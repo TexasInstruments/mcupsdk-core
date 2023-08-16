@@ -1,0 +1,801 @@
+diff --git a/source/drivers/mmcsd/v0/mmcsd.h b/source/drivers/mmcsd/v0/mmcsd.h
+index 9f3f5f8cd6..d7941d98b9 100644
+--- a/source/drivers/mmcsd/v0/mmcsd.h
++++ b/source/drivers/mmcsd/v0/mmcsd.h
+@@ -507,6 +507,9 @@ typedef struct
+     uint32_t isOpen;
+     /**< Flag to indicate if the instance is already open */
+ 
++    uint32_t xferHighSpeedEn;
++    /**< Flag to indicate hs transfers */
++
+     SemaphoreP_Object       cmdMutex;
+     /**< Command Mutex */
+ 
+diff --git a/source/drivers/mmcsd/v0/mmcsd_v0.c b/source/drivers/mmcsd/v0/mmcsd_v0.c
+index 6cc25bdb67..2f14cec2ca 100644
+--- a/source/drivers/mmcsd/v0/mmcsd_v0.c
++++ b/source/drivers/mmcsd/v0/mmcsd_v0.c
+@@ -151,7 +151,7 @@ static void MMCSD_xferStatusPollingFxnCMD19(MMCSD_Handle handle);
+ 
+ /* PHY related functions */
+ static int32_t MMCSD_phyInit(uint32_t ssBaseAddr, uint32_t phyType);
+-static int32_t MMCSD_phyDisableDLL(uint32_t ssBaseAddr);
++static inline void MMCSD_phyDisableDLL(uint32_t ssBaseAddr);
+ static int32_t MMCSD_phyConfigure(uint32_t ssBaseAddr, uint32_t phyMode, uint32_t phyClkFreq, uint32_t driverImpedance);
+ static int32_t MMCSD_phyTuneManualEMMC(MMCSD_Handle handle);
+ static int32_t MMCSD_phyTuneAuto(MMCSD_Handle handle);
+@@ -162,7 +162,7 @@ static int32_t MMCSD_halLinesResetCmd(uint32_t ctrlBaseAddr);
+ static int32_t MMCSD_halLinesResetDat(uint32_t ctrlBaseAddr);
+ static int32_t MMCSD_halSetBusWidth(uint32_t ctrlBaseAddr, uint32_t busWidth);
+ static int32_t MMCSD_halSetBusVolt(uint32_t ctrlBaseAddr, uint32_t volt);
+-static int32_t MMCSD_halIsCardInserted(uint32_t ctrlBaseAddr);
++static inline int32_t MMCSD_halIsCardInserted(uint32_t ctrlBaseAddr);
+ static int32_t MMCSD_halBusPower(uint32_t ctrlBaseAddr, uint32_t pwr);
+ static int32_t MMCSD_halIsClockStable(uint32_t ctrlBaseAddr, uint32_t timeout);
+ static int32_t MMCSD_halEnableInternalClock(uint32_t ctrlBaseAddr, uint32_t clkState);
+@@ -173,17 +173,17 @@ static int32_t MMCSD_halSetUHSMode(uint32_t ctrlBaseAddr, uint32_t uhsMode);
+ 
+ /* Interrupt related functions */
+ static uint32_t MMCSD_halNormalIntrStatusGet(uint32_t ctrlBaseAddr, uint16_t intrFlag);
+-static int32_t MMCSD_halNormalIntrStatusClear(uint32_t ctrlBaseAddr, uint16_t intrFlag);
++static inline void MMCSD_halNormalIntrStatusClear(uint32_t ctrlBaseAddr, uint16_t intrFlag);
+ static uint32_t MMCSD_halErrorIntrStatusGet(uint32_t ctrlBaseAddr, uint16_t intrFlag);
+-static int32_t MMCSD_halErrorIntrStatusClear(uint32_t ctrlBaseAddr, uint16_t intrFlag);
+-static int32_t MMCSD_halNormalIntrStatusEnable(uint32_t ctrlBaseAddr, uint16_t intrFlag);
+-static int32_t MMCSD_halNormalIntrStatusDisable(uint32_t ctrlBaseAddr, uint16_t intrFlag);
+-static int32_t MMCSD_halErrorIntrStatusEnable(uint32_t ctrlBaseAddr, uint16_t intrFlag);
+-static int32_t MMCSD_halErrorIntrStatusDisable(uint32_t ctrlBaseAddr, uint16_t intrFlag);
+-static int32_t MMCSD_halNormalSigIntrDisable(uint32_t ctrlBaseAddr, uint16_t intrFlag);
+-static int32_t MMCSD_halNormalSigIntrEnable(uint32_t ctrlBaseAddr, uint16_t intrFlag);
+-static int32_t MMCSD_halErrorSigIntrDisable(uint32_t ctrlBaseAddr, uint16_t intrFlag);
+-static int32_t MMCSD_halErrorSigIntrEnable(uint32_t ctrlBaseAddr, uint16_t intrFlag);
++static inline void MMCSD_halErrorIntrStatusClear(uint32_t ctrlBaseAddr, uint16_t intrFlag);
++static inline void MMCSD_halNormalIntrStatusEnable(uint32_t ctrlBaseAddr, uint16_t intrFlag);
++static inline void MMCSD_halNormalIntrStatusDisable(uint32_t ctrlBaseAddr, uint16_t intrFlag);
++static inline void MMCSD_halErrorIntrStatusEnable(uint32_t ctrlBaseAddr, uint16_t intrFlag);
++static inline void MMCSD_halErrorIntrStatusDisable(uint32_t ctrlBaseAddr, uint16_t intrFlag);
++static inline void MMCSD_halNormalSigIntrDisable(uint32_t ctrlBaseAddr, uint16_t intrFlag);
++static inline void MMCSD_halNormalSigIntrEnable(uint32_t ctrlBaseAddr, uint16_t intrFlag);
++static inline void MMCSD_halErrorSigIntrDisable(uint32_t ctrlBaseAddr, uint16_t intrFlag);
++static inline void MMCSD_halErrorSigIntrEnable(uint32_t ctrlBaseAddr, uint16_t intrFlag);
+ 
+ static void MMCSD_isr(void *arg);
+ 
+@@ -414,10 +414,16 @@ int32_t MMCSD_read(MMCSD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32_
+ {
+     int32_t status = SystemP_SUCCESS;
+     MMCSD_Object *obj = ((MMCSD_Config *)handle)->object;
++    MMCSD_Attrs const *attrs = ((MMCSD_Config *)handle)->attrs;
+     MMCSD_Transaction trans;
+     uint32_t addr = 0U;
+     uint32_t cmd = 0U, stopCmd = 0U;
+     uint32_t blockSize = MMCSD_getBlockSize(handle);
++    if((obj->emmcData->supportedModes & MMCSD_EMMC_ECSD_DEVICE_TYPE_HS200_200MHZ_1P8V) &&
++       (attrs->supportedModes & MMCSD_SUPPORT_MMC_HS200))
++    {
++        obj->xferHighSpeedEn = 1;
++    }
+ 
+     obj->readBufIdx = buf;
+     obj->readBlockCount = numBlks;
+@@ -497,10 +503,16 @@ int32_t MMCSD_write(MMCSD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32
+ {
+     int32_t status = SystemP_SUCCESS;
+     MMCSD_Object *obj = ((MMCSD_Config *)handle)->object;
++    MMCSD_Attrs const *attrs = ((MMCSD_Config *)handle)->attrs;
+     MMCSD_Transaction trans;
+     uint32_t addr = 0U;
+     uint32_t stopCmd = 0U;
+     uint32_t blockSize = MMCSD_getBlockSize(handle);
++    if((obj->emmcData->supportedModes & MMCSD_EMMC_ECSD_DEVICE_TYPE_HS200_200MHZ_1P8V) &&
++       (attrs->supportedModes & MMCSD_SUPPORT_MMC_HS200))
++    {
++        obj->xferHighSpeedEn = 1;
++    }
+ 
+     obj->writeBufIdx = buf;
+     obj->writeBlockCount = numBlks;
+@@ -508,26 +520,10 @@ int32_t MMCSD_write(MMCSD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32
+     if(obj->cardType == MMCSD_CARD_TYPE_EMMC)
+     {
+         stopCmd = MMCSD_MMC_CMD(12);
+-        if(numBlks >  1U)
+-        {
+-            // cmd = MMCSD_MMC_CMD(18);
+-        }
+-        else
+-        {
+-            // cmd = MMCSD_MMC_CMD(17);
+-        }
+     }
+     else
+     {
+         stopCmd = MMCSD_SD_CMD(12);
+-        if(numBlks >  1U)
+-        {
+-            // cmd = MMCSD_SD_CMD(18);
+-        }
+-        else
+-        {
+-            // cmd = MMCSD_SD_CMD(17);
+-        }
+     }
+ 
+     if(SystemP_SUCCESS == status)
+@@ -651,8 +647,8 @@ int32_t MMCSD_enableBootPartition(MMCSD_Handle handle, uint32_t partitionNum)
+             trans.arg = arg;
+             status = MMCSD_transfer(handle, &trans);
+ 
+-            /* Delay for 5 ms for the change to take effect in the device */
+-            ClockP_usleep(5000);
++            /* Delay for 3 ms for the change to take effect in the device */
++            ClockP_usleep(3000);
+ 
+             if(status == SystemP_SUCCESS)
+             {
+@@ -665,8 +661,8 @@ int32_t MMCSD_enableBootPartition(MMCSD_Handle handle, uint32_t partitionNum)
+                 status = MMCSD_transfer(handle, &trans);
+             }
+ 
+-            /* Delay for 5 ms for the change to take effect in the device */
+-            ClockP_usleep(5000);
++            /* Delay for 3 ms for the change to take effect in the device */
++            ClockP_usleep(3000);
+         }
+         else
+         {
+@@ -1000,8 +996,11 @@ static int32_t MMCSD_initEMMC(MMCSD_Handle handle)
+         trans.arg   = 0U;
+         status = MMCSD_transfer(handle, &trans);
+     }
+-    /* Sleep for 50 ms */
+-    ClockP_usleep(50000);
++
++    /* Sleep for 5ms for input clock frequency, as mentioned
++     * in JEDEC standard JESD84-B51 section 10.1
++     */
++    ClockP_usleep(5000);
+ 
+     if(SystemP_SUCCESS == status)
+     {
+@@ -1023,6 +1022,12 @@ static int32_t MMCSD_initEMMC(MMCSD_Handle handle)
+             hostOCR |= (0x1FFU << 15U);
+         }
+ 
++        /* High Speed support bit set */
++        if(CSL_REG64_FEXT(&pReg->CAPABILITIES, MMC_SSCFG_CTL_CFG_2_REG_HIGHSPEEDSUPPORT) == TRUE)
++        {
++            CSL_REG32_FINS(&pSSReg->CTL_CFG_2_REG,MMC_SSCFG_CTL_CFG_2_REG_HIGHSPEEDSUPPORT, 1);
++        }
++
+         /* Poll until card status bit is powered up */
+         uint32_t retry = 0xFFFFU;
+ 
+@@ -1117,17 +1122,11 @@ static int32_t MMCSD_initEMMC(MMCSD_Handle handle)
+         status = MMCSD_transfer(handle, &trans);
+     }
+ 
+-    /* Wait for 100 ms */
+-    ClockP_usleep(100U*1000U);
+-
+     if(status == SystemP_SUCCESS)
+     {
+         MMCSD_parseECSDEmmc(obj->emmcData, obj->tempDataBuf);
+     }
+ 
+-    /* Wait for 100 ms */
+-    ClockP_usleep(100U*1000U);
+-
+     /* Set bus width in controller and device */
+     uint32_t controllerBusWidth, ecsdBusWidth;
+ 
+@@ -1161,29 +1160,12 @@ static int32_t MMCSD_initEMMC(MMCSD_Handle handle)
+     }
+ 
+     obj->busWidth = controllerBusWidth;
+-    /* Wait for 100 ms */
+-    ClockP_usleep(100U*1000U);
+ 
+     if(SystemP_SUCCESS == status)
+     {
+         MMCSD_halSetBusWidth(attrs->ctrlBaseAddr, controllerBusWidth);
+     }
+ 
+-    /* Wait for 100 ms */
+-    ClockP_usleep(100U*1000U);
+-
+-    /* Permanently enable RST_n */
+-    if(SystemP_SUCCESS == status)
+-    {
+-        MMCSD_initTransaction(&trans);
+-        trans.cmd = MMCSD_MMC_CMD(6);
+-        trans.arg = 0x03A20100;
+-        status = MMCSD_transfer(handle, &trans);
+-    }
+-
+-    /* Wait for 100 ms */
+-    ClockP_usleep(100U*1000U);
+-
+     status = MMCSD_isReadyForTransfer(handle);
+ 
+     /* Find the highest mode supported by device and the controller */
+@@ -1199,12 +1181,6 @@ static int32_t MMCSD_initEMMC(MMCSD_Handle handle)
+         obj->transferSpeed = MMCSD_getXferSpeedFromModeEmmc(mode);
+     }
+ 
+-    /* Wait for 100 ms for switching to finalize */
+-    ClockP_usleep(100U*1000U);
+-
+-    /* Enable boot partition by default */
+-
+-
+     if(SystemP_SUCCESS != status)
+     {
+         MMCSD_close(handle);
+@@ -1298,8 +1274,8 @@ static int32_t MMCSD_transfer(MMCSD_Handle handle, MMCSD_Transaction *trans)
+             /* Set block length */
+             CSL_REG16_FINS(&pReg->BLOCK_SIZE, MMC_CTLCFG_BLOCK_SIZE_XFER_BLK_SIZE, trans->blockSize);
+ 
+-            /* Set data timeout */
+-            CSL_REG8_FINS(&pReg->TIMEOUT_CONTROL, MMC_CTLCFG_TIMEOUT_CONTROL_COUNTER_VALUE, 14U);
++            /* Set block count */
++            CSL_REG16_WR(&pReg->BLOCK_COUNT, trans->blockCount);
+ 
+             MMCSD_halNormalIntrStatusEnable(attrs->ctrlBaseAddr,
+                 CSL_MMC_CTLCFG_NORMAL_INTR_STS_ENA_CMD_COMPLETE_MASK | CSL_MMC_CTLCFG_NORMAL_INTR_STS_ENA_XFER_COMPLETE_MASK);
+@@ -1648,20 +1624,46 @@ static int32_t MMCSD_isReadyForTransfer(MMCSD_Handle handle)
+ static int32_t MMCSD_setupADMA2(MMCSD_Handle handle, MMCSD_ADMA2Descriptor *desc, uint64_t bufAddr, uint32_t dataSize)
+ {
+     int32_t status = SystemP_SUCCESS;
+-    const MMCSD_Attrs *attrs;
+-    const CSL_mmc_ctlcfgRegs *pReg;
++    MMCSD_Object *obj = NULL;
++    const MMCSD_Attrs *attrs = NULL;
++    const CSL_mmc_ctlcfgRegs *pReg = NULL;
+     uint32_t dmaParams = 0U;
+ 
+-    if((desc != NULL) && (handle != NULL) && (((MMCSD_Config *)handle)->attrs != NULL))
++    if((desc == NULL) || (handle == NULL))
++    {
++        status = SystemP_FAILURE;
++    }
++    if (SystemP_SUCCESS == status)
+     {
+         attrs = ((MMCSD_Config *)handle)->attrs;
+-        pReg = (const CSL_mmc_ctlcfgRegs *)(attrs->ctrlBaseAddr);
++        obj = ((MMCSD_Config *)handle)->object;
++
++        if ((attrs == NULL) || (obj == NULL))
++        {
++            status = SystemP_FAILURE;
++        }
++        else
++        {
++            pReg = (const CSL_mmc_ctlcfgRegs *)(attrs->ctrlBaseAddr);
++        }
++        if (pReg == NULL)
++        {
++            status = SystemP_FAILURE;
++        }
++    }
++    if (SystemP_SUCCESS == status)
++    {
++
+         dmaParams = dataSize << 16U;
+         dmaParams |= (((dataSize >> 16U) << 6U) | 0x0023U);
+ 
+         /* Enable version 4 for 26 bit sizes */
+         CSL_REG16_FINS(&pReg->HOST_CONTROL2, MMC_CTLCFG_HOST_CONTROL2_HOST_VER40_ENA, 1U);
+         CSL_REG16_FINS(&pReg->HOST_CONTROL2, MMC_CTLCFG_HOST_CONTROL2_ADMA2_LEN_MODE, 1U);
++        if(obj->xferHighSpeedEn == 1)
++        {
++            CSL_REG16_WR(&pReg->HOST_CONTROL2, 1 << CSL_MMC_CTLCFG_HOST_CONTROL2_ADMA2_LEN_MODE_SHIFT);
++        }
+ 
+         /* Setup ADMA2 descriptor */
+         desc->dmaParams = dmaParams;
+@@ -1670,6 +1672,12 @@ static int32_t MMCSD_setupADMA2(MMCSD_Handle handle, MMCSD_ADMA2Descriptor *desc
+ 
+         /* Set 32 bit ADMA2 */
+         CSL_REG8_FINS(&pReg->HOST_CONTROL1, MMC_CTLCFG_HOST_CONTROL1_DMA_SELECT, 2U);
++        if(obj->xferHighSpeedEn == 1)
++        {
++            CSL_REG8_WR(&pReg->HOST_CONTROL1, ((1 << CSL_MMC_CTLCFG_HOST_CONTROL1_EXT_DATA_WIDTH_SHIFT) |
++                       (2 << CSL_MMC_CTLCFG_HOST_CONTROL1_DMA_SELECT_SHIFT)));
++            obj->xferHighSpeedEn = 0;
++        }
+ 
+         /* Write the descriptor address to ADMA2 Address register */
+         CSL_REG64_WR(&pReg->ADMA_SYS_ADDRESS, (uint64_t)desc);
+@@ -1701,20 +1709,9 @@ static void MMCSD_initTransaction(MMCSD_Transaction *trans)
+ {
+     if(trans != NULL)
+     {
+-        trans->cmd = 0U;
+-        trans->dir = 0U;
+-        trans->arg = 0U;
+-        trans->dataBuf = NULL;
++        memset(trans, 0, sizeof(MMCSD_Transaction));
+         trans->blockSize = 512U;
+         trans->blockCount = 1U;
+-        trans->autoCmdEn = 0U;
+-        trans->enableDma = FALSE;
+-        trans->isTuning = FALSE;
+-
+-        trans->response[0] = 0U;
+-        trans->response[1] = 0U;
+-        trans->response[2] = 0U;
+-        trans->response[3] = 0U;
+     }
+ }
+ 
+@@ -1773,8 +1770,6 @@ static int32_t MMCSD_switchEmmcMode(MMCSD_Handle handle, uint32_t mode)
+     trans.arg = 0x03000000 | (MMCSD_ECSD_HS_TIMING_INDEX << 16U) | ((((obj->emmcData->driveStrength) << 4U) | hsTimingVal) << 8U);
+     status = MMCSD_transfer(handle, &trans);
+ 
+-    ClockP_usleep(50*1000);
+-
+     if(SystemP_SUCCESS == status)
+     {
+         while(CSL_REG32_FEXT(&pReg->PRESENTSTATE, MMC_CTLCFG_PRESENTSTATE_SDIF_DAT0IN) != 1U);
+@@ -1797,8 +1792,6 @@ static int32_t MMCSD_switchEmmcMode(MMCSD_Handle handle, uint32_t mode)
+         trans.arg = 0x03000000 | (MMCSD_ECSD_BUS_WIDTH_INDEX << 16) | (((es << MMCSD_ECSD_BUS_WIDTH_ES_SHIFT) | ecsdBusWidth) << 8);
+         status = MMCSD_transfer(handle, &trans);
+ 
+-        ClockP_usleep(50*1000);
+-
+         if(SystemP_SUCCESS == status)
+         {
+             while(CSL_REG32_FEXT(&pReg->PRESENTSTATE, MMC_CTLCFG_PRESENTSTATE_SDIF_DAT0IN) != 1U);
+@@ -1821,7 +1814,6 @@ static int32_t MMCSD_switchEmmcMode(MMCSD_Handle handle, uint32_t mode)
+ 
+     if(SystemP_SUCCESS == status)
+     {
+-        ClockP_usleep(50*1000);
+ 
+         /* Enable DLL */
+         MMCSD_phyConfigure(attrs->ssBaseAddr, phyMode, phyClkFreq, phyDriverType);
+@@ -1862,7 +1854,6 @@ static int32_t MMCSD_switchEmmcMode(MMCSD_Handle handle, uint32_t mode)
+         trans.arg   = 0x03000000 | (MMCSD_ECSD_HS_TIMING_INDEX << 16U) | (((es << 4U) | hsTimingVal) << 8U);
+         status = MMCSD_transfer(handle, &trans);
+ 
+-        ClockP_usleep(50*1000);
+ 
+         /* Disable PHY DLL */
+         MMCSD_phyDisableDLL(attrs->ssBaseAddr);
+@@ -1871,7 +1862,6 @@ static int32_t MMCSD_switchEmmcMode(MMCSD_Handle handle, uint32_t mode)
+ 
+         if(SystemP_SUCCESS == status)
+         {
+-            ClockP_usleep(50*1000);
+ 
+             phyMode = MMCSD_PHY_MODE_HSSDR50;
+ 
+@@ -1883,7 +1873,6 @@ static int32_t MMCSD_switchEmmcMode(MMCSD_Handle handle, uint32_t mode)
+             trans.arg   = 0x03000000 | (MMCSD_ECSD_BUS_WIDTH_INDEX << 16U) | (((es << MMCSD_ECSD_BUS_WIDTH_ES_SHIFT) | MMCSD_ECSD_BUS_WIDTH_8BIT_DDR) << 8U);
+             status = MMCSD_transfer(handle, &trans);
+ 
+-            ClockP_usleep(50*1000);
+ 
+             if(status == SystemP_SUCCESS)
+             {
+@@ -1900,8 +1889,6 @@ static int32_t MMCSD_switchEmmcMode(MMCSD_Handle handle, uint32_t mode)
+                 status = MMCSD_transfer(handle, &trans);
+             }
+ 
+-            ClockP_usleep(50*1000);
+-
+             if(status == SystemP_SUCCESS)
+             {
+                 /* Wait for DAT0 to go low */
+@@ -1924,13 +1911,9 @@ static int32_t MMCSD_switchEmmcMode(MMCSD_Handle handle, uint32_t mode)
+             /* Set O/P clock to 200 MHz. HC may set it to a value <= 200 MHz */
+             status = MMCSD_halSetBusFreq(attrs->ctrlBaseAddr, attrs->inputClkFreq, 200*1000000, 0U);
+ 
+-            ClockP_usleep(50*1000);
+-
+             phyMode = MMCSD_PHY_MODE_HS400;
+ 
+             MMCSD_phyConfigure(attrs->ssBaseAddr, phyMode, 200*1000000, phyDriverType);
+-
+-            ClockP_usleep(50*1000);
+         }
+     }
+ 
+@@ -2056,6 +2039,8 @@ static void MMCSD_xferStatusPollingFxn(MMCSD_Handle handle)
+     volatile uint32_t dataLength = 0U;
+     uint32_t remainingBlocks = 0U, offset = 0U;
+     uint32_t tempWord = 0xDEADBABE;
++    uint8_t *pTempWord = NULL;
++    uint32_t i;
+ 
+     uint16_t normalIntrStatus = MMCSD_halNormalIntrStatusGet(attrs->ctrlBaseAddr, MMCSD_INTERRUPT_ALL_NORMAL);
+     uint16_t errorIntrStatus = MMCSD_halErrorIntrStatusGet(attrs->ctrlBaseAddr, MMCSD_INTERRUPT_ALL_ERROR);
+@@ -2073,12 +2058,10 @@ static void MMCSD_xferStatusPollingFxn(MMCSD_Handle handle)
+                 remainingBlocks = obj->readBlockCount;
+                 offset = (obj->dataBlockCount - remainingBlocks) * (obj->dataBlockSize);
+ 
+-                volatile uint32_t i;
+-
+                 for(i = 0; i < dataLength; i += 4U)
+                 {
+                     tempWord = CSL_REG32_RD(&pReg->DATA_PORT);
+-                    uint8_t *pTempWord = (uint8_t *)&tempWord;
++                    pTempWord = (uint8_t *)&tempWord;
+                     obj->dataBufIdx[offset + i] = *(pTempWord);
+                     obj->dataBufIdx[offset + i + 1U] = *(pTempWord + 1U);
+                     obj->dataBufIdx[offset + i + 2U] = *(pTempWord + 2U);
+@@ -2102,14 +2085,13 @@ static void MMCSD_xferStatusPollingFxn(MMCSD_Handle handle)
+                 remainingBlocks = obj->writeBlockCount;
+                 offset = (obj->dataBlockCount - remainingBlocks) * (obj->dataBlockSize);
+ 
+-                volatile uint32_t i;
+-
+                 for(i = 0; i < dataLength; i += 4U)
+                 {
+-                    *((uint8_t *)&tempWord)      = obj->dataBufIdx[offset + i];
+-                    *((uint8_t *)&tempWord + 1U) = obj->dataBufIdx[offset + i + 1U];
+-                    *((uint8_t *)&tempWord + 2U) = obj->dataBufIdx[offset + i + 2U];
+-                    *((uint8_t *)&tempWord + 3U) = obj->dataBufIdx[offset + i + 3U];
++                    pTempWord = (uint8_t *)&tempWord;
++                    *(pTempWord)      = obj->dataBufIdx[offset + i];
++                    *(pTempWord + 1U) = obj->dataBufIdx[offset + i + 1U];
++                    *(pTempWord + 2U) = obj->dataBufIdx[offset + i + 2U];
++                    *(pTempWord + 3U) = obj->dataBufIdx[offset + i + 3U];
+                     CSL_REG32_WR(&pReg->DATA_PORT, tempWord);
+                 }
+                 obj->writeBlockCount--;
+@@ -2313,49 +2295,54 @@ static int32_t MMCSD_phyInit(uint32_t ssBaseAddr, uint32_t phyType)
+     return status;
+ }
+ 
+-static int32_t MMCSD_phyDisableDLL(uint32_t ssBaseAddr)
++static inline void MMCSD_phyDisableDLL(uint32_t ssBaseAddr)
+ {
+-    int32_t status = SystemP_SUCCESS;
+     const CSL_mmc_sscfgRegs *ssReg = (const CSL_mmc_sscfgRegs *)ssBaseAddr;
+ 
+     CSL_REG32_FINS(&ssReg->PHY_CTRL_1_REG, MMC_SSCFG_PHY_CTRL_1_REG_ENDLL, 0U);
+-
+-    return status;
+ }
+ 
+-static void MMCSD_phyGetOtapDelay(uint32_t *outputTapDelaySel, uint32_t *outputTapDelayVal, uint32_t phyMode)
++static void MMCSD_phyGetOtapDelay(uint32_t *outputTapDelaySel, uint32_t *outputTapDelayVal,
++    uint32_t *inputTapDelaySel, uint32_t *inputTapDelayVal, uint32_t phyMode)
+ {
+-    uint32_t s = 0U, v = 0U;
+     switch(phyMode) {
+-        case MMCSD_PHY_MODE_DS:
+-        case MMCSD_PHY_MODE_HS:
+-            s = 0U;
+-            v = 0U;
+-            break;
+         case MMCSD_PHY_MODE_SDR50:
+         case MMCSD_PHY_MODE_HSSDR50:
+-            s = 1U;
+-            v = 8U;
++            *outputTapDelaySel = 1U;
++            *outputTapDelayVal = 8U;
++            *inputTapDelaySel = 0U;
++            *inputTapDelayVal = 0U;
+             break;
+         case MMCSD_PHY_MODE_HS200:
+         case MMCSD_PHY_MODE_SDR104:
+-            s = 1U;
+-            v = 6U;
++            *outputTapDelaySel = 1U;
++            *outputTapDelayVal = 7U;
++            *inputTapDelaySel = 1U;
++            *inputTapDelayVal = 0U;
+             break;
+         case MMCSD_PHY_MODE_DDR50:
+-            s = 1U;
+-            v = 5U;
++            *outputTapDelaySel = 1U;
++            *outputTapDelayVal = 6U;
++            *inputTapDelaySel = 1U;
++            *inputTapDelayVal = 3U;
+             break;
+         case MMCSD_PHY_MODE_HS400:
+-            s = 1U;
+-            v = 2U;
++            *outputTapDelaySel = 1U;
++            *outputTapDelayVal = 2U;
++            *inputTapDelaySel = 0U;
++            *inputTapDelayVal = 0U;
++            break;
++        case MMCSD_PHY_MODE_DS:
++        case MMCSD_PHY_MODE_HS:
++            *outputTapDelaySel = 0U;
++            *outputTapDelayVal = 0U;
++            *inputTapDelaySel = 0U;
++            *inputTapDelayVal = 0U;
+             break;
+         default:
+             break;
+     }
+ 
+-    *outputTapDelaySel = s;
+-    *outputTapDelayVal = v;
+ }
+ 
+ static int32_t MMCSD_phyConfigure(uint32_t ssBaseAddr, uint32_t phyMode, uint32_t phyClkFreq, uint32_t driverImpedance)
+@@ -2365,6 +2352,7 @@ static int32_t MMCSD_phyConfigure(uint32_t ssBaseAddr, uint32_t phyMode, uint32_
+ 
+     uint32_t freqSel = 0U, strobeSel = 0U, regVal = 0U;
+     uint32_t outputTapDelaySel = 0U, outputTapDelayVal = 0U;
++    uint32_t inputTapDelaySel = 0U, inputTapDelayVal = 0U;
+ 
+     if(phyMode == MMCSD_PHY_MODE_HS400)
+     {
+@@ -2430,12 +2418,20 @@ static int32_t MMCSD_phyConfigure(uint32_t ssBaseAddr, uint32_t phyMode, uint32_
+     /* Enable DLL */
+     CSL_REG32_FINS(&ssReg->PHY_CTRL_1_REG, MMC_SSCFG_PHY_CTRL_1_REG_ENDLL, 1U);
+ 
+-    MMCSD_phyGetOtapDelay(&outputTapDelaySel, &outputTapDelayVal, phyMode);
++    MMCSD_phyGetOtapDelay(&outputTapDelaySel, &outputTapDelayVal, &inputTapDelaySel, &inputTapDelayVal, phyMode);
+ 
+-    if(outputTapDelaySel)
++    /* Disable tap window before modifying the receiver clock delay's, so as to not affect the configured delay's */
++    if(outputTapDelaySel | inputTapDelaySel)
+     {
+-        CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_OTAPDLYENA, 1U);
++        CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPCHGWIN, 1U);
++
++        CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_OTAPDLYENA, outputTapDelaySel);
+         CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_OTAPDLYSEL, outputTapDelayVal);
++        CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPDLYENA, inputTapDelaySel);
++        CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPDLYSEL, inputTapDelayVal);
++
++        CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPCHGWIN, 0U);
++
+     }
+ 
+     /* Wait for DLL READY bit */
+@@ -2639,7 +2635,7 @@ static int32_t MMCSD_halSetBusVolt(uint32_t ctrlBaseAddr, uint32_t volt)
+     return status;
+ }
+ 
+-static int32_t MMCSD_halIsCardInserted(uint32_t ctrlBaseAddr)
++static inline int32_t MMCSD_halIsCardInserted(uint32_t ctrlBaseAddr)
+ {
+     volatile int32_t retVal = 0;
+     const CSL_mmc_ctlcfgRegs *pReg = (const CSL_mmc_ctlcfgRegs *)ctrlBaseAddr;
+@@ -2801,18 +2797,28 @@ static int32_t MMCSD_halSendCommand(uint32_t ctrlBaseAddr, MMCSD_Transaction *tr
+     CSL_REG16_WR(&pReg->ARGUMENT1_LO, (trans->arg & 0xFFFFU));
+     CSL_REG16_WR(&pReg->ARGUMENT1_HI, ((trans->arg >> 16) & 0xFFFFU));
+ 
+-    /* Fill the transfer mode and command registers from the the command object */
+-    CSL_REG16_FINS(&pReg->TRANSFER_MODE, MMC_CTLCFG_TRANSFER_MODE_DMA_ENA, trans->enableDma);
+-    CSL_REG16_FINS(&pReg->TRANSFER_MODE, MMC_CTLCFG_TRANSFER_MODE_AUTO_CMD_ENA, trans->autoCmdEn);
+-    CSL_REG16_FINS(&pReg->TRANSFER_MODE, MMC_CTLCFG_TRANSFER_MODE_DATA_XFER_DIR, trans->dir);
+-
+-    if(multiBlock == TRUE)
++    if(trans->cmd & CSL_MMC_CTLCFG_COMMAND_DATA_PRESENT_MASK)
+     {
+-        CSL_REG16_WR(&pReg->BLOCK_COUNT, trans->blockCount);
+-        CSL_REG16_FINS(&pReg->TRANSFER_MODE, MMC_CTLCFG_TRANSFER_MODE_MULTI_BLK_SEL, CSL_MMC_CTLCFG_TRANSFER_MODE_MULTI_BLK_SEL_VAL_MULTIPLE);
+-        CSL_REG16_FINS(&pReg->TRANSFER_MODE, MMC_CTLCFG_TRANSFER_MODE_BLK_CNT_ENA, CSL_MMC_CTLCFG_TRANSFER_MODE_BLK_CNT_ENA_VAL_ENABLE);
+-    }
++        if(multiBlock == TRUE)
++        {
++            CSL_REG16_WR(&pReg->BLOCK_COUNT, trans->blockCount);
++            CSL_REG16_WR(&pReg->BLOCK_SIZE, trans->blockSize);
++            CSL_REG16_WR(&pReg->TRANSFER_MODE, ((trans->enableDma << CSL_MMC_CTLCFG_TRANSFER_MODE_DMA_ENA_SHIFT) |
++                                                (1 << CSL_MMC_CTLCFG_TRANSFER_MODE_BLK_CNT_ENA_SHIFT) |
++                                                (trans->autoCmdEn << CSL_MMC_CTLCFG_TRANSFER_MODE_AUTO_CMD_ENA_SHIFT) |
++                                                (trans->dir << CSL_MMC_CTLCFG_TRANSFER_MODE_DATA_XFER_DIR_SHIFT) |
++                                                (1 << CSL_MMC_CTLCFG_TRANSFER_MODE_MULTI_BLK_SEL_SHIFT)));
+ 
++        }
++        else
++        {
++            CSL_REG16_WR(&pReg->TRANSFER_MODE, ((trans->enableDma << CSL_MMC_CTLCFG_TRANSFER_MODE_DMA_ENA_SHIFT) |
++                                                (0 << CSL_MMC_CTLCFG_TRANSFER_MODE_BLK_CNT_ENA_SHIFT) |
++                                                (trans->autoCmdEn << CSL_MMC_CTLCFG_TRANSFER_MODE_AUTO_CMD_ENA_SHIFT) |
++                                                (trans->dir << CSL_MMC_CTLCFG_TRANSFER_MODE_DATA_XFER_DIR_SHIFT) |
++                                                (0 << CSL_MMC_CTLCFG_TRANSFER_MODE_MULTI_BLK_SEL_SHIFT)));
++        }
++    }
+     CSL_REG16_WR(&pReg->COMMAND, (uint16_t)trans->cmd);
+ 
+     return status;
+@@ -2837,7 +2843,7 @@ static int32_t MMCSD_halCmdResponseGet(uint32_t ctrlBaseAddr, uint32_t *rsp)
+     return status;
+ }
+ 
+-static uint32_t MMCSD_halNormalIntrStatusGet(uint32_t ctrlBaseAddr, uint16_t intrFlag)
++static inline uint32_t MMCSD_halNormalIntrStatusGet(uint32_t ctrlBaseAddr, uint16_t intrFlag)
+ {
+     uint32_t regVal = 0U;
+     const CSL_mmc_ctlcfgRegs *pReg = (const CSL_mmc_ctlcfgRegs *)ctrlBaseAddr;
+@@ -2847,17 +2853,15 @@ static uint32_t MMCSD_halNormalIntrStatusGet(uint32_t ctrlBaseAddr, uint16_t int
+     return regVal;
+ }
+ 
+-static int32_t MMCSD_halNormalIntrStatusClear(uint32_t ctrlBaseAddr, uint16_t intrFlag)
++static inline void MMCSD_halNormalIntrStatusClear(uint32_t ctrlBaseAddr, uint16_t intrFlag)
+ {
+-    int32_t status = SystemP_SUCCESS;
+     const CSL_mmc_ctlcfgRegs *pReg = (const CSL_mmc_ctlcfgRegs *)ctrlBaseAddr;
+ 
+     CSL_REG16_WR(&pReg->NORMAL_INTR_STS, intrFlag);
+ 
+-    return status;
+ }
+ 
+-static uint32_t MMCSD_halErrorIntrStatusGet(uint32_t ctrlBaseAddr, uint16_t intrFlag)
++static inline uint32_t MMCSD_halErrorIntrStatusGet(uint32_t ctrlBaseAddr, uint16_t intrFlag)
+ {
+     uint32_t regVal = 0U;
+     const CSL_mmc_ctlcfgRegs *pReg = (const CSL_mmc_ctlcfgRegs *)ctrlBaseAddr;
+@@ -2868,20 +2872,16 @@ static uint32_t MMCSD_halErrorIntrStatusGet(uint32_t ctrlBaseAddr, uint16_t intr
+ 
+ }
+ 
+-static int32_t MMCSD_halErrorIntrStatusClear(uint32_t ctrlBaseAddr, uint16_t intrFlag)
++static inline void MMCSD_halErrorIntrStatusClear(uint32_t ctrlBaseAddr, uint16_t intrFlag)
+ {
+-    int32_t status = SystemP_SUCCESS;
+     const CSL_mmc_ctlcfgRegs *pReg = (const CSL_mmc_ctlcfgRegs *)ctrlBaseAddr;
+ 
+     CSL_REG16_WR(&pReg->ERROR_INTR_STS, intrFlag);
+ 
+-    return status;
+-
+ }
+ 
+-static int32_t MMCSD_halNormalIntrStatusEnable(uint32_t ctrlBaseAddr, uint16_t intrFlag)
++static inline void MMCSD_halNormalIntrStatusEnable(uint32_t ctrlBaseAddr, uint16_t intrFlag)
+ {
+-    int32_t status = SystemP_SUCCESS;
+     const CSL_mmc_ctlcfgRegs *pReg = (const CSL_mmc_ctlcfgRegs *)ctrlBaseAddr;
+ 
+     volatile uint16_t regVal = 0U;
+@@ -2890,12 +2890,10 @@ static int32_t MMCSD_halNormalIntrStatusEnable(uint32_t ctrlBaseAddr, uint16_t i
+     regVal |= intrFlag;
+     CSL_REG16_WR(&pReg->NORMAL_INTR_STS_ENA, regVal);
+ 
+-    return status;
+ }
+ 
+-static int32_t MMCSD_halNormalIntrStatusDisable(uint32_t ctrlBaseAddr, uint16_t intrFlag)
++static inline void MMCSD_halNormalIntrStatusDisable(uint32_t ctrlBaseAddr, uint16_t intrFlag)
+ {
+-    int32_t status = SystemP_SUCCESS;
+     const CSL_mmc_ctlcfgRegs *pReg = (const CSL_mmc_ctlcfgRegs *)ctrlBaseAddr;
+ 
+     volatile uint16_t regVal = 0U;
+@@ -2904,12 +2902,10 @@ static int32_t MMCSD_halNormalIntrStatusDisable(uint32_t ctrlBaseAddr, uint16_t
+     regVal &= ~intrFlag;
+     CSL_REG16_WR(&pReg->NORMAL_INTR_STS_ENA, regVal);
+ 
+-    return status;
+ }
+ 
+-static int32_t MMCSD_halErrorIntrStatusEnable(uint32_t ctrlBaseAddr, uint16_t intrFlag)
++static inline void MMCSD_halErrorIntrStatusEnable(uint32_t ctrlBaseAddr, uint16_t intrFlag)
+ {
+-    int32_t status = SystemP_SUCCESS;
+     const CSL_mmc_ctlcfgRegs *pReg = (const CSL_mmc_ctlcfgRegs *)ctrlBaseAddr;
+ 
+     volatile uint16_t regVal = 0U;
+@@ -2918,12 +2914,10 @@ static int32_t MMCSD_halErrorIntrStatusEnable(uint32_t ctrlBaseAddr, uint16_t in
+     regVal |= intrFlag;
+     CSL_REG16_WR(&pReg->ERROR_INTR_STS_ENA, regVal);
+ 
+-    return status;
+ }
+ 
+-static int32_t MMCSD_halErrorIntrStatusDisable(uint32_t ctrlBaseAddr, uint16_t intrFlag)
++static inline void MMCSD_halErrorIntrStatusDisable(uint32_t ctrlBaseAddr, uint16_t intrFlag)
+ {
+-     int32_t status = SystemP_SUCCESS;
+     const CSL_mmc_ctlcfgRegs *pReg = (const CSL_mmc_ctlcfgRegs *)ctrlBaseAddr;
+ 
+     volatile uint16_t regVal = 0U;
+@@ -2932,12 +2926,10 @@ static int32_t MMCSD_halErrorIntrStatusDisable(uint32_t ctrlBaseAddr, uint16_t i
+     regVal &= ~intrFlag;
+     CSL_REG16_WR(&pReg->ERROR_INTR_STS_ENA, regVal);
+ 
+-    return status;
+ }
+ 
+-static int32_t MMCSD_halNormalSigIntrDisable(uint32_t ctrlBaseAddr, uint16_t intrFlag)
++static inline void MMCSD_halNormalSigIntrDisable(uint32_t ctrlBaseAddr, uint16_t intrFlag)
+ {
+-    int32_t status = SystemP_SUCCESS;
+     const CSL_mmc_ctlcfgRegs *pReg = (const CSL_mmc_ctlcfgRegs *)ctrlBaseAddr;
+     volatile uint16_t regVal = 0U;
+ 
+@@ -2945,12 +2937,10 @@ static int32_t MMCSD_halNormalSigIntrDisable(uint32_t ctrlBaseAddr, uint16_t int
+     regVal &= ~intrFlag;
+     CSL_REG16_WR(&pReg->NORMAL_INTR_SIG_ENA, regVal);
+ 
+-    return status;
+ }
+ 
+-static int32_t MMCSD_halNormalSigIntrEnable(uint32_t ctrlBaseAddr, uint16_t intrFlag)
++static inline void MMCSD_halNormalSigIntrEnable(uint32_t ctrlBaseAddr, uint16_t intrFlag)
+ {
+-    int32_t status = SystemP_SUCCESS;
+     const CSL_mmc_ctlcfgRegs *pReg = (const CSL_mmc_ctlcfgRegs *)ctrlBaseAddr;
+     volatile uint16_t regVal = 0U;
+ 
+@@ -2958,12 +2948,10 @@ static int32_t MMCSD_halNormalSigIntrEnable(uint32_t ctrlBaseAddr, uint16_t intr
+     regVal |= intrFlag;
+     CSL_REG16_WR(&pReg->NORMAL_INTR_SIG_ENA, regVal);
+ 
+-    return status;
+ }
+ 
+-static int32_t MMCSD_halErrorSigIntrDisable(uint32_t ctrlBaseAddr, uint16_t intrFlag)
++static inline void MMCSD_halErrorSigIntrDisable(uint32_t ctrlBaseAddr, uint16_t intrFlag)
+ {
+-    int32_t status = SystemP_SUCCESS;
+     const CSL_mmc_ctlcfgRegs *pReg = (const CSL_mmc_ctlcfgRegs *)ctrlBaseAddr;
+     volatile uint16_t regVal = 0U;
+ 
+@@ -2971,12 +2959,10 @@ static int32_t MMCSD_halErrorSigIntrDisable(uint32_t ctrlBaseAddr, uint16_t intr
+     regVal &= ~intrFlag;
+     CSL_REG16_WR(&pReg->ERROR_INTR_SIG_ENA, regVal);
+ 
+-    return status;
+ }
+ 
+-static int32_t MMCSD_halErrorSigIntrEnable(uint32_t ctrlBaseAddr, uint16_t intrFlag)
++static inline void MMCSD_halErrorSigIntrEnable(uint32_t ctrlBaseAddr, uint16_t intrFlag)
+ {
+-    int32_t status = SystemP_SUCCESS;
+     const CSL_mmc_ctlcfgRegs *pReg = (const CSL_mmc_ctlcfgRegs *)ctrlBaseAddr;
+     volatile uint16_t regVal = 0U;
+ 
+@@ -2984,7 +2970,6 @@ static int32_t MMCSD_halErrorSigIntrEnable(uint32_t ctrlBaseAddr, uint16_t intrF
+     regVal |= intrFlag;
+     CSL_REG16_WR(&pReg->ERROR_INTR_SIG_ENA, regVal);
+ 
+-    return status;
+ }
+ 
+ static void MMCSD_isr(void *arg)
+diff --git a/source/drivers/mmcsd/v1/mmcsd_v1.c b/source/drivers/mmcsd/v1/mmcsd_v1.c
+index 38dd9f37fc..3aef4c4d01 100644
+--- a/source/drivers/mmcsd/v1/mmcsd_v1.c
++++ b/source/drivers/mmcsd/v1/mmcsd_v1.c
+@@ -1521,7 +1521,7 @@ static int32_t MMCSD_initEMMC(MMCSD_Handle handle)
+                                          (((uint32_t)(obj->ecsd[213])) << 8) +
+                                          (((uint32_t)(obj->ecsd[212])));
+                     obj->size = (obj->blockCount * obj->blockSize);
+-                    obj->busWidth = MMCSD_BUS_WIDTH_8BIT;
++                    obj->busWidth = MMCSD_BUS_WIDTH_4BIT;
+                     obj->sdVer = obj->ecsd[192];
+                 }
+ 
+@@ -1586,14 +1586,14 @@ static int32_t MMCSD_initEMMC(MMCSD_Handle handle)
+                 obj->busWidth = controllerBuswidth;
+ 
+                 /* Add delay */
+-                MMCSD_delay(150U);
++                MMCSD_delay(100U);
+ 
+                 if(SystemP_SUCCESS == status)
+                 {
+                     MMCSD_setBusWidth(attrs->baseAddr, controllerBuswidth);
+                 }
+ 
+-                MMCSD_delay(150U);
++                MMCSD_delay(100U);
+ 
+                 if(SystemP_SUCCESS == status)
+                 {
+@@ -1603,7 +1603,7 @@ static int32_t MMCSD_initEMMC(MMCSD_Handle handle)
+                     status = MMCSD_transfer(handle, &trans);
+                 }
+ 
+-                MMCSD_delay(150U);
++                MMCSD_delay(100U);
+             }
+             if(SystemP_FAILURE == status)
+             {

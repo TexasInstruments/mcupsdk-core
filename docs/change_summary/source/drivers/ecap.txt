@@ -1,0 +1,120 @@
+diff --git a/source/drivers/ecap/v0/ecap.c b/source/drivers/ecap/v0/ecap.c
+index 9b328c3682..06803956e8 100644
+--- a/source/drivers/ecap/v0/ecap.c
++++ b/source/drivers/ecap/v0/ecap.c
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2021 Texas Instruments Incorporated
++ * Copyright (C) 2021-2023 Texas Instruments Incorporated
+  *
+  * Redistribution and use in source and binary forms, with or without
+  * modification, are permitted provided that the following conditions
+@@ -160,7 +160,7 @@ void ECAP_captureEvtCntrRstConfig(uint32_t baseAddr, uint32_t counterRst1,
+     HW_WR_REG16(temp_addr, value);
+ }
+ 
+-void ECAP_continousModeConfig(uint32_t baseAddr)
++void ECAP_continuousModeConfig(uint32_t baseAddr)
+ {
+     uint32_t temp_addr = baseAddr + ECAP_ECCTL2;
+     uint16_t value = HW_RD_REG16(temp_addr);
+diff --git a/source/drivers/ecap/v0/ecap.h b/source/drivers/ecap/v0/ecap.h
+index 744b7379cd..74a80a6dc1 100644
+--- a/source/drivers/ecap/v0/ecap.h
++++ b/source/drivers/ecap/v0/ecap.h
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2021 Texas Instruments Incorporated
++ * Copyright (C) 2021-2023 Texas Instruments Incorporated
+  *
+  * Redistribution and use in source and binary forms, with or without
+  * modification, are permitted provided that the following conditions
+@@ -336,7 +336,7 @@ void ECAP_captureEvtCntrRstConfig(uint32_t baseAddr, uint32_t counterRst1,
+  *
+  * \param   baseAddr   It is the Memory address of the ECAP instance used.
+  */
+-void ECAP_continousModeConfig(uint32_t baseAddr);
++void ECAP_continuousModeConfig(uint32_t baseAddr);
+ 
+ /**
+  * \brief   This function configures ECAP to One-shot mode and also
+diff --git a/source/drivers/ecap/v1/ecap.h b/source/drivers/ecap/v1/ecap.h
+index 4367669771..0d8df3bf1f 100644
+--- a/source/drivers/ecap/v1/ecap.h
++++ b/source/drivers/ecap/v1/ecap.h
+@@ -848,6 +848,15 @@ typedef enum
+ #define ECAP_MONITORING_UNIT_2       1U
+ 
+ //*****************************************************************************
++//
++//! Values that can be passed to ECAP_selectShadowLoadMode() as the
++//! \e loadMode parameter.
++//
++//*****************************************************************************
++//! Load on next sync event
++#define ECAP_ACTIVE_LOAD_SYNC_EVT            0U
++//! Load on EPWM GLDLCSTRB event
++#define ECAP_ACTIVE_LOAD_GLDLCSTRB_EVT       1U
+ 
+ //*****************************************************************************
+ //
+@@ -1351,7 +1360,7 @@ static inline uint16_t ECAP_getInterruptSource(uint32_t base)
+     //
+     // Return contents of ECFLG register
+     //
+-    return(HW_RD_REG16(base + CSL_ECAP_ECFLG) & 0xFEU);
++    return(HW_RD_REG16(base + CSL_ECAP_ECFLG) & 0x1EFEU);
+ }
+ 
+ //*****************************************************************************
+diff --git a/source/drivers/ecap/v2/ecap.c b/source/drivers/ecap/v2/ecap.c
+index acef6f3936..a2c9ab3a33 100644
+--- a/source/drivers/ecap/v2/ecap.c
++++ b/source/drivers/ecap/v2/ecap.c
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2021 Texas Instruments Incorporated
++ * Copyright (C) 2021-2023 Texas Instruments Incorporated
+  *
+  * Redistribution and use in source and binary forms, with or without
+  * modification, are permitted provided that the following conditions
+@@ -160,7 +160,7 @@ void ECAP_captureEvtCntrRstConfig(uint32_t baseAddr, uint32_t counterRst1,
+     HW_WR_REG32(temp_addr, value);
+ }
+ 
+-void ECAP_continousModeConfig(uint32_t baseAddr)
++void ECAP_continuousModeConfig(uint32_t baseAddr)
+ {
+     uint32_t temp_addr = baseAddr + CSL_ECAP_ECCTL1_ECCTL2;
+     uint32_t value = HW_RD_REG32(temp_addr);
+diff --git a/source/drivers/ecap/v2/ecap.h b/source/drivers/ecap/v2/ecap.h
+index 322223f9cf..021e5ccb7b 100644
+--- a/source/drivers/ecap/v2/ecap.h
++++ b/source/drivers/ecap/v2/ecap.h
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2021 Texas Instruments Incorporated
++ * Copyright (C) 2021-2023 Texas Instruments Incorporated
+  *
+  * Redistribution and use in source and binary forms, with or without
+  * modification, are permitted provided that the following conditions
+@@ -339,7 +339,7 @@ void ECAP_captureEvtCntrRstConfig(uint32_t baseAddr, uint32_t counterRst1,
+  *
+  * \param   baseAddr   It is the Memory address of the ECAP instance used.
+  */
+-void ECAP_continousModeConfig(uint32_t baseAddr);
++void ECAP_continuousModeConfig(uint32_t baseAddr);
+ 
+ /**
+  * \brief   This function configures ECAP to One-shot mode and also
+@@ -511,8 +511,8 @@ void ECAP_intrStatusClear(uint32_t baseAddr, uint32_t flag);
+  * \param   baseAddr  It is the Memory address of the ECAP instance used.
+  * \param   srcSelect Capture input select
+  *                    0x0 capture input is ECAPxINPUT[0]
+- *                    0x1 capture input is ECAPxINPUT[1] 
+- *                    0x7F  capture input is ECAPxINPUT[127] 
++ *                    0x1 capture input is ECAPxINPUT[1]
++ *                    0x7F  capture input is ECAPxINPUT[127]
+  */
+ void ECAP_captureInputSourceSelect(uint32_t baseAddr, uint8_t srcSelect);
+ 

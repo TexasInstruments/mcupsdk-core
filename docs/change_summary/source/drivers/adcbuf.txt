@@ -1,0 +1,1057 @@
+diff --git a/source/drivers/adcbuf/v0/adcbuf.c b/source/drivers/adcbuf/v0/adcbuf.c
+index 45cf4dc3a2..e8a5944971 100644
+--- a/source/drivers/adcbuf/v0/adcbuf.c
++++ b/source/drivers/adcbuf/v0/adcbuf.c
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2021 Texas Instruments Incorporated
++ * Copyright (C) 2021-23 Texas Instruments Incorporated
+  *
+  * Redistribution and use in source and binary forms, with or without
+  * modification, are permitted provided that the following conditions
+@@ -48,6 +48,7 @@
+ #include <drivers/hw_include/hw_types.h>
+ #include <drivers/hw_include/csl_types.h>
+ #include <kernel/dpl/DebugP.h>
++#include <kernel/dpl/ClockP.h>
+ 
+ /* ========================================================================== */
+ /*                           Macros & Typedefs                                */
+@@ -88,8 +89,11 @@ static void ADCBUFTestPatternStart(CSL_rss_ctrlRegs *rssCtrlRegs, uint32_t numOf
+ static void ADCBUFTestPatternStop(CSL_rss_ctrlRegs *rssCtrlRegs);
+ static void ADCBUFCQConfig(CSL_rss_ctrlRegs *rssCtrlRegs, ADCBuf_CQConf *cqCfg);
+ static int32_t ADCBUFDriverParamsCheck(const ADCBuf_Params *params);
+-static int32_t ADCBUFCmdParamCheck(ADCBufMMWave_CMD cmd, void* arg);
++static int32_t ADCBUFCmdParamCheck(uint8_t cmd, void* arg);
+ static uint32_t ADCBUFIsChannelEnabled(CSL_rss_ctrlRegs *rssCtrlRegs, uint32_t channel);
++static int32_t ADCBUFcheckForTimeout(uint32_t addr,
++                                     uint32_t timeToWaitInTicks,
++                                     uint32_t value);
+ 
+ /* ========================================================================== */
+ /*                            Global Variables                                */
+@@ -114,12 +118,42 @@ const ADCBuf_Params gADCBufDefaultParams =
+ /*                          Function Definitions                              */
+ /* ========================================================================== */
+ 
+-void ADCBuf_init(void)
++static int32_t ADCBUFcheckForTimeout(uint32_t addr,
++                                     uint32_t timeToWaitInTicks,
++                                     uint32_t value)
+ {
+-    uint32_t            i;
++    uint32_t curTicks = ClockP_getTicks();
++    uint32_t elaspedTicks, done = 0U;
++    int32_t status = SystemP_SUCCESS;
++
++    do{
++        if(CSL_REG32_RD(addr) == value)
++        {
++            status = SystemP_SUCCESS;
++            done = 1U;
++        }
++        if(done == 0U)
++        {
++            elaspedTicks =  ClockP_getTicks() - curTicks;
++
++            if(elaspedTicks >= timeToWaitInTicks)
++            {
++                status = SystemP_TIMEOUT;
++                done = 1U;
++            }
++        }
++    } while (done == 0U);
++
++    return status;
++}
++
++void ADCBuf_init(uint32_t timeout)
++{
++    uint32_t           i;
+     ADCBuf_Config      *config;
+     ADCBuf_Attrs       *attrs;
+-    CSL_rss_ctrlRegs  *rssCtrl;
++    CSL_rss_ctrlRegs   *rssCtrl;
++    int32_t            status = SystemP_SUCCESS;
+ 
+     /* Call each driver's init function */
+     for(i = 0; i < gADCBufConfigNum; i++)
+@@ -133,19 +167,28 @@ void ADCBuf_init(void)
+          * Initialize ADCBUF Ping Memory.
+          */
+         /* Clear MEMINIT DONE before initiating MEMINIT */
+-        CSL_FINS(rssCtrl->RSS_ADCBUF_PING_MEMINIT_DONE, RSS_CTRL_RSS_ADCBUF_PING_MEMINIT_DONE_RSS_ADCBUF_PING_MEMINIT_DONE_DONE, 1);
+-        while(CSL_FEXT(rssCtrl->RSS_ADCBUF_PING_MEMINIT_DONE, RSS_CTRL_RSS_ADCBUF_PING_MEMINIT_DONE_RSS_ADCBUF_PING_MEMINIT_DONE_DONE) != 0);
+-        CSL_FINS(rssCtrl->RSS_ADCBUF_PING_MEMINIT, RSS_CTRL_RSS_ADCBUF_PING_MEMINIT_RSS_ADCBUF_PING_MEMINIT_START, 1);
+-        while(CSL_FEXT(rssCtrl->RSS_ADCBUF_PING_MEMINIT_DONE, RSS_CTRL_RSS_ADCBUF_PING_MEMINIT_DONE_RSS_ADCBUF_PING_MEMINIT_DONE_DONE) != 1);
++        CSL_FINS(rssCtrl->RSS_ADCBUF_PING_MEMINIT_DONE, RSS_CTRL_RSS_ADCBUF_PING_MEMINIT_DONE_RSS_ADCBUF_PING_MEMINIT_DONE_DONE, 1U);
++
++        status = ADCBUFcheckForTimeout((uint32_t)&rssCtrl->RSS_ADCBUF_PING_MEMINIT_DONE, timeout, 0U);
++        DebugP_assert(status == SystemP_SUCCESS);
++
++        /* Start ADCBUF Ping memory Initialization */
++        CSL_FINS(rssCtrl->RSS_ADCBUF_PING_MEMINIT, RSS_CTRL_RSS_ADCBUF_PING_MEMINIT_RSS_ADCBUF_PING_MEMINIT_START, 1U);
++        status = ADCBUFcheckForTimeout((uint32_t)&rssCtrl->RSS_ADCBUF_PING_MEMINIT_DONE, timeout, 1U);
++        DebugP_assert(status == SystemP_SUCCESS);
+ 
+         /*
+          * Initialize ADCBUF Pong Memory.
+          */
+         /* Clear MEMINIT DONE before initiating MEMINIT */
+-        CSL_FINS(rssCtrl->RSS_ADCBUF_PONG_MEMINIT_DONE, RSS_CTRL_RSS_ADCBUF_PONG_MEMINIT_DONE_RSS_ADCBUF_PONG_MEMINIT_DONE_DONE, 1);
+-        while(CSL_FEXT(rssCtrl->RSS_ADCBUF_PONG_MEMINIT_DONE, RSS_CTRL_RSS_ADCBUF_PONG_MEMINIT_DONE_RSS_ADCBUF_PONG_MEMINIT_DONE_DONE) != 0);
+-        CSL_FINS(rssCtrl->RSS_ADCBUF_PONG_MEMINIT, RSS_CTRL_RSS_ADCBUF_PONG_MEMINIT_RSS_ADCBUF_PONG_MEMINIT_START, 1);
+-        while(CSL_FEXT(rssCtrl->RSS_ADCBUF_PONG_MEMINIT_DONE, RSS_CTRL_RSS_ADCBUF_PONG_MEMINIT_DONE_RSS_ADCBUF_PONG_MEMINIT_DONE_DONE) != 1);
++        CSL_FINS(rssCtrl->RSS_ADCBUF_PONG_MEMINIT_DONE, RSS_CTRL_RSS_ADCBUF_PONG_MEMINIT_DONE_RSS_ADCBUF_PONG_MEMINIT_DONE_DONE, 1U);
++
++        status = ADCBUFcheckForTimeout((uint32_t)&rssCtrl->RSS_ADCBUF_PONG_MEMINIT_DONE, timeout, 0U);
++        DebugP_assert(status == SystemP_SUCCESS);
++
++        CSL_FINS(rssCtrl->RSS_ADCBUF_PONG_MEMINIT, RSS_CTRL_RSS_ADCBUF_PONG_MEMINIT_RSS_ADCBUF_PONG_MEMINIT_START, 1U);
++        status = ADCBUFcheckForTimeout((uint32_t)&rssCtrl->RSS_ADCBUF_PONG_MEMINIT_DONE, timeout, 1U);
++        DebugP_assert(status == SystemP_SUCCESS);
+     }
+ 
+     return;
+@@ -156,27 +199,28 @@ void ADCBuf_deinit(void)
+     return;
+ }
+ 
+-ADCBuf_Handle ADCBuf_open(uint_fast8_t index, const ADCBuf_Params *params)
++ADCBuf_Handle ADCBuf_open(uint8_t index, const ADCBuf_Params *params)
+ {
+     ADCBuf_Handle handle;
++	ADCBuf_Params *localParams = (ADCBuf_Params *) params ;
+ 
+-    if((int32_t)index >= gADCBufConfigNum)
++    if(index >= gADCBufConfigNum)
+     {
+         handle = (ADCBuf_Handle)NULL;
+     }
+     else
+     {
+-        /* If params are NULL use defaults */
+-        if(params == NULL)
++        /* If localParams are NULL use defaults */
++        if(localParams == NULL)
+         {
+-            params = (ADCBuf_Params *) &gADCBufDefaultParams;
++            localParams = (ADCBuf_Params *) &gADCBufDefaultParams;
+         }
+ 
+         /* Get handle for this driver instance */
+         handle = (ADCBuf_Handle)&(gADCBufConfig[index]);
+ 
+         /* Open the ADCBUF mmWave Driver: */
+-        handle = ADCBUF_MMWave_open(handle, params);
++        handle = ADCBUF_MMWave_open(handle, localParams);
+     }
+ 
+     return (handle);
+@@ -237,18 +281,18 @@ void ADCBuf_close(ADCBuf_Handle handle)
+  *  @retval
+  *      Status of the command execution
+  */
+-int_fast16_t ADCBuf_control(ADCBuf_Handle handle, uint_fast8_t cmd, void *arg)
++int32_t ADCBuf_control(ADCBuf_Handle handle, uint8_t cmd, void *arg)
+ {
+     ADCBuf_Config          *config;
+     ADCBuf_Attrs           *attrs;
+-    CSL_rss_ctrlRegs      *rssCtrlRegs;
+-    int_fast16_t            status = ADCBUF_STATUS_SUCCESS;
++    CSL_rss_ctrlRegs       *rssCtrlRegs;
++    int32_t                status = SystemP_SUCCESS;
+     ADCBuf_dataFormat      *dataFormat;
+     ADCBuf_RxChanConf      *rxChanConf;
+     ADCBuf_TestPatternConf *testPatternConf;
+     ADCBuf_CQConf          *cqConf;
+     uint32_t                chirpThreshold;
+-    uint8_t                 channel;
++    uint32_t                 channel;
+     uint32_t                channelMask;
+ 
+     if(handle == (ADCBuf_Handle) NULL)
+@@ -265,11 +309,11 @@ int_fast16_t ADCBuf_control(ADCBuf_Handle handle, uint_fast8_t cmd, void *arg)
+         /* Stop doesn't need any error check */
+         if(cmd != ADCBufMMWave_CMD_STOP_TEST_PATTERN)
+         {
+-            status = ADCBUFCmdParamCheck((ADCBufMMWave_CMD)cmd, arg);
++            status = ADCBUFCmdParamCheck(cmd, arg);
+         }
+     }
+ 
+-    if(ADCBUF_STATUS_SUCCESS == status)
++    if(SystemP_SUCCESS == status)
+     {
+         switch(cmd)
+         {
+@@ -315,10 +359,10 @@ int_fast16_t ADCBuf_control(ADCBuf_Handle handle, uint_fast8_t cmd, void *arg)
+             case ADCBufMMWave_CMD_CHANNEL_DISABLE:
+                 channelMask = *(uint32_t *)arg;
+                 for(channel = 0; channel < SOC_ADCBUF_NUM_RX_CHANNEL; channel++)
+-                {
+-                    if(channelMask & ((uint32_t)0x1U << channel))
++                {                   
++					if((channelMask & ((uint32_t)0x1U << channel)) != 0U)
+                     {
+-                        ADCBUFChannelDisable(rssCtrlRegs, channel);
++                        ADCBUFChannelDisable(rssCtrlRegs, (uint8_t)channel);
+                     }
+                 }
+                 break;
+@@ -391,12 +435,12 @@ uint32_t ADCBuf_getChanBufAddr(ADCBuf_Handle handle, uint8_t channel, int32_t *e
+         rssCtrlRegs = (CSL_rss_ctrlRegs *) attrs->baseAddr;
+ 
+         /* Set default value for errCode */
+-        *errCode = ADCBUF_STATUS_SUCCESS;
++        *errCode = SystemP_SUCCESS;
+ 
+         /* Check if the channel is enabled? */
+         if(ADCBUFIsChannelEnabled(rssCtrlRegs, channel) != (uint32_t)0U)
+         {
+-            uint32_t addrOffset;
++            uint32_t addrOffset = 0U;
+ 
+             switch(channel)
+             {
+@@ -416,12 +460,15 @@ uint32_t ADCBuf_getChanBufAddr(ADCBuf_Handle handle, uint8_t channel, int32_t *e
+                                                     CSL_RSS_CTRL_ADCBUFCFG3_ADCBUFCFG3_ADCBUFADDRX2_MASK,
+                                                     CSL_RSS_CTRL_ADCBUFCFG3_ADCBUFCFG3_ADCBUFADDRX2_SHIFT);
+                     break;
+-                default:
++
+                 case 3U:
+                     addrOffset = CSL_REG32_FEXT_RAW(&rssCtrlRegs->ADCBUFCFG3,
+                                                     CSL_RSS_CTRL_ADCBUFCFG3_ADCBUFCFG3_ADCBUFADDRX3_MASK,
+                                                     CSL_RSS_CTRL_ADCBUFCFG3_ADCBUFCFG3_ADCBUFADDRX3_SHIFT);
+                     break;
++					
++				default:
++					break;
+             }
+ 
+             /* Calculate the physical address for the channel */
+@@ -467,7 +514,7 @@ uint32_t ADCBUF_MMWave_getCQBufAddr(ADCBuf_Handle handle,
+     uint32_t                 addrOffset;
+ 
+     /* Set default value for errCode */
+-    *errCode = ADCBUF_STATUS_SUCCESS;
++    *errCode = SystemP_SUCCESS;
+ 
+     /* Parameter check */
+     if(handle == (ADCBuf_Handle)NULL)
+@@ -508,7 +555,7 @@ uint32_t ADCBUF_MMWave_getCQBufAddr(ADCBuf_Handle handle,
+                 break;
+         }
+ 
+-        if(*errCode == ADCBUF_STATUS_SUCCESS)
++        if(*errCode == SystemP_SUCCESS)
+         {
+             /* Calculate the physical address for the channel */
+             chanAddress = attrs->cqbufBaseAddr + ((uint32_t)addrOffset << 4U);
+@@ -563,24 +610,29 @@ static ADCBuf_Handle ADCBUF_MMWave_open(ADCBuf_Handle handle, const ADCBuf_Param
+     {
+         /* Allocate memory for the driver: */
+         obj = config->object;
+-        /* Initialize the memory: */
+-        memset((void *)obj, 0, sizeof(ADCBuf_Object));
+ 
+-        /* Get the DSS register base address  */
+-        rssCtrlRegs = (CSL_rss_ctrlRegs *) attrs->baseAddr;
++        /* Check if driver is not opened */
++        if(obj->isOpen != TRUE)
++        {
++            /* Initialize the memory: */
++            memset((void *)obj, 0, sizeof(ADCBuf_Object));
+ 
+-        /* Configuration of ADCBUF params */
+-        ADCBUFSrcSelect(rssCtrlRegs, (uint32_t)params->source);
+-        ADCBUFContinuousModeCtrl(rssCtrlRegs, params->continousMode);
++            /* Get the DSS register base address  */
++            rssCtrlRegs = (CSL_rss_ctrlRegs *) attrs->baseAddr;
+ 
+-        /* Configurate chirp threshold */
+-        ADCBUFSetPingNumChirpThreshhold(rssCtrlRegs, ((uint32_t)params->chirpThresholdPing - 1U));
+-        ADCBUFSetPongNumChirpThreshhold(rssCtrlRegs, ((uint32_t)params->chirpThresholdPong - 1U));
++            /* Configuration of ADCBUF params */
++            ADCBUFSrcSelect(rssCtrlRegs, (uint32_t)params->source);
++            ADCBUFContinuousModeCtrl(rssCtrlRegs, params->continousMode);
+ 
+-        /* Mark the handle as being used */
+-        obj->isOpen = TRUE;
++            /* Configurate chirp threshold */
++            ADCBUFSetPingNumChirpThreshhold(rssCtrlRegs, ((uint32_t)params->chirpThresholdPing - 1U));
++            ADCBUFSetPongNumChirpThreshhold(rssCtrlRegs, ((uint32_t)params->chirpThresholdPong - 1U));
+ 
+-        retHandle = config;
++            /* Mark the handle as being used */
++            obj->isOpen = TRUE;
++
++            retHandle = config;
++        }
+     }
+ 
+     return (retHandle);
+@@ -754,7 +806,7 @@ static void ADCBUFContinuousModeStop(CSL_rss_ctrlRegs  *rssCtrlRegs)
+  */
+ static void ADCBUFConfigureDataFormat(CSL_rss_ctrlRegs  *rssCtrlRegs, uint8_t dataFormat, uint8_t interleave, uint8_t iqConfig)
+ {
+-    if(dataFormat == 0)    /* Complex data format */
++    if(dataFormat == 0U)    /* Complex data format */
+     {
+         /* The requested data format is complex */
+         CSL_REG32_FINS_RAW(&rssCtrlRegs->ADCBUFCFG1,
+@@ -883,21 +935,21 @@ static void ADCBUFChannelEnSetOffset(CSL_rss_ctrlRegs  *rssCtrlRegs, uint8_t cha
+ static void ADCBUFChannelDisable(CSL_rss_ctrlRegs  *rssCtrlRegs, uint8_t channel)
+ {
+     /* Disable the channel */
+-    if(channel == 0)
++    if(channel == 0U)
+     {
+         CSL_REG32_FINS_RAW(&rssCtrlRegs->ADCBUFCFG1,
+                             CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX0EN_MASK,
+                             CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX0EN_SHIFT,
+                             0U);
+     }
+-    else if(channel == 1)
++    else if(channel == 1U)
+     {
+         CSL_REG32_FINS_RAW(&rssCtrlRegs->ADCBUFCFG1,
+                             CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX1EN_MASK,
+                             CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX1EN_SHIFT,
+                             0U);
+     }
+-    else if(channel == 2)
++    else if(channel == 2U)
+     {
+         CSL_REG32_FINS_RAW(&rssCtrlRegs->ADCBUFCFG1,
+                             CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX2EN_MASK,
+@@ -1149,7 +1201,7 @@ static void ADCBUFCQConfig(CSL_rss_ctrlRegs *rssCtrlRegs, ADCBuf_CQConf *cqCfg)
+  */
+ static int32_t ADCBUFDriverParamsCheck(const ADCBuf_Params *params)
+ {
+-    int32_t     retCode = ADCBUF_STATUS_SUCCESS;
++    int32_t     retCode = SystemP_SUCCESS;
+     uint32_t    paramVal;
+ 
+     /* Check continuous mode of the ADCBUF */
+@@ -1179,18 +1231,18 @@ static int32_t ADCBUFDriverParamsCheck(const ADCBuf_Params *params)
+  *  @retval
+  *      N/A
+  */
+-static int32_t ADCBUFCmdParamCheck(ADCBufMMWave_CMD cmd, void* arg)
++static int32_t ADCBUFCmdParamCheck(uint8_t cmd, void* arg)
+ {
+     ADCBuf_dataFormat  *dataFormat;
+     ADCBuf_RxChanConf  *rxChanConf;
+     ADCBuf_CQConf      *cqConf;
+     uint32_t            paramVal;
+-    int32_t             retCode = ADCBUF_STATUS_SUCCESS;
++    int32_t             retCode = SystemP_SUCCESS;
+ 
+     /* Validate the pointer to the command arguments
+      * validate argument is 4 bytes  aligned.
+      */
+-    if((arg == (void *)NULL) || (((uint32_t)arg % 4U) != 0))
++    if((arg == (void *)NULL) || (((uint32_t)arg % 4U) != 0U))
+     {
+         retCode = ADCBUF_STATUS_INVALID_PARAMS;
+     }
+@@ -1265,7 +1317,7 @@ static int32_t ADCBUFCmdParamCheck(ADCBufMMWave_CMD cmd, void* arg)
+ 
+             case ADCBufMMWave_CMD_SET_PING_CHIRP_THRESHHOLD:
+             case ADCBufMMWave_CMD_SET_PONG_CHIRP_THRESHHOLD:
+-                if(((*(uint8_t *)arg) == 0) || ((*(uint8_t *)arg) > (uint8_t)(0x1U <<ADCBUF_NUMBITS_CHIRPTHRESHOLD)))
++                if(((*(uint8_t *)arg) == 0U) || ((*(uint8_t *)arg) > (uint8_t)(0x1U <<ADCBUF_NUMBITS_CHIRPTHRESHOLD)))
+                 {
+                     retCode = ADCBUF_STATUS_INVALID_PARAMS;
+                 }
+@@ -1287,19 +1339,19 @@ static uint32_t ADCBUFIsChannelEnabled(CSL_rss_ctrlRegs  *rssCtrlRegs, uint32_t
+ {
+     uint32_t retVal = 0U;
+ 
+-    if(channel == 0)
++    if(channel == 0U)
+     {
+         retVal = CSL_REG32_FEXT_RAW(&rssCtrlRegs->ADCBUFCFG1,
+                                     CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX0EN_MASK,
+                                     CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX0EN_SHIFT);
+     }
+-    else if(channel == 1)
++    else if(channel == 1U)
+     {
+         retVal = CSL_REG32_FEXT_RAW(&rssCtrlRegs->ADCBUFCFG1,
+                                     CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX1EN_MASK,
+                                     CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX1EN_SHIFT);
+     }
+-    else if(channel == 2)
++    else if(channel == 2u)
+     {
+         retVal = CSL_REG32_FEXT_RAW(&rssCtrlRegs->ADCBUFCFG1,
+                                     CSL_RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_RX2EN_MASK,
+@@ -1314,3 +1366,213 @@ static uint32_t ADCBUFIsChannelEnabled(CSL_rss_ctrlRegs  *rssCtrlRegs, uint32_t
+ 
+     return (retVal);
+ }
++
++int32_t ADCBUF_verifySrcSelCfg(ADCBuf_Handle handle, uint32_t source)
++{
++    int32_t            status = SystemP_SUCCESS;
++    uint32_t           sourceSel;
++    ADCBuf_Config      *config;
++    ADCBuf_Attrs       *attrs;
++    CSL_rss_ctrlRegs   *rssCtrlRegs;
++
++    if((handle == (ADCBuf_Handle) NULL)   ||
++       (source > ADCBUF_SOURCE_SELECT_MAX))
++    {
++        status = ADCBUF_STATUS_INVALID_PARAMS;
++    }
++    else
++    {
++        /* Get the Object from ADCBuf Handle */
++        config = (ADCBuf_Config *) handle;
++        attrs = (ADCBuf_Attrs *) config->attrs;
++        rssCtrlRegs = (CSL_rss_ctrlRegs *) attrs->baseAddr;
++
++        /* Read source select configuration field from DMMSWINT1 register*/
++        sourceSel = CSL_FEXT(rssCtrlRegs->DMMSWINT1,
++                             RSS_CTRL_DMMSWINT1_DMMSWINT1_DMMADCBUFWREN);
++
++        if(sourceSel != source)
++        {
++            status = SystemP_FAILURE;
++        }
++    }
++
++    return (status);
++}
++
++int32_t ADCBUF_verifyChirpThreshold(ADCBuf_Handle handle,
++                                    uint32_t pingThreshCfg,
++                                    uint32_t pongThreshCfg)
++{
++    int32_t            status = SystemP_SUCCESS;
++    uint32_t           pingThresh;
++    uint32_t           pongThresh;
++    ADCBuf_Config      *config;
++    ADCBuf_Attrs       *attrs;
++    CSL_rss_ctrlRegs   *rssCtrlRegs;
++
++    if((handle == (ADCBuf_Handle) NULL)            ||
++       (pingThreshCfg > ADCBUF_PING_THRESHOLD_MAX) ||
++       (pongThreshCfg > ADCBUF_PONG_THRESHOLD_MAX))
++    {
++        status = ADCBUF_STATUS_INVALID_PARAMS;
++    }
++    else
++    {
++        /* Get the Object from ADCBuf Handle */
++        config = (ADCBuf_Config *) handle;
++        attrs = (ADCBuf_Attrs *) config->attrs;
++        rssCtrlRegs = (CSL_rss_ctrlRegs *) attrs->baseAddr;
++
++        /* Read ping threshold configuration field */
++        pingThresh = CSL_FEXT(rssCtrlRegs->ADCBUFCFG4,
++                              RSS_CTRL_ADCBUFCFG4_ADCBUFCFG4_ADCBUFNUMCHRPPING);
++
++        if((pingThresh + 1U) != pingThreshCfg)
++        {
++            status = SystemP_FAILURE;
++        }
++    }
++
++    if (status == SystemP_SUCCESS)
++    {
++        /* Read pong threshold configuration field */
++        pongThresh = CSL_FEXT(rssCtrlRegs->ADCBUFCFG4,
++                              RSS_CTRL_ADCBUFCFG4_ADCBUFCFG4_ADCBUFNUMCHRPPONG);
++
++        if((pongThresh + 1U) != pongThreshCfg)
++        {
++            status = SystemP_FAILURE;
++        }
++    }
++
++    return (status);
++}
++
++int32_t ADCBUF_verifyContinuousModeCfg(ADCBuf_Handle handle, uint32_t continuousModeCfg)
++{
++    int32_t            status = SystemP_SUCCESS;
++    uint32_t           continuousMode;
++    ADCBuf_Config      *config;
++    ADCBuf_Attrs       *attrs;
++    CSL_rss_ctrlRegs   *rssCtrlRegs;
++
++    if((handle == (ADCBuf_Handle) NULL)   ||
++       (continuousModeCfg > ADCBUF_CONTINUOUS_MODE_MAX))
++    {
++        status = ADCBUF_STATUS_INVALID_PARAMS;
++    }
++    else
++    {
++        /* Get the Object from ADCBuf Handle */
++        config = (ADCBuf_Config *) handle;
++        attrs = (ADCBuf_Attrs *) config->attrs;
++        rssCtrlRegs = (CSL_rss_ctrlRegs *) attrs->baseAddr;
++
++        /* Read ADCBUFCONTMODEEN field of ADCBUFCFG1 register */
++        continuousMode = CSL_FEXT(rssCtrlRegs->ADCBUFCFG1,
++                                  RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_ADCBUFCONTMODEEN);
++
++        if(continuousMode != continuousModeCfg)
++        {
++            status = SystemP_FAILURE;
++        }
++    }
++
++    return (status);
++}
++
++int32_t ADCBUF_verifyDataFormatCfg(ADCBuf_Handle handle,
++                                   uint32_t dataFormatcfg,
++                                   uint32_t interleavecfg,
++                                   uint32_t iqConfig)
++{
++    int32_t            status = SystemP_SUCCESS;
++    uint32_t           dataFormat;
++    uint32_t           interleave;
++    uint32_t           iqCfg;
++    ADCBuf_Config      *config;
++    ADCBuf_Attrs       *attrs;
++    CSL_rss_ctrlRegs   *rssCtrlRegs;
++
++    if((handle == (ADCBuf_Handle) NULL)   ||
++       (dataFormatcfg > ADCBUF_DATA_FMT_MAX) ||
++       (interleavecfg > ADCBUF_WRITEMODE_MAX) ||
++       (iqConfig  > ADCBUF_IQSWAP_CFG_MAX))
++    {
++        status = ADCBUF_STATUS_INVALID_PARAMS;
++    }
++    else
++    {
++        /* Get the Object from ADCBuf Handle */
++        config = (ADCBuf_Config *) handle;
++        attrs = (ADCBuf_Attrs *) config->attrs;
++        rssCtrlRegs = (CSL_rss_ctrlRegs *) attrs->baseAddr;
++
++        /* Read ADCBUFREALONLYMODE Complex Data mode or Real data mode */
++        dataFormat = CSL_FEXT(rssCtrlRegs->ADCBUFCFG1,
++                              RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_ADCBUFREALONLYMODE);
++
++        if(dataFormat != dataFormatcfg)
++        {
++            status = SystemP_FAILURE;
++        }
++    }
++
++    if (status == SystemP_SUCCESS)
++    {
++        /* Read ADCBUFWRITEMODE field for interleave/Non-interleave Mode*/
++        interleave = CSL_FEXT(rssCtrlRegs->ADCBUFCFG1,
++                              RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_ADCBUFWRITEMODE);
++
++        if(interleave != interleavecfg)
++        {
++            status = SystemP_FAILURE;
++        }
++    }
++
++    if (status == SystemP_SUCCESS)
++    {
++        /* Read ADCBUFWRITEMODE field for interleave/Non-interleave Mode*/
++        iqCfg = CSL_FEXT(rssCtrlRegs->ADCBUFCFG1,
++                              RSS_CTRL_ADCBUFCFG1_ADCBUFCFG1_ADCBUFIQSWAP);
++
++        if(iqCfg != iqConfig)
++        {
++            status = SystemP_FAILURE;
++        }
++    }
++
++    return (status);
++}
++
++int32_t ADCBUF_readStaticRegs(ADCBuf_Handle handle, ADCBUF_StaticRegs *pStaticRegs)
++{
++    int32_t                status = SystemP_SUCCESS;
++    ADCBuf_Config          *config;
++    ADCBuf_Attrs           *attrs;
++
++    if ((handle == (ADCBuf_Handle) NULL) ||
++       (pStaticRegs == (NULL_PTR)))
++    {
++        status = ADCBUF_STATUS_INVALID_PARAMS;
++    }
++    else
++    {
++        /* Get the Object from ADCBuf Handle */
++        config = (ADCBuf_Config *) handle;
++        attrs = config->attrs;
++
++        pStaticRegs->ADCBUFCFG1   = HW_RD_REG32((attrs->baseAddr + CSL_RSS_CTRL_ADCBUFCFG1));
++        pStaticRegs->ADCBUFCFG2   = HW_RD_REG32((attrs->baseAddr + CSL_RSS_CTRL_ADCBUFCFG2));
++        pStaticRegs->ADCBUFCFG3   = HW_RD_REG32((attrs->baseAddr + CSL_RSS_CTRL_ADCBUFCFG3));
++        pStaticRegs->ADCBUFCFG4   = HW_RD_REG32((attrs->baseAddr + CSL_RSS_CTRL_ADCBUFCFG4));
++        pStaticRegs->DMMSWINT1    = HW_RD_REG32((attrs->baseAddr + CSL_RSS_CTRL_DMMSWINT1));
++        pStaticRegs->CQCFG1       = HW_RD_REG32((attrs->baseAddr + CSL_RSS_CTRL_CQCFG1));
++
++        status = SystemP_SUCCESS;
++    }
++
++    return status;
++}
++
+diff --git a/source/drivers/adcbuf/v0/adcbuf.h b/source/drivers/adcbuf/v0/adcbuf.h
+index 8e1e06e0eb..ed8562ab0f 100644
+--- a/source/drivers/adcbuf/v0/adcbuf.h
++++ b/source/drivers/adcbuf/v0/adcbuf.h
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2021 Texas Instruments Incorporated
++ * Copyright (C) 2021-23 Texas Instruments Incorporated
+  *
+  * Redistribution and use in source and binary forms, with or without
+  * modification, are permitted provided that the following conditions
+@@ -73,14 +73,7 @@ extern "C" {
+  *
+  * @{
+  */
+-/**
+- * \brief  Success status code returned by:
+- * ADCBuf_control()
+- *
+- * Functions return ADCBuf_STATUS_SUCCESS if the call was executed
+- * successfully.
+- */
+-#define ADCBUF_STATUS_SUCCESS           (0U)
++
+ /**
+  * \brief   Generic error status code returned by ADCBuf_control().
+  *
+@@ -131,6 +124,131 @@ typedef uint32_t ADCBufMMWave_CQType;
+ #define ADCBufMMWave_CQType_CQ2         ((uint32_t) 2) /**< CQ type for CQ2. */
+ #define ADCBufMMWave_CQType_MAX_CQ      ((uint32_t) 3) /**< Maximum number of CQ which can be supported. */
+ 
++/**
++ * \brief  Macro defines maximum value of Source Selection.
++ */
++#define ADCBUF_SOURCE_SELECT_MAX         ((uint32_t)(0x1U))
++
++/**
++ * \brief  Macro defines maximum value of Number of Chirps in
++ *         PING memory.
++ */
++#define ADCBUF_PING_THRESHOLD_MAX         ((uint32_t)(0x1FU))
++
++/**
++ * \brief  Macro defines maximum value of Number of Chirps in
++ *         PONG memory.
++ */
++#define ADCBUF_PONG_THRESHOLD_MAX         ((uint32_t)(0x1FU))
++
++/**
++ * \brief  Macro defines maximum value of CONTINUOUS mode enable.
++ */
++#define ADCBUF_CONTINUOUS_MODE_MAX         ((uint32_t)(0x1U))
++
++/**
++ * \brief  Macro defines maximum value of DATA FORMAT Complex
++ *         data or Real data mode.
++ */
++#define ADCBUF_DATA_FMT_MAX                 ((uint32_t)(0x1U))
++
++/**
++ * \brief  Macro defines maximum value of Write mode interleave or
++ *         Non-interleave.
++ */
++#define ADCBUF_WRITEMODE_MAX                 ((uint32_t)(0x1U))
++
++/**
++ * \brief  Macro defines maximum value of IQSWAP mac value.
++ */
++#define ADCBUF_IQSWAP_CFG_MAX                 ((uint32_t)(0x1U))
++
++/**
++ * \brief ADCBUF Command
++ * \details This Macros are used to define ADCBUF driver commands.
++ */
++ 
++ /**
++ * \brief   set ADCBUF source, it can be DFE or VIN.
++ *          The size of the argument size for this command is 4 bytes
++ */
++#define    ADCBufMMWave_CMD_SET_SRC    0U
++/**
++ * \brief   Set number of Chirps to be stored in each Ping and Pong buffer.
++ *          It should be programmed one less the actual number needed .
++ *          The size of the argument size for this command is 4 bytes
++ */
++#define    ADCBufMMWave_CMD_SET_CHIRP_THRESHHOLD    1U
++/**
++ * \brief   Set number of Chirps to be stored in each Ping buffer.
++ *          It should be programmed one less the actual number needed .
++ *          The size of the argument size for this command is 4 bytes
++ */
++#define    ADCBufMMWave_CMD_SET_PING_CHIRP_THRESHHOLD   2U
++/**
++ * \brief   Set number of Chirps to be stored in each  Pong buffer.
++ *          It should be programmed one less the actual number needed .
++ *          The size of the argument size for this command is 4 bytes
++ */
++#define    ADCBufMMWave_CMD_SET_PONG_CHIRP_THRESHHOLD	3U
++/**
++ * \brief   Enables/Disables Continuous mode for ADCBUF.
++ *             1 to enable continuous mode.
++ *          The size of the argument size for this command is 4 bytes
++ */
++#define    ADCBufMMWave_CMD_SET_CONTINUOUS_MODE		4U
++/**
++ * \brief   Starts Continuous mode for ADCBUF.
++ *          Number of Samples to store in Ping/Pong buffer needs to be provided.
++ *          The size of the argument size for this command is 4 bytes
++ */
++#define    ADCBufMMWave_CMD_START_CONTINUOUS_MODE		5U
++/**
++ * \brief   Stops Continuous mode for ADCBUF.
++ *          The size of the argument size for this command is 0 bytes
++ */
++#define    ADCBufMMWave_CMD_STOP_CONTINUOUS_MODE		6U
++/**
++ * \brief   Configures ADCBUF data format.
++ *          The size of the argument size for this command is size of \ref ADCBuf_dataFormat
++ */
++#define    ADCBufMMWave_CMD_CONF_DATA_FORMAT		7U
++/**
++ * \brief   Enable RX channels and configures the address offset in ADCBUF for the channel.
++ *          The size of the argument size for this command is size of \ref ADCBuf_RxChanConf
++ */
++#define    ADCBufMMWave_CMD_CHANNEL_ENABLE		8U
++/**
++ * \brief   Disable RX channels specified with RX channel bitmask
++ *          The size of the argument size for this command is 4 bytes
++ */
++#define    ADCBufMMWave_CMD_CHANNEL_DISABLE		9U
++/**
++ * \brief   Test pattern configuration.
++ *          The size of the argument size for this command is size of \ref ADCBuf_TestPatternConf
++ */
++#define    ADCBufMMWave_CMD_CONF_TEST_PATTERN		10U
++/**
++ * \brief   Starts Test pattern generation. Reboot is required when switching from Test pattern mode
++ *          to normal operation mode.
++ *          The size of the argument size for this command is 0 bytes
++ */
++#define    ADCBufMMWave_CMD_START_TEST_PATTERN		11U
++/**
++ * \brief   Stops Test pattern generation.
++ *          The size of the argument size for this command is 0 bytes
++ */
++#define    ADCBufMMWave_CMD_STOP_TEST_PATTERN		12U
++/**
++ * \brief   Chirp Quality configuration.
++ *          The size of the argument size for this command is size of \ref ADCBuf_CQConf
++ */
++#define    ADCBufMMWave_CMD_CONF_CQ		13U
++/**
++ * \brief  Last command.
++ */
++#define    ADCBufMMWave_CMD_LAST   14U
++
+ /* ========================================================================== */
+ /*                         Structures and Enums                               */
+ /* ========================================================================== */
+@@ -157,93 +275,6 @@ typedef enum ADCBufSource_e
+     ADCBUF_SOURCE_HIL
+ } ADCBufSource;
+ 
+-/**
+- * \brief ADCBUF Command
+- * \details The structure is used to define ADCBUF driver commands.
+- */
+-typedef enum ADCBufMMWave_CMD_e
+-{
+-    /**
+-     * \brief   set ADCBUF source, it can be DFE or VIN.
+-     *          The size of the argument size for this command is 4 bytes
+-     */
+-    ADCBufMMWave_CMD_SET_SRC    = 0,
+-    /**
+-     * \brief   Set number of Chirps to be stored in each Ping and Pong buffer.
+-     *          It should be programmed one less the actual number needed .
+-     *          The size of the argument size for this command is 4 bytes
+-     */
+-    ADCBufMMWave_CMD_SET_CHIRP_THRESHHOLD,
+-    /**
+-     * \brief   Set number of Chirps to be stored in each Ping buffer.
+-     *          It should be programmed one less the actual number needed .
+-     *          The size of the argument size for this command is 4 bytes
+-     */
+-    ADCBufMMWave_CMD_SET_PING_CHIRP_THRESHHOLD,
+-    /**
+-     * \brief   Set number of Chirps to be stored in each  Pong buffer.
+-     *          It should be programmed one less the actual number needed .
+-     *          The size of the argument size for this command is 4 bytes
+-     */
+-    ADCBufMMWave_CMD_SET_PONG_CHIRP_THRESHHOLD,
+-    /**
+-     * \brief   Enables/Disables Continuous mode for ADCBUF.
+-     *             1 to enable continuous mode.
+-     *          The size of the argument size for this command is 4 bytes
+-     */
+-    ADCBufMMWave_CMD_SET_CONTINUOUS_MODE,
+-    /**
+-     * \brief   Starts Continuous mode for ADCBUF.
+-     *          Number of Samples to store in Ping/Pong buffer needs to be provided.
+-     *          The size of the argument size for this command is 4 bytes
+-     */
+-    ADCBufMMWave_CMD_START_CONTINUOUS_MODE,
+-    /**
+-     * \brief   Stops Continuous mode for ADCBUF.
+-     *          The size of the argument size for this command is 0 bytes
+-     */
+-    ADCBufMMWave_CMD_STOP_CONTINUOUS_MODE,
+-    /**
+-     * \brief   Configures ADCBUF data format.
+-     *          The size of the argument size for this command is size of \ref ADCBuf_dataFormat
+-     */
+-    ADCBufMMWave_CMD_CONF_DATA_FORMAT,
+-    /**
+-     * \brief   Enable RX channels and configures the address offset in ADCBUF for the channel.
+-     *          The size of the argument size for this command is size of \ref ADCBuf_RxChanConf
+-     */
+-    ADCBufMMWave_CMD_CHANNEL_ENABLE,
+-    /**
+-     * \brief   Disable RX channels specified with RX channel bitmask
+-     *          The size of the argument size for this command is 4 bytes
+-     */
+-    ADCBufMMWave_CMD_CHANNEL_DISABLE,
+-    /**
+-     * \brief   Test pattern configuration.
+-     *          The size of the argument size for this command is size of \ref ADCBuf_TestPatternConf
+-     */
+-    ADCBufMMWave_CMD_CONF_TEST_PATTERN,
+-    /**
+-     * \brief   Starts Test pattern generation. Reboot is required when switching from Test pattern mode
+-     *          to normal operation mode.
+-     *          The size of the argument size for this command is 0 bytes
+-     */
+-    ADCBufMMWave_CMD_START_TEST_PATTERN,
+-    /**
+-     * \brief   Stops Test pattern generation.
+-     *          The size of the argument size for this command is 0 bytes
+-     */
+-    ADCBufMMWave_CMD_STOP_TEST_PATTERN,
+-    /**
+-     * \brief   Chirp Quality configuration.
+-     *          The size of the argument size for this command is size of \ref ADCBuf_CQConf
+-     */
+-    ADCBufMMWave_CMD_CONF_CQ,
+-    /**
+-     * \brief  Last command.
+-     */
+-    ADCBufMMWave_CMD_LAST
+-} ADCBufMMWave_CMD;
+ 
+ /**
+  * \brief ADC Buffer data format Parameters
+@@ -403,6 +434,25 @@ extern ADCBuf_Config gADCBufConfig[];
+ /** \brief Externally defined driver configuration array size */
+ extern uint32_t      gADCBufConfigNum;
+ 
++/**
++ * \brief  ADCBUF static registers list.
++ */
++typedef struct
++{
++    volatile uint32_t ADCBUFCFG1;
++    /**< ADCBUFCFG1 Register */
++    volatile uint32_t ADCBUFCFG2;
++    /**< ADCBUFCFG4 Register */
++    volatile uint32_t ADCBUFCFG3;
++    /**< ADCBUFCFG3 Register */
++    volatile uint32_t ADCBUFCFG4;
++    /**< ADCBUFCFG4 Register */
++    volatile uint32_t DMMSWINT1;
++    /**< DMMSWINT1 Register */
++    volatile uint32_t CQCFG1;
++    /**< CQCFG1 Register */
++} ADCBUF_StaticRegs;
++
+ /* ========================================================================== */
+ /*                         Global Variables Declarations                      */
+ /* ========================================================================== */
+@@ -426,8 +476,9 @@ extern uint32_t      gADCBufConfigNum;
+  *      This function initializes the ADC module. This function must be called
+  *      before any other functions are called.
+  *
++ *  \param[in] timeout Amount of time in units of ticks to wait
+  */
+-void ADCBuf_init(void);
++void ADCBuf_init(uint32_t timeout);
+ 
+ /**
+  *  \brief Driver deinit function
+@@ -467,7 +518,7 @@ void ADCBuf_Params_init(ADCBuf_Params *params);
+  *          opened already. If NULL is returned further ADC API calls will
+  *          result in undefined behaviour.
+  */
+-ADCBuf_Handle ADCBuf_open(uint_fast8_t index, const ADCBuf_Params *params);
++ADCBuf_Handle ADCBuf_open(uint8_t index, const ADCBuf_Params *params);
+ 
+ /**
+  *  \brief Description
+@@ -487,14 +538,29 @@ void ADCBuf_close(ADCBuf_Handle handle);
+  *  \param[in]  handle
+  *      Handle to the ADCBUF instance obtained through call to \ref ADCBuf_open.
+  *  \param[in] cmd
+- *      A command value defined by the driver specific implementation \ref ADCBufMMWave_CMD. \n
++ *      A command value defined by the driver specific implementation.Refer Macros
++        ADCBufMMWave_CMD_SET_SRC
++        ADCBufMMWave_CMD_SET_CHIRP_THRESHHOLD
++		ADCBufMMWave_CMD_SET_PING_CHIRP_THRESHHOLD
++		ADCBufMMWave_CMD_SET_PONG_CHIRP_THRESHHOLD
++		ADCBufMMWave_CMD_SET_CONTINUOUS_MODE
++		ADCBufMMWave_CMD_START_CONTINUOUS_MODE
++		ADCBufMMWave_CMD_STOP_CONTINUOUS_MODE  
++		ADCBufMMWave_CMD_CONF_DATA_FORMAT 
++		ADCBufMMWave_CMD_CHANNEL_ENABLE	
++		ADCBufMMWave_CMD_CHANNEL_DISABLE	 
++		ADCBufMMWave_CMD_CONF_TEST_PATTERN	 
++		ADCBufMMWave_CMD_START_TEST_PATTERN	 
++		ADCBufMMWave_CMD_STOP_TEST_PATTERN	
++		ADCBufMMWave_CMD_CONF_CQ	
++		ADCBufMMWave_CMD_LAST
+  *  \param[in] arg
+  *      A pointer to an optional R/W (read/write) argument that is accompanied with cmd.
+  *      arg should be 4 bytes aligned.
+- *  \return Success     - \ref ADCBUF_STATUS_SUCCESS
++ *  \return Success     - \ref SystemP_SUCCESS
+  *          Error       - one of \ref ADCBUF_ERROR_CODES
+  */
+-int_fast16_t ADCBuf_control(ADCBuf_Handle handle, uint_fast8_t cmd, void *arg);
++int32_t ADCBuf_control(ADCBuf_Handle handle, uint8_t cmd, void *arg);
+ 
+ /**
+  *  \brief Description
+@@ -507,7 +573,7 @@ int_fast16_t ADCBuf_control(ADCBuf_Handle handle, uint_fast8_t cmd, void *arg);
+  *      Receive channel number.
+  *  \param[in] errCode
+  *      Pointer to an error code populated by the driver.
+- *  \return Success     - \ref ADCBUF_STATUS_SUCCESS
++ *  \return Success     - \ref SystemP_SUCCESS
+  *          Error       - one of \ref ADCBUF_ERROR_CODES
+  */
+ uint32_t ADCBuf_getChanBufAddr(ADCBuf_Handle handle, uint8_t channel, int32_t *errCode);
+@@ -523,11 +589,109 @@ uint32_t ADCBuf_getChanBufAddr(ADCBuf_Handle handle, uint8_t channel, int32_t *e
+  *      Type of CQ that request the address.
+  *  \param[in] errCode
+  *      Pointer to an error code populated by the driver.
+- *  \return Success     - \ref ADCBUF_STATUS_SUCCESS
++ *  \return Success     - \ref SystemP_SUCCESS
+  *          Error       - one of \ref ADCBUF_ERROR_CODES
+  */
+ uint32_t ADCBUF_MMWave_getCQBufAddr(ADCBuf_Handle handle, ADCBufMMWave_CQType cqType, int32_t *errCode);
+ 
++/**
++ *  \brief Description
++ *  \n
++ *      This API verifies source selection configuration for ADCBUF peripheral.
++ *
++ *  \param[in]  handle
++ *      Handle to the ADCBUF instance obtained through call to \ref ADCBuf_open.
++ *
++ *  \param[in]  source  Source selected for ADCBUF peripheral read from DMMSWINT1 register
++ *                      0 -> Write to ADC BUF memory will happen from DFE
++ *                      1 -> Write to CQ memory will happen from ADCBUF_W slave port in DSS interconnect
++ *                           using DMM as master.
++ *
++ *  \return  status   ADCBUF channel configuration status
++ *                    SystemP_SUCCESS:     success
++ *                    ADCBUF_STATUS_INVALID_PARAMS: failure, indicate the bad input arguments
++ *                    SystemP_FAILURE: failure, indicate verification failed
++ */
++int32_t ADCBUF_verifySrcSelCfg(ADCBuf_Handle handle, uint32_t source);
++
++/**
++ *  \brief Description
++ *  \n
++ *      This API verifies ping threshold configuration for ADCBUF peripheral.
++ *
++ *  \param[in]  handle
++ *      Handle to the ADCBUF instance obtained through call to \ref ADCBuf_open.
++ *
++ *  \param[in]  pingThreshCfg Number of chirps to be stored in Ping Buffer
++ *
++ *  \param[in]  pongThreshCfg Number of chirps to be stored in Pong Buffer
++ *
++ *  \return  status    ADCBUF channel configuration status
++ *                     SystemP_SUCCESS:     success
++ *                     ADCBUF_STATUS_INVALID_PARAMS: failure, indicate the bad input arguments
++ *                     SystemP_FAILURE: failure, indicate verification failed
++ */
++int32_t ADCBUF_verifyChirpThreshold(ADCBuf_Handle handle, uint32_t pingThreshCfg, uint32_t pongThreshCfg);
++
++/**
++ *  \brief Description
++ *  \n
++ *      This API verifies continuous mode configuration for ADCBUF peripheral.
++ *
++ *  \param[in]  handle
++ *      Handle to the ADCBUF instance obtained through call to \ref ADCBuf_open.
++ *
++ *  \param[in]  continuousModeCfg continuous mode config for ADCBUF peripheral
++ *
++ *  \return  status    ADCBUF channel configuration status
++ *                     SystemP_SUCCESS:     success
++ *                     ADCBUF_STATUS_INVALID_PARAMS: failure, indicate the bad input arguments
++ *                     SystemP_FAILURE: failure, indicate verification failed
++ */
++int32_t ADCBUF_verifyContinuousModeCfg(ADCBuf_Handle handle, uint32_t continuousModeCfg);
++
++/**
++ *  \brief Description
++ *  \n
++ *      This API will verify the configuration of ADCBUF, dataFormat and interleave
++ *      iqConfig.
++ *
++ *  \param[in]  handle
++ *      Handle to the ADCBUF instance obtained through call to \ref ADCBuf_open.
++ *
++ *  \param[in]  dataFormat Complex Data mode or Real data mode
++ *
++ *  \param[in]  interleave ADCBUF Write mode interleave or Non-interleave
++ *
++ *  \param[in]  iqConfig IQSwap configuration
++ *
++ *  \return  status    ADCBUF channel configuration status
++ *                     SystemP_SUCCESS:     success
++ *                     ADCBUF_STATUS_INVALID_PARAMS: failure, indicate the bad input arguments
++ *                     SystemP_FAILURE: failure, indicate verification failed
++ */
++int32_t ADCBUF_verifyDataFormatCfg(ADCBuf_Handle handle, uint32_t dataFormat, uint32_t interleave, uint32_t iqConfig);
++
++
++/**
++ *  \brief Description
++ *  \n
++ *     This API is used to read static registers of ADCBUF module.
++ *     This API needs to be called after the initial configuration is done and
++ *     hence mutliple read between static registers do not change the values
++ *
++ *  \param[in]  handle
++ *      Handle to the ADCBUF instance obtained through call to \ref ADCBuf_open.
++ *
++ *  \param   pStaticRegs     pointer to static registers to be read
++ *
++ *
++ *  \return
++ *                     SystemP_SUCCESS:     success
++ *                     ADCBUF_STATUS_INVALID_PARAMS: failure, indicate the bad input arguments
++ */
++int32_t ADCBUF_readStaticRegs(ADCBuf_Handle handle, ADCBUF_StaticRegs *pStaticRegs);
++
+ /** @} */
+ 
+ /* ========================================================================== */

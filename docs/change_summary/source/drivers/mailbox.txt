@@ -1,0 +1,156 @@
+diff --git a/source/drivers/mailbox/v0/mailbox.c b/source/drivers/mailbox/v0/mailbox.c
+index 6f9811eb74..1a7f16b1c0 100644
+--- a/source/drivers/mailbox/v0/mailbox.c
++++ b/source/drivers/mailbox/v0/mailbox.c
+@@ -32,6 +32,23 @@
+  */
+ 
+ #include "mailbox_priv.h"
++#include <kernel/dpl/HwiP.h>
++#include <kernel/dpl/ClockP.h>
++
++/* mailbox registers */
++#define R4F_BSS_MBOX_READ_REQ    (CSL_RSS_PROC_CTRL_U_BASE + 0x0CU)
++#define R4F_BSS_MBOX_READ_DONE   (CSL_RSS_PROC_CTRL_U_BASE + 0x10U)
++
++/* CPU bit positions within the mailbox registers */
++#define R5FSS0_0_MBOX_PROC_BIT_POS  ( 0U)
++#define R5FSS0_1_MBOX_PROC_BIT_POS  ( 4U)
++#define RSS_R4_MBOX_PROC_BIT_POS    (12u)
++#define C66SS0_MBOX_PROC_BIT_POS    (16U)
++
++/* A delay of 0.5uSec is recommended before clear pending read request from remote core
++ * This delay is implemented as a loop and is profiled to be approximately 0.6uSec
++ */
++#define MAILBOX_WAIT_CYCLES          (17U)
+ 
+ /* global state of mailbox communication */
+ Mailbox_Ctrl gMailbox_ctrl;
+@@ -64,16 +81,31 @@ static inline void Mailbox_sendReadAckIntr(const Mailbox_RemoteCoreObj *obj)
+     *addr = (uint32_t)(1UL << obj->readAckIntrBitPos);
+ }
+ 
++ #if defined(__aarch64__) || defined(__arm__)
++static inline void Mailbox_dataAndInstructionBarrier(void)
++{
++ __asm__ __volatile__ ( "dsb sy"  "\n\t": : : "memory");
++ __asm__ __volatile__ ( "isb sy"     "\n\t": : : "memory");
++}
++#endif
++
+ static int32_t Mailbox_waitWriteAckIntr(const Mailbox_RemoteCoreObj *obj, uint32_t timeToWaitInTicks)
+ {
+     int32_t status = SystemP_FAILURE;
+     uint32_t done = 0, isAck;
+     uint32_t curTicks = ClockP_getTicks(), elaspedTicks;
++    volatile uint32_t loopCounter = 0U;
+ 
+     do {
+         isAck = Mailbox_isWriteAckIntr(obj);
+         if(isAck != 0U)
+         {
++            /*
++            * Added delay here so that trasmitting core have sufficient time
++            * to ensure the readback of acknowledgement is correct.
++            */
++            for(loopCounter = 0; loopCounter < MAILBOX_WAIT_CYCLES; loopCounter++);
++
+             Mailbox_clearWriteAckIntr(obj);
+             status = SystemP_SUCCESS;
+             done = 1;
+@@ -178,6 +210,9 @@ uint32_t Mailbox_isCoreEnabled(uint32_t coreId)
+ int32_t Mailbox_write(uint32_t remoteCoreId, const uint8_t *buffer, uint32_t size, uint32_t timeToWaitInTicks)
+ {
+     int32_t status = SystemP_FAILURE;
++    uint8_t loop = 0U;
++    uint32_t oldIntState;
++    volatile uint32_t *prtrBSSMboxReadReq = (volatile uint32_t *)R4F_BSS_MBOX_READ_REQ;
+ 
+     if(    (buffer != NULL)
+         && (size > 0U)
+@@ -190,8 +225,7 @@ int32_t Mailbox_write(uint32_t remoteCoreId, const uint8_t *buffer, uint32_t siz
+             (void)memcpy(obj->writeShmBuffer, buffer, size);
+ 
+             #if defined(__aarch64__) || defined(__arm__)
+-            __asm__ __volatile__ ( "dsb sy"  "\n\t": : : "memory");
+-            __asm__ __volatile__ ( "isb sy"     "\n\t": : : "memory");
++            Mailbox_dataAndInstructionBarrier();
+             #endif
+             #if defined(_TMS320C6X)
+             _mfence();
+@@ -199,7 +233,31 @@ int32_t Mailbox_write(uint32_t remoteCoreId, const uint8_t *buffer, uint32_t siz
+             #endif
+ 
+             Mailbox_clearWriteAckIntr(obj);
+-            Mailbox_sendWriteIntr(obj);
++
++            oldIntState = HwiP_disable();
++            do
++            {
++                Mailbox_sendWriteIntr(obj);
++
++                #if defined(__aarch64__) || defined(__arm__)
++
++                /* Check for the read request confirmation */
++                if(*prtrBSSMboxReadReq & (1U << R5FSS0_0_MBOX_PROC_BIT_POS))
++                    break;
++
++                #endif
++
++                #if defined(_TMS320C6X)
++
++                /* Check for the read request confirmation */
++                if(*prtrBSSMboxReadReq & (1U << C66SS0_MBOX_PROC_BIT_POS))
++                    break;
++
++                #endif
++
++            } while (++loop < 3U);
++
++            HwiP_restore(oldIntState);
+ 
+             status = SystemP_SUCCESS;
+ 
+@@ -247,7 +305,10 @@ int32_t Mailbox_read(uint32_t remoteCoreId, uint8_t *buffer, uint32_t size, uint
+ 
+ int32_t Mailbox_readDone(uint32_t remoteCoreId)
+ {
++    uint8_t loop = 0U;
++    uintptr_t oldIntState;
+     int32_t status = SystemP_FAILURE;
++    volatile uint32_t *ptrBSSMboxReadDone = (volatile uint32_t *)R4F_BSS_MBOX_READ_DONE;
+ 
+     if(  Mailbox_isCoreEnabled(remoteCoreId) != 0U )
+     {
+@@ -255,7 +316,30 @@ int32_t Mailbox_readDone(uint32_t remoteCoreId)
+ 
+         obj->curReadSize = 0U;
+ 
+-        Mailbox_sendReadAckIntr(obj);
++        oldIntState = HwiP_disable();
++        do
++        {
++            Mailbox_sendReadAckIntr(obj);
++
++            if(remoteCoreId == CSL_CORE_ID_RSS_R4)
++            {
++                if(*ptrBSSMboxReadDone & (1U << R5FSS0_0_MBOX_PROC_BIT_POS))
++                {
++                    break;
++                }
++                else if(*ptrBSSMboxReadDone & (1U << C66SS0_MBOX_PROC_BIT_POS))
++                {
++
++                    break;
++                }
++                else
++                {
++                    /* */
++                }
++            }
++        } while (++loop < 3);
++
++        HwiP_restore(oldIntState);
+ 
+         status = SystemP_SUCCESS;
+     }

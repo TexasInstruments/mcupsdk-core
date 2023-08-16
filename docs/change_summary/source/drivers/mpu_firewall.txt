@@ -1,0 +1,1460 @@
+diff --git a/source/drivers/mpu_firewall/v0/cslr_mpu.h b/source/drivers/mpu_firewall/v0/cslr_mpu.h
+new file mode 100644
+index 0000000000..7a094563ce
+--- /dev/null
++++ b/source/drivers/mpu_firewall/v0/cslr_mpu.h
+@@ -0,0 +1,357 @@
++/*
++ *  Copyright (C) 2023 Texas Instruments Incorporated
++ *
++ *  Redistribution and use in source and binary forms, with or without
++ *  modification, are permitted provided that the following conditions
++ *  are met:
++ *
++ *    Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *
++ *    Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the
++ *    distribution.
++ *
++ *    Neither the name of Texas Instruments Incorporated nor the names of
++ *    its contributors may be used to endorse or promote products derived
++ *    from this software without specific prior written permission.
++ *
++ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++#ifndef CSLR_MPU_H
++#define CSLR_MPU_H
++
++#ifdef __cplusplus
++extern "C"
++{
++#endif
++
++
++/**************************************************************************\
++* Register Overlay Structure for prog_region
++\**************************************************************************/
++typedef struct  {
++    volatile Uint32 PROG_START_ADDRESS;
++    volatile Uint32 PROG_END_ADDRESS;
++    volatile Uint32 PROG_MPPA;
++    volatile Uint8 RSVD2[4];
++} CSL_MpuProg_regionRegs;
++
++/**************************************************************************\
++* Register Overlay Structure
++\**************************************************************************/
++typedef struct  {
++    volatile Uint32 REVISION;
++    volatile Uint32 CONFIG;
++    volatile Uint8 RSVD0[8];
++    volatile Uint32 INT_RAW_STATUS_SET;
++    volatile Uint32 INT_ENABLED_STATUS_CLEAR;
++    volatile Uint32 INT_ENABLE;
++    volatile Uint32 INT_ENABLE_CLEAR;
++    volatile Uint32 EOI;
++    volatile Uint8  RSVD[4];
++    volatile Uint8 RSVD1[216];
++    volatile Uint32 FIXED_START_ADDRESS;
++    volatile Uint32 FIXED_END_ADDRESS;
++    volatile Uint32 FIXED_MPPA;
++    volatile Uint8 RSVD3[244];
++    CSL_MpuProg_regionRegs PROG_REGION[16];
++    volatile Uint32 FAULT_ADDRESS;
++    volatile Uint32 FAULT_STATUS;
++    volatile Uint32 FAULT_CLEAR;
++} CSL_MpuRegs;
++
++/**************************************************************************\
++* Field Definition Macros
++\**************************************************************************/
++
++/* prog_start_address */
++
++#define CSL_MPU_PROG_START_ADDRESS_START_ADDR_MASK (0xFFFFFFFFu)
++#define CSL_MPU_PROG_START_ADDRESS_START_ADDR_SHIFT (0x00000000u)
++#define CSL_MPU_PROG_START_ADDRESS_START_ADDR_RESETVAL (0x00000000u)
++
++#define CSL_MPU_PROG_START_ADDRESS_RESETVAL (0x00000000u)
++
++/* prog_end_address */
++
++#define CSL_MPU_PROG_END_ADDRESS_END_ADDR_MASK (0xFFFFFFFFu)
++#define CSL_MPU_PROG_END_ADDRESS_END_ADDR_SHIFT (0x00000000u)
++#define CSL_MPU_PROG_END_ADDRESS_END_ADDR_RESETVAL (0x00000000u)
++
++#define CSL_MPU_PROG_END_ADDRESS_RESETVAL (0x00000000u)
++
++/* prog_mppa */
++
++#define CSL_MPU_PROG_MPPA_AID_15_0_MASK  (0x03FFFC00u)
++#define CSL_MPU_PROG_MPPA_AID_15_0_SHIFT (0x0000000Au)
++#define CSL_MPU_PROG_MPPA_AID_15_0_RESETVAL (0x00000000u)
++
++#define CSL_MPU_PROG_MPPA_AIDX_MASK      (0x00000200u)
++#define CSL_MPU_PROG_MPPA_AIDX_SHIFT     (0x00000009u)
++#define CSL_MPU_PROG_MPPA_AIDX_RESETVAL  (0x00000000u)
++
++#define CSL_MPU_PROG_MPPA_NS_MASK        (0x00000080u)
++#define CSL_MPU_PROG_MPPA_NS_SHIFT       (0x00000007u)
++#define CSL_MPU_PROG_MPPA_NS_RESETVAL    (0x00000000u)
++
++#define CSL_MPU_PROG_MPPA_EMU_MASK       (0x00000040u)
++#define CSL_MPU_PROG_MPPA_EMU_SHIFT      (0x00000006u)
++#define CSL_MPU_PROG_MPPA_EMU_RESETVAL   (0x00000000u)
++
++#define CSL_MPU_PROG_MPPA_SR_MASK        (0x00000020u)
++#define CSL_MPU_PROG_MPPA_SR_SHIFT       (0x00000005u)
++#define CSL_MPU_PROG_MPPA_SR_RESETVAL    (0x00000000u)
++
++#define CSL_MPU_PROG_MPPA_SW_MASK        (0x00000010u)
++#define CSL_MPU_PROG_MPPA_SW_SHIFT       (0x00000004u)
++#define CSL_MPU_PROG_MPPA_SW_RESETVAL    (0x00000000u)
++
++#define CSL_MPU_PROG_MPPA_SX_MASK        (0x00000008u)
++#define CSL_MPU_PROG_MPPA_SX_SHIFT       (0x00000003u)
++#define CSL_MPU_PROG_MPPA_SX_RESETVAL    (0x00000000u)
++
++#define CSL_MPU_PROG_MPPA_UR_MASK        (0x00000004u)
++#define CSL_MPU_PROG_MPPA_UR_SHIFT       (0x00000002u)
++#define CSL_MPU_PROG_MPPA_UR_RESETVAL    (0x00000000u)
++
++#define CSL_MPU_PROG_MPPA_UW_MASK        (0x00000002u)
++#define CSL_MPU_PROG_MPPA_UW_SHIFT       (0x00000001u)
++#define CSL_MPU_PROG_MPPA_UW_RESETVAL    (0x00000000u)
++
++#define CSL_MPU_PROG_MPPA_UX_MASK        (0x00000001u)
++#define CSL_MPU_PROG_MPPA_UX_SHIFT       (0x00000000u)
++#define CSL_MPU_PROG_MPPA_UX_RESETVAL    (0x00000000u)
++
++#define CSL_MPU_PROG_MPPA_RESETVAL       (0x00000000u)
++
++/* revision */
++
++#define CSL_MPU_REVISION_SCHEME_MASK     (0xC0000000u)
++#define CSL_MPU_REVISION_SCHEME_SHIFT    (0x0000001Eu)
++#define CSL_MPU_REVISION_SCHEME_RESETVAL (0x00000001u)
++
++#define CSL_MPU_REVISION_BU_MASK         (0x30000000u)
++#define CSL_MPU_REVISION_BU_SHIFT        (0x0000001Cu)
++#define CSL_MPU_REVISION_BU_RESETVAL     (0x00000000u)
++
++#define CSL_MPU_REVISION_MODID_MASK      (0x0FFF0000u)
++#define CSL_MPU_REVISION_MODID_SHIFT     (0x00000010u)
++#define CSL_MPU_REVISION_MODID_RESETVAL  (0x00000E81u)
++
++#define CSL_MPU_REVISION_RTL_VER_MASK    (0x0000F800u)
++#define CSL_MPU_REVISION_RTL_VER_SHIFT   (0x0000000Bu)
++#define CSL_MPU_REVISION_RTL_VER_RESETVAL (0x00000000u)
++
++#define CSL_MPU_REVISION_REVMAJ_MASK     (0x00000700u)
++#define CSL_MPU_REVISION_REVMAJ_SHIFT    (0x00000008u)
++#define CSL_MPU_REVISION_REVMAJ_RESETVAL (0x00000001u)
++
++#define CSL_MPU_REVISION_CUSTOMER_MASK   (0x000000C0u)
++#define CSL_MPU_REVISION_CUSTOMER_SHIFT  (0x00000006u)
++#define CSL_MPU_REVISION_CUSTOMER_RESETVAL (0x00000000u)
++
++#define CSL_MPU_REVISION_REVMIN_MASK     (0x0000003Fu)
++#define CSL_MPU_REVISION_REVMIN_SHIFT    (0x00000000u)
++#define CSL_MPU_REVISION_REVMIN_RESETVAL (0x00000001u)
++
++#define CSL_MPU_REVISION_RESETVAL        (0x4E810101u)
++
++/* config */
++
++#define CSL_MPU_CONFIG_ADDRESS_ALIGN_MASK (0xFF000000u)
++#define CSL_MPU_CONFIG_ADDRESS_ALIGN_SHIFT (0x00000018u)
++#define CSL_MPU_CONFIG_ADDRESS_ALIGN_RESETVAL (0x00000000u)
++
++#define CSL_MPU_CONFIG_NUM_FIXED_MASK    (0x00F00000u)
++#define CSL_MPU_CONFIG_NUM_FIXED_SHIFT   (0x00000014u)
++#define CSL_MPU_CONFIG_NUM_FIXED_RESETVAL (0x00000000u)
++
++#define CSL_MPU_CONFIG_NUM_PROG_MASK     (0x000F0000u)
++#define CSL_MPU_CONFIG_NUM_PROG_SHIFT    (0x00000010u)
++#define CSL_MPU_CONFIG_NUM_PROG_RESETVAL (0x00000000u)
++
++#define CSL_MPU_CONFIG_NUM_FIXED_AIDS_MASK (0x0000F000u)
++#define CSL_MPU_CONFIG_NUM_FIXED_AIDS_SHIFT (0x0000000Cu)
++#define CSL_MPU_CONFIG_NUM_FIXED_AIDS_RESETVAL (0x00000000u)
++
++#define CSL_MPU_CONFIG_ASSUMED_ALLOWED_MASK (0x00000001u)
++#define CSL_MPU_CONFIG_ASSUMED_ALLOWED_SHIFT (0x00000000u)
++#define CSL_MPU_CONFIG_ASSUMED_ALLOWED_RESETVAL (0x00000001u)
++
++#define CSL_MPU_CONFIG_RESETVAL          (0x00000001u)
++
++/* int_raw_status_set */
++
++#define CSL_MPU_INT_RAW_STATUS_SET_ADDR_ERR_MASK (0x00000002u)
++#define CSL_MPU_INT_RAW_STATUS_SET_ADDR_ERR_SHIFT (0x00000001u)
++#define CSL_MPU_INT_RAW_STATUS_SET_ADDR_ERR_RESETVAL (0x00000000u)
++
++#define CSL_MPU_INT_RAW_STATUS_SET_PROT_ERR_MASK (0x00000001u)
++#define CSL_MPU_INT_RAW_STATUS_SET_PROT_ERR_SHIFT (0x00000000u)
++#define CSL_MPU_INT_RAW_STATUS_SET_PROT_ERR_RESETVAL (0x00000000u)
++
++#define CSL_MPU_INT_RAW_STATUS_SET_RESETVAL (0x00000000u)
++
++/* int_enabled_status_clear */
++
++#define CSL_MPU_INT_ENABLED_STATUS_CLEAR_ENABLED_ADDR_ERR_MASK (0x00000002u)
++#define CSL_MPU_INT_ENABLED_STATUS_CLEAR_ENABLED_ADDR_ERR_SHIFT (0x00000001u)
++#define CSL_MPU_INT_ENABLED_STATUS_CLEAR_ENABLED_ADDR_ERR_RESETVAL (0x00000000u)
++
++#define CSL_MPU_INT_ENABLED_STATUS_CLEAR_ENABLED_PROT_ERR_MASK (0x00000001u)
++#define CSL_MPU_INT_ENABLED_STATUS_CLEAR_ENABLED_PROT_ERR_SHIFT (0x00000000u)
++#define CSL_MPU_INT_ENABLED_STATUS_CLEAR_ENABLED_PROT_ERR_RESETVAL (0x00000000u)
++
++#define CSL_MPU_INT_ENABLED_STATUS_CLEAR_RESETVAL (0x00000000u)
++
++/* int_enable */
++
++#define CSL_MPU_INT_ENABLE_ADDR_ERR_EN_MASK (0x00000002u)
++#define CSL_MPU_INT_ENABLE_ADDR_ERR_EN_SHIFT (0x00000001u)
++#define CSL_MPU_INT_ENABLE_ADDR_ERR_EN_RESETVAL (0x00000000u)
++
++#define CSL_MPU_INT_ENABLE_PROT_ERR_EN_MASK (0x00000001u)
++#define CSL_MPU_INT_ENABLE_PROT_ERR_EN_SHIFT (0x00000000u)
++#define CSL_MPU_INT_ENABLE_PROT_ERR_EN_RESETVAL (0x00000000u)
++
++#define CSL_MPU_INT_ENABLE_RESETVAL      (0x00000000u)
++
++/* int_enable_clear */
++
++#define CSL_MPU_INT_ENABLE_CLEAR_ADDR_ERR_EN_CLR_MASK (0x00000002u)
++#define CSL_MPU_INT_ENABLE_CLEAR_ADDR_ERR_EN_CLR_SHIFT (0x00000001u)
++#define CSL_MPU_INT_ENABLE_CLEAR_ADDR_ERR_EN_CLR_RESETVAL (0x00000000u)
++
++#define CSL_MPU_INT_ENABLE_CLEAR_PROT_ERR_EN_CLR_MASK (0x00000001u)
++#define CSL_MPU_INT_ENABLE_CLEAR_PROT_ERR_EN_CLR_SHIFT (0x00000000u)
++#define CSL_MPU_INT_ENABLE_CLEAR_PROT_ERR_EN_CLR_RESETVAL (0x00000000u)
++
++#define CSL_MPU_INT_ENABLE_CLEAR_RESETVAL (0x00000000u)
++
++/* eoi */
++
++#define CSL_MPU_EOI_EOI_VECTOR_MASK      (0x000000FFu)
++#define CSL_MPU_EOI_EOI_VECTOR_SHIFT     (0x00000000u)
++#define CSL_MPU_EOI_EOI_VECTOR_RESETVAL  (0x00000000u)
++
++#define CSL_MPU_EOI_RESETVAL             (0x00000000u)
++
++/* fixed_start_address */
++
++#define CSL_MPU_FIXED_START_ADDRESS_START_ADDR_MASK (0xFFFFFFFFu)
++#define CSL_MPU_FIXED_START_ADDRESS_START_ADDR_SHIFT (0x00000000u)
++#define CSL_MPU_FIXED_START_ADDRESS_START_ADDR_RESETVAL (0x00000000u)
++
++#define CSL_MPU_FIXED_START_ADDRESS_RESETVAL (0x00000000u)
++
++/* fixed_end_address */
++
++#define CSL_MPU_FIXED_END_ADDRESS_END_ADDR_MASK (0xFFFFFFFFu)
++#define CSL_MPU_FIXED_END_ADDRESS_END_ADDR_SHIFT (0x00000000u)
++#define CSL_MPU_FIXED_END_ADDRESS_END_ADDR_RESETVAL (0x00000000u)
++
++#define CSL_MPU_FIXED_END_ADDRESS_RESETVAL (0x00000000u)
++
++/* fixed_mppa */
++
++#define CSL_MPU_FIXED_MPPA_AID_15_0_MASK (0x03FFFC00u)
++#define CSL_MPU_FIXED_MPPA_AID_15_0_SHIFT (0x0000000Au)
++#define CSL_MPU_FIXED_MPPA_AID_15_0_RESETVAL (0x00000000u)
++
++#define CSL_MPU_FIXED_MPPA_AIDX_MASK     (0x00000200u)
++#define CSL_MPU_FIXED_MPPA_AIDX_SHIFT    (0x00000009u)
++#define CSL_MPU_FIXED_MPPA_AIDX_RESETVAL (0x00000000u)
++
++#define CSL_MPU_FIXED_MPPA_NS_MASK       (0x00000080u)
++#define CSL_MPU_FIXED_MPPA_NS_SHIFT      (0x00000007u)
++#define CSL_MPU_FIXED_MPPA_NS_RESETVAL   (0x00000000u)
++
++#define CSL_MPU_FIXED_MPPA_EMU_MASK      (0x00000040u)
++#define CSL_MPU_FIXED_MPPA_EMU_SHIFT     (0x00000006u)
++#define CSL_MPU_FIXED_MPPA_EMU_RESETVAL  (0x00000000u)
++
++#define CSL_MPU_FIXED_MPPA_SR_MASK       (0x00000020u)
++#define CSL_MPU_FIXED_MPPA_SR_SHIFT      (0x00000005u)
++#define CSL_MPU_FIXED_MPPA_SR_RESETVAL   (0x00000000u)
++
++#define CSL_MPU_FIXED_MPPA_SW_MASK       (0x00000010u)
++#define CSL_MPU_FIXED_MPPA_SW_SHIFT      (0x00000004u)
++#define CSL_MPU_FIXED_MPPA_SW_RESETVAL   (0x00000000u)
++
++#define CSL_MPU_FIXED_MPPA_SX_MASK       (0x00000008u)
++#define CSL_MPU_FIXED_MPPA_SX_SHIFT      (0x00000003u)
++#define CSL_MPU_FIXED_MPPA_SX_RESETVAL   (0x00000000u)
++
++#define CSL_MPU_FIXED_MPPA_UR_MASK       (0x00000004u)
++#define CSL_MPU_FIXED_MPPA_UR_SHIFT      (0x00000002u)
++#define CSL_MPU_FIXED_MPPA_UR_RESETVAL   (0x00000000u)
++
++#define CSL_MPU_FIXED_MPPA_UW_MASK       (0x00000002u)
++#define CSL_MPU_FIXED_MPPA_UW_SHIFT      (0x00000001u)
++#define CSL_MPU_FIXED_MPPA_UW_RESETVAL   (0x00000000u)
++
++#define CSL_MPU_FIXED_MPPA_UX_MASK       (0x00000001u)
++#define CSL_MPU_FIXED_MPPA_UX_SHIFT      (0x00000000u)
++#define CSL_MPU_FIXED_MPPA_UX_RESETVAL   (0x00000000u)
++
++#define CSL_MPU_FIXED_MPPA_RESETVAL      (0x00000000u)
++
++/* fault_address */
++
++#define CSL_MPU_FAULT_ADDRESS_FAULT_ADDR_MASK (0xFFFFFFFFu)
++#define CSL_MPU_FAULT_ADDRESS_FAULT_ADDR_SHIFT (0x00000000u)
++#define CSL_MPU_FAULT_ADDRESS_FAULT_ADDR_RESETVAL (0x00000000u)
++
++#define CSL_MPU_FAULT_ADDRESS_RESETVAL   (0x00000000u)
++
++/* fault_status */
++
++#define CSL_MPU_FAULT_STATUS_ID_MASK     (0xFF000000u)
++#define CSL_MPU_FAULT_STATUS_ID_SHIFT    (0x00000018u)
++#define CSL_MPU_FAULT_STATUS_ID_RESETVAL (0x00000000u)
++
++#define CSL_MPU_FAULT_STATUS_MSTID_MASK  (0x00FF0000u)
++#define CSL_MPU_FAULT_STATUS_MSTID_SHIFT (0x00000010u)
++#define CSL_MPU_FAULT_STATUS_MSTID_RESETVAL (0x00000000u)
++
++#define CSL_MPU_FAULT_STATUS_PRIVID_MASK (0x00001E00u)
++#define CSL_MPU_FAULT_STATUS_PRIVID_SHIFT (0x00000009u)
++#define CSL_MPU_FAULT_STATUS_PRIVID_RESETVAL (0x00000000u)
++
++#define CSL_MPU_FAULT_STATUS_NS_MASK     (0x00000080u)
++#define CSL_MPU_FAULT_STATUS_NS_SHIFT    (0x00000007u)
++#define CSL_MPU_FAULT_STATUS_NS_RESETVAL (0x00000000u)
++
++#define CSL_MPU_FAULT_STATUS_FAULT_TYPE_MASK (0x0000003Fu)
++#define CSL_MPU_FAULT_STATUS_FAULT_TYPE_SHIFT (0x00000000u)
++#define CSL_MPU_FAULT_STATUS_FAULT_TYPE_RESETVAL (0x00000000u)
++
++#define CSL_MPU_FAULT_STATUS_RESETVAL    (0x00000000u)
++
++/* fault_clear */
++
++#define CSL_MPU_FAULT_CLEAR_FAULT_CLR_MASK (0x00000001u)
++#define CSL_MPU_FAULT_CLEAR_FAULT_CLR_SHIFT (0x00000000u)
++#define CSL_MPU_FAULT_CLEAR_FAULT_CLR_RESETVAL (0x00000000u)
++
++#define CSL_MPU_FAULT_CLEAR_RESETVAL     (0x00000000u)
++
++
++#ifdef __cplusplus
++}
++#endif
++
++#endif
+diff --git a/source/drivers/mpu_firewall/v0/mpu_firewall.c b/source/drivers/mpu_firewall/v0/mpu_firewall.c
+new file mode 100644
+index 0000000000..d3525d34af
+--- /dev/null
++++ b/source/drivers/mpu_firewall/v0/mpu_firewall.c
+@@ -0,0 +1,231 @@
++/*
++ *  Copyright (C) 2023 Texas Instruments Incorporated
++ *
++ *  Redistribution and use in source and binary forms, with or without
++ *  modification, are permitted provided that the following conditions
++ *  are met:
++ *
++ *    Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *
++ *    Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the
++ *    distribution.
++ *
++ *    Neither the name of Texas Instruments Incorporated nor the names of
++ *    its contributors may be used to endorse or promote products derived
++ *    from this software without specific prior written permission.
++ *
++ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++/**
++ *  \file mpu_firewall.c
++ *
++ *  \brief File containing MPU Firewall Driver APIs implementation for version V0.
++ *
++ */
++
++/* ========================================================================== */
++/*                             Include Files                                  */
++/* ========================================================================== */
++
++#include <stdint.h>
++#include <string.h>
++#include <kernel/dpl/SystemP.h>
++#include <drivers/hw_include/hw_types.h>
++#include <drivers/mpu_firewall/v0/mpu_firewall.h>
++
++/* ========================================================================== */
++/*                          Function Declarations                             */
++/* ========================================================================== */
++
++/** Gets the start address of the given region in the MPU firewall  */
++static uint32_t MPU_FIREWALL_getProgrammableStartAddress (uint32_t baseAddr, uint32_t regionNum);
++/** Gets the end address of the given region in the MPU firewall  */
++static uint32_t MPU_FIREWALL_getProgrammableEndAddress (uint32_t baseAddr, uint32_t regionNum);
++/** Gets the permission attributes of the given region in the MPU firewall  */
++static void MPU_FIREWALL_getPermissionAttributes(uint32_t baseAddr, uint32_t regionNum, MPU_FIREWALL_RegionParams* mpuParams);
++
++/* ========================================================================== */
++/*                            Global Variables                                */
++/* ========================================================================== */
++
++extern uint32_t gMpuFirewallNumRegions;
++extern MPU_FIREWALL_RegionParams gMpuFirewallRegionConfig[];
++extern MPU_FIREWALL_Config gMpuFirewallConfig[];
++
++/* ========================================================================== */
++/*                          Function Definitions                              */
++/* ========================================================================== */
++
++static uint32_t MPU_FIREWALL_getProgrammableStartAddress (uint32_t baseAddr, uint32_t regionNum)
++{
++    /* Returns the start address of the specified programmable region */
++    return (uint32_t)((CSL_MpuRegs*) baseAddr)->PROG_REGION[regionNum].PROG_START_ADDRESS;
++}
++
++static uint32_t MPU_FIREWALL_getProgrammableEndAddress (uint32_t baseAddr, uint32_t regionNum)
++{
++    /* Returns the end address of the specified programmable region */
++    return (uint32_t)((CSL_MpuRegs*) baseAddr)->PROG_REGION[regionNum].PROG_END_ADDRESS;
++}
++
++static void MPU_FIREWALL_getPermissionAttributes(uint32_t baseAddr, uint32_t regionNum, MPU_FIREWALL_RegionParams* mpuParams)
++{
++    uint32_t mppa_baseAddress = (uint32_t) &((CSL_MpuRegs*) baseAddr)->PROG_REGION[regionNum].PROG_MPPA;
++
++    /* Populate the members of MPU_FIREWALL_RegionParams */
++    mpuParams->aidConfig = CSL_REG32_FEXT_RAW((const volatile uint32_t *) mppa_baseAddress,
++                                                        CSL_MPU_PROG_MPPA_AID_15_0_MASK,
++                                                        CSL_MPU_PROG_MPPA_AID_15_0_SHIFT);
++
++    mpuParams->aidxConfig = CSL_REG8_FEXT_RAW( (const volatile uint8_t *) mppa_baseAddress,
++                                                        (uint8_t) CSL_MPU_PROG_MPPA_AIDX_MASK,
++                                                        CSL_MPU_PROG_MPPA_AIDX_SHIFT);
++
++    mpuParams->nonSecureConfig = CSL_REG8_FEXT_RAW( (const volatile uint8_t *) mppa_baseAddress,
++                                                        CSL_MPU_PROG_MPPA_NS_MASK,
++                                                        CSL_MPU_PROG_MPPA_NS_SHIFT);
++
++    mpuParams->debugConfig = CSL_REG8_FEXT_RAW( (const volatile uint8_t *) mppa_baseAddress,
++                                                        CSL_MPU_PROG_MPPA_EMU_MASK,
++                                                        CSL_MPU_PROG_MPPA_EMU_SHIFT);
++
++    mpuParams->supervisorReadConfig = CSL_REG8_FEXT_RAW( (const volatile uint8_t *) mppa_baseAddress,
++                                                        CSL_MPU_PROG_MPPA_SR_MASK,
++                                                        CSL_MPU_PROG_MPPA_SR_SHIFT);
++
++    mpuParams->supervisorWriteConfig = CSL_REG8_FEXT_RAW( (const volatile uint8_t *) mppa_baseAddress,
++                                                        CSL_MPU_PROG_MPPA_SW_MASK,
++                                                        CSL_MPU_PROG_MPPA_SW_SHIFT);
++
++    mpuParams->supervisorExecConfig = CSL_REG8_FEXT_RAW( (const volatile uint8_t *) mppa_baseAddress,
++                                                        CSL_MPU_PROG_MPPA_SX_MASK,
++                                                        CSL_MPU_PROG_MPPA_SX_SHIFT);
++
++    mpuParams->userReadConfig =  CSL_REG8_FEXT_RAW( (const volatile uint8_t *) mppa_baseAddress,
++                                                        CSL_MPU_PROG_MPPA_UR_MASK,
++                                                        CSL_MPU_PROG_MPPA_UR_SHIFT);
++
++    mpuParams->userWriteConfig = CSL_REG8_FEXT_RAW( (const volatile uint8_t *) mppa_baseAddress,
++                                                        CSL_MPU_PROG_MPPA_UW_MASK,
++                                                        CSL_MPU_PROG_MPPA_UW_SHIFT);
++
++    mpuParams->userExecConfig = CSL_REG8_FEXT_RAW( (const volatile uint8_t *) mppa_baseAddress,
++                                                        CSL_MPU_PROG_MPPA_UX_MASK,
++                                                        CSL_MPU_PROG_MPPA_UX_SHIFT);
++}
++
++Fwl_Return_t MPU_FIREWALL_getFirewallConfig(uint32_t firewallId, MPU_FIREWALL_Config** firewallConfig)
++{
++    Fwl_Return_t status = FWL_DRV_RETURN_FAILURE;
++
++    /* Check if the firewal ID is less then the total number of firewalls in SOC */
++    if(firewallId < CSL_FW_CNT)
++    {
++        status = FWL_DRV_RETURN_SUCCESS;
++        *firewallConfig = &gMpuFirewallConfig[firewallId];
++    }
++    return status;
++}
++
++Fwl_Return_t MPU_FIREWALL_getRegion(MPU_FIREWALL_RegionParams* mpuParams)
++{
++    uint32_t baseAddr;
++    uint32_t regionNumber;
++    Fwl_Return_t status = FWL_DRV_RETURN_FAILURE;
++    MPU_FIREWALL_Config* firewallConfig = NULL;
++
++    /* Get the firewall parameters */
++    status = MPU_FIREWALL_getFirewallConfig(mpuParams->id, &firewallConfig);
++
++    /* Get the base address of the firewall to be configured */
++    baseAddr = firewallConfig->baseAddr;
++
++    /* Get the region number to be fetched */
++    regionNumber = mpuParams->regionNumber;
++
++    /* Check if the region number is less than the total regions in firewall */
++    if(status == FWL_DRV_RETURN_SUCCESS && regionNumber < firewallConfig->numRegions)
++    {
++        /* Start address configuration */
++        mpuParams->startAddress = MPU_FIREWALL_getProgrammableStartAddress (baseAddr,  regionNumber);
++        /* End Address configuration */
++        mpuParams->endAddress = MPU_FIREWALL_getProgrammableEndAddress (baseAddr,  regionNumber);
++
++        MPU_FIREWALL_getPermissionAttributes(baseAddr,  regionNumber, mpuParams);
++    }
++    return status;
++}
++
++Fwl_Return_t MPU_FIREWALL_readFaultAddress (uint32_t firewallId, uint32_t* faultAddress)
++{
++    uint32_t baseAddr;
++    MPU_FIREWALL_Config* firewallConfig = NULL;
++    Fwl_Return_t status = FWL_DRV_RETURN_FAILURE;
++
++    /* Get the firewall parameters */
++    status = MPU_FIREWALL_getFirewallConfig(firewallId, &firewallConfig);
++
++    if(status == FWL_DRV_RETURN_SUCCESS){
++        /* Get the base address of the firewall to be configured */
++        baseAddr = firewallConfig->baseAddr;
++
++        /* Read the fault address register */
++        *faultAddress = HW_RD_REG32(&((CSL_MpuRegs*) baseAddr)->FAULT_ADDRESS);
++    }
++
++    return status;
++}
++
++Fwl_Return_t MPU_FIREWALL_readFaultStatus (uint32_t firewallId, uint32_t* faultStatus)
++{
++    uint32_t baseAddr;
++    MPU_FIREWALL_Config* firewallConfig = NULL;
++    Fwl_Return_t status = FWL_DRV_RETURN_FAILURE;
++
++    /* Get the firewall parameters */
++    status = MPU_FIREWALL_getFirewallConfig(firewallId, &firewallConfig);
++
++    if(status == FWL_DRV_RETURN_SUCCESS){
++        /* Get the base address of the firewall to be configured */
++        baseAddr = firewallConfig->baseAddr;
++
++        /* Read the fault status register */
++        *faultStatus = HW_RD_REG32(&((CSL_MpuRegs*) baseAddr)->FAULT_STATUS);
++    }
++
++    return status;
++}
++
++Fwl_Return_t MPU_FIREWALL_getInterruptStatus (uint32_t firewallId, uint32_t* interruptStatus)
++{
++    uint32_t baseAddr;
++    MPU_FIREWALL_Config* firewallConfig = NULL;
++    Fwl_Return_t status = FWL_DRV_RETURN_FAILURE;
++
++    /* Get the firewall parameters */
++    status = MPU_FIREWALL_getFirewallConfig(firewallId, &firewallConfig);
++
++    if(status == FWL_DRV_RETURN_SUCCESS){
++        /* Get the base address of the firewall to be configured */
++        baseAddr = firewallConfig->baseAddr;
++
++        /* Read the interrupt status register */
++        *interruptStatus = HW_RD_REG32(&((CSL_MpuRegs*) baseAddr)->INT_RAW_STATUS_SET);
++    }
++
++    return status;
++}
+diff --git a/source/drivers/mpu_firewall/v0/mpu_firewall.h b/source/drivers/mpu_firewall/v0/mpu_firewall.h
+new file mode 100644
+index 0000000000..39608bffdf
+--- /dev/null
++++ b/source/drivers/mpu_firewall/v0/mpu_firewall.h
+@@ -0,0 +1,216 @@
++/*
++ *  Copyright (C) 2023 Texas Instruments Incorporated
++ *
++ *  Redistribution and use in source and binary forms, with or without
++ *  modification, are permitted provided that the following conditions
++ *  are met:
++ *
++ *    Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *
++ *    Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the
++ *    distribution.
++ *
++ *    Neither the name of Texas Instruments Incorporated nor the names of
++ *    its contributors may be used to endorse or promote products derived
++ *    from this software without specific prior written permission.
++ *
++ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++/**
++ *  \defgroup DRV_MPU_FIREWALL_MODULE APIs for MPU Firewall
++ *  \ingroup DRV_MODULE
++ *
++ *  This module contains APIs to program the MPU Firewall module.
++ *
++ *  @{
++ */
++
++/**
++ *  \file v0/mpu_firewall.h
++ *
++ *  \brief MPU Firewall Driver API/interface file.
++ */
++
++#ifndef MPU_FIREWALL_H_
++#define MPU_FIREWALL_H_
++
++/* ========================================================================== */
++/*                             Include Files                                  */
++/* ========================================================================== */
++#include <drivers/hw_include/cslr_soc.h>
++#include <drivers/mpu_firewall/v0/cslr_mpu.h>
++
++#ifdef __cplusplus
++extern "C" {
++#endif
++
++/* ========================================================================== */
++/*                           Macros & Typedefs                                */
++/* ========================================================================== */
++
++/**
++ * \brief
++ *  Firewall Driver Error code
++ *
++ * \details
++ *  The enumeration describes all the possible return and error codes which
++ *  the Firewall Driver can return
++ */
++typedef enum Fwl_Return_e
++{
++    FWL_DRV_RETURN_SUCCESS                  = 0xBA14D51BU, /*!< Success/pass return code */
++    FWL_DRV_RETURN_FAILURE                  = 0xAADF4AFAU, /*!< General or unspecified failure/error */
++}Fwl_Return_t;
++
++/**
++ *  \brief  MPU Firewall Target
++ *
++ *  This structure contains parameters associated with an MPU Firewall memory map target.
++ */
++typedef struct
++{
++    /** Start address of the target */
++    uint32_t  startAddr ;
++    /** Size of the region */
++    uint32_t regionSize ;
++
++}Firewall_Target;
++
++/**
++ *  \brief  MPU Firewall Parameters
++ *
++ *  This structure contains parameters associated with a MPU Firewall.
++ */
++typedef struct
++{
++    /** Base address of the firewall */
++    uint32_t  baseAddr ;
++    /** Number of regions in the firewall */
++    uint32_t  numRegions ;
++    /** Number of memory map targets */
++    uint32_t targetCount ;
++    /** pointer to the target information array*/
++    Firewall_Target *target;
++
++}MPU_FIREWALL_Config;
++
++/* ========================================================================== */
++/*                         Structure Declarations                             */
++/* ========================================================================== */
++
++/**
++ *  \brief  MPU Region Parameters
++ *
++ *  This structure contains MPPA configuration prarameters
++ *  of a MPU Firewall region.
++ */
++typedef struct
++{
++    /** Firewall ID */
++    uint32_t  id ;
++    /** Region number in a particular firewall */
++    uint32_t  regionNumber ;
++    /** Start address of a firewall region */
++    uint32_t startAddress ;
++    /** End address of a firewall region */
++    uint32_t endAddress ;
++    /** AID configuration - It is a bit mask with each bit denoting an AID
++    An AID is allowed if the value in bit position allocated for it is 1  */
++    uint32_t aidConfig ;
++    /** External AID configuration - 0->not allowed, 1->allowed */
++    uint8_t aidxConfig ;
++    /** Supervisor read permission - 0->not allowed, 1->allowed */
++    uint8_t supervisorReadConfig ;
++    /** Supervisor write permission - 0->not allowed, 1->allowed */
++    uint8_t supervisorWriteConfig ;
++    /** Supervisor Execute permission - 0->not allowed, 1->allowed */
++    uint8_t supervisorExecConfig ;
++    /** User read permission - 0->not allowed, 1->allowed */
++    uint8_t userReadConfig ;
++    /** User write permission - 0->not allowed, 1->allowed */
++    uint8_t userWriteConfig ;
++    /** User Execute permission - 0->not allowed, 1->allowed */
++    uint8_t userExecConfig ;
++    /** Non secure access permission - 0->not allowed, 1->allowed */
++    uint8_t nonSecureConfig ;
++    /** Debug permission - 0->not allowed, 1->allowed */
++    uint8_t debugConfig ;
++
++}MPU_FIREWALL_RegionParams;
++
++/* ========================================================================== */
++/*                       Function Declarations                                */
++/* ========================================================================== */
++
++/**
++ *  \brief  Retrieves the start and end addresses and the permission attributes of a given region in a given firewall.
++ *
++ *  \param  mpuParams      Structure containing all region configuration parameters.
++ *
++ *  \return FWL_DRV_RETURN_SUCCESS if the region configuration is successfully fetched; else FWL_DRV_RETURN_FAILURE
++ */
++Fwl_Return_t MPU_FIREWALL_getRegion(MPU_FIREWALL_RegionParams* mpuParams);
++
++/**
++ *  \brief  Function to get parameters associated to a MPU firewall.
++ *
++ *  \param  firewallId      Firewall ID.
++ *  \param  firewallConfig  Structure to save mpu firewall configuration.
++ *
++ *  \return FWL_DRV_RETURN_SUCCESS on successful config read; else FWL_DRV_RETURN_FAILURE
++ */
++Fwl_Return_t MPU_FIREWALL_getFirewallConfig(uint32_t firewallId, MPU_FIREWALL_Config** firewallConfig);
++
++/**
++ *  \brief  Function to read the fault address that created the firewall
++ *          violation.
++ *
++ *  \param  firewallId      MPU Firewall Id
++ *  \param  faultAddress    pointer to the faultAddress to be populated
++ *
++ *  \return FWL_DRV_RETURN_SUCCESS on successful fault address read; else FWL_DRV_RETURN_FAILURE
++ */
++Fwl_Return_t MPU_FIREWALL_readFaultAddress (uint32_t firewallId, uint32_t* faultAddress);
++
++/**
++ *  \brief  Function to read the fault status register. It contains information
++ *          on the kind of firewall violation that had occurred.
++ *
++ *  \param  firewallId      MPU Firewall Id
++ *  \param  faultStatus     pointer to the faultStatus to be populated
++ *
++ *  \return FWL_DRV_RETURN_SUCCESS on successful fault status read; else FWL_DRV_RETURN_FAILURE
++ */
++Fwl_Return_t MPU_FIREWALL_readFaultStatus (uint32_t firewallId, uint32_t* faultStatus);
++
++/**
++ *  \brief  Function to read interrupt status.
++ *
++ *  \param  firewallId          MPU Firewall Id
++ *  \param  interruptStatus     pointer to the interruptStatus to be populated
++ *
++ *  \return FWL_DRV_RETURN_SUCCESS on successful interrupt status read; else FWL_DRV_RETURN_FAILURE
++ */
++Fwl_Return_t MPU_FIREWALL_getInterruptStatus (uint32_t firewallId, uint32_t* interruptStatus);
++
++#ifdef __cplusplus
++}
++#endif
++
++#endif /* #ifndef MPU_FIREWALL_H_ */
++
++/** @} */
+diff --git a/source/drivers/mpu_firewall/v0/soc/am263x/mpu_firewall_v0_cfg.c b/source/drivers/mpu_firewall/v0/soc/am263x/mpu_firewall_v0_cfg.c
+new file mode 100644
+index 0000000000..36085c983a
+--- /dev/null
++++ b/source/drivers/mpu_firewall/v0/soc/am263x/mpu_firewall_v0_cfg.c
+@@ -0,0 +1,343 @@
++/*
++ *  Copyright (C) 2023 Texas Instruments Incorporated
++ *
++ *  Redistribution and use in source and binary forms, with or without
++ *  modification, are permitted provided that the following conditions
++ *  are met:
++ *
++ *    Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *
++ *    Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the
++ *    distribution.
++ *
++ *    Neither the name of Texas Instruments Incorporated nor the names of
++ *    its contributors may be used to endorse or promote products derived
++ *    from this software without specific prior written permission.
++ *
++ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++#include <drivers/mpu_firewall/v0/mpu_firewall.h>
++
++/**
++ *  \brief  MPU Firewall Config
++ *  This config contains the parameters for all firewalls in the SOC
++ *
++ */
++MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
++{
++    {
++        .baseAddr = CSL_FW_R5SS0_CORE0_AXIS_SLV_CFG_ADDR,
++        .numRegions = CSL_FW_R5SS0_CORE0_AXIS_SLV_NUM_REGION,
++        .targetCount = CSL_FW_R5SS0_CORE0_AXIS_SLV_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_R5SS0_CORE0_AXIS_SLV_START_ADDR0,
++            .regionSize = CSL_FW_R5SS0_CORE0_AXIS_SLV_REGION_SIZE0
++        },
++        {
++            .startAddr = CSL_FW_R5SS0_CORE0_AXIS_SLV_START_ADDR1,
++            .regionSize = CSL_FW_R5SS0_CORE0_AXIS_SLV_REGION_SIZE1,
++        },
++        {
++            .startAddr = CSL_FW_R5SS0_CORE0_AXIS_SLV_START_ADDR2,
++            .regionSize = CSL_FW_R5SS0_CORE0_AXIS_SLV_REGION_SIZE2,
++        },
++        {
++            .startAddr = CSL_FW_R5SS0_CORE0_AXIS_SLV_START_ADDR3,
++            .regionSize = CSL_FW_R5SS0_CORE0_AXIS_SLV_REGION_SIZE3,
++        }
++        }
++
++    },
++    {
++        .baseAddr = CSL_FW_R5SS0_CORE1_AXIS_SLV_CFG_ADDR,
++        .numRegions = CSL_FW_R5SS0_CORE1_AXIS_SLV_NUM_REGION,
++        .targetCount = CSL_FW_R5SS0_CORE1_AXIS_SLV_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_R5SS0_CORE1_AXIS_SLV_START_ADDR0,
++            .regionSize = CSL_FW_R5SS0_CORE1_AXIS_SLV_REGION_SIZE0
++        },
++        {
++            .startAddr = CSL_FW_R5SS0_CORE1_AXIS_SLV_START_ADDR1,
++            .regionSize = CSL_FW_R5SS0_CORE1_AXIS_SLV_REGION_SIZE1,
++        },
++        {
++            .startAddr = CSL_FW_R5SS0_CORE1_AXIS_SLV_START_ADDR2,
++            .regionSize = CSL_FW_R5SS0_CORE1_AXIS_SLV_REGION_SIZE2,
++        },
++        {
++            .startAddr = CSL_FW_R5SS0_CORE1_AXIS_SLV_START_ADDR3,
++            .regionSize = CSL_FW_R5SS0_CORE1_AXIS_SLV_REGION_SIZE3,
++        }
++        }
++
++    },
++    {
++        .baseAddr = CSL_FW_R5SS1_CORE0_AXIS_SLV_CFG_ADDR,
++        .numRegions = CSL_FW_R5SS1_CORE0_AXIS_SLV_NUM_REGION,
++        .targetCount = CSL_FW_R5SS1_CORE0_AXIS_SLV_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_R5SS1_CORE0_AXIS_SLV_START_ADDR0,
++            .regionSize = CSL_FW_R5SS1_CORE0_AXIS_SLV_REGION_SIZE0
++        },
++        {
++            .startAddr = CSL_FW_R5SS1_CORE0_AXIS_SLV_START_ADDR1,
++            .regionSize = CSL_FW_R5SS1_CORE0_AXIS_SLV_REGION_SIZE1,
++        },
++        {
++            .startAddr = CSL_FW_R5SS1_CORE0_AXIS_SLV_START_ADDR2,
++            .regionSize = CSL_FW_R5SS1_CORE0_AXIS_SLV_REGION_SIZE2,
++        },
++        {
++            .startAddr = CSL_FW_R5SS1_CORE0_AXIS_SLV_START_ADDR3,
++            .regionSize = CSL_FW_R5SS1_CORE0_AXIS_SLV_REGION_SIZE3,
++        }
++        }
++
++    },
++    {
++        .baseAddr = CSL_FW_R5SS1_CORE1_AXIS_SLV_CFG_ADDR,
++        .numRegions = CSL_FW_R5SS1_CORE1_AXIS_SLV_NUM_REGION,
++        .targetCount = CSL_FW_R5SS1_CORE1_AXIS_SLV_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_R5SS1_CORE1_AXIS_SLV_START_ADDR0,
++            .regionSize = CSL_FW_R5SS1_CORE1_AXIS_SLV_REGION_SIZE0
++        },
++        {
++            .startAddr = CSL_FW_R5SS1_CORE1_AXIS_SLV_START_ADDR1,
++            .regionSize = CSL_FW_R5SS1_CORE1_AXIS_SLV_REGION_SIZE1,
++        },
++        {
++            .startAddr = CSL_FW_R5SS1_CORE1_AXIS_SLV_START_ADDR2,
++            .regionSize = CSL_FW_R5SS1_CORE1_AXIS_SLV_REGION_SIZE2,
++        },
++        {
++            .startAddr = CSL_FW_R5SS1_CORE1_AXIS_SLV_START_ADDR3,
++            .regionSize = CSL_FW_R5SS1_CORE1_AXIS_SLV_REGION_SIZE3,
++        }
++        }
++
++    },
++    {
++        .baseAddr = CSL_FW_L2OCRAM_BANK0_SLV_CFG_ADDR,
++        .numRegions = CSL_FW_L2OCRAM_BANK0_SLV_NUM_REGION,
++        .targetCount = CSL_FW_L2OCRAM_BANK0_SLV_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_L2OCRAM_BANK0_SLV_START_ADDR0,
++            .regionSize = CSL_FW_L2OCRAM_BANK0_SLV_REGION_SIZE0,
++        }
++        }
++
++    },
++    {
++        .baseAddr = CSL_FW_L2OCRAM_BANK1_SLV_CFG_ADDR,
++        .numRegions = CSL_FW_L2OCRAM_BANK1_SLV_NUM_REGION,
++        .targetCount = CSL_FW_L2OCRAM_BANK1_SLV_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_L2OCRAM_BANK1_SLV_START_ADDR0,
++            .regionSize = CSL_FW_L2OCRAM_BANK1_SLV_REGION_SIZE0,
++        }
++        }
++
++    },
++    {
++        .baseAddr = CSL_FW_L2OCRAM_BANK2_SLV_CFG_ADDR,
++        .numRegions = CSL_FW_L2OCRAM_BANK2_SLV_NUM_REGION,
++        .targetCount = CSL_FW_L2OCRAM_BANK2_SLV_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_L2OCRAM_BANK2_SLV_START_ADDR0,
++            .regionSize = CSL_FW_L2OCRAM_BANK2_SLV_REGION_SIZE0,
++        }
++        }
++
++    },
++    {
++        .baseAddr = CSL_FW_L2OCRAM_BANK3_SLV_CFG_ADDR,
++        .numRegions = CSL_FW_L2OCRAM_BANK3_SLV_NUM_REGION,
++        .targetCount = CSL_FW_L2OCRAM_BANK3_SLV_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_L2OCRAM_BANK3_SLV_START_ADDR0,
++            .regionSize = CSL_FW_L2OCRAM_BANK3_SLV_REGION_SIZE0,
++        }
++        }
++
++    },
++    {
++        .baseAddr = CSL_FW_MBOX_RAM_SLV_CFG_ADDR,
++        .numRegions = CSL_FW_MBOX_RAM_SLV_NUM_REGION,
++        .targetCount = CSL_FW_MBOX_RAM_SLV_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_MBOX_RAM_SLV_START_ADDR0,
++            .regionSize = CSL_FW_MBOX_RAM_SLV_REGION_SIZE0,
++        }
++        }
++
++    },
++    {
++        .baseAddr = CSL_FW_HSM_SLV_CFG_ADDR,
++        .numRegions = CSL_FW_HSM_SLV_NUM_REGION,
++        .targetCount = CSL_FW_HSM_SLV_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_HSM_SLV_START_ADDR0,
++            .regionSize = CSL_FW_HSM_SLV_REGION_SIZE0,
++        },
++        {
++            .startAddr = CSL_FW_HSM_SLV_START_ADDR1,
++            .regionSize = CSL_FW_HSM_SLV_REGION_SIZE1,
++        }
++        }
++    },
++    {
++        .baseAddr = CSL_FW_DTHE_SLV_CFG_ADDR,
++        .numRegions = CSL_FW_DTHE_SLV_NUM_REGION,
++        .targetCount = CSL_FW_DTHE_SLV_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_DTHE_SLV_START_ADDR0,
++            .regionSize = CSL_FW_DTHE_SLV_REGION_SIZE0,
++        }
++        }
++
++
++    },
++    {
++        .baseAddr = CSL_FW_QSPI0_SLV_CFG_ADDR,
++        .numRegions = CSL_FW_QSPI0_SLV_NUM_REGION,
++        .targetCount = CSL_FW_QSPI0_SLV_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_QSPI0_SLV_START_ADDR0,
++            .regionSize = CSL_FW_QSPI0_SLV_REGION_SIZE0,
++        },
++        {
++            .startAddr = CSL_FW_QSPI0_SLV_START_ADDR1,
++            .regionSize = CSL_FW_QSPI0_SLV_REGION_SIZE1,
++        },
++        {
++            .startAddr = CSL_FW_QSPI0_SLV_START_ADDR2,
++            .regionSize = CSL_FW_QSPI0_SLV_REGION_SIZE2,
++        },
++        {
++            .startAddr = CSL_FW_QSPI0_SLV_START_ADDR3,
++            .regionSize = CSL_FW_QSPI0_SLV_REGION_SIZE3,
++        },
++        {
++            .startAddr = CSL_FW_QSPI0_SLV_START_ADDR4,
++            .regionSize = CSL_FW_QSPI0_SLV_REGION_SIZE4,
++        }
++        }
++
++    },
++    {
++        .baseAddr = CSL_FW_SCRM2SCRP0_SLV_CFG_ADDR,
++        .numRegions = CSL_FW_SCRM2SCRP0_SLV_NUM_REGION,
++        .targetCount = CSL_FW_SCRM2SCRP0_SLV_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_SCRM2SCRP0_SLV_START_ADDR0,
++            .regionSize = CSL_FW_SCRM2SCRP0_SLV_REGION_SIZE0,
++        }
++        }
++
++
++    },
++    {
++        .baseAddr = CSL_FW_SCRM2SCRP1_SLV_CFG_ADDR,
++        .numRegions = CSL_FW_SCRM2SCRP1_SLV_NUM_REGION,
++        .targetCount = CSL_FW_SCRM2SCRP1_SLV_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_SCRM2SCRP1_SLV_START_ADDR0,
++            .regionSize = CSL_FW_SCRM2SCRP1_SLV_REGION_SIZE0,
++        }
++        }
++
++    },
++    {
++        .baseAddr = CSL_FW_R5SS0_CORE0_AHB_MST_CFG_ADDR,
++        .numRegions = CSL_FW_R5SS0_CORE0_AHB_MST_NUM_REGION,
++        .targetCount = CSL_FW_R5SS0_CORE0_AHB_MST_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_R5SS0_CORE0_AHB_MST_START_ADDR0,
++            .regionSize = CSL_FW_R5SS0_CORE0_AHB_MST_REGION_SIZE0,
++        }
++        }
++
++    },
++    {
++        .baseAddr = CSL_FW_R5SS0_CORE1_AHB_MST_CFG_ADDR,
++        .numRegions = CSL_FW_R5SS0_CORE1_AHB_MST_NUM_REGION,
++        .targetCount = CSL_FW_R5SS0_CORE1_AHB_MST_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_R5SS0_CORE1_AHB_MST_START_ADDR0,
++            .regionSize = CSL_FW_R5SS0_CORE1_AHB_MST_REGION_SIZE0,
++        }
++        }
++
++    },
++    {
++        .baseAddr = CSL_FW_R5SS1_CORE0_AHB_MST_CFG_ADDR,
++        .numRegions = CSL_FW_R5SS1_CORE0_AHB_MST_NUM_REGION,
++        .targetCount = CSL_FW_R5SS1_CORE0_AHB_MST_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_R5SS1_CORE0_AHB_MST_START_ADDR0,
++            .regionSize = CSL_FW_R5SS1_CORE0_AHB_MST_REGION_SIZE0,
++        }
++        }
++    },
++    {
++        .baseAddr = CSL_FW_R5SS1_CORE1_AHB_MST_CFG_ADDR,
++        .numRegions = CSL_FW_R5SS1_CORE1_AHB_MST_NUM_REGION,
++        .targetCount = CSL_FW_R5SS1_CORE1_AHB_MST_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_R5SS1_CORE1_AHB_MST_START_ADDR0,
++            .regionSize = CSL_FW_R5SS1_CORE1_AHB_MST_REGION_SIZE0,
++        }
++        }
++    },
++};
+diff --git a/source/drivers/mpu_firewall/v0/soc/am273x/mpu_firewall_v0_cfg.c b/source/drivers/mpu_firewall/v0/soc/am273x/mpu_firewall_v0_cfg.c
+new file mode 100644
+index 0000000000..6f8b4e711a
+--- /dev/null
++++ b/source/drivers/mpu_firewall/v0/soc/am273x/mpu_firewall_v0_cfg.c
+@@ -0,0 +1,283 @@
++/*
++ *  Copyright (C) 2023 Texas Instruments Incorporated
++ *
++ *  Redistribution and use in source and binary forms, with or without
++ *  modification, are permitted provided that the following conditions
++ *  are met:
++ *
++ *    Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *
++ *    Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the
++ *    distribution.
++ *
++ *    Neither the name of Texas Instruments Incorporated nor the names of
++ *    its contributors may be used to endorse or promote products derived
++ *    from this software without specific prior written permission.
++ *
++ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++#include <drivers/mpu_firewall/v0/mpu_firewall.h>
++
++/**
++ *  \brief  MPU Firewall Config
++ *  This config contains the parameters for all firewalls in the SOC
++ *
++ */
++MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
++{
++    {
++        .baseAddr = CSL_FW_L2_BANKA_CFG_ADDR,
++        .numRegions = CSL_FW_L2_BANKA_NUM_REGION,
++        .targetCount = CSL_FW_L2_BANKA_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_L2_BANKA_START_ADDR0,
++            .regionSize = CSL_FW_L2_BANKA_REGION_SIZE0
++        }
++        }
++    },
++    {
++        .baseAddr = CSL_FW_L2_BANKB_CFG_ADDR,
++        .numRegions = CSL_FW_L2_BANKB_NUM_REGION,
++        .targetCount = CSL_FW_L2_BANKB_NUM_REGION,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_L2_BANKB_START_ADDR0,
++            .regionSize = CSL_FW_L2_BANKB_REGION_SIZE0
++        }
++        }
++    },
++    {
++        .baseAddr = CSL_FW_HSM_DTHE_CFG_ADDR,
++        .numRegions = CSL_FW_HSM_DTHE_NUM_REGION,
++        .targetCount = CSL_FW_HSM_DTHE_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_HSM_DTHE_START_ADDR0,
++            .regionSize = CSL_FW_HSM_DTHE_REGION_SIZE0
++        }
++        }
++    },
++    {
++        .baseAddr = CSL_FW_MSS_MBOX_CFG_ADDR,
++        .numRegions = CSL_FW_MSS_MBOX_NUM_REGION,
++        .targetCount = CSL_FW_MSS_MBOX_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_MSS_MBOX_START_ADDR0,
++            .regionSize = CSL_FW_MSS_MBOX_REGION_SIZE0
++        }
++        }
++    },
++    {
++        .baseAddr = CSL_FW_MSS_PCRA_CFG_ADDR,
++        .numRegions = CSL_FW_MSS_PCRA_NUM_REGION,
++        .targetCount = CSL_FW_MSS_PCRA_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_MSS_PCRA_START_ADDR0,
++            .regionSize = CSL_FW_MSS_PCRA_REGION_SIZE0
++        }
++        }
++
++    },
++    {
++        .baseAddr = CSL_FW_QSPI0_CFG_ADDR,
++        .numRegions = CSL_FW_QSPI0_NUM_REGION,
++        .targetCount = CSL_FW_QSPI0_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_QSPI0_START_ADDR0,
++            .regionSize = CSL_FW_QSPI0_REGION_SIZE0
++        },
++        {
++            .startAddr = CSL_FW_QSPI0_START_ADDR1,
++            .regionSize = CSL_FW_QSPI0_REGION_SIZE1
++        }
++        }
++    },
++    {
++        .baseAddr = CSL_FW_R5SS_COREA_AXIS_CFG_ADDR,
++        .numRegions = CSL_FW_R5SS_COREA_AXIS_NUM_REGION,
++        .targetCount = CSL_FW_R5SS_COREA_AXIS_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_R5SS_COREA_AXIS_START_ADDR0,
++            .regionSize = CSL_FW_R5SS_COREA_AXIS_REGION_SIZE0
++        },
++        {
++            .startAddr = CSL_FW_R5SS_COREA_AXIS_START_ADDR1,
++            .regionSize = CSL_FW_R5SS_COREA_AXIS_REGION_SIZE1
++        },
++        {
++            .startAddr = CSL_FW_R5SS_COREA_AXIS_START_ADDR2,
++            .regionSize = CSL_FW_R5SS_COREA_AXIS_REGION_SIZE2
++        },
++        {
++            .startAddr = CSL_FW_R5SS_COREA_AXIS_START_ADDR3,
++            .regionSize = CSL_FW_R5SS_COREA_AXIS_REGION_SIZE3
++        }
++        }
++    },
++    {
++        .baseAddr = CSL_FW_R5SS_COREB_AXIS_CFG_ADDR,
++        .numRegions = CSL_FW_R5SS_COREB_AXIS_NUM_REGION,
++        .targetCount = CSL_FW_R5SS_COREB_AXIS_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_R5SS_COREB_AXIS_START_ADDR0,
++            .regionSize = CSL_FW_R5SS_COREB_AXIS_REGION_SIZE0
++        },
++        {
++            .startAddr = CSL_FW_R5SS_COREB_AXIS_START_ADDR1,
++            .regionSize = CSL_FW_R5SS_COREB_AXIS_REGION_SIZE1
++        },
++        {
++            .startAddr = CSL_FW_R5SS_COREB_AXIS_START_ADDR2,
++            .regionSize = CSL_FW_R5SS_COREB_AXIS_REGION_SIZE2
++        },
++        {
++            .startAddr = CSL_FW_R5SS_COREB_AXIS_START_ADDR3,
++            .regionSize = CSL_FW_R5SS_COREB_AXIS_REGION_SIZE3
++        }
++        }
++    },
++    {
++        .baseAddr = CSL_FW_L3_BANKA_CFG_ADDR,
++        .numRegions = CSL_FW_L3_BANKA_NUM_REGION,
++        .targetCount = CSL_FW_L3_BANKA_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_L3_BANKA_START_ADDR0,
++            .regionSize = CSL_FW_L3_BANKA_REGION_SIZE0
++        }
++        }
++    },
++    {
++        .baseAddr = CSL_FW_L3_BANKB_CFG_ADDR,
++        .numRegions = CSL_FW_L3_BANKB_NUM_REGION,
++        .targetCount = CSL_FW_L3_BANKB_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_L3_BANKB_START_ADDR0,
++            .regionSize = CSL_FW_L3_BANKB_REGION_SIZE0
++        }
++        }
++    },
++    {
++        .baseAddr = CSL_FW_L3_BANKC_CFG_ADDR,
++        .numRegions = CSL_FW_L3_BANKC_NUM_REGION,
++        .targetCount = CSL_FW_L3_BANKC_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_L3_BANKC_START_ADDR0,
++            .regionSize = CSL_FW_L3_BANKC_REGION_SIZE0
++        }
++        }
++    },
++    {
++        .baseAddr = CSL_FW_L3_BANKD_CFG_ADDR,
++        .numRegions = CSL_FW_L3_BANKD_NUM_REGION,
++        .targetCount = CSL_FW_L3_BANKD_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_L3_BANKD_START_ADDR0,
++            .regionSize = CSL_FW_L3_BANKD_REGION_SIZE0
++        }
++        }
++    },
++    {
++        .baseAddr = CSL_FW_HWA_DMA0_CFG_ADDR,
++        .numRegions = CSL_FW_HWA_DMA0_NUM_REGION,
++        .targetCount = CSL_FW_HWA_DMA0_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_HWA_DMA0_START_ADDR0,
++            .regionSize = CSL_FW_HWA_DMA0_REGION_SIZE0
++        }
++        }
++    },
++    {
++        .baseAddr = CSL_FW_HWA_DMA1_CFG_ADDR,
++        .numRegions = CSL_FW_HWA_DMA1_NUM_REGION,
++        .targetCount = CSL_FW_HWA_DMA1_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_HWA_DMA1_START_ADDR0,
++            .regionSize = CSL_FW_HWA_DMA1_REGION_SIZE0
++        }
++        }
++    },
++    {
++        .baseAddr = CSL_FW_DSS_HWA_PROC_CFG_ADDR,
++        .numRegions = CSL_FW_DSS_HWA_PROC_NUM_REGION,
++        .targetCount = CSL_FW_DSS_HWA_PROC_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_DSS_HWA_PROC_START_ADDR0,
++            .regionSize = CSL_FW_DSS_HWA_PROC_REGION_SIZE0
++        },
++        {
++            .startAddr = CSL_FW_DSS_HWA_PROC_START_ADDR1,
++            .regionSize = CSL_FW_DSS_HWA_PROC_REGION_SIZE1
++        }
++        }
++    },
++    {
++        .baseAddr = CSL_FW_DSS_MBOX_CFG_ADDR,
++        .numRegions = CSL_FW_DSS_MBOX_NUM_REGION,
++        .targetCount = CSL_FW_DSS_MBOX_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_DSS_MBOX_START_ADDR0,
++            .regionSize = CSL_FW_DSS_MBOX_REGION_SIZE0
++        }
++        }
++    },
++    {
++        .baseAddr = CSL_FW_HSM_CFG_ADDR,
++        .numRegions = CSL_FW_HSM_NUM_REGION,
++        .targetCount = CSL_FW_HSM_NUM_PROTECTED,
++        .target = (Firewall_Target[])
++        {
++        {
++            .startAddr = CSL_FW_HSM_START_ADDR0,
++            .regionSize = CSL_FW_HSM_REGION_SIZE0
++        },
++        {
++            .startAddr = CSL_FW_HSM_START_ADDR1,
++            .regionSize = CSL_FW_HSM_REGION_SIZE1
++        }
++        }
++    },
++};

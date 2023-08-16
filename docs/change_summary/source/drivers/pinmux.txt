@@ -1,0 +1,75 @@
+diff --git a/source/drivers/pinmux/am64x_am243x/pinmux.c b/source/drivers/pinmux/am64x_am243x/pinmux.c
+index 528882b80b..d89ed0f4bf 100644
+--- a/source/drivers/pinmux/am64x_am243x/pinmux.c
++++ b/source/drivers/pinmux/am64x_am243x/pinmux.c
+@@ -74,8 +74,8 @@
+ /*                 Internal Function Declarations                             */
+ /* ========================================================================== */
+ 
+-static void Pinmux_lockMMR(uint32_t domainId);
+-static void Pinmux_unlockMMR(uint32_t domainId);
++void Pinmux_lockMMR(uint32_t domainId);
++void Pinmux_unlockMMR(uint32_t domainId);
+ 
+ /* ========================================================================== */
+ /*                            Global Variables                                */
+@@ -123,7 +123,7 @@ void Pinmux_config(const Pinmux_PerCfg_t *pinmuxCfg, uint32_t domainId)
+     return;
+ }
+ 
+-static void Pinmux_lockMMR(uint32_t domainId)
++void Pinmux_lockMMR(uint32_t domainId)
+ {
+     uint32_t            baseAddr;
+     volatile uint32_t  *kickAddr;
+@@ -165,7 +165,7 @@ static void Pinmux_lockMMR(uint32_t domainId)
+     return;
+ }
+ 
+-static void Pinmux_unlockMMR(uint32_t domainId)
++void Pinmux_unlockMMR(uint32_t domainId)
+ {
+     uint32_t            baseAddr;
+     volatile uint32_t  *kickAddr;
+diff --git a/source/drivers/pinmux/am64x_am243x/pinmux.h b/source/drivers/pinmux/am64x_am243x/pinmux.h
+index 52d25fac9d..5fa8a082c2 100644
+--- a/source/drivers/pinmux/am64x_am243x/pinmux.h
++++ b/source/drivers/pinmux/am64x_am243x/pinmux.h
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2021 Texas Instruments Incorporated
++ * Copyright (C) 2021-23 Texas Instruments Incorporated
+  *
+  * Redistribution and use in source and binary forms, with or without
+  * modification, are permitted provided that the following conditions
+@@ -184,6 +184,7 @@ enum Pinmux_MainOffsets
+     PIN_OSPI0_D6                = 0x0024,
+     PIN_OSPI0_D7                = 0x0028,
+     PIN_OSPI0_DQS               = 0x0008,
++    PIN_OSPI0_LBCLKO            = 0x0004,
+     PIN_PRG0_MDIO0_MDC          = 0x0204,
+     PIN_PRG0_MDIO0_MDIO         = 0x0200,
+     PIN_PRG0_PRU0_GPO0          = 0x0160,
+@@ -357,6 +358,22 @@ typedef struct Pinmux_PerCfg
+  */
+ void Pinmux_config(const Pinmux_PerCfg_t *pinmuxCfg, uint32_t domainId);
+ 
++/**
++ *  \brief  This API unlocks the PAD config control MMRs for the given domain
++ *
++ *  \param  domainId    Domain ID to unlock the PAD config MMRs.
++ *                      Refer \ref Pinmux_DomainId_t
++ */
++void Pinmux_unlockMMR(uint32_t domainId);
++
++/**
++ *  \brief  This API locks the PAD config control MMRs for the given domain
++ *
++ *  \param  domainId    Domain ID to lock the PAD config MMRs.
++ *                      Refer \ref Pinmux_DomainId_t
++ */
++void Pinmux_lockMMR(uint32_t domainId);
++
+ /* ========================================================================== */
+ /*                       Static Function Definitions                          */
+ /* ========================================================================== */

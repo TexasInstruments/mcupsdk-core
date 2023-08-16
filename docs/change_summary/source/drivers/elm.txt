@@ -1,0 +1,1825 @@
+diff --git a/source/drivers/elm/v0/cslr_elm.h b/source/drivers/elm/v0/cslr_elm.h
+new file mode 100644
+index 0000000000..a7058f299c
+--- /dev/null
++++ b/source/drivers/elm/v0/cslr_elm.h
+@@ -0,0 +1,657 @@
++/********************************************************************
++ * Copyright (C) 2023 Texas Instruments Incorporated.
++ *
++ *  Redistribution and use in source and binary forms, with or without
++ *  modification, are permitted provided that the following conditions
++ *  are met:
++ *
++ *    Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *
++ *    Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the
++ *    distribution.
++ *
++ *    Neither the name of Texas Instruments Incorporated nor the names of
++ *    its contributors may be used to endorse or promote products derived
++ *    from this software without specific prior written permission.
++ *
++ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ *
++ *  Name        : cslr_elm.h
++*/
++#ifndef CSLR_ELM_H
++#define CSLR_ELM_H
++
++#ifdef __cplusplus
++extern "C"
++{
++#endif
++
++#include <stdint.h>
++
++
++/**************************************************************************
++* Register Overlay Structure for Header
++**************************************************************************/
++typedef struct {
++    volatile uint32_t REVISION;
++    volatile uint8_t  RSVD0[12];
++    volatile uint32_t SYSCONFIG;
++    volatile uint32_t SYSSTS;
++    volatile uint32_t IRQSTS;
++    volatile uint32_t IRQEN;
++    volatile uint32_t LOCATION_CONFIG;
++    volatile uint8_t  RSVD1[92];
++    volatile uint32_t PAGE_CTRL;
++} CSL_ElmHeaderRegs;
++
++
++/**************************************************************************
++* Register Overlay Structure for ELM_SYNDROMES
++**************************************************************************/
++typedef struct {
++    volatile uint32_t SYNDROME_FRAGMENT_0;
++    volatile uint32_t SYNDROME_FRAGMENT_1;
++    volatile uint32_t SYNDROME_FRAGMENT_2;
++    volatile uint32_t SYNDROME_FRAGMENT_3;
++    volatile uint32_t SYNDROME_FRAGMENT_4;
++    volatile uint32_t SYNDROME_FRAGMENT_5;
++    volatile uint32_t SYNDROME_FRAGMENT_6;
++    volatile uint8_t  RSVD0[36];
++} CSL_ElmSyndromesRegs;
++
++
++/**************************************************************************
++* Register Overlay Structure for ELM_ERROR_LOCATIONS
++**************************************************************************/
++typedef struct {
++    volatile uint32_t LOCATION_STS;
++    volatile uint8_t  RSVD0[124];
++    volatile uint32_t ERROR_LOCATION_0;
++    volatile uint32_t ERROR_LOCATION_1;
++    volatile uint32_t ERROR_LOCATION_2;
++    volatile uint32_t ERROR_LOCATION_3;
++    volatile uint32_t ERROR_LOCATION_4;
++    volatile uint32_t ERROR_LOCATION_5;
++    volatile uint32_t ERROR_LOCATION_6;
++    volatile uint32_t ERROR_LOCATION_7;
++    volatile uint32_t ERROR_LOCATION_8;
++    volatile uint32_t ERROR_LOCATION_9;
++    volatile uint32_t ERROR_LOCATION_10;
++    volatile uint32_t ERROR_LOCATION_11;
++    volatile uint32_t ERROR_LOCATION_12;
++    volatile uint32_t ERROR_LOCATION_13;
++    volatile uint32_t ERROR_LOCATION_14;
++    volatile uint32_t ERROR_LOCATION_15;
++    volatile uint8_t  RSVD1[64];
++} CSL_ElmError_locationsRegs;
++
++
++/**************************************************************************
++* Register Overlay Structure
++**************************************************************************/
++typedef struct {
++    CSL_ElmHeaderRegs	HEADER;
++    volatile uint8_t  RSVD2[892];
++    CSL_ElmSyndromesRegs	SYNDROMES[8];
++    volatile uint8_t  RSVD3[512];
++    CSL_ElmError_locationsRegs	ERROR_LOCATIONS[8];
++} CSL_elmRegs;
++
++
++
++
++/**************************************************************************
++* Register Macros
++**************************************************************************/
++
++/* Register Macros for OCP_target */
++
++/* This register contains the IP revision code. (A write to this register has
++ * no effect, the same as the reset) */
++#define CSL_ELM_REVISION                                        (0x0U)
++
++/* This register allows controlling various parameters of the OCP interface */
++#define CSL_ELM_SYSCONFIG                                       (0x10U)
++
++/* Internal Reset monitoring (OCP domain) Undefined since: on HW perspective
++ * reset state is 0 on SW user perspective when module is accessible is 1 */
++#define CSL_ELM_SYSSTS                                          (0x14U)
++
++/* Interrupt status. This register doubles as a status register for the error
++ * location processes. */
++#define CSL_ELM_IRQSTS                                          (0x18U)
++
++/* Interrupt enable */
++#define CSL_ELM_IRQEN                                           (0x1CU)
++
++/* ECC algorithm parameters */
++#define CSL_ELM_LOCATION_CONFIG                                 (0x20U)
++
++/* Page definition */
++#define CSL_ELM_PAGE_CTRL                                       (0x80U)
++
++/* Input syndrome polynomial bits 32 to 63. */
++#define CSL_ELM_SYNDROME_FRAGMENT_1(n)                          (0x404U + ((n) * (0x40U)))
++
++/* Input syndrome polynomial bits 64 to 95. */
++#define CSL_ELM_SYNDROME_FRAGMENT_2(n)                          (0x408U + ((n) * (0x40U)))
++
++/* Input syndrome polynomial bits 192 to 207. */
++#define CSL_ELM_SYNDROME_FRAGMENT_6(n)                          (0x418U + ((n) * (0x40U)))
++
++/* Input syndrome polynomial bits 0 to 31. */
++#define CSL_ELM_SYNDROME_FRAGMENT_0(n)                          (0x400U + ((n) * (0x40U)))
++
++/* Input syndrome polynomial bits 96 to 127 */
++#define CSL_ELM_SYNDROME_FRAGMENT_3(n)                          (0x40CU + ((n) * (0x40U)))
++
++/* Input syndrome polynomial bits 128 to 159. */
++#define CSL_ELM_SYNDROME_FRAGMENT_4(n)                          (0x410U + ((n) * (0x40U)))
++
++/* Input syndrome polynomial bits 160 to 191. */
++#define CSL_ELM_SYNDROME_FRAGMENT_5(n)                          (0x414U + ((n) * (0x40U)))
++
++/* Error location register */
++#define CSL_ELM_ERROR_LOCATION_7(n)                             (0x89CU + ((n) * (0x100U)))
++
++/* Error location register */
++#define CSL_ELM_ERROR_LOCATION_6(n)                             (0x898U + ((n) * (0x100U)))
++
++/* Error location register */
++#define CSL_ELM_ERROR_LOCATION_5(n)                             (0x894U + ((n) * (0x100U)))
++
++/* Error location register */
++#define CSL_ELM_ERROR_LOCATION_4(n)                             (0x890U + ((n) * (0x100U)))
++
++/* Error location register */
++#define CSL_ELM_ERROR_LOCATION_3(n)                             (0x88CU + ((n) * (0x100U)))
++
++/* Error location register */
++#define CSL_ELM_ERROR_LOCATION_2(n)                             (0x888U + ((n) * (0x100U)))
++
++/* Error location register */
++#define CSL_ELM_ERROR_LOCATION_1(n)                             (0x884U + ((n) * (0x100U)))
++
++/* Error location register */
++#define CSL_ELM_ERROR_LOCATION_0(n)                             (0x880U + ((n) * (0x100U)))
++
++/* Exit status for the syndrome polynomial processing */
++#define CSL_ELM_LOCATION_STS(n)                                 (0x800U + ((n) * (0x100U)))
++
++/* Error location register */
++#define CSL_ELM_ERROR_LOCATION_11(n)                            (0x8ACU + ((n) * (0x100U)))
++
++/* Error location register */
++#define CSL_ELM_ERROR_LOCATION_13(n)                            (0x8B4U + ((n) * (0x100U)))
++
++/* Error location register */
++#define CSL_ELM_ERROR_LOCATION_15(n)                            (0x8BCU + ((n) * (0x100U)))
++
++/* Error location register */
++#define CSL_ELM_ERROR_LOCATION_10(n)                            (0x8A8U + ((n) * (0x100U)))
++
++/* Error location register */
++#define CSL_ELM_ERROR_LOCATION_8(n)                             (0x8A0U + ((n) * (0x100U)))
++
++/* Error location register */
++#define CSL_ELM_ERROR_LOCATION_9(n)                             (0x8A4U + ((n) * (0x100U)))
++
++/* Error location register */
++#define CSL_ELM_ERROR_LOCATION_14(n)                            (0x8B8U + ((n) * (0x100U)))
++
++/* Error location register */
++#define CSL_ELM_ERROR_LOCATION_12(n)                            (0x8B0U + ((n) * (0x100U)))
++
++
++/**************************************************************************
++* Field Definition Macros
++**************************************************************************/
++
++/* REVISION */
++
++#define CSL_ELM_REVISION_REV_NUMBER_SHIFT                       (0U)
++#define CSL_ELM_REVISION_REV_NUMBER_MASK                        (0x000000FFU)
++#define CSL_ELM_REVISION_REV_NUMBER_RESETVAL                    (0x00000020U)
++#define CSL_ELM_REVISION_REV_NUMBER_MAX                         (0x000000ffU)
++
++#define CSL_ELM_REVISION_RESETVAL                               (0x00000020U)
++
++/* SYSCONFIG */
++
++#define CSL_ELM_SYSCONFIG_AUTOGATING_SHIFT                      (0U)
++#define CSL_ELM_SYSCONFIG_AUTOGATING_MASK                       (0x00000001U)
++#define CSL_ELM_SYSCONFIG_AUTOGATING_RESETVAL                   (0x00000001U)
++#define CSL_ELM_SYSCONFIG_AUTOGATING_OCP_FREE                   (0x00000000U)
++#define CSL_ELM_SYSCONFIG_AUTOGATING_OCP_GATING                 (0x00000001U)
++
++#define CSL_ELM_SYSCONFIG_SOFTRESET_SHIFT                       (1U)
++#define CSL_ELM_SYSCONFIG_SOFTRESET_MASK                        (0x00000002U)
++#define CSL_ELM_SYSCONFIG_SOFTRESET_RESETVAL                    (0x00000000U)
++#define CSL_ELM_SYSCONFIG_SOFTRESET_RESET                       (0x00000002U)
++#define CSL_ELM_SYSCONFIG_SOFTRESET_NORMAL                      (0x00000000U)
++
++#define CSL_ELM_SYSCONFIG_CLOCKACTIVITYOCP_SHIFT                (8U)
++#define CSL_ELM_SYSCONFIG_CLOCKACTIVITYOCP_MASK                 (0x00000100U)
++#define CSL_ELM_SYSCONFIG_CLOCKACTIVITYOCP_RESETVAL             (0x00000000U)
++#define CSL_ELM_SYSCONFIG_CLOCKACTIVITYOCP_OCP_OFF              (0x00000000U)
++#define CSL_ELM_SYSCONFIG_CLOCKACTIVITYOCP_OCP_ON               (0x00000100U)
++
++#define CSL_ELM_SYSCONFIG_SIDLEMODE_SHIFT                       (3U)
++#define CSL_ELM_SYSCONFIG_SIDLEMODE_MASK                        (0x00000018U)
++#define CSL_ELM_SYSCONFIG_SIDLEMODE_RESETVAL                    (0x00000002U)
++#define CSL_ELM_SYSCONFIG_SIDLEMODE_NO_IDLE                     (0x00000008U)
++#define CSL_ELM_SYSCONFIG_SIDLEMODE_RESERVED                    (0x00000018U)
++#define CSL_ELM_SYSCONFIG_SIDLEMODE_FORCE_IDLE                  (0x00000000U)
++#define CSL_ELM_SYSCONFIG_SIDLEMODE_SMART_IDLE                  (0x00000010U)
++
++#define CSL_ELM_SYSCONFIG_RESETVAL                              (0x00000011U)
++
++/* SYSSTS */
++
++#define CSL_ELM_SYSSTS_RESETDONE_SHIFT                          (0U)
++#define CSL_ELM_SYSSTS_RESETDONE_MASK                           (0x00000001U)
++#define CSL_ELM_SYSSTS_RESETDONE_RESETVAL                       (0x00000001U)
++#define CSL_ELM_SYSSTS_RESETDONE_RST_DONE                       (0x00000001U)
++#define CSL_ELM_SYSSTS_RESETDONE_RST_ONGOING                    (0x00000000U)
++
++#define CSL_ELM_SYSSTS_RESETVAL                                 (0x00000001U)
++
++/* IRQSTS */
++
++#define CSL_ELM_IRQSTS_LOC_VALID_0_SHIFT                        (0U)
++#define CSL_ELM_IRQSTS_LOC_VALID_0_MASK                         (0x00000001U)
++#define CSL_ELM_IRQSTS_LOC_VALID_0_RESETVAL                     (0x00000000U)
++#define CSL_ELM_IRQSTS_LOC_VALID_0_MAX                          (0x00000001U)
++
++#define CSL_ELM_IRQSTS_LOC_VALID_1_SHIFT                        (1U)
++#define CSL_ELM_IRQSTS_LOC_VALID_1_MASK                         (0x00000002U)
++#define CSL_ELM_IRQSTS_LOC_VALID_1_RESETVAL                     (0x00000000U)
++#define CSL_ELM_IRQSTS_LOC_VALID_1_MAX                          (0x00000001U)
++
++#define CSL_ELM_IRQSTS_LOC_VALID_2_SHIFT                        (2U)
++#define CSL_ELM_IRQSTS_LOC_VALID_2_MASK                         (0x00000004U)
++#define CSL_ELM_IRQSTS_LOC_VALID_2_RESETVAL                     (0x00000000U)
++#define CSL_ELM_IRQSTS_LOC_VALID_2_MAX                          (0x00000001U)
++
++#define CSL_ELM_IRQSTS_LOC_VALID_3_SHIFT                        (3U)
++#define CSL_ELM_IRQSTS_LOC_VALID_3_MASK                         (0x00000008U)
++#define CSL_ELM_IRQSTS_LOC_VALID_3_RESETVAL                     (0x00000000U)
++#define CSL_ELM_IRQSTS_LOC_VALID_3_MAX                          (0x00000001U)
++
++#define CSL_ELM_IRQSTS_LOC_VALID_4_SHIFT                        (4U)
++#define CSL_ELM_IRQSTS_LOC_VALID_4_MASK                         (0x00000010U)
++#define CSL_ELM_IRQSTS_LOC_VALID_4_RESETVAL                     (0x00000000U)
++#define CSL_ELM_IRQSTS_LOC_VALID_4_MAX                          (0x00000001U)
++
++#define CSL_ELM_IRQSTS_LOC_VALID_5_SHIFT                        (5U)
++#define CSL_ELM_IRQSTS_LOC_VALID_5_MASK                         (0x00000020U)
++#define CSL_ELM_IRQSTS_LOC_VALID_5_RESETVAL                     (0x00000000U)
++#define CSL_ELM_IRQSTS_LOC_VALID_5_MAX                          (0x00000001U)
++
++#define CSL_ELM_IRQSTS_LOC_VALID_6_SHIFT                        (6U)
++#define CSL_ELM_IRQSTS_LOC_VALID_6_MASK                         (0x00000040U)
++#define CSL_ELM_IRQSTS_LOC_VALID_6_RESETVAL                     (0x00000000U)
++#define CSL_ELM_IRQSTS_LOC_VALID_6_MAX                          (0x00000001U)
++
++#define CSL_ELM_IRQSTS_LOC_VALID_7_SHIFT                        (7U)
++#define CSL_ELM_IRQSTS_LOC_VALID_7_MASK                         (0x00000080U)
++#define CSL_ELM_IRQSTS_LOC_VALID_7_RESETVAL                     (0x00000000U)
++#define CSL_ELM_IRQSTS_LOC_VALID_7_MAX                          (0x00000001U)
++
++#define CSL_ELM_IRQSTS_PAGE_VALID_SHIFT                         (8U)
++#define CSL_ELM_IRQSTS_PAGE_VALID_MASK                          (0x00000100U)
++#define CSL_ELM_IRQSTS_PAGE_VALID_RESETVAL                      (0x00000000U)
++#define CSL_ELM_IRQSTS_PAGE_VALID_MAX                           (0x00000001U)
++
++#define CSL_ELM_IRQSTS_RESETVAL                                 (0x00000000U)
++
++/* IRQEN */
++
++#define CSL_ELM_IRQEN_LOCATION_MASK_0_SHIFT                     (0U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_0_MASK                      (0x00000001U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_0_RESETVAL                  (0x00000000U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_0_MAX                       (0x00000001U)
++
++#define CSL_ELM_IRQEN_LOCATION_MASK_1_SHIFT                     (1U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_1_MASK                      (0x00000002U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_1_RESETVAL                  (0x00000000U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_1_MAX                       (0x00000001U)
++
++#define CSL_ELM_IRQEN_LOCATION_MASK_2_SHIFT                     (2U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_2_MASK                      (0x00000004U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_2_RESETVAL                  (0x00000000U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_2_MAX                       (0x00000001U)
++
++#define CSL_ELM_IRQEN_LOCATION_MASK_3_SHIFT                     (3U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_3_MASK                      (0x00000008U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_3_RESETVAL                  (0x00000000U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_3_MAX                       (0x00000001U)
++
++#define CSL_ELM_IRQEN_LOCATION_MASK_4_SHIFT                     (4U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_4_MASK                      (0x00000010U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_4_RESETVAL                  (0x00000000U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_4_MAX                       (0x00000001U)
++
++#define CSL_ELM_IRQEN_LOCATION_MASK_5_SHIFT                     (5U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_5_MASK                      (0x00000020U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_5_RESETVAL                  (0x00000000U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_5_MAX                       (0x00000001U)
++
++#define CSL_ELM_IRQEN_LOCATION_MASK_6_SHIFT                     (6U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_6_MASK                      (0x00000040U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_6_RESETVAL                  (0x00000000U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_6_MAX                       (0x00000001U)
++
++#define CSL_ELM_IRQEN_LOCATION_MASK_7_SHIFT                     (7U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_7_MASK                      (0x00000080U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_7_RESETVAL                  (0x00000000U)
++#define CSL_ELM_IRQEN_LOCATION_MASK_7_MAX                       (0x00000001U)
++
++#define CSL_ELM_IRQEN_PAGE_MASK_SHIFT                           (8U)
++#define CSL_ELM_IRQEN_PAGE_MASK_MASK                            (0x00000100U)
++#define CSL_ELM_IRQEN_PAGE_MASK_RESETVAL                        (0x00000000U)
++#define CSL_ELM_IRQEN_PAGE_MASK_MAX                             (0x00000001U)
++
++#define CSL_ELM_IRQEN_RESETVAL                                  (0x00000000U)
++
++/* LOCATION_CONFIG */
++
++#define CSL_ELM_LOCATION_CONFIG_ECC_BCH_LEVEL_SHIFT             (0U)
++#define CSL_ELM_LOCATION_CONFIG_ECC_BCH_LEVEL_MASK              (0x00000003U)
++#define CSL_ELM_LOCATION_CONFIG_ECC_BCH_LEVEL_RESETVAL          (0x00000000U)
++#define CSL_ELM_LOCATION_CONFIG_ECC_BCH_LEVEL_MAX               (0x00000003U)
++
++#define CSL_ELM_LOCATION_CONFIG_ECC_SIZE_SHIFT                  (16U)
++#define CSL_ELM_LOCATION_CONFIG_ECC_SIZE_MASK                   (0x07FF0000U)
++#define CSL_ELM_LOCATION_CONFIG_ECC_SIZE_RESETVAL               (0x00000000U)
++#define CSL_ELM_LOCATION_CONFIG_ECC_SIZE_MAX                    (0x000007ffU)
++
++#define CSL_ELM_LOCATION_CONFIG_RESETVAL                        (0x00000000U)
++
++/* PAGE_CTRL */
++
++#define CSL_ELM_PAGE_CTRL_SECTOR_0_SHIFT                        (0U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_0_MASK                         (0x00000001U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_0_RESETVAL                     (0x00000000U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_0_MAX                          (0x00000001U)
++
++#define CSL_ELM_PAGE_CTRL_SECTOR_1_SHIFT                        (1U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_1_MASK                         (0x00000002U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_1_RESETVAL                     (0x00000000U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_1_MAX                          (0x00000001U)
++
++#define CSL_ELM_PAGE_CTRL_SECTOR_2_SHIFT                        (2U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_2_MASK                         (0x00000004U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_2_RESETVAL                     (0x00000000U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_2_MAX                          (0x00000001U)
++
++#define CSL_ELM_PAGE_CTRL_SECTOR_3_SHIFT                        (3U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_3_MASK                         (0x00000008U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_3_RESETVAL                     (0x00000000U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_3_MAX                          (0x00000001U)
++
++#define CSL_ELM_PAGE_CTRL_SECTOR_4_SHIFT                        (4U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_4_MASK                         (0x00000010U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_4_RESETVAL                     (0x00000000U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_4_MAX                          (0x00000001U)
++
++#define CSL_ELM_PAGE_CTRL_SECTOR_5_SHIFT                        (5U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_5_MASK                         (0x00000020U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_5_RESETVAL                     (0x00000000U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_5_MAX                          (0x00000001U)
++
++#define CSL_ELM_PAGE_CTRL_SECTOR_6_SHIFT                        (6U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_6_MASK                         (0x00000040U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_6_RESETVAL                     (0x00000000U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_6_MAX                          (0x00000001U)
++
++#define CSL_ELM_PAGE_CTRL_SECTOR_7_SHIFT                        (7U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_7_MASK                         (0x00000080U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_7_RESETVAL                     (0x00000000U)
++#define CSL_ELM_PAGE_CTRL_SECTOR_7_MAX                          (0x00000001U)
++
++#define CSL_ELM_PAGE_CTRL_RESETVAL                              (0x00000000U)
++
++/* SYNDROME_FRAGMENT_1 */
++
++#define CSL_ELM_SYNDROME_FRAGMENT_1_SYNDROME_1_SHIFT            (0U)
++#define CSL_ELM_SYNDROME_FRAGMENT_1_SYNDROME_1_MASK             (0xFFFFFFFFU)
++#define CSL_ELM_SYNDROME_FRAGMENT_1_SYNDROME_1_RESETVAL         (0x00000000U)
++#define CSL_ELM_SYNDROME_FRAGMENT_1_SYNDROME_1_MAX              (0xffffffffU)
++
++#define CSL_ELM_SYNDROME_FRAGMENT_1_RESETVAL                    (0x00000000U)
++
++/* SYNDROME_FRAGMENT_2 */
++
++#define CSL_ELM_SYNDROME_FRAGMENT_2_SYNDROME_2_SHIFT            (0U)
++#define CSL_ELM_SYNDROME_FRAGMENT_2_SYNDROME_2_MASK             (0xFFFFFFFFU)
++#define CSL_ELM_SYNDROME_FRAGMENT_2_SYNDROME_2_RESETVAL         (0x00000000U)
++#define CSL_ELM_SYNDROME_FRAGMENT_2_SYNDROME_2_MAX              (0xffffffffU)
++
++#define CSL_ELM_SYNDROME_FRAGMENT_2_RESETVAL                    (0x00000000U)
++
++/* SYNDROME_FRAGMENT_6 */
++
++#define CSL_ELM_SYNDROME_FRAGMENT_6_SYNDROME_6_SHIFT            (0U)
++#define CSL_ELM_SYNDROME_FRAGMENT_6_SYNDROME_6_MASK             (0x0000FFFFU)
++#define CSL_ELM_SYNDROME_FRAGMENT_6_SYNDROME_6_RESETVAL         (0x00000000U)
++#define CSL_ELM_SYNDROME_FRAGMENT_6_SYNDROME_6_MAX              (0x0000ffffU)
++
++#define CSL_ELM_SYNDROME_FRAGMENT_6_SYNDROME_VALID_SHIFT        (16U)
++#define CSL_ELM_SYNDROME_FRAGMENT_6_SYNDROME_VALID_MASK         (0x00010000U)
++#define CSL_ELM_SYNDROME_FRAGMENT_6_SYNDROME_VALID_RESETVAL     (0x00000000U)
++#define CSL_ELM_SYNDROME_FRAGMENT_6_SYNDROME_VALID_MAX          (0x00000001U)
++
++#define CSL_ELM_SYNDROME_FRAGMENT_6_RESETVAL                    (0x00000000U)
++
++/* SYNDROME_FRAGMENT_0 */
++
++#define CSL_ELM_SYNDROME_FRAGMENT_0_SYNDROME_0_SHIFT            (0U)
++#define CSL_ELM_SYNDROME_FRAGMENT_0_SYNDROME_0_MASK             (0xFFFFFFFFU)
++#define CSL_ELM_SYNDROME_FRAGMENT_0_SYNDROME_0_RESETVAL         (0x00000000U)
++#define CSL_ELM_SYNDROME_FRAGMENT_0_SYNDROME_0_MAX              (0xffffffffU)
++
++#define CSL_ELM_SYNDROME_FRAGMENT_0_RESETVAL                    (0x00000000U)
++
++/* SYNDROME_FRAGMENT_3 */
++
++#define CSL_ELM_SYNDROME_FRAGMENT_3_SYNDROME_3_SHIFT            (0U)
++#define CSL_ELM_SYNDROME_FRAGMENT_3_SYNDROME_3_MASK             (0xFFFFFFFFU)
++#define CSL_ELM_SYNDROME_FRAGMENT_3_SYNDROME_3_RESETVAL         (0x00000000U)
++#define CSL_ELM_SYNDROME_FRAGMENT_3_SYNDROME_3_MAX              (0xffffffffU)
++
++#define CSL_ELM_SYNDROME_FRAGMENT_3_RESETVAL                    (0x00000000U)
++
++/* SYNDROME_FRAGMENT_4 */
++
++#define CSL_ELM_SYNDROME_FRAGMENT_4_SYNDROME_4_SHIFT            (0U)
++#define CSL_ELM_SYNDROME_FRAGMENT_4_SYNDROME_4_MASK             (0xFFFFFFFFU)
++#define CSL_ELM_SYNDROME_FRAGMENT_4_SYNDROME_4_RESETVAL         (0x00000000U)
++#define CSL_ELM_SYNDROME_FRAGMENT_4_SYNDROME_4_MAX              (0xffffffffU)
++
++#define CSL_ELM_SYNDROME_FRAGMENT_4_RESETVAL                    (0x00000000U)
++
++/* SYNDROME_FRAGMENT_5 */
++
++#define CSL_ELM_SYNDROME_FRAGMENT_5_SYNDROME_5_SHIFT            (0U)
++#define CSL_ELM_SYNDROME_FRAGMENT_5_SYNDROME_5_MASK             (0xFFFFFFFFU)
++#define CSL_ELM_SYNDROME_FRAGMENT_5_SYNDROME_5_RESETVAL         (0x00000000U)
++#define CSL_ELM_SYNDROME_FRAGMENT_5_SYNDROME_5_MAX              (0xffffffffU)
++
++#define CSL_ELM_SYNDROME_FRAGMENT_5_RESETVAL                    (0x00000000U)
++
++/* ERROR_LOCATION_7 */
++
++#define CSL_ELM_ERROR_LOCATION_7_ECC_ERROR_LOCATION_SHIFT       (0U)
++#define CSL_ELM_ERROR_LOCATION_7_ECC_ERROR_LOCATION_MASK        (0x00001FFFU)
++#define CSL_ELM_ERROR_LOCATION_7_ECC_ERROR_LOCATION_RESETVAL    (0x00000000U)
++#define CSL_ELM_ERROR_LOCATION_7_ECC_ERROR_LOCATION_MAX         (0x00001fffU)
++
++#define CSL_ELM_ERROR_LOCATION_7_RESETVAL                       (0x00000000U)
++
++/* ERROR_LOCATION_6 */
++
++#define CSL_ELM_ERROR_LOCATION_6_ECC_ERROR_LOCATION_SHIFT       (0U)
++#define CSL_ELM_ERROR_LOCATION_6_ECC_ERROR_LOCATION_MASK        (0x00001FFFU)
++#define CSL_ELM_ERROR_LOCATION_6_ECC_ERROR_LOCATION_RESETVAL    (0x00000000U)
++#define CSL_ELM_ERROR_LOCATION_6_ECC_ERROR_LOCATION_MAX         (0x00001fffU)
++
++#define CSL_ELM_ERROR_LOCATION_6_RESETVAL                       (0x00000000U)
++
++/* ERROR_LOCATION_5 */
++
++#define CSL_ELM_ERROR_LOCATION_5_ECC_ERROR_LOCATION_SHIFT       (0U)
++#define CSL_ELM_ERROR_LOCATION_5_ECC_ERROR_LOCATION_MASK        (0x00001FFFU)
++#define CSL_ELM_ERROR_LOCATION_5_ECC_ERROR_LOCATION_RESETVAL    (0x00000000U)
++#define CSL_ELM_ERROR_LOCATION_5_ECC_ERROR_LOCATION_MAX         (0x00001fffU)
++
++#define CSL_ELM_ERROR_LOCATION_5_RESETVAL                       (0x00000000U)
++
++/* ERROR_LOCATION_4 */
++
++#define CSL_ELM_ERROR_LOCATION_4_ECC_ERROR_LOCATION_SHIFT       (0U)
++#define CSL_ELM_ERROR_LOCATION_4_ECC_ERROR_LOCATION_MASK        (0x00001FFFU)
++#define CSL_ELM_ERROR_LOCATION_4_ECC_ERROR_LOCATION_RESETVAL    (0x00000000U)
++#define CSL_ELM_ERROR_LOCATION_4_ECC_ERROR_LOCATION_MAX         (0x00001fffU)
++
++#define CSL_ELM_ERROR_LOCATION_4_RESETVAL                       (0x00000000U)
++
++/* ERROR_LOCATION_3 */
++
++#define CSL_ELM_ERROR_LOCATION_3_ECC_ERROR_LOCATION_SHIFT       (0U)
++#define CSL_ELM_ERROR_LOCATION_3_ECC_ERROR_LOCATION_MASK        (0x00001FFFU)
++#define CSL_ELM_ERROR_LOCATION_3_ECC_ERROR_LOCATION_RESETVAL    (0x00000000U)
++#define CSL_ELM_ERROR_LOCATION_3_ECC_ERROR_LOCATION_MAX         (0x00001fffU)
++
++#define CSL_ELM_ERROR_LOCATION_3_RESETVAL                       (0x00000000U)
++
++/* ERROR_LOCATION_2 */
++
++#define CSL_ELM_ERROR_LOCATION_2_ECC_ERROR_LOCATION_SHIFT       (0U)
++#define CSL_ELM_ERROR_LOCATION_2_ECC_ERROR_LOCATION_MASK        (0x00001FFFU)
++#define CSL_ELM_ERROR_LOCATION_2_ECC_ERROR_LOCATION_RESETVAL    (0x00000000U)
++#define CSL_ELM_ERROR_LOCATION_2_ECC_ERROR_LOCATION_MAX         (0x00001fffU)
++
++#define CSL_ELM_ERROR_LOCATION_2_RESETVAL                       (0x00000000U)
++
++/* ERROR_LOCATION_1 */
++
++#define CSL_ELM_ERROR_LOCATION_1_ECC_ERROR_LOCATION_SHIFT       (0U)
++#define CSL_ELM_ERROR_LOCATION_1_ECC_ERROR_LOCATION_MASK        (0x00001FFFU)
++#define CSL_ELM_ERROR_LOCATION_1_ECC_ERROR_LOCATION_RESETVAL    (0x00000000U)
++#define CSL_ELM_ERROR_LOCATION_1_ECC_ERROR_LOCATION_MAX         (0x00001fffU)
++
++#define CSL_ELM_ERROR_LOCATION_1_RESETVAL                       (0x00000000U)
++
++/* ERROR_LOCATION_0 */
++
++#define CSL_ELM_ERROR_LOCATION_0_ECC_ERROR_LOCATION_SHIFT       (0U)
++#define CSL_ELM_ERROR_LOCATION_0_ECC_ERROR_LOCATION_MASK        (0x00001FFFU)
++#define CSL_ELM_ERROR_LOCATION_0_ECC_ERROR_LOCATION_RESETVAL    (0x00000000U)
++#define CSL_ELM_ERROR_LOCATION_0_ECC_ERROR_LOCATION_MAX         (0x00001fffU)
++
++#define CSL_ELM_ERROR_LOCATION_0_RESETVAL                       (0x00000000U)
++
++/* LOCATION_STS */
++
++#define CSL_ELM_LOCATION_STS_ECC_NB_ERRORS_SHIFT                (0U)
++#define CSL_ELM_LOCATION_STS_ECC_NB_ERRORS_MASK                 (0x0000001FU)
++#define CSL_ELM_LOCATION_STS_ECC_NB_ERRORS_RESETVAL             (0x00000000U)
++#define CSL_ELM_LOCATION_STS_ECC_NB_ERRORS_MAX                  (0x0000001fU)
++
++#define CSL_ELM_LOCATION_STS_ECC_CORRECTBL_SHIFT                (8U)
++#define CSL_ELM_LOCATION_STS_ECC_CORRECTBL_MASK                 (0x00000100U)
++#define CSL_ELM_LOCATION_STS_ECC_CORRECTBL_RESETVAL             (0x00000000U)
++#define CSL_ELM_LOCATION_STS_ECC_CORRECTBL_MAX                  (0x00000001U)
++
++#define CSL_ELM_LOCATION_STS_RESETVAL                           (0x00000000U)
++
++/* ERROR_LOCATION_11 */
++
++#define CSL_ELM_ERROR_LOCATION_11_ECC_ERROR_LOCATION_SHIFT      (0U)
++#define CSL_ELM_ERROR_LOCATION_11_ECC_ERROR_LOCATION_MASK       (0x00001FFFU)
++#define CSL_ELM_ERROR_LOCATION_11_ECC_ERROR_LOCATION_RESETVAL   (0x00000000U)
++#define CSL_ELM_ERROR_LOCATION_11_ECC_ERROR_LOCATION_MAX        (0x00001fffU)
++
++#define CSL_ELM_ERROR_LOCATION_11_RESETVAL                      (0x00000000U)
++
++/* ERROR_LOCATION_13 */
++
++#define CSL_ELM_ERROR_LOCATION_13_ECC_ERROR_LOCATION_SHIFT      (0U)
++#define CSL_ELM_ERROR_LOCATION_13_ECC_ERROR_LOCATION_MASK       (0x00001FFFU)
++#define CSL_ELM_ERROR_LOCATION_13_ECC_ERROR_LOCATION_RESETVAL   (0x00000000U)
++#define CSL_ELM_ERROR_LOCATION_13_ECC_ERROR_LOCATION_MAX        (0x00001fffU)
++
++#define CSL_ELM_ERROR_LOCATION_13_RESETVAL                      (0x00000000U)
++
++/* ERROR_LOCATION_15 */
++
++#define CSL_ELM_ERROR_LOCATION_15_ECC_ERROR_LOCATION_SHIFT      (0U)
++#define CSL_ELM_ERROR_LOCATION_15_ECC_ERROR_LOCATION_MASK       (0x00001FFFU)
++#define CSL_ELM_ERROR_LOCATION_15_ECC_ERROR_LOCATION_RESETVAL   (0x00000000U)
++#define CSL_ELM_ERROR_LOCATION_15_ECC_ERROR_LOCATION_MAX        (0x00001fffU)
++
++#define CSL_ELM_ERROR_LOCATION_15_RESETVAL                      (0x00000000U)
++
++/* ERROR_LOCATION_10 */
++
++#define CSL_ELM_ERROR_LOCATION_10_ECC_ERROR_LOCATION_SHIFT      (0U)
++#define CSL_ELM_ERROR_LOCATION_10_ECC_ERROR_LOCATION_MASK       (0x00001FFFU)
++#define CSL_ELM_ERROR_LOCATION_10_ECC_ERROR_LOCATION_RESETVAL   (0x00000000U)
++#define CSL_ELM_ERROR_LOCATION_10_ECC_ERROR_LOCATION_MAX        (0x00001fffU)
++
++#define CSL_ELM_ERROR_LOCATION_10_RESETVAL                      (0x00000000U)
++
++/* ERROR_LOCATION_8 */
++
++#define CSL_ELM_ERROR_LOCATION_8_ECC_ERROR_LOCATION_SHIFT       (0U)
++#define CSL_ELM_ERROR_LOCATION_8_ECC_ERROR_LOCATION_MASK        (0x00001FFFU)
++#define CSL_ELM_ERROR_LOCATION_8_ECC_ERROR_LOCATION_RESETVAL    (0x00000000U)
++#define CSL_ELM_ERROR_LOCATION_8_ECC_ERROR_LOCATION_MAX         (0x00001fffU)
++
++#define CSL_ELM_ERROR_LOCATION_8_RESETVAL                       (0x00000000U)
++
++/* ERROR_LOCATION_9 */
++
++#define CSL_ELM_ERROR_LOCATION_9_ECC_ERROR_LOCATION_SHIFT       (0U)
++#define CSL_ELM_ERROR_LOCATION_9_ECC_ERROR_LOCATION_MASK        (0x00001FFFU)
++#define CSL_ELM_ERROR_LOCATION_9_ECC_ERROR_LOCATION_RESETVAL    (0x00000000U)
++#define CSL_ELM_ERROR_LOCATION_9_ECC_ERROR_LOCATION_MAX         (0x00001fffU)
++
++#define CSL_ELM_ERROR_LOCATION_9_RESETVAL                       (0x00000000U)
++
++/* ERROR_LOCATION_14 */
++
++#define CSL_ELM_ERROR_LOCATION_14_ECC_ERROR_LOCATION_SHIFT      (0U)
++#define CSL_ELM_ERROR_LOCATION_14_ECC_ERROR_LOCATION_MASK       (0x00001FFFU)
++#define CSL_ELM_ERROR_LOCATION_14_ECC_ERROR_LOCATION_RESETVAL   (0x00000000U)
++#define CSL_ELM_ERROR_LOCATION_14_ECC_ERROR_LOCATION_MAX        (0x00001fffU)
++
++#define CSL_ELM_ERROR_LOCATION_14_RESETVAL                      (0x00000000U)
++
++/* ERROR_LOCATION_12 */
++
++#define CSL_ELM_ERROR_LOCATION_12_ECC_ERROR_LOCATION_SHIFT      (0U)
++#define CSL_ELM_ERROR_LOCATION_12_ECC_ERROR_LOCATION_MASK       (0x00001FFFU)
++#define CSL_ELM_ERROR_LOCATION_12_ECC_ERROR_LOCATION_RESETVAL   (0x00000000U)
++#define CSL_ELM_ERROR_LOCATION_12_ECC_ERROR_LOCATION_MAX        (0x00001fffU)
++
++#define CSL_ELM_ERROR_LOCATION_12_RESETVAL                      (0x00000000U)
++
++#ifdef __cplusplus
++}
++#endif
++#endif
+diff --git a/source/drivers/elm/v0/elm.h b/source/drivers/elm/v0/elm.h
+new file mode 100644
+index 0000000000..bcbb85d328
+--- /dev/null
++++ b/source/drivers/elm/v0/elm.h
+@@ -0,0 +1,632 @@
++/*
++ *  Copyright (C) 2023 Texas Instruments Incorporated
++ *
++ *  Redistribution and use in source and binary forms, with or without
++ *  modification, are permitted provided that the following conditions
++ *  are met:
++ *
++ *    Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *
++ *    Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the
++ *    distribution.
++ *
++ *    Neither the name of Texas Instruments Incorporated nor the names of
++ *    its contributors may be used to endorse or promote products derived
++ *    from this software without specific prior written permission.
++ *
++ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++/**
++ *  \defgroup DRV_ELM_MODULE APIs for ELM
++ *  \ingroup DRV_MODULE
++ *
++ *  This module contains APIs to program and use the ELM module. The APIs
++ *  can be used by other drivers to get access to ELM and also by
++ *  application to initiate data transfer operation.
++ *
++ *  @{
++ */
++
++/**
++ *  \file v0/elm.h
++ *
++ *  \brief ELM Driver API/interface file.
++ */
++
++#ifndef ELM_H
++#define ELM_H
++
++/* ========================================================================== */
++/*                             Include Files                                  */
++/* ========================================================================== */
++#include <stdint.h>
++#include <drivers/hw_include/cslr_elm.h>
++
++#ifdef __cplusplus
++extern "C" {
++#endif
++
++/*******************************************************************************
++*                           MACRO DEFINITIONS
++*******************************************************************************/
++/*****************************************************************************/
++
++/**
++ *  \brief Macros which can be used as 'configVal' parameter
++ *         to ELM_autoGatingConfig API
++ */
++/** OCP clock is free-running */
++#define ELM_AUTOGATING_OCP_FREE                       (0)
++/** Automatic internal OCP clock gating strategy is applied
++    based on the OCP interface activity */
++#define ELM_AUTOGATING_OCP_GATING                     (1)
++
++/**
++ *  \brief Macros which can be used as 'configVal' parameter
++ *         to ELM_idleModeSelect API.
++ */
++/** For selecting force-idle mode */
++#define ELM_IDLEMODE_FORCEIDLE                        (0)
++/** For selecting no-idle mode */
++#define ELM_IDLEMODE_NOIDLE                           (1)
++/** For selecting smart-idle mode */
++#define ELM_IDLEMODE_SMARTIDLE                        (2)
++
++/**
++ *  \brief Macros which can be used as 'configVal' parameter
++ *         to ELM_clockActivityOCPConfig API.
++ */
++/** OCP Clock is maintained during wake up period */
++#define ELM_CLOCKACTIVITYOCP_OCP_ON                   (1)
++/** OCP clock is switch off */
++#define ELM_CLOCKACTIVITYOCP_OCP_OFF                  (0)
++
++/**
++ *  \brief Macros which can be used as 'flag' parameter to ELM_interuptStatusGet API.
++ */
++/** Error-location status for syndrome polynomial 0 */
++#define ELM_LOC_VALID_0_STATUS                        (0U)
++/** Error-location status for syndrome polynomial 1 */
++#define ELM_LOC_VALID_1_STATUS                        (1U)
++/** Error-location status for syndrome polynomial 2 */
++#define ELM_LOC_VALID_2_STATUS                        (2U)
++/** Error-location status for syndrome polynomial 3 */
++#define ELM_LOC_VALID_3_STATUS                        (3U)
++/** Error-location status for syndrome polynomial 4 */
++#define ELM_LOC_VALID_4_STATUS                        (4U)
++/** Error-location status for syndrome polynomial 5 */
++#define ELM_LOC_VALID_5_STATUS                        (5U)
++/** Error-location status for syndrome polynomial 6 */
++#define ELM_LOC_VALID_6_STATUS                        (6U)
++/** Error-location status for syndrome polynomial 7 */
++#define ELM_LOC_VALID_7_STATUS                        (7U)
++/** Error-location status for a full page */
++#define ELM_PAGE_VALID_STATUS                         (8U)
++
++/**
++ *  \brief Macros which can be used as 'flag' parameter to ELM_interuptConfig API.
++ */
++/** Enables ELM interrupts */
++#define ELM_INT_ENALBLE                               (1U)
++/** Disables ELM interrupts */
++#define ELM_INT_DISALBLE                              (0U)
++
++/**
++ *  \brief Macros which can be used as 'bchECCLevel' parameter to
++ *         ELM_errorCorrectionLevelSet API.
++ */
++/** BCH level for Upto 4 bits error correction */
++#define ELM_ECC_BCH_LEVEL_4BITS                       (0U)
++/** BCH level for Upto 8 bits error correction */
++#define ELM_ECC_BCH_LEVEL_8BITS                       (1U)
++/** BCH level for Upto 16 bits error correction */
++#define ELM_ECC_BCH_LEVEL_16BITS                      (2U)
++
++/**
++ *  \brief Macros which can be used as 'mode' parameter to ELM_setSectorMode API.
++ */
++/** Enables continuous mode of ELM module */
++#define ELM_MODE_CONTINUOUS                           (0U)
++/** Enables page mode of ELM module */
++#define ELM_MODE_PAGE                                 (1U)
++
++/**
++ *  \brief Macros which can be used as 'sectorNum' parameter to ELM_setSectorMode API.
++ */
++/** For selecting syndrome polynomial 0 as part of the page in page mode */
++#define ELM_PAGEMODE_SECTOR_0                         (0U)
++/** For selecting syndrome polynomial 1 as part of the page in page mode */
++#define ELM_PAGEMODE_SECTOR_1                         (1U)
++/** For selecting syndrome polynomial 2 as part of the page in page mode */
++#define ELM_PAGEMODE_SECTOR_2                         (2U)
++/** For selecting syndrome polynomial 3 as part of the page in page mode */
++#define ELM_PAGEMODE_SECTOR_3                         (3U)
++/** For selecting syndrome polynomial 4 as part of the page in page mode */
++#define ELM_PAGEMODE_SECTOR_4                         (4U)
++/** For selecting syndrome polynomial 5 as part of the page in page mode */
++#define ELM_PAGEMODE_SECTOR_5                         (5U)
++/** For selecting syndrome polynomial 6 as part of the page in page mode */
++#define ELM_PAGEMODE_SECTOR_6                         (6U)
++/** For selecting syndrome polynomial 7 as part of the page in page mode */
++#define ELM_PAGEMODE_SECTOR_7                         (7U)
++
++/**
++ *  \brief Macros which can be used as 'synFrgmtId' parameter to
++ *         ELM_setSyndromeFragment API
++ */
++/** Selects syndrome fragment 0 for error-location processing */
++#define ELM_SYNDROME_FRGMT_0                          (0U)
++/** Selects syndrome fragment 1 for error-location processing */
++#define ELM_SYNDROME_FRGMT_1                          (1U)
++/** Selects syndrome fragment 2 for error-location processing */
++#define ELM_SYNDROME_FRGMT_2                          (2U)
++/** Selects syndrome fragment 3 for error-location processing */
++#define ELM_SYNDROME_FRGMT_3                          (3U)
++/** Selects syndrome fragment 4 for error-location processing */
++#define ELM_SYNDROME_FRGMT_4                          (4U)
++/** Selects syndrome fragment 5 for error-location processing */
++#define ELM_SYNDROME_FRGMT_5                          (5U)
++/** Selects syndrome fragment 6 for error-location processing */
++#define ELM_SYNDROME_FRGMT_6                          (6U)
++
++/**
++ *  \brief Macros which can be used as 'errNum' parameter to
++ *         ELM_errorLocationBitAddrGet API.
++ */
++/** Indicates 0th error of ELM */
++#define ELM_ERROR_NUM_0                               (0U)
++/** Indicates 1st error of ELM */
++#define ELM_ERROR_NUM_1                               (1U)
++/** Indicates 2nd error of ELM */
++#define ELM_ERROR_NUM_2                               (2U)
++/** Indicates 3rd error of ELM */
++#define ELM_ERROR_NUM_3                               (3U)
++/** Indicates 4th error of ELM */
++#define ELM_ERROR_NUM_4                               (4U)
++/** Indicates 5th error of ELM */
++#define ELM_ERROR_NUM_5                               (5U)
++/** Indicates 6th error of ELM */
++#define ELM_ERROR_NUM_6                               (6U)
++/** Indicates 7th error of ELM */
++#define ELM_ERROR_NUM_7                               (7U)
++/** Indicates 8th error of ELM */
++#define ELM_ERROR_NUM_8                               (8U)
++/** Indicates 9th error of ELM */
++#define ELM_ERROR_NUM_9                               (9U)
++/** Indicates 10th error of ELM */
++#define ELM_ERROR_NUM_10                              (10U)
++/** Indicates 11th error of ELM */
++#define ELM_ERROR_NUM_11                              (11U)
++/** Indicates 12th error of ELM */
++#define ELM_ERROR_NUM_12                              (12U)
++/** Indicates 13th error of ELM */
++#define ELM_ERROR_NUM_13                              (13U)
++/** Indicates 14th error of ELM */
++#define ELM_ERROR_NUM_14                              (14U)
++/** Indicates 15th error of ELM */
++#define ELM_ERROR_NUM_15                              (15U)
++
++/** Sets a bit of ELM register to high */
++#define ELM_BIT_SET_HIGH        (1U)
++/** Sets a bit of ELM register to low */
++#define ELM_BIT_SET_LOW         (0U)
++
++/** Enables a bit of ELM register */
++#define ELM_BIT_ENABLE          (1U)
++/** Disables a bit of ELM register */
++#define ELM_BIT_DISABLE         (0U)
++
++/** Handle to access ELM registers. */
++#define hElmCfg  ((CSL_elmRegs *)CSL_ELM_0_CFG_REGS)
++
++/** ELM Handle */
++typedef CSL_elmRegs * elmHandle;
++
++/*****************************************************************************
++**                    FUNCTION PROTOTYPES
++*****************************************************************************/
++
++/**
++* \brief   This function reads the IP revision code of ELM.\n
++*
++* \param   baseAddr       Memory address of the ELM.\n
++*
++* \return  ipRev          IP revision code of ELM.\n
++*/
++uint32_t ELM_revisionGet(uint32_t baseAddr);
++
++/**
++* \brief   This function configs the Internal OCP clock gating strategy.\n
++*
++* \param   baseAddr       Memory address of the ELM.\n
++*
++* \param   configVal      Config value for OCP clk gating.\n
++*                         This can take one of the following values :\n
++*                         ELM_AUTOGATING_OCP_FREE   -- OCP clock is free-running\n
++*                         ELM_AUTOGATING_OCP_GATING -- Automatic internal OCP
++*                                                      clock gating strategy is
++*                                                      applied based on the OCP
++*                                                      interface activity.\n
++*
++* \return  none.\n
++*/
++void ELM_autoGatingConfig(uint32_t baseAddr, uint32_t configVal);
++
++/**
++* \brief   This function sets the idle mode for ELM.\n
++*
++* \param   baseAddr       Memory address of the ELM.\n
++*
++* \param   mode           Idle mode.\n
++*                         This can take one of the following values :\n
++*                         ELM_IDLEMODE_FORCEIDLE -- for force-idle. \n
++*                         ELM_IDLEMODE_NOIDLE    -- for no-idle. \n
++*                         ELM_IDLEMODE_SMARTIDLE -- for smart-idle.\n
++*
++* \return  none.\n
++*/
++void ELM_idleModeSelect(uint32_t baseAddr, uint32_t mode);
++
++/**
++* \brief   This function Resets the ELM.\n
++*
++* \param   baseAddr   Memory address of the ELM.\n
++*
++* \return  None.\n
++*/
++void ELM_moduleReset(uint32_t baseAddr);
++
++/**
++* \brief   This function sets the OCP Clock activity when module is in IDLE
++*          mode.\n
++*
++* \param   baseAddr       Memory address of the ELM.\n
++*
++* \param   configVal      Config value.\n
++*                         This can take one of the following values :\n
++*                         ELM_CLOCKACTIVITYOCP_OCP_OFF -- OCP clock is swith off\n
++*                         ELM_CLOCKACTIVITYOCP_OCP_ON  -- OCP Clock is
++*                                                         maintained during
++*                                                         wake up period.\n
++*
++* \return  none.\n
++*/
++void ELM_clockActivityOCPConfig(uint32_t baseAddr, uint32_t configVal);
++
++/**
++* \brief   This function gets the software resets status of ELM.\n
++*
++* \param   baseAddr   Memory address of the ELM.\n
++*
++* \return  status     Reset status : \n
++*                       0 : Module reset is on-going.\n
++*                       1 : Module reset is completed.\n
++*/
++uint32_t ELM_moduleResetStatusGet(uint32_t baseAddr);
++
++/**
++* \brief   This function gets Interrupt status.\n
++*
++* \param   baseAddr       Memory address of the ELM.\n
++*
++* \param   flag           Flag for which interrupt status has to get.\n
++*                         This can take one of the following values :\n
++*                         ELM_LOC_VALID_0_STATUS         : Error-location
++*                                                          status for syndrome
++*                                                          polynomial 0.\n
++*                         ELM_LOC_VALID_1_STATUS         : Error-location
++*                                                          status for syndrome
++*                                                          polynomial 1.\n
++*                         ELM_LOC_VALID_2_STATUS         : Error-location
++*                                                          status for syndrome
++*                                                          polynomial 2.\n
++*                         ELM_LOC_VALID_3_STATUS         : Error-location
++*                                                          status for syndrome
++*                                                          polynomial 3.\n
++*                         ELM_LOC_VALID_4_STATUS         : Error-location
++*                                                          status for syndrome
++*                                                          polynomial 4.\n
++*                         ELM_LOC_VALID_5_STATUS         : Error-location
++*                                                          status for syndrome
++*                                                          polynomial 5.\n
++*                         ELM_LOC_VALID_6_STATUS         : Error-location
++*                                                          status for syndrome
++*                                                          polynomial 6.\n
++*                         ELM_LOC_VALID_7_STATUS         : Error-location
++*                                                          status for syndrome
++*                                                          polynomial 7.\n
++*                         ELM_PAGE_VALID_STATUS          : Error-location
++*                                                          status for a full
++*                                                          page. \n
++*
++* \return  intSts         Interrupt Status. Return value meaning depends on the
++*                         param flag. \n
++*                         If flag is ELM_LOC_VALID_i_STATUS where i = 0 to 7,
++*                         then\n
++*                            0 : No syndrome processed or process in progress.\n
++*                            1 : Error-location process completed.\n
++*
++*                         If flag is ELM_PAGE_VALID_STATUS, then\n
++*                            0 : Error locations invalid for all polynomials
++*                                enabled.\n
++*                            1 : All error locations valid.\n
++*
++*/
++uint32_t ELM_interuptStatusGet(uint32_t baseAddr, uint32_t flag);
++
++/**
++* \brief   This function clears the interrupt.\n
++*
++* \param   baseAddr       Memory address of the ELM.\n
++*
++* \param   flag           Flag for which interrupt status has to clear.\n
++*                         This can take one of the following values :\n
++*                         ELM_LOC_VALID_0_STATUS        : Error-location
++*                                                         interrupt for syndrome
++*                                                         polynomial 0.\n
++*                         ELM_LOC_VALID_1_STATUS        : Error-location
++*                                                         interrupt for syndrome
++*                                                         polynomial 1.\n
++*                         ELM_LOC_VALID_2_STATUS        : Error-location
++*                                                         interrupt for syndrome
++*                                                         polynomial 2.\n
++*                         ELM_LOC_VALID_3_STATUS        : Error-location
++*                                                         interrupt for syndrome
++*                                                         polynomial 3.\n
++*                         ELM_LOC_VALID_4_STATUS        : Error-location
++*                                                         interrupt for syndrome
++*                                                         polynomial 4.\n
++*                         ELM_LOC_VALID_5_STATUS        : Error-location
++*                                                         interrupt for syndrome
++*                                                         polynomial 5.\n
++*                         ELM_LOC_VALID_6_STATUS        : Error-location
++*                                                         interrupt for syndrome
++*                                                         polynomial 6.\n
++*                         ELM_LOC_VALID_7_STATUS        : Error-location
++*                                                         interrupt for syndrome
++*                                                         polynomial 7.\n
++*                         ELM_PAGE_VALID_STATUS         : Error-location
++*                                                         interrupt for a full
++*                                                         page.\n
++*
++* \return  None. \n
++*
++*/
++void ELM_interuptStatusClear(uint32_t baseAddr, uint32_t flag);
++
++/**
++* \brief   This function configs i.e enables or disables the interrupts.\n
++*
++* \param   baseAddr       Memory address of the ELM.\n
++*
++* \param   intflag        intFlag for which interrupt has to config.\n
++*                         This can take one of the following values :\n
++*                         ELM_LOC_VALID_0_STATUS        : Error-location
++*                                                         interrupt for syndrome
++*                                                         polynomial 0.\n
++*                         ELM_LOC_VALID_1_STATUS        : Error-location
++*                                                         interrupt for syndrome
++*                                                         polynomial 1.\n
++*                         ELM_LOC_VALID_2_STATUS        : Error-location
++*                                                         interrupt for syndrome
++*                                                         polynomial 2.\n
++*                         ELM_LOC_VALID_3_STATUS        : Error-location
++*                                                         interrupt for syndrome
++*                                                         polynomial 3.\n
++*                         ELM_LOC_VALID_4_STATUS        : Error-location
++*                                                         interrupt for syndrome
++*                                                         polynomial 4.\n
++*                         ELM_LOC_VALID_5_STATUS        : Error-location
++*                                                         interrupt for syndrome
++*                                                         polynomial 5.\n
++*                         ELM_LOC_VALID_6_STATUS        : Error-location
++*                                                         interrupt for syndrome
++*                                                         polynomial 6.\n
++*                         ELM_LOC_VALID_7_STATUS        : Error-location
++*                                                         interrupt for syndrome
++*                                                         polynomial 7.\n
++*                         ELM_PAGE_VALID_STATUS         : Error-location
++*                                                         interrupt for a full
++*                                                         page. \n
++*
++* \param   configVal     Config Value.\n
++*                        This can take one of the following values :\n
++*                        ELM_INT_ENALBLE                : To enble the interrupt\n
++*                        ELM_INT_DISALBLE               : To disable the
++*                                                         interrupt.\n
++* \return  None. \n
++*
++*/
++void ELM_interuptConfig(uint32_t baseAddr, uint32_t intFlag, uint32_t configVal);
++
++/**
++* \brief   This function sets the Error correction level for BCH alogorithm.\n
++*
++* \param   baseAddr       Memory address of the ELM.\n
++*
++* \param   bchECCLevel    BCH error correction level.\n
++*                         This can take one of the following values :\n
++*                         ELM_ECC_BCH_LEVEL_16BITS    : For Upto 16 bits error
++*                                                       correction.\n
++*                         ELM_ECC_BCH_LEVEL_8BITS     : For Upto 8 bits error
++*                                                       correction.\n
++*                         ELM_ECC_BCH_LEVEL_4BITS     : For Upto 4 bits error
++*                                                       correction.\n
++*
++* \return  None. \n
++*
++*/
++void ELM_errorCorrectionLevelSet(uint32_t baseAddr, uint32_t eccLevel);
++
++/**
++* \brief   This function sets the size of the buffers for which
++*          the error-location engine is used.\n
++*
++* \param   baseAddr   Memory address of the ELM.\n
++*
++* \param   eccSize    eccSize in number of nibbles (i.e 4-bits entities).\n
++*
++* \return  None. \n
++*
++*/
++void ELM_setECCSize(uint32_t baseAddr, uint32_t eccSize);
++
++/**
++* \brief   This function sets mode of the ELM module.\n
++*
++* \param   baseAddr       Memory address of the ELM.\n
++* \param   mode           mode of the ELM.\n
++*                         This can take one of the following values :\n
++*                         ELM_MODE_PAGE       -- For page mode.\n
++*                         ELM_MODE_CONTINUOUS -- For continuous mode.\n
++*
++* \param   sectorNum      Sector number or syndrome polynomial number which has
++*                         to select as part of the page in page mode.\n
++*                         This can take one of the following values :\n
++*                         ELM_PAGEMODE_SECTOR_0 -- For selecting syndrome
++*                                                  polynomial 0 as part of the
++*                                                  page in page mode.\n
++*                         ELM_PAGEMODE_SECTOR_1 -- For selecting syndrome
++*                                                  polynomial 1 as part of the
++*                                                  page in page mode.\n
++*                         ELM_PAGEMODE_SECTOR_2 -- For selecting syndrome
++*                                                  polynomial 2 as part of the
++*                                                  page in page mode.\n
++*                         ELM_PAGEMODE_SECTOR_3 -- For selecting syndrome
++*                                                  polynomial 3 as part of the
++*                                                  page in page mode.\n
++*                         ELM_PAGEMODE_SECTOR_4 -- For selecting syndrome
++*                                                  polynomial 4 as part of the
++*                                                  page in page mode.\n
++*                         ELM_PAGEMODE_SECTOR_5 -- For selecting syndrome
++*                                                  polynomial 5 as part of the
++*                                                  page in page mode.\n
++*                         ELM_PAGEMODE_SECTOR_6 -- For selecting syndrome
++*                                                  polynomial 6 as part of the
++*                                                  page in page mode.\n
++*                         ELM_PAGEMODE_SECTOR_7 -- For selecting syndrome
++*                                                  polynomial 7 as part of the
++*                                                  page in page mode.\n
++
++* \return  None. \n
++*
++*/
++void ELM_setSectorMode(uint32_t baseAddr, uint32_t mode, uint32_t sectorNum);
++
++/**
++* \brief   This function sets the fragments of syndrome polynomial for
++*          error-location processing.\n
++*
++* \param   baseAddr       Memory address of the ELM.\n
++*
++* \param   synFrgmtId     Syndrome fragment ID.\n
++*                         This can take one of the following values :\n
++*                         ELM_SYNDROME_FRGMT_0 - For syndrome fragment 0.\n
++*                         ELM_SYNDROME_FRGMT_1 - For syndrome fragment 1.\n
++*                         ELM_SYNDROME_FRGMT_2 - For syndrome fragment 2.\n
++*                         ELM_SYNDROME_FRGMT_3 - For syndrome fragment 3.\n
++*                         ELM_SYNDROME_FRGMT_4 - For syndrome fragment 4.\n
++*                         ELM_SYNDROME_FRGMT_5 - For syndrome fragment 5.\n
++*                         ELM_SYNDROME_FRGMT_6 - For syndrome fragment 6.\n
++* \param   synFrgmtVal    Syndrome fragment value.\n
++*
++* \param   sector         528 bytes sector num.\n
++*
++* \return  None. \n
++*
++*/
++void ELM_setSyndromeFragment(uint32_t baseAddr, uint32_t synFrgmtId,
++                         uint32_t synFrgmtVal, uint32_t sector);
++
++/**
++* \brief   This function starts the error-location processing for the polynomial
++*          set in the syndrome fragment registers.\n
++*
++* \param   baseAddr   Memory address of the ELM.\n
++*
++* \param   sector     528 bytes sector num.\n
++*
++* \return  None. \n
++*
++*/
++void ELM_errorLocationProcessingStart(uint32_t baseAddr, uint32_t sector);
++
++/**
++* \brief   This function gets the error-location processing status.\n
++*
++* \param   baseAddr   Memory address of the ELM.\n
++*
++* \param   sector     Page sector num.\n
++*
++* \return  status. \n
++*          0 : ECC error-location process failed.\n
++*          1 : ECC error-location process passed.\n
++*
++*/
++uint32_t ELM_errorLocationProcessingStatusGet(uint32_t baseAddr, uint32_t sector);
++
++/**
++* \brief   This function gets the number of errors detected and located
++*          during error-location processing.\n
++*
++* \param   baseAddr   Memory address of the ELM.\n
++*
++* \param   sector     Page sector num, 0 - 7.\n
++*
++* \return  Number of errors detected and located.\n
++*
++*/
++uint32_t ELM_getNumError(uint32_t baseAddr, uint32_t sector);
++
++/**
++* \brief   This function gets the Error-location bit address for the error
++*          number passed.\n
++*
++* \param   baseAddr       Memory address of the ELM.\n
++*
++* \param   errNum         Error number.\n
++*                         This can take one of the following values :\n
++*                         ELM_ERROR_NUM_0 - For 0th error.\n
++*                         ELM_ERROR_NUM_1 - For 1th error.\n
++*                         ELM_ERROR_NUM_2 - For 2th error.\n
++*                         ELM_ERROR_NUM_3 - For 3th error.\n
++*                         ELM_ERROR_NUM_4 - For 4th error.\n
++*                         ELM_ERROR_NUM_5 - For 5th error.\n
++*                         ELM_ERROR_NUM_6 - For 6th error.\n
++*                         ELM_ERROR_NUM_7 - For 7th error.\n
++*                         ELM_ERROR_NUM_8 - For 8th error.\n
++*                         ELM_ERROR_NUM_9 - For 9th error.\n
++*                         ELM_ERROR_NUM_10 - For 10th error.\n
++*                         ELM_ERROR_NUM_11 - For 11th error.\n
++*                         ELM_ERROR_NUM_12 - For 12th error.\n
++*                         ELM_ERROR_NUM_13 - For 13th error.\n
++*                         ELM_ERROR_NUM_14 - For 14th error.\n
++*                         ELM_ERROR_NUM_15 - For 15th error.\n
++*
++* \param   sector      Page sector num, 0 - 7.\n
++*
++* \return  Bit address for the error number.\n
++*
++*/
++uint32_t ELM_errorLocationBitAddrGet(uint32_t baseAddr, uint32_t errNum, uint32_t sector);
++
++
++#ifdef __cplusplus
++}
++#endif
++
++#endif /* ELM_H */
+diff --git a/source/drivers/elm/v0/elm_v0.c b/source/drivers/elm/v0/elm_v0.c
+new file mode 100644
+index 0000000000..f32575b1c5
+--- /dev/null
++++ b/source/drivers/elm/v0/elm_v0.c
+@@ -0,0 +1,518 @@
++/*
++ *  Copyright (C) 2023 Texas Instruments Incorporated
++ *
++ *  Redistribution and use in source and binary forms, with or without
++ *  modification, are permitted provided that the following conditions
++ *  are met:
++ *
++ *    Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *
++ *    Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the
++ *    distribution.
++ *
++ *    Neither the name of Texas Instruments Incorporated nor the names of
++ *    its contributors may be used to endorse or promote products derived
++ *    from this software without specific prior written permission.
++ *
++ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++/**
++ *  \file elm_v0.c
++ *
++ *  \brief File containing ELM Driver APIs implementation for version V0.
++ *
++ */
++
++/* ========================================================================== */
++/*                             Include Files                                  */
++/* ========================================================================== */
++#include <drivers/hw_include/cslr.h>
++#include <drivers/hw_include/hw_types.h>
++#include <drivers/elm.h>
++/*******************************************************************************
++*                       API DEFINITIONS
++*******************************************************************************/
++
++uint32_t ELM_revisionGet(uint32_t baseAddr)
++{
++    uint32_t ipRev;
++
++    ipRev = HW_RD_REG32(baseAddr + CSL_ELM_REVISION);
++
++    return (ipRev);
++}
++
++void ELM_autoGatingConfig(uint32_t baseAddr, uint32_t configVal)
++{
++	HW_WR_FIELD32(baseAddr + CSL_ELM_SYSCONFIG,
++	              CSL_ELM_SYSCONFIG_AUTOGATING,
++	              configVal);
++}
++
++void ELM_idleModeSelect(uint32_t baseAddr, uint32_t mode)
++{
++	HW_WR_FIELD32(baseAddr + CSL_ELM_SYSCONFIG,
++	              CSL_ELM_SYSCONFIG_SIDLEMODE,
++	              mode);
++}
++
++void ELM_moduleReset(uint32_t baseAddr)
++{
++    /* Initiate the soft reset of the module. */
++    HW_WR_FIELD32(baseAddr + CSL_ELM_SYSCONFIG,
++                  CSL_ELM_SYSCONFIG_SOFTRESET,
++                  ELM_BIT_SET_HIGH);
++
++    /* Wait until the process of Module Reset is complete. */
++    while(CSL_ELM_SYSSTS_RESETDONE_RST_DONE !=
++        HW_RD_FIELD32(baseAddr + CSL_ELM_SYSSTS, CSL_ELM_SYSSTS_RESETDONE)){}
++}
++
++void ELM_clockActivityOCPConfig(uint32_t baseAddr, uint32_t configVal)
++{
++    HW_WR_FIELD32(baseAddr + CSL_ELM_SYSCONFIG,
++                  CSL_ELM_SYSCONFIG_CLOCKACTIVITYOCP,
++	              configVal);
++}
++
++uint32_t ELM_moduleResetStatusGet(uint32_t baseAddr)
++{
++    uint32_t resetStat;
++
++    resetStat = HW_RD_FIELD32(baseAddr + CSL_ELM_SYSSTS,
++                              CSL_ELM_SYSSTS_RESETDONE);
++
++    return (resetStat);
++}
++
++uint32_t ELM_interuptStatusGet(uint32_t baseAddr, uint32_t flag)
++{
++    uint32_t retVal;
++
++    retVal = 0;
++
++    switch(flag)
++    {
++        case ELM_LOC_VALID_0_STATUS:
++        	 retVal = HW_RD_FIELD32(baseAddr + CSL_ELM_IRQSTS,
++        	                        CSL_ELM_IRQSTS_LOC_VALID_0);
++        break;
++        case ELM_LOC_VALID_1_STATUS:
++        	 retVal = HW_RD_FIELD32(baseAddr + CSL_ELM_IRQSTS,
++        	                        CSL_ELM_IRQSTS_LOC_VALID_1);
++        break;
++        case ELM_LOC_VALID_2_STATUS:
++        	 retVal = HW_RD_FIELD32(baseAddr + CSL_ELM_IRQSTS,
++        	                        CSL_ELM_IRQSTS_LOC_VALID_2);
++        break;
++        case ELM_LOC_VALID_3_STATUS:
++        	 retVal = HW_RD_FIELD32(baseAddr + CSL_ELM_IRQSTS,
++        	                        CSL_ELM_IRQSTS_LOC_VALID_3);
++        break;
++        case ELM_LOC_VALID_4_STATUS:
++        	 retVal = HW_RD_FIELD32(baseAddr + CSL_ELM_IRQSTS,
++        	                        CSL_ELM_IRQSTS_LOC_VALID_4);
++        break;
++        case ELM_LOC_VALID_5_STATUS:
++        	 retVal = HW_RD_FIELD32(baseAddr + CSL_ELM_IRQSTS,
++        	                        CSL_ELM_IRQSTS_LOC_VALID_5);
++        break;
++        case ELM_LOC_VALID_6_STATUS:
++        	 retVal = HW_RD_FIELD32(baseAddr + CSL_ELM_IRQSTS,
++        	                        CSL_ELM_IRQSTS_LOC_VALID_6);
++        break;
++        case ELM_LOC_VALID_7_STATUS:
++        	 retVal = HW_RD_FIELD32(baseAddr + CSL_ELM_IRQSTS,
++        	                        CSL_ELM_IRQSTS_LOC_VALID_7);
++        break;
++        case ELM_PAGE_VALID_STATUS:
++        	 retVal = HW_RD_FIELD32(baseAddr + CSL_ELM_IRQSTS,
++        	                        CSL_ELM_IRQSTS_PAGE_VALID);
++        break;
++        default:
++        /* Nothing to do here */
++        break;
++    }
++
++    return (retVal);
++}
++
++void ELM_interuptStatusClear(uint32_t baseAddr, uint32_t flag)
++{
++
++    uint32_t regVal = 0;
++    switch(flag)
++    {
++        case ELM_LOC_VALID_0_STATUS:
++            HW_SET_FIELD32(regVal,
++                           CSL_ELM_IRQSTS_LOC_VALID_0,
++                           ELM_BIT_SET_HIGH);
++
++        break;
++        case ELM_LOC_VALID_1_STATUS:
++            HW_SET_FIELD32(regVal,
++                           CSL_ELM_IRQSTS_LOC_VALID_1,
++                           ELM_BIT_SET_HIGH);
++        break;
++        case ELM_LOC_VALID_2_STATUS:
++            HW_SET_FIELD32(regVal,
++                           CSL_ELM_IRQSTS_LOC_VALID_2,
++                           ELM_BIT_SET_HIGH);
++        break;
++        case ELM_LOC_VALID_3_STATUS:
++            HW_SET_FIELD32(regVal,
++                           CSL_ELM_IRQSTS_LOC_VALID_3,
++                           ELM_BIT_SET_HIGH);
++        break;
++        case ELM_LOC_VALID_4_STATUS:
++            HW_SET_FIELD32(regVal,
++                           CSL_ELM_IRQSTS_LOC_VALID_4,
++                           ELM_BIT_SET_HIGH);
++        break;
++        case ELM_LOC_VALID_5_STATUS:
++            HW_SET_FIELD32(regVal,
++                           CSL_ELM_IRQSTS_LOC_VALID_5,
++                           ELM_BIT_SET_HIGH);
++        break;
++        case ELM_LOC_VALID_6_STATUS:
++            HW_SET_FIELD32(regVal,
++                           CSL_ELM_IRQSTS_LOC_VALID_6,
++                           ELM_BIT_SET_HIGH);
++        break;
++        case ELM_LOC_VALID_7_STATUS:
++            HW_SET_FIELD32(regVal,
++                           CSL_ELM_IRQSTS_LOC_VALID_7,
++                           ELM_BIT_SET_HIGH);
++        break;
++        case ELM_PAGE_VALID_STATUS:
++            HW_SET_FIELD32(regVal,
++                           CSL_ELM_IRQSTS_PAGE_VALID,
++                           ELM_BIT_SET_HIGH);
++        break;
++        default:
++        	 /* Nothing to do here */
++        break;
++    }
++
++    HW_WR_REG32(baseAddr + CSL_ELM_IRQSTS, regVal);
++}
++
++void ELM_interuptConfig(uint32_t baseAddr, uint32_t intFlag, uint32_t configVal)
++{
++    switch(intFlag)
++    {
++        case ELM_LOC_VALID_0_STATUS:
++            if(configVal == ELM_INT_ENALBLE)
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_LOCATION_MASK_0,
++                              ELM_BIT_ENABLE);
++            }
++            else
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_LOCATION_MASK_0,
++                              ELM_BIT_DISABLE);
++            }
++        break;
++        case ELM_LOC_VALID_1_STATUS:
++            if(configVal == ELM_INT_ENALBLE)
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_LOCATION_MASK_1,
++                              ELM_BIT_ENABLE);
++            }
++            else
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_LOCATION_MASK_1,
++                              ELM_BIT_DISABLE);
++            }
++        break;
++        case ELM_LOC_VALID_2_STATUS:
++            if(configVal == ELM_INT_ENALBLE)
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_LOCATION_MASK_2,
++                              ELM_BIT_ENABLE);
++            }
++            else
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_LOCATION_MASK_2,
++                              ELM_BIT_DISABLE);
++            }
++        break;
++        case ELM_LOC_VALID_3_STATUS:
++            if(configVal == ELM_INT_ENALBLE)
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_LOCATION_MASK_3,
++                              ELM_BIT_ENABLE);
++            }
++            else
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_LOCATION_MASK_3,
++                              ELM_BIT_DISABLE);
++            }
++        break;
++        case ELM_LOC_VALID_4_STATUS:
++            if(configVal == ELM_INT_ENALBLE)
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_LOCATION_MASK_4,
++                              ELM_BIT_ENABLE);
++            }
++            else
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_LOCATION_MASK_4,
++                              ELM_BIT_DISABLE);
++            }
++        break;
++        case ELM_LOC_VALID_5_STATUS:
++            if(configVal == ELM_INT_ENALBLE)
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_LOCATION_MASK_5,
++                              ELM_BIT_ENABLE);
++            }
++            else
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_LOCATION_MASK_5,
++                              ELM_BIT_DISABLE);
++            }
++        break;
++        case ELM_LOC_VALID_6_STATUS:
++            if(configVal == ELM_INT_ENALBLE)
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_LOCATION_MASK_6,
++                              ELM_BIT_ENABLE);
++            }
++            else
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_LOCATION_MASK_6,
++                              ELM_BIT_DISABLE);
++            }
++        break;
++        case ELM_LOC_VALID_7_STATUS:
++            if(configVal == ELM_INT_ENALBLE)
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_LOCATION_MASK_7,
++                              ELM_BIT_ENABLE);
++            }
++            else
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_LOCATION_MASK_7,
++                              ELM_BIT_DISABLE);
++            }
++        break;
++        case ELM_PAGE_VALID_STATUS:
++            if(configVal == ELM_INT_ENALBLE)
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_PAGE_MASK,
++                              ELM_BIT_ENABLE);
++            }
++            else
++            {
++                HW_WR_FIELD32(baseAddr + CSL_ELM_IRQEN,
++                              CSL_ELM_IRQEN_PAGE_MASK,
++                              ELM_BIT_DISABLE);
++            }
++        break;
++        default:
++        	/* Nothing to do here */
++        break;
++    }
++}
++
++void ELM_errorCorrectionLevelSet(uint32_t baseAddr, uint32_t eccLevel)
++{
++    HW_WR_FIELD32(baseAddr + CSL_ELM_LOCATION_CONFIG,
++                  CSL_ELM_LOCATION_CONFIG_ECC_BCH_LEVEL,
++                  eccLevel);
++}
++
++void ELM_setECCSize(uint32_t baseAddr, uint32_t eccSize)
++{
++    HW_WR_FIELD32(baseAddr + CSL_ELM_LOCATION_CONFIG,
++                  CSL_ELM_LOCATION_CONFIG_ECC_SIZE,
++                  eccSize);
++}
++
++void ELM_setSectorMode(uint32_t baseAddr, uint32_t mode, uint32_t sectorNum)
++{
++	uint32_t pageCtrl = HW_RD_REG32(baseAddr + CSL_ELM_PAGE_CTRL);
++
++    if(mode == ELM_MODE_CONTINUOUS)
++    {
++        pageCtrl &= ~( ((uint32_t)1U) << sectorNum );
++    }
++    else
++    {
++        pageCtrl |= ( mode << sectorNum );
++    }
++    HW_WR_REG32(baseAddr + CSL_ELM_PAGE_CTRL, pageCtrl);
++}
++
++void ELM_setSyndromeFragment(uint32_t baseAddr, uint32_t synFrgmtId,
++                         uint32_t synFrgmtVal, uint32_t sector)
++{
++    uint32_t synFrgmtAddr = 0;
++
++    switch (synFrgmtId)
++    {
++        case ELM_SYNDROME_FRGMT_0:
++            synFrgmtAddr = baseAddr + CSL_ELM_SYNDROME_FRAGMENT_0(sector);
++            break;
++        case ELM_SYNDROME_FRGMT_1:
++            synFrgmtAddr = baseAddr + CSL_ELM_SYNDROME_FRAGMENT_1(sector);
++            break;
++        case ELM_SYNDROME_FRGMT_2:
++            synFrgmtAddr = baseAddr + CSL_ELM_SYNDROME_FRAGMENT_2(sector);
++            break;
++        case ELM_SYNDROME_FRGMT_3:
++            synFrgmtAddr = baseAddr + CSL_ELM_SYNDROME_FRAGMENT_3(sector);
++            break;
++        case ELM_SYNDROME_FRGMT_4:
++            synFrgmtAddr = baseAddr + CSL_ELM_SYNDROME_FRAGMENT_4(sector);
++            break;
++        case ELM_SYNDROME_FRGMT_5:
++            synFrgmtAddr = baseAddr + CSL_ELM_SYNDROME_FRAGMENT_5(sector);
++            break;
++        case ELM_SYNDROME_FRGMT_6:
++            synFrgmtAddr = baseAddr + CSL_ELM_SYNDROME_FRAGMENT_6(sector);
++            break;
++
++        default:
++            break;
++    }
++
++    if(synFrgmtId != ELM_SYNDROME_FRGMT_6)
++    {
++        HW_WR_REG32(synFrgmtAddr, synFrgmtVal);
++    }
++    else
++    {
++        HW_WR_REG32(synFrgmtAddr, synFrgmtVal & CSL_ELM_SYNDROME_FRAGMENT_6_SYNDROME_6_MASK);
++    }
++}
++
++void ELM_errorLocationProcessingStart(uint32_t baseAddr, uint32_t sector)
++{
++    uint32_t synFrgmtAddr;
++    uint32_t synFrgmtVal;
++
++    /* Initiate the processing of syndrome polynomial. */
++    synFrgmtAddr = baseAddr + CSL_ELM_SYNDROME_FRAGMENT_6(sector);
++    synFrgmtVal = HW_RD_REG32(synFrgmtAddr) | \
++                  CSL_ELM_SYNDROME_FRAGMENT_6_SYNDROME_VALID_MASK;
++    HW_WR_REG32(synFrgmtAddr, synFrgmtVal);
++}
++
++uint32_t ELM_errorLocationProcessingStatusGet(uint32_t baseAddr, uint32_t sector)
++{
++    uint32_t status;
++
++    /* Get the status of the Error location process. */
++    status = HW_RD_FIELD32(baseAddr + CSL_ELM_LOCATION_STS(sector),
++                           CSL_ELM_LOCATION_STS_ECC_CORRECTBL);
++    return (status);
++}
++
++uint32_t ELM_getNumError(uint32_t baseAddr, uint32_t sector)
++{
++    uint32_t numOfErrs;
++
++    /* The number of errors located for the particular syndrome polynomial. */
++    numOfErrs = HW_RD_FIELD32(baseAddr + CSL_ELM_LOCATION_STS(sector),
++                              CSL_ELM_LOCATION_STS_ECC_NB_ERRORS);
++
++    return (numOfErrs);
++}
++
++uint32_t ELM_errorLocationBitAddrGet(uint32_t baseAddr, uint32_t errNum, uint32_t sector)
++{
++    uint32_t errLocOffset = 0;
++    uint32_t bitAddr;
++
++    switch(errNum)
++    {
++        case ELM_ERROR_NUM_0:
++            errLocOffset = baseAddr + CSL_ELM_ERROR_LOCATION_0(sector);
++            break;
++        case ELM_ERROR_NUM_1:
++            errLocOffset = baseAddr + CSL_ELM_ERROR_LOCATION_1(sector);
++            break;
++        case ELM_ERROR_NUM_2:
++            errLocOffset = baseAddr + CSL_ELM_ERROR_LOCATION_2(sector);
++            break;
++        case ELM_ERROR_NUM_3:
++            errLocOffset = baseAddr + CSL_ELM_ERROR_LOCATION_3(sector);
++            break;
++        case ELM_ERROR_NUM_4:
++            errLocOffset = baseAddr + CSL_ELM_ERROR_LOCATION_4(sector);
++            break;
++        case ELM_ERROR_NUM_5:
++            errLocOffset = baseAddr + CSL_ELM_ERROR_LOCATION_5(sector);
++            break;
++        case ELM_ERROR_NUM_6:
++            errLocOffset = baseAddr + CSL_ELM_ERROR_LOCATION_6(sector);
++            break;
++        case ELM_ERROR_NUM_7:
++            errLocOffset = baseAddr + CSL_ELM_ERROR_LOCATION_7(sector);
++            break;
++        case ELM_ERROR_NUM_8:
++            errLocOffset = baseAddr + CSL_ELM_ERROR_LOCATION_8(sector);
++            break;
++        case ELM_ERROR_NUM_9:
++            errLocOffset = baseAddr + CSL_ELM_ERROR_LOCATION_9(sector);
++            break;
++        case ELM_ERROR_NUM_10:
++            errLocOffset = baseAddr + CSL_ELM_ERROR_LOCATION_10(sector);
++            break;
++        case ELM_ERROR_NUM_11:
++            errLocOffset = baseAddr + CSL_ELM_ERROR_LOCATION_11(sector);
++            break;
++        case ELM_ERROR_NUM_12:
++            errLocOffset = baseAddr + CSL_ELM_ERROR_LOCATION_12(sector);
++            break;
++        case ELM_ERROR_NUM_13:
++            errLocOffset = baseAddr + CSL_ELM_ERROR_LOCATION_13(sector);
++            break;
++        case ELM_ERROR_NUM_14:
++            errLocOffset = baseAddr + CSL_ELM_ERROR_LOCATION_14(sector);
++            break;
++        case ELM_ERROR_NUM_15:
++            errLocOffset = baseAddr + CSL_ELM_ERROR_LOCATION_15(sector);
++            break;
++        default:
++            break;
++    }
++
++    bitAddr = HW_RD_FIELD32(errLocOffset,
++                              CSL_ELM_ERROR_LOCATION_0_ECC_ERROR_LOCATION);
++
++    return (bitAddr);
++}

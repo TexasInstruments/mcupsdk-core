@@ -1,0 +1,598 @@
+diff --git a/source/drivers/ipc_rpmsg/ipc_rpmsg.c b/source/drivers/ipc_rpmsg/ipc_rpmsg.c
+index 95212bce53..dc254758a8 100755
+--- a/source/drivers/ipc_rpmsg/ipc_rpmsg.c
++++ b/source/drivers/ipc_rpmsg/ipc_rpmsg.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -97,7 +97,7 @@ int32_t RPMessage_getEndPtMsg(RPMessage_Struct *obj, RPMessage_LocalMsg **pMsg,
+             {
+                 done = 1;
+             }
+-            if(status == SystemP_SUCCESS && obj->doRecvUnblock)
++            if((status == SystemP_SUCCESS) && ((obj->doRecvUnblock)!=0U))
+             {
+                 status = SystemP_TIMEOUT;
+                 done = 1;
+@@ -108,7 +108,7 @@ int32_t RPMessage_getEndPtMsg(RPMessage_Struct *obj, RPMessage_LocalMsg **pMsg,
+             status = SystemP_SUCCESS;
+             done = 1;
+         }
+-    } while( ! done );
++    } while(done!=1U);
+ 
+     return status;
+ }
+@@ -194,17 +194,17 @@ void RPMessage_recvHandler(uint32_t remoteCoreId)
+ 
+ void RPMessage_notifyCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
+ {
+-    if(gIpcRpmsgCtrl.isCoreEnable[remoteCoreId] && gIpcRpmsgCtrl.isCoreInitialized[remoteCoreId])
++    if((gIpcRpmsgCtrl.isCoreEnable[remoteCoreId]!=0U) && (gIpcRpmsgCtrl.isCoreInitialized[remoteCoreId]!=0U))
+     {
+         uint16_t rxMsgValue = RPMESSAGE_MSG_VRING_NEW_FULL;
+ 
+-        if(RPMessage_isLinuxCore(remoteCoreId))
++        if((RPMessage_isLinuxCore(remoteCoreId)!=0U))
+         {
+             rxMsgValue = RPMESSAGE_LINUX_RX_VRING_ID; /* In linux, we get RX VRING ID, which is 1 in linux */
+         }
+         if(msgValue == rxMsgValue)
+         {   /* check full ring */
+-            while(RPMessage_vringIsFullRxBuf(remoteCoreId))
++            while((RPMessage_vringIsFullRxBuf(remoteCoreId)!=0U))
+             {
+                 RPMessage_recvHandler(remoteCoreId);
+             }
+@@ -226,10 +226,11 @@ int32_t RPMessage_send( void*    data,
+                         uint32_t timeout
+                       )
+ {
++    uint16_t dataLength = dataLen;
+     int32_t status = SystemP_FAILURE;
+ 
+-    if(remoteCoreId < CSL_CORE_ID_MAX && gIpcRpmsgCtrl.isCoreEnable[remoteCoreId]
+-        && data != NULL && dataLen != 0
++    if(((remoteCoreId < CSL_CORE_ID_MAX)) && ((gIpcRpmsgCtrl.isCoreEnable[remoteCoreId] != 0U))
++        && ((data != NULL)) && ((dataLength != 0U)) && (localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT)
+         )
+     {
+         uint16_t vringBufId;
+@@ -241,9 +242,9 @@ int32_t RPMessage_send( void*    data,
+             uint16_t vringBufLen = RPMessage_vringGetTxBufLen(remoteCoreId, vringBufId);
+             RPMessage_Header *header = (RPMessage_Header *)vringBufAddr;
+ 
+-            if(dataLen > (vringBufLen - sizeof(RPMessage_Header)) )
++            if(dataLength > (vringBufLen - sizeof(RPMessage_Header)) )
+             {
+-                dataLen = vringBufLen - sizeof(RPMessage_Header);
++                dataLength = vringBufLen - sizeof(RPMessage_Header);
+ 
+                 DebugP_logWarn("[IPC RPMSG] Message send to remote core %d @ %d end point truncated due to lack of space in vring buffer !!!\r\n",
+                     remoteCoreId, remoteEndPt);
+@@ -253,11 +254,11 @@ int32_t RPMessage_send( void*    data,
+             header->dstEndPt = remoteEndPt;
+             header->srcCoreId = gIpcRpmsgCtrl.selfCoreId;
+             header->flags = 0;
+-            header->dataLen = dataLen;
++            header->dataLen = dataLength;
+ 
+-            memcpy( &vringBufAddr[sizeof(RPMessage_Header)], data, dataLen);
++            memcpy((void *) &vringBufAddr[sizeof(RPMessage_Header)], (const void *) data, (size_t)dataLength);
+ 
+-            RPMessage_vringPutFullTxBuf(remoteCoreId, vringBufId, dataLen + sizeof(RPMessage_Header));
++            RPMessage_vringPutFullTxBuf(remoteCoreId, vringBufId, dataLength + sizeof(RPMessage_Header));
+         }
+         else
+         {
+@@ -280,14 +281,14 @@ int32_t RPMessage_recv(RPMessage_Object *handle, void* data, uint16_t *dataLen,
+     int32_t status = SystemP_FAILURE;
+     RPMessage_Struct *obj = (RPMessage_Struct *)handle;
+ 
+-    if( data != NULL && dataLen != NULL && remoteCoreId != NULL && remoteEndPt != NULL
+-        && obj->recvCallback == NULL /* i.e non-callback mode */
++   if( (data != NULL) && (dataLen != NULL) && (remoteCoreId != NULL) && (remoteEndPt != NULL)
++        && (obj->recvCallback == NULL) /* i.e non-callback mode */
+       )
+     {
+         RPMessage_LocalMsg *pMsg;
+ 
+         status = RPMessage_getEndPtMsg(obj, &pMsg, timeout);
+-        if(status == SystemP_SUCCESS && pMsg != NULL)
++        if((status == SystemP_SUCCESS) && (pMsg != NULL))
+         {
+             uint32_t isAllocPending = 0;
+             uint16_t vringBufId = pMsg->vringBufId;
+@@ -308,11 +309,11 @@ int32_t RPMessage_recv(RPMessage_Object *handle, void* data, uint16_t *dataLen,
+                 *dataLen = header->dataLen;
+             }
+ 
+-            memcpy( data, &vringBufAddr[sizeof(RPMessage_Header)], *dataLen);
++            memcpy((void *) data,(const void *) &vringBufAddr[sizeof(RPMessage_Header)],(size_t) *dataLen);
+ 
+             RPMessage_vringPutEmptyRxBuf(*remoteCoreId, vringBufId);
+             isAllocPending = RPMessage_freeEndPtMsg(*remoteCoreId, pMsg);
+-            if(isAllocPending)
++            if(isAllocPending!=0U)
+             {   /* if any messages are pending message pointer due to free Q being empty,
+                  * now there will be atleast one element to handle any pending vring requests.
+                  * So check vring and handle pending messages if any
+@@ -325,12 +326,9 @@ int32_t RPMessage_recv(RPMessage_Object *handle, void* data, uint16_t *dataLen,
+         }
+         else
+         {
+-            if(status != SystemP_TIMEOUT)
+-            {
+-                DebugP_logError("[IPC RPMSG] Message recv @ %d local end point failed due to invalid end point Q !!!\r\n",
++            DebugP_logError("[IPC RPMSG] Message recv @ %d local end point failed due to invalid end point Q !!!\r\n",
+                     obj->localEndPt
+                     );
+-            }
+         }
+     }
+     else
+@@ -344,28 +342,39 @@ int32_t RPMessage_recv(RPMessage_Object *handle, void* data, uint16_t *dataLen,
+ 
+ void RPMessage_unblock(RPMessage_Object *handle)
+ {
+-    RPMessage_Struct *obj = (RPMessage_Struct *)handle;
++    RPMessage_Struct *obj;
+ 
++    if(handle != NULL)
++    {
++    obj = (RPMessage_Struct *)handle;
+     obj->doRecvUnblock = 1;
+     SemaphoreP_post(&obj->newEndPtMsgSem);
++    }
+ }
+ 
+ uint16_t RPMessage_getLocalEndPt(const RPMessage_Object *handle)
+ {
+-    RPMessage_Struct *obj = (RPMessage_Struct *)handle;
++    RPMessage_Struct *obj;
+ 
++    DebugP_assert(handle != NULL);
++
++    obj = (RPMessage_Struct *)handle;
+     return obj->localEndPt;
++
+ }
+ 
+ int32_t RPMessage_construct(RPMessage_Object *handle, const RPMessage_CreateParams *createParams)
+ {
+-    RPMessage_Struct *obj = (RPMessage_Struct *)handle;
++    RPMessage_Struct *obj;
+     int32_t status = SystemP_FAILURE;
+ 
+     DebugP_assert(sizeof(RPMessage_Object) >= sizeof(RPMessage_Struct));
+ 
+-    if(createParams->localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT
+-        && gIpcRpmsgCtrl.localEndPtObj[createParams->localEndPt] == NULL)
++    if((handle != NULL) && (createParams != NULL))
++    {
++    obj = (RPMessage_Struct *)handle;
++    if((createParams->localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT)
++        && (gIpcRpmsgCtrl.localEndPtObj[createParams->localEndPt] == NULL))
+     {
+         obj->localEndPt = createParams->localEndPt;
+         obj->recvCallback = createParams->recvCallback;
+@@ -380,15 +389,19 @@ int32_t RPMessage_construct(RPMessage_Object *handle, const RPMessage_CreatePara
+ 
+         status = SystemP_SUCCESS;
+     }
++    }
+     return status;
+ }
+ 
+ void RPMessage_destruct(RPMessage_Object *handle)
+ {
+-    RPMessage_Struct *obj = (RPMessage_Struct *)handle;
++    RPMessage_Struct *obj;
+ 
+-    if(obj->localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT &&
+-        gIpcRpmsgCtrl.localEndPtObj[obj->localEndPt] != NULL)
++    if(handle != NULL)
++    {
++    obj = (RPMessage_Struct *)handle;
++    if((obj->localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT) &&
++        (gIpcRpmsgCtrl.localEndPtObj[obj->localEndPt] != NULL))
+     {
+         gIpcRpmsgCtrl.localEndPtObj[obj->localEndPt] = NULL;
+ 
+@@ -399,6 +412,7 @@ void RPMessage_destruct(RPMessage_Object *handle)
+         RPMessage_queueReset(&obj->endPtQ);
+         SemaphoreP_destruct(&obj->newEndPtMsgSem);
+     }
++    }
+ }
+ 
+ void RPMessage_CreateParams_init(RPMessage_CreateParams *params)
+@@ -414,6 +428,8 @@ void RPMessage_Params_init(RPMessage_Params *params)
+ {
+     uint16_t coreId;
+ 
++    if(params != NULL)
++    {
+     memset(params, 0, sizeof(RPMessage_Params));
+ 
+     for(coreId=0; coreId<CSL_CORE_ID_MAX; coreId++)
+@@ -423,9 +439,10 @@ void RPMessage_Params_init(RPMessage_Params *params)
+     }
+     params->vringNumBuf = 8;
+     params->vringMsgSize = 128;
+-    params->vringSize = RPMESSAGE_VRING_SIZE(params->vringNumBuf, params->vringMsgSize);
++    params->vringSize = RPMESSAGE_VRING_SIZE((uint32_t)params->vringNumBuf, params->vringMsgSize);
+     params->linuxCoreId = CSL_CORE_ID_MAX;
+     params->linuxResourceTable = NULL;
++    }
+ }
+ 
+ int32_t  RPMessage_coreInit(uint16_t remoteCoreId, const RPMessage_Params *params)
+@@ -442,7 +459,7 @@ int32_t  RPMessage_coreInit(uint16_t remoteCoreId, const RPMessage_Params *param
+         RPMessage_queuePut(&coreObj->freeQ, &coreObj->localMsgObj[elemId].elem);
+     }
+     /* Linux VRINGs we will init later inside RPMessage_waitForLinuxReady() */
+-    if(gIpcRpmsgCtrl.isCoreEnable[remoteCoreId] && !RPMessage_isLinuxCore(remoteCoreId))
++    if((gIpcRpmsgCtrl.isCoreEnable[remoteCoreId] != 0U) && (RPMessage_isLinuxCore(remoteCoreId) == 0U))
+     {
+         /* reset RX ring */
+         RPMessage_vringReset(remoteCoreId, 0, params);
+@@ -481,7 +498,7 @@ void RPMessage_controlEndPtHandler(RPMessage_Object *obj, void *arg,
+         void *data, uint16_t dataLen,
+         uint16_t remoteCoreId, uint16_t remoteEndPt)
+ {
+-    if(gIpcRpmsgCtrl.controlEndPtCallback)
++    if(gIpcRpmsgCtrl.controlEndPtCallback!=NULL)
+     {
+         /* check if message is of correct size */
+         if(dataLen == sizeof(RPMessage_AnnounceMsg))
+@@ -519,13 +536,15 @@ void RPMessage_controlEndPtDeInit(void)
+ 
+ int32_t  RPMessage_announce(uint16_t remoteCoreId, uint16_t localEndPt, const char* name)
+ {
+-    int32_t status;
++    int32_t status = SystemP_FAILURE;
+     RPMessage_AnnounceMsg msg;
+ 
++    if((remoteCoreId < CSL_CORE_ID_MAX) && (localEndPt < RPMESSAGE_MAX_LOCAL_ENDPT) && (name != NULL))
++    {
+     msg.type = 0;
+     msg.remoteEndPt = localEndPt; /* local end point will be remote end point for the other side */
+-    strncpy(msg.name, name, RPMESSAGE_ANNOUNCE_SERVICENAME_LEN-1);
+-    msg.name[RPMESSAGE_ANNOUNCE_SERVICENAME_LEN-1] = '\0';
++    strncpy(msg.name, name, RPMESSAGE_ANNOUNCE_SERVICENAME_LEN-1U);
++    msg.name[RPMESSAGE_ANNOUNCE_SERVICENAME_LEN-1U] = '\0';
+ 
+     status = RPMessage_send(
+                 &msg,
+@@ -535,6 +554,7 @@ int32_t  RPMessage_announce(uint16_t remoteCoreId, uint16_t localEndPt, const ch
+                 RPMESSAGE_CTRL_ENDPOINT_ID, /* reply or local end point, set also to control end point */
+                 SystemP_WAIT_FOREVER /* wait until message is put in VRING */
+     );
++    }
+     return status;
+ }
+ 
+@@ -543,19 +563,21 @@ void RPMessage_controlEndPtCallback(RPMessage_ControlEndPtCallback controlEndPtC
+ {
+     uint32_t oldIntState;
+ 
+-    oldIntState = HwiP_disable();
+-
+-    gIpcRpmsgCtrl.controlEndPtCallback = controlEndPtCallback;
+-    gIpcRpmsgCtrl.controlEndPtCallbackArgs = controlEndPtCallbackArgs;
++    if(controlEndPtCallback != NULL)
++    {
++        oldIntState = HwiP_disable();
++        gIpcRpmsgCtrl.controlEndPtCallback = controlEndPtCallback;
++        gIpcRpmsgCtrl.controlEndPtCallbackArgs = controlEndPtCallbackArgs;
+ 
+-    HwiP_restore(oldIntState);
++        HwiP_restore(oldIntState);
++    }
+ }
+ 
+ uint32_t RPMessage_isLinuxCore(uint16_t coreId)
+ {
+     uint32_t isLinuxCore = 0;
+ 
+-    if(coreId == gIpcRpmsgCtrl.linuxCoreId && gIpcRpmsgCtrl.linuxResourceTable)
++    if((coreId == gIpcRpmsgCtrl.linuxCoreId) && (gIpcRpmsgCtrl.linuxResourceTable))
+     {
+         isLinuxCore = 1;
+     }
+@@ -567,7 +589,7 @@ int32_t  RPMessage_waitForLinuxReady(uint32_t timeout)
+     int32_t status = SystemP_FAILURE;
+     volatile RPMessage_ResourceTable *rscTable = (RPMessage_ResourceTable *)gIpcRpmsgCtrl.linuxResourceTable;
+ 
+-    if(rscTable)
++    if(rscTable!=NULL)
+     {
+         uint32_t elaspedTicks, startTicks = ClockP_getTicks();
+         do
+@@ -622,6 +644,8 @@ int32_t  RPMessage_init(const RPMessage_Params *params)
+     int32_t status = SystemP_SUCCESS;
+     uint16_t coreId, localEndPtId;
+ 
++    if(params != NULL)
++    {
+     gIpcRpmsgCtrl.selfCoreId = IpcNotify_getSelfCoreId();
+     gIpcRpmsgCtrl.controlEndPtCallback = NULL;
+     gIpcRpmsgCtrl.controlEndPtCallbackArgs = NULL;
+@@ -640,19 +664,19 @@ int32_t  RPMessage_init(const RPMessage_Params *params)
+          */
+         gIpcRpmsgCtrl.isCoreEnable[coreId] = 0;
+         gIpcRpmsgCtrl.isCoreInitialized[coreId] = 0;
+-        if(params->vringTxBaseAddr[coreId] != RPMESSAGE_VRING_ADDR_INVALID
++       if((params->vringTxBaseAddr[coreId] != RPMESSAGE_VRING_ADDR_INVALID)
+             &&
+-            params->vringRxBaseAddr[coreId] != RPMESSAGE_VRING_ADDR_INVALID
++            (params->vringRxBaseAddr[coreId] != RPMESSAGE_VRING_ADDR_INVALID)
+             &&
+-            coreId != gIpcRpmsgCtrl.selfCoreId
++            (coreId != gIpcRpmsgCtrl.selfCoreId)
+             &&
+-            IpcNotify_isCoreEnabled(coreId)
++            ((IpcNotify_isCoreEnabled(coreId))!=0U)
+           )
+         {
+             gIpcRpmsgCtrl.isCoreEnable[coreId] = 1;
+         }
+-        if(RPMessage_isLinuxCore(coreId)
+-            && IpcNotify_isCoreEnabled(coreId)
++        if((RPMessage_isLinuxCore(coreId)!=0U)
++            && (IpcNotify_isCoreEnabled(coreId)!=0U)
+             )
+         {
+             gIpcRpmsgCtrl.isCoreEnable[coreId] = 1;
+@@ -661,16 +685,17 @@ int32_t  RPMessage_init(const RPMessage_Params *params)
+     }
+     for(coreId=0; coreId<CSL_CORE_ID_MAX; coreId++)
+     {
+-        status |= RPMessage_coreInit(coreId, params);
++        status += RPMessage_coreInit(coreId, params);
+     }
+ 
+     /* create control end point */
+-    status |= RPMessage_controlEndPtInit();
++    status += RPMessage_controlEndPtInit();
+ 
+     IpcNotify_registerClient(IPC_NOTIFY_CLIENT_ID_RPMSG,
+         RPMessage_notifyCallback, NULL
+         );
+ 
++    }
+     return status;
+ }
+ 
+diff --git a/source/drivers/ipc_rpmsg/ipc_rpmsg_priv.h b/source/drivers/ipc_rpmsg/ipc_rpmsg_priv.h
+index 27334eea6c..7072652951 100755
+--- a/source/drivers/ipc_rpmsg/ipc_rpmsg_priv.h
++++ b/source/drivers/ipc_rpmsg/ipc_rpmsg_priv.h
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -286,9 +286,17 @@ extern IpcRpmsg_Ctrl gIpcRpmsgCtrl;
+ /* utility function to align a value, `align` MUST be power of 2 */
+ static inline uint32_t RPMessage_align(uint32_t value, uint32_t align)
+ {
+-    return (value + align - 1) & ~(align-1);
++    return (value + align - 1U) & ~(align-1U);
+ }
+ 
++ #if defined(__aarch64__) || defined(__arm__)
++static inline void IpcRpMsg_dataAndInstructionBarrier(void)
++{
++    __asm__ __volatile__ ( "dsb sy"  "\n\t": : : "memory");
++    __asm__ __volatile__ ( "isb sy"  "\n\t": : : "memory");
++}
++#endif
++
+ /* utility function to find if core ID runs linux */
+ uint32_t RPMessage_isLinuxCore(uint16_t coreId);
+ 
+@@ -308,6 +316,21 @@ uint32_t RPMessage_vringGetSize(uint16_t numBuf, uint16_t msgSize, uint32_t alig
+ void     RPMessage_vringReset(uint16_t remoteCoreId, uint16_t isTx, const RPMessage_Params *params);
+ void     RPMessage_vringResetLinux(uint16_t remoteCoreId, uint16_t isTx, const RPMessage_ResourceTable *rscTable);
+ 
++void RPMessage_vringResetInternal(RPMessage_Vring *vringObj, uint16_t numBuf, uint16_t msgSize, uintptr_t vringBaseAddr, uint32_t offset_desc, uint32_t offset_avail, uint32_t offset_used, uint32_t offset_buf, uint32_t isTx);
++
++RPMessage_LocalMsg *RPMessage_allocEndPtMsg(uint32_t remoteCoreId);
++uint32_t RPMessage_freeEndPtMsg(uint16_t remoteCoreId, RPMessage_LocalMsg *pMsg);
++void RPMessage_putEndPtMsg(RPMessage_Struct *obj, RPMessage_LocalMsg *pMsg);
++int32_t RPMessage_getEndPtMsg(RPMessage_Struct *obj, RPMessage_LocalMsg **pMsg, uint32_t timeout);
++void RPMessage_recvHandler(uint32_t remoteCoreId);
++void RPMessage_notifyCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args);
++int32_t  RPMessage_coreInit(uint16_t remoteCoreId, const RPMessage_Params *params);
++void RPMessage_coreDeInit(uint16_t remoteCoreId);
++void RPMessage_forceRecvMsgHandlers(void);
++void RPMessage_controlEndPtHandler(RPMessage_Object *obj, void *arg,void *data, uint16_t dataLen,uint16_t remoteCoreId, uint16_t remoteEndPt);
++int32_t RPMessage_controlEndPtInit(void);
++void RPMessage_controlEndPtDeInit(void);
++
+ #ifdef __cplusplus
+ }
+ #endif
+diff --git a/source/drivers/ipc_rpmsg/ipc_rpmsg_vring.c b/source/drivers/ipc_rpmsg/ipc_rpmsg_vring.c
+index 83bc4e652d..85497a530d 100644
+--- a/source/drivers/ipc_rpmsg/ipc_rpmsg_vring.c
++++ b/source/drivers/ipc_rpmsg/ipc_rpmsg_vring.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -89,7 +89,7 @@ int32_t RPMessage_vringGetEmptyTxBuf(uint16_t remoteCoreId, uint16_t *vringBufId
+             done = 1;
+             status = SystemP_SUCCESS;
+         }
+-    } while( ! done );
++    } while(done!=1U);
+ 
+     HwiP_restore(oldIntState);
+ 
+@@ -104,7 +104,7 @@ void RPMessage_vringPutFullTxBuf(uint16_t remoteCoreId, uint16_t vringBufId, uin
+     uint32_t oldIntState;
+     uint32_t txMsgValue = RPMESSAGE_MSG_VRING_NEW_FULL;
+ 
+-    if(RPMessage_isLinuxCore(remoteCoreId))
++    if(RPMessage_isLinuxCore(remoteCoreId) != 0U)
+     {
+         /* for linux we need to send the TX VRING ID in the mailbox message */
+         txMsgValue = RPMESSAGE_LINUX_TX_VRING_ID;
+@@ -118,8 +118,7 @@ void RPMessage_vringPutFullTxBuf(uint16_t remoteCoreId, uint16_t vringBufId, uin
+     vringObj->used->idx++;
+ 
+     #if defined(__aarch64__) || defined(__arm__)
+-    __asm__ __volatile__ ( "dsb sy"  "\n\t": : : "memory");
+-    __asm__ __volatile__ ( "isb sy"  "\n\t": : : "memory");
++    IpcRpMsg_dataAndInstructionBarrier();
+     #endif
+     #if defined(_TMS320C6X)
+     _mfence();
+@@ -151,7 +150,7 @@ void RPMessage_vringCheckEmptyTxBuf(uint16_t remoteCoreId)
+ 
+     HwiP_restore(oldIntState);
+ 
+-    if(isNewEmptyBuf)
++    if(isNewEmptyBuf !=0U)
+     {
+         SemaphoreP_post(&coreObj->newEmptyVringBufSem);
+     }
+@@ -183,7 +182,7 @@ int32_t RPMessage_vringGetFullRxBuf(uint16_t remoteCoreId, uint16_t *vringBufId)
+ 
+     oldIntState = HwiP_disable();
+ 
+-    if(RPMessage_isLinuxCore(remoteCoreId))
++    if(RPMessage_isLinuxCore(remoteCoreId) != 0U)
+     {
+         /* There's nothing available */
+         if (vringObj->lastAvailIdx != vringObj->avail->idx)
+@@ -226,7 +225,7 @@ void RPMessage_vringPutEmptyRxBuf(uint16_t remoteCoreId, uint16_t vringBufId)
+ 
+     oldIntState = HwiP_disable();
+ 
+-    if(RPMessage_isLinuxCore(remoteCoreId))
++    if(RPMessage_isLinuxCore(remoteCoreId) != 0U)
+     {
+         struct vring_used_elem *used;
+ 
+@@ -249,8 +248,7 @@ void RPMessage_vringPutEmptyRxBuf(uint16_t remoteCoreId, uint16_t vringBufId)
+     }
+ 
+     #if defined(__aarch64__) || defined(__arm__)
+-    __asm__ __volatile__ ( "dsb sy"  "\n\t": : : "memory");
+-    __asm__ __volatile__ ( "isb sy"  "\n\t": : : "memory");
++    IpcRpMsg_dataAndInstructionBarrier();
+     #endif
+     #if defined(_TMS320C6X)
+     _mfence();
+@@ -275,7 +273,7 @@ uint32_t RPMessage_vringIsFullRxBuf(uint16_t remoteCoreId)
+ 
+     oldIntState = HwiP_disable();
+ 
+-    if(RPMessage_isLinuxCore(remoteCoreId))
++    if(RPMessage_isLinuxCore(remoteCoreId) != 0U)
+     {
+         if (vringObj->lastAvailIdx == vringObj->avail->idx)
+         {
+@@ -306,17 +304,17 @@ uint8_t *RPMessage_vringGetRxBufAddr(uint16_t remoteCoreId, uint16_t vringBufId)
+ uint32_t RPMessage_vringGetSize(uint16_t numBuf, uint16_t msgSize, uint32_t align)
+ {
+     return  RPMessage_align(
+-                sizeof(struct vring_desc) * numBuf /* buffer descriptors for each buffer */
+-              + sizeof(uint16_t) * (2 + numBuf)    /* avail queue */
++               (uint32_t)((sizeof(struct vring_desc) * (uint32_t)numBuf) /* buffer descriptors for each buffer */
++              +(uint32_t)(sizeof(uint16_t) * (2U + (uint32_t)numBuf)))    /* avail queue */
+               , align
+             )
+             +
+             RPMessage_align(
+-                  sizeof(uint16_t) * 2 + sizeof(struct vring_used_elem) * numBuf /* used queue */
++                (uint32_t)((sizeof(uint16_t) * 2U) + (sizeof(struct vring_used_elem) * (uint32_t)numBuf)) /* used queue */
+                 , align
+                 )
+             +
+-            numBuf * msgSize /* message buffers */
++            ((uint32_t)numBuf * (uint32_t)msgSize) /* message buffers */
+             ;
+ }
+ 
+@@ -344,7 +342,7 @@ void RPMessage_vringResetInternal(RPMessage_Vring *vringObj, uint16_t numBuf, ui
+     vringObj->bufBaseAddr = (uint8_t            *)(vringBaseAddr + offset_buf);
+ 
+     /* only initialize TX vring, RX vring is initialized by the remote core */
+-    if(isTx)
++    if(isTx != 0U)
+     {
+         /* initialize descriptors with message buffer address and max len */
+         bufAddr = vringObj->bufBaseAddr;
+@@ -385,7 +383,7 @@ void RPMessage_vringReset(uint16_t remoteCoreId, uint16_t isTx, const RPMessage_
+     uint32_t align, vringSize;
+     uint16_t numBuf, msgSize;
+ 
+-    if(isTx)
++    if(isTx != 0U)
+     {
+         vringObj = &coreObj->vringTxObj;
+         vringBaseAddr = params->vringTxBaseAddr[remoteCoreId];
+@@ -409,9 +407,9 @@ void RPMessage_vringReset(uint16_t remoteCoreId, uint16_t isTx, const RPMessage_
+      * relative to vringBaseAddr
+      */
+     offset_desc  = 0;
+-    offset_avail = offset_desc  + sizeof(struct vring_desc) * numBuf;
+-    offset_used  = offset_avail + RPMessage_align( sizeof(uint16_t) * (2 + numBuf), align);
+-    offset_buf   = offset_used  + RPMessage_align( sizeof(uint16_t) * 2 + sizeof(struct vring_used_elem) * numBuf, align);
++    offset_avail = offset_desc  + (sizeof(struct vring_desc) * numBuf);
++    offset_used  = offset_avail + RPMessage_align( (sizeof(uint16_t) * (uint32_t)(2U + (uint32_t)numBuf)), align);
++    offset_buf   = offset_used  + RPMessage_align( (sizeof(uint16_t) * 2U) + (sizeof(struct vring_used_elem) * (uint32_t)numBuf), align);
+ 
+     RPMessage_vringResetInternal(vringObj,
+         numBuf, msgSize,
+@@ -433,7 +431,7 @@ void RPMessage_vringResetLinux(uint16_t remoteCoreId, uint16_t isTx, const RPMes
+     uint32_t align;
+     uint16_t numBuf, msgSize;
+ 
+-    if(isTx)
++    if(isTx != 0U)
+     {
+         vringObj = &coreObj->vringTxObj;
+         vringBaseAddr = rscTable->vring0.da;
+@@ -454,13 +452,13 @@ void RPMessage_vringResetLinux(uint16_t remoteCoreId, uint16_t isTx, const RPMes
+      * relative to vringBaseAddr
+      */
+     offset_desc  = 0;
+-    offset_avail = offset_desc  + sizeof(struct vring_desc) * numBuf;
+-    offset_used  = offset_avail + RPMessage_align( sizeof(uint16_t) * (2 + numBuf), align);
+-    offset_buf   = offset_used  + RPMessage_align( sizeof(uint16_t) * 2 + sizeof(struct vring_used_elem) * numBuf, align);
++    offset_avail = offset_desc  + (sizeof(struct vring_desc) * numBuf);
++    offset_used  = offset_avail + RPMessage_align( (sizeof(uint16_t) * (uint32_t)(2U + (uint32_t)numBuf)), align);
++    offset_buf   = offset_used  + RPMessage_align( (sizeof(uint16_t) * 2U) + (sizeof(struct vring_used_elem) * (uint32_t)numBuf), align);
+     /* buffer offset is aligned to numBuf*msgSize*2, eg, 512*256*2 = 256KB after offset_used */
+-    offset_buf   = RPMessage_align( offset_buf, numBuf*msgSize*2);
++    offset_buf   = RPMessage_align( offset_buf, (uint32_t) numBuf*msgSize*2U);
+ 
+-    if(isTx)
++    if(isTx != 0U)
+     {
+         /* offset_buf points to TX buffers already */
+     }
+@@ -469,7 +467,7 @@ void RPMessage_vringResetLinux(uint16_t remoteCoreId, uint16_t isTx, const RPMes
+         /* we dont really use offset buf for RX VRING but showing the calculation here for completeness
+          * RX buffers are initialized by Linux side
+          */
+-        offset_buf += numBuf*msgSize - (rscTable->vring1.da - rscTable->vring0.da);
++        offset_buf += ((uint32_t)numBuf*(uint32_t)msgSize) - (rscTable->vring1.da - rscTable->vring0.da);
+     }
+ 
+     RPMessage_vringResetInternal(vringObj,

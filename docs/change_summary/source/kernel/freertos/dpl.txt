@@ -1,0 +1,241 @@
+diff --git a/source/kernel/freertos/dpl/a53/ClockP_freertos_a53.c b/source/kernel/freertos/dpl/a53/ClockP_freertos_a53.c
+index 20dd094f78..22c2e27de6 100644
+--- a/source/kernel/freertos/dpl/a53/ClockP_freertos_a53.c
++++ b/source/kernel/freertos/dpl/a53/ClockP_freertos_a53.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -87,6 +87,7 @@ void ClockP_init(void)
+     timerHwiParams.intNum = gClockConfig.timerHwiIntNum;
+     timerHwiParams.callback = ClockP_timerTickIsr;
+     timerHwiParams.isPulse = 0;
++    timerHwiParams.priority = gClockConfig.intrPriority;
+     HwiP_construct(&gClockCtrl.timerHwiObj, &timerHwiParams);
+ 
+     /* start the tick timer */
+diff --git a/source/kernel/freertos/dpl/common/SemaphoreP_freertos.c b/source/kernel/freertos/dpl/common/SemaphoreP_freertos.c
+index 4664b93044..480e0ef477 100755
+--- a/source/kernel/freertos/dpl/common/SemaphoreP_freertos.c
++++ b/source/kernel/freertos/dpl/common/SemaphoreP_freertos.c
+@@ -44,27 +44,36 @@ typedef struct SemaphoreP_Struct_ {
+ 
+ int32_t SemaphoreP_constructBinary(SemaphoreP_Object *obj, uint32_t initCount)
+ {
+-    SemaphoreP_Struct *pSemaphore = (SemaphoreP_Struct *)obj;
+-    int32_t status;
++    SemaphoreP_Struct *pSemaphore = NULL;
++    int32_t status = SystemP_FAILURE;
+ 
+     DebugP_assert(sizeof(SemaphoreP_Struct) <= sizeof(SemaphoreP_Object) );
+ 
+-    pSemaphore->isRecursiveMutex = 0;
+-    pSemaphore->semHndl = xSemaphoreCreateBinaryStatic(&pSemaphore->semObj);
+-    if( pSemaphore->semHndl == NULL )
++    if(obj != NULL)
+     {
+-        status = SystemP_FAILURE;
++        pSemaphore = (SemaphoreP_Struct *)obj;
++        status = SystemP_SUCCESS;
+     }
+-    else
+-    {
+-        vQueueAddToRegistry(pSemaphore->semHndl, "Binary Sem (DPL)");
+ 
+-        if(initCount == 1U)
++    if (SystemP_SUCCESS == status)
++    {
++        pSemaphore->isRecursiveMutex = 0;
++        pSemaphore->semHndl = xSemaphoreCreateBinaryStatic(&pSemaphore->semObj);
++        if( pSemaphore->semHndl == NULL )
+         {
+-            /* post a semaphore to increment initial count to 1 */
+-            (void)xSemaphoreGive(pSemaphore->semHndl);
++            status = SystemP_FAILURE;
++        }
++        else
++        {
++            vQueueAddToRegistry(pSemaphore->semHndl, "Binary Sem (DPL)");
++
++            if(initCount == 1U)
++            {
++                /* post a semaphore to increment initial count to 1 */
++                (void)xSemaphoreGive(pSemaphore->semHndl);
++            }
++            status = SystemP_SUCCESS;
+         }
+-        status = SystemP_SUCCESS;
+     }
+ 
+     return status;
+diff --git a/source/kernel/freertos/dpl/m4/ClockP_freertos_m4.c b/source/kernel/freertos/dpl/m4/ClockP_freertos_m4.c
+index f127b8b39f..7cb209b9a6 100755
+--- a/source/kernel/freertos/dpl/m4/ClockP_freertos_m4.c
++++ b/source/kernel/freertos/dpl/m4/ClockP_freertos_m4.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -87,6 +87,7 @@ void ClockP_init(void)
+     timerHwiParams.intNum = gClockConfig.timerHwiIntNum;
+     timerHwiParams.callback = ClockP_timerTickIsr;
+     timerHwiParams.isPulse = 0;
++    timerHwiParams.priority = gClockConfig.intrPriority;
+     HwiP_construct(&gClockCtrl.timerHwiObj, &timerHwiParams);
+ 
+     /* start the tick timer */
+diff --git a/source/kernel/freertos/dpl/r5/ClockP_freertos_r5.c b/source/kernel/freertos/dpl/r5/ClockP_freertos_r5.c
+index df5f7933b2..2fef9a383f 100755
+--- a/source/kernel/freertos/dpl/r5/ClockP_freertos_r5.c
++++ b/source/kernel/freertos/dpl/r5/ClockP_freertos_r5.c
+@@ -87,6 +87,7 @@ void ClockP_init(void)
+     timerHwiParams.intNum = gClockConfig.timerHwiIntNum;
+     timerHwiParams.callback = ClockP_timerTickIsr;
+     timerHwiParams.isPulse = 0;
++    timerHwiParams.priority = gClockConfig.intrPriority;
+     (void)HwiP_construct(&gClockCtrl.timerHwiObj, &timerHwiParams);
+ 
+     /* start the tick timer */
+diff --git a/source/kernel/freertos/dpl/r5/HwiP_armv7r_handlers_freertos.c b/source/kernel/freertos/dpl/r5/HwiP_armv7r_handlers_freertos.c
+index ab5c13b978..94a8a9d043 100644
+--- a/source/kernel/freertos/dpl/r5/HwiP_armv7r_handlers_freertos.c
++++ b/source/kernel/freertos/dpl/r5/HwiP_armv7r_handlers_freertos.c
+@@ -33,6 +33,8 @@
+ #include <kernel/dpl/HwiP.h>
+ #include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
+ #include <drivers/hw_include/csl_types.h>
++#include <drivers/hw_include/soc_config.h>
++#include <drivers/pmu.h>
+ 
+ static volatile uint32_t gdummy;
+ 
+@@ -44,7 +46,49 @@ void __attribute__((section(".text.hwi"))) HwiP_irq_handler_c(void);
+ void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_reserved_handler(void);
+ void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_undefined_handler(void);
+ void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_prefetch_abort_handler(void);
++#ifdef __cplusplus
++extern "C" {
++#endif
+ void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_data_abort_handler(void);
++#ifdef __cplusplus
++}
++#endif
++
++#ifdef INTR_PROF
++void __attribute__((section(".text.hwi"))) HwiP_irq_profile_c(uint32_t intNum)
++{
++    uint32_t idx = 0, exists = 1;
++
++    for(idx = 0; idx <= gHwiCtrlProf.traceInterruptedISRIndex; idx++)
++    {
++        if(gHwiCtrlProf.traceInterruptedISR[idx] == intNum)
++        {
++            gHwiCtrlProf.traceInterruptedISR[idx] = 0;
++            gHwiCtrlProf.traceInterruptedISRIndex --;
++            if(gHwiCtrlProf.traceInterruptedISRIndex == 0)
++            {
++                gHwiCtrlProf.readCounterStop = CSL_armR5PmuReadCntr(CSL_ARM_R5_PMU_CYCLE_COUNTER_NUM);
++                if(gHwiCtrlProf.readCounterStop > gHwiCtrlProf.readCounterStart)
++                {
++                    gHwiCtrlProf.pmuCountVal += gHwiCtrlProf.readCounterStop - gHwiCtrlProf.readCounterStart - gHwiCtrlProf.pmuCalibration;
++                }
++                else
++                {
++                    gHwiCtrlProf.pmuCountVal += (0xFFFFFFFFU - gHwiCtrlProf.readCounterStart) + gHwiCtrlProf.readCounterStop - gHwiCtrlProf.pmuCalibration;
++                }
++            }
++            exists = 0;
++            break;
++        }
++    }
++    if(exists)
++    {
++        gHwiCtrlProf.traceInterruptedISR[(gHwiCtrlProf.traceInterruptedISRIndex)] = intNum;
++        gHwiCtrlProf.traceInterruptedISRIndex ++;
++        gHwiCtrlProf.readCounterStart = CSL_armR5PmuReadCntr(CSL_ARM_R5_PMU_CYCLE_COUNTER_NUM);
++    }
++}
++#endif
+ 
+ /* IRQ handler starts execution in HwiP_irq_handler, defined in portASM.S
+  * After some initial assembly logic it then branches to this function.
+@@ -66,6 +110,13 @@ void __attribute__((section(".text.hwi"))) HwiP_irq_handler_c(void)
+     status = HwiP_getIRQ(&intNum);
+     if(status==SystemP_SUCCESS)
+     {
++        #ifdef INTR_PROF
++        if(gHwiCtrlProf.profileIntr == 1)
++        {
++            HwiP_irq_profile_c(intNum);
++        }
++        #endif
++
+         uint32_t isPulse = HwiP_isPulse(intNum);
+         HwiP_FxnCallback isr;
+         void *args;
+@@ -96,6 +147,13 @@ void __attribute__((section(".text.hwi"))) HwiP_irq_handler_c(void)
+             HwiP_clearInt(intNum);
+         }
+         HwiP_ackIRQ(intNum);
++
++        #ifdef INTR_PROF
++        if(gHwiCtrlProf.profileIntr == 1)
++        {
++            HwiP_irq_profile_c(intNum);
++        }
++        #endif
+     }
+     else
+     {
+diff --git a/source/kernel/freertos/dpl/r5/HwiP_armv7r_handlers_freertos_asm.S b/source/kernel/freertos/dpl/r5/HwiP_armv7r_handlers_freertos_asm.S
+index a9bd14ddde..a4d92f7233 100644
+--- a/source/kernel/freertos/dpl/r5/HwiP_armv7r_handlers_freertos_asm.S
++++ b/source/kernel/freertos/dpl/r5/HwiP_armv7r_handlers_freertos_asm.S
+@@ -48,25 +48,36 @@ HwiP_data_abort_handler:
+          * instruction set) points to the second instruction beyond the address where
+          * the exception was generated.
+          */
+-        SUB		lr, lr, #6
++
++        /*   Push used registers. */
++        PUSH	{r0-r4, r12}
++
++        /* SPSR has the snapshot of CPSR before data abort. Compare thumb state bit in SPSR */
++        MRS r0, SPSR
++        AND r1, r0, #0x20
++        CMP R1, #0
++
++        /* branches to label ARM_STATE if the thumb state bit is not set */
++        BEQ ARM_STATE
++        SUB lr, lr, #2
++        ARM_STATE:
++        SUB lr, lr, #4
++        END:
+ 
+         /*   Push the return address and SPSR. */
+         PUSH	{lr}
+         MRS	lr, SPSR
+         PUSH	{lr}
+ 
+-        /*   Push used registers. */
+-        PUSH	{r0-r4, r12}
+-
+         /*   Call the interrupt handler. */
+         LDR	r1, HwiP_data_abort_handler_const
+         BLX	r1
+ 
+         /*  Restore used registers, LR and SPSR before  returning. */
+-        POP	{r0-r4, r12}
+         POP	{LR}
+         MSR	SPSR_cxsf, LR
+         POP	{LR}
++        POP	{r0-r4, r12}
+         MOVS	PC, LR
+ 
+ HwiP_data_abort_handler_const: .word HwiP_data_abort_handler_c

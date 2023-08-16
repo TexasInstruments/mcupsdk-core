@@ -1,0 +1,3914 @@
+diff --git a/source/usb/cdn/core_driver/common/src/cdn_osal_none.c b/source/usb/cdn/core_driver/common/src/cdn_osal_none.c
+index 8c553f6580..8ee6b70ae4 100644
+--- a/source/usb/cdn/core_driver/common/src/cdn_osal_none.c
++++ b/source/usb/cdn/core_driver/common/src/cdn_osal_none.c
+@@ -53,11 +53,12 @@ OsalNoRtosReturn_t OsalNoRtosQueue_init(
+ 			   uint16_t eleSize )
+ {
+ 	OsalNoRtosReturn_t status = OSAL_NO_RTOS_RETURN_SUCCESS ; 
+-    memset((void *) queue,0,sizeof(OsalNoRtosQueue_t));
+ 	/* parameters sanity check */ 
+ 	if ((queue != NULL) && (buffer != NULL) &&  \
+ 			   (maxDepth != 0) && (eleSize != 0) && (bufferSize >= maxDepth*eleSize))
+ 	{
++		memset((void *) queue,0,sizeof(OsalNoRtosQueue_t));
++		
+ 		queue->fifo = buffer; 
+ 		queue->maxDepth = maxDepth ; 
+ 		queue->eleSize = eleSize ; 
+diff --git a/source/usb/cdn/core_driver/device/src/cusbd.c b/source/usb/cdn/core_driver/device/src/cusbd.c
+index 8fade9eef6..ff0e024347 100644
+--- a/source/usb/cdn/core_driver/device/src/cusbd.c
++++ b/source/usb/cdn/core_driver/device/src/cusbd.c
+@@ -3026,10 +3026,10 @@ static void handleEp0IrqIoc(CUSBD_PrivateData* dev, CUSBDMA_DmaChannel *channel)
+         if (dev->request->complete != NULL) {
+             dev->request->complete(&dev->ep0.ep, dev->request);
+         }
++	    if (dev->request->deferStatusStage)  /* please put it above the line dev->ep0NextState = CH9_EP0_SETUP_PHASE; */
++		    return;
++    
+     }
+-	 if (dev->request->deferStatusStage)  /* please put it above the line dev->ep0NextState = CH9_EP0_SETUP_PHASE; */
+-		return;
+-
+ 
+     dev->ep0NextState = CH9_EP0_SETUP_PHASE;
+     CPS_UncachedWrite32(&dev->reg->USBR_EP_SEL, 0x00U);
+diff --git a/source/usb/tinyusb/.project/.ncm/project_freertos.js b/source/usb/tinyusb/.project/.ncm/project_freertos.js
+new file mode 100755
+index 0000000000..983c13d6b6
+--- /dev/null
++++ b/source/usb/tinyusb/.project/.ncm/project_freertos.js
+@@ -0,0 +1,14 @@
++function getComponentProperty(device)
++{
++    return require(`./project_freertos_${device}`).getComponentProperty();
++};
++
++function getComponentBuildProperty(buildOption)
++{
++    return require(`./project_freertos_${buildOption.device}`).getComponentBuildProperty(buildOption);
++};
++
++module.exports = {
++    getComponentProperty,
++    getComponentBuildProperty,
++};
+diff --git a/source/usb/tinyusb/.project/.ncm/project_freertos_am243x.js b/source/usb/tinyusb/.project/.ncm/project_freertos_am243x.js
+new file mode 100755
+index 0000000000..dec956dd5d
+--- /dev/null
++++ b/source/usb/tinyusb/.project/.ncm/project_freertos_am243x.js
+@@ -0,0 +1,162 @@
++let path = require('path');
++
++let device = "am243x";
++
++const files = {
++    common: [
++		/* cdn -> tusb  wrapper */
++        "usb_wrapper.c",
++        /* TinyUSB porting layer (usb/tinyusb/portable) */
++        "dcd.c",
++        /* TinyUSB core driver (usb/tinyusb/tinyusb-stack/src) */
++        "tusb.c",
++        "tusb_fifo.c",
++        "usbd.c",
++        "usbd_control.c",
++        /* TinyUSB NCM class driver (usb/tinyusb/tinyusb-stack/class) */
++        "ncm_device.c",
++		/* TinyUSB networking lib */ 
++		"dhserver.c",
++		"dnserver.c",
++
++		/* LWIP SRC code */ 
++		"altcp.c",
++		"altcp_alloc.c",
++		"altcp_tcp.c",
++		"def.c",
++		"dns.c",
++		"inet_chksum.c",
++		"init.c",
++		"ip.c",
++		"mem.c",
++		"memp.c",
++		"netif.c",
++		"pbuf.c",
++		"raw.c",
++		"stats.c",
++		"sys.c",
++		"tcp.c",
++		"tcp_in.c",
++		"tcp_out.c",
++		"timeouts.c",
++		"udp.c",
++		"autoip.c",
++		"dhcp.c",
++		"etharp.c",
++		"icmp.c",
++		"igmp.c",
++		"ip4.c",
++		"ip4_addr.c",
++		"ip4_frag.c",
++		"ethernet.c",
++		"slipif.c",
++		"httpd.c",
++		"lwiperf.c",
++		"fs.c",
++		"err.c"
++    ],
++};
++
++const filedirs = {
++    common: [
++        "../tinyusb/tinyusb-stack/src",
++        "../tinyusb/tinyusb-stack/lib/networking",
++        "../tinyusb/tinyusb-stack/src/common",
++        "../tinyusb/tinyusb-stack/src/device",
++        "../tinyusb/tinyusb-stack/src/class/net",
++        "../tinyusb/portable/am64x_am243x",
++        "../cdn/include",
++        "../cdn/soc/am64x_am243x",
++		"../../networking/lwip/lwip-stack/src/core",
++		"../../networking/lwip/lwip-stack/src/api",
++		"../../networking/lwip/lwip-stack/src/core/ipv4",
++		"../../networking/lwip/lwip-stack/src/netif",
++		"../../networking/lwip/lwip-stack/src/apps/http/",
++		"../../networking/lwip/lwip-stack/src/apps/lwiperf/",
++    ],
++};
++
++const includes = {
++    common: [
++        "../../drivers/hw_include",
++        "../../drivers/hw_include/am64x_am243x",
++        "../../drivers/soc/am64x_am243x",
++        "../../kernel/freertos/FreeRTOS-Kernel/include",
++        "../../kernel/freertos/config/am243x/r5f",
++        "../../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
++        "../tinyusb/tinyusb-stack/src",
++        "../tinyusb/tinyusb-stack/src/common",
++        "../tinyusb/tinyusb-stack/src/device",
++        "../tinyusb/tinyusb-stack/src/class/net",
++        "../tinyusb/tinyusb-stack/lib/networking",
++        "../tinyusb/config/freertos/am64x_am243x/ncm_config",
++        "../cdn/core_driver/common/src",
++        "../cdn/core_driver/common/include",
++        "../cdn/core_driver/device/src",
++        "../cdn/core_driver/device/include",
++        "../cdn/include",
++        "../cdn/soc/am64x_am243x",
++		"../../networking/lwip/lwip-stack/src/include",
++		"../../networking/lwip/lwip-stack/src/include/ipv4",
++		"../../networking/lwip/lwip-stack/src/include/lwip/apps",
++		"../../networking/lwip/lwip-stack/src/include/lwip",
++		"../../networking/lwip/lwip-config/am243x/usb/",
++		"../../networking/lwip/lwip-port/include/",
++    ],
++};
++
++const defines = {
++    common: [
++        "TINYUSB_INTEGRATION",
++        "CFG_TUSB_OS=OPT_OS_FREERTOS"
++    ],
++    debug: [
++    ],
++    release: [
++    ],
++};
++
++const cflags = {
++    common: [
++        "-Wno-address-of-packed-member",
++    ],
++	release:[
++	]
++};
++
++const buildOptionCombos = [
++    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
++];
++
++function getComponentProperty() {
++    let property = {};
++
++    property.dirPath = path.resolve(__dirname, "../..");
++    property.type = "library";
++    property.name = "usbd_tusb_ncm_freertos";
++    property.isInternal = false;
++    property.isSkipTopLevelBuild = false;
++    property.buildOptionCombos = buildOptionCombos;
++    property.tag = "ncm_freertos";
++    /* Ignore this library for cpp build */ 
++    property.ignore_cpp = true ;  
++
++    return property;
++}
++
++function getComponentBuildProperty(buildOption) {
++    let build_property = {};
++
++    build_property.files = files;
++    build_property.filedirs = filedirs;
++    build_property.includes = includes;
++    build_property.defines = defines;
++    build_property.cflags = cflags;
++
++    return build_property;
++}
++
++module.exports = {
++    getComponentProperty,
++    getComponentBuildProperty,
++};
+diff --git a/source/usb/tinyusb/.project/.ncm/project_freertos_am64x.js b/source/usb/tinyusb/.project/.ncm/project_freertos_am64x.js
+new file mode 100755
+index 0000000000..f2f0242ce4
+--- /dev/null
++++ b/source/usb/tinyusb/.project/.ncm/project_freertos_am64x.js
+@@ -0,0 +1,162 @@
++let path = require('path');
++
++let device = "am64x";
++
++const files = {
++    common: [
++		/* cdn -> tusb  wrapper */
++        "usb_wrapper.c",
++        /* TinyUSB porting layer (usb/tinyusb/portable) */
++        "dcd.c",
++        /* TinyUSB core driver (usb/tinyusb/tinyusb-stack/src) */
++        "tusb.c",
++        "tusb_fifo.c",
++        "usbd.c",
++        "usbd_control.c",
++        /* TinyUSB NCM class driver (usb/tinyusb/tinyusb-stack/class) */
++        "ncm_device.c",
++		/* TinyUSB networking lib */ 
++		"dhserver.c",
++		"dnserver.c",
++
++		/* LWIP SRC code */ 
++		"altcp.c",
++		"altcp_alloc.c",
++		"altcp_tcp.c",
++		"def.c",
++		"dns.c",
++		"inet_chksum.c",
++		"init.c",
++		"ip.c",
++		"mem.c",
++		"memp.c",
++		"netif.c",
++		"pbuf.c",
++		"raw.c",
++		"stats.c",
++		"sys.c",
++		"tcp.c",
++		"tcp_in.c",
++		"tcp_out.c",
++		"timeouts.c",
++		"udp.c",
++		"autoip.c",
++		"dhcp.c",
++		"etharp.c",
++		"icmp.c",
++		"igmp.c",
++		"ip4.c",
++		"ip4_addr.c",
++		"ip4_frag.c",
++		"ethernet.c",
++		"slipif.c",
++		"httpd.c",
++		"lwiperf.c",
++		"fs.c",
++		"err.c"
++    ],
++};
++
++const filedirs = {
++    common: [
++        "../tinyusb/tinyusb-stack/src",
++        "../tinyusb/tinyusb-stack/lib/networking",
++        "../tinyusb/tinyusb-stack/src/common",
++        "../tinyusb/tinyusb-stack/src/device",
++        "../tinyusb/tinyusb-stack/src/class/net",
++        "../tinyusb/portable/am64x_am243x",
++        "../cdn/include",
++        "../cdn/soc/am64x_am243x",
++		"../../networking/lwip/lwip-stack/src/core",
++		"../../networking/lwip/lwip-stack/src/api",
++		"../../networking/lwip/lwip-stack/src/core/ipv4",
++		"../../networking/lwip/lwip-stack/src/netif",
++		"../../networking/lwip/lwip-stack/src/apps/http/",
++		"../../networking/lwip/lwip-stack/src/apps/lwiperf/",
++    ],
++};
++
++const includes = {
++    common: [
++        "../../drivers/hw_include",
++        "../../drivers/hw_include/am64x_am243x",
++        "../../drivers/soc/am64x_am243x",
++        "../../kernel/freertos/FreeRTOS-Kernel/include",
++        "../../kernel/freertos/config/am64x/r5f",
++        "../../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
++        "../tinyusb/tinyusb-stack/src",
++        "../tinyusb/tinyusb-stack/src/common",
++        "../tinyusb/tinyusb-stack/src/device",
++        "../tinyusb/tinyusb-stack/src/class/net",
++        "../tinyusb/tinyusb-stack/lib/networking",
++        "../tinyusb/config/freertos/am64x_am243x/ncm_config",
++        "../cdn/core_driver/common/src",
++        "../cdn/core_driver/common/include",
++        "../cdn/core_driver/device/src",
++        "../cdn/core_driver/device/include",
++        "../cdn/include",
++        "../cdn/soc/am64x_am243x",
++		"../../networking/lwip/lwip-stack/src/include",
++		"../../networking/lwip/lwip-stack/src/include/ipv4",
++		"../../networking/lwip/lwip-stack/src/include/lwip/apps",
++		"../../networking/lwip/lwip-stack/src/include/lwip",
++		"../../networking/lwip/lwip-config/am64x/usb/",
++		"../../networking/lwip/lwip-port/include/",
++    ],
++};
++
++const defines = {
++    common: [
++        "TINYUSB_INTEGRATION",
++        "CFG_TUSB_OS=OPT_OS_FREERTOS"
++    ],
++    debug: [
++    ],
++    release: [
++    ],
++};
++
++const cflags = {
++    common: [
++        "-Wno-address-of-packed-member",
++    ],
++	release:[
++	]
++};
++
++const buildOptionCombos = [
++    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
++];
++
++function getComponentProperty() {
++    let property = {};
++
++    property.dirPath = path.resolve(__dirname, "../..");
++    property.type = "library";
++    property.name = "usbd_tusb_ncm_freertos";
++    property.isInternal = false;
++    property.isSkipTopLevelBuild = false;
++    property.buildOptionCombos = buildOptionCombos;
++    property.tag = "ncm_freertos";
++    /* flag to ignore cpp build */ 
++    property.ignore_cpp = true ;
++
++    return property;
++}
++
++function getComponentBuildProperty(buildOption) {
++    let build_property = {};
++
++    build_property.files = files;
++    build_property.filedirs = filedirs;
++    build_property.includes = includes;
++    build_property.defines = defines;
++    build_property.cflags = cflags;
++
++    return build_property;
++}
++
++module.exports = {
++    getComponentProperty,
++    getComponentBuildProperty,
++};
+diff --git a/source/usb/tinyusb/.project/.ncm/project_nortos.js b/source/usb/tinyusb/.project/.ncm/project_nortos.js
+new file mode 100755
+index 0000000000..f14ee823af
+--- /dev/null
++++ b/source/usb/tinyusb/.project/.ncm/project_nortos.js
+@@ -0,0 +1,14 @@
++function getComponentProperty(device)
++{
++    return require(`./project_nortos_${device}`).getComponentProperty();
++};
++
++function getComponentBuildProperty(buildOption)
++{
++    return require(`./project_nortos_${buildOption.device}`).getComponentBuildProperty(buildOption);
++};
++
++module.exports = {
++    getComponentProperty,
++    getComponentBuildProperty,
++};
+diff --git a/source/usb/tinyusb/.project/.ncm/project_nortos_am243x.js b/source/usb/tinyusb/.project/.ncm/project_nortos_am243x.js
+new file mode 100755
+index 0000000000..568e52b9c9
+--- /dev/null
++++ b/source/usb/tinyusb/.project/.ncm/project_nortos_am243x.js
+@@ -0,0 +1,156 @@
++let path = require('path');
++
++let device = "am243x";
++
++const files = {
++    common: [
++		/* cdn -> tusb  wrapper */
++        "usb_wrapper.c",
++        /* TinyUSB porting layer (usb/tinyusb/portable) */
++        "dcd.c",
++        /* TinyUSB core driver (usb/tinyusb/tinyusb-stack/src) */
++        "tusb.c",
++        "tusb_fifo.c",
++        "usbd.c",
++        "usbd_control.c",
++        /* TinyUSB NCM class driver (usb/tinyusb/tinyusb-stack/class) */
++        "ncm_device.c",
++		/* TinyUSB networking lib */ 
++		"dhserver.c",
++		"dnserver.c",
++
++		/* LWIP SRC code */ 
++		"altcp.c",
++		"altcp_alloc.c",
++		"altcp_tcp.c",
++		"def.c",
++		"dns.c",
++		"inet_chksum.c",
++		"init.c",
++		"ip.c",
++		"mem.c",
++		"memp.c",
++		"netif.c",
++		"pbuf.c",
++		"raw.c",
++		"stats.c",
++		"sys.c",
++		"tcp.c",
++		"tcp_in.c",
++		"tcp_out.c",
++		"timeouts.c",
++		"udp.c",
++		"autoip.c",
++		"dhcp.c",
++		"etharp.c",
++		"icmp.c",
++		"igmp.c",
++		"ip4.c",
++		"ip4_addr.c",
++		"ip4_frag.c",
++		"ethernet.c",
++		"slipif.c",
++		"httpd.c",
++		"lwiperf.c",
++		"fs.c",
++		"err.c"
++    ],
++};
++
++const filedirs = {
++    common: [
++        "../tinyusb/tinyusb-stack/src",
++        "../tinyusb/tinyusb-stack/lib/networking",
++        "../tinyusb/tinyusb-stack/src/common",
++        "../tinyusb/tinyusb-stack/src/device",
++        "../tinyusb/tinyusb-stack/src/class/net",
++        "../tinyusb/portable/am64x_am243x",
++        "../cdn/include",
++        "../cdn/soc/am64x_am243x",
++		"../../networking/lwip/lwip-stack/src/core",
++		"../../networking/lwip/lwip-stack/src/api",
++		"../../networking/lwip/lwip-stack/src/core/ipv4",
++		"../../networking/lwip/lwip-stack/src/netif",
++		"../../networking/lwip/lwip-stack/src/apps/http/",
++		"../../networking/lwip/lwip-stack/src/apps/lwiperf/",
++    ],
++};
++
++const includes = {
++    common: [
++        "../../drivers/hw_include",
++        "../../drivers/hw_include/am64x_am243x",
++        "../../drivers/soc/am64x_am243x",
++        "../tinyusb/config/nortos/am64x_am243x",
++        "../tinyusb/tinyusb-stack/src",
++        "../tinyusb/tinyusb-stack/src/common",
++        "../tinyusb/tinyusb-stack/src/device",
++        "../tinyusb/tinyusb-stack/src/class/net",
++        "../tinyusb/tinyusb-stack/lib/networking",
++        "../tinyusb/config/nortos/am64x_am243x/ncm_config",
++        "../cdn/core_driver/common/src",
++        "../cdn/core_driver/common/include",
++        "../cdn/core_driver/device/src",
++        "../cdn/core_driver/device/include",
++        "../cdn/include",
++        "../cdn/soc/am64x_am243x",
++		"../../networking/lwip/lwip-stack/src/include",
++		"../../networking/lwip/lwip-stack/src/include/ipv4",
++		"../../networking/lwip/lwip-stack/src/include/lwip/apps",
++		"../../networking/lwip/lwip-stack/src/include/lwip",
++		"../../networking/lwip/lwip-config/am243x/usb/",
++		"../../networking/lwip/lwip-port/include/",
++    ],
++};
++
++const defines = {
++    common: [
++    ],
++    debug: [
++    ],
++    release: [
++    ],
++};
++
++const cflags = {
++    common: [
++        "-Wno-address-of-packed-member",
++    ],
++};
++
++const buildOptionCombos = [
++    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
++];
++
++function getComponentProperty() {
++    let property = {};
++
++    property.dirPath = path.resolve(__dirname, "../..");
++    property.type = "library";
++    property.name = "usbd_tusb_ncm_nortos";
++    property.isInternal = false;
++    property.isSkipTopLevelBuild = false;
++    property.buildOptionCombos = buildOptionCombos;
++    property.tag = "ncm_nortos";
++    /* flag to ignore cpp build */ 
++    property.ignore_cpp = true ;
++
++    return property;
++}
++
++function getComponentBuildProperty(buildOption) {
++    let build_property = {};
++
++    build_property.files = files;
++    build_property.filedirs = filedirs;
++    build_property.includes = includes;
++    build_property.defines = defines;
++    build_property.cflags = cflags;
++
++    return build_property;
++}
++
++module.exports = {
++    getComponentProperty,
++    getComponentBuildProperty,
++};
+diff --git a/source/usb/tinyusb/.project/.ncm/project_nortos_am64x.js b/source/usb/tinyusb/.project/.ncm/project_nortos_am64x.js
+new file mode 100755
+index 0000000000..1daa2152b6
+--- /dev/null
++++ b/source/usb/tinyusb/.project/.ncm/project_nortos_am64x.js
+@@ -0,0 +1,156 @@
++let path = require('path');
++
++let device = "am64x";
++
++const files = {
++    common: [
++		/* cdn -> tusb  wrapper */
++        "usb_wrapper.c",
++        /* TinyUSB porting layer (usb/tinyusb/portable) */
++        "dcd.c",
++        /* TinyUSB core driver (usb/tinyusb/tinyusb-stack/src) */
++        "tusb.c",
++        "tusb_fifo.c",
++        "usbd.c",
++        "usbd_control.c",
++        /* TinyUSB NCM class driver (usb/tinyusb/tinyusb-stack/class) */
++        "ncm_device.c",
++		/* TinyUSB networking lib */ 
++		"dhserver.c",
++		"dnserver.c",
++
++		/* LWIP SRC code */ 
++		"altcp.c",
++		"altcp_alloc.c",
++		"altcp_tcp.c",
++		"def.c",
++		"dns.c",
++		"inet_chksum.c",
++		"init.c",
++		"ip.c",
++		"mem.c",
++		"memp.c",
++		"netif.c",
++		"pbuf.c",
++		"raw.c",
++		"stats.c",
++		"sys.c",
++		"tcp.c",
++		"tcp_in.c",
++		"tcp_out.c",
++		"timeouts.c",
++		"udp.c",
++		"autoip.c",
++		"dhcp.c",
++		"etharp.c",
++		"icmp.c",
++		"igmp.c",
++		"ip4.c",
++		"ip4_addr.c",
++		"ip4_frag.c",
++		"ethernet.c",
++		"slipif.c",
++		"httpd.c",
++		"lwiperf.c",
++		"fs.c",
++		"err.c"
++    ],
++};
++
++const filedirs = {
++    common: [
++        "../tinyusb/tinyusb-stack/src",
++        "../tinyusb/tinyusb-stack/lib/networking",
++        "../tinyusb/tinyusb-stack/src/common",
++        "../tinyusb/tinyusb-stack/src/device",
++        "../tinyusb/tinyusb-stack/src/class/net",
++        "../tinyusb/portable/am64x_am243x",
++        "../cdn/include",
++        "../cdn/soc/am64x_am243x",
++		"../../networking/lwip/lwip-stack/src/core",
++		"../../networking/lwip/lwip-stack/src/api",
++		"../../networking/lwip/lwip-stack/src/core/ipv4",
++		"../../networking/lwip/lwip-stack/src/netif",
++		"../../networking/lwip/lwip-stack/src/apps/http/",
++		"../../networking/lwip/lwip-stack/src/apps/lwiperf/",
++    ],
++};
++
++const includes = {
++    common: [
++        "../../drivers/hw_include",
++        "../../drivers/hw_include/am64x_am243x",
++        "../../drivers/soc/am64x_am243x",
++        "../tinyusb/config/nortos/am64x_am243x",
++        "../tinyusb/tinyusb-stack/src",
++        "../tinyusb/tinyusb-stack/src/common",
++        "../tinyusb/tinyusb-stack/src/device",
++        "../tinyusb/tinyusb-stack/src/class/net",
++        "../tinyusb/tinyusb-stack/lib/networking",
++        "../tinyusb/config/nortos/am64x_am243x/ncm_config",
++        "../cdn/core_driver/common/src",
++        "../cdn/core_driver/common/include",
++        "../cdn/core_driver/device/src",
++        "../cdn/core_driver/device/include",
++        "../cdn/include",
++        "../cdn/soc/am64x_am243x",
++		"../../networking/lwip/lwip-stack/src/include",
++		"../../networking/lwip/lwip-stack/src/include/ipv4",
++		"../../networking/lwip/lwip-stack/src/include/lwip/apps",
++		"../../networking/lwip/lwip-stack/src/include/lwip",
++		"../../networking/lwip/lwip-config/am64x/usb/",
++		"../../networking/lwip/lwip-port/include/",
++    ],
++};
++
++const defines = {
++    common: [
++    ],
++    debug: [
++    ],
++    release: [
++    ],
++};
++
++const cflags = {
++    common: [
++        "-Wno-address-of-packed-member",
++    ],
++};
++
++const buildOptionCombos = [
++    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
++];
++
++function getComponentProperty() {
++    let property = {};
++
++    property.dirPath = path.resolve(__dirname, "../..");
++    property.type = "library";
++    property.name = "usbd_tusb_ncm_nortos";
++    property.isInternal = false;
++    property.isSkipTopLevelBuild = false;
++    property.buildOptionCombos = buildOptionCombos;
++    property.tag = "ncm_nortos";
++    /* flag to ignore cpp build */ 
++    property.ignore_cpp = true ;
++
++    return property;
++}
++
++function getComponentBuildProperty(buildOption) {
++    let build_property = {};
++
++    build_property.files = files;
++    build_property.filedirs = filedirs;
++    build_property.includes = includes;
++    build_property.defines = defines;
++    build_property.cflags = cflags;
++
++    return build_property;
++}
++
++module.exports = {
++    getComponentProperty,
++    getComponentBuildProperty,
++};
+diff --git a/source/usb/tinyusb/.project/.rndis/project_freertos.js b/source/usb/tinyusb/.project/.rndis/project_freertos.js
+new file mode 100755
+index 0000000000..983c13d6b6
+--- /dev/null
++++ b/source/usb/tinyusb/.project/.rndis/project_freertos.js
+@@ -0,0 +1,14 @@
++function getComponentProperty(device)
++{
++    return require(`./project_freertos_${device}`).getComponentProperty();
++};
++
++function getComponentBuildProperty(buildOption)
++{
++    return require(`./project_freertos_${buildOption.device}`).getComponentBuildProperty(buildOption);
++};
++
++module.exports = {
++    getComponentProperty,
++    getComponentBuildProperty,
++};
+diff --git a/source/usb/tinyusb/.project/.rndis/project_freertos_am243x.js b/source/usb/tinyusb/.project/.rndis/project_freertos_am243x.js
+new file mode 100755
+index 0000000000..87813765d7
+--- /dev/null
++++ b/source/usb/tinyusb/.project/.rndis/project_freertos_am243x.js
+@@ -0,0 +1,163 @@
++let path = require('path');
++
++let device = "am243x";
++
++const files = {
++    common: [
++		/* cdn -> tusb  wrapper */
++        "usb_wrapper.c",
++        /* TinyUSB porting layer (usb/tinyusb/portable) */
++        "dcd.c",
++        /* TinyUSB core driver (usb/tinyusb/tinyusb-stack/src) */
++        "tusb.c",
++        "tusb_fifo.c",
++        "usbd.c",
++        "usbd_control.c",
++        /* TinyUSB NCM class driver (usb/tinyusb/tinyusb-stack/class) */
++        "ecm_rndis_device.c",
++	    "rndis_reports.c",
++		/* TinyUSB networking lib */ 
++		"dhserver.c",
++		"dnserver.c",
++
++		/* LWIP SRC code */ 
++		"altcp.c",
++		"altcp_alloc.c",
++		"altcp_tcp.c",
++		"def.c",
++		"dns.c",
++		"inet_chksum.c",
++		"init.c",
++		"ip.c",
++		"mem.c",
++		"memp.c",
++		"netif.c",
++		"pbuf.c",
++		"raw.c",
++		"stats.c",
++		"sys.c",
++		"tcp.c",
++		"tcp_in.c",
++		"tcp_out.c",
++		"timeouts.c",
++		"udp.c",
++		"autoip.c",
++		"dhcp.c",
++		"etharp.c",
++		"icmp.c",
++		"igmp.c",
++		"ip4.c",
++		"ip4_addr.c",
++		"ip4_frag.c",
++		"ethernet.c",
++		"slipif.c",
++		"httpd.c",
++		"lwiperf.c",
++		"fs.c",
++		"err.c"
++    ],
++};
++
++const filedirs = {
++    common: [
++        "../tinyusb/tinyusb-stack/src",
++        "../tinyusb/tinyusb-stack/lib/networking",
++        "../tinyusb/tinyusb-stack/src/common",
++        "../tinyusb/tinyusb-stack/src/device",
++        "../tinyusb/tinyusb-stack/src/class/net",
++        "../tinyusb/portable/am64x_am243x",
++        "../cdn/include",
++        "../cdn/soc/am64x_am243x",
++		"../../networking/lwip/lwip-stack/src/core",
++		"../../networking/lwip/lwip-stack/src/api",
++		"../../networking/lwip/lwip-stack/src/core/ipv4",
++		"../../networking/lwip/lwip-stack/src/netif",
++		"../../networking/lwip/lwip-stack/src/apps/http/",
++		"../../networking/lwip/lwip-stack/src/apps/lwiperf/",
++    ],
++};
++
++const includes = {
++    common: [
++        "../../drivers/hw_include",
++        "../../drivers/hw_include/am64x_am243x",
++        "../../drivers/soc/am64x_am243x",
++        "../../kernel/freertos/FreeRTOS-Kernel/include",
++        "../../kernel/freertos/config/am243x/r5f",
++        "../../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
++        "../tinyusb/tinyusb-stack/src",
++        "../tinyusb/tinyusb-stack/src/common",
++        "../tinyusb/tinyusb-stack/src/device",
++        "../tinyusb/tinyusb-stack/src/class/net",
++        "../tinyusb/tinyusb-stack/lib/networking",
++        "../tinyusb/config/freertos/am64x_am243x/rndis_config",
++        "../cdn/core_driver/common/src",
++        "../cdn/core_driver/common/include",
++        "../cdn/core_driver/device/src",
++        "../cdn/core_driver/device/include",
++        "../cdn/include",
++        "../cdn/soc/am64x_am243x",
++		"../../networking/lwip/lwip-stack/src/include",
++		"../../networking/lwip/lwip-stack/src/include/ipv4",
++		"../../networking/lwip/lwip-stack/src/include/lwip/apps",
++		"../../networking/lwip/lwip-stack/src/include/lwip",
++		"../../networking/lwip/lwip-config/am243x/usb/",
++		"../../networking/lwip/lwip-port/include/",
++    ],
++};
++
++const defines = {
++    common: [
++        "TINYUSB_INTEGRATION",
++        "CFG_TUSB_OS=OPT_OS_FREERTOS"
++    ],
++    debug: [
++    ],
++    release: [
++    ],
++};
++
++const cflags = {
++    common: [
++        "-Wno-address-of-packed-member",
++    ],
++	release:[
++	]
++};
++
++const buildOptionCombos = [
++    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
++];
++
++function getComponentProperty() {
++    let property = {};
++
++    property.dirPath = path.resolve(__dirname, "../..");
++    property.type = "library";
++    property.name = "usbd_tusb_rndis_freertos";
++    property.isInternal = false;
++    property.isSkipTopLevelBuild = false;
++    property.buildOptionCombos = buildOptionCombos;
++    property.tag = "rndis_freertos";
++    /* Ignore this library for cpp build */ 
++    property.ignore_cpp = true ;
++
++    return property;
++}
++
++function getComponentBuildProperty(buildOption) {
++    let build_property = {};
++
++    build_property.files = files;
++    build_property.filedirs = filedirs;
++    build_property.includes = includes;
++    build_property.defines = defines;
++    build_property.cflags = cflags;
++
++    return build_property;
++}
++
++module.exports = {
++    getComponentProperty,
++    getComponentBuildProperty,
++};
+diff --git a/source/usb/tinyusb/.project/.rndis/project_freertos_am64x.js b/source/usb/tinyusb/.project/.rndis/project_freertos_am64x.js
+new file mode 100755
+index 0000000000..e1b160bb2c
+--- /dev/null
++++ b/source/usb/tinyusb/.project/.rndis/project_freertos_am64x.js
+@@ -0,0 +1,163 @@
++let path = require('path');
++
++let device = "am64x";
++
++const files = {
++    common: [
++		/* cdn -> tusb  wrapper */
++        "usb_wrapper.c",
++        /* TinyUSB porting layer (usb/tinyusb/portable) */
++        "dcd.c",
++        /* TinyUSB core driver (usb/tinyusb/tinyusb-stack/src) */
++        "tusb.c",
++        "tusb_fifo.c",
++        "usbd.c",
++        "usbd_control.c",
++        /* TinyUSB NCM class driver (usb/tinyusb/tinyusb-stack/class) */
++        "ecm_rndis_device.c",
++	    "rndis_reports.c",
++		/* TinyUSB networking lib */ 
++		"dhserver.c",
++		"dnserver.c",
++
++		/* LWIP SRC code */ 
++		"altcp.c",
++		"altcp_alloc.c",
++		"altcp_tcp.c",
++		"def.c",
++		"dns.c",
++		"inet_chksum.c",
++		"init.c",
++		"ip.c",
++		"mem.c",
++		"memp.c",
++		"netif.c",
++		"pbuf.c",
++		"raw.c",
++		"stats.c",
++		"sys.c",
++		"tcp.c",
++		"tcp_in.c",
++		"tcp_out.c",
++		"timeouts.c",
++		"udp.c",
++		"autoip.c",
++		"dhcp.c",
++		"etharp.c",
++		"icmp.c",
++		"igmp.c",
++		"ip4.c",
++		"ip4_addr.c",
++		"ip4_frag.c",
++		"ethernet.c",
++		"slipif.c",
++		"httpd.c",
++		"lwiperf.c",
++		"fs.c",
++		"err.c"
++    ],
++};
++
++const filedirs = {
++    common: [
++        "../tinyusb/tinyusb-stack/src",
++        "../tinyusb/tinyusb-stack/lib/networking",
++        "../tinyusb/tinyusb-stack/src/common",
++        "../tinyusb/tinyusb-stack/src/device",
++        "../tinyusb/tinyusb-stack/src/class/net",
++        "../tinyusb/portable/am64x_am243x",
++        "../cdn/include",
++        "../cdn/soc/am64x_am243x",
++		"../../networking/lwip/lwip-stack/src/core",
++		"../../networking/lwip/lwip-stack/src/api",
++		"../../networking/lwip/lwip-stack/src/core/ipv4",
++		"../../networking/lwip/lwip-stack/src/netif",
++		"../../networking/lwip/lwip-stack/src/apps/http/",
++		"../../networking/lwip/lwip-stack/src/apps/lwiperf/",
++    ],
++};
++
++const includes = {
++    common: [
++        "../../drivers/hw_include",
++        "../../drivers/hw_include/am64x_am243x",
++        "../../drivers/soc/am64x_am243x",
++        "../../kernel/freertos/FreeRTOS-Kernel/include",
++        "../../kernel/freertos/config/am64x/r5f",
++        "../../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
++        "../tinyusb/tinyusb-stack/src",
++        "../tinyusb/tinyusb-stack/src/common",
++        "../tinyusb/tinyusb-stack/src/device",
++        "../tinyusb/tinyusb-stack/src/class/net",
++        "../tinyusb/tinyusb-stack/lib/networking",
++        "../tinyusb/config/freertos/am64x_am243x/rndis_config",
++        "../cdn/core_driver/common/src",
++        "../cdn/core_driver/common/include",
++        "../cdn/core_driver/device/src",
++        "../cdn/core_driver/device/include",
++        "../cdn/include",
++        "../cdn/soc/am64x_am243x",
++		"../../networking/lwip/lwip-stack/src/include",
++		"../../networking/lwip/lwip-stack/src/include/ipv4",
++		"../../networking/lwip/lwip-stack/src/include/lwip/apps",
++		"../../networking/lwip/lwip-stack/src/include/lwip",
++		"../../networking/lwip/lwip-config/am64x/usb/",
++		"../../networking/lwip/lwip-port/include/",
++    ],
++};
++
++const defines = {
++    common: [
++        "TINYUSB_INTEGRATION",
++        "CFG_TUSB_OS=OPT_OS_FREERTOS"
++    ],
++    debug: [
++    ],
++    release: [
++    ],
++};
++
++const cflags = {
++    common: [
++        "-Wno-address-of-packed-member",
++    ],
++	release:[
++	]
++};
++
++const buildOptionCombos = [
++    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
++];
++
++function getComponentProperty() {
++    let property = {};
++
++    property.dirPath = path.resolve(__dirname, "../..");
++    property.type = "library";
++    property.name = "usbd_tusb_rndis_freertos";
++    property.isInternal = false;
++    property.isSkipTopLevelBuild = false;
++    property.buildOptionCombos = buildOptionCombos;
++    property.tag = "rndis_freertos";
++    /* Ignore this library for cpp build */ 
++    property.ignore_cpp = true  ; 
++
++    return property;
++}
++
++function getComponentBuildProperty(buildOption) {
++    let build_property = {};
++
++    build_property.files = files;
++    build_property.filedirs = filedirs;
++    build_property.includes = includes;
++    build_property.defines = defines;
++    build_property.cflags = cflags;
++
++    return build_property;
++}
++
++module.exports = {
++    getComponentProperty,
++    getComponentBuildProperty,
++};
+diff --git a/source/usb/tinyusb/.project/.rndis/project_nortos.js b/source/usb/tinyusb/.project/.rndis/project_nortos.js
+new file mode 100755
+index 0000000000..f14ee823af
+--- /dev/null
++++ b/source/usb/tinyusb/.project/.rndis/project_nortos.js
+@@ -0,0 +1,14 @@
++function getComponentProperty(device)
++{
++    return require(`./project_nortos_${device}`).getComponentProperty();
++};
++
++function getComponentBuildProperty(buildOption)
++{
++    return require(`./project_nortos_${buildOption.device}`).getComponentBuildProperty(buildOption);
++};
++
++module.exports = {
++    getComponentProperty,
++    getComponentBuildProperty,
++};
+diff --git a/source/usb/tinyusb/.project/.rndis/project_nortos_am243x.js b/source/usb/tinyusb/.project/.rndis/project_nortos_am243x.js
+new file mode 100755
+index 0000000000..7c547de790
+--- /dev/null
++++ b/source/usb/tinyusb/.project/.rndis/project_nortos_am243x.js
+@@ -0,0 +1,157 @@
++let path = require('path');
++
++let device = "am243x";
++
++const files = {
++    common: [
++		/* cdn -> tusb  wrapper */
++        "usb_wrapper.c",
++        /* TinyUSB porting layer (usb/tinyusb/portable) */
++        "dcd.c",
++        /* TinyUSB core driver (usb/tinyusb/tinyusb-stack/src) */
++        "tusb.c",
++        "tusb_fifo.c",
++        "usbd.c",
++        "usbd_control.c",
++        /* TinyUSB NCM class driver (usb/tinyusb/tinyusb-stack/class) */
++        "ecm_rndis_device.c",
++	    "rndis_reports.c",
++		/* TinyUSB networking lib */ 
++		"dhserver.c",
++		"dnserver.c",
++
++		/* LWIP SRC code compiled lwip repo*/ 
++		"altcp.c",
++		"altcp_alloc.c",
++		"altcp_tcp.c",
++		"def.c",
++		"dns.c",
++		"inet_chksum.c",
++		"init.c",
++		"ip.c",
++		"mem.c",
++		"memp.c",
++		"netif.c",
++		"pbuf.c",
++		"raw.c",
++		"stats.c",
++		"sys.c",
++		"tcp.c",
++		"tcp_in.c",
++		"tcp_out.c",
++		"timeouts.c",
++		"udp.c",
++		"autoip.c",
++		"dhcp.c",
++		"etharp.c",
++		"icmp.c",
++		"igmp.c",
++		"ip4.c",
++		"ip4_addr.c",
++		"ip4_frag.c",
++		"ethernet.c",
++		"slipif.c",
++		"httpd.c",
++		"lwiperf.c",
++		"fs.c",
++		"err.c"
++    ],
++};
++
++const filedirs = {
++    common: [
++        "../tinyusb/tinyusb-stack/src",
++        "../tinyusb/tinyusb-stack/lib/networking",
++        "../tinyusb/tinyusb-stack/src/common",
++        "../tinyusb/tinyusb-stack/src/device",
++        "../tinyusb/tinyusb-stack/src/class/net",
++        "../tinyusb/portable/am64x_am243x",
++        "../cdn/include",
++        "../cdn/soc/am64x_am243x",
++		"../../networking/lwip/lwip-stack/src/core",
++		"../../networking/lwip/lwip-stack/src/api",
++		"../../networking/lwip/lwip-stack/src/core/ipv4",
++		"../../networking/lwip/lwip-stack/src/netif",
++		"../../networking/lwip/lwip-stack/src/apps/http/",
++		"../../networking/lwip/lwip-stack/src/apps/lwiperf/",
++    ],
++};
++
++const includes = {
++    common: [
++        "../../drivers/hw_include",
++        "../../drivers/hw_include/am64x_am243x",
++        "../../drivers/soc/am64x_am243x",
++        "../tinyusb/config/nortos/am64x_am243x",
++        "../tinyusb/tinyusb-stack/src",
++        "../tinyusb/tinyusb-stack/src/common",
++        "../tinyusb/tinyusb-stack/src/device",
++        "../tinyusb/tinyusb-stack/src/class/net",
++        "../tinyusb/tinyusb-stack/lib/networking",
++        "../tinyusb/config/nortos/am64x_am243x/rndis_config",
++        "../cdn/core_driver/common/src",
++        "../cdn/core_driver/common/include",
++        "../cdn/core_driver/device/src",
++        "../cdn/core_driver/device/include",
++        "../cdn/include",
++        "../cdn/soc/am64x_am243x",
++		"../../networking/lwip/lwip-stack/src/include",
++		"../../networking/lwip/lwip-stack/src/include/ipv4",
++		"../../networking/lwip/lwip-stack/src/include/lwip/apps",
++		"../../networking/lwip/lwip-stack/src/include/lwip",
++		"../../networking/lwip/lwip-config/am243x/usb/",
++		"../../networking/lwip/lwip-port/include/",
++    ],
++};
++
++const defines = {
++    common: [
++    ],
++    debug: [
++    ],
++    release: [
++    ],
++};
++
++const cflags = {
++    common: [
++        "-Wno-address-of-packed-member",
++    ],
++};
++
++const buildOptionCombos = [
++    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
++];
++
++function getComponentProperty() {
++    let property = {};
++
++    property.dirPath = path.resolve(__dirname, "../..");
++    property.type = "library";
++    property.name = "usbd_tusb_rndis_nortos";
++    property.isInternal = false;
++    property.isSkipTopLevelBuild = false;
++    property.buildOptionCombos = buildOptionCombos;
++    property.tag = "rndis_nortos";
++    /* Ignore this library for cpp build */ 
++    property.ignore_cpp = true ;
++
++    return property;
++}
++
++function getComponentBuildProperty(buildOption) {
++    let build_property = {};
++
++    build_property.files = files;
++    build_property.filedirs = filedirs;
++    build_property.includes = includes;
++    build_property.defines = defines;
++    build_property.cflags = cflags;
++
++    return build_property;
++}
++
++module.exports = {
++    getComponentProperty,
++    getComponentBuildProperty,
++};
+diff --git a/source/usb/tinyusb/.project/.rndis/project_nortos_am64x.js b/source/usb/tinyusb/.project/.rndis/project_nortos_am64x.js
+new file mode 100755
+index 0000000000..f8cd9fee0d
+--- /dev/null
++++ b/source/usb/tinyusb/.project/.rndis/project_nortos_am64x.js
+@@ -0,0 +1,157 @@
++let path = require('path');
++
++let device = "am64x";
++
++const files = {
++    common: [
++		/* cdn -> tusb  wrapper */
++        "usb_wrapper.c",
++        /* TinyUSB porting layer (usb/tinyusb/portable) */
++        "dcd.c",
++        /* TinyUSB core driver (usb/tinyusb/tinyusb-stack/src) */
++        "tusb.c",
++        "tusb_fifo.c",
++        "usbd.c",
++        "usbd_control.c",
++        /* TinyUSB NCM class driver (usb/tinyusb/tinyusb-stack/class) */
++        "ecm_rndis_device.c",
++	    "rndis_reports.c",
++		/* TinyUSB networking lib */ 
++		"dhserver.c",
++		"dnserver.c",
++
++		/* LWIP SRC code compiled lwip repo*/ 
++		"altcp.c",
++		"altcp_alloc.c",
++		"altcp_tcp.c",
++		"def.c",
++		"dns.c",
++		"inet_chksum.c",
++		"init.c",
++		"ip.c",
++		"mem.c",
++		"memp.c",
++		"netif.c",
++		"pbuf.c",
++		"raw.c",
++		"stats.c",
++		"sys.c",
++		"tcp.c",
++		"tcp_in.c",
++		"tcp_out.c",
++		"timeouts.c",
++		"udp.c",
++		"autoip.c",
++		"dhcp.c",
++		"etharp.c",
++		"icmp.c",
++		"igmp.c",
++		"ip4.c",
++		"ip4_addr.c",
++		"ip4_frag.c",
++		"ethernet.c",
++		"slipif.c",
++		"httpd.c",
++		"lwiperf.c",
++		"fs.c",
++		"err.c"
++    ],
++};
++
++const filedirs = {
++    common: [
++        "../tinyusb/tinyusb-stack/src",
++        "../tinyusb/tinyusb-stack/lib/networking",
++        "../tinyusb/tinyusb-stack/src/common",
++        "../tinyusb/tinyusb-stack/src/device",
++        "../tinyusb/tinyusb-stack/src/class/net",
++        "../tinyusb/portable/am64x_am243x",
++        "../cdn/include",
++        "../cdn/soc/am64x_am243x",
++		"../../networking/lwip/lwip-stack/src/core",
++		"../../networking/lwip/lwip-stack/src/api",
++		"../../networking/lwip/lwip-stack/src/core/ipv4",
++		"../../networking/lwip/lwip-stack/src/netif",
++		"../../networking/lwip/lwip-stack/src/apps/http/",
++		"../../networking/lwip/lwip-stack/src/apps/lwiperf/",
++    ],
++};
++
++const includes = {
++    common: [
++        "../../drivers/hw_include",
++        "../../drivers/hw_include/am64x_am243x",
++        "../../drivers/soc/am64x_am243x",
++        "../tinyusb/config/nortos/am64x_am243x",
++        "../tinyusb/tinyusb-stack/src",
++        "../tinyusb/tinyusb-stack/src/common",
++        "../tinyusb/tinyusb-stack/src/device",
++        "../tinyusb/tinyusb-stack/src/class/net",
++        "../tinyusb/tinyusb-stack/lib/networking",
++        "../tinyusb/config/nortos/am64x_am243x/rndis_config",
++        "../cdn/core_driver/common/src",
++        "../cdn/core_driver/common/include",
++        "../cdn/core_driver/device/src",
++        "../cdn/core_driver/device/include",
++        "../cdn/include",
++        "../cdn/soc/am64x_am243x",
++		"../../networking/lwip/lwip-stack/src/include",
++		"../../networking/lwip/lwip-stack/src/include/ipv4",
++		"../../networking/lwip/lwip-stack/src/include/lwip/apps",
++		"../../networking/lwip/lwip-stack/src/include/lwip",
++		"../../networking/lwip/lwip-config/am64x/usb/",
++		"../../networking/lwip/lwip-port/include/",
++    ],
++};
++
++const defines = {
++    common: [
++    ],
++    debug: [
++    ],
++    release: [
++    ],
++};
++
++const cflags = {
++    common: [
++        "-Wno-address-of-packed-member",
++    ],
++};
++
++const buildOptionCombos = [
++    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
++];
++
++function getComponentProperty() {
++    let property = {};
++
++    property.dirPath = path.resolve(__dirname, "../..");
++    property.type = "library";
++    property.name = "usbd_tusb_rndis_nortos";
++    property.isInternal = false;
++    property.isSkipTopLevelBuild = false;
++    property.buildOptionCombos = buildOptionCombos;
++    property.tag = "rndis_nortos";
++    /* Ignore this library for cpp build */ 
++    property.ignore_cpp = true ;
++
++    return property;
++}
++
++function getComponentBuildProperty(buildOption) {
++    let build_property = {};
++
++    build_property.files = files;
++    build_property.filedirs = filedirs;
++    build_property.includes = includes;
++    build_property.defines = defines;
++    build_property.cflags = cflags;
++
++    return build_property;
++}
++
++module.exports = {
++    getComponentProperty,
++    getComponentBuildProperty,
++};
+diff --git a/source/usb/tinyusb/config/freertos/am64x_am243x/ncm_config/tusb_config.h b/source/usb/tinyusb/config/freertos/am64x_am243x/ncm_config/tusb_config.h
+new file mode 100755
+index 0000000000..7005da6b33
+--- /dev/null
++++ b/source/usb/tinyusb/config/freertos/am64x_am243x/ncm_config/tusb_config.h
+@@ -0,0 +1,199 @@
++/*
++ * The MIT License (MIT)
++ *
++ * Copyright (c) 2019 Ha Thach (tinyusb.org)
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ * THE SOFTWARE.
++ *
++ */
++/*
++ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
++ *
++ *  Redistribution and use in source and binary forms, with or without
++ *  modification, are permitted provided that the following conditions
++ *  are met:
++ *
++ *    Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *
++ *    Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the
++ *    distribution.
++ *
++ *    Neither the name of Texas Instruments Incorporated nor the names of
++ *    its contributors may be used to endorse or promote products derived
++ *    from this software without specific prior written permission.
++ *
++ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++/* Adapted by TI for running on its platform and SDK */
++
++#ifndef _TUSB_CONFIG_H_
++#define _TUSB_CONFIG_H_
++
++#ifdef __cplusplus
++ extern "C" {
++#endif
++
++#define CFG_TUSB_MCU    (OPT_MCU_AM64X)
++
++/*
++--------------------------------------------------------------------
++ COMMON CONFIGURATION
++--------------------------------------------------------------------
++*/
++/* defined by board.mk */
++#ifndef CFG_TUSB_MCU
++  #error CFG_TUSB_MCU must be defined
++#endif
++/* RHPort number used for device can be defined by board.mk, default to port 0 */
++#ifndef BOARD_DEVICE_RHPORT_NUM
++  #define BOARD_DEVICE_RHPORT_NUM     0
++#endif
++
++/* RHPort max operational speed can defined by board.mk */
++/* Default to Highspeed for MCU with internal HighSpeed PHY (can be port specific), otherwise FullSpeed */
++#ifndef BOARD_DEVICE_RHPORT_SPEED
++  #if (CFG_TUSB_MCU == OPT_MCU_LPC18XX || CFG_TUSB_MCU == OPT_MCU_LPC43XX || CFG_TUSB_MCU == OPT_MCU_MIMXRT10XX || \
++       CFG_TUSB_MCU == OPT_MCU_NUC505  || CFG_TUSB_MCU == OPT_MCU_CXD56 || CFG_TUSB_MCU == OPT_MCU_AM64X)
++    #define BOARD_DEVICE_RHPORT_SPEED   OPT_MODE_HIGH_SPEED
++    #define TUP_DCD_ENDPOINT_MAX         16
++  #else
++    #define BOARD_DEVICE_RHPORT_SPEED   OPT_MODE_FULL_SPEED
++  #endif
++#endif
++
++/* Device mode with rhport and speed defined by board.mk */
++#if   BOARD_DEVICE_RHPORT_NUM == 0
++  #define CFG_TUSB_RHPORT0_MODE     (OPT_MODE_DEVICE | BOARD_DEVICE_RHPORT_SPEED)
++#elif BOARD_DEVICE_RHPORT_NUM == 1
++  #define CFG_TUSB_RHPORT1_MODE     (OPT_MODE_DEVICE | BOARD_DEVICE_RHPORT_SPEED)
++#else
++  #error "Incorrect RHPort configuration"
++#endif
++
++/* This example uses  FreeRTOS */
++#define CFG_TUSB_OS                 OPT_OS_FREERTOS
++
++/* CFG_TUSB_DEBUG is defined by compiler in DEBUG build */
++#ifndef CFG_TUSB_DEBUG
++  #undef CFG_TUSB_DEBUG
++  #define CFG_TUSB_DEBUG 0
++#else 
++  #undef CFG_TUSB_DEBUG
++  #define CFG_TUSB_DEBUG 2 
++#endif
++#define CFG_TUSB_DEBUG_PRINTF    CFG_TUSB_DEBUG_PRINTF
++
++/* USB DMA on some MCUs can only access a specific SRAM region with restriction on alignment.
++ * Tinyusb use follows macros to declare transferring memory so that they can be put
++ * into those specific section.
++ * e.g
++ * - CFG_TUSB_MEM SECTION : __attribute__ (( section(".usb_ram") ))
++ * - CFG_TUSB_MEM_ALIGN   : __attribute__ ((aligned(4)))
++ */
++#ifndef CFG_TUSB_MEM_SECTION
++#define CFG_TUSB_MEM_SECTION
++#endif
++
++#ifndef CFG_TUSB_MEM_ALIGN
++#define CFG_TUSB_MEM_ALIGN          __attribute__ ((aligned(4)))
++#endif
++
++/*
++--------------------------------------------------------------------
++ DEVICE CONFIGURATION
++--------------------------------------------------------------------
++*/
++// RHPort number used for device can be defined by board.mk, default to port 0
++#ifndef BOARD_TUD_RHPORT
++#define BOARD_TUD_RHPORT      0
++#endif
++
++// RHPort max operational speed can defined by board.mk
++#ifndef BOARD_TUD_MAX_SPEED
++#define BOARD_TUD_MAX_SPEED   OPT_MODE_HIGH_SPEED
++#endif
++
++//--------------------------------------------------------------------
++// COMMON CONFIGURATION
++//--------------------------------------------------------------------
++
++// defined by board.mk
++#ifndef CFG_TUSB_MCU
++#error CFG_TUSB_MCU must be defined
++#endif
++
++#ifndef CFG_TUSB_OS
++#define CFG_TUSB_OS           OPT_OS_NONE
++#endif
++
++// Enable Device stack
++#define CFG_TUD_ENABLED       1
++
++// Default is max speed that hardware controller could support with on-chip PHY
++#define CFG_TUD_MAX_SPEED     BOARD_TUD_MAX_SPEED
++
++/* USB DMA on some MCUs can only access a specific SRAM region with restriction on alignment.
++ * Tinyusb use follows macros to declare transferring memory so that they can be put
++ * into those specific section.
++ * e.g
++ * - CFG_TUSB_MEM SECTION : __attribute__ (( section(".usb_ram") ))
++ * - CFG_TUSB_MEM_ALIGN   : __attribute__ ((aligned(4)))
++ */
++#ifndef CFG_TUSB_MEM_SECTION
++#define CFG_TUSB_MEM_SECTION
++#endif
++
++#ifndef CFG_TUSB_MEM_ALIGN
++#define CFG_TUSB_MEM_ALIGN          __attribute__ ((aligned(4)))
++#endif
++
++/*
++--------------------------------------------------------------------
++ DEVICE CONFIGURATION
++--------------------------------------------------------------------
++*/
++#ifndef CFG_TUD_ENDPOINT0_SIZE
++#define CFG_TUD_ENDPOINT0_SIZE    64
++#endif
++
++/*------------- CLASS -------------*/
++// Network class has 2 drivers: ECM/RNDIS and NCM.
++// Only one of the drivers can be enabled
++#define CFG_TUD_ECM_RNDIS      0
++#define CFG_TUD_NCM           (1-CFG_TUD_ECM_RNDIS)
++
++#ifdef __cplusplus
++ }
++#endif
++
++#endif /* _TUSB_CONFIG_H_ */
+diff --git a/source/usb/tinyusb/config/freertos/am64x_am243x/rndis_config/tusb_config.h b/source/usb/tinyusb/config/freertos/am64x_am243x/rndis_config/tusb_config.h
+new file mode 100755
+index 0000000000..d76cc65d36
+--- /dev/null
++++ b/source/usb/tinyusb/config/freertos/am64x_am243x/rndis_config/tusb_config.h
+@@ -0,0 +1,199 @@
++/*
++ * The MIT License (MIT)
++ *
++ * Copyright (c) 2019 Ha Thach (tinyusb.org)
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ * THE SOFTWARE.
++ *
++ */
++/*
++ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
++ *
++ *  Redistribution and use in source and binary forms, with or without
++ *  modification, are permitted provided that the following conditions
++ *  are met:
++ *
++ *    Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *
++ *    Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the
++ *    distribution.
++ *
++ *    Neither the name of Texas Instruments Incorporated nor the names of
++ *    its contributors may be used to endorse or promote products derived
++ *    from this software without specific prior written permission.
++ *
++ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++/* Adapted by TI for running on its platform and SDK */
++
++#ifndef _TUSB_CONFIG_H_
++#define _TUSB_CONFIG_H_
++
++#ifdef __cplusplus
++ extern "C" {
++#endif
++
++#define CFG_TUSB_MCU    (OPT_MCU_AM64X)
++
++/*
++--------------------------------------------------------------------
++ COMMON CONFIGURATION
++--------------------------------------------------------------------
++*/
++/* defined by board.mk */
++#ifndef CFG_TUSB_MCU
++  #error CFG_TUSB_MCU must be defined
++#endif
++/* RHPort number used for device can be defined by board.mk, default to port 0 */
++#ifndef BOARD_DEVICE_RHPORT_NUM
++  #define BOARD_DEVICE_RHPORT_NUM     0
++#endif
++
++/* RHPort max operational speed can defined by board.mk */
++/* Default to Highspeed for MCU with internal HighSpeed PHY (can be port specific), otherwise FullSpeed */
++#ifndef BOARD_DEVICE_RHPORT_SPEED
++  #if (CFG_TUSB_MCU == OPT_MCU_LPC18XX || CFG_TUSB_MCU == OPT_MCU_LPC43XX || CFG_TUSB_MCU == OPT_MCU_MIMXRT10XX || \
++       CFG_TUSB_MCU == OPT_MCU_NUC505  || CFG_TUSB_MCU == OPT_MCU_CXD56 || CFG_TUSB_MCU == OPT_MCU_AM64X)
++    #define BOARD_DEVICE_RHPORT_SPEED   OPT_MODE_HIGH_SPEED
++    #define TUP_DCD_ENDPOINT_MAX         16
++  #else
++    #define BOARD_DEVICE_RHPORT_SPEED   OPT_MODE_FULL_SPEED
++  #endif
++#endif
++
++/* Device mode with rhport and speed defined by board.mk */
++#if   BOARD_DEVICE_RHPORT_NUM == 0
++  #define CFG_TUSB_RHPORT0_MODE     (OPT_MODE_DEVICE | BOARD_DEVICE_RHPORT_SPEED)
++#elif BOARD_DEVICE_RHPORT_NUM == 1
++  #define CFG_TUSB_RHPORT1_MODE     (OPT_MODE_DEVICE | BOARD_DEVICE_RHPORT_SPEED)
++#else
++  #error "Incorrect RHPort configuration"
++#endif
++
++/* This example uses  FreeRTOS */
++#define CFG_TUSB_OS                 OPT_OS_FREERTOS
++
++/* CFG_TUSB_DEBUG is defined by compiler in DEBUG build */
++#ifndef CFG_TUSB_DEBUG
++  #undef CFG_TUSB_DEBUG
++  #define CFG_TUSB_DEBUG 0
++#else 
++  #undef CFG_TUSB_DEBUG
++  #define CFG_TUSB_DEBUG 2 
++#endif
++#define CFG_TUSB_DEBUG_PRINTF    CFG_TUSB_DEBUG_PRINTF
++
++/* USB DMA on some MCUs can only access a specific SRAM region with restriction on alignment.
++ * Tinyusb use follows macros to declare transferring memory so that they can be put
++ * into those specific section.
++ * e.g
++ * - CFG_TUSB_MEM SECTION : __attribute__ (( section(".usb_ram") ))
++ * - CFG_TUSB_MEM_ALIGN   : __attribute__ ((aligned(4)))
++ */
++#ifndef CFG_TUSB_MEM_SECTION
++#define CFG_TUSB_MEM_SECTION
++#endif
++
++#ifndef CFG_TUSB_MEM_ALIGN
++#define CFG_TUSB_MEM_ALIGN          __attribute__ ((aligned(4)))
++#endif
++
++/*
++--------------------------------------------------------------------
++ DEVICE CONFIGURATION
++--------------------------------------------------------------------
++*/
++// RHPort number used for device can be defined by board.mk, default to port 0
++#ifndef BOARD_TUD_RHPORT
++#define BOARD_TUD_RHPORT      0
++#endif
++
++// RHPort max operational speed can defined by board.mk
++#ifndef BOARD_TUD_MAX_SPEED
++#define BOARD_TUD_MAX_SPEED   OPT_MODE_HIGH_SPEED
++#endif
++
++//--------------------------------------------------------------------
++// COMMON CONFIGURATION
++//--------------------------------------------------------------------
++
++// defined by board.mk
++#ifndef CFG_TUSB_MCU
++#error CFG_TUSB_MCU must be defined
++#endif
++
++#ifndef CFG_TUSB_OS
++#define CFG_TUSB_OS           OPT_OS_NONE
++#endif
++
++// Enable Device stack
++#define CFG_TUD_ENABLED       1
++
++// Default is max speed that hardware controller could support with on-chip PHY
++#define CFG_TUD_MAX_SPEED     BOARD_TUD_MAX_SPEED
++
++/* USB DMA on some MCUs can only access a specific SRAM region with restriction on alignment.
++ * Tinyusb use follows macros to declare transferring memory so that they can be put
++ * into those specific section.
++ * e.g
++ * - CFG_TUSB_MEM SECTION : __attribute__ (( section(".usb_ram") ))
++ * - CFG_TUSB_MEM_ALIGN   : __attribute__ ((aligned(4)))
++ */
++#ifndef CFG_TUSB_MEM_SECTION
++#define CFG_TUSB_MEM_SECTION
++#endif
++
++#ifndef CFG_TUSB_MEM_ALIGN
++#define CFG_TUSB_MEM_ALIGN          __attribute__ ((aligned(4)))
++#endif
++
++/*
++--------------------------------------------------------------------
++ DEVICE CONFIGURATION
++--------------------------------------------------------------------
++*/
++#ifndef CFG_TUD_ENDPOINT0_SIZE
++#define CFG_TUD_ENDPOINT0_SIZE    64
++#endif
++
++/*------------- CLASS -------------*/
++// Network class has 2 drivers: ECM/RNDIS and NCM.
++// Only one of the drivers can be enabled
++#define CFG_TUD_ECM_RNDIS      1
++#define CFG_TUD_NCM           (1-CFG_TUD_ECM_RNDIS)
++
++#ifdef __cplusplus
++ }
++#endif
++
++#endif /* _TUSB_CONFIG_H_ */
+diff --git a/source/usb/tinyusb/config/nortos/am64x_am243x/ncm_config/tusb_config.h b/source/usb/tinyusb/config/nortos/am64x_am243x/ncm_config/tusb_config.h
+new file mode 100755
+index 0000000000..a219da3edc
+--- /dev/null
++++ b/source/usb/tinyusb/config/nortos/am64x_am243x/ncm_config/tusb_config.h
+@@ -0,0 +1,199 @@
++/*
++ * The MIT License (MIT)
++ *
++ * Copyright (c) 2019 Ha Thach (tinyusb.org)
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ * THE SOFTWARE.
++ *
++ */
++/*
++ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
++ *
++ *  Redistribution and use in source and binary forms, with or without
++ *  modification, are permitted provided that the following conditions
++ *  are met:
++ *
++ *    Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *
++ *    Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the
++ *    distribution.
++ *
++ *    Neither the name of Texas Instruments Incorporated nor the names of
++ *    its contributors may be used to endorse or promote products derived
++ *    from this software without specific prior written permission.
++ *
++ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++/* Adapted by TI for running on its platform and SDK */
++
++#ifndef _TUSB_CONFIG_H_
++#define _TUSB_CONFIG_H_
++
++#ifdef __cplusplus
++ extern "C" {
++#endif
++
++#define CFG_TUSB_MCU    (OPT_MCU_AM64X)
++
++/*
++--------------------------------------------------------------------
++ COMMON CONFIGURATION
++--------------------------------------------------------------------
++*/
++/* defined by board.mk */
++#ifndef CFG_TUSB_MCU
++  #error CFG_TUSB_MCU must be defined
++#endif
++
++/* RHPort number used for device can be defined by board.mk, default to port 0 */
++#ifndef BOARD_DEVICE_RHPORT_NUM
++  #define BOARD_DEVICE_RHPORT_NUM     0
++#endif
++
++/* RHPort max operational speed can defined by board.mk */
++/* Default to Highspeed for MCU with internal HighSpeed PHY (can be port specific), otherwise FullSpeed */
++#ifndef BOARD_DEVICE_RHPORT_SPEED
++  #if (CFG_TUSB_MCU == OPT_MCU_LPC18XX || CFG_TUSB_MCU == OPT_MCU_LPC43XX || CFG_TUSB_MCU == OPT_MCU_MIMXRT10XX || \
++       CFG_TUSB_MCU == OPT_MCU_NUC505  || CFG_TUSB_MCU == OPT_MCU_CXD56 || CFG_TUSB_MCU == OPT_MCU_AM64X)
++    #define BOARD_DEVICE_RHPORT_SPEED   OPT_MODE_HIGH_SPEED
++    #define TUP_DCD_ENDPOINT_MAX         16
++  #else
++    #define BOARD_DEVICE_RHPORT_SPEED   OPT_MODE_FULL_SPEED
++  #endif
++#endif
++
++/* Device mode with rhport and speed defined by board.mk */
++#if   BOARD_DEVICE_RHPORT_NUM == 0
++  #define CFG_TUSB_RHPORT0_MODE     (OPT_MODE_DEVICE | BOARD_DEVICE_RHPORT_SPEED)
++#elif BOARD_DEVICE_RHPORT_NUM == 1
++  #define CFG_TUSB_RHPORT1_MODE     (OPT_MODE_DEVICE | BOARD_DEVICE_RHPORT_SPEED)
++#else
++  #error "Incorrect RHPort configuration"
++#endif
++
++/* This example doesn't use an RTOS */
++#define CFG_TUSB_OS                 OPT_OS_NONE
++
++/* CFG_TUSB_DEBUG is defined by compiler in DEBUG build */
++#ifndef CFG_TUSB_DEBUG
++  #define CFG_TUSB_DEBUG 0
++#else  
++  #undef  CFG_TUSB_DEBUG 	 
++  #define CFG_TUSB_DEBUG 3 
++#endif
++#define CFG_TUSB_DEBUG_PRINTF    CFG_TUSB_DEBUG_PRINTF
++
++/* USB DMA on some MCUs can only access a specific SRAM region with restriction on alignment.
++ * Tinyusb use follows macros to declare transferring memory so that they can be put
++ * into those specific section.
++ * e.g
++ * - CFG_TUSB_MEM SECTION : __attribute__ (( section(".usb_ram") ))
++ * - CFG_TUSB_MEM_ALIGN   : __attribute__ ((aligned(4)))
++ */
++#ifndef CFG_TUSB_MEM_SECTION
++#define CFG_TUSB_MEM_SECTION
++#endif
++
++#ifndef CFG_TUSB_MEM_ALIGN
++#define CFG_TUSB_MEM_ALIGN          __attribute__ ((aligned(4)))
++#endif
++
++/*
++--------------------------------------------------------------------
++ DEVICE CONFIGURATION
++--------------------------------------------------------------------
++*/
++// RHPort number used for device can be defined by board.mk, default to port 0
++#ifndef BOARD_TUD_RHPORT
++#define BOARD_TUD_RHPORT      0
++#endif
++
++// RHPort max operational speed can defined by board.mk
++#ifndef BOARD_TUD_MAX_SPEED
++#define BOARD_TUD_MAX_SPEED   OPT_MODE_HIGH_SPEED
++#endif
++
++//--------------------------------------------------------------------
++// COMMON CONFIGURATION
++//--------------------------------------------------------------------
++
++// defined by board.mk
++#ifndef CFG_TUSB_MCU
++#error CFG_TUSB_MCU must be defined
++#endif
++
++#ifndef CFG_TUSB_OS
++#define CFG_TUSB_OS           OPT_OS_NONE
++#endif
++
++// Enable Device stack
++#define CFG_TUD_ENABLED       1
++
++// Default is max speed that hardware controller could support with on-chip PHY
++#define CFG_TUD_MAX_SPEED     BOARD_TUD_MAX_SPEED
++
++/* USB DMA on some MCUs can only access a specific SRAM region with restriction on alignment.
++ * Tinyusb use follows macros to declare transferring memory so that they can be put
++ * into those specific section.
++ * e.g
++ * - CFG_TUSB_MEM SECTION : __attribute__ (( section(".usb_ram") ))
++ * - CFG_TUSB_MEM_ALIGN   : __attribute__ ((aligned(4)))
++ */
++#ifndef CFG_TUSB_MEM_SECTION
++#define CFG_TUSB_MEM_SECTION
++#endif
++
++#ifndef CFG_TUSB_MEM_ALIGN
++#define CFG_TUSB_MEM_ALIGN          __attribute__ ((aligned(4)))
++#endif
++
++/*
++--------------------------------------------------------------------
++ DEVICE CONFIGURATION
++--------------------------------------------------------------------
++*/
++#ifndef CFG_TUD_ENDPOINT0_SIZE
++#define CFG_TUD_ENDPOINT0_SIZE    64
++#endif
++
++/*------------- CLASS -------------*/
++// Network class has 2 drivers: ECM/RNDIS and NCM.
++// Only one of the drivers can be enabled
++#define CFG_TUD_ECM_RNDIS      0
++#define CFG_TUD_NCM           (1-CFG_TUD_ECM_RNDIS)
++
++#ifdef __cplusplus
++ }
++#endif
++
++#endif /* _TUSB_CONFIG_H_ */
+diff --git a/source/usb/tinyusb/config/nortos/am64x_am243x/rndis_config/tusb_config.h b/source/usb/tinyusb/config/nortos/am64x_am243x/rndis_config/tusb_config.h
+new file mode 100755
+index 0000000000..0ff62b1d38
+--- /dev/null
++++ b/source/usb/tinyusb/config/nortos/am64x_am243x/rndis_config/tusb_config.h
+@@ -0,0 +1,199 @@
++/*
++ * The MIT License (MIT)
++ *
++ * Copyright (c) 2019 Ha Thach (tinyusb.org)
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ * THE SOFTWARE.
++ *
++ */
++/*
++ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
++ *
++ *  Redistribution and use in source and binary forms, with or without
++ *  modification, are permitted provided that the following conditions
++ *  are met:
++ *
++ *    Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *
++ *    Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the
++ *    distribution.
++ *
++ *    Neither the name of Texas Instruments Incorporated nor the names of
++ *    its contributors may be used to endorse or promote products derived
++ *    from this software without specific prior written permission.
++ *
++ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++/* Adapted by TI for running on its platform and SDK */
++
++#ifndef _TUSB_CONFIG_H_
++#define _TUSB_CONFIG_H_
++
++#ifdef __cplusplus
++ extern "C" {
++#endif
++
++#define CFG_TUSB_MCU    (OPT_MCU_AM64X)
++
++/*
++--------------------------------------------------------------------
++ COMMON CONFIGURATION
++--------------------------------------------------------------------
++*/
++/* defined by board.mk */
++#ifndef CFG_TUSB_MCU
++  #error CFG_TUSB_MCU must be defined
++#endif
++
++/* RHPort number used for device can be defined by board.mk, default to port 0 */
++#ifndef BOARD_DEVICE_RHPORT_NUM
++  #define BOARD_DEVICE_RHPORT_NUM     0
++#endif
++
++/* RHPort max operational speed can defined by board.mk */
++/* Default to Highspeed for MCU with internal HighSpeed PHY (can be port specific), otherwise FullSpeed */
++#ifndef BOARD_DEVICE_RHPORT_SPEED
++  #if (CFG_TUSB_MCU == OPT_MCU_LPC18XX || CFG_TUSB_MCU == OPT_MCU_LPC43XX || CFG_TUSB_MCU == OPT_MCU_MIMXRT10XX || \
++       CFG_TUSB_MCU == OPT_MCU_NUC505  || CFG_TUSB_MCU == OPT_MCU_CXD56 || CFG_TUSB_MCU == OPT_MCU_AM64X)
++    #define BOARD_DEVICE_RHPORT_SPEED   OPT_MODE_HIGH_SPEED
++    #define TUP_DCD_ENDPOINT_MAX         16
++  #else
++    #define BOARD_DEVICE_RHPORT_SPEED   OPT_MODE_FULL_SPEED
++  #endif
++#endif
++
++/* Device mode with rhport and speed defined by board.mk */
++#if   BOARD_DEVICE_RHPORT_NUM == 0
++  #define CFG_TUSB_RHPORT0_MODE     (OPT_MODE_DEVICE | BOARD_DEVICE_RHPORT_SPEED)
++#elif BOARD_DEVICE_RHPORT_NUM == 1
++  #define CFG_TUSB_RHPORT1_MODE     (OPT_MODE_DEVICE | BOARD_DEVICE_RHPORT_SPEED)
++#else
++  #error "Incorrect RHPort configuration"
++#endif
++
++/* This example doesn't use an RTOS */
++#define CFG_TUSB_OS                 OPT_OS_NONE
++
++/* CFG_TUSB_DEBUG is defined by compiler in DEBUG build */
++#ifndef CFG_TUSB_DEBUG
++  #define CFG_TUSB_DEBUG 0
++#else  
++  #undef  CFG_TUSB_DEBUG 	 
++  #define CFG_TUSB_DEBUG 3 
++#endif
++#define CFG_TUSB_DEBUG_PRINTF    CFG_TUSB_DEBUG_PRINTF
++
++/* USB DMA on some MCUs can only access a specific SRAM region with restriction on alignment.
++ * Tinyusb use follows macros to declare transferring memory so that they can be put
++ * into those specific section.
++ * e.g
++ * - CFG_TUSB_MEM SECTION : __attribute__ (( section(".usb_ram") ))
++ * - CFG_TUSB_MEM_ALIGN   : __attribute__ ((aligned(4)))
++ */
++#ifndef CFG_TUSB_MEM_SECTION
++#define CFG_TUSB_MEM_SECTION
++#endif
++
++#ifndef CFG_TUSB_MEM_ALIGN
++#define CFG_TUSB_MEM_ALIGN          __attribute__ ((aligned(4)))
++#endif
++
++/*
++--------------------------------------------------------------------
++ DEVICE CONFIGURATION
++--------------------------------------------------------------------
++*/
++// RHPort number used for device can be defined by board.mk, default to port 0
++#ifndef BOARD_TUD_RHPORT
++#define BOARD_TUD_RHPORT      0
++#endif
++
++// RHPort max operational speed can defined by board.mk
++#ifndef BOARD_TUD_MAX_SPEED
++#define BOARD_TUD_MAX_SPEED   OPT_MODE_HIGH_SPEED
++#endif
++
++//--------------------------------------------------------------------
++// COMMON CONFIGURATION
++//--------------------------------------------------------------------
++
++// defined by board.mk
++#ifndef CFG_TUSB_MCU
++#error CFG_TUSB_MCU must be defined
++#endif
++
++#ifndef CFG_TUSB_OS
++#define CFG_TUSB_OS           OPT_OS_NONE
++#endif
++
++// Enable Device stack
++#define CFG_TUD_ENABLED       1
++
++// Default is max speed that hardware controller could support with on-chip PHY
++#define CFG_TUD_MAX_SPEED     BOARD_TUD_MAX_SPEED
++
++/* USB DMA on some MCUs can only access a specific SRAM region with restriction on alignment.
++ * Tinyusb use follows macros to declare transferring memory so that they can be put
++ * into those specific section.
++ * e.g
++ * - CFG_TUSB_MEM SECTION : __attribute__ (( section(".usb_ram") ))
++ * - CFG_TUSB_MEM_ALIGN   : __attribute__ ((aligned(4)))
++ */
++#ifndef CFG_TUSB_MEM_SECTION
++#define CFG_TUSB_MEM_SECTION
++#endif
++
++#ifndef CFG_TUSB_MEM_ALIGN
++#define CFG_TUSB_MEM_ALIGN          __attribute__ ((aligned(4)))
++#endif
++
++/*
++--------------------------------------------------------------------
++ DEVICE CONFIGURATION
++--------------------------------------------------------------------
++*/
++#ifndef CFG_TUD_ENDPOINT0_SIZE
++#define CFG_TUD_ENDPOINT0_SIZE    64
++#endif
++
++/*------------- CLASS -------------*/
++// Network class has 2 drivers: ECM/RNDIS and NCM.
++// Only one of the drivers can be enabled
++#define CFG_TUD_ECM_RNDIS      1
++#define CFG_TUD_NCM           (1-CFG_TUD_ECM_RNDIS)
++
++#ifdef __cplusplus
++ }
++#endif
++
++#endif /* _TUSB_CONFIG_H_ */
+diff --git a/source/usb/tinyusb/makefile.ncm_freertos.am243x.r5f.ti-arm-clang b/source/usb/tinyusb/makefile.ncm_freertos.am243x.r5f.ti-arm-clang
+new file mode 100644
+index 0000000000..23652c54da
+--- /dev/null
++++ b/source/usb/tinyusb/makefile.ncm_freertos.am243x.r5f.ti-arm-clang
+@@ -0,0 +1,200 @@
++#
++# Auto generated makefile
++#
++
++export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
++include $(MCU_PLUS_SDK_PATH)/imports.mak
++
++CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
++
++CC=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmclang
++AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
++
++PROFILE?=release
++ConfigName:=$(PROFILE)
++
++LIBNAME:=usbd_tusb_ncm_freertos.am243x.r5f.ti-arm-clang.$(PROFILE).lib
++
++FILES_common := \
++    usb_wrapper.c \
++    dcd.c \
++    tusb.c \
++    tusb_fifo.c \
++    usbd.c \
++    usbd_control.c \
++    ncm_device.c \
++    dhserver.c \
++    dnserver.c \
++    altcp.c \
++    altcp_alloc.c \
++    altcp_tcp.c \
++    def.c \
++    dns.c \
++    inet_chksum.c \
++    init.c \
++    ip.c \
++    mem.c \
++    memp.c \
++    netif.c \
++    pbuf.c \
++    raw.c \
++    stats.c \
++    sys.c \
++    tcp.c \
++    tcp_in.c \
++    tcp_out.c \
++    timeouts.c \
++    udp.c \
++    autoip.c \
++    dhcp.c \
++    etharp.c \
++    icmp.c \
++    igmp.c \
++    ip4.c \
++    ip4_addr.c \
++    ip4_frag.c \
++    ethernet.c \
++    slipif.c \
++    httpd.c \
++    lwiperf.c \
++    fs.c \
++    err.c \
++
++FILES_PATH_common = \
++    ../tinyusb/tinyusb-stack/src \
++    ../tinyusb/tinyusb-stack/lib/networking \
++    ../tinyusb/tinyusb-stack/src/common \
++    ../tinyusb/tinyusb-stack/src/device \
++    ../tinyusb/tinyusb-stack/src/class/net \
++    ../tinyusb/portable/am64x_am243x \
++    ../cdn/include \
++    ../cdn/soc/am64x_am243x \
++    ../../networking/lwip/lwip-stack/src/core \
++    ../../networking/lwip/lwip-stack/src/api \
++    ../../networking/lwip/lwip-stack/src/core/ipv4 \
++    ../../networking/lwip/lwip-stack/src/netif \
++    ../../networking/lwip/lwip-stack/src/apps/http/ \
++    ../../networking/lwip/lwip-stack/src/apps/lwiperf/ \
++
++INCLUDES_common := \
++    -I${CG_TOOL_ROOT}/include/c \
++    -I${MCU_PLUS_SDK_PATH}/source \
++    -I../../drivers/hw_include \
++    -I../../drivers/hw_include/am64x_am243x \
++    -I../../drivers/soc/am64x_am243x \
++    -I../../kernel/freertos/FreeRTOS-Kernel/include \
++    -I../../kernel/freertos/config/am243x/r5f \
++    -I../../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
++    -I../tinyusb/tinyusb-stack/src \
++    -I../tinyusb/tinyusb-stack/src/common \
++    -I../tinyusb/tinyusb-stack/src/device \
++    -I../tinyusb/tinyusb-stack/src/class/net \
++    -I../tinyusb/tinyusb-stack/lib/networking \
++    -I../tinyusb/config/freertos/am64x_am243x/ncm_config \
++    -I../cdn/core_driver/common/src \
++    -I../cdn/core_driver/common/include \
++    -I../cdn/core_driver/device/src \
++    -I../cdn/core_driver/device/include \
++    -I../cdn/include \
++    -I../cdn/soc/am64x_am243x \
++    -I../../networking/lwip/lwip-stack/src/include \
++    -I../../networking/lwip/lwip-stack/src/include/ipv4 \
++    -I../../networking/lwip/lwip-stack/src/include/lwip/apps \
++    -I../../networking/lwip/lwip-stack/src/include/lwip \
++    -I../../networking/lwip/lwip-config/am243x/usb/ \
++    -I../../networking/lwip/lwip-port/include/ \
++
++DEFINES_common := \
++    -DSOC_AM243X \
++    -DTINYUSB_INTEGRATION \
++    -DCFG_TUSB_OS=OPT_OS_FREERTOS \
++
++DEFINES_debug := \
++
++DEFINES_release := \
++
++CFLAGS_common := \
++    -mcpu=cortex-r5 \
++    -mfloat-abi=hard \
++    -mfpu=vfpv3-d16 \
++    -mthumb \
++    -Wall \
++    -Werror \
++    -g \
++    -Wno-gnu-variable-sized-type-not-at-end \
++    -Wno-unused-function \
++    -Wno-address-of-packed-member \
++
++CFLAGS_release := \
++    -Os \
++
++CFLAGS_cpp_common := \
++    -Wno-c99-designator \
++    -Wno-extern-c-compat \
++    -Wno-c++11-narrowing \
++    -Wno-reorder-init-list \
++    -Wno-deprecated-register \
++    -Wno-writable-strings \
++    -Wno-enum-compare \
++    -Wno-reserved-user-defined-literal \
++    -Wno-unused-const-variable \
++    -x c++ \
++
++CFLAGS_debug := \
++    -D_DEBUG_=1 \
++
++ARFLAGS_common := \
++    rc \
++
++FILES := $(FILES_common) $(FILES_$(PROFILE))
++ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
++FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
++CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
++ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
++DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
++INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
++ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
++
++LIBDIR := lib
++OBJDIR := obj/am243x/ti-arm-clang/$(PROFILE)/r5f/usbd_tusb_ncm_freertos/
++OBJS := $(FILES:%.c=%.obj)
++OBJS += $(ASMFILES:%.S=%.obj)
++DEPS := $(FILES:%.c=%.d)
++
++vpath %.obj $(OBJDIR)
++vpath %.c $(FILES_PATH)
++vpath %.S $(FILES_PATH)
++
++$(OBJDIR)/%.obj %.obj: %.c
++	@echo  Compiling: $(LIBNAME): $<
++	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
++
++$(OBJDIR)/%.obj %.obj: %.S
++	@echo  Compiling: $(LIBNAME): $<
++	$(CC) -c $(ASMFLAGS) -o $(OBJDIR)/$@ $<
++
++all: $(LIBDIR)/$(LIBNAME)
++
++$(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
++	@echo  .
++	@echo  Archiving: $(LIBNAME) to $@ ...
++	$(AR) $(ARFLAGS) $@ $(addprefix $(OBJDIR), $(OBJS))
++	@echo  Archiving: $(LIBNAME) Done !!!
++	@echo  .
++
++clean:
++	@echo  Cleaning: $(LIBNAME) ...
++	$(RMDIR) $(OBJDIR)
++	$(RM) $(LIBDIR)/$(LIBNAME)
++
++scrub:
++	@echo  Scrubing: $(LIBNAME) ...
++	-$(RMDIR) obj/
++	-$(RMDIR) lib/
++
++$(OBJS): | $(OBJDIR)
++
++$(LIBDIR) $(OBJDIR):
++	$(MKDIR) $@
++
++-include $(addprefix $(OBJDIR)/, $(DEPS))
+diff --git a/source/usb/tinyusb/makefile.ncm_freertos.am64x.r5f.ti-arm-clang b/source/usb/tinyusb/makefile.ncm_freertos.am64x.r5f.ti-arm-clang
+new file mode 100644
+index 0000000000..efff270636
+--- /dev/null
++++ b/source/usb/tinyusb/makefile.ncm_freertos.am64x.r5f.ti-arm-clang
+@@ -0,0 +1,200 @@
++#
++# Auto generated makefile
++#
++
++export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
++include $(MCU_PLUS_SDK_PATH)/imports.mak
++
++CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
++
++CC=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmclang
++AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
++
++PROFILE?=release
++ConfigName:=$(PROFILE)
++
++LIBNAME:=usbd_tusb_ncm_freertos.am64x.r5f.ti-arm-clang.$(PROFILE).lib
++
++FILES_common := \
++    usb_wrapper.c \
++    dcd.c \
++    tusb.c \
++    tusb_fifo.c \
++    usbd.c \
++    usbd_control.c \
++    ncm_device.c \
++    dhserver.c \
++    dnserver.c \
++    altcp.c \
++    altcp_alloc.c \
++    altcp_tcp.c \
++    def.c \
++    dns.c \
++    inet_chksum.c \
++    init.c \
++    ip.c \
++    mem.c \
++    memp.c \
++    netif.c \
++    pbuf.c \
++    raw.c \
++    stats.c \
++    sys.c \
++    tcp.c \
++    tcp_in.c \
++    tcp_out.c \
++    timeouts.c \
++    udp.c \
++    autoip.c \
++    dhcp.c \
++    etharp.c \
++    icmp.c \
++    igmp.c \
++    ip4.c \
++    ip4_addr.c \
++    ip4_frag.c \
++    ethernet.c \
++    slipif.c \
++    httpd.c \
++    lwiperf.c \
++    fs.c \
++    err.c \
++
++FILES_PATH_common = \
++    ../tinyusb/tinyusb-stack/src \
++    ../tinyusb/tinyusb-stack/lib/networking \
++    ../tinyusb/tinyusb-stack/src/common \
++    ../tinyusb/tinyusb-stack/src/device \
++    ../tinyusb/tinyusb-stack/src/class/net \
++    ../tinyusb/portable/am64x_am243x \
++    ../cdn/include \
++    ../cdn/soc/am64x_am243x \
++    ../../networking/lwip/lwip-stack/src/core \
++    ../../networking/lwip/lwip-stack/src/api \
++    ../../networking/lwip/lwip-stack/src/core/ipv4 \
++    ../../networking/lwip/lwip-stack/src/netif \
++    ../../networking/lwip/lwip-stack/src/apps/http/ \
++    ../../networking/lwip/lwip-stack/src/apps/lwiperf/ \
++
++INCLUDES_common := \
++    -I${CG_TOOL_ROOT}/include/c \
++    -I${MCU_PLUS_SDK_PATH}/source \
++    -I../../drivers/hw_include \
++    -I../../drivers/hw_include/am64x_am243x \
++    -I../../drivers/soc/am64x_am243x \
++    -I../../kernel/freertos/FreeRTOS-Kernel/include \
++    -I../../kernel/freertos/config/am64x/r5f \
++    -I../../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
++    -I../tinyusb/tinyusb-stack/src \
++    -I../tinyusb/tinyusb-stack/src/common \
++    -I../tinyusb/tinyusb-stack/src/device \
++    -I../tinyusb/tinyusb-stack/src/class/net \
++    -I../tinyusb/tinyusb-stack/lib/networking \
++    -I../tinyusb/config/freertos/am64x_am243x/ncm_config \
++    -I../cdn/core_driver/common/src \
++    -I../cdn/core_driver/common/include \
++    -I../cdn/core_driver/device/src \
++    -I../cdn/core_driver/device/include \
++    -I../cdn/include \
++    -I../cdn/soc/am64x_am243x \
++    -I../../networking/lwip/lwip-stack/src/include \
++    -I../../networking/lwip/lwip-stack/src/include/ipv4 \
++    -I../../networking/lwip/lwip-stack/src/include/lwip/apps \
++    -I../../networking/lwip/lwip-stack/src/include/lwip \
++    -I../../networking/lwip/lwip-config/am64x/usb/ \
++    -I../../networking/lwip/lwip-port/include/ \
++
++DEFINES_common := \
++    -DSOC_AM64X \
++    -DTINYUSB_INTEGRATION \
++    -DCFG_TUSB_OS=OPT_OS_FREERTOS \
++
++DEFINES_debug := \
++
++DEFINES_release := \
++
++CFLAGS_common := \
++    -mcpu=cortex-r5 \
++    -mfloat-abi=hard \
++    -mfpu=vfpv3-d16 \
++    -mthumb \
++    -Wall \
++    -Werror \
++    -g \
++    -Wno-gnu-variable-sized-type-not-at-end \
++    -Wno-unused-function \
++    -Wno-address-of-packed-member \
++
++CFLAGS_release := \
++    -Os \
++
++CFLAGS_cpp_common := \
++    -Wno-c99-designator \
++    -Wno-extern-c-compat \
++    -Wno-c++11-narrowing \
++    -Wno-reorder-init-list \
++    -Wno-deprecated-register \
++    -Wno-writable-strings \
++    -Wno-enum-compare \
++    -Wno-reserved-user-defined-literal \
++    -Wno-unused-const-variable \
++    -x c++ \
++
++CFLAGS_debug := \
++    -D_DEBUG_=1 \
++
++ARFLAGS_common := \
++    rc \
++
++FILES := $(FILES_common) $(FILES_$(PROFILE))
++ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
++FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
++CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
++ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
++DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
++INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
++ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
++
++LIBDIR := lib
++OBJDIR := obj/am64x/ti-arm-clang/$(PROFILE)/r5f/usbd_tusb_ncm_freertos/
++OBJS := $(FILES:%.c=%.obj)
++OBJS += $(ASMFILES:%.S=%.obj)
++DEPS := $(FILES:%.c=%.d)
++
++vpath %.obj $(OBJDIR)
++vpath %.c $(FILES_PATH)
++vpath %.S $(FILES_PATH)
++
++$(OBJDIR)/%.obj %.obj: %.c
++	@echo  Compiling: $(LIBNAME): $<
++	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
++
++$(OBJDIR)/%.obj %.obj: %.S
++	@echo  Compiling: $(LIBNAME): $<
++	$(CC) -c $(ASMFLAGS) -o $(OBJDIR)/$@ $<
++
++all: $(LIBDIR)/$(LIBNAME)
++
++$(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
++	@echo  .
++	@echo  Archiving: $(LIBNAME) to $@ ...
++	$(AR) $(ARFLAGS) $@ $(addprefix $(OBJDIR), $(OBJS))
++	@echo  Archiving: $(LIBNAME) Done !!!
++	@echo  .
++
++clean:
++	@echo  Cleaning: $(LIBNAME) ...
++	$(RMDIR) $(OBJDIR)
++	$(RM) $(LIBDIR)/$(LIBNAME)
++
++scrub:
++	@echo  Scrubing: $(LIBNAME) ...
++	-$(RMDIR) obj/
++	-$(RMDIR) lib/
++
++$(OBJS): | $(OBJDIR)
++
++$(LIBDIR) $(OBJDIR):
++	$(MKDIR) $@
++
++-include $(addprefix $(OBJDIR)/, $(DEPS))
+diff --git a/source/usb/tinyusb/makefile.ncm_nortos.am243x.r5f.ti-arm-clang b/source/usb/tinyusb/makefile.ncm_nortos.am243x.r5f.ti-arm-clang
+new file mode 100755
+index 0000000000..882de0d3e1
+--- /dev/null
++++ b/source/usb/tinyusb/makefile.ncm_nortos.am243x.r5f.ti-arm-clang
+@@ -0,0 +1,196 @@
++#
++# Auto generated makefile
++#
++
++export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
++include $(MCU_PLUS_SDK_PATH)/imports.mak
++
++CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
++
++CC=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmclang
++AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
++
++PROFILE?=release
++ConfigName:=$(PROFILE)
++
++LIBNAME:=usbd_tusb_ncm_nortos.am243x.r5f.ti-arm-clang.$(PROFILE).lib
++
++FILES_common := \
++    usb_wrapper.c \
++    dcd.c \
++    tusb.c \
++    tusb_fifo.c \
++    usbd.c \
++    usbd_control.c \
++    ncm_device.c \
++    dhserver.c \
++    dnserver.c \
++    altcp.c \
++    altcp_alloc.c \
++    altcp_tcp.c \
++    def.c \
++    dns.c \
++    inet_chksum.c \
++    init.c \
++    ip.c \
++    mem.c \
++    memp.c \
++    netif.c \
++    pbuf.c \
++    raw.c \
++    stats.c \
++    sys.c \
++    tcp.c \
++    tcp_in.c \
++    tcp_out.c \
++    timeouts.c \
++    udp.c \
++    autoip.c \
++    dhcp.c \
++    etharp.c \
++    icmp.c \
++    igmp.c \
++    ip4.c \
++    ip4_addr.c \
++    ip4_frag.c \
++    ethernet.c \
++    slipif.c \
++    httpd.c \
++    lwiperf.c \
++    fs.c \
++    err.c \
++
++FILES_PATH_common = \
++    ../tinyusb/tinyusb-stack/src \
++    ../tinyusb/tinyusb-stack/lib/networking \
++    ../tinyusb/tinyusb-stack/src/common \
++    ../tinyusb/tinyusb-stack/src/device \
++    ../tinyusb/tinyusb-stack/src/class/net \
++    ../tinyusb/portable/am64x_am243x \
++    ../cdn/include \
++    ../cdn/soc/am64x_am243x \
++    ../../networking/lwip/lwip-stack/src/core \
++    ../../networking/lwip/lwip-stack/src/api \
++    ../../networking/lwip/lwip-stack/src/core/ipv4 \
++    ../../networking/lwip/lwip-stack/src/netif \
++    ../../networking/lwip/lwip-stack/src/apps/http/ \
++    ../../networking/lwip/lwip-stack/src/apps/lwiperf/ \
++
++INCLUDES_common := \
++    -I${CG_TOOL_ROOT}/include/c \
++    -I${MCU_PLUS_SDK_PATH}/source \
++    -I../../drivers/hw_include \
++    -I../../drivers/hw_include/am64x_am243x \
++    -I../../drivers/soc/am64x_am243x \
++    -I../tinyusb/config/nortos/am64x_am243x \
++    -I../tinyusb/tinyusb-stack/src \
++    -I../tinyusb/tinyusb-stack/src/common \
++    -I../tinyusb/tinyusb-stack/src/device \
++    -I../tinyusb/tinyusb-stack/src/class/net \
++    -I../tinyusb/tinyusb-stack/lib/networking \
++    -I../tinyusb/config/nortos/am64x_am243x/ncm_config \
++    -I../cdn/core_driver/common/src \
++    -I../cdn/core_driver/common/include \
++    -I../cdn/core_driver/device/src \
++    -I../cdn/core_driver/device/include \
++    -I../cdn/include \
++    -I../cdn/soc/am64x_am243x \
++    -I../../networking/lwip/lwip-stack/src/include \
++    -I../../networking/lwip/lwip-stack/src/include/ipv4 \
++    -I../../networking/lwip/lwip-stack/src/include/lwip/apps \
++    -I../../networking/lwip/lwip-stack/src/include/lwip \
++    -I../../networking/lwip/lwip-config/am243x/usb/ \
++    -I../../networking/lwip/lwip-port/include/ \
++
++DEFINES_common := \
++    -DSOC_AM243X \
++
++DEFINES_debug := \
++
++DEFINES_release := \
++
++CFLAGS_common := \
++    -mcpu=cortex-r5 \
++    -mfloat-abi=hard \
++    -mfpu=vfpv3-d16 \
++    -mthumb \
++    -Wall \
++    -Werror \
++    -g \
++    -Wno-gnu-variable-sized-type-not-at-end \
++    -Wno-unused-function \
++    -Wno-address-of-packed-member \
++
++CFLAGS_cpp_common := \
++    -Wno-c99-designator \
++    -Wno-extern-c-compat \
++    -Wno-c++11-narrowing \
++    -Wno-reorder-init-list \
++    -Wno-deprecated-register \
++    -Wno-writable-strings \
++    -Wno-enum-compare \
++    -Wno-reserved-user-defined-literal \
++    -Wno-unused-const-variable \
++    -x c++ \
++
++CFLAGS_debug := \
++    -D_DEBUG_=1 \
++
++CFLAGS_release := \
++    -Os \
++
++ARFLAGS_common := \
++    rc \
++
++FILES := $(FILES_common) $(FILES_$(PROFILE))
++ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
++FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
++CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
++ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
++DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
++INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
++ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
++
++LIBDIR := lib
++OBJDIR := obj/am243x/ti-arm-clang/$(PROFILE)/r5f/usbd_tusb_ncm_nortos/
++OBJS := $(FILES:%.c=%.obj)
++OBJS += $(ASMFILES:%.S=%.obj)
++DEPS := $(FILES:%.c=%.d)
++
++vpath %.obj $(OBJDIR)
++vpath %.c $(FILES_PATH)
++vpath %.S $(FILES_PATH)
++
++$(OBJDIR)/%.obj %.obj: %.c
++	@echo  Compiling: $(LIBNAME): $<
++	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
++
++$(OBJDIR)/%.obj %.obj: %.S
++	@echo  Compiling: $(LIBNAME): $<
++	$(CC) -c $(ASMFLAGS) -o $(OBJDIR)/$@ $<
++
++all: $(LIBDIR)/$(LIBNAME)
++
++$(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
++	@echo  .
++	@echo  Archiving: $(LIBNAME) to $@ ...
++	$(AR) $(ARFLAGS) $@ $(addprefix $(OBJDIR), $(OBJS))
++	@echo  Archiving: $(LIBNAME) Done !!!
++	@echo  .
++
++clean:
++	@echo  Cleaning: $(LIBNAME) ...
++	$(RMDIR) $(OBJDIR)
++	$(RM) $(LIBDIR)/$(LIBNAME)
++
++scrub:
++	@echo  Scrubing: $(LIBNAME) ...
++	-$(RMDIR) obj/
++	-$(RMDIR) lib/
++
++$(OBJS): | $(OBJDIR)
++
++$(LIBDIR) $(OBJDIR):
++	$(MKDIR) $@
++
++-include $(addprefix $(OBJDIR)/, $(DEPS))
+diff --git a/source/usb/tinyusb/makefile.ncm_nortos.am64x.r5f.ti-arm-clang b/source/usb/tinyusb/makefile.ncm_nortos.am64x.r5f.ti-arm-clang
+new file mode 100644
+index 0000000000..30b4c68efb
+--- /dev/null
++++ b/source/usb/tinyusb/makefile.ncm_nortos.am64x.r5f.ti-arm-clang
+@@ -0,0 +1,196 @@
++#
++# Auto generated makefile
++#
++
++export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
++include $(MCU_PLUS_SDK_PATH)/imports.mak
++
++CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
++
++CC=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmclang
++AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
++
++PROFILE?=release
++ConfigName:=$(PROFILE)
++
++LIBNAME:=usbd_tusb_ncm_nortos.am64x.r5f.ti-arm-clang.$(PROFILE).lib
++
++FILES_common := \
++    usb_wrapper.c \
++    dcd.c \
++    tusb.c \
++    tusb_fifo.c \
++    usbd.c \
++    usbd_control.c \
++    ncm_device.c \
++    dhserver.c \
++    dnserver.c \
++    altcp.c \
++    altcp_alloc.c \
++    altcp_tcp.c \
++    def.c \
++    dns.c \
++    inet_chksum.c \
++    init.c \
++    ip.c \
++    mem.c \
++    memp.c \
++    netif.c \
++    pbuf.c \
++    raw.c \
++    stats.c \
++    sys.c \
++    tcp.c \
++    tcp_in.c \
++    tcp_out.c \
++    timeouts.c \
++    udp.c \
++    autoip.c \
++    dhcp.c \
++    etharp.c \
++    icmp.c \
++    igmp.c \
++    ip4.c \
++    ip4_addr.c \
++    ip4_frag.c \
++    ethernet.c \
++    slipif.c \
++    httpd.c \
++    lwiperf.c \
++    fs.c \
++    err.c \
++
++FILES_PATH_common = \
++    ../tinyusb/tinyusb-stack/src \
++    ../tinyusb/tinyusb-stack/lib/networking \
++    ../tinyusb/tinyusb-stack/src/common \
++    ../tinyusb/tinyusb-stack/src/device \
++    ../tinyusb/tinyusb-stack/src/class/net \
++    ../tinyusb/portable/am64x_am243x \
++    ../cdn/include \
++    ../cdn/soc/am64x_am243x \
++    ../../networking/lwip/lwip-stack/src/core \
++    ../../networking/lwip/lwip-stack/src/api \
++    ../../networking/lwip/lwip-stack/src/core/ipv4 \
++    ../../networking/lwip/lwip-stack/src/netif \
++    ../../networking/lwip/lwip-stack/src/apps/http/ \
++    ../../networking/lwip/lwip-stack/src/apps/lwiperf/ \
++
++INCLUDES_common := \
++    -I${CG_TOOL_ROOT}/include/c \
++    -I${MCU_PLUS_SDK_PATH}/source \
++    -I../../drivers/hw_include \
++    -I../../drivers/hw_include/am64x_am243x \
++    -I../../drivers/soc/am64x_am243x \
++    -I../tinyusb/config/nortos/am64x_am243x \
++    -I../tinyusb/tinyusb-stack/src \
++    -I../tinyusb/tinyusb-stack/src/common \
++    -I../tinyusb/tinyusb-stack/src/device \
++    -I../tinyusb/tinyusb-stack/src/class/net \
++    -I../tinyusb/tinyusb-stack/lib/networking \
++    -I../tinyusb/config/nortos/am64x_am243x/ncm_config \
++    -I../cdn/core_driver/common/src \
++    -I../cdn/core_driver/common/include \
++    -I../cdn/core_driver/device/src \
++    -I../cdn/core_driver/device/include \
++    -I../cdn/include \
++    -I../cdn/soc/am64x_am243x \
++    -I../../networking/lwip/lwip-stack/src/include \
++    -I../../networking/lwip/lwip-stack/src/include/ipv4 \
++    -I../../networking/lwip/lwip-stack/src/include/lwip/apps \
++    -I../../networking/lwip/lwip-stack/src/include/lwip \
++    -I../../networking/lwip/lwip-config/am64x/usb/ \
++    -I../../networking/lwip/lwip-port/include/ \
++
++DEFINES_common := \
++    -DSOC_AM64X \
++
++DEFINES_debug := \
++
++DEFINES_release := \
++
++CFLAGS_common := \
++    -mcpu=cortex-r5 \
++    -mfloat-abi=hard \
++    -mfpu=vfpv3-d16 \
++    -mthumb \
++    -Wall \
++    -Werror \
++    -g \
++    -Wno-gnu-variable-sized-type-not-at-end \
++    -Wno-unused-function \
++    -Wno-address-of-packed-member \
++
++CFLAGS_cpp_common := \
++    -Wno-c99-designator \
++    -Wno-extern-c-compat \
++    -Wno-c++11-narrowing \
++    -Wno-reorder-init-list \
++    -Wno-deprecated-register \
++    -Wno-writable-strings \
++    -Wno-enum-compare \
++    -Wno-reserved-user-defined-literal \
++    -Wno-unused-const-variable \
++    -x c++ \
++
++CFLAGS_debug := \
++    -D_DEBUG_=1 \
++
++CFLAGS_release := \
++    -Os \
++
++ARFLAGS_common := \
++    rc \
++
++FILES := $(FILES_common) $(FILES_$(PROFILE))
++ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
++FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
++CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
++ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
++DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
++INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
++ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
++
++LIBDIR := lib
++OBJDIR := obj/am64x/ti-arm-clang/$(PROFILE)/r5f/usbd_tusb_ncm_nortos/
++OBJS := $(FILES:%.c=%.obj)
++OBJS += $(ASMFILES:%.S=%.obj)
++DEPS := $(FILES:%.c=%.d)
++
++vpath %.obj $(OBJDIR)
++vpath %.c $(FILES_PATH)
++vpath %.S $(FILES_PATH)
++
++$(OBJDIR)/%.obj %.obj: %.c
++	@echo  Compiling: $(LIBNAME): $<
++	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
++
++$(OBJDIR)/%.obj %.obj: %.S
++	@echo  Compiling: $(LIBNAME): $<
++	$(CC) -c $(ASMFLAGS) -o $(OBJDIR)/$@ $<
++
++all: $(LIBDIR)/$(LIBNAME)
++
++$(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
++	@echo  .
++	@echo  Archiving: $(LIBNAME) to $@ ...
++	$(AR) $(ARFLAGS) $@ $(addprefix $(OBJDIR), $(OBJS))
++	@echo  Archiving: $(LIBNAME) Done !!!
++	@echo  .
++
++clean:
++	@echo  Cleaning: $(LIBNAME) ...
++	$(RMDIR) $(OBJDIR)
++	$(RM) $(LIBDIR)/$(LIBNAME)
++
++scrub:
++	@echo  Scrubing: $(LIBNAME) ...
++	-$(RMDIR) obj/
++	-$(RMDIR) lib/
++
++$(OBJS): | $(OBJDIR)
++
++$(LIBDIR) $(OBJDIR):
++	$(MKDIR) $@
++
++-include $(addprefix $(OBJDIR)/, $(DEPS))
+diff --git a/source/usb/tinyusb/makefile.rndis_freertos.am243x.r5f.ti-arm-clang b/source/usb/tinyusb/makefile.rndis_freertos.am243x.r5f.ti-arm-clang
+new file mode 100644
+index 0000000000..93411b4d43
+--- /dev/null
++++ b/source/usb/tinyusb/makefile.rndis_freertos.am243x.r5f.ti-arm-clang
+@@ -0,0 +1,201 @@
++#
++# Auto generated makefile
++#
++
++export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
++include $(MCU_PLUS_SDK_PATH)/imports.mak
++
++CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
++
++CC=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmclang
++AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
++
++PROFILE?=release
++ConfigName:=$(PROFILE)
++
++LIBNAME:=usbd_tusb_rndis_freertos.am243x.r5f.ti-arm-clang.$(PROFILE).lib
++
++FILES_common := \
++    usb_wrapper.c \
++    dcd.c \
++    tusb.c \
++    tusb_fifo.c \
++    usbd.c \
++    usbd_control.c \
++    ecm_rndis_device.c \
++    rndis_reports.c \
++    dhserver.c \
++    dnserver.c \
++    altcp.c \
++    altcp_alloc.c \
++    altcp_tcp.c \
++    def.c \
++    dns.c \
++    inet_chksum.c \
++    init.c \
++    ip.c \
++    mem.c \
++    memp.c \
++    netif.c \
++    pbuf.c \
++    raw.c \
++    stats.c \
++    sys.c \
++    tcp.c \
++    tcp_in.c \
++    tcp_out.c \
++    timeouts.c \
++    udp.c \
++    autoip.c \
++    dhcp.c \
++    etharp.c \
++    icmp.c \
++    igmp.c \
++    ip4.c \
++    ip4_addr.c \
++    ip4_frag.c \
++    ethernet.c \
++    slipif.c \
++    httpd.c \
++    lwiperf.c \
++    fs.c \
++    err.c \
++
++FILES_PATH_common = \
++    ../tinyusb/tinyusb-stack/src \
++    ../tinyusb/tinyusb-stack/lib/networking \
++    ../tinyusb/tinyusb-stack/src/common \
++    ../tinyusb/tinyusb-stack/src/device \
++    ../tinyusb/tinyusb-stack/src/class/net \
++    ../tinyusb/portable/am64x_am243x \
++    ../cdn/include \
++    ../cdn/soc/am64x_am243x \
++    ../../networking/lwip/lwip-stack/src/core \
++    ../../networking/lwip/lwip-stack/src/api \
++    ../../networking/lwip/lwip-stack/src/core/ipv4 \
++    ../../networking/lwip/lwip-stack/src/netif \
++    ../../networking/lwip/lwip-stack/src/apps/http/ \
++    ../../networking/lwip/lwip-stack/src/apps/lwiperf/ \
++
++INCLUDES_common := \
++    -I${CG_TOOL_ROOT}/include/c \
++    -I${MCU_PLUS_SDK_PATH}/source \
++    -I../../drivers/hw_include \
++    -I../../drivers/hw_include/am64x_am243x \
++    -I../../drivers/soc/am64x_am243x \
++    -I../../kernel/freertos/FreeRTOS-Kernel/include \
++    -I../../kernel/freertos/config/am243x/r5f \
++    -I../../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
++    -I../tinyusb/tinyusb-stack/src \
++    -I../tinyusb/tinyusb-stack/src/common \
++    -I../tinyusb/tinyusb-stack/src/device \
++    -I../tinyusb/tinyusb-stack/src/class/net \
++    -I../tinyusb/tinyusb-stack/lib/networking \
++    -I../tinyusb/config/freertos/am64x_am243x/rndis_config \
++    -I../cdn/core_driver/common/src \
++    -I../cdn/core_driver/common/include \
++    -I../cdn/core_driver/device/src \
++    -I../cdn/core_driver/device/include \
++    -I../cdn/include \
++    -I../cdn/soc/am64x_am243x \
++    -I../../networking/lwip/lwip-stack/src/include \
++    -I../../networking/lwip/lwip-stack/src/include/ipv4 \
++    -I../../networking/lwip/lwip-stack/src/include/lwip/apps \
++    -I../../networking/lwip/lwip-stack/src/include/lwip \
++    -I../../networking/lwip/lwip-config/am243x/usb/ \
++    -I../../networking/lwip/lwip-port/include/ \
++
++DEFINES_common := \
++    -DSOC_AM243X \
++    -DTINYUSB_INTEGRATION \
++    -DCFG_TUSB_OS=OPT_OS_FREERTOS \
++
++DEFINES_debug := \
++
++DEFINES_release := \
++
++CFLAGS_common := \
++    -mcpu=cortex-r5 \
++    -mfloat-abi=hard \
++    -mfpu=vfpv3-d16 \
++    -mthumb \
++    -Wall \
++    -Werror \
++    -g \
++    -Wno-gnu-variable-sized-type-not-at-end \
++    -Wno-unused-function \
++    -Wno-address-of-packed-member \
++
++CFLAGS_release := \
++    -Os \
++
++CFLAGS_cpp_common := \
++    -Wno-c99-designator \
++    -Wno-extern-c-compat \
++    -Wno-c++11-narrowing \
++    -Wno-reorder-init-list \
++    -Wno-deprecated-register \
++    -Wno-writable-strings \
++    -Wno-enum-compare \
++    -Wno-reserved-user-defined-literal \
++    -Wno-unused-const-variable \
++    -x c++ \
++
++CFLAGS_debug := \
++    -D_DEBUG_=1 \
++
++ARFLAGS_common := \
++    rc \
++
++FILES := $(FILES_common) $(FILES_$(PROFILE))
++ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
++FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
++CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
++ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
++DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
++INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
++ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
++
++LIBDIR := lib
++OBJDIR := obj/am243x/ti-arm-clang/$(PROFILE)/r5f/usbd_tusb_rndis_freertos/
++OBJS := $(FILES:%.c=%.obj)
++OBJS += $(ASMFILES:%.S=%.obj)
++DEPS := $(FILES:%.c=%.d)
++
++vpath %.obj $(OBJDIR)
++vpath %.c $(FILES_PATH)
++vpath %.S $(FILES_PATH)
++
++$(OBJDIR)/%.obj %.obj: %.c
++	@echo  Compiling: $(LIBNAME): $<
++	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
++
++$(OBJDIR)/%.obj %.obj: %.S
++	@echo  Compiling: $(LIBNAME): $<
++	$(CC) -c $(ASMFLAGS) -o $(OBJDIR)/$@ $<
++
++all: $(LIBDIR)/$(LIBNAME)
++
++$(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
++	@echo  .
++	@echo  Archiving: $(LIBNAME) to $@ ...
++	$(AR) $(ARFLAGS) $@ $(addprefix $(OBJDIR), $(OBJS))
++	@echo  Archiving: $(LIBNAME) Done !!!
++	@echo  .
++
++clean:
++	@echo  Cleaning: $(LIBNAME) ...
++	$(RMDIR) $(OBJDIR)
++	$(RM) $(LIBDIR)/$(LIBNAME)
++
++scrub:
++	@echo  Scrubing: $(LIBNAME) ...
++	-$(RMDIR) obj/
++	-$(RMDIR) lib/
++
++$(OBJS): | $(OBJDIR)
++
++$(LIBDIR) $(OBJDIR):
++	$(MKDIR) $@
++
++-include $(addprefix $(OBJDIR)/, $(DEPS))
+diff --git a/source/usb/tinyusb/makefile.rndis_freertos.am64x.r5f.ti-arm-clang b/source/usb/tinyusb/makefile.rndis_freertos.am64x.r5f.ti-arm-clang
+new file mode 100644
+index 0000000000..06c55bc909
+--- /dev/null
++++ b/source/usb/tinyusb/makefile.rndis_freertos.am64x.r5f.ti-arm-clang
+@@ -0,0 +1,201 @@
++#
++# Auto generated makefile
++#
++
++export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
++include $(MCU_PLUS_SDK_PATH)/imports.mak
++
++CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
++
++CC=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmclang
++AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
++
++PROFILE?=release
++ConfigName:=$(PROFILE)
++
++LIBNAME:=usbd_tusb_rndis_freertos.am64x.r5f.ti-arm-clang.$(PROFILE).lib
++
++FILES_common := \
++    usb_wrapper.c \
++    dcd.c \
++    tusb.c \
++    tusb_fifo.c \
++    usbd.c \
++    usbd_control.c \
++    ecm_rndis_device.c \
++    rndis_reports.c \
++    dhserver.c \
++    dnserver.c \
++    altcp.c \
++    altcp_alloc.c \
++    altcp_tcp.c \
++    def.c \
++    dns.c \
++    inet_chksum.c \
++    init.c \
++    ip.c \
++    mem.c \
++    memp.c \
++    netif.c \
++    pbuf.c \
++    raw.c \
++    stats.c \
++    sys.c \
++    tcp.c \
++    tcp_in.c \
++    tcp_out.c \
++    timeouts.c \
++    udp.c \
++    autoip.c \
++    dhcp.c \
++    etharp.c \
++    icmp.c \
++    igmp.c \
++    ip4.c \
++    ip4_addr.c \
++    ip4_frag.c \
++    ethernet.c \
++    slipif.c \
++    httpd.c \
++    lwiperf.c \
++    fs.c \
++    err.c \
++
++FILES_PATH_common = \
++    ../tinyusb/tinyusb-stack/src \
++    ../tinyusb/tinyusb-stack/lib/networking \
++    ../tinyusb/tinyusb-stack/src/common \
++    ../tinyusb/tinyusb-stack/src/device \
++    ../tinyusb/tinyusb-stack/src/class/net \
++    ../tinyusb/portable/am64x_am243x \
++    ../cdn/include \
++    ../cdn/soc/am64x_am243x \
++    ../../networking/lwip/lwip-stack/src/core \
++    ../../networking/lwip/lwip-stack/src/api \
++    ../../networking/lwip/lwip-stack/src/core/ipv4 \
++    ../../networking/lwip/lwip-stack/src/netif \
++    ../../networking/lwip/lwip-stack/src/apps/http/ \
++    ../../networking/lwip/lwip-stack/src/apps/lwiperf/ \
++
++INCLUDES_common := \
++    -I${CG_TOOL_ROOT}/include/c \
++    -I${MCU_PLUS_SDK_PATH}/source \
++    -I../../drivers/hw_include \
++    -I../../drivers/hw_include/am64x_am243x \
++    -I../../drivers/soc/am64x_am243x \
++    -I../../kernel/freertos/FreeRTOS-Kernel/include \
++    -I../../kernel/freertos/config/am64x/r5f \
++    -I../../kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
++    -I../tinyusb/tinyusb-stack/src \
++    -I../tinyusb/tinyusb-stack/src/common \
++    -I../tinyusb/tinyusb-stack/src/device \
++    -I../tinyusb/tinyusb-stack/src/class/net \
++    -I../tinyusb/tinyusb-stack/lib/networking \
++    -I../tinyusb/config/freertos/am64x_am243x/rndis_config \
++    -I../cdn/core_driver/common/src \
++    -I../cdn/core_driver/common/include \
++    -I../cdn/core_driver/device/src \
++    -I../cdn/core_driver/device/include \
++    -I../cdn/include \
++    -I../cdn/soc/am64x_am243x \
++    -I../../networking/lwip/lwip-stack/src/include \
++    -I../../networking/lwip/lwip-stack/src/include/ipv4 \
++    -I../../networking/lwip/lwip-stack/src/include/lwip/apps \
++    -I../../networking/lwip/lwip-stack/src/include/lwip \
++    -I../../networking/lwip/lwip-config/am64x/usb/ \
++    -I../../networking/lwip/lwip-port/include/ \
++
++DEFINES_common := \
++    -DSOC_AM64X \
++    -DTINYUSB_INTEGRATION \
++    -DCFG_TUSB_OS=OPT_OS_FREERTOS \
++
++DEFINES_debug := \
++
++DEFINES_release := \
++
++CFLAGS_common := \
++    -mcpu=cortex-r5 \
++    -mfloat-abi=hard \
++    -mfpu=vfpv3-d16 \
++    -mthumb \
++    -Wall \
++    -Werror \
++    -g \
++    -Wno-gnu-variable-sized-type-not-at-end \
++    -Wno-unused-function \
++    -Wno-address-of-packed-member \
++
++CFLAGS_release := \
++    -Os \
++
++CFLAGS_cpp_common := \
++    -Wno-c99-designator \
++    -Wno-extern-c-compat \
++    -Wno-c++11-narrowing \
++    -Wno-reorder-init-list \
++    -Wno-deprecated-register \
++    -Wno-writable-strings \
++    -Wno-enum-compare \
++    -Wno-reserved-user-defined-literal \
++    -Wno-unused-const-variable \
++    -x c++ \
++
++CFLAGS_debug := \
++    -D_DEBUG_=1 \
++
++ARFLAGS_common := \
++    rc \
++
++FILES := $(FILES_common) $(FILES_$(PROFILE))
++ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
++FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
++CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
++ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
++DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
++INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
++ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
++
++LIBDIR := lib
++OBJDIR := obj/am64x/ti-arm-clang/$(PROFILE)/r5f/usbd_tusb_rndis_freertos/
++OBJS := $(FILES:%.c=%.obj)
++OBJS += $(ASMFILES:%.S=%.obj)
++DEPS := $(FILES:%.c=%.d)
++
++vpath %.obj $(OBJDIR)
++vpath %.c $(FILES_PATH)
++vpath %.S $(FILES_PATH)
++
++$(OBJDIR)/%.obj %.obj: %.c
++	@echo  Compiling: $(LIBNAME): $<
++	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
++
++$(OBJDIR)/%.obj %.obj: %.S
++	@echo  Compiling: $(LIBNAME): $<
++	$(CC) -c $(ASMFLAGS) -o $(OBJDIR)/$@ $<
++
++all: $(LIBDIR)/$(LIBNAME)
++
++$(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
++	@echo  .
++	@echo  Archiving: $(LIBNAME) to $@ ...
++	$(AR) $(ARFLAGS) $@ $(addprefix $(OBJDIR), $(OBJS))
++	@echo  Archiving: $(LIBNAME) Done !!!
++	@echo  .
++
++clean:
++	@echo  Cleaning: $(LIBNAME) ...
++	$(RMDIR) $(OBJDIR)
++	$(RM) $(LIBDIR)/$(LIBNAME)
++
++scrub:
++	@echo  Scrubing: $(LIBNAME) ...
++	-$(RMDIR) obj/
++	-$(RMDIR) lib/
++
++$(OBJS): | $(OBJDIR)
++
++$(LIBDIR) $(OBJDIR):
++	$(MKDIR) $@
++
++-include $(addprefix $(OBJDIR)/, $(DEPS))
+diff --git a/source/usb/tinyusb/makefile.rndis_nortos.am243x.r5f.ti-arm-clang b/source/usb/tinyusb/makefile.rndis_nortos.am243x.r5f.ti-arm-clang
+new file mode 100644
+index 0000000000..789f9e6b22
+--- /dev/null
++++ b/source/usb/tinyusb/makefile.rndis_nortos.am243x.r5f.ti-arm-clang
+@@ -0,0 +1,197 @@
++#
++# Auto generated makefile
++#
++
++export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
++include $(MCU_PLUS_SDK_PATH)/imports.mak
++
++CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
++
++CC=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmclang
++AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
++
++PROFILE?=release
++ConfigName:=$(PROFILE)
++
++LIBNAME:=usbd_tusb_rndis_nortos.am243x.r5f.ti-arm-clang.$(PROFILE).lib
++
++FILES_common := \
++    usb_wrapper.c \
++    dcd.c \
++    tusb.c \
++    tusb_fifo.c \
++    usbd.c \
++    usbd_control.c \
++    ecm_rndis_device.c \
++    rndis_reports.c \
++    dhserver.c \
++    dnserver.c \
++    altcp.c \
++    altcp_alloc.c \
++    altcp_tcp.c \
++    def.c \
++    dns.c \
++    inet_chksum.c \
++    init.c \
++    ip.c \
++    mem.c \
++    memp.c \
++    netif.c \
++    pbuf.c \
++    raw.c \
++    stats.c \
++    sys.c \
++    tcp.c \
++    tcp_in.c \
++    tcp_out.c \
++    timeouts.c \
++    udp.c \
++    autoip.c \
++    dhcp.c \
++    etharp.c \
++    icmp.c \
++    igmp.c \
++    ip4.c \
++    ip4_addr.c \
++    ip4_frag.c \
++    ethernet.c \
++    slipif.c \
++    httpd.c \
++    lwiperf.c \
++    fs.c \
++    err.c \
++
++FILES_PATH_common = \
++    ../tinyusb/tinyusb-stack/src \
++    ../tinyusb/tinyusb-stack/lib/networking \
++    ../tinyusb/tinyusb-stack/src/common \
++    ../tinyusb/tinyusb-stack/src/device \
++    ../tinyusb/tinyusb-stack/src/class/net \
++    ../tinyusb/portable/am64x_am243x \
++    ../cdn/include \
++    ../cdn/soc/am64x_am243x \
++    ../../networking/lwip/lwip-stack/src/core \
++    ../../networking/lwip/lwip-stack/src/api \
++    ../../networking/lwip/lwip-stack/src/core/ipv4 \
++    ../../networking/lwip/lwip-stack/src/netif \
++    ../../networking/lwip/lwip-stack/src/apps/http/ \
++    ../../networking/lwip/lwip-stack/src/apps/lwiperf/ \
++
++INCLUDES_common := \
++    -I${CG_TOOL_ROOT}/include/c \
++    -I${MCU_PLUS_SDK_PATH}/source \
++    -I../../drivers/hw_include \
++    -I../../drivers/hw_include/am64x_am243x \
++    -I../../drivers/soc/am64x_am243x \
++    -I../tinyusb/config/nortos/am64x_am243x \
++    -I../tinyusb/tinyusb-stack/src \
++    -I../tinyusb/tinyusb-stack/src/common \
++    -I../tinyusb/tinyusb-stack/src/device \
++    -I../tinyusb/tinyusb-stack/src/class/net \
++    -I../tinyusb/tinyusb-stack/lib/networking \
++    -I../tinyusb/config/nortos/am64x_am243x/rndis_config \
++    -I../cdn/core_driver/common/src \
++    -I../cdn/core_driver/common/include \
++    -I../cdn/core_driver/device/src \
++    -I../cdn/core_driver/device/include \
++    -I../cdn/include \
++    -I../cdn/soc/am64x_am243x \
++    -I../../networking/lwip/lwip-stack/src/include \
++    -I../../networking/lwip/lwip-stack/src/include/ipv4 \
++    -I../../networking/lwip/lwip-stack/src/include/lwip/apps \
++    -I../../networking/lwip/lwip-stack/src/include/lwip \
++    -I../../networking/lwip/lwip-config/am243x/usb/ \
++    -I../../networking/lwip/lwip-port/include/ \
++
++DEFINES_common := \
++    -DSOC_AM243X \
++
++DEFINES_debug := \
++
++DEFINES_release := \
++
++CFLAGS_common := \
++    -mcpu=cortex-r5 \
++    -mfloat-abi=hard \
++    -mfpu=vfpv3-d16 \
++    -mthumb \
++    -Wall \
++    -Werror \
++    -g \
++    -Wno-gnu-variable-sized-type-not-at-end \
++    -Wno-unused-function \
++    -Wno-address-of-packed-member \
++
++CFLAGS_cpp_common := \
++    -Wno-c99-designator \
++    -Wno-extern-c-compat \
++    -Wno-c++11-narrowing \
++    -Wno-reorder-init-list \
++    -Wno-deprecated-register \
++    -Wno-writable-strings \
++    -Wno-enum-compare \
++    -Wno-reserved-user-defined-literal \
++    -Wno-unused-const-variable \
++    -x c++ \
++
++CFLAGS_debug := \
++    -D_DEBUG_=1 \
++
++CFLAGS_release := \
++    -Os \
++
++ARFLAGS_common := \
++    rc \
++
++FILES := $(FILES_common) $(FILES_$(PROFILE))
++ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
++FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
++CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
++ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
++DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
++INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
++ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
++
++LIBDIR := lib
++OBJDIR := obj/am243x/ti-arm-clang/$(PROFILE)/r5f/usbd_tusb_rndis_nortos/
++OBJS := $(FILES:%.c=%.obj)
++OBJS += $(ASMFILES:%.S=%.obj)
++DEPS := $(FILES:%.c=%.d)
++
++vpath %.obj $(OBJDIR)
++vpath %.c $(FILES_PATH)
++vpath %.S $(FILES_PATH)
++
++$(OBJDIR)/%.obj %.obj: %.c
++	@echo  Compiling: $(LIBNAME): $<
++	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
++
++$(OBJDIR)/%.obj %.obj: %.S
++	@echo  Compiling: $(LIBNAME): $<
++	$(CC) -c $(ASMFLAGS) -o $(OBJDIR)/$@ $<
++
++all: $(LIBDIR)/$(LIBNAME)
++
++$(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
++	@echo  .
++	@echo  Archiving: $(LIBNAME) to $@ ...
++	$(AR) $(ARFLAGS) $@ $(addprefix $(OBJDIR), $(OBJS))
++	@echo  Archiving: $(LIBNAME) Done !!!
++	@echo  .
++
++clean:
++	@echo  Cleaning: $(LIBNAME) ...
++	$(RMDIR) $(OBJDIR)
++	$(RM) $(LIBDIR)/$(LIBNAME)
++
++scrub:
++	@echo  Scrubing: $(LIBNAME) ...
++	-$(RMDIR) obj/
++	-$(RMDIR) lib/
++
++$(OBJS): | $(OBJDIR)
++
++$(LIBDIR) $(OBJDIR):
++	$(MKDIR) $@
++
++-include $(addprefix $(OBJDIR)/, $(DEPS))
+diff --git a/source/usb/tinyusb/makefile.rndis_nortos.am64x.r5f.ti-arm-clang b/source/usb/tinyusb/makefile.rndis_nortos.am64x.r5f.ti-arm-clang
+new file mode 100644
+index 0000000000..872aca1395
+--- /dev/null
++++ b/source/usb/tinyusb/makefile.rndis_nortos.am64x.r5f.ti-arm-clang
+@@ -0,0 +1,197 @@
++#
++# Auto generated makefile
++#
++
++export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
++include $(MCU_PLUS_SDK_PATH)/imports.mak
++
++CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
++
++CC=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmclang
++AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
++
++PROFILE?=release
++ConfigName:=$(PROFILE)
++
++LIBNAME:=usbd_tusb_rndis_nortos.am64x.r5f.ti-arm-clang.$(PROFILE).lib
++
++FILES_common := \
++    usb_wrapper.c \
++    dcd.c \
++    tusb.c \
++    tusb_fifo.c \
++    usbd.c \
++    usbd_control.c \
++    ecm_rndis_device.c \
++    rndis_reports.c \
++    dhserver.c \
++    dnserver.c \
++    altcp.c \
++    altcp_alloc.c \
++    altcp_tcp.c \
++    def.c \
++    dns.c \
++    inet_chksum.c \
++    init.c \
++    ip.c \
++    mem.c \
++    memp.c \
++    netif.c \
++    pbuf.c \
++    raw.c \
++    stats.c \
++    sys.c \
++    tcp.c \
++    tcp_in.c \
++    tcp_out.c \
++    timeouts.c \
++    udp.c \
++    autoip.c \
++    dhcp.c \
++    etharp.c \
++    icmp.c \
++    igmp.c \
++    ip4.c \
++    ip4_addr.c \
++    ip4_frag.c \
++    ethernet.c \
++    slipif.c \
++    httpd.c \
++    lwiperf.c \
++    fs.c \
++    err.c \
++
++FILES_PATH_common = \
++    ../tinyusb/tinyusb-stack/src \
++    ../tinyusb/tinyusb-stack/lib/networking \
++    ../tinyusb/tinyusb-stack/src/common \
++    ../tinyusb/tinyusb-stack/src/device \
++    ../tinyusb/tinyusb-stack/src/class/net \
++    ../tinyusb/portable/am64x_am243x \
++    ../cdn/include \
++    ../cdn/soc/am64x_am243x \
++    ../../networking/lwip/lwip-stack/src/core \
++    ../../networking/lwip/lwip-stack/src/api \
++    ../../networking/lwip/lwip-stack/src/core/ipv4 \
++    ../../networking/lwip/lwip-stack/src/netif \
++    ../../networking/lwip/lwip-stack/src/apps/http/ \
++    ../../networking/lwip/lwip-stack/src/apps/lwiperf/ \
++
++INCLUDES_common := \
++    -I${CG_TOOL_ROOT}/include/c \
++    -I${MCU_PLUS_SDK_PATH}/source \
++    -I../../drivers/hw_include \
++    -I../../drivers/hw_include/am64x_am243x \
++    -I../../drivers/soc/am64x_am243x \
++    -I../tinyusb/config/nortos/am64x_am243x \
++    -I../tinyusb/tinyusb-stack/src \
++    -I../tinyusb/tinyusb-stack/src/common \
++    -I../tinyusb/tinyusb-stack/src/device \
++    -I../tinyusb/tinyusb-stack/src/class/net \
++    -I../tinyusb/tinyusb-stack/lib/networking \
++    -I../tinyusb/config/nortos/am64x_am243x/rndis_config \
++    -I../cdn/core_driver/common/src \
++    -I../cdn/core_driver/common/include \
++    -I../cdn/core_driver/device/src \
++    -I../cdn/core_driver/device/include \
++    -I../cdn/include \
++    -I../cdn/soc/am64x_am243x \
++    -I../../networking/lwip/lwip-stack/src/include \
++    -I../../networking/lwip/lwip-stack/src/include/ipv4 \
++    -I../../networking/lwip/lwip-stack/src/include/lwip/apps \
++    -I../../networking/lwip/lwip-stack/src/include/lwip \
++    -I../../networking/lwip/lwip-config/am64x/usb/ \
++    -I../../networking/lwip/lwip-port/include/ \
++
++DEFINES_common := \
++    -DSOC_AM64X \
++
++DEFINES_debug := \
++
++DEFINES_release := \
++
++CFLAGS_common := \
++    -mcpu=cortex-r5 \
++    -mfloat-abi=hard \
++    -mfpu=vfpv3-d16 \
++    -mthumb \
++    -Wall \
++    -Werror \
++    -g \
++    -Wno-gnu-variable-sized-type-not-at-end \
++    -Wno-unused-function \
++    -Wno-address-of-packed-member \
++
++CFLAGS_cpp_common := \
++    -Wno-c99-designator \
++    -Wno-extern-c-compat \
++    -Wno-c++11-narrowing \
++    -Wno-reorder-init-list \
++    -Wno-deprecated-register \
++    -Wno-writable-strings \
++    -Wno-enum-compare \
++    -Wno-reserved-user-defined-literal \
++    -Wno-unused-const-variable \
++    -x c++ \
++
++CFLAGS_debug := \
++    -D_DEBUG_=1 \
++
++CFLAGS_release := \
++    -Os \
++
++ARFLAGS_common := \
++    rc \
++
++FILES := $(FILES_common) $(FILES_$(PROFILE))
++ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
++FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
++CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
++ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
++DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
++INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
++ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
++
++LIBDIR := lib
++OBJDIR := obj/am64x/ti-arm-clang/$(PROFILE)/r5f/usbd_tusb_rndis_nortos/
++OBJS := $(FILES:%.c=%.obj)
++OBJS += $(ASMFILES:%.S=%.obj)
++DEPS := $(FILES:%.c=%.d)
++
++vpath %.obj $(OBJDIR)
++vpath %.c $(FILES_PATH)
++vpath %.S $(FILES_PATH)
++
++$(OBJDIR)/%.obj %.obj: %.c
++	@echo  Compiling: $(LIBNAME): $<
++	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
++
++$(OBJDIR)/%.obj %.obj: %.S
++	@echo  Compiling: $(LIBNAME): $<
++	$(CC) -c $(ASMFLAGS) -o $(OBJDIR)/$@ $<
++
++all: $(LIBDIR)/$(LIBNAME)
++
++$(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
++	@echo  .
++	@echo  Archiving: $(LIBNAME) to $@ ...
++	$(AR) $(ARFLAGS) $@ $(addprefix $(OBJDIR), $(OBJS))
++	@echo  Archiving: $(LIBNAME) Done !!!
++	@echo  .
++
++clean:
++	@echo  Cleaning: $(LIBNAME) ...
++	$(RMDIR) $(OBJDIR)
++	$(RM) $(LIBDIR)/$(LIBNAME)
++
++scrub:
++	@echo  Scrubing: $(LIBNAME) ...
++	-$(RMDIR) obj/
++	-$(RMDIR) lib/
++
++$(OBJS): | $(OBJDIR)
++
++$(LIBDIR) $(OBJDIR):
++	$(MKDIR) $@
++
++-include $(addprefix $(OBJDIR)/, $(DEPS))
+diff --git a/source/usb/tinyusb/portable/am64x_am243x/dcd.c b/source/usb/tinyusb/portable/am64x_am243x/dcd.c
+old mode 100644
+new mode 100755
+index 7e9016d4f2..09c47c0f3f
+--- a/source/usb/tinyusb/portable/am64x_am243x/dcd.c
++++ b/source/usb/tinyusb/portable/am64x_am243x/dcd.c
+@@ -452,11 +452,6 @@ bool dcd_edpt_xfer (uint8_t rhport, uint8_t ep_addr, uint8_t * buffer, uint16_t
+         return false;
+       }
+ 
+-      /* make sure the queued buffer is not exceed the maximum packet size */
+-      CH9_UsbEndpointDescriptor *desc = (CH9_UsbEndpointDescriptor *)ep->desc;
+-      if (desc->wMaxPacketSize<total_bytes)
+-        total_bytes = desc->wMaxPacketSize;
+-
+       TU_LOG2("[dcd_edpt_xfer] waiting request(%d) for ep:%02X, %d bytes to buffer=%08X\n", reqIdx, ep_addr,
+               total_bytes, (uint32_t)buffer);
+ 

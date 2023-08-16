@@ -1,0 +1,3284 @@
+diff --git a/include/core/enet_dma.h b/include/core/enet_dma.h
+index 1d04d833..3e3f2d0e 100644
+--- a/include/core/enet_dma.h
++++ b/include/core/enet_dma.h
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (c) Texas Instruments Incorporated 2020
++ *  Copyright (c) Texas Instruments Incorporated 2020-23
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -61,7 +61,7 @@
+ #include <include/dma/udma/enet_udma_types.h>
+ #include <include/dma/udma/enet_udma.h>
+ #include <include/dma/udma/enet_udma_psi.h>
+-#elif defined (SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X)
++#elif defined (SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AWR2544) || defined(SOC_AM263X) || defined(SOC_AM263PX)
+ #include <include/dma/cpdma/enet_cpdma.h>
+ #else
+ #error "SOC not supported"
+@@ -77,7 +77,7 @@ extern "C" {
+ 
+ 
+ 
+-#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X)
++#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AWR2544) || defined(SOC_AM263X) || defined(SOC_AM263PX)
+ /*! * \brief Set to false as Cache is not coherent in AM273X, AWR294X SOC.*/
+ #define Enet_isCacheCoherent()                  (false)
+ #elif defined(SOC_AM64X) || defined(SOC_AM243X)
+diff --git a/include/core/enet_mod_macport.h b/include/core/enet_mod_macport.h
+index 51770143..1b8fdd13 100644
+--- a/include/core/enet_mod_macport.h
++++ b/include/core/enet_mod_macport.h
+@@ -554,20 +554,26 @@ typedef enum EnetMacPort_PreemptVerifyStatus_e
+     /*! Unknown status */
+     ENET_MAC_VERIFYSTATUS_UNKNOWN = 0U,
+ 
++    /*! Initial state */
++    ENET_MAC_VERIFYSTATE_INITIAL,
++
++    /*! Verifying state */
++    ENET_MAC_VERIFYSTATE_VERIFYING,
++
+     /*! Verify Success */
+     ENET_MAC_VERIFYSTATUS_SUCCEEDED,
+ 
+     /*! Verify Failure */
+     ENET_MAC_VERIFYSTATUS_FAILED,
+ 
++    /*! Verification Disabled */
++    ENET_MAC_VERIFYSTATUS_DISABLED,
++
+     /*! Received Verify Packet with Errors */
+     ENET_MAC_VERIFYSTATUS_RXRESPOND_ERROR,
+ 
+     /*! Received Verify Packet with Errors */
+     ENET_MAC_VERIFYSTATUS_RXVERIFY_ERROR,
+-
+-    /*! Verification Disabled */
+-    ENET_MAC_VERIFYSTATUS_DISABLED,
+ } EnetMacPort_PreemptVerifyStatus;
+ 
+ /*!
+diff --git a/include/core/enet_mod_mdio.h b/include/core/enet_mod_mdio.h
+index 54938385..b96b2b0c 100644
+--- a/include/core/enet_mod_mdio.h
++++ b/include/core/enet_mod_mdio.h
+@@ -336,7 +336,10 @@ typedef enum EnetMdio_C45Mmd_e
+  */
+ typedef struct EnetMdio_C22ReadInArgs_s
+ {
+-    /*! User channel to be used to perform the register access */
++    /*! User channel to be used to perform the register access.
++     * Simultaneous access from same group is not allowed.
++     * Not applicable in manual mode.
++     */
+     EnetMdio_Group group;
+ 
+     /*! PHY address */
+@@ -353,7 +356,10 @@ typedef struct EnetMdio_C22ReadInArgs_s
+  */
+ typedef struct EnetMdio_C45ReadInArgs_s
+ {
+-    /*! User channel to be used to perform the register access */
++    /*! User channel to be used to perform the register access.
++     * Simultaneous access from same group is not allowed.
++     * Not applicable in manual mode.
++     */
+     EnetMdio_Group group;
+ 
+     /*! PHY address */
+@@ -373,7 +379,10 @@ typedef struct EnetMdio_C45ReadInArgs_s
+  */
+ typedef struct EnetMdio_C22WriteInArgs_s
+ {
+-    /*! User channel to be used to perform the register access */
++    /*! User channel to be used to perform the register access.
++     * Simultaneous access from same group is not allowed.
++     * Not applicable in manual mode.
++     */
+     EnetMdio_Group group;
+ 
+     /*! PHY address */
+@@ -393,7 +402,10 @@ typedef struct EnetMdio_C22WriteInArgs_s
+  */
+ typedef struct EnetMdio_C45WriteInArgs_s
+ {
+-    /*! User channel to be used to perform the register access */
++    /*! User channel to be used to perform the register access.
++     * Simultaneous access from same group is not allowed.
++     * Not applicable in manual mode.
++     */
+     EnetMdio_Group group;
+ 
+     /*! PHY address */
+diff --git a/include/core/enet_mod_timesync.h b/include/core/enet_mod_timesync.h
+index 134633a0..5514c93d 100644
+--- a/include/core/enet_mod_timesync.h
++++ b/include/core/enet_mod_timesync.h
+@@ -141,7 +141,10 @@ typedef enum EnetTimeSync_Ioctl_e
+     ENET_TIMESYNC_IOCTL_GET_ETH_RX_TIMESTAMP = ENET_TIMESYNC_PUBLIC_IOCTL(6U),
+ 
+     /*!
+-     * \brief Get Ethernet TX timestamp.
++     * \brief Get Ethernet TX timestamp. For CPSW the driver maintains a pool of the timestamps that
++     *  are captured by CPTS and gives back the matched entry. But, In case of ICSSG, Driver doesn't maintain
++     *  any software pool, it returns back the top entry in the queue if it matches the seq id passed.
++     *
+      *
+      * IOCTL parameters:
+      * -  inArgs: #EnetTimeSync_GetEthTimestampInArgs
+@@ -239,13 +242,15 @@ typedef enum EnetTimeSync_AdjDir_e
+  */
+ typedef struct EnetTimeSync_setTimestamp_s
+ {
+-    /*! timestamp to set */
++    /*! timestamp value in nano seconds unit to set */
+     uint64_t tsLoadVal;
+ 
+-    /*! mode of the clock */
++    /*! mode of the clock. Applicable only to ICSSG peripheral.
++     * Says whether given value  tsLoadVal is absolute or related.
++     * 0: absolute, 1: relative */
+     uint8_t clkMode;
+ 
+-    /*! sign of the clock */
++    /*Sign of the clock. Applicable only to ICSSG peripheral. */
+     uint8_t clkSign;
+ } EnetTimeSync_setTimestamp;
+ 
+diff --git a/include/core/enet_soc.h b/include/core/enet_soc.h
+index a36633f3..48210ed0 100644
+--- a/include/core/enet_soc.h
++++ b/include/core/enet_soc.h
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (c) Texas Instruments Incorporated 2020
++ *  Copyright (c) Texas Instruments Incorporated 2020-23
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -59,6 +59,10 @@
+ #include <soc/awr294x/enet_soc.h>
+ #elif defined(SOC_AM263X)
+ #include <soc/am263x/enet_soc.h>
++#elif defined(SOC_AM263PX)
++#include <soc/am263px/enet_soc.h>
++#elif defined(SOC_AWR2544)
++#include <soc/awr2544/enet_soc.h>
+ #endif
+ 
+ #ifdef __cplusplus
+diff --git a/include/enet_cfg.h b/include/enet_cfg.h
+index f9af649f..772185e3 100644
+--- a/include/enet_cfg.h
++++ b/include/enet_cfg.h
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (c) Texas Instruments Incorporated 2020
++ *  Copyright (c) Texas Instruments Incorporated 2020-23
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -108,7 +108,7 @@ extern "C" {
+ #endif
+ 
+ /*! \brief Enabling Optimized IRQ for critical section. */
+-#if defined(SOC_AM273X) || defined(SOC_AWR294X)|| defined(SOC_AM263X)
++#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AWR2544) || defined(SOC_AM263X) || defined(SOC_AM263PX)
+ #define ENET_CFG_USE_OPTIMIZED_IRQ_CRITICAL_SECTION  (1U)
+ #else
+ #define ENET_CFG_USE_OPTIMIZED_IRQ_CRITICAL_SECTION  (0U)
+diff --git a/include/per/cpsw.h b/include/per/cpsw.h
+index c8e6944d..ced0d716 100644
+--- a/include/per/cpsw.h
++++ b/include/per/cpsw.h
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (c) Texas Instruments Incorporated 2020
++ *  Copyright (c) Texas Instruments Incorporated 2020-23
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -91,7 +91,7 @@ extern "C" {
+                                                ENET_IOCTL_MIN(x))
+ 
+ /*! Maximum number of MAC ports supported by this driver. */
+-#if defined(SOC_AM273X) || defined(SOC_AWR294X)
++#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AWR2544)
+ #define CPSW_MAC_PORT_NUM                     (1U)
+ #else
+ #define CPSW_MAC_PORT_NUM                     (8U)
+diff --git a/include/per/icssg.h b/include/per/icssg.h
+index a0bc07c7..8768e346 100644
+--- a/include/per/icssg.h
++++ b/include/per/icssg.h
+@@ -458,105 +458,6 @@ typedef enum Icssg_Ioctl_e
+      */
+     ICSSG_MACPORT_IOCTL_SET_MACADDR = ICSSG_PUBLIC_IOCTL(10U),
+ 
+-    /*!
+-     * \brief Enable preemption on TX.
+-     *
+-     * IOCTL params:
+-     * -  inArgs: #Enet_MacPort
+-     * - outArgs: None
+-     *
+-     * Type: Asynchronous.
+-     */
+-    ICSSG_MACPORT_IOCTL_PREEMPT_TX_ENABLE = ICSSG_PUBLIC_IOCTL(12U),
+-
+-    /*!
+-     * \brief Disable preemption on TX.
+-     *
+-     * IOCTL params:
+-     * -  inArgs: #Enet_MacPort
+-     * - outArgs: None
+-     *
+-     * Type: Asynchronous.
+-     */
+-    ICSSG_MACPORT_IOCTL_PREEMPT_TX_DISABLE = ICSSG_PUBLIC_IOCTL(13U),
+-
+-    /*!
+-     * \brief Get status of preemption on TX.
+-     *
+-     * IOCTL params:
+-     * -  inArgs: #Enet_MacPort
+-     * - outArgs: bool
+-     *
+-     * Type: Synchronous.
+-     */
+-    ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ENABLE_STATUS = ICSSG_PUBLIC_IOCTL(14U),
+-
+-    /*!
+-     * \brief Get status of whether preemption is active or not.
+-     *
+-     * IOCTL params:
+-     * -  inArgs: #Enet_MacPort
+-     * - outArgs: bool
+-     *
+-     * Type: Synchronous.
+-     */
+-    ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ACTIVE_STATUS = ICSSG_PUBLIC_IOCTL(15U),
+-
+-    /*!
+-     * \brief Enable verify state machine.
+-     *
+-     * IOCTL params:
+-     * -  inArgs: #Enet_MacPort
+-     * - outArgs: None
+-     *
+-     * Type: Synchronous.
+-     */
+-    ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_ENABLE = ICSSG_PUBLIC_IOCTL(16U),
+-
+-    /*!
+-     * \brief Disable verify state machine.
+-     *
+-     * IOCTL params:
+-     * -  inArgs: #Enet_MacPort
+-     * - outArgs: None
+-     *
+-     * Type: Synchronous.
+-     */
+-    ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_DISABLE = ICSSG_PUBLIC_IOCTL(17U),
+-
+-    /*!
+-     * \brief Get current state of the verify state machine.
+-     *
+-     * IOCTL params:
+-     * -  inArgs: #Enet_MacPort
+-     * - outArgs: #Icssg_PreemptVerifyState
+-     *
+-     * Type: Synchronous.
+-     */
+-    ICSSG_MACPORT_IOCTL_PREEMPT_GET_VERIFY_STATE = ICSSG_PUBLIC_IOCTL(18U),
+-
+-    /*!
+-     * \brief Get minimum fragment size supported by firmware.
+-     *
+-     * IOCTL params:
+-     * -  inArgs: #Enet_MacPort
+-     * - outArgs: uint8_t
+-     *
+-     * Type: Synchronous.
+-     */
+-    ICSSG_MACPORT_IOCTL_PREEMPT_GET_MIN_FRAG_SIZE_LOCAL = ICSSG_PUBLIC_IOCTL(19U),
+-
+-    /*!
+-     * \brief Add minimum fragment size.
+-     *
+-     * IOCTL params:
+-     * -  inArgs: IcssgMacPort_PreemptSetMinFragSizeRemoteInArgs
+-     * - outArgs: None
+-     *
+-     * Type: Synchronous.
+-     */
+-    ICSSG_MACPORT_IOCTL_PREEMPT_SET_MIN_FRAG_SIZE_REMOTE = ICSSG_PUBLIC_IOCTL(20U),
+-
+     /*!
+      * \brief Add MAC address of the host port interface.
+      *
+@@ -566,31 +467,31 @@ typedef enum Icssg_Ioctl_e
+      *
+      * Type: Synchronous.
+      */
+-    ICSSG_HOSTPORT_IOCTL_SET_MACADDR = ICSSG_PUBLIC_IOCTL(21U),
++    ICSSG_HOSTPORT_IOCTL_SET_MACADDR = ICSSG_PUBLIC_IOCTL(11U),
+ 
+     /*!
+      * \internal
+      * \brief Execute TAS 'trigger' command. Legacy implementation.
+      */
+-    ICSSG_PER_IOCTL_TAS_TRIGGER = ICSSG_PUBLIC_IOCTL(22U),
++    ICSSG_PER_IOCTL_TAS_TRIGGER = ICSSG_PUBLIC_IOCTL(12U),
+ 
+     /*!
+      * \internal
+      * \brief Execute TAS 'enable' command. Legacy implementation.
+      */
+-    ICSSG_PER_IOCTL_TAS_ENABLE = ICSSG_PUBLIC_IOCTL(23U),
++    ICSSG_PER_IOCTL_TAS_ENABLE = ICSSG_PUBLIC_IOCTL(13U),
+ 
+     /*!
+      * \internal
+      * \brief Execute TAS 'disable' command. Legacy implementation.
+      */
+-    ICSSG_PER_IOCTL_TAS_DISABLE = ICSSG_PUBLIC_IOCTL(24U),
++    ICSSG_PER_IOCTL_TAS_DISABLE = ICSSG_PUBLIC_IOCTL(14U),
+ 
+     /*!
+      * \internal
+      * \brief Execute TAS 'reset' command. Legacy implementation.
+      */
+-    ICSSG_PER_IOCTL_TAS_RESET = ICSSG_PUBLIC_IOCTL(25U),
++    ICSSG_PER_IOCTL_TAS_RESET = ICSSG_PUBLIC_IOCTL(15U),
+ 
+     /*!
+      * \brief Set the default VLAN ID and PCP bits for host port.
+@@ -605,7 +506,7 @@ typedef enum Icssg_Ioctl_e
+      *
+      * Type: Synchronous.
+      */
+-    ICSSG_PER_IOCTL_VLAN_SET_HOSTPORT_DFLT_VID = ICSSG_PUBLIC_IOCTL(26U),
++    ICSSG_PER_IOCTL_VLAN_SET_HOSTPORT_DFLT_VID = ICSSG_PUBLIC_IOCTL(16U),
+ 
+     /*!
+      * \brief Set the default VLAN ID and PCP bits for specified MAC port.
+@@ -616,7 +517,7 @@ typedef enum Icssg_Ioctl_e
+      *
+      * Type: Synchronous.
+      */
+-    ICSSG_PER_IOCTL_VLAN_SET_MACPORT_DFLT_VID = ICSSG_PUBLIC_IOCTL(27U),
++    ICSSG_PER_IOCTL_VLAN_SET_MACPORT_DFLT_VID = ICSSG_PUBLIC_IOCTL(17U),
+ 
+     /*!
+      * \brief Set the aging period of the FDB.
+@@ -629,7 +530,7 @@ typedef enum Icssg_Ioctl_e
+      *
+      * Type: Synchronous.
+      */
+-    ICSSG_FDB_IOCTL_SET_AGING_PERIOD = ICSSG_PUBLIC_IOCTL(28U),
++    ICSSG_FDB_IOCTL_SET_AGING_PERIOD = ICSSG_PUBLIC_IOCTL(18U),
+ 
+     /*!
+      * \brief Enable flooding of unicast packets to host port.
+@@ -640,7 +541,7 @@ typedef enum Icssg_Ioctl_e
+      *
+      * Type: Asynchronous.
+      */
+-    ICSSG_MACPORT_IOCTL_ENABLE_UCAST_FLOOD = ICSSG_PUBLIC_IOCTL(29U),
++    ICSSG_MACPORT_IOCTL_ENABLE_UCAST_FLOOD = ICSSG_PUBLIC_IOCTL(19U),
+ 
+     /*!
+      * \brief Disable flooding of unicast packets to host port.
+@@ -651,7 +552,7 @@ typedef enum Icssg_Ioctl_e
+      *
+      * Type: Asynchronous.
+      */
+-    ICSSG_MACPORT_IOCTL_DISABLE_UCAST_FLOOD = ICSSG_PUBLIC_IOCTL(30U),
++    ICSSG_MACPORT_IOCTL_DISABLE_UCAST_FLOOD = ICSSG_PUBLIC_IOCTL(20U),
+ 
+     /*!
+      * \brief Enable flooding of multicast packets to host port.
+@@ -662,7 +563,7 @@ typedef enum Icssg_Ioctl_e
+      *
+      * Type: Asynchronous.
+      */
+-    ICSSG_MACPORT_IOCTL_ENABLE_MCAST_FLOOD = ICSSG_PUBLIC_IOCTL(31U),
++    ICSSG_MACPORT_IOCTL_ENABLE_MCAST_FLOOD = ICSSG_PUBLIC_IOCTL(21U),
+ 
+     /*!
+      * \brief Disable flooding of multicast packets to host port.
+@@ -673,7 +574,7 @@ typedef enum Icssg_Ioctl_e
+      *
+      * Type: Asynchronous.
+      */
+-    ICSSG_MACPORT_IOCTL_DISABLE_MCAST_FLOOD = ICSSG_PUBLIC_IOCTL(32U),
++    ICSSG_MACPORT_IOCTL_DISABLE_MCAST_FLOOD = ICSSG_PUBLIC_IOCTL(22U),
+ 
+     /*!
+      * \brief Set the criteria for accepting VLAN tagged/untagged packets.
+@@ -689,7 +590,7 @@ typedef enum Icssg_Ioctl_e
+      *
+      * Type: Synchronous.
+      */
+-    ICSSG_MACPORT_IOCTL_SET_ACCEPT_FRAME_CHECK = ICSSG_PUBLIC_IOCTL(33U),
++    ICSSG_MACPORT_IOCTL_SET_ACCEPT_FRAME_CHECK = ICSSG_PUBLIC_IOCTL(23U),
+ 
+     /*!
+      * \brief Configure ingress rate limiting.
+@@ -700,7 +601,7 @@ typedef enum Icssg_Ioctl_e
+      *
+      * Type: Synchronous.
+      */
+-    ICSSG_MACPORT_IOCTL_SET_INGRESS_RATE_LIM = ICSSG_PUBLIC_IOCTL(34U),
++    ICSSG_MACPORT_IOCTL_SET_INGRESS_RATE_LIM = ICSSG_PUBLIC_IOCTL(24U),
+ 
+     /*!
+      * \brief cut through or prempt select configuration.
+@@ -711,7 +612,7 @@ typedef enum Icssg_Ioctl_e
+      *
+      * Type: Synchronous.
+      */
+-    ICSSG_MACPORT_IOCTL_SET_QUEUE_CUT_THROUGH_PREEMPT_SELECT = ICSSG_PUBLIC_IOCTL(35U),
++    ICSSG_MACPORT_IOCTL_SET_QUEUE_CUT_THROUGH_PREEMPT_SELECT = ICSSG_PUBLIC_IOCTL(25U),
+ 
+     /*!
+      * \brief special frame priority configuration.
+@@ -722,7 +623,7 @@ typedef enum Icssg_Ioctl_e
+      *
+      * Type: Synchronous.
+      */
+-    ICSSG_MACPORT_IOCTL_CONFIG_SPL_FRAME_PRIO = ICSSG_PUBLIC_IOCTL(36U),
++    ICSSG_MACPORT_IOCTL_CONFIG_SPL_FRAME_PRIO = ICSSG_PUBLIC_IOCTL(26U),
+ 
+     /*!
+      * \brief Register Handler for the IOCTL CMD
+@@ -733,7 +634,7 @@ typedef enum Icssg_Ioctl_e
+      *
+      * Type: Synchronous.
+      */
+-    ICSSG_INTERNAL_IOCTL_REGISTER_HANDLER = ICSSG_PUBLIC_IOCTL(37U),
++    ICSSG_INTERNAL_IOCTL_REGISTER_HANDLER = ICSSG_PUBLIC_IOCTL(27U),
+ 
+ } Icssg_Ioctl;
+ 
+@@ -883,18 +784,6 @@ typedef struct IcssgMacPort_SetMacAddressInArgs_s
+     uint8_t macAddr[ENET_MAC_ADDR_LEN];
+ } IcssgMacPort_SetMacAddressInArgs;
+ 
+-/*!
+- * \brief Input args for #ICSSG_MACPORT_IOCTL_PREEMPT_SET_MIN_FRAG_SIZE_REMOTE
+- *        command.
+- */
+-typedef struct IcssgMacPort_PreemptSetMinFragSizeRemoteInArgs_s
+-{
+-    /*! Port number */
+-    Enet_MacPort macPort;
+-
+-    /*! Specifies minimum fragment size to be configured */
+-    uint16_t preemptMinFrageSizeRemote;
+-} IcssgMacPort_PreemptSetMinFragSizeRemoteInArgs;
+ 
+ /*!
+  * \brief VLAN FID entry parameters.
+@@ -961,30 +850,6 @@ typedef struct Icssg_FdbEntry_s
+     uint8_t fdbEntry[2];
+ } Icssg_FdbEntry;
+ 
+-/*!
+- * \brief Preemption Verify State Machine states.
+- */
+-typedef enum Icssg_PreemptVerifyState_e
+-{
+-    /*! Unknown state */
+-    ICSSG_VERIFYSTATE_UNKNOWN = 0U,
+-
+-    /*! Initial state */
+-    ICSSG_VERIFYSTATE_INITIAL,
+-
+-    /*! Verifying state */
+-    ICSSG_VERIFYSTATE_VERIFYING,
+-
+-    /*! Succeeded state */
+-    ICSSG_VERIFYSTATE_SUCCEEDED,
+-
+-    /*! Failed state */
+-    ICSSG_VERIFYSTATE_FAILED,
+-
+-    /*! Disabled state */
+-    ICSSG_VERIFYSTATE_DISABLED,
+-} Icssg_PreemptVerifyState;
+-
+ /*!
+  * \brief Default VLAN configuration.
+  */
+diff --git a/lwipif/src/lwip2enet.c b/lwipif/src/lwip2enet.c
+index 30bb51ae..5a4d48ad 100644
+--- a/lwipif/src/lwip2enet.c
++++ b/lwipif/src/lwip2enet.c
+@@ -506,7 +506,7 @@ static void Lwip2Enet_initRxObj(Enet_Type enetType, uint32_t instId, uint32_t ch
+     else
+     {
+         LwipifEnetAppIf_GetRxHandleInArgs inArgs;
+-        LwipifEnetAppIf_RxHandleInfo outArgs;
++        LwipifEnetAppIf_RxHandleInfo outArgs = {0};
+ 
+         inArgs.enetType        = enetType;
+         inArgs.instId          = instId;
+@@ -908,7 +908,7 @@ static void Lwip2Enet_submitRxPackets(Lwip2Enet_RxObj *rx,
+     retVal = EnetDma_submitRxPktQ(rx->hFlow, pSubmitQ);
+     if (ENET_SOK != retVal)
+     {
+-		Lwip2Enet_print(rx->hLwip2Enet,
++        Lwip2Enet_print(rx->hLwip2Enet,
+                         "EnetDma_submitRxPktQ: failed to submit pkts: %d\n",
+                         retVal);
+     }
+@@ -1194,6 +1194,7 @@ static uint32_t Lwip2Enet_prepRxPktQ(Lwip2Enet_RxObj *rx,
+                     /* store the head of the pbuf */
+                     hPbufPacket = &(cPbuf->p.pbuf);
+                 }
++                Lwip2Enet_assert(hPbufPacket != NULL);
+                 /* Fill the pbuf with the sg list data */
+                 if (Lwip2Enet_setCustomPbuf(PBUF_RAW, list->segmentFilledLen, PBUF_POOL, &(cPbuf->p), list->bufPtr, list->segmentAllocLen) == NULL)
+                 {
+@@ -1254,6 +1255,7 @@ static uint32_t Lwip2Enet_prepRxPktQ(Lwip2Enet_RxObj *rx,
+                 case Lwip2Enet_RxMode_SwitchSharedChannel:
+                 case Lwip2Enet_RxMode_MacSharedChannel:
+                 {
++                    Lwip2Enet_assert(rxPortNum < LWIPIF_MAX_NUM_MAC_PORTS);
+                     netif = rx->mapPortToNetif[rxPortNum];
+                     break;
+                 }
+diff --git a/priv/mod/icssg_timesync_ioctl_priv.h b/priv/mod/icssg_timesync_ioctl_priv.h
+index 6ee7a1bb..b696cd66 100644
+--- a/priv/mod/icssg_timesync_ioctl_priv.h
++++ b/priv/mod/icssg_timesync_ioctl_priv.h
+@@ -88,6 +88,10 @@ int32_t  IcssgTimeSync_ioctl_handler_ENET_TIMESYNC_IOCTL_SET_TIMESTAMP_COMPLETE(
+                                              uint32_t cmd,
+                                              Enet_IoctlPrms *prms);
+ 
++int32_t IcssgTimeSync_ioctl_handler_ENET_TIMESYNC_IOCTL_GET_ETH_TX_TIMESTAMP(EnetMod_Handle hMod,
++                                                                             uint32_t cmd,
++                                                                             Enet_IoctlPrms *prms);
++
+ /* ========================================================================== */
+ /*                        Deprecated Function Declarations                    */
+ /* ========================================================================== */
+diff --git a/priv/mod/mdio_priv.h b/priv/mod/mdio_priv.h
+index 1b68a4b9..a15fce68 100644
+--- a/priv/mod/mdio_priv.h
++++ b/priv/mod/mdio_priv.h
+@@ -116,7 +116,7 @@ typedef struct Mdio_PhyStatus_s
+  * Callback for the MDIO link state change interrupt (MDIO_LINKINT).  This
+  * callback is invoked from interrupt context.
+  *
+- * \param group        User channel or group
++ * \param group        User channel or group. Not applicable for Manual mode
+  * \param phyStatus    PHY status: alive and linked masks
+  * \param cbArgs       Callback function arguments
+  */
+@@ -127,7 +127,7 @@ typedef void (*Mdio_LinkStateCallback)(EnetMdio_Group group,
+ /*!
+  * \brief MDIO user access completion callback function.
+  *
+- * \param group        User channel or group
++ * \param group        User channel or group. Not applicable for Manual mode
+  * \param phyAddr      Address of the PHY that completed access
+  * \param cbArgs       Callback function arguments
+  */
+diff --git a/priv/per/icssg_ioctl_priv.h b/priv/per/icssg_ioctl_priv.h
+index d76771cd..d33c5438 100644
+--- a/priv/per/icssg_ioctl_priv.h
++++ b/priv/per/icssg_ioctl_priv.h
+@@ -176,43 +176,49 @@ int32_t Icssg_ioctl_handler_ICSSG_HOSTPORT_IOCTL_SET_MACADDR(EnetPer_Handle hPer
+                                                             uint32_t cmd,
+                                                             Enet_IoctlPrms *prms);
+ 
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_TX_ENABLE(EnetPer_Handle hPer,
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_ENABLE_PREEMPTION(EnetPer_Handle hPer,
+                                                             uint32_t cmd,
+                                                             Enet_IoctlPrms *prms);
+ 
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_TX_DISABLE(EnetPer_Handle hPer,
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_DISABLE_PREEMPTION(EnetPer_Handle hPer,
+                                                             uint32_t cmd,
+                                                             Enet_IoctlPrms *prms);
+ 
+-
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ENABLE_STATUS(EnetPer_Handle hPer,
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_GET_PREEMPTION_ENABLE_STATUS(EnetPer_Handle hPer,
+                                                             uint32_t cmd,
+                                                             Enet_IoctlPrms *prms);
+ 
+-
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ACTIVE_STATUS(EnetPer_Handle hPer,
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_GET_PREEMPTION_ACTIVE_STATUS(EnetPer_Handle hPer,
+                                                             uint32_t cmd,
+                                                             Enet_IoctlPrms *prms);
+ 
+-
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_ENABLE(EnetPer_Handle hPer,
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_ENABLE_PREEMPT_VERIFICATION(EnetPer_Handle hPer,
+                                                             uint32_t cmd,
+                                                             Enet_IoctlPrms *prms);
+ 
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_DISABLE(EnetPer_Handle hPer,
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_DISABLE_PREEMPT_VERIFICATION(EnetPer_Handle hPer,
++                                                            uint32_t cmd,
++                                                            Enet_IoctlPrms *prms);
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_GET_PREEMPT_VERIFY_STATUS(EnetPer_Handle hPer,
+                                                             uint32_t cmd,
+                                                             Enet_IoctlPrms *prms);
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_GET_VERIFY_STATE(EnetPer_Handle hPer,
++
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_GET_PREEMPT_MIN_FRAG_SIZE(EnetPer_Handle hPer,
+                                                             uint32_t cmd,
+                                                             Enet_IoctlPrms *prms);
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_GET_MIN_FRAG_SIZE_LOCAL(EnetPer_Handle hPer,
++
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_SET_PREEMPT_MIN_FRAG_SIZE(EnetPer_Handle hPer,
+                                                             uint32_t cmd,
+                                                             Enet_IoctlPrms *prms);
+ 
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_SET_MIN_FRAG_SIZE_REMOTE(EnetPer_Handle hPer,
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_SET_PREEMPT_QUEUE(EnetPer_Handle hPer,
+                                                             uint32_t cmd,
+                                                             Enet_IoctlPrms *prms);
+ 
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_GET_QUEUE_PREEMPT_STATUS(EnetPer_Handle hPer,
++                                                                        uint32_t cmd,
++                                                                        Enet_IoctlPrms *prms);
++
+ int32_t Icssg_ioctl_handler_ENET_IOCTL_REGISTER_RX_DEFAULT_FLOW(EnetPer_Handle hPer,
+                                                             uint32_t cmd,
+                                                             Enet_IoctlPrms *prms);
+diff --git a/src/dma/cpdma/enet_cpdma.c b/src/dma/cpdma/enet_cpdma.c
+index 18c40880..337d34d2 100644
+--- a/src/dma/cpdma/enet_cpdma.c
++++ b/src/dma/cpdma/enet_cpdma.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (c) Texas Instruments Incorporated 2020
++ *  Copyright (c) Texas Instruments Incorporated 2020-23
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -59,7 +59,7 @@
+ #include <include/core/enet_dma_pktutils.h>
+ #include <src/dma/cpdma/enet_cpdma_priv.h>
+ #include <priv/mod/cpsw_clks.h>
+-#if defined (SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X)
++#if defined (SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AWR2544) || defined(SOC_AM263X) || defined(SOC_AM263PX)
+ #include <priv/per/cpsw_cpdma_priv.h>
+ #endif
+ 
+diff --git a/src/dma/udma/enet_udma.c b/src/dma/udma/enet_udma.c
+index ef6c54b4..a813524d 100644
+--- a/src/dma/udma/enet_udma.c
++++ b/src/dma/udma/enet_udma.c
+@@ -1640,6 +1640,61 @@ int32_t EnetDma_retrieveRxPktQ(EnetDma_RxChHandle hRxFlow,
+     return retVal;
+ }
+ 
++int32_t EnetDma_retrieveRxPkt(EnetDma_RxChHandle hRxFlow,
++                               EnetDma_Pkt **ppPkt)
++{
++    EnetPer_Handle hPer = hRxFlow->hDma->hPer;
++    int32_t retVal = UDMA_SOK;
++    EnetQ tempQ;
++
++#if ENET_CFG_IS_ON(DEV_ERROR)
++    if ((NULL == hRxFlow) ||
++        (NULL == ppPkt))
++    {
++        ENETTRACE_ERR_IF((NULL == hRxFlow), "[Enet UDMA] hRxFlow is NULL!!\n");
++        ENETTRACE_ERR_IF((NULL == ppPkt), "[Enet UDMA] ppPkt is NULL!!\n");
++        Enet_assert(FALSE);
++        retVal = UDMA_EBADARGS;
++    }
++    else
++#endif
++    {
++#if defined(ENETDMA_INSTRUMENTATION_ENABLED)
++        uint32_t startTime, diffTime;
++        startTime = EnetOsal_timerRead();
++#endif
++        if(EnetQueue_getQCount(&hRxFlow->cqIsrQ) == 0)
++        {
++            EnetQueue_initQ(&tempQ);
++
++            /* EnetUdma_retrievePkts initializes the queue so cannot pass
++             * pRetrieveQ as it contains packets drained from isrq
++             */
++            retVal = EnetUdma_retrievePkts(hPer,
++                                           hRxFlow->cqRing,
++                                           &tempQ,
++                                           hRxFlow->hDmaDescPool,
++                                           hRxFlow->rxFlowPrms.disableCacheOpsFlag,
++                                           ENET_UDMA_DIR_RX);
++
++            if (ENET_SOK == retVal)
++            {
++                EnetQueue_append(&hRxFlow->cqIsrQ, &tempQ);
++            }
++
++        }
++
++        *ppPkt = (EnetUdma_PktInfo *)EnetQueue_deq(&hRxFlow->cqIsrQ);
++#if defined(ENETDMA_INSTRUMENTATION_ENABLED)
++        EnetUdmaStats_addCnt(&hRxFlow->stats.rxRetrievePktDeq, 1U);
++        diffTime = EnetOsal_timerGetDiff(startTime);
++        EnetUdmaStats_updateNotifyStats(&hRxFlow->stats.retrievePktStats, 1U, diffTime);
++#endif
++    }
++
++    return retVal;
++}
++
+ int32_t EnetDma_submitRxPktQ(EnetDma_RxChHandle hRxFlow,
+                                 EnetDma_PktQ *pSubmitQ)
+ {
+@@ -1709,6 +1764,75 @@ int32_t EnetDma_submitRxPktQ(EnetDma_RxChHandle hRxFlow,
+     return retVal;
+ }
+ 
++int32_t EnetDma_submitRxPkt(EnetDma_RxChHandle hRxFlow,
++                            EnetDma_Pkt *pPkt)
++{
++    EnetPer_Handle hPer = hRxFlow->hDma->hPer;
++    int32_t retVal = UDMA_SOK;
++    Udma_RingHandle ringHandle;
++
++#if ENET_CFG_IS_ON(DEV_ERROR)
++    if ((NULL == hRxFlow) ||
++        (NULL == pPkt))
++    {
++        ENETTRACE_ERR_IF((NULL == hRxFlow), "[Enet UDMA] hRxFlow is NULL!!\n");
++        ENETTRACE_ERR_IF((NULL == pPkt), "[Enet UDMA] pPkt is NULL!!\n");
++        Enet_assert(FALSE);
++        retVal = UDMA_EBADARGS;
++    }
++    else
++#endif
++    {
++#if defined(ENETDMA_INSTRUMENTATION_ENABLED)
++        uint32_t startTime, diffTime;
++        uint32_t notifyCount;
++        startTime = EnetOsal_timerRead();
++#endif
++#if (UDMA_SOC_CFG_UDMAP_PRESENT == 1)
++        ringHandle = hRxFlow->fqRing;
++#else
++        ringHandle = hRxFlow->cqRing;
++#endif
++
++        /* Enqueue descs to fqRing regardless of caller's queue state */
++
++        retVal = EnetUdma_submitSingleRxPkt(hPer,
++                                          ringHandle,
++                                          pPkt,
++                                          hRxFlow->hDmaDescPool,
++                                          hRxFlow->rxFlowPrms.disableCacheOpsFlag
++#if (UDMA_SOC_CFG_PROXY_PRESENT == 1)
++                                          ,
++                                          hRxFlow->hUdmaProxy
++#endif
++                                          );
++
++        if (retVal == UDMA_EALLOC)
++        {
++            ENETTRACE_INFO("Descriptor unavailable. Please transmit again\n");
++            retVal = UDMA_SOK;
++        }
++
++        /* If fqRing ran out of space is not an error, packets will be re-submitted from application */
++        if (UDMA_ETIMEOUT == retVal)
++        {
++            ENETTRACE_INFO("RX FLOW FQ underflow had occurred\n");
++            retVal = UDMA_SOK;
++        }
++
++#if defined(ENETDMA_INSTRUMENTATION_ENABLED)
++        EnetUdmaStats_addCnt(&hRxFlow->stats.rxSubmitPktUnderFlowCnt, 1U);
++        EnetUdmaStats_addCnt(&hRxFlow->stats.rxSubmitPktEnq, 1U);
++        diffTime = EnetOsal_timerGetDiff(startTime);
++        notifyCount = hRxFlow->stats.submitPktStats.dataNotifyCnt & (ENET_DMA_STATS_HISTORY_CNT - 1U);
++        hRxFlow->stats.submitPktStats.readyDmaDescQCnt[notifyCount] = EnetUdma_dmaDescQCount(hRxFlow->hDmaDescPool);
++        EnetUdmaStats_updateNotifyStats(&hRxFlow->stats.submitPktStats, 1U, diffTime);
++#endif
++    }
++
++    return retVal;
++}
++
+ int32_t EnetDma_retrieveTxPktQ(EnetDma_TxChHandle hTxCh,
+                                    EnetDma_PktQ *pRetrieveQ)
+ {
+@@ -1763,6 +1887,62 @@ int32_t EnetDma_retrieveTxPktQ(EnetDma_TxChHandle hTxCh,
+     return retVal;
+ }
+ 
++int32_t EnetDma_retrieveTxPkt(EnetDma_TxChHandle hTxCh,
++                              EnetDma_Pkt **ppPkt)
++{
++    EnetPer_Handle hPer = hTxCh->hDma->hPer;
++    int32_t retVal = UDMA_SOK;
++    EnetQ tempQ;
++
++#if ENET_CFG_IS_ON(DEV_ERROR)
++    if ((NULL == hTxCh) ||
++        (NULL == ppPkt))
++    {
++        ENETTRACE_ERR_IF((NULL == hTxCh), "[Enet UDMA] hTxCh is NULL!!\n");
++        ENETTRACE_ERR_IF((NULL == ppPkt), "[Enet UDMA] ppPkt is NULL!!\n");
++        Enet_assert(FALSE);
++        retVal = UDMA_EBADARGS;
++    }
++    else
++#endif
++    {
++#if defined(ENETDMA_INSTRUMENTATION_ENABLED)
++        uint32_t startTime, diffTime;
++        startTime = EnetOsal_timerRead();
++#endif
++        if(EnetQueue_getQCount(&hTxCh->cqIsrQ) == 0)
++        {
++            EnetQueue_initQ(&tempQ);
++
++            /* EnetUdma_retrievePkts initializes the queue so cannot pass
++             * pRetrieveQ as it contains packets drained from isrq
++             */
++            retVal = EnetUdma_retrievePkts(hPer,
++                                           hTxCh->cqRing,
++                                           &tempQ,
++                                           hTxCh->hDmaDescPool,
++                                           hTxCh->txChPrms.disableCacheOpsFlag,
++                                           ENET_UDMA_DIR_TX);
++
++            if (ENET_SOK == retVal)
++            {
++                EnetQueue_append(&hTxCh->cqIsrQ, &tempQ);
++            }
++
++        }
++
++        *ppPkt = (EnetUdma_PktInfo *)EnetQueue_deq(&hTxCh->cqIsrQ);
++
++#if defined(ENETDMA_INSTRUMENTATION_ENABLED)
++        EnetUdmaStats_addCnt(&hTxCh->stats.txRetrievePktDeq, 1U);
++        diffTime = EnetOsal_timerGetDiff(startTime);
++        EnetUdmaStats_updateNotifyStats(&hTxCh->stats.retrievePktStats, 1U, diffTime);
++#endif
++    }
++
++    return retVal;
++}
++
+ int32_t EnetDma_submitTxPktQ(EnetDma_TxChHandle hTxCh,
+                                   EnetDma_PktQ *pSubmitQ)
+ 
+@@ -1799,15 +1979,15 @@ int32_t EnetDma_submitTxPktQ(EnetDma_TxChHandle hTxCh,
+         {
+             retVal = EnetUdma_submitPkts(hPer,
+                                          ringHandle,
+-                                        pSubmitQ,
+-                                        hTxCh->hDmaDescPool,
+-                                        hTxCh->txChPrms.disableCacheOpsFlag,
+-                                        ENET_UDMA_DIR_TX
++                                         pSubmitQ,
++                                         hTxCh->hDmaDescPool,
++                                         hTxCh->txChPrms.disableCacheOpsFlag,
++                                         ENET_UDMA_DIR_TX
+ #if (UDMA_SOC_CFG_PROXY_PRESENT == 1)
+-                                        ,
+-                                        hTxCh->hUdmaProxy
++                                         ,
++                                         hTxCh->hUdmaProxy
+ #endif
+-                                        );
++                                         );
+         }
+ 
+         /* If fqRing ran out of space it is not an error, packets will be re-submitted by application*/
+@@ -1832,6 +2012,69 @@ int32_t EnetDma_submitTxPktQ(EnetDma_TxChHandle hTxCh,
+     return retVal;
+ }
+ 
++int32_t EnetDma_submitTxPkt(EnetDma_TxChHandle hTxCh,
++                                  EnetDma_Pkt *pPkt)
++
++{
++    EnetPer_Handle hPer = hTxCh->hDma->hPer;
++    int32_t retVal = UDMA_SOK;
++    Udma_RingHandle ringHandle;
++
++#if ENET_CFG_IS_ON(DEV_ERROR)
++    if ((NULL == hTxCh) ||
++        (NULL == pPkt))
++    {
++        ENETTRACE_ERR_IF((NULL == hTxCh), "[Enet UDMA] hTxCh is NULL!!\n");
++        ENETTRACE_ERR_IF((NULL == pPkt), "[Enet UDMA] pPkt is NULL!!\n");
++        Enet_assert(FALSE);
++        retVal = UDMA_EBADARGS;
++    }
++    else
++#endif
++    {
++#if defined(ENETDMA_INSTRUMENTATION_ENABLED)
++        uint32_t startTime, diffTime;
++        uint32_t notifyCount;
++        startTime = EnetOsal_timerRead();
++#endif
++#if (UDMA_SOC_CFG_UDMAP_PRESENT == 1)
++        ringHandle = hTxCh->fqRing;
++#else
++        ringHandle = hTxCh->cqRing;
++#endif
++        /* Enqueue descs to fqRing regardless of caller's queue state */
++        retVal = EnetUdma_submitSingleTxPkt(hPer,
++                                            ringHandle,
++                                            pPkt,
++                                            hTxCh->hDmaDescPool,
++                                            hTxCh->txChPrms.disableCacheOpsFlag
++#if (UDMA_SOC_CFG_PROXY_PRESENT == 1)
++                                            ,
++                                            hTxCh->hUdmaProxy
++#endif
++                                            );
++
++        /* If fqRing ran out of space it is not an error, packets will be re-submitted by application*/
++        if (UDMA_ETIMEOUT == retVal)
++        {
++            ENETTRACE_INFO("TX Channel FQ underflow had occurred\n");
++            retVal = UDMA_SOK;
++        }
++
++#if defined(ENETDMA_INSTRUMENTATION_ENABLED)
++        EnetUdmaStats_addCnt(&hTxCh->stats.txSubmitPktOverFlowCnt, 1U);
++        EnetUdmaStats_addCnt(&hTxCh->stats.txSubmitPktEnq, 1U);
++        diffTime                                                  = EnetOsal_timerGetDiff(startTime);
++        notifyCount                                               = hTxCh->stats.submitPktStats.dataNotifyCnt & (ENET_DMA_STATS_HISTORY_CNT - 1U);
++        hTxCh->stats.submitPktStats.readyDmaDescQCnt[notifyCount] = hTxCh->hDmaDescPool->count;
++
++        EnetUdmaStats_updateNotifyStats(&hTxCh->stats.submitPktStats, 1U, diffTime);
++#endif
++    }
++
++    return retVal;
++}
++
+ void EnetDma_initPktInfo(EnetDma_Pkt *pktInfo)
+ {
+     uint32_t i;
+diff --git a/src/dma/udma/enet_udma_priv.c b/src/dma/udma/enet_udma_priv.c
+index be950019..21adf897 100644
+--- a/src/dma/udma/enet_udma_priv.c
++++ b/src/dma/udma/enet_udma_priv.c
+@@ -671,6 +671,439 @@ int32_t EnetUdma_submitPkts(EnetPer_Handle hPer,
+     return retVal;
+ }
+ 
++int32_t EnetUdma_submitSingleRxPkt(EnetPer_Handle hPer,
++                                   Udma_RingHandle hUdmaRing,
++                                   EnetDma_Pkt *pPkt,
++                                   EnetUdma_DmaDescQ *pDmaDescQ,
++                                   bool disableCacheOpsFlag
++#if (UDMA_SOC_CFG_PROXY_PRESENT == 1)
++                                   ,
++                                   Udma_ProxyHandle hUdmaProxy
++#endif
++                           )
++{
++    int32_t retVal = UDMA_SOK;
++    EnetUdma_DmaDesc *pDmaDesc;
++    int32_t submitCnt = 0, i;
++    bool isExposedRing;
++    uint64_t *ringMemPtr = NULL, *currRingMemPtr = NULL;
++    uint32_t ringWrIdx = 0U, ringMemEleCnt = 0U;
++    uint32_t totalPacketFilledLen = 0;
++    EnetUdma_SGListEntry *sgList;
++
++    isExposedRing = (Udma_ringGetMode(hUdmaRing) == TISCI_MSG_VALUE_RM_RING_MODE_RING);
++#if defined(SOC_AM64X) || defined(SOC_AM243X)
++    isExposedRing = 0U;
++#endif
++    if (isExposedRing == true)
++    {
++        ringMemPtr = (uint64_t *)Udma_ringGetMemPtr(hUdmaRing);
++        ringWrIdx = Udma_ringGetWrIdx(hUdmaRing);
++        ringMemEleCnt = Udma_ringGetElementCnt(hUdmaRing);
++    }
++
++    /* Enqueue packets until fqRing is full */
++    if (NULL != pPkt)
++    {
++        /* Enqueue desc to fqRing */
++        pDmaDesc = EnetUdma_dmaDescDeque(pDmaDescQ);
++
++        if (NULL != pDmaDesc)
++        {
++            EnetUdma_CpswHpdDesc *pHpdDesc = (EnetUdma_CpswHpdDesc*) pDmaDesc;
++            CSL_UdmapCppi5HMPD *pHostDesc = &pHpdDesc->hostDesc;
++
++            pDmaDesc->dmaPkt = pPkt;
++            sgList = pPkt->sgList.list;
++            EnetDma_checkPktState(&pDmaDesc->dmaPkt->pktState,
++                                  ENET_PKTSTATE_MODULE_DRIVER,
++                                  (uint32_t) ENET_PKTSTATE_DMA_NOT_WITH_HW,
++                                  (uint32_t) ENET_PKTSTATE_DMA_WITH_HW);
++
++            CSL_UdmapCppi5HMPD *pHDesc = pHostDesc;
++            CSL_UdmapCppi5HMPD *pHDescPrev = NULL;
++            for (i = 0; i < pPkt->sgList.numScatterSegments; i++)
++            {
++                if (ENET_UDMA_CPSW_IS_HBD_IDX(i))
++                {
++                    pHDesc = &pDmaDesc->hostBufDesc[i - ENET_UDMA_CPSW_HOSTBUFDESC_INDEX].desc;
++                    /* Link the Descs */
++                    CSL_udmapCppi5LinkDesc(pHDescPrev, (uint64_t) pHDesc);
++                }
++                CSL_udmapCppi5SetBufferAddr(pHDesc, (uint64_t) sgList[i].bufPtr);
++                CSL_udmapCppi5SetBufferLen(pHDesc, sgList[i].segmentAllocLen);
++                CSL_udmapCppi5SetOrgBufferAddr(pHDesc, (uint64_t) sgList[i].bufPtr);
++                CSL_udmapCppi5SetOrgBufferLen(pHDesc, sgList[i].segmentAllocLen);
++                totalPacketFilledLen += sgList[i].segmentFilledLen;
++                pHDescPrev = pHDesc;
++            }
++            /* Link the last segment's Desc to NULL */
++            CSL_udmapCppi5LinkDesc(pHDesc, 0U);
++            CSL_udmapCppi5HostSetPktLen(pHostDesc, totalPacketFilledLen);
++
++            /* Check that the buffer pointer and length are correct */
++            retVal = EnetUdma_dmaDescCheck(pDmaDesc, ENET_UDMA_DIR_RX);
++
++            if (UDMA_SOK == retVal)
++            {
++                retVal = EnetUdma_ringEnqueue(hUdmaRing,
++                                             pDmaDesc,
++                                             disableCacheOpsFlag,
++                                             ENET_UDMA_DIR_RX
++#if (UDMA_SOC_CFG_PROXY_PRESENT == 1)
++                                             ,
++                                             hUdmaProxy
++#endif
++                                             );
++            }
++
++            /* Dequeue from toHwQ only if the packet was actually queued to the fqRing */
++            if (UDMA_SOK == retVal)
++            {
++                submitCnt++;
++            }
++            else
++            {
++                // TODO - based on error we should add back dmadesc and pktInfo to orig Queues
++                EnetDma_checkPktState(&pDmaDesc->dmaPkt->pktState,
++                                        ENET_PKTSTATE_MODULE_DRIVER,
++                                        (uint32_t)ENET_PKTSTATE_DMA_WITH_HW,
++                                        (uint32_t)ENET_PKTSTATE_DMA_NOT_WITH_HW);
++            }
++        }
++        else
++        {
++            /* Return dequeued packet buffer as couldn't get free dma desc to attach
++             *  packet to */
++            retVal = UDMA_EALLOC;
++        }
++    }
++
++    /* Wb the Ring memory cache before commiting to the ring in case of exposed ring mode */
++    if ((UDMA_SOK == retVal) && (isExposedRing == true))
++    {
++        if ((ringWrIdx + submitCnt) > ringMemEleCnt)
++        {
++            currRingMemPtr = ringMemPtr + ringWrIdx;
++            EnetOsal_cacheWb(currRingMemPtr,
++                             (ringMemEleCnt - ringWrIdx) * ENET_UDMA_RING_MEM_SIZE);
++            EnetOsal_cacheWb(ringMemPtr,
++                             (submitCnt - ringMemEleCnt + ringWrIdx) * ENET_UDMA_RING_MEM_SIZE);
++        }
++        else
++        {
++            EnetOsal_cacheWb(currRingMemPtr,
++                             submitCnt * ENET_UDMA_RING_MEM_SIZE);
++        }
++
++        /* Set Ring door bell register with count of number of descriptors queued */
++        Udma_ringSetDoorBell(hUdmaRing, submitCnt);
++    }
++
++    /* If fqRing ran out of space is not an error, packets will be re-submitted from toHwQ */
++    if (UDMA_ETIMEOUT == retVal)
++    {
++        retVal = UDMA_SOK;
++    }
++
++    return retVal;
++}
++
++int32_t EnetUdma_submitSingleTxPkt(EnetPer_Handle hPer,
++                            Udma_RingHandle hUdmaRing,
++                           EnetDma_Pkt *pPkt,
++                           EnetUdma_DmaDescQ *pDmaDescQ,
++                           bool disableCacheOpsFlag
++#if (UDMA_SOC_CFG_PROXY_PRESENT == 1)
++                           ,
++                           Udma_ProxyHandle hUdmaProxy
++#endif
++                           )
++{
++    int32_t retVal = UDMA_SOK;
++    EnetUdma_DmaDesc *pDmaDesc;
++    uint32_t dstTag;
++    EnetUdma_CppiRxControl *cppiRxCntr;
++    uint32_t *iccsgTxTsId, *tsInfo;
++    int32_t submitCnt = 0;
++    bool isExposedRing;
++    uint64_t *ringMemPtr = NULL, *currRingMemPtr = NULL;
++    uint32_t ringWrIdx = 0U, ringMemEleCnt = 0U;
++    uint32_t tosIndex, i;
++    uint8_t dscpIPv4En, tosVal;
++    uint32_t totalPacketFilledLen = 0;
++    EnetUdma_SGListEntry *sgList;
++
++    isExposedRing = (Udma_ringGetMode(hUdmaRing) == TISCI_MSG_VALUE_RM_RING_MODE_RING);
++#if defined(SOC_AM64X) || defined(SOC_AM243X)
++    isExposedRing = 0U;
++#endif
++    if (isExposedRing == true)
++    {
++        ringMemPtr = (uint64_t *)Udma_ringGetMemPtr(hUdmaRing);
++        ringWrIdx = Udma_ringGetWrIdx(hUdmaRing);
++        ringMemEleCnt = Udma_ringGetElementCnt(hUdmaRing);
++    }
++
++    /* Enqueue sintgle packet */
++    if (NULL != pPkt)
++    {
++        /* Enqueue desc to fqRing */
++        pDmaDesc = EnetUdma_dmaDescDeque(pDmaDescQ);
++
++        if (NULL != pDmaDesc)
++        {
++            EnetUdma_CpswHpdDesc *pHpdDesc = (EnetUdma_CpswHpdDesc*) pDmaDesc;
++            CSL_UdmapCppi5HMPD *pHostDesc = &pHpdDesc->hostDesc;
++
++            pDmaDesc->dmaPkt = pPkt;
++            sgList = pPkt->sgList.list;
++            EnetDma_checkPktState(&pDmaDesc->dmaPkt->pktState,
++                                  ENET_PKTSTATE_MODULE_DRIVER,
++                                  (uint32_t) ENET_PKTSTATE_DMA_NOT_WITH_HW,
++                                  (uint32_t) ENET_PKTSTATE_DMA_WITH_HW);
++
++            CSL_UdmapCppi5HMPD *pHDesc = pHostDesc;
++            CSL_UdmapCppi5HMPD *pHDescPrev = NULL;
++            for (i = 0; i < pPkt->sgList.numScatterSegments; i++)
++            {
++                if (ENET_UDMA_CPSW_IS_HBD_IDX(i))
++                {
++                    pHDesc = &pDmaDesc->hostBufDesc[i - ENET_UDMA_CPSW_HOSTBUFDESC_INDEX].desc;
++                    /* Link the Descs */
++                    CSL_udmapCppi5LinkDesc(pHDescPrev, (uint64_t) pHDesc);
++                }
++                CSL_udmapCppi5SetBufferAddr(pHDesc, (uint64_t) sgList[i].bufPtr);
++                CSL_udmapCppi5SetBufferLen(pHDesc, sgList[i].segmentFilledLen);
++                CSL_udmapCppi5SetOrgBufferAddr(pHDesc, (uint64_t) sgList[i].bufPtr);
++                CSL_udmapCppi5SetOrgBufferLen(pHDesc, sgList[i].segmentAllocLen);
++                totalPacketFilledLen += sgList[i].segmentFilledLen;
++                pHDescPrev = pHDesc;
++            }
++            /* Link the last segment's Desc to NULL */
++            CSL_udmapCppi5LinkDesc(pHDesc, 0U);
++
++            CSL_udmapCppi5HostSetPktLen(pHostDesc, totalPacketFilledLen);
++
++#if ENET_CFG_IS_ON(DEV_ERROR)
++            /* For TX all defaults are set in EnetUdma_buffDescInit function. We just confirm those
++             * are not changed here */
++            Enet_assert(CSL_UDMAP_CPPI5_PD_DESCINFO_DTYPE_VAL_HOST == CSL_udmapCppi5GetDescType(pHostDesc));
++            Enet_assert(0U == CSL_udmapCppi5GetPsDataLoc(pHostDesc));
++            Enet_assert(true == CSL_udmapCppi5IsEpiDataPresent(pHostDesc));
++            Enet_assert(ENET_UDMA_PROTOCOL_SPECIFIC_INFO_BLOCK_SIZE ==
++                            CSL_udmapCppi5GetPsDataLen(pHostDesc));
++#endif
++            cppiRxCntr = (EnetUdma_CppiRxControl *)pHpdDesc->psInfo;
++
++            if (Enet_isIcssFamily(hPer->enetType))
++            {
++                cppiRxCntr->chkSumInfo = 0U;
++                tsInfo = (uint32_t *)&pHpdDesc->extendedPktInfo[4U];
++            }
++            else
++            {
++                cppiRxCntr->chkSumInfo = pPkt->chkSumInfo;
++                tsInfo = (uint32_t *)&cppiRxCntr->tsInfo;
++            }
++
++            if (pPkt->tsInfo.enableHostTxTs == true)
++            {
++                ENETUDMA_CPPIPSI_SET_TSEN(*tsInfo, 1U);
++
++                /* Below fields are only valid for CPSW. In ICSSG, whole tsInfo word is
++                 * used for enabling timestamp.
++                 * This is don't care/reserved word for ICSSG so we set without any check */
++                ENETUDMA_CPPIPSI_SET_DOMAIN(*tsInfo,
++                                           pPkt->tsInfo.txPktDomain);
++                ENETUDMA_CPPIPSI_SET_MSGTYPE(*tsInfo,
++                                            pPkt->tsInfo.txPktMsgType);
++                ENETUDMA_CPPIPSI_SET_SEQID(*tsInfo,
++                                          pPkt->tsInfo.txPktSeqId);
++
++                /* Set host Tx timestamp flag back to false. */
++                pPkt->tsInfo.enableHostTxTs = false;
++
++                /* For ICSSG psinfo word 0 is used for passing cookie to the firmwareiccsgTxTsId
++                 * This is don't care/reserved word for CPSW so we set without any check */
++                iccsgTxTsId = (uint32_t *)&pHpdDesc->extendedPktInfo[0U];
++                *iccsgTxTsId = pPkt->txTsId;
++            }
++            else
++            {
++                ENETUDMA_CPPIPSI_SET_TSEN(*tsInfo, 0U);
++            }
++
++            if (Enet_isIcssFamily(hPer->enetType))
++            {
++                uintptr_t baseAddr = (uintptr_t)hPer->virtAddr;
++
++                if (hPer->enetType == ENET_ICSSG_DUALMAC)
++                {
++                    if ((hPer->instId == 0) || (hPer->instId == 2))
++                    {
++                        baseAddr += CSL_ICSS_G_DRAM0_SLV_RAM_REGS_BASE;
++                    }
++                    else
++                    {
++                        /*DRAM1*/
++                        baseAddr += CSL_ICSS_G_DRAM1_SLV_RAM_REGS_BASE;
++                    }
++                }
++                else
++                {
++                    /* In switch mode expecting both ports have same dscp priorities
++                       If in case of undirected traffic dscp priorities are taken from
++                       Port1
++                    */
++                    /*DRAM0*/
++                    baseAddr += CSL_ICSS_G_DRAM0_SLV_RAM_REGS_BASE;
++                    if (pPkt->txPortNum == ENET_MAC_PORT_2)
++                    {
++                        /*DRAM1*/
++                        baseAddr += CSL_ICSS_G_DRAM1_SLV_RAM_REGS_BASE;
++                    }
++                }
++                baseAddr = baseAddr + DSCP_ENABLE_DISABLE_STATUS;
++                dscpIPv4En = CSL_REG8_RD(baseAddr);
++                if (dscpIPv4En == 1)
++                {
++                    pPkt->txPktTc = 0;
++                    Enet_assert(sgList[ENET_UDMA_CPSW_HOSTPKTDESC_INDEX].segmentFilledLen > 13);
++                    /*check for Vlan tagging*/
++                    if ((sgList[ENET_UDMA_CPSW_HOSTPKTDESC_INDEX].bufPtr[12] == 0x81U) &&
++                            (sgList[ENET_UDMA_CPSW_HOSTPKTDESC_INDEX].bufPtr[13] == 0x00U))
++                    {
++                        Enet_assert(sgList[ENET_UDMA_CPSW_HOSTPKTDESC_INDEX].segmentFilledLen > 17);
++                        /*Check for ipv4 ethertype*/
++                        if ((sgList[ENET_UDMA_CPSW_HOSTPKTDESC_INDEX].bufPtr[16] == 0x08U) &&
++                                (sgList[ENET_UDMA_CPSW_HOSTPKTDESC_INDEX].bufPtr[17] == 0x00U))
++                        {
++                            Enet_assert(sgList[ENET_UDMA_CPSW_HOSTPKTDESC_INDEX].segmentFilledLen > 19);
++                            /* upper 6 bits has the dscp index */
++                            tosIndex = ((sgList[ENET_UDMA_CPSW_HOSTPKTDESC_INDEX].bufPtr[19] >> 2) & 0x3f);
++
++                            for (i = 0; i < ENET_PRI_NUM; i++)
++                            {
++                                tosVal = CSL_REG8_RD(baseAddr + (i+1));
++                                if(tosVal == tosIndex)
++                                {
++                                    break;
++                                }
++                            }
++                            pPkt->txPktTc = i;
++                        }
++                    }
++                    else
++                    {
++                        pPkt->txPktTc = 0;
++                        if ((sgList[ENET_UDMA_CPSW_HOSTPKTDESC_INDEX].bufPtr[12] == 0x08U) &&
++                                (sgList[ENET_UDMA_CPSW_HOSTPKTDESC_INDEX].bufPtr[13] == 0x00U))
++                        {
++                            /* upper 6 bits has the dscp index */
++                            Enet_assert(sgList[ENET_UDMA_CPSW_HOSTPKTDESC_INDEX].segmentFilledLen > 15);
++                            tosIndex = ((sgList[ENET_UDMA_CPSW_HOSTPKTDESC_INDEX].bufPtr[15] >> 2) & 0x3f);
++                            for (i = 0; i < ENET_PRI_NUM; i++)
++                            {
++                                tosVal = CSL_REG8_RD(baseAddr + (i+1));
++                                if(tosVal == tosIndex)
++                                {
++                                    break;
++                                }
++                            }
++                            pPkt->txPktTc = i;
++                        }
++                    }
++                }
++            }
++
++            if (pPkt->txPortNum != ENET_MAC_PORT_INV)
++            {
++                dstTag = CPSW_ALE_MACPORT_TO_ALEPORT(pPkt->txPortNum);
++                /* Set txPortNum back to invalid to reset directed packet configuration */
++                pPkt->txPortNum = ENET_MAC_PORT_INV;
++            }
++            else
++            {
++                dstTag = 0U;
++            }
++
++            if (pPkt->txPktTc != ENET_TRAFFIC_CLASS_INV)
++            {
++                dstTag |= pPkt->txPktTc << 8U;
++            }
++
++            CSL_udmapCppi5SetDstTag(pHostDesc, dstTag);
++
++            /* Check that the buffer pointer and length are correct */
++            retVal = EnetUdma_dmaDescCheck(pDmaDesc, ENET_UDMA_DIR_TX);
++
++            if (UDMA_SOK == retVal)
++            {
++                retVal = EnetUdma_ringEnqueue(hUdmaRing,
++                                             pDmaDesc,
++                                             disableCacheOpsFlag,
++                                             ENET_UDMA_DIR_TX
++#if (UDMA_SOC_CFG_PROXY_PRESENT == 1)
++                                             ,
++                                             hUdmaProxy
++#endif
++                                             );
++            }
++
++            /* Dequeue from toHwQ only if the packet was actually queued to the fqRing */
++            if (UDMA_SOK == retVal)
++            {
++                submitCnt++;
++            }
++            else
++            {
++                // TODO - based on error we should add back dmadesc and pktInfo to orig Queues
++                EnetDma_checkPktState(&pDmaDesc->dmaPkt->pktState,
++                                        ENET_PKTSTATE_MODULE_DRIVER,
++                                        (uint32_t)ENET_PKTSTATE_DMA_WITH_HW,
++                                        (uint32_t)ENET_PKTSTATE_DMA_NOT_WITH_HW);
++            }
++        }
++        else
++        {
++            /* Return dequeued packet buffer as couldn't get free dma desc to attach
++             *  packet to */
++            //TODO: surbhi handle this case
++            retVal = UDMA_EALLOC;
++        }
++    }
++
++    /* Wb the Ring memory cache before commiting to the ring in case of exposed ring mode */
++    if ((UDMA_SOK == retVal) && (isExposedRing == true))
++    {
++        if ((ringWrIdx + submitCnt) > ringMemEleCnt)
++        {
++            currRingMemPtr = ringMemPtr + ringWrIdx;
++            EnetOsal_cacheWb(currRingMemPtr,
++                             (ringMemEleCnt - ringWrIdx) * ENET_UDMA_RING_MEM_SIZE);
++            EnetOsal_cacheWb(ringMemPtr,
++                             (submitCnt - ringMemEleCnt + ringWrIdx) * ENET_UDMA_RING_MEM_SIZE);
++        }
++        else
++        {
++            EnetOsal_cacheWb(currRingMemPtr,
++                             submitCnt * ENET_UDMA_RING_MEM_SIZE);
++        }
++
++        /* Set Ring door bell register with count of number of descriptors queued */
++        Udma_ringSetDoorBell(hUdmaRing, submitCnt);
++    }
++
++    /* If fqRing ran out of space is not an error, packets will be re-submitted from toHwQ */
++    if (UDMA_ETIMEOUT == retVal)
++    {
++        retVal = UDMA_SOK;
++    }
++
++    return retVal;
++}
++
+ int32_t EnetUdma_flushRxFlowRing(EnetDma_RxChHandle hRxFlow,
+                                 Udma_RingHandle hUdmaRing,
+                                 EnetDma_PktQ *pPktInfoQ)
+diff --git a/src/dma/udma/enet_udma_priv.h b/src/dma/udma/enet_udma_priv.h
+index 9f05ae6f..260a98cc 100644
+--- a/src/dma/udma/enet_udma_priv.h
++++ b/src/dma/udma/enet_udma_priv.h
+@@ -657,6 +657,28 @@ int32_t EnetUdma_submitPkts(EnetPer_Handle hPer,
+ #endif
+                            );
+ 
++int32_t EnetUdma_submitSingleRxPkt(EnetPer_Handle hPer,
++                                   Udma_RingHandle hUdmaRing,
++                                   EnetDma_Pkt *pPkt,
++                                   EnetUdma_DmaDescQ *pDmaDescQ,
++                                   bool disableCacheOpsFlag
++#if (UDMA_SOC_CFG_PROXY_PRESENT == 1)
++                                   ,
++                                   Udma_ProxyHandle hUdmaProxy
++#endif
++                                   );
++
++int32_t EnetUdma_submitSingleTxPkt(EnetPer_Handle hPer,
++                                   Udma_RingHandle hUdmaRing,
++                                   EnetDma_Pkt *pPkt,
++                                   EnetUdma_DmaDescQ *pDmaDescQ,
++                                   bool disableCacheOpsFlag
++#if (UDMA_SOC_CFG_PROXY_PRESENT == 1)
++                                   ,
++                                   Udma_ProxyHandle hUdmaProxy
++#endif
++                                  );
++
+ int32_t EnetUdma_retrievePkts(EnetPer_Handle hPer,
+                               Udma_RingHandle hUdmaRing,
+                              EnetDma_PktQ *pFromHwQueue,
+diff --git a/src/mod/cpsw_ale.c b/src/mod/cpsw_ale.c
+index 67fecb45..11857623 100644
+--- a/src/mod/cpsw_ale.c
++++ b/src/mod/cpsw_ale.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (c) Texas Instruments Incorporated 2020
++ *  Copyright (c) Texas Instruments Incorporated 2020-23
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -75,12 +75,12 @@
+ #define CPSW_ALE_VER_ID_AM263X                  (0x00000029U)
+ 
+ /* Number of ALE table entries and policers per CPSW variant */
+-#if defined(SOC_AM273X) || defined(SOC_AWR294X)
++#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AWR2544)
+ #define CPSW_ALE_2G_ALE_ENTRIES_MAX             (32U)
+ #else
+ #define CPSW_ALE_2G_ALE_ENTRIES_MAX             (64U)
+ #endif
+-#if defined(SOC_AM273X) || defined(SOC_AWR294X)
++#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AWR2544)
+ #define CPSW_ALE_2G_POLICERS_MAX                (4U)
+ #else
+ #define CPSW_ALE_2G_POLICERS_MAX                (8U)
+@@ -682,7 +682,7 @@ int32_t CpswAle_open(EnetMod_Handle hMod,
+             Enet_devAssert(numEntries == CPSW_ALE_2G_ALE_ENTRIES_MAX,
+                            "Unexpected number of ALE entries (got %u, expected %u)\n",
+                            numEntries, CPSW_ALE_2G_ALE_ENTRIES_MAX);
+-#if !(defined(SOC_AM273X) || defined(SOC_AWR294X))
++#if !(defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AWR2544))
+             /*
+              * There are 4 entries  for AM273X, AWR294X which can be represented as div8 value,
+              * Skip the test for AM273X, AWR294X
+diff --git a/src/mod/cpsw_ale_ioctl.c b/src/mod/cpsw_ale_ioctl.c
+index c2d3b260..63540041 100644
+--- a/src/mod/cpsw_ale_ioctl.c
++++ b/src/mod/cpsw_ale_ioctl.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (c) Texas Instruments Incorporated 2020
++ *  Copyright (c) Texas Instruments Incorporated 2020-23
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -75,12 +75,12 @@
+ #define CPSW_ALE_VER_ID_AM263X                  (0x00000029U)
+ 
+ /* Number of ALE table entries and policers per CPSW variant */
+-#if defined(SOC_AM273X) || defined(SOC_AWR294X)
++#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AWR2544)
+ #define CPSW_ALE_2G_ALE_ENTRIES_MAX             (32U)
+ #else
+ #define CPSW_ALE_2G_ALE_ENTRIES_MAX             (64U)
+ #endif
+-#if defined(SOC_AM273X) || defined(SOC_AWR294X)
++#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AWR2544)
+ #define CPSW_ALE_2G_POLICERS_MAX                (4U)
+ #else
+ #define CPSW_ALE_2G_POLICERS_MAX                (8U)
+diff --git a/src/mod/cpsw_cpts.c b/src/mod/cpsw_cpts.c
+index 540778b8..61107248 100644
+--- a/src/mod/cpsw_cpts.c
++++ b/src/mod/cpsw_cpts.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (c) Texas Instruments Incorporated 2020
++ *  Copyright (c) Texas Instruments Incorporated 2020-23
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -75,6 +75,12 @@
+ #define CPSW_CPTS_VER_REVRTL_AM64X            (0x00000000U)
+ #define CPSW_HOSTPORT_VER_ID_AM64X            (0x00004E8AU)
+ 
++/* Supported AWR2544 versions */
++#define CPSW_CPTS_VER_REVMAJ_AWR2544          (0x00000001U)
++#define CPSW_CPTS_VER_REVMIN_AWR2544          (0x0000000DU)
++#define CPSW_CPTS_VER_REVRTL_AWR2544          (0x00000000U)
++#define CPSW_HOSTPORT_VER_ID_AWR2544          (0x00004E8AU)
++
+ 
+ #define CPSW_CPTS_IOCTL_HANDLER_ENTRY_INIT(x)    \
+           {.cmd = x,                            \
+@@ -141,6 +147,12 @@ static CSL_CPSW_VERSION CpswCpts_gSupportedVer[] =
+         .rtlVer   = CPSW_CPTS_VER_REVRTL_AM64X,
+         .id       = CPSW_HOSTPORT_VER_ID_AM64X,
+     },
++    {   /* AWR2544 CPSW_2G */
++        .majorVer = CPSW_CPTS_VER_REVMAJ_AWR2544,
++        .minorVer = CPSW_CPTS_VER_REVMIN_AWR2544,
++        .rtlVer   = CPSW_CPTS_VER_REVRTL_AWR2544,
++        .id       = CPSW_HOSTPORT_VER_ID_AWR2544,
++    },
+ };
+ 
+ /* Public CPTS IOCTL validation data. */
+@@ -225,7 +237,7 @@ static Enet_IoctlValidate gCpswCpts_privIoctlValidate[] =
+ };
+ #endif
+ 
+-static CpswCptsIoctlHandlerRegistry_t CpswCptsIoctlHandlerRegistry[] = 
++static CpswCptsIoctlHandlerRegistry_t CpswCptsIoctlHandlerRegistry[] =
+ {
+     CPSW_CPTS_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_TIMESYNC_IOCTL_GET_VERSION),
+     CPSW_CPTS_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_TIMESYNC_IOCTL_PRINT_REGS),
+@@ -479,9 +491,9 @@ static int32_t CpswCpts_ioctl_handler_CPSW_CPTS_IOCTL_REGISTER_HANDLER(CpswCpts_
+     const Enet_IoctlRegisterHandlerInArgs *inArgs = (const Enet_IoctlRegisterHandlerInArgs *)prms->inArgs;
+     int32_t status;
+ 
+-    status = CpswCpts_setIoctlHandlerFxn(inArgs->cmd, 
+-                                        (CpswCptsIoctlHandler *)inArgs->fxn, 
+-                                        CpswCptsIoctlHandlerRegistry, 
++    status = CpswCpts_setIoctlHandlerFxn(inArgs->cmd,
++                                        (CpswCptsIoctlHandler *)inArgs->fxn,
++                                        CpswCptsIoctlHandlerRegistry,
+                                         ENET_ARRAYSIZE(CpswCptsIoctlHandlerRegistry));
+     return status;
+ }
+diff --git a/src/mod/cpsw_cpts_ioctl.c b/src/mod/cpsw_cpts_ioctl.c
+index 3fb8b572..2cf239a2 100644
+--- a/src/mod/cpsw_cpts_ioctl.c
++++ b/src/mod/cpsw_cpts_ioctl.c
+@@ -198,7 +198,8 @@ int32_t CpswCpts_ioctl_handler_ENET_TIMESYNC_IOCTL_GET_CURRENT_TIMESTAMP(CpswCpt
+ 
+ int32_t CpswCpts_ioctl_handler_ENET_TIMESYNC_IOCTL_SET_TIMESTAMP(CpswCpts_Handle hCpts, CSL_cptsRegs *regs, Enet_IoctlPrms *prms)
+ {
+-    uint64_t tsLoadVal = *(uint64_t *)prms->inArgs;
++    EnetTimeSync_setTimestamp *tsSet = (EnetTimeSync_setTimestamp *)prms->inArgs;
++    const uint64_t tsLoadVal = tsSet->tsLoadVal;
+     uint32_t tsLoadValHi = 0U;
+     uint32_t tsLoadValLo = 0U;
+     int32_t status = ENET_SOK;
+diff --git a/src/mod/cpsw_hostport.c b/src/mod/cpsw_hostport.c
+index 950b2f6e..a9aac9c2 100644
+--- a/src/mod/cpsw_hostport.c
++++ b/src/mod/cpsw_hostport.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (c) Texas Instruments Incorporated 2020
++ *  Copyright (c) Texas Instruments Incorporated 2020-23
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -80,6 +80,12 @@
+ #define CPSW_HOSTPORT_VER_REVRTL_AWR294X        (0x00000000U)
+ #define CPSW_HOSTPORT_VER_ID_AWR294X            (0x00006B90U)
+ 
++/* Supported AWR2544 version */
++#define CPSW_HOSTPORT_VER_REVMAJ_AWR2544        (0x00000001U)
++#define CPSW_HOSTPORT_VER_REVMIN_AWR2544        (0x00000003U)
++#define CPSW_HOSTPORT_VER_REVRTL_AWR2544        (0x00000003U)
++#define CPSW_HOSTPORT_VER_ID_AWR2544            (0x00006B90U)
++
+ /*! \brief Default value used for host port RX MTU. */
+ #define CPSW_HOSTPORT_RX_MTU_DEFAULT          (1518U)
+ 
+@@ -153,6 +159,12 @@ static CSL_CPSW_VERSION CpswHostPort_gSupportedVer[] =
+         .rtlVer   = CPSW_HOSTPORT_VER_REVRTL_AWR294X,
+         .id       = CPSW_HOSTPORT_VER_ID_AWR294X,
+     },
++    {   /* AWR2544 */
++        .majorVer = CPSW_HOSTPORT_VER_REVMAJ_AWR2544,
++        .minorVer = CPSW_HOSTPORT_VER_REVMIN_AWR2544,
++        .rtlVer   = CPSW_HOSTPORT_VER_REVRTL_AWR2544,
++        .id       = CPSW_HOSTPORT_VER_ID_AWR2544,
++    },
+ };
+ 
+ /* Public host port IOCTL validation data. */
+diff --git a/src/mod/cpsw_macport.c b/src/mod/cpsw_macport.c
+index 65320ce9..1c116b4b 100644
+--- a/src/mod/cpsw_macport.c
++++ b/src/mod/cpsw_macport.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (c) Texas Instruments Incorporated 2020
++ *  Copyright (c) Texas Instruments Incorporated 2020-23
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -85,6 +85,12 @@
+ #define CPSW_MACPORT_VER_REVRTL_AWR294X         (0x00000000U)
+ #define CPSW_MACPORT_VER_ID_AWR294X             (0x00006B90U)
+ 
++/* Supported AWR2544 version */
++#define CPSW_MACPORT_VER_REVMAJ_AWR2544         (0x00000001U)
++#define CPSW_MACPORT_VER_REVMIN_AWR2544         (0x00000003U)
++#define CPSW_MACPORT_VER_REVRTL_AWR2544         (0x00000003U)
++#define CPSW_MACPORT_VER_ID_AWR2544             (0x00006B90U)
++
+ /*! \brief Default value used for MAC port RX MTU (MRU). */
+ #define CPSW_MACPORT_RX_MTU_DEFAULT           (1518U)
+ 
+@@ -233,6 +239,12 @@ static CSL_CPSW_VERSION CpswMacPort_gSupportedVer[] =
+         .rtlVer   = CPSW_MACPORT_VER_REVRTL_AWR294X,
+         .id       = CPSW_MACPORT_VER_ID_AWR294X,
+     },
++    {   /* AWR2544 */
++        .majorVer = CPSW_MACPORT_VER_REVMAJ_AWR2544,
++        .minorVer = CPSW_MACPORT_VER_REVMIN_AWR2544,
++        .rtlVer   = CPSW_MACPORT_VER_REVRTL_AWR2544,
++        .id       = CPSW_MACPORT_VER_ID_AWR2544,
++    },
+ };
+ 
+ /* Public MAC port IOCTL validation data. */
+diff --git a/src/mod/cpsw_stats.c b/src/mod/cpsw_stats.c
+index 400e54ea..afe4bb2b 100644
+--- a/src/mod/cpsw_stats.c
++++ b/src/mod/cpsw_stats.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (c) Texas Instruments Incorporated 2020
++ *  Copyright (c) Texas Instruments Incorporated 2020-23
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -79,6 +79,12 @@
+ #define CPSW_STATS_VER_REVRTL_AWR294X           (0x00000000U)
+ #define CPSW_STATS_VER_ID_AWR294X               (0x00006B90U)
+ 
++/* Supported AWR2544 version */
++#define CPSW_STATS_VER_REVMAJ_AWR2544           (0x00000001U)
++#define CPSW_STATS_VER_REVMIN_AWR2544           (0x00000003U)
++#define CPSW_STATS_VER_REVRTL_AWR2544           (0x00000003U)
++#define CPSW_STATS_VER_ID_AWR2544               (0x00006B90U)
++
+ #define CPSW_STATS_IOCTL_HANDLER_ENTRY_INIT(x)    \
+           {.cmd = x,                            \
+            .fxn = &CpswStats_ioctl_handler_##x}
+@@ -149,6 +155,12 @@ static CSL_CPSW_VERSION CpswStats_gSupportedVer[] =
+         .rtlVer   = CPSW_STATS_VER_REVRTL_AWR294X,
+         .id       = CPSW_STATS_VER_ID_AWR294X,
+     },
++    {   /* AWR2544 */
++        .majorVer = CPSW_STATS_VER_REVMAJ_AWR2544,
++        .minorVer = CPSW_STATS_VER_REVMIN_AWR2544,
++        .rtlVer   = CPSW_STATS_VER_REVRTL_AWR2544,
++        .id       = CPSW_STATS_VER_ID_AWR2544,
++    },
+ };
+ 
+ /* Public statistics IOCTL validation data. */
+diff --git a/src/mod/icssg_timesync.c b/src/mod/icssg_timesync.c
+index 08e44853..b0eed075 100644
+--- a/src/mod/icssg_timesync.c
++++ b/src/mod/icssg_timesync.c
+@@ -244,6 +244,7 @@ static IcssgTimeSyncIoctlHandlerTableEntry_t IcssgTimeSyncIoctlHandlerTable[] =
+     ICSSG_TIMESYNC_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_TIMESYNC_IOCTL_SET_TIMESTAMP),
+     ICSSG_TIMESYNC_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_TIMESYNC_IOCTL_ADJUST_TIMESTAMP),
+     ICSSG_TIMESYNC_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_TIMESYNC_IOCTL_SET_TIMESTAMP_COMPLETE),
++    ICSSG_TIMESYNC_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_TIMESYNC_IOCTL_GET_ETH_TX_TIMESTAMP),
+     ICSSG_TIMESYNC_IOCTL_HANDLER_ENTRY_INIT(ICSSG_TIMESYNC_IOCTL_REGISTER_HANDLER)
+ };
+ 
+@@ -629,7 +630,7 @@ int32_t  IcssgTimeSync_ioctl_handler_ENET_TIMESYNC_IOCTL_SET_TIMESTAMP(EnetMod_H
+     Enet_assert(cmd == ENET_TIMESYNC_IOCTL_SET_TIMESTAMP);
+ 
+     EnetTimeSync_setTimestamp *tsSet = (EnetTimeSync_setTimestamp *)prms->inArgs;
+-    uint64_t tsLoadVal = tsSet->tsLoadVal;
++    const uint64_t tsLoadVal = tsSet->tsLoadVal;
+     IcssgTimeSync_Timestamp clkTime;
+     uint8_t clkMode = tsSet->clkMode; /* Absolute or relative setClock mode for WorkingClock*/
+     uint8_t clkSign = tsSet->clkSign; // FIXME
+@@ -681,6 +682,72 @@ int32_t  IcssgTimeSync_ioctl_handler_ENET_TIMESYNC_IOCTL_SET_TIMESTAMP_COMPLETE(
+ 
+ }
+ 
++static int32_t IcssgTimeSync_getTxTs(IcssgTimeSync_Handle hTimeSync,
++                                     Enet_MacPort macPort,
++                                     uint32_t seqId,
++                                     uint64_t *ts)
++{
++    int32_t hwQLevel;
++    int32_t status = ENET_SOK;
++    Icssg_Handle hIcssg = (Icssg_Handle)hTimeSync->hIcssg;
++    EnetPer_Handle hPer = (EnetPer_Handle)hIcssg;
++    uint32_t *pMgmtPkt = NULL;
++    uint32_t txTsId = 0;
++    uint64_t tsVal = 0;
++    uint32_t slice;
++
++    hwQLevel = IcssgUtils_hwqLevel(hIcssg, macPort, ICSSG_TXTS_RX_HWQA);
++    if (hwQLevel != 0)
++    {
++        pMgmtPkt = (uint32_t*)IcssgUtils_hwqPop(hIcssg, macPort, ICSSG_TXTS_RX_HWQA);
++        if (pMgmtPkt != NULL)
++        {
++             slice = ENET_GET_BIT(pMgmtPkt[0], 23);
++             txTsId = pMgmtPkt[2];
++             tsVal = pMgmtPkt[4];
++             tsVal = tsVal << 32U | pMgmtPkt[3];
++             tsVal = Icssg_convertTs(hPer, tsVal);
++
++             /* Pop from port-dependent HwQ, but push into specific HwQ as indicated
++              * by bit 23 of word 0, irrespective of port number */
++             IcssgUtils_hwqPushForSlice(hIcssg, slice, ICSSG_TXTS_FREE_HWQA, pMgmtPkt);
++        }
++        if (txTsId != seqId)
++        {
++            status = ENET_ENOTFOUND;
++        }
++        *ts = tsVal;
++    }
++    else
++    {
++         status = ENET_ENOTFOUND;
++    }
++    return status;
++}
++
++int32_t IcssgTimeSync_ioctl_handler_ENET_TIMESYNC_IOCTL_GET_ETH_TX_TIMESTAMP(EnetMod_Handle hMod,
++                                                                             uint32_t cmd,
++                                                                             Enet_IoctlPrms *prms)
++{
++    IcssgTimeSync_Handle hTimeSync = (IcssgTimeSync_Handle)hMod;
++    const EnetTimeSync_GetEthTimestampInArgs *inArgs =
++           (const EnetTimeSync_GetEthTimestampInArgs *)prms->inArgs;
++    uint64_t *ts = (uint64_t *)prms->outArgs;
++    int32_t status = ENET_SOK;
++    void *portNum = (void *) &(inArgs->portNum);
++    Enet_MacPort macPort = *(Enet_MacPort *)portNum;
++
++    Enet_assert(cmd == ENET_TIMESYNC_IOCTL_GET_ETH_TX_TIMESTAMP);
++    /* Pop the top entry in the entry in the queue and return.
++     * Driver is not maintaining any pool of timestamps, so application
++     * should makesure to call this ioctl in proper order of tx pkts.
++     * TODO: Driver to maintain the pool of timestamps using polling logic? */
++    status = IcssgTimeSync_getTxTs(hTimeSync, macPort, inArgs->seqId, ts);
++
++    return status;
++
++}
++
+ static int32_t Icssg_getTimeSyncIoctlHandlerEntry(EnetMod_Handle hMod, uint32_t cmd, IcssgTimeSyncIoctlHandlerTableEntry_t ioctlTbl[], uint32_t numEntries, uint32_t *entryIdx)
+ {
+     uint32_t i;
+@@ -772,4 +839,4 @@ int32_t IcssgTimeSync_ioctl_handler_ICSSG_TIMESYNC_IOCTL_REGISTER_HANDLER(EnetMo
+ 
+     status = IcssgTimeSync_ioctl_handler_registerHandler(hMod, cmd, prms);
+     return status;
+-}
+\ No newline at end of file
++}
+diff --git a/src/mod/icssg_timesync_ioctl_register.c b/src/mod/icssg_timesync_ioctl_register.c
+index c3105ffa..70f47a31 100644
+--- a/src/mod/icssg_timesync_ioctl_register.c
++++ b/src/mod/icssg_timesync_ioctl_register.c
+@@ -79,3 +79,4 @@ ICSSG_TIMESYNC_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_TIMESYNC_IOCTL_GET_CURRENT_TI
+ ICSSG_TIMESYNC_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_TIMESYNC_IOCTL_SET_TIMESTAMP)
+ ICSSG_TIMESYNC_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_TIMESYNC_IOCTL_ADJUST_TIMESTAMP)
+ ICSSG_TIMESYNC_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_TIMESYNC_IOCTL_SET_TIMESTAMP_COMPLETE)
++ICSSG_TIMESYNC_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_TIMESYNC_IOCTL_GET_ETH_TX_TIMESTAMP)
+diff --git a/src/mod/mdio.c b/src/mod/mdio.c
+index 6f3984b2..e626259a 100644
+--- a/src/mod/mdio.c
++++ b/src/mod/mdio.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (c) Texas Instruments Incorporated 2022
++ *  Copyright (c) Texas Instruments Incorporated 2022-23
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -68,6 +68,12 @@
+ #define ICSSG_MDIO_VER_REVMIN_J7X             (0x00000007U)
+ #define ICSSG_MDIO_VER_REVRTL_J7X             (0x00000000U)
+ 
++/*! \brief AWR2544 MDIO versions. */
++#define MDIO_VER_MODID_AWR2544                (0x00000007U)
++#define MDIO_VER_REVMAJ_AWR2544               (0x00000001U)
++#define MDIO_VER_REVMIN_AWR2544               (0x00000007U)
++#define MDIO_VER_REVRTL_AWR2544               (0x00000002U)
++
+ /*! \brief Default MDIO bus frequency. */
+ #define MDIO_MDIOBUS_DFLT_FREQ_HZ             (2200000U)
+ 
+@@ -134,6 +140,12 @@ static CSL_MDIO_VERSION gMdio_supportedVer[] =
+         .revMin = ICSSG_MDIO_VER_REVMIN_J7X,
+         .revRtl = ICSSG_MDIO_VER_REVRTL_J7X,
+     },
++    {   /* MDIO on AWR2544 devices */
++        .modId  = MDIO_VER_MODID_AWR2544,
++        .revMaj = MDIO_VER_REVMAJ_AWR2544,
++        .revMin = MDIO_VER_REVMIN_AWR2544,
++        .revRtl = MDIO_VER_REVRTL_AWR2544,
++    },
+ };
+ 
+ /* Private MDIO IOCTL validation data. */
+diff --git a/src/per/cpsw_est.c b/src/per/cpsw_est.c
+index b65a295e..8ca8f7a6 100644
+--- a/src/per/cpsw_est.c
++++ b/src/per/cpsw_est.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (c) Texas Instruments Incorporated 2022
++ *  Copyright (c) Texas Instruments Incorporated 2022-23
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -46,7 +46,7 @@
+ #include <enet.h>
+ #include <csl_cpswitch.h>
+ #include <enet_cfg.h>
+-#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X)
++#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AWR2544) || defined(SOC_AM263X) || defined(SOC_AM263PX)
+ #include <priv/per/cpsw_cpdma_priv.h>
+ #else
+ #include <priv/per/cpsw_priv.h>
+diff --git a/src/per/cpsw_est_ioctl.c b/src/per/cpsw_est_ioctl.c
+index 3a7a1e3e..57a0d73e 100644
+--- a/src/per/cpsw_est_ioctl.c
++++ b/src/per/cpsw_est_ioctl.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (c) Texas Instruments Incorporated 2022
++ *  Copyright (c) Texas Instruments Incorporated 2022-23
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -46,7 +46,7 @@
+ #include <csl_cpswitch.h>
+ #include <enet_cfg.h>
+ #include <include/core/enet_base.h>
+-#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X)
++#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AWR2544) || defined(SOC_AM263X) || defined(SOC_AM263PX)
+ #include <priv/per/cpsw_cpdma_priv.h>
+ #else
+ #include <priv/per/cpsw_priv.h>
+diff --git a/src/per/cpsw_est_ioctl_register.c b/src/per/cpsw_est_ioctl_register.c
+index 761816c5..1e99d111 100644
+--- a/src/per/cpsw_est_ioctl_register.c
++++ b/src/per/cpsw_est_ioctl_register.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (c) Texas Instruments Incorporated 2022
++ *  Copyright (c) Texas Instruments Incorporated 2022-23
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -46,7 +46,7 @@
+ #include <csl_cpswitch.h>
+ #include <enet_cfg.h>
+ #include <enet.h>
+-#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X)
++#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AWR2544) || defined(SOC_AM263X) || defined(SOC_AM263PX)
+ #include <priv/per/cpsw_cpdma_priv.h>
+ #else
+ #include <priv/per/cpsw_priv.h>
+diff --git a/src/per/cpsw_intervlan.c b/src/per/cpsw_intervlan.c
+index f351602a..48880c07 100644
+--- a/src/per/cpsw_intervlan.c
++++ b/src/per/cpsw_intervlan.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (c) Texas Instruments Incorporated 2020
++ *  Copyright (c) Texas Instruments Incorporated 2020-23
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -53,7 +53,7 @@
+ #include <priv/mod/cpsw_macport_priv.h>
+ #include <priv/mod/cpsw_macport_ioctl_priv.h>
+ #include <include/per/cpsw.h>
+-#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X)
++#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AWR2544) || defined(SOC_AM263X) || defined(SOC_AM263PX)
+ #include <priv/per/cpsw_cpdma_priv.h>
+ #else
+ #include <priv/per/cpsw_priv.h>
+diff --git a/src/per/firmware/icssg/dualmac/RTU0_SLICE0_bin.h b/src/per/firmware/icssg/dualmac/RTU0_SLICE0_bin.h
+index da55b2d6..f2477e64 100644
+--- a/src/per/firmware/icssg/dualmac/RTU0_SLICE0_bin.h
++++ b/src/per/firmware/icssg/dualmac/RTU0_SLICE0_bin.h
+@@ -1,4 +1,4 @@
+-/*
++/* 
+  * RTU0_SLICE0_bin.h
+  *
+  *
+@@ -21,7 +21,7 @@
+  * code license limitations below) in the documentation and/or other materials provided
+  * with the distribution
+  *
+- * Redistribution and use in binary form, without modification, are permitted provided
++ * Redistribution and use in binary form, without modification, are permitted provided 
+  * that the following conditions are met:
+  *       No reverse engineering, decompilation, or disassembly of this software is
+  *       permitted with respect to any software provided in binary form.
+@@ -36,19 +36,19 @@
+  *       Any redistribution and use of any object code compiled from the source code and
+  *   any resulting derivative works, are licensed by TI for use only with TI Devices.
+  *
+- * Neither the name of Texas Instruments Incorporated nor the names of its suppliers
+- * may be used to endorse or  promote products derived from this software without
++ * Neither the name of Texas Instruments Incorporated nor the names of its suppliers 
++ * may be used to endorse or  promote products derived from this software without 
+  * specific prior written permission.
+  *
+  * DISCLAIMER.
+  *
+  * THIS SOFTWARE IS PROVIDED BY TI AND TI'S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED
+  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+- * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND
++ * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND 
+  * TI'S LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  *
+@@ -826,4 +826,4 @@ const unsigned int RTU0_SLICE0_b00_DMac[]= {
+ 0x48435449,
+ 0x2e32305f,
+ 0x312e3230,
+-0x32302e32 };
++0x34302e32 };
+diff --git a/src/per/firmware/icssg/dualmac/RTU0_SLICE1_bin.h b/src/per/firmware/icssg/dualmac/RTU0_SLICE1_bin.h
+index 670130f5..e85ad6e8 100644
+--- a/src/per/firmware/icssg/dualmac/RTU0_SLICE1_bin.h
++++ b/src/per/firmware/icssg/dualmac/RTU0_SLICE1_bin.h
+@@ -1,4 +1,4 @@
+-/*
++/* 
+  * RTU0_SLICE1_bin.h
+  *
+  *
+@@ -21,7 +21,7 @@
+  * code license limitations below) in the documentation and/or other materials provided
+  * with the distribution
+  *
+- * Redistribution and use in binary form, without modification, are permitted provided
++ * Redistribution and use in binary form, without modification, are permitted provided 
+  * that the following conditions are met:
+  *       No reverse engineering, decompilation, or disassembly of this software is
+  *       permitted with respect to any software provided in binary form.
+@@ -36,19 +36,19 @@
+  *       Any redistribution and use of any object code compiled from the source code and
+  *   any resulting derivative works, are licensed by TI for use only with TI Devices.
+  *
+- * Neither the name of Texas Instruments Incorporated nor the names of its suppliers
+- * may be used to endorse or  promote products derived from this software without
++ * Neither the name of Texas Instruments Incorporated nor the names of its suppliers 
++ * may be used to endorse or  promote products derived from this software without 
+  * specific prior written permission.
+  *
+  * DISCLAIMER.
+  *
+  * THIS SOFTWARE IS PROVIDED BY TI AND TI'S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED
+  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+- * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND
++ * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND 
+  * TI'S LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  *
+@@ -758,4 +758,4 @@ const unsigned int RTU0_SLICE1_b00_DMac[]= {
+ 0x48435449,
+ 0x2e32305f,
+ 0x312e3230,
+-0x32302e32 };
++0x34302e32 };
+diff --git a/src/per/firmware/icssg/dualmac/RX_PRU_SLICE0_bin.h b/src/per/firmware/icssg/dualmac/RX_PRU_SLICE0_bin.h
+index eca775cb..63853542 100644
+--- a/src/per/firmware/icssg/dualmac/RX_PRU_SLICE0_bin.h
++++ b/src/per/firmware/icssg/dualmac/RX_PRU_SLICE0_bin.h
+@@ -1,4 +1,4 @@
+-/*
++/* 
+  * RX_PRU_SLICE0_bin.h
+  *
+  *
+@@ -21,7 +21,7 @@
+  * code license limitations below) in the documentation and/or other materials provided
+  * with the distribution
+  *
+- * Redistribution and use in binary form, without modification, are permitted provided
++ * Redistribution and use in binary form, without modification, are permitted provided 
+  * that the following conditions are met:
+  *       No reverse engineering, decompilation, or disassembly of this software is
+  *       permitted with respect to any software provided in binary form.
+@@ -36,19 +36,19 @@
+  *       Any redistribution and use of any object code compiled from the source code and
+  *   any resulting derivative works, are licensed by TI for use only with TI Devices.
+  *
+- * Neither the name of Texas Instruments Incorporated nor the names of its suppliers
+- * may be used to endorse or  promote products derived from this software without
++ * Neither the name of Texas Instruments Incorporated nor the names of its suppliers 
++ * may be used to endorse or  promote products derived from this software without 
+  * specific prior written permission.
+  *
+  * DISCLAIMER.
+  *
+  * THIS SOFTWARE IS PROVIDED BY TI AND TI'S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED
+  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+- * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND
++ * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND 
+  * TI'S LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  *
+@@ -268,11 +268,11 @@ const unsigned int RX_PRU_SLICE0_b00_DMac[]= {
+ 0x24000601,
+ 0x2ec80061,
+ 0xcf0061ff,
+-0x2f0f108a,
+-0x2f480061,
++0x2f0f1082,
+ 0x51008a03,
+ 0x05018a8a,
+-0x7f0000fc,
++0x7f0000fd,
++0x2f480061,
+ 0x7f0000d5,
+ 0x69010e4e,
+ 0x1091918a,
+@@ -931,15 +931,12 @@ const unsigned int RX_PRU_SLICE0_b00_DMac[]= {
+ 0x240010df,
+ 0x24002382,
+ 0x81240082,
+-0xd1089e16,
+-0xd1035d09,
+-0xd1025d0d,
++0xd1089e13,
++0xd1035d06,
++0xd1025d0a,
+ 0x24007a01,
+ 0x81440901,
+-0x1f1febeb,
+-0x2f0b006b,
+-0xc9035f02,
+-0x1f17ffff,
++0x1f12ffff,
+ 0x7b00002e,
+ 0x2e8a1582,
+ 0xc9000b08,
+@@ -965,8 +962,6 @@ const unsigned int RX_PRU_SLICE0_b00_DMac[]= {
+ 0x24000a8a,
+ 0x2f181082,
+ 0x2e8a9582,
+-0x1f1febeb,
+-0x2f0b006b,
+ 0x1d0b9e9e,
+ 0xd1031505,
+ 0x24318093,
+@@ -994,17 +989,19 @@ const unsigned int RX_PRU_SLICE0_b00_DMac[]= {
+ 0x2f078007,
+ 0x24004001,
+ 0x81440901,
+-0xd10315f8,
++0xd10315fa,
+ 0x10d6d685,
+ 0x2f078085,
+-0x790000f5,
++0x790000f7,
++0x1f1febeb,
++0x2f0b006b,
+ 0xd100151e,
+ 0x51021d03,
+ 0x51001d08,
+ 0x51011d06,
+ 0xc900eb03,
+ 0x2400031d,
+-0x2103eb00,
++0x2103e800,
+ 0x2400001d,
+ 0x7900006d,
+ 0x2400031d,
+@@ -1033,7 +1030,7 @@ const unsigned int RX_PRU_SLICE0_b00_DMac[]= {
+ 0x51011d06,
+ 0xc900eb03,
+ 0x2400031d,
+-0x2103eb00,
++0x2103e800,
+ 0x2400001d,
+ 0x79000077,
+ 0x2400031d,
+@@ -1245,8 +1242,7 @@ const unsigned int RX_PRU_SLICE0_b00_DMac[]= {
+ 0x1d089e9e,
+ 0x2efe0060,
+ 0x2f852980,
+-0x2104a600,
+-0x00000000,
++0x2104a300,
+ 0x73726556,
+ 0x206e6f69,
+ 0x2e4c4552,
+@@ -1258,4 +1254,4 @@ const unsigned int RX_PRU_SLICE0_b00_DMac[]= {
+ 0x48435449,
+ 0x2e32305f,
+ 0x312e3230,
+-0x32302e32 };
++0x34302e32 };
+diff --git a/src/per/firmware/icssg/dualmac/RX_PRU_SLICE1_bin.h b/src/per/firmware/icssg/dualmac/RX_PRU_SLICE1_bin.h
+index 67f5760b..4cb44842 100644
+--- a/src/per/firmware/icssg/dualmac/RX_PRU_SLICE1_bin.h
++++ b/src/per/firmware/icssg/dualmac/RX_PRU_SLICE1_bin.h
+@@ -1,4 +1,4 @@
+-/*
++/* 
+  * RX_PRU_SLICE1_bin.h
+  *
+  *
+@@ -21,7 +21,7 @@
+  * code license limitations below) in the documentation and/or other materials provided
+  * with the distribution
+  *
+- * Redistribution and use in binary form, without modification, are permitted provided
++ * Redistribution and use in binary form, without modification, are permitted provided 
+  * that the following conditions are met:
+  *       No reverse engineering, decompilation, or disassembly of this software is
+  *       permitted with respect to any software provided in binary form.
+@@ -36,19 +36,19 @@
+  *       Any redistribution and use of any object code compiled from the source code and
+  *   any resulting derivative works, are licensed by TI for use only with TI Devices.
+  *
+- * Neither the name of Texas Instruments Incorporated nor the names of its suppliers
+- * may be used to endorse or  promote products derived from this software without
++ * Neither the name of Texas Instruments Incorporated nor the names of its suppliers 
++ * may be used to endorse or  promote products derived from this software without 
+  * specific prior written permission.
+  *
+  * DISCLAIMER.
+  *
+  * THIS SOFTWARE IS PROVIDED BY TI AND TI'S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED
+  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+- * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND
++ * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND 
+  * TI'S LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  *
+@@ -287,11 +287,11 @@ const unsigned int RX_PRU_SLICE1_b00_DMac[]= {
+ 0x24000601,
+ 0x2ec80061,
+ 0xcf0061ff,
+-0x2f0f108a,
+-0x2f480061,
++0x2f0f1082,
+ 0x51008a03,
+ 0x05018a8a,
+-0x7f0000fc,
++0x7f0000fd,
++0x2f480061,
+ 0x7f0000d5,
+ 0x69010e4e,
+ 0x1091918a,
+@@ -953,15 +953,12 @@ const unsigned int RX_PRU_SLICE1_b00_DMac[]= {
+ 0x240010df,
+ 0x24002f82,
+ 0x81240082,
+-0xd1089e16,
+-0xd1035d09,
+-0xd1025d0d,
++0xd1089e13,
++0xd1035d06,
++0xd1025d0a,
+ 0x24007b01,
+ 0x814c0901,
+-0x1f1febeb,
+-0x2f0b006b,
+-0xc9035f02,
+-0x1f17ffff,
++0x1f12ffff,
+ 0x7b000030,
+ 0x2e8a1582,
+ 0xc9000b08,
+@@ -987,8 +984,6 @@ const unsigned int RX_PRU_SLICE1_b00_DMac[]= {
+ 0x24000a8a,
+ 0x2f181082,
+ 0x2e8a9582,
+-0x1f1febeb,
+-0x2f0b006b,
+ 0x1d0b9e9e,
+ 0xd1031505,
+ 0x24318093,
+@@ -1016,17 +1011,19 @@ const unsigned int RX_PRU_SLICE1_b00_DMac[]= {
+ 0x2f078007,
+ 0x24004101,
+ 0x814c0901,
+-0xd10315fa,
++0xd10315fc,
+ 0x10d6d685,
+ 0x2f078085,
+-0x790000f7,
++0x790000f9,
++0x1f1febeb,
++0x2f0b006b,
+ 0xd100151e,
+ 0x51021d03,
+ 0x51001d08,
+ 0x51011d06,
+ 0xc900eb03,
+ 0x2400031d,
+-0x21040100,
++0x2103fe00,
+ 0x2400001d,
+ 0x7900006e,
+ 0x2400031d,
+@@ -1055,7 +1052,7 @@ const unsigned int RX_PRU_SLICE1_b00_DMac[]= {
+ 0x51011d06,
+ 0xc900eb03,
+ 0x2400031d,
+-0x21040100,
++0x2103fe00,
+ 0x2400001d,
+ 0x79000078,
+ 0x2400031d,
+@@ -1269,8 +1266,7 @@ const unsigned int RX_PRU_SLICE1_b00_DMac[]= {
+ 0x1d089e9e,
+ 0x2efe0060,
+ 0x2f85a980,
+-0x2104be00,
+-0x00000000,
++0x2104bb00,
+ 0x73726556,
+ 0x206e6f69,
+ 0x2e4c4552,
+@@ -1282,4 +1278,4 @@ const unsigned int RX_PRU_SLICE1_b00_DMac[]= {
+ 0x48435449,
+ 0x2e32305f,
+ 0x312e3230,
+-0x32302e32 };
++0x34302e32 };
+diff --git a/src/per/firmware/icssg/dualmac/TX_PRU_SLICE0_bin.h b/src/per/firmware/icssg/dualmac/TX_PRU_SLICE0_bin.h
+index 3444ee01..3f8d7a42 100644
+--- a/src/per/firmware/icssg/dualmac/TX_PRU_SLICE0_bin.h
++++ b/src/per/firmware/icssg/dualmac/TX_PRU_SLICE0_bin.h
+@@ -1,4 +1,4 @@
+-/*
++/* 
+  * TX_PRU_SLICE0_bin.h
+  *
+  *
+@@ -21,7 +21,7 @@
+  * code license limitations below) in the documentation and/or other materials provided
+  * with the distribution
+  *
+- * Redistribution and use in binary form, without modification, are permitted provided
++ * Redistribution and use in binary form, without modification, are permitted provided 
+  * that the following conditions are met:
+  *       No reverse engineering, decompilation, or disassembly of this software is
+  *       permitted with respect to any software provided in binary form.
+@@ -36,19 +36,19 @@
+  *       Any redistribution and use of any object code compiled from the source code and
+  *   any resulting derivative works, are licensed by TI for use only with TI Devices.
+  *
+- * Neither the name of Texas Instruments Incorporated nor the names of its suppliers
+- * may be used to endorse or  promote products derived from this software without
++ * Neither the name of Texas Instruments Incorporated nor the names of its suppliers 
++ * may be used to endorse or  promote products derived from this software without 
+  * specific prior written permission.
+  *
+  * DISCLAIMER.
+  *
+  * THIS SOFTWARE IS PROVIDED BY TI AND TI'S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED
+  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+- * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND
++ * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND 
+  * TI'S LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  *
+@@ -1294,4 +1294,4 @@ const unsigned int TX_PRU_SLICE0_b00_DMac[]= {
+ 0x48435449,
+ 0x2e32305f,
+ 0x312e3230,
+-0x32302e32 };
++0x34302e32 };
+diff --git a/src/per/firmware/icssg/dualmac/TX_PRU_SLICE1_bin.h b/src/per/firmware/icssg/dualmac/TX_PRU_SLICE1_bin.h
+index 56d6e85b..156d9701 100644
+--- a/src/per/firmware/icssg/dualmac/TX_PRU_SLICE1_bin.h
++++ b/src/per/firmware/icssg/dualmac/TX_PRU_SLICE1_bin.h
+@@ -1,4 +1,4 @@
+-/*
++/* 
+  * TX_PRU_SLICE1_bin.h
+  *
+  *
+@@ -21,7 +21,7 @@
+  * code license limitations below) in the documentation and/or other materials provided
+  * with the distribution
+  *
+- * Redistribution and use in binary form, without modification, are permitted provided
++ * Redistribution and use in binary form, without modification, are permitted provided 
+  * that the following conditions are met:
+  *       No reverse engineering, decompilation, or disassembly of this software is
+  *       permitted with respect to any software provided in binary form.
+@@ -36,19 +36,19 @@
+  *       Any redistribution and use of any object code compiled from the source code and
+  *   any resulting derivative works, are licensed by TI for use only with TI Devices.
+  *
+- * Neither the name of Texas Instruments Incorporated nor the names of its suppliers
+- * may be used to endorse or  promote products derived from this software without
++ * Neither the name of Texas Instruments Incorporated nor the names of its suppliers 
++ * may be used to endorse or  promote products derived from this software without 
+  * specific prior written permission.
+  *
+  * DISCLAIMER.
+  *
+  * THIS SOFTWARE IS PROVIDED BY TI AND TI'S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED
+  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+- * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND
++ * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND 
+  * TI'S LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  *
+@@ -1146,4 +1146,4 @@ const unsigned int TX_PRU_SLICE1_b00_DMac[]= {
+ 0x48435449,
+ 0x2e32305f,
+ 0x312e3230,
+-0x32302e32 };
++0x34302e32 };
+diff --git a/src/per/firmware/icssg/dualmac/ethernet_mac_1g_commit_id.txt b/src/per/firmware/icssg/dualmac/ethernet_mac_1g_commit_id.txt
+index 69200382..d8a0592e 100644
+--- a/src/per/firmware/icssg/dualmac/ethernet_mac_1g_commit_id.txt
++++ b/src/per/firmware/icssg/dualmac/ethernet_mac_1g_commit_id.txt
+@@ -1 +1 @@
+-REL.PRU-ICSS-ETHERNET-SWITCH_02.02.12.02
+\ No newline at end of file
++REL.PRU-ICSS-ETHERNET-SWITCH_02.02.12.04
+\ No newline at end of file
+diff --git a/src/per/firmware/icssg/switch/RTU0_SLICE0_bin.h b/src/per/firmware/icssg/switch/RTU0_SLICE0_bin.h
+index 6cf7bd3b..de8ca733 100644
+--- a/src/per/firmware/icssg/switch/RTU0_SLICE0_bin.h
++++ b/src/per/firmware/icssg/switch/RTU0_SLICE0_bin.h
+@@ -1,4 +1,4 @@
+-/*
++/* 
+  * RTU0_SLICE0_bin.h
+  *
+  *
+@@ -21,7 +21,7 @@
+  * code license limitations below) in the documentation and/or other materials provided
+  * with the distribution
+  *
+- * Redistribution and use in binary form, without modification, are permitted provided
++ * Redistribution and use in binary form, without modification, are permitted provided 
+  * that the following conditions are met:
+  *       No reverse engineering, decompilation, or disassembly of this software is
+  *       permitted with respect to any software provided in binary form.
+@@ -36,19 +36,19 @@
+  *       Any redistribution and use of any object code compiled from the source code and
+  *   any resulting derivative works, are licensed by TI for use only with TI Devices.
+  *
+- * Neither the name of Texas Instruments Incorporated nor the names of its suppliers
+- * may be used to endorse or  promote products derived from this software without
++ * Neither the name of Texas Instruments Incorporated nor the names of its suppliers 
++ * may be used to endorse or  promote products derived from this software without 
+  * specific prior written permission.
+  *
+  * DISCLAIMER.
+  *
+  * THIS SOFTWARE IS PROVIDED BY TI AND TI'S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED
+  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+- * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND
++ * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND 
+  * TI'S LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  *
+diff --git a/src/per/firmware/icssg/switch/RTU0_SLICE1_bin.h b/src/per/firmware/icssg/switch/RTU0_SLICE1_bin.h
+index cd298d03..8dafd75f 100644
+--- a/src/per/firmware/icssg/switch/RTU0_SLICE1_bin.h
++++ b/src/per/firmware/icssg/switch/RTU0_SLICE1_bin.h
+@@ -1,6 +1,6 @@
+-/*
++/* 
+  * RTU0_SLICE1_bin.h
+- *
++ * 
+  *
+  * Copyright (c) 2023, Texas Instruments Incorporated
+  * All rights reserved not granted herein.
+@@ -21,7 +21,7 @@
+  * code license limitations below) in the documentation and/or other materials provided
+  * with the distribution
+  *
+- * Redistribution and use in binary form, without modification, are permitted provided
++ * Redistribution and use in binary form, without modification, are permitted provided 
+  * that the following conditions are met:
+  *       No reverse engineering, decompilation, or disassembly of this software is
+  *       permitted with respect to any software provided in binary form.
+@@ -36,19 +36,19 @@
+  *       Any redistribution and use of any object code compiled from the source code and
+  *   any resulting derivative works, are licensed by TI for use only with TI Devices.
+  *
+- * Neither the name of Texas Instruments Incorporated nor the names of its suppliers
+- * may be used to endorse or  promote products derived from this software without
++ * Neither the name of Texas Instruments Incorporated nor the names of its suppliers 
++ * may be used to endorse or  promote products derived from this software without 
+  * specific prior written permission.
+  *
+  * DISCLAIMER.
+  *
+  * THIS SOFTWARE IS PROVIDED BY TI AND TI'S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED
+  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+- * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND
++ * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND 
+  * TI'S LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  *
+diff --git a/src/per/firmware/icssg/switch/RX_PRU_SLICE0_bin.h b/src/per/firmware/icssg/switch/RX_PRU_SLICE0_bin.h
+index 00bc576b..e3261a37 100644
+--- a/src/per/firmware/icssg/switch/RX_PRU_SLICE0_bin.h
++++ b/src/per/firmware/icssg/switch/RX_PRU_SLICE0_bin.h
+@@ -1,4 +1,4 @@
+-/*
++/* 
+  * RX_PRU_SLICE0_bin.h
+  *
+  *
+@@ -21,7 +21,7 @@
+  * code license limitations below) in the documentation and/or other materials provided
+  * with the distribution
+  *
+- * Redistribution and use in binary form, without modification, are permitted provided
++ * Redistribution and use in binary form, without modification, are permitted provided 
+  * that the following conditions are met:
+  *       No reverse engineering, decompilation, or disassembly of this software is
+  *       permitted with respect to any software provided in binary form.
+@@ -36,19 +36,19 @@
+  *       Any redistribution and use of any object code compiled from the source code and
+  *   any resulting derivative works, are licensed by TI for use only with TI Devices.
+  *
+- * Neither the name of Texas Instruments Incorporated nor the names of its suppliers
+- * may be used to endorse or  promote products derived from this software without
++ * Neither the name of Texas Instruments Incorporated nor the names of its suppliers 
++ * may be used to endorse or  promote products derived from this software without 
+  * specific prior written permission.
+  *
+  * DISCLAIMER.
+  *
+  * THIS SOFTWARE IS PROVIDED BY TI AND TI'S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED
+  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+- * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND
++ * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND 
+  * TI'S LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  *
+@@ -529,11 +529,11 @@ const unsigned int RX_PRU_SLICE0_b00_Swt[]= {
+ 0x24000601,
+ 0x2ec80061,
+ 0xcf0061ff,
+-0x2f0f108a,
+-0x2f480061,
++0x2f0f1082,
+ 0x51008a03,
+ 0x05018a8a,
+-0x7f0000fc,
++0x7f0000fd,
++0x2f480061,
+ 0x7f0000d5,
+ 0x69010e4e,
+ 0x1091918a,
+@@ -1237,15 +1237,12 @@ const unsigned int RX_PRU_SLICE0_b00_Swt[]= {
+ 0x240010df,
+ 0x24002382,
+ 0x81240082,
+-0xd1089e16,
+-0xd1035d09,
+-0xd1025d0d,
++0xd1089e13,
++0xd1035d06,
++0xd1025d0a,
+ 0x24007a01,
+ 0x81440901,
+-0x1f1febeb,
+-0x2f0b006b,
+-0xc9035f02,
+-0x1f17ffff,
++0x1f12ffff,
+ 0x7b000084,
+ 0x2e8a1582,
+ 0xc9000b08,
+@@ -1271,8 +1268,6 @@ const unsigned int RX_PRU_SLICE0_b00_Swt[]= {
+ 0x24000a8a,
+ 0x2f181082,
+ 0x2e8a9582,
+-0x1f1febeb,
+-0x2f0b006b,
+ 0x1d0b9e9e,
+ 0xd1031505,
+ 0x24318093,
+@@ -1300,20 +1295,22 @@ const unsigned int RX_PRU_SLICE0_b00_Swt[]= {
+ 0x2f078007,
+ 0x24004001,
+ 0x81440901,
+-0xd303154e,
++0xd3031550,
+ 0x24002e01,
+ 0x2ec80061,
+ 0x2f480061,
+ 0x10d6d685,
+ 0x2f078085,
+-0x7b000048,
++0x7b00004a,
++0x1f1febeb,
++0x2f0b006b,
+ 0xd100152e,
+ 0x51021d03,
+ 0x51001d08,
+ 0x51011d06,
+ 0xc900eb03,
+ 0x2400031d,
+-0x21054000,
++0x21053d00,
+ 0x2400001d,
+ 0x7900009c,
+ 0x2400031d,
+@@ -1358,7 +1355,7 @@ const unsigned int RX_PRU_SLICE0_b00_Swt[]= {
+ 0x51011d06,
+ 0xc900eb03,
+ 0x2400031d,
+-0x21054000,
++0x21053d00,
+ 0x2400001d,
+ 0x790000a8,
+ 0x2400031d,
+@@ -1637,4 +1634,4 @@ const unsigned int RX_PRU_SLICE0_b00_Swt[]= {
+ 0x1d089e9e,
+ 0x2efe0060,
+ 0x2f852980,
+-0x21062e00 };
++0x21062b00 };
+diff --git a/src/per/firmware/icssg/switch/RX_PRU_SLICE1_bin.h b/src/per/firmware/icssg/switch/RX_PRU_SLICE1_bin.h
+index 385abd36..a210a2fb 100644
+--- a/src/per/firmware/icssg/switch/RX_PRU_SLICE1_bin.h
++++ b/src/per/firmware/icssg/switch/RX_PRU_SLICE1_bin.h
+@@ -1,4 +1,4 @@
+-/*
++/* 
+  * RX_PRU_SLICE1_bin.h
+  *
+  *
+@@ -21,7 +21,7 @@
+  * code license limitations below) in the documentation and/or other materials provided
+  * with the distribution
+  *
+- * Redistribution and use in binary form, without modification, are permitted provided
++ * Redistribution and use in binary form, without modification, are permitted provided 
+  * that the following conditions are met:
+  *       No reverse engineering, decompilation, or disassembly of this software is
+  *       permitted with respect to any software provided in binary form.
+@@ -36,19 +36,19 @@
+  *       Any redistribution and use of any object code compiled from the source code and
+  *   any resulting derivative works, are licensed by TI for use only with TI Devices.
+  *
+- * Neither the name of Texas Instruments Incorporated nor the names of its suppliers
+- * may be used to endorse or  promote products derived from this software without
++ * Neither the name of Texas Instruments Incorporated nor the names of its suppliers 
++ * may be used to endorse or  promote products derived from this software without 
+  * specific prior written permission.
+  *
+  * DISCLAIMER.
+  *
+  * THIS SOFTWARE IS PROVIDED BY TI AND TI'S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED
+  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+- * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND
++ * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND 
+  * TI'S LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  *
+@@ -544,11 +544,11 @@ const unsigned int RX_PRU_SLICE1_b00_Swt[]= {
+ 0x24000601,
+ 0x2ec80061,
+ 0xcf0061ff,
+-0x2f0f108a,
+-0x2f480061,
++0x2f0f1082,
+ 0x51008a03,
+ 0x05018a8a,
+-0x7f0000fc,
++0x7f0000fd,
++0x2f480061,
+ 0x7f0000d5,
+ 0x69010e4e,
+ 0x1091918a,
+@@ -1255,15 +1255,12 @@ const unsigned int RX_PRU_SLICE1_b00_Swt[]= {
+ 0x240010df,
+ 0x24002f82,
+ 0x81240082,
+-0xd1089e16,
+-0xd1035d09,
+-0xd1025d0d,
++0xd1089e13,
++0xd1035d06,
++0xd1025d0a,
+ 0x24007b01,
+ 0x814c0901,
+-0x1f1febeb,
+-0x2f0b006b,
+-0xc9035f02,
+-0x1f17ffff,
++0x1f12ffff,
+ 0x7b000086,
+ 0x2e8a1582,
+ 0xc9000b08,
+@@ -1289,8 +1286,6 @@ const unsigned int RX_PRU_SLICE1_b00_Swt[]= {
+ 0x24000a8a,
+ 0x2f181082,
+ 0x2e8a9582,
+-0x1f1febeb,
+-0x2f0b006b,
+ 0x1d0b9e9e,
+ 0xd1031505,
+ 0x24318093,
+@@ -1318,20 +1313,22 @@ const unsigned int RX_PRU_SLICE1_b00_Swt[]= {
+ 0x2f078007,
+ 0x24004101,
+ 0x814c0901,
+-0xd3031550,
++0xd3031552,
+ 0x24002f01,
+ 0x2ec80061,
+ 0x2f480061,
+ 0x10d6d685,
+ 0x2f078085,
+-0x7b00004a,
++0x7b00004c,
++0x1f1febeb,
++0x2f0b006b,
+ 0xd100152e,
+ 0x51021d03,
+ 0x51001d08,
+ 0x51011d06,
+ 0xc900eb03,
+ 0x2400031d,
+-0x21055200,
++0x21054f00,
+ 0x2400001d,
+ 0x7900009d,
+ 0x2400031d,
+@@ -1376,7 +1373,7 @@ const unsigned int RX_PRU_SLICE1_b00_Swt[]= {
+ 0x51011d06,
+ 0xc900eb03,
+ 0x2400031d,
+-0x21055200,
++0x21054f00,
+ 0x2400001d,
+ 0x790000a9,
+ 0x2400031d,
+@@ -1657,4 +1654,4 @@ const unsigned int RX_PRU_SLICE1_b00_Swt[]= {
+ 0x1d089e9e,
+ 0x2efe0060,
+ 0x2f85a980,
+-0x21064200 };
++0x21063f00 };
+diff --git a/src/per/firmware/icssg/switch/TX_PRU_SLICE0_bin.h b/src/per/firmware/icssg/switch/TX_PRU_SLICE0_bin.h
+index 9740ef68..44e2a861 100644
+--- a/src/per/firmware/icssg/switch/TX_PRU_SLICE0_bin.h
++++ b/src/per/firmware/icssg/switch/TX_PRU_SLICE0_bin.h
+@@ -1,6 +1,6 @@
+-/*
++/* 
+  * TX_PRU_SLICE0_bin.h
+- *
++ * 
+  *
+  * Copyright (c) 2023, Texas Instruments Incorporated
+  * All rights reserved not granted herein.
+@@ -21,7 +21,7 @@
+  * code license limitations below) in the documentation and/or other materials provided
+  * with the distribution
+  *
+- * Redistribution and use in binary form, without modification, are permitted provided
++ * Redistribution and use in binary form, without modification, are permitted provided 
+  * that the following conditions are met:
+  *       No reverse engineering, decompilation, or disassembly of this software is
+  *       permitted with respect to any software provided in binary form.
+@@ -36,19 +36,19 @@
+  *       Any redistribution and use of any object code compiled from the source code and
+  *   any resulting derivative works, are licensed by TI for use only with TI Devices.
+  *
+- * Neither the name of Texas Instruments Incorporated nor the names of its suppliers
+- * may be used to endorse or  promote products derived from this software without
++ * Neither the name of Texas Instruments Incorporated nor the names of its suppliers 
++ * may be used to endorse or  promote products derived from this software without 
+  * specific prior written permission.
+  *
+  * DISCLAIMER.
+  *
+  * THIS SOFTWARE IS PROVIDED BY TI AND TI'S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED
+  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+- * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND
++ * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND 
+  * TI'S LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  *
+diff --git a/src/per/firmware/icssg/switch/TX_PRU_SLICE1_bin.h b/src/per/firmware/icssg/switch/TX_PRU_SLICE1_bin.h
+index c142af4a..1a67ff14 100644
+--- a/src/per/firmware/icssg/switch/TX_PRU_SLICE1_bin.h
++++ b/src/per/firmware/icssg/switch/TX_PRU_SLICE1_bin.h
+@@ -1,4 +1,4 @@
+-/*
++/* 
+  * TX_PRU_SLICE1_bin.h
+  *
+  *
+@@ -21,7 +21,7 @@
+  * code license limitations below) in the documentation and/or other materials provided
+  * with the distribution
+  *
+- * Redistribution and use in binary form, without modification, are permitted provided
++ * Redistribution and use in binary form, without modification, are permitted provided 
+  * that the following conditions are met:
+  *       No reverse engineering, decompilation, or disassembly of this software is
+  *       permitted with respect to any software provided in binary form.
+@@ -36,19 +36,19 @@
+  *       Any redistribution and use of any object code compiled from the source code and
+  *   any resulting derivative works, are licensed by TI for use only with TI Devices.
+  *
+- * Neither the name of Texas Instruments Incorporated nor the names of its suppliers
+- * may be used to endorse or  promote products derived from this software without
++ * Neither the name of Texas Instruments Incorporated nor the names of its suppliers 
++ * may be used to endorse or  promote products derived from this software without 
+  * specific prior written permission.
+  *
+  * DISCLAIMER.
+  *
+  * THIS SOFTWARE IS PROVIDED BY TI AND TI'S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED
+  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+- * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND
++ * AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND 
+  * TI'S LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  *
+diff --git a/src/per/firmware/icssg/switch/ethernet_switch_1g_commit_id.txt b/src/per/firmware/icssg/switch/ethernet_switch_1g_commit_id.txt
+index 69200382..d8a0592e 100644
+--- a/src/per/firmware/icssg/switch/ethernet_switch_1g_commit_id.txt
++++ b/src/per/firmware/icssg/switch/ethernet_switch_1g_commit_id.txt
+@@ -1 +1 @@
+-REL.PRU-ICSS-ETHERNET-SWITCH_02.02.12.02
+\ No newline at end of file
++REL.PRU-ICSS-ETHERNET-SWITCH_02.02.12.04
+\ No newline at end of file
+diff --git a/src/per/icssg.c b/src/per/icssg.c
+index ba315b6e..cc803141 100644
+--- a/src/per/icssg.c
++++ b/src/per/icssg.c
+@@ -226,14 +226,14 @@ static int32_t Icssg_ioctlPreemptVerifyDisable(Icssg_Handle hIcssg,
+ 
+ static int32_t Icssg_ioctlPreemptGetVerifyState(Icssg_Handle hIcssg,
+                                                 Enet_MacPort macPort,
+-                                                Icssg_PreemptVerifyState *status);
++                                                EnetMacPort_PreemptVerifyStatus *status);
+ 
+ static int32_t Icssg_ioctlPreemptGetMinFragSizeLocal(Icssg_Handle hIcssg,
+                                                      Enet_MacPort macPort,
+                                                      uint8_t *minFragSizeLocal);
+ 
+ static int32_t Icssg_ioctlPreemptSetMinFragSizeRemote(Icssg_Handle hIcssg,
+-                                                      IcssgMacPort_PreemptSetMinFragSizeRemoteInArgs *minFragSizeRemoteArgs);
++                                                      EnetMacPort_SetPreemptMinFragSizeInArgs *minFragSizeRemoteArgs);
+ 
+ static int32_t Icssg_ioctlPortLinkCfg(Icssg_Handle hIcssg,
+                                       const EnetPer_PortLinkCfg *portLinkCfg);
+@@ -445,42 +445,50 @@ static Enet_IoctlValidate gIcssg_ioctlValidate[] =
+                           sizeof(IcssgMacPort_SetMacAddressInArgs),
+                           0U),
+ 
+-    ENET_IOCTL_VALID_PRMS(ICSSG_MACPORT_IOCTL_PREEMPT_TX_ENABLE,
++    ENET_IOCTL_VALID_PRMS(ENET_MACPORT_IOCTL_ENABLE_PREEMPTION,
+                           sizeof(Enet_MacPort),
+                           0U),
+ 
+-    ENET_IOCTL_VALID_PRMS(ICSSG_MACPORT_IOCTL_PREEMPT_TX_DISABLE,
++    ENET_IOCTL_VALID_PRMS(ENET_MACPORT_IOCTL_DISABLE_PREEMPTION,
+                           sizeof(Enet_MacPort),
+                           0U),
+ 
+-    ENET_IOCTL_VALID_PRMS(ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ENABLE_STATUS,
++    ENET_IOCTL_VALID_PRMS(ENET_MACPORT_IOCTL_GET_PREEMPTION_ENABLE_STATUS,
+                           sizeof(Enet_MacPort),
+                           0U),
+ 
+-    ENET_IOCTL_VALID_PRMS(ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ACTIVE_STATUS,
++    ENET_IOCTL_VALID_PRMS(ENET_MACPORT_IOCTL_GET_PREEMPTION_ACTIVE_STATUS,
+                           sizeof(Enet_MacPort),
+                           0U),
+ 
+-    ENET_IOCTL_VALID_PRMS(ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_ENABLE,
++    ENET_IOCTL_VALID_PRMS(ENET_MACPORT_IOCTL_ENABLE_PREEMPT_VERIFICATION,
+                           sizeof(Enet_MacPort),
+                           0U),
+ 
+-    ENET_IOCTL_VALID_PRMS(ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_DISABLE,
++    ENET_IOCTL_VALID_PRMS(ENET_MACPORT_IOCTL_DISABLE_PREEMPT_VERIFICATION,
+                           sizeof(Enet_MacPort),
+                           0U),
+ 
+-    ENET_IOCTL_VALID_PRMS(ICSSG_MACPORT_IOCTL_PREEMPT_GET_VERIFY_STATE,
++    ENET_IOCTL_VALID_PRMS(ENET_MACPORT_IOCTL_GET_PREEMPT_VERIFY_STATUS,
+                           sizeof(Enet_MacPort),
+-                          sizeof(Icssg_PreemptVerifyState)),
++                          sizeof(EnetMacPort_PreemptVerifyStatus)),
+ 
+-    ENET_IOCTL_VALID_PRMS(ICSSG_MACPORT_IOCTL_PREEMPT_GET_MIN_FRAG_SIZE_LOCAL,
++    ENET_IOCTL_VALID_PRMS(ENET_MACPORT_IOCTL_GET_PREEMPT_MIN_FRAG_SIZE,
+                           sizeof(Enet_MacPort),
+                           sizeof(uint8_t)),
+ 
+-    ENET_IOCTL_VALID_PRMS(ICSSG_MACPORT_IOCTL_PREEMPT_SET_MIN_FRAG_SIZE_REMOTE,
+-                          sizeof(IcssgMacPort_PreemptSetMinFragSizeRemoteInArgs),
++    ENET_IOCTL_VALID_PRMS(ENET_MACPORT_IOCTL_SET_PREEMPT_MIN_FRAG_SIZE,
++                          sizeof(EnetMacPort_SetPreemptMinFragSizeInArgs),
+                           0U),
+ 
++    ENET_IOCTL_VALID_PRMS(ENET_MACPORT_IOCTL_SET_PREEMPT_QUEUE,
++                          sizeof(EnetMacPort_SetPreemptQueueInArgs),
++                          0U),
++
++    ENET_IOCTL_VALID_PRMS(ENET_MACPORT_IOCTL_GET_PREEMPT_MIN_FRAG_SIZE,
++                          sizeof(EnetMacPort_GenericInArgs),
++                          sizeof(uint8_t)),
++
+     ENET_IOCTL_VALID_PRMS(ICSSG_HOSTPORT_IOCTL_SET_MACADDR,
+                           sizeof(Icssg_MacAddr),
+                           0U),
+@@ -559,15 +567,6 @@ static IcssgInternalIoctlHandlerTableEntry_t IcssgInternalIoctlHandlerTable[] =
+     ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ICSSG_FDB_IOCTL_REMOVE_AGEABLE_ENTRIES),
+     ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ICSSG_MACPORT_IOCTL_SET_MACADDR),
+     ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ICSSG_HOSTPORT_IOCTL_SET_MACADDR),
+-    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ICSSG_MACPORT_IOCTL_PREEMPT_TX_ENABLE),
+-    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ICSSG_MACPORT_IOCTL_PREEMPT_TX_DISABLE),
+-    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ENABLE_STATUS),
+-    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ACTIVE_STATUS),
+-    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_ENABLE),
+-    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_DISABLE),
+-    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ICSSG_MACPORT_IOCTL_PREEMPT_GET_VERIFY_STATE),
+-    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ICSSG_MACPORT_IOCTL_PREEMPT_GET_MIN_FRAG_SIZE_LOCAL),
+-    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ICSSG_MACPORT_IOCTL_PREEMPT_SET_MIN_FRAG_SIZE_REMOTE),
+     ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_IOCTL_REGISTER_RX_DEFAULT_FLOW),
+     ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_IOCTL_UNREGISTER_RX_DEFAULT_FLOW),
+     ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_PER_IOCTL_ATTACH_CORE),
+@@ -596,7 +595,18 @@ static IcssgMacPortIoctlHandlerTableEntry_t IcssgMacPortIoctlHandlerTable[] =
+     ICSSG_MACPORT_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_MACPORT_IOCTL_GET_EGRESS_QOS_PRI_MAP), /*IOCTL Not supported*/
+     ICSSG_MACPORT_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_MACPORT_IOCTL_GET_PRI_REGEN_MAP), /*IOCTL Not supported*/
+     ICSSG_MACPORT_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_MACPORT_IOCTL_GET_INGRESS_DSCP_PRI_MAP), /*IOCTL Not supported*/
+-    ICSSG_MACPORT_IOCTL_HANDLER_ENTRY_INIT(ICSSG_MACPORT_IOCTL_REGISTER_HANDLER)
++    ICSSG_MACPORT_IOCTL_HANDLER_ENTRY_INIT(ICSSG_MACPORT_IOCTL_REGISTER_HANDLER),
++    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_MACPORT_IOCTL_ENABLE_PREEMPTION),
++    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_MACPORT_IOCTL_DISABLE_PREEMPTION),
++    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_MACPORT_IOCTL_GET_PREEMPTION_ENABLE_STATUS),
++    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_MACPORT_IOCTL_GET_PREEMPTION_ACTIVE_STATUS),
++    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_MACPORT_IOCTL_ENABLE_PREEMPT_VERIFICATION),
++    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_MACPORT_IOCTL_DISABLE_PREEMPT_VERIFICATION),
++    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_MACPORT_IOCTL_GET_PREEMPT_VERIFY_STATUS),
++    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_MACPORT_IOCTL_GET_PREEMPT_MIN_FRAG_SIZE),
++    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_MACPORT_IOCTL_SET_PREEMPT_MIN_FRAG_SIZE),
++    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_MACPORT_IOCTL_SET_PREEMPT_QUEUE),
++    ICSSG_IOCTL_HANDLER_ENTRY_INIT_DEFAULT(ENET_MACPORT_IOCTL_GET_QUEUE_PREEMPT_STATUS)
+ };
+ 
+ #if ((ENET_CFG_TRACE_LEVEL >= ENET_CFG_TRACE_LEVEL_ERROR) && ENET_CFG_IS_OFF(TRACE_DISABLE_INFOSTRING))
+@@ -774,27 +784,27 @@ static int32_t Icssg_disablePruss(Icssg_Handle hIcssg)
+ 
+ static uint32_t Icssg_getFwIdx(uint32_t instId)
+ {
+-	uint32_t fwIdx;
++    uint32_t fwIdx;
+ 
+-	switch(instId)
+-	{
+-	    case 0:
+-	    	fwIdx = 0;
+-	    	break;
++    switch(instId)
++    {
++        case 0:
++            fwIdx = 0;
++            break;
+ 
+-	    case 1:
+-	    	fwIdx = 1;
+-	    	break;
++        case 1:
++            fwIdx = 1;
++            break;
+ 
+-	    case 2:
+-	    	fwIdx = 0;
+-	    	break;
++        case 2:
++            fwIdx = 0;
++            break;
+ 
+-	    case 3:
+-	    	fwIdx = 1;
+-	    	break;
+-	}
+-	return fwIdx;
++        case 3:
++            fwIdx = 1;
++            break;
++    }
++    return fwIdx;
+ }
+ 
+ static Enet_MacPort Icssg_getMacFromInstId(uint32_t instId)
+@@ -2319,7 +2329,7 @@ static int32_t Icssg_ioctlPreemptVerifyDisable(Icssg_Handle hIcssg,
+ 
+ static int32_t Icssg_ioctlPreemptGetVerifyState(Icssg_Handle hIcssg,
+                                                 Enet_MacPort macPort,
+-                                                Icssg_PreemptVerifyState *status)
++                                                EnetMacPort_PreemptVerifyStatus *status)
+ {
+     uintptr_t dram = Icssg_getDramAddr(hIcssg, macPort);
+     int32_t retVal = ENET_EINVALIDPARAMS;
+@@ -2327,7 +2337,7 @@ static int32_t Icssg_ioctlPreemptGetVerifyState(Icssg_Handle hIcssg,
+     if ((macPort == ENET_MAC_PORT_1) ||
+         (macPort == ENET_MAC_PORT_2))
+     {
+-        *status = (Icssg_PreemptVerifyState)(Icssg_rd8(hIcssg, dram + PRE_EMPTION_VERIFY_STATUS));
++        *status = (EnetMacPort_PreemptVerifyStatus)(Icssg_rd8(hIcssg, dram + PRE_EMPTION_VERIFY_STATUS));
+         retVal = ENET_SOK;
+     }
+ 
+@@ -2354,7 +2364,7 @@ static int32_t Icssg_ioctlPreemptGetMinFragSizeLocal(Icssg_Handle hIcssg,
+ }
+ 
+ static int32_t Icssg_ioctlPreemptSetMinFragSizeRemote(Icssg_Handle hIcssg,
+-                                                      IcssgMacPort_PreemptSetMinFragSizeRemoteInArgs *minFragSizeRemoteArgs)
++                                                     EnetMacPort_SetPreemptMinFragSizeInArgs *minFragSizeRemoteArgs)
+ {
+     uintptr_t dram = Icssg_getDramAddr(hIcssg, minFragSizeRemoteArgs->macPort);
+     int32_t retVal = ENET_EINVALIDPARAMS;
+@@ -2363,7 +2373,7 @@ static int32_t Icssg_ioctlPreemptSetMinFragSizeRemote(Icssg_Handle hIcssg,
+         (minFragSizeRemoteArgs->macPort == ENET_MAC_PORT_2))
+     {
+         Icssg_wr16(hIcssg, dram + PRE_EMPTION_ADD_FRAG_SIZE_REMOTE,
+-                   (minFragSizeRemoteArgs->preemptMinFrageSizeRemote + 1) * 64);
++                   (minFragSizeRemoteArgs->preemptMinFragSize + 1) * 64);
+         retVal = ENET_SOK;
+     }
+ 
+@@ -4358,7 +4368,7 @@ int32_t Icssg_ioctl_handler_ICSSG_HOSTPORT_IOCTL_SET_MACADDR(EnetPer_Handle hPer
+ }
+ 
+ 
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_TX_ENABLE(EnetPer_Handle hPer,
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_ENABLE_PREEMPTION(EnetPer_Handle hPer,
+                                                                     uint32_t cmd,
+                                                                     Enet_IoctlPrms *prms)
+ {
+@@ -4366,7 +4376,7 @@ int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_TX_ENABLE(EnetPer_Handle
+     int32_t status = ENET_SOK;
+     Enet_MacPort macPort = *(Enet_MacPort *)prms->inArgs;
+ 
+-    Enet_assert(cmd == ICSSG_MACPORT_IOCTL_PREEMPT_TX_ENABLE);
++    Enet_assert(cmd == ENET_MACPORT_IOCTL_ENABLE_PREEMPTION);
+ 
+     if (!(hIcssg->isPremQueEnable))
+     {
+@@ -4383,7 +4393,7 @@ int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_TX_ENABLE(EnetPer_Handle
+     return status;
+ }
+ 
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_TX_DISABLE(EnetPer_Handle hPer,
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_DISABLE_PREEMPTION(EnetPer_Handle hPer,
+                                                                     uint32_t cmd,
+                                                                     Enet_IoctlPrms *prms)
+ {
+@@ -4391,7 +4401,7 @@ int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_TX_DISABLE(EnetPer_Handl
+     int32_t status = ENET_SOK;
+     Enet_MacPort macPort = *(Enet_MacPort *)prms->inArgs;
+ 
+-    Enet_assert(cmd == ICSSG_MACPORT_IOCTL_PREEMPT_TX_DISABLE);
++    Enet_assert(cmd == ENET_MACPORT_IOCTL_DISABLE_PREEMPTION);
+ 
+     status = Icssg_ioctlPreemptTxDisable(hIcssg, macPort);
+     ENETTRACE_ERR_IF((status != ENET_SINPROGRESS),
+@@ -4402,7 +4412,7 @@ int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_TX_DISABLE(EnetPer_Handl
+ }
+ 
+ 
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ENABLE_STATUS(EnetPer_Handle hPer,
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_GET_PREEMPTION_ENABLE_STATUS(EnetPer_Handle hPer,
+                                                                             uint32_t cmd,
+                                                                             Enet_IoctlPrms *prms)
+ {
+@@ -4411,7 +4421,7 @@ int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ENABLE_STATUS(Ene
+     Enet_MacPort macPort = *(Enet_MacPort *)prms->inArgs;
+     bool *enabled = (bool *)prms->outArgs;
+ 
+-    Enet_assert(cmd == ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ENABLE_STATUS);
++    Enet_assert(cmd == ENET_MACPORT_IOCTL_GET_PREEMPTION_ENABLE_STATUS);
+ 
+     status = Icssg_ioctlPreemptGetTxEnableStatus(hIcssg, macPort, enabled);
+     ENETTRACE_ERR_IF((status != ENET_SOK),
+@@ -4422,7 +4432,7 @@ int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ENABLE_STATUS(Ene
+ }
+ 
+ 
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ACTIVE_STATUS(EnetPer_Handle hPer,
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_GET_PREEMPTION_ACTIVE_STATUS(EnetPer_Handle hPer,
+                                                                             uint32_t cmd,
+                                                                             Enet_IoctlPrms *prms)
+ {
+@@ -4431,7 +4441,7 @@ int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ACTIVE_STATUS(Ene
+     Enet_MacPort macPort = *(Enet_MacPort *)prms->inArgs;
+     bool *active = (bool *)prms->outArgs;
+ 
+-    Enet_assert(cmd == ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ACTIVE_STATUS);
++    Enet_assert(cmd == ENET_MACPORT_IOCTL_GET_PREEMPTION_ACTIVE_STATUS);
+ 
+     status = Icssg_ioctlPreemptGetTxActiveStatus(hIcssg, macPort, active);
+     ENETTRACE_ERR_IF((status != ENET_SOK),
+@@ -4442,7 +4452,7 @@ int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ACTIVE_STATUS(Ene
+ }
+ 
+ 
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_ENABLE(EnetPer_Handle hPer,
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_ENABLE_PREEMPT_VERIFICATION(EnetPer_Handle hPer,
+                                                                         uint32_t cmd,
+                                                                         Enet_IoctlPrms *prms)
+ {
+@@ -4450,7 +4460,7 @@ int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_ENABLE(EnetPer_Ha
+     int32_t status = ENET_SOK;
+     Enet_MacPort macPort = *(Enet_MacPort *)prms->inArgs;
+ 
+-    Enet_assert(cmd == ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_ENABLE);
++    Enet_assert(cmd == ENET_MACPORT_IOCTL_ENABLE_PREEMPT_VERIFICATION);
+ 
+     status = Icssg_ioctlPreemptVerifyEnable(hIcssg, macPort);
+     ENETTRACE_ERR_IF((status != ENET_SINPROGRESS),
+@@ -4461,7 +4471,7 @@ int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_ENABLE(EnetPer_Ha
+ }
+ 
+ 
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_DISABLE(EnetPer_Handle hPer,
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_DISABLE_PREEMPT_VERIFICATION(EnetPer_Handle hPer,
+                                                                         uint32_t cmd,
+                                                                         Enet_IoctlPrms *prms)
+ {
+@@ -4469,7 +4479,7 @@ int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_DISABLE(EnetPer_H
+     int32_t status = ENET_SOK;
+     Enet_MacPort macPort = *(Enet_MacPort *)prms->inArgs;
+ 
+-    Enet_assert(cmd == ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_DISABLE);
++    Enet_assert(cmd == ENET_MACPORT_IOCTL_DISABLE_PREEMPT_VERIFICATION);
+ 
+     status = Icssg_ioctlPreemptVerifyDisable(hIcssg, macPort);
+     ENETTRACE_ERR_IF((status != ENET_SINPROGRESS),
+@@ -4479,16 +4489,16 @@ int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_DISABLE(EnetPer_H
+     return status;
+ }
+ 
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_GET_VERIFY_STATE(EnetPer_Handle hPer,
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_GET_PREEMPT_VERIFY_STATUS(EnetPer_Handle hPer,
+                                                                         uint32_t cmd,
+                                                                         Enet_IoctlPrms *prms)
+ {
+     Icssg_Handle hIcssg = (Icssg_Handle)hPer;
+     int32_t status = ENET_SOK;
+     Enet_MacPort macPort = *(Enet_MacPort *)prms->inArgs;
+-    Icssg_PreemptVerifyState *outArgs = (Icssg_PreemptVerifyState *)prms->outArgs;
++    EnetMacPort_PreemptVerifyStatus *outArgs = (EnetMacPort_PreemptVerifyStatus *)prms->outArgs;
+ 
+-    Enet_assert(cmd == ICSSG_MACPORT_IOCTL_PREEMPT_GET_VERIFY_STATE);
++    Enet_assert(cmd == ENET_MACPORT_IOCTL_GET_PREEMPT_VERIFY_STATUS);
+ 
+     status = Icssg_ioctlPreemptGetVerifyState(hIcssg, macPort, outArgs);
+     ENETTRACE_ERR_IF((status != ENET_SOK),
+@@ -4497,7 +4507,7 @@ int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_GET_VERIFY_STATE(EnetPer
+     return status;
+ }
+ 
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_GET_MIN_FRAG_SIZE_LOCAL(EnetPer_Handle hPer,
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_GET_PREEMPT_MIN_FRAG_SIZE(EnetPer_Handle hPer,
+                                                                                 uint32_t cmd,
+                                                                                 Enet_IoctlPrms *prms)
+ {
+@@ -4506,7 +4516,7 @@ int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_GET_MIN_FRAG_SIZE_LOCAL(
+     Enet_MacPort macPort = *(Enet_MacPort *)prms->inArgs;
+     uint8_t *minFragSize = (uint8_t *)prms->outArgs;
+ 
+-    Enet_assert(cmd == ICSSG_MACPORT_IOCTL_PREEMPT_GET_MIN_FRAG_SIZE_LOCAL);
++    Enet_assert(cmd == ENET_MACPORT_IOCTL_GET_PREEMPT_MIN_FRAG_SIZE);
+ 
+     status = Icssg_ioctlPreemptGetMinFragSizeLocal(hIcssg, macPort, minFragSize);
+     ENETTRACE_ERR_IF((status != ENET_SOK),
+@@ -4516,24 +4526,51 @@ int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_GET_MIN_FRAG_SIZE_LOCAL(
+     return status;
+ }
+ 
+-int32_t Icssg_ioctl_handler_ICSSG_MACPORT_IOCTL_PREEMPT_SET_MIN_FRAG_SIZE_REMOTE(EnetPer_Handle hPer,
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_SET_PREEMPT_MIN_FRAG_SIZE(EnetPer_Handle hPer,
+                                                                                 uint32_t cmd,
+                                                                                 Enet_IoctlPrms *prms)
+ {
+     Icssg_Handle hIcssg = (Icssg_Handle)hPer;
+     int32_t status = ENET_SOK;
+-    IcssgMacPort_PreemptSetMinFragSizeRemoteInArgs *inArgs =
+-                (IcssgMacPort_PreemptSetMinFragSizeRemoteInArgs *)prms->inArgs;
++    EnetMacPort_SetPreemptMinFragSizeInArgs *inArgs =
++                (EnetMacPort_SetPreemptMinFragSizeInArgs *)prms->inArgs;
+ 
+-    Enet_assert(cmd == ICSSG_MACPORT_IOCTL_PREEMPT_SET_MIN_FRAG_SIZE_REMOTE);
++    Enet_assert(cmd == ENET_MACPORT_IOCTL_SET_PREEMPT_MIN_FRAG_SIZE);
+ 
+     status = Icssg_ioctlPreemptSetMinFragSizeRemote(hIcssg, inArgs);
+-    ENETTRACE_ERR_IF((status != ENET_SINPROGRESS),
++    ENETTRACE_ERR_IF((status != ENET_SOK),
+                         "%s: Port %u: failed to verify preempt disable: %d\r\n",
+                         ENET_PER_NAME(hIcssg), ENET_MACPORT_ID(inArgs->macPort), status);
+     return status;
+ }
+ 
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_SET_PREEMPT_QUEUE(EnetPer_Handle hPer,
++                                                                 uint32_t cmd,
++                                                                 Enet_IoctlPrms *prms)
++{
++
++    int32_t status = ENET_SOK;
++
++    Enet_assert(cmd == ENET_MACPORT_IOCTL_GET_QUEUE_PREEMPT_STATUS);
++
++    status = ENET_EINVALIDPARAMS;
++    Enet_assert(status != ENET_SOK);
++    return status;
++}
++
++int32_t Icssg_ioctl_handler_ENET_MACPORT_IOCTL_GET_QUEUE_PREEMPT_STATUS(EnetPer_Handle hPer,
++                                                                        uint32_t cmd,
++                                                                        Enet_IoctlPrms *prms)
++{
++    int32_t status = ENET_SOK;
++
++    Enet_assert(cmd == ENET_MACPORT_IOCTL_GET_QUEUE_PREEMPT_STATUS);
++
++    status = ENET_EINVALIDPARAMS;
++    Enet_assert(status != ENET_SOK);
++    return status;
++}
++
+ int32_t Icssg_ioctl_handler_ENET_IOCTL_REGISTER_RX_DEFAULT_FLOW(EnetPer_Handle hPer,
+                                                                 uint32_t cmd,
+                                                                 Enet_IoctlPrms *prms)
+diff --git a/src/per/icssg_ioctl_register.c b/src/per/icssg_ioctl_register.c
+index 5090d626..96b66e45 100644
+--- a/src/per/icssg_ioctl_register.c
++++ b/src/per/icssg_ioctl_register.c
+@@ -135,15 +135,17 @@ ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ICSSG_FDB_IOCTL_REMOVE_ALL_ENTRIES)
+ ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ICSSG_FDB_IOCTL_REMOVE_AGEABLE_ENTRIES)
+ ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ICSSG_MACPORT_IOCTL_SET_MACADDR)
+ ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ICSSG_HOSTPORT_IOCTL_SET_MACADDR)
+-ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ICSSG_MACPORT_IOCTL_PREEMPT_TX_ENABLE)
+-ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ICSSG_MACPORT_IOCTL_PREEMPT_TX_DISABLE)
+-ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ENABLE_STATUS)
+-ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ICSSG_MACPORT_IOCTL_PREEMPT_GET_TX_ACTIVE_STATUS)
+-ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_ENABLE)
+-ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ICSSG_MACPORT_IOCTL_PREEMPT_VERIFY_DISABLE)
+-ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ICSSG_MACPORT_IOCTL_PREEMPT_GET_VERIFY_STATE)
+-ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ICSSG_MACPORT_IOCTL_PREEMPT_GET_MIN_FRAG_SIZE_LOCAL)
+-ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ICSSG_MACPORT_IOCTL_PREEMPT_SET_MIN_FRAG_SIZE_REMOTE)
++ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_MACPORT_IOCTL_ENABLE_PREEMPTION)
++ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_MACPORT_IOCTL_DISABLE_PREEMPTION)
++ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_MACPORT_IOCTL_GET_PREEMPTION_ENABLE_STATUS)
++ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_MACPORT_IOCTL_GET_PREEMPTION_ACTIVE_STATUS)
++ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_MACPORT_IOCTL_ENABLE_PREEMPT_VERIFICATION)
++ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_MACPORT_IOCTL_DISABLE_PREEMPT_VERIFICATION)
++ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_MACPORT_IOCTL_GET_PREEMPT_VERIFY_STATUS)
++ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_MACPORT_IOCTL_GET_PREEMPT_MIN_FRAG_SIZE)
++ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_MACPORT_IOCTL_SET_PREEMPT_MIN_FRAG_SIZE)
++ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_MACPORT_IOCTL_SET_PREEMPT_QUEUE)
++ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_MACPORT_IOCTL_GET_QUEUE_PREEMPT_STATUS)
+ ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_IOCTL_REGISTER_RX_DEFAULT_FLOW)
+ ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_IOCTL_UNREGISTER_RX_DEFAULT_FLOW)
+ ICSSG_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_PER_IOCTL_ATTACH_CORE)
+@@ -166,4 +168,4 @@ ICSSG_MACPORT_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_MACPORT_IOCTL_SET_PRI_REGEN_MA
+ ICSSG_MACPORT_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_MACPORT_IOCTL_SET_INGRESS_DSCP_PRI_MAP)
+ ICSSG_MACPORT_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_MACPORT_IOCTL_GET_EGRESS_QOS_PRI_MAP)
+ ICSSG_MACPORT_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_MACPORT_IOCTL_GET_PRI_REGEN_MAP)
+-ICSSG_MACPORT_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_MACPORT_IOCTL_GET_INGRESS_DSCP_PRI_MAP)
+\ No newline at end of file
++ICSSG_MACPORT_GEN_REGISTER_IOCTL_HANDLER_FXN(ENET_MACPORT_IOCTL_GET_INGRESS_DSCP_PRI_MAP)

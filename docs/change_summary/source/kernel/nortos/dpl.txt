@@ -1,0 +1,2171 @@
+diff --git a/source/kernel/nortos/dpl/a53/ClockP_nortos_a53.c b/source/kernel/nortos/dpl/a53/ClockP_nortos_a53.c
+index e2e3acea49..d7ac208dd7 100644
+--- a/source/kernel/nortos/dpl/a53/ClockP_nortos_a53.c
++++ b/source/kernel/nortos/dpl/a53/ClockP_nortos_a53.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -77,6 +77,7 @@ void ClockP_init(void)
+     timerHwiParams.intNum = gClockConfig.timerHwiIntNum;
+     timerHwiParams.callback = ClockP_timerTickIsr;
+     timerHwiParams.isPulse = 0;
++    timerHwiParams.priority = gClockConfig.intrPriority;
+     HwiP_construct(&gClockCtrl.timerHwiObj, &timerHwiParams);
+ 
+     /* start the tick timer */
+diff --git a/source/kernel/nortos/dpl/c66/HwiP_c66.c b/source/kernel/nortos/dpl/c66/HwiP_c66.c
+index 0a27fb8ab4..e65ad6d480 100644
+--- a/source/kernel/nortos/dpl/c66/HwiP_c66.c
++++ b/source/kernel/nortos/dpl/c66/HwiP_c66.c
+@@ -68,6 +68,9 @@ static inline void HwiP_intcMapEventVector(HwiP_IntcRegsOvly pIntcRegs,
+ HwiP_Ctrl       gHwiCtrl;
+ HwiP_IntcVect   gHwiIntcIntrTable;
+ 
++HwiP_raisePrivilegeFxnPtr gHwiRaisePrivilegeHook = NULL;
++HwiP_restorPrivilegeFxnPtr gHwiRestorePrivilegeHook = NULL;
++
+ /* ========================================================================== */
+ /*                          Function Definitions                              */
+ /* ========================================================================== */
+@@ -77,6 +80,7 @@ void HwiP_init(void)
+     uint32_t            i, key;
+     uint32_t            vectId;
+     HwiP_IntcRegsOvly   pIntcRegs;
++    int32_t             currentState;
+ 
+     key = _disable_interrupts();
+ 
+@@ -94,6 +98,11 @@ void HwiP_init(void)
+     HwiP_assignIntrHandlers();
+     HwiP_intcIvpSet();
+ 
++    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
++    {
++        currentState = gHwiRaisePrivilegeHook();
++    }
++
+     /*
+      * Disable and clear all ECM events
+      */
+@@ -124,6 +133,11 @@ void HwiP_init(void)
+     /* Set global interrupt enable bit (GIE) bit in the control status register (CSR) */
+     (void) HwiP_intcGlobalEnable(NULL);
+ 
++    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
++    {
++        gHwiRestorePrivilegeHook(currentState);
++    }
++
+     (void) _restore_interrupts(key);
+ 
+     return;
+@@ -135,6 +149,7 @@ int32_t HwiP_construct(HwiP_Object *handle, HwiP_Params *params)
+     uint32_t            ecmId, eventId;
+     HwiP_Struct        *obj;
+     HwiP_IntcRegsOvly   pIntcRegs;
++    int32_t             currentState;
+ 
+     obj = (HwiP_Struct *)handle;
+     pIntcRegs = gHwiCtrl.pIntcRegs;
+@@ -146,15 +161,25 @@ int32_t HwiP_construct(HwiP_Object *handle, HwiP_Params *params)
+ 
+     key = _disable_interrupts();
+ 
++    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
++    {
++        currentState = gHwiRaisePrivilegeHook();
++    }
++
+     gHwiCtrl.isr[params->intNum] = params->callback;
+     gHwiCtrl.isrArgs[params->intNum] = params->args;
+     obj->intNum = params->intNum;
+ 
+-        /* TODO: Handle direct interrupts. */
+-        /* Enable the event through ECM */
+-        ecmId = params->intNum >> 5U;
+-        eventId = params->intNum & 0x1FU;
+-        pIntcRegs->EVTMASK[ecmId] &= ~((uint32_t) 1U << eventId);
++    /* TODO: Handle direct interrupts. */
++    /* Enable the event through ECM */
++    ecmId = params->intNum >> 5U;
++    eventId = params->intNum & 0x1FU;
++    pIntcRegs->EVTMASK[ecmId] &= ~((uint32_t) 1U << eventId);
++
++    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
++    {
++        gHwiRestorePrivilegeHook(currentState);
++    }
+ 
+    (void) _restore_interrupts(key);
+ 
+@@ -167,6 +192,7 @@ void HwiP_destruct(HwiP_Object *handle)
+     uint32_t            ecmId, eventId;
+     HwiP_Struct        *obj;
+     HwiP_IntcRegsOvly   pIntcRegs;
++    int32_t             currentState;
+ 
+     obj = (HwiP_Struct *) handle;
+     pIntcRegs = gHwiCtrl.pIntcRegs;
+@@ -176,6 +202,11 @@ void HwiP_destruct(HwiP_Object *handle)
+ 
+     key = _disable_interrupts();
+ 
++    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
++    {
++        currentState = gHwiRaisePrivilegeHook();
++    }
++
+         /* TODO: Handle direct interrupts */
+         /* Disable and clear event through ECM */
+         ecmId = obj->intNum >> 5U;
+@@ -187,6 +218,11 @@ void HwiP_destruct(HwiP_Object *handle)
+     gHwiCtrl.isr[obj->intNum] = NULL;
+     gHwiCtrl.isrArgs[obj->intNum] = NULL;
+ 
++    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
++    {
++        gHwiRestorePrivilegeHook(currentState);
++    }
++
+     (void) _restore_interrupts(key);
+ 
+     return;
+@@ -238,23 +274,32 @@ void HwiP_enableInt(uint32_t intNum)
+     uint32_t            key;
+     uint32_t            ecmId, eventId;
+     HwiP_IntcRegsOvly   pIntcRegs;
++    int32_t             currentState;
+ 
+     pIntcRegs = gHwiCtrl.pIntcRegs;
+     DebugP_assertNoLog(intNum < HwiP_MAX_EVENTS);
+     /* Check for reserved event used by ECM - 0 to 3 */
+     DebugP_assertNoLog(intNum >= HwiP_INTC_NUM_RESV_INTR);
+ 
++    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
++    {
++        currentState = gHwiRaisePrivilegeHook();
++    }
++
+     //TODO: Handle direct interrupts
+     //if(1)
++    /* Enable event through ECM */
++    ecmId = intNum >> 5U;
++    eventId = intNum & 0x1FU;
++    key = _disable_interrupts();
++    pIntcRegs->EVTMASK[ecmId] &= ~((uint32_t) 1U << eventId);
++    (void) _restore_interrupts(key);
++    // else block here
++
++    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
+     {
+-        /* Enable event through ECM */
+-        ecmId = intNum >> 5U;
+-        eventId = intNum & 0x1FU;
+-        key = _disable_interrupts();
+-        pIntcRegs->EVTMASK[ecmId] &= ~((uint32_t) 1U << eventId);
+-        (void) _restore_interrupts(key);
++        gHwiRestorePrivilegeHook(currentState);
+     }
+-    // else block here
+ 
+     return;
+ }
+@@ -265,12 +310,18 @@ uint32_t HwiP_disableInt(uint32_t intNum)
+     uint32_t            ecmId, eventId;
+     HwiP_IntcRegsOvly   pIntcRegs;
+     uint32_t            isEnable = 0;
++    int32_t             currentState;
+ 
+     pIntcRegs = gHwiCtrl.pIntcRegs;
+     DebugP_assertNoLog(intNum < HwiP_MAX_EVENTS);
+     /* Check for reserved event used by ECM - 0 to 3 */
+     DebugP_assertNoLog(intNum >= HwiP_INTC_NUM_RESV_INTR);
+ 
++    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
++    {
++        currentState = gHwiRaisePrivilegeHook();
++    }
++
+     //TODO: Handle direct interrupts
+     //if(1)
+     {
+@@ -287,6 +338,12 @@ uint32_t HwiP_disableInt(uint32_t intNum)
+     }
+     // else block here
+ 
++    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
++    {
++        gHwiRestorePrivilegeHook(currentState);
++    }
++
++
+     return (isEnable);
+ }
+ 
+@@ -308,12 +365,18 @@ void HwiP_clearInt(uint32_t intNum)
+ {
+     uint32_t            ecmId, eventId;
+     HwiP_IntcRegsOvly   pIntcRegs;
++    int32_t             currentState;
+ 
+     pIntcRegs = gHwiCtrl.pIntcRegs;
+     DebugP_assertNoLog(intNum < HwiP_MAX_EVENTS);
+     /* Check for reserved event used by ECM - 0 to 3 */
+     DebugP_assertNoLog(intNum >= HwiP_INTC_NUM_RESV_INTR);
+ 
++    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
++    {
++        currentState = gHwiRaisePrivilegeHook();
++    }
++
+     //TODO: Handle direct interrupts
+     //if(1)
+     {
+@@ -324,6 +387,11 @@ void HwiP_clearInt(uint32_t intNum)
+     }
+     // else block here
+ 
++    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
++    {
++        gHwiRestorePrivilegeHook(currentState);
++    }
++
+     return;
+ }
+ 
+@@ -337,12 +405,18 @@ void HwiP_post(uint32_t intNum)
+ {
+     uint32_t            ecmId, eventId;
+     HwiP_IntcRegsOvly   pIntcRegs;
++    int32_t             currentState;
+ 
+     pIntcRegs = gHwiCtrl.pIntcRegs;
+     DebugP_assertNoLog(intNum < HwiP_MAX_EVENTS);
+     /* Check for reserved event used by ECM - 0 to 3 */
+     DebugP_assertNoLog(intNum >= HwiP_INTC_NUM_RESV_INTR);
+ 
++    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
++    {
++        currentState = gHwiRaisePrivilegeHook();
++    }
++
+     //TODO: Handle direct interrupts
+     //if(1)
+     {
+@@ -353,6 +427,11 @@ void HwiP_post(uint32_t intNum)
+     }
+     // else block here
+ 
++    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
++    {
++        gHwiRestorePrivilegeHook(currentState);
++    }
++
+     return;
+ }
+ 
+@@ -392,9 +471,15 @@ void HwiP_intcEcmDispatcher(uint32_t ecmId)
+     HwiP_IntcRegsOvly   pIntcRegs = gHwiCtrl.pIntcRegs;
+     uint32_t            i, evtMask;
+     volatile uint32_t   mevtFlag;
+-	uint32_t flag = 0U;
++    uint32_t flag = 0U;
+     uint32_t loop = 1U;
+-	
++    int32_t             currentState;
++
++    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
++    {
++        currentState = gHwiRaisePrivilegeHook();
++    }
++
+     isrStartIdx = HwiP_EVENTS_PER_ECM * ecmId;
+     while(loop != 0U)
+     {
+@@ -428,6 +513,11 @@ void HwiP_intcEcmDispatcher(uint32_t ecmId)
+         }
+     }
+ 
++    if((gHwiRaisePrivilegeHook != NULL) && (gHwiRestorePrivilegeHook != NULL))
++    {
++        gHwiRestorePrivilegeHook(currentState);
++    }
++
+     return;
+ }
+ 
+@@ -456,3 +546,15 @@ static inline void HwiP_intcMapEventVector(HwiP_IntcRegsOvly pIntcRegs,
+     return;
+ }
+ 
++/* Register Raise Privilege Access hook. */
++void HwiP_registerRaisePrivilegeHandlerHook(HwiP_raisePrivilegeFxnPtr hookFxnPtr)
++{
++    gHwiRaisePrivilegeHook = hookFxnPtr;
++}
++
++/* Register Raise Privilege Access hook. */
++void HwiP_registerRestorePrivilegeHandlerHook(HwiP_restorPrivilegeFxnPtr hookFxnPtr)
++{
++    gHwiRestorePrivilegeHook = hookFxnPtr;
++}
++
+diff --git a/source/kernel/nortos/dpl/c66/HwiP_c66.h b/source/kernel/nortos/dpl/c66/HwiP_c66.h
+index 02f7a93496..fde871e9a4 100644
+--- a/source/kernel/nortos/dpl/c66/HwiP_c66.h
++++ b/source/kernel/nortos/dpl/c66/HwiP_c66.h
+@@ -71,6 +71,16 @@ extern "C"
+ 
+ typedef void (*HwiP_IntcIsr)(void);
+ 
++/**
++ * \brief typedef for RTOS hook to change Raise access from User to Supervisor Privilege.
++ */
++typedef int32_t (*HwiP_raisePrivilegeFxnPtr)(void);
++
++/**
++ * \brief typedef for RTOS hook to restore Privilege access.
++ */
++typedef void (*HwiP_restorPrivilegeFxnPtr)(int32_t runningPrivilege);
++
+ /**
+  *  \brief Enumeration of the exception
+  *  These are the symbols used along with the Exception Clear API
+@@ -182,6 +192,20 @@ void HwiP_setPri(uint32_t intNum, uint32_t priority);
+  */
+ void HwiP_appInterruptHandlerHook(uint32_t interruptVectorNum );
+ 
++/**
++ * \brief Function to register Privilege access function.
++ *
++ * \param hookFxnPtr  [in] callback function pointer
++ */
++void HwiP_registerRaisePrivilegeHandlerHook(HwiP_raisePrivilegeFxnPtr hookFxnPtr);
++
++/**
++ * \brief Function to register Restore Privilege access function.
++ *
++ * \param hookFxnPtr  [in] callback function pointer
++ */
++void HwiP_registerRestorePrivilegeHandlerHook(HwiP_restorPrivilegeFxnPtr hookFxnPtr);
++
+ 
+ #ifdef __cplusplus
+ }
+diff --git a/source/kernel/nortos/dpl/common/AddrTranslateP_null.c b/source/kernel/nortos/dpl/common/AddrTranslateP_null.c
+index b04d2d4cc8..911be5780e 100644
+--- a/source/kernel/nortos/dpl/common/AddrTranslateP_null.c
++++ b/source/kernel/nortos/dpl/common/AddrTranslateP_null.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+diff --git a/source/kernel/nortos/dpl/common/CacheP_null.c b/source/kernel/nortos/dpl/common/CacheP_null.c
+index 4a285d9532..b7523e0155 100755
+--- a/source/kernel/nortos/dpl/common/CacheP_null.c
++++ b/source/kernel/nortos/dpl/common/CacheP_null.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -34,7 +34,7 @@
+ 
+ /* for CPU's that dont have a cache, use a 'NULL' implementation */
+ 
+-void CacheP_init()
++void CacheP_init(void)
+ {
+ }
+ 
+@@ -47,7 +47,7 @@ void CacheP_enable(uint32_t type)
+ {
+ }
+ 
+-uint32_t CacheP_getEnabled()
++uint32_t CacheP_getEnabled(void)
+ {
+     return 0;
+ }
+diff --git a/source/kernel/nortos/dpl/common/ClockP_nortos.c b/source/kernel/nortos/dpl/common/ClockP_nortos.c
+index 461a0c729c..738ecaf593 100755
+--- a/source/kernel/nortos/dpl/common/ClockP_nortos.c
++++ b/source/kernel/nortos/dpl/common/ClockP_nortos.c
+@@ -298,9 +298,9 @@ uint64_t ClockP_getTimeUsec(void)
+ 
+ 
+     /* Get the current time in microseconds */
+-	ts = (ticks2 * (uint64_t)gClockCtrl.usecPerTick)
+-    +(uint64_t)  ( /* convert timer count to usecs */
+-	(uint64_t)((timerCount - gClockCtrl.timerReloadCount)*gClockCtrl.usecPerTick)/((uint64_t)MAX_TIMER_COUNT_VALUE - gClockCtrl.timerReloadCount)
++	ts = ((uint64_t) ticks2 * (uint64_t)gClockCtrl.usecPerTick)
++    +( /* convert timer count to usecs */
++	(((uint64_t)timerCount - (uint64_t)gClockCtrl.timerReloadCount)*(uint64_t)gClockCtrl.usecPerTick)/(uint64_t)(MAX_TIMER_COUNT_VALUE - (uint64_t)gClockCtrl.timerReloadCount)
+     );
+     return (ts);
+ }
+diff --git a/source/kernel/nortos/dpl/common/ClockP_nortos_priv.h b/source/kernel/nortos/dpl/common/ClockP_nortos_priv.h
+index 9160cf4ee2..01e71d1e7b 100755
+--- a/source/kernel/nortos/dpl/common/ClockP_nortos_priv.h
++++ b/source/kernel/nortos/dpl/common/ClockP_nortos_priv.h
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+diff --git a/source/kernel/nortos/dpl/common/CycleCounterP_null.c b/source/kernel/nortos/dpl/common/CycleCounterP_null.c
+index 95d99d01c6..ebeccd282a 100755
+--- a/source/kernel/nortos/dpl/common/CycleCounterP_null.c
++++ b/source/kernel/nortos/dpl/common/CycleCounterP_null.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+diff --git a/source/kernel/nortos/dpl/common/DebugP_nortos.c b/source/kernel/nortos/dpl/common/DebugP_nortos.c
+index 7a4ab29ca9..5ae42cb521 100755
+--- a/source/kernel/nortos/dpl/common/DebugP_nortos.c
++++ b/source/kernel/nortos/dpl/common/DebugP_nortos.c
+@@ -35,6 +35,8 @@
+ #include <kernel/nortos/dpl/common/printf.h>
+ 
+ extern uint32_t gDebugLogZone;
++int32_t _DebugP_log(char *format, ...);
++void DebugP_shmLogReaderTaskCreate(void);
+ 
+ void _DebugP_logZone(uint32_t logZone, char *format, ...)
+ {
+diff --git a/source/kernel/nortos/dpl/common/DebugP_shmLogReader.c b/source/kernel/nortos/dpl/common/DebugP_shmLogReader.c
+index 2dd3316879..40e9cdb537 100755
+--- a/source/kernel/nortos/dpl/common/DebugP_shmLogReader.c
++++ b/source/kernel/nortos/dpl/common/DebugP_shmLogReader.c
+@@ -167,7 +167,7 @@ void DebugP_shmLogRead(void)
+ 	{
+ 		DebugP_ShmLog *shmLog = &gDebugShmLogReaderCtrl.shmLog[i];
+ 
+-		if(gDebugShmLogReaderCtrl.isCoreShmLogInialized[i]==0)
++		if(gDebugShmLogReaderCtrl.isCoreShmLogInialized[i]==0U)
+ 		{
+ 			if(shmLog->isValid == DebugP_SHM_LOG_IS_VALID)
+ 			{
+@@ -176,7 +176,7 @@ void DebugP_shmLogRead(void)
+ 				shmLog->isValid = 0;
+ 			}
+ 		}
+-		if(gDebugShmLogReaderCtrl.isCoreShmLogInialized[i])
++		if((gDebugShmLogReaderCtrl.isCoreShmLogInialized[i]!=0U))
+ 		{
+ 			uint32_t strLen;
+ 
+@@ -185,11 +185,11 @@ void DebugP_shmLogRead(void)
+ 				strLen = DebugP_shmLogReaderGetString(shmLog,
+ 								gDebugShmLogReaderCtrl.lineBuf,
+ 								DEBUG_SHM_LOG_READER_LINE_BUF_SIZE);
+-				if(strLen > 0)
++				if(strLen > 0U)
+ 				{
+ 					DebugP_log(gDebugShmLogReaderCtrl.lineBuf);
+ 				}
+-			} while(strLen);
++			} while(strLen != 0U);
+ 		}
+ 	}
+ }
+diff --git a/source/kernel/nortos/dpl/common/EventP_nortos.c b/source/kernel/nortos/dpl/common/EventP_nortos.c
+index 203a0d0bb5..984bdc1e78 100644
+--- a/source/kernel/nortos/dpl/common/EventP_nortos.c
++++ b/source/kernel/nortos/dpl/common/EventP_nortos.c
+@@ -114,7 +114,6 @@ int32_t EventP_waitBits(EventP_Object  *obj,
+             status = SystemP_TIMEOUT;
+             break;
+         }
+-
+         if (timeout == SystemP_NO_WAIT)
+         {
+             /* Break without waiting */
+diff --git a/source/kernel/nortos/dpl/common/HeapP_nortos.c b/source/kernel/nortos/dpl/common/HeapP_nortos.c
+index 42afaf0502..f18612f13e 100755
+--- a/source/kernel/nortos/dpl/common/HeapP_nortos.c
++++ b/source/kernel/nortos/dpl/common/HeapP_nortos.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+diff --git a/source/kernel/nortos/dpl/common/QueueP_nortos.c b/source/kernel/nortos/dpl/common/QueueP_nortos.c
+index 15cf666727..670176f0f3 100644
+--- a/source/kernel/nortos/dpl/common/QueueP_nortos.c
++++ b/source/kernel/nortos/dpl/common/QueueP_nortos.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -94,20 +94,22 @@ void * QueueP_get(QueueP_Handle handle)
+     QueueP_nortos *queue = (QueueP_nortos *)handle;
+     QueueP_Elem      *pElem = NULL;
+     QueueP_Elem      *q;
++    
++    if(QueueP_isEmpty(handle) != QueueP_EMPTY)
++    {
++        key = HwiP_disable();
+ 
+-    key = HwiP_disable();
+-
+-    q = &queue->queueHndl;
+-
+-    pElem = q->next;
++        q = &queue->queueHndl;
+ 
+-    q->next = pElem->next;
+-    pElem->next->prev = q;
++        pElem = q->next;
+ 
+-    HwiP_restore(key);
++        q->next = pElem->next;
++        pElem->next->prev = q;
+ 
++        HwiP_restore(key);
++    }
+     return (pElem);
+-}
++}   
+ 
+ /*
+  *  ======== QueueP_put ========
+diff --git a/source/kernel/nortos/dpl/common/TimerP.c b/source/kernel/nortos/dpl/common/TimerP.c
+index 2bad2658c2..25d3753316 100755
+--- a/source/kernel/nortos/dpl/common/TimerP.c
++++ b/source/kernel/nortos/dpl/common/TimerP.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -63,58 +63,60 @@ void TimerP_setup(uint32_t baseAddr, TimerP_Params *params)
+     uint32_t countVal, reloadVal;
+     uint64_t timeInNsec, inputClkHz, timerCycles;
+ 
+-    DebugP_assert( baseAddr!=0);
+-    DebugP_assert( params->inputPreScaler != 0);
+-    DebugP_assert( params->inputClkHz != 0);
+-    DebugP_assert( params->periodInUsec != 0 || params->periodInNsec != 0 );
++    DebugP_assert( baseAddr!=0U);
++    DebugP_assert( params->inputPreScaler != 0U);
++    DebugP_assert( params->inputClkHz != 0U);
++    DebugP_assert(( params->periodInUsec != 0U) || (params->periodInNsec != 0U) );
+     /* pre scaler MUST be <= 256 */
+-    DebugP_assert( params->inputPreScaler <= 256);
++    DebugP_assert( params->inputPreScaler <= 256U);
+     /* pre scaler MUST divide input clock in integer units */
+-    DebugP_assert( (params->inputClkHz % params->inputPreScaler) == 0);
++    DebugP_assert( (params->inputClkHz % params->inputPreScaler) == 0U);
+ 
+     /* stop timer and clear pending interrupts */
+     TimerP_stop(baseAddr);
+     TimerP_clearOverflowInt(baseAddr);
+ 
+     timeInNsec = (uint64_t)params->periodInNsec;
+-    if(timeInNsec == 0)
++    if(timeInNsec == 0U)
+     {
+-        timeInNsec = params->periodInUsec*1000U;
++        timeInNsec = (uint64_t)params->periodInUsec*1000U;
+     }
+ 
+-    inputClkHz = params->inputClkHz / params->inputPreScaler;
++    inputClkHz = (uint64_t)params->inputClkHz / (uint64_t)params->inputPreScaler;
+     timerCycles =  ( inputClkHz * timeInNsec ) / 1000000000U;
+ 
+     /* if timerCycles > 32b then we cannot give accurate timing */
+     DebugP_assert( timerCycles < 0xFFFFFFFFU );
+ 
+     /* calculate count and reload value register value */
+-    countVal = 0xFFFFFFFFu - (timerCycles - 1);
++    countVal = 0xFFFFFFFFu - (timerCycles - 1U);
+ 
+     /* keep reload value as 0, later if is auto-reload is enabled, it will be set a value > 0 */
+     reloadVal = 0;
+ 
+     /* calculate control register value, keep timer disabled */
+     ctrlVal = 0;
+-    if(params->inputPreScaler>1)
++    if(params->inputPreScaler>1U)
+     {
+         uint32_t preScaleVal;
+ 
+-        for(preScaleVal=8; preScaleVal>=1; preScaleVal--)
++        for(preScaleVal=8U; preScaleVal>=1U; preScaleVal--)
+         {
+-            if( (params->inputPreScaler & (0x1 << preScaleVal)) != 0 )
++            if( (params->inputPreScaler & (0x1U << preScaleVal)) != 0U )
++            {
+                 break;
++            }
+         }
+ 
+         /* enable pre-scaler */
+-        ctrlVal |= (0x1 << 5);
++        ctrlVal |= (0x1U << 5);
+         /* set pre-scaler value */
+-        ctrlVal |= ( ((preScaleVal - 1) & 0x7) << 2);
++        ctrlVal |= ( ((preScaleVal - 1U) & 0x7U) << 2);
+     }
+-    if(params->oneshotMode==0)
++    if(params->oneshotMode==0U)
+     {
+         /* autoreload timer */
+-        ctrlVal |= (0x1 << 1);
++        ctrlVal |= (0x1U << 1);
+         reloadVal = countVal;
+     }
+ 
+@@ -131,17 +133,17 @@ void TimerP_setup(uint32_t baseAddr, TimerP_Params *params)
+     *addr = reloadVal;
+ 
+     /* enable/disable interrupts */
+-    if(params->enableOverflowInt)
++    if((params->enableOverflowInt) != 0U)
+     {
+         /* enable interrupt */
+         addr = (volatile uint32_t *)(baseAddr + TIMER_IRQ_INT_ENABLE);
+-        *addr = (0x1 << TIMER_OVF_INT_SHIFT);
++        *addr = (0x1U << TIMER_OVF_INT_SHIFT);
+     }
+     else
+     {
+         /* disable interrupt */
+         addr = (volatile uint32_t *)(baseAddr + TIMER_IRQ_INT_DISABLE);
+-        *addr = (0x1 << TIMER_OVF_INT_SHIFT);
++        *addr = (0x1U << TIMER_OVF_INT_SHIFT);
+     }
+ }
+ 
+@@ -150,7 +152,7 @@ void TimerP_start(uint32_t baseAddr)
+     volatile uint32_t *addr = (uint32_t *)(baseAddr + TIMER_TCLR);
+ 
+     /* start timer */
+-    *addr |= (0x1 << 0);
++    *addr |= (0x1U << 0);
+ }
+ 
+ void TimerP_stop(uint32_t baseAddr)
+@@ -158,7 +160,7 @@ void TimerP_stop(uint32_t baseAddr)
+     volatile uint32_t *addr = (volatile uint32_t *)(baseAddr + TIMER_TCLR);
+ 
+     /* stop timer */
+-    *addr &= ~(0x1 << 0);
++    *addr &= ~(0x1U << 0);
+ }
+ 
+ uint32_t TimerP_getCount(uint32_t baseAddr)
+@@ -178,7 +180,7 @@ uint32_t TimerP_getReloadCount(uint32_t baseAddr)
+ void TimerP_clearOverflowInt(uint32_t baseAddr)
+ {
+     volatile uint32_t *addr;
+-    uint32_t value = (0x1 << TIMER_OVF_INT_SHIFT);
++    uint32_t value = (0x1U << TIMER_OVF_INT_SHIFT);
+ 
+     /* clear status for overflow interrupt */
+     addr = (volatile uint32_t *)(baseAddr + TIMER_IRQ_STATUS);
+@@ -186,7 +188,7 @@ void TimerP_clearOverflowInt(uint32_t baseAddr)
+ 
+     /* [MCUSDK-177] read back and make sure interrupt was indeed cleared, if not clear it again
+      */
+-    if(*addr & value)
++    if((*addr & value) != 0U) {}
+         *addr = value;
+ 
+     #if 0 /* should not be used for level interrupts */
+@@ -204,5 +206,5 @@ uint32_t TimerP_isOverflowed(uint32_t baseAddr)
+     /* get status for overflow interrupt */
+     val = *(volatile uint32_t *)(baseAddr + TIMER_IRQ_STATUS_RAW);
+ 
+-    return ((val >> TIMER_OVF_INT_SHIFT) & 0x1);
++    return ((val >> TIMER_OVF_INT_SHIFT) & 0x1U);
+ }
+diff --git a/source/kernel/nortos/dpl/m4/ClockP_nortos_m4.c b/source/kernel/nortos/dpl/m4/ClockP_nortos_m4.c
+index 78795ac7ac..614a6992ab 100755
+--- a/source/kernel/nortos/dpl/m4/ClockP_nortos_m4.c
++++ b/source/kernel/nortos/dpl/m4/ClockP_nortos_m4.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -49,11 +49,11 @@ void ClockP_init(void)
+     HwiP_Params timerHwiParams;
+ 
+     /* These MUST not be 0 */
+-    DebugP_assert( gClockConfig.timerInputPreScaler != 0);
+-    DebugP_assert( gClockConfig.timerInputClkHz != 0);
+-    DebugP_assert( gClockConfig.usecPerTick != 0);
+-    DebugP_assert( gClockConfig.timerBaseAddr != 0);
+-    
++    DebugP_assert( gClockConfig.timerInputPreScaler != 0U);
++    DebugP_assert( gClockConfig.timerInputClkHz != 0U);
++    DebugP_assert( gClockConfig.usecPerTick != 0U);
++    DebugP_assert( gClockConfig.timerBaseAddr != 0U);
++
+     /* init internal data structure */
+     gClockCtrl.ticks = 0;
+     gClockCtrl.list = NULL;
+@@ -65,7 +65,7 @@ void ClockP_init(void)
+     timerParams.inputPreScaler    = gClockConfig.timerInputPreScaler;
+     timerParams.inputClkHz        = gClockConfig.timerInputClkHz;
+     timerParams.periodInUsec      = gClockConfig.usecPerTick;
+-    timerParams.oneshotMode       = 0;        
++    timerParams.oneshotMode       = 0;
+     timerParams.enableOverflowInt = 1;
+     SysTickTimerP_setup(&timerParams);
+ 
+@@ -77,6 +77,7 @@ void ClockP_init(void)
+     timerHwiParams.intNum = gClockConfig.timerHwiIntNum;
+     timerHwiParams.callback = ClockP_timerTickIsr;
+     timerHwiParams.isPulse = 0;
++    timerHwiParams.priority = gClockConfig.intrPriority;
+     HwiP_construct(&gClockCtrl.timerHwiObj, &timerHwiParams);
+ 
+     /* start the tick timer */
+diff --git a/source/kernel/nortos/dpl/m4/CycleCounterP_m4.c b/source/kernel/nortos/dpl/m4/CycleCounterP_m4.c
+index 1c5feb82f9..1c73ea6f2a 100755
+--- a/source/kernel/nortos/dpl/m4/CycleCounterP_m4.c
++++ b/source/kernel/nortos/dpl/m4/CycleCounterP_m4.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -37,16 +37,16 @@
+ #define DWT_CTRL    (volatile uint32_t *)(0xE0001000U)
+ #define DWT_CYCCNT  (volatile uint32_t *)(0xE0001004U)
+ 
+-uint32_t CycleCounterP_getCount32()
++uint32_t CycleCounterP_getCount32(void)
+ {
+     return *DWT_CYCCNT;
+ }
+ 
+-void CycleCounterP_reset()
++void CycleCounterP_reset(void)
+ {
+-    *DEMCR |= 0x01000000; /* enable ITM, DWT features */
+-    *DWT_CTRL &= ~(0x1);  /* disable cycle counter */
++    *DEMCR |= 0x01000000U; /* enable ITM, DWT features */
++    *DWT_CTRL &= ~(0x1U);  /* disable cycle counter */
+     *DWT_CYCCNT = 0; /* clear cycle counter */
+-    *DWT_CTRL |= 1; /* enable cycle counter */
++    *DWT_CTRL |= 1U; /* enable cycle counter */
+ }
+ 
+diff --git a/source/kernel/nortos/dpl/m4/HwiP_armv7m.c b/source/kernel/nortos/dpl/m4/HwiP_armv7m.c
+index 01e6c8b5b4..e8530cd1ea 100755
+--- a/source/kernel/nortos/dpl/m4/HwiP_armv7m.c
++++ b/source/kernel/nortos/dpl/m4/HwiP_armv7m.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -67,6 +67,10 @@ void HWI_SECTION HwiP_enableInt(uint32_t intNum)
+         *addr |= 0x00000002U;   /* enable SysTick interrupt */
+         HwiP_restore(oldIntState);
+     }
++    else
++    {
++        //do nothing
++    }
+ }
+ 
+ uint32_t HWI_SECTION HwiP_disableInt(uint32_t intNum)
+@@ -144,6 +148,10 @@ void HWI_SECTION HwiP_restoreInt(uint32_t intNum, uint32_t oldEnableState)
+         }
+         HwiP_restore(oldIntState);
+     }
++    else
++    {
++        //do nothing
++    }
+ 
+ }
+ 
+@@ -166,22 +174,23 @@ void HWI_SECTION HwiP_clearInt(uint32_t intNum)
+ 
+ void HWI_SECTION HwiP_setPri(uint32_t intNum, uint32_t priority)
+ {
+-    if(priority < HwiP_MAX_PRIORITY)
++    uint32_t value = priority;
++    if(value < HwiP_MAX_PRIORITY)
+     {
+         volatile uint32_t *addr;
+ 
+-        priority = (priority << HwiP_NVIC_PRI_SHIFT);
++        value = (value << HwiP_NVIC_PRI_SHIFT);
+         /* User interrupt (id >= 16) priorities are set in the IPR registers */
+         if (intNum >= 16U) {
+             uint32_t index, mask, shift;
+ 
+-            shift = (((intNum - 16U) & 0x3U) * 8);
+-            mask  = 0xFF << shift;
+-            index = (intNum - 16U) / 4;
++            shift = (((intNum - 16U) & 0x3U) * 8U);
++            mask  = 0xFFU << shift;
++            index = (intNum - 16U) / 4U;
+ 
+             addr = NVIC_IPRI(index);
+             *addr &= ~(mask); /* clear priority */
+-            *addr |= (priority << shift); /* set priority */
++            *addr |= (value << shift); /* set priority */
+         }
+         else
+         if (intNum >= 4U)
+@@ -189,13 +198,13 @@ void HWI_SECTION HwiP_setPri(uint32_t intNum, uint32_t priority)
+             /* System interrupt (id >= 4) priorities are set in the SHPR registers */
+             uint32_t index, mask, shift;
+ 
+-            shift = (((intNum - 4U) & 0x3U) * 8);
+-            mask  = 0xFF << shift;
+-            index = (intNum - 4U) / 4;
++            shift = (((intNum - 4U) & 0x3U) * 8U);
++            mask  = (uint32_t)0xFFU << shift;
++            index = (intNum - 4U) / 4U;
+ 
+             addr = SHPR(index);
+             *addr &= ~(mask); /* clear priority */
+-            *addr |= (priority << shift); /* set priority */
++            *addr |= (value << shift); /* set priority */
+         }
+         else
+         {
+@@ -210,7 +219,7 @@ void HWI_SECTION HwiP_Params_init(HwiP_Params *params)
+     params->callback = NULL;
+     params->args = NULL;
+     params->eventId = 0; /* NOT USED */
+-    params->priority = HwiP_MAX_PRIORITY-1; /* set default as lowest priority */
++    params->priority = HwiP_MAX_PRIORITY-1U; /* set default as lowest priority */
+     params->isFIQ = 0; /* NOT USED */
+     params->isPulse = 0; /* NOT USED */
+ }
+@@ -224,7 +233,7 @@ int32_t HWI_SECTION HwiP_construct(HwiP_Object *handle, HwiP_Params *params)
+     DebugP_assertNoLog( params->intNum < HwiP_MAX_INTERRUPTS );
+     DebugP_assertNoLog( params->priority < HwiP_MAX_PRIORITY );
+     /* can register user handlers only for systick and external NVIC interrupts */
+-    DebugP_assertNoLog( params->intNum >= 15 );
++    DebugP_assertNoLog( params->intNum >= 15U );
+ 
+     HwiP_disableInt(params->intNum);
+     HwiP_clearInt(params->intNum);
+@@ -259,7 +268,7 @@ void HWI_SECTION HwiP_destruct(HwiP_Object *handle)
+      */
+     HwiP_disableInt(obj->intNum);
+     HwiP_clearInt(obj->intNum);
+-    HwiP_setPri(obj->intNum, HwiP_MAX_PRIORITY-1);
++    HwiP_setPri(obj->intNum, HwiP_MAX_PRIORITY-1U);
+ 
+     /* clear interrupt data structure */
+     gHwiCtrl.isr[obj->intNum] = NULL;
+@@ -278,12 +287,12 @@ void HWI_SECTION HwiP_post(uint32_t intNum)
+     }
+ }
+ 
+-uintptr_t HWI_SECTION HwiP_disable()
++uintptr_t HWI_SECTION HwiP_disable(void)
+ {
+     return _set_interrupt_priority(HwiP_NVIC_PRI_DISABLE);
+ }
+ 
+-void HWI_SECTION HwiP_enable()
++void HWI_SECTION HwiP_enable(void)
+ {
+     _set_interrupt_priority(0u);
+ }
+@@ -293,7 +302,7 @@ void HWI_SECTION HwiP_restore(uintptr_t oldIntState)
+     _set_interrupt_priority(oldIntState);
+ }
+ 
+-void HWI_SECTION HwiP_init()
++void HWI_SECTION HwiP_init(void)
+ {
+     uint32_t i;
+     volatile uint32_t *addr;
+@@ -307,16 +316,16 @@ void HWI_SECTION HwiP_init()
+     /* initalize local data structure, and set all interrupts to lowest priority
+      * and set ISR address as IRQ handler
+      */
+-    for(i=0; i<HwiP_MAX_INTERRUPTS;i++)
++    for(i=0U; i<HwiP_MAX_INTERRUPTS;i++)
+     {
+         gHwiCtrl.isr[i] = NULL;
+         gHwiCtrl.isrArgs[i] = NULL;
+ 
+-        if(i >= 15)
++        if(i >= 15U)
+         {
+             /* handler setup, interrupt disable/clear is allowed only for systick and external MVIC interrupts
+              */
+-            void HwiP_interrupt_handler();
++            void HwiP_interrupt_handler(void);
+ 
+             gHwiP_vectorTable[i] = (uint32_t)&HwiP_interrupt_handler;
+ 
+@@ -325,7 +334,7 @@ void HWI_SECTION HwiP_init()
+         }
+ 
+         /* keep all interrupt as low priority by default */
+-        HwiP_setPri(i, HwiP_MAX_PRIORITY-1);
++        HwiP_setPri(i, HwiP_MAX_PRIORITY-1U);
+     }
+ 
+     /* keep interrupt disabled, they should be enabled during system init
+@@ -337,7 +346,7 @@ uint32_t HwiP_inISR(void)
+ {
+     uint32_t stat;
+ 
+-    if (( *ICSR & 0x000001ff) == 0)
++    if (( *ICSR & 0x000001ffU) == 0U)
+     {
+         stat = 0;
+     }
+diff --git a/source/kernel/nortos/dpl/m4/HwiP_armv7m.h b/source/kernel/nortos/dpl/m4/HwiP_armv7m.h
+index c912c27c92..126f5e1312 100755
+--- a/source/kernel/nortos/dpl/m4/HwiP_armv7m.h
++++ b/source/kernel/nortos/dpl/m4/HwiP_armv7m.h
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2022 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -49,16 +49,16 @@ extern "C"
+ #define HwiP_NVIC_PRI_BITS      (3u)
+ #define HwiP_NVIC_PRI_SHIFT     (8u-(HwiP_NVIC_PRI_BITS))
+ /* this is the value to use to disable all interrupts above this priority */
+-#define HwiP_NVIC_PRI_DISABLE   (((HwiP_MAX_PRIORITY)-1) << (HwiP_NVIC_PRI_SHIFT))
++#define HwiP_NVIC_PRI_DISABLE   (((HwiP_MAX_PRIORITY)-1U) << (HwiP_NVIC_PRI_SHIFT))
+ 
+ #define NVIC_BASE       (0xE000E000u)
+-#define NVIC_ISER(x)    (volatile uint32_t *)((NVIC_BASE)+0x100u+4u*(x))
+-#define NVIC_ICER(x)    (volatile uint32_t *)((NVIC_BASE)+0x180u+4u*(x))
++#define NVIC_ISER(x)    (volatile uint32_t *)((NVIC_BASE)+0x100u+(4u*(x)))
++#define NVIC_ICER(x)    (volatile uint32_t *)((NVIC_BASE)+0x180u+(4u*(x)))
+ #define NVIC_ISPR(x)    (volatile uint32_t *)((NVIC_BASE)+0x200u+4u*(x))
+-#define NVIC_ICPR(x)    (volatile uint32_t *)((NVIC_BASE)+0x280u+4u*(x))
+-#define NVIC_IPRI(x)    (volatile uint32_t *)((NVIC_BASE)+0x400u+4u*(x))
++#define NVIC_ICPR(x)    (volatile uint32_t *)((NVIC_BASE)+0x280u+(4u*(x)))
++#define NVIC_IPRI(x)    (volatile uint32_t *)((NVIC_BASE)+0x400u+(4u*(x)))
+ 
+-#define SHPR(x)         (volatile uint32_t *)((0xE000ED18)+4u*(x))
++#define SHPR(x)         (volatile uint32_t *)((0xE000ED18U)+(4u*(x)))
+ 
+ #define SYSTICK_CSR     (volatile uint32_t *)(0xE000E010u)
+ #define STIR            (volatile uint32_t *)(0xE000EF00u)
+diff --git a/source/kernel/nortos/dpl/m4/HwiP_armv7m_handlers_nortos.c b/source/kernel/nortos/dpl/m4/HwiP_armv7m_handlers_nortos.c
+index e43157589d..fb2e96d2e0 100755
+--- a/source/kernel/nortos/dpl/m4/HwiP_armv7m_handlers_nortos.c
++++ b/source/kernel/nortos/dpl/m4/HwiP_armv7m_handlers_nortos.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -33,17 +33,38 @@
+ #include <kernel/nortos/dpl/m4/HwiP_armv7m.h>
+ #include <drivers/hw_include/csl_types.h>
+ #include <ti_compatibility.h>
++#include <stdbool.h>
+ 
+-void HWI_SECTION HwiP_interrupt_handler()
++void HWI_SECTION HwiP_busFault_handler(void);
++
++void HWI_SECTION HwiP_debugMon_handler(void);
++
++void HWI_SECTION HwiP_hardFault_handler(void);
++
++void HWI_SECTION HwiP_interrupt_handler(void);
++
++void HWI_SECTION HwiP_memFault_handler(void);
++
++void HWI_SECTION HwiP_nmi_handler(void);
++
++void HWI_SECTION HwiP_pendSV_handler(void);
++
++void HWI_SECTION HwiP_reserved_handler(void);
++
++void HWI_SECTION HwiP_svc_handler(void);
++
++void HWI_SECTION HwiP_usageFault_handler(void);
++
++void HWI_SECTION HwiP_interrupt_handler(void)
+ {
+     volatile uint32_t *addr;
+     uint32_t activeIntNum;
+ 
+     addr = ICSR;
+-    activeIntNum = (*addr & 0xFF);
++    activeIntNum = (*addr & 0xFFU);
+ 
+     if(    (activeIntNum < HwiP_MAX_INTERRUPTS)
+-        && (activeIntNum >= 15) /* sys tick or external NIVC interrupt */
++        && (activeIntNum >= 15U) /* sys tick or external NIVC interrupt */
+         && (gHwiCtrl.isr[activeIntNum] != NULL)
+         )
+     {
+@@ -51,71 +72,62 @@ void HWI_SECTION HwiP_interrupt_handler()
+     }
+ }
+ 
+-void HWI_SECTION HwiP_nmi_handler()
++void HWI_SECTION HwiP_nmi_handler(void)
+ {
+     volatile uint32_t loop = 1;
+-    while(loop)
+-        ;
++    while(loop != 0U) {;}
+ }
+ 
+-void HWI_SECTION HwiP_hardFault_handler()
++void HWI_SECTION HwiP_hardFault_handler(void)
+ {
+     volatile uint32_t loop = 1;
+-    while(loop)
+-        ;
++    while(loop != 0U) {;}
+ }
+ 
+-void HWI_SECTION HwiP_memFault_handler()
++void HWI_SECTION HwiP_memFault_handler(void)
+ {
+     volatile uint32_t loop = 1;
+-    while(loop)
+-        ;
++    while(loop != 0U) {;}
+ }
+ 
+-void HWI_SECTION HwiP_busFault_handler()
++void HWI_SECTION HwiP_busFault_handler(void)
+ {
+     volatile uint32_t loop = 1;
+-    while(loop)
+-        ;
++    while(loop != 0U) {;}
+ }
+ 
+-void HWI_SECTION HwiP_usageFault_handler()
++void HWI_SECTION HwiP_usageFault_handler(void)
+ {
+     volatile uint32_t loop = 1;
+-    while(loop)
+-        ;
++    while(loop != 0U) {;}
+ }
+ 
+-void HWI_SECTION HwiP_reserved_handler()
++void HWI_SECTION HwiP_reserved_handler(void)
+ {
+     volatile uint32_t loop = 1;
+-    while(loop)
+-        ;
++    while(loop != 0U) {;}
+ }
+ 
+-void HWI_SECTION HwiP_svc_handler()
++void HWI_SECTION HwiP_svc_handler(void)
+ {
+     volatile uint32_t loop = 1;
+-    while(loop)
+-        ;
++    while(loop != 0U) {;}
+ }
+ 
+-void HWI_SECTION HwiP_debugMon_handler()
++void HWI_SECTION HwiP_debugMon_handler(void)
+ {
+     volatile uint32_t loop = 1;
+-    while(loop)
+-        ;
++    while(loop != 0U) {;}
+ }
+ 
+-void HWI_SECTION HwiP_pendSV_handler()
++void HWI_SECTION HwiP_pendSV_handler(void)
+ {
+     volatile uint32_t loop = 1;
+-    while(loop)
+-        ;
++    while(loop != 0U) {;}
+ }
+ 
+ extern uint32_t __STACK_END;
+-extern void _c_int00();
++extern void _c_int00(void);
+ 
+ uint32_t __attribute__((section(".vectors"), aligned(32))) gHwiP_vectorTable[HwiP_MAX_INTERRUPTS]  = {
+     (uint32_t)&__STACK_END,             /* 0 */
+diff --git a/source/kernel/nortos/dpl/m4/MpuP_armv7m.c b/source/kernel/nortos/dpl/m4/MpuP_armv7m.c
+index f27daca504..09d94e9941 100644
+--- a/source/kernel/nortos/dpl/m4/MpuP_armv7m.c
++++ b/source/kernel/nortos/dpl/m4/MpuP_armv7m.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -55,15 +55,15 @@ extern MpuP_RegionConfig gMpuRegionConfig[];
+ static uint32_t MPU_SECTION MpuP_getAttrsAndSize(MpuP_RegionAttrs *region, uint32_t size)
+ {
+     uint32_t regionAttrs = 
+-          ((uint32_t)(region->isExecuteNever & 0x1) << 28) 
+-        | ((uint32_t)(region->accessPerm     & 0x7) << 24)
+-        | ((uint32_t)(region->tex            & 0x7) << 19) 
+-        | ((uint32_t)(region->isSharable     & 0x1) << 18) 
+-        | ((uint32_t)(region->isCacheable    & 0x1) << 17) 
+-        | ((uint32_t)(region->isBufferable   & 0x1) << 16)
+-        | ((uint32_t)(region->subregionDisableMask & 0xFF) << 8)
+-        | ((uint32_t)(size & 0x1F)                  << 1)
+-        | ((uint32_t)(region->isEnable       & 0x1) << 0)
++          ((uint32_t)(region->isExecuteNever & (uint32_t)0x1) << 28) 
++        | ((uint32_t)(region->accessPerm     & (uint32_t)0x7) << 24)
++        | ((uint32_t)(region->tex            & (uint32_t)0x7) << 19) 
++        | ((uint32_t)(region->isSharable     & (uint32_t)0x1) << 18) 
++        | ((uint32_t)(region->isCacheable    & (uint32_t)0x1) << 17) 
++        | ((uint32_t)(region->isBufferable   & (uint32_t)0x1) << 16)
++        | ((uint32_t)(region->subregionDisableMask & (uint32_t)0xFF) << 8)
++        | ((uint32_t)(size & (uint32_t)0x1F)                  << 1)
++        | ((uint32_t)(region->isEnable       & (uint32_t)0x1) << 0)
+         ; 
+ 
+     return regionAttrs;
+@@ -86,17 +86,18 @@ void MPU_SECTION MpuP_setRegion(uint32_t regionNum, void * addr, uint32_t size,
+     uint32_t baseAddress, regionAndSizeAttrs;
+     uint32_t enabled;
+     uintptr_t key;
++    uint32_t setSize = size;
+ 
+     DebugP_assertNoLog( regionNum < MpuP_MAX_REGIONS);
+ 
+     /* size 5b field */
+-    size = (size & 0x1F);
++    setSize = (setSize & 0x1FU);
+ 
+     /* align base address to region size */
+-    baseAddress = ((uint32_t)addr & ~( (1<<((uint64_t)size+1))-1 ));
++    baseAddress = ((uint32_t)addr & ~( (1U<<((uint64_t)setSize+1U))-1U ));
+ 
+     /* get region attribute mask */
+-    regionAndSizeAttrs = MpuP_getAttrsAndSize(attrs, size);
++    regionAndSizeAttrs = MpuP_getAttrsAndSize(attrs, setSize);
+ 
+     enabled = MpuP_isEnable();
+ 
+@@ -111,14 +112,14 @@ void MPU_SECTION MpuP_setRegion(uint32_t regionNum, void * addr, uint32_t size,
+ 
+     HwiP_restore(key);
+ 
+-    if (enabled) {
++    if ((enabled) != 0U) {
+         MpuP_enable();
+     }
+ }
+ 
+-void MPU_SECTION MpuP_enable()
++void MPU_SECTION MpuP_enable(void)
+ {
+-    if(!MpuP_isEnable())
++    if((MpuP_isEnable()) == 0U)
+     {
+         uint32_t value;
+         uintptr_t key;
+@@ -126,7 +127,7 @@ void MPU_SECTION MpuP_enable()
+         key = HwiP_disable();
+ 
+         value = 0;
+-        if (gMpuConfig.enableBackgroundRegion) {
++        if ((gMpuConfig.enableBackgroundRegion) != 0U) {
+             value |= (1u << 2u);  /* PRIVDEFENA, 0: Disables the default memory map, 
+                                    *             1: enable default memory map for non mapped regions 
+                                    */
+@@ -143,9 +144,9 @@ void MPU_SECTION MpuP_enable()
+     }
+ }
+ 
+-void MPU_SECTION MpuP_disable()
++void MPU_SECTION MpuP_disable(void)
+ {
+-    if(MpuP_isEnable())
++    if((MpuP_isEnable()) == 0U)
+     {
+         uintptr_t key;
+ 
+@@ -159,16 +160,16 @@ void MPU_SECTION MpuP_disable()
+     }
+ }
+ 
+-uint32_t MPU_SECTION MpuP_isEnable()
++uint32_t MPU_SECTION MpuP_isEnable(void)
+ {
+-    return (*MPU_CTRL & 0x1);
++    return (*MPU_CTRL & 0x1U);
+ }
+ 
+-void MPU_SECTION MpuP_init()
++void MPU_SECTION MpuP_init(void)
+ {
+     uint32_t i;
+ 
+-    if (MpuP_isEnable()) {
++    if ((MpuP_isEnable()) != 0U) {
+         MpuP_disable();
+     }
+ 
+@@ -186,7 +187,7 @@ void MPU_SECTION MpuP_init()
+         );
+     }
+ 
+-    if (gMpuConfig.enableMpu) {
++    if ((gMpuConfig.enableMpu) != 0U) {
+         MpuP_enable();
+     }
+ }
+diff --git a/source/kernel/nortos/dpl/m4/SysTickTimerP.c b/source/kernel/nortos/dpl/m4/SysTickTimerP.c
+index d6042c6d9d..5a61d186da 100755
+--- a/source/kernel/nortos/dpl/m4/SysTickTimerP.c
++++ b/source/kernel/nortos/dpl/m4/SysTickTimerP.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -56,18 +56,18 @@ void SysTickTimerP_setup(TimerP_Params *params)
+     uint64_t timeInNsec, timerCycles;
+ 
+     /* There is no pre-scaler support for SysTick and its value is ignored */
+-    DebugP_assert( params->inputClkHz != 0);
+-    DebugP_assert( params->periodInUsec != 0);
++    DebugP_assert( params->inputClkHz != 0U);
++    DebugP_assert( params->periodInUsec != 0U);
+     /* usec period MUST divide 1sec in integer units */
+-    DebugP_assert( (1000000u % params->periodInUsec) == 0 );
++    DebugP_assert( (1000000u % params->periodInUsec) == 0U );
+ 
+     /* stop timer and clear pending interrupts */
+     SysTickTimerP_stop();
+ 
+     timeInNsec = (uint64_t)params->periodInNsec;
+-    if(timeInNsec == 0)
++    if(timeInNsec == 0U)
+     {
+-        timeInNsec = params->periodInUsec*1000U;
++        timeInNsec = (uint64_t)params->periodInUsec*1000U;
+     }
+ 
+     timerCycles =  ( (uint64_t)params->inputClkHz * timeInNsec ) / 1000000000U;
+@@ -78,7 +78,7 @@ void SysTickTimerP_setup(TimerP_Params *params)
+     /* calculate count and reload value register value */
+     /* For generating a mutishot timer with period of N processor cycles,
+        a reload count of N-1 is used */
+-    countVal = timerCycles - 1;
++    countVal = timerCycles - 1U;
+ 
+     /* keep reload value as 0, later if is auto-reload is enabled, it will be set a value > 0 */
+     reloadVal = 0;
+@@ -88,13 +88,13 @@ void SysTickTimerP_setup(TimerP_Params *params)
+     /* select clock source as CPU clock */
+     ctrlVal |= (1u << 2u);
+     /* enable/disable interrupts */
+-    if(params->enableOverflowInt)
++    if((params->enableOverflowInt) != 0U)
+     {
+         /* enable interrupt */
+         ctrlVal |= (1u << 1u);
+     }
+ 
+-    if(params->oneshotMode==0)
++    if(params->oneshotMode==0U)
+     {
+         /* autoreload timer */
+         reloadVal = countVal;
+@@ -115,25 +115,25 @@ void SysTickTimerP_setup(TimerP_Params *params)
+ }
+ 
+ /* base address not used since, address is fixed for SysTick in M4F */
+-void SysTickTimerP_start()
++void SysTickTimerP_start(void)
+ {
+     volatile uint32_t *addr = SYST_CSR;
+ 
+     /* start timer */
+-    *addr |= (0x1 << 0);
++    *addr |= ((uint32_t)0x1 << 0);
+ }
+ 
+ /* base address not used since, address is fixed for SysTick in M4F */
+-void SysTickTimerP_stop()
++void SysTickTimerP_stop(void)
+ {
+     volatile uint32_t *addr = SYST_CSR;
+ 
+     /* stop timer */
+-    *addr &= ~(0x1 << 0);
++    *addr &= ~(0x1U << 0);
+ }
+ 
+ /* base address not used since, address is fixed for SysTick in M4F */
+-uint32_t SysTickTimerP_getCount()
++uint32_t SysTickTimerP_getCount(void)
+ {
+     /* return 0xFFFFFFFF - value, since ClockP assumes in this format to calculate current time */
+     return (0xFFFFFFFFu - CSL_REG32_RD(SYST_CVR));
+@@ -141,16 +141,16 @@ uint32_t SysTickTimerP_getCount()
+ }
+ 
+ /* base address not used since, address is fixed for SysTick in M4F */
+-uint32_t SysTickTimerP_getReloadCount()
++uint32_t SysTickTimerP_getReloadCount(void)
+ {
+     /* return 0xFFFFFFFF - value, since ClockP assumes in this format to calculate current time */
+     return (0xFFFFFFFFu - CSL_REG32_RD(SYST_RVR));
+ }
+ 
+ /* base address not used since, address is fixed for SysTick in M4F */
+-uint32_t SysTickTimerP_isOverflowed()
++uint32_t SysTickTimerP_isOverflowed(void)
+ {
+     volatile uint32_t *addr = SYST_CSR;
+ 
+-    return ((*addr >> 16) & 0x1);
++    return ((*addr >> 16) & 0x1U);
+ }
+\ No newline at end of file
+diff --git a/source/kernel/nortos/dpl/m4/SysTickTimerP.h b/source/kernel/nortos/dpl/m4/SysTickTimerP.h
+index 20e26aa0b2..12efaef857 100755
+--- a/source/kernel/nortos/dpl/m4/SysTickTimerP.h
++++ b/source/kernel/nortos/dpl/m4/SysTickTimerP.h
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -62,31 +62,31 @@ void SysTickTimerP_setup(TimerP_Params *params);
+ /**
+  * \brief Start timer 
+  */ 
+-void SysTickTimerP_start();
++void SysTickTimerP_start(void);
+ 
+ /**
+  * \brief Stop timer
+  */ 
+-void SysTickTimerP_stop();
++void SysTickTimerP_stop(void);
+ 
+ /**
+  * \brief Get timer current count
+  * 
+  * \return current timer count value
+  */ 
+-uint32_t SysTickTimerP_getCount();
++uint32_t SysTickTimerP_getCount(void);
+ 
+ /**
+  * \brief Get timer reload count
+  * 
+  * \return reload count value
+  */ 
+-uint32_t SysTickTimerP_getReloadCount();
++uint32_t SysTickTimerP_getReloadCount(void);
+ 
+ /**
+  * \brief Check if timer is overflowed
+  */ 
+-uint32_t SysTickTimerP_isOverflowed();
++uint32_t SysTickTimerP_isOverflowed(void);
+ 
+ /** @} */
+ 
+diff --git a/source/kernel/nortos/dpl/m4/boot_armv7m.c b/source/kernel/nortos/dpl/m4/boot_armv7m.c
+index 0e56430e11..82c1dca0c7 100644
+--- a/source/kernel/nortos/dpl/m4/boot_armv7m.c
++++ b/source/kernel/nortos/dpl/m4/boot_armv7m.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -34,8 +34,9 @@
+ 
+ extern uint32_t __BSS_START;
+ extern uint32_t __BSS_END;
++int32_t _system_pre_init(void);
+ 
+-int _system_pre_init()
++int32_t _system_pre_init(void)
+ {
+     uint32_t bss_size = ((uintptr_t)&__BSS_END - (uintptr_t)&__BSS_START);
+     memset((void*)&__BSS_START, 0x00, bss_size);
+@@ -56,21 +57,28 @@ __asm__ __volatile__ (".set __TI_default_c_int00, 1": : : "memory");
+ /* Define the user mode stack. The size will be determined by the linker.     */
+ /*----------------------------------------------------------------------------*/
+ __attribute__((section(".stack")))
+-int __stack;
++int32_t __stack;
+ 
+ /*----------------------------------------------------------------------------*/
+ /* Linker defined symbol that will point to the end of the user mode stack.   */
+ /* The linker will enforce 8-byte alignment.                                  */
+ /*----------------------------------------------------------------------------*/
+-extern int __STACK_END;
++extern int32_t __STACK_END;
+ 
+ /*----------------------------------------------------------------------------*/
+ /* Function declarations.                                                     */
+ /*----------------------------------------------------------------------------*/
+ __attribute__((weak)) extern void __mpu_init(void);
++#ifdef __cplusplus
++extern "C" {
++#endif
+ extern void __TI_auto_init(void);
+-extern void exit(int);
+-extern int main(int argc, char **argv);
++extern void exit(int32_t argc);
++void _c_int00(void);
++#ifdef __cplusplus
++}
++#endif
++extern int32_t main(int32_t argc, char **argv);
+ 
+ /*----------------------------------------------------------------------------*/
+ /* boot routine for Cortex-M                                          */
+@@ -91,15 +99,14 @@ void _c_int00(void)
+    /* Initialize the stack pointer */
+    register char* stack_ptr = (char*)&__STACK_END;
+    __asm volatile ("MSR msp, %0" : : "r" (stack_ptr) : );
+-
+    /* Initialize the FPU if building for floating point */
+    #ifdef __ARM_FP
+-   volatile uint32_t* cpacr = (volatile uint32_t*)0xE000ED88;
+-   *cpacr |= (0xf0 << 16);
++   volatile uint32_t* cpacr = (volatile uint32_t*)0xE000ED88U;
++   *cpacr |= ((uint32_t)0xf0 << 16);
+    #endif
+ 
+    __mpu_init();
+-   if (_system_pre_init())
++   if ((_system_pre_init()) != 0)
+    {
+        __TI_auto_init();
+    }
+@@ -108,5 +115,5 @@ void _c_int00(void)
+ 
+    exit(1);
+ 
+-   while (1);
++   while(1);
+ }
+diff --git a/source/kernel/nortos/dpl/r5/CacheP_armv7r.c b/source/kernel/nortos/dpl/r5/CacheP_armv7r.c
+index ba4b29fcab..9d25225480 100644
+--- a/source/kernel/nortos/dpl/r5/CacheP_armv7r.c
++++ b/source/kernel/nortos/dpl/r5/CacheP_armv7r.c
+@@ -37,8 +37,11 @@
+ #define CACHE_SECTION __attribute__((section(".text.cache")))
+ 
+ /* APIs defined in CacheP_armv7r_asm.S */
+-uint32_t CacheP_getCacheLevelInfo(uint32_t level);
+ uint32_t CacheP_getEnabled(void);
++#ifdef __cplusplus
++extern "C" {
++#endif
++uint32_t CacheP_getCacheLevelInfo(uint32_t level);
+ void CacheP_configForceWrThru(uint32_t enable);
+ void CacheP_disableL1d(void);
+ void CacheP_disableL1p(void);
+@@ -47,9 +50,17 @@ void CacheP_enableL1p(void);
+ void CacheP_invL1p(uint32_t blockPtr, uint32_t byteCnt);
+ void CacheP_invL1d(uint32_t blockPtr, uint32_t byteCnt);
+ void CacheP_setDLFO(void);
++#ifdef __cplusplus
++}
++#endif
+ 
++#ifdef __cplusplus
++extern const uint32_t  gCacheL1dCacheLineSize = 32;
++extern const uint32_t  gCacheL1pCacheLineSize = 32;
++#else
+ const uint32_t  gCacheL1dCacheLineSize = 32;
+ const uint32_t  gCacheL1pCacheLineSize = 32;
++#endif
+ 
+ /* these are defined as part of SysConfig */
+ extern const CacheP_Config gCacheConfig;
+diff --git a/source/kernel/nortos/dpl/r5/ClockP_nortos_r5.c b/source/kernel/nortos/dpl/r5/ClockP_nortos_r5.c
+index 2ba6b16978..6b6813e9c7 100755
+--- a/source/kernel/nortos/dpl/r5/ClockP_nortos_r5.c
++++ b/source/kernel/nortos/dpl/r5/ClockP_nortos_r5.c
+@@ -32,6 +32,9 @@
+ 
+ #include <kernel/nortos/dpl/common/ClockP_nortos_priv.h>
+ #include <kernel/dpl/TimerP.h>
++void ClockP_init(void);
++void ClockP_timerClearOverflowInt(uint32_t timerBaseAddr);
++uint32_t ClockP_getTimerCount(uint32_t timerBaseAddr);
+ 
+ void ClockP_timerClearOverflowInt(uint32_t timerBaseAddr)
+ {
+@@ -77,6 +80,7 @@ void ClockP_init(void)
+     timerHwiParams.intNum = gClockConfig.timerHwiIntNum;
+     timerHwiParams.callback = ClockP_timerTickIsr;
+     timerHwiParams.isPulse = 0;
++    timerHwiParams.priority = gClockConfig.intrPriority;
+     (void) HwiP_construct(&gClockCtrl.timerHwiObj, &timerHwiParams);
+ 
+     /* start the tick timer */
+diff --git a/source/kernel/nortos/dpl/r5/CpuId_armv7r.c b/source/kernel/nortos/dpl/r5/CpuId_armv7r.c
+index e13f1b31a4..ae01e16ea9 100644
+--- a/source/kernel/nortos/dpl/r5/CpuId_armv7r.c
++++ b/source/kernel/nortos/dpl/r5/CpuId_armv7r.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2022 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -46,3 +46,8 @@ void CSL_armR5GetCpuID(CSL_ArmR5CPUInfo *cpuInfo)
+                                             CSL_R5_MPIDR_AFF1_SHIFT);
+     }
+ }
++
++void CSL_armR5SetWFIMode(void)
++{
++    __asm__ __volatile__ ("wfi"   "\n\t": : : "memory");
++}
+diff --git a/source/kernel/nortos/dpl/r5/CpuId_armv7r.h b/source/kernel/nortos/dpl/r5/CpuId_armv7r.h
+index 942792a721..8ffb021c3a 100644
+--- a/source/kernel/nortos/dpl/r5/CpuId_armv7r.h
++++ b/source/kernel/nortos/dpl/r5/CpuId_armv7r.h
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2022 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+diff --git a/source/kernel/nortos/dpl/r5/HwiP_armv7r_handlers_nortos.c b/source/kernel/nortos/dpl/r5/HwiP_armv7r_handlers_nortos.c
+index ba86a8d84c..96466f3ac8 100755
+--- a/source/kernel/nortos/dpl/r5/HwiP_armv7r_handlers_nortos.c
++++ b/source/kernel/nortos/dpl/r5/HwiP_armv7r_handlers_nortos.c
+@@ -34,7 +34,14 @@
+ #include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
+ #include <drivers/hw_include/csl_types.h>
+ 
++#ifdef __cplusplus
++extern "C" {
++#endif
+ void __attribute__((interrupt("SWI"), section(".text.hwi"))) HwiP_svc_handler(void);
++void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak)) HwiP_data_abort_handler_c(void);
++#ifdef __cplusplus
++}
++#endif
+ 
+ /* compile flag to enable or disable interrupt nesting */
+ #define HWIP_NESTED_INTERRUPTS_IRQ_ENABLE
+diff --git a/source/kernel/nortos/dpl/r5/HwiP_armv7r_handlers_nortos_asm.S b/source/kernel/nortos/dpl/r5/HwiP_armv7r_handlers_nortos_asm.S
+index e85d152bd9..81a5a31f0e 100644
+--- a/source/kernel/nortos/dpl/r5/HwiP_armv7r_handlers_nortos_asm.S
++++ b/source/kernel/nortos/dpl/r5/HwiP_armv7r_handlers_nortos_asm.S
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -106,7 +106,6 @@ HwiP_irq_handler:
+         .global HwiP_data_abort_handler
+         .type HwiP_data_abort_handler,%function
+         .section ".text.hwi","ax",%progbits
+-        .arm
+         .align 2
+ HwiP_data_abort_handler:
+         /* Return to the instruction following the interrupted.
+@@ -116,25 +115,36 @@ HwiP_data_abort_handler:
+          * instruction set) points to the second instruction beyond the address where
+          * the exception was generated.
+          */
+-        SUB		lr, lr, #6
++
++        /*   Push used registers. */
++        PUSH	{r0-r4, r12}
++
++        /* SPSR has the snapshot of CPSR before data abort. Compare thumb state bit in SPSR */
++        MRS r0, SPSR
++        AND r1, r0, #0x20
++        CMP R1, #0
++
++        /* branches to label ARM_STATE if the thumb state bit is not set */
++        BEQ ARM_STATE
++        SUB lr, lr, #2
++        ARM_STATE:
++        SUB lr, lr, #4
++        END:
+ 
+         /*   Push the return address and SPSR. */
+         PUSH	{lr}
+         MRS	lr, SPSR
+         PUSH	{lr}
+ 
+-        /*   Push used registers. */
+-        PUSH	{r0-r4, r12}
+-
+         /*   Call the interrupt handler. */
+         LDR	r1, HwiP_data_abort_handler_const
+         BLX	r1
+ 
+         /*  Restore used registers, LR and SPSR before  returning. */
+-        POP	{r0-r4, r12}
+         POP	{LR}
+         MSR	SPSR_cxsf, LR
+         POP	{LR}
++        POP	{r0-r4, r12}
+         MOVS	PC, LR
+ 
+ HwiP_irq_handler_const: .word HwiP_irq_handler_c
+diff --git a/source/kernel/nortos/dpl/r5/HwiP_armv7r_vim.c b/source/kernel/nortos/dpl/r5/HwiP_armv7r_vim.c
+index cb1b8483b2..0258ad2fe2 100644
+--- a/source/kernel/nortos/dpl/r5/HwiP_armv7r_vim.c
++++ b/source/kernel/nortos/dpl/r5/HwiP_armv7r_vim.c
+@@ -33,10 +33,11 @@
+ #include <kernel/dpl/HwiP.h>
+ #include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
+ #include <drivers/hw_include/csl_types.h>
++#include <drivers/hw_include/soc_config.h>
+ 
+ static volatile uint32_t gdummy;
+ 
+-static void assembly(void)
++static void Hwip_dataAndInstructionBarrier(void)
+ {
+     __asm__ __volatile__ (" isb"   "\n\t": : : "memory");
+     __asm__ __volatile__ (" dsb"   "\n\t": : : "memory");
+@@ -49,13 +50,16 @@ typedef struct HwiP_Struct_s {
+ } HwiP_Struct;
+ 
+ HwiP_Ctrl gHwiCtrl;
++#ifdef INTR_PROF
++HwiP_Prof_Ctrl gHwiCtrlProf;
++#endif
+ 
+ void HWI_SECTION HwiP_enableInt(uint32_t intNum)
+ {
+     volatile uint32_t *addr;
+     uint32_t bitPos;
+ 
+-    assembly();
++    Hwip_dataAndInstructionBarrier();
+ 
+     addr = (volatile uint32_t *)(gHwiConfig.intcBaseAddr + VIM_INT_EN(intNum));
+     bitPos = VIM_BIT_POS(intNum);
+@@ -79,7 +83,7 @@ uint32_t HWI_SECTION HwiP_disableInt(uint32_t intNum)
+     *addr = ((uint32_t)0x1 << bitPos);
+ 
+ 
+-    assembly();
++    Hwip_dataAndInstructionBarrier();
+ 
+ 
+     return isEnable;
+@@ -123,7 +127,7 @@ void HWI_SECTION HwiP_post(uint32_t intNum)
+      * returns.
+      */
+ 
+-    assembly();
++    Hwip_dataAndInstructionBarrier();
+ 
+ 
+ }
+@@ -273,7 +277,13 @@ void HWI_SECTION HwiP_init(void)
+     /* HwiP_enable(); */
+ }
+ 
++#ifdef __cplusplus
++extern "C" {
++#endif
+ uint32_t HwiP_getCPSR(void);
++#ifdef __cplusplus
++}
++#endif
+ 
+ uint32_t HWI_SECTION HwiP_inISR(void)
+ {
+diff --git a/source/kernel/nortos/dpl/r5/HwiP_armv7r_vim.h b/source/kernel/nortos/dpl/r5/HwiP_armv7r_vim.h
+index 92a8a4f967..624c258fb5 100755
+--- a/source/kernel/nortos/dpl/r5/HwiP_armv7r_vim.h
++++ b/source/kernel/nortos/dpl/r5/HwiP_armv7r_vim.h
+@@ -40,6 +40,7 @@ extern "C"
+ 
+ 
+ #include <kernel/dpl/HwiP.h>
++#include <drivers/hw_include/soc_config.h>
+ 
+ /* compile flag to enable VIC mode of operation, undef this to use non-VIC mode */
+ #define HWIP_VIM_VIC_ENABLE
+@@ -80,6 +81,21 @@ typedef struct HwiP_Ctrl_s {
+     uint32_t spuriousFIQCount;
+ } HwiP_Ctrl;
+ 
++#ifdef INTR_PROF
++typedef struct HwiP_Prof_Ctrl_s {
++
++    uint32_t traceInterruptedISR[HwiP_MAX_INTERRUPTS];
++    uint32_t traceInterruptedISRIndex;
++    uint32_t readCounterStart;
++    uint32_t readCounterStop;
++    uint32_t profileIntr;
++    uint64_t pmuCountVal;
++    uint64_t pmuCalibration;
++
++} HwiP_Prof_Ctrl;
++extern HwiP_Prof_Ctrl gHwiCtrlProf;
++#endif
++
+ extern HwiP_Ctrl gHwiCtrl;
+ extern HwiP_Config gHwiConfig;
+ /* APIs defined in HwiP_armv7r_asm.S */
+@@ -105,7 +121,7 @@ static inline void  HWI_SECTION HwiP_setAsFIQ(uint32_t intNum, uint32_t isFIQ)
+ 
+     if(isFIQ != 0U)
+     {
+-        *addr |= (0x1u << bitPos);
++        *addr |= ((uint32_t)0x1u << bitPos);
+     }
+     else
+     {
+@@ -135,7 +151,7 @@ static inline void  HWI_SECTION HwiP_setAsPulse(uint32_t intNum, uint32_t isPuls
+ 
+     if(isPulse != 0U)
+     {
+-        *addr |= (0x1u << bitPos);
++        *addr |= ((uint32_t)0x1u << bitPos);
+     }
+     else
+     {
+@@ -233,6 +249,309 @@ static inline void HWI_SECTION HwiP_ackFIQ(uint32_t intNum)
+     *addr= intNum;
+ }
+ 
++#define ISR_CALL_LEVEL_NONFLOAT_NONREENTRANT(fn, arg, intNum, vim_sts_addr, vim_sts_clr_mask)                  \
++    __asm__ volatile(                  \
++    "   SUB     lr, lr, #4                  \n"    \
++    "   PUSH    {lr}                        \n"    \
++    "   MRS     lr, SPSR                    \n"    \
++    "   PUSH    {lr}                        \n"    \
++    "   PUSH    {r0-r4, r12}                \n"    \
++    "   LDR     r0, ="#arg"                 \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   LDR     r1, ="#fn"                  \n"    \
++    "   BLX     r1                          \n"    \
++    "   LDR     r0, ="#vim_sts_addr"        \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   LDR     r1, ="#vim_sts_clr_mask"    \n"    \
++    "   LDR     r1, [r1]                    \n"    \
++    "   STR     r1, [r0]                    \n"    \
++    "   LDR     r0, ="#intNum"              \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   MOVW    r1, 0                       \n"    \
++    "   MOVT    r1, 0x50F0                  \n"    \
++    "   STR     r0, [r1, 0x18]              \n"    \
++    "   POP     {r0-r4, r12}                \n"    \
++    "   POP     {LR}                        \n"    \
++    "   MSR     SPSR_cxsf, LR               \n"    \
++    "   POP     {LR}                        \n"    \
++    "   MOVS    PC, LR                      \n"    \
++    ) 
++
++
++#define ISR_CALL_PULSE_NONFLOAT_NONREENTRANT(fn, arg, intNum, vim_sts_addr, vim_sts_clr_mask)                  \
++    __asm__ volatile(                  \
++    "   SUB     lr, lr, #4                  \n"    \
++    "   PUSH    {lr}                        \n"    \
++    "   MRS     lr, SPSR                    \n"    \
++    "   PUSH    {lr}                        \n"    \
++    "   PUSH    {r0-r4, r12}                \n"    \
++    "   LDR     r0, ="#vim_sts_addr"        \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   LDR     r1, ="#vim_sts_clr_mask"    \n"    \
++    "   LDR     r1, [r1]                    \n"    \
++    "   STR     r1, [r0]                    \n"    \
++    "   LDR     r0, ="#arg"                 \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   LDR     r1, ="#fn"                  \n"    \
++    "   BLX     r1                          \n"    \
++    "   LDR     r0, ="#intNum"              \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   MOVW    r1, 0                       \n"    \
++    "   MOVT    r1, 0x50F0                  \n"    \
++    "   STR     r0, [r1, 0x18]              \n"    \
++    "   POP     {r0-r4, r12}                \n"    \
++    "   POP     {LR}                        \n"    \
++    "   MSR     SPSR_cxsf, LR               \n"    \
++    "   POP     {LR}                        \n"    \
++    "   MOVS    PC, LR                      \n"    \
++    ) 
++
++
++#define ISR_CALL_LEVEL_FLOAT_NONREENTRANT(fn, arg, intNum, vim_sts_addr, vim_sts_clr_mask)                  \
++    __asm__ volatile(                  \
++    "   SUB     lr, lr, #4                  \n"    \
++    "   PUSH    {lr}                        \n"    \
++    "   MRS     lr, SPSR                    \n"    \
++    "   PUSH    {lr}                        \n"    \
++    "   PUSH    {r0-r4, r12}                \n"    \
++    "   FMRX    R0, FPSCR                   \n"    \
++    "   VPUSH   {D0-D15}                    \n"    \
++    "   PUSH    {R0}                        \n"    \
++    "   LDR     r0, ="#arg"                 \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   LDR     r1, ="#fn"                  \n"    \
++    "   BLX     r1                          \n"    \
++    "   LDR     r0, ="#vim_sts_addr"        \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   LDR     r1, ="#vim_sts_clr_mask"    \n"    \
++    "   LDR     r1, [r1]                    \n"    \
++    "   STR     r1, [r0]                    \n"    \
++    "   LDR     r0, ="#intNum"              \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   MOVW    r1, 0                       \n"    \
++    "   MOVT    r1, 0x50F0                  \n"    \
++    "   STR     r0, [r1, 0x18]              \n"    \
++    "   POP     {R0}                        \n"    \
++    "   VPOP    {D0-D15}                    \n"    \
++    "   VMSR    FPSCR, R0                   \n"    \
++    "   POP     {r0-r4, r12}                \n"    \
++    "   POP     {LR}                        \n"    \
++    "   MSR     SPSR_cxsf, LR               \n"    \
++    "   POP     {LR}                        \n"    \
++    "   MOVS    PC, LR                      \n"    \
++    ) 
++
++
++#define ISR_CALL_PULSE_FLOAT_NONREENTRANT(fn, arg, intNum, vim_sts_addr, vim_sts_clr_mask)                  \
++    __asm__ volatile(                  \
++    "   SUB     lr, lr, #4                  \n"    \
++    "   PUSH    {lr}                        \n"    \
++    "   MRS     lr, SPSR                    \n"    \
++    "   PUSH    {lr}                        \n"    \
++    "   PUSH    {r0-r4, r12}                \n"    \
++    "   FMRX    R0, FPSCR                   \n"    \
++    "   VPUSH   {D0-D15}                    \n"    \
++    "   PUSH    {R0}                        \n"    \
++    "   LDR     r0, ="#vim_sts_addr"        \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   LDR     r1, ="#vim_sts_clr_mask"    \n"    \
++    "   LDR     r1, [r1]                    \n"    \
++    "   STR     r1, [r0]                    \n"    \
++    "   LDR     r0, ="#arg"                 \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   LDR     r1, ="#fn"                  \n"    \
++    "   BLX     r1                          \n"    \
++    "   LDR     r0, ="#intNum"              \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   MOVW    r1, 0                       \n"    \
++    "   MOVT    r1, 0x50F0                  \n"    \
++    "   STR     r0, [r1, 0x18]              \n"    \
++    "   POP     {R0}                        \n"    \
++    "   VPOP    {D0-D15}                    \n"    \
++    "   VMSR    FPSCR, R0                   \n"    \
++    "   POP     {r0-r4, r12}                \n"    \
++    "   POP     {LR}                        \n"    \
++    "   MSR     SPSR_cxsf, LR               \n"    \
++    "   POP     {LR}                        \n"    \
++    "   MOVS    PC, LR                      \n"    \
++    ) 
++
++
++#define ISR_CALL_LEVEL_NONFLOAT_REENTRANT(fn, arg, intNum, vim_sts_addr, vim_sts_clr_mask)                  \
++    __asm__ volatile(                  \
++    "   SUB     lr, lr, #4                  \n"    \
++    "   PUSH    {lr}                        \n"    \
++    "   MRS     lr, SPSR                    \n"    \
++    "   PUSH    {lr}                        \n"    \
++    "   CPS     #0x13                       \n"    \
++    "   PUSH    {r0-r4, r12}                \n"    \
++    "   AND     r2, sp, #4                  \n"    \
++    "   SUB     sp, sp, r2                  \n"    \
++    "   PUSH    {r2, lr}                    \n"    \
++    "   CPSIE   i                           \n"    \
++    "   LDR     r0, ="#arg"                 \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   LDR     r1, ="#fn"                  \n"    \
++    "   BLX     r1                          \n"    \
++    "   CPSID   i                           \n"    \
++    "   LDR     r0, ="#vim_sts_addr"        \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   LDR     r1, ="#vim_sts_clr_mask"    \n"    \
++    "   LDR     r1, [r1]                    \n"    \
++    "   STR     r1, [r0]                    \n"    \
++    "   LDR     r0, ="#intNum"              \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   MOVW    r1, 0                       \n"    \
++    "   MOVT    r1, 0x50F0                  \n"    \
++    "   STR     r0, [r1, 0x18]              \n"    \
++    "   POP     {r2, lr}                    \n"    \
++    "   ADD     sp, sp, r2                  \n"    \
++    "   CPSID   i                           \n"    \
++    "   DSB                                 \n"    \
++    "   ISB                                 \n"    \
++    "   POP     {r0-r4, r12}                \n"    \
++    "   CPS     #0x12                       \n"    \
++    "   POP     {LR}                        \n"    \
++    "   MSR     SPSR_cxsf, LR               \n"    \
++    "   POP     {LR}                        \n"    \
++    "   MOVS    PC, LR                      \n"    \
++    ) 
++
++
++#define ISR_CALL_PULSE_NONFLOAT_REENTRANT(fn, arg, intNum, vim_sts_addr, vim_sts_clr_mask)                  \
++    __asm__ volatile(                  \
++    "   SUB     lr, lr, #4                  \n"    \
++    "   PUSH    {lr}                        \n"    \
++    "   MRS     lr, SPSR                    \n"    \
++    "   PUSH    {lr}                        \n"    \
++    "   CPS     #0x13                       \n"    \
++    "   PUSH    {r0-r4, r12}                \n"    \
++    "   AND     r2, sp, #4                  \n"    \
++    "   SUB     sp, sp, r2                  \n"    \
++    "   PUSH    {r2, lr}                    \n"    \
++    "   LDR     r0, ="#vim_sts_addr"        \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   LDR     r1, ="#vim_sts_clr_mask"    \n"    \
++    "   LDR     r1, [r1]                    \n"    \
++    "   STR     r1, [r0]                    \n"    \
++    "   CPSIE   i                           \n"    \
++    "   LDR     r0, ="#arg"                 \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   LDR     r1, ="#fn"                  \n"    \
++    "   BLX     r1                          \n"    \
++    "   CPSID   i                           \n"    \
++    "   LDR     r0, ="#intNum"              \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   MOVW    r1, 0                       \n"    \
++    "   MOVT    r1, 0x50F0                  \n"    \
++    "   STR     r0, [r1, 0x18]              \n"    \
++    "   POP     {r2, lr}                    \n"    \
++    "   ADD     sp, sp, r2                  \n"    \
++    "   CPSID   i                           \n"    \
++    "   DSB                                 \n"    \
++    "   ISB                                 \n"    \
++    "   POP     {r0-r4, r12}                \n"    \
++    "   CPS     #0x12                       \n"    \
++    "   POP     {LR}                        \n"    \
++    "   MSR     SPSR_cxsf, LR               \n"    \
++    "   POP     {LR}                        \n"    \
++    "   MOVS    PC, LR                      \n"    \
++    ) 
++
++
++#define ISR_CALL_LEVEL_FLOAT_REENTRANT(fn, arg, intNum, vim_sts_addr, vim_sts_clr_mask)                  \
++    __asm__ volatile(                  \
++    "   SUB     lr, lr, #4                  \n"    \
++    "   PUSH    {lr}                        \n"    \
++    "   MRS     lr, SPSR                    \n"    \
++    "   PUSH    {lr}                        \n"    \
++    "   CPS     #0x13                       \n"    \
++    "   PUSH    {r0-r4, r12}                \n"    \
++    "   FMRX    R0, FPSCR                   \n"    \
++    "   VPUSH   {D0-D15}                    \n"    \
++    "   PUSH    {R0}                        \n"    \
++    "   AND     r2, sp, #4                  \n"    \
++    "   SUB     sp, sp, r2                  \n"    \
++    "   PUSH    {r2, lr}                    \n"    \
++    "   CPSIE   i                           \n"    \
++    "   LDR     r0, ="#arg"                 \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   LDR     r1, ="#fn"                  \n"    \
++    "   BLX     r1                          \n"    \
++    "   CPSID   i                           \n"    \
++    "   LDR     r0, ="#vim_sts_addr"        \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   LDR     r1, ="#vim_sts_clr_mask"    \n"    \
++    "   LDR     r1, [r1]                    \n"    \
++    "   STR     r1, [r0]                    \n"    \
++    "   LDR     r0, ="#intNum"              \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   MOVW    r1, 0                       \n"    \
++    "   MOVT    r1, 0x50F0                  \n"    \
++    "   STR     r0, [r1, 0x18]              \n"    \
++    "   POP     {r2, lr}                    \n"    \
++    "   ADD     sp, sp, r2                  \n"    \
++    "   CPSID   i                           \n"    \
++    "   DSB                                 \n"    \
++    "   ISB                                 \n"    \
++    "   POP     {R0}                        \n"    \
++    "   VPOP    {D0-D15}                    \n"    \
++    "   VMSR    FPSCR, R0                   \n"    \
++    "   POP     {r0-r4, r12}                \n"    \
++    "   CPS     #0x12                       \n"    \
++    "   POP     {LR}                        \n"    \
++    "   MSR     SPSR_cxsf, LR               \n"    \
++    "   POP     {LR}                        \n"    \
++    "   MOVS    PC, LR                      \n"    \
++    ) 
++
++
++#define ISR_CALL_PULSE_FLOAT_REENTRANT(fn, arg, intNum, vim_sts_addr, vim_sts_clr_mask)                  \
++    __asm__ volatile(                  \
++    "   SUB     lr, lr, #4                  \n"    \
++    "   PUSH    {lr}                        \n"    \
++    "   MRS     lr, SPSR                    \n"    \
++    "   PUSH    {lr}                        \n"    \
++    "   CPS     #0x13                       \n"    \
++    "   PUSH    {r0-r4, r12}                \n"    \
++    "   FMRX    R0, FPSCR                   \n"    \
++    "   VPUSH   {D0-D15}                    \n"    \
++    "   PUSH    {R0}                        \n"    \
++    "   AND     r2, sp, #4                  \n"    \
++    "   SUB     sp, sp, r2                  \n"    \
++    "   PUSH    {r2, lr}                    \n"    \
++    "   LDR     r0, ="#vim_sts_addr"        \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   LDR     r1, ="#vim_sts_clr_mask"    \n"    \
++    "   LDR     r1, [r1]                    \n"    \
++    "   STR     r1, [r0]                    \n"    \
++    "   CPSIE   i                           \n"    \
++    "   LDR     r0, ="#arg"                 \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   LDR     r1, ="#fn"                  \n"    \
++    "   BLX     r1                          \n"    \
++    "   CPSID   i                           \n"    \
++    "   LDR     r0, ="#intNum"              \n"    \
++    "   LDR     r0, [r0]                    \n"    \
++    "   MOVW    r1, 0                       \n"    \
++    "   MOVT    r1, 0x50F0                  \n"    \
++    "   STR     r0, [r1, 0x18]              \n"    \
++    "   POP     {r2, lr}                    \n"    \
++    "   ADD     sp, sp, r2                  \n"    \
++    "   CPSID   i                           \n"    \
++    "   DSB                                 \n"    \
++    "   ISB                                 \n"    \
++    "   POP     {R0}                        \n"    \
++    "   VPOP    {D0-D15}                    \n"    \
++    "   VMSR    FPSCR, R0                   \n"    \
++    "   POP     {r0-r4, r12}                \n"    \
++    "   CPS     #0x12                       \n"    \
++    "   POP     {LR}                        \n"    \
++    "   MSR     SPSR_cxsf, LR               \n"    \
++    "   POP     {LR}                        \n"    \
++    "   MOVS    PC, LR                      \n"    \
++    ) 
++
+ 
+ #ifdef __cplusplus
+ }
+diff --git a/source/kernel/nortos/dpl/r5/MpuP_armv7r.c b/source/kernel/nortos/dpl/r5/MpuP_armv7r.c
+index 90cb2be956..b6289a9f16 100644
+--- a/source/kernel/nortos/dpl/r5/MpuP_armv7r.c
++++ b/source/kernel/nortos/dpl/r5/MpuP_armv7r.c
+@@ -42,6 +42,9 @@
+ #define MpuP_MAX_REGIONS    (16u)
+ 
+ /* APIs defined in MpuP_armv7r_asm.s */
++#ifdef __cplusplus
++extern "C" {
++#endif
+ void MpuP_disableAsm(void);
+ void MpuP_enableAsm(void);
+ uint32_t MpuP_isEnableAsm(void);
+@@ -49,6 +52,9 @@ void MpuP_disableBRAsm(void);
+ void MpuP_enableBRAsm(void);
+ void MpuP_setRegionAsm(uint32_t regionId, uint32_t regionBaseAddr,
+               uint32_t sizeAndEnble, uint32_t regionAttrs);
++#ifdef __cplusplus
++}
++#endif
+ 
+ /* these are defined as part of SysConfig */
+ extern MpuP_Config gMpuConfig;
+@@ -131,7 +137,7 @@ void MPU_SECTION MpuP_enable(void)
+         /* get the current enabled bits */
+         type = CacheP_getEnabled();
+ 
+-        DebugP_assertNoLog ((type & CacheP_TYPE_ALL)  == 0);
++        DebugP_assertNoLog ((type & CacheP_TYPE_ALL)  == 0U);
+ 
+         MpuP_enableAsm();
+ 
+diff --git a/source/kernel/nortos/dpl/r5/PmuP_armv7r.c b/source/kernel/nortos/dpl/r5/PmuP_armv7r.c
+index 7bf238e4b6..6b6a44b229 100755
+--- a/source/kernel/nortos/dpl/r5/PmuP_armv7r.c
++++ b/source/kernel/nortos/dpl/r5/PmuP_armv7r.c
+@@ -61,10 +61,16 @@
+ PMU_DATA_SECTION
+ static uint64_t gCounterFreqHz = 0;
+ 
++#ifdef __cplusplus
++extern "C" {
++#endif
+ void PmuP_enableCounters(uint32_t counterMask);
+ void PmuP_disableCounters(uint32_t counterMask);
+ void PmuP_clearOverflowStatus(uint32_t counterMask);
+ void PmuP_setup(uint32_t setupFlags);
++#ifdef __cplusplus
++}
++#endif
+ 
+ void PMU_TEXT_SECTION CycleCounterP_init(const uint64_t cpuFreqHz)
+ {
+diff --git a/source/kernel/nortos/dpl/r5/boot_armv7r.c b/source/kernel/nortos/dpl/r5/boot_armv7r.c
+index 0c9bf12051..dea7783046 100644
+--- a/source/kernel/nortos/dpl/r5/boot_armv7r.c
++++ b/source/kernel/nortos/dpl/r5/boot_armv7r.c
+@@ -33,6 +33,7 @@
+ #include <string.h>
+ 
+ int32_t _system_pre_init(void);
++void __TI_auto_init(void);
+ 
+ extern uint32_t __BSS_START;
+ extern uint32_t __BSS_END;
+@@ -45,7 +46,7 @@ int32_t _system_pre_init(void)
+ }
+ 
+ #if !defined (__clang__)
+-void __TI_auto_init()
++void __TI_auto_init(void)
+ {
+ }
+ #endif

@@ -1,0 +1,72 @@
+diff --git a/source/kernel/dpl/ClockP.h b/source/kernel/dpl/ClockP.h
+index 04cf2c9ce5..a7ca3c73b7 100755
+--- a/source/kernel/dpl/ClockP.h
++++ b/source/kernel/dpl/ClockP.h
+@@ -79,6 +79,7 @@ typedef struct ClockP_Config_
+     uint32_t timerInputClkHz; /**< Timer clock in units of Hz */
+     uint32_t timerInputPreScaler; /**< Timer divider to apply to the input clock */
+     uint32_t usecPerTick; /**< period of one timer tick in units of usecs */
++    uint8_t  intrPriority; /**< Tick Interrupt priority */
+ 
+ } ClockP_Config;
+ 
+@@ -228,6 +229,11 @@ uint64_t ClockP_ticksToUsec(uint32_t ticks);
+ 
+ /**
+  * \brief Get current time in units of usecs
++ * 
++ * \note This API shouldn't be called from an ISR with priority higher than 
++ *       that of Tick Interrupt. This is because Tick interrupt won't be able  
++ *       to preempt the current ISR and \ref ClockP_getTimeUsec may return 
++ *       incorrect value.
+  */
+ uint64_t ClockP_getTimeUsec(void);
+ 
+diff --git a/source/kernel/dpl/CpuIdP.h b/source/kernel/dpl/CpuIdP.h
+index 4ef2bc7ca7..2d9e1cba9f 100644
+--- a/source/kernel/dpl/CpuIdP.h
++++ b/source/kernel/dpl/CpuIdP.h
+@@ -75,6 +75,12 @@ typedef struct
+  */
+ void CSL_armR5GetCpuID(CSL_ArmR5CPUInfo *cpuInfo);
+ 
++/**
++ *  \brief Set current R5 Core to Standby mode
++ *
++ */
++void CSL_armR5SetWFIMode(void);
++
+ /** @} */
+ 
+ #ifdef __cplusplus
+diff --git a/source/kernel/dpl/MmuP_armv8.h b/source/kernel/dpl/MmuP_armv8.h
+index b242e15804..eebba28736 100644
+--- a/source/kernel/dpl/MmuP_armv8.h
++++ b/source/kernel/dpl/MmuP_armv8.h
+@@ -128,7 +128,7 @@ void MmuP_MapAttrs_init(MmuP_MapAttrs *attrs);
+ /**
+  * \brief Enable MMU sub-system
+  */
+-void MmuP_enable();
++void MmuP_enable(void);
+ 
+ /**
+  * \brief Disable MMU sub-system
+@@ -140,7 +140,7 @@ void MmuP_disable(void);
+  *
+  * \return 0: MMU sub-system is disabled, 1: MMU sub-system is enabled
+  */
+-uint32_t MmuP_isEnabled();
++uint32_t MmuP_isEnabled(void);
+ 
+ /* Memory map */
+ 
+@@ -160,7 +160,7 @@ int32_t MmuP_map(uintptr_t vaddr, uintptr_t paddr, uint32_t size, MmuP_MapAttrs
+  * \brief Initialize MMU sub-system, called by SysConfig, not to be called by end users
+  *
+  */
+-void MmuP_init();
++void MmuP_init(void);
+ 
+ /** @} */
+ 

@@ -1,0 +1,703 @@
+diff --git a/source/drivers/bootloader/bootloader.c b/source/drivers/bootloader/bootloader.c
+index e7ef17e24e..3aa46db106 100644
+--- a/source/drivers/bootloader/bootloader.c
++++ b/source/drivers/bootloader/bootloader.c
+@@ -159,7 +159,7 @@ int32_t Bootloader_runCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo)
+     return status;
+ }
+ 
+-int32_t Bootloader_loadSelfCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo)
++int32_t Bootloader_loadSelfCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo, uint32_t skipLoad)
+ {
+     int32_t status = SystemP_SUCCESS;
+     uint32_t cpuId = cpuInfo->cpuId;
+@@ -190,7 +190,7 @@ int32_t Bootloader_loadSelfCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpu
+     {
+         status = Bootloader_socMemInitCpu(cpuId);
+     }
+-    if(SystemP_SUCCESS == status)
++    if((SystemP_SUCCESS == status) && (skipLoad == FALSE))
+     {
+         if( cpuInfo->rprcOffset != BOOTLOADER_INVALID_ID)
+         {
+@@ -259,7 +259,7 @@ int32_t Bootloader_bootSelfCpu(Bootloader_Handle handle, Bootloader_BootImageInf
+ 
+     while( selfCpuList[i] != BOOTLOADER_INVALID_ID)
+     {
+-        status = Bootloader_loadSelfCpu(handle, &bootImageInfo->cpuInfo[ selfCpuList[i] ] );
++        status = Bootloader_loadSelfCpu(handle, &bootImageInfo->cpuInfo[ selfCpuList[i] ], FALSE);
+         if(status!=SystemP_SUCCESS)
+         {
+             break;
+@@ -402,9 +402,8 @@ uint32_t Bootloader_getMsgLen(uint8_t *x509_cert_ptr, uint32_t x509_cert_size)
+     uint8_t *boot_seq_ptr;
+     uint32_t msg_len = 0, boot_seq_len;
+     uint8_t *msg_len_ptr = (uint8_t *)&msg_len;
+-    /* oid encoding of image_integrity extension - 1.3.6.1.4.1.294.1.22 */
+-    uint8_t boot_seq_oid[] = {0x06, 0x09, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x82, 0x26, 0x01, 0x22};
+-
++    uint8_t boot_seq_oid[11];
++    Bootloader_socGetBootSeqOid(boot_seq_oid);
+     boot_seq_ptr = Bootloader_findSeq(x509_cert_ptr, x509_cert_size, boot_seq_oid, sizeof(boot_seq_oid));
+ 
+     /* length of seq is stored in the byte after the 0x30 seq_id */
+@@ -522,7 +521,7 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
+         else if(config->bootMedia == BOOTLOADER_MEDIA_FLASH)
+         {
+             Bootloader_FlashArgs *flashArgs = (Bootloader_FlashArgs *)(config->args);
+-            certLoadAddr = flashArgs->appImageOffset + 0x60000000;
++            certLoadAddr = flashArgs->appImageOffset + SOC_getFlashDataBaseAddr();
+         }
+ #ifdef DRV_VERSION_MMCSD_V0
+         else if(config->bootMedia == BOOTLOADER_MEDIA_EMMC)
+@@ -571,9 +570,9 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
+         {
+             if(config->disableAppImageAuth == TRUE)
+             {
+-                /* NOTE: This is an option to skip image authentication in a signed 
+-                image to aid initial development on HS devices. If the user has 
+-                opted to disable image authentication, do not authenticate/decrypt. 
++                /* NOTE: This is an option to skip image authentication in a signed
++                image to aid initial development on HS devices. If the user has
++                opted to disable image authentication, do not authenticate/decrypt.
+                 Skip the certificate length and start loading as in GP */
+                 authStatus = SystemP_SUCCESS;
+             }
+@@ -581,9 +580,13 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
+             {
+                 authStatus = Bootloader_socAuthImage(certLoadAddr);
+             }
++
++            /* Invalidate the cache before reading in case HSM decrypted image */
++            CacheP_inv((void *)certLoadAddr, cacheAlignedLen, CacheP_TYPE_ALL);
++
+             if(config->bootMedia == BOOTLOADER_MEDIA_BUFIO)
+             {
+-                /* Authentication will fail in Buf Io because we don't have full data yet, 
++                /* Authentication will fail in Buf Io because we don't have full data yet,
+                 so make it pass here for testing. Default behaviour is to assert. */
+ 
+                 /* authStatus = SystemP_SUCCESS; */
+@@ -826,7 +829,7 @@ int32_t Bootloader_parseAndLoadLinuxAppImage(Bootloader_Handle handle, Bootloade
+         }
+         else
+         {
+-            status = SystemP_SUCCESS;
++            status = SystemP_FAILURE;
+         }
+     }
+ 
+diff --git a/source/drivers/bootloader/soc/am263x/bootloader_hsmRt_load.c b/source/drivers/bootloader/soc/am263x/bootloader_hsmRt_load.c
+index c115c3a6ff..5a26fae84f 100644
+--- a/source/drivers/bootloader/soc/am263x/bootloader_hsmRt_load.c
++++ b/source/drivers/bootloader/soc/am263x/bootloader_hsmRt_load.c
+@@ -60,7 +60,7 @@
+ /* ========================================================================== */
+ 
+ 
+-CSL_top_ctrlRegs * ptrTopCtrlRegs = (CSL_top_ctrlRegs *)CSL_TOP_CTRL_U_BASE;
++extern CSL_top_ctrlRegs * ptrTopCtrlRegs;
+ 
+ /* ========================================================================== */
+ /*                             Function Definitions                           */
+diff --git a/source/drivers/bootloader/soc/am263x/bootloader_soc.c b/source/drivers/bootloader/soc/am263x/bootloader_soc.c
+index cd7ffeed2f..6c49cc74f4 100644
+--- a/source/drivers/bootloader/soc/am263x/bootloader_soc.c
++++ b/source/drivers/bootloader/soc/am263x/bootloader_soc.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2021 Texas Instruments Incorporated
++ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -37,6 +37,9 @@
+ #include <kernel/dpl/CacheP.h>
+ #include <kernel/dpl/HwiP.h>
+ 
++#define BOOTLOADER_SOC_APP_CERT_SIZE (0x1000)
++#define BOOTLOADER_R5SS_FREQ_200MHz (1U)
++
+ Bootloader_resMemSections gResMemSection =
+ {
+     .numSections    = 1,
+@@ -147,6 +150,8 @@ Bootloader_CoreAddrTranslateInfo gAddrTranslateInfo[] =
+     },
+ };
+ 
++CSL_top_ctrlRegs * ptrTopCtrlRegs = (CSL_top_ctrlRegs *)CSL_TOP_CTRL_U_BASE;
++
+ volatile uint32_t gR5ss0MemInitDone = FALSE, gR5ss1MemInitDone = FALSE, gR5ss1PORDone = FALSE;
+ volatile uint32_t gR5ss0Core1ImagePresent = FALSE, gR5ss1Core1ImagePresent = FALSE;
+ 
+@@ -430,9 +435,10 @@ uint32_t Bootloader_socTranslateSectionAddr(uint32_t cslCoreId, uint32_t addr)
+ void Bootloader_socConfigurePll(void)
+ {
+     SOC_RcmPllHsDivOutConfig hsDivCfg;
++    uint32_t r5ClkSrc_restore;
+ 
+     /* Pre Requisite Sequence to relock core pll needs to be done */
+-    SOC_rcmCoreApllRelockPreRequisite();
++    r5ClkSrc_restore = SOC_rcmCoreApllRelockPreRequisite();
+ 
+     hsDivCfg.hsdivOutEnMask = (RCM_PLL_HSDIV_OUTPUT_ENABLE_0 |
+                               RCM_PLL_HSDIV_OUTPUT_ENABLE_1 |
+@@ -447,6 +453,9 @@ void Bootloader_socConfigurePll(void)
+     hsDivCfg.hsDivOutFreqHz[0] = SOC_RCM_FREQ_MHZ2HZ(160U);
+     hsDivCfg.hsDivOutFreqHz[1] = SOC_RCM_FREQ_MHZ2HZ(192U);
+     SOC_rcmPerApllConfig(RCM_PLL_FOUT_FREQID_CLK_1920MHZ, &hsDivCfg);
++
++    /* Restore R5F source clock*/
++    SOC_rcmSetR5ClockSource(r5ClkSrc_restore);
+ }
+ 
+ void Bootloader_socInitL2MailBoxMemory(void)
+@@ -462,10 +471,52 @@ Bootloader_resMemSections* Bootloader_socGetSBLMem(void)
+ 
+ int32_t Bootloader_socAuthImage(uint32_t certLoadAddr)
+ {
+-    return SystemP_SUCCESS;
++    int32_t status = SystemP_FAILURE;
++    HsmClient_t client ;
++    status = HsmClient_register(&client, BOOTLOADER_CLIENT_ID);
++
++    /* Request TIFS-MCU to authenticate (and decrypt if mentioned in the x509 cert) the image */
++    status = HsmClient_procAuthBoot(&client, (uint8_t *)certLoadAddr, BOOTLOADER_SOC_APP_CERT_SIZE, SystemP_WAIT_FOREVER);
++
++    return status;
+ }
+ 
+ uint32_t Bootloader_socIsAuthRequired(void)
+ {
+-    return FALSE;
++    uint32_t isAuthRequired = TRUE;
++
++    if(ptrTopCtrlRegs->EFUSE_DEVICE_TYPE == BOOTLOADER_DEVTYPE_HSSE)
++    {
++        isAuthRequired = TRUE;
++    }
++    else
++    {
++        isAuthRequired = FALSE;
++    }
++
++    return isAuthRequired;
++}
++
++void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid){
++    uint8_t boot_seq[] = {0x06, 0x09, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x82, 0x26, 0x01, 0x01};
++    memcpy(boot_seq_oid, boot_seq, sizeof(boot_seq));
+ }
++
++void Bootloader_socSetAutoClock()
++{
++    if (((ptrTopCtrlRegs->EFUSE1_ROW_12) & CSL_TOP_CTRL_EFUSE1_ROW_12_R5SS_FREQ_MASK) == BOOTLOADER_R5SS_FREQ_200MHz)
++    {
++
++        uint32_t cpuFreq = 200 * 1000000, sysClkFreq = 200 * 1000000;
++        uint32_t testCpuFreq;
++
++        SOC_rcmsetR5SysClock(cpuFreq, sysClkFreq, CSL_CORE_ID_R5FSS0_0);
++        testCpuFreq = SOC_rcmGetR5Clock(CSL_CORE_ID_R5FSS0_0);
++
++        DebugP_assert(testCpuFreq == 200 * 1000000);
++    }
++    else
++    {
++        Bootloader_socCpuSetClock(CSL_CORE_ID_R5FSS0_0, (uint32_t)(400*1000000));
++    }
++}
+\ No newline at end of file
+diff --git a/source/drivers/bootloader/soc/am263x/bootloader_soc.h b/source/drivers/bootloader/soc/am263x/bootloader_soc.h
+index e6c93d0324..fb039264fe 100644
+--- a/source/drivers/bootloader/soc/am263x/bootloader_soc.h
++++ b/source/drivers/bootloader/soc/am263x/bootloader_soc.h
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2021 Texas Instruments Incorporated
++ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -40,6 +40,7 @@ extern "C"
+ 
+ 
+ #include <drivers/hw_include/cslr_soc.h>
++#include <drivers/hsmclient.h>
+ /* ========================================================================== */
+ /*                           Macros & Typedefs                                */
+ /* ========================================================================== */
+@@ -55,6 +56,8 @@ extern "C"
+ #define BOOTLOADER_DEVTYPE_HSFS         (0xAAU)
+ /** \brief device type GP   */
+ #define BOOTLOADER_DEVTYPE_GP           (0x03U)
++/** \brief hsmclient ID for bootloader */
++#define BOOTLOADER_CLIENT_ID            (0x02)
+ /** @} */
+ /**
+  * \brief Data structure containing information about a core specific to the SOC
+@@ -271,11 +274,23 @@ int32_t Bootloader_socAuthImage(uint32_t certLoadAddr);
+  */
+ uint32_t Bootloader_socIsAuthRequired(void);
+ 
++/**
++ * \brief API to get boot sequence oid
++ *
++ * \param boot_seq_oid [in] pointer to integer array for populating boot sequence oid
++ *
++ */
++void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid);
++
+ /**
+  * \brief API to load hsm runtime firmware
+  */
+ void Bootloader_socLoadHsmRtFw(const uint8_t *HsmRtFw, uint32_t hsmRTSize);
+ 
++/**
++ * \brief API to set CPU clock to 200 MHz or 400 MHz on the basis of eFUSE bits configuration
++ */
++void Bootloader_socSetAutoClock();
+ #ifdef __cplusplus
+ }
+ #endif
+diff --git a/source/drivers/bootloader/soc/am273x/bootloader_hsmRt_load.c b/source/drivers/bootloader/soc/am273x/bootloader_hsmRt_load.c
+index bb07109778..31ec1c538f 100644
+--- a/source/drivers/bootloader/soc/am273x/bootloader_hsmRt_load.c
++++ b/source/drivers/bootloader/soc/am273x/bootloader_hsmRt_load.c
+@@ -60,7 +60,7 @@
+ /* ========================================================================== */
+ 
+ 
+-CSL_top_ctrlRegs * ptrTopCtrlRegs = (CSL_top_ctrlRegs *)CSL_TOP_CTRL_U_BASE;
++extern CSL_top_ctrlRegs * ptrTopCtrlRegs;
+ 
+ /* ========================================================================== */
+ /*                             Function Definitions                           */
+diff --git a/source/drivers/bootloader/soc/am273x/bootloader_soc.c b/source/drivers/bootloader/soc/am273x/bootloader_soc.c
+index b4c5367372..062a1f00a2 100644
+--- a/source/drivers/bootloader/soc/am273x/bootloader_soc.c
++++ b/source/drivers/bootloader/soc/am273x/bootloader_soc.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2021 Texas Instruments Incorporated
++ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -40,6 +40,8 @@
+ #define BOOTLOADER_SOC_RSV_MEM_START (0x10200000)
+ #define BOOTLOADER_SOC_RSV_MEM_END   (0x10220000)
+ 
++#define BOOTLOADER_SOC_APP_CERT_SIZE (0x1000)
++
+ Bootloader_resMemSections gResMemSection =
+ {
+     .numSections    = 2,
+@@ -151,6 +153,8 @@ int32_t Bootloader_socCpuSetClock(uint32_t cpuId, uint32_t cpuHz)
+     return status;
+ }
+ 
++CSL_top_ctrlRegs * ptrTopCtrlRegs = (CSL_top_ctrlRegs *)CSL_TOP_CTRL_U_BASE;
++
+ int32_t Bootloader_socCpuPowerOnReset(uint32_t cpuId,void *socCoreOpMode)
+ {
+     int32_t status = SystemP_SUCCESS;
+@@ -217,14 +221,14 @@ int32_t Bootloader_socMemInitCpu(uint32_t cpuId)
+             }
+             break;
+         case CSL_CORE_ID_C66SS0:
+-            if (gR5ss0MemInitDone == FALSE)
++            if (gDssMemInitDone == FALSE)
+             {
+                 SOC_rcmStartMemInitDSSL2(SOC_RCM_MEMINIT_DSSL2_MEMBANK_ALL);
+                 SOC_rcmStartMemInitDSSL3(SOC_RCM_MEMINIT_DSSL3_MEMBANK_ALL);
+                 SOC_rcmWaitMemInitDSSL2(SOC_RCM_MEMINIT_DSSL2_MEMBANK_ALL);
+                 SOC_rcmWaitMemInitDSSL3(SOC_RCM_MEMINIT_DSSL3_MEMBANK_ALL);
+                 SOC_rcmMemInitDssMailboxMemory();
+-                gR5ss0MemInitDone = TRUE;
++                gDssMemInitDone = TRUE;
+             }
+             break;
+         default:
+@@ -313,10 +317,33 @@ Bootloader_resMemSections* Bootloader_socGetSBLMem(void)
+ 
+ int32_t Bootloader_socAuthImage(uint32_t certLoadAddr)
+ {
+-    return SystemP_SUCCESS;
++    int32_t status = SystemP_FAILURE;
++    HsmClient_t client ;
++    status = HsmClient_register(&client, BOOTLOADER_CLIENT_ID);
++
++    /* Request TIFS-MCU to authenticate (and decrypt if mentioned in the x509 cert) the image */
++    status = HsmClient_procAuthBoot(&client, (uint8_t *)certLoadAddr, BOOTLOADER_SOC_APP_CERT_SIZE, SystemP_WAIT_FOREVER);
++
++    return status;
+ }
+ 
+ uint32_t Bootloader_socIsAuthRequired(void)
+ {
+-    return FALSE;
++    uint32_t isAuthRequired = TRUE;
++
++    if(ptrTopCtrlRegs->EFUSE_DEVICE_TYPE == BOOTLOADER_DEVTYPE_HSSE)
++    {
++        isAuthRequired = TRUE;
++    }
++    else
++    {
++        isAuthRequired = FALSE;
++    }
++
++    return isAuthRequired;
++}
++
++void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid){
++    uint8_t boot_seq[] = {0x06, 0x09, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x82, 0x26, 0x01, 0x01};
++    memcpy(boot_seq_oid, boot_seq, sizeof(boot_seq));
+ }
+diff --git a/source/drivers/bootloader/soc/am273x/bootloader_soc.h b/source/drivers/bootloader/soc/am273x/bootloader_soc.h
+index af5c1baeaa..4cf44feb3d 100644
+--- a/source/drivers/bootloader/soc/am273x/bootloader_soc.h
++++ b/source/drivers/bootloader/soc/am273x/bootloader_soc.h
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2021 Texas Instruments Incorporated
++ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -40,6 +40,7 @@ extern "C"
+ 
+ 
+ #include <drivers/hw_include/cslr_soc.h>
++#include <drivers/hsmclient.h>
+ /* ========================================================================== */
+ /*                           Macros & Typedefs                                */
+ /* ========================================================================== */
+@@ -55,6 +56,8 @@ extern "C"
+ #define BOOTLOADER_DEVTYPE_HSFS         (0xAAU)
+ /** \brief device type GP   */
+ #define BOOTLOADER_DEVTYPE_GP           (0x03U)
++/** \brief hsmclient ID for bootloader */
++#define BOOTLOADER_CLIENT_ID            (0x02)
+ /** @} */
+ /**
+  * \brief Data structure containing information about a core specific to the AM273x SOC
+@@ -264,6 +267,14 @@ uint32_t Bootloader_socIsAuthRequired(void);
+  */
+ void Bootloader_socLoadHsmRtFw(const uint8_t *HsmRtFw, uint32_t hsmRTSize);
+ 
++/**
++ * \brief API to get boot sequence oid
++ *
++ * \param boot_seq_oid [in] pointer to integer array for populating boot sequence oid
++ *
++ */
++void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid);
++
+ #ifdef __cplusplus
+ }
+ #endif
+diff --git a/source/drivers/bootloader/soc/am64x_am243x/bootloader_soc.c b/source/drivers/bootloader/soc/am64x_am243x/bootloader_soc.c
+index a6f38f03ba..5c032b48c0 100644
+--- a/source/drivers/bootloader/soc/am64x_am243x/bootloader_soc.c
++++ b/source/drivers/bootloader/soc/am64x_am243x/bootloader_soc.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2021-2022 Texas Instruments Incorporated
++ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -927,7 +927,7 @@ int32_t Bootloader_socCpuResetReleaseSelf(void)
+         bDualSelfR5F = TRUE;
+     }
+ 
+-    
++
+     if(bDualSelfR5F == TRUE)
+     {
+         sciclientCpuProcIdCore1 = Bootloader_socGetSciclientCpuProcId(CSL_CORE_ID_R5FSS0_1);
+@@ -1319,3 +1319,8 @@ void Bootloader_socNotifyFirewallOpen(void)
+ 
+     CSL_REG32_WR(psramPtr, SOC_FWL_OPEN_MAGIC_NUM);
+ }
++
++void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid){
++    uint8_t boot_seq[] = {0x06, 0x09, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x82, 0x26, 0x01, 0x22};
++    memcpy(boot_seq_oid, boot_seq, sizeof(boot_seq));
++}
+\ No newline at end of file
+diff --git a/source/drivers/bootloader/soc/am64x_am243x/bootloader_soc.h b/source/drivers/bootloader/soc/am64x_am243x/bootloader_soc.h
+index ccf39e3ae2..68c2f7576e 100644
+--- a/source/drivers/bootloader/soc/am64x_am243x/bootloader_soc.h
++++ b/source/drivers/bootloader/soc/am64x_am243x/bootloader_soc.h
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2021-2022 Texas Instruments Incorporated
++ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -282,8 +282,8 @@ uint32_t Bootloader_socIsR5FSSDual(uint32_t ssNum);
+  * \brief API to check the GPN variant of the SOC - whether it's a quad core,
+  * dual core or a single core variant
+  *
+- * \return \ref BOOTLOADER_DEVICE_VARIANT_SINGLE_CORE, 
+- *         \ref BOOTLOADER_DEVICE_VARIANT_DUAL_CORE or 
++ * \return \ref BOOTLOADER_DEVICE_VARIANT_SINGLE_CORE,
++ *         \ref BOOTLOADER_DEVICE_VARIANT_DUAL_CORE or
+  *         \ref BOOTLOADER_DEVICE_VARIANT_QUAD_CORE or
+  *          0xFFFFFFFF if invalid bit field read
+  */
+@@ -319,6 +319,14 @@ uint32_t Bootloader_socIsMCUResetIsoEnabled(void);
+  */
+ void Bootloader_socNotifyFirewallOpen(void);
+ 
++/**
++ * \brief API to get boot sequence oid
++ *
++ * \param boot_seq_oid [in] pointer to integer array for populating boot sequence oid
++ *
++ */
++void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid);
++
+ #ifdef __cplusplus
+ }
+ #endif
+diff --git a/source/drivers/bootloader/soc/awr294x/bootloader_hsmRt_load.c b/source/drivers/bootloader/soc/awr294x/bootloader_hsmRt_load.c
+new file mode 100644
+index 0000000000..df3c1bf5a2
+--- /dev/null
++++ b/source/drivers/bootloader/soc/awr294x/bootloader_hsmRt_load.c
+@@ -0,0 +1,97 @@
++/*
++ *  Copyright (C) 2022-2023 Texas Instruments Incorporated
++ *
++ *  Redistribution and use in source and binary forms, with or without
++ *  modification, are permitted provided that the following conditions
++ *  are met:
++ *
++ *    Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *
++ *    Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the
++ *    distribution.
++ *
++ *    Neither the name of Texas Instruments Incorporated nor the names of
++ *    its contributors may be used to endorse or promote products derived
++ *    from this software without specific prior written permission.
++ *
++ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ *
++ */
++
++/**
++ *  \file bootloader_hsmRt_load.c
++ *
++ *  \brief Implementation of hsm runtime boot test for CCS initialization
++ *
++ */
++
++/* ========================================================================== */
++/*                             Include Files                                  */
++/* ========================================================================== */
++
++#include <stdint.h>
++#include <string.h>
++#include <stdio.h>
++#include <drivers/bootloader/soc/bootloader_soc.h>
++#include <kernel/dpl/SystemP.h>
++#include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
++#include <drivers/hsmclient.h>
++#include <kernel/dpl/DebugP.h>
++#include <drivers/hw_include/cslr_soc.h>
++/* ========================================================================== */
++/*                           Macros & Typedefs                                */
++/* ========================================================================== */
++
++/* ========================================================================== */
++/*                            Global Variables                                */
++/* ========================================================================== */
++
++
++extern CSL_top_ctrlRegs * ptrTopCtrlRegs;
++
++/* ========================================================================== */
++/*                             Function Definitions                           */
++/* ========================================================================== */
++
++void Bootloader_socLoadHsmRtFw(const uint8_t *HsmRtFw, uint32_t hsmRTSize)
++{
++    int32_t retVal = SystemP_SUCCESS;
++
++    /* Load hsmRt firmware only when device is HSSE */
++    if(ptrTopCtrlRegs->EFUSE_DEVICE_TYPE == BOOTLOADER_DEVTYPE_HSSE)
++    {
++        DebugP_logInfo("DevType : HSSE  \r\n");
++        retVal = Hsmclient_loadHSMRtFirmware((uint8_t*)HsmRtFw);
++        DebugP_logInfo("HSMRT Size in Bytes : %ld \r\n", (uint32_t)hsmRTSize);
++        if(retVal == SystemP_SUCCESS)
++        {
++            DebugP_logInfo("hsm runtime firmware load complete ... \r\n");
++        }
++        else
++        {
++            DebugP_logInfo("hsm runtime firmware load failure ... \r\n");
++        }
++    }
++    else if(ptrTopCtrlRegs->EFUSE_DEVICE_TYPE == BOOTLOADER_DEVTYPE_HSFS)
++    {
++        DebugP_logInfo("Device Type : HSFS  \r\n");
++    }
++    else
++    {
++        /* None */
++    }
++    DebugP_assertNoLog(retVal==SystemP_SUCCESS);
++}
+diff --git a/source/drivers/bootloader/soc/awr294x/bootloader_soc.c b/source/drivers/bootloader/soc/awr294x/bootloader_soc.c
+index 3a36684941..0a7e96d1f6 100644
+--- a/source/drivers/bootloader/soc/awr294x/bootloader_soc.c
++++ b/source/drivers/bootloader/soc/awr294x/bootloader_soc.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2021-23 Texas Instruments Incorporated
++ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -39,6 +39,7 @@
+ 
+ #define CSL_MSS_TOP_PBIST_RINFOL_OFFSET    (0x000000C8U)
+ #define CSL_MSS_TOP_PBIST_RINFOU_OFFSET    (0x000000CCU)
++#define BOOTLOADER_SOC_APP_CERT_SIZE (0x1000)
+ 
+ Bootloader_resMemSections gResMemSection =
+ {
+@@ -154,6 +155,7 @@ int32_t Bootloader_socCpuSetClock(uint32_t cpuId, uint32_t cpuHz)
+     }
+     return SystemP_SUCCESS;
+ }
++CSL_top_ctrlRegs * ptrTopCtrlRegs = (CSL_top_ctrlRegs *)CSL_TOP_CTRL_U_BASE;
+ 
+ int32_t Bootloader_socCpuPowerOnReset(uint32_t cpuId,void *socCoreOpMode)
+ {
+@@ -415,10 +417,33 @@ Bootloader_resMemSections* Bootloader_socGetSBLMem(void)
+ 
+ int32_t Bootloader_socAuthImage(uint32_t certLoadAddr)
+ {
+-    return SystemP_SUCCESS;
++    int32_t status = SystemP_FAILURE;
++    HsmClient_t client ;
++    status = HsmClient_register(&client, BOOTLOADER_CLIENT_ID);
++
++    /* Request TIFS-MCU to authenticate (and decrypt if mentioned in the x509 cert) the image */
++    status = HsmClient_procAuthBoot(&client, (uint8_t *)certLoadAddr, BOOTLOADER_SOC_APP_CERT_SIZE, SystemP_WAIT_FOREVER);
++
++    return status;
+ }
+ 
+ uint32_t Bootloader_socIsAuthRequired(void)
+ {
+-    return FALSE;
++    uint32_t isAuthRequired = TRUE;
++
++    if(ptrTopCtrlRegs->EFUSE_DEVICE_TYPE == BOOTLOADER_DEVTYPE_HSSE)
++    {
++        isAuthRequired = TRUE;
++    }
++    else
++    {
++        isAuthRequired = FALSE;
++    }
++
++    return isAuthRequired;
++}
++
++void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid){
++    uint8_t boot_seq[] = {0x06, 0x09, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x82, 0x26, 0x01, 0x01};
++    memcpy(boot_seq_oid, boot_seq, sizeof(boot_seq));
+ }
+diff --git a/source/drivers/bootloader/soc/awr294x/bootloader_soc.h b/source/drivers/bootloader/soc/awr294x/bootloader_soc.h
+index 6d08ba10f3..0bf4ced951 100644
+--- a/source/drivers/bootloader/soc/awr294x/bootloader_soc.h
++++ b/source/drivers/bootloader/soc/awr294x/bootloader_soc.h
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2021 Texas Instruments Incorporated
++ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -30,8 +30,8 @@
+  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  */
+ 
+-#ifndef BOOTLOADER_SOC_AM273X_H_
+-#define BOOTLOADER_SOC_AM273X_H_
++#ifndef BOOTLOADER_SOC_AWR294X_H_
++#define BOOTLOADER_SOC_AWR294X_H_
+ 
+ #ifdef __cplusplus
+ extern "C"
+@@ -40,9 +40,27 @@ extern "C"
+ 
+ 
+ #include <drivers/hw_include/cslr_soc.h>
++#include <drivers/hsmclient.h>
++/* ========================================================================== */
++/*                           Macros & Typedefs                                */
++/* ========================================================================== */
+ 
+ /**
+- * \brief Data structure containing information about a core specific to the AM64x SOC
++ *  \anchor DevTypes
++ *  \name Device Types
++ *  @{
++ */
++/** \brief device type HSSE */
++#define BOOTLOADER_DEVTYPE_HSSE         (0x0AU)
++/** \brief device type HSFS */
++#define BOOTLOADER_DEVTYPE_HSFS         (0xAAU)
++/** \brief device type GP   */
++#define BOOTLOADER_DEVTYPE_GP           (0x03U)
++/** \brief hsmclient ID for bootloader */
++#define BOOTLOADER_CLIENT_ID            (0x02)
++/** @} */
++/**
++ * \brief Data structure containing information about a core specific to the AWR294x SOC
+  *
+  * This structure is used to store the data about cores in the SoC in the form of a lookup table which will be
+  * used by various APIs.
+@@ -233,6 +251,18 @@ int32_t Bootloader_socAuthImage(uint32_t certLoadAddr);
+  */
+ uint32_t Bootloader_socIsAuthRequired(void);
+ 
++/**
++ * \brief API to load hsm runtime firmware
++ */
++void Bootloader_socLoadHsmRtFw(const uint8_t *HsmRtFw, uint32_t hsmRTSize);
++
++/**
++ * \brief API to get boot sequence oid
++ *
++ * \param boot_seq_oid [in] pointer to integer array for populating boot sequence oid
++ *
++ */
++void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid);
+ 
+ #ifdef __cplusplus
+ }

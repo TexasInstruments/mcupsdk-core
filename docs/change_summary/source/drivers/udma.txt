@@ -1,0 +1,80 @@
+diff --git a/source/drivers/udma/include/udma_types.h b/source/drivers/udma/include/udma_types.h
+index 2e4de6338e..68c0341112 100755
+--- a/source/drivers/udma/include/udma_types.h
++++ b/source/drivers/udma/include/udma_types.h
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
++ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+  *
+  *  Redistribution and use in source and binary forms, with or without
+  *  modification, are permitted provided that the following conditions
+@@ -76,7 +76,7 @@ typedef void *                          Udma_FlowHandle;
+ #define UDMA_CACHELINE_ALIGNMENT        (128U)
+ 
+ /** \brief Macro to align the size in bytes to UDMA cache line alignment */
+-#define UDMA_ALIGN_SIZE(x)              (((x) + UDMA_CACHELINE_ALIGNMENT) & ~(UDMA_CACHELINE_ALIGNMENT - 1U))
++#define UDMA_ALIGN_SIZE(x)              (((x) + UDMA_CACHELINE_ALIGNMENT - 1U) & ~(UDMA_CACHELINE_ALIGNMENT - 1U))
+ 
+ /** \brief Default UDMA channel disable timeout */
+ #define UDMA_DEFAULT_CH_DISABLE_TIMEOUT (100U)
+diff --git a/source/drivers/udma/include/udma_utils.h b/source/drivers/udma/include/udma_utils.h
+index 81aa2f9a05..0be9d4f30f 100755
+--- a/source/drivers/udma/include/udma_utils.h
++++ b/source/drivers/udma/include/udma_utils.h
+@@ -190,6 +190,25 @@ static inline uint32_t UdmaUtils_getTrpdTr15Response(const uint8_t *trpdMem,
+ static inline CSL_UdmapTR15 *UdmaUtils_getTrpdTr15Pointer(uint8_t *trpdMem,
+                                                           uint32_t trIndex);
+ 
++/**
++ *  \brief Map L2G event for BCDMA trigger
++ *
++ *  \param drvHandle    [IN] UDMA driver handle - static memory needs to
++ *                           allocated by caller. This is used by the driver to
++ *                           maintain the driver states.
++ *                           This cannot be NULL.
++ *  \param chHandle     [IN] UDMA channel handle.
++ *                           This parameter can't be NULL.
++ *  \param localeventID [IN] Local event ID for the corresponding IP.
++ *
++ *  \param eventMode    [IN] Edge triggering signal or pulsed signal.
++ *
++ *
++ *  \return SYSTEMP_SUCESS OR SYSTEMP_FAILURE.
++ */
++int32_t UdmaUtils_mapLocaltoGlobalEvent(Udma_DrvHandle drvHandle, Udma_ChHandle chHandle,
++                                        uint32_t localeventID, uint32_t eventMode);
++
+ /* ========================================================================== */
+ /*                       Static Function Definitions                          */
+ /* ========================================================================== */
+diff --git a/source/drivers/udma/udma_utils.c b/source/drivers/udma/udma_utils.c
+index 5b31c3d924..5c988d3bcc 100755
+--- a/source/drivers/udma/udma_utils.c
++++ b/source/drivers/udma/udma_utils.c
+@@ -263,3 +263,25 @@ void *Udma_defaultPhyToVirtFxn(uint64_t phyAddr,
+ 
+     return ((void *) temp);
+ }
++
++int32_t UdmaUtils_mapLocaltoGlobalEvent(Udma_DrvHandle drvHandle, Udma_ChHandle chHandle, uint32_t localeventID, uint32_t eventMode)
++{
++    int32_t status = SystemP_SUCCESS;
++
++    if(drvHandle != NULL && chHandle != NULL)
++    {
++        /*Map l2g event for DMA*/
++        Udma_ChObjectInt    *chHandleInt = (Udma_ChObjectInt*)chHandle;
++        Udma_DrvObjectInt   *drvHandleInt = (Udma_DrvObjectInt*)drvHandle;
++        CSL_intaggrMapEventToLocalEvent(&drvHandleInt->iaRegs,
++                                        CSL_DMSS_GEM_BCDMA_TRIGGER_OFFSET + chHandleInt->txChNum * 2 ,
++                                        localeventID ,eventMode);
++
++    }
++    else
++    {
++        status = SystemP_FAILURE;
++    }
++
++    return status;
++}
