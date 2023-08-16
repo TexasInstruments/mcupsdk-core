@@ -25,17 +25,18 @@ const int_xbar1  = int_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-adc1.adcClockPrescaler  = "ADC_CLK_DIV_4_0";
-adc1.interruptPulseMode = "ADC_PULSE_END_OF_CONV";
-adc1.enableInterrupt1   = true;
-adc1.enableConverter    = true;
-adc1.soc0Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
-adc1.soc1Channel        = "ADC_CH_ADCIN1";
-adc1.soc2Channel        = "ADC_CH_ADCIN2";
-adc1.soc1Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
-adc1.soc2Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
-adc1.$name              = "CONFIG_ADC2";
-adc1.ADC.$assign        = "ADC2";
+adc1.adcClockPrescaler   = "ADC_CLK_DIV_4_0";
+adc1.interruptPulseMode  = "ADC_PULSE_END_OF_CONV";
+adc1.enableInterrupt1    = true;
+adc1.enableConverter     = true;
+adc1.soc0Trigger         = "ADC_TRIGGER_EPWM0_SOCA";
+adc1.soc1Channel         = "ADC_CH_ADCIN1";
+adc1.soc2Channel         = "ADC_CH_ADCIN2";
+adc1.soc1Trigger         = "ADC_TRIGGER_EPWM0_SOCA";
+adc1.soc2Trigger         = "ADC_TRIGGER_EPWM0_SOCA";
+adc1.$name               = "CONFIG_ADC2";
+adc1.interrupt1SOCSource = "ADC_SOC_NUMBER2";
+adc1.ADC.$assign         = "ADC2";
 
 adc2.$name              = "CONFIG_ADC1";
 adc2.adcClockPrescaler  = "ADC_CLK_DIV_4_0";
@@ -46,6 +47,7 @@ adc2.soc1Channel        = "ADC_CH_ADCIN1";
 adc2.soc1Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
 adc2.soc2Channel        = "ADC_CH_ADCIN2";
 adc2.soc2Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
+adc2.ADC.$assign        = "ADC1";
 
 epwm1.$name                                                      = "CONFIG_EPWM0";
 epwm1.epwmTimebase_emulationMode                                 = "EPWM_EMULATION_FREE_RUN";
@@ -97,13 +99,12 @@ adc1.ADC.AIN2.$suggestSolution          = "ADC2_AIN2";
 adc1.ADC.AIN3.$suggestSolution          = "ADC2_AIN3";
 adc1.ADC.AIN4.$suggestSolution          = "ADC2_AIN4";
 adc1.ADC.AIN5.$suggestSolution          = "ADC2_AIN5";
-adc2.ADC.$suggestSolution               = "ADC0";
-adc2.ADC.AIN0.$suggestSolution          = "ADC0_AIN0";
-adc2.ADC.AIN1.$suggestSolution          = "ADC0_AIN1";
-adc2.ADC.AIN2.$suggestSolution          = "ADC0_AIN2";
-adc2.ADC.AIN3.$suggestSolution          = "ADC0_AIN3";
-adc2.ADC.AIN4.$suggestSolution          = "ADC0_AIN4";
-adc2.ADC.AIN5.$suggestSolution          = "ADC0_AIN5";
+adc2.ADC.AIN0.$suggestSolution          = "ADC1_AIN0";
+adc2.ADC.AIN1.$suggestSolution          = "ADC1_AIN1";
+adc2.ADC.AIN2.$suggestSolution          = "ADC1_AIN2";
+adc2.ADC.AIN3.$suggestSolution          = "ADC1_AIN3";
+adc2.ADC.AIN4.$suggestSolution          = "ADC1_AIN4";
+adc2.ADC.AIN5.$suggestSolution          = "ADC1_AIN5";
 epwm1.EPWM.$suggestSolution             = "EPWM0";
 epwm1.EPWM.A.$suggestSolution           = "EPWM0_A";
 epwm1.EPWM.B.$suggestSolution           = "EPWM0_B";

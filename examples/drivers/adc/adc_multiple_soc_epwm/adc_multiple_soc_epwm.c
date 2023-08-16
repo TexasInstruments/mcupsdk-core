@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -140,10 +140,10 @@ static void App_adcISR(void *args)
 {
     /* Store results */
     gAdc2Result0[gAdcConversionCount] = ADC_readResult(CONFIG_ADC2_RESULT_BASE_ADDR, ADC_SOC_NUMBER0);
-    gAdc2Result1[gAdcConversionCount] = ADC_readResult(CONFIG_ADC2_RESULT_BASE_ADDR, ADC_SOC_NUMBER1);
-    gAdc2Result2[gAdcConversionCount] = ADC_readResult(CONFIG_ADC2_RESULT_BASE_ADDR, ADC_SOC_NUMBER2);
     gAdc1Result0[gAdcConversionCount] = ADC_readResult(CONFIG_ADC1_RESULT_BASE_ADDR, ADC_SOC_NUMBER0);
+    gAdc2Result1[gAdcConversionCount] = ADC_readResult(CONFIG_ADC2_RESULT_BASE_ADDR, ADC_SOC_NUMBER1);
     gAdc1Result1[gAdcConversionCount] = ADC_readResult(CONFIG_ADC1_RESULT_BASE_ADDR, ADC_SOC_NUMBER1);
+    gAdc2Result2[gAdcConversionCount] = ADC_readResult(CONFIG_ADC2_RESULT_BASE_ADDR, ADC_SOC_NUMBER2);
     gAdc1Result2[gAdcConversionCount] = ADC_readResult(CONFIG_ADC1_RESULT_BASE_ADDR, ADC_SOC_NUMBER2);
 
     /* Update the conversion count */
