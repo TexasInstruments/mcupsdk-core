@@ -120,6 +120,47 @@
     \image html ccs_setup_02_11p2.png "CCS Compilers"
 \endcond
 
+\cond SOC_AM263X
+## Update CSP {#CSP_UPDATE}
+- Goto "Help > Check for updates"
+
+    \imageStyle{ccs_update_check.png,width:30%}
+    \image html ccs_update_check.png "Check for Updates Menu"
+
+- The window will list the available updates. Select "Sitara device support" and click next.
+
+    \imageStyle{ccs_update_avail.png,width:30%}
+    \image html ccs_update_avail.png "List of available updates"
+
+- Click on next.
+
+    \imageStyle{ccs_update_details.png,width:30%}
+    \image html ccs_update_details.png "Update details"
+
+- Accept the licence agreement and click "Finish".
+
+    \imageStyle{ccs_update_accept.png,width:30%}
+    \image html ccs_update_accept.png "Review licenses"
+
+- Restart CCS.
+
+- Goto "Help > About Code Composer Studio"
+
+    \imageStyle{ccs_update_about.png,width:30%}
+    \image html ccs_update_about.png "Help menu"
+
+- Click on "Installation details".
+
+    \imageStyle{ccs_update_inst_details.png,width:20%}
+    \image html ccs_update_inst_details.png "About CCS"
+
+- Scroll down to "Sitara device support". The CSP version should be 1.2.4 or above.
+
+    \imageStyle{ccs_update_csp_version.png,width:40%}
+    \image html ccs_update_csp_version.png "CSP version"
+
+\endcond
+
 \cond SOC_AM64X
 ## Create Target Configuration {#CCS_NEW_TARGET_CONFIG}
 ### AM64X-EVM

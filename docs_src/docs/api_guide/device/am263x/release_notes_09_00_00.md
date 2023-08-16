@@ -10,6 +10,8 @@
 
 \attention Klockwork Static Analysis report is not updated for this release
 
+\note CSP 1.2.4 or beyond needs to be used for system project. Refer \ref CSP_UPDATE for installation steps.
+
 ## New in this Release
 
 Feature                                                                                         | Module
