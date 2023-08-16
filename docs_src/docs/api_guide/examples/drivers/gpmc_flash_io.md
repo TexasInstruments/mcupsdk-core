@@ -9,6 +9,7 @@ This example demonstrate's basic read write erase to the Parallel NAND flash usi
 The example writes known data to a particular offset in the flash and then reads it back. The read back data is then compared with the written known data.
 By deafult ELM is enabled in the example. When both the comparisons match, test result is passed otherwise failed.
 
+An external GPMC NAND flash needs to be connected to the device.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_GPMC_FLASH_IO_COMBOS}
 
