@@ -35,6 +35,9 @@ to transport the message values.
 @VAR_SYSCFG_USAGE_NOTE
 
 - Enable/Disable IPC Notify between different CPUs
+- Enable/Disable SafeIPC. If Enabled, the Shared memory is organized in a way that allows Firewalling. Only Sender and Receiver core will have access to the Queue.
+  Firewall configuration is not part of IPC SysCfg module. It has to be done separately. The SysCfg generated code has comments on the Start and End addresses and
+  the involved cores. This can be used during the firewall configuration. Data Integrity Check has to be handled in application. CRC can be sent as a part of Payload and decoded in the receiver end.
 
 ## Features NOT Supported
 

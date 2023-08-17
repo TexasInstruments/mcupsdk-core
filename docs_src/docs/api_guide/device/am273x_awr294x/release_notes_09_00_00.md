@@ -20,7 +20,6 @@ Standby (WFI) mode support DPL noRTOS                                           
 EDMA example to transfer between different memories                                             | EDMA
 Interrupt profiling support and example                                                         | DPL
 Support for loading HS-FS firmware view CCS load script                                         | Common
-Safe IPC support                                                                                | IPC
 SBL over CAN example                                                                            | SBL
 SDK migration script from ZCE to NZN package                                                    | Common
 MbedTLS MQTT example                                                                            | Networking
@@ -274,6 +273,20 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
     <td> DPL
     <td> 8.03.00 onwards
     <td> None
+</tr>
+<tr>
+    <td> MCUSDK-11518
+    <td> IPC: Firewalling error due to Alignment not being per core pair.
+    <td> IPC
+    <td> 09.00.00
+    <td> Firewalling should not be enabled for SafeIPC.
+</tr>
+<tr>
+    <td> MCUSDK-10978
+    <td> CCS build doesn't support for HS appimages generation
+    <td> CCS
+    <td> 09.00.00
+    <td> Use make/gmake based build for HS-SE
 </tr>
 <tr>
     <td> <a href="https://mbed-tls.readthedocs.io/en/latest/tech-updates/security-advisories/mbedtls-security-advisory-2021-07-1/">mbedTLS-advisory</a> <br> MCUSDK-9082

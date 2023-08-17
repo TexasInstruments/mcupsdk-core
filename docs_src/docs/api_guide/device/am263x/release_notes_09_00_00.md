@@ -21,9 +21,9 @@ EDMA example to transfer between different memories                             
 SysConfig option to enable pBIST for SBL                                                        | SBL
 Interrupt profiling support and example                                                         | DPL
 Support for loading HS-FS firmware view CCS load script                                         | Common
-Safe IPC support                                                                                | IPC
 MbedTLS MQTT example                                                                            | Networking
 Support added for Single Packet reception from DMA                                              | Networking
+Smart placement support                                                                         | Common
 
 ## Device and Validation Information
 
@@ -392,13 +392,6 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> Reset board between 2 runs
 </tr>
 <tr>
-    <td> MCUSDK-11147
-    <td> LIN Master does not works as a transmitter after a single pkt is sent and received as receiver
-    <td> LIN
-    <td> 8.6.0
-    <td> -
-</tr>
-<tr>
     <td> MCUSDK-11462
     <td> EPWM: Illegal Combo Logic example fails
     <td> EPWM
@@ -439,6 +432,20 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> CPSW
     <td> 8.2.0 onwards
     <td> Disable hostRxTimestampEn flag in CPSW CPST configuration. This does not impact the CPTS Rx or Tx Timestamp Events for PTP packets and is orthogonal feature.
+</tr>
+<tr>
+    <td> MCUSDK-11518
+    <td> IPC: Firewalling error due to Alignment not being per core pair.
+    <td> IPC
+    <td> 09.00.00
+    <td> Firewalling should not be enabled for SafeIPC.
+</tr>
+<tr>
+    <td> MCUSDK-10978
+    <td> CCS build doesn't support for HS appimages generation
+    <td> CCS
+    <td> 09.00.00
+    <td> Use make/gmake based build for HS-SE
 </tr>
 </table>
 

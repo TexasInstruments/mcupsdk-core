@@ -41,6 +41,9 @@
 - Enable/Disable IPC RPMessage between different CPUs
 - Enable IPC RPMessage between NORTOS/RTOS and Linux. When enabled, SysConfig generates the resource table that is needed to talk with Linux.
 - Select RP Message max message size, number of buffer in a VRING
+- Enable/Disable SafeIPC. If Enabled, the Shared memory is organized in a way that allows Firewalling. Only Sender and Receiver core will have access to the VRING.
+  Firewall configuration is not part of IPC SysCfg module. It has to be done separately. The SysCfg generated code has comments on the Start and End addresses and
+  the involved cores. This can be used during the firewall configuration. Data Integrity Check has to be handled in application. CRC can be sent as a part of Payload and decoded in the receiver end.
 \endcond
 \cond SOC_AM62X
 - Enable IPC RPMessage between NORTOS/RTOS and Linux. When enabled, SysConfig generates the resource table that is needed to talk with Linux.

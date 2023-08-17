@@ -19,30 +19,31 @@
 \cond SOC_AM64X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
-Descoped GP support                                                                             | Common
 RNDIS device class support                                                                      | USB
 NCM device class support                                                                        | USB
 GPMC support for NAND Flash                                                                     | GPMC
 EMMC high speed support                                                                         | MMCSD
 Interrupt profiling support and example                                                         | DPL
-Safe IPC support                                                                                | IPC
+Smart placement support                                                                         | Common
 MbedTLS MQTT example                                                                            | Networking
 Support added for Single Packet reception from DMA                                              | Networking
 Integrated with industry grade with TSN gPTP protocol stack with example                        | Networking
+Descoped GP support                                                                             | Common
 \endcond
 
 \cond SOC_AM243X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
-Descoped GP support                                                                             | Common
 RNDIS device class support                                                                      | USB
 NCM device class support                                                                        | USB
 GPMC support for NAND Flash                                                                     | GPMC
 EMMC high speed support                                                                         | MMCSD
-Interrupt profiling and example                                                                 | DPL
-Safe IPC support                                                                                | IPC
+Interrupt profiling support and example                                                         | DPL
+Smart placement support                                                                         | Common
+MbedTLS MQTT example                                                                            | Networking
 Support added for Single Packet reception from DMA                                              | Networking
-Integrated with production grade with TSN gPTP protocol stack with example                      | Networking
+Integrated with industry grade with TSN gPTP protocol stack with example                        | Networking
+Descoped GP support                                                                             | Common
 
 \endcond
 
@@ -545,6 +546,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 8.2.0 onwards
     <td> AM64x, AM243x
     <td> Disable hostRxTimestampEn flag in CPSW CPST configuration. This does not impact the CPTS Rx or Tx Timestamp Events for PTP packets and is orthogonal feature.
+</tr>
+<tr>
+    <td> MCUSDK-11518
+    <td> IPC: Firewalling error due to Alignment not being per core pair.
+    <td> IPC
+    <td> 09.00.00
+    <td> AM243x
+    <td> Firewalling should not be enabled for SafeIPC.
 </tr>
 </table>
 
