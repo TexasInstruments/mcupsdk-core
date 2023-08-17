@@ -557,6 +557,11 @@ int32_t UART_write(UART_Handle handle, UART_Transaction *trans)
                          trans->status = UART_TRANSFER_STATUS_TIMEOUT;
                          /* Cancel the DMA without posting the semaphore */
                          UART_writeCancelNoCB(&handle, object, attrs);
+                         /*
+                          * Reset the current transaction pointer so that 
+                          * application can start another transfer.
+                          */
+                         object->writeTrans = NULL;
                          status = SystemP_FAILURE;
                      }
                  }
@@ -688,6 +693,11 @@ int32_t UART_read(UART_Handle handle, UART_Transaction *trans)
                             trans->status = UART_TRANSFER_STATUS_TIMEOUT;
                             /* Cancel the DMA without posting the semaphore */
                             UART_readCancelNoCB(&handle, object, attrs);
+                            /*
+                             * Reset the current transaction pointer so that 
+                             * application can start another transfer.
+                             */
+                            object->readTrans = NULL;
                             status = SystemP_FAILURE;
                         }
                         trans->count = (uint32_t)(object->readCount);

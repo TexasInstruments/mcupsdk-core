@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-2023 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -1042,6 +1042,11 @@ static int32_t UART_writeInterrupt(UART_Object *object,
                  /* Cancel the write without posting the semaphore */
                  trans->status = UART_TRANSFER_STATUS_TIMEOUT;
                  UART_writeCancelNoCB(object, attrs);
+                 /*
+                  * Reset the current transaction pointer so that 
+                  * application can start another transfer.
+                  */
+                 object->writeTrans = NULL;
                  status = SystemP_FAILURE;
              }
          }
@@ -1146,6 +1151,11 @@ static int32_t UART_readInterrupt(UART_Config    *config,
             /* Cancel the read without posting the semaphore */
             trans->status = UART_TRANSFER_STATUS_TIMEOUT;
             UART_readCancelNoCB(object, attrs);
+            /*
+             * Reset the current transaction pointer so that 
+             * application can start another transfer.
+             */
+            object->readTrans = NULL;
             status = SystemP_FAILURE;
         }
         trans->count = (uint32_t)(object->readCount);
