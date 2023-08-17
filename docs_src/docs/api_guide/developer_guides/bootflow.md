@@ -399,8 +399,6 @@ In secure device variants, there are slight differences in the bootflow. For det
 
 pBIST (parallel Built-In Self-Test) can be performed for both 200MHz and 400MHz part numbers by including the instance of `mcu_bist` in the sys-config for the bootloader examples. By default it's enabled only for bootloader `sbl-sd`. For 400 MHz part numbers ROM performs pBIST on R5FSS0 Memories and L2 Memory - Bank-0 and Bank-1. But due to ROM limitation this test is not done by ROM for 200 MHz part numbers. The `mcu_bist` instance can be added or removed on the basis of use-case. pBIST is perfromed only on L2 memory - three banks (Bank-1,Bank-2,Bank3 (not on Bank-0)) and R5FSS1 TCM Memories. Please refer below for more information.
 
-This section provides instructions on a software workaround for ROM errata affecting 200 MHz R5F core variants. Due to the errata, the ROM is unable to perform pBIST (parallel Built-In Self-Test) on these variants. To address this limitation, a workaround has been implemented, allowing pBIST to be performed during the SBL startup based on efuse bit detection.
-
   <p>\note Important Information:<br>
     - pBIST is a destructive test and cannot be run on active memories.<br>
     - Perform pBIST on specific sections of RAM and Subsystem 1 TCM, excluding active areas.<br>
