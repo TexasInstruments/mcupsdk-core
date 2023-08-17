@@ -36,6 +36,7 @@ TARGETS := $(BOOTIMAGE_NAME)
 
 FILES_common := \
 	test_dpl.c \
+	DebugP_log_test_pos.c \
 	main.c \
 	float_ops.c \
 	ti_drivers_config.c \

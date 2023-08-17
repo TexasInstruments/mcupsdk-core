@@ -60,7 +60,7 @@ BOOTIMAGE_NAME_SIGNED:=`args.project.name`.$(PROFILE).appimage.signed
 BOOTIMAGE_RPRC_NAME:=`args.project.name`.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=`args.project.name`.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=`args.project.name`.$(PROFILE).rprc_tmp
-% if (((args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am273x")||(args.project.device == "awr294x")) && (!args.project.isPartOfSystemProject)) {
+% if (((args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am273x")||(args.project.device == "awr294x"))) {
 BOOTIMAGE_NAME_HS:=`args.project.name`.$(PROFILE).appimage.hs
 % if(args.project.device == "awr294x"){
 BOOTIMAGE_NAME_QSPI_HS:=`args.project.name`.$(PROFILE).appimage_qspi.hs
@@ -327,7 +327,7 @@ $(OBJDIR)/%.obj %.obj: %.S
 	$(CC) -c -x assembler-with-cpp $(CFLAGS) $(INCLUDES) $(DEFINES) -o $(OBJDIR)$@ $<
 % }
 
-% if(((args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "awr294x")) && (!args.project.isBootLoader) && (!args.project.isPartOfSystemProject)) {
+% if(((args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "awr294x")) && (!args.project.isBootLoader)) {
 all: $(TARGETS)
 % } else {
 all: $(BOOTIMAGE_NAME)
@@ -639,10 +639,10 @@ SBL_DEV_ID=55
 
 MULTI_CORE_IMAGE_GEN = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
 OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
-% if (((args.project.device == "am243x") || (args.project.device == "am64x")) && (!args.project.isPartOfSystemProject)) {
+% if (((args.project.device == "am243x") || (args.project.device == "am64x"))) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
 % }
-% if (((args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "awr294x")) && (!args.project.isPartOfSystemProject)) {
+% if (((args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "awr294x"))) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 % }
 
@@ -689,7 +689,7 @@ endif
 	@echo  .
 % }
 
-% if (((args.project.device == "am243x") || (args.project.device == "am64x")) && (!args.project.isPartOfSystemProject)) {
+% if (((args.project.device == "am243x") || (args.project.device == "am64x"))) {
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED),no)
@@ -704,7 +704,7 @@ endif
 	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
 	@echo  .
 else
-% if (((args.project.device == "am243x") || (args.project.device == "am64x")) && (!args.project.isPartOfSystemProject)) {
+% if (((args.project.device == "am243x") || (args.project.device == "am64x"))) {
 # Sign the appimage for HS-FS using appimage signing script
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS_FS)
 % }
@@ -713,7 +713,7 @@ else
 	@echo  .
 endif
 % }
-% if (((args.project.device == "am263x") || (args.project.device == "am273x")) && (!args.project.isPartOfSystemProject)) {
+% if ((args.project.device == "am263x") || (args.project.device == "am273x")) {
 $(BOOTIMAGE_NAME_HS): $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
@@ -729,7 +729,7 @@ endif
 	@echo  .
 endif
 % }
-% if ((args.project.device == "awr294x") && (!args.project.isPartOfSystemProject)) {
+% if ((args.project.device == "awr294x")) {
 $(BOOTIMAGE_NAME_HS): $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script

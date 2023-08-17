@@ -230,7 +230,7 @@ SBL_DEV_ID=55
 
 MULTI_CORE_IMAGE_GEN = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
 OUTRPRC_CMD = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
-% if (((args.project.device == "am243x") || (args.project.device == "am64x")) && (!args.project.isPartOfSystemProject)) {
+% if (((args.project.device == "am243x") || (args.project.device == "am64x"))) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
 % }
 
@@ -271,11 +271,11 @@ else
 % if (args.project.device == "awr294x") {
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_QSPI) $(MULTI_CORE_IMAGE_PARAMS_QSPI) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 % }
-% if (((args.project.device == "am243x") || (args.project.device == "am64x")) && (!args.project.isPartOfSystemProject)) {
+% if (((args.project.device == "am243x") || (args.project.device == "am64x"))) {
 # Sign the appimage for HS-FS using appimage signing script
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME).hs_fs
 % }
-% if (((args.project.device == "am243x") || (args.project.device == "am64x")) && (!args.project.isPartOfSystemProject)) {
+% if (((args.project.device == "am243x") || (args.project.device == "am64x"))) {
 ifeq ($(DEVICE_TYPE),HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED),no)
@@ -297,7 +297,7 @@ endif
 	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_NAME) Done !!!
 	@echo  .
 % }
-% if (((args.project.device == "am243x") || (args.project.device == "am64x")) && (!args.project.isPartOfSystemProject)) {
+% if (((args.project.device == "am243x") || (args.project.device == "am64x"))) {
 ifeq ($(DEVICE_TYPE),HS)
 	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_NAME).hs Done !!!
 	@echo  .

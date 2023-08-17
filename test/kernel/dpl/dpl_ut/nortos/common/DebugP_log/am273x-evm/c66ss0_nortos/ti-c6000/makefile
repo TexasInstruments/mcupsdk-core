@@ -40,6 +40,7 @@ endif
 FILES_common := \
 	test_dpl.c \
 	test_c66x.c \
+	DebugP_log_test_pos.c \
 	main.c \
 	float_ops.c \
 	ti_drivers_config.c \

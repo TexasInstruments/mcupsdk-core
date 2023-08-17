@@ -471,8 +471,8 @@ BUILD_COMBO_EXAMPLE_ALL += mibspi_loopback_icount_awr294x-evm_r5fss0-0_nortos_ti
 BUILD_COMBO_EXAMPLE_ALL += mibspi_loopback_icount_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mibspi_loopback_dma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mibspi_loopback_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL +=  pmu_multievent_awr294x-evm_r5fss0-1_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmu_multievent_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += pmu_multievent_awr294x-evm_r5fss0-1_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += qspi_flash_diag_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -712,10 +712,10 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  mibspi_loopback_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
-  pmu_multievent_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+ pmu_multievent_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
-  pmu_multievent_awr294x-evm_r5fss0-1_nortos_ti-arm-clang:
+ pmu_multievent_awr294x-evm_r5fss0-1_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile all
 
  qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
@@ -1075,8 +1075,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += mibspi_loopback_icount_awr294x-evm_r5fss0-0_nor
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mibspi_loopback_icount_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mibspi_loopback_dma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mibspi_loopback_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL +=  pmu_multievent_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmu_multievent_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += pmu_multievent_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += qspi_flash_diag_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1316,10 +1316,10 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  mibspi_loopback_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
-  pmu_multievent_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+ pmu_multievent_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
-  pmu_multievent_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_clean:
+ pmu_multievent_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile clean
 
  qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
@@ -1679,8 +1679,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += mibspi_loopback_icount_awr294x-evm_r5fss0-0_nor
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mibspi_loopback_icount_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mibspi_loopback_dma_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mibspi_loopback_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL +=  pmu_multievent_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmu_multievent_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += pmu_multievent_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += qspi_flash_diag_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -1920,10 +1920,10 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  mibspi_loopback_dma_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/mibspi/mibspi_loopback_dma/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
-  pmu_multievent_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+ pmu_multievent_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
-  pmu_multievent_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_scrub:
+ pmu_multievent_awr294x-evm_r5fss0-1_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pmu/pmu_multievent/awr294x-evm/r5fss0-1_nortos/ti-arm-clang -f makefile scrub
 
  qspi_flash_dma_transfer_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:

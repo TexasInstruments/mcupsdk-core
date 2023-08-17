@@ -33,6 +33,9 @@ BOOTIMAGE_RPRC_NAME_TMP:=interrupt_profiling.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=interrupt_profiling.$(PROFILE).appimage.hs
 BOOTIMAGE_NAME_HS_FS:=interrupt_profiling.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
+ifeq ($(DEVICE_TYPE), HS)
+   TARGETS += $(BOOTIMAGE_NAME_HS)
+endif
 
 FILES_common := \
 	interrupt_profiling.c \
@@ -271,6 +274,8 @@ endif
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
+	@echo  Boot image: am263x:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  .
 
 $(BOOTIMAGE_NAME_HS): $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)

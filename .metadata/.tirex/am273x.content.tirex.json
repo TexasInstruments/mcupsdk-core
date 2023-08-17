@@ -2152,8 +2152,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM273x_EVM"
@@ -2185,8 +2185,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS0-1 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am273x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM273x_EVM"
