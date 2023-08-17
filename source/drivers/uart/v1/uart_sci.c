@@ -574,11 +574,7 @@ int32_t UART_writeCancel(UART_Handle handle, UART_Transaction *trans)
         attrs = config->attrs;
         DebugP_assert(NULL != object);
 
-        if(object->isOpen == TRUE)
-        {
-            status = UART_checkTransaction(object, trans);
-        }
-        else
+        if(object->isOpen != TRUE)
         {
             status = SystemP_FAILURE;
         }
@@ -642,11 +638,7 @@ int32_t UART_readCancel(UART_Handle handle, UART_Transaction *trans)
         attrs = config->attrs;
         DebugP_assert(NULL != object);
 
-        if(object->isOpen == TRUE)
-        {
-            status = UART_checkTransaction(object, trans);
-        }
-        else
+        if(object->isOpen != TRUE)
         {
             status = SystemP_FAILURE;
         }
