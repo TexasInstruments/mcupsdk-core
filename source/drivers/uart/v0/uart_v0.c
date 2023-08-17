@@ -663,41 +663,46 @@ int32_t UART_read(UART_Handle handle, UART_Transaction *trans)
                 {
                     status = UART_readInterruptDma(object, attrs, trans);
                 }
-                if ((SystemP_SUCCESS == status) &&
-                    (object->prms.readMode == UART_TRANSFER_MODE_BLOCKING))
+                
+                /* Check if the transfer has already completed (can happen only for interrupt mode) */
+                if(NULL != object->readTrans)
                 {
-                    /* Pend on lock and wait for Hwi to finish. */
-                    semStatus = SemaphoreP_pend(&object->readTransferSemObj, trans->timeout);
-                    if (semStatus == SystemP_SUCCESS)
+                    if ((SystemP_SUCCESS == status) &&
+                        (object->prms.readMode == UART_TRANSFER_MODE_BLOCKING))
                     {
-                        if (trans->status == UART_TRANSFER_STATUS_SUCCESS)
+                        /* Pend on lock and wait for Hwi to finish. */
+                        semStatus = SemaphoreP_pend(&object->readTransferSemObj, trans->timeout);
+                        if (semStatus == SystemP_SUCCESS)
                         {
-                            status = SystemP_SUCCESS;
+                            if (trans->status == UART_TRANSFER_STATUS_SUCCESS)
+                            {
+                                status = SystemP_SUCCESS;
+                            }
+                            else
+                            {
+                                status = SystemP_FAILURE;
+                            }
                         }
                         else
                         {
+                            trans->status = UART_TRANSFER_STATUS_TIMEOUT;
+                            /* Cancel the DMA without posting the semaphore */
+                            UART_readCancelNoCB(&handle, object, attrs);
                             status = SystemP_FAILURE;
                         }
+                        trans->count = (uint32_t)(object->readCount);
                     }
                     else
                     {
-                        trans->status = UART_TRANSFER_STATUS_TIMEOUT;
-                        /* Cancel the DMA without posting the semaphore */
-                        UART_readCancelNoCB(&handle, object, attrs);
-                        status = SystemP_FAILURE;
+                        /*
+                        * for callback mode, immediately return SUCCESS,
+                        * once the transaction is done, callback function
+                        * will return the transaction status and actual
+                        * read count
+                        */
+                        trans->count = 0U;
+                        status = SystemP_SUCCESS;
                     }
-                    trans->count = (uint32_t)(object->readCount);
-                }
-                else
-                {
-                    /*
-                     * for callback mode, immediately return SUCCESS,
-                     * once the transaction is done, callback function
-                     * will return the transaction status and actual
-                     * read count
-                     */
-                    trans->count = 0U;
-                    status = SystemP_SUCCESS;
                 }
             }
             else
