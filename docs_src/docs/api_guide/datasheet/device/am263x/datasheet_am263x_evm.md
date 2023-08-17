@@ -208,30 +208,6 @@ Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time
 | 256 | Encryption |  512.00 B | 96.138951 |
 | 256 | Decryption |  512.00 B | 95.422248 |
 
-### AES CMAC
-
-- Software/Application used : test_athe_aes_cmac
-- Code Placement            : OCRAM
-- Data Placement            : OCRAM
-- Input Data sizes          : 512B, 1KB, 2KB, 4KB, 8KB, 16KB and 32KB
-- CPU with operating speed  : R5F with 400MHZ
-| Key Length | Size | Performance (Mbps) |
-|------------|------|--------------------|
-| 256 |  32.00 KB | 23.793096 |
-| 256 |  16.00 KB | 23.761210 |
-| 256 |  8.00 KB | 23.782432 |
-| 256 |  4.00 KB | 23.758270 |
-| 256 |  2.00 KB | 23.642818 |
-| 256 |  1024.00 B | 23.371825 |
-| 256 |  512.00 B | 22.859694 |
-| 128 |  32.00 KB | 24.450572 |
-| 128 |  16.00 KB | 24.413842 |
-| 128 |  8.00 KB | 24.422269 |
-| 128 |  4.00 KB | 24.411558 |
-| 128 |  2.00 KB | 24.308876 |
-| 128 |  1024.00 B | 24.055558 |
-| 128 |  512.00 B | 23.542598 |
-
 ### SHA
 
 - Software/Application used : test_dthe_sha
