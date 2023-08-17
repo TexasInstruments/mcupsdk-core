@@ -207,13 +207,26 @@ We can then boot this application without being connected to CCS via JTAG.
 - If flashing is successful, do the next steps ...
 
 ## Running the flashed application
+
+\note The "OSPI" bootmode mentioned below in the images actually correspond to the
+"xSPI" bootmode mentioned in the TRM. It is called as the OSPI bootmode for clarifying
+that it is indeed an Octal SPI boot. Historically, OSPI bootmode means that the
+protocol used is 1S-1S-8S. This is why the TRM mentions OSPI bootmode separately.
+The "xSPI" bootmode mentioned in the TRM (which is the OSPI/xSPI bootmode we have
+mentioned below) means that the protocol used by ROM for the boot would be Octal DDR
+or 8D-8D-8D. The actual OSPI bootmode (1S-1S-8S) is not recommended if xSPI (8D-8D-8D)
+is available because of boot time reasons. Which is why we have chosen to include
+only the xSPI bootmode pin settings. But we do call it OSPI to reiterate that the
+number of lines used in the protocol is indeed 8.
+
 ### AM64X-EVM
+
 - **POWER-OFF** the EVM
 
-- Switch the EVM boot mode to OSPI mode as shown below,
+- Switch the EVM boot mode to OSPI/xSPI mode as shown below,
 
   \imageStyle{boot_pins_ospi_mode.png,width:30%}
-  \image html boot_pins_ospi_mode.png "OSPI BOOT MODE"
+  \image html boot_pins_ospi_mode.png "OSPI/xSPI BOOT MODE"
 
 - Re-connect the UART terminal in CCS window as shown in \ref CCS_UART_TERMINAL
 
@@ -250,10 +263,10 @@ We can then boot this application without being connected to CCS via JTAG.
 ### AM64X-SK
 - **POWER-OFF** the AM64X-SK
 
-- Switch the EVM boot mode to OSPI mode as shown below,
+- Switch the EVM boot mode to OSPI/xSPI mode as shown below,
 
   \imageStyle{sk_boot_pins_ospi_mode.png,width:30%}
-  \image html sk_boot_pins_ospi_mode.png "OSPI BOOT MODE"
+  \image html sk_boot_pins_ospi_mode.png "OSPI/xSPI BOOT MODE"
 
 - Re-connect the UART terminal in CCS window as shown in \ref CCS_UART_TERMINAL
 
@@ -422,10 +435,10 @@ We can then boot this application without being connected to CCS via JTAG.
 ### AM243X-LP
 - **POWER-OFF** the AM243X-LP
 
-- Switch the AM243X-LP boot mode to OSPI mode as shown below,
+- Switch the AM243X-LP boot mode to QSPI mode as shown below,
 
   \imageStyle{lp_boot_pins_ospi_mode.png,width:30%}
-  \image html lp_boot_pins_ospi_mode.png "OSPI BOOT MODE"
+  \image html lp_boot_pins_ospi_mode.png "QSPI BOOT MODE"
 
 - Re-connect the UART terminal in CCS window as shown in \ref CCS_UART_TERMINAL
 
@@ -462,10 +475,10 @@ We can then boot this application without being connected to CCS via JTAG.
 ### AM243X-EVM
 - **POWER-OFF** the EVM
 
-- Switch the EVM boot mode to OSPI mode as shown below,
+- Switch the EVM boot mode to OSPI/xSPI mode as shown below,
 
   \imageStyle{boot_pins_ospi_mode.png,width:30%}
-  \image html boot_pins_ospi_mode.png "OSPI BOOT MODE"
+  \image html boot_pins_ospi_mode.png "OSPI/xSPI BOOT MODE"
 
 - Re-connect the UART terminal in CCS window as shown in \ref CCS_UART_TERMINAL
 
