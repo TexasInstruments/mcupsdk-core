@@ -24,6 +24,8 @@ SBL over CAN example                                                            
 SDK migration script from ZCE to NZN package                                                    | Common
 MbedTLS MQTT example                                                                            | Networking
 Support added for Single Packet reception from DMA                                              | Networking
+SDL ECC examples for DSS L1 and L2                                                              | SDL
+SDL is safety certified from TuV for ISO26262/IEC61508 for MCU PLUS SDK version 8.6.0.          | SDL
 
 \endcond
 \cond SOC_AWR294X
@@ -181,12 +183,11 @@ DCC               | R5F, C66        | NA                |  NORTOS | Single Shot 
 PBIST             | R5F             | NA                |  NORTOS | Memories supported by MSS and DSS PBIST controller.          |-
 ESM               | R5F, C66        | NA                |  NORTOS | Tested in combination with RTI, DCC, ECC                                        |-
 RTI               | R5F, C66        | NA                |  NORTOS | WINDOWSIZE_100_PERCENT, WINDOWSIZE_50_PERCENT ,Latency/Propagation timing error(early)(50% window),Latency/Propagation timing error(late)(50% window)                                     | -
-ECC               | R5F, C66        | NA                |  NORTOS | ECC of MSS_L2, Mailbox, TPTC, R5SS TCM, MCAN, VIM, ICSSM     | R5F Cache, HSM
-Bus Safety        | R5F, C66        | NA                |  NORTOS | Bus Safety of Mailbox, DSS L3, HWA, ADCBUF, DSS_PCR, MSS_TPTC, CORE A and B AHB, MCRC, MSS_CR5 ,MSS_QSPI, MSS_PCR, MSS_SWBUF, MSS_GPADC, DSS_DSP_SDMA,MSS_TO_MDO  | MSS_CPSW, MSS_L2, DAP_R232, DSS_DSP_MDMA
+ECC               | R5F, C66        | NA                |  NORTOS | ECC of MSS_L2, Mailbox, TPTC, R5SS TCM, MCAN, VIM, DSP L1/L2/L3, HWA     | R5F Cache
+ECC Bus Safety    | R5F, C66        | NA                |  NORTOS | Bus Safety of Mailbox, DSS L3, HWA, ADCBUF, DSS_PCR, MSS_TPTC, CORE A and B AHB, MCRC, MSS_CR5 ,MSS_QSPI, MSS_PCR, MSS_SWBUF, MSS_GPADC, DSS_DSP_SDMA,MSS_TO_MDO  | MSS_CPSW, MSS_L2, DAP_R232, DSS_DSP_MDMA
 HWA               | C66             | NA                |  NORTOS | Parity on Data Memories, Window Memory and FSM Lockstep                                                 | -
 CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode, Error Forcing Mode and Self Test Error Forcing Mode                                 | -
 R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F and DSP.                                                 |-
-PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA memories                                                |-
 
 ## Fixed Issues
 
@@ -312,10 +313,10 @@ PARITY            | R5F, C66        | NA                |  NORTOS | TCM and DMA 
     <td> None.
 </tr>
 <tr>
-    <td> PROC_SDL-5615
-    <td> DAP R232 SEC, DED does not work.
+    <td> PROC_SDL-5159
+    <td> SEC ECC Bus Safety for MSS_AXI_RD not supported.
     <td> SDL
-    <td> 8.6.0 onwards
+    <td> 8.5.0 onwards
     <td> None.
 </tr>
 <tr>
@@ -515,7 +516,7 @@ earlier SDKs.
 <tr>
     <td> ADCBUF
     <td> Changed the argument type of ADCBUFCmdParamCheck api from ADCBufMMWave_CMD to uint8_t.
-    <td> Repace the enum type ADCBufMMWave_CMD with macros.	
+    <td> Repace the enum type ADCBufMMWave_CMD with macros.
     <td> Safety driver update
 </tr>
 \endcond

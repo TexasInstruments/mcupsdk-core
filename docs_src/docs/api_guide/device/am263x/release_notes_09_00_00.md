@@ -26,6 +26,8 @@ Support for loading HS-FS firmware view CCS load script                         
 MbedTLS MQTT example                                                                            | Networking
 Support added for Single Packet reception from DMA                                              | Networking
 Smart placement support                                                                         | Common
+IEC60730 Support added. R5F CPU static register read diagnoctic and example added.              | SDL
+SDL is safety certified from TuV for ISO26262/IEC61508 for MCU PLUS SDK version 8.6.0.          | SDL
 
 ## Device and Validation Information
 
@@ -184,11 +186,11 @@ DCC               | R5F             | NA                |  NORTOS | Single Shot 
 PBIST             | R5F             | NA                |  NORTOS | Memories supported by MSS PBIST controller.          | -
 ESM               | R5F             | NA                |  NORTOS | Tested in combination with RTI, DCC                                        | -
 RTI               | R5F             | NA                |  NORTOS | WINDOWSIZE_100_PERCENT, WINDOWSIZE_50_PERCENT ,Latency/Propagation timing error(early)(50% window),Latency/Propagation timing error(late)(50% window)                                     | -
-ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L2, R5F TCM, MCAN, VIM, ICSSM      | R5F Cache, HSM, CPSW
-Bus Safety        | R5F             | NA                |  NORTOS | AHB, AXI, TPTC                           | -
+ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L2, R5F TCM, MCAN, VIM, ICSSM, TPTC      | R5F Cache
+ECC Bus Safety    | R5F             | NA                |  NORTOS | AHB, AXI, TPTC                           | -
 CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode,Error Forcing Mode and Self Test Error Forcing Mode.                      | -
-R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F.                                                 |-
-PARITY            | R5F             | NA                |  NORTOS | TCM and DMA memories                                                |-
+R5F STC(LBIST), Static Register Read| R5F               | NA                |  NORTOS | STC of R5F, R5F CPU Static Register Read                                 |-
+
 ## Fixed Issues
 
 <table>
@@ -333,6 +335,13 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> 8.6.0
     <td> -
 </tr>
+<tr>
+    <td> PROC_SDL-5981
+    <td> SDL does not handle CCM callback of R5FSS1.
+    <td> SDL
+    <td> 8.5.0 onwards
+    <td> -
+</tr>
 </table>
 
 ## Known Issues
@@ -402,21 +411,21 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
 </tr>
 <tr>
     <td> PROC_SDL-5616
-    <td> For ECC Bus Safety, SEC and DED are not supported for CPSW.
+    <td> ECC Bus Safety SEC and DED Error Injection fails for CPSW.
     <td> SDL
     <td> 8.6.0 onwards
     <td> None.
 </tr>
 <tr>
     <td> PROC_SDL-5617
-    <td> ECC Bus safety for SEC and DED not supported for MSS_L2.
+    <td> ECC Bus Safety SEC and DED Error Injection fails for MSS_L2.
     <td> SDL
     <td> 8.6.0 onwards
     <td> None.
 </tr>
 <tr>
     <td> PROC_SDL-4749
-    <td> AXI DED Bus Safety fail.
+    <td> ECC Bus Safety DED Error Injection fails for AXI.
     <td> SDL
     <td> 8.5.0 onwards
     <td> None.
@@ -448,6 +457,13 @@ PARITY            | R5F             | NA                |  NORTOS | TCM and DMA 
     <td> CCS
     <td> 09.00.00
     <td> Use make/gmake based build for HS-SE
+</tr>
+<tr>
+    <td> PROC_SDL-5979
+    <td> R5F Cache ECC diagnostics are not supported.
+    <td> SDL
+    <td> 8.5.0 onwards
+    <td> None.
 </tr>
 </table>
 

@@ -44,6 +44,7 @@ MbedTLS MQTT example                                                            
 Support added for Single Packet reception from DMA                                              | Networking
 Integrated with industry grade with TSN gPTP protocol stack with example                        | Networking
 Descoped GP support                                                                             | Common
+IEC60730 Support added. R5F CPU static register read diagnoctic, ROM Checksum diagnostic and examples added.              | SDL
 
 \endcond
 
@@ -187,7 +188,7 @@ UDMA       | R5F, A53       | YES               | Yes          | Basic memory co
 WDT        | R5F, A53       | YES               | No           | Interrupt after watchdog expiry                                                            | Reset not supported
 
 ### Software Diagnostic Library (SDL)
-
+\cond SOC_AM243X
 SDL Module| Supported CPUs | SysConfig Support
 ----------|----------------|-------------------
 ESM       | M4F, R5F       | NO
@@ -200,6 +201,23 @@ PBIST     | M4F, R5F       | NO
 MTOG      | M4F            | NO
 POK       | M4F, R5F       | NO
 ECC       | M4F, R5F       | NO
+ROM Checksum| R5F          | NO
+\endcond
+
+\cond SOC_AM64X
+SDL Module| Supported CPUs | SysConfig Support
+----------|----------------|-------------------
+ESM       | M4F, R5F       | NO
+MCRC      | M4F, R5F       | NO
+RTI       | M4F, R5F       | NO
+DCC       | M4F, R5F       | NO
+VTM       | M4F, R5F       | NO
+STOG      | M4F, R5F       | NO
+PBIST     | M4F, R5F       | NO
+MTOG      | M4F            | NO
+POK       | M4F, R5F       | NO
+ECC       | M4F, R5F       | NO
+\endcond
 
 ### Board Device Drivers
 
@@ -272,6 +290,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> IPC
     <td> 8.05.00 onwards
     <td> Added status variable check
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-10213
@@ -279,12 +298,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> GPIO
     <td> 8.05.00 onwards
     <td> Updated RM config to DEVGRP_APP
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-10551
     <td> UDMA_ALIGN_SIZE macro implementation is incorrect
     <td> UDMA
     <td> 8.06.00 onwards
+    <td> -
     <td> -
 </tr>
 <tr>
@@ -293,6 +314,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> Pinmux
     <td> 8.05.00 onwards
     <td> Added pinmux definition
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-10704
@@ -300,6 +322,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> SBL
     <td> 8.06.00 onwards
     <td> Migrated the script to python 3
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-10841
@@ -307,6 +330,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> SBL
     <td> 8.06.00 onwards
     <td> Move the image load for self core just before the release reset instead of doing it early
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-10895
@@ -314,12 +338,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> UART
     <td> 8.06.00 onwards
     <td> Enabled warning in Sysconfig
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-10904
     <td> DFU Uniflash gives TIMEOUT on sending a file of 1MB
     <td> USB
     <td> 8.06.00 onwards
+    <td> -
     <td> -
 </tr>
 <tr>
@@ -328,6 +354,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> SBL
     <td> 8.06.00 onwards
     <td> -
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-11178
@@ -335,6 +362,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> SBL
     <td> 8.06.00 onwards
     <td> ENC_SBL_ENABLED condition was missing from the ccs bootimage gen makefile
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-11264
@@ -342,12 +370,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> UDMA
     <td> 8.06.00 onwards
     <td> Sysconfig update to use PKT DMA instead of BCDMA
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-8361
     <td> ENET Layer 2 CPSW Switch Port 2 does not link up for AM64x-SK baord
     <td> Networking
     <td> 8.4.0
+    <td> -
     <td> -
 </tr>
 <tr>
@@ -356,12 +386,22 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> Networking
     <td> 8.5.0
     <td> -
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-10775
     <td> Example build failing on enabling External Phy Management
     <td> Networking
     <td> 8.6.0
+    <td> -
+    <td> -
+</tr>
+<tr>
+    <td> PROC_SDL-6010
+    <td> ECCerror injection  is not supported for 2 instances. These are SDL_ECC_AGGR1 Ram ID 4 fails on interconnect ram ID 4 checker group 4-14 and SDL_PCIE0_PCIE_G2X1_64_CORE_CORE_ECC_AGGR.
+    <td> SDL
+    <td> 8.6.0
+    <td> AM64x, AM243x
     <td> -
 </tr>
 \cond SOC_AM64X
@@ -371,12 +411,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> SBL
     <td> 8.05.00 onwards
     <td> -
+    <td> -
 </tr>
 <tr>
     <td> MCUSDK-10840
     <td> SBL-to-Linux Boot Flow must leave control MMRs unlocked - Just like U-Boot/SPL
     <td> SBL
     <td> 8.06.00 onwards
+    <td> -
     <td> -
 </tr>
 \endcond
@@ -456,7 +498,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 8.6.0
     <td> AM64x, AM243x, AM263X, AM273X
     <td> -
-</tr>   
+</tr>
 <tr>
     <td> MCUSDK-2715
     <td> PKA ECDSA sign verify is not working for P-521 and BrainPool P-512R1 curves
@@ -554,6 +596,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 09.00.00
     <td> AM243x
     <td> Firewalling should not be enabled for SafeIPC.
+</tr>
+<tr>
+    <td> PROC_SDL-6445
+    <td> ECC error injection test fails for VTM aggregator from R5F domain.
+    <td> SDL
+    <td> 8.6.0
+    <td> AM64x, AM243x
+    <td> For VTM ECC aggregator, use M4F for error injection.
 </tr>
 </table>
 
