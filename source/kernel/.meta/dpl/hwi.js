@@ -11,6 +11,9 @@ function getHwiMaxPriority() {
     if(common.getSelfSysCfgCoreName().includes("m4f")) {
         maxPriority = 7;
     }
+	if(common.getSelfSysCfgCoreName().includes("hsm")) {
+        maxPriority = 7;
+    }
 
     return maxPriority;
 }
@@ -33,7 +36,10 @@ function getHwiDefaultPriority() {
     if(common.getSelfSysCfgCoreName().includes("m4f")) {
         defaultPriority = 7;
     }
-    if(common.getSelfSysCfgCoreName().includes("a53")) {
+    if(common.getSelfSysCfgCoreName().includes("hsm")) {
+        defaultPriority = 7;
+    }
+	if(common.getSelfSysCfgCoreName().includes("a53")) {
         defaultPriority = 9;
     }
 
