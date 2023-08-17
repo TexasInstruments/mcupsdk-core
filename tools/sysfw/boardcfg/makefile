@@ -65,11 +65,13 @@ CFG_DIR := $(MCU_PLUS_SDK_PATH)/source/drivers/sciclient/sciclient_default_board
 # These will be used to distinguish between an HS configuration and
 # .. a GP configuration in the rules below.
 ifeq ($(DEVICE_TYPE),HS)
-SGN_EXT := .hs.signed
-HEX_EXT := _hexhs.h
+UNSIGN_EXT := hs.bin.unsigned
+SGN_EXT    := .hs.signed
+HEX_EXT    := _hexhs.h
 else
-SGN_EXT := .signed
-HEX_EXT := _hex.h
+UNSIGN_EXT := .bin.unsigned
+SGN_EXT    := .signed
+HEX_EXT    := _hex.h
 endif
 
 VALIDATOR_JSON := $(MCU_PLUS_SDK_PATH)/tools/sysfw/boardcfg/sysfw_boardcfg_rules.json
@@ -108,15 +110,15 @@ HEXFILES := $(foreach file, \
 # .. generated if missing/a board configuration file has been changed
 .PHONY: sciclient_boardcfg $(HEXFILES)
 
-BCFG=$(OBJDIR)/sciclient_defaultBoardcfg_hex.bin.unsigned
-BCFG_RM=$(OBJDIR)/sciclient_defaultBoardcfg_rm_hex.bin.unsigned
-BCFG_PM=$(OBJDIR)/sciclient_defaultBoardcfg_pm_hex.bin.unsigned
-BCFG_SEC=$(OBJDIR)/sciclient_defaultBoardcfg_security_hex.bin.unsigned
+BCFG=$(OBJDIR)/sciclient_defaultBoardcfg_hex$(UNSIGN_EXT)
+BCFG_RM=$(OBJDIR)/sciclient_defaultBoardcfg_rm_hex$(UNSIGN_EXT)
+BCFG_PM=$(OBJDIR)/sciclient_defaultBoardcfg_pm_hex$(UNSIGN_EXT)
+BCFG_SEC=$(OBJDIR)/sciclient_defaultBoardcfg_security_hex$(UNSIGN_EXT)
 
-BCFG_LINUX=$(OBJDIR)/sciclient_defaultBoardcfg_hex.bin.unsigned
-BCFG_RM_LINUX=$(OBJDIR)/sciclient_defaultBoardcfg_rm_linux_hex.bin.unsigned
-BCFG_PM_LINUX=$(OBJDIR)/sciclient_defaultBoardcfg_pm_linux_hex.bin.unsigned
-BCFG_SEC_LINUX=$(OBJDIR)/sciclient_defaultBoardcfg_security_linux_hex.bin.unsigned
+BCFG_LINUX=$(OBJDIR)/sciclient_defaultBoardcfg_hex$(UNSIGN_EXT)
+BCFG_RM_LINUX=$(OBJDIR)/sciclient_defaultBoardcfg_rm_linux_hex$(UNSIGN_EXT)
+BCFG_PM_LINUX=$(OBJDIR)/sciclient_defaultBoardcfg_pm_linux_hex$(UNSIGN_EXT)
+BCFG_SEC_LINUX=$(OBJDIR)/sciclient_defaultBoardcfg_security_linux_hex$(UNSIGN_EXT)
 
 BCFG_BLOB_FILE=$(CFG_DIR)/boardcfg_blob.bin
 BCFG_BLOB_LINUX_FILE=$(CFG_DIR)/boardcfg_blob_linux.bin
