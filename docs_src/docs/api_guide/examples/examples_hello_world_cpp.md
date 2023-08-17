@@ -4,7 +4,7 @@
 
 # Introduction
 
-This example is compiled with the c++ compiler options.
+This example is compiled with the C++ compiler options.
 It does driver and board initialization and prints the string, Hello World! on UART console.
 
 # Supported Combinations {#EXAMPLES_HELLO_WORLD_CPP_COMBOS}
@@ -80,7 +80,7 @@ Hello World!
 In this example the "hello_world.cpp" and "main.cpp" files are built with the c++ compiler flags.
 The example will link with the prebuilt mcu sdk libs.
 
-## Flags used for c++ build
+## Flags used for C++ build
 
 Below are the flags used for the files to build with c++ flags along with the other flags used for c files.
 -   -x c++
@@ -94,10 +94,10 @@ Below are the flags used for the files to build with c++ flags along with the ot
 -   -Wno-reserved-user-defined-literal
 -   -Wno-unused-const-variable
 
-## Building the mcu sdk libs with c++ flsgs.
+## Building the mcu sdk libs with C++ flsgs.
 
-The pre built libs provided in mcu sdk are built with the c flags.
-However the application can re build the libs using the c++ flags.
+The pre built libs provided in mcu sdk are built with the C flags.
+However the application can re build the libs using the C++ flags.
 The application needs to pass the below additional flag for the make commands used for building libs
 
 \code
@@ -105,6 +105,12 @@ CPLUSPLUS_BUILD=yes
 \endcode
 
 note: Before re building the libs you need to clean all the pre built libs.
+
+\attention All the MCU+ SDK libs are written in C. So if they're built with C++ flags, it is
+possible that a linking error might happen during the application build because of the
+name mangling done for C++ linkage. In this case, unless there is a requirement, it is recommended
+to keep the libs built using C flags only to force the C linkage. For C++ linkage of libraries,
+currently only the basic libs required for this example to build are tested.
 
 ## Building an application using c++ flags
 
