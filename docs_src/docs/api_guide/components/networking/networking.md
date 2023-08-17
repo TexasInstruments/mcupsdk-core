@@ -30,11 +30,14 @@ To know more about the hardware peripherals, please refer to datasheet and Techn
 
 Below is the software components overview highlighting mainly the components used in the Networking software development.
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM273X
-  \imageStyle{networking_layer_with_mbedtls.png,width:50%}
+\cond SOC_AM64X || SOC_AM243X
+  \imageStyle{networking_layer_with_mbedtls.png,width:60%}
   \image html networking_layer_with_mbedtls.png Figure: Networking Software Components Overview
 \endcond
-
+\cond SOC_AM263X || SOC_AM273X
+  \imageStyle{networking_layer_with_mbedtls.png,width:60%}
+  \image html cpdma_networking_block_diagram.png Figure: Networking Software Components Overview
+\endcond
 \cond SOC_AWR294X
   \imageStyle{netowrking_layer.png,width:50%}
   \image html netowrking_layer.png Figure: Networking Software Components Overview

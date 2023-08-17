@@ -1,0 +1,135 @@
+<mxfile host="Electron" modified="2023-08-17T16:51:22.406Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" version="21.6.8" etag="29jHEjZQY245jcshCD2Y" type="device">
+  <diagram name="Page-1" id="Page-1">
+    <mxGraphModel dx="780" dy="520" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="" tags="Background" id="2">
+          <mxCell style="vsdxID=1;fillColor=#ffffff;gradientColor=none;shape=stencil(nZBRDoQgDERP03+WHsHFe5iISyOCQdT19kIaIxq//Jtp3zTpAFaTaUYNUkwx+F6v1EYD+AUpyRkdKCYFqACrzgf9C352LfuxyWRWg1/yhT/nRE5IsZWuZtCSK8CPeI0e/hF+jV7AJM4PO7KWCyr390bSiNtEtQM=);strokeColor=#000000;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=0;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="110" y="30" width="580" height="560" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" tags="Background" id="3">
+          <mxCell style="vsdxID=2;fillColor=#fff2cc;gradientColor=none;shape=stencil(nZBRDoQgDERP03+WHsHFe5iISyOCQdT19kIaIxq//Jtp3zTpAFaTaUYNUkwx+F6v1EYD+AUpyRkdKCYFqACrzgf9C352LfuxyWRWg1/yhT/nRE5IsZWuZtCSK8CPeI0e/hF+jV7AJM4PO7KWCyr390bSiNtEtQM=);strokeColor=#000000;strokeWidth=2;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=0;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="160" y="110" width="490" height="90" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" tags="Background" id="4">
+          <mxCell style="vsdxID=3;fillColor=#ffffff;gradientColor=none;shape=stencil(nZBdDsIgEIRPs6+Ggp6g1gt4AiKrbERoaP09vbQTEzQ+9W1n5ptsMmTawdueSathzOnMd3GjJ7MlrSV6zjKWi0xHpj2mzKecrtFB97aQWs0OO3SaidbK5sNeXgxvvdrARe2SbtO7B0KF6FmrHcAgsQIbtRj96L/wYvQLLMc8B4aSELBmnf/OVyxMb7o3);strokeColor=#000000;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=1;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="410" y="450" width="230" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" tags="Background" id="5">
+          <mxCell style="vsdxID=4;fillColor=#fff2cc;gradientColor=none;shape=stencil(nZBRDoQgDERP03+WHsHFe5iISyOCQdT19kIaIxq//Jtp3zTpAFaTaUYNUkwx+F6v1EYD+AUpyRkdKCYFqACrzgf9C352LfuxyWRWg1/yhT/nRE5IsZWuZtCSK8CPeI0e/hF+jV7AJM4PO7KWCyr390bSiNtEtQM=);strokeColor=#000000;strokeWidth=2;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=0;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="160" y="210" width="490" height="120" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" tags="Background" id="6">
+          <mxCell style="vsdxID=5;fillColor=#fff2cc;gradientColor=none;shape=stencil(nZBRDoQgDERP03+WHsHFe5iISyOCQdT19kIaIxq//Jtp3zTpAFaTaUYNUkwx+F6v1EYD+AUpyRkdKCYFqACrzgf9C352LfuxyWRWg1/yhT/nRE5IsZWuZtCSK8CPeI0e/hF+jV7AJM4PO7KWCyr390bSiNtEtQM=);strokeColor=#000000;strokeWidth=2;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=0;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="160" y="340" width="490" height="90" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="" tags="Background" id="7">
+          <mxCell style="vsdxID=6;fillColor=#fff2cc;gradientColor=none;shape=stencil(nZBRDoQgDERP03+WHsHFe5iISyOCQdT19kIaIxq//Jtp3zTpAFaTaUYNUkwx+F6v1EYD+AUpyRkdKCYFqACrzgf9C352LfuxyWRWg1/yhT/nRE5IsZWuZtCSK8CPeI0e/hF+jV7AJM4PO7KWCyr390bSiNtEtQM=);strokeColor=#000000;strokeWidth=2;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=0;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="160" y="440" width="490" height="90" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;Application&lt;br/&gt;&lt;/font&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;(Example and Demos)&lt;/font&gt;&lt;/div&gt;" tags="Background" id="8">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=7;fillColor=#f8cecc;gradientColor=none;shape=stencil(nZBLDsIwDERP4y1yE3GCUi7ACSLiEouQVGn4nr5pDVJArLrzzLyRpQHdjs4MBArHnOKZ7myzA70DpTg4SpzLBboD3fYx0SnFa7CiB1NIhYtDVjrNTCs06XjgF7093GzFlt4l3uZ/D0lRomet9gJ6DhXY4Gr0o//Cq9EvsBzLHrIUey9z1vnvfsWS7XU3AQ==);strokeColor=#b85450;strokeWidth=2;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=1;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="240" y="120" width="400" height="70" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;Stack Porting and Interface Layer (LwIP-IF, lwip-porting etc)&lt;/font&gt;&lt;/div&gt;" tags="Background" id="9">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=8;fillColor=#ffe6cc;gradientColor=none;shape=stencil(nZBdDsIgEIRPs6+Ggp6g1gt4AiKrbERoaP09vbQTEzQ+9W1n5ptsMmTawdueSathzOnMd3GjJ7MlrSV6zjKWi0xHpj2mzKecrtFB97aQWs0OO3SaidbK5sNeXgxvvdrARe2SbtO7B0KF6FmrHcAgsQIbtRj96L/wYvQLLMc8B4aSELBmnf/OVyxMb7o3);strokeColor=#d79b00;strokeWidth=2;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=1;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="240" y="290" width="400" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;LwIP Stack&lt;/font&gt;&lt;/div&gt;" tags="Background" id="10">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=9;fillColor=#ffe6cc;gradientColor=none;shape=stencil(nZDNDsIgEISfZu8UTp5rfQGfgMgqGxEair9PL+3EBI2n3nZmvskmQ6afvB2ZtJpKTme+iyuezJa0lug5S6kXmYFMf0yZTzldo4MebSW1Whx26HQzrZXNh728GN4GHkqXdJufPRApRM9W7QAGiQ3YqdXoR/+FV6NfYD2WMTCThIAt2/x3vGpheDO8AQ==);strokeColor=#d79b00;strokeWidth=2;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=1;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="240" y="220" width="120" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;Mbed-TLS&lt;/font&gt;&lt;/div&gt;" tags="Background" id="11">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=10;fillColor=#ffe6cc;gradientColor=none;shape=stencil(nZDNDsIgEISfZu8UTp5rfQGfgMgqGxEair9PL+3EBI2n3nZmvskmQ6afvB2ZtJpKTme+iyuezJa0lug5S6kXmYFMf0yZTzldo4MebSW1Whx26HQzrZXNh728GN4GHkqXdJufPRApRM9W7QAGiQ3YqdXoR/+FV6NfYD2WMTCThIAt2/x3vGpheDO8AQ==);strokeColor=#d79b00;strokeWidth=2;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=1;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="520" y="220" width="120" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;Industrial Protocol&lt;br/&gt;&lt;/font&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;Stack&lt;/font&gt;&lt;/div&gt;" tags="Background" id="12">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=11;fillColor=#ffe6cc;gradientColor=none;shape=stencil(nZDNDsIgEISfZu8UTp5rfQGfgMgqGxEair9PL+3EBI2n3nZmvskmQ6afvB2ZtJpKTme+iyuezJa0lug5S6kXmYFMf0yZTzldo4MebSW1Whx26HQzrZXNh728GN4GHkqXdJufPRApRM9W7QAGiQ3YqdXoR/+FV6NfYD2WMTCThIAt2/x3vGpheDO8AQ==);strokeColor=#d79b00;strokeWidth=2;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=1;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="380" y="220" width="120" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;CPSW&lt;br/&gt;&lt;/font&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;ENET Low Level Driver&lt;br/&gt;&lt;/font&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;(ENET LLD)&lt;/font&gt;&lt;/div&gt;" tags="Background" id="13">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=12;fillColor=#d5e8d4;gradientColor=none;shape=stencil(nZDNDsIgEISfZu8UTp5rfQGfgMgqGxEair9PL+3EBI2n3nZmvskmQ6afvB2ZtJpKTme+iyuezJa0lug5S6kXmYFMf0yZTzldo4MebSW1Whx26HQzrZXNh728GN4GHkqXdJufPRApRM9W7QAGiQ3YqdXoR/+FV6NfYD2WMTCThIAt2/x3vGpheDO8AQ==);strokeColor=#82b366;strokeWidth=2;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=1;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="240" y="360" width="190" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;ICSS EMAC&lt;br/&gt;&lt;/font&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;(100M support)&lt;/font&gt;&lt;/div&gt;" tags="Background" id="14">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=13;fillColor=#d5e8d4;gradientColor=none;shape=stencil(nZDNDsIgEISfZu8UTp5rfQGfgMgqGxEair9PL+3EBI2n3nZmvskmQ6afvB2ZtJpKTme+iyuezJa0lug5S6kXmYFMf0yZTzldo4MebSW1Whx26HQzrZXNh728GN4GHkqXdJufPRApRM9W7QAGiQ3YqdXoR/+FV6NfYD2WMTCThIAt2/x3vGpheDO8AQ==);strokeColor=#82b366;strokeWidth=2;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=1;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="450" y="360" width="190" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;FreeRTOS&lt;br/&gt;&lt;/font&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;POSIX&lt;/font&gt;&lt;/div&gt;" tags="Background" id="15">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=14;fillColor=#dae8fc;gradientColor=none;shape=stencil(nZBLDsIwDERP4y1yE3GCUi7ACSLiEouQVGn4nr5pDVJArLrzzLyRpQHdjs4MBArHnOKZ7myzA70DpTg4SpzLBboD3fYx0SnFa7CiB1NIhYtDVjrNTCs06XjgF7093GzFlt4l3uZ/D0lRomet9gJ6DhXY4Gr0o//Cq9EvsBzLHrIUey9z1vnvfsWS7XU3AQ==);strokeColor=#6c8ebf;strokeWidth=2;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=1;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="240" y="450" width="150" height="70" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;FreeRTOS Kernel&lt;/font&gt;&lt;/div&gt;" tags="Background" id="16">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=15;fillColor=#dae8fc;gradientColor=none;shape=stencil(nZBdDsIgEIRPs6+Ggp6g1gt4AiKrbERoaP09vbQTEzQ+9W1n5ptsMmTawdueSathzOnMd3GjJ7MlrSV6zjKWi0xHpj2mzKecrtFB97aQWs0OO3SaidbK5sNeXgxvvdrARe2SbtO7B0KF6FmrHcAgsQIbtRj96L/wYvQLLMc8B4aSELBmnf/OVyxMb7o3);strokeColor=#6c8ebf;strokeWidth=2;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=1;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="410" y="490" width="110" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;No RTOS&lt;/font&gt;&lt;/div&gt;" tags="Background" id="17">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=16;fillColor=#dae8fc;gradientColor=none;shape=stencil(nZBdDsIgEIRPs6+Ggp6g1gt4AiKrbERoaP09vbQTEzQ+9W1n5ptsMmTawdueSathzOnMd3GjJ7MlrSV6zjKWi0xHpj2mzKecrtFB97aQWs0OO3SaidbK5sNeXgxvvdrARe2SbtO7B0KF6FmrHcAgsQIbtRj96L/wYvQLLMc8B4aSELBmnf/OVyxMb7o3);strokeColor=#6c8ebf;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=1;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="530" y="490" width="110" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#ffffff;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;CPSW&lt;/font&gt;&lt;/div&gt;" tags="Background" id="18">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=17;fillColor=#000000;gradientColor=none;shape=stencil(rZNbDsIgEEVXw6dkYFof3z424Aoai5ZYW8WqrauXOtVA8ZEY/5i5dzInF2A4PWbJXjEJx8qUW3XRaZUxnDEpdZEpoyt7YjhnOF2XRm1MeSpSqveJdUq4d1RKM6J1S0jMaqmvinoRj6lLY7vy3K6rSQSSGrdakDHXhWMU8LP1Ub80/2z1jPZwj4OC0nlOaT71v2QVcYg8hAFyRBfjcErS1i86Hfio29KI/gjUMnR1LTHmY3wfhDvRocEHjBh8hhH4ADb0gCD6fL/9/QFwD8EbeR/FJOaToQ8SZOyzfL+T4Gm4Sv9P2Rb9R5zfAA==);strokeColor=#000000;shadow=1;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=1;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="160" y="540" width="140" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#ffffff;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;CPDMA&lt;/font&gt;&lt;/div&gt;" tags="Background" id="19">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=18;fillColor=#000000;gradientColor=none;shape=stencil(rZNbDsIgEEVXw6dkYFof3z424Aoai5ZYW8WqrauXOtVA8ZEY/5i5dzInF2A4PWbJXjEJx8qUW3XRaZUxnDEpdZEpoyt7YjhnOF2XRm1MeSpSqveJdUq4d1RKM6J1S0jMaqmvinoRj6lLY7vy3K6rSQSSGrdakDHXhWMU8LP1Ub80/2z1jPZwj4OC0nlOaT71v2QVcYg8hAFyRBfjcErS1i86Hfio29KI/gjUMnR1LTHmY3wfhDvRocEHjBh8hhH4ADb0gCD6fL/9/QFwD8EbeR/FJOaToQ8SZOyzfL+T4Gm4Sv9P2Rb9R5zfAA==);strokeColor=#000000;shadow=1;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=1;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="340" y="540" width="140" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#ffffff;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;ICSSM&lt;/font&gt;&lt;/div&gt;" tags="Background" id="20">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=19;fillColor=#262626;gradientColor=none;shape=stencil(rZNNboMwEIVP42WtsQcHuqbpBXoCFNxglULqkObn9DEMqWxcqIS688y8J396YzPMj1Vx0EzCsbPthz6bsqsYvjApTVNpazp3YrhlmL+3Vu9te2pKqg+FU0oYOrokj+jVEgq7ezM3Tb2EK+qS7bP97q+70BBodPWrVxLWpvGEAlZLH/Wv4tXSQOgOQxwUlKlrSvNn/i9ZJRxVgPCEHNHH+DoVZa8X4xx4mo4OMbXARcaqsSUynuF8EL5jRIMFDAUhQwohgAs9IkiW9zu9PwKeIASW+SieFd+oECTKOGT5eyfR0/An0z/lWvQfcXsH);strokeColor=#000000;shadow=1;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=1;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="520" y="540" width="130" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;Examples&lt;br/&gt;&lt;/font&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;And &lt;br/&gt;&lt;/font&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;Demos&lt;/font&gt;&lt;/div&gt;" tags="Background" id="21">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=20;fillColor=none;gradientColor=none;shape=stencil(nZBRDoQgDERP03+WHsHFe5iISyOCQdT19kIaIxq//Jtp3zTpAFaTaUYNUkwx+F6v1EYD+AUpyRkdKCYFqACrzgf9C352LfuxyWRWg1/yhT/nRE5IsZWuZtCSK8CPeI0e/hF+jV7AJM4PO7KWCyr390bSiNtEtQM=);strokeColor=none;strokeWidth=2;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=0;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="170" y="140" width="60" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.16px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;ProtocolStack&lt;br/&gt;&lt;/font&gt;&lt;font style=&quot;font-size:11.16px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;And&lt;br/&gt;&lt;/font&gt;&lt;font style=&quot;font-size:11.16px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;Middleware&lt;/font&gt;&lt;/div&gt;" tags="Background" id="22">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=21;fillColor=none;gradientColor=none;shape=stencil(nZBRDoQgDERP03+WHsHFe5iISyOCQdT19kIaIxq//Jtp3zTpAFaTaUYNUkwx+F6v1EYD+AUpyRkdKCYFqACrzgf9C352LfuxyWRWg1/yhT/nRE5IsZWuZtCSK8CPeI0e/hF+jV7AJM4PO7KWCyr390bSiNtEtQM=);strokeColor=none;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=0;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="155" y="235" width="90" height="70" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;Drivers&lt;br/&gt;&lt;/font&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;And&lt;br/&gt;&lt;/font&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;HAL&lt;/font&gt;&lt;/div&gt;" tags="Background" id="23">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=22;fillColor=none;gradientColor=none;shape=stencil(nZBRDoQgDERP03+WHsHFe5iISyOCQdT19kIaIxq//Jtp3zTpAFaTaUYNUkwx+F6v1EYD+AUpyRkdKCYFqACrzgf9C352LfuxyWRWg1/yhT/nRE5IsZWuZtCSK8CPeI0e/hF+jV7AJM4PO7KWCyr390bSiNtEtQM=);strokeColor=none;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=0;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="155" y="350" width="90" height="70" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;OS&lt;br/&gt;&lt;/font&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;Kenel&lt;/font&gt;&lt;/div&gt;" tags="Background" id="24">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=23;fillColor=none;gradientColor=none;shape=stencil(nZBRDoQgDERP03+WHsHFe5iISyOCQdT19kIaIxq//Jtp3zTpAFaTaUYNUkwx+F6v1EYD+AUpyRkdKCYFqACrzgf9C352LfuxyWRWg1/yhT/nRE5IsZWuZtCSK8CPeI0e/hF+jV7AJM4PO7KWCyr390bSiNtEtQM=);strokeColor=none;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=0;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="155" y="450" width="90" height="70" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:11.64px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;Driver Porting Layer (DPL)&lt;/font&gt;&lt;/div&gt;" tags="Background" id="25">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=24;fillColor=#dae8fc;gradientColor=none;shape=stencil(nZBdDsIgEIRPs6+Ggp6g1gt4AiKrbERoaP09vbQTEzQ+9W1n5ptsMmTawdueSathzOnMd3GjJ7MlrSV6zjKWi0xHpj2mzKecrtFB97aQWs0OO3SaidbK5sNeXgxvvdrARe2SbtO7B0KF6FmrHcAgsQIbtRj96L/wYvQLLMc8B4aSELBmnf/OVyxMb7o3);strokeColor=#6c8ebf;strokeWidth=2;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=1;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="410" y="450" width="230" height="30" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 1px&quot;&gt;&lt;font style=&quot;font-size:17.46px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;&lt;b&gt;Software Architecture Overview&lt;br/&gt;&lt;/b&gt;&lt;/font&gt;&lt;font style=&quot;font-size:17.46px;font-family:Helvetica;color:#000000;direction:ltr;letter-spacing:0px;line-height:120%;opacity:1&quot;&gt;&lt;b&gt;Networking - Ethernet And Industrial Protocols&lt;br/&gt;&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;" tags="Background" id="26">
+          <mxCell style="verticalAlign=middle;align=center;overflow=width;vsdxID=25;fillColor=none;gradientColor=none;shape=stencil(nZBRDoQgDERP03+WHsHFe5iISyOCQdT19kIaIxq//Jtp3zTpAFaTaUYNUkwx+F6v1EYD+AUpyRkdKCYFqACrzgf9C352LfuxyWRWg1/yhT/nRE5IsZWuZtCSK8CPeI0e/hF+jV7AJM4PO7KWCyr390bSiNtEtQM=);strokeColor=none;spacingTop=-3;spacingBottom=-3;spacingLeft=-3;spacingRight=-3;points=[];labelBackgroundColor=none;rounded=0;html=1;whiteSpace=wrap;" parent="1" vertex="1">
+            <mxGeometry x="184" y="39" width="425" height="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
