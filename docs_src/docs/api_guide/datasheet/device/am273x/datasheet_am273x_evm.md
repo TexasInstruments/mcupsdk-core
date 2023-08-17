@@ -32,11 +32,12 @@ Data Placement          | MSS L2 RAM
 
 Boot time breakdown                     |   Time (us)
 ----------------------------------------|--------------
-SBL : System Init                       |   482
+SBL : System Init                       |   73
 SBL : Drivers_open                      |   16
-SBL : Board_driversOpen                 |   2705
-SBL : CPU Load                          |   2419
-SBL : Total time taken                  |   5625
+SBL : LoadHsmRtFw                       |   4
+SBL : Board_driversOpen                 |   2700
+SBL : CPU Load                          |   1818
+SBL : Total time taken                  |   4613
 
 ### MCAN performance
 
@@ -68,7 +69,7 @@ Data Width 	| Data Length | Transfer Time (micro sec)
 Actual Rate Calculation
 Data Width 	| Data Length | Transfer Time (micro sec)
 ------------|-------------|--------------------------
-16	        | 1024	      | 246.90
+16	        | 1024	      | 246.80
 
 ### IPC performance
 
@@ -78,8 +79,8 @@ Data Width 	| Data Length | Transfer Time (micro sec)
 
 Local Core  | Remote Core | Average Message Latency (us)
 ------------|-------------|------------------------------
- r5f0-0 | r5f0-1        |  1.64
- r5f0-0 | c66ss0        |  3.37
+ r5f0-0	| r5f0-1	|  1.56
+ r5f0-0	| c66ss0	|  3.26
 
 #### IPC RPMSG
 
@@ -87,27 +88,30 @@ Local Core  | Remote Core | Average Message Latency (us)
 
 Local Core  | Remote Core | Message Size | Average Message Latency (us)
 ------------|-------------|--------------|------------------------------
- r5f0-0 | r5f0-1        | 4     |  1.05
- r5f0-0 | c66ss0        | 4     |  1.05
- r5f0-0 | r5f0-1        | 32    |  1.32
- r5f0-0 | r5f0-1        | 64    |  1.58
- r5f0-0 | r5f0-1        | 112   |  1.97
+ r5f0-0	| r5f0-1	| 4	| 0.832
+ r5f0-0	| c66ss0	| 4	| 1.247
+ r5f0-0	| r5f0-1	| 32	| 1.097
+ r5f0-0	| r5f0-1	| 64	| 1.332
+ r5f0-0	| r5f0-1	| 112	| 1.691
 
-### MATHLIB performance
+### MATHLIB
+
+### MATHLIB BENCHMARK
 
 - Calculated for the 500 samples taken between 0 and 2 * Pi
-- trignometric function timings compared between the optimized Mathlib mcusdk implementation and the compiler mathlib version
+- Trignometric function timings compared between the optimized Mathlib mcusdk implementation and the compiler mathlib version
 - The max error for each operation between the optimized Mathlib mcusdk functions and the compiler mathlib version is printed
-
-Function        | Err           | Max Cycles Mathlib (mcusdk)   | avg cycles Mathlib (mcusdk)   | max cycles mathlib (clang)    | avg cycles mathlib (clang)    |
+Function	| Err		| Max Cycles Mathlib (mcusdk) 	| avg cycles Mathlib (mcusdk) 	| max cycles mathlib (clang) 	| avg cycles mathlib (clang) 	|
 ----------------|---------------|-----------------------|-----------------------|-----------------------|-----------------------|
-sin             |0.0000007150   | 62                    | 43.779999             | 502                   | 287.299988            |
-cos             |0.0000002870   | 572                   | 54.897999             | 492                   | 288.247986            |
-sincos sin      |0.0000001790   | 88                    | 68.888000             | 496                   | 285.933990            |
-asin            |0.0000003430   | 94                    | 63.902000             | 829                   | 445.175995            |
-acos            |0.0000004770   | 84                    | 64.454002             | 549                   | 395.761993            |
-atan            |0.0000005360   | 580                   | 73.269997             | 533                   | 385.109985            |
-atan2           |0.0000007150   | 118                   | 102.412003            | 594                   | 490.556000            |
+sin 		|0.0000007150	| 62			| 43.063999 		| 687			| 288.306000		|
+cos  		|0.0000002870	| 73			| 53.976002 		| 488			| 288.447998		|
+sincos sin  	|0.0000001790	| 88			| 68.973999 		| 643			| 286.645996		|
+sincos cos	|0.0000001900	|			|			|			|			|
+asin 		|0.0000003430	| 83			| 63.921997 		| 592			| 444.145996		|
+acos 		|0.0000004770	| 84			| 64.926003 		| 728			| 396.635986		|
+atan 		|0.0000005360	| 89			| 72.288002 		| 512			| 385.382019		|
+atan2 		|0.0000007150	| 513			| 103.234001 		| 594			| 490.760010		|
+
 
 ### Ethernet Performance
 
