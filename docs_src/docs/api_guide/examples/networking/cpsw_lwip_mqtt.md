@@ -76,8 +76,8 @@ The example does below
 <tr>
     <td>Disable Mac Port1, Disable Mac Port2
     <td>TI Networking / Enet (CPSW)
-    <td>Select which port to use.
-    <td>Default is Port1 enabled. If both Port1 and Port 2 are ticked any port can be used and it als enables traffic switching between the two ports.
+    <td>Select which port to Disable
+    <td>Default is Port1 enabled. If both Port1 and Port 2 are enabled, any port can be used and  if operating in switch mode, it enables traffic switching between the two ports.
 </tr>
 \endcond
 

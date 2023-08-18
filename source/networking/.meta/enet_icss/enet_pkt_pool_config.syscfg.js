@@ -168,7 +168,7 @@ const enet_pkt_pool_config = {
         },
         {
             name: "PktInfoOnlyEnable",
-            description: "Flag to enable packet Info from enet utils library. It should be disabled to avoid utils memory wastage, in case aplication allots packet via other mechanism. (Ex- Lwip pools)",
+            description: "Flag to allocate only the DMA Packet Info structures, this does not include the buffer memory. This is useful when the buffer memory is internally allocated by the application. (Ex- Lwip pools)",
             displayName: "Only Enable Packet Info Allocation",
             default: false,
             onChange: function (inst, ui) {
