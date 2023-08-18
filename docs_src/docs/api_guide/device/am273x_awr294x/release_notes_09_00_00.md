@@ -354,6 +354,13 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F a
     <td> 8.2.0 onwards
     <td> Disable hostRxTimestampEn flag in CPSW CPST configuration. This does not impact the CPTS Rx or Tx Timestamp Events for PTP packets and is orthogonal feature.
 </tr>
+<tr>
+    <td> MCUSDK-9309
+    <td> IPC: Issue when Combination of Notify and RPMsg is enabled in SysCfg.
+    <td> IPC
+    <td> 8.01.00 onwards
+    <td> Use Only Notify or Only Notify+RPMsg on all cores.
+</tr>
 \endcond
 </table>
 

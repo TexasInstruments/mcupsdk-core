@@ -465,6 +465,13 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> 8.5.0 onwards
     <td> None.
 </tr>
+<tr>
+    <td> MCUSDK-9309
+    <td> IPC: Issue when Combination of Notify and RPMsg is enabled in SysCfg.
+    <td> IPC
+    <td> 8.01.00 onwards
+    <td> Use Only Notify or Only Notify+RPMsg on all cores.
+</tr>
 </table>
 
 ## Errata

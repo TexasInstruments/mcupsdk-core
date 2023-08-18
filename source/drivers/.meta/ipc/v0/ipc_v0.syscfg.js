@@ -53,8 +53,8 @@ function getConfigurables()
         {
             name: "intrPriority",
             displayName: "Interrupt Priority",
-            default: 4,
-            hidden: false,
+            default: hwi.getHwiDefaultPriority(),
+            hidden: !hwi.getPriorityConfigSupported(),
             description: `Interrupt Priority: 0 (highest) to ${hwi.getHwiMaxPriority()} (lowest)`,
         },
         {
@@ -343,8 +343,6 @@ function validate(instance, report) {
                 {
                     report.logError(`Value MUST match with core ${sysCfgCoreName}`, instance, remoteCoreName);
                 }
-                
-                common.validate.checkConfigurableValueMatchForAllCores(ipc_module_name, instance, report, remoteCoreName);
             }
         }
     }

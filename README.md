@@ -356,4 +356,4 @@ The documentation can also be generated as mentioned in the below section.
 
 ## Contributing to the project
 
-This project is currently not accepting contributions. We expect to accept contributions from 3Q23.
+This project is currently not accepting contributions. Coming Soon!
