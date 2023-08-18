@@ -21,7 +21,7 @@ function getInstanceConfig(moduleInstance) {
 
 function getOperatingMode(inst) {
 
-    if(inst.cardType == "EMMC")
+    if((inst.cardType == "EMMC") || (inst.cardType == "NO_DEVICE"))
     {
         switch(inst.modeSelectEMMC)
         {
