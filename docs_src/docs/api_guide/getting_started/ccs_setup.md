@@ -122,7 +122,7 @@
 
 \cond SOC_AM263X
 ## Update CSP {#CSP_UPDATE}
-- Goto "Help > Check for updates"
+- Goto "Help -> Check for updates"
 
     \imageStyle{ccs_update_check.png,width:30%}
     \image html ccs_update_check.png "Check for Updates Menu"
@@ -144,7 +144,7 @@
 
 - Restart CCS.
 
-- Goto "Help > About Code Composer Studio"
+- Goto "Help -> About Code Composer Studio"
 
     \imageStyle{ccs_update_about.png,width:30%}
     \image html ccs_update_about.png "Help menu"
@@ -159,6 +159,8 @@
     \imageStyle{ccs_update_csp_version.png,width:40%}
     \image html ccs_update_csp_version.png "CSP version"
 
+\note If user is still seeing an single core while importing/using the system project, user will need to update the timestamp of CSP.
+\note Close CCS, go to "<ccs_insall_dir>\ccs\ccs_base\common\targetdb" and update the 'timestamp' file to current date and start the CCS
 \endcond
 
 \cond SOC_AM64X
