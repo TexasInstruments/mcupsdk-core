@@ -13,6 +13,8 @@ from random import randint
 import shutil
 from textwrap import dedent
 
+g_sbl_max_size = 1500000
+
 g_sha_to_use = "sha512"
 
 g_sha_oids = {
@@ -23,8 +25,8 @@ g_sha_oids = {
 }
 
 g_dbg_types = {
-	"DBG_PERM_DISABLE"   : '0', 
-	"DBG_SOC_DEFAULT"    : '1', 
+	"DBG_PERM_DISABLE"   : '0',
+	"DBG_SOC_DEFAULT"    : '1',
 	"DBG_PUBLIC_ENABLE"  : '2',
 	"DBG_FULL_ENABLE"    : '4',
 }
@@ -166,7 +168,7 @@ def get_encrypted_file_iv_rs(bin_file_name, enc_key):
 		zeros_pad = bytearray( 16 - (os.path.getsize(bin_file_name) % 16))
 		tempfile_name = "tmpfile" + str(randint(1111, 9999))
 		encbin_name = get_enc_filename(bin_file_name)
-		
+
 		shutil.copy(bin_file_name, tempfile_name)
 
 		# append zeros to tempfile
@@ -316,6 +318,11 @@ subprocess.check_output('openssl req -new -x509 -key {} -nodes -outform DER -out
 final_fh = open(args.rom_image, 'wb+')
 cert_fh = open(cert_name, 'rb')
 sbl_fh = None
+
+if os.path.getsize(args.sbl_bin) >= g_sbl_max_size:
+    except_msg = f'SBL/HSM size should be less than {g_sbl_max_size}'
+    raise Exception(except_msg)
+
 if args.sbl_enc:
 	sbl_fh = open(get_enc_filename(args.sbl_bin), 'rb')
 else:

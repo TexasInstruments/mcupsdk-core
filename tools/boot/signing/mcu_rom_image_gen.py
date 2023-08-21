@@ -13,6 +13,8 @@ import shutil
 from textwrap import dedent
 from hkdf import hkdf
 
+g_sbl_hsm_max_size = 983000
+
 g_sha_to_use = "sha512"
 
 g_sha_oids = {
@@ -306,6 +308,10 @@ subprocess.check_output('openssl req -new -x509 -key {} -nodes -outform DER -out
 # Concatenate the certificate and  input binary
 final_fh = open(args.out_image, 'wb+')
 cert_fh = open(cert_name, 'rb')
+
+if os.path.getsize(args.image_bin) >= g_sbl_hsm_max_size:
+    except_msg = f'SBL/HSM size should be less than {g_sbl_hsm_max_size}'
+    raise Exception(except_msg)
 
 if args.sbl_enc or args.tifs_enc:
     bin_fh = open(get_enc_filename(args.image_bin), 'rb')
