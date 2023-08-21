@@ -87,11 +87,16 @@ static TaskP_Object gMyTask;
 void test_c66x(void);
 #endif
 
+int _DebugP_log(char *format, ...);
 static void myISR1(void *args)
 {
     gMyISRCount++;
 
     gInISR += HwiP_inISR();
+    uint32_t logZone = 0;
+    char format;
+    _DebugP_logZone(logZone, &format);
+    _DebugP_log("Hi!");
 }
 
 static void myISR2(void *args)

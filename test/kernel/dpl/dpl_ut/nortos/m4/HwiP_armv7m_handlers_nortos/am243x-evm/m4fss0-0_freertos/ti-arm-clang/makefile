@@ -21,22 +21,22 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=dpl_ut_HwiP_armv7r_handlers_nortos_m4.$(PROFILE).out
+OUTNAME:=dpl_ut_HwiP_armv7m_handlers_nortos_m4.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=dpl_ut_HwiP_armv7r_handlers_nortos_m4.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=dpl_ut_HwiP_armv7r_handlers_nortos_m4.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=dpl_ut_HwiP_armv7r_handlers_nortos_m4.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=dpl_ut_HwiP_armv7r_handlers_nortos_m4.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=dpl_ut_HwiP_armv7r_handlers_nortos_m4.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=dpl_ut_HwiP_armv7r_handlers_nortos_m4.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=dpl_ut_HwiP_armv7r_handlers_nortos_m4.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=dpl_ut_HwiP_armv7r_handlers_nortos_m4.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=dpl_ut_HwiP_armv7m_handlers_nortos_m4.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=dpl_ut_HwiP_armv7m_handlers_nortos_m4.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=dpl_ut_HwiP_armv7m_handlers_nortos_m4.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=dpl_ut_HwiP_armv7m_handlers_nortos_m4.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=dpl_ut_HwiP_armv7m_handlers_nortos_m4.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=dpl_ut_HwiP_armv7m_handlers_nortos_m4.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=dpl_ut_HwiP_armv7m_handlers_nortos_m4.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=dpl_ut_HwiP_armv7m_handlers_nortos_m4.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 FILES_common := \
 	test_dpl.c \
-	HwiP_armv7r_handlers_nortos_test_pos.c \
+	HwiP_armv7m_handlers_nortos_test_pos.c \
 	main.c \
 	float_ops.c \
 	ti_drivers_config.c \
@@ -188,7 +188,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am243x:m4fss0-0:freertos:ti-arm-clang dpl_ut_HwiP_armv7r_handlers_nortos_m4 ...
+	@echo  Scrubing: am243x:m4fss0-0:freertos:ti-arm-clang dpl_ut_HwiP_armv7m_handlers_nortos_m4 ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

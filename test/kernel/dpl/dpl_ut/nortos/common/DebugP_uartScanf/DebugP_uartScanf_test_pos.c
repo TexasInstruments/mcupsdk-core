@@ -87,7 +87,7 @@ void posTest_DebugP_readLine(void * args)
 	if(testStatus==SystemP_SUCCESS)
 	{
         trans.status=1;
-		if(DebugP_readLine(&lineBuf,bufSize)== SystemP_SUCCESS)
+		if(DebugP_readLine(&lineBuf,bufSize)!= SystemP_SUCCESS)
 		{
 			testStatus=SystemP_FAILURE;
 		}
@@ -156,7 +156,7 @@ void posTest_DebugP_scanfOne(void * args)
      if(testStatus==SystemP_SUCCESS)
 	{
         DebugP_uartSetDrvIndex(0);
-        if(DebugP_readLine(&lineBuf,bufSize)== SystemP_SUCCESS)
+        if(DebugP_readLine(&lineBuf,bufSize)!= SystemP_SUCCESS)
 		{
 			testStatus=SystemP_FAILURE;
 		}
@@ -178,7 +178,7 @@ void posTest_DebugP_scanfOne(void * args)
     if(testStatus==SystemP_SUCCESS)
 	{
         trans.status=1;
-        if(DebugP_readLine(&lineBuf,bufSize)== SystemP_SUCCESS)
+        if(DebugP_readLine(&lineBuf,bufSize)!= SystemP_SUCCESS)
 		{
 			testStatus=SystemP_FAILURE;
 		}
@@ -192,6 +192,34 @@ void posTest_DebugP_scanfOne(void * args)
 	TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
  }
 
+/*
+ * Test to get status as SystemP_FAILURE for DebugP_scanf API.
+ */
+void posTest_DebugP_scanfTwo(void * args)
+{
+    extern uint32_t gDebugP_uartDrvIndex;
+    gDebugP_uartDrvIndex = 3U;
+	UART_Handle handle = NULL;
+	if(testStatus==SystemP_SUCCESS)
+	{
+    	value32 = 0;
+		DebugP_log("Enter a 32b number\r\n");
+    	if(gDebugP_uartDrvIndex != 0)
+        {
+            DebugP_scanf("%d", &value32);
+        }
+    	DebugP_log("32b value = %d\r\n", value32);
+	}
+
+	if (testStatus != SystemP_SUCCESS)
+    {
+		testStatus = SystemP_FAILURE;
+        DebugP_log("DebugP_uartScanf_nortos_posTest: failure on line no. %d \n", __LINE__);
+    }
+	TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+    UART_close(handle);
+}
+
 void test_pos_main(void *args)
 {
 	RUN_TEST(posTest_DebugP_scanf,5991, NULL);
@@ -199,4 +227,5 @@ void test_pos_main(void *args)
     RUN_TEST(posTest_DebugP_readLine,5990, NULL);
 	RUN_TEST(posTest_DebugP_readLineTwo,10795, NULL);
 	RUN_TEST(posTest_DebugP_readLineOne,5992, NULL);
+    RUN_TEST(posTest_DebugP_scanfTwo,11834, NULL);
 }

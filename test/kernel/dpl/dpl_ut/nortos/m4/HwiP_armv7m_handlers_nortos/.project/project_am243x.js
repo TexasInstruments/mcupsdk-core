@@ -5,7 +5,7 @@ let device = "am243x";
 const files_m4f = {
     common: [
         "test_dpl.c",
-		"HwiP_armv7r_handlers_nortos_test_pos.c",
+		"HwiP_armv7m_handlers_nortos_test_pos.c",
         "main.c",
         "float_ops.c",
     ],
@@ -130,7 +130,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "dpl_ut_HwiP_armv7r_handlers_nortos_m4";
+    property.name = "dpl_ut_HwiP_armv7m_handlers_nortos_m4";
     property.isInternal = true;
     property.skipProjectSpec = true;
     property.buildOptionCombos = buildOptionCombos;

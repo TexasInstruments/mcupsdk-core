@@ -60,14 +60,42 @@
 #include <kernel/dpl/MpuP_armv7.h>
 #include <kernel/nortos/dpl/m4/HwiP_armv7m.h>
 #include <drivers/hw_include/csl_types.h>
+#include <ti_compatibility.h>
 
+#define TEST_INT_NUM     (20U)
 int32_t    testStatus = SystemP_SUCCESS;
 uint32_t intNum=1;
-uint32_t oldIntState=0;
+uint32_t oldIntState;
 uint32_t oldEnableState=1U;
 HwiP_Params params;
 HwiP_Object handle;
-void *args=NULL;
+volatile uint32_t gMyISRCount;
+volatile uint32_t gInISR;
+static SemaphoreP_Object gMyDoneSem;
+
+static void myISR4(void *args)
+{
+    gMyISRCount++;
+
+    gInISR += HwiP_inISR();
+}
+
+static void myISR6(void *args)
+{
+    gInISR = 1;
+}
+
+static void myISR3(void *args)
+{
+    gInISR = 1;
+}
+
+static void myISR2(void *args)
+{
+    SemaphoreP_Object *pSemObj = (SemaphoreP_Object *)args;
+
+    SemaphoreP_post(pSemObj);
+}
 
 /*  Positive test of enableInt API*/
 void posTest_HwiP_enableInt(void * args)
@@ -81,6 +109,7 @@ void posTest_HwiP_enableInt(void * args)
     if (testStatus != SystemP_SUCCESS)
     {
         testStatus = SystemP_FAILURE;
+        DebugP_log("HwiP_armv7m_pos_test: failure on line no %d \n", __LINE__);
     }
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
@@ -127,7 +156,12 @@ void posTest_HwiP_Params_init(void * args)
 {
     if (testStatus == SystemP_SUCCESS)
     {
-        HwiP_Params_init(&params);
+        HwiP_Params hwiParams;
+        HwiP_Object hwiObj;
+        HwiP_Params_init(&hwiParams);
+        hwiParams.intNum = TEST_INT_NUM;
+        hwiParams.callback = myISR3;
+        testStatus = HwiP_construct(&hwiObj, &hwiParams);
     }
 
     if (testStatus != SystemP_SUCCESS)
@@ -144,6 +178,7 @@ void posTest_HwiP_disable(void * args)
     if (testStatus == SystemP_SUCCESS)
     {
         oldIntState = HwiP_disable();
+        HwiP_restore(oldIntState);
     }
 
     if (testStatus != SystemP_SUCCESS)
@@ -170,13 +205,38 @@ void posTest_HwiP_enable(void * args)
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
 
-/*  Positive test of HwiP_restore API*/
-void posTest_HwiP_restore(void * args)
+/*  Positive test of destruct API*/
+void posTest_HwiP_destruct(void * args)
 {
-    oldIntState = HwiP_NVIC_PRI_DISABLE;
+    int32_t    testStatus = SystemP_SUCCESS;
     if (testStatus == SystemP_SUCCESS)
     {
-        HwiP_restore(oldIntState);
+        HwiP_Params hwiParams;
+        HwiP_Object hwiObj;
+        uint32_t i, maxCount = 10;
+
+        gMyISRCount = 0;
+        gInISR = 0;
+
+        HwiP_Params_init(&hwiParams);
+        hwiParams.intNum = TEST_INT_NUM;
+        hwiParams.callback = myISR4;
+        testStatus = HwiP_construct(&hwiObj, &hwiParams);
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, testStatus);
+
+    for (i = 0; i < maxCount; i++)
+    {
+        HwiP_post(hwiParams.intNum);
+    }
+
+    while (gMyISRCount < maxCount)
+        ;
+
+    TEST_ASSERT_EQUAL_INT32(maxCount, gMyISRCount);
+    TEST_ASSERT_EQUAL_INT32(maxCount, gInISR);
+    TEST_ASSERT_EQUAL_UINT32( 0, HwiP_inISR());
+
+    HwiP_destruct(&hwiObj);
     }
 
     if (testStatus != SystemP_SUCCESS)
@@ -187,13 +247,46 @@ void posTest_HwiP_restore(void * args)
     TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
 
-/*  Positive test of init API*/
-void posTest_HwiP_init(void * args)
+/*  Positive test of restoreInt API*/
+void posTest_HwiP_restoreInt(void * args)
 {
+    intNum = TEST_INT_NUM;
+    oldEnableState = 1;
+    int32_t    testStatus = SystemP_SUCCESS;
     if (testStatus == SystemP_SUCCESS)
     {
-        HwiP_init();
-	}
+        HwiP_restoreInt(intNum, oldEnableState);
+    }
+
+    if (testStatus != SystemP_SUCCESS)
+    {
+        testStatus = SystemP_FAILURE;
+        DebugP_log("HwiP_armv7m_pos_test: failure on line no %d \n", __LINE__);
+    }
+    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
+
+/*  Positive test of HwiP_Params_init API*/
+void posTest_HwiP_Params_initOne(void * args)
+{
+    if(testStatus == SystemP_SUCCESS)
+    {
+        HwiP_Params hwiParams1,hwiParams2;
+        HwiP_Object hwiObj1,hwiObj2;
+
+        HwiP_Params_init(&hwiParams1);
+        hwiParams1.intNum = TEST_INT_NUM;
+        hwiParams1.callback = myISR6;
+        testStatus = HwiP_construct(&hwiObj1, &hwiParams1);
+
+        HwiP_Params_init(&hwiParams2);
+        hwiParams2.intNum = TEST_INT_NUM;
+        hwiParams2.callback = myISR2;
+        hwiParams2.args = &gMyDoneSem;
+        HwiP_construct(&hwiObj2, &hwiParams2);
+        HwiP_destruct(&hwiObj2);
+        HwiP_destruct(&hwiObj1);
+    }
 
     if (testStatus != SystemP_SUCCESS)
     {
@@ -205,11 +298,12 @@ void posTest_HwiP_init(void * args)
 
 void test_pos_main(void * args)
 {
-    RUN_TEST(posTest_HwiP_Params_init,11442,NULL);
+    RUN_TEST(posTest_HwiP_destruct,11545,NULL);
     RUN_TEST(posTest_HwiP_enable,11443,NULL);
     RUN_TEST(posTest_HwiP_disable,11444,NULL);
-    RUN_TEST(posTest_HwiP_restore,11445,NULL);
     RUN_TEST(posTest_HwiP_enableInt,11446,NULL);
     RUN_TEST(posTest_HwiP_disableInt,11447,NULL);
     RUN_TEST(posTest_HwiP_clearInt,11448,NULL);
+    RUN_TEST(posTest_HwiP_Params_initOne,11544,NULL);
+    RUN_TEST(posTest_HwiP_Params_init,11442,NULL);
 }

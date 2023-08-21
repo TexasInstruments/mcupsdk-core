@@ -42,7 +42,7 @@ endif
 
 FILES_common := \
 	test_dpl.c \
-	DebugP_shmLogWriter_test_pos.c \
+	DebugP_shmLogWriter_test_pos_awr.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \

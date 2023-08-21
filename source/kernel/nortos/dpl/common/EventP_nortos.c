@@ -91,7 +91,7 @@ int32_t EventP_waitBits(EventP_Object  *obj,
      * (but it is not OK to start it).
      */
     ClockP_Params_init(&clockParams);
-    clockParams.timeout = SystemP_WAIT_FOREVER;
+    clockParams.timeout = timeout;
     ClockP_construct(&clockObj, &clockParams);
 
     if ((timeout != SystemP_NO_WAIT) && (timeout != SystemP_WAIT_FOREVER))

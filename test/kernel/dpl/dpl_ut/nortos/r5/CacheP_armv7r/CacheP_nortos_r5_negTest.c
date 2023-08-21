@@ -116,13 +116,13 @@ void CacheP_enable_neg(void *args)
 void  CacheP_inv_neg(void *args)
 {
 	int32_t    testStatus = SystemP_SUCCESS;
-	uint32_t type =0;
+	uint32_t type = 1U;
 	void *blockPtr=NULL;
 	uint32_t byteCnt=0;
     /*  Error/Fault test of CacheP_inv API*/
     if (testStatus == SystemP_SUCCESS)
     {
-         CacheP_inv(blockPtr,type,byteCnt);
+        CacheP_inv(blockPtr, byteCnt, type);
     }
 
     if (testStatus != SystemP_SUCCESS)
@@ -133,6 +133,25 @@ void  CacheP_inv_neg(void *args)
 	TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
 
+void  CacheP_inv_neg_one(void *args)
+{
+	int32_t    testStatus = SystemP_SUCCESS;
+	uint32_t type = 2U;
+	void *blockPtr=NULL;
+	uint32_t byteCnt=0;
+    /*  Error/Fault test of CacheP_inv API*/
+    if (testStatus == SystemP_SUCCESS)
+    {
+        CacheP_inv(blockPtr, byteCnt, type);
+    }
+
+    if (testStatus != SystemP_SUCCESS)
+    {
+        DebugP_log("CacheP_armv7r_neg_test: falure on line no %d \n", __LINE__);
+        testStatus = SystemP_FAILURE;
+    }
+	TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
 
 void test_neg_main(void *args)
 {
@@ -141,5 +160,6 @@ void test_neg_main(void *args)
     RUN_TEST(CacheP_disable_neg, 11434, NULL);
     RUN_TEST(CacheP_enable_neg, 11435, NULL);
     RUN_TEST(CacheP_inv_neg, 11436, NULL);
+    RUN_TEST(CacheP_inv_neg_one, 11543, NULL);
 
 }

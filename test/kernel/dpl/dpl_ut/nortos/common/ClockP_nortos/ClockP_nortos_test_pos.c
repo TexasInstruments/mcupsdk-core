@@ -311,6 +311,22 @@ void test_getTimeout(void *args)
 }
 
 /*
+ * Test to verify ClockP_getTimeout API for branch condition coverage.
+ */
+void test_getTimeoutOne(void *args)
+{
+    if (testStatus1 == SystemP_SUCCESS)
+    {
+        ClockP_setTimeout(&handle, (uint32_t)SystemP_TIMEOUT);
+        ClockP_getTimeout(&handle);
+    }
+	if (testStatus1 != SystemP_SUCCESS)
+    {
+        DebugP_log("pos_Test: failure on line no %d \n", __LINE__);
+    }
+}
+
+/*
  * Test to verify ClockP_isActive API with valid parameters.
  */
  void test_isActive(void *args)
@@ -716,6 +732,7 @@ void test_pos_main(void *args)
     RUN_TEST(test_usleep,5779,NULL);
     RUN_TEST(test_usleepTwo,5777,NULL);
     RUN_TEST(test_getTimeUsec,5780,NULL);
+    RUN_TEST(test_getTimeoutOne,11737,NULL);
 
     UNITY_END();
     Drivers_close();

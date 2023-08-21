@@ -147,9 +147,12 @@ void posTest_EventP_waitBits(void * args)
     TEST_ASSERT_EQUAL_INT32(EVENT_BIT_FROM_PING | EVENT_BIT_FROM_PONG, eventBits);
 
     testStatus = EventP_waitBits(&gMyEvent, EVENT_BIT_FROM_PING | EVENT_BIT_FROM_PONG | EVENT_BIT_FROM_ISR, 1, 1, 10 , &eventBits);
-    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, testStatus);
+    TEST_ASSERT_EQUAL_INT32(SystemP_TIMEOUT, testStatus);
     TEST_ASSERT_EQUAL_INT32(EVENT_BIT_FROM_PING | EVENT_BIT_FROM_PONG, eventBits);
 
+    testStatus = EventP_waitBits(&gMyEvent, EVENT_BIT_FROM_PING | EVENT_BIT_FROM_PONG | EVENT_BIT_FROM_ISR, 1, 1, 0 , &eventBits);
+    TEST_ASSERT_EQUAL_INT32(SystemP_TIMEOUT, testStatus);
+    
     testStatus = EventP_clearBits(&gMyEvent, EVENT_BIT_FROM_PING | EVENT_BIT_FROM_PONG);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, testStatus);
 
@@ -338,10 +341,6 @@ void posTest_EventP_getBits(void * args)
 
 void test_pos_main(void * args)
 {
-    /* Open drivers to open the UART driver for console */
-    Drivers_open();
-
-    UNITY_BEGIN();
 
     RUN_TEST(posTest_EventP_construct,5994,NULL);
     RUN_TEST(posTest_EventP_destruct,5995,NULL);
@@ -352,7 +351,4 @@ void test_pos_main(void * args)
     RUN_TEST(posTest_EventP_clearBits,5998,NULL);
     RUN_TEST(posTest_EventP_getBits, 5999 ,NULL);
 
-    UNITY_END();
-
-    Drivers_close();
 }

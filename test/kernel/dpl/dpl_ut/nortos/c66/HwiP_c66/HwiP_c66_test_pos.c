@@ -60,6 +60,8 @@
 
 HwiP_Object handle;
 HwiP_Params params;
+HwiP_raisePrivilegeFxnPtr hookFxnPtr;
+HwiP_restorPrivilegeFxnPtr hookFxnRestorePtr;
 
 /* positive test of HwiP_init API */
 void HwiP_init_posTest(void *args)
@@ -227,6 +229,42 @@ void HwiP_unregisterNmiHandler_posTest(void *args)
 	TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
 }
 
+/* positive test of HwiP_registerRaisePrivilegeHandlerHook API */
+void HwiP_registerRaisePrivilegeHandlerHook_posTest(void *args)
+{
+	int32_t  testStatus = SystemP_SUCCESS;
+
+    if (testStatus == SystemP_SUCCESS)
+    {
+		HwiP_registerRaisePrivilegeHandlerHook(hookFxnPtr);
+    }
+
+	if (testStatus != SystemP_SUCCESS)
+    {
+        testStatus = SystemP_FAILURE;
+        DebugP_log("nortos_c66_pos_Test: failure on line no. %d \n", __LINE__);
+    }
+    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
+
+/* positive test of HwiP_registerRestorePrivilegeHandlerHook API */
+void HwiP_registerRestorePrivilegeHandlerHook_posTest(void *args)
+{
+	int32_t  testStatus = SystemP_SUCCESS;
+
+    if (testStatus == SystemP_SUCCESS)
+    {
+		HwiP_registerRestorePrivilegeHandlerHook(hookFxnRestorePtr);
+    }
+
+	if (testStatus != SystemP_SUCCESS)
+    {
+        testStatus = SystemP_FAILURE;
+        DebugP_log("nortos_c66_pos_Test: failure on line no. %d \n", __LINE__);
+    }
+    TEST_ASSERT_EQUAL_INT32(testStatus,SystemP_SUCCESS);
+}
+
 void test_pos_main(void * args)
 {
     RUN_TEST(HwiP_init_posTest,9992,NULL);
@@ -237,4 +275,7 @@ void test_pos_main(void * args)
 	RUN_TEST(HwiP_Params_init_posTest, 9992, NULL);
 	RUN_TEST(HwiP_setArgs_posTest,9993,NULL);
     RUN_TEST(HwiP_unregisterNmiHandler_posTest, 10957, NULL);
+    RUN_TEST(HwiP_registerRaisePrivilegeHandlerHook_posTest,11740,NULL);
+    RUN_TEST(HwiP_registerRestorePrivilegeHandlerHook_posTest,11741,NULL);
+    RUN_TEST(HwiP_init_posTest,9992,NULL);
 }

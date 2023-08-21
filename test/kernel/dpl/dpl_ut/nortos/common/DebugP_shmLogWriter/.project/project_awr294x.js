@@ -5,7 +5,7 @@ let device = "awr294x";
 const files = {
     common: [
         "test_dpl.c",
-        "DebugP_shmLogWriter_test_pos.c",
+        "DebugP_shmLogWriter_test_pos_awr.c",
         "main.c",
     ],
 };
@@ -14,7 +14,7 @@ const files_c66x = {
     common: [
         "test_dpl.c",
         "test_c66x.c",
-        "DebugP_shmLogWriter_test_pos.c",
+        "DebugP_shmLogWriter_test_pos_awr.c",
         "main.c",
         "float_ops.c",
     ],

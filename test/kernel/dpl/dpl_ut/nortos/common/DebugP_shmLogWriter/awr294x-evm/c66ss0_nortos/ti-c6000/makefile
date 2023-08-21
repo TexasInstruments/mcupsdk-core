@@ -43,7 +43,7 @@ endif
 FILES_common := \
 	test_dpl.c \
 	test_c66x.c \
-	DebugP_shmLogWriter_test_pos.c \
+	DebugP_shmLogWriter_test_pos_awr.c \
 	main.c \
 	float_ops.c \
 	ti_drivers_config.c \

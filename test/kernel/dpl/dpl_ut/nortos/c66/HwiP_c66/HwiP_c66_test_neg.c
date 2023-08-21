@@ -182,7 +182,7 @@ void HwiP_HwiP_registerNmiHandler_negTest(void *args)
 void HwiP_HwiP_registerNmiHandler_negTestOne(void *args)
 {
 	int32_t    testStatus = SystemP_SUCCESS;
-    HwiP_FxnCallback nmiHandler = NULL;
+    HwiP_FxnCallback nmiHandler = (HwiP_FxnCallback)1;
 
     if (testStatus == SystemP_SUCCESS)
     {
