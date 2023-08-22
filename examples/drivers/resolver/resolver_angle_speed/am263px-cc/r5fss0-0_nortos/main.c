@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2022 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -28,33 +28,23 @@
  *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
-#ifndef CSLR_EPWM_TOP_H_
-#define CSLR_EPWM_TOP_H_
 
-#ifdef __cplusplus
-extern "C"
+#include <stdlib.h>
+#include "ti_drivers_config.h"
+#include "ti_board_config.h"
+
+void resolver_angle_speed_main(void *args);
+
+int main(void)
 {
-#endif
+    System_init();
+    Board_init();
 
-#include <drivers/hw_include/soc_config.h>
+    resolver_angle_speed_main(NULL);
 
-#if defined (IP_VERSION_EPWM_V0)
-#include <drivers/epwm/v0/hw_pwmss_epwm.h>
-#endif
+    Board_deinit();
+    System_deinit();
 
-#if defined (IP_VERSION_EPWM_V1)
-#include <drivers/epwm/v1/cslr_etpwm.h>
-#include <drivers/epwm/v1/cslr_ottocal.h>
-#endif
-
-#if defined (IP_VERSION_EPWM_V2)
-#include <drivers/epwm/v2/cslr_epwm.h>
-#endif
-
-#ifdef __cplusplus
+    return 0;
 }
-#endif
-
-#endif

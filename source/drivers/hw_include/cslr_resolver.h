@@ -41,7 +41,7 @@ extern "C"
 #include <drivers/hw_include/soc_config.h>
 
 #if defined (IP_VERSION_RESOLVER_V0)
-#include <drivers/resolver/v1/cslr_resolver.h>
+#include <drivers/resolver/v0/cslr_resolver.h>
 #endif
 
 

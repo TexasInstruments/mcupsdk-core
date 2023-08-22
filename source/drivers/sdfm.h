@@ -43,11 +43,6 @@ extern "C"
 #if defined (DRV_VERSION_SDFM_V0)
 #include <drivers/sdfm/v0/sdfm.h>
 #endif
-//FIXME : ADD SDFMV1-1 when support added
-#if defined (DRV_VERSION_SDFM_V0_1)
-#include <drivers/sdfm/v0/sdfm.h>
-// #include <drivers/sdfm/v0_1/sdfm.h>
-#endif
 
 #ifdef __cplusplus
 }

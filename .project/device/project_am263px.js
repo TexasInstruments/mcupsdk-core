@@ -107,6 +107,7 @@ const example_file_list = [
 	// "examples/drivers/ospi/ospi_flash_dma/.project/project.js",
 	// "examples/drivers/ospi/ospi_flash_io/.project/project.js",
 	"examples/drivers/pmu/pmu_multievent/.project/project.js",
+	"examples/drivers/resolver/resolver_angle_speed/.project/project.js",
 	"examples/drivers/rti/rti_led_blink/.project/project.js",
 	//"examples/drivers/sdfm/sdfm_epwm_sync_cpuread/.project/project.js",
 	//"examples/drivers/sdfm/sdfm_filter_sync_cpuread/.project/project.js",

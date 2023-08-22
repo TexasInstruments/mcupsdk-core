@@ -15,6 +15,7 @@ const files_r5f = {
         "led_gpio.c",
         "led_tpic2810.c",
         "nor_spi_sfdp.c",
+        "ioexp_tca6424.c",
     ],
 };
 
@@ -32,6 +33,7 @@ const filedirs = {
         "flash/sfdp",
         "flash/ospi",
         "led",
+        "ioexp",
     ],
 };
 

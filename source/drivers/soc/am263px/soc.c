@@ -255,6 +255,10 @@ void SOC_enableAdcReference(uint32_t adcInstance)
     {
         compctlmask = (compctlmask << 8);
     }
+    else if(adcInstance == 5 || adcInstance == 6)
+    {
+        compctlmask = (compctlmask << 12);
+    }
 
     /* Unlock Top Control Space */
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
@@ -429,10 +433,30 @@ void SOC_gateAdcClock(uint32_t adcInstance)
 {
     uint32_t baseAddr = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_ADC0_CLK_GATE + (0x4*adcInstance);
 
+    /* for ADC_R0, ADC_R1 these config registers are placed differently*/
+    if(adcInstance >= 4)
+    {
+        uint32_t adcR0Instance = 5;
+        baseAddr = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_ADCR0_CLK_GATE + (0x4* (adcInstance - adcR0Instance));
+    }
     /* Unlock CONTROLSS_CTRL registers */
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
 
+    /* Gate Mask is same for ADCx and ADC_Rx*/
     CSL_REG32_WR(baseAddr, CSL_CONTROLSS_CTRL_ADC0_CLK_GATE_CLK_GATE_MASK);
+
+    /* Lock CONTROLSS_CTRL registers */
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+}
+
+void SOC_gateRdcClock(uint32_t rdcInstance)
+{
+    uint32_t baseAddr = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_HW_RESOLVER_CLK_GATE + (0x4*rdcInstance);
+
+    /* Unlock CONTROLSS_CTRL registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+
+    CSL_REG32_WR(baseAddr, CSL_CONTROLSS_CTRL_HW_RESOLVER_CLK_GATE_CLK_GATE_MASK);
 
     /* Lock CONTROLSS_CTRL registers */
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
@@ -606,12 +630,32 @@ void SOC_generateDacReset()
 void SOC_generateAdcReset(uint32_t adcInstance)
 {
     uint32_t baseAddr = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_ADC0_RST + (0x4*adcInstance);
+    if(adcInstance > 4)
+    {
+        uint32_t adcR0Instance = 5;
+        baseAddr = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_ADCR0_RST + (0x4*(adcInstance - adcR0Instance));
+    }
+    /* Unlock CONTROLSS_CTRL registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+
+    /* masks and reset values are same for ADCx and ADC_Rx*/
+    CSL_REG32_WR(baseAddr, CSL_CONTROLSS_CTRL_ADC0_RST_RST_MASK);
+    CSL_REG32_WR(baseAddr, CSL_CONTROLSS_CTRL_ADC0_RST_RST_RESETVAL);
+
+    /* Lock CONTROLSS_CTRL registers */
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+}
+
+void SOC_generateRdcReset(uint32_t rdcInstance)
+{
+    uint32_t baseAddr = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_HW_RESOLVER_RST + (0x4*rdcInstance);
 
     /* Unlock CONTROLSS_CTRL registers */
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
 
-    CSL_REG32_WR(baseAddr, CSL_CONTROLSS_CTRL_ADC0_RST_RST_MASK);
-    CSL_REG32_WR(baseAddr, CSL_CONTROLSS_CTRL_ADC0_RST_RST_RESETVAL);
+    /* masks and reset values are same for ADCx and ADC_Rx*/
+    CSL_REG32_WR(baseAddr, CSL_CONTROLSS_CTRL_HW_RESOLVER_RST_RST_MASK);
+    CSL_REG32_WR(baseAddr, CSL_CONTROLSS_CTRL_HW_RESOLVER_RST_RST_RESETVAL);
 
     /* Lock CONTROLSS_CTRL registers */
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);

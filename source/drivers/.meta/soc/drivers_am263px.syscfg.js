@@ -62,6 +62,9 @@ const driverVer = {
     "ospi": {
         version: "v0",
     },
+    "resolver": {
+        version: "v0",
+    },
     "rti": {
         version: "v0",
     },
@@ -97,6 +100,7 @@ const topModules_main = [
     "/drivers/mmcsd/mmcsd",
     "/drivers/pruicss/pruicss",
     "/drivers/ospi/ospi",
+    "/drivers/resolver/resolver",
     "/drivers/rti/rti",
     "/drivers/sdfm/sdfm",
     "/drivers/uart/uart",

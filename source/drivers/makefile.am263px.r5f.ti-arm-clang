@@ -16,6 +16,7 @@ ConfigName:=$(PROFILE)
 LIBNAME:=drivers.am263px.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
+    adc.c \
     bootloader.c \
     bootloader_buf_io.c \
     bootloader_can.c \
@@ -33,6 +34,7 @@ FILES_common := \
     ecap.c \
     edma.c \
     eqep.c \
+    etpwm.c \
     fsi_rx.c \
     fsi_tx.c \
     gpio.c \
@@ -56,6 +58,8 @@ FILES_common := \
     pruicss_m_v0.c \
     pruicss_m_v0_cfg.c \
     rti.c \
+    resolver.c \
+    sdfm.c \
     sipc_notify_cfg.c \
     sipc_notify_src.c \
     soc.c \
@@ -75,7 +79,7 @@ FILES_PATH_common = \
     pruicss/m_v0 \
     pruicss/soc/am263px \
     watchdog/v0/soc/am263px \
-    adc/v1_1 \
+    adc/v1 \
     bootloader \
     bootloader/soc/am263px \
     cmpss/v0 \
@@ -83,7 +87,7 @@ FILES_PATH_common = \
     dac/v0 \
     ecap/v1 \
     edma/v0 \
-    epwm/v1_1 \
+    epwm/v1 \
     eqep/v1 \
     fsi/v1 \
     gpio/v0 \
@@ -103,8 +107,9 @@ FILES_PATH_common = \
     mmcsd/v1 \
     pmu \
     pmu/r5f \
+    resolver/v0 \
     rti/v0 \
-    sdfm/v0_1 \
+    sdfm/v0 \
     secure_ipc_notify/ \
     secure_ipc_notify/soc/ \
     secure_ipc_notify/soc/am263px \

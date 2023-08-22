@@ -27,6 +27,7 @@ FILES_common := \
     led_gpio.c \
     led_tpic2810.c \
     nor_spi_sfdp.c \
+    ioexp_tca6424.c \
 
 FILES_PATH_common = \
     eeprom \
@@ -35,6 +36,7 @@ FILES_PATH_common = \
     flash/sfdp \
     flash/ospi \
     led \
+    ioexp \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

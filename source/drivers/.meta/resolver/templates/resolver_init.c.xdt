@@ -1,0 +1,14 @@
+%%{
+    let module = system.modules['/drivers/resolver/resolver'];
+    let common   = system.getScript("/common");
+%%}
+    /* RESOLVER */
+    {
+        /* Enable ADC_R Reference */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+        SOC_enableAdcReference(5);
+        SOC_enableAdcReference(6);
+% }
+    }

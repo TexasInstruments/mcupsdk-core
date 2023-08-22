@@ -227,9 +227,16 @@ void SOC_gateDacClock(void);
 /**
  * \brief Gate the ADC clock
  *
- * \param adcInstance [in] ADC instance number [0 - 4]
+ * \param adcInstance [in] ADC instance number [0 - 4] or ADC_R instance [0 - 1]
  */
 void SOC_gateAdcClock(uint32_t adcInstance);
+
+/**
+ * @brief Gate the HW_RESOLVER clock
+ *
+ * @param rdcInstance [in] HW_RESOLVER instance number [0]
+ */
+void SOC_gateRdcClock(uint32_t rdcInstance);
 
 /**
  * \brief Gate the OTTO clock
@@ -319,6 +326,13 @@ void SOC_generateDacReset(void);
  * \param adcInstance [in] ADC instance number [0 - 4]
  */
 void SOC_generateAdcReset(uint32_t adcInstance);
+
+/**
+ * @brief Generate RDC reset
+ *
+ * @param rdcInstance
+ */
+void SOC_generateRdcReset(uint32_t rdcInstance);
 
 /**
  * \brief Halt EPWM with corresponding cPU

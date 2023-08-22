@@ -1,0 +1,112 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.15.0+2826"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const epwm               = scripting.addModule("/drivers/epwm/epwm", {}, false);
+const epwm1              = epwm.addInstance();
+const epwm2              = epwm.addInstance();
+const resolver           = scripting.addModule("/drivers/resolver/resolver", {}, false);
+const resolver1          = resolver.addInstance();
+const debug_log          = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7          = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71         = mpu_armv7.addInstance();
+const mpu_armv72         = mpu_armv7.addInstance();
+const mpu_armv73         = mpu_armv7.addInstance();
+const mpu_armv74         = mpu_armv7.addInstance();
+const mpu_armv75         = mpu_armv7.addInstance();
+const mpu_armv76         = mpu_armv7.addInstance();
+const epwm_syncout_xbar  = scripting.addModule("/xbar/epwm_syncout_xbar/epwm_syncout_xbar", {}, false);
+const epwm_syncout_xbar1 = epwm_syncout_xbar.addInstance();
+const int_xbar           = scripting.addModule("/xbar/int_xbar/int_xbar", {}, false);
+const int_xbar1          = int_xbar.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+epwm1.$name                         = "CONFIG_EPWM0";
+epwm1.epwmTimebase_syncOutPulseMode = ["EPWM_SYNC_OUT_PULSE_ON_SOFTWARE"];
+epwm1.epwmTimebase_emulationMode    = "EPWM_EMULATION_FREE_RUN";
+epwm1.epwmTimebase_period           = 9999;
+epwm1.EPWM.$assign                  = "EPWM0";
+
+epwm2.$name                                          = "CONFIG_EPWM1";
+epwm2.epwmTimebase_periodLoadEvent                   = "EPWM_SHADOW_LOAD_MODE_SYNC";
+epwm2.epwmTimebase_period                            = 9999;
+epwm2.epwmTimebase_syncInPulseSource                 = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
+epwm2.epwmCounterCompare_cmpA                        = 20;
+epwm2.epwmCounterCompare_enableShadowLoadModeCMPA    = false;
+epwm2.epwmEventTrigger_enableInterrupt               = true;
+epwm2.epwmEventTrigger_interruptSource               = "EPWM_INT_TBCTR_U_CMPA";
+epwm2.epwmEventTrigger_interruptEventCount           = "1";
+epwm2.epwmEventTrigger_interruptEventCountInitEnable = true;
+epwm2.epwmTimebase_emulationMode                     = "EPWM_EMULATION_FREE_RUN";
+epwm2.EPWM.$assign                                   = "EPWM1";
+
+resolver1.$name                         = "CONFIG_RESOLVER0";
+resolver1.AdcSocWidth                   = 0;
+resolver1.SyncInEnable                  = true;
+resolver1.AdvConfig                     = true;
+resolver1.SocDelay_adv                  = 20;
+resolver1.Core0DcOffsetCorrectionEnable = true;
+resolver1.Core0PgSinGainBypassValue_adv = 18000;
+resolver1.Core0PgCosGainBypassValue_adv = 18000;
+resolver1.Core1track2kvelfilt_adv       = 1;
+resolver1.resolverSignalMode            = "RDC_SINGALMODE_SINGLE_ENDED";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+mpu_armv75.$name        = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr     = 0x50D00000;
+mpu_armv75.size         = 14;
+mpu_armv75.allowExecute = false;
+mpu_armv75.attributes   = "Device";
+
+mpu_armv76.$name        = "CONFIG_MPU_REGION5";
+mpu_armv76.baseAddr     = 0x72000000;
+mpu_armv76.size         = 14;
+mpu_armv76.allowExecute = false;
+mpu_armv76.attributes   = "NonCached";
+
+epwm_syncout_xbar1.$name      = "CONFIG_EPWM_SYNCOUT_XBAR0";
+epwm_syncout_xbar1.xbarOutput = ["EPWM0_SYNCOUT"];
+epwm_syncout_xbar1.instance   = "EPWM_SYNCOUT_XBAR_2";
+
+int_xbar1.$name      = "CONFIG_INT_XBAR0";
+int_xbar1.xbarOutput = ["EPWM1_INT"];
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+epwm1.EPWM.A.$suggestSolution            = "EPWM0_A";
+epwm1.EPWM.B.$suggestSolution            = "EPWM0_B";
+epwm2.EPWM.A.$suggestSolution            = "EPWM1_A";
+epwm2.EPWM.B.$suggestSolution            = "EPWM1_B";
+resolver1.RESOLVER.$suggestSolution      = "RESOLVER";
+resolver1.RESOLVER.PWM0.$suggestSolution = "PR0_PRU1_GPIO10";
+resolver1.RESOLVER.PWM1.$suggestSolution = "PR0_PRU1_GPIO14";
