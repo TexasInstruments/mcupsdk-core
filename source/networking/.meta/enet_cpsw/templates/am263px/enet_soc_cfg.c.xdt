@@ -37,6 +37,7 @@
 #include <drivers/hw_include/cslr_soc.h>
 #include <kernel/dpl/CpuIdP.h>
 #include "ti_enet_config.h"
+#include <networking/enet/utils/include/enet_apputils.h>
 
 
 /* ========================================================================== */
@@ -873,4 +874,9 @@ uint32_t EnetSoC_mapApp2CpdmaCoreId(uint32_t appCoreId)
     }
 
     return coreId;
+}
+
+void EnetSoC_toggleCPSWResetBit(void *pArg)
+{
+    EnetAppUtils_print("CPSW Reset is not supported in this platform");
 }

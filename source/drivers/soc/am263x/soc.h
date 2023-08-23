@@ -344,6 +344,16 @@ void SOC_generateOttoReset(uint32_t ottoInstance);
 void SOC_selectIcssGpiMux(uint8_t pru_instance, uint32_t mask);
 
 /**
+ * \brief Setting CPSW hard reset Bit
+ */
+void SOC_setResetCPSWBit();
+
+/**
+ * \brief Clearing CPSW hard reset bit
+ */
+void SOC_clearResetCPSWBit();
+
+/**
  *  \brief SOC Virtual (CPU) to Physical address translation function.
  *
  *  \param virtAddr [IN] Virtual/CPU address

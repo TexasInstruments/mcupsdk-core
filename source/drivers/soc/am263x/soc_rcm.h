@@ -643,6 +643,20 @@ extern void SOC_rcmsetClkoutClock(uint32_t clkout0FreqHz, uint32_t clkout1FreqHz
 extern int32_t SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId periphId, SOC_RcmPeripheralClockSource clkSource, uint32_t freqHz);
 
 /**
+ * \brief Set CPSW hard reset bit
+ *
+ *      This API sets the CPSW reset bit. This clears all the CPSW registers.
+ */
+void SOC_rcmSetCPSWResetBit();
+
+/**
+ * \brief Clear CPSW hard reset bit
+ *
+ *      This API clears the CPSW reset bit.
+ */
+void SOC_rcmClearCPSWResetBit();
+
+/**
  * \brief Get R5FSS reset cause
  *
  *      This API returns the reset cause for R5 core. It also clears the Reset

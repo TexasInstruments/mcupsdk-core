@@ -687,6 +687,20 @@ void SOC_selectIcssGpiMux(uint8_t pru_instance, uint32_t mask)
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, MSS_CTRL_PARTITION0);
 }
 
+void SOC_setResetCPSWBit()
+{
+    SOC_controlModuleUnlockMMR(0, MSS_RCM_PARTITION0);
+    SOC_rcmSetCPSWResetBit();
+    SOC_controlModuleLockMMR(0, MSS_RCM_PARTITION0);
+}
+
+void SOC_clearResetCPSWBit()
+{
+    SOC_controlModuleUnlockMMR(0, MSS_RCM_PARTITION0);
+    SOC_rcmClearCPSWResetBit();
+    SOC_controlModuleLockMMR(0, MSS_RCM_PARTITION0);
+}
+
 uint64_t SOC_virtToPhy(void *virtAddr)
 {
     uintptr_t   temp = (uintptr_t) virtAddr;

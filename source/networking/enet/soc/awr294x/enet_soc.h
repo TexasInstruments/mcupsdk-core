@@ -180,6 +180,13 @@ void EnetSoc_getCppiDescInfo(Enet_Type enetType,
                              uintptr_t *descStartAddr,
                              uint32_t *size);
 
+/*!
+ *  \brief EnetSoC_toggleCPSWResetBit
+ *
+ *  Hard reset CPSW peripheral.
+ */
+void EnetSoC_toggleCPSWResetBit(void *pArg);
+
 /* ========================================================================== */
 /*                        Deprecated Function Declarations                    */
 /* ========================================================================== */

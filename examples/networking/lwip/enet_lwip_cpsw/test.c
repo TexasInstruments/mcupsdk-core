@@ -160,6 +160,7 @@
 /* Handle to the Applciation interface for the LwIPIf Layer
  */
 LwipifEnetApp_Handle hlwipIfApp = NULL;
+
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -666,7 +667,6 @@ test_init(void * arg)
 #endif /* !NO_SYS */
 }
 
-
 /* This is somewhat different to other ports: we have a main loop here:
  * a dedicated task that waits for packets to arrive. This would normally be
  * done from interrupt context with embedded hardware, but we don't get an
@@ -704,7 +704,6 @@ main_loop(void * a0)
 #if (LWIP_SOCKET || LWIP_NETCONN) && LWIP_NETCONN_SEM_PER_THREAD
   netconn_thread_init();
 #endif
-
   /* MAIN LOOP for driver update (and timers if NO_SYS) */
   while (!LWIP_EXAMPLE_APP_ABORT()) {
 #if NO_SYS

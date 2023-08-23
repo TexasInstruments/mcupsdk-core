@@ -78,7 +78,12 @@ extern "C" {
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-/* None */
+/*!
+ *  \brief EnetSoC_toggleCPSWResetBit
+ *
+ *  Hard reset CPSW peripheral.
+ */
+void EnetSoC_toggleCPSWResetBit(void *pArg);
 
 /* ========================================================================== */
 /*                        Deprecated Function Declarations                    */

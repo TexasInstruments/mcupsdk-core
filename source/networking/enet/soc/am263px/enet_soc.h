@@ -191,6 +191,13 @@ void EnetSoc_getCppiDescInfo(Enet_Type enetType,
  */
 uint32_t EnetSoC_mapApp2CpdmaCoreId(uint32_t appCoreId);
 
+/*!
+ *  \brief EnetSoC_toggleCPSWResetBit
+ *
+ *  Hard reset CPSW peripheral.
+ */
+void EnetSoC_toggleCPSWResetBit(void *pArg);
+
 /* ========================================================================== */
 /*                        Deprecated Function Declarations                    */
 /* ========================================================================== */

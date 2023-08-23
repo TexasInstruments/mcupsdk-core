@@ -194,6 +194,8 @@ typedef struct EnetApp_Obj_s
 
 void EnetApp_mainTask(void *args);
 
+void EnetApp_triggerReset(EnetApp_PerCtxt *perCtxt);
+
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */

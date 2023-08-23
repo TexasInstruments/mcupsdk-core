@@ -148,6 +148,10 @@ void EnetApp_mainTask(void *args)
             {
                 EnetApp_setCpswPolicer(gEnetApp.perCtxt);
             }
+            else if (option == 't')
+            {
+                EnetApp_triggerReset(gEnetApp.perCtxt);
+            }
             else
             {
                 EnetAppUtils_print("Invalid option, try again...\r\n");

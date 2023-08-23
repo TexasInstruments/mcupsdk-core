@@ -2057,6 +2057,24 @@ int32_t SOC_rcmSetPeripheralClock (SOC_RcmPeripheralId periphId,
     return (retVal);
 }
 
+void SOC_rcmSetCPSWResetBit()
+{
+    CSL_mss_rcmRegs *ptrRCMRegs;
+    uint16_t    resetBits = CSL_MSS_RCM_CPSW_RST_CTRL_ASSERT_MASK;
+
+    ptrRCMRegs = SOC_rcmGetBaseAddressMSSRCM ();
+    ptrRCMRegs->CPSW_RST_CTRL = SOC_rcmInsert8 (ptrRCMRegs->CPSW_RST_CTRL, 2U, 0U, resetBits);
+}
+
+void SOC_rcmClearCPSWResetBit()
+{
+    CSL_mss_rcmRegs *ptrRCMRegs;
+    uint16_t    clearBits = CSL_MSS_RCM_CPSW_RST_CTRL_RESETVAL;
+
+    ptrRCMRegs = SOC_rcmGetBaseAddressMSSRCM ();
+    ptrRCMRegs->CPSW_RST_CTRL = SOC_rcmInsert8 (ptrRCMRegs->CPSW_RST_CTRL, 2U, 0U, clearBits);
+}
+
 SOC_RcmResetCause SOC_rcmGetResetCause (SOC_Rcmr5fssNum r5fssNum)
 {
     CSL_mss_rcmRegs *ptrRCMRegs;

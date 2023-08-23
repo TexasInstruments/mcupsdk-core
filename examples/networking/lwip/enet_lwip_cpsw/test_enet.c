@@ -321,8 +321,6 @@ static void EnetApp_addMCastEntry(Enet_Type enetType,
     }
 }
 
-
-
 #if (ENET_SYSCFG_ENABLE_EXTPHY == 1U)
 
 EnetExtPhy_Handle ghExtPhy[ENET_SYSCFG_MAX_MAC_PORTS] = {NULL};

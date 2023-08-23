@@ -34,6 +34,7 @@
 #include <priv/per/cpsw_priv.h>
 #include <utils/include/enet_appsoc.h>
 #include <drivers/hw_include/cslr_soc.h>
+#include <networking/enet/utils/include/enet_apputils.h>
 #include "ti_enet_config.h"
 
 
@@ -833,4 +834,9 @@ const EnetRm_IoctlPermissionTable *EnetAppRm_getIoctlPermissionInfo(Enet_Type en
     }
 
     return(ioctlPerm);
+}
+
+void EnetSoC_toggleCPSWResetBit(void *pArg)
+{
+    EnetAppUtils_print("CPSW Reset is not supported in this platform");
 }

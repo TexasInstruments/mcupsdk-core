@@ -37,6 +37,8 @@
 #include <drivers/hw_include/cslr_soc.h>
 #include <kernel/dpl/CpuIdP.h>
 #include "ti_enet_config.h"
+#include <drivers/soc.h>
+#include <networking/enet/utils/include/enet_apputils.h>
 
 
 /* ========================================================================== */
@@ -49,6 +51,9 @@
 /* ENET_CTRL_MODE value for different MII modes */
 #define CPSW_ENET_CTRL_MODE_RMII                     (1U)
 #define CPSW_ENET_CTRL_MODE_RGMII                    (2U)
+
+#define ENET_SOC_CPSW_POST_RESET_WAIT_DURATION_NS    (200U)
+#define ENET_SOC_CPSW_RESET_BIT_HOLD_DURATION_NS     (200U)
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -164,6 +169,8 @@ CpswSoc_Cfg gEnetSoc_cpsw3gSocCfg =
         .rejoin     = &CpswMacPort_rejoin,                            \
         .ioctl      = &CpswMacPort_ioctl,                             \
         .close      = &CpswMacPort_close,                             \
+        .saveCtxt    = &CpswMacPort_saveCtxt,                         \
+        .restoreCtxt = &CpswMacPort_restoreCtxt,                      \
     },                                                                \
     .macPort = ENET_MAC_PORT_ ## n,                                   \
 }
@@ -205,6 +212,8 @@ Cpsw_Obj gEnetSoc_cpsw3g =
         .registerEventCb = NULL,
         .unregisterEventCb = NULL,
         .close        = &Cpsw_close,
+        .saveCtxt     = &Cpsw_saveCtxt,
+        .restoreCtxt  = &Cpsw_restoreCtxt,
     },
 
     /* Host port module object */
@@ -212,14 +221,16 @@ Cpsw_Obj gEnetSoc_cpsw3g =
     {
         .enetMod =
         {
-            .name       = "cpsw3g.hostport",
-            .physAddr   = (CSL_CPSW0_U_BASE + CPSW_NU_OFFSET),
-            .features   = ENET_FEAT_BASE,
-            .errata     = ENET_ERRATA_NONE,
-            .open       = &CpswHostPort_open,
-            .rejoin     = &CpswHostPort_rejoin,
-            .ioctl      = &CpswHostPort_ioctl,
-            .close      = &CpswHostPort_close,
+            .name        = "cpsw3g.hostport",
+            .physAddr    = (CSL_CPSW0_U_BASE + CPSW_NU_OFFSET),
+            .features    = ENET_FEAT_BASE,
+            .errata      = ENET_ERRATA_NONE,
+            .open        = &CpswHostPort_open,
+            .rejoin      = &CpswHostPort_rejoin,
+            .ioctl       = &CpswHostPort_ioctl,
+            .close       = &CpswHostPort_close,
+            .saveCtxt    = &CpswHostPort_saveCtxt,
+            .restoreCtxt = &CpswHostPort_restoreCtxt,
         }
     },
 
@@ -232,15 +243,17 @@ Cpsw_Obj gEnetSoc_cpsw3g =
     {
         .enetMod =
         {
-            .name       = "cpsw3g.ale",
-            .physAddr   = (CSL_CPSW0_U_BASE + CPSW_ALE_OFFSET),
-            .features   = (CPSW_ALE_FEATURE_FLOW_PRIORITY |
-                           CPSW_ALE_FEATURE_IP_HDR_WHITELIST),
-            .errata     = ENET_ERRATA_NONE,
-            .open       = &CpswAle_open,
-            .rejoin     = &CpswAle_rejoin,
-            .ioctl      = &CpswAle_ioctl,
-            .close      = &CpswAle_close,
+            .name        = "cpsw3g.ale",
+            .physAddr    = (CSL_CPSW0_U_BASE + CPSW_ALE_OFFSET),
+            .features    = (CPSW_ALE_FEATURE_FLOW_PRIORITY |
+                            CPSW_ALE_FEATURE_IP_HDR_WHITELIST),
+            .errata      = ENET_ERRATA_NONE,
+            .open        = &CpswAle_open,
+            .rejoin      = &CpswAle_rejoin,
+            .ioctl       = &CpswAle_ioctl,
+            .close       = &CpswAle_close,
+            .saveCtxt    = &CpswAle_saveCtxt,
+            .restoreCtxt = &CpswAle_restoreCtxt,
         },
     },
 
@@ -249,14 +262,16 @@ Cpsw_Obj gEnetSoc_cpsw3g =
     {
         .enetMod =
         {
-            .name       = "cpsw3g.cpts",
-            .physAddr   = (CSL_CPSW0_U_BASE + CPSW_CPTS_OFFSET),
-            .features   = ENET_FEAT_BASE,
-            .errata     = ENET_ERRATA_NONE,
-            .open       = &CpswCpts_open,
-            .rejoin     = &CpswCpts_rejoin,
-            .ioctl      = &CpswCpts_ioctl,
-            .close      = &CpswCpts_close,
+            .name        = "cpsw3g.cpts",
+            .physAddr    = (CSL_CPSW0_U_BASE + CPSW_CPTS_OFFSET),
+            .features    = ENET_FEAT_BASE,
+            .errata      = ENET_ERRATA_NONE,
+            .open        = &CpswCpts_open,
+            .rejoin      = &CpswCpts_rejoin,
+            .ioctl       = &CpswCpts_ioctl,
+            .close       = &CpswCpts_close,
+            .saveCtxt    = &CpswCpts_saveCtxt,
+            .restoreCtxt = &CpswCpts_restoreCtxt,
         },
     },
 
@@ -273,6 +288,8 @@ Cpsw_Obj gEnetSoc_cpsw3g =
             .rejoin     = &Mdio_rejoin,
             .ioctl      = &Mdio_ioctl,
             .close      = &Mdio_close,
+            .saveCtxt     = &Mdio_saveCtxt,
+            .restoreCtxt  = &Mdio_restoreCtxt,
         },
     },
 
@@ -289,6 +306,8 @@ Cpsw_Obj gEnetSoc_cpsw3g =
             .rejoin     = &CpswStats_rejoin,
             .ioctl      = &CpswStats_ioctl,
             .close      = &CpswStats_close,
+            .saveCtxt   = &CpswStats_saveCtxt,
+            .restoreCtxt = &CpswStats_restoreCtxt,
         },
     },
 
@@ -863,4 +882,17 @@ uint32_t EnetSoC_mapApp2CpdmaCoreId(uint32_t appCoreId)
     }
 
     return coreId;
+}
+
+void EnetSoC_toggleCPSWResetBit(void *pArg)
+{
+    /* CPSW RESET start*/
+    SOC_setResetCPSWBit();
+
+    EnetUtils_delayNs(ENET_SOC_CPSW_RESET_BIT_HOLD_DURATION_NS);
+
+    SOC_clearResetCPSWBit();
+
+    EnetUtils_delayNs(ENET_SOC_CPSW_POST_RESET_WAIT_DURATION_NS);
+   /* CPSW RESET complete*/
 }

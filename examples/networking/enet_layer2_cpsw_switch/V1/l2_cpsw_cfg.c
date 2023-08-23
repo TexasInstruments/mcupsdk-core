@@ -92,7 +92,6 @@ int32_t EnetApp_init(void)
 void EnetApp_deinit(void)
 {
     EnetAppUtils_print("Deinit complete\r\n");
-
 }
 
 void EnetApp_showMenu(void)
@@ -664,4 +663,24 @@ void EnetApp_setCpswPolicer(EnetApp_PerCtxt *perCtxt)
         EnetAppUtils_print("\nRate limiting Enabled port %d on Src MAC " , CPSW_ALE_MACPORT_TO_ALEPORT(ENET_TEST_POLICER_INGRESS_PORT));
         EnetAppUtils_printMacAddr(testSrcAddr);
     }
+}
+
+void EnetApp_triggerReset(EnetApp_PerCtxt *perCtxt)
+{
+    Enet_Type enetType;
+    uint32_t instId;
+    int32_t status = ENET_SOK;
+
+    EnetApp_getEnetInstInfo(CONFIG_ENET_CPSW0,
+                            &enetType,
+                            &instId);
+
+    Enet_notify_t hardResetCpsw =
+    {
+        .cbFxn = &EnetSoC_toggleCPSWResetBit,
+        .cbArg = NULL,
+    };
+    /* Saving Enet handle context and closing it*/
+    status = Enet_hardResetCpsw(perCtxt->hEnet, enetType, instId, &hardResetCpsw);
+    EnetAppUtils_assert(status == ENET_SOK);
 }
