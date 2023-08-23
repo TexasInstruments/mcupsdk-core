@@ -1312,6 +1312,40 @@ uint32_t Bootloader_socIsMCUResetIsoEnabled(void)
     return status;
 }
 
+int32_t Bootloader_socEnableICSSCores(uint32_t clkFreq)
+{
+    int32_t status = SystemP_SUCCESS;
+
+    /* Enable the ICCSG0 core */
+    status = SOC_moduleClockEnable(TISCI_DEV_PRU_ICSSG0, 1);
+
+    if(SystemP_SUCCESS == status)
+    {
+        status = SOC_moduleSetClockFrequency(
+                TISCI_DEV_PRU_ICSSG0,
+                TISCI_DEV_PRU_ICSSG0_CORE_CLK,
+                clkFreq
+                );
+    }
+
+    /* Enable the ICCSG1 core */
+    if(SystemP_SUCCESS == status)
+    {
+        status = SOC_moduleClockEnable(TISCI_DEV_PRU_ICSSG1, 1);
+    }
+
+    if(SystemP_SUCCESS == status)
+    {
+        status = SOC_moduleSetClockFrequency(
+                TISCI_DEV_PRU_ICSSG1,
+                TISCI_DEV_PRU_ICSSG1_CORE_CLK,
+                clkFreq
+                );
+    }
+
+    return status;
+}
+
 void Bootloader_socNotifyFirewallOpen(void)
 {
     /* PSRAM is used to signal firewall open from SBL */

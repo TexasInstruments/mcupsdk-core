@@ -259,6 +259,14 @@ int main(void)
         bootHandleLinux = Bootloader_open(CONFIG_BOOTLOADER_EMMMC_LINUX, &bootParamsLinux);
         if(bootHandle != NULL)
         {
+            /* Initialize PRU Cores if applicable */
+            Bootloader_Config *cfg = (Bootloader_Config *)bootHandle;
+            if(TRUE == cfg->initICSSCores)
+            {
+                status = Bootloader_socEnableICSSCores(BOOTLOADER_ICSS_CORE_DEFAULT_FREQUENCY);
+                DebugP_assert(status == SystemP_SUCCESS);
+            }
+
             bootConfig = (Bootloader_Config *)bootHandle;
             bootConfig->scratchMemPtr = gAppimage;
 

@@ -48,6 +48,8 @@ extern "C"
 #define BOOTLOADER_R5FSS0                        (0x00000000U)
 #define BOOTLOADER_R5FSS1                        (0x00010000U)
 
+#define BOOTLOADER_ICSS_CORE_DEFAULT_FREQUENCY   (200000000U)
+
 /**
  * \brief Data structure containing information about a core specific to the AM64x SOC
  *
@@ -318,6 +320,15 @@ uint32_t Bootloader_socIsMCUResetIsoEnabled(void);
  * This function should only be called from SBL
  */
 void Bootloader_socNotifyFirewallOpen(void);
+
+/**
+ * \brief API to enable ICSS cores when applicable
+ *
+ * \param clkFreq [in] Clock frequency of ICSS cores in Hz
+ *
+ * \return System_SUCCESS if enable passes, else return SystemP_FAILURE
+ */
+int32_t Bootloader_socEnableICSSCores(uint32_t clkFreq);
 
 /**
  * \brief API to get boot sequence oid

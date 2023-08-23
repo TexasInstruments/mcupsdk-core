@@ -183,6 +183,14 @@ int main(void)
 	/* Appimage is in memory buffer */
 	if((bootHandle != NULL) && (SystemP_SUCCESS == status) && ( BOOTLOADER_MEDIA_MEM == Bootloader_getBootMedia(bootHandle)))
 	{
+        /* Initialize PRU Cores if applicable */
+        Bootloader_Config *cfg = (Bootloader_Config *)bootHandle;
+        if(TRUE == cfg->initICSSCores)
+        {
+            status = Bootloader_socEnableICSSCores(BOOTLOADER_ICSS_CORE_DEFAULT_FREQUENCY);
+            DebugP_assert(status == SystemP_SUCCESS);
+        }
+
 		status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
 		/* Load CPUs */
 		/* Do not load M4 when MCU domain is reset isolated */

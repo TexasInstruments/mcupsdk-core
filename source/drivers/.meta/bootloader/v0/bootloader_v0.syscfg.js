@@ -137,6 +137,15 @@ function getConfig(){
             }
         );
     }
+    if(["am243x", "am64x"].includes(common.getSocName())) {
+        cfg.push(
+            {
+                name: "initICSSCores",
+                displayName: "Initialize ICSS Cores",
+                description: "Whether to initialize the ICSS cores in the bootloader or not",
+                default: true,
+            });
+    }
     return cfg;
 }
 

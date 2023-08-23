@@ -115,6 +115,14 @@ int32_t App_loadImages(Bootloader_Handle bootHandle, Bootloader_BootImageInfo *b
 
     if(bootHandle != NULL)
     {
+        /* Initialize PRU Cores if applicable */
+        Bootloader_Config *cfg = (Bootloader_Config *)bootHandle;
+        if(TRUE == cfg->initICSSCores)
+        {
+            status = Bootloader_socEnableICSSCores(BOOTLOADER_ICSS_CORE_DEFAULT_FREQUENCY);
+            DebugP_assert(status == SystemP_SUCCESS);
+        }
+
         status = Bootloader_parseMultiCoreAppImage(bootHandle, bootImageInfo);
 
         /* Load CPUs */

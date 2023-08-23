@@ -212,6 +212,8 @@ typedef struct Bootloader_Config_s
        after the boot time degradation is fixed for HS devices. */
     uint32_t isAppimageSigned;
     uint32_t disableAppImageAuth;
+    /* Whether to initialize ICSS cores or not */
+    uint32_t initICSSCores;
 
 } Bootloader_Config;
 
