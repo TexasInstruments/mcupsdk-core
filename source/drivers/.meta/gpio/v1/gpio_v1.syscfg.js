@@ -84,13 +84,13 @@ let gpio_module = {
             moduleName: gpio_module_name,
         },
         "/drivers/system/system_config.c.xdt": {
-            driver_config: "/drivers/gpio/templates/gpio_config.c.xdt",
+            driver_config: "/drivers/gpio/templates/gpio_config_v1.c.xdt",
             driver_init: "/drivers/gpio/templates/gpio_init.c.xdt",
             driver_deinit: "/drivers/gpio/templates/gpio_deinit.c.xdt",
             moduleName: gpio_module_name,
         },
         "/drivers/system/drivers_open_close.c.xdt": {
-            driver_open_close_config: "/drivers/gpio/templates/gpio_open_close_config.c.xdt",
+            driver_open_close_config: "/drivers/gpio/templates/gpio_open_close_config_v1.c.xdt",
             driver_open: "/drivers/gpio/templates/gpio_open.c.xdt",
         },
         "/drivers/system/drivers_open_close.h.xdt": {

@@ -1,0 +1,27 @@
+%%{
+    let module = system.modules['/drivers/gpio/gpio'];
+%%}
+
+/*
+ * GPIO
+ */
+#include <drivers/gpio.h>
+#include <drivers/soc.h>
+
+
+void Drivers_gpioOpen(void)
+{
+    uint32_t    baseAddr;
+    % for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+
+    /* Instance `i` */
+    /* Get address after translation translate */
+    baseAddr = (uint32_t) AddrTranslateP_getLocalAddr(`instance.$name.toUpperCase()`_BASE_ADDR);
+    GPIO_setDirMode(baseAddr, `instance.$name.toUpperCase()`_PIN, `instance.$name.toUpperCase()`_DIR);
+    % if(config.trigType != "NONE"){
+    GPIO_setTrigType(baseAddr, `instance.$name.toUpperCase()`_PIN, `instance.$name.toUpperCase()`_TRIG_TYPE);
+    % }
+% }
+}

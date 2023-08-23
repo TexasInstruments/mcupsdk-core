@@ -1,0 +1,23 @@
+%%{
+    let module = system.modules['/drivers/gpio/gpio'];
+%%}
+
+/*
+ * GPIO
+ */
+
+/* ----------- GPIO Direction, Trigger, Interrupt initialization ----------- */
+
+void GPIO_init()
+{
+    % for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    GPIO_moduleEnable(`instance.$name.toUpperCase()`_BASE_ADDR);
+    % }
+}
+
+/* ----------- GPIO Interrupt de-initialization ----------- */
+void GPIO_deinit()
+{
+
+}
