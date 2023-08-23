@@ -305,7 +305,7 @@ void     RPMessage_vringCheckEmptyTxBuf(uint16_t remoteCoreId);
 int32_t  RPMessage_vringGetEmptyTxBuf(uint16_t remoteCoreId, uint16_t *vringBufId, uint32_t timeout);
 uint8_t *RPMessage_vringGetTxBufAddr(uint16_t remoteCoreId, uint16_t vringBufId);
 uint32_t RPMessage_vringGetTxBufLen(uint16_t remoteCoreId, uint16_t vringBufId);
-void     RPMessage_vringPutFullTxBuf(uint16_t remoteCoreId, uint16_t vringBufId, uint16_t dataLen);
+int32_t  RPMessage_vringPutFullTxBuf(uint16_t remoteCoreId, uint16_t vringBufId, uint16_t dataLen, uint32_t timeout);
 /* functions for VRING RX handling and initialization */
 uint32_t RPMessage_vringIsFullRxBuf(uint16_t remoteCoreId);
 int32_t  RPMessage_vringGetFullRxBuf(uint16_t remoteCoreId, uint16_t *vringBufId);

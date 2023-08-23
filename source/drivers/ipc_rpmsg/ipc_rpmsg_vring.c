@@ -96,13 +96,15 @@ int32_t RPMessage_vringGetEmptyTxBuf(uint16_t remoteCoreId, uint16_t *vringBufId
     return status;
 }
 
-void RPMessage_vringPutFullTxBuf(uint16_t remoteCoreId, uint16_t vringBufId, uint16_t dataLen)
+int32_t RPMessage_vringPutFullTxBuf(uint16_t remoteCoreId, uint16_t vringBufId, uint16_t dataLen, uint32_t timeout)
 {
     RPMessage_Core *coreObj = &gIpcRpmsgCtrl.coreObj[remoteCoreId];
     RPMessage_Vring *vringObj = &coreObj->vringTxObj;
     struct vring_used_elem *used;
     uint32_t oldIntState;
     uint32_t txMsgValue = RPMESSAGE_MSG_VRING_NEW_FULL;
+    int32_t status = SystemP_FAILURE;
+    uint32_t elapsedTicks, startTicks;
 
     if(RPMessage_isLinuxCore(remoteCoreId) != 0U)
     {
@@ -127,11 +129,19 @@ void RPMessage_vringPutFullTxBuf(uint16_t remoteCoreId, uint16_t vringBufId, uin
 
     HwiP_restore(oldIntState);
 
-    IpcNotify_sendMsg(remoteCoreId,
-        IPC_NOTIFY_CLIENT_ID_RPMSG,
-        txMsgValue,
-        1 /* wait for message to be posted */
-        );
+    startTicks = ClockP_getTicks();
+    do
+    {
+        status = IpcNotify_sendMsg(remoteCoreId, IPC_NOTIFY_CLIENT_ID_RPMSG, txMsgValue, 0);
+        elapsedTicks = ClockP_getTicks() - startTicks;
+    } while((elapsedTicks < timeout) && (status == SystemP_TIMEOUT));
+
+    if(elapsedTicks >= timeout)
+    {
+        status = SystemP_TIMEOUT;
+    }
+
+    return status;
 }
 
 void RPMessage_vringCheckEmptyTxBuf(uint16_t remoteCoreId)

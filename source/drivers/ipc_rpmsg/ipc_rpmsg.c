@@ -258,7 +258,13 @@ int32_t RPMessage_send( void*    data,
 
             memcpy((void *) &vringBufAddr[sizeof(RPMessage_Header)], (const void *) data, (size_t)dataLength);
 
-            RPMessage_vringPutFullTxBuf(remoteCoreId, vringBufId, dataLength + sizeof(RPMessage_Header));
+            status = RPMessage_vringPutFullTxBuf(remoteCoreId, vringBufId, dataLength + sizeof(RPMessage_Header), timeout);
+
+            if(status != SystemP_SUCCESS)
+            {
+                DebugP_logWarn("[IPC RPMSG] Message send to remote core %d @ %d end point failed due to lack of space in Notify Queue !!!\r\n",
+                remoteCoreId, remoteEndPt);
+            }
         }
         else
         {
