@@ -28,13 +28,8 @@ When migrating from Processor SDK RTOS, see \ref MIGRATION_GUIDES for more detai
 
 Given below is a block diagram of the SW modules in this SDK,
 
-\if SOC_AM64X
-\imageStyle{am64x/block_diagram.png,width:70%}
-\image html am64x/block_diagram.png "Software Block Diagram"
-\else
 \imageStyle{block_diagram.png,width:70%}
 \image html block_diagram.png "Software Block Diagram"
-\endif
 
 The main software components in the block diagram are described below
 
