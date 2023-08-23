@@ -5,8 +5,7 @@ let device = "am263px";
 const files = {
     common: [
         "test_dpl.c",
-		"TimerP_rti_test_neg.c",
-		"TimerP_rti_test_pos.c",
+		"DebugP_shmLogWriter_test_pos.c",
         "main.c",
     ],
 };
@@ -90,7 +89,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "dpl_ut_TimerP_rti";
+    property.name = "dpl_ut_DebugP_shmLogWriter";
     property.isInternal = true;
     property.skipProjectSpec = true;
     property.buildOptionCombos = buildOptionCombos;

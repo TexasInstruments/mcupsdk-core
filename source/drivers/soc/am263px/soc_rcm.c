@@ -1250,7 +1250,7 @@ static void SOC_rcmConfigurePllCore (void)
 }
 
 /* Pre Requisite Sequence to relock core pll as mentioned in the clock spec */
-void SOC_rcmCoreApllRelockPreRequisite(void)
+uint32_t SOC_rcmCoreApllRelockPreRequisite(void)
 {
 
     volatile uint32_t *ptrClkCtrl;
@@ -1259,11 +1259,27 @@ void SOC_rcmCoreApllRelockPreRequisite(void)
     ptrTopRCMRegs = SOC_rcmGetBaseAddressTOPRCM ();
     ptrClkCtrl    = &(ptrTopRCMRegs->PLL_CORE_CLKCTRL);
 
+    uint32_t r5ClkSrc = ptrTopRCMRegs->R5SS_CLK_SRC_SEL;
+
 	/* Switch the R5F Sorce clock to 25MHz */
     ptrTopRCMRegs->R5SS_CLK_SRC_SEL = SOC_rcmInsert16 (ptrTopRCMRegs->R5SS_CLK_SRC_SEL, 11U, 0U, gR5SysClkSrcValMap[SOC_RcmPeripheralClockSource_WUCPUCLK]);
 
     /* Assert Soft Reset Pll */
     *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 0U, 0U, 0x0U);
+
+    return r5ClkSrc;
+}
+
+/* Set R5 clock source */
+void SOC_rcmSetR5ClockSource(uint32_t r5ClkSrc)
+{
+    CSL_top_rcmRegs *ptrTopRCMRegs;
+
+    ptrTopRCMRegs = SOC_rcmGetBaseAddressTOPRCM ();
+
+	/* Write R5F Source clock */
+    ptrTopRCMRegs->R5SS_CLK_SRC_SEL = r5ClkSrc;
+
 }
 
 

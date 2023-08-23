@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -56,20 +56,21 @@ int main(void)
 
     Bootloader_profileReset();
     Bootloader_socConfigurePll();
-    Bootloader_socInitL2MailBoxMemory();
+    Bootloader_socSetAutoClock();
 
     System_init();
-    SOC_rcmMemInitL2Memory();
     Bootloader_profileAddProfilePoint("System_init");
 
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     DebugP_log("\r\n");
-    Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
-    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+    // Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socInitL2MailBoxMemory();
+    // Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
     DebugP_log("Starting NULL Bootloader ... \r\n");
+
 
     Bootloader_Params bootParams;
     Bootloader_BootImageInfo bootImageInfo;

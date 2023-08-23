@@ -8,6 +8,8 @@
 /**
  * Import the modules used in this configuration.
  */
+const uart       = scripting.addModule("/drivers/uart/uart", {}, false);
+const uart1      = uart.addInstance();
 const clock      = scripting.addModule("/kernel/dpl/clock");
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -19,7 +21,13 @@ const mpu_armv74 = mpu_armv7.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+uart1.$name            = "TESTER_UART";
+uart1.UART.$assign     = "UART3";
+uart1.UART.RXD.$assign = "ball.C11";
+uart1.UART.TXD.$assign = "ball.A11";
+
 debug_log.enableUartLog            = true;
+debug_log.enableCssLog             = false;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.RXD.$assign = "ball.A7";
 debug_log.uartLog.UART.TXD.$assign = "ball.A6";

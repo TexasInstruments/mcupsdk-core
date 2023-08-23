@@ -38,6 +38,7 @@
 #include <kernel/dpl/HwiP.h>
 
 #define BOOTLOADER_SOC_APP_CERT_SIZE (0x1000)
+#define BOOTLOADER_R5SS_FREQ_200MHz (1U)
 
 Bootloader_resMemSections gResMemSection =
 {
@@ -434,9 +435,10 @@ uint32_t Bootloader_socTranslateSectionAddr(uint32_t cslCoreId, uint32_t addr)
 void Bootloader_socConfigurePll(void)
 {
     SOC_RcmPllHsDivOutConfig hsDivCfg;
+    uint32_t r5ClkSrc_restore;
 
     /* Pre Requisite Sequence to relock core pll needs to be done */
-    SOC_rcmCoreApllRelockPreRequisite();
+    r5ClkSrc_restore = SOC_rcmCoreApllRelockPreRequisite();
 
     hsDivCfg.hsdivOutEnMask = (RCM_PLL_HSDIV_OUTPUT_ENABLE_0 |
                               RCM_PLL_HSDIV_OUTPUT_ENABLE_1 |
@@ -451,6 +453,9 @@ void Bootloader_socConfigurePll(void)
     hsDivCfg.hsDivOutFreqHz[0] = SOC_RCM_FREQ_MHZ2HZ(160U);
     hsDivCfg.hsDivOutFreqHz[1] = SOC_RCM_FREQ_MHZ2HZ(192U);
     SOC_rcmPerApllConfig(RCM_PLL_FOUT_FREQID_CLK_1920MHZ, &hsDivCfg);
+
+    /* Restore R5F source clock*/
+    SOC_rcmSetR5ClockSource(r5ClkSrc_restore);
 }
 
 void Bootloader_socInitL2MailBoxMemory(void)
@@ -495,4 +500,23 @@ uint32_t Bootloader_socIsAuthRequired(void)
 void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid){
     uint8_t boot_seq[] = {0x06, 0x09, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x82, 0x26, 0x01, 0x01};
     memcpy(boot_seq_oid, boot_seq, sizeof(boot_seq));
+}
+
+void Bootloader_socSetAutoClock()
+{
+    if (((ptrTopCtrlRegs->EFUSE1_ROW_12) & CSL_TOP_CTRL_EFUSE1_ROW_12_EFUSE1_ROW_12_R5SS_FREQ_MASK) == BOOTLOADER_R5SS_FREQ_200MHz)
+    {
+
+        uint32_t cpuFreq = 200 * 1000000, sysClkFreq = 200 * 1000000;
+        uint32_t testCpuFreq;
+
+        SOC_rcmsetR5SysClock(cpuFreq, sysClkFreq, CSL_CORE_ID_R5FSS0_0);
+        testCpuFreq = SOC_rcmGetR5Clock(CSL_CORE_ID_R5FSS0_0);
+
+        DebugP_assert(testCpuFreq == 200 * 1000000);
+    }
+    else
+    {
+        Bootloader_socCpuSetClock(CSL_CORE_ID_R5FSS0_0, (uint32_t)(400*1000000));
+    }
 }

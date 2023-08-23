@@ -32,6 +32,7 @@ const libdirs = {
 const includes = {
     common: [
         "${MCU_PLUS_SDK_PATH}/test/unity/",
+        "${MCU_PLUS_SDK_PATH}/test/drivers/menu/",
     ],
 };
 

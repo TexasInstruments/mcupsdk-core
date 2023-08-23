@@ -83,7 +83,7 @@ function getConfig(){
             hidden: true,
         }
     ]
-    if(common.getSocName() == "am263x") {
+    if(["am263x", "am263px"].includes(common.getSocName())) {
         cfg.push(
             {
                 name: "R5FSS0operatingMode",

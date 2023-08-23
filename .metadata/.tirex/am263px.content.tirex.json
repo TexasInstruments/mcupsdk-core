@@ -7,6 +7,1128 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "ADC burst mode epwm example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_burst_mode_epwm",
+        "location": "../../examples/drivers/adc/adc_burst_mode_epwm/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_burst_mode_epwm",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC burst mode epwm example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_burst_mode_epwm",
+        "location": "../../examples/drivers/adc/adc_burst_mode_epwm/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_burst_mode_epwm",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC burst mode oversampling example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_burst_mode_oversampling",
+        "location": "../../examples/drivers/adc/adc_burst_mode_oversampling/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_burst_mode_oversampling",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC burst mode oversampling example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_burst_mode_oversampling",
+        "location": "../../examples/drivers/adc/adc_burst_mode_oversampling/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_burst_mode_oversampling",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC differential mode example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_differential_mode",
+        "location": "../../examples/drivers/adc/adc_differential_mode/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_differential_mode",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC differential mode example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_differential_mode",
+        "location": "../../examples/drivers/adc/adc_differential_mode/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_differential_mode",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC early interrupt and offset example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_early_interrupt_offset",
+        "location": "../../examples/drivers/adc/adc_early_interrupt_offset/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_early_interrupt_offset",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC early interrupt and offset example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_early_interrupt_offset",
+        "location": "../../examples/drivers/adc/adc_early_interrupt_offset/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_early_interrupt_offset",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ADC High Priority example. This example showcases the high priority soc feature of ADC. CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_high_priority_soc",
+        "location": "../../examples/drivers/adc/adc_high_priority_soc/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_high_priority_soc",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ADC High Priority example. This example showcases the high priority soc feature of ADC. CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_high_priority_soc",
+        "location": "../../examples/drivers/adc/adc_high_priority_soc/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_high_priority_soc",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ADC Software triggered example. This example converts a SOC when triggered by Software. CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_multiple_soc_epwm",
+        "location": "../../examples/drivers/adc/adc_multiple_soc_epwm/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_multiple_soc_epwm",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ADC Software triggered example. This example converts a SOC when triggered by Software. CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_multiple_soc_epwm",
+        "location": "../../examples/drivers/adc/adc_multiple_soc_epwm/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_multiple_soc_epwm",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC PPB Delay example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_ppb_delay",
+        "location": "../../examples/drivers/adc/adc_ppb_delay/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_ppb_delay",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC PPB Delay example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_ppb_delay",
+        "location": "../../examples/drivers/adc/adc_ppb_delay/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_ppb_delay",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ADC example that triggers ePWM using ADC Post Processing Block. CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_ppb_epwm_trip",
+        "location": "../../examples/drivers/adc/adc_ppb_epwm_trip/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_ppb_epwm_trip",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ADC example that triggers ePWM using ADC Post Processing Block. CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_ppb_epwm_trip",
+        "location": "../../examples/drivers/adc/adc_ppb_epwm_trip/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_ppb_epwm_trip",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC PPB Limits example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_ppb_limits",
+        "location": "../../examples/drivers/adc/adc_ppb_limits/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_ppb_limits",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC PPB Limits example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_ppb_limits",
+        "location": "../../examples/drivers/adc/adc_ppb_limits/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_ppb_limits",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC PPB Offset example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_ppb_offset",
+        "location": "../../examples/drivers/adc/adc_ppb_offset/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_ppb_offset",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC PPB Offset example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_ppb_offset",
+        "location": "../../examples/drivers/adc/adc_ppb_offset/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_ppb_offset",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC SOC Continuous example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_soc_continuous",
+        "location": "../../examples/drivers/adc/adc_soc_continuous/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_soc_continuous",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC SOC Continuous example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_soc_continuous",
+        "location": "../../examples/drivers/adc/adc_soc_continuous/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_soc_continuous",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ADC Software triggered example. This example converts a SOC when triggered by Software. CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_soc_continuous_dma",
+        "location": "../../examples/drivers/adc/adc_soc_continuous_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_soc_continuous_dma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ADC Software triggered example. This example converts a SOC when triggered by Software. CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_soc_continuous_dma",
+        "location": "../../examples/drivers/adc/adc_soc_continuous_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_soc_continuous_dma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC SOC Epwm example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_soc_epwm",
+        "location": "../../examples/drivers/adc/adc_soc_epwm/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_soc_epwm",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC SOC Epwm example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_soc_epwm",
+        "location": "../../examples/drivers/adc/adc_soc_epwm/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_soc_epwm",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC SOC Oversampling example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_soc_oversampling",
+        "location": "../../examples/drivers/adc/adc_soc_oversampling/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_soc_oversampling",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC SOC Oversampling example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_soc_oversampling",
+        "location": "../../examples/drivers/adc/adc_soc_oversampling/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_soc_oversampling",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ADC Software triggered example. This example converts a SOC when triggered by Software. CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_soc_software",
+        "location": "../../examples/drivers/adc/adc_soc_software/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_soc_software",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ADC Software triggered example. This example converts a SOC when triggered by Software. CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_soc_software",
+        "location": "../../examples/drivers/adc/adc_soc_software/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_soc_software",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ADC Synchronous Software triggered example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_soc_software_sync",
+        "location": "../../examples/drivers/adc/adc_soc_software_sync/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_soc_software_sync",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ADC Synchronous Software triggered example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_soc_software_sync",
+        "location": "../../examples/drivers/adc/adc_soc_software_sync/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_soc_software_sync",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC Software Interleaved Averaging example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_sw_interleaved_averaging",
+        "location": "../../examples/drivers/adc/adc_sw_interleaved_averaging/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_sw_interleaved_averaging",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC Software Interleaved Averaging example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_sw_interleaved_averaging",
+        "location": "../../examples/drivers/adc/adc_sw_interleaved_averaging/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_sw_interleaved_averaging",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Sbl Null Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_null",
         "location": "../../examples/drivers/boot/sbl_null/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -1987,6 +3109,204 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Fsi Loopback Dma Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "fsi_loopback_dma",
+        "location": "../../examples/drivers/fsi/fsi_loopback_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "fsi",
+            "fsi_loopback_dma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Fsi Loopback Dma Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "fsi_loopback_dma",
+        "location": "../../examples/drivers/fsi/fsi_loopback_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "fsi",
+            "fsi_loopback_dma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Fsi Loopback Interrupt Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "fsi_loopback_interrupt",
+        "location": "../../examples/drivers/fsi/fsi_loopback_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "fsi",
+            "fsi_loopback_interrupt",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Fsi Loopback Interrupt Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "fsi_loopback_interrupt",
+        "location": "../../examples/drivers/fsi/fsi_loopback_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "fsi",
+            "fsi_loopback_interrupt",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Fsi Loopback Polling Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "fsi_loopback_polling",
+        "location": "../../examples/drivers/fsi/fsi_loopback_polling/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "fsi",
+            "fsi_loopback_polling",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Fsi Loopback Polling Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "fsi_loopback_polling",
+        "location": "../../examples/drivers/fsi/fsi_loopback_polling/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "fsi",
+            "fsi_loopback_polling",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Gpio Input Interrupt Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "gpio_input_interrupt",
         "location": "../../examples/drivers/gpio/gpio_input_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -2400,6 +3720,666 @@
             "i2c",
             "i2c_temperature",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am263px-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS1-0 running NORTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS1-1 running NORTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am263px-cc/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss1-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am263px-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am263px-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS1-0 running NORTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am263px-lp/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo Example. CPU is R5FSS1-1 running NORTOS.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am263px-lp/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "r5fss1-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am263px-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS1-0 running NORTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS1-1 running NORTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am263px-cc/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss1-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am263px-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am263px-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS1-0 running NORTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am263px-lp/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS1-1 running NORTOS.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am263px-lp/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "r5fss1-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Spinlock Sharedmem Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ipc_spinlock_sharedmem",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_spinlock_sharedmem",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Spinlock Sharedmem Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_spinlock_sharedmem",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am263px-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_spinlock_sharedmem",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Spinlock Sharedmem Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ipc_spinlock_sharedmem",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am263px-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_spinlock_sharedmem",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Spinlock Sharedmem Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "ipc_spinlock_sharedmem",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am263px-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_spinlock_sharedmem",
+            "r5fss0-1_nortos"
         ],
         "mainCategories": [
             [
@@ -4495,6 +6475,138 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A SDFM example that reads filter data from CPU CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdfm_epwm_sync_cpuread",
+        "location": "../../examples/drivers/sdfm/sdfm_epwm_sync_cpuread/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "sdfm",
+            "sdfm_epwm_sync_cpuread",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A SDFM example that reads filter data from CPU CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdfm_filter_sync_cpuread",
+        "location": "../../examples/drivers/sdfm/sdfm_filter_sync_cpuread/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "sdfm",
+            "sdfm_filter_sync_cpuread",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A SDFM example that reads filter data from CPU CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdfm_filter_sync_cpuread_single_channel",
+        "location": "../../examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "sdfm",
+            "sdfm_filter_sync_cpuread_single_channel",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A SDFM example that reads filter data from CPU CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdfm_filter_sync_cpuread_single_channel",
+        "location": "../../examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "sdfm",
+            "sdfm_filter_sync_cpuread_single_channel",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo",
         "location": "../../examples/drivers/uart/uart_echo/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -6080,6 +8192,346 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Crypto Dthe Aes Cbc 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_cbc_128",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_cbc_128",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Dthe Aes Cbc 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_cbc_256",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cbc_256/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_cbc_256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Dthe Aes Cmac 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_cmac_128",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cmac_128/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_cmac_128",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Dthe Aes Cmac 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_cmac_256",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cmac_256/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_cmac_256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Dthe Aes Ecb 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_ecb_128",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ecb_128/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_ecb_128",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Dthe Aes Ecb 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_dthe_aes_ecb_256",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ecb_256/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_ecb_256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Dthe Hmac Sha256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dthe_hmac_sha256",
+        "location": "../../examples/security/crypto/dthe_sha/crypto_hmac_sha256/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_sha",
+            "crypto_hmac_sha256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Dthe Hmac Sha512 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dthe_hmac_sha512",
+        "location": "../../examples/security/crypto/dthe_sha/crypto_hmac_sha512/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_sha",
+            "crypto_hmac_sha512",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Dthe Sha 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dthe_sha_256",
+        "location": "../../examples/security/crypto/dthe_sha/crypto_sha_256/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_sha",
+            "crypto_sha_256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Dthe Sha 512 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dthe_sha_512",
+        "location": "../../examples/security/crypto/dthe_sha/crypto_sha_512/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_sha",
+            "crypto_sha_512",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. System project.",
         "name": "edma_interrupt_transfer",
         "location": "../../examples/drivers/edma/edma_interrupt_transfer/am263px-cc/system_freertos_nortos/system.projectspec",
@@ -6123,6 +8575,186 @@
             "drivers",
             "edma",
             "edma_interrupt_transfer",
+            "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo System Example.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am263px-cc/system_freertos_nortos/system.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Notify Echo System Example.",
+        "name": "ipc_notify_echo",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am263px-lp/system_freertos_nortos/system.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_notify_echo",
+            "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo System Example.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am263px-cc/system_freertos_nortos/system.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Rpmsg Echo System Example.",
+        "name": "ipc_rpmsg_echo",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am263px-lp/system_freertos_nortos/system.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_rpmsg_echo",
+            "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Spinlock Sharedmem System Example.",
+        "name": "ipc_spinlock_sharedmem",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am263px-cc/system_freertos_nortos/system.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_spinlock_sharedmem",
+            "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ipc Spinlock Sharedmem System Example.",
+        "name": "ipc_spinlock_sharedmem",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am263px-lp/system_freertos_nortos/system.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "ipc",
+            "ipc_spinlock_sharedmem",
             "system_freertos_nortos"
         ],
         "mainCategories": [

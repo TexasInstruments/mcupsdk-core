@@ -5,7 +5,7 @@ let device = "am263px";
 const files = {
     common: [
         "test_dpl.c",
-		"HeapP_internal_pos_test.c",
+		"ClockP_nortos_test_pos.c",
         "main.c",
     ],
 };
@@ -89,7 +89,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "dpl_ut_HeapP_internal";
+    property.name = "dpl_ut_ClockP_nortos";
     property.isInternal = true;
     property.skipProjectSpec = true;
     property.buildOptionCombos = buildOptionCombos;

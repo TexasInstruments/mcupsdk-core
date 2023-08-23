@@ -21,19 +21,19 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=dpl_ut_HeapP_nortos.$(PROFILE).out
+OUTNAME:=dpl_ut_AddrTranslateP_null.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=dpl_ut_HeapP_nortos.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=dpl_ut_HeapP_nortos.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=dpl_ut_HeapP_nortos.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=dpl_ut_HeapP_nortos.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=dpl_ut_HeapP_nortos.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=dpl_ut_HeapP_nortos.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME:=dpl_ut_AddrTranslateP_null.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=dpl_ut_AddrTranslateP_null.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=dpl_ut_AddrTranslateP_null.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=dpl_ut_AddrTranslateP_null.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=dpl_ut_AddrTranslateP_null.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=dpl_ut_AddrTranslateP_null.$(PROFILE).rprc_tmp
 
 FILES_common := \
 	test_dpl.c \
-	HeapP_nortos_posTest.c \
+	AddrTranslateP_null_test_pos.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -184,7 +184,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263px:r5fss0-0:nortos:ti-arm-clang dpl_ut_HeapP_nortos ...
+	@echo  Scrubing: am263px:r5fss0-0:nortos:ti-arm-clang dpl_ut_AddrTranslateP_null ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

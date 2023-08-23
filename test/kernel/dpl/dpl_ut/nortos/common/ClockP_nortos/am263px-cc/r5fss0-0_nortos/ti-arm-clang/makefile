@@ -21,19 +21,19 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=dpl_ut_HeapP_internal.$(PROFILE).out
+OUTNAME:=dpl_ut_ClockP_nortos.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=dpl_ut_HeapP_internal.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=dpl_ut_HeapP_internal.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=dpl_ut_HeapP_internal.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=dpl_ut_HeapP_internal.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=dpl_ut_HeapP_internal.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=dpl_ut_HeapP_internal.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME:=dpl_ut_ClockP_nortos.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=dpl_ut_ClockP_nortos.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=dpl_ut_ClockP_nortos.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=dpl_ut_ClockP_nortos.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=dpl_ut_ClockP_nortos.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=dpl_ut_ClockP_nortos.$(PROFILE).rprc_tmp
 
 FILES_common := \
 	test_dpl.c \
-	HeapP_internal_pos_test.c \
+	ClockP_nortos_test_pos.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -184,7 +184,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263px:r5fss0-0:nortos:ti-arm-clang dpl_ut_HeapP_internal ...
+	@echo  Scrubing: am263px:r5fss0-0:nortos:ti-arm-clang dpl_ut_ClockP_nortos ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

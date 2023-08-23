@@ -21,20 +21,19 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=dpl_ut_QueueP_nortos.$(PROFILE).out
+OUTNAME:=dpl_ut_DebugP_log.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=dpl_ut_QueueP_nortos.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=dpl_ut_QueueP_nortos.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=dpl_ut_QueueP_nortos.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=dpl_ut_QueueP_nortos.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=dpl_ut_QueueP_nortos.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=dpl_ut_QueueP_nortos.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME:=dpl_ut_DebugP_log.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=dpl_ut_DebugP_log.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=dpl_ut_DebugP_log.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=dpl_ut_DebugP_log.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=dpl_ut_DebugP_log.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=dpl_ut_DebugP_log.$(PROFILE).rprc_tmp
 
 FILES_common := \
 	test_dpl.c \
-	QueueP_nortos_test_neg.c \
-	QueueP_nortos_test_pos.c \
+	DebugP_log_test_pos.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -185,7 +184,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263px:r5fss0-0:nortos:ti-arm-clang dpl_ut_QueueP_nortos ...
+	@echo  Scrubing: am263px:r5fss0-0:nortos:ti-arm-clang dpl_ut_DebugP_log ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

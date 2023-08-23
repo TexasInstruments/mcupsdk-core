@@ -68,11 +68,12 @@ int main(void)
     int32_t status;
 
     Bootloader_socConfigurePll();
-    Bootloader_socInitL2MailBoxMemory();
+    Bootloader_socSetAutoClock();
 
     System_init();
     Drivers_open();
-    Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    // Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socInitL2MailBoxMemory();
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
@@ -92,7 +93,7 @@ int main(void)
         bootParams.memArgsAppImageBaseAddr = (uintptr_t)gAppImageBuf;
 
         bootHandle = Bootloader_open(CONFIG_BOOTLOADER_0, &bootParams);
-        
+
         if(BOOTLOADER_MEDIA_MEM == Bootloader_getBootMedia(bootHandle))
         {
             uint32_t fileSize = 0;
@@ -132,10 +133,11 @@ int main(void)
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_1);
 
-                /* Reset self cluster, both Core0 and Core 1. Init RAMs and load the app  */
+                /* Skip the image load by passing TRUE, so that image load on self core doesnt corrupt the SBLs IVT. Load the image later before the reset release of the self core  */
                 status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
                 if(status == SystemP_SUCCESS)
                 {
+                    /* Reset self cluster, both Core0 and Core 1. Init RAMs and load the app  */
                     status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
                 }
             }
@@ -177,6 +179,11 @@ int main(void)
             }
             if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
             {
+                /* Load the image on self core now */
+                if( bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
+                {
+                    status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
+                }
                 /* Reset self cluster, both Core0 and Core 1. Init RAMs and run the app  */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
             }
