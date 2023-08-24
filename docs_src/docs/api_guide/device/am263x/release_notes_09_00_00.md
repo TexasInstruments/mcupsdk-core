@@ -578,22 +578,22 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <th> Additional Remarks
 </tr>
 <tr>
-    <td> ECAP driver versions v0 and v2
-    <td> ECAP_continousmodeConfig
-    <td> Spell corrected to "ECAP_continuousmodeConfig"
-    <td> -
+    <td> IPC Notify and RPmessage
+    <td> Enabled IPC memory configuration via application to enable firewalling
+    <td> SysConfig based shared memory configutation for IPC notify. IPC RPmessage memory configuration already done via SysConfig.\n Added API IpcNotify_allocSwQueue to update the memory configuration for driver.\n Linker section name changes from ipc_vring_mem to ipc_shared_mem and updated the shared memory size to use the entire mailbox
+    <td> Changes for SysConfig based memory management and new API call are taken care via Syscofnig code generation. Linker file needs to be changed manually. Refer \ref EXAMPLES_DRIVERS_IPC_NOTIFY_ECHO
 </tr>
 <tr>
-    <td> IPC Notify version v0 and v1
+    <td> IPC Notify
     <td> IpcNotify_init
     <td> IntrPriority added as an element in IpcNotify_Params structure to make interrupt priority configurable.
-    <td> -
+    <td> This field is automatically updated by sysconfig
 </tr>
 <tr>
     <td> ClockP
     <td> ClockP_init
     <td> IntrPriority added as an element in ClockP_Params structure to make Tick interrupt priority configurable.
-    <td> -
+    <td> This field is automatically updated by sysconfig
 </tr>
 </table>
 

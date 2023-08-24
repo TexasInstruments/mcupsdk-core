@@ -742,6 +742,25 @@ earlier SDKs.
     <th> Change
     <th> Additional Remarks
 </tr>
+<tr>
+    <td> ECAP
+    <td> ECAP_continousModeConfig
+    <td> Spell corrected to "ECAP_continuousmodeConfig"
+    <td> -
+</tr>
+<tr>
+    <td> IPC Notify
+    <td> IpcNotify_init
+    <td> IntrPriority added as an element in IpcNotify_Params structure to make interrupt priority configurable.
+    <td> This field is automatically updated by sysconfig
+</tr>
+<tr>
+    <td> ClockP
+    <td> ClockP_init
+    <td> IntrPriority added as an element in ClockP_Params structure to make Tick interrupt priority configurable.
+    <td> This field is automatically updated by sysconfig
+</tr>
+</table>
 
 ### Networking
 

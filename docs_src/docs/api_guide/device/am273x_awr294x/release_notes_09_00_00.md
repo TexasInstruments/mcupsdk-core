@@ -527,6 +527,31 @@ earlier SDKs.
     <td> Safety driver update
 </tr>
 \endcond
+<tr>
+    <td> IPC Notify and RPmessage
+    <td> Enabled IPC memory configuration via application to enable firewalling
+    <td> SysConfig based shared memory configutation for IPC notify. IPC RPmessage memory configuration already done via SysConfig.\n Added API IpcNotify_allocSwQueue to update the memory configuration for driver.\n Linker section name changes from ipc_vring_mem to ipc_shared_mem and updated the shared memory size to use the entire mailbox
+    <td> Changes for SysConfig based memory management and new API call are taken care via Syscofnig code generation. Linker file needs to be changed manually. Refer \ref EXAMPLES_DRIVERS_IPC_NOTIFY_ECHO
+</tr>
+<tr>
+    <td> IPC Notify
+    <td> IpcNotify_init
+    <td> IntrPriority added as an element in IpcNotify_Params structure to make interrupt priority configurable.
+    <td> This field is automatically updated by SysConfig
+</tr>
+<tr>
+    <td> ECAP
+    <td> ECAP_continousModeConfig
+    <td> Spell corrected to "ECAP_continuousmodeConfig"
+    <td> -
+</tr>
+<tr>
+    <td> ClockP
+    <td> ClockP_init
+    <td> IntrPriority added as an element in ClockP_Params structure to make Tick interrupt priority configurable.
+    <td> This field is automatically updated by SysConfig
+</tr>
+</table>
 </table>
 
 ### Networking

@@ -263,39 +263,14 @@ read through the instructions below.
 - When IPC RP Message is enabled, a shared memory is used to exchange packet buffers between different CPUs.
   This shared memory MUST be mapped to the same address across all CPUs.
 
-- This is done via the linker command file as shown in below snippet taken from  \ref EXAMPLES_DRIVERS_IPC_RPMESSAGE_ECHO example
+- This is done via the linker command file. Refer to  \ref EXAMPLES_DRIVERS_IPC_RPMESSAGE_ECHO example linker script.
 
-    \code
-    /* specify the memory segment */
-    MEMORY
-    {
-        ...
-
-        /* shared memories that are used by RTOS/NORTOS cores */
-        /* On R5F,
-        * - make sure there is a MPU entry which maps below regions as non-cache
-        */
-        USER_SHM_MEM            : ORIGIN = 0x701D0000, LENGTH = 0x00004000
-        LOG_SHM_MEM             : ORIGIN = 0x701D4000, LENGTH = 0x00004000
-        RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0x701D8000, LENGTH = 0x00008000
-    }
-
-
-    /* map the shared memory section to the memory segment */
-    SECTION
-    {
-        ...
-
-        /* General purpose user shared memory, used in some examples */
-        .bss.user_shared_mem (NOLOAD) : {} > USER_SHM_MEM
-        /* this is used when Debug log's to shared memory are enabled, else this is not used */
-        .bss.log_shared_mem  (NOLOAD) : {} > LOG_SHM_MEM
-        /* this is used only when IPC RPMessage is enabled, else this is not used */
-        .bss.ipc_vring_mem   (NOLOAD) : {} > RTOS_NORTOS_IPC_SHM_MEM
-    }
-    \endcode
-
+\cond !(SOC_AM273X || SOC_AM263X || SOC_AWR294X)
 - Strictly speaking for IPC RP Message only `RTOS_NORTOS_IPC_SHM_MEM` is needed.
+\endcond
+\cond (SOC_AM273X || SOC_AM263X || SOC_AWR294X)
+- Strictly speaking for IPC RP Message and IPC Notify, only `RTOS_NORTOS_IPC_SHM_MEM` is needed.
+\endcond
 
 - However the example also shows the below,
   - A shared memory segment for shared memory based debug logging (`LOG_SHM_MEM`)
