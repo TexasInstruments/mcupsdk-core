@@ -44,12 +44,13 @@
 #include "testcase_singlepkt_tc1.h"
 #include "testcase_singlepkt_tc2.h"
 #include "testcase_singlepkt_tc3.h"
+#include "testcase_cptsrxts.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-#define TOTAL_TESTCASES     11
+#define TOTAL_TESTCASES     18
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -90,6 +91,7 @@ static const char TestCaseMenu[] =
     " \r\n 15: Internal PHY loopback with Single Packet API where Number of Scatter Segment = 4 where txNumPkt=rxNumPkt=4"
     " \r\n 16: External PHY loopback with Single Packet API where Number of Scatter Segment = 4 where txNumPkt=rxNumPkt=4"
     " \r\n 17: Internal PHY loopback with Single Packet API as well as submit/retrieve Queue APIs together where Number of Scatter Segment = 1 where txNumPkt=rxNumPkt=16"
+    " \r\n 18: External PHY loopback to check the CPTS Rx pkt time stamping"
     " \r\n"
     " \r\n Enter option: "
 };
@@ -697,6 +699,37 @@ static void TestApp_runTestcase(int8_t option)
             {
                 EnetAppUtils_print("Loopback application completed\r\n");
                 EnetAppUtils_print("All tests have passed!!\r\n");
+            }
+            else
+            {
+                EnetAppUtils_print("Loopback application failed to complete\r\n");
+            }
+            break;
+        case 18U:
+            gTestApp.testLoopBackType = LOOPBACK_TYPE_PHY;
+            gTestApp.macMode          = RGMII;
+            gTestApp.boardId          = ENETBOARD_CPB_ID;
+            gTestCfg.txScatterSeg     = 1;
+            gTestCfg.rxScatterSeg     = 1;
+            gTestCfg.rxNumPkt         = 8;
+            gTestCfg.txNumPkt         = 8;
+            for (i = 0U; i < ENETLPBK_NUM_ITERATION; i++)
+            {
+                EnetAppUtils_print("=============================\r\n");
+                EnetAppUtils_print(" TestCase %d: Iteration %u \r\n", option, i + 1);
+                EnetAppUtils_print("=============================\r\n");
+
+                /* Run the loopback test */
+                status = TestApp_CptsRxTsTestcase();
+                EnetAppUtils_assert(status == ENET_SOK);
+
+                /* Sleep at end of each iteration to allow idle task to delete all terminated tasks */
+                ClockP_usleep(1000);
+            }
+
+            if (status == ENET_SOK)
+            {
+                EnetAppUtils_print("Loopback application completed\r\n");
             }
             else
             {

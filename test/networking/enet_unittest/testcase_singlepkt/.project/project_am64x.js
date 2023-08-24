@@ -8,6 +8,7 @@ const files = {
             "testcase_singlepkt_tc2.c",
             "testcase_singlepkt_tc3.c",
             "testcase_common_cfg.c",
+            "testcase_cptsrxts.c",
             "testcase_main.c",
             "main.c",
     ],

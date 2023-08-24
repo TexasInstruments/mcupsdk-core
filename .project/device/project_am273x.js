@@ -222,6 +222,7 @@ const example_file_list = [
     "test/networking/mbedtls_test/test_pka/.project/project.js",
     "test/networking/mbedtls_benchmark/.project/project.js",
     "test/networking/cpsw_intervlan/.project/project.js",
+    "test/networking/enet_unittest/testcase_singlepkt/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {

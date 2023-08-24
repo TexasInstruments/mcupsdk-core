@@ -101,6 +101,14 @@ typedef enum EnetLpbk_type_e
     LOOPBACK_TYPE_PHY = 1
 } EnetLpbk_type;
 
+typedef enum TestLpbk_result_e
+{
+    /* Success */
+    LOOPBACK_TEST_PASS = 0,
+    /* Failure */
+    LOOPBACK_TEST_FAIL = 1
+} TestLpbk_result;
+
 typedef struct TestApp_Obj_s
 {
     /* Enet driver */
@@ -146,6 +154,7 @@ typedef struct TestApp_Obj_s
     ClockP_Object timerObj;
     /* Semaphore posted by tick timer to run tick task */
     SemaphoreP_Object timerSemObj;
+    TestLpbk_result testResult;
 } TestApp_Obj;
 
 typedef struct TestCfg_Obj_s

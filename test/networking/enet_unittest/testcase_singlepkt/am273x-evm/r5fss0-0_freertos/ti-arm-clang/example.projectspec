@@ -4,23 +4,23 @@
         <when>
             <context
                 deviceFamily="ARM"
-                deviceId="Cortex R.AM263x"
+                deviceId="Cortex R.AM273x.evmAM273x"
             />
         </when>
     </applicability>
 
     <project
         title="Testcase Singlepkt"
-        name = "testcase_singlepkt_am263x-cc_r5fss0-0_freertos_ti-arm-clang"
+        name = "testcase_singlepkt_am273x-evm_r5fss0-0_freertos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
-            Release,
-            Debug,
+                Debug,
+                Release,
         "
         connection="TIXDS110_Connection.xml"
         toolChain="TICLANG"
-        cgtVersion="3.1.0"
-        device="Cortex R.AM263x"
+        cgtVersion="2.1.3"
+        device="Cortex R.AM273x.evmAM273x"
         deviceCore="Cortex_R5_0"
         ignoreDefaultDeviceSettings="true"
         ignoreDefaultCCSSettings="true"
@@ -33,7 +33,7 @@
             -I${MCU_PLUS_SDK_PATH}/source
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F
-            -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am273x/r5f
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include
@@ -41,7 +41,7 @@
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/phy
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core
-            -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263x
+            -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am273x
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4
             -mcpu=cortex-r5
@@ -53,7 +53,7 @@
             -g
             -Wno-gnu-variable-sized-type-not-at-end
             -Wno-unused-function
-            -DSOC_AM263X
+            -DSOC_AM273X
         "
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
@@ -71,11 +71,11 @@
             --use_memcpy=fast
         "
 
-        postBuildStep="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_ccs_bootimage_gen OUTNAME=${BuildArtifactFileBaseName} PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE} DEVICE=am263x"
+        postBuildStep="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_ccs_bootimage_gen OUTNAME=${BuildArtifactFileBaseName} PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE} DEVICE=am273x"
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --context r5fss0-0 --part AM263x --package ZCZ
+            --context r5fss0-0 --part Default --package ZCE
         "
 
         description="A Testcase Singlepkt FREERTOS project">
@@ -85,10 +85,9 @@
                 -D_DEBUG_=1
             "
             linkerBuildOptions="
-                -lfreertos.am263x.r5f.ti-arm-clang.debug.lib
-                -ldrivers.am263x.r5f.ti-arm-clang.debug.lib
-                -lenet-cpsw.am263x.r5f.ti-arm-clang.debug.lib
-                -lboard.am263x.r5f.ti-arm-clang.debug.lib
+                -lfreertos.am273x.r5f.ti-arm-clang.debug.lib
+                -ldrivers.am273x.r5f.ti-arm-clang.debug.lib
+                -lenet-cpsw.am273x.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -100,14 +99,14 @@
                 -flto
             "
             linkerBuildOptions="
-                -lfreertos.am263x.r5f.ti-arm-clang.release.lib
-                -ldrivers.am263x.r5f.ti-arm-clang.release.lib
-                -lenet-cpsw.am263x.r5f.ti-arm-clang.release.lib
-                -lboard.am263x.r5f.ti-arm-clang.release.lib
+                -lfreertos.am273x.r5f.ti-arm-clang.release.lib
+                -ldrivers.am273x.r5f.ti-arm-clang.release.lib
+                -lenet-cpsw.am273x.r5f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a
             "
         ></configuration>
+        <pathVariable name="DSPLIB_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}/source/dsplib_c66x_3_4_0_0" scope="project" />
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
         <file path="../../../testcase_singlepkt_tc1.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
@@ -127,7 +126,7 @@
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263x/EXAMPLES_ENET_LOOPBACK.html"
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am273x/EXAMPLES_ENET_LOOPBACK.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">

@@ -118,6 +118,8 @@
         </file>
         <file path="../../../testcase_common_cfg.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
+        <file path="../../../testcase_cptsrxts.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
         <file path="../../../testcase_main.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="link">
