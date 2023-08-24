@@ -137,7 +137,7 @@ CpswSoc_Cfg gEnetSoc_cpsw2gSocCfg =
         {   /* MISC_PEND - Miscellaneous interrupt for CPTS, MDIO and Stats*/
             .intrId     = CPSW_INTR_MISC_PEND,
             .coreIntNum = CSL_MSS_INTR_MSS_CPSW_MISC_INT,
-            .triggerType= ENETOSAL_ARM_GIC_TRIG_TYPE_LEVEL,
+            .triggerType= ENETOSAL_ARM_GIC_TRIG_TYPE_EDGE,
         },
     },
     .txChCount       = ENET_CPDMA_CPSW_MAX_TX_CH, /* TODO: set to 8 eventually */

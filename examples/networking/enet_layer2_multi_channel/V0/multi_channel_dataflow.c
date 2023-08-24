@@ -125,10 +125,12 @@ void EnetApp_rxPtpNotifyFxn(void *appData)
 void EnetApp_txPtpNotifyFxn(void *appData)
 {
     uint32_t pktCount;
+    EnetApp_PerCtxt *enet_perctxt = NULL;
 
     if (appData != NULL)
     {
-        pktCount = EnetApp_retrieveTxDonePkts();
+        enet_perctxt = (EnetApp_PerCtxt *)appData;
+        pktCount = EnetApp_retrieveFreeTxPkts(enet_perctxt->hTxPtpCh, &gEnetApp.txPtpFreePktInfoQ);
         EnetAppUtils_assert(pktCount != 0U);
     }
 }
@@ -918,6 +920,7 @@ int32_t EnetApp_getPtpFrame(EnetApp_PerCtxt* enet_perctxt,
     uint32_t rxReadyCnt =0;
     EnetDma_PktQ rxReadyQ;
     EnetDma_PktQ rxFreeQ;
+    uint32_t i;
 
     if (enet_perctxt != NULL)
     {
@@ -945,8 +948,19 @@ int32_t EnetApp_getPtpFrame(EnetApp_PerCtxt* enet_perctxt,
             memcpy(frame, rxFrame, *size);
             *rxPort = (uint8_t)pktInfo->rxPortNum;
 
-            /* Release the received packet */
+            /* Enqueue back all the retrieved packets */
             EnetQueue_enq(&rxFreeQ, &pktInfo->node);
+
+            for (i = 1; i < rxReadyCnt; i++)
+            {
+                pktInfo = (EnetDma_Pkt *)EnetQueue_deq(&rxReadyQ);
+                EnetAppUtils_assert(pktInfo != NULL);
+                EnetDma_checkPktState(&pktInfo->pktState,
+                                      ENET_PKTSTATE_MODULE_APP,
+                                      ENET_PKTSTATE_APP_WITH_READYQ,
+                                      ENET_PKTSTATE_APP_WITH_FREEQ);
+                EnetQueue_enq(&rxFreeQ, &pktInfo->node);
+            }
 
             EnetAppUtils_validatePacketState(&rxFreeQ,
                                              ENET_PKTSTATE_APP_WITH_FREEQ,
@@ -983,7 +997,7 @@ int32_t EnetApp_sendPtpFrame(EnetApp_PerCtxt* enet_perctxt,
     if (enet_perctxt != NULL)
     {
         EnetQueue_initQ(&txSubmitQ);
-        pktInfo = (EnetDma_Pkt *)EnetQueue_deq(&gEnetApp.txFreePktInfoQ);
+        pktInfo = (EnetDma_Pkt *)EnetQueue_deq(&gEnetApp.txPtpFreePktInfoQ);
         if (NULL != pktInfo)
         {
             txFrame = (uint8_t *)pktInfo->sgList.list[0].bufPtr;
@@ -1010,7 +1024,7 @@ int32_t EnetApp_sendPtpFrame(EnetApp_PerCtxt* enet_perctxt,
 
             if (0U != EnetQueue_getQCount(&txSubmitQ))
             {
-                status = EnetDma_submitTxPktQ(gEnetApp.perCtxt[0].hTxCh,
+                status = EnetDma_submitTxPktQ(gEnetApp.perCtxt[0].hTxPtpCh,
                                                       &txSubmitQ);
             }
         }
