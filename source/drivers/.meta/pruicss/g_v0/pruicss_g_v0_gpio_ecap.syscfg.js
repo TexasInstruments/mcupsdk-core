@@ -77,7 +77,7 @@ function getPeripheralPinNames(inst)
     return pinList;
 }
 
-let pruicss_top_module_name = "/drivers/pruicss/pruicss_gpio_ecap";
+let pruicss_top_module_name = "/drivers/pruicss/g_v0/pruicss_g_v0_gpio_ecap";
 
 let pruicss_top_module = {
     displayName: "PRU (ICSS) ECAP IO",

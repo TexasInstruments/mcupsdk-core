@@ -124,11 +124,47 @@ static Pinmux_PerCfg_t gPinMuxMcuDomainCfg[] = {
 /*
  * Pinmux
  */
+
+%let flag=0;
+
 void Pinmux_init(void)
 {
     Pinmux_config(gPinMuxMainDomainCfg, PINMUX_DOMAIN_ID_MAIN);
-% if(common.isMcuDomainSupported()) {
+    %let MSS_CTRL_ICSSM_PRU0_GPIO_OUT_CTRL_VALUE=0x00000000;
+    %let MSS_CTRL_ICSSM_PRU1_GPIO_OUT_CTRL_VALUE=0x00000000;
+    %for(let subTemplate of args){
+        %let module=system.modules[subTemplate.moduleName];
+        % for(let i = 0; i < module.$instances.length; i++) {
+            %let instance = module.$instances[i];
+            %if(module.getInterfaceNameList && module.getInterfaceNameList(instance)=="ICSSM"){
+                %flag=1;
+                %let interfaceName = module.getInterfaceNameList(instance);
+                % let peripheral = instance[interfaceName];
+                % let pinNames = module.getPeripheralPinNames(instance);
+                % for (let pinName of pinNames) {
+                %     let peripheralPin = peripheral[pinName];
+                %     if (peripheralPin && peripheralPin.rx && peripheralPin.$solution.peripheralPinName && peripheralPin.$solution.peripheralPinName.substr(4,4)==="PRU0" && peripheralPin.$solution.peripheralPinName.substr(9,4)==="GPIO") {
+                %            MSS_CTRL_ICSSM_PRU0_GPIO_OUT_CTRL_VALUE|=1<<parseInt(peripheralPin.$solution.peripheralPinName.slice(13,15));
+                %     }
+                %     if (peripheralPin && peripheralPin.rx && peripheralPin.$solution.peripheralPinName && peripheralPin.$solution.peripheralPinName.substr(4,4)==="PRU1" && peripheralPin.$solution.peripheralPinName.substr(9,4)==="GPIO") {
+                %            MSS_CTRL_ICSSM_PRU1_GPIO_OUT_CTRL_VALUE|=1<<parseInt(peripheralPin.$solution.peripheralPinName.slice(13,15));
+                %     }
+                %}
+            %}
+        %}
+    %}
+
+    %if(flag===1){
+
+    /* Set bits for input pins in ICSSM_PRU0_GPIO_OUT_CTRL and ICSSM_PRU1_GPIO_OUT_CTRL registers */
+    CSL_REG32_WR(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU0_GPIO_OUT_CTRL, `MSS_CTRL_ICSSM_PRU0_GPIO_OUT_CTRL_VALUE`);
+    CSL_REG32_WR(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU1_GPIO_OUT_CTRL, `MSS_CTRL_ICSSM_PRU1_GPIO_OUT_CTRL_VALUE`);
+    
+    %}
+    
+    % if(common.isMcuDomainSupported()) {
     Pinmux_config(gPinMuxMcuDomainCfg, PINMUX_DOMAIN_ID_MCU);
-% }
+    % }
 }
+
 

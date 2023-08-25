@@ -14,6 +14,7 @@ function getInterfacePinList(inst, peripheralName)
 
     pinList = pinmux.getInterfacePinList(interfaceName);
 
+
     return pinList;
 }
 
@@ -22,6 +23,7 @@ function getPeripheralRequirements(inst, peripheralName)
     let interfaceName = getInterfaceName(inst, peripheralName);
     let pinList = getInterfacePinList(inst, peripheralName);
     let resources = [];
+    let device = common.getDeviceName();
 
     for(let pin of pinList)
     {
@@ -48,29 +50,26 @@ function getPeripheralRequirements(inst, peripheralName)
 
 function pinmuxRequirements(inst) {
 
-    let mii_g_rt = getPeripheralRequirements(inst, "MII_G_RT");
+    let iep = getPeripheralRequirements(inst, "IEP");
 
     /* set default values for "rx" for different pins, based on use case */
-    pinmux.setPeripheralPinConfigurableDefault( mii_g_rt, "MII0_TXD0", "rx", false);
-    pinmux.setPeripheralPinConfigurableDefault( mii_g_rt, "MII0_TXD1", "rx", false);
-    pinmux.setPeripheralPinConfigurableDefault( mii_g_rt, "MII0_TXD2", "rx", false);
-    pinmux.setPeripheralPinConfigurableDefault( mii_g_rt, "MII0_TXD3", "rx", false);
-    pinmux.setPeripheralPinConfigurableDefault( mii_g_rt, "MII0_TXEN", "rx", false);
-    pinmux.setPeripheralPinConfigurableDefault( mii_g_rt, "MII1_TXD0", "rx", false);
-    pinmux.setPeripheralPinConfigurableDefault( mii_g_rt, "MII1_TXD1", "rx", false);
-    pinmux.setPeripheralPinConfigurableDefault( mii_g_rt, "MII1_TXD2", "rx", false);
-    pinmux.setPeripheralPinConfigurableDefault( mii_g_rt, "MII1_TXD3", "rx", false);
-    pinmux.setPeripheralPinConfigurableDefault( mii_g_rt, "MII1_TXEN", "rx", false);
-    pinmux.setPeripheralPinConfigurableDefault( mii_g_rt, "MII_MT0_CLK", "rx", false);
-    pinmux.setPeripheralPinConfigurableDefault( mii_g_rt, "MII_MT1_CLK", "rx", false);
+    pinmux.setPeripheralPinConfigurableDefault( iep, "EDC_LATCH_IN0", "rx", false);
+    pinmux.setPeripheralPinConfigurableDefault( iep, "EDC_LATCH_IN1", "rx", false);
+    pinmux.setPeripheralPinConfigurableDefault( iep, "EDC_SYNC_OUT0", "rx", false);
+    pinmux.setPeripheralPinConfigurableDefault( iep, "EDC_SYNC_OUT1", "rx", false);
+    pinmux.setPeripheralPinConfigurableDefault( iep, "EDIO_DATA_IN_OUT28", "rx", false);
+    pinmux.setPeripheralPinConfigurableDefault( iep, "EDIO_DATA_IN_OUT29", "rx", false);
+    pinmux.setPeripheralPinConfigurableDefault( iep, "EDIO_DATA_IN_OUT30", "rx", false);
+    pinmux.setPeripheralPinConfigurableDefault( iep, "EDIO_DATA_IN_OUT31", "rx", false);
+    pinmux.setPeripheralPinConfigurableDefault( iep, "EDIO_OUTVALID", "rx", false);
 
-    return [mii_g_rt];
+    return [iep];
 }
 
 function getInterfaceNameList(inst) {
 
     return [
-        getInterfaceName(inst, "MII_G_RT"),
+        getInterfaceName(inst, "IEP"),
     ];
 }
 
@@ -78,14 +77,14 @@ function getPeripheralPinNames(inst)
 {
     let pinList = [];
 
-    pinList = pinList.concat(getInterfacePinList(inst, "MII_G_RT"));
+    pinList = pinList.concat(getInterfacePinList(inst, "IEP"));
     return pinList;
 }
 
-let pruicss_top_module_name = "/drivers/pruicss/pruicss_gpio_mii_g_rt";
+let pruicss_top_module_name = "/drivers/pruicss/g_v0/pruicss_g_v0_gpio_iep";
 
 let pruicss_top_module = {
-    displayName: "PRU (ICSS) MII_G_RT IO",
+    displayName: "PRU (ICSS) IEP IO",
 
     templates: {
         "/drivers/pinmux/pinmux_config.c.xdt": {
@@ -93,7 +92,7 @@ let pruicss_top_module = {
         },
     },
 
-    defaultInstanceName: "CONFIG_PRU_ICSS_MII_G_RT_IO",
+    defaultInstanceName: "CONFIG_PRU_ICSS_IEP_IO",
     config: [
         {
             name: "instance",

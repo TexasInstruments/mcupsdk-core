@@ -96,6 +96,14 @@
     %   if(instance.iepSyncMode) {
     CSL_REG32_WR(CSL_ICSSM0_INTERNAL_U_BASE + CSL_ICSS_M_PR1_CFG_SLV_REGS_BASE + CSL_ICSS_M_PR1_CFG_SLV_IEPCLK_REG, 1);
     %   }
+    % if((device === "am263x-cc") || (device === "am263x-lp")){
+    %   if(instance["INTC MODE"] === "mode1"){
+    CSL_REG32_WR(CSL_ICSSM0_INTERNAL_U_BASE + CSL_ICSS_M_PR1_CFG_SLV_REGS_BASE + CSL_ICSS_M_PR1_CFG_SLV_MII_RT_REG , 1);
+    %   }
+    %   if(instance["INTC MODE"] === "mode0"){
+    CSL_REG32_WR(CSL_ICSSM0_INTERNAL_U_BASE + CSL_ICSS_M_PR1_CFG_SLV_REGS_BASE + CSL_ICSS_M_PR1_CFG_SLV_MII_RT_REG , 0);
+    %   }
+    %}
 % }
 % }
 % if (ethphyModule?.$instances[0]?.manualMode && (ethphyModule?.$instances[0]?.mdioManualModeLinkPolling === "Polling")) {

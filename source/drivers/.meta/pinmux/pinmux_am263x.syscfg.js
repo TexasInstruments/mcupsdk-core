@@ -63,6 +63,17 @@ function getPinConfigurables(interfaceName, pinName)
             "legacy": true
         },
     );
+    if(interfaceName === "ICSSM"){
+        pinConfig.push({
+            "type": "CheckBox",
+            "name": "rx",
+            "readOnly": false,
+            "hidden": false,
+            "displayName": "rx",
+            "default": false,
+            "legacy": true
+        })
+    }
     if( interfaceName == "SDFM" || interfaceName == "EQEP" || interfaceName == "GPIO")
     {
         pinConfig.push(

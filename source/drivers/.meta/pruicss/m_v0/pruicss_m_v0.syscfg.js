@@ -24,6 +24,46 @@ function getMdioBaseAddr(pruicssInstance)
     return config.mdioBaseAddr;
 }
 
+function getConfigurables()
+{
+    let device = common.getDeviceName();
+    let config=new Array();
+    config.push(
+        {
+            name: "instance",
+            displayName: "Instance",
+            default: "ICSSM0",
+            options: [
+                {
+                    name: "ICSSM0",
+                },
+            ],
+        },
+    )
+    if(device==="am263x-cc" || device==="am263-lp"){
+        config.push(
+            {
+                name: "INTC MODE",
+                displayName: "INTC MODE",
+                default:"mode1",
+                options: [
+                    {
+                        name:"mode1",
+                        displayName: "ICSSM0_MII_RT_EVENT_ENABLE",
+                        description:'In this mode MII_RT_EVENTS are enabled PRU-ICSS Interrupt Controller lines 32 through 55 are mapped to internal events'
+                    },
+                    {
+                        name:"mode0",
+                        displayName: "ICSSM0_MII_RT_EVENT_DISABLE",
+                        description:"In this mode MII_RT_EVENTS are NOT enabled PRU-ICSS Interrupt Controller lines 32 through 55 are mapped to external events"
+                    },
+                ],
+            },
+        )
+    }
+    return config
+}
+
 let pruicss_top_module_name = "/drivers/pruicss/pruicss";
 
 let pruicss_top_module = {
@@ -41,23 +81,43 @@ let pruicss_top_module = {
     },
 
     defaultInstanceName: "CONFIG_PRU_ICSS",
-    config: [
-        {
-            name: "instance",
-            displayName: "Instance",
-            default: "ICSSM0",
-            options: [
-                {
-                    name: "ICSSM0",
-                },
-            ],
-        },
-    ],
+    config: getConfigurables(),
+    moduleInstances: moduleInstances,
     validate: validate,
     getInstanceConfig,
     getMdioBaseAddr,
 };
-
+function moduleInstances(instance) {
+    let device = common.getDeviceName();
+    let modInstances = new Array();
+    if(device==="am263x-cc" || device==="am263-lp"){
+        modInstances.push({
+            name: "AdditionalICSSSettings",
+            displayName: "Additional ICSS Settings",
+            moduleName: '/drivers/pruicss/m_v0/pruicss_m_v0_gpio',
+            useArray: true,
+            minInstanceCount: 1,
+            defaultInstanceCount: 1,
+            maxInstanceCount: 1,
+        });
+        // Interrupt Mapping:
+        let submodule = "/drivers/pruicss/m_v0/icss_intc/";
+        if(instance["INTC MODE"] === "mode1")
+        submodule += "icss0_m_v0_mode1_intc_mapping";
+        else if(instance["INTC MODE"] === "mode0")
+        submodule += "icss0_m_v0_mode0_intc_mapping";
+        else
+        submodule += "icss0_m_v0_mode1_intc_mapping";
+        modInstances.push({
+            name: "intcMapping",
+            displayName: instance.instance + " INTC Internal Signals Mapping",
+            moduleName: submodule,
+            useArray: true,
+            defaultInstanceCount: 0,
+        });
+        }
+        return (modInstances);
+}
 function validate(inst, report) {
     common.validate.checkSameInstanceName(inst, report);
 }

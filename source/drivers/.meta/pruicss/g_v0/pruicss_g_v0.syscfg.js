@@ -210,7 +210,7 @@ function moduleInstances(instance) {
          modInstances.push({
              name: "AdditionalICSSSettings",
              displayName: "Additional ICSS Settings",
-             moduleName: '/drivers/pruicss/pruicss_gpio',
+             moduleName: '/drivers/pruicss/g_v0/pruicss_g_v0_gpio',
              useArray: true,
              minInstanceCount: 1,
              defaultInstanceCount: 1,
