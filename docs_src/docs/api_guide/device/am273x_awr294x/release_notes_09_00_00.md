@@ -276,13 +276,6 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F a
     <td> None
 </tr>
 <tr>
-    <td> MCUSDK-11518
-    <td> IPC: Firewalling error due to Alignment not being per core pair.
-    <td> IPC
-    <td> 09.00.00
-    <td> Firewalling should not be enabled for SafeIPC.
-</tr>
-<tr>
     <td> MCUSDK-10978
     <td> CCS build doesn't support for HS appimages generation
     <td> CCS
@@ -527,12 +520,6 @@ earlier SDKs.
     <td> Safety driver update
 </tr>
 \endcond
-<tr>
-    <td> IPC Notify and RPmessage
-    <td> Enabled IPC memory configuration via application to enable firewalling
-    <td> SysConfig based shared memory configutation for IPC notify. IPC RPmessage memory configuration already done via SysConfig.\n Added API IpcNotify_allocSwQueue to update the memory configuration for driver.\n Linker section name changes from ipc_vring_mem to ipc_shared_mem and updated the shared memory size to use the entire mailbox
-    <td> Changes for SysConfig based memory management and new API call are taken care via Syscofnig code generation. Linker file needs to be changed manually. Refer \ref EXAMPLES_DRIVERS_IPC_NOTIFY_ECHO
-</tr>
 <tr>
     <td> IPC Notify
     <td> IpcNotify_init

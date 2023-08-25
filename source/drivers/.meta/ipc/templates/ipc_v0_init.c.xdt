@@ -4,6 +4,7 @@
     let selfCpuName = module.getSelfIpcCoreName();
     let enabledCpus = module.getEnabledCpus(instance);
     let enabledRPMessageCpus = module.getEnabledRPMessageCpus(instance);
+    let vringRxTxMap = module.getRPMessageVringRxTxMap(instance);
 %%}
 % if ( enabledCpus.length > 0 || instance.enableLinuxIpc === true || instance.enableMailboxIpc === true) {
     /* IPC Notify */
@@ -63,13 +64,20 @@
         RPMessage_Params_init(&rpmsgParams);
 
         % if ( enabledRPMessageCpus.length > 0 ) {
+        /* VRING mapping from source core to destination core, '-1' means NO VRING,
+        % for ( let prop in vringRxTxMap) {
+            `prop` => `JSON.stringify(vringRxTxMap[prop])`
+        % }
+         */
         /* TX VRINGs */
         % for( let cpuName of enabledRPMessageCpus) {
-        rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_`cpuName.toUpperCase()`] = IPC_RPMSG_VRING_`selfCpuName.toUpperCase()`_`cpuName.toUpperCase()`;
+            % let vringId = vringRxTxMap[selfCpuName][cpuName];
+        rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_`cpuName.toUpperCase()`] = (uintptr_t)gRPMessageVringMem[`vringId`];
         % }
         /* RX VRINGs */
         % for( let cpuName of enabledRPMessageCpus) {
-        rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_`cpuName.toUpperCase()`] = IPC_RPMSG_VRING_`cpuName.toUpperCase()`_`selfCpuName.toUpperCase()`;
+            % let vringId = vringRxTxMap[cpuName][selfCpuName];
+        rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_`cpuName.toUpperCase()`] = (uintptr_t)gRPMessageVringMem[`vringId`];
         % }
         /* Other VRING properties */
         rpmsgParams.vringSize = IPC_RPMESSAGE_VRING_SIZE;

@@ -295,8 +295,6 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
     uint32_t mailboxBaseAddr;
     uint32_t coreIDlist_InterruptCheck;
     uint32_t coreID_Check = (params->selfCoreId < CSL_CORE_ID_MAX)?1U:0U;
-
-    IpcNotify_allocSwQueue(&gIpcNotifyMailboxConfig[0][0]);
     IpcNotify_getConfig(&gIpcNotifyCtrl.interruptConfig, &gIpcNotifyCtrl.interruptConfigNum);
 
     DebugP_assert(coreID_Check!=0U);

@@ -167,17 +167,6 @@ A similar design pattern can be used with IPC Notify APIs, only in this case, th
 And the end point values MUST be less than \ref IPC_NOTIFY_CLIENT_ID_MAX
 \endcond
 
-\cond !SOC_AM62X
-### SafeIPC Design
-
-SafeIPC in a Multi core system requires both Firewalling of shared memory and Data integrity check of payload. SafeIPC can be enabled using SysCfg
-which configures the shared memory in a way that firewalling is possible(limitation being number of firewalls and firewall granularity).
-Firewall configuration is not automatic and need to be manually enabled and configured. The SysCfg generated code for IPC has details on 
-Cores involved as well as Start and End addresses which help in firewall configuration.
-Data Integrity check has to be handled in application. CRC or any other checksum can be added as a part of the payload and decoded in the receiver
-side for this purpose.
-
-\endcond
 ## Enabling IPC in applications
 Below are the summary of steps a application writer on RTOS/NORTOS needs to do enable IPC for their applications
 \cond !SOC_AM62X
@@ -263,14 +252,39 @@ read through the instructions below.
 - When IPC RP Message is enabled, a shared memory is used to exchange packet buffers between different CPUs.
   This shared memory MUST be mapped to the same address across all CPUs.
 
-- This is done via the linker command file. Refer to  \ref EXAMPLES_DRIVERS_IPC_RPMESSAGE_ECHO example linker script.
+- This is done via the linker command file as shown in below snippet taken from  \ref EXAMPLES_DRIVERS_IPC_RPMESSAGE_ECHO example
 
-\cond !(SOC_AM273X || SOC_AM263X || SOC_AWR294X)
+    \code
+    /* specify the memory segment */
+    MEMORY
+    {
+        ...
+
+        /* shared memories that are used by RTOS/NORTOS cores */
+        /* On R5F,
+        * - make sure there is a MPU entry which maps below regions as non-cache
+        */
+        USER_SHM_MEM            : ORIGIN = 0x701D0000, LENGTH = 0x00004000
+        LOG_SHM_MEM             : ORIGIN = 0x701D4000, LENGTH = 0x00004000
+        RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0x701D8000, LENGTH = 0x00008000
+    }
+
+
+    /* map the shared memory section to the memory segment */
+    SECTION
+    {
+        ...
+
+        /* General purpose user shared memory, used in some examples */
+        .bss.user_shared_mem (NOLOAD) : {} > USER_SHM_MEM
+        /* this is used when Debug log's to shared memory are enabled, else this is not used */
+        .bss.log_shared_mem  (NOLOAD) : {} > LOG_SHM_MEM
+        /* this is used only when IPC RPMessage is enabled, else this is not used */
+        .bss.ipc_vring_mem   (NOLOAD) : {} > RTOS_NORTOS_IPC_SHM_MEM
+    }
+    \endcode
+
 - Strictly speaking for IPC RP Message only `RTOS_NORTOS_IPC_SHM_MEM` is needed.
-\endcond
-\cond (SOC_AM273X || SOC_AM263X || SOC_AWR294X)
-- Strictly speaking for IPC RP Message and IPC Notify, only `RTOS_NORTOS_IPC_SHM_MEM` is needed.
-\endcond
 
 - However the example also shows the below,
   - A shared memory segment for shared memory based debug logging (`LOG_SHM_MEM`)

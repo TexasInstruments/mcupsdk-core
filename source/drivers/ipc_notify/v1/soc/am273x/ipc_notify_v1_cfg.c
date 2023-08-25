@@ -50,6 +50,31 @@
 #define R5FSS0_1_MBOX_READ_REQ_INTR ( 79U)
 #define C66SS0_MBOX_READ_REQ_INTR   ( 94U)
 
+/* dedicated mailbox memories address and size */
+#define MSS_MBOX_MEM                (CSL_MSS_MBOX_U_BASE)
+#define MSS_MBOX_MEM_SIZE           (8U*1024U)
+#define DSS_MBOX_MEM                (CSL_DSS_MAILBOX_U_BASE)
+#define DSS_MBOX_MEM_SIZE           (4U*1024U)
+
+/*
+ * SW queue between each pair of CPUs
+ *
+ * place SW queues at the bottom of the dedicated mailbox memories.
+ * Driver assume this memory is init to zero in bootloader as it's ECC protected and
+ * needs to be intialized only once and to ensure that only one core has done the
+ * mailbox ram initialization before ipc_init. If SBL is not used then Gel does the initialization.
+ * We need 4 SW Q's for the 2x R5F to send messages to C66SS0 and each other, i.e 128 B
+ * and we need 2 SW Q's for C66SS0 to send messages to each R5F, i.e 64 B
+ *
+ * Rest of the mailbox memory cna be used for ipc_rpmessage or custom message passing
+ */
+#define C66SS0_TO_R5FSS0_0_SW_QUEUE        (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*6U))
+#define C66SS0_TO_R5FSS0_1_SW_QUEUE        (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*5U))
+#define R5FSS0_1_TO_R5FSS0_0_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*4U))
+#define R5FSS0_1_TO_C66SS0_SW_QUEUE        (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*3U))
+#define R5FSS0_0_TO_R5FSS0_1_SW_QUEUE      (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*2U))
+#define R5FSS0_0_TO_C66SS0_SW_QUEUE        (IpcNotify_SwQueue*)((MSS_MBOX_MEM + MSS_MBOX_MEM_SIZE) - (MAILBOX_MAX_SW_QUEUE_SIZE*1U))
+
 /* shift to apply in mailbox addr to get to core specific status */
 uint32_t gIpcNotifyCoreIntrBitPos[] =
 {
@@ -80,13 +105,13 @@ IpcNotify_MailboxConfig gIpcNotifyMailboxConfig[CSL_CORE_ID_MAX][CSL_CORE_ID_MAX
             .writeDoneMailboxBaseAddr = R5FSS0_0_MBOX_WRITE_DONE,
             .readReqMailboxBaseAddr = R5FSS0_0_MBOX_READ_REQ,
             .intrBitPos = R5FSS0_1_MBOX_PROC_BIT_POS,
-            .swQ = NULL,
+            .swQ = R5FSS0_0_TO_R5FSS0_1_SW_QUEUE,
         },
         { /* with C66SS0 */
             .writeDoneMailboxBaseAddr = R5FSS0_0_MBOX_WRITE_DONE,
             .readReqMailboxBaseAddr = R5FSS0_0_MBOX_READ_REQ,
             .intrBitPos = C66SS0_MBOX_PROC_BIT_POS,
-            .swQ = NULL,
+            .swQ = R5FSS0_0_TO_C66SS0_SW_QUEUE,
         },
     },
     /* R5FSS0-1 */
@@ -95,7 +120,7 @@ IpcNotify_MailboxConfig gIpcNotifyMailboxConfig[CSL_CORE_ID_MAX][CSL_CORE_ID_MAX
             .writeDoneMailboxBaseAddr = R5FSS0_1_MBOX_WRITE_DONE,
             .readReqMailboxBaseAddr = R5FSS0_1_MBOX_READ_REQ,
             .intrBitPos = R5FSS0_0_MBOX_PROC_BIT_POS,
-            .swQ = NULL,
+            .swQ = R5FSS0_1_TO_R5FSS0_0_SW_QUEUE,
         },
         { /* with R5FSS0_1 */
             .writeDoneMailboxBaseAddr = R5FSS0_1_MBOX_WRITE_DONE,
@@ -107,7 +132,7 @@ IpcNotify_MailboxConfig gIpcNotifyMailboxConfig[CSL_CORE_ID_MAX][CSL_CORE_ID_MAX
             .writeDoneMailboxBaseAddr = R5FSS0_1_MBOX_WRITE_DONE,
             .readReqMailboxBaseAddr = R5FSS0_1_MBOX_READ_REQ,
             .intrBitPos = C66SS0_MBOX_PROC_BIT_POS,
-            .swQ = NULL,
+            .swQ = R5FSS0_1_TO_C66SS0_SW_QUEUE,
         },
     },
     /* C66SS0 */
@@ -116,13 +141,13 @@ IpcNotify_MailboxConfig gIpcNotifyMailboxConfig[CSL_CORE_ID_MAX][CSL_CORE_ID_MAX
             .writeDoneMailboxBaseAddr = C66SS0_MBOX_WRITE_DONE,
             .readReqMailboxBaseAddr = C66SS0_MBOX_READ_REQ,
             .intrBitPos = R5FSS0_0_MBOX_PROC_BIT_POS,
-            .swQ = NULL,
+            .swQ = C66SS0_TO_R5FSS0_0_SW_QUEUE,
         },
         { /* with R5FSS0_1 */
             .writeDoneMailboxBaseAddr = C66SS0_MBOX_WRITE_DONE,
             .readReqMailboxBaseAddr = C66SS0_MBOX_READ_REQ,
             .intrBitPos = R5FSS0_1_MBOX_PROC_BIT_POS,
-            .swQ = NULL,
+            .swQ = C66SS0_TO_R5FSS0_1_SW_QUEUE,
         },
         { /* with C66SS0 */
             .writeDoneMailboxBaseAddr = C66SS0_MBOX_WRITE_DONE,

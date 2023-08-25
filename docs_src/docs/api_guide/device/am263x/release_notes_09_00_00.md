@@ -210,13 +210,6 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-9309
-    <td> IpcRPmsg : Invalid TX RX queue buffer allocation via syscfg for multicore project
-    <td> IPC
-    <td> 8.1.0 onwards
-    <td> Updated memory allocation for IPC
-</tr>
-<tr>
     <td> MCUSDK-9662
     <td> QSPI LLD EDMA Transfer fails for size (Unaligned) > MAX EDMA CNT
     <td> QSPI
@@ -445,13 +438,6 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> Disable hostRxTimestampEn flag in CPSW CPST configuration. This does not impact the CPTS Rx or Tx Timestamp Events for PTP packets and is orthogonal feature.
 </tr>
 <tr>
-    <td> MCUSDK-11518
-    <td> IPC: Firewalling error due to Alignment not being per core pair.
-    <td> IPC
-    <td> 09.00.00
-    <td> Firewalling should not be enabled for SafeIPC.
-</tr>
-<tr>
     <td> MCUSDK-10978
     <td> CCS build doesn't support for HS appimages generation
     <td> CCS
@@ -576,12 +562,6 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <th> Affected API
     <th> Change
     <th> Additional Remarks
-</tr>
-<tr>
-    <td> IPC Notify and RPmessage
-    <td> Enabled IPC memory configuration via application to enable firewalling
-    <td> SysConfig based shared memory configutation for IPC notify. IPC RPmessage memory configuration already done via SysConfig.\n Added API IpcNotify_allocSwQueue to update the memory configuration for driver.\n Linker section name changes from ipc_vring_mem to ipc_shared_mem and updated the shared memory size to use the entire mailbox
-    <td> Changes for SysConfig based memory management and new API call are taken care via Syscofnig code generation. Linker file needs to be changed manually. Refer \ref EXAMPLES_DRIVERS_IPC_NOTIFY_ECHO
 </tr>
 <tr>
     <td> IPC Notify

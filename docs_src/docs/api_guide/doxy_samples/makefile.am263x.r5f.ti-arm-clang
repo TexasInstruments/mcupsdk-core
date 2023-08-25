@@ -30,7 +30,7 @@ FILES_common := \
     HeapP_sample.c \
     HwiP_sample.c \
     IpcNotify_sample.c \
-    IpcRPMessage_sample_v1.c \
+    IpcRPMessage_sample.c \
     Mcspi_sample.c \
     Mdio_sample.c \
     MpuP_arm_v7_sample.c \

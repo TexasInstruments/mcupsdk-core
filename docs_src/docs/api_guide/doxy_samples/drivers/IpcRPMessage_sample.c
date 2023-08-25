@@ -10,31 +10,24 @@
 
 /* Below code is for reference, recommened to use SysCfg to generate this code */
 
-#define IPC_RPMESSAGE_NUM_CORES           (2U)
-#define IPC_RPMESSAGE_NUM_VRINGS          (IPC_RPMESSAGE_NUM_CORES*(IPC_RPMESSAGE_NUM_CORES-1))
-#define IPC_RPMESSAGE_NUM_VRING_BUF       (8U)
-#define IPC_RPMESSAGE_MAX_VRING_BUF_SIZE  (128U)
-#define IPC_RPMESSAGE_VRING_SIZE          (RPMESSAGE_VRING_SIZE(IPC_RPMESSAGE_NUM_VRING_BUF, IPC_RPMESSAGE_MAX_VRING_BUF_SIZE))
-#define IPC_RPMESSAGE_MEMORY_SIZE          (IPC_RPMESSAGE_VRING_SIZE * IPC_RPMESSAGE_NUM_VRINGS)
-/* Total Shared memory size used for IPC */
-#define IPC_SHARED_MEM_SIZE               (IPC_RPMESSAGE_MEMORY_SIZE)
+/* Below is common code for all the CPUs participating in this IPC */
 
-/* VRING base address, all VRINGs are put in the below region.
- *
- * IMPORTANT: Make sure of below,
+#define NUM_CPUS            (2u) /* R5FSS0-0 and R5FSS0-1 in this example */
+#define VRING_NUM           (NUM_CPUS*(NUM_CPUS-1))
+#define VRING_NUM_BUF       (8u)
+#define VRING_MAX_MSG_SIZE  (128u)   
+
+/* Size of each VRING is
+ *     number of buffers x ( size of each buffer + space for data structures of one buffer (32B) ) 
+ */ 
+#define VRING_SIZE          RPMESSAGE_VRING_SIZE(VRING_NUM_BUF, VRING_MAX_MSG_SIZE) 
+
+/* Make sure of below,  
  * - The section defined below should be placed at the exact same location in memory for all the CPUs
- * - The memory should be marked as non-cached for all the CPUs
- * - The section should be marked as NOLOAD in all the CPUs linker command file
- */
-uint8_t gIpcSharedMem[IPC_SHARED_MEM_SIZE] __attribute__((aligned(128), section(".bss.ipc_vring_mem")));
-
-/*
- * Driver assume this memory is init to zero in bootloader as it's ECC protected and
- * needs to be intialized only once and to ensure that only one core has done the
- * mailbox ram initialization before ipc_init. If SBL is not used then Gel does the initialization.
- */
-#define IPC_RPMSG_VRING_R5FSS0_0_R5FSS0_1          (uintptr_t)(&gIpcSharedMem[(IPC_SHARED_MEM_SIZE) - (IPC_RPMESSAGE_VRING_SIZE*1U)])
-#define IPC_RPMSG_VRING_R5FSS0_1_R5FSS0_0          (uintptr_t)(&gIpcSharedMem[(IPC_SHARED_MEM_SIZE) - (IPC_RPMESSAGE_VRING_SIZE*2U)])
+ * - the memory should be marked as non-cached for all the CPUs
+ * - the section should be marked as NOLOAD in all the CPUs linker command file
+ */ 
+uint8_t gVringMem[VRING_NUM][VRING_SIZE] __attribute__((aligned(128), section(".bss.sharedmemory")));
 
 //! [shared mem]
 
@@ -68,11 +61,11 @@ void ipc_rpmessage_sample()
     RPMessage_Params initParams;
 
     RPMessage_Params_init(&initParams);
-    initParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS0_1] = IPC_RPMSG_VRING_R5FSS0_0_R5FSS0_1;
-    initParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS0_1] = IPC_RPMSG_VRING_R5FSS0_1_R5FSS0_0;
-    initParams.vringNumBuf = IPC_RPMESSAGE_NUM_VRING_BUF;
-    initParams.vringMsgSize = IPC_RPMESSAGE_MAX_VRING_BUF_SIZE;
-    initParams.vringSize = IPC_RPMESSAGE_VRING_SIZE;
+    initParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS0_1] = (uintptr_t)gVringMem[0];
+    initParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS0_1] = (uintptr_t)gVringMem[1];
+    initParams.vringNumBuf = VRING_NUM_BUF;
+    initParams.vringMsgSize = VRING_MAX_MSG_SIZE;
+    initParams.vringSize = VRING_SIZE;
     status = RPMessage_init(&initParams);
     DebugP_assert(status==SystemP_SUCCESS);
 //! [core0 init]
@@ -89,11 +82,11 @@ void ipc_rpmessage_sample()
     RPMessage_Params initParams;
 
     RPMessage_Params_init(&initParams);
-    initParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS0_0] = IPC_RPMSG_VRING_R5FSS0_1_R5FSS0_0;
-    initParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS0_0] = IPC_RPMSG_VRING_R5FSS0_0_R5FSS0_1;
-    initParams.vringNumBuf = IPC_RPMESSAGE_NUM_VRING_BUF;
-    initParams.vringMsgSize = IPC_RPMESSAGE_MAX_VRING_BUF_SIZE;
-    initParams.vringSize = IPC_RPMESSAGE_VRING_SIZE;
+    initParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS0_0] = (uintptr_t)gVringMem[1];
+    initParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS0_0] = (uintptr_t)gVringMem[0];
+    initParams.vringNumBuf = VRING_NUM_BUF;
+    initParams.vringMsgSize = VRING_MAX_MSG_SIZE;
+    initParams.vringSize = VRING_SIZE;
     status = RPMessage_init(&initParams);
     DebugP_assert(status==SystemP_SUCCESS);
 //! [core1 init]

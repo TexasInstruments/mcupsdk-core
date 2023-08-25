@@ -3,12 +3,8 @@
     let instance = module.$static;
     let selfCpuName = module.getSelfIpcCoreName();
     let enabledCpus = module.getEnabledCpus(instance);
-    let allEnabledCpus = module.getAllEnabledCpus(instance);
     let enabledRPMessageCpus = module.getEnabledRPMessageCpus(instance);
-    let allEnabledRPMessageCpus = module.getAllEnabledRPMessageCpus(instance);
     let implementationVersion = module.getImplementationVersion();
-    let firewallGranularity = module.getFirewallGranularity();
-    let sharedMemAddress = module.getSharedMemAddress();
 %%}
 % if ( enabledCpus.length > 0 || instance.enableLinuxIpc === true || instance.enableMailboxIpc === true) {
 /*
@@ -37,98 +33,28 @@ void IpcNotify_getConfig(IpcNotify_InterruptConfig **interruptConfig, uint32_t *
 
     % if ( enabledRPMessageCpus.length > 0) {
 /* Number of CPUs that are enabled for IPC RPMessage */
-% let rpmsgNumCores = allEnabledRPMessageCpus.length;
-#define IPC_RPMESSAGE_NUM_CORES           (`rpmsgNumCores`U)
+#define IPC_RPMESSAGE_NUM_CORES           (`enabledRPMessageCpus.length+1`U)
 /* Number of VRINGs for the numner of CPUs that are enabled for IPC */
-% let rpmsgNumVrings = (rpmsgNumCores) * (rpmsgNumCores - 1);
 #define IPC_RPMESSAGE_NUM_VRINGS          (IPC_RPMESSAGE_NUM_CORES*(IPC_RPMESSAGE_NUM_CORES-1))
 /* Number of a buffers in a VRING, i.e depth of VRING queue */
-% let rpmsgNumBuf = instance.vringNumBuf;
-#define IPC_RPMESSAGE_NUM_VRING_BUF       (`rpmsgNumBuf`U)
+#define IPC_RPMESSAGE_NUM_VRING_BUF       (`instance.vringNumBuf`U)
 /* Max size of a buffer in a VRING */
-% let rpmsgVringMsgSize = instance.vringMsgSize;
-#define IPC_RPMESSAGE_MAX_VRING_BUF_SIZE  (`rpmsgVringMsgSize`U)
-/* Size of each VRING is :
- *     Number of buffers x ( size of each buffer + space for data structures of one buffer (32B) )
+#define IPC_RPMESSAGE_MAX_VRING_BUF_SIZE  (`instance.vringMsgSize`U)
+/* Size of each VRING is
+ *     number of buffers x ( size of each buffer + space for data structures of one buffer (32B) )
  */
- % let rpmsgVringSize = (rpmsgNumBuf * (rpmsgVringMsgSize + 32)) + 32;
-#define IPC_RPMESSAGE_VRING_SIZE          (RPMESSAGE_VRING_SIZE(IPC_RPMESSAGE_NUM_VRING_BUF, IPC_RPMESSAGE_MAX_VRING_BUF_SIZE))
-/* Total memory size required for RPMSG VRINGS */
-#define IPC_RPMESSAGE_MEMORY_SIZE          (IPC_RPMESSAGE_VRING_SIZE * IPC_RPMESSAGE_NUM_VRINGS)
+#define IPC_RPMESSAGE_VRING_SIZE          RPMESSAGE_VRING_SIZE(IPC_RPMESSAGE_NUM_VRING_BUF, IPC_RPMESSAGE_MAX_VRING_BUF_SIZE)
 
-% if(!instance.enableSafeIpc) {
-/* Total Shared memory size used for IPC */
-#define IPC_SHARED_MEM_SIZE               (IPC_RPMESSAGE_MEMORY_SIZE)
-% } else {
-% let ipcTotalSize = 0, firewallSize = 0;
-% ipcTotalSize = rpmsgVringSize * (allEnabledRPMessageCpus.length - 1);
-% firewallSize = firewallGranularity * Math.trunc(ipcTotalSize / firewallGranularity);
-% if((ipcTotalSize < firewallGranularity) || (ipcTotalSize % firewallGranularity != 0)) {
-    % firewallSize += firewallGranularity;
-% }
-/* Total Alignment padding required for IPC memory */
-#define IPC_FIREWALL_ALIGN_SIZE           (`firewallSize - ipcTotalSize`U * IPC_RPMESSAGE_NUM_CORES)
-/* Total Shared memory size used for IPC */
-#define IPC_SHARED_MEM_SIZE               (IPC_RPMESSAGE_MEMORY_SIZE + IPC_FIREWALL_ALIGN_SIZE)
-% }
-
-/* VRING base address, all VRINGs are put in the below region.
+/* VRING base address, all VRINGs are put one after other in the below region.
  *
  * IMPORTANT: Make sure of below,
  * - The section defined below should be placed at the exact same location in memory for all the CPUs
  * - The memory should be marked as non-cached for all the CPUs
  * - The section should be marked as NOLOAD in all the CPUs linker command file
  */
-uint8_t gIpcSharedMem[IPC_SHARED_MEM_SIZE] __attribute__((aligned(128), section(".bss.ipc_vring_mem")));
+/* In this case gRPMessageVringMem size is `module.getRPMessageVringSize(instance)` bytes */
+uint8_t gRPMessageVringMem[IPC_RPMESSAGE_NUM_VRINGS][IPC_RPMESSAGE_VRING_SIZE] __attribute__((aligned(128), section(".bss.ipc_vring_mem")));
 
-/*
- * Driver assume this memory is init to zero in bootloader as it's ECC protected and
- * needs to be intialized only once and to ensure that only one core has done the
- * mailbox ram initialization before ipc_init. If SBL is not used then Gel does the initialization.
- */
-% if(!instance.enableSafeIpc) {
-    % let counter = 1, coreString ="", vringCount = 0;
-    % for(let coreName1 of allEnabledCpus) {
-        % for(let coreName2 of allEnabledCpus) {
-            % if(coreName1 != coreName2) {
-                % coreString = coreName1.toUpperCase()+"_"+coreName2.toUpperCase();
-                % if((allEnabledRPMessageCpus.indexOf(coreName1) > -1) && (allEnabledRPMessageCpus.indexOf(coreName2) > -1)) {
-#define IPC_RPMSG_VRING_`coreString`          (uintptr_t)(&gIpcSharedMem[(IPC_SHARED_MEM_SIZE) - (IPC_RPMESSAGE_VRING_SIZE*`vringCount+1`U)])
-                    % vringCount++;
-                % }
-                % counter++;
-            % }
-        % }
-    % }
-% } else {
-    % let counter = 1, coreString ="", offset = 0, vringCount = 0;
-    % let ipcTotalSize = 0, firewallSize = 0;
-    % let sharedMemEndAddress = (sharedMemAddress + instance.sharedMemUsed - 1);
-    % let endAddress = sharedMemEndAddress;
-    % let startAddress = 0;
-    % for(let coreName1 of allEnabledCpus) {
-/* `coreName1.toUpperCase()` Firewall End Address =  0x`endAddress.toString(16).toUpperCase()` */
-        % for(let coreName2 of allEnabledCpus) {
-            % if(coreName1 != coreName2) {
-                % coreString = coreName1.toUpperCase()+"_"+coreName2.toUpperCase();
-                % if((allEnabledRPMessageCpus.indexOf(coreName1) > -1) && (allEnabledRPMessageCpus.indexOf(coreName2) > -1)) {
-#define IPC_RPMSG_VRING_`coreString`          (uintptr_t)(&gIpcSharedMem[(IPC_SHARED_MEM_SIZE) - (IPC_RPMESSAGE_VRING_SIZE*`vringCount+1`U) - (`offset`U)])
-                    % vringCount++;
-                % }
-                % counter++;
-            % }
-        % }
-        % ipcTotalSize = rpmsgVringSize * (allEnabledRPMessageCpus.length - 1);
-        % firewallSize = firewallGranularity * Math.trunc(ipcTotalSize / firewallGranularity);
-        % if((ipcTotalSize < firewallGranularity) || (ipcTotalSize % firewallGranularity != 0)) {
-            % firewallSize += firewallGranularity;
-        % }
-        % offset += firewallSize - ipcTotalSize;
-        % startAddress = sharedMemEndAddress - (rpmsgVringSize * vringCount) - offset + 1;
-/* `coreName1.toUpperCase()` Firewall Start Address = 0x`startAddress.toString(16).toUpperCase()` */
-        % endAddress = startAddress - 1;
-    % }
-% }
     % }
     % if (instance.enableLinuxIpc === true ) {
 

@@ -81,7 +81,7 @@ TaskHandle_t gIPCRestartTask;
 uint16_t gRpmsgEndPointId = 7;
 RPMessage_Object gAckReplyMsgObject;
 
-extern uint8_t gIpcSharedMem[IPC_RPMESSAGE_NUM_VRINGS][IPC_RPMESSAGE_VRING_SIZE];
+extern uint8_t gRPMessageVringMem[IPC_RPMESSAGE_NUM_VRINGS][IPC_RPMESSAGE_VRING_SIZE];
 
 void resetReqIsr(void *args)
 {
@@ -268,9 +268,9 @@ void ipcRestartTask(void *args)
                 m4fss0_0 => {"r5fss0_0":1,"m4fss0_0":-1}
             */
             /* TX VRINGs */
-            rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS0_0] = (uintptr_t)gIpcSharedMem[1];
+            rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS0_0] = (uintptr_t)gRPMessageVringMem[1];
             /* RX VRINGs */
-            rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS0_0] = (uintptr_t)gIpcSharedMem[0];
+            rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS0_0] = (uintptr_t)gRPMessageVringMem[0];
             /* Other VRING properties */
             rpmsgParams.vringSize = IPC_RPMESSAGE_VRING_SIZE;
             rpmsgParams.vringNumBuf = IPC_RPMESSAGE_NUM_VRING_BUF;
