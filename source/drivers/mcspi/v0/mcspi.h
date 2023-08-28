@@ -680,6 +680,16 @@ MCSPI_Handle MCSPI_open(uint32_t index, const MCSPI_OpenParams *openPrms);
 void MCSPI_close(MCSPI_Handle handle);
 
 /**
+ *  \brief  Function to return a open'ed MCSPI handle given a MCSPI instance index
+ *
+ *  \param  index       Index of config to use in the *MCSPI_Config* array
+ *
+ *  \return A #MCSPI_Handle on success or a NULL on an error or if the instance
+ *            index has  NOT been opened yet
+ */
+MCSPI_Handle MCSPI_getHandle(uint32_t index);
+
+/**
  *  \brief  Function to configure a MCSPI channel
  *
  *  \param  handle      #MCSPI_Handle returned from #MCSPI_open()

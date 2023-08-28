@@ -12,6 +12,7 @@ const topModules_main = [
       "/board/led/led",
       "/board/flash/flash",
       "/board/ethphy/ethphy",
+      "/board/pmic/pmic"
 ];
 const topModules_mcu = [
 ];

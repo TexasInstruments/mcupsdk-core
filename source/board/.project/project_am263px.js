@@ -17,6 +17,8 @@ const files_r5f = {
         "nor_spi_sfdp.c",
         "ioexp_tca6424.c",
         "ioexp_tca6416.c",
+        "pmic_tps653860xx.c",
+        "pmic.c",
     ],
 };
 
@@ -35,6 +37,7 @@ const filedirs = {
         "flash/ospi",
         "led",
         "ioexp",
+        "pmic",
     ],
 };
 

@@ -76,9 +76,15 @@ function pinmuxRequirements(inst) {
         displayName: "SPI Instance",
         interfaceName: interfaceName,
         resources: resources,
+        filter : inst.pmicEnabled ? getPmicSpiInstance: undefined,
     };
 
     return [spi];
+}
+
+function getPmicSpiInstance(perf)
+{
+    return perf.name === "SPI1";
 }
 
 function getInterfaceName(inst) {
@@ -148,7 +154,7 @@ let mcspi_module = {
     getClockEnableIds,
 };
 
-function addModuleInstances(instance) {
+function addModuleInstances(inst) {
     let modInstances = new Array();
 
     modInstances.push({
@@ -453,6 +459,13 @@ function getConfigurables()
                 },
             ],
             description: "Initial delay for first transfer in bus clock cycles. Applicable only for single controller mode",
+        },
+        {
+            name        : "pmicEnabled",
+            displayName : "PMIC",
+            description : '',
+            hidden      : true,
+            default     : 0
         },
     )
 

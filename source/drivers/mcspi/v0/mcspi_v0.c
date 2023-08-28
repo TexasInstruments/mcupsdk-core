@@ -375,6 +375,27 @@ void MCSPI_close(MCSPI_Handle handle)
     return;
 }
 
+MCSPI_Handle MCSPI_getHandle(uint32_t index)
+{
+    MCSPI_Handle         handle = NULL;
+
+    /* Check index */
+    if(index < gMcspiConfigNum)
+    {
+        MCSPI_Object *object;
+
+        object = gMcspiConfig[index].object;
+
+        if(object && (TRUE == object->isOpen))
+        {
+            /* valid handle */
+            handle = object->handle;
+        }
+    }
+
+    return handle;
+}
+
 int32_t MCSPI_chConfig(MCSPI_Handle handle,
                        const MCSPI_ChConfig *chCfg)
 {
