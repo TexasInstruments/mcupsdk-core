@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.15.0+2826"}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
@@ -16,6 +16,7 @@ const mpu_armv73 = mpu_armv7.addInstance();
 const mpu_armv74 = mpu_armv7.addInstance();
 const mpu_armv75 = mpu_armv7.addInstance();
 const mpu_armv76 = mpu_armv7.addInstance();
+const mpu_armv77 = mpu_armv7.addInstance();
 const RL2        = scripting.addModule("/optiflash/RL2/RL2", {}, false);
 const RL21       = RL2.addInstance();
 
@@ -25,8 +26,8 @@ const RL21       = RL2.addInstance();
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
-debug_log.uartLog.UART.RXD.$assign = "ball.A7";
-debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -60,6 +61,14 @@ mpu_armv76.size         = 14;
 mpu_armv76.allowExecute = false;
 mpu_armv76.attributes   = "NonCached";
 
-RL21.$name      = "RL20";
-RL21.cacheSize  = "RL2_CACHESIZE_128K";
-RL21.l2Sram0Len = 131072;
+mpu_armv77.$name      = "CONFIG_MPU_REGION6";
+mpu_armv77.baseAddr   = 0x60000000;
+mpu_armv77.size       = 27;
+mpu_armv77.attributes = "NonCached";
+
+RL21.$name       = "RL20";
+RL21.cacheSize   = "RL2_CACHESIZE_128K";
+RL21.l2Sram0Len  = 131072;
+RL21.l2Sram0Base = 0x70000000;
+RL21.rangeStart  = 0x60100000;
+RL21.rangeEnd    = 0x60180000;

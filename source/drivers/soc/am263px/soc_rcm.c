@@ -213,26 +213,26 @@ static uint16_t gMcanClkSrcValMap[] =
 
 /**
  * @brief
- *  Mapping Array for QSPI
+ *  Mapping Array for OSPI
  *
  * @details
- *  Mapping Array between Clock mode and Clock Mode Value for QSPI
+ *  Mapping Array between Clock mode and Clock Mode Value for OSPI
  */
-// static uint16_t gQspiClkSrcValMap[] =
-// {
-//     [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
-//     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
-//     [SOC_RcmPeripheralClockSource_WUCPUCLK]                    = 0x000U,
-//     [SOC_RcmPeripheralClockSource_EXT_REFCLK]                  = 0x111U,
-//     [SOC_RcmPeripheralClockSource_RCCLK10M]                    = 0x555U,   //And 0x777U
-//     [SOC_RcmPeripheralClockSource_RCCLK32K]                    = UNSUPPORTED_CLOCK_SOURCE,
-//     [SOC_RcmPeripheralClockSource_CTPS_GENF0]                  = UNSUPPORTED_CLOCK_SOURCE,
-//     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = 0x444U,
-//     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = UNSUPPORTED_CLOCK_SOURCE,
-//     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
-//     [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
-//     [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1]     = 0x333U,
-// };
+static uint16_t gOspiClkSrcValMap[] =
+{
+    [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
+    [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
+    [SOC_RcmPeripheralClockSource_WUCPUCLK]                    = 0x000U,
+    [SOC_RcmPeripheralClockSource_EXT_REFCLK]                  = 0x111U,
+    [SOC_RcmPeripheralClockSource_RCCLK10M]                    = 0x555U,   //And 0x777U
+    [SOC_RcmPeripheralClockSource_RCCLK32K]                    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_CTPS_GENF0]                  = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = 0x444U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1]     = 0x333U,
+};
 
 /**
  * @brief
@@ -907,13 +907,13 @@ static void SOC_rcmGetClkSrcAndDivReg (SOC_RcmPeripheralId periphId,
             *clkSrcVal = gMcanClkSrcValMap[clkSource];
             break;
         }
-        // case SOC_RcmPeripheralId_QSPI0:
-        // {
-        //     *clkSrcReg  = &(ptrMSSRCMRegs->QSPI0_CLK_SRC_SEL);
-        //     *clkdDivReg = &(ptrMSSRCMRegs->QSPI0_CLK_DIV_VAL);
-        //     *clkSrcVal = gQspiClkSrcValMap[clkSource];
-        //     break;
-        // }
+        case SOC_RcmPeripheralId_OSPI0:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->OSPI0_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->OSPI0_CLK_DIV_VAL);
+            *clkSrcVal = gOspiClkSrcValMap[clkSource];
+            break;
+        }
         case SOC_RcmPeripheralId_RTI0:
         {
             *clkSrcReg  = &(ptrMSSRCMRegs->RTI0_CLK_SRC_SEL);
@@ -1313,7 +1313,6 @@ void SOC_rcmSetR5ClockSource(uint32_t r5ClkSrc)
 
 }
 
-
 /**
  *  @b Description
  *  @n
@@ -1462,9 +1461,9 @@ static uint32_t SOC_rcmGetCLKOUTInFrequency(void)
 static uint32_t SOC_rcmGetModuleClkDivVal(uint32_t inFreq, uint32_t outFreq)
 {
     uint32_t moduleClkDivVal;
-
-    DebugP_assert((inFreq % outFreq) == 0);
     moduleClkDivVal = inFreq / outFreq;
+    uint32_t actOutFreq = inFreq / moduleClkDivVal;
+    DebugP_assert(actOutFreq == outFreq);
     moduleClkDivVal--;
     return moduleClkDivVal;
 }
@@ -2194,20 +2193,20 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
             }
             break;
         }
-        //FIXME: Change QSPI TO OSPI. ADD OTHER OSPI RELATED DATA
-        // case SOC_RcmPeripheralId_QSPI0:
-        // {
-        //     if(enable==1)
-        //     {
-        //         ptrMSSRCMRegs->QSPI0_CLK_GATE = CSL_MSS_RCM_QSPI0_CLK_GATE_GATED_RESETVAL;
-        //     }
-        //     else
-        //     if(enable==0)
-        //     {
-        //         ptrMSSRCMRegs->QSPI0_CLK_GATE = CSL_MSS_RCM_QSPI0_CLK_GATE_GATED_MASK;
-        //     }
-        //     break;
-        // }
+        //FIXME: Change OSPI TO OSPI. ADD OTHER OSPI RELATED DATA
+        case SOC_RcmPeripheralId_OSPI0:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->OSPI_CLK_GATE = CSL_MSS_RCM_OSPI_CLK_GATE_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->OSPI_CLK_GATE = CSL_MSS_RCM_OSPI_CLK_GATE_OSPI_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
         case SOC_RcmPeripheralId_RTI0:
         {
             if(enable==1)

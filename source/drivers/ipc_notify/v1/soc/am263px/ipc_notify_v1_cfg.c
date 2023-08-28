@@ -134,7 +134,7 @@ IpcNotify_MailboxConfig gIpcNotifyMailboxConfig[CSL_CORE_ID_MAX][CSL_CORE_ID_MAX
             .writeDoneMailboxBaseAddr = R5FSS0_1_MBOX_WRITE_DONE,
             .readReqMailboxBaseAddr = R5FSS0_1_MBOX_READ_REQ,
             .intrBitPos = R5FSS0_0_MBOX_PROC_BIT_POS,
-            .swQ = NULL,
+            .swQ = R5FSS0_1_TO_R5FSS0_0_SW_QUEUE,
         },
         { /* with R5FSS0_1 */
             .writeDoneMailboxBaseAddr = R5FSS0_1_MBOX_WRITE_DONE,

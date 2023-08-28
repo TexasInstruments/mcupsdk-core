@@ -1129,6 +1129,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Sbl Can Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_can",
+        "location": "../../examples/drivers/boot/sbl_can/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_can",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sbl Can Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_can",
+        "location": "../../examples/drivers/boot/sbl_can/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_can",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Sbl Null Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_null",
         "location": "../../examples/drivers/boot/sbl_null/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -1195,6 +1261,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Sbl Ospi Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_ospi",
+        "location": "../../examples/drivers/boot/sbl_ospi/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_ospi",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sbl Ospi Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_ospi",
+        "location": "../../examples/drivers/boot/sbl_ospi/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_ospi",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Sbl Uart Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_uart",
         "location": "../../examples/drivers/boot/sbl_uart/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -1244,6 +1376,72 @@
             "drivers",
             "boot",
             "sbl_uart",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sbl Uart Uniflash Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_uart_uniflash",
+        "location": "../../examples/drivers/boot/sbl_uart_uniflash/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_uart_uniflash",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sbl Uart Uniflash Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_uart_uniflash",
+        "location": "../../examples/drivers/boot/sbl_uart_uniflash/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_uart_uniflash",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -6145,6 +6343,204 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Ospi Flash Diag Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ospi_flash_diag",
+        "location": "../../examples/drivers/ospi/ospi_flash_diag/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ospi",
+            "ospi_flash_diag",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ospi Flash Diag Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ospi_flash_diag",
+        "location": "../../examples/drivers/ospi/ospi_flash_diag/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ospi",
+            "ospi_flash_diag",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ospi Flash Dma Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ospi_flash_dma",
+        "location": "../../examples/drivers/ospi/ospi_flash_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ospi",
+            "ospi_flash_dma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ospi Flash Dma Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ospi_flash_dma",
+        "location": "../../examples/drivers/ospi/ospi_flash_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ospi",
+            "ospi_flash_dma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ospi Flash Io Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ospi_flash_io",
+        "location": "../../examples/drivers/ospi/ospi_flash_io/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ospi",
+            "ospi_flash_io",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ospi Flash Io Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ospi_flash_io",
+        "location": "../../examples/drivers/ospi/ospi_flash_io/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ospi",
+            "ospi_flash_io",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A  Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
         "name": " pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -6425,6 +6821,70 @@
             "drivers",
             "resolver",
             "resolver_angle_speed",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.rl2"
+        ],
+        "description": "Basic RL2 example. This shows how to setup Remote Layer 2 cache. CPU is R5FSS0-0 running NORTOS.",
+        "name": "rl2",
+        "location": "../../examples/drivers/rl2/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "rl2",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.rl2"
+        ],
+        "description": "Basic RL2 example. This shows how to setup Remote Layer 2 cache. CPU is R5FSS0-0 running NORTOS.",
+        "name": "rl2",
+        "location": "../../examples/drivers/rl2/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "rl2",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [

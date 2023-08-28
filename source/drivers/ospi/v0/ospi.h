@@ -198,6 +198,9 @@ typedef void *OSPI_Handle;
 #define OSPI_CHIP_SELECT(x)   ((~((1U) << (x))) & 0xFU)
 /** @} */
 
+#define OSPI_RESETPIN_DQ3       (0U)
+#define OSPI_RESETPIN_DEDICATED (1U)
+
 /**
 *  \anchor OSPI_DecChipSelect
 *  \name Decoder Chip Selects
@@ -1121,6 +1124,9 @@ int32_t OSPI_norFlashReadSfdp(OSPI_Handle handle, uint32_t offset, uint8_t *buf,
  *  \return #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
  */
 int32_t OSPI_norFlashErase(OSPI_Handle handle, uint32_t address);
+
+int32_t OSPI_configResetPin(OSPI_Handle handle, uint32_t config);
+
 /** @} */
 
 /** @} */

@@ -37,7 +37,7 @@ FLC_RegionInfo gFLCRegionConfig[] =
     {
         .sourceStartAddress         = `flcInst.sourceStartAddress`,
         .destinationStartAddress    = `flcInst.destinationStartAddress`,
-        .sourceEndAddress           = `flcInst.sourceStartAddress + flcInst.copySize * 4096`,
+        .sourceEndAddress           = `flcInst.sourceStartAddress + flcInst.copySize`,
         .regionId                   = `i`,
         .baseAddress                = `baseaddress`
     },

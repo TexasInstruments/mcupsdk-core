@@ -68,74 +68,20 @@ RL2_API_STS_t RL2_configure(RL2_Params *config)
         }
         else
         {
-            /* check if the sum of length of all regions is equal to the size of rl2 cache required */
-            if((config->l2Sram0Len + config->l2Sram1Len + config->l2Sram2Len) != requried_cache_size)
-            {
-                retStatus = (RL2_API_STS_CANNOT_CONFIGURE | RL2_API_STS_WRONG_REGION_CALCULATION);
-            }
-            else
-            {
-                /* check if user is writing to the reserved bits of the registors */
-                if(
-                    (uint32_t)(config->l2Sram0Base & (CSL_RL2_OF_R5FSS0_CORE0_REM_ADR_ADR_LSW_MASK)) != (uint32_t)0 ||
-                    (uint32_t)(config->l2Sram1Base & (CSL_RL2_OF_R5FSS0_CORE0_REM_ADR_ADR_LSW_MASK)) != (uint32_t)0 ||
-                    (uint32_t)(config->l2Sram2Base & (CSL_RL2_OF_R5FSS0_CORE0_REM_ADR_ADR_LSW_MASK)) != (uint32_t)0 ||
-                    (uint32_t)(config->rangeStart & (CSL_RL2_OF_R5FSS0_CORE0_L2_LO_ADDRESS_LO_LSW_MASK)) != (uint32_t)0 ||
-                    (uint32_t)(config->rangeEnd & (CSL_RL2_OF_R5FSS0_CORE0_L2_HI_ADDRESS_HI_LSW_MASK)) != (uint32_t)0 ||
-                    (uint32_t)(config->l2Sram0Len & (CSL_RL2_OF_R5FSS0_CORE0_REM_LEN_LEN_MASK)) != (uint32_t)0 ||
-                    (uint32_t)(config->l2Sram1Len & (CSL_RL2_OF_R5FSS0_CORE0_REM_LEN_LEN_MASK)) != (uint32_t)0 ||
-                    (uint32_t)(config->l2Sram2Len & (CSL_RL2_OF_R5FSS0_CORE0_REM_LEN_LEN_MASK)) != (uint32_t)0
-                )
-                {
-                    retStatus = (RL2_API_STS_CANNOT_CONFIGURE | RL2_API_STS_RESERVED_BIT_WRITE);
-                }
-                else
-                {
-                    /* check if regions are overlapping */
-                    {
-                        uint32_t r1start = config->l2Sram0Base, r2start = config->l2Sram1Base, r3start = config->l2Sram0Base;
-                        uint32_t r1end = r1start + config->l2Sram0Len - (uint32_t)1, r2end = r2start + config->l2Sram1Len - (uint32_t)1, r3end = r3start + config->l2Sram2Len - (uint32_t)1;
-                        uint32_t ranges[][2] = {{r1start, r1end}, {r2start, r2end}, {r3start, r3end}};
-                        for(int i=0;i < (int)(sizeof(ranges)/sizeof(*ranges));i++)
-                        {
-                            for(int j=0;j < (int)(sizeof(ranges)/sizeof(*ranges));j++)
-                            {
-                                if(i==j)
-                                {
-                                    continue;
-                                }
-                                if(ranges[i][0] >= ranges[j][0] && ranges[i][0] <= ranges[j][1])
-                                {
-                                    retStatus = (RL2_API_STS_CANNOT_CONFIGURE | RL2_API_STS_REGIONS_OVERLAPPING);
-                                    break;
-                                }
-                                if(ranges[i][1] >= ranges[j][0] && ranges[i][1] <= ranges[j][1])
-                                {
-                                    retStatus = (RL2_API_STS_CANNOT_CONFIGURE | RL2_API_STS_REGIONS_OVERLAPPING);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    if(retStatus == RL2_API_STS_SUCCESS)
-                    {
-                        CSL_rl2_of_r5fss0_core0Regs *regs;
-                        regs = (CSL_rl2_of_r5fss0_core0Regs*)config->baseAddress;
-                        // set the regions
-                        regs->REM[0].ADR = config->l2Sram0Base;
-                        regs->REM[0].LEN = config->l2Sram0Len;
-                        regs->REM[1].ADR = config->l2Sram1Base;
-                        regs->REM[1].LEN = config->l2Sram1Len;
-                        regs->REM[2].ADR = config->l2Sram2Base;
-                        regs->REM[2].LEN = config->l2Sram2Len;
-                        regs->L2_LO = config->rangeStart;
-                        regs->L2_HI = config->rangeEnd;
-                        regs->L2_CTRL |= CSL_RL2_OF_R5FSS0_CORE0_L2_CTRL_ENABLE_MASK | ((((uint32_t)(config->cacheSize)) << CSL_RL2_OF_R5FSS0_CORE0_L2_CTRL_SIZE_SHIFT) & CSL_RL2_OF_R5FSS0_CORE0_L2_CTRL_SIZE_MASK);
-                        while(regs->L2_STS != CSL_RL2_OF_R5FSS0_CORE0_L2_STS_OK_TO_GO_MASK);
-                    }
-                }
-            }
+            RL2_disable(config);
+            CSL_rl2_of_r5fss0_core0Regs *regs;
+            regs = (CSL_rl2_of_r5fss0_core0Regs*)config->baseAddress;
+            // set the regions
+            regs->REM[0].ADR = config->l2Sram0Base;
+            regs->REM[0].LEN = config->l2Sram0Len;
+            regs->REM[1].ADR = config->l2Sram1Base;
+            regs->REM[1].LEN = config->l2Sram1Len;
+            regs->REM[2].ADR = config->l2Sram2Base;
+            regs->REM[2].LEN = config->l2Sram2Len;
+            regs->L2_LO = config->rangeStart;
+            regs->L2_HI = config->rangeEnd;
+            regs->L2_CTRL |= CSL_RL2_OF_R5FSS0_CORE0_L2_CTRL_ENABLE_MASK | ((((uint32_t)(config->cacheSize)) << CSL_RL2_OF_R5FSS0_CORE0_L2_CTRL_SIZE_SHIFT) & CSL_RL2_OF_R5FSS0_CORE0_L2_CTRL_SIZE_MASK);
+            while(regs->L2_STS != CSL_RL2_OF_R5FSS0_CORE0_L2_STS_OK_TO_GO_MASK);
         }
     }
     return retStatus;
@@ -270,6 +216,32 @@ RL2_API_STS_t RL2_getCacheHits(RL2_Params * config, uint32_t * hits)
         CSL_rl2_of_r5fss0_core0Regs *regs;
         regs = (CSL_rl2_of_r5fss0_core0Regs*)config->baseAddress;
         *hits = regs->L2HC;
+    }
+    return ret;
+}
+
+RL2_API_STS_t RL2_enable(RL2_Params * config)
+{
+    RL2_API_STS_t ret = RL2_API_STS_SUCCESS;
+    if(NULL != config)
+    {
+        CSL_rl2_of_r5fss0_core0Regs *regs;
+        regs = (CSL_rl2_of_r5fss0_core0Regs*)config->baseAddress;
+        regs->L2_CTRL |= CSL_RL2_OF_R5FSS0_CORE0_L2_CTRL_ENABLE_MASK | ((((uint32_t)(config->cacheSize)) << CSL_RL2_OF_R5FSS0_CORE0_L2_CTRL_SIZE_SHIFT) & CSL_RL2_OF_R5FSS0_CORE0_L2_CTRL_SIZE_MASK);
+        ret = RL2_API_STS_SUCCESS;
+    }
+    return ret;
+}
+
+RL2_API_STS_t RL2_disable(RL2_Params * config)
+{
+    RL2_API_STS_t ret = RL2_API_STS_SUCCESS;
+    if(NULL != config)
+    {
+        CSL_rl2_of_r5fss0_core0Regs *regs;
+        regs = (CSL_rl2_of_r5fss0_core0Regs*)config->baseAddress;
+        regs->L2_CTRL &= ~(CSL_RL2_OF_R5FSS0_CORE0_L2_CTRL_ENABLE_MASK);
+        ret = RL2_API_STS_SUCCESS;
     }
     return ret;
 }

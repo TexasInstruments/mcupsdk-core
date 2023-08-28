@@ -245,7 +245,7 @@ FLC_API_STS_t FLC_readIRQStatus(FLC_RegionInfo * const regionInfo, uint32_t *sta
  * @return FLC_API_STS_t
  * @see FLC_Interrupt
  */
-FLC_API_STS_t FLC_setInterrupt(FLC_RegionInfo * const regionInfo, FLC_Interrupt intr);
+FLC_API_STS_t FLC_enableInterrupt(FLC_RegionInfo * const regionInfo, FLC_Interrupt intr);
 
 /**
  * @brief Clear Interrupt for different FLC events.
@@ -256,6 +256,16 @@ FLC_API_STS_t FLC_setInterrupt(FLC_RegionInfo * const regionInfo, FLC_Interrupt 
  * @see FLC_Interrupt
  */
 FLC_API_STS_t FLC_clearInterrupt(FLC_RegionInfo * const regionInfo, FLC_Interrupt intr);
+
+/**
+ * @brief Clear Interrupt for different FLC events.
+ *
+ * @param regionInfo [in] pointer to region info struct
+ * @param intr interrupt which needs to be set.
+ * @return FLC_API_STS_t
+ * @see FLC_Interrupt
+ */
+FLC_API_STS_t FLC_disableInterrupt(FLC_RegionInfo * const regionInfo, FLC_Interrupt intr);
 
 /**
  * @brief Disable a region

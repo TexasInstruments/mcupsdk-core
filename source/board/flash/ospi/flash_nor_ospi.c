@@ -1147,6 +1147,8 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
 
     if(SystemP_SUCCESS == status)
     {
+
+        OSPI_configResetPin(obj->ospiHandle, OSPI_RESETPIN_DEDICATED);
         /* Set device size and addressing bytes */
         OSPI_setDeviceSize(obj->ospiHandle, attrs->pageSize, attrs->blockSize);
 

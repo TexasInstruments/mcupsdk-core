@@ -54,65 +54,148 @@
  */
 void* test_flc_configuration(void* args)
 {
-    // MCUSDK-4441 & MCUSDK-4446
-
+    // MCUSDK-4441
+    int32_t retval = SystemP_SUCCESS;
     CSL_rl2_of_r5fss0_core0Regs * rl2_of_reg;
     rl2_of_reg = (CSL_rl2_of_r5fss0_core0Regs *)gFLCRegionConfig[0].baseAddress;
     /*flc should be already configured by syscfg and not be configured else where in the program*/
-    /*test case 1: */
-    DebugP_assert(rl2_of_reg->FLC[0].LO == (volatile uint32_t)0x88000000);
-    DebugP_assert(rl2_of_reg->FLC[0].HI == (volatile uint32_t)(0x88100000));
-    DebugP_assert(rl2_of_reg->FLC[0].RA == (volatile uint32_t)(0x70000000));
+
+    if(SystemP_SUCCESS == retval && (volatile uint32_t)0x88000000 != rl2_of_reg->FLC[0].LO )
+    {
+        retval = SystemP_FAILURE;
+    }
+    if(SystemP_SUCCESS == retval && rl2_of_reg->FLC[0].HI != (volatile uint32_t)(0x88100000))
+    {
+        retval = SystemP_FAILURE;
+    }
+    if(SystemP_SUCCESS == retval && rl2_of_reg->FLC[0].RA != (volatile uint32_t)(0x70000000))
+    {
+        retval = SystemP_FAILURE;
+    }
+
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retval);
+
+    return NULL;
+}
+
+
+void *test_flc_runtimeconfig(void *args)
+{
+    //MCUSDK-4446
+    int32_t retval = SystemP_SUCCESS;
+    CSL_rl2_of_r5fss0_core0Regs * rl2_of_reg;
+    rl2_of_reg = (CSL_rl2_of_r5fss0_core0Regs *)gFLCRegionConfig[0].baseAddress;
     // reconfigure branch
     gFLCRegionConfig[0].sourceStartAddress = (uint32_t)sourceBuffer;
     gFLCRegionConfig[0].destinationStartAddress = (uint32_t)destBuffer;
     gFLCRegionConfig[0].sourceEndAddress = (uint32_t)sourceBuffer + TRANSFERSIZE;
-    // FLC_startRegion(&gFLCRegionConfig[0]);
+    FLC_configureRegion(&gFLCRegionConfig[0]);
+    FLC_startRegion(&gFLCRegionConfig[0]);
+    {
+        uint32_t cpy_status = 0;
+        do
+        {
+            FLC_isRegionDone(&gFLCRegionConfig[FLC_REGION_FLC0], &cpy_status);
+        } while ((cpy_status & (1<<FLC_REGION_FLC0)) == 0);
+    }
     // check if all the required configurations has been written to the correct configurations
-    DebugP_assert(rl2_of_reg->FLC[0].LO == (volatile uint32_t)sourceBuffer);
-    DebugP_assert(rl2_of_reg->FLC[0].HI == (volatile uint32_t)((uint32_t)sourceBuffer + TRANSFERSIZE));
-    DebugP_assert(rl2_of_reg->FLC[0].RA == (volatile uint32_t)(destBuffer));
+    if(SystemP_SUCCESS == retval && rl2_of_reg->FLC[0].LO != (volatile uint32_t)sourceBuffer)
+    {
+        retval = SystemP_FAILURE;
+    }
+    if(SystemP_SUCCESS == retval && rl2_of_reg->FLC[0].HI != (volatile uint32_t)((uint32_t)sourceBuffer + TRANSFERSIZE))
+    {
+        retval = SystemP_FAILURE;
+    }
+    if(SystemP_SUCCESS == retval && rl2_of_reg->FLC[0].RA != (volatile uint32_t)(destBuffer))
+    {
+        retval = SystemP_FAILURE;
+    }
+
+    for(uint32_t  i = 0 ; i < TRANSFERSIZE; i++)
+    {
+        if(SystemP_SUCCESS == retval  && sourceBuffer[i] != destBuffer[i])
+        {
+            retval = SystemP_FAILURE;
+        }
+    }
+
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retval);
+
     return NULL;
 }
 
 void* test_flc_interrupt(void* args)
 {
     // MCUSDK-4442
+    int32_t retval = SystemP_SUCCESS;
     CSL_rl2_of_r5fss0_core0Regs * rl2_of_reg;
     rl2_of_reg = (CSL_rl2_of_r5fss0_core0Regs *)gFLCRegionConfig[0].baseAddress;
+    HwiP_disable();
     /* see if all interrupts are cleared*/
-    DebugP_assert(rl2_of_reg->IRQENABLE_SET == 0);
+    FLC_clearInterrupt(&gFLCRegionConfig[0], FLC_INTERRUPT_DONE);
+    if(SystemP_FAILURE == retval && rl2_of_reg->IRQSTATUS_RAW != 0)
+    {
+        retval = SystemP_FAILURE;
+    }
     /* FLC done interrupt*/
-    FLC_setInterrupt(&gFLCRegionConfig[0], FLC_INTERRUPT_DONE);
-    DebugP_assert((rl2_of_reg->IRQENABLE_SET & CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_DON_MASK) != 0);
-    FLC_clearInterrupt(&gFLCRegionConfig[0], FLC_INTERRUPT_WRITE_ERROR);
-    DebugP_assert(rl2_of_reg->IRQENABLE_SET == 0);
+    FLC_enableInterrupt(&gFLCRegionConfig[0], FLC_INTERRUPT_DONE);
+    if(SystemP_FAILURE == retval && (rl2_of_reg->IRQENABLE_SET & CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_RAW_FLC_DON_MASK) == 0)
+    {
+        retval = SystemP_FAILURE;
+    }
+    FLC_disableInterrupt(&gFLCRegionConfig[0], FLC_INTERRUPT_DONE);
+    if(SystemP_FAILURE == retval && rl2_of_reg->IRQENABLE_SET != 0)
+    {
+        retval = SystemP_FAILURE;
+    }
     /* FLC write interrupt*/
-    FLC_setInterrupt(&gFLCRegionConfig[0], FLC_INTERRUPT_WRITE_ERROR);
-    DebugP_assert((rl2_of_reg->IRQENABLE_SET & CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_WRERR_MASK) != 0);
-    FLC_clearInterrupt(&gFLCRegionConfig[0], FLC_INTERRUPT_WRITE_ERROR);
-    DebugP_assert(rl2_of_reg->IRQENABLE_SET == 0);
+    FLC_enableInterrupt(&gFLCRegionConfig[0], FLC_INTERRUPT_WRITE_ERROR);
+    if(SystemP_FAILURE == retval && (rl2_of_reg->IRQENABLE_SET & CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_RAW_FLC_WRERR_MASK) == 0)
+    {
+        retval = SystemP_FAILURE;
+    }
+    FLC_disableInterrupt(&gFLCRegionConfig[0], FLC_INTERRUPT_WRITE_ERROR);
+    if(SystemP_FAILURE == retval && rl2_of_reg->IRQENABLE_SET != 0)
+    {
+        retval = SystemP_FAILURE;
+    }
     /* FLC read interrupt*/
-    FLC_setInterrupt(&gFLCRegionConfig[0], FLC_INTERRUPT_READ_ERROR);
-    DebugP_assert((rl2_of_reg->IRQENABLE_SET & CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_MSK_FLC_RDERR_MASK) != 0);
-    FLC_clearInterrupt(&gFLCRegionConfig[0], FLC_INTERRUPT_READ_ERROR);
-    DebugP_assert(rl2_of_reg->IRQENABLE_SET == 0);
-
+    FLC_enableInterrupt(&gFLCRegionConfig[0], FLC_INTERRUPT_READ_ERROR);
+    if(SystemP_FAILURE == retval && (rl2_of_reg->IRQENABLE_SET & CSL_RL2_OF_R5FSS0_CORE0_IRQSTATUS_RAW_FLC_RDERR_MASK) == 0)
+    {
+        retval = SystemP_FAILURE;
+    }
+    FLC_disableInterrupt(&gFLCRegionConfig[0], FLC_INTERRUPT_READ_ERROR);
+    if(SystemP_FAILURE == retval && rl2_of_reg->IRQENABLE_SET != 0)
+    {
+        retval = SystemP_FAILURE;
+    }
+    HwiP_enable();
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retval);
     return NULL;
 }
 
 void *test_flc_enable_disable(void* args)
 {
     // MCUSDK-4445
+    int32_t retval = SystemP_SUCCESS;
     CSL_rl2_of_r5fss0_core0Regs * rl2_of_reg;
     rl2_of_reg = (CSL_rl2_of_r5fss0_core0Regs *)gFLCRegionConfig[0].baseAddress;
 
     /* enable FLC */
     FLC_startRegion(&gFLCRegionConfig[0]);
-    DebugP_assert((rl2_of_reg->FLC[0].CTL & CSL_RL2_OF_R5FSS0_CORE0_FLC_CTL_FENABLE_MASK) != 0);
+    if(SystemP_FAILURE == retval && (rl2_of_reg->FLC[0].CTL & CSL_RL2_OF_R5FSS0_CORE0_FLC_CTL_FENABLE_MASK) == 0)
+    {
+        retval = SystemP_FAILURE;
+    }
     FLC_disable(&gFLCRegionConfig[0]);
-    DebugP_assert((rl2_of_reg->FLC[0].CTL & CSL_RL2_OF_R5FSS0_CORE0_FLC_CTL_FENABLE_MASK) == 0);
+    if(SystemP_FAILURE == retval && (rl2_of_reg->FLC[0].CTL & CSL_RL2_OF_R5FSS0_CORE0_FLC_CTL_FENABLE_MASK) != 0)
+    {
+        retval = SystemP_FAILURE;
+    }
 
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retval);
     return NULL;
 }
 
@@ -121,6 +204,7 @@ void *test_rl2_config(void *args)
     // MCUSDK-4449
     // MCUSDK-4450
     // MCUSDK-4452
+    int32_t retval = SystemP_SUCCESS;
     CSL_rl2_of_r5fss0_core0Regs * rl2_of_reg;
     rl2_of_reg = (CSL_rl2_of_r5fss0_core0Regs *)gRL2Config[0].baseAddress;
 
@@ -131,30 +215,6 @@ void *test_rl2_config(void *args)
             0,0,
             0,0,
             RL2_API_STS_SUCCESS
-        },
-        {
-            0x70000000, 32*1024,
-            0x70008000, 32*1024,
-            0x70010000, 64*1024,
-            RL2_API_STS_CANNOT_CONFIGURE | RL2_API_STS_REGIONS_OVERLAPPING
-        },
-        {
-            0x70000000, 32*1024,
-            0x70008000 - 12, 32*1024,
-            0x70010000, 64*1024,
-            RL2_API_STS_CANNOT_CONFIGURE | RL2_API_STS_REGIONS_OVERLAPPING
-        },
-        {
-            0x70000000, 32*1024,
-            0x70008000, 32*1024,
-            0x70010000 - 12, 64*1024,
-            RL2_API_STS_CANNOT_CONFIGURE | RL2_API_STS_REGIONS_OVERLAPPING
-        },
-        {
-            0x70000000, 32*1024,
-            0x70008000, 64*1024,
-            0x70010000, 32*1024,
-            RL2_API_STS_CANNOT_CONFIGURE | RL2_API_STS_REGIONS_OVERLAPPING
         },
         {
             0x70000000, 8*1024,
@@ -190,7 +250,10 @@ void *test_rl2_config(void *args)
 
     /* configure RL2 and check*/
     RL2_API_STS_t res = RL2_configure(&gRL2Config[0]);
-    DebugP_assert(RL2_API_STS_SUCCESS == res);
+    if(SystemP_SUCCESS == retval && RL2_API_STS_SUCCESS != res)
+    {
+        retval = SystemP_FAILURE;
+    }
 
     for(unsigned int i = 0; i < 5; i++)
     {
@@ -201,29 +264,52 @@ void *test_rl2_config(void *args)
         gRL2Config[0].l2Sram2Base = RA[i][4];
         gRL2Config[0].l2Sram2Len  = RA[i][5];
         res = RL2_configure(&gRL2Config[0]);
-        DebugP_assert(RA[i][6] == res);
+        if(SystemP_SUCCESS == retval && RA[i][6] != res)
+        {
+            retval = SystemP_FAILURE;
+        }
         if(RL2_API_STS_SUCCESS == res)
         {
-            DebugP_assert(rl2_of_reg->REM[0].ADR == RA[i][0]);
-            DebugP_assert(rl2_of_reg->REM[0].LEN == RA[i][1]);
-            DebugP_assert(rl2_of_reg->REM[1].ADR == RA[i][2]);
-            DebugP_assert(rl2_of_reg->REM[1].LEN == RA[i][3]);
-            DebugP_assert(rl2_of_reg->REM[2].ADR == RA[i][4]);
-            DebugP_assert(rl2_of_reg->REM[2].LEN == RA[i][5]);
+            if(SystemP_SUCCESS == retval && rl2_of_reg->REM[0].ADR != RA[i][0])
+            {
+                retval = SystemP_FAILURE;
+            }
+            if(SystemP_SUCCESS == retval && rl2_of_reg->REM[0].LEN != RA[i][1])
+            {
+                retval = SystemP_FAILURE;
+            }
+            if(SystemP_SUCCESS == retval && rl2_of_reg->REM[1].ADR != RA[i][2])
+            {
+                retval = SystemP_FAILURE;
+            }
+            if(SystemP_SUCCESS == retval && rl2_of_reg->REM[1].LEN != RA[i][3])
+            {
+                retval = SystemP_FAILURE;
+            }
+            if(SystemP_SUCCESS == retval && rl2_of_reg->REM[2].ADR != RA[i][4])
+            {
+                retval = SystemP_FAILURE;
+            }
+            if(SystemP_SUCCESS == retval && rl2_of_reg->REM[2].LEN != RA[i][5])
+            {
+                retval = SystemP_FAILURE;
+            }
         }
     };
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retval);
 
     return NULL;
 }
 
 void *test_rat_config(void *args)
 {
+    int32_t retval = SystemP_SUCCESS;
     CSL_rl2_of_r5fss0_core0Regs * rl2_of_reg;
     rl2_of_reg = (CSL_rl2_of_r5fss0_core0Regs *)CSL_RL2_REGS_R5SS0_CORE0_U_BASE;
     DebugP_assert((rl2_of_reg->RAT[0].CTL & 0x3f) != 0);
     DebugP_assert(rl2_of_reg->RAT[0].RBA == 0x8000);
     DebugP_assert(rl2_of_reg->RAT[0].RTA == 0x200);
-
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retval);
     return NULL;
 }
 

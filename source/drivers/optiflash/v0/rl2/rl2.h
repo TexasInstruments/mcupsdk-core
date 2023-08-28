@@ -177,6 +177,24 @@ RL2_API_STS_t RL2_configure(RL2_Params *config);
  */
 RL2_API_STS_t RL2_initparams(RL2_Params * config);
 
+
+/**
+ * @brief Enable RL2
+ *
+ * @param config [inout] pointer to RL2_Params object
+ * @return RL2_API_STS_t
+ */
+RL2_API_STS_t RL2_enable(RL2_Params * config);
+
+
+/**
+ * @brief disable RL2
+ *
+ * @param config [inout] pointer to RL2_Params object
+ * @return RL2_API_STS_t
+ */
+RL2_API_STS_t RL2_disable(RL2_Params * config);
+
 /**
  * @brief set RL2 related interrupts
  *

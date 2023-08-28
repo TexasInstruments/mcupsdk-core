@@ -28,7 +28,6 @@ const device_defines = {
 };
 
 const example_file_list = [
-    "examples/drivers/rl2/.project/project_nortos_am263px.js",
 	"examples/drivers/adc/adc_burst_mode_epwm/.project/project.js",
 	"examples/drivers/adc/adc_burst_mode_oversampling/.project/project.js",
 	"examples/drivers/adc/adc_differential_mode/.project/project.js",
@@ -48,8 +47,10 @@ const example_file_list = [
 	"examples/drivers/adc/adc_sw_interleaved_averaging/.project/project.js",
 	"examples/drivers/boot/sbl_can/.project/project.js",
 	"examples/drivers/boot/sbl_null/.project/project.js",
+    // "examples/drivers/boot/sbl_jtag_uniflash/.project/project.js",
 	"examples/drivers/boot/sbl_ospi/.project/project.js",
 	"examples/drivers/boot/sbl_uart/.project/project.js",
+    "examples/drivers/boot/sbl_uart_uniflash/.project/project.js",
 	"examples/drivers/cmpss/cmpss_asynchronous_trip/.project/project.js",
 	"examples/drivers/dac/dac_constant_voltage/.project/project.js",
 	"examples/drivers/dac/dac_ramp_wave/.project/project.js",
@@ -109,6 +110,7 @@ const example_file_list = [
 	"examples/drivers/ospi/ospi_flash_io/.project/project.js",
 	"examples/drivers/pmu/pmu_multievent/.project/project.js",
 	"examples/drivers/resolver/resolver_angle_speed/.project/project.js",
+    "examples/drivers/rl2/.project/project_nortos_am263px.js",
 	"examples/drivers/rti/rti_led_blink/.project/project.js",
 	"examples/drivers/sdfm/sdfm_epwm_sync_cpuread/.project/project.js",
 	"examples/drivers/sdfm/sdfm_filter_sync_cpuread/.project/project.js",

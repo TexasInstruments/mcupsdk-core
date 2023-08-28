@@ -40,6 +40,11 @@
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
     = HSMRT_IMG;
 
+
+extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
+
+void flashFixUpOspiBoot(OSPI_Handle oHandle, Flash_Handle fHandle);
+
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
  * with debugger connected.
@@ -57,7 +62,7 @@ int main(void)
 
     Bootloader_profileReset();
     Bootloader_socConfigurePll();
-    Bootloader_socInitL2MailBoxMemory();
+    Bootloader_socSetAutoClock();
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");
@@ -67,9 +72,16 @@ int main(void)
 
     DebugP_log("\r\n");
     Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socInitL2MailBoxMemory();
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
     DebugP_log("Starting OSPI Bootloader ... \r\n");
+
+    /* ROM doesn't reset the OSPI flash. This can make the flash initialization
+    troublesome because sequences are very different in Octal DDR mode. So for a
+    moment switch OSPI controller to 8D mode and do a flash reset. */
+    flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0], NULL);
+
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
@@ -161,4 +173,14 @@ int main(void)
     System_deinit();
 
     return 0;
+}
+void flashFixUpOspiBoot(OSPI_Handle oHandle, Flash_Handle fHandle)
+{
+    OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(8,8,8,1));
+    OSPI_enableDDR(oHandle);
+    OSPI_setDualOpCodeMode(oHandle);
+    Flash_reset(fHandle);
+    OSPI_enableSDR(oHandle);
+    OSPI_clearDualOpCodeMode(oHandle);
+    OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));
 }

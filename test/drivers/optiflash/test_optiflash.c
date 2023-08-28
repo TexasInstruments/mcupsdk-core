@@ -69,15 +69,21 @@ uint8_t __attribute__((aligned(4*1024), section(".data.flashSrcBuffer"))) source
 
 uint8_t destBuffer[TRANSFERSIZE];
 
-void* test_flc_configuration(void*);
-
 void test_main(void *args)
 {
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     UNITY_BEGIN();
 
-    RUN_TEST((UnityTestFunction)test_flc_configuration, 0, NULL);
+    RUN_TEST((UnityTestFunction)test_flc_configuration, 4441, NULL);
+    RUN_TEST((UnityTestFunction)test_flc_runtimeconfig, 4446, NULL);
+    RUN_TEST((UnityTestFunction)test_flc_interrupt, 4442, NULL);
+    RUN_TEST((UnityTestFunction)test_flc_enable_disable, 4445, NULL);
+    RUN_TEST((UnityTestFunction)test_rl2_config, 4449, NULL);
+    RUN_TEST((UnityTestFunction)test_rl2_config, 4450, NULL);
+    RUN_TEST((UnityTestFunction)test_rl2_config, 4452, NULL);
+    // RUN_TEST((UnityTestFunction)test_rat_config, 4455, NULL);
+    // RUN_TEST((UnityTestFunction)test_rat_config, 4456, NULL);
 
     UNITY_END();
     Drivers_close();

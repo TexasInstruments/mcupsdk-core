@@ -41,7 +41,7 @@ function getDefaultFlashConfig()
 function getDefaultProtocol()
 {
     if(system.deviceData.device == "AM263Px") {
-        return { name : "1s_1s_8s", displayName : "1S-1S-8D" };
+        return { name : "1s_1s_8s", displayName : "1S-1S-8S" };
     } else {
         return { name : "4s_4d_4d", displayName : "4S-4D-4D" };
     }

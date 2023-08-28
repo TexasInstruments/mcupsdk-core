@@ -5,16 +5,16 @@ let ospi_input_clk_freq = 133333333;
 const ospi_config_r5fss = [
     {
         name            : "OSPI0",
-        baseAddr        : "CSL_FLASH_CONFIG_REG0_U_BASE",
+        baseAddr        : "CSL_FLASH_CONFIG_REG8_U_BASE",
         dataBaseAddr    : "CSL_FLASH_DATA_REG0_U_BASE",
         inputClkFreq    : ospi_input_clk_freq,
         dacEnable       : false,
         baudRateDiv     : 4,
         intrNum         : 171,
-        clockIds        : [ "SOC_RcmPeripheralId_QSPI0" ],
+        clockIds        : [ "SOC_RcmPeripheralId_OSPI0" ],
         clockFrequencies: [
             {
-                moduleId: "SOC_RcmPeripheralId_QSPI0",
+                moduleId: "SOC_RcmPeripheralId_OSPI0",
                 clkId   : "SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0",
                 clkRate : ospi_input_clk_freq,
             },

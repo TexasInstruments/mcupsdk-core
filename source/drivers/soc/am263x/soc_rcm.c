@@ -79,7 +79,17 @@ const SOC_RcmADPLLJConfig_t gADPLLJConfigTbl[] =
         .M = 768U,
         .FracM = 0U,
     },
+    /* PER_800_25MHz */
+    {
+        .Finp = 25U,
+        .N = 11U,
+        .Fout = 800U,
+        .M2 = 1U,
+        .M = 384U,
+        .FracM = 0U,
+    },
 };
+
 
 const SOC_RcmXTALInfo gXTALInfo[] =
 {

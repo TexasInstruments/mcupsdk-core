@@ -286,9 +286,9 @@ typedef enum SOC_RcmPeripheralId_e
      */
     SOC_RcmPeripheralId_MCAN3,
     /**
-     * \brief   Value specifying QSPI0
+     * \brief   Value specifying OSPI0
      */
-    SOC_RcmPeripheralId_QSPI0,
+    SOC_RcmPeripheralId_OSPI0,
     /**
      * \brief   Value specifying RTI0
      */
@@ -715,6 +715,11 @@ void SOC_rcmR5ConfigLockStep(uint32_t cpuId);
  * \param cpuId [in] Cpu Id. Refer \ref CSL_CoreID for applicable values.
  */
 void SOC_rcmR5ConfigDualCore(uint32_t cpuId);
+
+/**
+ * \brief Set R5 clock source
+ */
+extern void SOC_rcmSetR5ClockSource(uint32_t r5ClkSrc);
 
 /**
  *  \brief Trigger R5 core reset

@@ -49,6 +49,8 @@ SECTIONS
         .text:abort: palign(8) /* this helps in loading symbols when using XIP mode */
     } > OCRAM
 
+    .text.loadFunction : {} > FLASH
+
     /* This is rest of code. This can be placed in DDR if DDR is available and needed */
     GROUP {
         .text:   {} palign(8)   /* This is where code resides */

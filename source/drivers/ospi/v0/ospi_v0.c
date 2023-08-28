@@ -1122,7 +1122,7 @@ int32_t OSPI_readCmd(OSPI_Handle handle, OSPI_ReadCmdParams *rdParams)
         /* do nothing */
     }
 
-    if(rdParams->cmdAddr != OSPI_CMD_INVALID_ADDR && rdParams->numAddrBytes > 0)
+    if((rdParams->cmdAddr != OSPI_CMD_INVALID_ADDR) && (rdParams->numAddrBytes > 0))
     {
         /* Enable Command address in command control register */
         CSL_REG32_FINS(&pReg->FLASH_CMD_CTRL_REG, OSPI_FLASH_CFG_FLASH_CMD_CTRL_REG_ENB_COMD_ADDR_FLD, TRUE);
@@ -1396,8 +1396,7 @@ int32_t OSPI_writeCmd(OSPI_Handle handle, OSPI_WriteCmdParams *wrParams)
 
 int32_t OSPI_writeDirect(OSPI_Handle handle, OSPI_Transaction *trans)
 {
-    /* Direct write is not supported in the xSPI, will implement this when suitable flash comes */
-       int32_t status = SystemP_SUCCESS;
+    int32_t status = SystemP_SUCCESS;
     const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
     // OSPI_Object *obj = ((OSPI_Config *)handle)->object;
     const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)(attrs->baseAddr);
@@ -2026,4 +2025,35 @@ static void OSPI_isr(void *args)
 {
     /* TODO */
     return ;
+}
+
+int32_t OSPI_configResetPin(OSPI_Handle handle, uint32_t config)
+{
+    int32_t status = SystemP_SUCCESS;
+
+    if(NULL != handle)
+    {
+        const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
+        const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)(attrs->baseAddr);
+
+        switch(config)
+        {
+            case OSPI_RESETPIN_DQ3:
+                CSL_REG32_FINS(&pReg->CONFIG_REG,
+                                OSPI_FLASH_CFG_CONFIG_REG_RESET_CFG_FLD,
+                                FALSE);
+                break;
+            case OSPI_RESETPIN_DEDICATED:
+            default:
+                CSL_REG32_FINS(&pReg->CONFIG_REG,
+                                OSPI_FLASH_CFG_CONFIG_REG_RESET_CFG_FLD,
+                                TRUE);
+        }
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
 }
