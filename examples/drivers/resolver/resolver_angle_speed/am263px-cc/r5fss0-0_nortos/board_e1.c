@@ -32,16 +32,30 @@
 
 #include <stdint.h>
 
-#include <board/ioexp/ioexp_tca6424.h>
+#include <board/ioexp/ioexp_tca6416.h>
 
 #define IO_MUX_ADC1_MUX_SEL_PORT_LINE (14)      // PORT 1, PIN 6    -> ioIndex : 1*8 + 6 = 14
+#define IO_MUX_ADC1_MUX_SEL_PORT_LINE_STATE (TCA6416_OUT_STATE_HIGH)
+
 #define IO_MUX_ADC2_MUX_SEL_PORT_LINE (15)      // PORT 1, PIN 7    -> ioIndex : 1*8 + 7 = 15
+#define IO_MUX_ADC2_MUX_SEL_PORT_LINE_STATE (TCA6416_OUT_STATE_LOW)
+
 #define IO_MUX_ADC3_MUX_SEL_PORT_LINE (5)       // PORT 0, PIN 5    -> ioIndex : 0*8 + 5 = 5
+#define IO_MUX_ADC3_MUX_SEL_PORT_LINE_STATE (TCA6416_OUT_STATE_LOW)
+
 #define IO_MUX_ADC4_MUX_SEL_PORT_LINE (6)       // PORT 0, PIN 6    -> ioIndex : 0*8 + 6 = 6
-#define IO_MUX_PORT_LINES (4)
+#define IO_MUX_ADC4_MUX_SEL_PORT_LINE_STATE (TCA6416_OUT_STATE_HIGH)
+
+#define IO_MUX_ADC5_MUX_SEL_PORT_LINE (8)       // PORT 1, PIN 0    -> ioIndex : 1*8 + 0 = 8
+#define IO_MUX_ADC5_MUX_SEL_PORT_LINE_STATE (TCA6416_OUT_STATE_HIGH)
+
+#define IO_MUX_ICSSM2_MUX_SEL_PORT_LINE (3)      // PORT 0, PIN 3    -> ioIndex : 0*8 + 3 = 3
+#define IO_MUX_ICSSM2_MUX_SEL_PORT_LINE_STATE (TCA6416_OUT_STATE_HIGH)
+
+#define IO_MUX_PORT_LINES (6)
 
 
-void App_TCA6424_Params_init(TCA6424_Params *params)
+void App_TCA6416_Params_init(TCA6416_Params *params)
 {
     if(NULL != params)
     {
@@ -52,42 +66,54 @@ void App_TCA6424_Params_init(TCA6424_Params *params)
     return;
 }
 
-static void i2c_io_expander_resolver_adc(void* args)
+void i2c_io_expander_resolver_adc()
 {
-    static TCA6424_Config  gTCA6424_Config;
+    static TCA6416_Config  gTCA6416_Config;
     int32_t             status = SystemP_SUCCESS;
-    TCA6424_Params      tca6424Params;
-    App_TCA6424_Params_init(&tca6424Params);
-    status = TCA6424_open(&gTCA6424_Config, &tca6424Params);
-    uint32_t            ioIndex[IO_MUX_PORT_LINES] = {
+    TCA6416_Params      tca6416Params;
+    App_TCA6416_Params_init(&tca6416Params);
+    status = TCA6416_open(&gTCA6416_Config, &tca6416Params);
+    uint32_t ioIndex[IO_MUX_PORT_LINES] = {
         IO_MUX_ADC1_MUX_SEL_PORT_LINE,
         IO_MUX_ADC2_MUX_SEL_PORT_LINE,
         IO_MUX_ADC3_MUX_SEL_PORT_LINE,
         IO_MUX_ADC4_MUX_SEL_PORT_LINE,
+        IO_MUX_ADC5_MUX_SEL_PORT_LINE,
+        IO_MUX_ICSSM2_MUX_SEL_PORT_LINE,
+    };
+    uint32_t ioIndex_state[IO_MUX_PORT_LINES] = {
+        IO_MUX_ADC1_MUX_SEL_PORT_LINE_STATE,
+        IO_MUX_ADC2_MUX_SEL_PORT_LINE_STATE,
+        IO_MUX_ADC3_MUX_SEL_PORT_LINE_STATE,
+        IO_MUX_ADC4_MUX_SEL_PORT_LINE_STATE,
+        IO_MUX_ADC5_MUX_SEL_PORT_LINE_STATE,
+        IO_MUX_ICSSM2_MUX_SEL_PORT_LINE_STATE,
     };
 
-    for(int iter = 0; iter<=IO_MUX_PORT_LINES; iter++ )
+    for(int iter = 0; iter < IO_MUX_PORT_LINES; iter++ )
     {
         uint32_t index = ioIndex[iter];
+        uint32_t state = ioIndex_state[iter];
 
         if(status == SystemP_SUCCESS)
         {
-            status = TCA6424_setOutput(
-                            &gTCA6424_Config,
+            DebugP_log("index : %d\r\n", index);
+            status = TCA6416_setOutput(
+                            &gTCA6416_Config,
                             index,
-                            TCA6424_OUT_STATE_HIGH);
+                            state);
             /* Configure as output  */
-            status += TCA6424_config(
-                            &gTCA6424_Config,
+            status += TCA6416_config(
+                            &gTCA6416_Config,
                             index,
-                            TCA6424_MODE_OUTPUT);
+                            TCA6416_MODE_OUTPUT);
         }
         else
         {
-            DebugP_log("failure to Select RESOLVER ADC Mux lines");
-            TCA6424_close(&gTCA6424_Config);
+            DebugP_log("failure to Select RESOLVER ADC Mux lines, index : %d\r\n", index);
+            TCA6416_close(&gTCA6416_Config);
         }
     }
 
-    TCA6424_close(&gTCA6424_Config);
+    TCA6416_close(&gTCA6416_Config);
 }

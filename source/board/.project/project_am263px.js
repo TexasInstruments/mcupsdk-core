@@ -16,6 +16,7 @@ const files_r5f = {
         "led_tpic2810.c",
         "nor_spi_sfdp.c",
         "ioexp_tca6424.c",
+        "ioexp_tca6416.c",
     ],
 };
 

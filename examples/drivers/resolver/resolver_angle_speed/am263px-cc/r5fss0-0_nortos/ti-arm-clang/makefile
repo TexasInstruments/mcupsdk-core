@@ -34,7 +34,7 @@ BOOTIMAGE_RPRC_NAME_TMP:=resolver_angle_speed.$(PROFILE).rprc_tmp
 FILES_common := \
 	resolver_angle_speed.c \
 	main.c \
-	board.c \
+	board_e1.c \
 	sw_track2.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \

@@ -92,11 +92,11 @@ void RDC_coreParamsInit(Core_config_t* coreParams)
 #define RDC_IDEALSAMPLE_PARAM2_RESET_PARAM_VALUE    (7U)
 #define RDC_DC_PARAM3_RESET_PARAM_VALUE             (2U)
 #define RDC_PG_PARAM4_RESET_PARAM_VALUE             (16384U)
-#define RDC_T2_PARAM5_RESET_PARAM_VALUE             (6U)
-#define RDC_T2_PARAM6_RESET_PARAM_VALUE             (64U)
-#define RDC_T2_PARAM7_RESET_PARAM_VALUE             (10U)
-#define RDC_T2_PARAM8_RESET_PARAM_VALUE             (7U)
-#define RDC_T2_PARAM9_RESET_PARAM_VALUE             (FALSE)
+#define RDC_T2_PARAM5_RESET_PARAM_VALUE             (6U)    // kffw         cfg2
+#define RDC_T2_PARAM6_RESET_PARAM_VALUE             (64U)   // ki           cfg1
+#define RDC_T2_PARAM7_RESET_PARAM_VALUE             (10U)   // kpdiv        cfg3
+#define RDC_T2_PARAM8_RESET_PARAM_VALUE             (7U)    // vboost coef  cfg3
+#define RDC_T2_PARAM9_RESET_PARAM_VALUE             (FALSE) // boost vel    cfg2
 
 void RDC_BaselineParametersInit(uint32_t base)
 {
@@ -105,14 +105,64 @@ void RDC_BaselineParametersInit(uint32_t base)
     params.IdealParam2 = RDC_IDEALSAMPLE_PARAM2_RESET_PARAM_VALUE;
     params.DcParam3    = RDC_DC_PARAM3_RESET_PARAM_VALUE;
     params.PgParam4    = RDC_PG_PARAM4_RESET_PARAM_VALUE;
-    params.t2Param5    = RDC_T2_PARAM5_RESET_PARAM_VALUE;
-    params.t2Param6    = RDC_T2_PARAM6_RESET_PARAM_VALUE;
-    params.t2Param7    = RDC_T2_PARAM7_RESET_PARAM_VALUE;
-    params.t2Param8    = RDC_T2_PARAM8_RESET_PARAM_VALUE;
-    params.t2Param9    = RDC_T2_PARAM9_RESET_PARAM_VALUE;
+    params.t2Param5    = RDC_T2_PARAM5_RESET_PARAM_VALUE;  // kffw         cfg2
+    params.t2Param6    = RDC_T2_PARAM6_RESET_PARAM_VALUE;  // ki           cfg1
+    params.t2Param7    = RDC_T2_PARAM7_RESET_PARAM_VALUE;  // kpdiv        cfg3
+    params.t2Param8    = RDC_T2_PARAM8_RESET_PARAM_VALUE;  // vboost coef  cfg3
+    params.t2Param9    = RDC_T2_PARAM9_RESET_PARAM_VALUE;  // boost vel    cfg2
 
     /* the APIs are removed. so need to write the reg level values */
     /* TODO: need to add the T2 coefs for the SW track2 as well */
+    HW_WR_REG32(
+            base + CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG1,
+            (HW_RD_REG32(
+                 base + CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG1) &
+             ~CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG1_ADC_SAMPLE_RATE_MASK) |
+                (((uint32_t)(params.adcParam1)) << CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG1_ADC_SAMPLE_RATE_SHIFT));
+    for(int core = 0; core <= 1; core++)
+    {
+        HW_WR_REG32(
+                base + CSL_RESOLVER_REGS_DC_OFF_CFG1_0 + (core * RDC_CORE_OFFSET),
+                ((HW_RD_REG32(
+                    base + CSL_RESOLVER_REGS_DC_OFF_CFG1_0 + (core * RDC_CORE_OFFSET)) & ~CSL_RESOLVER_REGS_DC_OFF_CFG1_1_OFFSET_HYSTERESIS_MASK) |
+                    (((uint32_t) (params.DcParam3)) <<  CSL_RESOLVER_REGS_DC_OFF_CFG1_1_OFFSET_HYSTERESIS_SHIFT)));
+
+        HW_WR_REG32(
+                base + CSL_RESOLVER_REGS_SAMPLE_CFG1_0 + (core * RDC_CORE_OFFSET),
+                ((HW_RD_REG32(
+                    base + CSL_RESOLVER_REGS_SAMPLE_CFG1_0 + (core * RDC_CORE_OFFSET)) &
+                ~CSL_RESOLVER_REGS_SAMPLE_CFG1_0_PEAK_AVG_LIMIT_MASK) |
+                    (((uint32_t) (params.IdealParam2)) << CSL_RESOLVER_REGS_SAMPLE_CFG1_0_PEAK_AVG_LIMIT_SHIFT)));
+
+        HW_WR_REG32(
+                base + CSL_RESOLVER_REGS_PG_EST_CFG4_0 + (core * RDC_CORE_OFFSET),
+                ((HW_RD_REG32(
+                    base + CSL_RESOLVER_REGS_PG_EST_CFG4_0 + (core * RDC_CORE_OFFSET)) &
+                ~CSL_RESOLVER_REGS_PG_EST_CFG4_0_PG_GLITCHTHRESHOLD_MASK) |
+                    ((params.PgParam4) << CSL_RESOLVER_REGS_PG_EST_CFG4_0_PG_GLITCHTHRESHOLD_SHIFT)));
+
+        HW_WR_REG32(
+                base + CSL_RESOLVER_REGS_TRACK2_CFG1_0 + (core * RDC_CORE_OFFSET),
+                ((HW_RD_REG32(
+                    base + CSL_RESOLVER_REGS_TRACK2_CFG1_0 + (core * RDC_CORE_OFFSET)) &
+                ~CSL_RESOLVER_REGS_TRACK2_CFG1_0_KI_MASK) |
+                    ((params.t2Param6) << CSL_RESOLVER_REGS_TRACK2_CFG1_0_KI_SHIFT)));
+
+        HW_WR_REG32(
+                base + CSL_RESOLVER_REGS_TRACK2_CFG2_0 + (core * RDC_CORE_OFFSET),
+                ((HW_RD_REG32(
+                    base + CSL_RESOLVER_REGS_TRACK2_CFG2_0 + (core * RDC_CORE_OFFSET)) &
+                ~(CSL_RESOLVER_REGS_TRACK2_CFG2_0_BOOST_MASK | CSL_RESOLVER_REGS_TRACK2_CFG2_0_KFFW_MASK)) |
+                    ((params.t2Param5) << CSL_RESOLVER_REGS_TRACK2_CFG2_0_KFFW_SHIFT)));
+
+        HW_WR_REG32(
+                base + CSL_RESOLVER_REGS_TRACK2_CFG3_0 + (core * RDC_CORE_OFFSET),
+                (HW_RD_REG32(
+                    base + CSL_RESOLVER_REGS_TRACK2_CFG3_0 + (core * RDC_CORE_OFFSET)) &
+                ~(CSL_RESOLVER_REGS_TRACK2_CFG3_0_KPDIV_MASK | CSL_RESOLVER_REGS_TRACK2_CFG3_0_VBOOSTCOEFF_MASK)) |
+                    (((params.t2Param7) << CSL_RESOLVER_REGS_TRACK2_CFG3_0_KPDIV_SHIFT) |
+                    ((params.t2Param8) << CSL_RESOLVER_REGS_TRACK2_CFG3_0_VBOOSTCOEFF_SHIFT)));
+    }
 }
 
 void RDC_paramsInit(RDC_configParams* params)

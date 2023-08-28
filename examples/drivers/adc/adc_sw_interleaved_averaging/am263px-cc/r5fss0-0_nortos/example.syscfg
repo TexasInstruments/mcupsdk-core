@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.15.0+2826"}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
@@ -158,16 +158,16 @@ adc2.adcClockPrescaler     = "ADC_CLK_DIV_4_0";
 adc2.ADC.$assign           = "ADC2";
 
 gpio1.$name                = "CONFIG_GPIO_INPUT";
-gpio1.GPIO.gpioPin.$assign = "ball.M1";
+gpio1.GPIO.gpioPin.$assign = "EPWM13_A";
 
 gpio2.pinDir               = "OUTPUT";
 gpio2.$name                = "CONFIG_GPIO_OUTPUT";
-gpio2.GPIO.gpioPin.$assign = "ball.L1";
+gpio2.GPIO.gpioPin.$assign = "EPWM13_B";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "ball.A7";
-debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -191,7 +191,7 @@ mpu_armv74.size              = 21;
 
 input_xbar1.$name      = "CONFIG_INPUT_XBAR0";
 input_xbar1.instance   = "INPUT_XBAR_5";
-input_xbar1.xbarOutput = "GPIO7";
+input_xbar1.xbarOutput = "GPIO69";
 
 int_xbar1.$name      = "CONFIG_INT_XBAR0";
 int_xbar1.xbarOutput = ["ADC1_INT2"];
@@ -205,18 +205,18 @@ int_xbar2.instance   = "INT_XBAR_1";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-adc1.ADC.AIN0.$suggestSolution          = "ball.T11";
-adc1.ADC.AIN1.$suggestSolution          = "ball.U11";
-adc1.ADC.AIN2.$suggestSolution          = "ball.T12";
-adc1.ADC.AIN3.$suggestSolution          = "ball.V12";
-adc1.ADC.AIN4.$suggestSolution          = "ball.U12";
-adc1.ADC.AIN5.$suggestSolution          = "ball.R12";
-adc2.ADC.AIN0.$suggestSolution          = "ball.R10";
-adc2.ADC.AIN1.$suggestSolution          = "ball.T10";
-adc2.ADC.AIN2.$suggestSolution          = "ball.U10";
-adc2.ADC.AIN3.$suggestSolution          = "ball.T9";
-adc2.ADC.AIN4.$suggestSolution          = "ball.V9";
-adc2.ADC.AIN5.$suggestSolution          = "ball.T8";
+adc1.ADC.AIN0.$suggestSolution          = "ADC1_AIN0";
+adc1.ADC.AIN1.$suggestSolution          = "ADC1_AIN1";
+adc1.ADC.AIN2.$suggestSolution          = "ADC1_AIN2";
+adc1.ADC.AIN3.$suggestSolution          = "ADC1_AIN3";
+adc1.ADC.AIN4.$suggestSolution          = "ADC1_AIN4";
+adc1.ADC.AIN5.$suggestSolution          = "ADC1_AIN5";
+adc2.ADC.AIN0.$suggestSolution          = "ADC2_AIN0";
+adc2.ADC.AIN1.$suggestSolution          = "ADC2_AIN1";
+adc2.ADC.AIN2.$suggestSolution          = "ADC2_AIN2";
+adc2.ADC.AIN3.$suggestSolution          = "ADC2_AIN3";
+adc2.ADC.AIN4.$suggestSolution          = "ADC2_AIN4";
+adc2.ADC.AIN5.$suggestSolution          = "ADC2_AIN5";
 gpio1.GPIO.$suggestSolution             = "GPIO";
 gpio2.GPIO.$suggestSolution             = "GPIO";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

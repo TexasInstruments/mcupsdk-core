@@ -6,7 +6,7 @@ const files = {
     common: [
         "resolver_angle_speed.c",
         "main.c",
-        "board.c",
+        "board_e1.c",
         "sw_track2.c",
     ],
 };

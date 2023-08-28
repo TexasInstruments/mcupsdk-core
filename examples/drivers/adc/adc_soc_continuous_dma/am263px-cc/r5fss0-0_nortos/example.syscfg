@@ -28,26 +28,26 @@ const int_xbar1  = int_xbar.addInstance();
  * Write custom configuration values to the imported modules.
  */
 adc1.$name                          = "CONFIG_ADC1";
-adc1.adcClockPrescaler              = "ADC_CLK_DIV_4_0";
-adc1.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
 adc1.enableConverter                = true;
 adc1.soc0Trigger                    = "ADC_TRIGGER_EPWM0_SOCA";
 adc1.soc0InterruptTrigger           = "ADC_INT_SOC_TRIGGER_ADCINT2";
 adc1.enableInterrupt2               = true;
 adc1.enableInterrupt2ContinuousMode = true;
-adc1.soc0SampleWindow               = 20;
 adc1.enableInterrupt1               = true;
+adc1.adcClockPrescaler              = "ADC_CLK_DIV_3_0";
+adc1.soc0SampleWindow               = 19;
+adc1.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
 adc1.ADC.$assign                    = "ADC1";
 
 adc2.$name                          = "CONFIG_ADC2";
-adc2.adcClockPrescaler              = "ADC_CLK_DIV_4_0";
 adc2.enableConverter                = true;
 adc2.soc0Trigger                    = "ADC_TRIGGER_EPWM0_SOCA";
-adc2.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
 adc2.soc0InterruptTrigger           = "ADC_INT_SOC_TRIGGER_ADCINT2";
 adc2.enableInterrupt2               = true;
 adc2.enableInterrupt2ContinuousMode = true;
-adc2.soc0SampleWindow               = 20;
+adc2.adcClockPrescaler              = "ADC_CLK_DIV_3_0";
+adc2.soc0SampleWindow               = 19;
+adc2.interruptPulseMode             = "ADC_PULSE_END_OF_CONV";
 adc2.ADC.$assign                    = "ADC2";
 
 edma1.$name                                         = "CONFIG_EDMA0";

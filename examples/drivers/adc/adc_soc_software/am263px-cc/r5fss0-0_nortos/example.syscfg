@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.10.0+2163"}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
@@ -24,14 +24,14 @@ adc1.$name              = "CONFIG_ADC0";
 adc1.adcClockPrescaler  = "ADC_CLK_DIV_4_0";
 adc1.interruptPulseMode = "ADC_PULSE_END_OF_CONV";
 adc1.enableConverter    = true;
-adc1.soc0SampleWindow   = 16;
 adc1.enableInterrupt1   = true;
+adc1.soc0Channel        = "ADC_CH_ADCIN2";
 adc1.ADC.$assign        = "ADC0";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "ball.A7";
-debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -58,10 +58,10 @@ mpu_armv74.size              = 21;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-adc1.ADC.AIN0.$suggestSolution          = "ball.V15";
-adc1.ADC.AIN1.$suggestSolution          = "ball.U15";
-adc1.ADC.AIN2.$suggestSolution          = "ball.T14";
-adc1.ADC.AIN3.$suggestSolution          = "ball.U14";
-adc1.ADC.AIN4.$suggestSolution          = "ball.U13";
-adc1.ADC.AIN5.$suggestSolution          = "ball.R14";
+adc1.ADC.AIN0.$suggestSolution          = "ADC0_AIN0";
+adc1.ADC.AIN1.$suggestSolution          = "ADC0_AIN1";
+adc1.ADC.AIN2.$suggestSolution          = "ADC0_AIN2";
+adc1.ADC.AIN3.$suggestSolution          = "ADC0_AIN3";
+adc1.ADC.AIN4.$suggestSolution          = "ADC0_AIN4";
+adc1.ADC.AIN5.$suggestSolution          = "ADC0_AIN5";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

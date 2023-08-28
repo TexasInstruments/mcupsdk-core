@@ -4,7 +4,6 @@
  * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P2" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @versions {"tool":"1.13.0+2553"}
  */
-
 /**
  * Import the modules used in this configuration.
  */

@@ -43,6 +43,8 @@ completed so far in the conversion cycle and average them.
 - feed analog input on ADC 2 Channel 0 - HSEC connecter pin - 31
 - feed analog input on ADC 2 Channel 1 - HSEC connecter pin - 33
 
+Early Access on AM263Px : loopback on HSEC pin 153, HSEC pin 154
+
 ## AM263X-CC E1 :
 - input trigger pulse on GPIO 7 (configured as input) - HSEC connecter pin - 80 or connect it to GPIO 8 (Configured as output) - HSEC Connecter pin - 82
 - feed analog input on ADC 1 Channel 0 - HSEC connecter pin - 18

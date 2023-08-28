@@ -47,7 +47,7 @@
  * For all other cores, CCS prints are used.
  */
 
-#define ITERATIONS                      (2000U)
+#define ITERATIONS                      (8000U)
 #define MAX_16B_SIGNED_VALUE            (0x7FFF)
 #define NUMBER_OF_16B_VALUES            (0x10000)
 #define SAMPLING_FREQUENCY_IN_HZ        (20000U)
@@ -56,19 +56,20 @@
 static HwiP_Object gEpwmHwiObject;
 
 
-float raw_atan_angle[ITERATIONS] = {0};
-float raw_track2_angle[ITERATIONS] = {0};
-float raw_track2_velocity[ITERATIONS] = {0};
+volatile float raw_atan_angle[ITERATIONS] = {0};
+volatile float raw_track2_angle[ITERATIONS] = {0};
+volatile float raw_track2_velocity[ITERATIONS] = {0};
 
-float sw_track2_angle[ITERATIONS] = {0};
-float sw_track2_velocity[ITERATIONS] = {0};
+volatile float sw_track2_angle[ITERATIONS] = {0};
+volatile float sw_track2_velocity[ITERATIONS] = {0};
 volatile uint32_t gCounter_value[ITERATIONS] ={0};
 
 volatile uint32_t gIsrCount = 0;
 volatile bool     gIsrComplete = false;
+volatile bool gfinal_iteration = false;
 uint32_t rdcBaseAddr = CONFIG_RESOLVER0_BASE_ADDR;
 
-extern void i2c_io_expander_resolver_adc(void* args);
+extern void i2c_io_expander_resolver_adc();
 
 extern __attribute__((section(".benchmark.code")))
 void track2_psuedo(int16_t theta_atan, int16_t* angle_output, int32_t* velocity_output);
@@ -84,7 +85,7 @@ void resolver_angle_speed_main(void *args)
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
-
+    i2c_io_expander_resolver_adc();
     /*
     2 EPWM are set up. - EPWM 0 and EPWM 1
     EPWM 0 -
@@ -123,12 +124,16 @@ void resolver_angle_speed_main(void *args)
     EPWM_forceSyncPulse(CONFIG_EPWM0_BASE_ADDR);
 
     /* the sync pulse forces the EPWM1 timebase counter load with the period value of 9999 and the interrupts will be triggered.*/
-
-    while(gIsrCount < ITERATIONS)
+    for (int iter = 0; iter <= 3; iter++)
     {
-        gIsrComplete = false;
-        while(gIsrComplete == false);
-    }
+        gIsrCount = 0;
+        while(gIsrCount < ITERATIONS)
+        {
+            gIsrComplete = false;
+            while(gIsrComplete == false);
+        }
+    }gfinal_iteration = true;
+
 
     DebugP_log("%d Iterations complete. Printing some of the values\r\n", ITERATIONS);
     DebugP_log("    ANGLES (DEGREES)					||	VELOCITIES (RPS)			\r\n");
@@ -137,7 +142,13 @@ void resolver_angle_speed_main(void *args)
 
     for(int iter = 0; iter < ITERATIONS; iter+=(ITERATIONS/10))
     {
-        DebugP_log("%f\t%f\t%f\t%f\t%f\r\n");
+        DebugP_log("%f\t%f\t%f\t%f\t%f\r\n",
+        raw_atan_angle[iter],
+        raw_track2_angle[iter],
+        sw_track2_angle[iter],
+        raw_track2_velocity[iter],
+        sw_track2_velocity[iter]
+        );
     }
 
     DebugP_log("All tests have passed!!\r\n");
@@ -173,23 +184,25 @@ void App_epwm1ISR(void *args)   // 10000 *5nS recurrance.
     track2_psuedo(temp_atanAngle, &temp_swTrack2angle, &temp_swTrack2Velocity);
 
     App_Angle2Degrees(temp_atanAngle, &temp_atanAngleDegree);
-    App_Angle2Degrees(temp_swTrack2angle, &temp_rawTrack2AngleDegree);
-    App_Angle2Degrees(temp_rawTrack2angle, &temp_swTrack2AngleDegree);
+    App_Angle2Degrees(temp_swTrack2angle, &temp_swTrack2AngleDegree);
+    App_Angle2Degrees(temp_rawTrack2angle, &temp_rawTrack2AngleDegree);
 
     App_velocity2Rps(temp_rawTrack2Velocity, &temp_rawTrack2VelocityRps);
     App_velocity2Rps(temp_swTrack2Velocity, &temp_swTrack2VelocityRps);
 
     raw_atan_angle[gIsrCount]       = temp_atanAngleDegree;
     raw_track2_angle[gIsrCount]     = temp_rawTrack2AngleDegree;
-    raw_track2_velocity[gIsrCount]  = temp_swTrack2AngleDegree;
-    sw_track2_angle[gIsrCount]      = temp_rawTrack2VelocityRps;
+    sw_track2_angle[gIsrCount]      = temp_swTrack2AngleDegree;
+    raw_track2_velocity[gIsrCount]  = temp_rawTrack2VelocityRps;
     sw_track2_velocity[gIsrCount]   = temp_swTrack2VelocityRps;
 
     gIsrCount++;
-    if(gIsrCount >= ITERATIONS)
+    if((gIsrCount >= ITERATIONS) && (gfinal_iteration == true))
     {
         EPWM_disableInterrupt(CONFIG_EPWM1_BASE_ADDR);
     }
+    EPWM_clearEventTriggerInterruptFlag(CONFIG_EPWM1_BASE_ADDR);
+    EPWM_clearEventTriggerInterruptFlag(CONFIG_EPWM1_BASE_ADDR);
     EPWM_clearEventTriggerInterruptFlag(CONFIG_EPWM1_BASE_ADDR);
     gIsrComplete = true;
 }

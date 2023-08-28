@@ -91,7 +91,7 @@
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="../board.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../board_e1.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../../../sw_track2.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>

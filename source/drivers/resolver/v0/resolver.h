@@ -627,8 +627,10 @@ typedef struct
     {
         HW_WR_REG32(
             base + CSL_RESOLVER_REGS_GLOBAL_CFG,
-            ~CSL_RESOLVER_REGS_GLOBAL_CFG_BURST_CNT_MASK |
-                (((uint8_t)burstCount) << CSL_RESOLVER_REGS_GLOBAL_CFG_BURST_CNT_SHIFT));
+            (HW_RD_REG32(
+                 base + CSL_RESOLVER_REGS_GLOBAL_CFG) &
+            ~CSL_RESOLVER_REGS_GLOBAL_CFG_BURST_CNT_MASK) |
+                ((uint32_t)(((uint8_t)burstCount) << CSL_RESOLVER_REGS_GLOBAL_CFG_BURST_CNT_SHIFT)));
     }
 
     /**
@@ -642,8 +644,10 @@ typedef struct
     {
         HW_WR_REG32(
             base + CSL_RESOLVER_REGS_GLOBAL_CFG,
-            ~CSL_RESOLVER_REGS_GLOBAL_CFG_SINGLE_EN_MASK |
-                ((1U) << CSL_RESOLVER_REGS_GLOBAL_CFG_SINGLE_EN_SHIFT));
+            (HW_RD_REG32(
+                base + CSL_RESOLVER_REGS_GLOBAL_CFG) &
+            ~CSL_RESOLVER_REGS_GLOBAL_CFG_SINGLE_EN_MASK) |
+                ((uint32_t)((1U) << CSL_RESOLVER_REGS_GLOBAL_CFG_SINGLE_EN_SHIFT)));
     }
 
     /**
@@ -721,7 +725,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_GLOBAL_CFG) &
              ~CSL_RESOLVER_REGS_GLOBAL_CFG_MODE_MASK) |
-                ((operationalMode) << CSL_RESOLVER_REGS_GLOBAL_CFG_MODE_SHIFT));
+                ((uint32_t)((operationalMode) << CSL_RESOLVER_REGS_GLOBAL_CFG_MODE_SHIFT)));
     }
     /**
      * @brief
@@ -737,7 +741,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_GLOBAL_CFG) &
              ~CSL_RESOLVER_REGS_GLOBAL_CFG_MASTER_EN_MASK) |
-                ((1U) << CSL_RESOLVER_REGS_GLOBAL_CFG_MASTER_EN_SHIFT));
+                ((uint32_t)((1U) << CSL_RESOLVER_REGS_GLOBAL_CFG_MASTER_EN_SHIFT)));
     }
     /**
      * @brief
@@ -753,7 +757,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_GLOBAL_CFG) |
              CSL_RESOLVER_REGS_GLOBAL_CFG_MASTER_EN_MASK) &
-                ~((1U) << CSL_RESOLVER_REGS_GLOBAL_CFG_MODE_SHIFT));
+                ~((uint32_t)((1U) << CSL_RESOLVER_REGS_GLOBAL_CFG_MASTER_EN_SHIFT)));
     }
 
 //*****************************************************************************
@@ -777,7 +781,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG1) &
              ~CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG1_EXC_FREQ_PHASE_CFG_MASK) |
-                (phase << CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG1_EXC_FREQ_PHASE_CFG_SHIFT));
+                ((uint32_t)(phase << CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG1_EXC_FREQ_PHASE_CFG_SHIFT)));
     }
 
     /**
@@ -818,7 +822,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG1) &
              ~CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG1_EXC_FREQ_SEL_MASK) |
-                (FrequencySel << CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG1_EXC_FREQ_SEL_SHIFT));
+                ((uint32_t)(FrequencySel << CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG1_EXC_FREQ_SEL_SHIFT)));
     }
 
     /**
@@ -869,7 +873,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2) &
              ~CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_SYNC_IN_EN_MASK) |
-                ((1U) << CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_SYNC_IN_EN_SHIFT));
+                ((uint32_t)((1U) << CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_SYNC_IN_EN_SHIFT)));
     }
 
     /**
@@ -885,7 +889,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2) |
              CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_SYNC_IN_EN_MASK) &
-                ~((1U) << CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_SYNC_IN_EN_SHIFT));
+                ~((uint32_t)((1U) << CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_SYNC_IN_EN_SHIFT)));
     }
 
     /**
@@ -921,7 +925,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2) &
              ~CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_SYNC_IN_EVENT_MASK) |
-                ((1U) << CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_SYNC_IN_EVENT_SHIFT));
+                ((uint32_t)((1U) << CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_SYNC_IN_EVENT_SHIFT)));
     }
 
     /**
@@ -955,7 +959,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2) &
              ~CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_TO_SOC_DLY_START_MASK) |
-                (socDelay << CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_TO_SOC_DLY_START_SHIFT));
+                ((uint32_t)(socDelay << CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG2_PWM_TO_SOC_DLY_START_SHIFT)));
     }
 
 
@@ -975,7 +979,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG3) &
              ~CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG3_EXC_AMP_CTRL_MASK) |
-                (amplitude << CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG3_EXC_AMP_CTRL_SHIFT));
+                ((uint32_t)(amplitude << CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG3_EXC_AMP_CTRL_SHIFT)));
     }
 
     /**
@@ -1011,7 +1015,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_IRQSTATUS_SYS) &
              ~CSL_RESOLVER_REGS_IRQSTATUS_SYS_SEQ_ERR_MASK) |
-                ((1U) << CSL_RESOLVER_REGS_IRQSTATUS_SYS_SEQ_ERR_SHIFT));
+                ((uint32_t)((1U) << CSL_RESOLVER_REGS_IRQSTATUS_SYS_SEQ_ERR_SHIFT)));
     }
 
     /**
@@ -1027,7 +1031,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_IRQENABLE_CLR_SYS) &
              ~CSL_RESOLVER_REGS_IRQENABLE_CLR_SYS_SEQ_ERR_MASK) |
-                ((1U) << CSL_RESOLVER_REGS_IRQENABLE_CLR_SYS_SEQ_ERR_SHIFT));
+                ((uint32_t)((1U) << CSL_RESOLVER_REGS_IRQENABLE_CLR_SYS_SEQ_ERR_SHIFT)));
     }
 
     /**
@@ -1043,7 +1047,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_IRQSTATUS_SYS) &
              ~CSL_RESOLVER_REGS_IRQSTATUS_SYS_SEQ_ERR_MASK) |
-                ((1U) << CSL_RESOLVER_REGS_IRQSTATUS_SYS_SEQ_ERR_SHIFT));
+                ((uint32_t)((1U) << CSL_RESOLVER_REGS_IRQSTATUS_SYS_SEQ_ERR_SHIFT)));
     }
 
     /**
@@ -1059,7 +1063,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_IRQSTATUS_RAW_SYS) &
              ~CSL_RESOLVER_REGS_IRQSTATUS_RAW_SYS_SEQ_ERR_MASK) |
-                ((1U) << CSL_RESOLVER_REGS_IRQSTATUS_RAW_SYS_SEQ_ERR_SHIFT));
+                ((uint32_t)((1U) << CSL_RESOLVER_REGS_IRQSTATUS_RAW_SYS_SEQ_ERR_SHIFT)));
     }
 
     /**
@@ -1074,7 +1078,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_IRQSTATUS_RAW_SYS) &
              ~CSL_RESOLVER_REGS_IRQSTATUS_RAW_SYS_SEQ_ERR_MASK) |
-            ((1U) << CSL_RESOLVER_REGS_IRQSTATUS_RAW_SYS_SEQ_ERR_SHIFT));
+            ((uint32_t)((1U) << CSL_RESOLVER_REGS_IRQSTATUS_RAW_SYS_SEQ_ERR_SHIFT)));
     }
 
 
@@ -1228,7 +1232,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_CAL_CFG) &
              ~CSL_RESOLVER_REGS_CAL_CFG_CAL_DONE_MASK) |
-                ((1U) << CSL_RESOLVER_REGS_CAL_CFG_CAL_DONE_SHIFT));
+                ((uint32_t)((1U) << CSL_RESOLVER_REGS_CAL_CFG_CAL_DONE_SHIFT)));
     }
 
     /**
@@ -1245,7 +1249,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_CAL_CFG) &
              ~CSL_RESOLVER_REGS_CAL_CFG_CAL_CHSEL_MASK) |
-                (calChannel << CSL_RESOLVER_REGS_CAL_CFG_CAL_CHSEL_SHIFT));
+                ((uint32_t)(calChannel << CSL_RESOLVER_REGS_CAL_CFG_CAL_CHSEL_SHIFT)));
     }
 
     /**
@@ -1261,7 +1265,7 @@ typedef struct
             (HW_RD_REG32(
                  base + CSL_RESOLVER_REGS_CAL_CFG) &
              ~CSL_RESOLVER_REGS_CAL_CFG_CAL_EN_MASK) |
-                ((1U) << CSL_RESOLVER_REGS_CAL_CFG_CAL_EN_SHIFT));
+                ((uint32_t)((1U) << CSL_RESOLVER_REGS_CAL_CFG_CAL_EN_SHIFT)));
     }
 
     /**
@@ -1341,7 +1345,7 @@ typedef struct
             (HW_RD_REG32(
                  base + regOffset) &
              ~CSL_RESOLVER_REGS_DC_OFF_CFG1_0_BANDPASSFILTER_ON_MASK) |
-                ((1U) << CSL_RESOLVER_REGS_DC_OFF_CFG1_0_BANDPASSFILTER_ON_SHIFT));
+                ((uint32_t)((1U) << CSL_RESOLVER_REGS_DC_OFF_CFG1_0_BANDPASSFILTER_ON_SHIFT)));
     }
 
     /**
@@ -1361,7 +1365,7 @@ typedef struct
             (HW_RD_REG32(
                  base + regOffset) |
              CSL_RESOLVER_REGS_DC_OFF_CFG1_0_BANDPASSFILTER_ON_MASK) &
-                ~((1U) << CSL_RESOLVER_REGS_DC_OFF_CFG1_0_BANDPASSFILTER_ON_SHIFT));
+                ~((uint32_t)((1U) << CSL_RESOLVER_REGS_DC_OFF_CFG1_0_BANDPASSFILTER_ON_SHIFT)));
     }
 
     /**
@@ -1382,7 +1386,7 @@ typedef struct
             (HW_RD_REG32(
                  base + regOffset) &
              ~CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFFSET_CORR_ON_MASK) |
-                ((1U) << CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFFSET_CORR_ON_SHIFT));
+                ((uint32_t)((1U) << CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFFSET_CORR_ON_SHIFT)));
     }
 
     /**
@@ -1403,7 +1407,7 @@ typedef struct
             (HW_RD_REG32(
                  base + regOffset) |
              CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFFSET_CORR_ON_MASK) &
-                ~((1U) << CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFFSET_CORR_ON_SHIFT));
+                ~((uint32_t)((1U) << CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFFSET_CORR_ON_SHIFT)));
     }
 
     /**
@@ -1479,7 +1483,7 @@ typedef struct
             (HW_RD_REG32(
                  base + regOffset) &
              ~CSL_RESOLVER_REGS_SAMPLE_CFG1_0_IDEAL_SAMPLE_TIME_OVR_MASK) |
-                (overrideValue << CSL_RESOLVER_REGS_SAMPLE_CFG1_0_IDEAL_SAMPLE_TIME_OVR_SHIFT));
+                ((uint32_t)(overrideValue << CSL_RESOLVER_REGS_SAMPLE_CFG1_0_IDEAL_SAMPLE_TIME_OVR_SHIFT)));
     }
 
     /**
@@ -1521,7 +1525,7 @@ typedef struct
             (HW_RD_REG32(
                  base + regOffset) &
              ~CSL_RESOLVER_REGS_SAMPLE_CFG1_0_SAMPLE_DET_THRESHOLD_MASK) |
-                (absThresholdValue << CSL_RESOLVER_REGS_SAMPLE_CFG1_0_SAMPLE_DET_THRESHOLD_SHIFT));
+                ((uint32_t)(absThresholdValue << CSL_RESOLVER_REGS_SAMPLE_CFG1_0_SAMPLE_DET_THRESHOLD_SHIFT)));
     }
 
     /**
@@ -1543,7 +1547,7 @@ typedef struct
             (HW_RD_REG32(
                  base + regOffset) &
              ~CSL_RESOLVER_REGS_SAMPLE_CFG2_0_BANDPASSFILTERSAMPLEADJUST_MASK) |
-                (sampleAdjustCount << CSL_RESOLVER_REGS_SAMPLE_CFG2_0_BANDPASSFILTERSAMPLEADJUST_SHIFT));
+                ((uint32_t)(sampleAdjustCount << CSL_RESOLVER_REGS_SAMPLE_CFG2_0_BANDPASSFILTERSAMPLEADJUST_SHIFT)));
     }
 
     /**
@@ -1563,7 +1567,7 @@ typedef struct
             ((HW_RD_REG32(
                   base + regOffset) &
               CSL_RESOLVER_REGS_SAMPLE_CFG2_0_PEAK_AVG_LIMIT_DONE_MASK) &
-             ((1U) << CSL_RESOLVER_REGS_SAMPLE_CFG2_0_PEAK_AVG_LIMIT_DONE_SHIFT)) != 0U);
+             ((uint32_t)((1U) << CSL_RESOLVER_REGS_SAMPLE_CFG2_0_PEAK_AVG_LIMIT_DONE_SHIFT))) != 0U);
     }
 
     /**
@@ -1589,7 +1593,7 @@ typedef struct
             (HW_RD_REG32(
                  base + regOffset) &
              ~CSL_RESOLVER_REGS_DEC_GF_CFG0_IDEAL_SAMPLE_MODE_MASK) |
-                (mode << CSL_RESOLVER_REGS_DEC_GF_CFG0_IDEAL_SAMPLE_MODE_SHIFT));
+                ((uint32_t)(mode << CSL_RESOLVER_REGS_DEC_GF_CFG0_IDEAL_SAMPLE_MODE_SHIFT)));
     }
 
     /**
@@ -1610,7 +1614,7 @@ typedef struct
             (HW_RD_REG32(
                  base + regOffset) &
              ~CSL_RESOLVER_REGS_DEC_GF_CFG0_ENABLE_BOTTOM_MASK) |
-                ((1U) << CSL_RESOLVER_REGS_DEC_GF_CFG0_ENABLE_BOTTOM_SHIFT));
+                ((uint32_t)((1U) << CSL_RESOLVER_REGS_DEC_GF_CFG0_ENABLE_BOTTOM_SHIFT)));
     }
 
     /**
@@ -1629,7 +1633,7 @@ typedef struct
             (HW_RD_REG32(
                  base + regOffset) |
              CSL_RESOLVER_REGS_DEC_GF_CFG0_ENABLE_BOTTOM_MASK) &
-                ~((1U) << CSL_RESOLVER_REGS_DEC_GF_CFG0_ENABLE_BOTTOM_SHIFT));
+                ~((uint32_t)((1U) << CSL_RESOLVER_REGS_DEC_GF_CFG0_ENABLE_BOTTOM_SHIFT)));
     }
 
     //*****************************************************************************
@@ -1653,7 +1657,7 @@ typedef struct
             ((HW_RD_REG32(
                   base + regOffset) &
               CSL_RESOLVER_REGS_PG_EST_CFG1_0_AUTOPHASEGAINREADYDONE_MASK) &
-             ((1U) << CSL_RESOLVER_REGS_PG_EST_CFG1_0_AUTOPHASEGAINREADYDONE_SHIFT)) != 0U);
+             ((uint32_t)((1U) << CSL_RESOLVER_REGS_PG_EST_CFG1_0_AUTOPHASEGAINREADYDONE_SHIFT))) != 0U);
     }
 
     /**
@@ -1674,7 +1678,7 @@ typedef struct
             (HW_RD_REG32(
                  base + regOffset) &
              ~CSL_RESOLVER_REGS_PG_EST_CFG1_0_PG_TRAIN_LIMIT_MASK) |
-                (pgEstimationLimit << CSL_RESOLVER_REGS_PG_EST_CFG1_0_PG_TRAIN_LIMIT_SHIFT));
+                ((uint32_t)(pgEstimationLimit << CSL_RESOLVER_REGS_PG_EST_CFG1_0_PG_TRAIN_LIMIT_SHIFT)));
     }
 
     /**
@@ -1695,7 +1699,7 @@ typedef struct
             (HW_RD_REG32(
                  base + regOffset) &
              ~CSL_RESOLVER_REGS_PG_EST_CFG2_0_PHASECOSBYP0_MASK) |
-                (cosPhaseBypass << CSL_RESOLVER_REGS_PG_EST_CFG2_0_PHASECOSBYP0_SHIFT));
+                ((uint32_t)(cosPhaseBypass << CSL_RESOLVER_REGS_PG_EST_CFG2_0_PHASECOSBYP0_SHIFT)));
     }
 
     /**
@@ -1712,9 +1716,10 @@ typedef struct
         HW_WR_REG32(
             base + regOffset,
             (HW_RD_REG32(
-                 base + regOffset) &
-             ~CSL_RESOLVER_REGS_PG_EST_CFG2_0_BYPASSPHASEGAINCORR0_MASK) |
-                ((1U) << CSL_RESOLVER_REGS_PG_EST_CFG2_0_BYPASSPHASEGAINCORR0_SHIFT));
+                 base + regOffset) |
+             CSL_RESOLVER_REGS_PG_EST_CFG2_0_BYPASSPHASEGAINCORR0_MASK) &
+                ~((1U) << CSL_RESOLVER_REGS_PG_EST_CFG2_0_BYPASSPHASEGAINCORR0_SHIFT));
+
     }
 
     /**
@@ -1731,9 +1736,9 @@ typedef struct
         HW_WR_REG32(
             base + regOffset,
             (HW_RD_REG32(
-                 base + regOffset) |
-             CSL_RESOLVER_REGS_PG_EST_CFG2_0_BYPASSPHASEGAINCORR0_MASK) &
-                ~((1U) << CSL_RESOLVER_REGS_PG_EST_CFG2_0_BYPASSPHASEGAINCORR0_SHIFT));
+                 base + regOffset) &
+             ~CSL_RESOLVER_REGS_PG_EST_CFG2_0_BYPASSPHASEGAINCORR0_MASK) |
+                ((1U) << CSL_RESOLVER_REGS_PG_EST_CFG2_0_BYPASSPHASEGAINCORR0_SHIFT));
     }
 
     /**
@@ -1922,7 +1927,7 @@ typedef struct
             (HW_RD_REG32(
                  base + regOffset) &
              ~CSL_RESOLVER_REGS_TRACK2_CFG2_0_BOOST_MASK) |
-                ((1U) << CSL_RESOLVER_REGS_TRACK2_CFG2_0_BOOST_SHIFT));
+                ((uint32_t)((1U) << CSL_RESOLVER_REGS_TRACK2_CFG2_0_BOOST_SHIFT)));
     }
     /**
      * @brief disables the track2 Boost
@@ -1941,7 +1946,7 @@ typedef struct
             (HW_RD_REG32(
                  base + regOffset) |
              CSL_RESOLVER_REGS_TRACK2_CFG2_0_BOOST_MASK) &
-                ~((1U) << CSL_RESOLVER_REGS_TRACK2_CFG2_0_BOOST_SHIFT));
+                ~((uint32_t)((1U) << CSL_RESOLVER_REGS_TRACK2_CFG2_0_BOOST_SHIFT)));
     }
 
     /**
