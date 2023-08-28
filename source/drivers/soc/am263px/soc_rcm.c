@@ -1535,7 +1535,7 @@ static uint32_t SOC_rcmGetCoreFout(uint32_t Finp, bool div2flag)
         M  = CSL_FEXT(ptrTopRCMRegs->PLL_CORE_MN2DIV, TOP_RCM_PLL_CORE_MN2DIV_M);
         FracM = CSL_FEXT(ptrTopRCMRegs->PLL_CORE_FRACDIV,TOP_RCM_PLL_CORE_FRACDIV_FRACTIONALM);
         FOut = SOC_rcmADPLLJGetFOut(Finp, N, M, M2, FracM,div2flag);
-        DebugP_assert(FOut != 0);
+        // DebugP_assert(FOut != 0);
     }
     else
     {
