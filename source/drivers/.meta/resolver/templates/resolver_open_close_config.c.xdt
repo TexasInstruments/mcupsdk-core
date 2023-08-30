@@ -48,7 +48,7 @@ void Drivers_resolverOpen()
     params.core`core`.Pg_cosGainBypassValue = `instance["Core"+core+"PgCosGainBypassValue_adv"]`;
     params.core`core`.Pg_cosPhaseBypassValue = `instance["Core"+core+"PgCosPhaseBypassValue_adv"]`;
 
-    params.core`core`.track2Constants.kvelfilt = `instance["Core"+core+"track2kvelfilt_adv"]`;
+    ((params.core`core`).track2Constants).kvelfilt = `instance["Core"+core+"track2kvelfilt_adv"]`;
 %%{
 let IntOptions  = [
     "RDC_INTERRUPT_SOURCE_LOWAMPLITUDE_ERR",

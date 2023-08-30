@@ -5591,7 +5591,7 @@ EPWM_clearTripZoneFlag(uint32_t base, uint16_t tzFlags)
     //
     // Check the arguments
     //
-    DebugP_assert((tzFlags < 0x80U) && (tzFlags >= 0x1U));
+    DebugP_assert((tzFlags <= 0x80U) && (tzFlags >= 0x1U));
 
     //
     // Clear Trip zone event flag

@@ -95,22 +95,22 @@ void i2c_io_expander_resolver_adc()
         uint32_t index = ioIndex[iter];
         uint32_t state = ioIndex_state[iter];
 
-        if(status == SystemP_SUCCESS)
+        DebugP_log("Setting RESOLVER ADC Mux Select Lines, Index : %d, State : %d\r\n", index, state);
+
+        status = TCA6416_setOutput(
+                        &gTCA6416_Config,
+                        index,
+                        state);
+
+        /* Configure as output  */
+        status += TCA6416_config(
+                        &gTCA6416_Config,
+                        index,
+                        TCA6416_MODE_OUTPUT);
+
+        if(status != SystemP_SUCCESS)
         {
-            DebugP_log("index : %d\r\n", index);
-            status = TCA6416_setOutput(
-                            &gTCA6416_Config,
-                            index,
-                            state);
-            /* Configure as output  */
-            status += TCA6416_config(
-                            &gTCA6416_Config,
-                            index,
-                            TCA6416_MODE_OUTPUT);
-        }
-        else
-        {
-            DebugP_log("failure to Select RESOLVER ADC Mux lines, index : %d\r\n", index);
+            DebugP_log("Failure to Set RESOLVER ADC Mux Select lines, at index : %d\r\n", index);
             TCA6416_close(&gTCA6416_Config);
         }
     }

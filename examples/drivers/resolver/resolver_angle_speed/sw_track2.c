@@ -35,32 +35,11 @@
 #include <stdbool.h>
 #include <drivers/hw_include/csl_types.h>
 
-
-#define RDC_ADC_PARAM1_RESET_PARAM_VALUE            (OVERSAMPLING_RATIO_20)
-#define RDC_IDEALSAMPLE_PARAM2_RESET_PARAM_VALUE    (7U)
-#define RDC_DC_PARAM3_RESET_PARAM_VALUE             (2U)
-#define RDC_PG_PARAM4_RESET_PARAM_VALUE             (16384U)
 #define RDC_T2_PARAM5_RESET_PARAM_VALUE             (6U)
 #define RDC_T2_PARAM6_RESET_PARAM_VALUE             (64U)
 #define RDC_T2_PARAM7_RESET_PARAM_VALUE             (10U)
 #define RDC_T2_PARAM8_RESET_PARAM_VALUE             (7U)
 #define RDC_T2_PARAM9_RESET_PARAM_VALUE             (FALSE)
-
-
-bool correct_quad_offset = TRUE;
-
-__attribute__((section(".benchmark.var")))
-volatile uint32_t offsetLookup[8] = {
-    3,  //000 0
-    4,  //001 1
-    6,  //010 2
-    7,  //011 3
-    -5,  //100 4
-    -4,  //101 5
-    -2,  //110 6
-    0,  //111 7
-};
-
 
  volatile int16_t accmsb                 __attribute__((section(".benchmark.var"))) = 0;
  volatile int32_t u0                     __attribute__((section(".benchmark.var"))) = 0;
@@ -72,9 +51,24 @@ volatile uint32_t offsetLookup[8] = {
  volatile int64_t fcw_shifted16          __attribute__((section(".benchmark.var"))) = 0;
  volatile int64_t vel0                   __attribute__((section(".benchmark.var"))) = 0;
 
- volatile int32_t kvelfilt               __attribute__((section(".benchmark.var"))) = 1;           // why is 5 in my old var // check
+ volatile int32_t kvelfilt               __attribute__((section(".benchmark.var"))) = 8;
  volatile int64_t speedcomp              __attribute__((section(".benchmark.var"))) = 0;
 
+bool correct_quad_offset = TRUE;
+bool boost_en __attribute__((section(".benchmark.var"))) = RDC_T2_PARAM9_RESET_PARAM_VALUE;
+
+
+__attribute__((section(".benchmark.var")))
+volatile int32_t offsetLookup[8] = {
+    3,      //000 0
+    4,      //001 1
+    6,      //010 2
+    7,      //011 3
+    -5,     //100 4
+    -4,     //101 5
+    -2,     //110 6
+    0,      //111 7
+};
 
 __attribute__((section(".benchmark.code")))
 void track2_psuedo(int16_t theta_atan, int16_t* angle_output, int32_t* velocity_output);
@@ -88,20 +82,10 @@ void atan_offset_correction(int16_t* atan_in)
     }
 }
 
-bool boost_en __attribute__((section(".benchmark.var"))) = RDC_T2_PARAM9_RESET_PARAM_VALUE;
-
 
 __attribute__((section(".benchmark.code")))
 void track2_psuedo(int16_t theta_atan, int16_t* angle_output, int32_t* velocity_output)
 {
-
-/*
-volatile int32_t ki                     __attribute__((section(".benchmark.var"))) = RDC_T2_PARAM6_RESET_PARAM_VALUE;
-volatile int32_t kffw                   __attribute__((section(".benchmark.var"))) = RDC_T2_PARAM5_RESET_PARAM_VALUE;
-volatile int32_t kpdiv                  __attribute__((section(".benchmark.var"))) = RDC_T2_PARAM7_RESET_PARAM_VALUE;
-volatile int32_t kvelfilt               __attribute__((section(".benchmark.var"))) = 1;
-volatile uint8_t vboostcoef             __attribute__((section(".benchmark.var"))) = RDC_T2_PARAM8_RESET_PARAM_VALUE; */
-
     accr += fcw_piout;
 
     atan_offset_correction(&theta_atan);
@@ -122,7 +106,7 @@ volatile uint8_t vboostcoef             __attribute__((section(".benchmark.var")
     /* seq 7 */
     e0filtcmp = e0filt >> 16;
 
-    if (RDC_T2_PARAM9_RESET_PARAM_VALUE)
+    if (boost_en)
     {
         *angle_output = accmsb + e0filtcmp;
         speedcomp = e0filt << RDC_T2_PARAM8_RESET_PARAM_VALUE;
@@ -136,10 +120,11 @@ volatile uint8_t vboostcoef             __attribute__((section(".benchmark.var")
 
     /* seq 10 */
     int64_t temp_vel0 = vel0;
+
     vel0 = (temp_vel0 - (temp_vel0 >> kvelfilt)) + ((fcw_shifted16 - speedcomp) >> kvelfilt);
 
     /* seq 11 */
-    *velocity_output = (int32_t) (vel0 >> 16);
+    *velocity_output = (int32_t) (((int64_t)vel0) >> 16);
 
     /* sequences done */
 }

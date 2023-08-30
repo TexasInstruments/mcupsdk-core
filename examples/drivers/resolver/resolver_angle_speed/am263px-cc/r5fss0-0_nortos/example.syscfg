@@ -57,17 +57,17 @@ i2c1.I2C.SCL.$assign = "UART0_RTSn";
 i2c1.I2C.SDA.$assign = "UART0_CTSn";
 
 resolver1.$name                         = "CONFIG_RESOLVER0";
-resolver1.AdcSocWidth                   = 0;
 resolver1.SyncInEnable                  = true;
 resolver1.AdvConfig                     = true;
-resolver1.SocDelay_adv                  = 20;
-resolver1.Core0DcOffsetCorrectionEnable = true;
-resolver1.Core1track2kvelfilt_adv       = 1;
 resolver1.resolverSignalMode            = "RDC_SINGALMODE_SINGLE_ENDED";
+resolver1.idealSampleOverride           = 7;
+resolver1.Core0IdealSampleMode_adv      = "RDC_IDEAL_SAMPLE_TIME_MODE_3_AUTO_DETECT_OFF";
 resolver1.Core0bandPassFilterEnable     = true;
-resolver1.manualSinGainOffset           = 18000;
-resolver1.manualCosGainOffset           = 18000;
-resolver1.idealSampleOverride           = 18;
+resolver1.Core1PgCosGainBypassValue_adv = 24960;
+resolver1.Core1PgSinGainBypassValue_adv = 24960;
+resolver1.AdcSocWidth                   = 30;
+resolver1.Core0PgSinGainBypassValue_adv = 25000;
+resolver1.Core0PgCosGainBypassValue_adv = 25000;
 resolver1.RESOLVER.PWM0.$assign         = "PR0_PRU1_GPIO10";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";

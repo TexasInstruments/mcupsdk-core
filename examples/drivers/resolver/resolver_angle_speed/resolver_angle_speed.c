@@ -47,14 +47,15 @@
  * For all other cores, CCS prints are used.
  */
 
-#define ITERATIONS                      (8000U)
-#define MAX_16B_SIGNED_VALUE            (0x7FFF)
-#define NUMBER_OF_16B_VALUES            (0x10000)
+#define ITERATIONS                      (4000U)
 #define SAMPLING_FREQUENCY_IN_HZ        (20000U)
-#define NUMBER_OF_32B_VALUES            (0x100000000)
+#define MAX_16B_SIGNED_VALUE            (0x7FFFU)
+#define NUMBER_OF_16B_VALUES            (0x10000U)
+#define NUMBER_OF_32B_VALUES            (0x100000000U)
+
+#define VELOCITY_SCALE_FACTOR   ((((float) (SAMPLING_FREQUENCY_IN_HZ)) / ((float) NUMBER_OF_32B_VALUES)))
 
 static HwiP_Object gEpwmHwiObject;
-
 
 volatile float raw_atan_angle[ITERATIONS] = {0};
 volatile float raw_track2_angle[ITERATIONS] = {0};
@@ -62,11 +63,11 @@ volatile float raw_track2_velocity[ITERATIONS] = {0};
 
 volatile float sw_track2_angle[ITERATIONS] = {0};
 volatile float sw_track2_velocity[ITERATIONS] = {0};
-volatile uint32_t gCounter_value[ITERATIONS] ={0};
 
 volatile uint32_t gIsrCount = 0;
-volatile bool     gIsrComplete = false;
+
 volatile bool gfinal_iteration = false;
+
 uint32_t rdcBaseAddr = CONFIG_RESOLVER0_BASE_ADDR;
 
 extern void i2c_io_expander_resolver_adc();
@@ -74,10 +75,11 @@ extern void i2c_io_expander_resolver_adc();
 extern __attribute__((section(".benchmark.code")))
 void track2_psuedo(int16_t theta_atan, int16_t* angle_output, int32_t* velocity_output);
 
-
+/* function to convert angle to degrees in range 0-360 deg */
 void App_Angle2Degrees(int16_t angle, float *angleDegree);
+/* function to convert velocity into RPS */
 void App_velocity2Rps(int32_t velocity, float *velocityRps);
-
+/* ISR configured for 20Khz to read resutls */
 void App_epwm1ISR(void *args);
 
 void resolver_angle_speed_main(void *args)
@@ -85,6 +87,7 @@ void resolver_angle_speed_main(void *args)
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
+    /* setting up resolver related pins on board muxes */
     i2c_io_expander_resolver_adc();
     /*
     2 EPWM are set up. - EPWM 0 and EPWM 1
@@ -113,41 +116,41 @@ void resolver_angle_speed_main(void *args)
 
     DebugP_log("setting up the EPWM ISR Complete!!\r\n");
 
-    DebugP_log("Resolver Configured!!\r\n");
-
     RDC_enableResolver(rdcBaseAddr);
     DebugP_log("Resolver Enabled!!\r\n");
 
-    EPWM_clearEventTriggerInterruptFlag(CONFIG_EPWM1_BASE_ADDR);
 
     DebugP_log("Forcing the Sync Pulse from the EPMW0!!\r\n");
     EPWM_forceSyncPulse(CONFIG_EPWM0_BASE_ADDR);
 
-    /* the sync pulse forces the EPWM1 timebase counter load with the period value of 9999 and the interrupts will be triggered.*/
-    for (int iter = 0; iter <= 3; iter++)
+    EPWM_clearEventTriggerInterruptFlag(CONFIG_EPWM1_BASE_ADDR);
+
+    /* the sync pulse forces the EPWM1 timebase counter load with the period value of 10000 and the interrupts will be triggered.*/
+    for (int iter = 4; iter >= 0; iter--)
     {
         gIsrCount = 0;
         while(gIsrCount < ITERATIONS)
         {
-            gIsrComplete = false;
-            while(gIsrComplete == false);
+            /* wait */
         }
-    }gfinal_iteration = true;
+        if(iter == 0)
+        gfinal_iteration = true;
+    }
 
 
     DebugP_log("%d Iterations complete. Printing some of the values\r\n", ITERATIONS);
-    DebugP_log("    ANGLES (DEGREES)					||	VELOCITIES (RPS)			\r\n");
+    DebugP_log("\t    ANGLES (DEGREES)					||	VELOCITIES (RPS)			\r\n");
     DebugP_log("----------------------------------------------------------------||-----------------------------------------------\r\n");
-    DebugP_log("	ATAN		RAW_TRACK2		SW_TRAKC2	||	HW_TRACK2		SW_TRACK2\r\n");
+    DebugP_log("	ATAN\t\tRAW_TRACK2\tSW_TRAKC2	\t||	HW_TRACK2		SW_TRACK2\r\n");
 
     for(int iter = 0; iter < ITERATIONS; iter+=(ITERATIONS/10))
     {
-        DebugP_log("%f\t%f\t%f\t%f\t%f\r\n",
-        raw_atan_angle[iter],
-        raw_track2_angle[iter],
-        sw_track2_angle[iter],
-        raw_track2_velocity[iter],
-        sw_track2_velocity[iter]
+        DebugP_log("\t%f\t%f\t%f\t\t||\t%f\t%f\r\n",
+            raw_atan_angle[iter],
+            raw_track2_angle[iter],
+            sw_track2_angle[iter],
+            raw_track2_velocity[iter],
+            sw_track2_velocity[iter]
         );
     }
 
@@ -166,29 +169,29 @@ void App_epwm1ISR(void *args)   // 10000 *5nS recurrance.
     update the global values.
     set a ISR complete variable */
 
-    int16_t temp_atanAngle = 0;
-    int16_t temp_swTrack2angle = 0;
-    int16_t temp_rawTrack2angle = 0;
-    int32_t temp_rawTrack2Velocity = 0;
-    int32_t temp_swTrack2Velocity = 0;
+    volatile int16_t temp_atanAngle = 0;
+    volatile int16_t temp_swTrack2Angle = 0;
+    volatile int16_t temp_rawTrack2Angle = 0;
+    volatile int32_t temp_rawTrack2Velocity = 0;
+    volatile int32_t temp_swTrack2Velocity = 0;
 
-    float temp_atanAngleDegree = 0, temp_rawTrack2AngleDegree = 0, temp_swTrack2AngleDegree = 0;
-    float temp_rawTrack2VelocityRps = 0, temp_swTrack2VelocityRps = 0;
+    volatile float temp_atanAngleDegree = 0, temp_rawTrack2AngleDegree = 0, temp_swTrack2AngleDegree = 0;
+    volatile float temp_rawTrack2VelocityRps = 0, temp_swTrack2VelocityRps = 0;
 
     /* reading HW results.*/
-    temp_atanAngle  = RDC_getArcTanAngle(rdcBaseAddr, RDC_RESOLVER_CORE0);
-    temp_rawTrack2angle     = RDC_getTrack2Angle(rdcBaseAddr, RDC_RESOLVER_CORE0);
+    temp_atanAngle          = RDC_getArcTanAngle(rdcBaseAddr, RDC_RESOLVER_CORE0);
+    temp_rawTrack2Angle     = RDC_getTrack2Angle(rdcBaseAddr, RDC_RESOLVER_CORE0);
     temp_rawTrack2Velocity  = RDC_getTrack2Velocity(rdcBaseAddr, RDC_RESOLVER_CORE0);
 
     /* running swTrack2 loop */
-    track2_psuedo(temp_atanAngle, &temp_swTrack2angle, &temp_swTrack2Velocity);
+    track2_psuedo(temp_atanAngle, (int16_t*) (&temp_swTrack2Angle), (int32_t*) (&temp_swTrack2Velocity));
 
-    App_Angle2Degrees(temp_atanAngle, &temp_atanAngleDegree);
-    App_Angle2Degrees(temp_swTrack2angle, &temp_swTrack2AngleDegree);
-    App_Angle2Degrees(temp_rawTrack2angle, &temp_rawTrack2AngleDegree);
+    App_Angle2Degrees(temp_atanAngle, (float*) (&temp_atanAngleDegree));
+    App_Angle2Degrees(temp_swTrack2Angle, (float*) (&temp_swTrack2AngleDegree));
+    App_Angle2Degrees(temp_rawTrack2Angle, (float*) (&temp_rawTrack2AngleDegree));
 
-    App_velocity2Rps(temp_rawTrack2Velocity, &temp_rawTrack2VelocityRps);
-    App_velocity2Rps(temp_swTrack2Velocity, &temp_swTrack2VelocityRps);
+    App_velocity2Rps(temp_rawTrack2Velocity,(float*) (&temp_rawTrack2VelocityRps));
+    App_velocity2Rps(temp_swTrack2Velocity,(float*) (&temp_swTrack2VelocityRps));
 
     raw_atan_angle[gIsrCount]       = temp_atanAngleDegree;
     raw_track2_angle[gIsrCount]     = temp_rawTrack2AngleDegree;
@@ -201,17 +204,17 @@ void App_epwm1ISR(void *args)   // 10000 *5nS recurrance.
     {
         EPWM_disableInterrupt(CONFIG_EPWM1_BASE_ADDR);
     }
-    EPWM_clearEventTriggerInterruptFlag(CONFIG_EPWM1_BASE_ADDR);
-    EPWM_clearEventTriggerInterruptFlag(CONFIG_EPWM1_BASE_ADDR);
-    EPWM_clearEventTriggerInterruptFlag(CONFIG_EPWM1_BASE_ADDR);
-    gIsrComplete = true;
+    else
+    {
+        EPWM_clearEventTriggerInterruptFlag(CONFIG_EPWM1_BASE_ADDR);
+    }
 }
 
-void App_Angle2Degrees(int16_t angle, float *angleDegree)
+inline void App_Angle2Degrees(int16_t angle, float *angleDegree)
 {
     *angleDegree =  ((float)((angle + (int16_t) MAX_16B_SIGNED_VALUE) * 360))/NUMBER_OF_16B_VALUES;
 }
-void App_velocity2Rps(int32_t velocity, float *velocityRps)
+inline void App_velocity2Rps(int32_t velocity, float *velocityRps)
 {
-    *velocityRps = ((float)(velocity * SAMPLING_FREQUENCY_IN_HZ))/((float)NUMBER_OF_32B_VALUES);
+    *velocityRps = (float)(velocity) * VELOCITY_SCALE_FACTOR;
 }

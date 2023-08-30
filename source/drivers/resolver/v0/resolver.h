@@ -1308,7 +1308,7 @@ typedef struct
     RDC_setDcOffsetCalCoef(uint32_t base, uint8_t core, uint8_t coef1, uint8_t coef2)
     {
         DebugP_assert((core == RDC_RESOLVER_CORE0) || (core == RDC_RESOLVER_CORE1));
-        uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF_CFG1_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF_CFG1_0 + (core * RDC_CORE_OFFSET);
         uint32_t mask = (CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFF_CAL_COEF1_MASK |
                          CSL_RESOLVER_REGS_DC_OFF_CFG1_0_OFF_CAL_COEF2_MASK);
 
@@ -1338,7 +1338,7 @@ typedef struct
     RDC_enableBPF(uint32_t base, uint8_t core)
     {
         DebugP_assert((core == RDC_RESOLVER_CORE0) || (core == RDC_RESOLVER_CORE1));
-        uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF_CFG1_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF_CFG1_0 + (core * RDC_CORE_OFFSET);
 
         HW_WR_REG32(
             base + regOffset,
@@ -1379,7 +1379,7 @@ typedef struct
     RDC_enableDcOffsetCorrection(uint32_t base, uint8_t core)
     {
         DebugP_assert((core == RDC_RESOLVER_CORE0) || (core == RDC_RESOLVER_CORE1));
-        uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF_CFG1_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF_CFG1_0 + (core * RDC_CORE_OFFSET);
 
         HW_WR_REG32(
             base + regOffset,
@@ -1400,7 +1400,7 @@ typedef struct
     RDC_disableDcOffsetCorrection(uint32_t base, uint8_t core)
     {
         DebugP_assert((core == RDC_RESOLVER_CORE0) || (core == RDC_RESOLVER_CORE1));
-        uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF_CFG1_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF_CFG1_0 + (core * RDC_CORE_OFFSET);
 
         HW_WR_REG32(
             base + regOffset,
@@ -1423,7 +1423,7 @@ typedef struct
     RDC_setDcOffsetManualCorrectionValue(uint32_t base, uint8_t core, int16_t sin, int16_t cos)
     {
         DebugP_assert((core == RDC_RESOLVER_CORE0) || (core == RDC_RESOLVER_CORE1));
-        uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF_CFG2_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF_CFG2_0 + (core * RDC_CORE_OFFSET);
         uint32_t mask = (CSL_RESOLVER_REGS_DC_OFF_CFG2_0_SIN_MAN_OFF_ADJ_MASK |
                          CSL_RESOLVER_REGS_DC_OFF_CFG2_0_COS_MAN_OFF_ADJ_MASK);
 
@@ -1453,7 +1453,7 @@ typedef struct
     static inline int16_t
     RDC_getDcOffsetEstimatedValues(uint32_t base, uint8_t core, uint8_t sinCosValue)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF0 + (core * RDC_CORE_OFFSET);
         uint32_t mask = CSL_RESOLVER_REGS_DC_OFF0_SIN_OFFSET_MASK | CSL_RESOLVER_REGS_DC_OFF0_COS_OFFSET_MASK;
         DebugP_assert((sinCosValue == RDC_DC_OFFSET_SIN_ESTIMATION) || (sinCosValue == RDC_DC_OFFSET_COS_ESTIMATION));
         return ((int16_t)(HW_RD_REG32(
@@ -1477,7 +1477,7 @@ typedef struct
     static inline void
     RDC_overrideIdealSampleTime(uint32_t base, uint8_t core, uint8_t overrideValue)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_SAMPLE_CFG1_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_SAMPLE_CFG1_0 + (core * RDC_CORE_OFFSET);
         HW_WR_REG32(
             base + regOffset,
             (HW_RD_REG32(
@@ -1497,7 +1497,7 @@ typedef struct
     static inline uint8_t
     RDC_getIdealSampleTime(uint32_t base, uint8_t core)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_SAMPLE_CFG1_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_SAMPLE_CFG1_0 + (core * RDC_CORE_OFFSET);
         return (
             (HW_RD_REG32(
                  base + regOffset) &
@@ -1519,7 +1519,7 @@ typedef struct
     static inline void
     RDC_setIdealSampleDetectionThreshold(uint32_t base, uint8_t core, uint16_t absThresholdValue)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_SAMPLE_CFG1_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_SAMPLE_CFG1_0 + (core * RDC_CORE_OFFSET);
         HW_WR_REG32(
             base + regOffset,
             (HW_RD_REG32(
@@ -1540,7 +1540,7 @@ typedef struct
     static inline void
     RDC_setIdealSampleBpfAdjust(uint32_t base, uint8_t core, uint8_t sampleAdjustCount)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_SAMPLE_CFG2_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_SAMPLE_CFG2_0 + (core * RDC_CORE_OFFSET);
         DebugP_assert(sampleAdjustCount <= RDC_MAX_IDEAL_SAMPLE_BPF_ADJUST);
         HW_WR_REG32(
             base + regOffset,
@@ -1562,7 +1562,7 @@ typedef struct
     static inline bool
     RDC_getIdealSamplePeakAvgLimitStatus(uint32_t base, uint8_t core)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_SAMPLE_CFG2_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_SAMPLE_CFG2_0 + (core * RDC_CORE_OFFSET);
         return (
             ((HW_RD_REG32(
                   base + regOffset) &
@@ -1585,7 +1585,7 @@ typedef struct
     static inline void
     RDC_setIdealSampleMode(uint32_t base, uint8_t core, uint8_t mode)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_DEC_GF_CFG0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_DEC_GF_CFG0 + (core * RDC_CORE_OFFSET);
         DebugP_assert(
             (mode & ~(CSL_RESOLVER_REGS_DEC_GF_CFG0_IDEAL_SAMPLE_MODE_MAX)) == 0U);
         HW_WR_REG32(
@@ -1608,7 +1608,7 @@ typedef struct
     static inline void
     RDC_enableIdealSampleBottomSampling(uint32_t base, uint8_t core)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_DEC_GF_CFG0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_DEC_GF_CFG0 + (core * RDC_CORE_OFFSET);
         HW_WR_REG32(
             base + regOffset,
             (HW_RD_REG32(
@@ -1627,7 +1627,7 @@ typedef struct
     static inline void
     RDC_disableIdealSampleBottomSampling(uint32_t base, uint8_t core)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_DEC_GF_CFG0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_DEC_GF_CFG0 + (core * RDC_CORE_OFFSET);
         HW_WR_REG32(
             base + regOffset,
             (HW_RD_REG32(
@@ -1652,7 +1652,7 @@ typedef struct
     static inline bool
     RDC_getPhaseGainEstimationStatus(uint32_t base, uint8_t core)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG1_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG1_0 + (core * RDC_CORE_OFFSET);
         return (
             ((HW_RD_REG32(
                   base + regOffset) &
@@ -1671,7 +1671,7 @@ typedef struct
     static inline void
     RDC_setPhaseGainEstimationTrainLimit(uint32_t base, uint8_t core, uint8_t pgEstimationLimit)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG1_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG1_0 + (core * RDC_CORE_OFFSET);
         DebugP_assert(pgEstimationLimit <= CSL_RESOLVER_REGS_PG_EST_CFG1_0_PG_TRAIN_LIMIT_MAX);
         HW_WR_REG32(
             base + regOffset,
@@ -1692,7 +1692,7 @@ typedef struct
     static inline void
     RDC_setCosPhaseBypass(uint32_t base, uint8_t core, uint16_t cosPhaseBypass)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + (core * RDC_CORE_OFFSET);
         DebugP_assert((cosPhaseBypass & (~CSL_RESOLVER_REGS_PG_EST_CFG2_0_PHASECOSBYP0_MAX)) == 0U);
         HW_WR_REG32(
             base + regOffset,
@@ -1712,7 +1712,7 @@ typedef struct
     static inline void
     RDC_enablePhaseGainEstimation(uint32_t base, uint8_t core)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + (core * RDC_CORE_OFFSET);
         HW_WR_REG32(
             base + regOffset,
             (HW_RD_REG32(
@@ -1732,7 +1732,7 @@ typedef struct
     static inline void
     RDC_disablePhaseGainEstimation(uint32_t base, uint8_t core)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + (core * RDC_CORE_OFFSET);
         HW_WR_REG32(
             base + regOffset,
             (HW_RD_REG32(
@@ -1751,7 +1751,7 @@ typedef struct
     static inline void
     RDC_enablePhaseAutoCorrection(uint32_t base, uint8_t core)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + (core * RDC_CORE_OFFSET);
         HW_WR_REG32(
             base + regOffset,
             (HW_RD_REG32(
@@ -1770,7 +1770,7 @@ typedef struct
     static inline void
     RDC_disablePhaseAutoCorrection(uint32_t base, uint8_t core)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + (core * RDC_CORE_OFFSET);
         HW_WR_REG32(
             base + regOffset,
             (HW_RD_REG32(
@@ -1789,7 +1789,7 @@ typedef struct
     static inline void
     RDC_enableGainAutoCorrection(uint32_t base, uint8_t core)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + (core * RDC_CORE_OFFSET);
         HW_WR_REG32(
             base + regOffset,
             (HW_RD_REG32(
@@ -1808,7 +1808,7 @@ typedef struct
     static inline void
     RDC_disableGainAutoCorrection(uint32_t base, uint8_t core)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + (core * RDC_CORE_OFFSET);
         HW_WR_REG32(
             base + regOffset,
             (HW_RD_REG32(
@@ -1829,7 +1829,7 @@ typedef struct
     static inline void
     RDC_setGainBypassValue(uint32_t base, uint8_t core, int16_t sinGainBypass, int16_t cosGainBypass)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG3_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG3_0 + (core * RDC_CORE_OFFSET);
         DebugP_assert(sinGainBypass >= 0);
         uint32_t value = ((uint32_t)(((uint16_t)cosGainBypass) << 16)) | ((uint32_t)((uint16_t)sinGainBypass));
 
@@ -1849,7 +1849,7 @@ typedef struct
     static inline int16_t // TODO : CHECK IF UNSINGED
     RDC_getPhaseEstimation(uint32_t base, uint8_t core)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG4_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG4_0 + (core * RDC_CORE_OFFSET);
         return (
             (HW_RD_REG32(
                  base + regOffset) &
@@ -1869,7 +1869,7 @@ typedef struct
     static inline void
     RDC_getGainEstimation(uint32_t base, uint8_t core, int16_t *sinGainEstimate, int16_t *cosGainEstimate)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG5_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG5_0 + (core * RDC_CORE_OFFSET);
         uint32_t value = HW_RD_REG32(base + regOffset);
 
         *cosGainEstimate = (int16_t)(value >> 16);
@@ -1901,7 +1901,7 @@ typedef struct
 
         uint32_t mask_cfg1 = (CSL_RESOLVER_REGS_TRACK2_CFG1_0_KVELFILT_MASK);
 
-        uint32_t regOffset_cfg1 = CSL_RESOLVER_REGS_TRACK2_CFG1_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset_cfg1 = CSL_RESOLVER_REGS_TRACK2_CFG1_0 + (core * RDC_CORE_OFFSET);
         HW_WR_REG32(
             base + regOffset_cfg1,
             (HW_RD_REG32(
@@ -1920,7 +1920,7 @@ typedef struct
     static inline void
     RDC_enableTrack2Boost(uint32_t base, uint8_t core)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_TRACK2_CFG2_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_TRACK2_CFG2_0 + (core * RDC_CORE_OFFSET);
 
         HW_WR_REG32(
             base + regOffset,
@@ -1939,7 +1939,7 @@ typedef struct
     static inline void
     RDC_disableTrack2Boost(uint32_t base, uint8_t core)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_TRACK2_CFG2_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_TRACK2_CFG2_0 + (core * RDC_CORE_OFFSET);
 
         HW_WR_REG32(
             base + regOffset,
@@ -1962,7 +1962,7 @@ typedef struct
     static inline int16_t
     RDC_getArcTanAngle(uint32_t base, uint8_t core)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_ANGLE_ARCTAN_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_ANGLE_ARCTAN_0 + (core * RDC_CORE_OFFSET);
         return (
             (int16_t)HW_RD_REG16(
                 base + regOffset));
@@ -1980,7 +1980,7 @@ typedef struct
     static inline int16_t
     RDC_getTrack2Angle(uint32_t base, uint8_t core)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_ANGLE_TRACK2_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_ANGLE_TRACK2_0 + (core * RDC_CORE_OFFSET);
         return (
             (int16_t)HW_RD_REG16(
                 base + regOffset));
@@ -1999,7 +1999,7 @@ typedef struct
     static inline int32_t
     RDC_getTrack2Velocity(uint32_t base, uint8_t core)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_VELOCITY_TRACK2_0 + core * RDC_CORE_OFFSET;
+        uint32_t regOffset = CSL_RESOLVER_REGS_VELOCITY_TRACK2_0 + (core * RDC_CORE_OFFSET);
         return (
             (int32_t)HW_RD_REG32(
                 base + regOffset));
