@@ -465,6 +465,10 @@ typedef enum SOC_RcmPllFoutFreqId_e
      * \brief   Value specifying PLL output frequency 1920MHz
      */
     RCM_PLL_FOUT_FREQID_CLK_1920MHZ,
+    /**
+     * \brief   Value specifying PLL output frequency 800MHz
+     */
+    RCM_PLL_FOUT_FREQID_CLK_800MHZ,
 } SOC_RcmPllFoutFreqId;
 /** @} */
 

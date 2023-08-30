@@ -79,6 +79,15 @@ const SOC_RcmADPLLJConfig_t gADPLLJConfigTbl[] =
         .M = 768U,
         .FracM = 0U,
     },
+    /* PER_800_25MHz */
+    {
+        .Finp = 25U,
+        .N = 11U,
+        .Fout = 800U,
+        .M2 = 1U,
+        .M = 384U,
+        .FracM = 0U,
+    },
 };
 
 const SOC_RcmXTALInfo gXTALInfo[] =
@@ -90,6 +99,7 @@ const uint32_t gPLLFreqId2FOutMap[] =
 {
     [RCM_PLL_FOUT_FREQID_CLK_2000MHZ]       = 2000U,
     [RCM_PLL_FOUT_FREQID_CLK_1920MHZ]       = 1920U,
+    [RCM_PLL_FOUT_FREQID_CLK_800MHZ]        = 800U,
 };
 
 const SOC_RcmClkSrcInfo gPeripheralClkSrcInfoMap[] =
@@ -1535,7 +1545,7 @@ static uint32_t SOC_rcmGetCoreFout(uint32_t Finp, bool div2flag)
         M  = CSL_FEXT(ptrTopRCMRegs->PLL_CORE_MN2DIV, TOP_RCM_PLL_CORE_MN2DIV_M);
         FracM = CSL_FEXT(ptrTopRCMRegs->PLL_CORE_FRACDIV,TOP_RCM_PLL_CORE_FRACDIV_FRACTIONALM);
         FOut = SOC_rcmADPLLJGetFOut(Finp, N, M, M2, FracM,div2flag);
-        // DebugP_assert(FOut != 0);
+        DebugP_assert(FOut != 0);
     }
     else
     {
