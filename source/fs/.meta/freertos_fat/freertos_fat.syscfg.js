@@ -36,10 +36,11 @@ let freertos_fat_module = {
 function moduleInstances(inst) {
 
     let modInstances = new Array();
+    let moduleSelectName = "";
 
     switch(inst.media) {
     	case "SD":
-            let moduleSelectName = "MMC1";
+            moduleSelectName = "MMC1";
             if ((common.getSocName() == "am263x") || (common.getSocName() == "am263px"))
             {
                 moduleSelectName = "MMC";
@@ -51,17 +52,24 @@ function moduleInstances(inst) {
     		    useArray: false,
     		    requiredArgs: {
     		        moduleSelect: moduleSelectName,
+                    cardType : "SD",
     		    },
     		});
     		break;
     	case "EMMC":
+            moduleSelectName = "MMC0";
+            if ((common.getSocName() == "am263x") || (common.getSocName() == "am263px"))
+            {
+                moduleSelectName = "MMC";
+            }
     		modInstances.push({
     		    name: "peripheralDriver",
     		    displayName: "MMCSD Configuration",
     		    moduleName: '/drivers/mmcsd/mmcsd',
     		    useArray: false,
     		    requiredArgs: {
-    		        moduleSelect: "MMC0",
+    		        moduleSelect: moduleSelectName,
+                    cardType : "EMMC",
     		    },
     		});
     		break;
