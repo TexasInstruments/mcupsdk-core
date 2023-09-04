@@ -34,6 +34,7 @@ help:
 	@echo  Library build targets,
 	@echo  ======================
 	@echo  $(MAKE) -s -f makefile.am263px board_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am263px sfo_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am263px drivers_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am263px freertos_fat_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am263px nortos_r5f.ti-arm-clang
@@ -53,6 +54,7 @@ help:
 	@echo  Library clean targets,
 	@echo  ======================
 	@echo  $(MAKE) -s -f makefile.am263px board_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am263px sfo_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am263px drivers_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am263px freertos_fat_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am263px nortos_r5f.ti-arm-clang_clean
@@ -145,6 +147,9 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_hr_updown/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_illegal_combo_logic/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_illegal_combo_logic/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/hrpwm_deadband_sfo/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/hrpwm_duty_cycle_sfo/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/hrpwm_phase_shift_sfo/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_minimum_deadband/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_minimum_deadband/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_protection_pru/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -313,6 +318,7 @@ help:
 
 # Various Component Targets
 BUILD_COMBO_board = board_r5f.ti-arm-clang
+BUILD_COMBO_sfo = sfo_r5f.ti-arm-clang
 BUILD_COMBO_drivers = drivers_r5f.ti-arm-clang
 BUILD_COMBO_freertos_fat = freertos_fat_r5f.ti-arm-clang
 BUILD_COMBO_nortos = nortos_r5f.ti-arm-clang
@@ -330,7 +336,7 @@ BUILD_COMBO_sdl = sdl_r5f.ti-arm-clang sdl_r5fss1.ti-arm-clang
 BUILD_COMBO_security = security_r5f.ti-arm-clang
 
 # Combine all Components
-BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos_fat) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_sdl) $(BUILD_COMBO_security)
+BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_sfo) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos_fat) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_sdl) $(BUILD_COMBO_security)
 
 # Combine all Pre-built Components
 BUILD_COMBO_PREBUILT_ALL =
@@ -346,6 +352,9 @@ libs-private: $(BUILD_COMBO_PRIVATE_ALL)
 
 $(BUILD_COMBO_board):
 	$(MAKE) -C source/board -f makefile.am263px.$(subst board_,,$@) all
+
+$(BUILD_COMBO_sfo):
+	$(MAKE) -C source/calibration -f makefile.am263px.$(subst sfo_,,$@) all
 
 $(BUILD_COMBO_drivers):
 	$(MAKE) -C source/drivers -f makefile.am263px.$(subst drivers_,,$@) all
@@ -395,6 +404,7 @@ $(BUILD_COMBO_security):
 
 # Various Component Clean Targets
 BUILD_COMBO_CLEAN_board = board_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_sfo = sfo_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_drivers = drivers_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_freertos_fat = freertos_fat_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_nortos = nortos_r5f.ti-arm-clang_clean
@@ -412,7 +422,7 @@ BUILD_COMBO_CLEAN_sdl = sdl_r5f.ti-arm-clang_clean sdl_r5fss1.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_security = security_r5f.ti-arm-clang_clean
 
 # Combine all Components Clean
-BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos_fat) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_security)
+BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_sfo) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos_fat) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_security)
 
 # Combine all Pre-built Components Clean
 BUILD_COMBO_PREBUILT_CLEAN_ALL =
@@ -423,6 +433,9 @@ libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
 
 $(BUILD_COMBO_CLEAN_board):
 	$(MAKE) -C source/board -f makefile.am263px.$(subst board_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_sfo):
+	$(MAKE) -C source/calibration -f makefile.am263px.$(subst sfo_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_drivers):
 	$(MAKE) -C source/drivers -f makefile.am263px.$(subst drivers_,,$(subst _clean,,$@)) clean
@@ -472,6 +485,7 @@ $(BUILD_COMBO_CLEAN_security):
 
 # Various Component Scrub Targets
 BUILD_COMBO_SCRUB_board = board_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_sfo = sfo_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_drivers = drivers_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_freertos_fat = freertos_fat_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_nortos = nortos_r5f.ti-arm-clang_scrub_scrub
@@ -489,7 +503,7 @@ BUILD_COMBO_SCRUB_sdl = sdl_r5f.ti-arm-clang_scrub sdl_r5fss1.ti-arm-clang_scrub
 BUILD_COMBO_SCRUB_security = security_r5f.ti-arm-clang_scrub_scrub
 
 # Combine all Components Scrub Targets
-BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos_fat) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_security)
+BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_sfo) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos_fat) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_security)
 
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
@@ -500,6 +514,9 @@ libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
 
 $(BUILD_COMBO_SCRUB_board):
 	$(MAKE) -C source/board -f makefile.am263px.$(subst board_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_sfo):
+	$(MAKE) -C source/calibration -f makefile.am263px.$(subst sfo_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_drivers):
 	$(MAKE) -C source/drivers -f makefile.am263px.$(subst drivers_,,$(subst _scrub,,$@)) scrub
@@ -619,6 +636,9 @@ BUILD_COMBO_EXAMPLE_ALL += epwm_hr_updown_am263px-cc_r5fss0-0_nortos_ti-arm-clan
 BUILD_COMBO_EXAMPLE_ALL += epwm_hr_updown_am263px-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += epwm_illegal_combo_logic_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += epwm_illegal_combo_logic_am263px-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += hrpwm_deadband_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += hrpwm_duty_cycle_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += hrpwm_phase_shift_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += epwm_minimum_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += epwm_minimum_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += epwm_protection_pru_am263px-cc_r5fss0-0_nortos_ti-arm-clang
@@ -1011,6 +1031,15 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  epwm_illegal_combo_logic_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/epwm/epwm_illegal_combo_logic/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ hrpwm_deadband_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/epwm/hrpwm_deadband_sfo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ hrpwm_duty_cycle_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/epwm/hrpwm_duty_cycle_sfo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ hrpwm_phase_shift_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/epwm/hrpwm_phase_shift_sfo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  epwm_minimum_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/epwm/epwm_minimum_deadband/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -1568,6 +1597,9 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += epwm_hr_updown_am263px-cc_r5fss0-0_nortos_ti-ar
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += epwm_hr_updown_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += epwm_illegal_combo_logic_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += epwm_illegal_combo_logic_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += hrpwm_deadband_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += hrpwm_duty_cycle_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += hrpwm_phase_shift_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += epwm_minimum_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += epwm_minimum_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += epwm_protection_pru_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1960,6 +1992,15 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  epwm_illegal_combo_logic_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/epwm/epwm_illegal_combo_logic/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ hrpwm_deadband_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/hrpwm_deadband_sfo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ hrpwm_duty_cycle_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/hrpwm_duty_cycle_sfo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ hrpwm_phase_shift_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/hrpwm_phase_shift_sfo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  epwm_minimum_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/epwm/epwm_minimum_deadband/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -2517,6 +2558,9 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += epwm_hr_updown_am263px-cc_r5fss0-0_nortos_ti-ar
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += epwm_hr_updown_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += epwm_illegal_combo_logic_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += epwm_illegal_combo_logic_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += hrpwm_deadband_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += hrpwm_duty_cycle_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += hrpwm_phase_shift_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += epwm_minimum_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += epwm_minimum_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += epwm_protection_pru_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -2909,6 +2953,15 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  epwm_illegal_combo_logic_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/epwm/epwm_illegal_combo_logic/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ hrpwm_deadband_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/epwm/hrpwm_deadband_sfo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ hrpwm_duty_cycle_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/epwm/hrpwm_duty_cycle_sfo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ hrpwm_phase_shift_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/epwm/hrpwm_phase_shift_sfo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  epwm_minimum_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/epwm/epwm_minimum_deadband/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

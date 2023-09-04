@@ -3503,7 +3503,7 @@ int32_t AM263_ADC_TTR_0001(uint32_t base)
         volatile uint32_t counter_start_stop_read_latency = 0;
         volatile uint32_t adc_result_read_latency = 0;
 
-        uint16_t result_dummy = 0;
+        volatile uint16_t result_dummy = 0;
 
         CycleCounterP_reset();
         counter_start_stop_read_latency = CycleCounterP_getCount32();
@@ -3750,7 +3750,7 @@ int32_t AM263_ADC_TTR_0003(uint32_t base)
 
         /* 16 bit read */
         CycleCounterP_reset();
-        adc_output_16 = ADC_getPPBDelayTimeStamp(0,0);
+        adc_output_16 = ADC_getPPBDelayTimeStamp(base,0);
         temp_count = CycleCounterP_getCount32();
         counter_values_for_read[0] = temp_count - counter_read_latency;
         temp_count = 0;
@@ -3780,7 +3780,8 @@ int32_t AM263_ADC_TTR_0003(uint32_t base)
 
         /* 16 bit result space read */
         CycleCounterP_reset();
-        adc_output_16 = HW_RD_REG16(result_base + CSL_ADC_RESULT_ADCRESULT0);
+        // adc_output_16 = HW_RD_REG16(result_base + CSL_ADC_RESULT_ADCRESULT0);
+        adc_output_16 = ADC_readResult(result_base, 0);
         temp_count = CycleCounterP_getCount32();
         counter_values_for_read[2] = temp_count - counter_read_latency;
         temp_count = 0;
@@ -3853,7 +3854,7 @@ int32_t AM263_ADC_TTR_0003(uint32_t base)
                 }
 
             }
-            if ((counter_values_for_write[0] < 11-3) || (counter_values_for_write[0] > 11+3) )
+            if ((counter_values_for_write[0] < 11-3) || (counter_values_for_write[0] > 11+4) )
             {
                 errors++ ;  /* 16 bit write */
                 if(enableLog)

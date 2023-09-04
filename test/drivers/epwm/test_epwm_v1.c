@@ -172,6 +172,8 @@ uint32_t tb_countmode_vector[] = {EPWM_COUNTER_MODE_UP, EPWM_COUNTER_MODE_DOWN, 
 
 uint32_t cc_values_vector[] = {0x3A98, 0x4650, 0x5DC0};
 
+#ifdef SOC_AM263X
+
 uint8_t isTestSupported[32][49] =
 {
     {0, 1,0,1,0, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1},
@@ -207,6 +209,46 @@ uint8_t isTestSupported[32][49] =
     {30, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
     {31, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
 };
+
+#endif
+#ifdef SOC_AM263PX
+
+uint8_t isTestSupported[32][49] =
+{
+    {0, 1,0,1,0, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1},
+    {1, 1,1,1,0, 0,1,0,1, 1,1,1,1, 1,1,1,1, 1,1,1,0, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1},
+    {2, 1,0,1,0, 0,1,0,1, 1,1,1,1, 1,1,1,1, 1,1,1,0, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1},
+    {3, 1,0,1,0, 0,1,0,1, 1,1,1,1, 1,1,1,1, 1,1,1,0, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1},
+    {4, 1,0,1,0, 0,1,0,1, 1,1,0,1, 0,1,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,1,1,1, 1,1,1,1, 0,1,1,1},
+    {5, 1,0,1,0, 0,1,0,1, 1,1,0,1, 0,1,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,1,1,1, 1,1,1,1, 0,1,1,1},
+    {6, 1,0,1,0, 0,1,0,1, 1,1,0,1, 0,1,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,1,1,1, 1,1,1,1, 0,1,1,1},
+    {7, 1,0,1,0, 0,1,0,1, 1,1,0,1, 0,1,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,1,1,1, 1,1,1,1, 0,1,1,1},
+    {8, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {9, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {10, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {11, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {12, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {13, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {14, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {15, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {16, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {17, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {18, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {19, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {20, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {21, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {22, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {23, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {24, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {25, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {26, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {27, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {28, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {29, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {30, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+    {31, 0,0,0,0, 0,0,0,1, 1,1,0,1, 0,0,1,1, 1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,1, 1,0,1,1, 0,1,0,1, 0,1,1,1},
+};
+#endif
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -4262,7 +4304,7 @@ int32_t AM263x_EPWM_xTR_0047(uint32_t base, uint32_t i)
 int32_t AM263x_EPWM_xTR_0048(uint32_t base)
 {
     int i;
-    uint32_t error =0;
+    volatile uint32_t error =0;
 
     for(i =0 ; i< 2; i++)
     {
@@ -4292,11 +4334,14 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
     EPWM_setTimeBaseCounter(base, 0xFFFF);
     if( !((HW_RD_REG16(base + CSL_EPWM_TBCTR) == (uint16_t)EPWM_getTimeBaseCounterValue(base))
     && (HW_RD_REG16(base + CSL_EPWM_TBCTR)) == 0xFFFF))
+    {
         error++;
-
+    }
     EPWM_setTimeBaseCounterMode(base, EPWM_COUNTER_MODE_UP);
     if(EPWM_getTimeBaseCounterDirection(base) != EPWM_TIME_BASE_STATUS_COUNT_UP)
+    {
         error++;
+    }
 
     EPWM_setTimeBaseCounterMode(base, EPWM_COUNTER_MODE_STOP_FREEZE);
 
@@ -4584,7 +4629,7 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
             - EPWM_CAPTURE_INPUT (0)
     */
 
-    for(uint8_t dcType = EPWM_CAPTURE_GATE; dcType >= EPWM_CAPTURE_INPUT; dcType--)
+    for(uint8_t dcType = EPWM_CAPTURE_INPUT; dcType <= EPWM_CAPTURE_GATE; dcType++)
     {
         regValue = (uint16_t*) (base + CSL_EPWM_CAPTRIPSEL);
         uint16_t mask;
@@ -4611,27 +4656,24 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
        EPWM_disableCaptureTripCombinationInput(base, tripInput, dcType)
        tripInput takes Or-ed values of EPWM_DC_COMBINATIONAL_TRIPINx for x in [0,15]
         */
-    for(uint8_t dcType = EPWM_CAPTURE_GATE; dcType >= EPWM_CAPTURE_INPUT; dcType--)
+    for(uint8_t dcType = EPWM_CAPTURE_INPUT; dcType <= EPWM_CAPTURE_GATE; dcType++)
     {
         uint16_t mask;
-        uint16_t shift;
         uint16_t tripSource;
         mask = 0xFFFF;
         if(dcType == EPWM_CAPTURE_GATE)
         {
             regValue = (uint16_t*) (base + CSL_EPWM_CAPGATETRIPSEL);
-            shift =  CSL_EPWM_CAPTRIPSEL_CAPGATECOMPSEL_SHIFT;
         }
         else
         {
             regValue = (uint16_t*) (base + CSL_EPWM_CAPINTRIPSEL);
-            shift =  CSL_EPWM_CAPTRIPSEL_CAPINCOMPSEL_SHIFT;
         }
-        for(tripSource = EPWM_DC_COMBINATIONAL_TRIPIN1; tripSource < (EPWM_DC_COMBINATIONAL_TRIPIN15<<1); tripSource |= (tripSource<<1))
+        for(tripSource = EPWM_DC_COMBINATIONAL_TRIPIN1; tripSource < (EPWM_DC_COMBINATIONAL_TRIPIN15<<1) - 1; tripSource |= (tripSource<<1))
         {
             EPWM_enableCaptureTripCombinationInput(base, tripSource, dcType);
             // TEST_ASSERT_BITS(mask, expected, actual);
-            TEST_ASSERT_BITS(mask, (tripSource << shift), *regValue);
+            TEST_ASSERT_BITS(mask, (uint16_t)(tripSource), *regValue);
 
             EPWM_disableCaptureTripCombinationInput(base, tripSource, dcType);
             TEST_ASSERT_BITS(tripSource, 0, *regValue);
@@ -4647,25 +4689,25 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
     EPWM_setCounterCompareValue_opt_cmpD(base, uint16_t compCount)
     */
     regValue = (uint16_t*) (base + CSL_EPWM_CMPA + 2U);
-    for(uint16_t cmp = 0; cmp <= 0xFFFF; cmp++)
+    for(uint16_t cmp = 0; cmp < 0xFFFF; cmp++)
     {
         EPWM_setCounterCompareValue_opt_cmpA(base, cmp);
         TEST_ASSERT_EQUAL_UINT16(*regValue, cmp);
     }
     regValue = (uint16_t*) (base + CSL_EPWM_CMPB + 2U);
-    for(uint16_t cmp = 0; cmp <= 0xFFFF; cmp++)
+    for(uint16_t cmp = 0; cmp < 0xFFFF; cmp++)
     {
         EPWM_setCounterCompareValue_opt_cmpB(base, cmp);
         TEST_ASSERT_EQUAL_UINT16(*regValue, cmp);
     }
     regValue = (uint16_t*) (base + CSL_EPWM_CMPC);
-    for(uint16_t cmp = 0; cmp <= 0xFFFF; cmp++)
+    for(uint16_t cmp = 0; cmp < 0xFFFF; cmp++)
     {
         EPWM_setCounterCompareValue_opt_cmpC(base, cmp);
         TEST_ASSERT_EQUAL_UINT16(*regValue, cmp);
     }
     regValue = (uint16_t*) (base + CSL_EPWM_CMPD);
-    for(uint16_t cmp = 0; cmp <= 0xFFFF; cmp++)
+    for(uint16_t cmp = 0; cmp < 0xFFFF; cmp++)
     {
         EPWM_setCounterCompareValue_opt_cmpD(base, cmp);
         TEST_ASSERT_EQUAL_UINT16(*regValue, cmp);

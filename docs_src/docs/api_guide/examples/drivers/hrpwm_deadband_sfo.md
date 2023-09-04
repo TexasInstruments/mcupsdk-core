@@ -15,7 +15,7 @@ This example modifies the MEP control registers to show edge displacement for hi
 ## AM263X-CC
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Connect HSEC 49 for epwm0_A
-- Connect HSEC 51 for epwm0_A
+- Connect HSEC 51 for epwm0_B
 
 
 
@@ -52,38 +52,38 @@ Shown below is a sample output when the application is run,
 \code
 EPWM High Resolution Deadband Test Started ...
 Please observe pins HSEC 49 and HSEC 51.
-High Resolution Deadband 20.00 ns. 
+High Resolution Deadband 20.00 ns.
 EPWM0 DBRED, DBFED = 8, DBREDHR, DBFEDHR = 0
 
 Calibration... Running...
 
-High Resolution Deadband 20.14 ns. 
+High Resolution Deadband 20.14 ns.
 EPWM0 DBRED, DBFED = 8, DBREDHR, DBFEDHR = 7
 
 Calibration... Running...
 
-High Resolution Deadband 20.29 ns. 
+High Resolution Deadband 20.29 ns.
 EPWM0 DBRED, DBFED = 8, DBREDHR, DBFEDHR = 15
 
 Calibration... Running...
 
-High Resolution Deadband 20.44 ns. 
+High Resolution Deadband 20.44 ns.
 EPWM0 DBRED, DBFED = 8, DBREDHR, DBFEDHR = 23
 
 Calibration... Running...
 
-High Resolution Deadband 20.59 ns. 
+High Resolution Deadband 20.59 ns.
 EPWM0 DBRED, DBFED = 8, DBREDHR, DBFEDHR = 30
 
 Calibration... Complete
 SFO status=1 , MEP_ScaleFactor=46
 
-High Resolution Deadband 20.74 ns. 
+High Resolution Deadband 20.74 ns.
 EPWM0 DBRED, DBFED = 8, DBREDHR, DBFEDHR = 38
 
 Calibration... Running...
 
-High Resolution Deadband 20.89 ns. 
+High Resolution Deadband 20.89 ns.
 EPWM0 DBRED, DBFED = 8, DBREDHR, DBFEDHR = 46
 
 \endcode

@@ -34,14 +34,14 @@
 #include "ti_drivers_config.h"
 #include "ti_board_config.h"
 
-void hrpwm_deadband_sfo(void *args);
+void hrpwm_phase_shift_sfo(void *args);
 
 int main(void)
 {
     System_init();
     Board_init();
 
-    hrpwm_deadband_sfo(NULL);
+    hrpwm_phase_shift_sfo(NULL);
 
     Board_deinit();
     System_deinit();

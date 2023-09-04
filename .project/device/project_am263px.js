@@ -2,6 +2,7 @@ const common = require("../common.js");
 
 const component_file_list = [
     "source/board/.project/project.js",
+    "source/calibration/.project/project.js",
     "source/drivers/.project/project.js",
     "source/fs/freertos_fat/.project/project.js",
     "source/kernel/nortos/.project/project.js",
@@ -70,6 +71,9 @@ const example_file_list = [
 	"examples/drivers/epwm/epwm_hr_duty_cycle/.project/project.js",
 	"examples/drivers/epwm/epwm_hr_updown/.project/project.js",
 	"examples/drivers/epwm/epwm_illegal_combo_logic/.project/project.js",
+    "examples/drivers/epwm/hrpwm_deadband_sfo/.project/project.js",
+    "examples/drivers/epwm/hrpwm_duty_cycle_sfo/.project/project.js",
+    "examples/drivers/epwm/hrpwm_phase_shift_sfo/.project/project.js",
 	"examples/drivers/epwm/epwm_minimum_deadband/.project/project.js",
 	"examples/drivers/epwm/epwm_protection_pru/.project/project.js",
 	"examples/drivers/epwm/epwm_trip_zone/.project/project.js",

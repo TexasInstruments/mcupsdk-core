@@ -21,18 +21,18 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=hrpwm_deadband_sfo.$(PROFILE).out
+OUTNAME:=hrpwm_duty_cycle_sfo.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=hrpwm_deadband_sfo.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=hrpwm_deadband_sfo.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=hrpwm_deadband_sfo.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=hrpwm_deadband_sfo.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=hrpwm_deadband_sfo.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=hrpwm_deadband_sfo.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME:=hrpwm_duty_cycle_sfo.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=hrpwm_duty_cycle_sfo.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=hrpwm_duty_cycle_sfo.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=hrpwm_duty_cycle_sfo.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=hrpwm_duty_cycle_sfo.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=hrpwm_duty_cycle_sfo.$(PROFILE).rprc_tmp
 
 FILES_common := \
-	hrpwm_deadband_sfo.c \
+	hrpwm_duty_cycle_sfo.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -182,7 +182,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263px:r5fss0-0:nortos:ti-arm-clang hrpwm_deadband_sfo ...
+	@echo  Scrubing: am263px:r5fss0-0:nortos:ti-arm-clang hrpwm_duty_cycle_sfo ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out

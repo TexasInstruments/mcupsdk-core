@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Hrpwm Deadband Sfo"
-        name = "hrpwm_deadband_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang"
+        title="Hrpwm Duty Cycle Sfo"
+        name = "hrpwm_duty_cycle_sfo_am263px-cc_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -48,7 +48,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${MCU_PLUS_SDK_PATH}/source/calibration/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=hrpwm_deadband_sfo.${ConfigName}.map
+            -m=hrpwm_duty_cycle_sfo.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs
@@ -61,7 +61,7 @@
             --context r5fss0-0 --part AM263P1 --package ZCZ_C
         "
 
-        description="A Hrpwm Deadband Sfo NORTOS project">
+        description="A Hrpwm Duty Cycle Sfo NORTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="
@@ -90,7 +90,7 @@
             "
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
-        <file path="../../../hrpwm_deadband_sfo.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../../hrpwm_duty_cycle_sfo.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
@@ -98,7 +98,7 @@
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263px/EXAMPLES_DRIVERS_HRPWM_DEADBAND_SFO.html"
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263px/EXAMPLES_DRIVERS_HRPWM_DUTY_CYCLE_SFO.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">

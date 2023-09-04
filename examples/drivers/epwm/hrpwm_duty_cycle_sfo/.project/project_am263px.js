@@ -4,7 +4,7 @@ let device = "am263px";
 
 const files = {
     common: [
-        "hrpwm_deadband_sfo.c",
+        "hrpwm_duty_cycle_sfo.c",
         "main.c",
     ],
 };
@@ -45,7 +45,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg"
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_HRPWM_DEADBAND_SFO";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_HRPWM_DUTY_CYCLE_SFO";
 
 const templates_nortos_r5f =
 [
@@ -57,7 +57,7 @@ const templates_nortos_r5f =
         input: ".project/templates/am263px/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "hrpwm_deadband_sfo",
+            entryFunction: "hrpwm_duty_cycle_sfo",
         },
     }
 ];
@@ -71,9 +71,9 @@ function getComponentProperty(device) {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "hrpwm_deadband_sfo";
+    property.name = "hrpwm_duty_cycle_sfo";
     property.isInternal = false;
-    property.description = "HRPWM Deadband SFO example."
+    property.description = "HRPWM Duty Cycle SFO example."
     property.buildOptionCombos = buildOptionCombos;
 
     return property;
