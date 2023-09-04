@@ -38,6 +38,7 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 - Capture waveform on HSEC Pin 49 for epwm0_A
 - Capture waveform on HSEC Pin 51 for epwm0_B
 
+
 ## AM263X-LP
 - Connect boosterpack header J1/J3 pin 7 to J2/J4 pin 18
 - Capture waveform on boosterpack header J2/J4 Pin 37 for epwm1_A

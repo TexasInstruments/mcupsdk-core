@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.14.0+2667"}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
@@ -174,7 +174,7 @@ epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTP
 epwm6.epwmDeadband_outputSwapOutB                                = true;
 epwm6.epwmDeadband_outputSwapOutA                                = true;
 epwm6.epwmTimebase_phaseEnable                                   = true;
-epwm6.EPWM.$assign                                               = "EPWM15";
+epwm6.EPWM.$assign                                               = "EPWM5";
 
 epwm7.$name                                                      = "CONFIG_EPWM6";
 epwm7.epwmDeadband_enableFED                                     = true;
@@ -247,8 +247,8 @@ epwm4.EPWM.A.$suggestSolution           = "EPWM3_A";
 epwm4.EPWM.B.$suggestSolution           = "EPWM3_B";
 epwm5.EPWM.A.$suggestSolution           = "EPWM13_A";
 epwm5.EPWM.B.$suggestSolution           = "EPWM13_B";
-epwm6.EPWM.A.$suggestSolution           = "EPWM15_A";
-epwm6.EPWM.B.$suggestSolution           = "EPWM15_B";
+epwm6.EPWM.A.$suggestSolution           = "EPWM5_A";
+epwm6.EPWM.B.$suggestSolution           = "EPWM5_B";
 epwm7.EPWM.A.$suggestSolution           = "EPWM4_A";
 epwm7.EPWM.B.$suggestSolution           = "EPWM4_B";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

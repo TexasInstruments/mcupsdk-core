@@ -49,6 +49,7 @@ Probe the following
 - CONFIG_EPWM5 output on HSEC PIN 160 (EPWM15_B)
 - CONFIG_EPWM6 output on HSEC PIN 57  (EPWM4_A)
 - CONFIG_EPWM6 output on HSEC PIN 59  (EPWM4_B)
+Early Access:AM263Px-CC E1 EPWM 15_A/15_B doesn't have a pinout so insted used EPWM 5_A/5_B ie: CONFIG_EPWM5 output on HSEC PIN 61 (EPWM5_A) and CONFIG_EPWM5 output on HSEC PIN 63 (EPWM5_B)
 ## AM263X-LP
 Probe the following
 - CONFIG_EPWM0 output on  PIN J2/4 11  (EPWM0_A)

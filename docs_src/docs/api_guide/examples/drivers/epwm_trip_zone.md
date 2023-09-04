@@ -40,7 +40,6 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 - Connect FSI header (on ControlCard) pin 8 to scope for epwm9_A
 - Connect HSEC Pin 53 to scope for epwm1_A
 
-
 ## AM263X-LP
 - Connect boosterpack header J1/J3 pin 7 to J2/J4 pin 18
 - Connect boosterpack header J6/J8 pin 75 to scope

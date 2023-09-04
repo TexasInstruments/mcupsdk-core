@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.15.0+2826"}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
@@ -61,15 +61,16 @@ epwm1.EPWM.$assign                                                    = "EPWM0";
 
 gpio1.pinDir               = "OUTPUT";
 gpio1.$name                = "GPIO_OUTPUT";
-gpio1.GPIO.gpioPin.$assign = "ball.B7";
+gpio1.GPIO.gpioPin.$assign = "SDFM0_CLK0";
 
 gpio2.$name                = "GPIO_INPUT";
-gpio2.GPIO.gpioPin.$assign = "ball.C1";
+gpio2.GPIO.$assign         = "GPIO";
+gpio2.GPIO.gpioPin.$assign = "EPWM2_B";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "ball.A7";
-debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -103,8 +104,7 @@ int_xbar1.xbarOutput = ["EPWM0_INT"];
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution           = "ball.B2";
-epwm1.EPWM.B.$suggestSolution           = "ball.B1";
+epwm1.EPWM.A.$suggestSolution           = "EPWM0_A";
+epwm1.EPWM.B.$suggestSolution           = "EPWM0_B";
 gpio1.GPIO.$suggestSolution             = "GPIO";
-gpio2.GPIO.$suggestSolution             = "GPIO";
 debug_log.uartLog.UART.$suggestSolution = "UART0";
