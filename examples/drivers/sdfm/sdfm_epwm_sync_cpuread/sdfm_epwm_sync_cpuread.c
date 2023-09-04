@@ -59,7 +59,7 @@ uint32_t gSdfmBaseAddr;
 uint32_t gClockEpwmBaseAddr;
 uint32_t gSyncEpwmBaseAddr;
 
-volatile uint32_t gInterruptCount;
+volatile int32_t gInterruptCount;
 volatile uint16_t gSdfmDataTimestamp;
 
 void sdfm_epwm_sync_cpuread_main(void *args)
@@ -94,34 +94,34 @@ void sdfm_epwm_sync_cpuread_main(void *args)
     initSDFM(gSdfmBaseAddr);
 
 	gInterruptCount = 0;
-	
+
 	/* Check interrupt and data*/
 	uint32_t loopCount = 0;
     while(loopCount < APP_RUN_TIME)
     {
 		DebugP_log("\r\nSDFM ISR count: %u\r\n", gInterruptCount);
 		gInterruptCount=0;
-			
+
 		if( (SDFM_getModulatorStatus(gSdfmBaseAddr, SDFM_FILTER_1) == true ) &&
 			(SDFM_getModulatorStatus(gSdfmBaseAddr, SDFM_FILTER_2) == true ) &&
 			(SDFM_getModulatorStatus(gSdfmBaseAddr, SDFM_FILTER_3) == true ) &&
 			(SDFM_getModulatorStatus(gSdfmBaseAddr, SDFM_FILTER_4) == true ))
 		{
 			DebugP_log("Modulator operating normally\r\n");
-			
+
 			/* Read and display result values */
 			DebugP_log("Filter 1 data : %d \r\n", filter1Result);
 			DebugP_log("Filter 2 data : %d \r\n", filter2Result);
 			DebugP_log("Filter 3 data : %d \r\n", filter3Result);
 			DebugP_log("Filter 4 data : %d \r\n", filter4Result);
-			
+
 			/*DebugP_log("SDFM ISR timestamp (Sync EPWM Timebase counter value) = %u \r\n", gSdfmDataTimestamp);*/
 		}
 		else
 		{
 			DebugP_log("Modulator failure\r\n");
 		}
-			
+
 		ClockP_sleep(1);
 		loopCount++;
     }
@@ -136,7 +136,7 @@ void sdfm_epwm_sync_cpuread_main(void *args)
 		  Fail if SDFM ISR period matches (without sync) SD clock freq/OSR = 1MHz/256 = 3906.25Hz.
 			SD clock frequency (Clock EPWM) configured using Sysconfig.
 		*/
-				
+
 		if( ((gInterruptCount -3051) < 50) && ((gInterruptCount -3051) > -50) )
 		{
 			DebugP_log("SDFM EPWM Sync CPU Read Test Passed!!\r\n");
@@ -180,7 +180,7 @@ static void sdfmISR1(void *handle)
 	}
 
 	gInterruptCount++;
-	
+
     /* Clear SDFM flag register */
     SDFM_clearInterruptFlag(gSdfmBaseAddr, SDFM_INT_MASK);
 }
