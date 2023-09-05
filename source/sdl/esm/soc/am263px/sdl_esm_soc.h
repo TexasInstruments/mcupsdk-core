@@ -42,8 +42,8 @@
 extern "C" {
 #endif
 
-#include <sdl/include/am263x/sdlr_intr_esm0.h>
-#include <sdl/include/am263x/sdlr_soc_baseaddress.h>
+#include <sdl/include/am263px/sdlr_intr_esm0.h>
+#include <sdl/include/am263px/sdlr_soc_baseaddress.h>
 
 /** ---------------------------------------------------------------------------
  * \brief Defines the different ESM instance types

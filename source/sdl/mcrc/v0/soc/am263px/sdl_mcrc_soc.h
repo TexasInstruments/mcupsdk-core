@@ -43,7 +43,7 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include <sdl/include/am263x/sdlr_soc_baseaddress.h>
+#include <sdl/include/am263px/sdlr_soc_baseaddress.h>
 
 #ifdef _cplusplus
 extern "C" {

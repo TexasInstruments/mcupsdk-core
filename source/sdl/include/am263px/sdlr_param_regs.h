@@ -41,7 +41,7 @@ extern "C"
 #endif
 
 #include <stdint.h>
-#include <sdl/include/am263x/sdlr_soc_baseaddress.h>
+#include <sdl/include/am263px/sdlr_soc_baseaddress.h>
 
 /* PARAM Registers */
 #define SDL_PARAM_REG_SET0							(0x52A04000U)

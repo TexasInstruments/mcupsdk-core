@@ -43,7 +43,7 @@ extern "C" {
 #endif
 
 #include <sdl/esm/v0/sdl_esm.h>
-#include <sdl/include/am263x/sdlr_intr_r5fss0_core0.h>
+#include <sdl/include/am263px/sdlr_intr_r5fss0_core0.h>
 
 /* Enumerate Interrupt number for the different esm interrupts */
 #define SDL_MAIN_ESM_HI_INTNO  SDL_R5FSS0_CORE0_INTR_ESM0_ESM_INT_HI
