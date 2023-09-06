@@ -1,0 +1,194 @@
+
+% let region_module = system.modules['/memory_configurator/memory_region'];
+% let general_module = system.modules['/memory_configurator/general'];
+% let group_module = system.modules['/memory_configurator/section'];
+% let common   = system.getScript("/common");
+
+ /* This is the stack that is used by code running within main()
+  * In case of NORTOS,
+  * - This means all the code outside of ISR uses this stack
+  * In case of FreeRTOS
+  * - This means all the code until vTaskStartScheduler() is called in main()
+  *   uses this stack.
+  * - After vTaskStartScheduler() each task created in FreeRTOS has its own stack
+  */
+% if (general_module !== undefined ) {
+% let general_module_instance = general_module.$instances
+% let instance = general_module_instance[0]
+--stack_size=`instance.stack_size`
+/* This is the heap size for malloc() API in NORTOS and FreeRTOS
+ * This is also the heap used by pvPortMalloc in FreeRTOS
+ */
+--heap_size=`instance.heap_size`
+-e_vectors  /* This is the entry of the application, _vector MUST be plabed starting address 0x0 */
+
+/* This is the size of stack when R5 is in IRQ mode
+ * In NORTOS,
+ * - Here interrupt nesting is enabled
+ * - This is the stack used by ISRs registered as type IRQ
+ * In FreeRTOS,
+ * - Here interrupt nesting is enabled
+ * - This is stack that is used initally when a IRQ is received
+ * - But then the mode is switched to SVC mode and SVC stack is used for all user ISR callbacks
+ * - Hence in FreeRTOS, IRQ stack size is less and SVC stack size is more
+ */
+__IRQ_STACK_SIZE = `instance.irq_stack_size`;
+/* This is the size of stack when R5 is in IRQ mode
+ * - In both NORTOS and FreeRTOS nesting is disabled for FIQ
+ */
+__FIQ_STACK_SIZE = `instance.fiq_stack_size`;
+__SVC_STACK_SIZE = `instance.svc_stack_size`; /* This is the size of stack when R5 is in SVC mode */
+__ABORT_STACK_SIZE = `instance.abort_stack_size`;  /* This is the size of stack when R5 is in ABORT mode */
+__UNDEFINED_STACK_SIZE = `instance.undefined_stack_size`;  /* This is the size of stack when R5 is in UNDEF mode */
+%}
+
+SECTIONS
+{
+%    if (group_module !== undefined ) {
+%    let group_module_instances = group_module.$instances
+%    for (let instance of group_module_instances) {
+%    let output_sections = instance.output_sections;
+%    let input_sections = instance.input_section
+%    let output_sections_start = instance.output_sections_start;
+%    let output_sections_end = instance.output_sections_end;
+%    if(instance.group) {
+    GROUP : load = `instance.load_memory`, run = `instance.run_memory`, type = `instance.type`  {
+        `output_sections` : {
+%    for(let i = 0; i<input_sections.length; i++) {
+%        let input_section = input_sections[i]
+%        if(input_section.length > 0)
+        `input_section.sections`;
+%     }
+    }
+%       if(output_sections_start) {
+        RUN_START(`output_sections_start`)
+% }
+%       if(output_sections_end) {
+        RUN_END(`output_sections_end`)
+% }
+    }
+%}
+% else {
+       `output_sections` (`instance.type`): load = `instance.load_memory`, run = `instance.run_memory`{
+%       for(let i = 0; i<input_sections.length; i++) {
+%           let input_section = input_sections[i]
+%}
+        } palign(`instance.alignment`)
+%}
+%}
+%}
+}
+
+%%{
+function util_function() {
+
+    let coreNames =  common.getSysCfgCoreNames();
+    let memory_region_module_name = '/memory_configurator/region'
+    let all_core_memory_instances = []
+    let regions_shared_with_this_core = []
+    let selfCoreName = common.getSelfSysCfgCoreName();
+
+    for (let core of coreNames) {
+
+        if( core.includes(selfCoreName) ) {
+            continue;
+        }
+
+        let core_module = common.getModuleForCore(memory_region_module_name, core);
+            if(core_module != undefined) {
+                let core_module_instances = core_module.$instances;
+                all_core_memory_instances.push(core_module_instances)
+            }
+    }
+
+    _.each(all_core_memory_instances, (each_core_memory_module) => {
+        _.each(each_core_memory_module, (each_instance) => {
+            if( each_instance.isShared && each_instance.shared_cores.includes(selfCoreName) ) {
+                regions_shared_with_this_core.push(each_instance)
+            }
+        })
+    })
+
+    return regions_shared_with_this_core
+}
+%%}
+
+MEMORY
+{
+    % if (region_module !== undefined ) {
+    % let region_module_instances = region_module.$instances
+    % let flag_ocram = false
+    % let flag_flash = false
+    % let flag_shared = false
+    % let flag_mailbox = false
+    % let flag_r5f = false
+    % let groups = region_module_instances.reduce((items, inst) => {
+    % let group = (items[inst.type] || []);
+    % group.push(inst);
+    % items[inst.type] = group;
+    % return items;
+    % }, {});
+    % let sorted_groups = []
+    %Object.keys(groups).forEach((key,value) => {
+    %    let tmp =  _.chain(groups[key])
+    %        .sortBy((item) => item.isShared)
+    %        .value();
+    %    sorted_groups.push(tmp)
+    %})
+    % Object.keys(sorted_groups).forEach((key,value) => {
+    % for (let item of sorted_groups[key]) {
+    % if(item.type == "OCRAM" && !item.isShared && !flag_ocram) {
+
+    /* when using multi-core application's i.e more than one R5F/M4F active, make sure
+    * this memory does not overlap with other R5F's
+    */
+
+    %flag_ocram = true
+    %}
+    % else if(item.type == "Flash" && !item.isShared && !flag_flash) {
+
+    /* This section can be used to put XIP section of the application in flash, make sure this does not overlap with
+    * other CPUs. Also make sure to add a MPU entry for this section and mark it as cached and code executable
+    */
+
+    %flag_flash = true
+    %}
+    % else if(item.isShared && !flag_shared) {
+
+    /* shared memories that are used by RTOS/NORTOS cores */
+    /* On R5F,
+    * - make sure there is a MPU entry which maps below regions as non-cache
+    */
+
+    %flag_shared = true
+    %}
+    % else if(item.type == "Mailbox" && item.isShared && !flag_mailbox) {
+    /* MSS mailbox memory is used as shared memory, we dont use bottom 32*12 bytes, since its used as SW queue by ipc_notify */
+    %flag_mailbox = true
+    %}
+     % else if(item.type.includes("R5f") && !flag_r5f) {
+
+    %flag_r5f = true
+    %}
+    % if (item.auto) {
+    `item.$name`  : ORIGIN = 0x`item.autoStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`item.size.toString(16).toUpperCase()`
+    %}
+    %else {
+    `item.$name`  : ORIGIN = 0x`item.manualStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`item.size.toString(16).toUpperCase()`
+    % }
+    % }
+    % });
+
+    /* For memory Regions not defined in this core but shared by other cores with the current core */
+
+    % let regions_shared_with_this_core = util_function()
+    % _.each(regions_shared_with_this_core, (region) => {
+    %             if (region.auto) {
+    `region.$name`  : ORIGIN = 0x`region.autoStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`region.size.toString(16).toUpperCase()`
+    %}
+    %             else {
+    `region.$name`  : ORIGIN = 0x`region.manualStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`region.size.toString(16).toUpperCase()`
+    % }
+    % })
+    %}
+}

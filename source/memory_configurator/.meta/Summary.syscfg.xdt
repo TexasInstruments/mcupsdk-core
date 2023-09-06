@@ -1,0 +1,15 @@
+% const summary = system.getScript("/memory_configurator/memoryLayoutSolver").getMemorySummary();
+% for(let memoryType in summary) {
+**`memoryType`**
+
+Start Address | Size | isShared | Core | Region
+-- | -- | -- | -- | --
+%	for(let entry of summary[memoryType]) {
+% 		if(!entry.inst) {
+0x`entry.start.toString(16)` | 0x`entry.size.toString(16)` | --- | --- | ---
+% 		} else {
+0x`entry.start.toString(16)` | 0x`entry.size.toString(16)` | `entry.isShared` | `entry.context` `entry.shared_cores` | [`entry.inst.$name`](`system.getReference(entry.inst)`)
+%		}
+% 	}
+
+% }

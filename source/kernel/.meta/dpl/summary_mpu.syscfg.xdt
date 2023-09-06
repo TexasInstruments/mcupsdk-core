@@ -1,0 +1,35 @@
+
+% const module = system.modules['/kernel/dpl/mpu_armv7'];
+% if (module !== undefined ) {
+Name | Start Address | Size | Access Permissions | Region Attributes | Allow Code Execution | Sub-Region Disable Mark
+-- | -- | -- | -- | -- | -- | --
+% let module_instances = module.$instances
+% _.each(module_instances, inst => {
+%   let size = CalculateSize(inst.size)
+[`inst.$name`](`system.getReference(inst)`) | 0x`inst.baseAddr.toString(16).toUpperCase()` | `size` |  `inst.accessPermissions` | `inst.attributes` | `inst.allowExecute` | `inst.subregionDisableMask`
+%})
+%}
+
+%%{
+    function CalculateSize(size) {
+        let actual_size = Math.pow(2,size)
+        let ctr = 0
+        let str = ""
+        let unit = ""
+
+        while(parseInt(actual_size/1024) > 0){
+            actual_size = actual_size/1024
+            actual_size = parseInt(actual_size)
+            ctr++
+        }
+
+        if(ctr == 0) unit = " B"
+        else if(ctr == 1) unit = " KB"
+        else if(ctr == 2) unit = " MB"
+        else if(ctr == 3) unit = " GB"
+
+        str = str.concat(actual_size.toString(),unit)
+
+        return str
+    }
+%%}

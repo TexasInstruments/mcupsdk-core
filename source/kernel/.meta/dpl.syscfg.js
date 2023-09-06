@@ -17,4 +17,10 @@ exports = {
         },
     ],
     topModules: soc.getTopModules(),
+    views: [{
+		name: "kernel/dpl/summary_mpu",
+		displayName: "MPU Setting Summary",
+		viewType: "markdown",
+		icon: "table-large",
+	}],
 };

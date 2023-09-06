@@ -1,6 +1,185 @@
 
 let common = system.getScript("/common");
 
+function memoryRegionMapping(mp_instance) {
+    let selfCoreName = common.getSelfSysCfgCoreName();
+
+    let mr_list = {
+        name: "",
+        type: "",
+        shared: false,
+        cores: "",
+        access_check: true
+    }
+
+    //if ( memory_region_module === undefined ) return mr_list;
+
+    let all_core_mr_instances = util_function()
+    let mr_instances = []
+    _.each(all_core_mr_instances, (each_core_memory_module) => {
+            if(each_core_memory_module.core.length > 0 ) {
+                _.each(each_core_memory_module.instances, (inst) => {
+                    let obj = Object.assign({}, inst) ;
+                    obj.core = each_core_memory_module.core
+                    mr_instances.push(obj)
+                })
+            }
+    })
+
+    let sorted_memory_regions = _.chain(mr_instances)
+        .sortBy((mr_instance) => (mr_instance.auto ? mr_instance.autoStartAddress: mr_instance.manualStartAddress))
+        .value();
+
+    let mp_start = mp_instance.baseAddr
+    let mp_size = Math.pow(2, mp_instance.size)
+    let mp_end = Number(mp_start) + Number(mp_size)
+
+    _.each(sorted_memory_regions, (region) => {
+
+        let mr_start = ( region.auto ? region.autoStartAddress: region.manualStartAddress )
+        let mr_end =  mr_start + region.size - 0x1
+
+
+        if (mr_end < mp_start || mp_end < mr_start)  // current mp instance doesn't fall inside this mr
+        { }
+        else
+        {
+            let region_name = (region.$name).concat("_",region.core)
+            mr_list.name = (mr_list.name).concat(region_name, "\n")
+            if(mr_list.type.includes(region.type) == false)
+                mr_list.type = (mr_list.type).concat(region.type, "\n")
+
+            if(mr_list.cores.includes(region.core) == false)
+                mr_list.cores = (mr_list.cores).concat(region.core, "\n")
+
+            if(region.isShared)
+            {
+                mr_list.shared = true
+                let arr_cores = region.shared_cores
+
+                if(!region.core.includes(selfCoreName) && !arr_cores.includes(selfCoreName)) {
+                    mr_list.access_check = false;
+                }
+
+                _.each( arr_cores, (core) => {
+                    if(mr_list.cores.includes(core) == false)
+                    mr_list.cores = (mr_list.cores).concat(core, " ")
+                } )
+            }
+        }
+    })
+
+    return mr_list;
+}
+
+function displayName(inst) {
+
+    let mr_names = memoryRegionMapping(inst).name;
+    let mr_names_array = mr_names.split("\n");
+    let map = {};
+
+    _.each(mr_names_array, (name) => {
+
+        let lastIndex = name.lastIndexOf("_");
+        let region_name = name.substring(0, lastIndex);
+        let core_name = name.substring(lastIndex+1);
+
+        if(map.hasOwnProperty(core_name)) {
+            map[core_name].push(region_name);
+        }
+        else {
+            map[core_name] = [region_name];
+        }
+    })
+
+    let ans = "";
+
+    for(let key in map) {
+        if (map.hasOwnProperty(key)) {
+            if(key.length > 0) {
+                ans = ans.concat(key.toUpperCase()," --> \n\n")
+                let value = map[key];
+                _.each(value, ele => {
+                    ans = ans.concat(ele, "\n")
+            })
+            ans = ans.concat("\n");
+            }
+        }
+    }
+
+    return ans;
+}
+
+function util_function() {
+
+    let coreNames =  common.getSysCfgCoreNames();
+    let memory_region_module_name = '/memory_configurator/memory_region'
+
+    let all_core_memory_module = []
+
+    for (let core of coreNames) {
+
+        let obj = {
+            instances: [],
+            core: "",
+        }
+        let core_module = common.getModuleForCore(memory_region_module_name, core);
+            if(core_module != undefined) {
+                let core_module_instances = core_module.$instances;
+                obj.instances = core_module_instances
+                obj.core = core
+            }
+            all_core_memory_module.push(obj)
+    }
+
+    return all_core_memory_module
+}
+
+function mpu_access_violation(inst, report) {
+
+    let selfCoreName = common.getSelfSysCfgCoreName();
+    if(!inst.memoryRegion_core.includes(selfCoreName) && inst.$ownedBy === undefined) {
+        report.logError(`${selfCoreName} cannot access this region`, inst, "baseAddr")
+    }
+}
+
+function readFromMemoryRegion(inst) {
+
+    let baseAddr = 0x0
+    if(inst.$ownedBy !== undefined) {
+
+        baseAddr = inst.$ownedBy.manualStartAddress;
+        if(inst.$ownedBy.auto){
+            baseAddr = inst.$ownedBy.autoStartAddress;
+        }
+    }
+    return baseAddr;
+}
+
+function changeDisplay(inst) {
+
+    if(inst.$ownedBy !== undefined) {
+        inst.$uiState.baseAddr_mr.hidden = false;
+        inst.$uiState.associated_mr.hidden = false;
+
+        inst.$uiState.baseAddr.hidden = true;
+        inst.$uiState.memoryRegion_name.hidden = true;
+        inst.$uiState.memoryRegion_type.hidden = true;
+        inst.$uiState.memoryRegion_shared.hidden = true;
+        inst.$uiState.memoryRegion_core.hidden = true;
+    }
+    else {
+        inst.$uiState.baseAddr_mr.hidden = true;
+        inst.$uiState.associated_mr.hidden = true;
+
+        inst.$uiState.baseAddr.hidden = false;
+        inst.$uiState.memoryRegion_name.hidden = false;
+        inst.$uiState.memoryRegion_type.hidden = false;
+        inst.$uiState.memoryRegion_shared.hidden = false;
+        inst.$uiState.memoryRegion_core.hidden = false;
+    }
+}
+
 let mpu_armv7_module = {
     displayName: "MPU ARMv7",
     longDescription: "Refer to ARMv7-R or AMRv-M Architecture Technical Reference Manual for more details",
@@ -22,10 +201,30 @@ let mpu_armv7_module = {
             displayFormat: "hex",
         },
         {
+            name: "baseAddr_mr",
+            displayName: "Region Start Address (hex)",
+            description: "MUST be <= 32 bits and MUST be region size aligned",
+            default: 0x0,
+            hidden: true,
+            displayFormat: "hex",
+            getValue: readFromMemoryRegion
+        },
+        {
+            name: "associated_mr",
+            displayName: "Memory Region",
+            description: "",
+            hidden: true,
+            default: "",
+        },
+        {
             name: "size",
             displayName: "Region Size (bytes)",
             default: 32,
             options: [
+                {
+                    name: 0,
+                    displayName: "0 B"
+                },
                 {
                     name: 5,
                     displayName: "32 B"
@@ -139,6 +338,7 @@ let mpu_armv7_module = {
                     displayName: "4 GB"
                 },
             ],
+            onChange: changeDisplay
         },
         {
             name: "accessPermissions",
@@ -163,7 +363,7 @@ let mpu_armv7_module = {
                 {
                     "name": "Supervisor BLOCK, User BLOCK",
                 },
-            ]
+            ],
         },
         {
             name: "attributes",
@@ -198,7 +398,7 @@ let mpu_armv7_module = {
                 {
                     "name": "Cached+Sharable",
                     "displayName": "Shareable",
-                    "description": "Region marked as shareable. Outer and inner write-back, write-allocate.",
+                    "description": "Cache enabled and region marked as sharable. Outer and inner write-back, write-allocate.",
                 },
                 {
                     "name": "CUSTOM",
@@ -282,6 +482,49 @@ let mpu_armv7_module = {
             hidden: true,
             description: "Refer ARMv7-R/M architecture manual for more details",
         },
+        {
+            name: "group_memory_region",
+            displayName: "Memory Region",
+            description: " ",
+            collapsed: false,
+            config : [
+                {
+                    name: "memoryRegion_name",
+                    displayName: "Name",
+                    multiline: true,
+                    default: "",
+                    description: 'Displays all the regions core wise which fall within this range.',
+                    readOnly: true,
+                    getValue: (inst) => { return displayName(inst); }
+                },
+                {
+                    name: "memoryRegion_type",
+                    displayName: "Type",
+                    multiline: true,
+                    default: "",
+                    description: 'Displays types of all the regions core wise which fall wthin this range.',
+                    readOnly: true,
+                    getValue: (inst) => { return memoryRegionMapping(inst).type ; }
+                },
+                {
+                    name: "memoryRegion_shared",
+                    displayName: "Shared",
+                    default: false,
+                    description: 'If checked, it means at least one of the regions falling in this range is shared.',
+                    readOnly: true,
+                    getValue: (inst) => { return memoryRegionMapping(inst).shared ; }
+                },
+                {
+                    name: "memoryRegion_core",
+                    displayName: "Cores Using It",
+                    multiline: true,
+                    default: " ",
+                    description: 'Displays all the cores that uses the regions falling within this range.',
+                    readOnly: true,
+                    getValue: (inst) => { return memoryRegionMapping(inst).cores ; }
+                },
+            ]
+        }
     ],
 
     validate : function (instance, report) {
@@ -300,6 +543,13 @@ let mpu_armv7_module = {
         {
             report.logError( `Region start address must be <= 0x${(maxAddr-1).toString(16).toUpperCase()}`,
                     instance, "baseAddr");
+        }
+
+        // mpu_access_violation(instance, report);
+        if (instance.memoryRegion_shared && instance.attributes == "Cached")
+        {
+            report.logInfo( `Region shared among cores is marked as cached. `,
+                    instance, "attributes");
         }
     },
     getSizeString(size) {
@@ -336,7 +586,7 @@ let mpu_armv7_module = {
 
         if(instance.attributes == "Cached+Sharable")
         {
-            attributes.isCacheable = 0;
+            attributes.isCacheable = 1;
             attributes.isBufferable = 1;
             attributes.isSharable = 1;
             attributes.tex = 1;

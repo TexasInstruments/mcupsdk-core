@@ -1,0 +1,5 @@
+% for(let subTemplate of args) {
+    % if (subTemplate.linker_config) {
+`system.getTemplate(subTemplate.linker_config)()`
+    % }
+% }

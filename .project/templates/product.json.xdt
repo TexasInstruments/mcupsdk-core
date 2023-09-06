@@ -37,6 +37,7 @@
         "/networking/networking",
         "/security/security",
         "/xbar/xbar",
+        "/memory_configurator/components",
         "/optiflash/optiflash"
 % }
 % if((args.device == "am273x") || (args.device == "awr294x")) {

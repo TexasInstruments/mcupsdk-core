@@ -1,0 +1,141 @@
+// All the numbers here are 100% made up and exist only to show how we can solve for layouts
+{
+	"AM64x": {
+		"OCRAM": {
+			"start": 0x8000,
+			"size": 0x1000
+		},
+		"Shared": {
+			"start": 0x18000,
+			"size": 0x500
+		},
+		"Flash": {
+			"start": 0x38000,
+			"size": 0x10000
+		}
+	},
+	"AM243x_ALV_beta": {
+		"OCRAM": {
+			"start": 0x8000,
+			"size": 0x1000
+		},
+		"Shared": {
+			"start": 0x18000,
+			"size": 0x500
+		},
+		"Flash": {
+			"start": 0x38000,
+			"size": 0x10000
+		}
+	},
+	"AM243x_ALX_beta": {
+		"OCRAM": {
+			"start": 0x8000,
+			"size": 0x1000
+		},
+		"Shared": {
+			"start": 0x18000,
+			"size": 0x500
+		},
+		"Flash": {
+			"start": 0x38000,
+			"size": 0x10000
+		}
+	},
+	"AM273x": {
+		"OCRAM": {
+			"start": 0x8000,
+			"size": 0x1000
+		},
+		"Shared": {
+			"start": 0x18000,
+			"size": 0x500
+		},
+		"Flash": {
+			"start": 0x38000,
+			"size": 0x10000
+		}
+	},
+	"AWR294X":{
+		"OCRAM": {
+			"start": 0x8000,
+			"size": 0x1000
+		},
+		"Shared": {
+			"start": 0x18000,
+			"size": 0x500
+		},
+		"Flash": {
+			"start": 0x38000,
+			"size": 0x10000
+		}
+	},
+	"AM263x_beta": {
+		"OCRAM": {
+			"start": 0x70000000,
+			"size":  0x00200000,
+            "access": "all"
+		},
+		"FLASH": {
+			"start": 0x60100000,
+			"size": 0x200000,
+            "access": "all"
+		},
+        "TCMA": {
+			"start": 0x00000000,
+			"size": 0x00008000,
+            "access": "individual"
+		},
+        "TCMB": {
+			"start": 0x00080000,
+			"size": 0x00008000,
+            "access": "individual"
+		},
+        "CUSTOM": {
+			"start": 0x00000000,
+			"size": 0xFFFFFFFF,
+            "access": "all"
+		},
+	},
+    "AM263Px": {
+		"OCRAM": {
+			"start": 0x70000000,
+			"size":  0x00300000,
+            "access": "all"
+		},
+		"FLASH": {
+			"start": 0x60000000,
+			"size": 0x8000000,
+            "access": "all"
+		},
+        "TCMA": {
+			"start": 0x00000000,
+			"size": 0x00008000,
+            "access": "individual"
+		},
+        "TCMB": {
+			"start": 0x00080000,
+			"size": 0x00008000,
+            "access": "individual"
+		},
+        "CUSTOM": {
+			"start": 0x00000000,
+			"size": 0xFFFFFFFF,
+            "access": "all"
+		},
+	},
+	"AM62x": {
+		"OCRAM": {
+			"start": 0x8000,
+			"size": 0x1000
+		},
+		"Shared": {
+			"start": 0x18000,
+			"size": 0x500
+		},
+		"Flash": {
+			"start": 0x38000,
+			"size": 0x10000
+		}
+	},
+}

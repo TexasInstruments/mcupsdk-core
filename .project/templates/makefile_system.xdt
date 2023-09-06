@@ -41,9 +41,11 @@ CORES = \
     $(CORE_`i`) \
 % }
 
+SYSTEM_FLAG := true
+
 all: syscfg
 % for (let project of args.project.projects) {
-	$(MAKE) -C ../`project.cpu`_`project.os`/`project.cgt`/ all
+	$(MAKE) -C ../`project.cpu`_`project.os`/`project.cgt`/ all SYSTEM_FLAG=${SYSTEM_FLAG}
 % }
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME)
 % if ((args.project.device == "am64x") || (args.project.device == "am243x")|| (args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "awr294x")) {

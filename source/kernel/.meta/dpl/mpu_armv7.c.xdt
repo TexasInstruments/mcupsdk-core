@@ -26,7 +26,12 @@ const MpuP_RegionConfig gMpuRegionConfig[CONFIG_MPU_NUM_REGIONS] RODATA_CFG_SECT
     % let instance = module.$instances[i];
     % let attributes = module.getRegionAttributes(instance);
     {
+        %if(instance.$ownedBy){
+        .baseAddr = 0x`instance.baseAddr_mr.toString(16).toUpperCase()`u,
+        %}
+        %else{
         .baseAddr = 0x`instance.baseAddr.toString(16).toUpperCase()`u,
+        %}
         .size = MpuP_RegionSize_`module.getSizeString(instance.size)`,
         .attrs = {
             .isEnable = 1,
