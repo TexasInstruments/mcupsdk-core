@@ -171,7 +171,6 @@ else
 	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_NAME) Done !!!
 	@echo  .
 endif
-endif
 % } else {
 % if (args.project.device == "am64x") {
 BOOTIMAGE_CORE_ID_a53ss0-0 = 0
