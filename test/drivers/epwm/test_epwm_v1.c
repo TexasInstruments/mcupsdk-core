@@ -1793,7 +1793,7 @@ int32_t AM263x_EPWM_xTR_0006(uint32_t base, uint32_t i)
     int32_t tmp = i;
     i%=4;
 
-    util_setEPWMTB(base, EPWM_EMULATION_FREE_RUN, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1, 0x5DC0, EPWM_COUNTER_MODE_UP);
+    util_setEPWMTB(base, EPWM_EMULATION_FREE_RUN, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1, 0x5DC0, EPWM_COUNTER_MODE_STOP_FREEZE);
     util_setEPWMCC(base, 0x4650, 0x4650);
     EPWM_setActionQualifierAction(base, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);
     EPWM_setActionQualifierAction(base, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_PERIOD);
@@ -1803,6 +1803,7 @@ int32_t AM263x_EPWM_xTR_0006(uint32_t base, uint32_t i)
     EPWM_setChopperFreq(base, i+3);    /*  6.25MHz, 5MHz, 4.1667MHz, 3.57MHz i.e. 160ns, 200ns, 240ns, 280ns */
     EPWM_setChopperDutyCycle(base, i+1); /*  High zone: 40ns, 75ns, 120ns, 175ns */
     EPWM_setChopperFirstPulseWidth(base, i+2);  /* First pulse: 120ns, 160ns, 200ns, 240ns */
+    EPWM_setTimeBaseCounterMode(base, EPWM_COUNTER_MODE_UP_DOWN);
     EPWM_enableSyncOutPulseSource(base, EPWM_SYNC_OUT_PULSE_ON_CNTR_COMPARE_B);
 
 
@@ -3856,13 +3857,15 @@ int32_t AM263x_EPWM_xTR_0043(uint32_t base, uint32_t i)
     /* Configure Action Qualifier Events */
     uint32_t tbprd = 0x5DC0, cmpA= 0x4650, cmpB = 0x3A98;
 
-    util_setEPWMTB(base, EPWM_EMULATION_FREE_RUN, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1, tbprd ,EPWM_COUNTER_MODE_UP_DOWN); //EPWM_COUNTER_MODE_STOP_FREEZE
+    util_setEPWMTB(base, EPWM_EMULATION_FREE_RUN, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1, tbprd ,EPWM_COUNTER_MODE_STOP_FREEZE); //EPWM_COUNTER_MODE_STOP_FREEZE
     util_setEPWMCC(base, cmpA, cmpB);
     EPWM_setActionQualifierAction(base, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);
     EPWM_setActionQualifierAction(base, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPA);
     EPWM_setActionQualifierAction(base, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);
     EPWM_setActionQualifierAction(base, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_DOWN_CMPB);
     EPWM_enableSyncOutPulseSource(base, EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO);
+
+    EPWM_setTimeBaseCounterMode(base, EPWM_COUNTER_MODE_UP_DOWN);
     ClockP_usleep(10000);
 
     /************************************* VALIDATING FROM TESTER *************************************/

@@ -412,7 +412,7 @@ void test_main(void *args)
 
             DebugP_log("%x %d %d %d\r\n", ecap_base, epwm, out, ecap[epwm][out]);
 
-            SOC_xbarSelectInputXBarInputSource(CSL_CONTROLSS_INPUTXBAR_U_BASE, 4, 0, INPUT_XBAR_GPIO120, 0); //Physical connection made from gpio on DUT to tester
+            SOC_xbarSelectInputXBarInputSource(CSL_CONTROLSS_INPUTXBAR_U_BASE, 20, 0, INPUT_XBAR_GPIO120, 0); //Physical connection made from gpio on DUT to tester
             ECAP_setSyncInPulseSource(ecap_base, ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0 + epwm_offset);
 
             uint16_t duty_cycle_arbitrary = 50;
@@ -736,7 +736,7 @@ void SyncEPWM(int8_t epwm_offset, Float32 duty_cycle, uint32_t period)
 {
     uint32_t epwm_base = CSL_CONTROLSS_G0_EPWM0_U_BASE + epwm_offset * 0x1000;
 
-    EPWM_setSyncInPulseSource(epwm_base, EPWM_SYNC_IN_PULSE_SRC_INPUTXBAR_OUT4);
+    EPWM_setSyncInPulseSource(epwm_base, EPWM_SYNC_IN_PULSE_SRC_INPUTXBAR_OUT20);
     EPWM_enableSyncOutPulseSource(epwm_base, EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO);
     EPWM_enablePhaseShiftLoad(epwm_base);
     EPWM_setPhaseShift(epwm_base, 0x0);
