@@ -20,117 +20,117 @@ function getInstanceConfig(moduleInstance) {
 
 let config = [
     {
-        name        :   "AdvConfig",
+        name        :   "advConfig",
         displayName :   "enable Advanced configurations",
         description :   "Check this box to enable configurations on the advanced parameters",
         default     :   false,
         onChange    :   (inst, ui) => {
-            if(inst["AdvConfig"] == true)
+            if(inst["advConfig"] == true)
             {
-                ui["resolverExcitationFrequencyAmplitude_adv"].readOnly = false
-                ui["SocDelay_adv"].readOnly = false
+                ui["resolverExcitationFrequencyAmplitudeAdv"].readOnly = false
+                ui["socDelayAdv"].readOnly = false
 
-                ui["Core0DcOffsetCalCoef1_adv"].readOnly = false
-                ui["Core1DcOffsetCalCoef1_adv"].readOnly = false
-                ui["Core0DcOffsetCalCoef2_adv"].readOnly = false
-                ui["Core1DcOffsetCalCoef2_adv"].readOnly = false
+                ui["core0dcOffsetCalCoef1Adv"].readOnly = false
+                ui["core1dcOffsetCalCoef1Adv"].readOnly = false
+                ui["core0dcOffsetCalCoef2Adv"].readOnly = false
+                ui["core1dcOffsetCalCoef2Adv"].readOnly = false
 
-                ui["Core0IdealSampleOverrideValue_adv"].readOnly = false
-                ui["Core1IdealSampleOverrideValue_adv"].readOnly = false
-                ui["Core0IdealSampleDetectionThreshold_adv"].readOnly = false
-                ui["Core1IdealSampleDetectionThreshold_adv"].readOnly = false
-                ui["Core0IdealSampleBpfAdjust_adv"].readOnly = false
-                ui["Core1IdealSampleBpfAdjust_adv"].readOnly = false
-                // ui["Core0IdealSamplePeakAvgLimit_adv"].readOnly = false
-                // ui["Core1IdealSamplePeakAvgLimit_adv"].readOnly = false
-                ui["Core0IdealSampleMode_adv"].readOnly = false
-                ui["Core1IdealSampleMode_adv"].readOnly = false
-                ui["Core0IdealSampleBottomSampling_adv"].readOnly = false
-                ui["Core1IdealSampleBottomSampling_adv"].readOnly = false
+                ui["core0IdealSampleOverrideValueAdv"].readOnly = false
+                ui["core1IdealSampleOverrideValueAdv"].readOnly = false
+                ui["core0IdealSampleDetectionThresholdAdv"].readOnly = false
+                ui["core1IdealSampleDetectionThresholdAdv"].readOnly = false
+                ui["core0IdealSampleBpfAdjustAdv"].readOnly = false
+                ui["core1IdealSampleBpfAdjustAdv"].readOnly = false
+                // ui["core0IdealSamplePeakAvgLimitAdv"].readOnly = false
+                // ui["core1IdealSamplePeakAvgLimitAdv"].readOnly = false
+                ui["core0IdealSampleModeAdv"].readOnly = false
+                ui["core1IdealSampleModeAdv"].readOnly = false
+                ui["core0IdealSampleBottomSamplingAdv"].readOnly = false
+                ui["core1IdealSampleBottomSamplingAdv"].readOnly = false
 
-                // ui["Core0PgOffsetConfig_adv"].readOnly = false
-                // ui["Core1PgOffsetConfig_adv"].readOnly = false
-                ui["Core0PgEstimationEnable_adv"].readOnly = false
-                ui["Core1PgEstimationEnable_adv"].readOnly = false
-                // ui["Core0PgGlitchThreshold_adv"].readOnly = false
-                // ui["Core1PgGlitchThreshold_adv"].readOnly = false
-                ui["Core0PgEstimationTrainLimit_adv"].readOnly = false
-                ui["Core1PgEstimationTrainLimit_adv"].readOnly = false
-                ui["Core0PgCorrectionEnable_adv"].readOnly = false
-                ui["Core1PgCorrectionEnable_adv"].readOnly = false
-                ui["Core0PgAutoPhaseGainCorrection_adv"].readOnly = false
-                ui["Core1PgAutoPhaseGainCorrection_adv"].readOnly = false
-                ui["Core0PgSinGainBypassValue_adv"].readOnly = false
-                ui["Core1PgSinGainBypassValue_adv"].readOnly = false
-                ui["Core0PgCosGainBypassValue_adv"].readOnly = false
-                ui["Core1PgCosGainBypassValue_adv"].readOnly = false
-                ui["Core0PgCosPhaseBypassValue_adv"].readOnly = false
-                ui["Core1PgCosPhaseBypassValue_adv"].readOnly = false
+                // ui["core0PgOffsetConfigAdv"].readOnly = false
+                // ui["core1PgOffsetConfigAdv"].readOnly = false
+                ui["core0PgEstimationEnableAdv"].readOnly = false
+                ui["core1PgEstimationEnableAdv"].readOnly = false
+                // ui["core0PgGlitchThresholdAdv"].readOnly = false
+                // ui["core1PgGlitchThresholdAdv"].readOnly = false
+                ui["core0PgEstimationTrainLimitAdv"].readOnly = false
+                ui["core1PgEstimationTrainLimitAdv"].readOnly = false
+                ui["core0PgCorrectionEnableAdv"].readOnly = false
+                ui["core1PgCorrectionEnableAdv"].readOnly = false
+                ui["core0PgAutoPhaseGainCorrectionAdv"].readOnly = false
+                ui["core1PgAutoPhaseGainCorrectionAdv"].readOnly = false
+                ui["core0PgSinGainBypassValueAdv"].readOnly = false
+                ui["core1PgSinGainBypassValueAdv"].readOnly = false
+                ui["core0PgCosGainBypassValueAdv"].readOnly = false
+                ui["core1PgCosGainBypassValueAdv"].readOnly = false
+                ui["core0PgCosPhaseBypassValueAdv"].readOnly = false
+                ui["core1PgCosPhaseBypassValueAdv"].readOnly = false
 
-                // ui["Core0track2ki_adv"].readOnly = false
-                // ui["Core1track2ki_adv"].readOnly = false
-                // ui["Core0track2kffw_adv"].readOnly = false
-                // ui["Core1track2kffw_adv"].readOnly = false
-                // ui["Core0track2kpdiv_adv"].readOnly = false
-                // ui["Core1track2kpdiv_adv"].readOnly = false
-                ui["Core0track2kvelfilt_adv"].readOnly = false
-                ui["Core1track2kvelfilt_adv"].readOnly = false
-                // ui["Core0track2vboostcoef_adv"].readOnly = false
-                // ui["Core1track2vboostcoef_adv"].readOnly = false
+                // ui["core0track2kiAdv"].readOnly = false
+                // ui["core1track2kiAdv"].readOnly = false
+                // ui["core0track2kffwAdv"].readOnly = false
+                // ui["core1track2kffwAdv"].readOnly = false
+                // ui["core0track2kpdivAdv"].readOnly = false
+                // ui["core1track2kpdivAdv"].readOnly = false
+                ui["core0track2kvelfiltAdv"].readOnly = false
+                ui["core1track2kvelfiltAdv"].readOnly = false
+                // ui["core0track2vboostcoefAdv"].readOnly = false
+                // ui["core1track2vboostcoefAdv"].readOnly = false
 
             }
             else
             {
-                ui["resolverExcitationFrequencyAmplitude_adv"].readOnly = true
-                ui["SocDelay_adv"].readOnly = true
+                ui["resolverExcitationFrequencyAmplitudeAdv"].readOnly = true
+                ui["socDelayAdv"].readOnly = true
 
-                ui["Core0DcOffsetCalCoef1_adv"].readOnly = true
-                ui["Core1DcOffsetCalCoef1_adv"].readOnly = true
-                ui["Core0DcOffsetCalCoef2_adv"].readOnly = true
-                ui["Core1DcOffsetCalCoef2_adv"].readOnly = true
+                ui["core0dcOffsetCalCoef1Adv"].readOnly = true
+                ui["core1dcOffsetCalCoef1Adv"].readOnly = true
+                ui["core0dcOffsetCalCoef2Adv"].readOnly = true
+                ui["core1dcOffsetCalCoef2Adv"].readOnly = true
 
-                ui["Core0IdealSampleOverrideValue_adv"].readOnly = true
-                ui["Core1IdealSampleOverrideValue_adv"].readOnly = true
-                ui["Core0IdealSampleDetectionThreshold_adv"].readOnly = true
-                ui["Core1IdealSampleDetectionThreshold_adv"].readOnly = true
-                ui["Core0IdealSampleBpfAdjust_adv"].readOnly = true
-                ui["Core1IdealSampleBpfAdjust_adv"].readOnly = true
-                ui["Core0IdealSamplePeakAvgLimit_adv"].readOnly = true
-                ui["Core1IdealSamplePeakAvgLimit_adv"].readOnly = true
-                ui["Core0IdealSampleMode_adv"].readOnly = true
-                ui["Core1IdealSampleMode_adv"].readOnly = true
-                ui["Core0IdealSampleBottomSampling_adv"].readOnly = true
-                ui["Core1IdealSampleBottomSampling_adv"].readOnly = true
+                ui["core0IdealSampleOverrideValueAdv"].readOnly = true
+                ui["core1IdealSampleOverrideValueAdv"].readOnly = true
+                ui["core0IdealSampleDetectionThresholdAdv"].readOnly = true
+                ui["core1IdealSampleDetectionThresholdAdv"].readOnly = true
+                ui["core0IdealSampleBpfAdjustAdv"].readOnly = true
+                ui["core1IdealSampleBpfAdjustAdv"].readOnly = true
+                ui["core0IdealSamplePeakAvgLimitAdv"].readOnly = true
+                ui["core1IdealSamplePeakAvgLimitAdv"].readOnly = true
+                ui["core0IdealSampleModeAdv"].readOnly = true
+                ui["core1IdealSampleModeAdv"].readOnly = true
+                ui["core0IdealSampleBottomSamplingAdv"].readOnly = true
+                ui["core1IdealSampleBottomSamplingAdv"].readOnly = true
 
-                // ui["Core0PgOffsetConfig_adv"].readOnly = true
-                // ui["Core1PgOffsetConfig_adv"].readOnly = true
-                ui["Core0PgEstimationEnable_adv"].readOnly = true
-                ui["Core1PgEstimationEnable_adv"].readOnly = true
-                // ui["Core0PgGlitchThreshold_adv"].readOnly = true
-                // ui["Core1PgGlitchThreshold_adv"].readOnly = true
-                ui["Core0PgEstimationTrainLimit_adv"].readOnly = true
-                ui["Core1PgEstimationTrainLimit_adv"].readOnly = true
-                ui["Core0PgCorrectionEnable_adv"].readOnly = true
-                ui["Core1PgCorrectionEnable_adv"].readOnly = true
-                ui["Core0PgAutoPhaseGainCorrection_adv"].readOnly = true
-                ui["Core1PgAutoPhaseGainCorrection_adv"].readOnly = true
-                ui["Core0PgSinGainBypassValue_adv"].readOnly = true
-                ui["Core1PgSinGainBypassValue_adv"].readOnly = true
-                ui["Core0PgCosGainBypassValue_adv"].readOnly = true
-                ui["Core1PgCosGainBypassValue_adv"].readOnly = true
-                ui["Core0PgCosPhaseBypassValue_adv"].readOnly = true
-                ui["Core1PgCosPhaseBypassValue_adv"].readOnly = true
+                // ui["core0PgOffsetConfigAdv"].readOnly = true
+                // ui["core1PgOffsetConfigAdv"].readOnly = true
+                ui["core0PgEstimationEnableAdv"].readOnly = true
+                ui["core1PgEstimationEnableAdv"].readOnly = true
+                // ui["core0PgGlitchThresholdAdv"].readOnly = true
+                // ui["core1PgGlitchThresholdAdv"].readOnly = true
+                ui["core0PgEstimationTrainLimitAdv"].readOnly = true
+                ui["core1PgEstimationTrainLimitAdv"].readOnly = true
+                ui["core0PgCorrectionEnableAdv"].readOnly = true
+                ui["core1PgCorrectionEnableAdv"].readOnly = true
+                ui["core0PgAutoPhaseGainCorrectionAdv"].readOnly = true
+                ui["core1PgAutoPhaseGainCorrectionAdv"].readOnly = true
+                ui["core0PgSinGainBypassValueAdv"].readOnly = true
+                ui["core1PgSinGainBypassValueAdv"].readOnly = true
+                ui["core0PgCosGainBypassValueAdv"].readOnly = true
+                ui["core1PgCosGainBypassValueAdv"].readOnly = true
+                ui["core0PgCosPhaseBypassValueAdv"].readOnly = true
+                ui["core1PgCosPhaseBypassValueAdv"].readOnly = true
 
-                ui["Core0track2ki_adv"].readOnly = true
-                ui["Core1track2ki_adv"].readOnly = true
-                ui["Core0track2kffw_adv"].readOnly = true
-                ui["Core1track2kffw_adv"].readOnly = true
-                ui["Core0track2kpdiv_adv"].readOnly = true
-                ui["Core1track2kpdiv_adv"].readOnly = true
-                ui["Core0track2kvelfilt_adv"].readOnly = true
-                ui["Core1track2kvelfilt_adv"].readOnly = true
-                ui["Core0track2vboostcoef_adv"].readOnly = true
-                ui["Core1track2vboostcoef_adv"].readOnly = true
+                ui["core0track2kiAdv"].readOnly = true
+                ui["core1track2kiAdv"].readOnly = true
+                ui["core0track2kffwAdv"].readOnly = true
+                ui["core1track2kffwAdv"].readOnly = true
+                ui["core0track2kpdivAdv"].readOnly = true
+                ui["core1track2kpdivAdv"].readOnly = true
+                ui["core0track2kvelfiltAdv"].readOnly = true
+                ui["core1track2kvelfiltAdv"].readOnly = true
+                ui["core0track2vboostcoefAdv"].readOnly = true
+                ui["core1track2vboostcoefAdv"].readOnly = true
 
             }
         }
@@ -151,14 +151,14 @@ config = config.concat([
                 options     : device_peripheral.RESOLVER_SignalMode,
             },
             {
-                name            : "AdcSocWidth",
+                name            : "adcSocWidth",
                 displayName     : "ADC SoC Width",
                 description :   "Start of Conversion Width for the ADC conversions",
                 default         : 16,
                 hidden          : false,
             },
             {
-                name            : "AdcBurstCount",
+                name            : "adcBurstCount",
                 displayName     : "ADC Burst Count",
                 description     : "Number of Burst Samples to be Averaged per RDC input. This is only valid for Sequencer mode 0",
                 longDescription : "The Oversample Ratio is ran on the Averaged Burst Samples. This is only valid for Sequencer mode 0",
@@ -177,69 +177,69 @@ config = config.concat([
                 onChange    : function (inst, ui){
                     if(inst["resolverSequencerMode"] == device_peripheral.RESOLVER_SequencerMode[0].name)
                     {
-                        ui["resolverSequencerMode_picture_0"].hidden = false
-                        ui["resolverSequencerMode_picture_1"].hidden = true
-                        ui["resolverSequencerMode_picture_2"].hidden = true
-                        ui["resolverSequencerMode_picture_3"].hidden = true
-                        ui["resolverSequencerMode_picture_4"].hidden = true
-                        ui["resolverSequencerMode_picture_5"].hidden = true
-                        ui["AdcBurstCount"].readOnly = false
-                        inst["AdcBurstCount"] = device_peripheral.RESOLVER_AdcBurstCount[0].name;
+                        ui["resolverSequencerModePicture0"].hidden = false
+                        ui["resolverSequencerModePicture1"].hidden = true
+                        ui["resolverSequencerModePicture2"].hidden = true
+                        ui["resolverSequencerModePicture3"].hidden = true
+                        ui["resolverSequencerModePicture4"].hidden = true
+                        ui["resolverSequencerModePicture5"].hidden = true
+                        ui["adcBurstCount"].readOnly = false
+                        inst["adcBurstCount"] = device_peripheral.RESOLVER_AdcBurstCount[0].name;
                     }
                     else
                     {
-                        ui["AdcBurstCount"].readOnly = true
-                        inst["AdcBurstCount"] = device_peripheral.RESOLVER_AdcBurstCount[0].name;
+                        ui["adcBurstCount"].readOnly = true
+                        inst["adcBurstCount"] = device_peripheral.RESOLVER_AdcBurstCount[0].name;
                     }
                     if(inst["resolverSequencerMode"] == device_peripheral.RESOLVER_SequencerMode[1].name)
                     {
-                        ui["resolverSequencerMode_picture_0"].hidden = true
-                        ui["resolverSequencerMode_picture_1"].hidden = false
-                        ui["resolverSequencerMode_picture_2"].hidden = true
-                        ui["resolverSequencerMode_picture_3"].hidden = true
-                        ui["resolverSequencerMode_picture_4"].hidden = true
-                        ui["resolverSequencerMode_picture_5"].hidden = true
+                        ui["resolverSequencerModePicture0"].hidden = true
+                        ui["resolverSequencerModePicture1"].hidden = false
+                        ui["resolverSequencerModePicture2"].hidden = true
+                        ui["resolverSequencerModePicture3"].hidden = true
+                        ui["resolverSequencerModePicture4"].hidden = true
+                        ui["resolverSequencerModePicture5"].hidden = true
                     }
                     if(inst["resolverSequencerMode"] == device_peripheral.RESOLVER_SequencerMode[2].name)
                     {
-                        ui["resolverSequencerMode_picture_0"].hidden = true
-                        ui["resolverSequencerMode_picture_1"].hidden = true
-                        ui["resolverSequencerMode_picture_2"].hidden = false
-                        ui["resolverSequencerMode_picture_3"].hidden = true
-                        ui["resolverSequencerMode_picture_4"].hidden = true
-                        ui["resolverSequencerMode_picture_5"].hidden = true
+                        ui["resolverSequencerModePicture0"].hidden = true
+                        ui["resolverSequencerModePicture1"].hidden = true
+                        ui["resolverSequencerModePicture2"].hidden = false
+                        ui["resolverSequencerModePicture3"].hidden = true
+                        ui["resolverSequencerModePicture4"].hidden = true
+                        ui["resolverSequencerModePicture5"].hidden = true
                     }
                     if(inst["resolverSequencerMode"] == device_peripheral.RESOLVER_SequencerMode[3].name)
                     {
-                        ui["resolverSequencerMode_picture_0"].hidden = true
-                        ui["resolverSequencerMode_picture_1"].hidden = true
-                        ui["resolverSequencerMode_picture_2"].hidden = true
-                        ui["resolverSequencerMode_picture_3"].hidden = false
-                        ui["resolverSequencerMode_picture_4"].hidden = true
-                        ui["resolverSequencerMode_picture_5"].hidden = true
+                        ui["resolverSequencerModePicture0"].hidden = true
+                        ui["resolverSequencerModePicture1"].hidden = true
+                        ui["resolverSequencerModePicture2"].hidden = true
+                        ui["resolverSequencerModePicture3"].hidden = false
+                        ui["resolverSequencerModePicture4"].hidden = true
+                        ui["resolverSequencerModePicture5"].hidden = true
                     }
                     if(inst["resolverSequencerMode"] == device_peripheral.RESOLVER_SequencerMode[4].name)
                     {
-                        ui["resolverSequencerMode_picture_0"].hidden = true
-                        ui["resolverSequencerMode_picture_1"].hidden = true
-                        ui["resolverSequencerMode_picture_2"].hidden = true
-                        ui["resolverSequencerMode_picture_3"].hidden = true
-                        ui["resolverSequencerMode_picture_4"].hidden = false
-                        ui["resolverSequencerMode_picture_5"].hidden = true
+                        ui["resolverSequencerModePicture0"].hidden = true
+                        ui["resolverSequencerModePicture1"].hidden = true
+                        ui["resolverSequencerModePicture2"].hidden = true
+                        ui["resolverSequencerModePicture3"].hidden = true
+                        ui["resolverSequencerModePicture4"].hidden = false
+                        ui["resolverSequencerModePicture5"].hidden = true
                     }
                     if(inst["resolverSequencerMode"] == device_peripheral.RESOLVER_SequencerMode[5].name)
                     {
-                        ui["resolverSequencerMode_picture_0"].hidden = true
-                        ui["resolverSequencerMode_picture_1"].hidden = true
-                        ui["resolverSequencerMode_picture_2"].hidden = true
-                        ui["resolverSequencerMode_picture_3"].hidden = true
-                        ui["resolverSequencerMode_picture_4"].hidden = true
-                        ui["resolverSequencerMode_picture_5"].hidden = false
+                        ui["resolverSequencerModePicture0"].hidden = true
+                        ui["resolverSequencerModePicture1"].hidden = true
+                        ui["resolverSequencerModePicture2"].hidden = true
+                        ui["resolverSequencerModePicture3"].hidden = true
+                        ui["resolverSequencerModePicture4"].hidden = true
+                        ui["resolverSequencerModePicture5"].hidden = false
                     }
                 },
             },
             {
-                name        : "resolverSequencerMode_picture_0",
+                name        : "resolverSequencerModePicture0",
                 displayName : "RESOLVER Sequencer Mode 0",
                 description : 'Sequencer Mode for RESOLVER',
                 longDescription : `![size='50%'](../source/drivers/.meta/resolver/images/mode0_Resolver_Sequencer_Modes.png)`,
@@ -248,7 +248,7 @@ config = config.concat([
                 readOnly    : true,
             },
             {
-                name        : "resolverSequencerMode_picture_1",
+                name        : "resolverSequencerModePicture1",
                 displayName : "RESOLVER Sequencer Mode 1",
                 description : 'Sequencer Mode for RESOLVER',
                 longDescription : `![size='50%'](../source/drivers/.meta/resolver/images/mode1_Resolver_Sequencer_Modes.png)`,
@@ -257,7 +257,7 @@ config = config.concat([
                 readOnly    : true,
             },
             {
-                name        : "resolverSequencerMode_picture_2",
+                name        : "resolverSequencerModePicture2",
                 displayName : "RESOLVER Sequencer Mode 2",
                 description : 'Sequencer Mode for RESOLVER',
                 longDescription : `![size='50%'](../source/drivers/.meta/resolver/images/mode2_Resolver_Sequencer_Modes.png)`,
@@ -266,7 +266,7 @@ config = config.concat([
                 readOnly    : true,
             },
             {
-                name        : "resolverSequencerMode_picture_3",
+                name        : "resolverSequencerModePicture3",
                 displayName : "RESOLVER Sequencer Mode 3",
                 description : 'Sequencer Mode for RESOLVER',
                 longDescription : `![size='50%'](../source/drivers/.meta/resolver/images/mode3_Resolver_Sequencer_Modes.png)`,
@@ -275,7 +275,7 @@ config = config.concat([
                 readOnly    : true,
             },
             {
-                name        : "resolverSequencerMode_picture_4",
+                name        : "resolverSequencerModePicture4",
                 displayName : "RESOLVER Sequencer Mode 4",
                 description : 'Sequencer Mode for RESOLVER',
                 longDescription : `![size='50%'](../source/drivers/.meta/resolver/images/mode4_Resolver_Sequencer_Modes.png)`,
@@ -284,7 +284,7 @@ config = config.concat([
                 readOnly    : true,
             },
             {
-                name        : "resolverSequencerMode_picture_5",
+                name        : "resolverSequencerModePicture5",
                 displayName : "RESOLVER Sequencer Mode 5",
                 description : 'Sequencer Mode for RESOLVER',
                 longDescription : `![size='50%'](../source/drivers/.meta/resolver/images/mode5_Resolver_Sequencer_Modes.png)`,
@@ -314,7 +314,7 @@ config = config.concat([
                 default     : 0,
             },
             {
-                name        : "resolverExcitationFrequencyAmplitude_adv",
+                name        : "resolverExcitationFrequencyAmplitudeAdv",
                 displayName : "Excitation Frequency Amplitude",
                 description : 'Select the Excitation Signal Amplitude. To enable editing, please select the advanced configurations above',
                 readOnly    : true,
@@ -322,15 +322,15 @@ config = config.concat([
                 default     : 249,
             },
             {
-                name        : "SyncInEnable",
+                name        : "syncInEnable",
                 displayName : "Enable Sync IN",
                 // FIXME: Find the PWMxBar that syncs to the resolver from integration spec
-                description : 'enables Sync In from the PWMxBar instance 6.',
+                description : 'enables Sync In from the PWMxBar instance 2.',
                 hidden      : false,
                 default     : false,
             },
             {
-                name        : "SocDelay_adv",
+                name        : "socDelayAdv",
                 displayName : "ADC SOC start Delay",
                 description : 'Delay of SOC start from the Excitation Frequency start. To enable editing, please select the advanced configurations above',
                 hidden      : false,
@@ -421,8 +421,8 @@ config = config.concat([
                 default     :  0,
                 hidden      : false,
                 onChange    : (inst, ui) => {
-                    inst["Core0PgCosPhaseBypassValue_adv"] =  inst["manualPhaseOffset"]
-                    inst["Core1PgCosPhaseBypassValue_adv"] =  inst["manualPhaseOffset"]
+                    inst["core0PgCosPhaseBypassValueAdv"] =  inst["manualPhaseOffset"]
+                    inst["core1PgCosPhaseBypassValueAdv"] =  inst["manualPhaseOffset"]
                 }
             },
             {
@@ -431,8 +431,8 @@ config = config.concat([
                 default     :  16384,
                 hidden      : false,
                 onChange    : (inst, ui) => {
-                    inst["Core0PgSinGainBypassValue_adv"] =  inst["manualSinGainOffset"]
-                    inst["Core1PgSinGainBypassValue_adv"] =  inst["manualSinGainOffset"]
+                    inst["core0PgSinGainBypassValueAdv"] =  inst["manualSinGainOffset"]
+                    inst["core1PgSinGainBypassValueAdv"] =  inst["manualSinGainOffset"]
                 }
             },
             {
@@ -441,8 +441,8 @@ config = config.concat([
                 default     :  16384,
                 hidden      : false,
                 onChange    : (inst, ui) => {
-                    inst["Core0PgCosGainBypassValue_adv"] =  inst["manualCosGainOffset"]
-                    inst["Core1PgCosGainBypassValue_adv"] =  inst["manualCosGainOffset"]
+                    inst["core0PgCosGainBypassValueAdv"] =  inst["manualCosGainOffset"]
+                    inst["core1PgCosGainBypassValueAdv"] =  inst["manualCosGainOffset"]
                 }
             },
             {
@@ -452,8 +452,8 @@ config = config.concat([
                 default     :  0,
                 hidden      : false,
                 onChange    : (inst, ui) => {
-                    inst["Core0IdealSampleOverrideValue_adv"] =  inst["idealSampleOverride"]
-                    inst["Core1IdealSampleOverrideValue_adv"] =  inst["idealSampleOverride"]
+                    inst["core0IdealSampleOverrideValueAdv"] =  inst["idealSampleOverride"]
+                    inst["core1IdealSampleOverrideValueAdv"] =  inst["idealSampleOverride"]
                 }
             }
         ],
@@ -467,106 +467,106 @@ for( let core = 0; core <= 1; core++)
     let coreConfig = []
     coreConfig = coreConfig.concat([
         {
-            name                :   "Core"+core.toString()+"bandPassFilterAndDcOffsetConfig",
+            name                :   "core"+core.toString()+"bandPassFilterAndDcOffsetConfig",
             displayName         :   "Band Pass Filter and DC Offset Configurations",
             description         :   "",
             longDescription     :   "Band Pass Filter for input ADC OverSample Ratio of 20 is available if Band Pass Filter is Used, DC offset Correction may be ignored",
             config              :   [
                 {
-                    name        :   "Core"+core.toString()+"bandPassFilterEnable",
+                    name        :   "core"+core.toString()+"bandPassFilterEnable",
                     displayName :   "Band Pass Filter Enable",
                     default     :   false,
                     hidden      :   false,
                     onChange    :   (inst, ui) => {
-                        if(inst["Core"+core.toString()+"bandPassFilterEnable"])
+                        if(inst["core"+core.toString()+"bandPassFilterEnable"])
                         {
-                            ui["Core"+core.toString()+"DcOffsetCorrectionEnable"].readOnly = true
-                            // ui["Core"+core.toString()+"autoDcOffset"].readOnly = true
-                            ui["Core"+core.toString()+"sinDcOffset"].readOnly = true
-                            ui["Core"+core.toString()+"cosDcOffset"].readOnly = true
+                            ui["core"+core.toString()+"dcOffsetCorrectionEnable"].readOnly = true
+                            // ui["core"+core.toString()+"autoDcOffset"].readOnly = true
+                            ui["core"+core.toString()+"sinDcOffset"].readOnly = true
+                            ui["core"+core.toString()+"cosDcOffset"].readOnly = true
                         }
                         else
                         {
-                            ui["Core"+core.toString()+"DcOffsetCorrectionEnable"].readOnly = false
-                            // ui["Core"+core.toString()+"autoDcOffset"].readOnly = false
-                            ui["Core"+core.toString()+"sinDcOffset"].readOnly = false
-                            ui["Core"+core.toString()+"cosDcOffset"].readOnly = false
+                            ui["core"+core.toString()+"dcOffsetCorrectionEnable"].readOnly = false
+                            // ui["core"+core.toString()+"autoDcOffset"].readOnly = false
+                            ui["core"+core.toString()+"sinDcOffset"].readOnly = false
+                            ui["core"+core.toString()+"cosDcOffset"].readOnly = false
                         }
                     }
                 },
                 {
-                    name        :   "Core"+core.toString()+"DcOffsetConfigurations",
+                    name        :   "core"+core.toString()+"DcOffsetConfigurations",
                     displayName :   "DC Offset Configurations",
                     config      :   [
                         {
-                            name        :   "Core"+core.toString()+"DcOffsetCorrectionEnable",
+                            name        :   "core"+core.toString()+"dcOffsetCorrectionEnable",
                             displayName :   "DC Offset Correction Enable",
                             hidden      :   false,
                             default     :   false,
                             readOnly    :   false,
                             onChange    :   (inst, ui) => {
-                                if (inst["Core"+core.toString()+"DcOffsetCorrectionEnable"] == false)
+                                if (inst["core"+core.toString()+"dcOffsetCorrectionEnable"] == false)
                                 {
-                                    // ui["Core"+core.toString()+"autoDcOffset"].hidden = true
-                                    ui["Core"+core.toString()+"sinDcOffset"].hidden = true
-                                    ui["Core"+core.toString()+"cosDcOffset"].hidden = true
-                                    ui["Core"+core.toString()+"DcOffsetCalCoef1_adv"].hidden = true
-                                    ui["Core"+core.toString()+"DcOffsetCalCoef2_adv"].hidden = true
+                                    // ui["core"+core.toString()+"autoDcOffset"].hidden = true
+                                    ui["core"+core.toString()+"sinDcOffset"].hidden = true
+                                    ui["core"+core.toString()+"cosDcOffset"].hidden = true
+                                    ui["core"+core.toString()+"dcOffsetCalCoef1Adv"].hidden = true
+                                    ui["core"+core.toString()+"dcOffsetCalCoef2Adv"].hidden = true
                                 }
                                 else
                                 {
-                                    // ui["Core"+core.toString()+"autoDcOffset"].hidden = false
-                                    ui["Core"+core.toString()+"sinDcOffset"].hidden = false
-                                    ui["Core"+core.toString()+"cosDcOffset"].hidden = false
-                                    ui["Core"+core.toString()+"sinDcOffset"].readOnly = false
-                                    ui["Core"+core.toString()+"cosDcOffset"].readOnly = false
-                                    ui["Core"+core.toString()+"DcOffsetCalCoef1_adv"].hidden = false
-                                    ui["Core"+core.toString()+"DcOffsetCalCoef2_adv"].hidden = false
+                                    // ui["core"+core.toString()+"autoDcOffset"].hidden = false
+                                    ui["core"+core.toString()+"sinDcOffset"].hidden = false
+                                    ui["core"+core.toString()+"cosDcOffset"].hidden = false
+                                    ui["core"+core.toString()+"sinDcOffset"].readOnly = false
+                                    ui["core"+core.toString()+"cosDcOffset"].readOnly = false
+                                    ui["core"+core.toString()+"dcOffsetCalCoef1Adv"].hidden = false
+                                    ui["core"+core.toString()+"dcOffsetCalCoef2Adv"].hidden = false
                                 }
                             }
                         },
                         {
-                            name        : "Core"+core.toString()+"DcOffsetCalCoef1_adv",
+                            name        : "core"+core.toString()+"dcOffsetCalCoef1Adv",
                             displayName : "DC Offset Cal Coefficient 1",
                             hidden      : true,
                             readOnly    : true,
                             default     : "8",
                         },
                         {
-                            name        : "Core"+core.toString()+"DcOffsetCalCoef2_adv",
+                            name        : "core"+core.toString()+"dcOffsetCalCoef2Adv",
                             displayName : "DC Offset Cal Coefficient 2",
                             hidden      : true,
                             readOnly    : true,
                             default     : "9",
                         },
                         // {
-                        //     name        :   "Core"+core.toString()+"autoDcOffset",
+                        //     name        :   "core"+core.toString()+"autoDcOffset",
                         //     displayName :   "Auto DC Offset Correction",
                         //     hidden      :   true,
                         //     default     :   false,
                         //     readOnly    :   false,
                         //     onChange    :   (inst, ui) => {
-                        //         if(inst["Core"+core.toString()+"autoDcOffset"] == true)
+                        //         if(inst["core"+core.toString()+"autoDcOffset"] == true)
                         //         {
-                        //             ui["Core"+core.toString()+"sinDcOffset"].hidden = true
-                        //             ui["Core"+core.toString()+"cosDcOffset"].hidden = true
+                        //             ui["core"+core.toString()+"sinDcOffset"].hidden = true
+                        //             ui["core"+core.toString()+"cosDcOffset"].hidden = true
                         //         }
                         //         else
                         //         {
-                        //             ui["Core"+core.toString()+"sinDcOffset"].hidden = false
-                        //             ui["Core"+core.toString()+"cosDcOffset"].hidden = false
+                        //             ui["core"+core.toString()+"sinDcOffset"].hidden = false
+                        //             ui["core"+core.toString()+"cosDcOffset"].hidden = false
                         //         }
                         //     }
                         // },
                         {
-                            name        :   "Core"+core.toString()+"sinDcOffset",
+                            name        :   "core"+core.toString()+"sinDcOffset",
                             displayName :   "Manual Sin DC Offset value",
                             hidden      :   true,
                             readOnly    :   true,
                             default     :   0,
                         },
                         {
-                            name        :   "Core"+core.toString()+"cosDcOffset",
+                            name        :   "core"+core.toString()+"cosDcOffset",
                             displayName :   "Manual Cos DC Offset value",
                             hidden      :   true,
                             readOnly    :   true,
@@ -580,24 +580,24 @@ for( let core = 0; core <= 1; core++)
 
     coreConfig = coreConfig.concat([
         {
-            name            :   "Core"+core.toString()+"IdealSampleConfigurations",
+            name            :   "core"+core.toString()+"IdealSampleConfigurations",
             displayName     :   "Ideal Sample Configurations",
             description     :   "",
             longDescription :   "Ideal Sample Configurations. Enable Advanced configurations for editing these values.",
             config          :   [
                 {
-                    name            :   "Core"+core.toString()+"IdealSampleOverrideValue_adv",
+                    name            :   "core"+core.toString()+"IdealSampleOverrideValueAdv",
                     displayName     :   "Ideal Sample Override Value",
                     description     :   "enable Advanced Configurations to edit this feild",
                     longDescription :   "if the Manual Ideal Sample Override value from the Tuning Parameters is set, that value will be copied here and vice versa",
                     default         :   0,
                     readOnly        :   true,
                     onChange        :   (inst, ui) => {
-                        inst["Core"+core.toString()+"idealSampleOverride"] =  inst["Core"+core.toString()+"IdealSampleOverrideValue_adv"]
+                        inst["core"+core.toString()+"idealSampleOverride"] =  inst["core"+core.toString()+"IdealSampleOverrideValueAdv"]
                     }
                 },
                 {
-                    name            :   "Core"+core.toString()+"IdealSamplePeakAvgLimit_adv",
+                    name            :   "core"+core.toString()+"IdealSamplePeakAvgLimitAdv",
                     displayName     :   "Peak Averaging Limit",
                     description     :   "enable Advanced Configurations to edit this feild",
                     longDescription :   `
@@ -608,14 +608,14 @@ for( let core = 0; core <= 1; core++)
                     hidden          :   true,
                 },
                 {
-                    name            :   "Core"+core.toString()+"IdealSampleDetectionThreshold_adv",
+                    name            :   "core"+core.toString()+"IdealSampleDetectionThresholdAdv",
                     displayName     :   "Ideal Sample Detection Threshold",
                     longDescription :   "Minimum threshold for the Sample Detection in the Ideal Sample detection Algorithm",
                     default         :   2500,
                     readOnly        :   true,
                 },
                 {
-                    name            :   "Core"+core.toString()+"IdealSampleBpfAdjust_adv",
+                    name            :   "core"+core.toString()+"IdealSampleBpfAdjustAdv",
                     displayName     :   "Ideal Sample BPF Adjust",
                     description     :   "enable Advanced Configurations to edit this feild",
                     longDescription :   "When the Band Pass filter is enabled, this paramter adjusts the Ideal Sample Detection Algorithm to accommodate the delay posed by the filter",
@@ -623,7 +623,7 @@ for( let core = 0; core <= 1; core++)
                     default         :   0,
                 },
                 {
-                    name            :   "Core"+core.toString()+"IdealSampleMode_adv",
+                    name            :   "core"+core.toString()+"IdealSampleModeAdv",
                     displayName     :   "Ideal Sample Detection Algorithm Mode",
                     longDescription :   `
     RDC_IDEAL_SAMPLE_TIME_MODE_0_AUTO_DETECT           - Computation on sin and cos
@@ -635,7 +635,7 @@ for( let core = 0; core <= 1; core++)
                     readOnly        :   true,
                 },
                 {
-                    name            :   "Core"+core.toString()+"IdealSampleBottomSampling_adv",
+                    name            :   "core"+core.toString()+"IdealSampleBottomSamplingAdv",
                     displayName     :   "Enable Bottom Sampling",
                     description     :   "enable Advanced Configurations to edit this feild",
                     longDescription :   `when Bottom Sampling is enabled, the HW Track2, ArcTan Loop run twice as fast.
@@ -650,12 +650,12 @@ for( let core = 0; core <= 1; core++)
 
     coreConfig = coreConfig.concat([
         {
-            name        :   "Core"+core.toString()+"PgOffsetConfig_adv",
+            name        :   "core"+core.toString()+"PgOffsetConfigAdv",
             displayName :   "Phase Gain Offset Configurations",
             description :   "",
             config      :   [
                 {
-                    name            :   "Core"+core.toString()+"PgEstimationEnable_adv",
+                    name            :   "core"+core.toString()+"PgEstimationEnableAdv",
                     displayName     :   "Enable Phase Gain Estimation",
                     description     :   "enable Advanced Configurations to edit this feild. The Phase Gain Estimation Loop will be enabled",
                     longDescription :   "For the Phase Gain Estimation to be enbaled, make sure the Motor connected is in rotational state.",
@@ -663,30 +663,30 @@ for( let core = 0; core <= 1; core++)
                     default         :   false,
                     onChange        :   (inst, ui) => {
                         // add the other items here to be notHidden
-                        if(inst["Core"+core.toString()+"PgEstimationEnable_adv"] == true)
+                        if(inst["core"+core.toString()+"PgEstimationEnableAdv"] == true)
                         {
-                            // ui["Core"+core.toString()+"PgGlitchThreshold_adv"].hidden = false
-                            ui["Core"+core.toString()+"PgEstimationTrainLimit_adv"].hidden = false
-                            ui["Core"+core.toString()+"PgAutoPhaseGainCorrection_adv"].hidden = false
-                            if(inst["Core"+core.toString()+"PgCorrectionEnable_adv"] == true)
+                            // ui["core"+core.toString()+"PgGlitchThresholdAdv"].hidden = false
+                            ui["core"+core.toString()+"PgEstimationTrainLimitAdv"].hidden = false
+                            ui["core"+core.toString()+"PgAutoPhaseGainCorrectionAdv"].hidden = false
+                            if(inst["core"+core.toString()+"PgCorrectionEnableAdv"] == true)
                             {
-                                ui["Core"+core.toString()+"PgAutoPhaseGainCorrection_adv"].hidden = false
+                                ui["core"+core.toString()+"PgAutoPhaseGainCorrectionAdv"].hidden = false
                             }
                             else
                             {
-                                ui["Core"+core.toString()+"PgAutoPhaseGainCorrection_adv"].hidden = true
+                                ui["core"+core.toString()+"PgAutoPhaseGainCorrectionAdv"].hidden = true
                             }
                         }
                         else
                         {
-                            // ui["Core"+core.toString()+"PgGlitchThreshold_adv"].hidden = true
-                            ui["Core"+core.toString()+"PgEstimationTrainLimit_adv"].hidden = true
-                            ui["Core"+core.toString()+"PgAutoPhaseGainCorrection_adv"].hidden = true
+                            // ui["core"+core.toString()+"PgGlitchThresholdAdv"].hidden = true
+                            ui["core"+core.toString()+"PgEstimationTrainLimitAdv"].hidden = true
+                            ui["core"+core.toString()+"PgAutoPhaseGainCorrectionAdv"].hidden = true
                         }
                     }
                 },
                 // {
-                //     name            :   "Core"+core.toString()+"PgGlitchThreshold_adv",
+                //     name            :   "core"+core.toString()+"PgGlitchThresholdAdv",
                 //     displayName     :   "Phase Gain Estimation Glitch Threshold",
                 //     description     :   "enable Advanced Configurations to edit this feild. When the Phase Gain estimation is enabled, the estimation considers samples that are over the threshold value.",
                 //     hidden          :   true,
@@ -694,7 +694,7 @@ for( let core = 0; core <= 1; core++)
                 //     default         :   0,
                 // },
                 {
-                    name            :   "Core"+core.toString()+"PgEstimationTrainLimit_adv",
+                    name            :   "core"+core.toString()+"PgEstimationTrainLimitAdv",
                     displayName     :   "Phase Gain Estimation Train Limit",
                     description     :   "enable Advanced Configurations to edit this feild. When the Phase Gain Estimation is enabled, the loop trains on these number of samples.",
                     hidden          :   true,
@@ -702,7 +702,7 @@ for( let core = 0; core <= 1; core++)
                     default         :   8,
                 },
                 {
-                    name            :   "Core"+core.toString()+"PgCorrectionEnable_adv",
+                    name            :   "core"+core.toString()+"PgCorrectionEnableAdv",
                     displayName     :   "Enable Phase Gain Correction",
                     description     :   "enable Advanced Configurations to edit this feild. The Phase Gain Correction will be enabled",
                     longDescription :   "For the Phase Gain Correction to be enbaled, make sure the Motor connected is in rotational state.",
@@ -710,82 +710,82 @@ for( let core = 0; core <= 1; core++)
                     default         :   true,
                     onChange        :   (inst, ui) => {
                         // add the other items here to be notHidden
-                        if(inst["Core"+core.toString()+"PgCorrectionEnable_adv"] == true)
+                        if(inst["core"+core.toString()+"PgCorrectionEnableAdv"] == true)
                         {
-                            if(inst["Core"+core.toString()+"PgEstimationEnable_adv"] == true)
+                            if(inst["core"+core.toString()+"PgEstimationEnableAdv"] == true)
                             {
-                                ui["Core"+core.toString()+"PgAutoPhaseGainCorrection_adv"].hidden = false
+                                ui["core"+core.toString()+"PgAutoPhaseGainCorrectionAdv"].hidden = false
                             }
                             else
                             {
-                                ui["Core"+core.toString()+"PgAutoPhaseGainCorrection_adv"].hidden = true
+                                ui["core"+core.toString()+"PgAutoPhaseGainCorrectionAdv"].hidden = true
                             }
-                            ui["Core"+core.toString()+"PgSinGainBypassValue_adv"].hidden = false
-                            ui["Core"+core.toString()+"PgCosGainBypassValue_adv"].hidden = false
-                            ui["Core"+core.toString()+"PgCosPhaseBypassValue_adv"].hidden = false
+                            ui["core"+core.toString()+"PgSinGainBypassValueAdv"].hidden = false
+                            ui["core"+core.toString()+"PgCosGainBypassValueAdv"].hidden = false
+                            ui["core"+core.toString()+"PgCosPhaseBypassValueAdv"].hidden = false
                         }
                         else
                         {
-                            ui["Core"+core.toString()+"PgAutoPhaseGainCorrection_adv"].hidden = true
-                            ui["Core"+core.toString()+"PgSinGainBypassValue_adv"].hidden = true
-                            ui["Core"+core.toString()+"PgCosGainBypassValue_adv"].hidden = true
-                            ui["Core"+core.toString()+"PgCosPhaseBypassValue_adv"].hidden = true
+                            ui["core"+core.toString()+"PgAutoPhaseGainCorrectionAdv"].hidden = true
+                            ui["core"+core.toString()+"PgSinGainBypassValueAdv"].hidden = true
+                            ui["core"+core.toString()+"PgCosGainBypassValueAdv"].hidden = true
+                            ui["core"+core.toString()+"PgCosPhaseBypassValueAdv"].hidden = true
                         }
                     }
                 },
                 {
-                    name            :   "Core"+core.toString()+"PgAutoPhaseGainCorrection_adv",
+                    name            :   "core"+core.toString()+"PgAutoPhaseGainCorrectionAdv",
                     displayName     :   "Auto Phase Gain Correction",
                     description     :   "enable Advanced Configurations to edit this feild. Auto Phase and Gain Correction is enabled, the estimated Phase Correction Value will be used for the Phase Correction.",
                     hidden          :   false,
                     readOnly        :   true,
                     default         :   false,
                     onChange        :   (inst, ui) => {
-                        if (inst["Core"+core.toString()+"PgAutoPhaseGainCorrection_adv"] == true)
+                        if (inst["core"+core.toString()+"PgAutoPhaseGainCorrectionAdv"] == true)
                         {
-                            ui["Core"+core.toString()+"PgSinGainBypassValue_adv"].hidden = true
-                            ui["Core"+core.toString()+"PgCosGainBypassValue_adv"].hidden = true
-                            ui["Core"+core.toString()+"PgCosPhaseBypassValue_adv"].hidden = true
+                            ui["core"+core.toString()+"PgSinGainBypassValueAdv"].hidden = true
+                            ui["core"+core.toString()+"PgCosGainBypassValueAdv"].hidden = true
+                            ui["core"+core.toString()+"PgCosPhaseBypassValueAdv"].hidden = true
                         }
                         else
                         {
-                            ui["Core"+core.toString()+"PgSinGainBypassValue_adv"].hidden = false
-                            ui["Core"+core.toString()+"PgCosGainBypassValue_adv"].hidden = false
-                            ui["Core"+core.toString()+"PgCosPhaseBypassValue_adv"].hidden = false
+                            ui["core"+core.toString()+"PgSinGainBypassValueAdv"].hidden = false
+                            ui["core"+core.toString()+"PgCosGainBypassValueAdv"].hidden = false
+                            ui["core"+core.toString()+"PgCosPhaseBypassValueAdv"].hidden = false
                         }
                     }
                 },
                 {
-                    name            :   "Core"+core.toString()+"PgSinGainBypassValue_adv",
+                    name            :   "core"+core.toString()+"PgSinGainBypassValueAdv",
                     displayName     :   "Manual Sin Gain Correction",
                     description     :   "enable Advanced Configurations to edit this feild. Manual value used for Sin Gain Correction.",
                     hidden          :   false,
                     readOnly        :   true,
                     default         :   16384,
                     onChange    : (inst, ui) => {
-                        inst["manualSinGainOffset"] =  inst["Core"+core.toString()+"PgSinGainBypassValue_adv"]
+                        inst["manualSinGainOffset"] =  inst["core"+core.toString()+"PgSinGainBypassValueAdv"]
                     }
                 },
                 {
-                    name            :   "Core"+core.toString()+"PgCosGainBypassValue_adv",
+                    name            :   "core"+core.toString()+"PgCosGainBypassValueAdv",
                     displayName     :   "Manual Cos Gain Correction",
                     description     :   "enable Advanced Configurations to edit this feild. Manual value used for Cos Gain Correction.",
                     hidden          :   false,
                     readOnly        :   true,
                     default         :   16384,
                     onChange    : (inst, ui) => {
-                        inst["manualCosGainOffset"] =  inst["Core"+core.toString()+"PgCosGainBypassValue_adv"]
+                        inst["manualCosGainOffset"] =  inst["core"+core.toString()+"PgCosGainBypassValueAdv"]
                     }
                 },
                 {
-                    name            :   "Core"+core.toString()+"PgCosPhaseBypassValue_adv",
+                    name            :   "core"+core.toString()+"PgCosPhaseBypassValueAdv",
                     displayName     :   "Manual Cos Phase Correction",
                     description     :   "enable Advanced Configurations to edit this feild. Manual value used for Cos Phase Correction.",
                     hidden          :   false,
                     readOnly        :   true,
                     default         :   0,
                     onChange    : (inst, ui) => {
-                        inst["manualPhaseOffset"] =  inst["Core"+core.toString()+"PgCosPhaseBypassValue_adv"]
+                        inst["manualPhaseOffset"] =  inst["core"+core.toString()+"PgCosPhaseBypassValueAdv"]
                     }
                 },
             ]
@@ -794,39 +794,39 @@ for( let core = 0; core <= 1; core++)
 
     coreConfig = coreConfig.concat([
         {
-            name            :   "Core"+core.toString()+"track2Configurations",
+            name            :   "core"+core.toString()+"track2Configurations",
             displayName     :   "Track2 Configurations",
             description     :   "",
             config          :   [
                 {
-                    name            :   "Core"+core.toString()+"track2ki_adv",
+                    name            :   "core"+core.toString()+"track2kiAdv",
                     displayName     :   "Ki Value",
                     readOnly        :   true,
                     default         :   64,
                     hidden          :   true,
                 },
                 {
-                    name            :   "Core"+core.toString()+"track2kffw_adv",
+                    name            :   "core"+core.toString()+"track2kffwAdv",
                     displayName     :   "Kffw Value",
                     readOnly        :   true,
                     default         :   6,
                     hidden          :   true,
                 },
                 {
-                    name            :   "Core"+core.toString()+"track2kpdiv_adv",
+                    name            :   "core"+core.toString()+"track2kpdivAdv",
                     displayName     :   "Kpdiv Value",
                     readOnly        :   true,
                     default         :   10,
                     hidden          :   true,
                 },
                 {
-                    name            :   "Core"+core.toString()+"track2kvelfilt_adv",
+                    name            :   "core"+core.toString()+"track2kvelfiltAdv",
                     displayName     :   "Kvelfilt Value",
                     readOnly        :   true,
                     default         :   8,
                 },
                 {
-                    name            :   "Core"+core.toString()+"track2vboostcoef_adv",
+                    name            :   "core"+core.toString()+"track2vboostcoefAdv",
                     displayName     :   "Vboost coefficient Value",
                     readOnly        :   true,
                     default         :   7,

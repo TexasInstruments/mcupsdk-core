@@ -572,6 +572,87 @@ typedef struct
     int16_t sin_pgc;
 } ADC_observationalData;
 
+
+/**
+ * @brief Struct holds the Resolver Core Configurations
+ * Can be passed to RDC_coreParamsInit(Core_config_t* coreParams);
+ * Note : this is also called in the RDC_paramsInit(RDC_configParams* params);
+ */
+typedef struct
+{
+    bool        BpfDc_bpfEnable;
+    bool        BpfDc_offsetCorrectionEnable;
+    uint8_t     BpfDc_dcOffCal1;
+    uint8_t     BpfDc_dcOffCal2;
+    int16_t     BpfDc_manualSin;
+    int16_t     BpfDc_manualCos;
+
+    uint8_t     IdealSample_overrideValue;
+    uint16_t    IdealSample_absThresholdValue;
+    uint8_t     IdealSample_sampleAdjustCount;
+    uint8_t     IdealSample_mode;
+    bool        IdealSample_bottomSampleEnable;
+
+    bool        Pg_estimationEnable;
+    uint8_t     Pg_estimationLimit;
+
+    bool        Pg_correctionEnable;
+    bool        Pg_autoCorrectionEnable;
+    int16_t     Pg_sinGainBypassValue;
+    int16_t     Pg_cosGainBypassValue;
+    int16_t     Pg_cosPhaseBypassValue;
+
+    Track2Constants_t   track2Constants;
+}Core_config_t;
+
+/**
+ * @brief Struct holds the RDC configurations
+ * Can be passed to
+ * RDC_paramsInit(RDC_configParams* params);
+ * RDC_init(uint32_t base, RDC_configParams* params);
+ *
+ */
+typedef struct
+{
+    bool adv_config;
+    uint8_t Input_signalMode;
+    uint8_t Input_socWidth;
+    uint8_t Input_adcBurstCount;
+    uint8_t Input_resolverSequencerMode;
+
+    uint8_t     ExcFrq_freqSel;
+    uint16_t    ExcFrq_phase;
+    uint8_t     ExcFrq_amplitude;
+    bool        ExcFrq_enableSyncIn;
+    uint16_t    ExcFrq_socDelay;
+
+    Core_config_t core0;
+    Core_config_t core1;
+
+    bool        Int_seqEnable;
+    uint32_t    Int_core0Interrupts;
+    uint32_t    Int_core1Interrupts;
+
+}RDC_configParams;
+
+/**
+ * @brief Struct holds the Baseline Parameter values
+ * Can be passed to RDC_BaselineParametersInit(uint32_t base);
+ *
+ */
+typedef struct
+{
+    uint8_t adcParam1;
+    uint8_t IdealParam2;
+    uint8_t DcParam3;
+    uint16_t PgParam4;
+    uint8_t t2Param5;
+    uint8_t t2Param6;
+    uint8_t t2Param7;
+    uint8_t t2Param8;
+    bool t2Param9;
+}baselineParameters;
+
 //*****************************************************************************
 //
 //! Values that can be passed to
@@ -1524,8 +1605,8 @@ typedef struct
             base + regOffset,
             (HW_RD_REG32(
                  base + regOffset) &
-             ~CSL_RESOLVER_REGS_SAMPLE_CFG1_0_SAMPLE_DET_THRESHOLD_MASK) |
-                ((uint32_t)(absThresholdValue << CSL_RESOLVER_REGS_SAMPLE_CFG1_0_SAMPLE_DET_THRESHOLD_SHIFT)));
+             ~CSL_RESOLVER_REGS_SAMPLE_CFG2_0_SAMPLE_DET_THRESHOLD_MASK) |
+                ((uint32_t)(absThresholdValue << CSL_RESOLVER_REGS_SAMPLE_CFG2_0_SAMPLE_DET_THRESHOLD_SHIFT)));
     }
 
     /**
@@ -2873,78 +2954,6 @@ typedef struct
         AdcData->sin_pgc = (int16_t)((value & CSL_RESOLVER_REGS_OBS_ADC_PGC_1_SIN_PGC_MASK)>>CSL_RESOLVER_REGS_OBS_ADC_PGC_1_SIN_PGC_SHIFT);
     }
 
-    /* //FIXME : when the CSLR update for the histogram happens, remove these.*/
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0   (0x000002D0)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0   (0x000002D4)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0  (0x000002D8)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0 (0x000002DC)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0 (0x000002E0)
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM0_MASK       (0x000000FFU)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM0_SHIFT      (0x00000000U)
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM1_MASK       (0x0000FF00U)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM1_SHIFT      (0x00000008U)
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM2_MASK       (0x00FF0000U)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM2_SHIFT      (0x00000010U)
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM3_MASK       (0xFF000000U)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM3_SHIFT      (0x00000018U)
-
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM4_MASK       (0x000000FFU)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM4_SHIFT      (0x00000000U)
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM5_MASK       (0x0000FF00U)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM5_SHIFT      (0x00000008U)
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM6_MASK       (0x00FF0000U)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM6_SHIFT      (0x00000010U)
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM7_MASK       (0xFF000000U)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM7_SHIFT      (0x00000018U)
-
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM8_MASK       (0x000000FFU)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM8_SHIFT      (0x00000000U)
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM9_MASK       (0x0000FF00U)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM9_SHIFT      (0x00000008U)
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM10_MASK       (0x00FF0000U)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM10_SHIFT      (0x00000010U)
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM11_MASK       (0xFF000000U)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM11_SHIFT      (0x00000018U)
-
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM12_MASK       (0x000000FFU)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM12_SHIFT      (0x00000000U)
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM13_MASK       (0x0000FF00U)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM13_SHIFT      (0x00000008U)
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM14_MASK       (0x00FF0000U)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM14_SHIFT      (0x00000010U)
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM15_MASK       (0xFF000000U)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM15_SHIFT      (0x00000018U)
-
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM16_MASK       (0x000000FFU)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM16_SHIFT      (0x00000000U)
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM17_MASK       (0x0000FF00U)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM17_SHIFT      (0x00000008U)
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM18_MASK       (0x00FF0000U)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM18_SHIFT      (0x00000010U)
-
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM19_MASK       (0xFF000000U)
-    #define CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM19_SHIFT      (0x00000018U)
-
-
     /**
      * @brief Returns the Peak Histogram Bucket data.
      *
@@ -2958,119 +2967,73 @@ typedef struct
         uint32_t regOffset = CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0 + (resolverCore * RDC_CORE_OFFSET);
         uint32_t value = HW_RD_REG32(
             base + regOffset);
-        histogram->peakHistgoramBucket[0] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM0_SHIFT);
-        histogram->peakHistgoramBucket[1] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM1_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM1_SHIFT);
-        histogram->peakHistgoramBucket[2] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM2_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM2_SHIFT);
-        histogram->peakHistgoramBucket[3] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM3_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM3_SHIFT);
+        histogram->peakHistgoramBucket[0] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM0_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM0_0_SHIFT);
+        histogram->peakHistgoramBucket[1] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM1_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM1_0_SHIFT);
+        histogram->peakHistgoramBucket[2] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM2_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM2_0_SHIFT);
+        histogram->peakHistgoramBucket[3] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM3_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM3_0_0_PEAKHISTOGRAM3_0_SHIFT);
 
         regOffset = CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0 + (resolverCore * RDC_CORE_OFFSET);
         value = HW_RD_REG32(
             base + regOffset);
-        histogram->peakHistgoramBucket[4] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM4_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM4_SHIFT);
-        histogram->peakHistgoramBucket[5] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM5_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM5_SHIFT);
-        histogram->peakHistgoramBucket[6] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM6_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM6_SHIFT);
-        histogram->peakHistgoramBucket[7] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM7_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM7_SHIFT);
+        histogram->peakHistgoramBucket[4] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM4_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM4_0_SHIFT);
+        histogram->peakHistgoramBucket[5] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM5_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM5_0_SHIFT);
+        histogram->peakHistgoramBucket[6] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM6_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM6_0_SHIFT);
+        histogram->peakHistgoramBucket[7] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM7_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM7_4_0_PEAKHISTOGRAM7_0_SHIFT);
 
         regOffset = CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0 + (resolverCore * RDC_CORE_OFFSET);
         value = HW_RD_REG32(
             base + regOffset);
-        histogram->peakHistgoramBucket[8] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM8_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM8_SHIFT);
-        histogram->peakHistgoramBucket[9] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM9_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM9_SHIFT);
-        histogram->peakHistgoramBucket[10] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM10_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM10_SHIFT);
-        histogram->peakHistgoramBucket[11] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM11_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM11_SHIFT);
+        histogram->peakHistgoramBucket[8] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM8_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM8_0_SHIFT);
+        histogram->peakHistgoramBucket[9] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM9_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM9_0_SHIFT);
+        histogram->peakHistgoramBucket[10] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM10_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM10_0_SHIFT);
+        histogram->peakHistgoramBucket[11] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM11_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM11_8_0_PEAKHISTOGRAM11_0_SHIFT);
 
         regOffset = CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0 + (resolverCore * RDC_CORE_OFFSET);
         value = HW_RD_REG32(
             base + regOffset);
-        histogram->peakHistgoramBucket[12] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM12_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM12_SHIFT);
-        histogram->peakHistgoramBucket[13] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM13_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM13_SHIFT);
-        histogram->peakHistgoramBucket[14] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM14_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM14_SHIFT);
-        histogram->peakHistgoramBucket[15] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM15_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM15_SHIFT);
+        histogram->peakHistgoramBucket[12] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM12_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM12_0_SHIFT);
+        histogram->peakHistgoramBucket[13] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM13_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM13_0_SHIFT);
+        histogram->peakHistgoramBucket[14] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM14_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM14_0_SHIFT);
+        histogram->peakHistgoramBucket[15] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM15_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM15_12_0_PEAKHISTOGRAM15_0_SHIFT);
 
         regOffset = CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0 + (resolverCore * RDC_CORE_OFFSET);
         value = HW_RD_REG32(
             base + regOffset);
-        histogram->peakHistgoramBucket[16] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM16_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM16_SHIFT);
-        histogram->peakHistgoramBucket[17] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM17_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM17_SHIFT);
-        histogram->peakHistgoramBucket[18] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM18_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM18_SHIFT);
-        histogram->peakHistgoramBucket[19] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM19_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM19_SHIFT);
+        histogram->peakHistgoramBucket[16] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM16_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM16_0_SHIFT);
+        histogram->peakHistgoramBucket[17] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM17_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM17_0_SHIFT);
+        histogram->peakHistgoramBucket[18] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM18_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM18_0_SHIFT);
+        histogram->peakHistgoramBucket[19] = ((value & CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM19_0_MASK) >> CSL_RESOLVER_REGS_OBS_PEAKHISTOGRAM19_16_0_PEAKHISTOGRAM19_0_SHIFT);
     }
 
-    //*****************************************************************************
-    // Strcut that can be passed to RDC_paramsInit() RDC_setup()
-    //*****************************************************************************
-
-    typedef struct
-    {
-        bool        BpfDc_bpfEnable;
-        bool        BpfDc_offsetCorrectionEnable;
-        // bool        BpfDc_autoOffsetCorrectionEnable;
-        uint8_t     BpfDc_DcOffCal1;
-        uint8_t     BpfDc_DcOffCal2;
-        int16_t     BpfDc_manualSin;
-        int16_t     BpfDc_manualCos;
-
-        uint8_t     IdealSample_overrideValue;
-        // uint8_t     IdealSample_peakAvgLimit;
-        uint16_t    IdealSample_absThresholdValue;
-        uint8_t     IdealSample_sampleAdjustCount;
-        uint8_t     IdealSample_mode;
-        bool        IdealSample_bottomSampleEnable;
-
-        bool        Pg_estimationEnable;
-        // uint16_t    Pg_glitchThreshold;
-        uint8_t     Pg_EstimationLimit;
-
-        bool        Pg_CorrectionEnable;
-        bool        Pg_autoCorrectionEnable;
-        int16_t     Pg_sinGainBypassValue;
-        int16_t     Pg_cosGainBypassValue;
-        int16_t     Pg_cosPhaseBypassValue;
-
-        Track2Constants_t   track2Constants;
-    }Core_config_t;
-
-    typedef struct
-    {
-        bool adv_config;
-        uint8_t Input_signalMode;
-        uint8_t Input_socWidth;
-        uint8_t Input_AdcBurstCount;
-        uint8_t Input_resolverSequencerMode;
-
-        uint8_t     ExcFrq_freqSel;
-        uint16_t    ExcFrq_phase;
-        uint8_t     ExcFrq_amplitude;
-        bool        ExcFrq_enableSyncIn;
-        uint16_t    ExcFrq_socDelay;
-        // uint8_t     ExcFrq_overSamplingRatio;
-
-        Core_config_t core0;
-        Core_config_t core1;
-
-        bool        Int_seqEnable;
-        uint32_t    Int_core0Interrupts;
-        uint32_t    Int_core1Interrupts;
-
-    }RDC_configParams;
-
-    typedef struct
-    {   //FIXME: remove the names once approved
-        uint8_t adcParam1;      // oversamplerate
-        uint8_t IdealParam2;    // ideal sample Peak avg limit
-        uint8_t DcParam3;       // dc offset hysteresis
-        uint16_t PgParam4;      // pg glitchthreshold
-        uint8_t t2Param5;       // t2 kffw
-        uint8_t t2Param6;       // t2 ki
-        uint8_t t2Param7;       // t2 kpdiv
-        uint8_t t2Param8;       // vboostcoef
-        bool t2Param9;          // boostvel enable
-    }baselineParameters;
-
-    void RDC_coreParamsInit(Core_config_t* coreParams);
-    void RDC_paramsInit(RDC_configParams* params);
-    void RDC_init(uint32_t base, RDC_configParams* params);
-    void RDC_BaselineParametersInit(uint32_t base);
+    /**
+     * @brief Inits the Core Parameters for the resolver core
+     *
+     * @param coreParams
+     */
+    extern void
+    RDC_coreParamsInit(Core_config_t* coreParams);
+    /**
+     * @brief Inits the resolver Configuration parameters
+     *
+     * @param params
+     */
+    extern void
+    RDC_paramsInit(RDC_configParams* params);
+    /**
+     * @brief Configures the RDC based on the parameter values
+     *
+     * @param base
+     * @param params
+     */
+    extern void
+    RDC_init(uint32_t base, RDC_configParams* params);
+    /**
+     * @brief Inits Baseline Parameter configurations
+     *
+     * @param base
+     */
+    extern void
+    RDC_BaselineParametersInit(uint32_t base);
 //*****************************************************************************
 //
 // Close the Doxygen group.

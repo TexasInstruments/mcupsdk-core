@@ -14,41 +14,41 @@ void Drivers_resolverOpen()
     RDC_paramsInit(&params);
 
     params.Input_signalMode = `instance.resolverSignalMode`;
-    params.Input_socWidth = `instance.AdcSocWidth`;
-    params.Input_AdcBurstCount = `instance.AdcBurstCount`;
+    params.Input_socWidth = `instance.adcSocWidth`;
+    params.Input_adcBurstCount = `instance.adcBurstCount`;
     params.Input_resolverSequencerMode = `instance.resolverSequencerMode`;
 
     params.ExcFrq_freqSel = `instance.resolverExcitationFrequencySelect`;
     params.ExcFrq_phase = `instance.resolverExcitationFrequencyPhase`;
-    params.ExcFrq_amplitude = `instance.resolverExcitationFrequencyAmplitude_adv`;
-    params.ExcFrq_enableSyncIn = `instance.SyncInEnable`;
-    params.ExcFrq_socDelay = `instance.SocDelay_adv`;
+    params.ExcFrq_amplitude = `instance.resolverExcitationFrequencyAmplitudeAdv`;
+    params.ExcFrq_enableSyncIn = `instance.syncInEnable`;
+    params.ExcFrq_socDelay = `instance.socDelayAdv`;
 
     %for(let core = 0; core <= 1; core++)
         %{
-    params.core`core`.BpfDc_bpfEnable = `instance["Core"+core+"bandPassFilterEnable"]`;
-    params.core`core`.BpfDc_offsetCorrectionEnable = `instance["Core"+core+"DcOffsetCorrectionEnable"]`;
-    params.core`core`.BpfDc_DcOffCal1 = `instance["Core"+core+"DcOffsetCalCoef1_adv"]`;
-    params.core`core`.BpfDc_DcOffCal2 = `instance["Core"+core+"DcOffsetCalCoef2_adv"]`;
-    params.core`core`.BpfDc_manualSin = `instance["Core"+core+"sinDcOffset"]`;
-    params.core`core`.BpfDc_manualCos = `instance["Core"+core+"cosDcOffset"]`;
+    params.core`core`.BpfDc_bpfEnable = `instance["core"+core+"bandPassFilterEnable"]`;
+    params.core`core`.BpfDc_offsetCorrectionEnable = `instance["core"+core+"dcOffsetCorrectionEnable"]`;
+    params.core`core`.BpfDc_dcOffCal1 = `instance["core"+core+"dcOffsetCalCoef1Adv"]`;
+    params.core`core`.BpfDc_dcOffCal2 = `instance["core"+core+"dcOffsetCalCoef2Adv"]`;
+    params.core`core`.BpfDc_manualSin = `instance["core"+core+"sinDcOffset"]`;
+    params.core`core`.BpfDc_manualCos = `instance["core"+core+"cosDcOffset"]`;
 
-    params.core`core`.IdealSample_overrideValue = `instance["Core"+core+"IdealSampleOverrideValue_adv"]`;
-    params.core`core`.IdealSample_absThresholdValue = `instance["Core"+core+"IdealSampleDetectionThreshold_adv"]`;
-    params.core`core`.IdealSample_sampleAdjustCount = `instance["Core"+core+"IdealSampleBpfAdjust_adv"]`;
-    params.core`core`.IdealSample_mode = `instance["Core"+core+"IdealSampleMode_adv"]`;
-    params.core`core`.IdealSample_bottomSampleEnable = `instance["Core"+core+"IdealSampleBottomSampling_adv"]`;
+    params.core`core`.IdealSample_overrideValue = `instance["core"+core+"IdealSampleOverrideValueAdv"]`;
+    params.core`core`.IdealSample_absThresholdValue = `instance["core"+core+"IdealSampleDetectionThresholdAdv"]`;
+    params.core`core`.IdealSample_sampleAdjustCount = `instance["core"+core+"IdealSampleBpfAdjustAdv"]`;
+    params.core`core`.IdealSample_mode = `instance["core"+core+"IdealSampleModeAdv"]`;
+    params.core`core`.IdealSample_bottomSampleEnable = `instance["core"+core+"IdealSampleBottomSamplingAdv"]`;
 
-    params.core`core`.Pg_estimationEnable = `instance["Core"+core+"PgEstimationEnable_adv"]`;
-    params.core`core`.Pg_EstimationLimit = `instance["Core"+core+"PgEstimationTrainLimit_adv"]`;
+    params.core`core`.Pg_estimationEnable = `instance["core"+core+"PgEstimationEnableAdv"]`;
+    params.core`core`.Pg_estimationLimit = `instance["core"+core+"PgEstimationTrainLimitAdv"]`;
 
-    params.core`core`.Pg_CorrectionEnable = `instance["Core"+core+"PgCorrectionEnable_adv"]`;
-    params.core`core`.Pg_autoCorrectionEnable = `instance["Core"+core+"PgAutoPhaseGainCorrection_adv"]`;
-    params.core`core`.Pg_sinGainBypassValue = `instance["Core"+core+"PgSinGainBypassValue_adv"]`;
-    params.core`core`.Pg_cosGainBypassValue = `instance["Core"+core+"PgCosGainBypassValue_adv"]`;
-    params.core`core`.Pg_cosPhaseBypassValue = `instance["Core"+core+"PgCosPhaseBypassValue_adv"]`;
+    params.core`core`.Pg_correctionEnable = `instance["core"+core+"PgCorrectionEnableAdv"]`;
+    params.core`core`.Pg_autoCorrectionEnable = `instance["core"+core+"PgAutoPhaseGainCorrectionAdv"]`;
+    params.core`core`.Pg_sinGainBypassValue = `instance["core"+core+"PgSinGainBypassValueAdv"]`;
+    params.core`core`.Pg_cosGainBypassValue = `instance["core"+core+"PgCosGainBypassValueAdv"]`;
+    params.core`core`.Pg_cosPhaseBypassValue = `instance["core"+core+"PgCosPhaseBypassValueAdv"]`;
 
-    ((params.core`core`).track2Constants).kvelfilt = `instance["Core"+core+"track2kvelfilt_adv"]`;
+    ((params.core`core`).track2Constants).kvelfilt = `instance["core"+core+"track2kvelfiltAdv"]`;
 %%{
 let IntOptions  = [
     "RDC_INTERRUPT_SOURCE_LOWAMPLITUDE_ERR",

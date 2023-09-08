@@ -63,8 +63,8 @@ void RDC_coreParamsInit(Core_config_t* coreParams)
     coreParams->BpfDc_bpfEnable                     = RDC_BPFDC_BPFENABLE_RESET_PARAM_VALUE;
     coreParams->BpfDc_offsetCorrectionEnable        = RDC_BPFDC_OFFSETCORRECTIONENABLE_RESET_PARAM_VALUE;
     // coreParams->BpfDc_autoOffsetCorrectionEnable    = RDC_BPFDC_AUTOOFFSETCORRECTIONENABLE_RESET_PARAM_VALUE;
-    coreParams->BpfDc_DcOffCal1                     = RDC_BPFDC_DCOFFCAL1_RESET_PARAM_VALUE;
-    coreParams->BpfDc_DcOffCal2                     = RDC_BPFDC_DCOFFCAL2_RESET_PARAM_VALUE;
+    coreParams->BpfDc_dcOffCal1                     = RDC_BPFDC_DCOFFCAL1_RESET_PARAM_VALUE;
+    coreParams->BpfDc_dcOffCal2                     = RDC_BPFDC_DCOFFCAL2_RESET_PARAM_VALUE;
     coreParams->BpfDc_manualSin                     = RDC_BPFDC_MANUALSIN_RESET_PARAM_VALUE;
     coreParams->BpfDc_manualCos                     = RDC_BPFDC_MANUALCOS_RESET_PARAM_VALUE;
 
@@ -77,9 +77,9 @@ void RDC_coreParamsInit(Core_config_t* coreParams)
 
     coreParams->Pg_estimationEnable                 = RDC_PG_ESTIMATIONENABLE_RESET_PARAM_VALUE;
     // coreParams->Pg_glitchThreshold                  = RDC_PG_GLITCHTHRESHOLD_RESET_PARAM_VALUE;
-    coreParams->Pg_EstimationLimit                  = RDC_PG_ESTIMATIONLIMIT_RESET_PARAM_VALUE;
+    coreParams->Pg_estimationLimit                  = RDC_PG_ESTIMATIONLIMIT_RESET_PARAM_VALUE;
 
-    coreParams->Pg_CorrectionEnable                 = RDC_PG_CORRECTIONENABLE_RESET_PARAM_VALUE;
+    coreParams->Pg_correctionEnable                 = RDC_PG_CORRECTIONENABLE_RESET_PARAM_VALUE;
     coreParams->Pg_autoCorrectionEnable             = RDC_PG_AUTOCORRECTIONENABLE_RESET_PARAM_VALUE;
     coreParams->Pg_sinGainBypassValue               = RDC_PG_SINGAINBYPASSVALUE_RESET_PARAM_VALUE;
     coreParams->Pg_cosGainBypassValue               = RDC_PG_COSGAINBYPASSVALUE_RESET_PARAM_VALUE;
@@ -170,7 +170,7 @@ void RDC_paramsInit(RDC_configParams* params)
         params->adv_config          = FALSE;
         params->Input_signalMode    = RDC_SINGALMODE_SINGLE_ENDED;
         params->Input_socWidth      = 0;
-        params->Input_AdcBurstCount = RDC_ADC_BURST_COUNT_DISABLE;
+        params->Input_adcBurstCount = RDC_ADC_BURST_COUNT_DISABLE;
         params->Input_resolverSequencerMode = RDC_SEQUENCER_MODE_0;
 
         params->ExcFrq_freqSel      = RDC_EXCITATION_FREQUENCY_20K;
@@ -202,7 +202,7 @@ void RDC_init(uint32_t base, RDC_configParams* params)
         RDC_disableAdcSingleEndedMode(base);
     }
     RDC_setAdcSocWidth(base, (uint8_t) (params->Input_socWidth));
-    RDC_setAdcBurstCount(base, (uint8_t) (params->Input_AdcBurstCount));
+    RDC_setAdcBurstCount(base, (uint8_t) (params->Input_adcBurstCount));
     RDC_setAdcSequencerOperationalMode(base, (uint8_t) (params->Input_resolverSequencerMode));
 
     /* EXCITATION FREQUENCY CONFIGURATIONS */
@@ -251,8 +251,8 @@ void RDC_init(uint32_t base, RDC_configParams* params)
             RDC_setDcOffsetCalCoef(
                 base,
                 resolverCore,
-                (uint8_t) (coreParams.BpfDc_DcOffCal1),
-                (uint8_t) (coreParams.BpfDc_DcOffCal2));
+                (uint8_t) (coreParams.BpfDc_dcOffCal1),
+                (uint8_t) (coreParams.BpfDc_dcOffCal2));
 
             if(coreParams.BpfDc_offsetCorrectionEnable)
             {
@@ -286,7 +286,7 @@ void RDC_init(uint32_t base, RDC_configParams* params)
         /* Phase Gain configurations */
         if(coreParams.Pg_estimationEnable == true)
         {
-            RDC_setPhaseGainEstimationTrainLimit(base, resolverCore, (uint8_t) (coreParams.Pg_EstimationLimit));
+            RDC_setPhaseGainEstimationTrainLimit(base, resolverCore, (uint8_t) (coreParams.Pg_estimationLimit));
             RDC_enablePhaseGainEstimation(base, resolverCore);
         }
         else
