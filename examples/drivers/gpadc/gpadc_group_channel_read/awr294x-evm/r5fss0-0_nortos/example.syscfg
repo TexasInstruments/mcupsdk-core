@@ -23,6 +23,7 @@ const mpu_armv75 = mpu_armv7.addInstance();
  * Write custom configuration values to the imported modules.
  */
 gpadc1.$name                        = "CONFIG_GPADC0";
+gpadc1.ChannelBitmap                = "0x1FF";
 gpadc1.gpadcChannel.create(9);
 gpadc1.gpadcChannel[0].$name        = "CONFIG_GPADC_CH0";
 gpadc1.gpadcChannel[1].$name        = "CONFIG_GPADC_CH1";
