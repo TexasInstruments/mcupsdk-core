@@ -117,6 +117,7 @@ const example_file_list = [
     "examples/drivers/safety/reset_isolation_ipc/.project/project.js",
     "examples/drivers/sciclient/sciclient_get_version/.project/project.js",
 	"examples/drivers/sciclient/sciclient_ccs_init/.project/project",
+    "examples/drivers/spinlock/spinlock_example/.project/project_nortos.js",
     "examples/drivers/uart/uart_echo/.project/project.js",
     "examples/drivers/uart/uart_echo_callback/.project/project.js",
     "examples/drivers/uart/uart_echo_dma/.project/project.js",

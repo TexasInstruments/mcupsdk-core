@@ -129,6 +129,7 @@ const example_file_list = [
     "examples/drivers/sdfm/sdfm_epwm_sync_cpuread/.project/project.js",
     "examples/drivers/sdfm/sdfm_filter_sync_cpuread/.project/project.js",
     "examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/.project/project.js",
+    "examples/drivers/spinlock/spinlock_example/.project/project_nortos.js",
     "examples/drivers/uart/uart_echo/.project/project.js",
     "examples/drivers/uart/uart_echo_callback/.project/project.js",
     "examples/drivers/uart/uart_echo_dma/.project/project.js",

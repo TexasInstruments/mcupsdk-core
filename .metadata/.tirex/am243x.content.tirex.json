@@ -327,6 +327,70 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Dhrystone Benchmark Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dhrystone_benchmark",
+        "location": "../../examples/benchmarks/dhrystone_benchmark/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "dhrystone_benchmark",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Dhrystone Benchmark Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dhrystone_benchmark",
+        "location": "../../examples/benchmarks/dhrystone_benchmark/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "dhrystone_benchmark",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An ADC singleshot example. This example demonstrates interrupts in ADC. CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_singleshot",
         "location": "../../examples/drivers/adc/adc_singleshot/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -6558,6 +6622,138 @@
             "sciclient",
             "sciclient_ccs_init",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An example to demonstrate the working of spinlock CPU is R5FSS0-0 running NORTOS.",
+        "name": "spinlock_example",
+        "location": "../../examples/drivers/spinlock/spinlock_example/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "spinlock",
+            "spinlock_example",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An example to demonstrate the working of spinlock CPU is R5FSS0-1 running NORTOS.",
+        "name": "spinlock_example",
+        "location": "../../examples/drivers/spinlock/spinlock_example/am243x-evm/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "spinlock",
+            "spinlock_example",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An example to demonstrate the working of spinlock CPU is R5FSS0-0 running NORTOS.",
+        "name": "spinlock_example",
+        "location": "../../examples/drivers/spinlock/spinlock_example/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "spinlock",
+            "spinlock_example",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An example to demonstrate the working of spinlock CPU is R5FSS0-1 running NORTOS.",
+        "name": "spinlock_example",
+        "location": "../../examples/drivers/spinlock/spinlock_example/am243x-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "spinlock",
+            "spinlock_example",
+            "r5fss0-1_nortos"
         ],
         "mainCategories": [
             [
@@ -15086,6 +15282,66 @@
             "safety",
             "reset_isolation_ipc",
             "system_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An example to demonstrate the working of spinlock System project.",
+        "name": "spinlock_example",
+        "location": "../../examples/drivers/spinlock/spinlock_example/am243x-evm/system_nortos/system.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "drivers",
+            "spinlock",
+            "spinlock_example",
+            "system_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An example to demonstrate the working of spinlock System project.",
+        "name": "spinlock_example",
+        "location": "../../examples/drivers/spinlock/spinlock_example/am243x-lp/system_nortos/system.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "drivers",
+            "spinlock",
+            "spinlock_example",
+            "system_nortos"
         ],
         "mainCategories": [
             [

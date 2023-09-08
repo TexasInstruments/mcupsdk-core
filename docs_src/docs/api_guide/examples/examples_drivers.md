@@ -90,6 +90,8 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 -# SCICLIENT
    -# \subpage EXAMPLES_DRIVERS_SCICLIENT_GET_VERSION
    -# \subpage EXAMPLES_DRIVERS_SCICLIENT_CCS_INIT
+-# SPINLOCK
+   -# \subpage EXAMPLE_SPINLOCK
 -# UART
    -# \subpage EXAMPLES_DRIVERS_UART_ECHO
    -# \subpage EXAMPLES_DRIVERS_UART_ECHO_DMA
@@ -304,6 +306,12 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_SDFM_EPWM_SYNC_CPUREAD
    -# \subpage EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD
    -# \subpage EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD_SINGLE_CHANNEL
+
+\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM64X
+-# SPINLOCK
+   -# \subpage EXAMPLE_SPINLOCK
+\endcond
+
 \cond SOC_AM263PX
 -# TMU
    -# \subpage EXAMPLES_DRIVERS_TMU_OPERATIONS

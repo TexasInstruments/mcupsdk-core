@@ -381,6 +381,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_spinlock_sharedmem_am243x-lp_sy
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_external_loopback_interrupt_am243x-evm_system_freertos_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += reset_isolation_am243x-evm_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += reset_isolation_ipc_am243x-evm_system_freertos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += spinlock_example_am243x-evm_system_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += spinlock_example_am243x-lp_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am243x-evm_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am243x-lp_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am243x-evm_system_nortos_build
@@ -1549,6 +1551,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  reset_isolation_ipc_am243x-evm_system_freertos_build:
 	$(MAKE) -C examples/drivers/safety/reset_isolation_ipc/am243x-evm/system_freertos -f makefile_projectspec all
 
+ spinlock_example_am243x-evm_system_nortos_build:
+	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-evm/system_nortos -f makefile_projectspec all
+
+ spinlock_example_am243x-lp_system_nortos_build:
+	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-lp/system_nortos -f makefile_projectspec all
+
  empty_am243x-evm_system_freertos_build:
 	$(MAKE) -C examples/empty/am243x-evm/system_freertos -f makefile_projectspec all
 
@@ -1963,6 +1971,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_spinlock_sharedmem_am243x-lp_sy
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_external_loopback_interrupt_am243x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += reset_isolation_am243x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += reset_isolation_ipc_am243x-evm_system_freertos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += spinlock_example_am243x-evm_system_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += spinlock_example_am243x-lp_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am243x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am243x-lp_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am243x-evm_system_nortos_clean
@@ -3131,6 +3141,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  reset_isolation_ipc_am243x-evm_system_freertos_clean:
 	$(MAKE) -C examples/drivers/safety/reset_isolation_ipc/am243x-evm/system_freertos -f makefile_projectspec clean
 
+ spinlock_example_am243x-evm_system_nortos_clean:
+	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-evm/system_nortos -f makefile_projectspec clean
+
+ spinlock_example_am243x-lp_system_nortos_clean:
+	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-lp/system_nortos -f makefile_projectspec clean
+
  empty_am243x-evm_system_freertos_clean:
 	$(MAKE) -C examples/empty/am243x-evm/system_freertos -f makefile_projectspec clean
 
@@ -3545,6 +3561,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_spinlock_sharedmem_am243x-lp_s
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_external_loopback_interrupt_am243x-evm_system_freertos_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += reset_isolation_am243x-evm_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += reset_isolation_ipc_am243x-evm_system_freertos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += spinlock_example_am243x-evm_system_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += spinlock_example_am243x-lp_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am243x-evm_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am243x-lp_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am243x-evm_system_nortos_export
@@ -4713,6 +4731,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  reset_isolation_ipc_am243x-evm_system_freertos_export:
 	$(MAKE) -C examples/drivers/safety/reset_isolation_ipc/am243x-evm/system_freertos -f makefile_projectspec export
 
+ spinlock_example_am243x-evm_system_nortos_export:
+	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-evm/system_nortos -f makefile_projectspec export
+
+ spinlock_example_am243x-lp_system_nortos_export:
+	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-lp/system_nortos -f makefile_projectspec export
+
  empty_am243x-evm_system_freertos_export:
 	$(MAKE) -C examples/empty/am243x-evm/system_freertos -f makefile_projectspec export
 
@@ -5161,6 +5185,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_external_loopback_interrupt/am243x-evm/system_freertos_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/safety/reset_isolation/am243x-evm/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/safety/reset_isolation_ipc/am243x-evm/system_freertos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/spinlock/spinlock_example/am243x-evm/system_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/spinlock/spinlock_example/am243x-lp/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/empty/am243x-evm/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/empty/am243x-lp/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/empty/am243x-evm/system_nortos -f makefile_projectspec [export all clean]
