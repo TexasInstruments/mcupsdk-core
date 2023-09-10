@@ -12,7 +12,7 @@ CC=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.cc`
 LNK=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.lnk`
 STRIP=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.strip`
 OBJCOPY=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.objcopy`
-% if ((args.isInstrumentationMode) && (args.cgtOptions.cov)) {
+% if (args.project.cgt == "ti-arm-clang") {
 COV=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.cov`
 PROFDATA=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.profdata`
 COVERAGE_PATH=$(abspath .)
@@ -258,6 +258,11 @@ CPPFILES := $(FILES_cpp_common) $(FILES_cpp_$(PROFILE))
 ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
 FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
 CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+
+ifeq ($(INSTRUMENTATION_MODE), yes)
+CFLAGS += -fprofile-instr-generate -fcoverage-mapping
+endif
+
 % if(args.project.files["cpp_common"] != undefined) {
 CPPFILES_PATH := $(FILES_PATH_cpp_common) $(FILES_PATH_$(PROFILE))
 CPPFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE)) $(CFLAGS_cpp_common)
@@ -751,7 +756,7 @@ endif
 endif
 % }
 % }
-% if (args.isInstrumentationMode && args.project.cgt == "ti-arm-clang") {
+% if (args.project.cgt == "ti-arm-clang") {
 .PHONY: coverage
 coverage:
 	@echo Creating Coverage Report for `args.project.name`.$(PROFILE) ...
