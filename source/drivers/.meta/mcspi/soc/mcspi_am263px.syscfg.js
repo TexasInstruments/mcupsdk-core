@@ -74,6 +74,48 @@ const mcspi_config_r5fss = [
             },
         ],
     },
+    {
+        name            : "SPI5",
+        baseAddr        : "CSL_MCSPI5_U_BASE",
+        inputClkFreq    : mcspi_input_clk_freq,
+        intrNum         : "CSLR_R5FSS0_CORE0_INTR_MCSPI5_INTR",
+        clockIds        : [ "SOC_RcmPeripheralId_MCSPI5" ],
+        clockFrequencies: [
+            {
+                moduleId: "SOC_RcmPeripheralId_MCSPI5",
+                clkId   : "SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0",
+                clkRate : mcspi_input_clk_freq,
+            },
+        ],
+    },
+    {
+        name            : "SPI6",
+        baseAddr        : "CSL_MCSPI6_U_BASE",
+        inputClkFreq    : mcspi_input_clk_freq,
+        intrNum         : "CSLR_R5FSS0_CORE0_INTR_MCSPI6_INTR",
+        clockIds        : [ "SOC_RcmPeripheralId_MCSPI6" ],
+        clockFrequencies: [
+            {
+                moduleId: "SOC_RcmPeripheralId_MCSPI6",
+                clkId   : "SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0",
+                clkRate : mcspi_input_clk_freq,
+            },
+        ],
+    },
+    {
+        name            : "SPI7",
+        baseAddr        : "CSL_MCSPI7_U_BASE",
+        inputClkFreq    : mcspi_input_clk_freq,
+        intrNum         : "CSLR_R5FSS0_CORE0_INTR_MCSPI7_INTR",
+        clockIds        : [ "SOC_RcmPeripheralId_MCSPI7" ],
+        clockFrequencies: [
+            {
+                moduleId: "SOC_RcmPeripheralId_MCSPI7",
+                clkId   : "SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0",
+                clkRate : mcspi_input_clk_freq,
+            },
+        ],
+    },
 ];
 
 function getMaxChannels(inst) {

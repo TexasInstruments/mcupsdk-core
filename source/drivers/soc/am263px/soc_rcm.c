@@ -1005,6 +1005,27 @@ static void SOC_rcmGetClkSrcAndDivReg (SOC_RcmPeripheralId periphId,
             *clkSrcVal = gMcSpiClkSrcValMap[clkSource];
             break;
         }
+        case SOC_RcmPeripheralId_MCSPI5:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->MCSPI5_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->MCSPI5_CLK_DIV_VAL);
+            *clkSrcVal = gMcSpiClkSrcValMap[clkSource];
+            break;
+        }
+        case SOC_RcmPeripheralId_MCSPI6:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->MCSPI6_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->MCSPI6_CLK_DIV_VAL);
+            *clkSrcVal = gMcSpiClkSrcValMap[clkSource];
+            break;
+        }
+        case SOC_RcmPeripheralId_MCSPI7:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->MCSPI7_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->MCSPI7_CLK_DIV_VAL);
+            *clkSrcVal = gMcSpiClkSrcValMap[clkSource];
+            break;
+        }
         case SOC_RcmPeripheralId_MMC0:
         {
             *clkSrcReg  = &(ptrMSSRCMRegs->MMC0_CLK_SRC_SEL);
