@@ -319,6 +319,7 @@ typedef struct Flash_Config_s
     Flash_Fxns                 *fxns;        /**< Flash device implementation functions */
     Flash_DevConfig            *devConfig;  /**< Flash device specific config, like command ID for read, erase, etc */
     void                       *object;      /**< Flash driver object, used to maintain driver implementation state */
+    uint32_t                   skipHwInit;  /**< Option to skip the HW initialization of the flash */
 
 } Flash_Config;
 

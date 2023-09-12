@@ -188,6 +188,18 @@ Board_open()
 ~~~
 
 `
+
+let skipInitDesc = `
+In some cases, a HW initialization of the flash device in the application may not be
+favourable. Typical example is an application with some code eXecuting In Place (XIP).
+In these cases, the flash will be configured and initialized by the bootloader and the
+application need not initialize it again. If this is the case in your application, please
+use this option to skip the HW init in the application.
+
+If this option is ticked, the Board_flashOpen ***will not*** initialize the flash HW.
+It will only update the book keeping structures in the software.
+`
+
 function getDriver(drvName) {
     return system.getScript(`/drivers/${drvName}/${drvName}`);
 }
@@ -240,6 +252,12 @@ let flash_module = {
                     inst.fname = "";
                 }
             }
+        },
+        {
+            name: "skipHwInit",
+            displayName: "Skip HW Init",
+            longDescription: skipInitDesc,
+            default: false,
         },
         {
             name: "fname",

@@ -140,6 +140,7 @@ Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES] =
         .fxns = &gFlashNorOspiFxns,
         .devConfig = &gFlashDevCfg_`config.fname`,
         .object = (void *)&gFlashObject_`config.fname`,
+        .skipHwInit = `config.skipHwInit.toString(10).toUpperCase()`
     },
 % }
 };

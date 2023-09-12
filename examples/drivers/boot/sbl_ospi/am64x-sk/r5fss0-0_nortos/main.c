@@ -37,7 +37,7 @@
 #include <drivers/sciclient.h>
 #include <drivers/bootloader.h>
 
-void flashFixUpOspiBoot(OSPI_Handle oHandle, Flash_Handle fHandle);
+void flashFixUpOspiBoot(OSPI_Handle oHandle);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -115,7 +115,7 @@ int main(void)
     /* ROM doesn't reset the OSPI flash. This can make the flash initialization
     troublesome because sequences are very different in Octal DDR mode. So for a
     moment switch OSPI controller to 8D mode and do a flash reset. */
-    flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0], gFlashHandle[CONFIG_FLASH0]);
+    flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
@@ -286,12 +286,25 @@ int main(void)
     return 0;
 }
 
-void flashFixUpOspiBoot(OSPI_Handle oHandle, Flash_Handle fHandle)
+void flashFixUpOspiBoot(OSPI_Handle oHandle)
 {
+    int32_t status = SystemP_FAILURE;
     OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(8,8,8,1));
     OSPI_enableDDR(oHandle);
     OSPI_setDualOpCodeMode(oHandle);
-    Flash_reset(fHandle);
+
+    /* Do a soft reset of the OSPI flash */
+    OSPI_WriteCmdParams wrParams;
+
+    OSPI_WriteCmdParams_init(&wrParams);
+    wrParams.cmd          = 0x66;
+    status = OSPI_writeCmd(oHandle, &wrParams);
+    if(status == SystemP_SUCCESS)
+    {
+        wrParams.cmd          = 0x99;
+        status = OSPI_writeCmd(oHandle, &wrParams);
+    }
+
     OSPI_enableSDR(oHandle);
     OSPI_clearDualOpCodeMode(oHandle);
     OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));

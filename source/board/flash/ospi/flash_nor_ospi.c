@@ -249,12 +249,12 @@ static int32_t Flash_norOspiSet4ByteAddrMode(Flash_Config *config)
     Flash_DevConfig *devCfg = config->devConfig;
     Flash_NorOspiObject *obj = (Flash_NorOspiObject *)(config->object);
 
-    if((devCfg->fourByteAddrEnSeq & (uint8_t)(1 << 0)) != 0)
+    if(((devCfg->fourByteAddrEnSeq & (uint8_t)(1 << 0)) != 0) && (config->skipHwInit == FALSE))
     {
         /* Issue instruction 0xB7 without WREN */
         status = Flash_norOspiCmdWrite(config, 0xB7, OSPI_CMD_INVALID_ADDR, 0, NULL, 0);
     }
-    if((devCfg->fourByteAddrEnSeq & (uint8_t)(1 << 1)) != 0)
+    if(((devCfg->fourByteAddrEnSeq & (uint8_t)(1 << 1)) != 0) && (config->skipHwInit == FALSE))
     {
         /* Issue instruction 0xB7 with WREN */
         status = Flash_norOspiCmdWrite(config, devCfg->cmdWren, OSPI_CMD_INVALID_ADDR, 0, NULL, 0);
@@ -515,16 +515,24 @@ static int32_t Flash_norOspiSetModeDummy(Flash_Config *config, void *ospiHandle)
     OSPI_setReadDummyCycles(ospiHandle, pCfg->dummyClksRd);
     OSPI_setCmdDummyCycles(ospiHandle, pCfg->dummyClksCmd);
 
-    if((pCfg->dummyClksCmd != 0) || (pCfg->dummyClksRd != 0))
+    /* Don't do the flash configuration if SBL has already taken care of it */
+    if(config->skipHwInit == FALSE)
     {
-        FlashCfg_RegConfig *dCfg = &(pCfg->dummyCfg);
-
-        status = Flash_norOspiSetRegCfg(config, dCfg);
-
-        if(status == SystemP_SUCCESS)
+        if((pCfg->dummyClksCmd != 0) || (pCfg->dummyClksRd != 0))
         {
-            status = Flash_norOspiWaitReady(config, devCfg->flashBusyTimeout);
+            FlashCfg_RegConfig *dCfg = &(pCfg->dummyCfg);
+
+            status = Flash_norOspiSetRegCfg(config, dCfg);
+
+            if(status == SystemP_SUCCESS)
+            {
+                status = Flash_norOspiWaitReady(config, devCfg->flashBusyTimeout);
+            }
         }
+    }
+    else
+    {
+        /* Nothing to be done, flash configuration is already done by previous SW entity */
     }
 
     return status;
@@ -757,13 +765,27 @@ static int32_t Flash_norOspiSetProtocol(Flash_Config *config, void *ospiHandle, 
                 case FLASH_CFG_PROTO_1S_1S_4S:
                     /* Set Quad Enable Bit. Set commands, mode and dummy cycle if needed */
                     /* Set QE bit */
-                    status += Flash_setQeBit(config, pCfg->enableType);
+                    if(config->skipHwInit == FALSE)
+                    {
+                        status += Flash_setQeBit(config, pCfg->enableType);
+                    }
+                    else
+                    {
+                        /* Nothing to be done, flash configuration is already done by previous SW entity */
+                    }
                     break;
 
                 case FLASH_CFG_PROTO_1S_1S_8S:
                     /* Set Octal Enable Bit. Set commands, mode and dummy cycle if needed */
                     /* Set OE bit */
-                    status += Flash_setOeBit(config, pCfg->enableType);
+                    if(config->skipHwInit == FALSE)
+                    {
+                        status += Flash_setOeBit(config, pCfg->enableType);
+                    }
+                    else
+                    {
+                        /* Nothing to be done, flash configuration is already done by previous SW entity */
+                    }
                     break;
 
                 case FLASH_CFG_PROTO_4S_4S_4S:
@@ -771,18 +793,32 @@ static int32_t Flash_norOspiSetProtocol(Flash_Config *config, void *ospiHandle, 
                     /* Set Quad Enable Bit. Set 444 mode. Set commands, mode and dummy cycle if needed.
                      * In case of DTR, enable that too*/
                     /* Set QE bit */
-                    status += Flash_setQeBit(config, pCfg->enableType);
-                    /* Set 444 mode */
-                    status += Flash_set444mode(config, pCfg->enableSeq);
+                    if(config->skipHwInit == FALSE)
+                    {
+                        status += Flash_setQeBit(config, pCfg->enableType);
+                        /* Set 444 mode */
+                        status += Flash_set444mode(config, pCfg->enableSeq);
+                    }
+                    else
+                    {
+                        /* Nothing to be done, flash configuration is already done by previous SW entity */
+                    }
                     break;
 
                 case FLASH_CFG_PROTO_8S_8S_8S:
                 case FLASH_CFG_PROTO_8D_8D_8D:
                     /* Set Octal Enable Bit. Set 444 mode. Set commands, mode and dummy cycle if needed */
                     /* Set OE bit */
-                    status = Flash_setOeBit(config, pCfg->enableType);
-                    /* Set 888 mode */
-                    status += Flash_set888mode(config, pCfg->enableSeq);
+                    if(config->skipHwInit == FALSE)
+                    {
+                        status = Flash_setOeBit(config, pCfg->enableType);
+                        /* Set 888 mode */
+                        status += Flash_set888mode(config, pCfg->enableSeq);
+                    }
+                    else
+                    {
+                        /* Nothing to be done, flash configuration is already done by previous SW entity */
+                    }
                     break;
 
                 default:

@@ -1267,6 +1267,9 @@ int32_t OSPI_readIndirect(OSPI_Handle handle, OSPI_Transaction *trans)
         OSPI_disableDacMode(handle);
     }
 
+    /* Config the Indirect Read Transfer Start Address Register */
+    CSL_REG32_WR(&pReg->INDIRECT_READ_XFER_START_REG, addrOffset);
+
     /* Set the Indirect Write Transfer Start Address Register */
     CSL_REG32_WR(&pReg->INDIRECT_READ_XFER_NUM_BYTES_REG, trans->count);
 
@@ -1438,22 +1441,22 @@ int32_t OSPI_writeIndirect(OSPI_Handle handle, OSPI_Transaction *trans)
     const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)attrs->baseAddr;
 
     uint8_t *pSrc;
-    uint32_t addrOffset, remainingSize, sramLevel, wrBytes, wrFlag = 0;
+    uint32_t dacState, addrOffset, remainingSize, sramLevel, wrBytes, wrFlag = 0;
 
     addrOffset = trans->addrOffset;
     pSrc = (uint8_t *) trans->buf;
 
     /* Disable DAC Mode */
-    CSL_REG32_FINS(&pReg->CONFIG_REG,
-                   OSPI_FLASH_CFG_CONFIG_REG_ENB_DIR_ACC_CTLR_FLD,
-                   0U);
-
-    CSL_REG32_WR(&pReg->IND_AHB_ADDR_TRIGGER_REG, 0);
+    dacState = obj->isDacEnable;
+    if(dacState == TRUE)
+    {
+        OSPI_disableDacMode(handle);
+    }
 
     /* Set write address in indirect mode */
     CSL_REG32_WR(&pReg->INDIRECT_WRITE_XFER_START_REG, addrOffset);
 
-    /* Set the Indirect Write Transfer Start Address Register */
+    /* Set the Indirect Write Transfer count */
     CSL_REG32_WR(&pReg->INDIRECT_WRITE_XFER_NUM_BYTES_REG, trans->count);
 
     /* Reset watermark register */
@@ -1512,6 +1515,12 @@ int32_t OSPI_writeIndirect(OSPI_Handle handle, OSPI_Transaction *trans)
         CSL_REG32_FINS(&pReg->INDIRECT_WRITE_XFER_CTRL_REG,
                    OSPI_FLASH_CFG_INDIRECT_WRITE_XFER_CTRL_REG_CANCEL_FLD,
                    1);
+    }
+
+    /* Return to DAC mode if it was initially in enabled state */
+    if(dacState == TRUE)
+    {
+        OSPI_enableDacMode(handle);
     }
 
     return status;
@@ -1622,11 +1631,11 @@ static int32_t OSPI_programInstance(OSPI_Config *config)
         /* Set indirect trigger address register */
         if(attrs->dacEnable)
         {
-            CSL_REG32_WR(&pReg->IND_AHB_ADDR_TRIGGER_REG, 0x4000000);
+            OSPI_enableDacMode(handle);
         }
         else
         {
-            CSL_REG32_WR(&pReg->IND_AHB_ADDR_TRIGGER_REG, 0);
+            OSPI_disableDacMode(handle);
         }
 
         /* Disable write completion auto polling */
@@ -1653,11 +1662,6 @@ static int32_t OSPI_programInstance(OSPI_Config *config)
         CSL_REG32_WR(&pReg->IRQ_MASK_REG, regVal);
 
         CSL_REG32_WR(&pReg->IRQ_STATUS_REG, CSL_OSPI_INTR_MASK_ALL);
-
-        /* Enable/Disable DAC */
-        CSL_REG32_FINS(&pReg->CONFIG_REG,
-               OSPI_FLASH_CFG_CONFIG_REG_ENB_DIR_ACC_CTLR_FLD,
-               attrs->dacEnable);
 
         /* Initialize read delay and related book-keeping variables */
         obj->phyRdDataCapDelay = 0xFF;
