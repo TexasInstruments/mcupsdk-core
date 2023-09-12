@@ -883,12 +883,15 @@ int32_t OSPI_enableDacMode(OSPI_Handle handle)
     if(NULL != handle)
     {
         const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
+        OSPI_Object *obj = ((OSPI_Config *)handle)->object;
         const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)(attrs->baseAddr);
 
         CSL_REG32_FINS(&pReg->CONFIG_REG,
                        OSPI_FLASH_CFG_CONFIG_REG_ENB_DIR_ACC_CTLR_FLD,
                        1);
         CSL_REG32_WR(&pReg->IND_AHB_ADDR_TRIGGER_REG, 0x04000000);
+
+        obj->isDacEnable = TRUE;
     }
     else
     {
@@ -905,12 +908,15 @@ int32_t OSPI_disableDacMode(OSPI_Handle handle)
     if(NULL != handle)
     {
         const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
+        OSPI_Object *obj = ((OSPI_Config *)handle)->object;
         const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)(attrs->baseAddr);
 
         CSL_REG32_FINS(&pReg->CONFIG_REG,
                        OSPI_FLASH_CFG_CONFIG_REG_ENB_DIR_ACC_CTLR_FLD,
                        0U);
         CSL_REG32_WR(&pReg->IND_AHB_ADDR_TRIGGER_REG, 0);
+
+        obj->isDacEnable = FALSE;
     }
     else
     {
@@ -1156,15 +1162,17 @@ int32_t OSPI_readDirect(OSPI_Handle handle, OSPI_Transaction *trans)
     uint8_t *pSrc;
     uint8_t *pDst;
     uint32_t addrOffset;
+    uint32_t dacState;
 
     addrOffset = trans->addrOffset;
     pDst = (uint8_t *) trans->buf;
 
     /* Enable Direct Access Mode */
-    CSL_REG32_FINS(&pReg->CONFIG_REG,
-                   OSPI_FLASH_CFG_CONFIG_REG_ENB_DIR_ACC_CTLR_FLD,
-                   1);
-    CSL_REG32_WR(&pReg->IND_AHB_ADDR_TRIGGER_REG, 0x04000000);
+    dacState = obj->isDacEnable;
+    if(dacState == FALSE)
+    {
+        OSPI_enableDacMode(handle);
+    }
 
     pSrc = (uint8_t *)(attrs->dataBaseAddr + addrOffset);
 
@@ -1227,6 +1235,12 @@ int32_t OSPI_readDirect(OSPI_Handle handle, OSPI_Transaction *trans)
         memcpy(pDst, pSrc, trans->count);
     }
 
+    /* Switch to INDAC mode if DAC was initially in disabled state */
+    if(dacState == FALSE)
+    {
+        OSPI_disableDacMode(handle);
+    }
+
     return status;
 }
 
@@ -1241,17 +1255,17 @@ int32_t OSPI_readIndirect(OSPI_Handle handle, OSPI_Transaction *trans)
     uint32_t remainingSize;
     uint32_t readFlag = 0U;
     uint32_t sramLevel = 0, readBytes = 0;
+    uint32_t dacState;
 
     addrOffset = trans->addrOffset;
     pDst = (uint8_t *) trans->buf;
 
     /* Disable DAC Mode */
-    CSL_REG32_FINS(&pReg->CONFIG_REG,
-                   OSPI_FLASH_CFG_CONFIG_REG_ENB_DIR_ACC_CTLR_FLD,
-                   0U);
-
-    /* Config the Indirect Read Transfer Start Address Register */
-    CSL_REG32_WR(&pReg->INDIRECT_READ_XFER_START_REG, addrOffset);
+    dacState = obj->isDacEnable;
+    if(dacState == TRUE)
+    {
+        OSPI_disableDacMode(handle);
+    }
 
     /* Set the Indirect Write Transfer Start Address Register */
     CSL_REG32_WR(&pReg->INDIRECT_READ_XFER_NUM_BYTES_REG, trans->count);
@@ -1297,6 +1311,12 @@ int32_t OSPI_readIndirect(OSPI_Handle handle, OSPI_Transaction *trans)
             trans->status = OSPI_TRANSFER_FAILED;
         }
 
+    }
+
+    /* Return to DAC mode if it was initially in enabled state */
+    if(dacState == TRUE)
+    {
+        OSPI_enableDacMode(handle);
     }
 
     return status;

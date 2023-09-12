@@ -409,6 +409,8 @@ typedef struct
      */
     uint32_t isOpen;
     /**< Flag to indicate if the instance is already open */
+    uint32_t isDacEnable;
+    /**< Flag to indicate if DAC mode is enabled or not */
     SemaphoreP_Object       lockObj;
     /**< Driver lock object */
     SemaphoreP_Object       transferSemObj;
@@ -627,7 +629,7 @@ void OSPI_WriteCmdParams_init(OSPI_WriteCmdParams *wrParams);
 uint32_t OSPI_getInputClk(OSPI_Handle handle);
 
 /**
- *  \brief  This function checks if the Direct Access Controller is enabled
+ *  \brief  This function checks if the Direct Access Controller mode is enabled
  *
  *  \pre    OSPI controller has been opened using #OSPI_open()
  *
