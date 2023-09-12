@@ -44,11 +44,6 @@ extern "C"
 #include <drivers/sdfm/v0/cslr_sdfm.h>
 #endif
 
-#if defined (IP_VERSION_SDFM_V0_1)
-#include <drivers/sdfm/v0_1/cslr_sdfm.h>
-#endif
-
-
 #ifdef __cplusplus
 }
 #endif

@@ -50,19 +50,6 @@ extern "C"
 #include <drivers/adc/v1/cslr_adc_result.h>
 #endif
 
-// FIXME: CHANGE TO ADC V1-1 ONCE THE DRIVER SUPPORT IS ADDED
-#if defined (IP_VERSION_ADC_V1_1)
-#include <drivers/adc/v1/cslr_adc.h>
-#include <drivers/adc/v1/cslr_adc_result.h>
-// #include <drivers/adc/v1_1/cslr_adc.h>
-// #include <drivers/adc/v1_1/cslr_adc_result.h>
-#endif
-
-#if defined (IP_VERSION_ADC_V2)
-#include <drivers/adc/v2/cslr_adc_r.h>
-#include <drivers/adc/v2/cslr_adc_result.h>
-#endif
-
 #ifdef __cplusplus
 }
 #endif

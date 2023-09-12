@@ -40,9 +40,10 @@ extern "C"
 
 #include <drivers/hw_include/soc_config.h>
 
-#if defined (DRV_VERSION_ADC_SAFETY_V0)
-#include <drivers/adc_safety/v0/adc_safety.h>
-#endif
+// FIXME : add back with driver support
+// #if defined (DRV_VERSION_ADC_SAFETY_V0)
+// #include <drivers/adc_safety/v0/adc_safety.h>
+// #endif
 
 #ifdef __cplusplus
 }
