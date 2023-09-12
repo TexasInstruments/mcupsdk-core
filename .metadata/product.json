@@ -13,9 +13,8 @@
         "/fs/fs",
         "/networking/networking",
         "/security/security",
-        "/xbar/xbar",
-        "/memory_configurator/components",
-        "/optiflash/optiflash"
+        "/usb/usb",
+        "/pru_io/pru_io"
     ],
     "devices": [
         "AM64x",

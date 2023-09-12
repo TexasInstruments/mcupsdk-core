@@ -114,12 +114,14 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_raw_io_am64x-evm_r5fss0-0_nor
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_raw_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_file_io_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mmcsd_file_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_flash_io_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_flash_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_flash_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_flash_dma_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_flash_diag_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_flash_diag_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_flash_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_flash_dma_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_flash_io_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_flash_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_flash_xip_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ospi_flash_xip_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += pcie_benchmark_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += pcie_benchmark_rc_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += pcie_buf_transfer_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
@@ -738,11 +740,11 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  mmcsd_file_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_file_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- ospi_flash_io_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+ ospi_flash_diag_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- ospi_flash_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+ ospi_flash_diag_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  ospi_flash_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -750,11 +752,17 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  ospi_flash_dma_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- ospi_flash_diag_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+ ospi_flash_io_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- ospi_flash_diag_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+ ospi_flash_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ ospi_flash_xip_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_xip/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ ospi_flash_xip_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_xip/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  pcie_benchmark_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/pcie/pcie_benchmark/pcie_benchmark_ep/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1728,12 +1736,14 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_raw_io_am64x-evm_r5fss0-0_nor
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_raw_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_file_io_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mmcsd_file_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_flash_io_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_flash_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_flash_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_flash_dma_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_flash_diag_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_flash_diag_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_flash_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_flash_dma_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_flash_io_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_flash_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_flash_xip_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ospi_flash_xip_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += pcie_benchmark_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += pcie_benchmark_rc_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += pcie_buf_transfer_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2352,11 +2362,11 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  mmcsd_file_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_file_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- ospi_flash_io_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+ ospi_flash_diag_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- ospi_flash_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+ ospi_flash_diag_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  ospi_flash_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -2364,11 +2374,17 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  ospi_flash_dma_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- ospi_flash_diag_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+ ospi_flash_io_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- ospi_flash_diag_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+ ospi_flash_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ ospi_flash_xip_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_xip/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ ospi_flash_xip_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_xip/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  pcie_benchmark_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pcie/pcie_benchmark/pcie_benchmark_ep/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -3342,12 +3358,14 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_raw_io_am64x-evm_r5fss0-0_no
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_raw_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_file_io_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mmcsd_file_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_flash_io_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_flash_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_flash_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_flash_dma_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_flash_diag_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_flash_diag_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_flash_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_flash_dma_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_flash_io_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_flash_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_flash_xip_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ospi_flash_xip_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += pcie_benchmark_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += pcie_benchmark_rc_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += pcie_buf_transfer_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
@@ -3966,11 +3984,11 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  mmcsd_file_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_file_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- ospi_flash_io_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+ ospi_flash_diag_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- ospi_flash_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+ ospi_flash_diag_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  ospi_flash_dma_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -3978,11 +3996,17 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  ospi_flash_dma_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- ospi_flash_diag_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+ ospi_flash_io_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- ospi_flash_diag_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+ ospi_flash_io_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ ospi_flash_xip_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_xip/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ ospi_flash_xip_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_xip/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  pcie_benchmark_ep_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/pcie/pcie_benchmark/pcie_benchmark_ep/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -4981,12 +5005,14 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_file_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_file_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_dma/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_diag/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_diag/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_dma/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_xip/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_xip/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/pcie/pcie_benchmark/pcie_benchmark_ep/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/pcie/pcie_benchmark/pcie_benchmark_rc/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_ep/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]

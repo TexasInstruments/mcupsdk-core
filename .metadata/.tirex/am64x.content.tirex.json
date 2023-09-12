@@ -4755,9 +4755,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Ospi Flash Io Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "ospi_flash_io",
-        "location": "../../examples/drivers/ospi/ospi_flash_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Ospi Flash Diag Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ospi_flash_diag",
+        "location": "../../examples/drivers/ospi/ospi_flash_diag/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_GP_EVM"
         ],
@@ -4770,7 +4770,7 @@
         "subCategories": [
             "drivers",
             "ospi",
-            "ospi_flash_io",
+            "ospi_flash_diag",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -4788,9 +4788,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Ospi Flash Io Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "ospi_flash_io",
-        "location": "../../examples/drivers/ospi/ospi_flash_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Ospi Flash Diag Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ospi_flash_diag",
+        "location": "../../examples/drivers/ospi/ospi_flash_diag/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_SK_EVM"
         ],
@@ -4803,7 +4803,7 @@
         "subCategories": [
             "drivers",
             "ospi",
-            "ospi_flash_io",
+            "ospi_flash_diag",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -4887,9 +4887,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Ospi Flash Diag Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "ospi_flash_diag",
-        "location": "../../examples/drivers/ospi/ospi_flash_diag/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Ospi Flash Io Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ospi_flash_io",
+        "location": "../../examples/drivers/ospi/ospi_flash_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_GP_EVM"
         ],
@@ -4902,7 +4902,7 @@
         "subCategories": [
             "drivers",
             "ospi",
-            "ospi_flash_diag",
+            "ospi_flash_io",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
@@ -4920,9 +4920,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Ospi Flash Diag Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "ospi_flash_diag",
-        "location": "../../examples/drivers/ospi/ospi_flash_diag/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "description": "A Ospi Flash Io Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ospi_flash_io",
+        "location": "../../examples/drivers/ospi/ospi_flash_io/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_SK_EVM"
         ],
@@ -4935,7 +4935,73 @@
         "subCategories": [
             "drivers",
             "ospi",
-            "ospi_flash_diag",
+            "ospi_flash_io",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ospi Flash Xip Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ospi_flash_xip",
+        "location": "../../examples/drivers/ospi/ospi_flash_xip/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ospi",
+            "ospi_flash_xip",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ospi Flash Xip Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ospi_flash_xip",
+        "location": "../../examples/drivers/ospi/ospi_flash_xip/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_SK_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ospi",
+            "ospi_flash_xip",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [

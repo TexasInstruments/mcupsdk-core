@@ -206,12 +206,14 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_performance_32bit/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_file_io/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_io/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_io/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_dma/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_diag/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_diag/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_dma/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_io/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_io/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_xip/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_xip/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pcie/pcie_benchmark/pcie_benchmark_ep/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pcie/pcie_benchmark/pcie_benchmark_rc/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_ep/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1002,12 +1004,14 @@ BUILD_COMBO_EXAMPLE_ALL += mcspi_performance_32bit_am243x-lp_r5fss0-0_nortos_ti-
 BUILD_COMBO_EXAMPLE_ALL += mcspi_performance_32bit_am243x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mmcsd_raw_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mmcsd_file_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += ospi_flash_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += ospi_flash_io_am243x-lp_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += ospi_flash_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += ospi_flash_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ospi_flash_diag_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ospi_flash_diag_am243x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ospi_flash_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ospi_flash_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ospi_flash_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ospi_flash_io_am243x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ospi_flash_xip_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ospi_flash_xip_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pcie_benchmark_ep_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pcie_benchmark_rc_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pcie_buf_transfer_ep_am243x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -1549,11 +1553,11 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  mmcsd_file_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_file_io/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- ospi_flash_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+ ospi_flash_diag_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- ospi_flash_io_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+ ospi_flash_diag_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  ospi_flash_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -1561,11 +1565,17 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  ospi_flash_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- ospi_flash_diag_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+ ospi_flash_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- ospi_flash_diag_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+ ospi_flash_io_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ospi_flash_xip_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_xip/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ospi_flash_xip_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_xip/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  pcie_benchmark_ep_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pcie/pcie_benchmark/pcie_benchmark_ep/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -2369,12 +2379,14 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcspi_performance_32bit_am243x-lp_r5fss0-0_nort
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcspi_performance_32bit_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mmcsd_raw_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mmcsd_file_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_io_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_diag_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_diag_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_io_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_xip_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_xip_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pcie_benchmark_ep_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pcie_benchmark_rc_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pcie_buf_transfer_ep_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2916,11 +2928,11 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  mmcsd_file_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_file_io/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- ospi_flash_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+ ospi_flash_diag_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- ospi_flash_io_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+ ospi_flash_diag_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  ospi_flash_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -2928,11 +2940,17 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  ospi_flash_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- ospi_flash_diag_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+ ospi_flash_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- ospi_flash_diag_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+ ospi_flash_io_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ospi_flash_xip_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_xip/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ospi_flash_xip_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_xip/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  pcie_benchmark_ep_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pcie/pcie_benchmark/pcie_benchmark_ep/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -3736,12 +3754,14 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcspi_performance_32bit_am243x-lp_r5fss0-0_nort
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcspi_performance_32bit_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mmcsd_raw_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mmcsd_file_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_io_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_diag_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_diag_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_io_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_xip_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_xip_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pcie_benchmark_ep_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pcie_benchmark_rc_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pcie_buf_transfer_ep_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -4283,11 +4303,11 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  mmcsd_file_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_file_io/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- ospi_flash_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+ ospi_flash_diag_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- ospi_flash_io_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+ ospi_flash_diag_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  ospi_flash_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -4295,11 +4315,17 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  ospi_flash_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/ospi/ospi_flash_dma/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- ospi_flash_diag_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+ ospi_flash_io_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- ospi_flash_diag_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/drivers/ospi/ospi_flash_diag/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+ ospi_flash_io_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ospi_flash_xip_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_xip/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ospi_flash_xip_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_xip/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  pcie_benchmark_ep_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pcie/pcie_benchmark/pcie_benchmark_ep/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
