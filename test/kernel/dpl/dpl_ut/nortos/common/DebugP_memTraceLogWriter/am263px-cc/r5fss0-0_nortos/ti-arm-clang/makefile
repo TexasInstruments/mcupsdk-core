@@ -12,6 +12,9 @@ CC=$(CG_TOOL_ROOT)/bin/tiarmclang
 LNK=$(CG_TOOL_ROOT)/bin/tiarmclang
 STRIP=$(CG_TOOL_ROOT)/bin/tiarmstrip
 OBJCOPY=$(CG_TOOL_ROOT)/bin/tiarmobjcopy
+COV=$(CG_TOOL_ROOT)/bin/tiarmcov
+PROFDATA=$(CG_TOOL_ROOT)/bin/tiarmprofdata
+COVERAGE_PATH=$(abspath .)
 ifeq ($(OS), Windows_NT)
 	PYTHON=python
 else
@@ -129,6 +132,11 @@ FILES := $(FILES_common) $(FILES_$(PROFILE))
 ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
 FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
 CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+
+ifeq ($(INSTRUMENTATION_MODE), yes)
+CFLAGS += -fprofile-instr-generate -fcoverage-mapping
+endif
+
 DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
 INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 LIBS := $(LIBS_common) $(LIBS_$(PROFILE))
@@ -272,5 +280,15 @@ endif
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo  Boot image: am263px:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
+
+.PHONY: coverage
+coverage:
+	@echo Creating Coverage Report for DebugP_memTraceLogWriter_test.$(PROFILE) ...
+	$(MKDIR) coverage
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o DebugP_memTraceLogWriter_test.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=DebugP_memTraceLogWriter_test.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=DebugP_memTraceLogWriter_test.$(PROFILE).profdata > coverage/DebugP_memTraceLogWriter_test.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/docs_src/code_coverage/clang_coverage_analyse.js --input=coverage/DebugP_memTraceLogWriter_test.$(PROFILE).profdata.json --output-json=coverage/DebugP_memTraceLogWriter_test.$(PROFILE).analysis.json --output-lnk=linker_xip.cmd --top-function-count=500
+	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

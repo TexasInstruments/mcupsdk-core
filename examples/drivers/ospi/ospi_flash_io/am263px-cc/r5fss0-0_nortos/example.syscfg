@@ -47,7 +47,7 @@ flash1.dummyClksRd                      = 16;
 flash1.dummy_bitP                       = 16;
 flash1.peripheralDriver.$name           = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable       = true;
-flash1.peripheralDriver.inputClkFreq    = 100000000;
+flash1.peripheralDriver.phyEnable       = true;
 flash1.peripheralDriver.OSPI.D7.$assign = "MCAN1_TX";
 flash1.peripheralDriver.OSPI.D5.$assign = "MCAN0_TX";
 
@@ -60,9 +60,11 @@ edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM5";
 edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM6";
 edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM7";
 
-debug_log.enableUartLog        = true;
-debug_log.uartLog.$name        = "CONFIG_UART_LOG";
-debug_log.uartLog.UART.$assign = "UART0";
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART_LOG";
+debug_log.uartLog.UART.$assign     = "UART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -103,5 +105,3 @@ flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "OSPI0_D3";
 flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "OSPI0_D2";
 flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "OSPI0_D1";
 flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "OSPI0_D0";
-debug_log.uartLog.UART.RXD.$suggestSolution        = "MMC0_CLK";
-debug_log.uartLog.UART.TXD.$suggestSolution        = "MMC0_CMD";

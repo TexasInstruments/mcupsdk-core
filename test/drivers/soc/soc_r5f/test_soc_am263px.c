@@ -77,89 +77,89 @@ void test_socSetFrequencyR5FSS(void *args)
 
     SOC_controlModuleUnlockMMR(0, MSS_RCM_PARTITION0);
     SOC_controlModuleUnlockMMR(0, TOP_RCM_PARTITION0);
-    
+
     DebugP_log("Set MCAN clock\r\n");
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_MCAN0, SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0, 80 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_MCAN1, SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0, 80 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_MCAN2, SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0, 80 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_MCAN3, SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0, 80 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
-    DebugP_log("Set QSPI clock\r\n");
-    retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_QSPI0, SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0, 80 * MHZ);
+
+    DebugP_log("Set OSPI clock\r\n");
+    retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_OSPI0, SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0, 80 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     DebugP_log("Set RTI clock\r\n");
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_RTI0, SOC_RcmPeripheralClockSource_SYS_CLK, 200 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_RTI1, SOC_RcmPeripheralClockSource_SYS_CLK, 200 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_RTI2, SOC_RcmPeripheralClockSource_SYS_CLK, 200 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_RTI3, SOC_RcmPeripheralClockSource_SYS_CLK, 200 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     DebugP_log("Set WDT clock\r\n");
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_WDT0, SOC_RcmPeripheralClockSource_SYS_CLK, 200 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_WDT1, SOC_RcmPeripheralClockSource_SYS_CLK, 200 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_WDT2, SOC_RcmPeripheralClockSource_SYS_CLK, 200 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_WDT3, SOC_RcmPeripheralClockSource_SYS_CLK, 200 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     DebugP_log("Set MCSPI clock\r\n");
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_MCSPI0, SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0, 50 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_MCSPI1, SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0, 50 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_MCSPI2, SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0, 50 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_MCSPI3, SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0, 50 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_MCSPI4, SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0, 50 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     DebugP_log("Set MMC clock\r\n");
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_MMC0, SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0, 50 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_MMC0, SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1, 48 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     DebugP_log("Set ICSSM UART clock\r\n");
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_ICSSM0_UART0, SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1, 192 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     DebugP_log("Set CPTS clock\r\n");
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_CPTS, SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1, 250 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     DebugP_log("Set GPMC clock\r\n");
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_GPMC, SOC_RcmPeripheralClockSource_SYS_CLK, 100 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     DebugP_log("Set ControlSS PLL clock\r\n");
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_CONTROLSS_PLL, SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2, 400 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     DebugP_log("Set I2C clock\r\n");
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_I2C, SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1, 48 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
@@ -171,16 +171,16 @@ void test_socSetFrequencyR5FSS(void *args)
 
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_LIN1_UART1, SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1, 192 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_LIN2_UART2, SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1, 192 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_LIN3_UART3, SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1, 192 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_LIN4_UART4, SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1, 192 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-    
+
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_LIN5_UART5, SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1, 192 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
 

@@ -1,6 +1,6 @@
 
 --stack_size=16384
---heap_size=32768
+--heap_size=32256
 -e_vectors_sbl  /* for SBL make sure to set entry point to _vectors_sbl */
 
 __IRQ_STACK_SIZE = 4096;
@@ -48,8 +48,8 @@ SECTIONS
         RUN_START(__UNDEFINED_STACK_START)
         RUN_END(__UNDEFINED_STACK_END)
     } > MSRAM_0
-    
-    /* HSMRt image section */ 
+
+    /* HSMRt image section */
     .rodata.hsmrt : {} palign(8) > MSRAM_HSMRT
 
     /* this is used only when Secure IPC is enabled */
@@ -64,8 +64,8 @@ MEMORY
     R5F_TCMB0:  ORIGIN = 0x41010000 , LENGTH = 0x00008000
     MSRAM_VECS: ORIGIN = 0x70002000 , LENGTH = 0x00000100
     MSRAM_0  :  ORIGIN = 0x70002100 , LENGTH = 0x25800 - 0x100
-    /* 256 KB memory section HSMRt */ 
-    MSRAM_HSMRT  :  ORIGIN = 0x70027800 , LENGTH = 0x40000 
+    /* 256 KB memory section HSMRt */
+    MSRAM_HSMRT  :  ORIGIN = 0x70027800 , LENGTH = 0x40000
     MAILBOX_HSM:    ORIGIN = 0x44000000 , LENGTH = 0x000003CE
     MAILBOX_R5F:    ORIGIN = 0x44000400 , LENGTH = 0x000003CE
 }
