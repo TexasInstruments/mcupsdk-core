@@ -694,7 +694,7 @@ typedef struct
      * @brief
      * sets the ADC Burst count, samples to be averaged.
      * @param base RDC Base Address
-     * @param burst_count the number of Burst per Sample to be averaged.
+     * @param burstCount the number of Burst per Sample to be averaged.
      * Valid Burst count values are
      *          \e RDC_ADC_BURST_COUNT_DISABLE     // Burst Count is disabled
      *          \e RDC_ADC_BURST_COUNT_2           // 2    samples to be averaged
@@ -777,7 +777,7 @@ typedef struct
 
     /**
      * @brief
-     * returns Sequencer Operational Mode
+     * sets Sequencer Operational Mode
      * Valid values are
      *   \e RDC_SEQUENCER_MODE_0    -   ADC0 SAMPLES SIN AND ADC1 SAMPLES COSINE PARALLELLY FOR CORE 0
      *   \e RDC_SEQUENCER_MODE_1    -   ADC0 SAMPLES SIN AND COSINE SEQUENTIALLY FOR CORE 0
@@ -792,7 +792,7 @@ typedef struct
      *                                  SIN0, COS0, COS1, SIN1 SAMPLES SEQUENTIALLY
      *                                  FOR CORE0/1. BOTH SIN(COS) SAMPLES FOR EACH CORE WILL BE AVERAGED.
      * @param base RDC Base Address
-     * @return uint8_t 4bit value of the resolver sequencer mode.
+     * @param operationalMode RDC sequencer operational mode
      */
     static inline void
     RDC_setAdcSequencerOperationalMode(uint32_t base, uint8_t operationalMode)
@@ -1167,6 +1167,8 @@ typedef struct
      * @brief enable Core Interrupt
      *
      * @param base RDC Base Address
+     * @param ResolverCore Resolver Core
+     * @param interruptSource Resolver Core Interrupt
      */
     static inline void
     RDC_enableCoreInterrupt(uint32_t base, uint32_t ResolverCore, uint32_t interruptSource)
@@ -1186,8 +1188,8 @@ typedef struct
     /**
      * @brief returns enabled Interrupt Sources
      *
-     * @param base
-     * @param core
+     * @param base  RDC Base Address
+     * @param ResolverCore Resolver Core
      * @return uint32_t
      */
     static inline uint32_t
@@ -1203,6 +1205,8 @@ typedef struct
      * @brief Disable Core Interrupt
      *
      * @param base RDC Base Address
+     * @param ResolverCore Resolver Core
+     * @param interruptSource Resolver Core Interrupt
      */
     static inline void
     RDC_disableCoreInterrupt(uint32_t base, uint32_t ResolverCore, uint32_t interruptSource)
@@ -1223,6 +1227,8 @@ typedef struct
      * @brief Clear the Core Interrupt status
      *
      * @param base RDC Base Address
+     * @param ResolverCore Resolver Core
+     * @param interruptSource Resolver Core Interrupt
      */
     static inline void
     RDC_clearCoreInterrupt(uint32_t base, uint32_t ResolverCore, uint32_t interruptSource)
@@ -1244,6 +1250,8 @@ typedef struct
      * @brief Force the Core Interrupt
      *
      * @param base RDC Base Address
+     * @param ResolverCore Resolver Core
+     * @param interruptSource Resolver Core Interrupt
      */
     static inline void
     RDC_forceCoreInterrupt(uint32_t base, uint32_t ResolverCore, uint32_t interruptSource)
@@ -1265,6 +1273,7 @@ typedef struct
      * @brief Returns Core interrupt Status
      *
      * @param base RDC Base Address
+     * @param ResolverCore Resovler Core
      */
     static inline uint32_t
     RDC_getCoreInterruptStatus(uint32_t base, uint32_t ResolverCore)
@@ -1970,6 +1979,7 @@ typedef struct
      * - kffw
      * - kpdiv
      *
+     * @param base RDC Base Address
      * @param core denotes Resolver Core within RDC
      * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
      * @param track2Constants

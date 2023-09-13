@@ -140,6 +140,7 @@ It consists of below sub-modules
 - \subpage DRIVERS_PINMUX_PAGE
 - \subpage DRIVERS_PMU_PAGE
 - \subpage DRIVERS_PRUICSS_PAGE
+- \subpage DRIVERS_RESOLVER_PAGE
 - \subpage DRIVERS_RTI_PAGE
 - \subpage DRIVERS_SDFM_PAGE
 - \subpage DRIVERS_SIPC_NOTIFY_PAGE

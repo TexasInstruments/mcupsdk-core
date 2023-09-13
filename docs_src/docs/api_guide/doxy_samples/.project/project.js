@@ -3,6 +3,7 @@ let path = require('path');
 const files = {
     common: [
         "Adc_sample.c",
+        "Resolver_sample.c",
         "AddrTranslateP_sample.c",
         "Bootloader_sample.c",
         "CacheP_sample.c",
