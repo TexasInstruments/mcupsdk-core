@@ -2377,6 +2377,45 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
             }
             break;
         }
+        case SOC_RcmPeripheralId_MCSPI5:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->MCSPI5_CLK_GATE = CSL_MSS_RCM_MCSPI5_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->MCSPI5_CLK_GATE = CSL_MSS_RCM_MCSPI5_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
+        case SOC_RcmPeripheralId_MCSPI6:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->MCSPI6_CLK_GATE = CSL_MSS_RCM_MCSPI6_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->MCSPI6_CLK_GATE = CSL_MSS_RCM_MCSPI6_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
+        case SOC_RcmPeripheralId_MCSPI7:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->MCSPI7_CLK_GATE = CSL_MSS_RCM_MCSPI7_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->MCSPI7_CLK_GATE = CSL_MSS_RCM_MCSPI7_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
         case SOC_RcmPeripheralId_MMC0:
         {
             if(enable==1)

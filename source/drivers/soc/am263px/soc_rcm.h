@@ -342,6 +342,18 @@ typedef enum SOC_RcmPeripheralId_e
      */
     SOC_RcmPeripheralId_MCSPI4,
     /**
+     * \brief   Value specifying MCSPI5
+     */
+    SOC_RcmPeripheralId_MCSPI5,
+    /**
+     * \brief   Value specifying MCSPI6
+     */
+    SOC_RcmPeripheralId_MCSPI6,
+    /**
+     * \brief   Value specifying MCSPI7
+     */
+    SOC_RcmPeripheralId_MCSPI7,
+    /**
      * \brief   Value specifying MMC0
      */
     SOC_RcmPeripheralId_MMC0,
