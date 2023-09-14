@@ -9,7 +9,7 @@ This example just does driver and board initialization and prints the string, He
 
 # Supported Combinations {#EXAMPLES_HELLO_WORLD_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

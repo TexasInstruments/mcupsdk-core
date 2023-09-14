@@ -56,7 +56,7 @@ with the transmitted one, then the example is completed.
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

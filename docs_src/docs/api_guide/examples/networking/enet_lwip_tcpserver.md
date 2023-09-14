@@ -7,7 +7,7 @@
 \note LwIP features are made available as is from public lwIP project. SDK configuration may only enable and exercise a subset of these features.
 
 This example shows about how to implement a simple TCP Server on LwIP networking stack using netconn API coupled with ethernet driver (ENET).
-\cond SOC_AM273X || SOC_AM263X
+\cond SOC_AM273X || SOC_AM263X || SOC_AM263PX
 This example also demonstrates Rx Scatter-Gather, the buffer size is kept to 384 bytes. Send packets greater than 384 bytes to exercise scatter-gather on Rx.
 \endcond
 
@@ -22,7 +22,7 @@ The example does below
 - TCP Server task waits for connection from client on port 8888. When connection is established, it waits for any message from client.
 - TCP Server task sends back "Greetings from Texas Instruments!" message back to client and closes the connection.
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 NOTE: DSCP priority mapping is configured in the example but for the host port to recieve different priority pkts on the same dma channel, user needs to enable channel override (enChOverrideFlag) flag in dmacfg. Refer enet_lwip_cpsw example.
 \endcond
 
@@ -74,7 +74,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -106,7 +106,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
     <td>Default is true. If your silicon is affected with errata <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf" target="_blank">i2329— MDIO interface corruption</a>, then TI suggests to use MDIO_MANUAL_MODE as software workaround.
 </tr>
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
 <tr>
     <td>Disable Mac Port1, Disable Mac Port2
     <td>TI Networking / Enet (CPSW)
@@ -244,9 +244,9 @@ to a network which has a DHCP server running.
 \code
 
 ==========================
-  CPSW LWIP TCP ECHO SERVER 
+  CPSW LWIP TCP ECHO SERVER
 ==========================
-EnetPhy_bindDriver:1718 
+EnetPhy_bindDriver:1718
 PHY 3 is alive
 PHY 12 is alive
 Starting lwIP, local interface IP is dhcp-enabled
@@ -256,7 +256,7 @@ Host MAC address: 34:08:e1:77:fb:0c
 Enet IF UP Event. Local interface IP:0.0.0.0
 Waiting for network UP ...
 Waiting for network UP ...
-Cpsw_handleLinkUp:1320 
+Cpsw_handleLinkUp:1320
 MAC Port 1: link up
 Network Link UP Event
 Waiting for network UP ...

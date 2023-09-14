@@ -41,7 +41,7 @@ Use Cases
 # Sample Output
 
 Shown below is a sample output when the application is run,
-\cond (SOC_AM263X)
+\cond (SOC_AM263X || SOC_AM263PX)
 \code
 
 ECC Example Application

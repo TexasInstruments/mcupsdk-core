@@ -19,7 +19,7 @@ This example acts as a getting started point for PRU firmware development in ass
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

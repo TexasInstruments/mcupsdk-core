@@ -18,7 +18,7 @@ Instance MCAN1 is set as a Commander in Transmit Mode. Message is transmitted an
 
 # Supported Combinations {#EXAMPLES_DRIVERS_MCAN_EXTERNAL_READ_WRITE_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

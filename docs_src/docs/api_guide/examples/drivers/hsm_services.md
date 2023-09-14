@@ -13,7 +13,7 @@ Three services are available.
 
 # Supported Combinations {#EXAMPLES_HSM_SERVICES_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter             | Value
  ----------------------|-----------

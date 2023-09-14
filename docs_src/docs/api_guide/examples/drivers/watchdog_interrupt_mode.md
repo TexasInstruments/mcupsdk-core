@@ -9,7 +9,7 @@ This example uses the WDT module in non reset mode to generate NMI Interrupt.
 \cond SOC_AM273X
 - ESM module is configured with ESM Group 2 number and ESM NMI number to generate a non-maskable interrupt to the CPU.
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 - ESM module is configured with ESM to generate a non-maskable interrupt to the CPU.
 \endcond
 - The callback function in the application handles the watchdog interrupt.
@@ -51,7 +51,7 @@ This example uses the WDT module in non reset mode to generate NMI Interrupt.
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

@@ -54,7 +54,7 @@ SDK features and tools.
 - \subpage CCS_CLOUD_INTRO_PAGE
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 - \subpage INSTALL_NON_DEFAULT
 - \subpage IPC_GUIDE
 - \subpage BOOTFLOW_GUIDE
@@ -64,7 +64,9 @@ SDK features and tools.
 - \subpage SECURE_BOOT
 - \subpage SYSCONFIG_INTRO_PAGE
 - \subpage TIREX_INTRO_PAGE
+\cond SOC_AM263X
 - \subpage CUSTOM_FLASH_SUPPORT_GUIDE
+\endcond
 - \subpage CCS_CLOUD_INTRO_PAGE
 - \subpage REAL_TIME_DEBUG_SUPPORT_GUIDE
 - \subpage PERFORMANCE_OPTIMIZATIONS_GUIDE

@@ -41,7 +41,7 @@ This bootloader does SOC initializations and attempts to boot a multicore appima
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

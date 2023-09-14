@@ -52,7 +52,7 @@ Loop DAC output back to ADC1 Channel 0
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_PPB_LIMITS_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

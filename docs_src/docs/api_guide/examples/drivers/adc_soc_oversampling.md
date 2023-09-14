@@ -42,7 +42,7 @@
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SOC_OVERSAMPLING_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

@@ -35,7 +35,7 @@ This example performs EDMA transfer test using link mode.
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

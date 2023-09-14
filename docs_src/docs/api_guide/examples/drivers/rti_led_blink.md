@@ -21,7 +21,7 @@ The application toggles the LED ON/OFF for 10 seconds using RTI Timer and exits.
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -40,7 +40,7 @@ The application toggles the LED ON/OFF for 10 seconds using RTI Timer and exits.
 - **When using makefiles to build**, note the required combination and build using
   make command (see \ref MAKEFILE_BUILD_PAGE)
 - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 ## AM263X-CC
 - Watch out for LED LD13 on the CC to blink which is controlled by GPIO0_1.
 

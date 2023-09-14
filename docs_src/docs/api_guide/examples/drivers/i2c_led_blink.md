@@ -43,7 +43,7 @@ Application exits after 10 iterations..
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -55,7 +55,7 @@ Application exits after 10 iterations..
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 ## AM263X-CC
 - Watch out for LEDs LD2, LD3, LD4, LD5, LD6, LD7, LD8, LD9, LD10, LD11 on the CC to blink which is controlled by I2C2.
 

@@ -68,7 +68,7 @@ Probe the following
 - CONFIG_EPWM6 output on  PIN J2/4 36  (EPWM14_B)
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_DEADBAND_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

@@ -17,7 +17,7 @@ The example does the below
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SINGLESHOT_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

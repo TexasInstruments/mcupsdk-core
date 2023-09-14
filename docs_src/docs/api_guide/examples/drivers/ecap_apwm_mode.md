@@ -32,7 +32,7 @@ The example does the below
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
 Connect OUTPUTXBAR1 output to oscilloscope
 
@@ -73,7 +73,7 @@ When using AM263x-LP
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

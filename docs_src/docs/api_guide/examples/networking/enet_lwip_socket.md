@@ -19,7 +19,7 @@ The example does below
 - TCP Socket Client gets server IP using UART terminal menu from USER and connect to server IP on port 8888
 - TCP Socket Client connects to server, sends data and expects the data from server.
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 NOTE: DSCP priority mapping is configured in the example but for the host port to recieve different priority pkts on the same dma channel, user needs to enable channel override (enChOverrideFlag) flag in dmacfg. Refer enet_lwip_cpsw example.
 \endcond
 
@@ -71,7 +71,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -103,7 +103,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
     <td>Default is true. If your silicon is affected with errata <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf" target="_blank">i2329— MDIO interface corruption</a>, then TI suggests to use MDIO_MANUAL_MODE as software workaround.
 </tr>
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
 <tr>
     <td>Disable Mac Port1, Disable Mac Port2
     <td>TI Networking / Enet (CPSW)
@@ -258,12 +258,12 @@ to a network which has a DHCP server running.
 \code
 
 ==========================
-  CPSW LWIP SIMPLE SOCKET 
+  CPSW LWIP SIMPLE SOCKET
 ==========================
 Enabling clocks!
-EnetAppUtils_reduceCoreMacAllocation: Reduced Mac Address Allocation for CoreId:1 From 4 To 2 
-Mdio_open:282 
-EnetPhy_bindDriver:1718 
+EnetAppUtils_reduceCoreMacAllocation: Reduced Mac Address Allocation for CoreId:1 From 4 To 2
+Mdio_open:282
+EnetPhy_bindDriver:1718
 PHY 0 is alive
 Starting lwIP, local interface IP is dhcp-enabled
 Host MAC address: f4:84:4c:fd:a6:00
@@ -271,46 +271,46 @@ Host MAC address: f4:84:4c:fd:a6:00
 [LWIPIF_LWIP] NETIF INIT SUCCESS
 Enet IF UP Event. Local interface IP:0.0.0.0
 Waiting for network UP ...
-Cpsw_handleLinkUp:1369 
+Cpsw_handleLinkUp:1369
 MAC Port 1: link up
 Network Link UP Event
 Waiting for network UP ...
 Enet IF UP Event. Local interface IP:192.168.1.10
 Network is UP ...
- UDP socket Menu: 
+ UDP socket Menu:
  Enter server IPv4 address:(example: 192.168.101.100)
 192.168.1.20
-<<< Iteration 1 >>>> 
- Connecting to: 192.168.1.20:8888 
+<<< Iteration 1 >>>>
+ Connecting to: 192.168.1.20:8888
 Connected to host
 Message to host: Greetings from Texas Instruments!
 Message from host: Greetings from Texas Instruments!
 Message to host: This is a sample message
 Closed Socket connection
-<<< Iteration 2 >>>> 
- Connecting to: 192.168.1.20:8888 
+<<< Iteration 2 >>>>
+ Connecting to: 192.168.1.20:8888
 Connected to host
 Message to host: Greetings from Texas Instruments!
 Message from host: Greetings from Texas Instruments!
 Message to host: This is a sample message
 Closed Socket connection
      43.914s : CPU load =   1.17 %
-<<< Iteration 3 >>>> 
- Connecting to: 192.168.1.20:8888 
+<<< Iteration 3 >>>>
+ Connecting to: 192.168.1.20:8888
 Connected to host
 Message to host: Greetings from Texas Instruments!
 Message from host: Greetings from Texas Instruments!
 Message to host: This is a sample message
 Closed Socket connection
-<<< Iteration 4 >>>> 
- Connecting to: 192.168.1.20:8888 
+<<< Iteration 4 >>>>
+ Connecting to: 192.168.1.20:8888
 Connected to host
 Message to host: Greetings from Texas Instruments!
 Message from host: Greetings from Texas Instruments!
 Message to host: This is a sample message
 Closed Socket connection
-<<< Iteration 5 >>>> 
- Connecting to: 192.168.1.20:8888 
+<<< Iteration 5 >>>>
+ Connecting to: 192.168.1.20:8888
 Connected to host
 Message to host: Greetings from Texas Instruments!
 Message from host: Greetings from Texas Instruments!

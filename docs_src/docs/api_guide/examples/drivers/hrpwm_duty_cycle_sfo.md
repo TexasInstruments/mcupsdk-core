@@ -20,7 +20,7 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 
 # Supported Combinations {#EXAMPLES_DRIVERS_HRPWM_DUTY_CYCLE_SFO_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

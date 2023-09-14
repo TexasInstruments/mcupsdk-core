@@ -54,7 +54,7 @@ ADC SOC0 and SOC1 are set for Channel 0, with sample window 17 each and are trig
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_PPB_OFFSET_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

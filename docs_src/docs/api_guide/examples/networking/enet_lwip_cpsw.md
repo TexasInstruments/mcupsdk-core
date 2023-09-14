@@ -18,14 +18,14 @@ The examples do below
 - Initializes the ethernet driver for the underlying HW
 - Initializes the LwIP stack for TCP/UDP IP
 - Allows user to run and test basic networking features like DHCP, ping, iperf with TCP/UDP.
-\cond SOC_AM273X || SOC_AWR294X 
+\cond SOC_AM273X || SOC_AWR294X
 - Example is configured to run in Switch mode.
 \endcond
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
 - Example is configured to run in Dual MAC mode.
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 Note: In this example, Different Priority Packets are received using a single channel by enabling the default thread Id (for this enChOverrideFlag is set in dmacfg), which allows packets with no classifer match to be received by the host.
 \endcond
 # Supported Combinations
@@ -76,7 +76,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -108,7 +108,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
     <td>Default is true. If your silicon is affected with errata <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf" target="_blank">i2329— MDIO interface corruption</a>, then TI suggests to use MDIO_MANUAL_MODE as software workaround.
 </tr>
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
 <tr>
     <td>Disable Mac Port1, Disable Mac Port2
     <td>TI Networking / Enet (CPSW)
@@ -294,7 +294,7 @@ status_callback==UP, local interface IP is 192.168.0.175
 
 \endcond
 
-\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X
+\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X || SOC_AM263PX
 
 \code
 

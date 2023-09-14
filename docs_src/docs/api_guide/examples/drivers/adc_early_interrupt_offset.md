@@ -51,7 +51,7 @@ Feed analog inputs to channels
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_EARLY_INTERRUPT_OFFSET_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

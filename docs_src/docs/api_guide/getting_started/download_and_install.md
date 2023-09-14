@@ -38,6 +38,22 @@ To build applications using this SDK, one needs below host PC machine
   - Windows, C:/ti
   - Linux, ${HOME}/ti
 
+\cond SOC_AM263PX
+
+- Update the device data for AM263px in syscfg. Contact TI representatives for the device data.
+- Refer to the instructions in documentation provided with the device data.
+
+\endcond
+
+### Uniflash
+
+- The Uniflash download home page is, https://www.ti.com/tool/UNIFLASH
+- Download UNiflash @VAR_UNIFLASH_VERSION from the above link
+- Install at below path,
+  - Windows, C:/ti
+  - Linux, ${HOME}/ti
+
+
 \cond SOC_AM64X
 ### GCC AARCH64 Compiler
 \attention GCC AARCH64 compiler installation is required only for A53 development in am64x

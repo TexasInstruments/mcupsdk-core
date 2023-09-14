@@ -37,7 +37,7 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EQEP_FREQUENCY_MEASUREMENT_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -70,7 +70,7 @@ Shown below is a sample output when the application is run,
 EQEP Frequency Measurement Test Started ...
 Please ensure EPWM to EQEP loopback is connected...
 Please wait 10 seconds ...
-Expected frequency = 10000 Hz, Measured frequency = 10000 Hz 
+Expected frequency = 10000 Hz, Measured frequency = 10000 Hz
 EQEP Frequency Measurement Test Passed!!
 All tests have passed!!
 \endcode

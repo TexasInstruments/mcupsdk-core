@@ -37,7 +37,7 @@ Memory Name| Memory Start Address | Memory Size
  FLASH     |0x60000000            | External Flash
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Memory Name|Memory Start Address | Memory Size
  -----------|---------------------|---------------
@@ -60,7 +60,7 @@ Smart Placement distribute functions across memories based on function's critica
 \cond SOC_AM243X
 \image html smart_placement_am243x_0.png
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \image html smart_placement_am263x_0.png
 \endcond
 

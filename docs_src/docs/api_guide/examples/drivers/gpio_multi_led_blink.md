@@ -20,7 +20,7 @@ The application toggles the each LED on/off for 10 seconds and exits.
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -47,7 +47,7 @@ The application toggles the each LED on/off for 10 seconds and exits.
 - Watch out for LED LD2 on the LP to blink which is controlled by GPIO1_55.
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 ## AM263X-CC
 - Watch out for LED LD13 on the CC to blink which is controlled by GPIO0_1.
 - Watch out for LED LD12 on the CC to blink which is controlled by GPIO0_22.

@@ -4,7 +4,7 @@
 
 # Introduction
 
-\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
 
 The Multi-channel example illustrates the usage of multiple channels of CPDMA. The application creates two independent TX and RX channels each, one for L2 echo server and the second for TimeSync PTP stack.
 
@@ -32,7 +32,7 @@ The Multi-channel example illustrates the usage of multiple channels of UDMA. Th
 
 - Please refer \ref ENET_MOD_TIMESYNC for details on all other IOCTLs supported by ENET-LLD for Timesync.
 
-\cond SOC_AM64X || SOC_AM243X|| SOC_AM263X|| SOC_AM273X || SOC_AWR294X
+\cond SOC_AM64X || SOC_AM243X|| SOC_AM263X || SOC_AM263PX|| SOC_AM273X || SOC_AWR294X
 
 On @VAR_SOC_NAME, we can do ethernet based communication using CPSW HW mechanism
 
@@ -42,7 +42,7 @@ On @VAR_SOC_NAME, we can do ethernet based communication using CPSW HW mechanism
 \endcond
 
 
-\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
 
 # Configuration Parameters
 
@@ -82,7 +82,7 @@ The Multichannel App continues to run until user decides to terminate the app by
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
 # Channel Overriding
 To override the channel mapping, we can use ALE classifier along with CPDMA_CONTROL.
@@ -118,7 +118,7 @@ To override the channel mapping, we can use ALE classifier along with CPDMA_CONT
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -200,7 +200,7 @@ To override the channel mapping, we can use ALE classifier along with CPDMA_CONT
 \cond SOC_AM64X || SOC_AM243X
 - We can start sending packets with Multicast addresses (01:80:C2:00:00:0E) PTP frames (Ethertype 0x88F7U) from Colasoft Pkt Builder or packETH tool and capture the packets in Wireshark. Packets must be sent without 802.1Q VLAN tag enabled to the application.
 \endcond
-\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
 - We can start sending packets with Multicast addresses (01:80:C2:00:00:0E) PTP frames (Ethertype 0x88F7U) from Colasoft Pkt Builder or packETH tool and capture the packets in Wireshark. Packets must be sent with 802.1Q VLAN tag enabled to the application.
 \endcond
 - By selecting 't' option from the menu we can toggle the timestamp printing on the Terminal.

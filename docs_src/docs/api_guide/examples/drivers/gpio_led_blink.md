@@ -80,7 +80,7 @@ Make the following connections for this example to work on the AM62X-SK-EVM.
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -113,7 +113,7 @@ Make the following connections for this example to work on the AM62X-SK-EVM.
 - Watch out for LED LD26 on the EVM to blink which is controlled by MCU_GPIO0_5.
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 ## AM263X-CC
 - Watch out for LED LD13 on the CC to blink which is controlled by GPIO0_1.
 

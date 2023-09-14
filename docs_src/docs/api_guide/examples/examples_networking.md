@@ -52,7 +52,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP
 \endcond
 
-\cond  SOC_AM263X
+\cond  SOC_AM263X || SOC_AM263PX
 ### Layer 2 Examples on FreeRTOS
 -# \subpage EXAMPLES_ENET_CPSW_LOOPBACK
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW

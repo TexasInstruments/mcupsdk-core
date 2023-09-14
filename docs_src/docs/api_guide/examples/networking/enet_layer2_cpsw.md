@@ -15,7 +15,7 @@ On @VAR_SOC_NAME, we can do ethernet based communication using CPSW HW mechanism
 This example also demonstrates Rx Scatter-Gather. Due to the Limitation with LC-DMA, We need to prelink the buffers before submitting to the DMA to exercise scatter-gather.
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
 On @VAR_SOC_NAME, we can do ethernet based communication using CPSW as HW mechanism
   - CPSW is a standard ethernet switch + port HW
@@ -68,7 +68,7 @@ This example do below:
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

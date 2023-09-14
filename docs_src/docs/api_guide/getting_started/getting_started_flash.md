@@ -61,7 +61,7 @@ We can then boot this application without being connected to CCS via JTAG.
 
 - Next, we need to list the files to flash in a flash configuration file. A default configuration file can be found at below path.
   You can edit this file directly or take a copy and edit this file.
-\cond SOC_AM273X || in a way that is connected with the meaning of words SOC_AWR294X || SOC_AM263X
+\cond SOC_AM273X || in a way that is connected with the meaning of words SOC_AWR294X || SOC_AM263X || SOC_AM263PX
         ${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/{board}/default_sbl_qspi.cfg
 \endcond
 \if SOC_AM64X || SOC_AM243X
@@ -595,7 +595,7 @@ number of lines used in the protocol is indeed 8.
 \endcond
 
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 ## Flashing the application
 
 - **POWER-OFF** the EVM
@@ -617,8 +617,12 @@ number of lines used in the protocol is indeed 8.
 - Open a command prompt and run the below command to flash the SOC initialization binary to the EVM.
 
         cd ${SDK_INSTALL_PATH}/tools/boot
+\cond SOC_AM263x
         python uart_uniflash.py -p COM<x> --cfg=sbl_prebuilt/@VAR_BOARD_NAME_LOWER/default_sbl_qspi.cfg
-
+\endcond
+\cond SOC_AM263Px
+        python uart_uniflash.py -p COM<x> --cfg=sbl_prebuilt/@VAR_BOARD_NAME_LOWER/default_sbl_ospi.cfg
+\endcond
   - Here COM<x> is the port name of the identified UART port in Windows.
   - On Linux,
     - The name for UART port is typically something like `/dev/ttyUSB0`
@@ -649,6 +653,7 @@ number of lines used in the protocol is indeed 8.
 - Re-connect the UART terminal in CCS window as shown in \ref CCS_UART_TERMINAL
 
 - Press the reset button on the board as shown in \ref EVM_CABLES
+\cond SOC_AM263x
 
 - You should see output like below on the UART terminal
 
@@ -663,6 +668,29 @@ number of lines used in the protocol is indeed 8.
         Hello World!
 
 - Congratulations now the AM263X-CC is flashed with your application and you dont need CCS anymore to run the application.
+\endcond
+\cond SOC_AM263Px
+
+- You should see output like below on the UART terminal
+
+        Starting OSPI Bootloader ...
+        [BOOTLOADER_PROFILE] Boot Media       : NOR SPI FLASH
+        [BOOTLOADER_PROFILE] Boot Media Clock : 100.000 MHz
+        [BOOTLOADER_PROFILE] Boot Image Size  : 0 KB
+        [BOOTLOADER_PROFILE] Cores present    :
+        r5f0-0
+        [BOOTLOADER PROFILE] System_init                      :        199us
+        [BOOTLOADER PROFILE] Drivers_open                     :         76us
+        [BOOTLOADER PROFILE] LoadHsmRtFw                      :        861us
+        [BOOTLOADER PROFILE] Board_driversOpen                :       3039us
+        [BOOTLOADER PROFILE] CPU load                         :        102us
+        [BOOTLOADER_PROFILE] SBL Total Time Taken             :       4280us
+
+        Image loading done, switching to application ...
+        Hello World!
+
+- Congratulations now the AM263PX-CC is flashed with your application and you dont need CCS anymore to run the application.
+\endcond
 
 \endcond
 

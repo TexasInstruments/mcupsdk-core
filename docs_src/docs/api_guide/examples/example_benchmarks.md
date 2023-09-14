@@ -11,6 +11,6 @@ This page lists all the examples related to benchmarks of SOC and board peripher
    -# \subpage BENCHMARK_SMART_PLACEMENT
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
    -# \subpage BENCHMARK_SMART_PLACEMENT
 \endcond

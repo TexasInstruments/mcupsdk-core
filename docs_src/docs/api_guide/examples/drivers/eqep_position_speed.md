@@ -67,7 +67,7 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EQEP_POSITION_SPEED_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -100,10 +100,10 @@ Shown below is a sample output when the application is run,
 EQEP Position Speed Test Started ...
 Please ensure EPWM to EQEP loopback is connected...
 Please wait few seconds ...
-Expected speed = 300 RPM, Measured speed = 299 RPM 
-Electrical angle (Q15) = 19608 
-Mechanical angle (Q15) = 26188 
-Rotation direction = CW, forward 
+Expected speed = 300 RPM, Measured speed = 299 RPM
+Electrical angle (Q15) = 19608
+Mechanical angle (Q15) = 26188
+Rotation direction = CW, forward
 EQEP Position Speed Test Passed!!
 All tests have passed!!
 \endcode

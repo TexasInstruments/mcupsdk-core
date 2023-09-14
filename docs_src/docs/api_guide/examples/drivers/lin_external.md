@@ -4,7 +4,7 @@
 
 # Introduction
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 This example is a application which demonstrates the LIN message
 communication to external PC via PLIN-USB (from PEAK Systems -> IPEH-004052)
 Instance LIN1 is set as a Commander in Transmit Mode.
@@ -15,7 +15,7 @@ The size of the message is also increased with increasing id.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_LIN_EXTERNAL_COMMANDER_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

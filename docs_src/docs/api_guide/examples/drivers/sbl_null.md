@@ -45,7 +45,7 @@ SBL NULL honors the various core variants of the device. The core variants might
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -107,7 +107,7 @@ INFO: Bootloader_runSelfCpu:235: All done, reseting self ...
 \endcode
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code
 Starting NULL Bootloader ...
 INFO: Bootloader_runCpu:150: CPU r5f1-1 is initialized to 400000000 Hz !!!

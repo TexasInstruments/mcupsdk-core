@@ -43,7 +43,7 @@ This example is more or less like a flashing server, and will never terminate un
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

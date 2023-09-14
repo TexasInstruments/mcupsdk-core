@@ -18,7 +18,7 @@ The example does below
 - Initializes the LwIP stack for TCP/UDP IP and Starts UDP (echo) IGMP Server task.
 - UDP Server task waits for a msg to the multicast IP address from client on port 2638 and echoes back the same message.
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 NOTE: DSCP priority mapping is configured in the example but for the host port to recieve different priority pkts on the same dma channel, user needs to enable channel override (enChOverrideFlag) flag in dmacfg. Refer enet_lwip_cpsw example.
 \endcond
 
@@ -70,7 +70,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -102,7 +102,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
     <td>Default is true. If your silicon is affected with errata <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf" target="_blank">i2329— MDIO interface corruption</a>, then TI suggests to use MDIO_MANUAL_MODE as software workaround.
 </tr>
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
 <tr>
     <td>Disable Mac Port1, Disable Mac Port2
     <td>TI Networking / Enet (CPSW)
@@ -241,9 +241,9 @@ to a network which has a DHCP server running.
 \code
 
 ============================
-  CPSW LWIP IGMP UDP SERVER 
+  CPSW LWIP IGMP UDP SERVER
 ============================
-EnetPhy_bindDriver:1718 
+EnetPhy_bindDriver:1718
 PHY 3 is alive
 PHY 12 is alive
 Starting lwIP, local interface IP is dhcp-enabled
@@ -252,14 +252,14 @@ Host MAC address: 34:08:e1:77:fb:0c
 [LWIPIF_LWIP] NETIF INIT SUCCESS
 Enet IF UP Event. Local interface IP:0.0.0.0
 Waiting for network UP ...
-Cpsw_handleLinkUp:1320 
+Cpsw_handleLinkUp:1320
 MAC Port 1: link up
 Network Link UP Event
 Waiting for network UP ...
 Enet IF UP Event. Local interface IP:10.24.69.14
 Network is UP ...
 UDP server: Port 2638
-UDP server: joined Multicast group 
+UDP server: joined Multicast group
      10.107s : CPU load =   2.25 %
      15.108s : CPU load =   1.70 %
      20.109s : CPU load =   1.82 %
@@ -320,7 +320,7 @@ UDP server: joined Multicast group
     295.164s : CPU load =   1.69 %
     300.165s : CPU load =   1.70 %
     305.166s : CPU load =   1.71 %
-Packet recieved 
+Packet recieved
 Client: Hi
 
 Echo pkt completed
@@ -348,8 +348,8 @@ Echo pkt completed
     415.188s : CPU load =   1.66 %
     420.189s : CPU load =   1.68 %
     425.190s : CPU load =   1.68 %
-Packet recieved 
-Client: 
+Packet recieved
+Client:
 Echo pkt completed
     430.191s : CPU load =   1.69 %
     435.192s : CPU load =   1.68 %
@@ -378,7 +378,7 @@ Echo pkt completed
 
    Invoke 'ncat' to connect to Multicast IP '224.0.1.129' on port 2638
     \code
-    $ncat -u 224.0.1.129 2638 
+    $ncat -u 224.0.1.129 2638
     $
     \endcode
 

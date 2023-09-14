@@ -114,6 +114,38 @@ const files_am263x = {
     ],
 };
 
+const files_am263px = {
+    common: [
+        "AddrTranslateP_sample.c",
+        "Bootloader_sample_v2.c",
+        "CacheP_sample.c",
+        "CpuIdP_sample.c",
+        "ClockP_sample.c",
+        "Cmpss_sample.c",
+        "Dac_sample.c",
+        "DebugP_sample.c",
+        "Edma_sample.c",
+        "Ethphy_sample.c",
+        "EventP_sample.c",
+        "HeapP_sample.c",
+        "HwiP_sample.c",
+        "IpcNotify_sample.c",
+        "IpcRPMessage_sample.c",
+        "Mcspi_sample.c",
+        "Mdio_sample.c",
+        "MpuP_arm_v7_sample.c",
+		"Pmu_sample.c",
+        "Pruicss_sample_m_v0.c",
+        "QueueP_sample.c",
+        "Sdfm_sample.c",
+        "SemaphoreP_sample.c",
+        "TaskP_sample.c",
+        "TimerP_sample.c",
+        "Uart_sample.c",
+        "Watchdog_sample.c",
+    ],
+};
+
 const files_am62x = {
     common: [
         "AddrTranslateP_sample.c",
@@ -172,6 +204,10 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.device=="am263x")
     {
         build_property.files = files_am263x;
+    }
+    if(buildOption.device=="am263px")
+    {
+        build_property.files = files_am263px;
     }
     if(buildOption.device=="am64x" || buildOption.device=="am243x")
     {

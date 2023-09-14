@@ -18,7 +18,7 @@ Use Cases
 
 # Supported Combinations {#EXAMPLES_SDL_MCRC_AUTO_CPU_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -56,7 +56,7 @@ Use Cases
 
 Shown below is a sample output when the application is run,
 
-\cond (SOC_AM263X)
+\cond (SOC_AM263X || SOC_AM263PX)
 \code
 
  MCRC Test Application
@@ -109,15 +109,15 @@ Calculated MCRC signature value : 0x01c133adab4dd50fU
 EDMA Data transfer completed !!
 MCRC Auto Mode Computation Time: 10us
 
-Test Name: MCRCAutoCPUfunctest_main  PASSED 
+Test Name: MCRCAutoCPUfunctest_main  PASSED
 
- All tests have passed. 
+ All tests have passed.
 \endcode
 \endcond
 
 \cond (SOC_AWR294X)||(SOC_AM273X)
 \code
-[Cortex_R5_0] 
+[Cortex_R5_0]
  MCRC Test Application
 
 MCRC AUTO CPU mode on Channel 1: Transfer Test Started...
@@ -144,8 +144,8 @@ Calculated MCRC signature value : 0x01c133adab4dd50fU
 EDMA Data transfer completed !!
 MCRC Auto Mode Computation Time: 8us
 
-Test Name: MCRCAutoCPU_main  PASSED 
+Test Name: MCRCAutoCPU_main  PASSED
 
- All tests have passed. 
+ All tests have passed.
 \endcode
 \endcond

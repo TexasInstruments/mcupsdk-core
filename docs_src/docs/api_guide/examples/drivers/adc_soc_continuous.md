@@ -34,7 +34,7 @@ feed analog input on ADC 1 Channel 0 - J1/J3 Pin - 24
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SOC_CONTINUOUS_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

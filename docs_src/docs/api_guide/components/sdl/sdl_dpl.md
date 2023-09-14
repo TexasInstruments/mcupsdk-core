@@ -85,7 +85,7 @@ HwiP_Object gHwiObject;
         }
 \endcode
 \endcond
-\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
 \code{.c}
         pSDL_DPL_HwipHandle SDL_TEST_registerInterrupt(SDL_DPL_HwipParams *pParams)
         {
@@ -99,7 +99,7 @@ HwiP_Object gHwiObject;
             HwiP_construct(&gHwiObject, &hwipParams);
 
             return &gHwiObject;
-        } 		
+        }
 
         int32_t SDL_TEST_enableInterrupt(uint32_t intNum)
         {

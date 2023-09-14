@@ -27,7 +27,7 @@ This examples demonstrates periodical triggering of conversion on ADC1 by EPWM0
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SOC_EPWM_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

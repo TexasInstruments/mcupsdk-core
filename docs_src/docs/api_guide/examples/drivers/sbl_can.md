@@ -70,7 +70,7 @@ In this application, the CAN settings are:
 - Refer to \subpage DRIVERS_MCAN_PAGE, for MCAN dependencies.
 # Supported Combinations {#EXAMPLES_DRIVERS_SBL_CAN_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

@@ -12,7 +12,7 @@ The UART driver provides API to perform read and write to any of the UART periph
 - DMA mode of operation (With RX and TX FIFO Trigger level of 1)
 - Blocking and Non-blocking (callback) transfers
 - Write and Read Cancel mode of operation
-\cond !SOC_AM263X
+\cond !(SOC_AM263X || SOC_AM263PX)
 - For low latency direct register read/write API, refer \ref EXAMPLES_DRIVERS_UART_ECHO_LOW_LATENCY_INTERRUPT and \ref EXAMPLES_DRIVERS_UART_ECHO_LOW_LATENCY_POLLING example.
 \endcond
 
@@ -32,7 +32,7 @@ SysConfig can be used to configure below parameters apart from common configurat
     - Set UART instance parameter configuration.
     - Driver ISR registration if Interrupt Mode is enabled.
     - Skip driver ISR registration if "User Managed Interrupt" mode is configured.
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
     - EDMA Trigger Crossbar configuration for UART RX and TX in DMA mode.
 \endcond
 

@@ -45,7 +45,7 @@ Watch  Variables
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SOC_CONTINUOUS_DMA_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

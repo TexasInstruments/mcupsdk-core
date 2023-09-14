@@ -59,7 +59,7 @@ Shown below is a block diagram of the SW modules involved in IPC,
 \imageStyle{ipc_block_diagram_am243.png,width:70%}
 \image html ipc_block_diagram_am243.png "IPC SW Block Diagram"
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \imageStyle{ipc_block_diagram_am263.png,width:70%}
 \image html ipc_block_diagram_am263.png "IPC SW Block Diagram"
 \endcond
@@ -199,7 +199,7 @@ read through the instructions below.
   \imageStyle{ipc_enable.png,width:70%}
   \image html ipc_enable.png "IPC SysConfig"
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
   \imageStyle{ipc_enable_am263.png,width:70%}
   \image html ipc_enable_am263.png "IPC SysConfig"
 \endcond

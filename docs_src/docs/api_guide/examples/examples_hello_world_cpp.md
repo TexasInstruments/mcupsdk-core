@@ -9,7 +9,7 @@ It does driver and board initialization and prints the string, Hello World! on U
 
 # Supported Combinations {#EXAMPLES_HELLO_WORLD_CPP_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

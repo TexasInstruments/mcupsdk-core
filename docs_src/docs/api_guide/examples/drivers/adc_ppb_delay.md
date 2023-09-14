@@ -70,7 +70,7 @@ Feed analog inputs to channels
 - gAdc1soc1Delay[] - holds the delay values for ADC1_SOC1
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_PPB_DELAY_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

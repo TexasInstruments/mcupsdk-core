@@ -37,7 +37,7 @@ MCU+ SDK supports FreeRTOS on below CPUS
 - R5F ISRs,
   - IRQ mode,
     - FPU save/restore is supported.
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
     - nested interrupts are supported.
 \endcond
 \endcond

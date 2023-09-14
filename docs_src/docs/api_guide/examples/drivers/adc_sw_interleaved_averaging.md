@@ -68,7 +68,7 @@ Early Access on AM263Px : loopback on HSEC pin 153, HSEC pin 154
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SOFTWARE_INTERLEAVED_AVERAGING_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

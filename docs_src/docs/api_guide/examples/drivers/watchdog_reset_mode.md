@@ -23,7 +23,7 @@ For it to work, we can flash the image to get the expected result.
 \endcond
 
 # Supported Combinations
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

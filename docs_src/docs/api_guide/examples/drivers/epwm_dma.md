@@ -35,7 +35,7 @@ When using AM263x-LP
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_DMA_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

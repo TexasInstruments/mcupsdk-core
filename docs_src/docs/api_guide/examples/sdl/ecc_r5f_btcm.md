@@ -9,7 +9,7 @@ Shows the generation of SEC and DED error on R5F BTCM ECC Aggregator.
 
 Use Cases
 ---------
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
  Use Case | Description
  ---------|------------
  UC-1     | Double bit error injection.
@@ -21,7 +21,7 @@ Use Cases
  ---------|------------
  UC-1     | Single bit error injection.
  UC-2     | Double bit error injection.
- 
+
 \endcond
 
 # Supported Combinations {#EXAMPLES_SDL_R5F_ECC_BTCM_COMBOS}
@@ -50,26 +50,26 @@ Use Cases
 
 Shown below is a sample output when the application is run,
 
-\cond (SOC_AM263X)
+\cond (SOC_AM263X || SOC_AM263PX)
 \code
 
 ECC Example Application
 
-ECC UC-1 and UC-2 Test 
+ECC UC-1 and UC-2 Test
 
-ECC_Test_init: Exception init complete 
+ECC_Test_init: Exception init complete
 
-ECC_Test_init: Initialize of R5FSS0 CORE0 ECC Memory is complete 
+ECC_Test_init: Initialize of R5FSS0 CORE0 ECC Memory is complete
 
-ESM_Test_init: Init MSS ESM complete 
+ESM_Test_init: Init MSS ESM complete
 
-ECC_Test_init: R5FSS0 CORE0 ECC initialization is completed 
+ECC_Test_init: R5FSS0 CORE0 ECC initialization is completed
 
-R5FSS0 CORE0 BTCM Double bit error inject: starting 
+R5FSS0 CORE0 BTCM Double bit error inject: starting
 
-ESM Call back function called : instType 0x2, intType 0x1, grpChannel 0x1, index 0x10, intSrc 0x30 
+ESM Call back function called : instType 0x2, intType 0x1, grpChannel 0x1, index 0x10, intSrc 0x30
 
-Take action 
+Take action
 
 High Priority Interrupt Executed
 
@@ -79,15 +79,15 @@ Read data of DED RAW MSS_CTRL register is 0x4
 
 R5FSS0 CORE0 BTCM Double bit error inject: pErrMem fixed location = 0x00080010 once test complete: the value of pErrMem is 0x00000000
 
-Waiting for ESM Interrupt 
+Waiting for ESM Interrupt
 
 UC-1: Injected 2-bit error and got ESM Interrupt
 
-R5FSS0 CORE0 BTCM Single bit error inject: starting 
+R5FSS0 CORE0 BTCM Single bit error inject: starting
 
-ESM Call back function called : instType 0x2, intType 0x2, grpChannel 0x1, index 0xf, intSrc 0x2f 
+ESM Call back function called : instType 0x2, intType 0x2, grpChannel 0x1, index 0xf, intSrc 0x2f
 
-Take action 
+Take action
 
 Low Priority Interrupt Executed
 
@@ -97,12 +97,12 @@ Read data of SEC RAW MSS_CTRL register is 0x0
 
 R5FSS0 CORE0 BTCM Single bit error inject at pErrMem = 0x00080010 and the value of pErrMem is 0x00000000 :test complete
 
-Waiting for ESM Interrupt 
+Waiting for ESM Interrupt
 
 UC-2: Injected 1-bit error and got ESM Interrupt
 
-All tests have passed. 
-All tests have passed. 
+All tests have passed.
+All tests have passed.
 
 \endcode
 \endcond
@@ -112,39 +112,39 @@ All tests have passed.
 
 ECC Example Application
 
-ECC UC-1 and UC-2 Test 
+ECC UC-1 and UC-2 Test
 
-ECC_Test_init: Exception init complete 
+ECC_Test_init: Exception init complete
 
-ECC_Test_init: Initialize of R5FSS0 CORE0 ECC Memory is complete 
+ECC_Test_init: Initialize of R5FSS0 CORE0 ECC Memory is complete
 
-ESM_Test_init: Init MSS ESM complete 
+ESM_Test_init: Init MSS ESM complete
 
-ECC_Test_init: R5FSS0 CORE0 ECC initialization is completed 
+ECC_Test_init: R5FSS0 CORE0 ECC initialization is completed
 
-R5FSS0 CORE0 BTCM Single bit error inject: starting 
+R5FSS0 CORE0 BTCM Single bit error inject: starting
 
-ESM Call back function called : instType 0x1, grpChannel 0x1, intSrc 0x2a 
+ESM Call back function called : instType 0x1, grpChannel 0x1, intSrc 0x2a
 
-Take action 
+Take action
 
 ECC Error Call back function called : eccMemType 49783896, errorSrc 0x400, ramId 270978723, bitErrorOffset 0x1026aa054fea7fca, bitErrorGroup 0
 
 R5FSS0 CORE0 BTCM Single bit error inject at pErrMem = 0x00080010 and the value of pErrMem is 0x00080000 :test complete
 
-Waiting for ESM Interrupt 
+Waiting for ESM Interrupt
 
 UC-1: Injected 1-bit error and got ESM Interrupt
 
-R5FSS0 CORE0 BTCM Double bit error inject: starting 
+R5FSS0 CORE0 BTCM Double bit error inject: starting
 
 R5FSS0 CORE0 BTCM Double bit error inject: pErrMem fixed location = 0x00080010 once test complete: the value of pErrMem is 0x00080000
 
-Waiting for ESM Interrupt 
+Waiting for ESM Interrupt
 
 UC-2: Injected 2-bit error and ESM Interrupt not occured
 
-All tests have passed. 
+All tests have passed.
 
 \endcode
 \endcond

@@ -86,7 +86,7 @@ There are changes in functions names, structure names and macro names. The chang
 ## See Also
 
  - \ref DRIVERS_I2C_PAGE
- \cond SOC_AM64X || SOC_AM243X || SOC_AM263X
+ \cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
  - \ref EXAMPLES_DRIVERS_I2C_LED_BLINK
  \endcond
  - \ref EXAMPLES_DRIVERS_I2C_READ

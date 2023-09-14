@@ -53,7 +53,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 \endcond
    -# \subpage EXAMPLES_DRIVERS_MCAN_LOOPBACK_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_MCAN_LOOPBACK_POLLING
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
    -# \subpage EXAMPLES_DRIVERS_MCAN_EXTERNAL_READ_WRITE
 \endcond
 -# MCSPI
@@ -68,10 +68,6 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_IO
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DMA
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG
-\cond SOC_AWR294X || SOC_AM273X || SOC_AM263X
--# PMU
-   -# \subpage EXAMPLES_DRIVERS_PMU_MULTIEVENT
-\endcond
 \cond SOC_AM64X || SOC_AM243X
 -# PCIE
    -# \subpage EXAMPLES_DRIVERS_PCIE_BENCHMARK_RC
@@ -105,6 +101,11 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_UDMA_MEMCPY_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_UDMA_MEMCPY_POLLING
    -# \subpage EXAMPLES_DRIVERS_UDMA_SW_TRIGGER
+\endcond
+
+\cond SOC_AWR294X || SOC_AM273X || SOC_AM263X || SOC_AM263PX
+-# PMU
+   -# \subpage EXAMPLES_DRIVERS_PMU_MULTIEVENT
 \endcond
 
 \cond SOC_AM273X || SOC_AWR294X
@@ -174,7 +175,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_WATCHDOG_RESET_MODE
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 -# ADC
    -# \subpage EXAMPLES_DRIVERS_ADC_BURST_MODE_OVERSAMPLING
    -# \subpage EXAMPLES_DRIVERS_ADC_BURST_MODE_EPWM
@@ -263,10 +264,18 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 -# MMCSD
     -# \subpage EXAMPLES_DRIVERS_MMCSD_RAW_IO
     -# \subpage EXAMPLES_DRIVERS_MMCSD_FILE_IO
+\cond SOC_AM263X
 -# QSPI
    -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_DIAG
    -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_TRANSFER
    -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_DMA_TRANSFER
+\endcond
+\cond SOC_AM263PX
+-# OSPI
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_IO
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DMA
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG
+\endcond
 -# RTI
    -# \subpage EXAMPLES_DRIVERS_RTI_LED_BLINK
 -# SDFM

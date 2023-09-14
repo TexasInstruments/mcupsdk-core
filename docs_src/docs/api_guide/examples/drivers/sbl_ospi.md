@@ -32,6 +32,17 @@ If a multicore appimage is found at the location, the SBL parses it, splits it i
 
 \endcond
 
+\cond SOC_AM263PX
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/drivers/boot/sbl_ospi
+
+\endcond
+
 # Steps to Run the Example
 
 Since this is a bootloader, the example will be run every time you boot an application using this example. It is run from a OSPI boot media  unlike other examples which are usually loaded with CCS. Nevertheless, you can build this example like you do for the others using makefile or build it via CCS by importing as a project.
@@ -48,6 +59,7 @@ Since this is a bootloader, the example will be run every time you boot an appli
 
 # Sample Output
 
+\cond SOC_AM64X || SOC_AM243X
 \code
 Starting OSPI Bootloader ...
 [BOOTLOADER PROFILE] SYSFW Load                       :      17606us
@@ -57,3 +69,23 @@ Starting OSPI Bootloader ...
 [BOOTLOADER PROFILE] CPU load                         :      18978us
 [BOOTLOADER_PROFILE] SBL Total Time Taken             :      78791us
 \endcode
+\endcond
+
+\cond SOC_AM263PX
+
+\code
+    Starting OSPI Bootloader ...
+    [BOOTLOADER_PROFILE] Boot Media       : NOR SPI FLASH
+    [BOOTLOADER_PROFILE] Boot Media Clock : 100.000 MHz
+    [BOOTLOADER_PROFILE] Boot Image Size  : 0 KB
+    [BOOTLOADER_PROFILE] Cores present    :
+    r5f0-0
+    [BOOTLOADER PROFILE] System_init                      :        199us
+    [BOOTLOADER PROFILE] Drivers_open                     :         76us
+    [BOOTLOADER PROFILE] LoadHsmRtFw                      :        861us
+    [BOOTLOADER PROFILE] Board_driversOpen                :       3039us
+    [BOOTLOADER PROFILE] CPU load                         :        102us
+    [BOOTLOADER_PROFILE] SBL Total Time Taken             :       4280us
+\endcode
+
+\endcond

@@ -74,7 +74,7 @@ In this application, the CAN settings are:
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SBL_CAN_UNIFLASH_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -102,7 +102,7 @@ In this application, the CAN settings are:
 
  - **Example is tested using PCAN-USB module**
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
  - **Hardware Conectivity**, First make sure the connections to the PCAN-USB module to PC are proper. Connect the PCAN-USB module to PC from USB and Serial Port to be connected as mentioned in the image below.
 
 \imageStyle{am263x_mcan_sbl_hw_connect.PNG,width:60%}

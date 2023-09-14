@@ -40,19 +40,19 @@ Use Cases
 
 Shown below is a sample output when the application is run,
 
-\cond (SOC_AM263X)
+\cond (SOC_AM263X || SOC_AM263PX)
 \code
 ECC Example Application
 
-ECC UC-1 and UC-2 Test 
+ECC UC-1 and UC-2 Test
 
-ECC_Test_init: Initialize of ICSSM ECC Memory is complete 
+ECC_Test_init: Initialize of ICSSM ECC Memory is complete
 
-ESM_Test_init: Init MSS ESM complete 
+ESM_Test_init: Init MSS ESM complete
 
-ECC_Test_init: ICSSM ECC initialization is completed 
+ECC_Test_init: ICSSM ECC initialization is completed
 
-ICSSM Double bit error inject: starting 
+ICSSM Double bit error inject: starting
 
 ESM Call back function called : instType 0x2, intType 0x1, grpChannel 0x2, index 0xd, intSrc 0x4d
 
@@ -64,11 +64,11 @@ ECC Error Call back function called : eccMemType 6, errorSrc 0x2, ramId 0, bitEr
 
 ICSSM Double bit error inject: pErrMem fixed location = 0x48000000 once test complete: the value of pErrMem is 0x00000007
 
-Waiting for ESM Interrupt 
+Waiting for ESM Interrupt
 
 UC-1: Injected 2-bit error and got ESM Interrupt
 
-ICSSM Single bit error inject: starting 
+ICSSM Single bit error inject: starting
 
 ESM Call back function called : instType 0x2, intType 0x2, grpChannel 0x2, index 0xe, intSrc 0x4e
 
@@ -80,11 +80,11 @@ ECC Error Call back function called : eccMemType 6, errorSrc 0x1, ramId 0, bitEr
 
 ICSSM Single bit error inject at pErrMem = 0x48000000 and the value of pErrMem is 0x00000000 :test complete
 
-Waiting for ESM Interrupt 
+Waiting for ESM Interrupt
 
 UC-2: Injected 1-bit error and got ESM Interrupt
 
-All tests have passed. 
+All tests have passed.
 
 \endcode
 \endcond

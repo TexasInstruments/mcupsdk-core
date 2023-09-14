@@ -41,7 +41,7 @@ Benchmarks:
 
 
 
- Interrupt handler                                            | Measured execution time 
+ Interrupt handler                                            | Measured execution time
  -------------------------------------------------------------|--------------------------
  1. Non Re-entrant, Without FPU context save                  | 310ns
  2. Non Re-entrant, With FPU context save                     | 426ns
@@ -51,7 +51,7 @@ Benchmarks:
 
 # Supported Combinations
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

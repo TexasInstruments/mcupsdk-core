@@ -13,7 +13,7 @@ The UART driver provides API to perform read and write to any of the UART periph
 \endcond
 - Blocking and Non-blocking (callback) transfers
 - Write and Read Cancel mode of operation
-\cond !SOC_AM263X
+\cond !(SOC_AM263X || SOC_AM263PX)
 - For low latency direct register read/write API, refer \ref EXAMPLES_DRIVERS_UART_ECHO_LOW_LATENCY_INTERRUPT and \ref EXAMPLES_DRIVERS_UART_ECHO_LOW_LATENCY_POLLING example.
 \endcond
 

@@ -4,10 +4,10 @@
 
 # Introduction
 
-This example demonstrates the usage of the R5 PMU Driver. The PMU supports three 
-event counters in additional to the cycle counter. So in total we could profile a 
-block of code / or a function for four metrics. The cycle counter is a dedicated 
-counter, but the other three are configurable for various PMU events. In this 
+This example demonstrates the usage of the R5 PMU Driver. The PMU supports three
+event counters in additional to the cycle counter. So in total we could profile a
+block of code / or a function for four metrics. The cycle counter is a dedicated
+counter, but the other three are configurable for various PMU events. In this
 example, we configure the counters to count these events:
 
 - ICache Miss
@@ -44,7 +44,7 @@ example, we configure the counters to count these events:
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

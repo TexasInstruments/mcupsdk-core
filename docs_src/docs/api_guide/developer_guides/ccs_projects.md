@@ -61,7 +61,7 @@ section provides basic instructions and tips on using CCS projects.
     \image html ccs_projects_02_am273x.png "Select Examples Folder"
 
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
 - Click "Browse" and go to ${SDK_INSTALL_PATH}/examples/ folder
     \imageStyle{ccs_projects_02_am263x.png,width:40%}
@@ -83,7 +83,7 @@ section provides basic instructions and tips on using CCS projects.
     \imageStyle{ccs_projects_03_am273x.png,width:30%}
     \image html ccs_projects_03_am273x.png "Select Project"
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 - This will list all example projects, now you can select one or more or all projects to import
   into CCS.
 
@@ -123,7 +123,7 @@ section provides basic instructions and tips on using CCS projects.
     \image html ccs_projects_04_am273x.png "Example Readme"
 
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 - Once a example project is imported, you can learn more about the example, by clicking the "README.html" file
 
     \imageStyle{ccs_projects_04_am263x.png,width:50%}
@@ -144,7 +144,7 @@ section provides basic instructions and tips on using CCS projects.
     \image html ccs_projects_06_am273x.png "Example SysConfig"
 
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 - You can also open the SysConfig GUI by double-clicking the "example.syscfg" file, (see also \ref SYSCONFIG_INTRO_PAGE)
 
     \imageStyle{ccs_projects_06_am263x.png,width:50%}
@@ -176,7 +176,7 @@ section provides basic instructions and tips on using CCS projects.
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 - By default it builds in "debug" profile, i.e without compiler optimizations. To build with compiler
   optimizations, select "release" profile by clicking, "Build Configurations > Set Active > Release" as shown
   below.
@@ -204,7 +204,7 @@ section provides basic instructions and tips on using CCS projects.
     \image html ccs_projects_08.png "System Project Import"
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
 - System projects make it convenient to import one system project which in turn imports the grouped
   CPU specific projects.
@@ -238,7 +238,7 @@ section provides basic instructions and tips on using CCS projects.
     \image html ccs_projects_10.png "System Project View"
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
 - After import, one can browse and build the individual CPU specific projects as before
 - You can also build the system project which will in turn build the grouped CPU projects.
@@ -256,7 +256,7 @@ section provides basic instructions and tips on using CCS projects.
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
 - You can also launch SysConfig GUI using the individual projects that were imported as part of the "system" project. However now, SysConfig will show the configuration of all CPUs in a single SysConfig window. (see also \ref SYSCONFIG_INTRO_PAGE)
 
@@ -388,7 +388,7 @@ section provides basic instructions and tips on using CCS projects.
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 ## 1 Click Debug with CCS Projects {#CCS_PROJECTS_1CLICK_DEBUG}
 
  - Projects imported in CCS can be loaded and run on the EVM with single click.
@@ -424,7 +424,7 @@ section provides basic instructions and tips on using CCS projects.
 \endcond
 
 
-\cond SOC_AWR294X || SOC_AM263X || SOC_AM243X || SOC_AM64X || SOC_AM62X
+\cond SOC_AWR294X || SOC_AM263X || SOC_AM263PX || SOC_AM243X || SOC_AM64X || SOC_AM62X
 ## Load and Run Executables Built with CCS Projects
 
 - Simply load and run binary .out on EVM using CCS (see \ref CCS_LAUNCH_PAGE)
@@ -446,7 +446,7 @@ section provides basic instructions and tips on using CCS projects.
     \image html ccs_projects_07.png "Delete a Project"
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
 - It is recommended to check the box as shown below, else you will have trouble re-importing the project
 

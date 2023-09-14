@@ -5,7 +5,7 @@
 # Introduction
 This example demonstrates SHA-512 algorithm running on SHA/MD5 module. This example explains the steps to build and run SHA-512.
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter             | Value
  ----------------------|-----------

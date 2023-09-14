@@ -10,7 +10,7 @@ expression window in CCS.
 
 # Supported Combinations
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

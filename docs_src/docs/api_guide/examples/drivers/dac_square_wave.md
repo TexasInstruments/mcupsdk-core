@@ -28,7 +28,7 @@ With AM263X-LP
 
 # Supported Combinations {#EXAMPLES_DRIVERS_DAC_SQUARE_WAVE_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

@@ -40,11 +40,11 @@ Use Cases
 # Sample Output
 
 Shown below is a sample output when the application is run,
-\cond (SOC_AM263X)
+\cond (SOC_AM263X || SOC_AM263PX)
 \code
 ECC Example Application
 
-ECC UC-1 and UC-2 Test 
+ECC UC-1 and UC-2 Test
 
 [EDMA] Interrupt Transfer Test Started...
 
@@ -52,7 +52,7 @@ ESM_Test_init: Init MSS ESM single bit complete
 
 ESM_Test_init: Init MSS ESM double bit complete
 
-ECC_Test_init: MSS ECC AGGR initialization is completed 
+ECC_Test_init: MSS ECC AGGR initialization is completed
 
 MSS TPTC_A0 Single bit error inject: test starting
 
@@ -70,7 +70,7 @@ MSS TPTC_A0 Single bit error inject at pErrMem 0x00000000
 
 All tests have passed!!
 
-All tests have passed. 
+All tests have passed.
 
 
 \endcode
@@ -80,7 +80,7 @@ All tests have passed.
 \code
 ECC Example Application
 
-ECC UC-1 and UC-2 Test 
+ECC UC-1 and UC-2 Test
 
 [EDMA] Interrupt Transfer Test Started...
 
@@ -88,23 +88,23 @@ ESM_Test_init: Init MSS ESM single bit complete
 
 ESM_Test_init: Init MSS ESM double bit complete
 
-ECC_Test_init: MSS ECC AGGR initialization is completed 
+ECC_Test_init: MSS ECC AGGR initialization is completed
 
 MSS TPTC_A0 Single bit error inject: test starting
 
-ESM Call back function called : instType 0x1, grpChannel 0x1, intSrc 0x12 
+ESM Call back function called : instType 0x1, grpChannel 0x1, intSrc 0x12
 
-Take action 
+Take action
 
 ECC Error Call back function called : eccMemType 2, errorSrc 0x1, ramId 5, bitErrorOffset 0x00000001, bitErrorGroup 0
 
 MSS TPTC_A0 Single bit error inject at pErrMem 0x00000000
- 
+
 [EDMA] Interrupt Transfer Test Completed!!
 
 All tests have passed!!
 
-All tests have passed. 
+All tests have passed.
 
 
 \endcode

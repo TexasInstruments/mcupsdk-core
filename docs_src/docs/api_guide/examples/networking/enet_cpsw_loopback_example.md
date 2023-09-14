@@ -7,7 +7,7 @@
 
 This example exercises the MAC loopback and PHY loopback functionality of the hardware. The CPSW hardware is opened with default initialization parameters and either the MAC loopback or PHY loopback is enabled based on the user input.
 
-\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X || SOC_AM64X || SOC_AM243X
+\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X || SOC_AM263PX || SOC_AM64X || SOC_AM243X
 
 On @VAR_SOC_NAME, we can do ethernet based communication using CPSW as HW mechanism
   - CPSW is a standard ethernet switch + port HW
@@ -43,7 +43,7 @@ Example folder | examples/networking/enet_loopback/enet_cpsw_loopback
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

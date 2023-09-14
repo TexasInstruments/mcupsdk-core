@@ -65,7 +65,7 @@ Connect the Excitation Frequency generated from RES0_PWMOUT0 or HSEC pin
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SOFTWARE_INTERLEAVED_AVERAGING_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

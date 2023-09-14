@@ -116,7 +116,7 @@ The RM board config need to have an entry for the interrupt router for the core 
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -162,7 +162,7 @@ The RM board config need to have an entry for the interrupt router for the core 
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
 ## AM263X-CC
 - Press and release SW1 button on the EVM to generate the trigger GPIO interrupt. This button is connected to GPIO21.

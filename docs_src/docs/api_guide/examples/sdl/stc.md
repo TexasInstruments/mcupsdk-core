@@ -22,7 +22,7 @@ Use Cases
 * STC run for DSP core after that it will run for R5F(Self Core).
 
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 Use Cases
 ---------
 * STC run for R5F1 core after that it will run R5F0( SELF CORE).
@@ -54,7 +54,7 @@ Use Cases
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -106,7 +106,7 @@ Waiting in loop in STC_func_test_Main().
 \endcode
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 Shown below is a sample output when the application is run for R5F1 followed by R5F0,
 code is running on  R5F0 core.
 \code

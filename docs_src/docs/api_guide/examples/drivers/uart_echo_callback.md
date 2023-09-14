@@ -45,7 +45,7 @@ The application ends when the user types 8 characters.
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

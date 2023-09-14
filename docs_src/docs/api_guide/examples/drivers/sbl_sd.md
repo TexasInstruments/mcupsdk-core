@@ -8,7 +8,7 @@ This bootloader does SOC initializations and attempts to boot a multicore appima
 
 If a multicore appimage file is found at the location, the SBL reads the file into a buffer, parses it, splits it into RPRCs for each core applicable. Each core is then initialized, RPRC image is loaded, entry points are set and the core is released from reset. For more on bootflow/bootloaders, please refer \ref BOOTFLOW_GUIDE
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
 This bootloader runs in three steps:
 - Format the SD Card with FAT32/16 (this is necessary if the card is new) and paste the app-image of desired application in the first FAT partition found in the Connected SD card. For connecting the SD Card to the host PC use a card reader. Make sure that the app-image is named "app" without any file extension.
@@ -43,7 +43,7 @@ This bootloader runs in three steps:
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -69,7 +69,7 @@ Since this is a bootloader, the example will be run every time you boot an appli
 
 # Sample Output
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 Logs from IPC RPMSG ECHO example:
 \code
 Starting SD Bootloader ...

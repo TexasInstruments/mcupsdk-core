@@ -29,7 +29,7 @@ The example does the below
 
 # Supported Combinations
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

@@ -18,7 +18,7 @@ Use Cases
 
 # Supported Combinations {#EXAMPLES_SDL_MCRC_SEMI_CPU_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -57,7 +57,7 @@ Use Cases
 Shown below is a sample output when the application is run,
 
 
-\cond (SOC_AM263X)
+\cond (SOC_AM263X || SOC_AM263PX)
 \code
 MCRC Test Application
 
@@ -113,9 +113,9 @@ Calculated MCRC signature value : 0x01c133adab4dd50fU
 EDMA Data transfer completed !!
 MCRC Semi Mode Computation Time: 14us
 
-Test Name: MCRC_semiCPU_mode  PASSED 
+Test Name: MCRC_semiCPU_mode  PASSED
 
- All tests have passed. 
+ All tests have passed.
 \endcode
 \endcond
 
@@ -149,8 +149,8 @@ Calculated MCRC signature value : 0x01c133adab4dd50fU
 EDMA Data transfer completed !!
 MCRC Semi Mode Computation Time: 12us
 
-Test Name: MCRC_semiCPU_mode  PASSED 
+Test Name: MCRC_semiCPU_mode  PASSED
 
- All tests have passed. 
+ All tests have passed.
 \endcode
 \endcond

@@ -17,7 +17,7 @@ Use Cases
 
 # Supported Combinations {#EXAMPLES_SDL_CCM_COMBOS}
 
-\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
 
  Parameter      | Value
  ---------------|-----------
@@ -54,15 +54,15 @@ Use Cases
 
 			${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/{board}/default_sbl_qspi.cfg
 
-  6. Edit below line in the config file to point to your application .appimage file. Give the absolute path to the .appimage file 
+  6. Edit below line in the config file to point to your application .appimage file. Give the absolute path to the .appimage file
     or path relative to ${SDK_INSTALL_PATH}/tools/boot. **Make sure to use forward slash / in the filename path**.
-		
+
 			--file=../../examples/sdl/ccm/sdl_ccm_example/{board}/r5fss0-0_nortos/ti-arm-clang/sdl_ccm_example.release.appimage --operation=flash --flash-offset=0x80000
-    
+
 	- **NOTE** : edit sdl_ccm_example to sdl_ccm_vim for ccm vim example testing.
   7. Save and close the config file.
   8. Flash the application by follow the steps mentioned in the page, \ref GETTING_STARTED_FLASH
-  
+
 # See Also
 
 \ref SDL_CCM_PAGE
@@ -71,7 +71,7 @@ Use Cases
 
 Shown below is a sample output when the application is run,
 
-\cond (SOC_AM263X) || (SOC_AM273X) || (SOC_AWR294X)
+\cond (SOC_AM263X || SOC_AM263PX) || (SOC_AM273X) || (SOC_AWR294X)
 \code
 R5F0 CORE:
 
@@ -104,7 +104,7 @@ All tests have passed.
 \endcode
 \endcond
 
-\cond (SOC_AM263X)
+\cond (SOC_AM263X || SOC_AM263PX)
 \code
 R5F1 CORE:
 

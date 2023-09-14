@@ -35,7 +35,7 @@ The following pulses (all with nominal timings) make up the transmitting sequenc
 
 # Supported Combinations
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
 | Parameter      | Value                                        |
 | -------------- | -------------------------------------------- |

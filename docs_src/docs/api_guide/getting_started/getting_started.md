@@ -13,7 +13,7 @@
 
 \note In Windows, use the `cmd.exe` as command prompt and in Linux, use the bash shell as the command prompt.
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \note For performance measurements, use compiler optimization level -Os. Refer developer guide \ref PERFORMANCE_OPTIMIZATIONS_GUIDE for more details
 \endcond
 
@@ -51,7 +51,7 @@ IO-Link Controller      | IO-Link device which provides the interface to the hig
 IO-Link Device          | IO-Link device is a short distance, bi-directional, digital, point-to-point, wired (or wireless), industrial communications networking standard (IEC 61131-9) used for connecting digital sensors and actuators to either a type of industrial fieldbus or a type of industrial Ethernet
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 Term                    | Description
 ------------------------|------------
 McSPI Controller        | McSPI in communication which generates the clock and initiates the transfer
@@ -88,7 +88,7 @@ PTP Sync Receiver       | Ethernet device that is waiting for the master to poll
 
 - **Step 3:** Setup EVM for program execution, see \subpage EVM_SETUP_PAGE
 
-\cond SOC_AM273X || SOC_AM263X
+\cond SOC_AM273X || SOC_AM263X || SOC_AM263PX
 - **Step 4:** Loading and running the example, see \subpage LOAD_RUN_EXAMPLE
 
 - **Step 5:** Additional Details, see \subpage ADDITIONAL_DETAILS_PAGE
@@ -105,7 +105,7 @@ PTP Sync Receiver       | Ethernet device that is waiting for the master to poll
 
 \endcond
 
-\cond SOC_AWR294X || SOC_AM273X || SOC_AM263X
+\cond SOC_AWR294X || SOC_AM273X || SOC_AM263X || SOC_AM263PX
 - **Step 6:** Flash the "hello world" example on the EVM and boot without CCS, see \subpage GETTING_STARTED_FLASH [**OPTIONAL and is typically needed after all development via CCS is done**]
 \endcond
 

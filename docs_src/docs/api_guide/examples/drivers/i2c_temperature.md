@@ -43,7 +43,7 @@ Application reads 20 samples from the sensor and exits.
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

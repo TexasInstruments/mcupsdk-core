@@ -44,7 +44,7 @@ The IP supports the following features:
 
 ### Features Supported In Driver
 \note True Random Number Generation (TRNG) and PKA (Public Key Accelerator) are not supported from R5F on HS-SE devices as these are secure assests and are locked for HSM.
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \note TRNG and PKA are single context engines and hence are secure assets on HS-SE devices. Should the system integrator choose to use these engines from R5F in HS-SE devices, they can do so by removing SOC and Device type checks in function defintions RNG_open() and PKA_open() in rng.c and pka.c respectively.
 \endcond
 \cond SOC_AM273X || SOC_AWR294X
@@ -64,7 +64,7 @@ The IP supports the following features:
         - <b>AES-ECB</b>(128/256)(<b>E</b>lectronic <b>C</b>ode <b>B</b>ook)
         - <b>AES-CMAC</b>(128/256)(<b>C</b>ipher-based <b>M</b>essage <b>A</b>uthentication <b>C</b>ode)
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 - \subpage DRIVERS_DTHE_SHA_PAGE (Supported on HS-SE and HS-FS device type)
 	- <b>S</b>ecure <b>h</b>ash <b>a</b>lgorithms)
         - <b>SHA256</b>, <b>SHA512</b>

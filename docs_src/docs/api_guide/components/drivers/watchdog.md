@@ -8,7 +8,7 @@ programmable period, or if no correct key sequence was written to the RTIWDKEY r
 
 
 ## Features Supported
-\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X
+\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X || SOC_AM263PX
 - Supports Watchdog reset mode.
 \endcond
 \cond SOC_AM64X || SOC_AM243X
@@ -25,7 +25,7 @@ programmable period, or if no correct key sequence was written to the RTIWDKEY r
 - Option to select Watchdog expiry time in millisecond.
 
 ## Features NOT Supported
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 - As ESM module not integrated in sdk still, Watchdog interrupt mode is not supported.
 \endcond
 \cond SOC_AM273X || SOC_AWR294X

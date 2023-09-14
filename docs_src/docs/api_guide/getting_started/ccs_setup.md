@@ -7,37 +7,37 @@
 ## Download CCS
 
 - The Code Composer Studio (CCS) download home page is, https://www.ti.com/tool/CCSTUDIO
-\cond !SOC_AM263X
+\cond !SOC_AM263X || SOC_AM263PX
 - Download CCS @VAR_CCS_VERSION from above link
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 - Download CCS @VAR_CCS_VERSION_AM263X
 \endcond
 - Unzip the file for Windows or Linux at any location on your host PC
 
 ## Install CCS
 
-\cond !SOC_AM263X
+\cond !SOC_AM263X || SOC_AM263PX
 - Install CCS @VAR_CCS_VERSION by double clicking the installer file from the downloaded and un-zipped CCS package file.
 
     \imageStyle{installer_file.png,width:20%}
     \image html installer_file.png "CCS Installer File"
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 - Install CCS @VAR_CCS_VERSION_AM263X by double clicking the installer file from the downloaded and un-zipped CCS package file.
 
     \imageStyle{installer_file_11p2.png,width:15%}
     \image html installer_file_11p2.png "CCS Installer File"
 \endcond
 
-\cond !SOC_AM263X
+\cond !SOC_AM263X || SOC_AM263PX
 - Follow the steps and at below screen, recommend to keep install directory as default.
 
     \imageStyle{install_directory.png,width:40%}
     \image html install_directory.png "CCS Install Path"
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 - Follow the steps and at below screen, recommend to keep install directory as default.
 
     \imageStyle{install_directory_11p2.png,width:50%}
@@ -48,7 +48,7 @@
 
     \imageStyle{setup_type.png,width:50%}
     \image html setup_type.png "CCS Setup Type"
-\cond SOC_AM243X || SOC_AM263X || SOC_AM273X
+\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X
 - Follow the steps and at below screen, select the component as "Sitara AM2x MCUs" to install @VAR_SOC_NAME related emulation and GELs
 
     \imageStyle{select_components_sitara.png,width:50%}
@@ -76,6 +76,14 @@
 
 - If using Linux, additionally go through the instructions given at [CCS Linux Host Support](https://software-dl.ti.com/ccs/esd/documents/ccsv11_linux_host_support.html)
 
+\cond SOC_AM263PX
+
+- Contact TI representative for AM263P CSP data.
+- Copy this CSP inside CCS installation directory at "ccs/ccs_base"
+- Update the Device data for am263p in CCS level syscfg
+
+\endcond
+
 - Launch CCS and select the workspace.
 
     \imageStyle{first_launch.png,width:50%}
@@ -90,14 +98,14 @@
     \imageStyle{ccs_setup_00.png,width:20%}
     \image html ccs_setup_00.png "CCS Preferences"
 
-\cond !SOC_AM263X
+\cond !SOC_AM263X || SOC_AM263PX
 - Goto "Code Composer Studio > Products", make sure you see SysConfig @VAR_SYSCFG_VERSION listed here.
   - Sometimes, you need to click "Restore Defaults" and then "Refresh"
 
     \imageStyle{ccs_setup_01.png,width:50%}
     \image html ccs_setup_01.png "CCS Products"
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 - Goto "Code Composer Studio > Products", make sure you see SysConfig @VAR_SYSCFG_VERSION_AM263X listed here.
   - Sometimes, you need to click "Restore Defaults" and then "Refresh"
 
@@ -105,14 +113,14 @@
     \image html ccs_setup_01_11p2.png "CCS Products"
 \endcond
 
-\cond !SOC_AM263X
+\cond !SOC_AM263X || SOC_AM263PX
 - Goto "Code Composer Studio > Build > Compilers", make sure you see TI CLANG @VAR_TI_ARM_CLANG_VERSION listed here
   - Sometimes, you need to click "Restore Defaults" and then "Refresh"
 
     \imageStyle{ccs_setup_02.png,width:50%}
     \image html ccs_setup_02.png "CCS Compilers"
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 - Goto "Code Composer Studio > Build > Compilers", make sure you see TI CLANG @VAR_TI_ARM_CLANG_VERSION listed here
   - Sometimes, you need to click "Restore Defaults" and then "Refresh"
 
@@ -120,7 +128,7 @@
     \image html ccs_setup_02_11p2.png "CCS Compilers"
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 ## Update CSP {#CSP_UPDATE}
 - Goto "Help -> Check for updates"
 
@@ -374,9 +382,14 @@
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 ## Create Target Configuration {#CCS_NEW_TARGET_CONFIG}
+\cond SOC_AM263X
 ### AM263X-CC / AM263X-LP
+\endcond
+\cond SOC_AM263PX
+### AM263PX-CC
+\endcond
 
 - Goto "View > Target Configuration"
 
@@ -398,8 +411,12 @@
     \imageStyle{target_config_xds.png,width:50%}
     \image html target_config_xds.png "Select JTAG Connection"
 
+\cond SOC_AM263X
 - In "Board or Device" type "@VAR_SOC_NAME" and select "AM263x"
-
+\endcond
+\cond SOC_AM263PX
+- In "Board or Device" type "@VAR_SOC_NAME" and select "AM263Px"
+\endcond
     \imageStyle{ccs_target_config_00.png,width:50%}
     \image html ccs_target_config_00.png "Select @VAR_SOC_NAME EVM"
 

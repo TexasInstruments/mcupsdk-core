@@ -49,7 +49,7 @@ In this example,
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -84,7 +84,7 @@ In this example,
   and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE). This will build all the dependant CPU projects as well
 - **When using makefiles to build**, build the system makefile using
   make command (see \ref MAKEFILE_BUILD_PAGE). This will build all the dependant CPU makefiles as well.
-\if SOC_AM263X
+\if SOC_AM263X || SOC_AM263PX
 - Launch a CCS debug session, follow the steps for running multi core applications in \ref PREREQUISITES and run the executables, see \ref CCS_LAUNCH_PAGE
 \else
 - Launch a CCS debug session and run the executables, see \ref CCS_LAUNCH_PAGE

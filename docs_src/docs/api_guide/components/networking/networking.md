@@ -2,7 +2,7 @@
 
 [TOC]
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
 
 ## Overview
 Advances in automated factories and smart vehicles require advanced networking capabilities, real-time processing and more advanced motor-control topologies. TI Networking solution packaged with the SDK provide a rapidly growing need for Sitara MCU to out space traditional MCUs and deliver processor-like capabilities. Networking is a broad terms used to cover Ethernet (IEEE 802.3), EtherCAT Profinet and other ethernet-like communication protocols used in industrial, automotive and other general use cases.
@@ -34,7 +34,7 @@ Below is the software components overview highlighting mainly the components use
   \imageStyle{networking_layer_with_mbedtls.png,width:60%}
   \image html networking_layer_with_mbedtls.png Figure: Networking Software Components Overview
 \endcond
-\cond SOC_AM263X || SOC_AM273X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X
   \imageStyle{networking_layer_with_mbedtls.png,width:60%}
   \image html cpdma_networking_block_diagram.png Figure: Networking Software Components Overview
 \endcond
@@ -46,7 +46,7 @@ Below is the software components overview highlighting mainly the components use
 ### Examples and Demos
 You can find out-of-box examples and demos **[here](\ref EXAMPLES_NETWORKING)**.
 
-\cond SOC_AM263X || SOC_AM273X || SOC_AM243X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X
 ### Performance
 You can find ethernet performance data **[here](\ref enetlld_performance)**.
 \endcond
@@ -84,7 +84,7 @@ To know more about the hardware peripherals, please refer to datasheet and Techn
 
 Below is the software components overview highlighting mainly the components used in the Networking software development.
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM273X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X
   \imageStyle{networking_layer_with_mbedtls.png,width:50%}
   \image html networking_layer_with_mbedtls.png Figure: Networking Software Components Overview
 \endcond
@@ -97,7 +97,7 @@ Below is the software components overview highlighting mainly the components use
 ### Examples and Demos
 You can find out-of-box examples and demos **[here](\ref EXAMPLES_NETWORKING)**.
 
-\cond SOC_AM263X || SOC_AM273X || SOC_AM243X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X
 ### Performance
 You can find ethernet performance data **[here](\ref enetlld_performance)**.
 \endcond

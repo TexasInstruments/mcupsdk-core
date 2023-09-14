@@ -40,20 +40,20 @@ Use Cases
 
 Shown below is a sample output when the application is run,
 
-\cond (SOC_AM263X)
+\cond (SOC_AM263X || SOC_AM263PX)
 \code
 
 ECC Example Application
 
-ECC UC-1 and UC-2 Test 
+ECC UC-1 and UC-2 Test
 
-ECC_Test_init: Initialize of MCANA ECC Memory is complete 
+ECC_Test_init: Initialize of MCANA ECC Memory is complete
 
-ESM_Test_init: Init MCANA ESM complete 
+ESM_Test_init: Init MCANA ESM complete
 
-ECC_Test_init: MCANA ECC initialization is completed 
+ECC_Test_init: MCANA ECC initialization is completed
 
-MCANA Single bit error inject: starting 
+MCANA Single bit error inject: starting
 
 ESM Call back function called : instType 0x2, intType 0x2, grpChannel 0x0, index 0x2, intSrc 0x2
 
@@ -85,11 +85,11 @@ Read data =  0x09090909
 
 Read data =  0x0A0A0A0A
 
-Waiting for ESM Interrupt 
+Waiting for ESM Interrupt
 
-UC-1: Injected 1-bit error and got ESM Interrupt 
+UC-1: Injected 1-bit error and got ESM Interrupt
 
-MCANA double bit error inject: starting 
+MCANA double bit error inject: starting
 
 ESM Call back function called : instType 0x2, intType 0x1, grpChannel 0x0, index 0x3, intSrc 0x3
 
@@ -125,7 +125,7 @@ Waiting for ESM Interrupt
 
 UC-2: Injected 2-bit error and got ESM Interrupt
 
-All tests have passed. 
+All tests have passed.
 
 \endcode
 \endcond
@@ -134,19 +134,19 @@ All tests have passed.
 
 ECC Example Application
 
-ECC UC-1 and UC-2 Test 
+ECC UC-1 and UC-2 Test
 
-ECC_Test_init: Initialize of MCANA ECC Memory is complete 
+ECC_Test_init: Initialize of MCANA ECC Memory is complete
 
-ECC_Test_init: MCANA ECC initialization is completed 
+ECC_Test_init: MCANA ECC initialization is completed
 
 ESM_Test_init: Init MCANA ESM single bit complete
 
-MCANA Single bit error inject: starting 
+MCANA Single bit error inject: starting
 
-ESM Call back function called : instType 0x1, grpChannel 0x1, intSrc 0x33 
-  
-Take action 
+ESM Call back function called : instType 0x1, grpChannel 0x1, intSrc 0x33
+
+Take action
 
 ECC Error Call back function called : eccMemType 4, errorSrc 0x1, ramId 0, bitErrorOffset 0x00000001, bitErrorGroup 0
 
@@ -172,17 +172,17 @@ Read data =  0x09090909
 
 Read data =  0x0A0A0A0A
 
-Waiting for ESM Interrupt 
+Waiting for ESM Interrupt
 
-UC-1: Injected 1-bit error and got ESM Interrupt 
+UC-1: Injected 1-bit error and got ESM Interrupt
 
-ESM_Test_init: Init MCANA ESM double bit complete 
+ESM_Test_init: Init MCANA ESM double bit complete
 
-MCANA double bit error inject: starting 
+MCANA double bit error inject: starting
 
-ESM Call back function called : instType 0x1, grpChannel 0x1, intSrc 0x32 
-  
-Take action 
+ESM Call back function called : instType 0x1, grpChannel 0x1, intSrc 0x32
+
+Take action
 
 ECC Error Call back function called : eccMemType 4, errorSrc 0x2, ramId 0, bitErrorOffset 0x00000000, bitErrorGroup 0
 
@@ -212,7 +212,7 @@ Waiting for ESM Interrupt
 
 UC-2: Injected 2-bit error and got ESM Interrupt
 
-All tests have passed. 
+All tests have passed.
 
 \endcode
 \endcond

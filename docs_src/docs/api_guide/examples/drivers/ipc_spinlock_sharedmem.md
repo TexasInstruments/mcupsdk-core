@@ -44,7 +44,7 @@ When iteration count reaches SPINLOCK_TEST_LOOPCNT, the example is completed.
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -63,7 +63,7 @@ When iteration count reaches SPINLOCK_TEST_LOOPCNT, the example is completed.
   and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE). This will build all the dependant CPU projects as well
 - **When using makefiles to build**, build the system makefile using
   make command (see \ref MAKEFILE_BUILD_PAGE). This will build all the dependant CPU makefiles as well.
-\if SOC_AM263X
+\if SOC_AM263X || SOC_AM263PX
 - Launch a CCS debug session, run the hotmenu item "AM263x Device Configuration -> MailBox_MEM_Init" in the GEL file and run the executables, see \ref CCS_LAUNCH_PAGE
 \else
 - Launch a CCS debug session and run the executables, see \ref CCS_LAUNCH_PAGE

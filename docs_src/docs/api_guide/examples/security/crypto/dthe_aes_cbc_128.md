@@ -5,7 +5,7 @@
 # Introduction
 This example demonstrates Cipher Block Chaining mode(CBC) of AES(Advanced Encryption Standard) using AES accelerator. The AES supported modes are CBC, ECB and CMAC and all three modes comes in 128-bit and 256-bit implementations. This example explains the steps to build and run for Dthe aes cbc-128.
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter             | Value
  ----------------------|-----------

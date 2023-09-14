@@ -17,7 +17,7 @@ Use Cases
 
 # Supported Combinations {#EXAMPLES_SDL_RTI_COMBOS}
 
-\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
 
 Parameter      | Value
 ---------------|-----------

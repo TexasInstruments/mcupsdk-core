@@ -34,7 +34,7 @@ Note: To use the reference voltage generated on LaunchPad, make sure that the DA
 
 # Supported Combinations {#EXAMPLES_DRIVERS_DAC_SINE_DMA_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

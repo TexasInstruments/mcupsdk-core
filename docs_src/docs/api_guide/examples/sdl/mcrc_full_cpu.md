@@ -29,7 +29,7 @@ Use Cases
  Example folder | examples/sdl/mcrc/mcrc_full_cpu/
 
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -112,8 +112,8 @@ Shown below is a sample output when the application is run,
 \endcode
 \endcond
 
-\cond SOC_AM263X
-# Sample Output SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
+# Sample Output SOC_AM263X || SOC_AM263PX
 \code
  MCRC Application
 

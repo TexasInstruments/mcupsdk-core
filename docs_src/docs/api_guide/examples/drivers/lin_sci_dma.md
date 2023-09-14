@@ -4,7 +4,7 @@
 
 # Introduction
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 This example is a application which demonstrates the SCI message
 communication via DMA.
 Instance LIN1 is set to Transmit as well as Recieve.
@@ -19,7 +19,7 @@ We are sending 128 bytes of data with 8 bytes in a single transfer.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SCI_DMA_LOOPBACK_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

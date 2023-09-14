@@ -65,7 +65,7 @@ MCU_I2C0 can be connected to Board ID EEPROM through making the following jumper
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

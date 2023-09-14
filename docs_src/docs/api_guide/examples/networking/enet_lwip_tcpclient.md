@@ -19,7 +19,7 @@ The example does below
 - TCP Client gets server IP using UART terminal menu from USER and connect to server IP on port 8888
 - TCP client connects to server, sends data and expects the data from server.
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 NOTE: DSCP priority mapping is configured in the example but for the host port to recieve different priority pkts on the same dma channel, user needs to enable channel override (enChOverrideFlag) flag in dmacfg. Refer enet_lwip_cpsw example.
 \endcond
 
@@ -71,7 +71,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -103,7 +103,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
     <td>Default is true. If your silicon is affected with errata <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf" target="_blank">i2329— MDIO interface corruption</a>, then TI suggests to use MDIO_MANUAL_MODE as software workaround.
 </tr>
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
 <tr>
     <td>Disable Mac Port1, Disable Mac Port2
     <td>TI Networking / Enet (CPSW)
@@ -259,9 +259,9 @@ to a network which has a DHCP server running.
 
 
 ==========================
-  CPSW LWIP TCP CLIENT    
+  CPSW LWIP TCP CLIENT
 ==========================
-EnetPhy_bindDriver:1729 
+EnetPhy_bindDriver:1729
 PHY 3 is alive
 PHY 12 is alive
 Starting lwIP, local interface IP is dhcp-enabled
@@ -271,18 +271,18 @@ Enet IF UP Event. Local interface IP:0.0.0.0
 [LWIPIF_LWIP] Enet has been started successfully
 Waiting for network UP ...
 Waiting for network UP ...
-Cpsw_handleLinkUp:1323 
+Cpsw_handleLinkUp:1323
 MAC Port 1: link up
 Network Link UP Event
 Waiting for network UP ...
 Enet IF UP Event. Local interface IP:192.168.1.10
 Network is UP ...
- TCP Client Menu: 
+ TCP Client Menu:
  Enter TCP server IPv4 address:(example: 192.168.101.100)
 192.168.1.20
- IP eneterd is: 192.168.1.20 
+ IP eneterd is: 192.168.1.20
 <<<< ITERATION 1 >>>>
- Connecting to: 192.168.1.20:8888 
+ Connecting to: 192.168.1.20:8888
 Connection with the server is established
 "Hello over TCP 1" was sent to the Server
 Successfully received the packet 1
@@ -296,7 +296,7 @@ Successfully received the packet 4
 Successfully received the packet 5
 Connection closed
 <<<< ITERATION 2 >>>>
- Connecting to: 192.168.1.20:8888 
+ Connecting to: 192.168.1.20:8888
 Connection with the server is established
 "Hello over TCP 1" was sent to the Server
 Successfully received the packet 1

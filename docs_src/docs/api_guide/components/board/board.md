@@ -6,7 +6,7 @@ This module has information related to the different board level peripherals tha
 
 It consists of below sub-modules
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
 - \subpage BOARD_ETHPHY_PAGE
 \endcond
 - \subpage BOARD_FLASH_PAGE

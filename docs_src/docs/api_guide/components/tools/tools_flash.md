@@ -7,6 +7,9 @@
 Flashing tools allow to flash binaries to the flash on a EVM.
 
 - \ref TOOLS_FLASH_UART_UNIFLASH
+\cond SOC_AM263PX
+- \ref TOOLS_TI_UNIFLASH_TOOL
+\endcond
 \cond SOC_AM64X || SOC_AM243X
 - \ref TOOLS_FLASH_DFU_UNIFLASH
 \endcond
@@ -14,9 +17,37 @@ Flashing tools allow to flash binaries to the flash on a EVM.
 \cond SOC_AWR294X
 - \ref TOOLS_FLASH_ENET_UNIFLASH
 \endcond
-\cond SOC_AM263X || SOC_AM273X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X
 - \ref TOOLS_FLASH_CAN_UNIFLASH
 \endcond
+
+\cond SOC_AM263PX
+## TI Uniflash {#TOOLS_TI_UNIFLASH_TOOL}
+
+\note Sitara MCU devices now supports TI Uniflash Tool for loading/flashing images into the target. Please refer \ref TI_UNIFLASH_TOOL for more details.
+\endcond
+
+### JTAG based Flashing
+
+The tool uses JTAG communication to commmunicate with the target and flash the image.
+
+  - Choose a Program to Flash:
+    - Click the "Browse" button to select the program you want to flash.
+    - If you're loading a ELF File(.out), the address and informations are obtained by the flash loader and the program gets loaded into the target. The program will run once after it loads if the **Run Target After Program Load/Flash Operation** is enabled.
+    \imageStyle{load_elf.png,width:90%}
+    \image html load_elf.png "Load ELF"
+    - Check the "Binary" checkbox if you are loading a binary file. You must provide a start address for binary files. UniFlash currently does not support flash offsets, so the full address is required.
+    \imageStyle{load_image.png,width:90%}
+    \image html load_image.png "Load Binary Image"
+  - Flash Address Table:
+    - The table below shows the flash addresses accepted by the ROM/SBL to load programs onto the target:
+| Program Type | Start Address |
+| --- | --- |
+| SBL | 0x60000000 |
+| Application | 0x60080000 |
+
+  - Initiating Programming:
+    - After clicking "Load Image," UniFlash starts the programming process, and the console displays a log of each operation. **[SUCCESS] Program Load completed successfully** will get printed in the console, if the program loads into the target successfully.
 
 ## UART Uniflash {#TOOLS_FLASH_UART_UNIFLASH}
 
@@ -59,7 +90,7 @@ UART is used as the transport or interface to send the file to flash to the EVM.
     will boot the user application file for all the CPUs
 </tr>
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 <tr>
     <td>sbl_qspi
     <td>QSPI bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application
@@ -149,7 +180,7 @@ UART is used as the transport or interface to send the file to flash to the EVM.
 \endcond
 \endcond
 
-\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
 
 #### Getting ready to flash
 
@@ -204,7 +235,7 @@ UART is used as the transport or interface to send the file to flash to the EVM.
 
 - If flashing is successful, power OFF the EVM, set the EVM to \ref BOOTMODE_OSPI and power ON the EVM to run the flashed application.
 \endcond
-\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X
+\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X || SOC_AM263PX
 - If flashing is successful, power OFF the EVM, set the EVM to \ref BOOTMODE_QSPI and power ON the EVM to run the flashed application.
 \endcond
 
@@ -279,7 +310,7 @@ The detailed sequence of steps that happen when flashing files is listed below, 
   - Verify a previously flashed file at a given offset in the flash
   - Erase a region of flash memory
 - The flashing application as such does not care what the file contains, it will simply flash it at the user specified location.
-\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X
+\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X || SOC_AM263PX
 - However typically one needs to at least send the below files to flash
   - Send a QSPI flash bootloader application and flash it at offset 0x0 (`sbl_qspi.release.tiimage`). If the QSPI bootloader is
     already flashed previously then this step can be skipped.
@@ -450,7 +481,7 @@ It uses \ref INSTALL_DFU_UTIL tool to underneath to send binaries via USB.
     will boot the user application file for all the CPUs
 </tr>
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 <tr>
     <td>sbl_qspi
     <td>QSPI bootloader application that needs to be flashed at offset 0x0. When in QSPI boot mode, this bootloader application
@@ -487,7 +518,7 @@ It uses \ref INSTALL_DFU_UTIL tool to underneath to send binaries via USB.
 
 - If flashing is successful, power OFF the EVM, set the EVM to \ref BOOTMODE_OSPI and power ON the EVM to run the flashed application.
 \endcond
-\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X
+\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X || SOC_AM263PX
 - If flashing is successful, power OFF the EVM, set the EVM to \ref BOOTMODE_QSPI and power ON the EVM to run the flashed application.
 \endcond
 
@@ -516,7 +547,7 @@ The detailed sequence of steps that happen when flashing files is listed below, 
   - Verify a previously flashed file at a given offset in the flash
   - Erase a region of flash memory
 - The flashing application as such does not care what the file contains, it will simply flash it at the user specified location.
-\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X
+\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X || SOC_AM263PX
 - However typically one needs to at least send the below files to flash
   - Send a QSPI flash bootloader application and flash it at offset 0x0 (`sbl_qspi.release.tiimage`). If the QSPI bootloader is
     already flashed previously then this step can be skipped.
@@ -571,7 +602,7 @@ JTAG is used as the transport or interface to send the file to flash to the EVM.
 
 Refer the example \ref EXAMPLES_DRIVERS_SBL_JTAG_UNIFLASH
 
-\cond SOC_AM263X || SOC_AM273X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X
 ## CAN Uniflash {#TOOLS_FLASH_CAN_UNIFLASH}
 
 CAN is used as the transport or interface to send the file to flash to the EVM.

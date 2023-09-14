@@ -115,6 +115,40 @@ It consists of below sub-modules
 - \subpage DRIVERS_WATCHDOG_PAGE
 \endcond
 
+\cond SOC_AM263PX
+- \subpage DRIVERS_ADC_PAGE
+- \subpage DRIVERS_BOOTLOADER_PAGE
+- \subpage DRIVERS_CMPSS_PAGE
+- \subpage DRIVERS_DAC_PAGE
+- \subpage DRIVERS_ECAP_PAGE
+- \subpage DRIVERS_EDMA_PAGE
+- \subpage DRIVERS_EPWM_PAGE
+- \subpage DRIVERS_EQEP_PAGE
+- \subpage DRIVERS_FSI_PAGE
+- \subpage DRIVERS_GPIO_PAGE
+- \subpage DRIVERS_HSMCLIENT_PAGE
+- \subpage DRIVERS_I2C_PAGE
+- \subpage DRIVERS_IPC_NOTIFY_PAGE
+- \subpage DRIVERS_IPC_RPMESSAGE_PAGE
+- \subpage DRIVERS_LIN_PAGE
+- \subpage DRIVERS_MCAN_PAGE
+- \subpage DRIVERS_MCSPI_PAGE
+- \subpage DRIVERS_MDIO_PAGE
+- \subpage DRIVERS_MPU_FIREWALL_PAGE
+- \subpage DRIVERS_MMCSD_PAGE
+- \subpage DRIVERS_OSPI_PAGE
+- \subpage DRIVERS_PINMUX_PAGE
+- \subpage DRIVERS_PMU_PAGE
+- \subpage DRIVERS_PRUICSS_PAGE
+- \subpage DRIVERS_RTI_PAGE
+- \subpage DRIVERS_SDFM_PAGE
+- \subpage DRIVERS_SIPC_NOTIFY_PAGE
+- \subpage DRIVERS_SOC_PAGE
+- \subpage DRIVERS_SPINLOCK_PAGE
+- \subpage DRIVERS_UART_PAGE
+- \subpage DRIVERS_WATCHDOG_PAGE
+\endcond
+
 \cond SOC_AM62X
 - \subpage DRIVERS_GPIO_PAGE
 - \subpage DRIVERS_I2C_PAGE

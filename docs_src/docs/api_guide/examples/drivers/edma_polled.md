@@ -32,7 +32,7 @@ This example demonstrates the data transfer using EDMA in polled mode
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

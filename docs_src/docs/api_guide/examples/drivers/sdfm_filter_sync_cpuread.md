@@ -54,7 +54,7 @@ This example is not supported on AM263X-LP
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

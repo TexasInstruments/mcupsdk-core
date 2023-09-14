@@ -32,11 +32,11 @@ This shows the DMA parity error injection.
 
 Shown below is a sample output when the application is run,
 
-\cond (SOC_AM263X)
+\cond (SOC_AM263X || SOC_AM263PX)
 \code
 Parity Example Application
 
-ESM_Test_init: Init MSS ESM complete 
+ESM_Test_init: Init MSS ESM complete
 
 TCM PARITY Example : Started
 
@@ -44,9 +44,9 @@ TCM PARITY : R5FSS0_0
 
 TCM PARITY : ATCM0 Started
 
-ESM Call back function called : instType 0x2, intType 0x1, grpChannel 0x0, index 0xe, intSrc 0xe 
+ESM Call back function called : instType 0x2, intType 0x1, grpChannel 0x0, index 0xe, intSrc 0xe
 
-Take action 
+Take action
 
 TCM Parity Status for ATCM0 = 0x1
 
@@ -54,9 +54,9 @@ R5FSS0_0 ATCM0 Parity : Completed
 
 TCM PARITY : B0TCM0 Started
 
-ESM Call back function called : instType 0x2, intType 0x1, grpChannel 0x0, index 0xe, intSrc 0xe 
+ESM Call back function called : instType 0x2, intType 0x1, grpChannel 0x0, index 0xe, intSrc 0xe
 
-Take action 
+Take action
 
 TCM Parity Status for B0TCM0 = 0x2
 
@@ -64,9 +64,9 @@ R5FSS0_0 B0TCM0 Parity : Completed
 
 TCM PARITY : B1TCM0 Started
 
-ESM Call back function called : instType 0x2, intType 0x1, grpChannel 0x0, index 0xe, intSrc 0xe 
+ESM Call back function called : instType 0x2, intType 0x1, grpChannel 0x0, index 0xe, intSrc 0xe
 
-Take action 
+Take action
 
 TCM Parity Status for B1TCM0 = 0x4
 
@@ -76,9 +76,9 @@ TCM PARITY:R5FSS0_1
 
 MSS TCM PARITY:ATCM1 Started
 
-ESM Call back function called : instType 0x2, intType 0x1, grpChannel 0x0, index 0xf, intSrc 0xf 
+ESM Call back function called : instType 0x2, intType 0x1, grpChannel 0x0, index 0xf, intSrc 0xf
 
-Take action 
+Take action
 
 TCM Parity Status for ATCM1 = 0x1
 
@@ -86,9 +86,9 @@ R5FSS0_1 ATCM1 Parity : Completed
 
 TCM PARITY : B0TCM1 Started
 
-ESM Call back function called : instType 0x2, intType 0x1, grpChannel 0x0, index 0xf, intSrc 0xf 
+ESM Call back function called : instType 0x2, intType 0x1, grpChannel 0x0, index 0xf, intSrc 0xf
 
-Take action 
+Take action
 
 TCM Parity Status for B0TCM1 = 0x2
 
@@ -96,9 +96,9 @@ R5FSS0_1 B0TCM1 Parity : Completed
 
 TCM PARITY : B1TCM1 Started
 
-ESM Call back function called : instType 0x2, intType 0x1, grpChannel 0x0, index 0xf, intSrc 0xf 
+ESM Call back function called : instType 0x2, intType 0x1, grpChannel 0x0, index 0xf, intSrc 0xf
 
-Take action 
+Take action
 
 TCM Parity Status for B1TCM1 = 0x4
 
@@ -108,9 +108,9 @@ TCM PARITY:R5FSS1_0
 
 TCM PARITY : ATCM0 Started
 
-ESM Call back function called : instType 0x2, intType 0x2, grpChannel 0x0, index 0x10, intSrc 0x10 
+ESM Call back function called : instType 0x2, intType 0x2, grpChannel 0x0, index 0x10, intSrc 0x10
 
-Take action 
+Take action
 
 TCM Parity Status for ATCM0 = 0x1
 
@@ -118,9 +118,9 @@ R5FSS1_0 ATCM0 Parity : Completed
 
 TCM PARITY:B0TCM0 Started
 
-ESM Call back function called : instType 0x2, intType 0x2, grpChannel 0x0, index 0x10, intSrc 0x10 
+ESM Call back function called : instType 0x2, intType 0x2, grpChannel 0x0, index 0x10, intSrc 0x10
 
-Take action 
+Take action
 
 TCM Parity Status for B0TCM0 = 0x2
 
@@ -128,9 +128,9 @@ R5FSS1_0 B0TCM0 Parity : Completed
 
 TCM PARITY : B1TCM0 Started
 
-ESM Call back function called : instType 0x2, intType 0x2, grpChannel 0x0, index 0x10, intSrc 0x10 
+ESM Call back function called : instType 0x2, intType 0x2, grpChannel 0x0, index 0x10, intSrc 0x10
 
-Take action 
+Take action
 
 TCM Parity Status for B1TCM0 = 0x4
 
@@ -140,9 +140,9 @@ TCM PARITY:R5FSS1_1
 
 TCM PARITY:ATCM1 Started
 
-ESM Call back function called : instType 0x2, intType 0x2, grpChannel 0x0, index 0x11, intSrc 0x11 
+ESM Call back function called : instType 0x2, intType 0x2, grpChannel 0x0, index 0x11, intSrc 0x11
 
-Take action 
+Take action
 
 TCM Parity Status for ATCM1 = 0x1
 
@@ -150,9 +150,9 @@ R5FSS1_1 ATCM1 Parity : Completed
 
 TCM PARITY : B0TCM1 Started
 
-ESM Call back function called : instType 0x2, intType 0x2, grpChannel 0x0, index 0x11, intSrc 0x11 
+ESM Call back function called : instType 0x2, intType 0x2, grpChannel 0x0, index 0x11, intSrc 0x11
 
-Take action 
+Take action
 
 TCM Parity Status for B0TCM1 = 0x2
 
@@ -160,15 +160,15 @@ R5FSS1_1 B0TCM1 Parity : Completed
 
 TCM PARITY : B1TCM1 Started
 
-ESM Call back function called : instType 0x2, intType 0x2, grpChannel 0x0, index 0x11, intSrc 0x11 
+ESM Call back function called : instType 0x2, intType 0x2, grpChannel 0x0, index 0x11, intSrc 0x11
 
-Take action 
+Take action
 
 TCM Parity Status for B1TCM1 = 0x4
 
 R5FSS1_1 B1TCM1 Parity : Completed
 
-All tests have passed.   
+All tests have passed.  
 
 \endcode
 \endcond
@@ -179,65 +179,65 @@ Parity Example Application
 
 TCM PARITY Example : Started
 
-ESM_Test_init: Init MSS ESM complete 
+ESM_Test_init: Init MSS ESM complete
 
 MSS TCM PARITY: ATCM0 Started
 
-ESM Call back function called : instType 0x1, grpChannel 0x2, intSrc 0x3 
+ESM Call back function called : instType 0x1, grpChannel 0x2, intSrc 0x3
 
-Take action 
+Take action
 
 MSS ATCM0 Parity : Completed
 
-ESM_Test_init: Init MSS ESM complete 
+ESM_Test_init: Init MSS ESM complete
 
 MSS TCM PARITY: ATCM1 Started
 
-ESM Call back function called : instType 0x1, grpChannel 0x2, intSrc 0x6 
+ESM Call back function called : instType 0x1, grpChannel 0x2, intSrc 0x6
 
-Take action 
+Take action
 
-MSS ATCM1 Parity : Completed 
+MSS ATCM1 Parity : Completed
 
-ESM_Test_init: Init MSS ESM complete 
+ESM_Test_init: Init MSS ESM complete
 
 MSS TCM PARITY: B0TCM0 Started
 
-ESM Call back function called : instType 0x1, grpChannel 0x2, intSrc 0x4 
+ESM Call back function called : instType 0x1, grpChannel 0x2, intSrc 0x4
 
-Take action 
+Take action
 
-MSS B0TCM0 Parity : Completed 
+MSS B0TCM0 Parity : Completed
 
-ESM_Test_init: Init MSS ESM complete 
+ESM_Test_init: Init MSS ESM complete
 
 MSS TCM PARITY: B0TCM1 Started
 
-ESM Call back function called : instType 0x1, grpChannel 0x2, intSrc 0x7 
+ESM Call back function called : instType 0x1, grpChannel 0x2, intSrc 0x7
 
-Take action 
+Take action
 
-MSS B0TCM1 Parity : Completed 
+MSS B0TCM1 Parity : Completed
 
-ESM_Test_init: Init MSS ESM complete 
+ESM_Test_init: Init MSS ESM complete
 
 MSS TCM PARITY: B1TCM0 Started
 
-ESM Call back function called : instType 0x1, grpChannel 0x2, intSrc 0x5 
+ESM Call back function called : instType 0x1, grpChannel 0x2, intSrc 0x5
 
-Take action 
+Take action
 
-MSS B1TCM0 Parity : Completed 
+MSS B1TCM0 Parity : Completed
 
-ESM_Test_init: Init MSS ESM complete 
+ESM_Test_init: Init MSS ESM complete
 
 MSS TCM PARITY: B1TCM1 Started
 
-ESM Call back function called : instType 0x1, grpChannel 0x2, intSrc 0x8 
+ESM Call back function called : instType 0x1, grpChannel 0x2, intSrc 0x8
 
-Take action 
+Take action
 
-MSS B1TCM1 Parity : Completed 
+MSS B1TCM1 Parity : Completed
 
 All tests have passed.
 \endcode

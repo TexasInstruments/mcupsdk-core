@@ -17,7 +17,7 @@ Use Cases
 
 # Supported Combinations {#EXAMPLES_SDL_PBIST_COMBOS}
 
-\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X
+\cond SOC_AM273X || SOC_AWR294X || SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -56,7 +56,7 @@ Use Cases
 
 Shown below is a sample output when the application is run,
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code
 [Cortex_R5_0]
 PBIST Application

@@ -4,7 +4,7 @@
 
 # Introduction
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 This example is a application which demonstrates the LIN message
 communication.
 Instance LIN1 is set to Transmit as well as Recieve.
@@ -15,7 +15,7 @@ It receives the same message by continously polling.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_LIN_INTERNAL_LOOPBACK_POLLING_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

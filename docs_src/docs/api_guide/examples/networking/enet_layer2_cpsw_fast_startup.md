@@ -21,7 +21,7 @@ This example does:
 
 # Supported Combinations
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -45,7 +45,7 @@ This example does:
 
 # Modifications needed before running the example:
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 ## EVM Board modification
 
 - On AM263x-cc(PROC110E1), we need to disable Auto-negotiation in the PHY  and force it to strapped mode with external starp resistors connected on PHY.
@@ -53,11 +53,11 @@ This example does:
 - For other variants of AM263x, refer the schematics of board to modify the strap resistors for that specific EVM.
 
 ### Modifications for CPSW RGMII1:
-    
+
 - Remove Strapping resistors from R270, R115, R278 and add the same to R101, R104, R284. All resistors are of same value.
 
 ### Modifications for CPSW RGMII2:
-    
+
 - Remove Strapping resistors from R248, R240, R74 and add the same to R64, R60, R63. All resistors are of same value.
 
 ## SW modifications
@@ -76,11 +76,11 @@ This example does:
 - For other variants of AM243x, refer the schematics of board to modify the strap resistors for that specific EVM.
 
 ### Modifications for CPSW RGMII1:
-    
+
 - Remove Strapping resistors from R138, R137, R139 and add the same to R265, R266, R264. All resistors are of same value.
 
 ### Modifications for CPSW RGMII2:
-    
+
 - Remove Strapping resistors from  R75, R74, R76 and add the same to R226, R227, R225. All resistors are of same value.
 
 ## SW modifications
@@ -132,13 +132,13 @@ This example does:
 \code
 
 =====================================================
-     Fast Srtartup Profiling logs in Microseconds(us)    
+     Fast Srtartup Profiling logs in Microseconds(us)
 =====================================================
-Application start time: 14 
+Application start time: 14
 Enet-lld initialisation done time : 3024
-Both ports linked up time: 8039 
-Time for First packet sent out from Port 1: 8057 
-Time for First packet received on Port 2: 8102 
+Both ports linked up time: 8039
+Time for First packet sent out from Port 1: 8057
+Time for First packet received on Port 2: 8102
 Application Terminating...
 
 \endcode

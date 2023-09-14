@@ -7,7 +7,7 @@
 This example demonstrates-
 * How to read all the static registers of ARM Cortex R5F CPU, which all can be found in System control section in R5F TRM.
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 Use Cases
 ---------
 * Read All the R5F CPU Static Registers.
@@ -18,7 +18,7 @@ Use Cases
 # Supported Combinations {#EXAMPLES_SDL_RESET_COMBOS}
 
 
-\cond SOC_AM263X || SOC_AM243X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM243X
 
  Parameter      | Value
  ---------------|-----------
@@ -44,7 +44,7 @@ Use Cases
 
 # Sample Output
 
-\cond  SOC_AM263X || SOC_AM243X
+\cond  SOC_AM263X || SOC_AM263PX || SOC_AM243X
 Shown below is a sample output when the application is run for R5F,
 
 For detail description of these register values, one can refer

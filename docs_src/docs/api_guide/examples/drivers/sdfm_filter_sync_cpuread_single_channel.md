@@ -55,7 +55,7 @@ If required, use PWM waveforms as data and clock
 
 # Supported Combinations {#EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD_COMBOS_SINGLE_CHANNEL}
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

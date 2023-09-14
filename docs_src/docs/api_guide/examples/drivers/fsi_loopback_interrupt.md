@@ -41,7 +41,7 @@ Once the transfer it completes, it compares the source and destination buffers f
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

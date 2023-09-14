@@ -20,7 +20,7 @@ The SDL provides support for the ECC through:
 	The SDL ECC module requires a mapping of certain aggregator registers into the address space of the R5F Core. In these cases, the ECC module will use the DPL API SDL_DPL_addrTranslate() to get the address. The application must provide the mapped address through this call. This mapping is required for any ECC aggregator that is used which has an address which is not in the 32-bit address space.
 The mapping is expected to always be valid because it may be needed at runtime to get information about ECC errors that may be encountered.
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 	There are over 13 ECC aggregators on the device each supporting multiple memories and interconnects.
 \endcond
 
@@ -117,7 +117,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 \endcode
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
@@ -271,7 +271,7 @@ SDL_ESM_NotifyParams ECC_TestparamsMSS[SDL_ESM_MAX_MSS_EXAMPLE_AGGR] =
 };
 \endcode
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
@@ -320,7 +320,7 @@ SDL_REG32_WR(SDL_MSS_CTRL_ESM_GATING4, (0x0 << (((SDL_ESMG3_ATCM0_UERR ) % 8)*4)
 \endcode
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 Initialize ESM module
 \code{.c}
 result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
@@ -368,7 +368,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_1BitInjectTest(void)
 }
 \endcode
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 Enabling the ECC module
 \code{.c}
 SDL_ECC_UTILS_enableECCATCM();
@@ -506,7 +506,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 \endcode
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
@@ -671,7 +671,7 @@ SDL_ESM_NotifyParams ECC_TestparamsMSS[SDL_ESM_MAX_MSS_EXAMPLE_AGGR] =
 \endcode
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
@@ -731,7 +731,7 @@ Initialize ESM module
 \endcode
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 Initialize ESM module
 \code{.c}
 result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
@@ -827,7 +827,7 @@ Include the below file to access the APIs
 \endcode
 
 Below are the macros specifies the RAM address, ECC aggregator and ECC aggregator RAMID for inject the ECC error
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x70100008u) /* MSS_L2_SLV2 address */
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_SOC_ECC_AGGR
@@ -854,7 +854,7 @@ Below are the macros specifies the RAM address, ECC aggregator and ECC aggregato
 \endcond
 
 ESM callback function
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
@@ -971,7 +971,7 @@ static SDL_ECC_InitConfig_t ECC_Test_MSS_L2_ECCInitConfig =
 \endcode
 
 Event BitMap for ECC ESM callback for MSS
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
@@ -1019,7 +1019,7 @@ SDL_ESM_NotifyParams ECC_TestparamsMSS[SDL_ESM_MAX_MSS_EXAMPLE_AGGR] =
 \endcond
 
 Initialization of MSS L2 memory
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
     /* Clear Done memory*/
     SDL_REG32_WR(SDL_MSS_L2_MEM_INIT_DONE_ADDR, 0xfu);
@@ -1055,7 +1055,7 @@ Initialize ECC memory for the ECC aggregator
 result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
 \endcode
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 Initialize ESM module
 \code{.c}
     result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
@@ -1136,7 +1136,7 @@ Clearing any old interrupt presented
 	SDL_REG32_WR(SDL_ECC_AGGR_ERROR_STATUS1_ADDR, 0xF0Fu);
 \endcode
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 Initialize ECC Memory
 \code{.c}
 	SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
@@ -1196,7 +1196,7 @@ Include the below file to access the APIs
 \endcode
 
 Below are the macros specifies the ECC aggregator and ECC aggregator RAMID for inject the ECC error
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 #define SDL_MSS_MAX_MEM_SECTIONS        (1u)
 #define SDL_ECC_SEC						(1U)
@@ -1224,7 +1224,7 @@ Below are the macros specifies the ECC aggregator and ECC aggregator RAMID for i
 \endcond
 
 ESM callback function
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
@@ -1341,7 +1341,7 @@ static SDL_ECC_InitConfig_t ECC_Test_MSS_ECCInitConfig =
 \endcode
 
 Event BitMap for ECC ESM callback for MSS
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
@@ -1417,7 +1417,7 @@ Initialize ECC memory for the ECC aggregator
 result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
 \endcode
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 Initialize ESM module
 \code{.c}
     result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
@@ -1820,7 +1820,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 This structure defines the elements of ECC  Init configuration
 \code{.c}
 static SDL_ECC_MemSubType ECC_Test_DSSsubMemTypeList[SDL_DSS_MAX_MEM_SECTIONS] =
-{     	
+{
      SDL_EXAMPLE_ECC_RAM_ID,
 };
 
@@ -2083,7 +2083,7 @@ Include the below file to access the APIs
 \endcode
 
 Below are the macros specifies the RAM address, ECC aggregator and ECC aggregator RAMID for inject the ECC error
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x52600000u) /*MCAN0 address*/
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR
@@ -2124,7 +2124,7 @@ static SDL_ECC_InitConfig_t ECC_Test_MCANA_ECCInitConfig =
 \endcode
 
 ESM callback function
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
@@ -2224,7 +2224,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 \endcond
 
 Event BitMap for ECC ESM callback for MCAN
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
@@ -2276,7 +2276,7 @@ Initialize ECC memory for the ECC aggregator
 result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
 \endcode
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 Initialize ESM module
 \code{.c}
 result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
@@ -2406,7 +2406,7 @@ for(i=1;i<=num_of_iterations;i++){
 }
 \endcode
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 ## Example Usage of ICSSM
 
 Include the below file to access the APIs
@@ -2416,7 +2416,7 @@ Include the below file to access the APIs
 \endcode
 
 Below are the macros specifies the RAM address, ECC aggregator and ECC aggregator RAMID for inject the ECC error
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 #define SDL_ICSSM_DRAM0								(1U)
 #define	SDL_ICSSM_DRAM1								(0U)
@@ -2475,7 +2475,7 @@ static SDL_ECC_InitConfig_t ECC_Test_ICSSM_ECCInitConfig =
 \endcode
 
 ESM callback function
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
@@ -2530,7 +2530,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 \endcond
 
 Event BitMap for ECC ESM callback for ICSSM
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
@@ -2557,7 +2557,7 @@ Initialize ECC memory for the ECC aggregator
 result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
 \endcode
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 Initialize ESM module
 \code{.c}
 result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
@@ -2650,7 +2650,7 @@ Include the below file to access the APIs
 \endcode
 
 Below are the macros specifies the values need to set for TCM parity Error forcing
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 #define SDL_R5F0ATCM0							(0x7U)
 #define SDL_R5F0B0TCM0							(0x700U)
@@ -2687,7 +2687,7 @@ Below are the macros specifies the values need to set for TCM parity Error forci
 \endcond
 
 ESM callback function
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
@@ -2733,7 +2733,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 \endcond
 
 Event BitMap for ESM callback for TCM Parity
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 SDL_ESM_config Test_esmInitConfig_MAIN =
 {
@@ -2813,7 +2813,7 @@ SDL_ESM_NotifyParams ECC_TestparamsMSS[SDL_ESM_MAX_EXAMPLE] =
 \endcode
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 Initialize ESM module
 \code{.c}
 result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
@@ -2827,10 +2827,10 @@ result = SDL_ESM_init(SDL_ESM_INST_MSS_ESM, &ECC_TestparamsMSS[0],NULL,NULL);
 \endcond
 
 Execute TCM Parity Error injection for B0TCM0 for R5FSS0 core 0
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 	if (retVal == 0)
-    {		
+    {
 		DebugP_log("\r\nTCM PARITY:B0TCM0 Started\r\n");
         retValue = SDL_ECC_TCMParity(SDL_R5SS0_CPU0_TCM,\
 								 SDL_R5FSS0_CORE0__B0TCM0,\
@@ -2852,13 +2852,13 @@ Execute TCM Parity Error injection for B0TCM0 for R5FSS0 core 0
 \cond (SOC_AM273X)||(SOC_AWR294X)
 \code{.c}
 	if (retVal == 0)
-    {		
+    {
 		DebugP_log("\r\nMSS TCM PARITY: ATCM0 Started\r\n");
         result = SDL_ECC_tcmParity(SDL_TCM_PARITY_ATCM0,\
 								 SDL_ATCM0_MASK);
 		/* Wait until ESM interrupt happens */
 		while(esmError !=true);
-		esmError = false;		
+		esmError = false;
 		if (result != SDL_PASS)
 		{
 			retVal = -1;
@@ -2881,7 +2881,7 @@ Include the below file to access the APIs
 \endcode
 
 ESM callback function
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
@@ -2939,7 +2939,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 \endcond
 
 Event BitMap for ESM callback for TCM Parity
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 SDL_ESM_config Test_esmInitConfig_MAIN =
 {
@@ -3017,7 +3017,7 @@ SDL_ESM_NotifyParams ECC_TestparamsDSS[SDL_ESM_DSS_MAX_EXAMPLE] =
 \endcode
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 Initialize ESM module
 \code{.c}
 result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
@@ -3032,13 +3032,13 @@ result = SDL_ESM_init(SDL_ESM_INST_MSS_ESM, &ECC_Testparams[0],NULL,NULL);
 \endcond
 
 Execute TPCC Parity Error injection
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code{.c}
 	if (retVal == 0)
     {
 		DebugP_log("\r\nTPCC PARITY : TPCC0 Started\r\n");
         retVal = SDL_ECC_TPCCParity(SDL_TPCC0, \
-								 0x11);		
+								 0x11);
 		DebugP_log("\r\nParam Register = %x\r\n", retVal);
 
 		/* wait for delay */
@@ -3061,7 +3061,7 @@ Execute TPCC Parity Error injection
 \cond SOC_AM273X || SOC_AWR294X
 \code{.c}
 	if (retVal == 0)
-    {		
+    {
 		DebugP_log("\r\nMSS TPCCA Parity \r\n");
         paramstatus = SDL_ECC_TPCCParity(SDL_TPCC0A, \
 								 0x11);
@@ -3115,7 +3115,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 										   int32_t grpChannel,
 										   int32_t intSrc,
 										   void *arg)
-{ 
+{
 
     DebugP_log("\r\nESM Call back function called : instType 0x%x, " \
                 "grpChannel 0x%x, intSrc 0x%x \r\n",
@@ -3127,15 +3127,15 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     else{
         DebugP_log("\r\nLow Priority Interrupt Executed\r\n");
     }
-	
+
     /*
      *Disable the parity by clearing DSS_CTRL.DSS_DSP_L2RAM_PARITY_CTRL.DSS_DSP_L2RAM_PARITY_CTRL_ENABLE
      *Disable register field
      */
     SDL_REG32_WR(SDL_DSS_DSP_L2RAM_PARITY_CTRL, SDL_ECC_DSS_L2RAM_PARITY_ERROR_CLEAR);
-	
+
 	DebugP_log("\r\nclearing DSS_CTRL.DSS_DSP_L2RAM_PARITY_CTRL.DSS_DSP_L2RAM_PARITY_CTRL_ENABLE\r\n");
-	
+
     esmError = true;
 
     return 0;
@@ -3153,7 +3153,7 @@ SDL_ESM_NotifyParams Parity_TestparamsDSS[SDL_ESM_MAX_DSS_EXAMPLE_AGGR] =
            .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
            .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
            .callBackFunction = &SDL_ESM_applicationCallbackFunction,
-      },	
+      },
 };
 \endcode
 
@@ -3229,7 +3229,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 										   int32_t grpChannel,
 										   int32_t intSrc,
 										   void *arg)
-{ 
+{
 
     printf("\r\nESM Call back function called : instType 0x%x, " \
                 "grpChannel 0x%x, intSrc 0x%x \r\n",
@@ -3345,7 +3345,7 @@ Read and Toggle single bit
 rd_data = SDL_REG32_RD(SDL_DSS_L2_ORIGIN);
 rd_data = rd_data ^ SDL_SEC;
 SDL_REG32_WR(SDL_DSS_L2_ORIGIN, rd_data);
-\endcode				
+\endcode
 
 IDMA transfer
 \code{.c}
@@ -3408,7 +3408,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 										   int32_t grpChannel,
 										   int32_t intSrc,
 										   void *arg)
-{ 
+{
 
     printf("\r\nESM Call back function called : instType 0x%x, " \
                 "grpChannel 0x%x, intSrc 0x%x \r\n",
@@ -3420,8 +3420,8 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     else{
         printf("\r\nLow Priority Interrupt Executed\r\n");
     }
-	
-	
+
+
 	/*Clear Error Detection Address Register*/
     SDL_REG32_WR(SDL_DSP_ICFG_L2EDADDR, 0x00u);
 
@@ -3466,7 +3466,7 @@ SDL_ESM_NotifyParams EDC_TestparamsDSS[SDL_ESM_MAX_DSS_EXAMPLE_AGGR] =
            .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
            .callBackFunction = &SDL_ESM_applicationCallbackFunction,
       },
-	
+
 };
 \endcode
 
@@ -3492,7 +3492,7 @@ Disable the L1P and L1D Cache
 SDL_REG32_WR(SDL_DSS_ICFGF_L1PCFG, 0x00); /*L1PCFG is set to 0*/
 SDL_REG32_WR(SDL_DSS_ICFGF_L1DCFG, 0x00); /*L1DCFG is set to 0*/
 \endcode
-	
+
 Initialize ESM module
 \code{.c}
 result = SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &Parity_TestparamsDSS[counter],NULL,NULL);
@@ -3610,19 +3610,19 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 										   int32_t intSrc,
 										   void *arg)
 {
-    
+
 	DebugP_log("\r\nESM Call back function called : instType 0x%x, " \
                 "grpChannel 0x%x, intSrc 0x%x \r\n",
                 esmInstType, grpChannel, intSrc);
     DebugP_log("\r\nTake action \r\n");
 
-	/* Write to DSP_ICFG__EDCINTMASK REGISTER and DSP_ICFG__EDCINTFLG REGISTER 
+	/* Write to DSP_ICFG__EDCINTMASK REGISTER and DSP_ICFG__EDCINTFLG REGISTER
 	 * TO disable PROPOGATION OF EXCEPTION
 	 */
 
     SDL_REG32_WR(SDL_DSP_ICFG_EDCINTMASK, SDL_DSP_ICFG_DISABLE);
     SDL_REG32_WR(SDL_DSP_ICFG_EDCINTFLG, SDL_DSP_ICFG_DISABLE);
-	
+
     esmError = true;
 
     return 0;
@@ -3752,12 +3752,12 @@ do
 } while (esmError == false);
 \endcode
 
-Read MASK register value after ESM callback 
+Read MASK register value after ESM callback
 \code{.c}
 readValue = SDL_REG32_RD(SDL_DSP_ICFG_EDCINTMASK);
 \endcode
 
-Read FLG register value after ESM callback 
+Read FLG register value after ESM callback
 \code{.c}
 readValue = SDL_REG32_RD(SDL_DSP_ICFG_EDCINTFLG);
 \endcode

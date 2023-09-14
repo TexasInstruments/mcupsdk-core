@@ -43,7 +43,7 @@ Application then copies the data to TX buffer and initiate the UART TX (echo).
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

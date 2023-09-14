@@ -9,7 +9,7 @@ To put it simply, **secure boot** refers to booting application images in a secu
 Out of the device types **GP** and **HS**, HS device type can do secure boot. In secure devices there are two subtypes:
 \endcond
 
-\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
  In secure device types (HS) there are two subtypes:
 \endcond
 
@@ -22,7 +22,7 @@ HS device type have FS and SE subtypes. Out of the two subtypes, FS and SE, this
 
 Secure boot process, like the normal boot, consists of two stages - ROM loading and SBL loading. ROM loading is when the boot ROM loads the HSM runtime binary onto the HSM core, and the signed SBL binary into the primary boot core, which in most cases is an ARM Cortex R5F. SBL loading is when the SBL reads the signed application image from a boot media, authenticates it, decrypts it, and boots it. Here we describe how the secure process takes place in an HS-SE device.
 
-\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
 \imageStyle{boot_flow_am263x.png,width:60%}
 \image html boot_flow_am263x.png "HIGH LEVEL BOOTFLOW"
 \endcond
@@ -64,7 +64,7 @@ endif
 \endcode
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code
 # Device type (HS/GP)
 DEVICE_TYPE?=GP
@@ -231,7 +231,7 @@ SBL and HSMRt are signed via Root of trust Keys i.e. SMPK (if keyrev = 1) or BMP
 
 For more information, please refer to the OTP Keywriter Documentation.
 
-\cond SOC_AM263X||SOC_AM273X||SOC_aWR294X
+\cond SOC_AM263X || SOC_AM263PX||SOC_AM273X||SOC_aWR294X
 \note HSMRt is built with TIFS-MCU package which is an add-on package on MCU+ SDK.
 \endcond
 
@@ -239,7 +239,7 @@ For more information, please refer to the OTP Keywriter Documentation.
 There is no extra step required other than making sure that the MPK used is indeed the one burnt into the eFUSEs.
 \endcond
 
-\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
 It is recommended to pass a key derivation salt for requesting ROM to not use the
 Customer MEK directly but generate a derived key to decrypt the SBL/HSMRt images.
 ROM uses HKDF (HMAC based Key Derivation Function) to derive a key from the S(B)MEK.
@@ -317,9 +317,9 @@ see \ref TOOLS_BOOT_SIGNING.
 \note We have enabled full debug while signing the ROM image. This is intentional as this is helpful for debug. Once moved from development to production please remove this option from the makefile. For more details see \ref TOOLS_BOOT_SIGNING
 \endcond
 
-\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
 To build SBL image with certificate for HS-SE devices, one can use the following command:
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code
 make -s -C examples/drivers/boot/sbl_uart/am263x-cc/r5fss0-0_nortos/ti-arm-clang all DEVICE=am263x DEVICE_TYPE=HS
 \endcode
@@ -355,7 +355,7 @@ To dig into the details of the process, one can refer to https://software-dl.ti.
 The SBL doesn't have innate abilities to do the image integrity check, or verify the SHA512 of the application image. It relies on SYSFW for this. The image is stored in a readable memory and a pointer to the start of the image is passed to the HSMRt with other details like load address, type of authentication etc.
 \endcond
 
-\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
 The SBL doesn't have innate abilities to do the image integrity check, or verify the SHA512 of the application image. It relies on HSMRt for this. The image is stored in a readable memory and a pointer to the start of the image is passed to the HSMRt with other details like load address, type of authentication etc.
 \endcond
 
@@ -363,7 +363,7 @@ The SBL doesn't have innate abilities to do the image integrity check, or verify
 For more information regarding the authentication request, please refer to http://downloads.ti.com/tisci/esd/latest/2_tisci_msgs/security/PROC_BOOT.html#proc-boot-authenticate-image-and-configure-processor
 \endcond
 
-\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
 Here is an example of x509 certificate template for application images:
 \code
 [ req ]
@@ -407,7 +407,7 @@ swrv = INTEGER:1
 The application images can be built with the following flags for appending the
 X509 certificate for HS-SE devices:
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code
 make -s -C examples/hello_world/am263x-cc/r5fss0-0_nortos/ti-arm-clang all DEVICE=am263x DEVICE_TYPE=HS
 \endcode
@@ -426,7 +426,7 @@ make -s -C examples/hello_world/awr294x-evm/r5fss0-0_nortos/ti-arm-clang all DEV
 
 Optionally, one can encrypt the application image to meet security goals.
 This can be accomplished with adding one more flag ENC_ENABLED with the make command:
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 \code
 make -s -C examples/hello_world/am263x-cc/r5fss0-0_nortos/ti-arm-clang all DEVICE=am263x DEVICE_TYPE=HS ENC_ENABLED=yes
 \endcode
@@ -499,7 +499,7 @@ salt         =  FORMAT:HEX,OCT:acca65ded29296fea498ab8a9a15aaa27445ab7c75757c991
 - **Encryption of application image not possible in SBL OSPI** : In other bootloaders like UART and SD, application image can be encrypted using the `ENC_ENABLED` option in the devconfig.mak. But this is not possible when you load the image using SBL OSPI. This is due to the fact that HSM does an in-place authentication and decryption of the image and we load the image directly from the FLASH memory in case of SBL OSPI. FLASH memory, as you would know is most often not directly writable. Due to this limitation not being taken care in the HSM, we can do decryption of images only in the case where the image resides in a volatile RAM-like memory. That is MSMC or DDR.
 \endcond
 
-\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
 - **Authentication of application image directly from flash in SBL QSPI** : Only authentication of application
 image from flash is supported in SBL QSPI. This is susceptible to Man-in-The-Middle (MiTM) attacks if Flash is overwritten post-auth.
 

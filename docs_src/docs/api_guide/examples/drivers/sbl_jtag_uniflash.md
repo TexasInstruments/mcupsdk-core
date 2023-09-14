@@ -18,9 +18,9 @@ Once the example starts running it displays a following menu.
  1: Erase Complete Flash
  2: Write File to Flash and Verify
  3: Verify file in Flash
- 
+
  x: Exit
- 
+
  Enter Choice:
 \endcode
 
@@ -40,7 +40,7 @@ This example is more or less like a flashing server, and will terminate until us
 
 \endcond
 
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -85,7 +85,7 @@ This example is more or less like a flashing server, and will terminate until us
 \attention Do not perform DDR Initialization \ref DDR_INIT as it is done in the example itself.
 - Reset the CPU and Load program on the CPU
 \endcond
-\cond SOC_AM263X
+\cond SOC_AM263X || SOC_AM263PX
 - Launch a CCS debug session and run the executable sbl_jtag using gels, please refer \ref EVM_SOC_INIT_NOBOOT_MODE
 \endcond
 \cond SOC_AM273X || SOC_AWR294X
@@ -99,33 +99,33 @@ This example is more or less like a flashing server, and will terminate until us
 # Sample Output
 
 \code
- 
+
  ==================
  JTAG Uniflash Menu
  ==================
- 
+
  1: Erase Complete Flash
  2: Write File to Flash and Verify
  3: Verify file in Flash
- 
+
  x: Exit
- 
+
  Enter Choice: 1
- [FLASH WRITER] Erasing complete flash ... 
- [FLASH WRITER] This can take few minutes, so please wait ... 
+ [FLASH WRITER] Erasing complete flash ...
+ [FLASH WRITER] This can take few minutes, so please wait ...
  [FLASH WRITER] Erasing complete flash ... SUCCESS !!!
- 
- 
+
+
  ==================
  JTAG Uniflash Menu
  ==================
- 
+
  1: Erase Complete Flash
  2: Write File to Flash and Verify
  3: Verify file in Flash
- 
+
  x: Exit
- 
+
  Enter Choice: 2
 
  Enter file name along with path to write or verify : C:\ti\mcu_plus_sdk_08_02_00\tools\boot\sbl_prebuilt\am243x-evm\sbl_null.release.tiimage
@@ -135,19 +135,19 @@ This example is more or less like a flashing server, and will terminate until us
 
  loadRaw(0x80000020, 0, "C:/ti/mcu_plus_sdk_08_02_00/tools/boot/sbl_prebuilt/am243x-evm/sbl_null.release.tiimage", 32, false);
 1
- [FLASH WRITER] Flashing success!!... 
- 
- 
+ [FLASH WRITER] Flashing success!!...
+
+
  ==================
  JTAG Uniflash Menu
  ==================
- 
+
  1: Erase Complete Flash
  2: Write File to Flash and Verify
  3: Verify file in Flash
- 
+
  x: Exit
- 
+
  Enter Choice: 3
 
  Enter file name along with path to write or verify : C:/ti/mcu_plus_sdk_08_02_00/tools/boot/sbl_prebuilt/am243x-evm/sbl_null.release.tiimage
@@ -157,19 +157,19 @@ This example is more or less like a flashing server, and will terminate until us
 
  loadRaw(0x80000020, 0, "C:/ti/mcu_plus_sdk_08_02_00/tools/boot/sbl_prebuilt/am243x-evm/sbl_null.release.tiimage", 32, false);
 1
- [FLASH WRITER] Verifying success!!... 
- 
- 
+ [FLASH WRITER] Verifying success!!...
+
+
  ==================
  JTAG Uniflash Menu
  ==================
- 
+
  1: Erase Complete Flash
  2: Write File to Flash and Verify
  3: Verify file in Flash
- 
+
  x: Exit
- 
+
  Enter Choice: x
 
  [FLASH WRITER] Application exited !!!
