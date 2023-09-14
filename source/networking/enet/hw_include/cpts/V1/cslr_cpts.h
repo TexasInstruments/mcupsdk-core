@@ -169,13 +169,13 @@ typedef struct {
 
 /* CONTROL_REG */
 
-#define CSL_CPTS_TS_GENF_CONTROL_REG_PPM_DIR_MASK                              (0x00000001U)
-#define CSL_CPTS_TS_GENF_CONTROL_REG_PPM_DIR_SHIFT                             (0x00000000U)
-#define CSL_CPTS_TS_GENF_CONTROL_REG_PPM_DIR_MAX                               (0x00000001U)
-
-#define CSL_CPTS_TS_GENF_CONTROL_REG_POLARITY_INV_MASK                         (0x00000002U)
-#define CSL_CPTS_TS_GENF_CONTROL_REG_POLARITY_INV_SHIFT                        (0x00000001U)
+#define CSL_CPTS_TS_GENF_CONTROL_REG_POLARITY_INV_MASK                         (0x00000001U)
+#define CSL_CPTS_TS_GENF_CONTROL_REG_POLARITY_INV_SHIFT                        (0x00000000U)
 #define CSL_CPTS_TS_GENF_CONTROL_REG_POLARITY_INV_MAX                          (0x00000001U)
+
+#define CSL_CPTS_TS_GENF_CONTROL_REG_PPM_DIR_MASK                              (0x00000002U)
+#define CSL_CPTS_TS_GENF_CONTROL_REG_PPM_DIR_SHIFT                             (0x00000001U)
+#define CSL_CPTS_TS_GENF_CONTROL_REG_PPM_DIR_MAX                               (0x00000001U)
 
 /* LENGTH_REG */
 
@@ -215,13 +215,13 @@ typedef struct {
 
 /* CONTROL_REG */
 
-#define CSL_CPTS_TS_ESTF_CONTROL_REG_PPM_DIR_MASK                              (0x00000001U)
-#define CSL_CPTS_TS_ESTF_CONTROL_REG_PPM_DIR_SHIFT                             (0x00000000U)
-#define CSL_CPTS_TS_ESTF_CONTROL_REG_PPM_DIR_MAX                               (0x00000001U)
-
-#define CSL_CPTS_TS_ESTF_CONTROL_REG_POLARITY_INV_MASK                         (0x00000002U)
-#define CSL_CPTS_TS_ESTF_CONTROL_REG_POLARITY_INV_SHIFT                        (0x00000001U)
+#define CSL_CPTS_TS_ESTF_CONTROL_REG_POLARITY_INV_MASK                         (0x00000001U)
+#define CSL_CPTS_TS_ESTF_CONTROL_REG_POLARITY_INV_SHIFT                        (0x00000000U)
 #define CSL_CPTS_TS_ESTF_CONTROL_REG_POLARITY_INV_MAX                          (0x00000001U)
+
+#define CSL_CPTS_TS_ESTF_CONTROL_REG_PPM_DIR_MASK                              (0x00000002U)
+#define CSL_CPTS_TS_ESTF_CONTROL_REG_PPM_DIR_SHIFT                             (0x00000001U)
+#define CSL_CPTS_TS_ESTF_CONTROL_REG_PPM_DIR_MAX                               (0x00000001U)
 
 /* LENGTH_REG */
 

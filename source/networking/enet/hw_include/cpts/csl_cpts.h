@@ -100,6 +100,14 @@ typedef uint32_t CSL_CPTS_TS_PPM_DIR;
 #define CSL_CPTS_TS_PPM_DIR_INCREASE        ((uint32_t) 0U)
 #define CSL_CPTS_TS_PPM_DIR_DECREASE        ((uint32_t) 1U)
 
+typedef uint32_t CSL_CPTS_GENF_PPM_DIR;
+#define CSL_CPTS_GENF_PPM_DIR_INCREASE        ((uint32_t) 1U)
+#define CSL_CPTS_GENF_PPM_DIR_DECREASE        ((uint32_t) 0U)
+
+typedef uint32_t CSL_CPTS_ESTF_PPM_DIR;
+#define CSL_CPTS_ESTF_PPM_DIR_INCREASE        ((uint32_t) 1U)
+#define CSL_CPTS_ESTF_PPM_DIR_DECREASE        ((uint32_t) 0U)
+
 /** @brief
  *
  *  Holds the CPTS control register info.
@@ -1429,6 +1437,73 @@ extern int32_t CSL_CPTS_setGENFnNudge (
 );
 
 /** ============================================================================
+ *   @n@b CSL_CPTS_setGENFnPpm
+ *
+ *   @b Description
+ *   @n This function sets the parts per million or parts per hour adjustment value.
+ *      Writing a non-zero ppm value enables PPM operations. The adjustment is up or
+ *      down depending on the ppmDir value. When ts_genfN_ppm_dir is set a single
+ *      RCLK time is subtracted from the generate function counter which has the effect
+ *      of increasing the generate function frequency by the PPM amount.  When ts_genfN_ppm_dir
+ *      is clear a single RCLK time is added to the generate function counter which has
+ *      the effect of decreasing the generate function frequency by the PPM amount.
+ *
+ *   @b Arguments
+     @verbatim
+        pCptsRegs           Pointer to CSL_cptsRegs structure
+        genfIndex           Index of the GENFn to configure
+        ppmValLo            Lower 32 bits of the PPM value
+        ppmValHi            Higher 10 bits of the PPM value
+        ppmDir              CSL_CPTS_TS_PPM_DIR_INCREASE(0) = A single RCLK is added to
+                            the generate function counter at the PPM rate which has the
+                            effect of decreasing the generate function frequency by the
+                            PPM amount.
+                            CSL_CPTS_TS_PPM_DIR_DECREASE(1) = A single RCLK is subtracted
+                            from the generate function counter at the PPM rate which
+                            has the effect of increasing the generate function
+                            frequency by the PPM amount.
+ *
+ *   @endverbatim
+ *
+ *   <b> Return Value </b>
+ *   @n  None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None.
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Affects
+ *   @n CPTS_TS_GENF_CONTROL_REG_PPM_DIR
+ *   @n CPTS_TS_GENF_PPM_HIGH_REG_PPM_HIGH
+ *   @n CPTS_TS_GENF_PPM_LOW_REG_PPM_LOW
+ *
+ *   @b Example
+ *   @verbatim
+        uint32_t                      genfIndex;
+        uint32_t                      tsPpmValLo,
+        uint32_t                      tsPpmValHi,
+        CSL_CPTS_TS_PPM_DIR         tsPpmDir;
+
+        genfIndex    =   0;
+        tsPpmValLo   =   10000UL;
+        tsPpmValHi   =   0;
+        tsPpmDir = CSL_CPTS_TS_PPM_DIR_INCREASE;
+
+        CSL_CPTS_setTSPpm (pCptsRegs, genfIndex, tsPpmValLo, tsPpmValHi, tsPpmDir);
+     @endverbatim
+ * =============================================================================
+ */
+extern void CSL_CPTS_setGENFnPpm (
+    CSL_cptsRegs        *pCptsRegs,
+    uint32_t            genfIndex,
+    uint32_t            ppmValLo,
+    uint32_t            ppmValHi,
+    CSL_CPTS_TS_PPM_DIR ppmDir
+);
+
+/** ============================================================================
  *   @n@b CSL_CPTS_getESTFnLength
  *
  *   @b Description
@@ -1579,6 +1654,73 @@ extern int32_t CSL_CPTS_setESTFnNudge (
     CSL_cptsRegs    *pCptsRegs,
     uint32_t        estfIndex,
     int32_t         tsNudge
+);
+
+/** ============================================================================
+ *   @n@b CSL_CPTS_setESTFnPpm
+ *
+ *   @b Description
+ *   @n This function sets the parts per million or parts per hour adjustment value.
+ *      Writing a non-zero ppm value enables PPM operations. The adjustment is up or
+ *      down depending on the ppmDir value. When ts_estfN_ppm_dir is set a single
+ *      RCLK time is subtracted from the generate function counter which has the effect
+ *      of increasing the generate function frequency by the PPM amount.  When ts_estfN_ppm_dir
+ *      is clear a single RCLK time is added to the generate function counter which has
+ *      the effect of decreasing the generate function frequency by the PPM amount.
+ *
+ *   @b Arguments
+     @verbatim
+        pCptsRegs           Pointer to CSL_cptsRegs structure
+        genfIndex           Index of the ESTFn to configure
+        ppmValLo            Lower 32 bits of the PPM value
+        ppmValHi            Higher 10 bits of the PPM value
+        ppmDir              CSL_CPTS_TS_PPM_DIR_INCREASE(0) = A single RCLK is added to
+                            the generate function counter at the PPM rate which has the
+                            effect of decreasing the generate function frequency by the
+                            PPM amount.
+                            CSL_CPTS_TS_PPM_DIR_DECREASE(1) = A single RCLK is subtracted
+                            from the generate function counter at the PPM rate which
+                            has the effect of increasing the generate function
+                            frequency by the PPM amount.
+ *
+ *   @endverbatim
+ *
+ *   <b> Return Value </b>
+ *   @n  None
+ *
+ *   <b> Pre Condition </b>
+ *   @n  None.
+ *
+ *   <b> Post Condition </b>
+ *   @n  None
+ *
+ *   @b Affects
+ *   @n CPTS_TS_ESTF_CONTROL_REG_PPM_DIR
+ *   @n CPTS_TS_ESTF_PPM_HIGH_REG_PPM_HIGH
+ *   @n CPTS_TS_ESTF_PPM_LOW_REG_PPM_LOW
+ *
+ *   @b Example
+ *   @verbatim
+        uint32_t                      estfIndex;
+        uint32_t                      tsPpmValLo,
+        uint32_t                      tsPpmValHi,
+        CSL_CPTS_TS_PPM_DIR         tsPpmDir;
+
+        genfIndex    =   0;
+        tsPpmValLo   =   10000UL;
+        tsPpmValHi   =   0;
+        tsPpmDir = CSL_CPTS_TS_PPM_DIR_INCREASE;
+
+        CSL_CPTS_setTSPpm (pCptsRegs, estfIndex, tsPpmValLo, tsPpmValHi, tsPpmDir);
+     @endverbatim
+ * =============================================================================
+ */
+extern void CSL_CPTS_setESTFnPpm (
+    CSL_cptsRegs        *pCptsRegs,
+    uint32_t            estfIndex,
+    uint32_t            ppmValLo,
+    uint32_t            ppmValHi,
+    CSL_CPTS_TS_PPM_DIR ppmDir
 );
 
 /**

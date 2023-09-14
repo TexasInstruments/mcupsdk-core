@@ -397,7 +397,7 @@ int32_t CSL_CPTS_setupGENFn(
     uint64_t compare,
     uint32_t polarityInv,
     uint64_t ppmAdjust,
-    CSL_CPTS_TS_PPM_DIR ppmDir
+    CSL_CPTS_GENF_PPM_DIR ppmDir
 )
 {
     int32_t retVal = -1;
@@ -432,6 +432,21 @@ int32_t CSL_CPTS_setupGENFn(
         retVal = 0;
     }
     return retVal;
+}
+
+void CSL_CPTS_setGENFnPpm (
+    CSL_cptsRegs        *pCptsRegs,
+    uint32_t            genfIndex,
+    uint32_t            ppmValLo,
+    uint32_t            ppmValHi,
+    CSL_CPTS_GENF_PPM_DIR ppmDir
+)
+{
+    CSL_REG32_FINS (&pCptsRegs->TS_GENF[genfIndex].CONTROL_REG, CPTS_TS_GENF_CONTROL_REG_PPM_DIR, ppmDir);
+    /* HIGH_VAL must be written first */
+    CSL_REG32_FINS (&pCptsRegs->TS_GENF[genfIndex].PPM_HIGH_REG, CPTS_TS_GENF_PPM_HIGH_REG_PPM_HIGH, ppmValHi);
+    CSL_REG32_FINS (&pCptsRegs->TS_GENF[genfIndex].PPM_LOW_REG, CPTS_TS_GENF_PPM_LOW_REG_PPM_LOW, ppmValLo);
+    return;
 }
 
 int32_t CSL_CPTS_setGENFnNudge (
@@ -474,7 +489,7 @@ int32_t CSL_CPTS_setupESTFn(
     uint64_t compare,
     uint32_t polarityInv,
     uint64_t ppmAdjust,
-    CSL_CPTS_TS_PPM_DIR ppmDir
+    CSL_CPTS_ESTF_PPM_DIR ppmDir
 )
 {
     int32_t retVal = -1;
@@ -526,5 +541,20 @@ int32_t CSL_CPTS_setESTFnNudge (
         retVal = 0;
     }
     return retVal;
+}
+
+void CSL_CPTS_setESTFnPpm (
+    CSL_cptsRegs        *pCptsRegs,
+    uint32_t            estfIndex,
+    uint32_t            ppmValLo,
+    uint32_t            ppmValHi,
+    CSL_CPTS_ESTF_PPM_DIR ppmDir
+)
+{
+    CSL_REG32_FINS (&pCptsRegs->TS_ESTF[estfIndex].CONTROL_REG, CPTS_TS_ESTF_CONTROL_REG_PPM_DIR, ppmDir);
+    /* HIGH_VAL must be written first */
+    CSL_REG32_FINS (&pCptsRegs->TS_ESTF[estfIndex].PPM_HIGH_REG, CPTS_TS_ESTF_PPM_HIGH_REG_PPM_HIGH, ppmValHi);
+    CSL_REG32_FINS (&pCptsRegs->TS_ESTF[estfIndex].PPM_LOW_REG, CPTS_TS_ESTF_PPM_LOW_REG_PPM_LOW, ppmValLo);
+    return;
 }
 

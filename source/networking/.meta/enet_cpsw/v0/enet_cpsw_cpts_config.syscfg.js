@@ -42,7 +42,7 @@ const enet_cpsw_cpts_config = {
             name: "cptstsGenfClrEn",
             longDescription: "GENF (and ESTF) clear enable. True:  A TS_GENFn (or TS_ESTFn) output is cleared when the associated ts_genf_length[31:0] (or ts_estf_length[31:0]) is cleared to zero. False: A TS_GENFn (or TS_ESTFn) output is not cleared when the associated ts_genf_length[31:0] (or ts_estf_length[31:0]) is cleared to zero",
             displayName: "Enable GENF (And ESTF) Clear",
-            default: false,
+            default: true,
         },
         {
             name: "cptsRftClkFreq",
