@@ -278,14 +278,4 @@ endif
 	@echo  Boot image: am263px:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
 
-.PHONY: coverage
-coverage:
-	@echo Creating Coverage Report for hello_world.$(PROFILE) ...
-	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o hello_world.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=hello_world.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=hello_world.$(PROFILE).profdata > coverage/hello_world.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/docs_src/code_coverage/clang_coverage_analyse.js --input=coverage/hello_world.$(PROFILE).profdata.json --output-json=coverage/hello_world.$(PROFILE).analysis.json --output-lnk=linker_xip.cmd --top-function-count=500
-	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
-
 -include $(addprefix $(OBJDIR)/, $(DEPS))

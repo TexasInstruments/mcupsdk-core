@@ -278,14 +278,4 @@ endif
 	@echo  Boot image: am263px:r5fss1-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
 
-.PHONY: coverage
-coverage:
-	@echo Creating Coverage Report for ipc_notify_ut.$(PROFILE) ...
-	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o ipc_notify_ut.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=ipc_notify_ut.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=ipc_notify_ut.$(PROFILE).profdata > coverage/ipc_notify_ut.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/docs_src/code_coverage/clang_coverage_analyse.js --input=coverage/ipc_notify_ut.$(PROFILE).profdata.json --output-json=coverage/ipc_notify_ut.$(PROFILE).analysis.json --output-lnk=linker_xip.cmd --top-function-count=500
-	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
-
 -include $(addprefix $(OBJDIR)/, $(DEPS))

@@ -756,7 +756,7 @@ endif
 endif
 % }
 % }
-% if (args.project.cgt == "ti-arm-clang") {
+% if (args.isInstrumentationMode && args.project.cgt == "ti-arm-clang") {
 .PHONY: coverage
 coverage:
 	@echo Creating Coverage Report for `args.project.name`.$(PROFILE) ...
