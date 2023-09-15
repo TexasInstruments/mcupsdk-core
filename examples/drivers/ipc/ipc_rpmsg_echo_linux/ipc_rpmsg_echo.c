@@ -39,6 +39,9 @@
 #include <drivers/ipc_rpmsg.h>
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+#include "FreeRTOS.h"
+#include "task.h"
+
 
 /* This example shows message exchange between Linux and RTOS/NORTOS cores.
  * This example also does message exchange between the RTOS/NORTOS cores themselves.
@@ -86,6 +89,30 @@
  */
 #define IPC_RPMESSAGE_NUM_RECV_TASKS         (2u)
 
+/**
+ * \brief Client ID used for remoteproc (RP_MBOX) related messages,  this client ID should not be used by other users
+ */
+#define IPC_NOTIFY_CLIENT_ID_RP_MBOX  (15U)
+
+/**
+ * \brief Various messages sent by remote proc kernel driver.
+ *
+ * Client ID for this will always be 15 \ref IPC_NOTIFY_CLIENT_ID_RP_MBOX
+ */
+#define IPC_NOTIFY_RP_MBOX_READY		    (0x0FFFFF00)
+#define IPC_NOTIFY_RP_MBOX_PENDING_MSG	    (0x0FFFFF01)
+#define IPC_NOTIFY_RP_MBOX_CRASH		    (0x0FFFFF02)
+#define IPC_NOTIFY_RP_MBOX_ECHO_REQUEST	    (0x0FFFFF03)
+#define IPC_NOTIFY_RP_MBOX_ECHO_REPLY	    (0x0FFFFF04)
+#define IPC_NOTIFY_RP_MBOX_ABORT_REQUEST	(0x0FFFFF05)
+#define IPC_NOTIFY_RP_MBOX_SUSPEND_AUTO	    (0x0FFFFF10)
+#define IPC_NOTIFY_RP_MBOX_SUSPEND_SYSTEM	(0x0FFFFF11)
+#define IPC_NOTIFY_RP_MBOX_SUSPEND_ACK	    (0x0FFFFF12)
+#define IPC_NOTIFY_RP_MBOX_SUSPEND_CANCEL	(0x0FFFFF13)
+#define IPC_NOTIFY_RP_MBOX_SHUTDOWN     	(0x0FFFFF14)
+#define IPC_NOTIFY_RP_MBOX_SHUTDOWN_ACK     (0x0FFFFF15)
+#define IPC_NOTIFY_RP_MBOX_END_MSG		    (0x0FFFFF16)
+
 /* RPMessage object used to recvice messages */
 RPMessage_Object gIpcRecvMsgObject[IPC_RPMESSAGE_NUM_RECV_TASKS];
 
@@ -119,6 +146,10 @@ uint32_t gRemoteCoreId[] = {
 };
 #endif
 
+volatile uint8_t gShutdown = 0u;
+volatile uint8_t gShutdownRemotecoreID = 0u;
+volatile uint8_t gIpcAckReplyMsgObjectPending = 0u;
+
 void ipc_recv_task_main(void *args)
 {
     int32_t status;
@@ -141,6 +172,12 @@ void ipc_recv_task_main(void *args)
             recvMsg, &recvMsgSize,
             &remoteCoreId, &remoteCoreEndPt,
             SystemP_WAIT_FOREVER);
+
+        if (gShutdown == 1u)
+        {
+            break;
+        }
+
         DebugP_assert(status==SystemP_SUCCESS);
 
         /* echo the same message string as reply */
@@ -157,7 +194,25 @@ void ipc_recv_task_main(void *args)
             SystemP_WAIT_FOREVER);
         DebugP_assert(status==SystemP_SUCCESS);
     }
-    /* This loop will never exit */
+
+    DebugP_log("[IPC RPMSG ECHO] Closing all drivers and going to WFI ... !!!\r\n");
+
+    /* Close the drivers */
+    Drivers_close();
+
+    /* ACK the suspend message */
+    IpcNotify_sendMsg(gShutdownRemotecoreID, IPC_NOTIFY_CLIENT_ID_RP_MBOX, IPC_NOTIFY_RP_MBOX_SHUTDOWN_ACK, 1u);
+
+    /* Disable interrupts */
+    HwiP_disable();
+#if (__ARM_ARCH_PROFILE == 'R') ||  (__ARM_ARCH_PROFILE == 'M')
+    /* For ARM R and M cores*/
+    __asm__ __volatile__ ("wfi"   "\n\t": : : "memory");
+#endif
+#if defined(BUILD_C7X)
+    asm("    IDLE");
+#endif
+    vTaskDelete(NULL);
 }
 
 void ipc_rpmsg_send_messages(void)
@@ -215,14 +270,27 @@ void ipc_rpmsg_send_messages(void)
                 * after return `msgSize` contains actual size of valid data in recv buffer
                 */
                 msgSize = sizeof(msgBuf);
+
+                gIpcAckReplyMsgObjectPending = 1;
                 status = RPMessage_recv(&gIpcAckReplyMsgObject,
                     msgBuf, &msgSize,
                     &remoteCoreId, &remoteCoreEndPt,
                     SystemP_WAIT_FOREVER);
+                if (gShutdown == 1u)
+                {
+                    break;
+                }
                 DebugP_assert(status==SystemP_SUCCESS);
+                gIpcAckReplyMsgObjectPending = 0;
+
             }
         }
+        if (gShutdown == 1u)
+        {
+            break;
+        }
     }
+    gIpcAckReplyMsgObjectPending = 0;
 
     curTime = ClockP_getTimeUsec() - curTime;
 
@@ -287,6 +355,24 @@ void ipc_rpmsg_create_recv_tasks(void)
     DebugP_assert(status == SystemP_SUCCESS);
 }
 
+void ipc_rp_mbox_callback(uint32_t remoteCoreId, uint16_t clientId, uint32_t msgValue, void *args)
+{
+    if (clientId == IPC_NOTIFY_CLIENT_ID_RP_MBOX)
+    {
+        if (msgValue == IPC_NOTIFY_RP_MBOX_SHUTDOWN)
+        {
+            /* Suspend request from the remotecore */
+            gShutdown = 1u;
+            gShutdownRemotecoreID = remoteCoreId;
+            RPMessage_unblock(&gIpcRecvMsgObject[0]);
+            RPMessage_unblock(&gIpcRecvMsgObject[1]);
+
+            if (gIpcAckReplyMsgObjectPending == 1u)
+                RPMessage_unblock(&gIpcAckReplyMsgObject);
+        }
+    }
+}
+
 void ipc_rpmsg_echo_main(void *args)
 {
     int32_t status;
@@ -300,7 +386,8 @@ void ipc_rpmsg_echo_main(void *args)
     status = RPMessage_waitForLinuxReady(SystemP_WAIT_FOREVER);
     DebugP_assert(status==SystemP_SUCCESS);
 
-
+    /* Register a callback for the RP_MBOX messages from the Linux remoteproc driver*/
+    IpcNotify_registerClient(IPC_NOTIFY_CLIENT_ID_RP_MBOX, &ipc_rp_mbox_callback, NULL);
 
     /* create message receive tasks, these tasks always run and never exit */
     ipc_rpmsg_create_recv_tasks();

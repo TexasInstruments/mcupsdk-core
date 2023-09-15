@@ -36,10 +36,6 @@ to transport the message values.
 
 - Enable/Disable IPC Notify between different CPUs
 
-## Features NOT Supported
-
-- IPC Notify cannot be used to talk to clients running Linux OS
-
 ## Important Usage Guidelines
 
 - To balance low latency performance vs flexiblility to end user, below contraints are introduced in the API
@@ -50,6 +46,11 @@ to transport the message values.
     one should pass offset from some known base address as values instead.
   - Offsets can easily fit within \ref IPC_NOTIFY_MSG_VALUE_MAX limit.
 - Internally the implementation will combine client ID and message value as one 32b integer.
+
+\cond SOC_AM64X
+\note In case of applications involving **Linux OS**, Client ID 15 is reserved for remoteproc messages, this client ID should not be utilized by other users.
+For more details refer to example at **examples/drivers/ipc/ipc_rpmsg_echo_linux/**
+\endcond
 
 ## Example Usage
 
