@@ -1111,6 +1111,34 @@ static void SOC_rcmGetClkSrcAndDivReg (SOC_RcmPeripheralId periphId,
             *clkSrcVal = gLinUartClkSrcValMap[clkSource];
             break;
         }
+        case SOC_RcmPeripheralId_MCAN4:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->MCAN4_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->MCAN4_CLK_DIV_VAL);
+            *clkSrcVal = gMcanClkSrcValMap[clkSource];
+            break;
+        }
+        case SOC_RcmPeripheralId_MCAN5:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->MCAN5_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->MCAN5_CLK_DIV_VAL);
+            *clkSrcVal = gMcanClkSrcValMap[clkSource];
+            break;
+        }
+        case SOC_RcmPeripheralId_MCAN6:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->MCAN6_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->MCAN6_CLK_DIV_VAL);
+            *clkSrcVal = gMcanClkSrcValMap[clkSource];
+            break;
+        }
+        case SOC_RcmPeripheralId_MCAN7:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->MCAN7_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->MCAN7_CLK_DIV_VAL);
+            *clkSrcVal = gMcanClkSrcValMap[clkSource];
+            break;
+        }
         default:
         {
             *clkSrcReg  = NULL;
@@ -2585,6 +2613,58 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
             if(enable==0)
             {
                 ptrMSSRCMRegs->UART5_CLK_GATE = CSL_MSS_RCM_UART5_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
+        case SOC_RcmPeripheralId_MCAN4:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->MCAN4_CLK_GATE = CSL_MSS_RCM_MCAN4_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->MCAN4_CLK_GATE = CSL_MSS_RCM_MCAN4_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
+        case SOC_RcmPeripheralId_MCAN5:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->MCAN5_CLK_GATE = CSL_MSS_RCM_MCAN5_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->MCAN5_CLK_GATE = CSL_MSS_RCM_MCAN5_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
+        case SOC_RcmPeripheralId_MCAN6:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->MCAN6_CLK_GATE = CSL_MSS_RCM_MCAN6_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->MCAN6_CLK_GATE = CSL_MSS_RCM_MCAN6_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
+        case SOC_RcmPeripheralId_MCAN7:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->MCAN7_CLK_GATE = CSL_MSS_RCM_MCAN7_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->MCAN7_CLK_GATE = CSL_MSS_RCM_MCAN7_CLK_GATE_GATED_MASK;
             }
             break;
         }

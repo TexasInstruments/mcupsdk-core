@@ -328,7 +328,7 @@ static const MCAN_OffsetAddr gMcanOffsetAddr =
 #if ((CSL_MSS_MCANA_CFG_U_BASE - CSL_MSS_MCANA_MSG_RAM_U_BASE) != (CSL_MSS_MCANB_CFG_U_BASE - CSL_MSS_MCANB_MSG_RAM_U_BASE))
      #error Offsets assumed donot match for MCAN
 #endif
-#elif defined (SOC_AM263X) || defined (SOC_AM263PX)
+#elif defined (SOC_AM263X)
 static const MCAN_OffsetAddr gMcanOffsetAddr =
 {
     .mcanSsOffset       = ((int32_t) CSL_MCAN0_CFG_U_BASE                   - (int32_t) CSL_MCAN0_MSG_RAM_U_BASE),
@@ -342,6 +342,35 @@ static const MCAN_OffsetAddr gMcanOffsetAddr =
      #error Offsets assumed donot match for MCAN
 #endif
 #if ((CSL_MCAN0_CFG_U_BASE - CSL_MCAN0_MSG_RAM_U_BASE) != (CSL_MCAN3_CFG_U_BASE - CSL_MCAN3_MSG_RAM_U_BASE))
+     #error Offsets assumed donot match for MCAN
+#endif
+
+#elif defined (SOC_AM263PX)
+static const MCAN_OffsetAddr gMcanOffsetAddr =
+{
+    .mcanSsOffset       = ((int32_t) CSL_MCAN0_CFG_U_BASE                   - (int32_t) CSL_MCAN0_MSG_RAM_U_BASE),
+    .mcanCfgOffset      = ((int32_t) (CSL_MCAN0_CFG_U_BASE + 0x00000200)    - (int32_t) CSL_MCAN0_MSG_RAM_U_BASE),
+};
+/* Offsets are same for MCAN0 and MCAN1 instances. */
+#if ((CSL_MCAN0_CFG_U_BASE - CSL_MCAN0_MSG_RAM_U_BASE) != (CSL_MCAN1_CFG_U_BASE - CSL_MCAN1_MSG_RAM_U_BASE))
+     #error Offsets assumed donot match for MCAN
+#endif
+#if ((CSL_MCAN0_CFG_U_BASE - CSL_MCAN0_MSG_RAM_U_BASE) != (CSL_MCAN2_CFG_U_BASE - CSL_MCAN2_MSG_RAM_U_BASE))
+     #error Offsets assumed donot match for MCAN
+#endif
+#if ((CSL_MCAN0_CFG_U_BASE - CSL_MCAN0_MSG_RAM_U_BASE) != (CSL_MCAN3_CFG_U_BASE - CSL_MCAN3_MSG_RAM_U_BASE))
+     #error Offsets assumed donot match for MCAN
+#endif
+#if ((CSL_MCAN0_CFG_U_BASE - CSL_MCAN0_MSG_RAM_U_BASE) != (CSL_MCAN4_CFG_U_BASE - CSL_MCAN4_MSG_RAM_U_BASE))
+     #error Offsets assumed donot match for MCAN
+#endif
+#if ((CSL_MCAN0_CFG_U_BASE - CSL_MCAN0_MSG_RAM_U_BASE) != (CSL_MCAN5_CFG_U_BASE - CSL_MCAN5_MSG_RAM_U_BASE))
+     #error Offsets assumed donot match for MCAN
+#endif
+#if ((CSL_MCAN0_CFG_U_BASE - CSL_MCAN0_MSG_RAM_U_BASE) != (CSL_MCAN6_CFG_U_BASE - CSL_MCAN6_MSG_RAM_U_BASE))
+     #error Offsets assumed donot match for MCAN
+#endif
+#if ((CSL_MCAN0_CFG_U_BASE - CSL_MCAN0_MSG_RAM_U_BASE) != (CSL_MCAN7_CFG_U_BASE - CSL_MCAN7_MSG_RAM_U_BASE))
      #error Offsets assumed donot match for MCAN
 #endif
 
@@ -2187,7 +2216,7 @@ static uint32_t MCAN_getECCRegionAddr(uint32_t baseAddr)
         case CSL_MSS_MCANB_MSG_RAM_U_BASE:
             eccAggrBase = CSL_MSS_MCANB_ECC_U_BASE;
             break;
-#elif defined (SOC_AM263X) || defined (SOC_AM263PX)
+#elif defined (SOC_AM263X)
         case CSL_MCAN0_MSG_RAM_U_BASE:
             eccAggrBase = CSL_MCAN0_ECC_U_BASE;
             break;
@@ -2199,6 +2228,31 @@ static uint32_t MCAN_getECCRegionAddr(uint32_t baseAddr)
             break;
         case CSL_MCAN3_MSG_RAM_U_BASE:
             eccAggrBase = CSL_MCAN3_ECC_U_BASE;
+            break;
+#elif defined (SOC_AM263PX)
+        case CSL_MCAN0_MSG_RAM_U_BASE:
+            eccAggrBase = CSL_MCAN0_ECC_U_BASE;
+            break;
+        case CSL_MCAN1_MSG_RAM_U_BASE:
+            eccAggrBase = CSL_MCAN1_ECC_U_BASE;
+            break;
+        case CSL_MCAN2_MSG_RAM_U_BASE:
+            eccAggrBase = CSL_MCAN2_ECC_U_BASE;
+            break;
+        case CSL_MCAN3_MSG_RAM_U_BASE:
+            eccAggrBase = CSL_MCAN3_ECC_U_BASE;
+            break;
+        case CSL_MCAN4_MSG_RAM_U_BASE:
+            eccAggrBase = CSL_MCAN4_ECC_U_BASE;
+            break;
+        case CSL_MCAN5_MSG_RAM_U_BASE:
+            eccAggrBase = CSL_MCAN5_ECC_U_BASE;
+            break;
+        case CSL_MCAN6_MSG_RAM_U_BASE:
+            eccAggrBase = CSL_MCAN6_ECC_U_BASE;
+            break;
+        case CSL_MCAN7_MSG_RAM_U_BASE:
+            eccAggrBase = CSL_MCAN7_ECC_U_BASE;
             break;
 #elif defined (SOC_AM62X)
         /*
@@ -2242,11 +2296,22 @@ static const MCAN_OffsetAddr* MCAN_getOffsetAddr(uint32_t baseAddr)
         case CSL_MSS_MCANB_MSG_RAM_U_BASE:
             offsetAddr = &gMcanOffsetAddr;
             break;
-#elif defined (SOC_AM263X)  || defined (SOC_AM263PX)
+#elif defined (SOC_AM263X)
         case CSL_MCAN0_MSG_RAM_U_BASE:
         case CSL_MCAN1_MSG_RAM_U_BASE:
         case CSL_MCAN2_MSG_RAM_U_BASE:
         case CSL_MCAN3_MSG_RAM_U_BASE:
+            offsetAddr = &gMcanOffsetAddr;
+            break;
+#elif defined (SOC_AM263PX)
+        case CSL_MCAN0_MSG_RAM_U_BASE:
+        case CSL_MCAN1_MSG_RAM_U_BASE:
+        case CSL_MCAN2_MSG_RAM_U_BASE:
+        case CSL_MCAN3_MSG_RAM_U_BASE:
+        case CSL_MCAN4_MSG_RAM_U_BASE:
+        case CSL_MCAN5_MSG_RAM_U_BASE:
+        case CSL_MCAN6_MSG_RAM_U_BASE:
+        case CSL_MCAN7_MSG_RAM_U_BASE:
             offsetAddr = &gMcanOffsetAddr;
             break;
 #elif defined (SOC_AM62X)

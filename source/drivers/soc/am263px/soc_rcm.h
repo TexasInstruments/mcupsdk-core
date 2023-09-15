@@ -401,6 +401,22 @@ typedef enum SOC_RcmPeripheralId_e
      * \brief   Value specifying LIN5_UART5
      */
     SOC_RcmPeripheralId_LIN5_UART5,
+    /**
+     * \brief   Value specifying MCAN4
+     */
+    SOC_RcmPeripheralId_MCAN4,
+    /**
+     * \brief   Value specifying MCAN5
+     */
+    SOC_RcmPeripheralId_MCAN5,
+    /**
+     * \brief   Value specifying MCAN6
+     */
+    SOC_RcmPeripheralId_MCAN6,
+    /**
+     * \brief   Value specifying MCAN7
+     */
+    SOC_RcmPeripheralId_MCAN7,
 }SOC_RcmPeripheralId;
 /** @} */
 

@@ -220,10 +220,10 @@ typedef struct {
     volatile uint32_t R5SS1_CORE0_GATE;
     volatile uint32_t R5SS0_CORE1_GATE;
     volatile uint32_t R5SS1_CORE1_GATE;
-    volatile uint32_t MSS_MCAN4_CLK_GATE;
-    volatile uint32_t MSS_MCAN5_CLK_GATE;
-    volatile uint32_t MSS_MCAN6_CLK_GATE;
-    volatile uint32_t MSS_MCAN7_CLK_GATE;
+    volatile uint32_t MCAN4_CLK_GATE;
+    volatile uint32_t MCAN5_CLK_GATE;
+    volatile uint32_t MCAN6_CLK_GATE;
+    volatile uint32_t MCAN7_CLK_GATE;
     volatile uint32_t RTI4_CLK_GATE;
     volatile uint32_t RTI5_CLK_GATE;
     volatile uint32_t RTI6_CLK_GATE;
@@ -580,10 +580,10 @@ typedef struct {
 #define CSL_MSS_RCM_R5SS1_CORE0_GATE                                           (0x000003D0U)
 #define CSL_MSS_RCM_R5SS0_CORE1_GATE                                           (0x000003D4U)
 #define CSL_MSS_RCM_R5SS1_CORE1_GATE                                           (0x000003D8U)
-#define CSL_MSS_RCM_MSS_MCAN4_CLK_GATE                                         (0x000003DCU)
-#define CSL_MSS_RCM_MSS_MCAN5_CLK_GATE                                         (0x000003E0U)
-#define CSL_MSS_RCM_MSS_MCAN6_CLK_GATE                                         (0x000003E4U)
-#define CSL_MSS_RCM_MSS_MCAN7_CLK_GATE                                         (0x000003E8U)
+#define CSL_MSS_RCM_MCAN4_CLK_GATE                                             (0x000003DCU)
+#define CSL_MSS_RCM_MCAN5_CLK_GATE                                             (0x000003E0U)
+#define CSL_MSS_RCM_MCAN6_CLK_GATE                                             (0x000003E4U)
+#define CSL_MSS_RCM_MCAN7_CLK_GATE                                             (0x000003E8U)
 #define CSL_MSS_RCM_RTI4_CLK_GATE                                              (0x000003ECU)
 #define CSL_MSS_RCM_RTI5_CLK_GATE                                              (0x000003F0U)
 #define CSL_MSS_RCM_RTI6_CLK_GATE                                              (0x000003F4U)
@@ -2205,41 +2205,41 @@ typedef struct {
 
 #define CSL_MSS_RCM_R5SS1_CORE1_GATE_RESETVAL                                  (0x00000000U)
 
-/* MSS_MCAN4_CLK_GATE */
+/* MCAN4_CLK_GATE */
 
-#define CSL_MSS_RCM_MSS_MCAN4_CLK_GATE_GATED_MASK                              (0x00000007U)
-#define CSL_MSS_RCM_MSS_MCAN4_CLK_GATE_GATED_SHIFT                             (0x00000000U)
-#define CSL_MSS_RCM_MSS_MCAN4_CLK_GATE_GATED_RESETVAL                          (0x00000000U)
-#define CSL_MSS_RCM_MSS_MCAN4_CLK_GATE_GATED_MAX                               (0x00000007U)
+#define CSL_MSS_RCM_MCAN4_CLK_GATE_GATED_MASK                                  (0x00000007U)
+#define CSL_MSS_RCM_MCAN4_CLK_GATE_GATED_SHIFT                                 (0x00000000U)
+#define CSL_MSS_RCM_MCAN4_CLK_GATE_GATED_RESETVAL                              (0x00000000U)
+#define CSL_MSS_RCM_MCAN4_CLK_GATE_GATED_MAX                                   (0x00000007U)
 
-#define CSL_MSS_RCM_MSS_MCAN4_CLK_GATE_RESETVAL                                (0x00000000U)
+#define CSL_MSS_RCM_MCAN4_CLK_GATE_RESETVAL                                    (0x00000000U)
 
-/* MSS_MCAN5_CLK_GATE */
+/* MCAN5_CLK_GATE */
 
-#define CSL_MSS_RCM_MSS_MCAN5_CLK_GATE_GATED_MASK                              (0x00000007U)
-#define CSL_MSS_RCM_MSS_MCAN5_CLK_GATE_GATED_SHIFT                             (0x00000000U)
-#define CSL_MSS_RCM_MSS_MCAN5_CLK_GATE_GATED_RESETVAL                          (0x00000000U)
-#define CSL_MSS_RCM_MSS_MCAN5_CLK_GATE_GATED_MAX                               (0x00000007U)
+#define CSL_MSS_RCM_MCAN5_CLK_GATE_GATED_MASK                                  (0x00000007U)
+#define CSL_MSS_RCM_MCAN5_CLK_GATE_GATED_SHIFT                                 (0x00000000U)
+#define CSL_MSS_RCM_MCAN5_CLK_GATE_GATED_RESETVAL                              (0x00000000U)
+#define CSL_MSS_RCM_MCAN5_CLK_GATE_GATED_MAX                                   (0x00000007U)
 
-#define CSL_MSS_RCM_MSS_MCAN5_CLK_GATE_RESETVAL                                (0x00000000U)
+#define CSL_MSS_RCM_MCAN5_CLK_GATE_RESETVAL                                    (0x00000000U)
 
-/* MSS_MCAN6_CLK_GATE */
+/* MCAN6_CLK_GATE */
 
-#define CSL_MSS_RCM_MSS_MCAN6_CLK_GATE_GATED_MASK                              (0x00000007U)
-#define CSL_MSS_RCM_MSS_MCAN6_CLK_GATE_GATED_SHIFT                             (0x00000000U)
-#define CSL_MSS_RCM_MSS_MCAN6_CLK_GATE_GATED_RESETVAL                          (0x00000000U)
-#define CSL_MSS_RCM_MSS_MCAN6_CLK_GATE_GATED_MAX                               (0x00000007U)
+#define CSL_MSS_RCM_MCAN6_CLK_GATE_GATED_MASK                                  (0x00000007U)
+#define CSL_MSS_RCM_MCAN6_CLK_GATE_GATED_SHIFT                                 (0x00000000U)
+#define CSL_MSS_RCM_MCAN6_CLK_GATE_GATED_RESETVAL                              (0x00000000U)
+#define CSL_MSS_RCM_MCAN6_CLK_GATE_GATED_MAX                                   (0x00000007U)
 
-#define CSL_MSS_RCM_MSS_MCAN6_CLK_GATE_RESETVAL                                (0x00000000U)
+#define CSL_MSS_RCM_MCAN6_CLK_GATE_RESETVAL                                    (0x00000000U)
 
-/* MSS_MCAN7_CLK_GATE */
+/* MCAN7_CLK_GATE */
 
-#define CSL_MSS_RCM_MSS_MCAN7_CLK_GATE_GATED_MASK                              (0x00000007U)
-#define CSL_MSS_RCM_MSS_MCAN7_CLK_GATE_GATED_SHIFT                             (0x00000000U)
-#define CSL_MSS_RCM_MSS_MCAN7_CLK_GATE_GATED_RESETVAL                          (0x00000000U)
-#define CSL_MSS_RCM_MSS_MCAN7_CLK_GATE_GATED_MAX                               (0x00000007U)
+#define CSL_MSS_RCM_MCAN7_CLK_GATE_GATED_MASK                                  (0x00000007U)
+#define CSL_MSS_RCM_MCAN7_CLK_GATE_GATED_SHIFT                                 (0x00000000U)
+#define CSL_MSS_RCM_MCAN7_CLK_GATE_GATED_RESETVAL                              (0x00000000U)
+#define CSL_MSS_RCM_MCAN7_CLK_GATE_GATED_MAX                                   (0x00000007U)
 
-#define CSL_MSS_RCM_MSS_MCAN7_CLK_GATE_RESETVAL                                (0x00000000U)
+#define CSL_MSS_RCM_MCAN7_CLK_GATE_RESETVAL                                    (0x00000000U)
 
 /* RTI4_CLK_GATE */
 
