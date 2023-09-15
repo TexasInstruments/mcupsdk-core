@@ -37,9 +37,7 @@
 #include <drivers/bootloader.h>
 #include <drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
 
-const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
-    = HSMRT_IMG;
-
+const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
 extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
 
@@ -52,7 +50,7 @@ void flashFixUpOspiBoot(OSPI_Handle oHandle, Flash_Handle fHandle);
 void loop_forever(void)
 {
     volatile uint32_t loop = 1;
-    while(loop)
+    while (loop)
         ;
 }
 
@@ -82,12 +80,11 @@ int main(void)
     moment switch OSPI controller to 8D mode and do a flash reset. */
     flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0], NULL);
 
-
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
-    if(SystemP_SUCCESS == status)
+    if (SystemP_SUCCESS == status)
     {
         Bootloader_BootImageInfo bootImageInfo;
         Bootloader_Params bootParams;
@@ -97,11 +94,11 @@ int main(void)
         Bootloader_BootImageInfo_init(&bootImageInfo);
 
         bootHandle = Bootloader_open(CONFIG_BOOTLOADER0, &bootParams);
-        if(bootHandle != NULL)
+        if (bootHandle != NULL)
         {
             status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
             /* Load CPUs */
-            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
+            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
             {
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_1);
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_1);
@@ -119,7 +116,7 @@ int main(void)
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_1);
                 status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
             }
-            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
+            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
             {
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
@@ -130,7 +127,7 @@ int main(void)
             OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
             Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, OSPI_getInputClk(ospiHandle));
 
-            if(status == SystemP_SUCCESS)
+            if (status == SystemP_SUCCESS)
             {
                 Bootloader_profileAddProfilePoint("SBL End");
                 Bootloader_profilePrintProfileLog();
@@ -139,23 +136,35 @@ int main(void)
             }
 
             /* Run CPUs */
-            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
+            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
             {
                 status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
             }
-            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
+            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
             {
                 status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
             }
-            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1)))
+            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1)))
             {
                 status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
             }
-            if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
+            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
             {
-                if( bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
+                if (bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
                 {
                     status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
+                }
+                if (status == SystemP_SUCCESS)
+                {
+                    /* enable Phy and Phy pipeline for XIP execution */
+                    if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
+                    {
+                        status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
+                        DebugP_assert(status == SystemP_SUCCESS);
+
+                        status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
+                        DebugP_assert(status == SystemP_SUCCESS);
+                    }
                 }
                 /* If any of the R5 core 0 have valid image reset the R5 core. */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
@@ -165,7 +174,7 @@ int main(void)
             Bootloader_close(bootHandle);
         }
     }
-    if(status != SystemP_SUCCESS )
+    if (status != SystemP_SUCCESS)
     {
         DebugP_log("Some tests have failed!!\r\n");
     }
@@ -176,11 +185,11 @@ int main(void)
 }
 void flashFixUpOspiBoot(OSPI_Handle oHandle, Flash_Handle fHandle)
 {
-    OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(8,8,8,1));
+    OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(8, 8, 8, 1));
     OSPI_enableDDR(oHandle);
     OSPI_setDualOpCodeMode(oHandle);
     Flash_reset(fHandle);
     OSPI_enableSDR(oHandle);
     OSPI_clearDualOpCodeMode(oHandle);
-    OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));
+    OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1, 1, 1, 0));
 }

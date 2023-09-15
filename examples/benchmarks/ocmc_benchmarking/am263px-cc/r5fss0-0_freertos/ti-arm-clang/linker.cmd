@@ -57,8 +57,8 @@ SECTIONS
         .text:abort: palign(8) /* this helps in loading symbols when using XIP mode */
     } > MSRAM
 
-    .TI.local   : {} >> R5F_TCMA | R5F_TCMB0 | MSRAM
-    .TI.onchip  : {} >> MSRAM
+    .TI.local   : {} >> R5F_TCMA | R5F_TCMB0 | MSRAM | FLASH
+    .TI.onchip  : {} >> MSRAM | FLASH
     .TI.offchip : {} > FLASH
 
     /* This is rest of code. This can be placed in DDR if DDR is available and needed */
