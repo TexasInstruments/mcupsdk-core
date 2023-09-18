@@ -72,6 +72,10 @@ SDK features and tools.
 - \subpage PERFORMANCE_OPTIMIZATIONS_GUIDE
 \endcond
 
+\cond SOC_AM263PX
+- \subpage OPTIFLASH_CONFIGURE
+\endcond
+
 \cond SOC_AM62X
 - \subpage INSTALL_NON_DEFAULT
 - \subpage IPC_GUIDE
