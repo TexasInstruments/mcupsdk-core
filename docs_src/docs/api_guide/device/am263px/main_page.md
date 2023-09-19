@@ -83,6 +83,11 @@ The main software components in the block diagram are described below
     <td> Smart placement is a process which aims to place critical functions & data in faster memory and is usually used for large memory footprint application which requires XIP.
 </tr>
 <tr>
+    <td> Memory Configurator
+    <td>\ref MEMORY_CONFIGURATOR
+    <td> Memory Configurator is a tool which provides option to choose critical parameters to generate linker files for a seamless, hassle-free experience.
+</tr>
+<tr>
     <td>Code Composer Studio (CCS)
     <td>\ref CCS_PROJECTS_PAGE
     <td>IDE used to build projects, debug programs, see http://software-dl.ti.com/ccs/esd/documents/users_guide/index_project-management.html

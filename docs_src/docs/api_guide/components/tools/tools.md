@@ -21,3 +21,6 @@ It consists of below sub-modules
 \cond SOC_AM243X || SOC_AM263X || SOC_AM263PX
 - \subpage SMART_PLACEMENT
 \endcond
+\cond SOC_AM263PX
+- \subpage MEMORY_CONFIGURATOR
+\endcond
