@@ -30,7 +30,7 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 /*
- * Auto generated file 
+ * Auto generated file
  */
 #include "ti_board_config.h"
 
@@ -54,7 +54,7 @@ void Board_init(void)
 
 % }
 % for(let subTemplate of args) {
-    % if (subTemplate.driver_init) {
+    % if (subTemplate.board_init) {
 `system.getTemplate(subTemplate.board_init)()`
     % }
 % }

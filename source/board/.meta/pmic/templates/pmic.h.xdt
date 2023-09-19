@@ -12,3 +12,5 @@
 #define `instance.$name.toUpperCase()` (`i`U)
 % }
 #define CONFIG_PMIC_NUM_INSTANCES (`module.$instances.length`U)
+
+void  Board_pmicInit();

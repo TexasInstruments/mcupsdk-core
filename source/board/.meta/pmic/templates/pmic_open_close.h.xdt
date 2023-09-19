@@ -2,6 +2,8 @@
  * PMIC
  */
 #include <board/pmic.h>
+/* Include ti_drivers_open_close.h to call MCSPI open*/
+#include "ti_drivers_open_close.h"
 
 /* PMIC Driver handles */
 extern PMIC_Handle gPmicHandle[CONFIG_PMIC_NUM_INSTANCES];

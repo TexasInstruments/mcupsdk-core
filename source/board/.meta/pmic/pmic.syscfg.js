@@ -34,7 +34,6 @@ let pmic_module = {
     templates: {
         "/board/board/board_open_close.c.xdt": {
             board_open_close_config: "/board/pmic/templates/pmic_open_close_config.c.xdt",
-            board_open: "/board/pmic/templates/pmic_open.c.xdt",
             board_close: "/board/pmic/templates/pmic_close.c.xdt",
         },
         "/board/board/board_open_close.h.xdt": {
@@ -42,6 +41,9 @@ let pmic_module = {
         },
         "/board/board/board_config.h.xdt": {
             board_config: "/board/pmic/templates/pmic.h.xdt",
+        },
+        "/board/board/board_config.c.xdt": {
+            board_init: "/board/pmic/templates/pmic_init.c.xdt",
         },
     },
     defaultInstanceName: "CONFIG_PMIC",
@@ -69,9 +71,6 @@ function moduleInstances(instance) {
             name: "peripheralDriver",
             displayName: "MCSPI Configuration",
             moduleName: '/drivers/mcspi/mcspi',
-            requiredArgs: {
-                pmicEnabled : 1,
-            },
         });
     }
 
