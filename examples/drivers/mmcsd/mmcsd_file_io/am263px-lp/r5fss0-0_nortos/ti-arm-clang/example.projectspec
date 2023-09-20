@@ -49,6 +49,7 @@
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
+            -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/lib
             -i${CG_TOOL_ROOT}/lib
             -m=mmcsd_file_io.${ConfigName}.map
@@ -72,6 +73,7 @@
             "
             linkerBuildOptions="
                 -lnortos.am263px.r5f.ti-arm-clang.debug.lib
+                -lboard.am263px.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am263px.r5f.ti-arm-clang.debug.lib
                 -lfreertos_fat.am263px.r5f.ti-arm-clang.debug.lib
                 -llibc.a
@@ -84,6 +86,7 @@
             "
             linkerBuildOptions="
                 -lnortos.am263px.r5f.ti-arm-clang.release.lib
+                -lboard.am263px.r5f.ti-arm-clang.release.lib
                 -ldrivers.am263px.r5f.ti-arm-clang.release.lib
                 -lfreertos_fat.am263px.r5f.ti-arm-clang.release.lib
                 -llibc.a

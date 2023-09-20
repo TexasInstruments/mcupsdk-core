@@ -32,6 +32,7 @@ const libdirs = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/lib",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/lib",
     ],
 };
@@ -39,6 +40,7 @@ const libdirs = {
 const libs_r5f = {
     common: [
         "nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "freertos_fat.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
