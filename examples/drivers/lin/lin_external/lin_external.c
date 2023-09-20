@@ -89,20 +89,25 @@ void lin_external_main(void)
 
     DebugP_log("[LIN] LIN mode external, application started ...\r\n");
 
-    /* Enable parity check */
-    LIN_enableParity(APP_LIN_BASE_ADDR);
-
     /* Enable multi-buffer mode */
     LIN_enableMultibufferMode(APP_LIN_BASE_ADDR);
+
+    LIN_setSyncFields(APP_LIN_BASE_ADDR, 5U, 3U);
 
     /* Enable Fixed baud rate mode */
     LIN_disableAutomaticBaudrate(APP_LIN_BASE_ADDR);
 
     /* Reaching the Baud of 19200 */
     LIN_setBaudRatePrescaler(APP_LIN_BASE_ADDR, 624U, 0U);
+    LIN_setMaximumBaudRate(APP_LIN_BASE_ADDR, 100000000U);
+
+    /* Set Mask ID so TX/RX match will always happen */
+    LIN_setTxMask(APP_LIN_BASE_ADDR, 0xFFU);
+    LIN_setRxMask(APP_LIN_BASE_ADDR, 0xFFU);
 
     /* Enable transfer of data to the shift registers  */
     LIN_enableDataTransmitter(APP_LIN_BASE_ADDR);
+    LIN_enableDataReceiver(APP_LIN_BASE_ADDR);
 
     /* Enable the triggering of checksum compare on extended frames */
     LIN_triggerChecksumCompare(APP_LIN_BASE_ADDR);
