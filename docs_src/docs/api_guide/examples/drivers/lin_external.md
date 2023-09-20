@@ -31,9 +31,9 @@ The size of the message is also increased with increasing id.
 
 # Steps to Run the Example
 
-- **Board Configuration**, change the SW9 to OFF mode, and change the SW10 to 1-2.
+- **Board Configuration**, change the SW9 to ON mode, and change the SW10 to 1-2.
 \imageStyle{lin_external_sw9_config.PNG,width:12.5%}
-\image html lin_external_sw9_config.PNG LIN SW9 set to OFF
+\image html lin_external_sw9_config.PNG LIN SW9 set to ON
 
 \imageStyle{lin_external_sw10_config.PNG,width:12.5%}
 \image html lin_external_sw10_config.PNG LIN SW10 connected in 1-2
@@ -56,6 +56,13 @@ The size of the message is also increased with increasing id.
 - **When using makefiles to build**, note the required combination and build using
   make command (see \ref MAKEFILE_BUILD_PAGE)
 - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
+
+# Overridding the default configurations
+
+- To override the default configurations or initializations, uncheck the box of Default Configuration and rebuild the example. The same example will work without any other changes.
+
+\imageStyle{lin_override_default_config.png,width:50%}
+\image html lin_override_default_config.png Bypassing Default Configuration.
 
 # See Also
 
