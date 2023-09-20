@@ -77,8 +77,7 @@ void Bootloader_socLoadHsmRtFw(const uint8_t *HsmRtFw, uint32_t hsmRTSize)
         retVal = Hsmclient_loadHSMRtFirmware((uint8_t*)HsmRtFw);
         DebugP_logInfo("HSMRT Size in Bytes : %ld \r\n", (uint32_t)hsmRTSize);
     }
-    else if((ptrTopCtrlRegs->EFUSE_DEVICE_TYPE == BOOTLOADER_DEVTYPE_HSFS) &&
-			(((ptrTopCtrlRegs->EFUSE1_ROW_15)&0xF) == AM263Px_SR11))
+    else if(ptrTopCtrlRegs->EFUSE_DEVICE_TYPE == BOOTLOADER_DEVTYPE_HSFS)
     {
         DebugP_logInfo("Device Type : HSFS  \r\n");
         retVal = Hsmclient_loadHSMRtFirmware((uint8_t*)HsmRtFw);
