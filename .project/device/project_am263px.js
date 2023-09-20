@@ -142,11 +142,9 @@ const example_file_list = [
 	"examples/security/crypto/dthe_sha/crypto_hmac_sha512/.project/project.js",
 	"examples/security/crypto/dthe_sha/crypto_sha_256/.project/project.js",
 	"examples/security/crypto/dthe_sha/crypto_sha_512/.project/project.js",
-        "examples/networking/enet_loopback/enet_cpsw_loopback/.project/project.js",
-        "examples/networking/enet_layer2_cpsw/.project/project.js",
-        "examples/networking/enet_layer2_multi_channel/.project/project.js",
-	// "examples/kernel/dpl/dpl_low_latency_interrupt/.project/project.js",
-	// "examples/kernel/dpl/interrupt_prioritization/.project/project.js",
+    "examples/networking/enet_loopback/enet_cpsw_loopback/.project/project.js",
+    "examples/networking/enet_layer2_cpsw/.project/project.js",
+    "examples/networking/enet_layer2_multi_channel/.project/project.js",
     "examples/networking/lwip/cpsw_lwip_https/.project/project.js",
     "examples/networking/lwip/enet_cpsw_udp_igmp/.project/project.js",
 	"test/board/eeprom/.project/project.js",
@@ -202,10 +200,12 @@ const example_file_list = [
 function getProjectSpecCpu(cpu) {
     let projectSpecCpu =
     {
-        "r5fss0-0": "MAIN_PULSAR_Cortex_R5_0_0",
-        "r5fss0-1": "MAIN_PULSAR_Cortex_R5_0_1",
-        "r5fss1-0": "MAIN_PULSAR_Cortex_R5_1_0",
-        "r5fss1-1": "MAIN_PULSAR_Cortex_R5_1_1",
+        "r5fss0-0": "Cortex_R5_0",
+        "r5fss0-1": "Cortex_R5_1",
+        "r5fss1-0": "Cortex_R5_2",
+        "r5fss1-1": "Cortex_R5_3",
+        "icssm-pru0": "ICSSM_PRU_0",
+        "icssm-pru1": "ICSSM_PRU_1",
     }
 
     return projectSpecCpu[cpu];

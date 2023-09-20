@@ -1,8 +1,8 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.9.0+2015","templates":null}
+ * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
@@ -27,22 +27,22 @@ const mpu_armv76 = mpu_armv7.addInstance();
 fsi_rx1.$name             = "CONFIG_FSI_RX0";
 fsi_rx1.intrEnable        = false;
 fsi_rx1.FSIRX.$assign     = "FSIRX0";
-fsi_rx1.FSIRX.CLK.$assign = "ball.T17";
-fsi_rx1.FSIRX.D0.$assign  = "ball.U18";
-fsi_rx1.FSIRX.D1.$assign  = "ball.T18";
+fsi_rx1.FSIRX.CLK.$assign = "SPI1_CLK";
+fsi_rx1.FSIRX.D0.$assign  = "SPI1_D0";
+fsi_rx1.FSIRX.D1.$assign  = "SPI1_D1";
 
 fsi_tx1.$name             = "CONFIG_FSI_TX0";
 fsi_tx1.intrEnable        = false;
 fsi_tx1.FSITX.$assign     = "FSITX0";
-fsi_tx1.FSITX.CLK.$assign = "ball.R17";
-fsi_tx1.FSITX.D0.$assign  = "ball.R18";
-fsi_tx1.FSITX.D1.$assign  = "ball.U17";
+fsi_tx1.FSITX.CLK.$assign = "RGMII1_RXC";
+fsi_tx1.FSITX.D0.$assign  = "SPI0_D0";
+fsi_tx1.FSITX.D1.$assign  = "SPI0_D1";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
 debug_log.uartLog.UART.$assign     = "UART0";
-debug_log.uartLog.UART.RXD.$assign = "ball.A7";
-debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;

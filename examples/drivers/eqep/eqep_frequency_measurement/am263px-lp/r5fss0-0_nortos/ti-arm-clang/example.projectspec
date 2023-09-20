@@ -21,7 +21,7 @@
         toolChain="TICLANG"
         cgtVersion="2.1.3"
         device="Cortex R.AM263Px"
-        deviceCore="MAIN_PULSAR_Cortex_R5_0_0"
+        deviceCore="Cortex_R5_0"
         ignoreDefaultDeviceSettings="true"
         ignoreDefaultCCSSettings="true"
         endianness="little"
@@ -57,7 +57,7 @@
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --context r5fss0-0 --part AM263P2 --package ZCZ_S
+            --context r5fss0-0 --part AM263P2 --package ZCZ_C
         "
 
         description="A Eqep Frequency Measurement NORTOS project">

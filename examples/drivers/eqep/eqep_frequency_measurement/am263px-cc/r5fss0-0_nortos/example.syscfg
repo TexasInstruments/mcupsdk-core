@@ -1,8 +1,8 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.15.0+2826"}
+ * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
@@ -53,12 +53,11 @@ eqep1.evntPrescale         = "EQEP_UNIT_POS_EVNT_DIV_8";
 eqep1.capPrescale          = "EQEP_CAPTURE_CLK_DIV_128";
 eqep1.enableCapture        = true;
 eqep1.captureConfig        = true;
-eqep1.EQEP.$assign         = "EQEP0";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "ball.A7";
-debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -88,10 +87,11 @@ int_xbar1.xbarOutput = ["EPWM0_INT"];
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution           = "ball.B2";
-epwm1.EPWM.B.$suggestSolution           = "ball.B1";
-eqep1.EQEP.A.$suggestSolution           = "ball.U18";
-eqep1.EQEP.B.$suggestSolution           = "ball.T18";
-eqep1.EQEP.STROBE.$suggestSolution      = "ball.M18";
-eqep1.EQEP.INDEX.$suggestSolution       = "ball.N18";
+epwm1.EPWM.A.$suggestSolution           = "EPWM0_A";
+epwm1.EPWM.B.$suggestSolution           = "EPWM0_B";
+eqep1.EQEP.$suggestSolution             = "EQEP0";
+eqep1.EQEP.A.$suggestSolution           = "EQEP0_A";
+eqep1.EQEP.B.$suggestSolution           = "EQEP0_B";
+eqep1.EQEP.STROBE.$suggestSolution      = "EQEP0_STROBE";
+eqep1.EQEP.INDEX.$suggestSolution       = "EQEP0_INDEX";
 debug_log.uartLog.UART.$suggestSolution = "UART0";
