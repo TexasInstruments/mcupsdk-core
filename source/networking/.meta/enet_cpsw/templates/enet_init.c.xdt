@@ -128,6 +128,10 @@ static void EnetApp_ConfigureDscpMapping(Enet_Type enetType,
 void EnetApp_phyStateHandler();
 %}
 
+%if(instance.RtosVariant == "FreeRTOS"){
+void EnetApp_phyStateHandler(void * appHandle);
+%}
+
 static Enet_Handle EnetApp_doCpswOpen(Enet_Type enetType, uint32_t instId, const Cpsw_Cfg *cpswCfg)
 {
     int32_t status = ENET_SOK;

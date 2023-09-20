@@ -1854,6 +1854,8 @@ int32_t AM263x_CMPSS_BTR_0006(uint32_t base)
     return test_cmpss_dac_swload(base, 0);
 }
 
+
+uint32_t stuck_count=0;
 int32_t test_cmpss_ramp_pwm(uint32_t base)
 {
     uint32_t error=0;
@@ -1893,7 +1895,6 @@ int32_t test_cmpss_ramp_pwm(uint32_t base)
     //Verify RAMPSTS logs
     //Verify if TBCTR is close to EPWMSYNCPER source
 
-    uint32_t stuck_count=0;
     for(loop_count=0;loop_count<100-1;loop_count++)
     {
         ////DebugP_log("\r\nrampsts = 0x%04x dacval = 0x%04x, pwmtbctr = 0x%04x", rampsts_logs[loop_count], dacval_logs[loop_count], pwmtbctr_logs[loop_count]);

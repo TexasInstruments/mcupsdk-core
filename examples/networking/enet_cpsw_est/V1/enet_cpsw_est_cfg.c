@@ -115,15 +115,13 @@ static void EnetApp_portLinkStatusChangeCb(Enet_MacPort macPort,
 static void EnetApp_mdioLinkStatusChange(Cpsw_MdioLinkStateChangeInfo *info,
                                          void *appArg)
 {
-    static uint32_t linkUpCount = 0U;
-
     if (info->linkChanged)
     {
-        if (info->isLinked)
-        {
-            linkUpCount++;
-        }
-        else
+        EnetAppUtils_print("Link Status Changed. PHY: 0x%x, state: %s\r\n",
+                info->phyAddr,
+                info->isLinked? "up" : "down");
+
+        if (!info->isLinked)
         {
             gEnetApp.usingDfltSched = false;
         }

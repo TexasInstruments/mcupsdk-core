@@ -141,6 +141,8 @@ const includes = {
 const cflags = {
     common: [
         "-Wno-extra",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-unused-but-set-variable",
     ],
     release: [
         "-Oz",

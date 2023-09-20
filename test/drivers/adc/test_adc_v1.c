@@ -3550,7 +3550,7 @@ void ADC_ISR_for_ADC_TTR_0002(void* args)
 }
 
 /* AM263_ADC_TTR_0002	 ADC Latch to R5F response latency */
-int32_t AM263_ADC_TTR_0002(base)
+int32_t AM263_ADC_TTR_0002(uint32_t base)
 {
     if(enableLog)
     {

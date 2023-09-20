@@ -136,6 +136,8 @@ const cflags = {
         "-Wno-extra",
         "-Wno-ti-macros",
         "-fno-strict-aliasing",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-unused-but-set-variable",
     ],
     release: [
         "-Oz",

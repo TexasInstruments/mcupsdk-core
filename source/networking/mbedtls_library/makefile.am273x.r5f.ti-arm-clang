@@ -126,6 +126,8 @@ CFLAGS_common := \
     -mno-unaligned-access \
     -Wno-extra \
     -Wvisibility \
+    -Wno-error=unused-but-set-variable \
+    -Wno-unused-but-set-variable \
 
 CFLAGS_release := \
     -Os \

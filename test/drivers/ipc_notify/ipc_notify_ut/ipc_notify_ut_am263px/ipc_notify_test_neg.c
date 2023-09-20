@@ -182,17 +182,11 @@ void negTest_ipcNotifysendMsgWaitFifo(void *args)
     uint32_t gMsgEchoCount = 10000u;
     uint32_t i;
     uint32_t gNullClientId = 5u;
-    uint32_t hwFifoFullCount;
-    hwFifoFullCount = 0;
     for(i=0 ; i<gMsgEchoCount; i++)
     {
         /* send message to remote core which does have any registered handler,
            DO NOT wait for message to be put in HW FIFO */
         testStatus = IpcNotify_sendMsg(remoteCoreId, gNullClientId, 0, 0);
-        if(testStatus==SystemP_TIMEOUT)
-        {
-            hwFifoFullCount++;
-        }
     }
     TEST_ASSERT_EQUAL_INT32(SystemP_FAILURE, testStatus);
 }

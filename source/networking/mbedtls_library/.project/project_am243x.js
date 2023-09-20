@@ -105,6 +105,8 @@ const cflags = {
         "-mno-unaligned-access",
         "-Wno-extra",
         "-Wvisibility",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-unused-but-set-variable",
     ],
     release: [
         "-Oz",

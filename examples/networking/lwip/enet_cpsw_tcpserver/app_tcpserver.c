@@ -57,7 +57,7 @@ static const uint8_t APP_CLIENT_TX_MSG1[] = "Greetings from Texas Instruments!";
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-static void AppTcp_echoPckt();
+static void AppTcp_echoPckt(struct netconn *pClientConn);
 
 static void AppTcp_ServerTask(void *arg);
 

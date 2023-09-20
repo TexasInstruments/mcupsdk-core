@@ -214,70 +214,70 @@ uint32_t util_EQEP_getInstanceFromBase(uint32_t base)
 
 }
 
-int32_t eqep_inst_tc_EQEP_quadrature_pattern_detection(base)
+int32_t eqep_inst_tc_EQEP_quadrature_pattern_detection(uint32_t base)
 {
     int32_t error=0;
 
     return error;
 }
 
-int32_t eqep_inst_tc_EQEP_pulse_width_direction_bit_pattern_detection(base)
+int32_t eqep_inst_tc_EQEP_pulse_width_direction_bit_pattern_detection(uint32_t base)
 {
     int32_t error=0;
 
     return error;
 }
 
-int32_t eqep_inst_tc_EQEP_qma_mode_1(base)
+int32_t eqep_inst_tc_EQEP_qma_mode_1(uint32_t base)
 {
     int32_t error=0;
 
     return error;
 }
 
-int32_t eqep_inst_tc_EQEP_qma_mode_2(base)
+int32_t eqep_inst_tc_EQEP_qma_mode_2(uint32_t base)
 {
     int32_t error=0;
 
     return error;
 }
 
-int32_t eqep_inst_tc_EQEP_eqep_cmpss_interaction(base)
+int32_t eqep_inst_tc_EQEP_eqep_cmpss_interaction(uint32_t base)
 {
     int32_t error=0;
 
     return error;
 }
 
-int32_t eqep_inst_tc_EQEP_eqep_adc_interaction(base)
+int32_t eqep_inst_tc_EQEP_eqep_adc_interaction(uint32_t base)
 {
     int32_t error=0;
 
     return error;
 }
 
-int32_t eqep_inst_tc_EQEP_eqep_pwm_xbar(base)
+int32_t eqep_inst_tc_EQEP_eqep_pwm_xbar(uint32_t base)
 {
     int32_t error=0;
 
     return error;
 }
 
-int32_t eqep_inst_tc_EQEP_invalid_pattern_detection(base)
+int32_t eqep_inst_tc_EQEP_invalid_pattern_detection(uint32_t base)
 {
     int32_t error=0;
 
     return error;
 }
 
-int32_t eqep_inst_tc_EQEP_qep_watchdog(base)
+int32_t eqep_inst_tc_EQEP_qep_watchdog(uint32_t base)
 {
     int32_t error=0;
 
     return error;
 }
 
-int32_t eqep_inst_tc_EQEP_qep_position_counter_overflow_underflow(base)
+int32_t eqep_inst_tc_EQEP_qep_position_counter_overflow_underflow(uint32_t base)
 {
     int32_t error=0;
 

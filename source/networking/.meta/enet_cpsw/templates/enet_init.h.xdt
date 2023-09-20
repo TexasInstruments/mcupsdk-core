@@ -59,7 +59,13 @@ void EnetApp_updateCpswInitCfg(Enet_Type enetType,  uint32_t instId,   Cpsw_Cfg 
 
 void EnetApp_initPhyStateHandlerTask(EventP_Object* pEvent);
 
+%if(instance.RtosVariant == "NoRTOS"){
 void EnetApp_phyStateHandler();
+%}
+
+%if(instance.RtosVariant == "FreeRTOS"){
+void EnetApp_phyStateHandler(void * appHandle);
+%}
 
 void EnetApp_doIetVerification(Enet_Handle hEnet, uint32_t coreId, Enet_MacPort macPort);
 

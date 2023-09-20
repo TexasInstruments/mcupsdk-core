@@ -231,10 +231,11 @@ void EnetApp_updateCpswInitCfg(Enet_Type enetType, uint32_t instId, Cpsw_Cfg *cp
 static void EnetApp_mdioLinkStatusChange(Cpsw_MdioLinkStateChangeInfo *info,
                                          void *appArg)
 {
-    static uint32_t linkUpCount = 0;
-    if ((info->linkChanged) && (info->isLinked))
+    if (info->linkChanged)
     {
-        linkUpCount++;
+        EnetAppUtils_print("Link Status Changed. PHY: 0x%x, state: %s\r\n",
+                info->phyAddr,
+                info->isLinked? "up" : "down");
     }
 }
 

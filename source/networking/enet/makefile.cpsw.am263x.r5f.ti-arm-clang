@@ -151,6 +151,8 @@ CFLAGS_common := \
     -Wno-unused-function \
     -Wno-extra \
     -Wno-ti-macros \
+    -Wno-error=unused-but-set-variable \
+    -Wno-unused-but-set-variable \
 
 CFLAGS_release := \
     -Os \

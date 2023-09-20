@@ -138,6 +138,8 @@ const cflags = {
     common: [
         "-Wno-extra",
         "-Wno-ti-macros",
+        "-Wno-error=unused-but-set-variable",
+        "-Wno-unused-but-set-variable",
     ],
     release: [
         "-Oz",

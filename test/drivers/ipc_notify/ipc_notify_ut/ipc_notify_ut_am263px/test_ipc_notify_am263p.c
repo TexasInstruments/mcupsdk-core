@@ -120,7 +120,7 @@ void test_ipc_notify_rx_msg_handler(uint32_t remoteCoreId, uint16_t localClientI
 void test_notifyAnyToAny(void *args)
 {
     int32_t status;
-    uint32_t i, numRemoteCores;
+    uint32_t i;
 
     /* create completion semaphores */
     for(i=0; i < CSL_CORE_ID_MAX; i++)
@@ -155,14 +155,12 @@ void test_notifyAnyToAny(void *args)
     }
 
     /* wait for all messages to be echo'ed back */
-    numRemoteCores = 0;
     for(i=0; gRemoteCoreId[i]!=CSL_CORE_ID_MAX; i++)
     {
         if(gRemoteCoreId[i] != IpcNotify_getSelfCoreId())
         {
             status = SemaphoreP_pend(&gAckDoneSem[ gRemoteCoreId[i] ], SystemP_WAIT_FOREVER);
             TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
-            numRemoteCores++;
         }
     }
 

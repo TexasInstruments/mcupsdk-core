@@ -72,7 +72,7 @@ static void TestApp_createRxTxTasks(void);
 
 static void TestApp_timerCb(ClockP_Object *clkInst, void * arg);
 
-static void TestApp_txTask();
+static void TestApp_txTask(void *args);
 
 static void TestApp_rxTask(void *args);
 

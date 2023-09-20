@@ -151,6 +151,8 @@ CFLAGS_common := \
     -Wno-gnu-variable-sized-type-not-at-end \
     -Wno-unused-function \
     -Wno-extra \
+    -Wno-error=unused-but-set-variable \
+    -Wno-unused-but-set-variable \
 
 CFLAGS_release := \
     -Os \

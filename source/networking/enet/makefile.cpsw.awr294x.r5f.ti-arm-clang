@@ -144,6 +144,8 @@ CFLAGS_common := \
     -Wno-extra \
     -Wno-ti-macros \
     -fno-strict-aliasing \
+    -Wno-error=unused-but-set-variable \
+    -Wno-unused-but-set-variable \
 
 CFLAGS_release := \
     -Os \

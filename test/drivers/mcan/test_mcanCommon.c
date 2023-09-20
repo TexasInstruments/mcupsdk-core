@@ -189,8 +189,8 @@ int32_t mcanTestFunc(st_mcanTestcaseParams_t *testParams);
  *
  * \retval  status      configuration status.
  */
-int32_t App_mcanRegisterInterrupt();
-int32_t App_mcanUnRegisterInterrupt();
+int32_t App_mcanRegisterInterrupt(uint32_t modIdx);
+int32_t App_mcanUnRegisterInterrupt(uint32_t modIdx);
 
 /**
  * \brief   This is Interrupt Service Routine for MCAN interrupt 0.
