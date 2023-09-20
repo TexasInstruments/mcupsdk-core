@@ -76,4 +76,3 @@ else
 	@echo  Boot image: am243x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_NAME) Done !!!
 	@echo  .
 endif
-endif

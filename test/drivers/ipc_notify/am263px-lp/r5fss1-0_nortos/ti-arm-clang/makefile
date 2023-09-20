@@ -12,9 +12,6 @@ CC=$(CG_TOOL_ROOT)/bin/tiarmclang
 LNK=$(CG_TOOL_ROOT)/bin/tiarmclang
 STRIP=$(CG_TOOL_ROOT)/bin/tiarmstrip
 OBJCOPY=$(CG_TOOL_ROOT)/bin/tiarmobjcopy
-COV=$(CG_TOOL_ROOT)/bin/tiarmcov
-PROFDATA=$(CG_TOOL_ROOT)/bin/tiarmprofdata
-COVERAGE_PATH=$(abspath .)
 ifeq ($(OS), Windows_NT)
 	PYTHON=python
 else
@@ -127,11 +124,9 @@ FILES := $(FILES_common) $(FILES_$(PROFILE))
 ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
 FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
 CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
-
 ifeq ($(INSTRUMENTATION_MODE), yes)
 CFLAGS += -fprofile-instr-generate -fcoverage-mapping
 endif
-
 DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
 INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 LIBS := $(LIBS_common) $(LIBS_$(PROFILE))
