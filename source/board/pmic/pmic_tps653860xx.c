@@ -98,8 +98,9 @@ int32_t PMIC_mcspiWriteRegister(MCSPI_Handle handle, MCSPI_Transaction *spiTrans
 
 PMIC_Fxns gPmicFxns_TPS653860xx =
 {
-    .openFxn    = PMIC_tps653860xxOpen,
-    .closeFxn   = PMIC_tps653860xxClose,
+    .openFxn        = PMIC_tps653860xxOpen,
+    .configureFxn   = PMIC_tps653860xxConfigure,
+    .closeFxn       = PMIC_tps653860xxClose,
 };
 
 /* ========================================================================== */
@@ -140,8 +141,6 @@ int32_t PMIC_tps653860xxOpen(PMIC_Config *config, const PMIC_Params *params)
 {
     int32_t         status = SystemP_SUCCESS;
     PMIC_Object     *object;
-    MCSPI_Transaction   spiTransaction;
-    uint8_t data = 0;
 
     if((NULL == config) || (NULL == params))
     {
@@ -159,16 +158,33 @@ int32_t PMIC_tps653860xxOpen(PMIC_Config *config, const PMIC_Params *params)
         }
     }
 
+   return status;
+}
+
+int32_t PMIC_tps653860xxConfigure(PMIC_Config *config)
+{
+    int32_t         status = SystemP_SUCCESS;
+    PMIC_Object     *object;
+    MCSPI_Transaction   spiTransaction;
+    uint8_t data = 0;
+
+    if((NULL == config))
+    {
+        status = SystemP_FAILURE;
+    }
+
     if(status == SystemP_SUCCESS)
     {
+        object = (PMIC_Object *) config->object;
+
         /* Setup SPI transfers*/
         MCSPI_Transaction_init(&spiTransaction);
         spiTransaction.channel  = MCSPI_CHANNEL_0;
-        // number of bits/frame - this defines the buffer data type used
+        /* number of bits/frame - this defines the buffer data type used */
         spiTransaction.dataSize = (uint32_t)32;
-        // CS will de-assert automatically after the frame completes
+        /* CS will de-assert automatically after the frame completes */
         spiTransaction.csDisable = TRUE;
-         // number of frames in the transfer
+        /* number of frames in the transfer */
         spiTransaction.count    = (uint32_t)1;
         spiTransaction.txBuf    = (void *)gPmicMcspiTxBuffer;
         spiTransaction.rxBuf    = (void *)gPmicMcspiRxBuffer;

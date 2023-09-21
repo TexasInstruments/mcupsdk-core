@@ -91,11 +91,15 @@ void Board_pmicClose(void)
     return;
 }
 
-void Board_pmicInit(void)
+void Drivers_pmicOpen()
 {
+    PMIC_Handle pmicHandle = NULL;
+
     Drivers_mcspiOpen();
     Board_pmicOpen();
+    pmicHandle = gPmicHandle[CONFIG_PMIC0];
+    PMIC_configure(pmicHandle);
     Drivers_mcspiClose();
-    /*Wait 1ms for LDO rail to get initilized*/
-    ClockP_usleep(1000);
+    /*Wait 5ms for LDO rail to get initilized*/
+    ClockP_usleep(5000);
 }

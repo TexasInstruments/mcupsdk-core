@@ -1,0 +1,7 @@
+/*
+ * PMIC
+ */
+#include <board/pmic.h>
+
+/* Include ti_drivers_open_close.h to call MCSPI open*/
+void Drivers_pmicOpen();

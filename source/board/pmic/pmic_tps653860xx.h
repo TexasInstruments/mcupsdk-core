@@ -66,6 +66,7 @@ extern PMIC_Fxns gPmicFxns_TPS653860xx;
 /* ========================================================================== */
 
 int32_t PMIC_tps653860xxOpen(PMIC_Config *config, const PMIC_Params *params);
+int32_t PMIC_tps653860xxConfigure(PMIC_Config *config);
 void PMIC_tps653860xxClose(PMIC_Config *config);
 
 /* ========================================================================== */

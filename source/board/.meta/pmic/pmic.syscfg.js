@@ -42,8 +42,11 @@ let pmic_module = {
         "/board/board/board_config.h.xdt": {
             board_config: "/board/pmic/templates/pmic.h.xdt",
         },
-        "/board/board/board_config.c.xdt": {
-            board_init: "/board/pmic/templates/pmic_init.c.xdt",
+        "/drivers/system/drivers_open_close.c.xdt": {
+            driver_open: "/board/pmic/templates/pmic_open.c.xdt",
+        },
+        "/drivers/system/drivers_open_close.h.xdt": {
+            driver_open_close_config: "/board/pmic/templates/pmic_driver_open_close.h.xdt",
         },
     },
     defaultInstanceName: "CONFIG_PMIC",

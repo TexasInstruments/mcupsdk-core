@@ -88,6 +88,20 @@ PMIC_Handle PMIC_open(uint32_t instanceId, const PMIC_Params *params)
     return (config);
 }
 
+int32_t PMIC_configure(PMIC_Handle handle)
+{
+    int32_t status = SystemP_FAILURE;
+
+    PMIC_Config *config = (PMIC_Config *) handle;
+
+    if(config && config->fxns && config->fxns->configureFxn)
+    {
+        config->fxns->configureFxn(config);
+    }
+
+    return status;
+}
+
 void PMIC_close(PMIC_Handle handle)
 {
     PMIC_Config *config = (PMIC_Config *) handle;

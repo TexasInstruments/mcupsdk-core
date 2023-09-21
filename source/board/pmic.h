@@ -88,6 +88,18 @@ typedef struct PMIC_Params_s PMIC_Params;
 typedef int32_t (*PMIC_OpenFxn)(PMIC_Config *config, const PMIC_Params *params);
 
 /**
+ *  \brief Driver implementation to configure the specific PMIC driver
+ *
+ *  Typically this callback is hidden from the end application and is implemented
+ *  when a new type of PMIC device needs to be implemented.
+ *
+ *  \param config [IN] PMIC configuration for the specific PMIC device
+ *
+ *  \return SystemP_SUCCESS on success, else failure
+ */
+typedef int32_t (*PMIC_ConfigureFxn)(PMIC_Config *config);
+
+/**
  *  \brief Driver implementation to close a specific PMIC driver
  *
  *  Typically this callback is hidden from the end application and is implemented
@@ -121,6 +133,8 @@ struct PMIC_Params_s
 typedef struct PMIC_Fxns_s
 {
     PMIC_OpenFxn     openFxn;
+    /**< PMIC driver implementation specific callback */
+    PMIC_ConfigureFxn configureFxn;
     /**< PMIC driver implementation specific callback */
     PMIC_CloseFxn    closeFxn;
     /**< PMIC driver implementation specific callback */
@@ -172,6 +186,13 @@ void PMIC_Params_init(PMIC_Params *params);
  *          Else returns NULL in case of failure
  */
 PMIC_Handle PMIC_open(uint32_t instanceId, const PMIC_Params *params);
+
+/**
+ *  \brief Configure PMIC driver
+ *
+ *  \param handle    [IN] PMIC driver handle from \ref PMIC_open
+ */
+int32_t PMIC_configure(PMIC_Handle handle);
 
 /**
  *  \brief Close PMIC driver
