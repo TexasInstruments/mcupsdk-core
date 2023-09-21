@@ -615,10 +615,18 @@ LIN_sendWakeupSignal(uint32_t base)
     DebugP_assert(LIN_isBaseValid(base));
 
     /* Set key in Byte 0 (MSB) of transmit buffer 0 register */
-    HW_WR_FIELD32_RAW((base + CSL_LIN_LINTD0), CSL_LIN_LINTD0_TD3_MASK, CSL_LIN_LINTD0_TD3_SHIFT, (uint16_t)LIN_WAKEUP_KEY);
+    HW_WR_FIELD32_RAW((base + CSL_LIN_LINTD0), CSL_LIN_LINTD0_TD0_MASK, CSL_LIN_LINTD0_TD0_SHIFT, (uint16_t)LIN_WAKEUP_KEY);
+
+    /* Set the powerdown mask */
+    HW_WR_FIELD32_RAW((base + CSL_LIN_SCIGCR2), CSL_LIN_SCIGCR2_POWERDOWN_MASK,
+                CSL_LIN_SCIGCR2_POWERDOWN_SHIFT, CSL_TRUE);
 
     /* Transmit TDO for wakeup */
     HW_WR_FIELD32_RAW((base + CSL_LIN_SCIGCR2), CSL_LIN_SCIGCR2_GENWU_MASK, CSL_LIN_SCIGCR2_GENWU_SHIFT, CSL_TRUE);
+
+    /* Set the powerdown mask */
+    HW_WR_FIELD32_RAW((base + CSL_LIN_SCIGCR2), CSL_LIN_SCIGCR2_POWERDOWN_MASK,
+                CSL_LIN_SCIGCR2_POWERDOWN_SHIFT, CSL_FALSE);
 }
 
 /**
