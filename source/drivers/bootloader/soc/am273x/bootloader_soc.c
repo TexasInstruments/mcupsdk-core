@@ -37,10 +37,17 @@
 #include <kernel/dpl/CacheP.h>
 #include <kernel/dpl/HwiP.h>
 
-#define BOOTLOADER_SOC_RSV_MEM_START (0x10200000)
-#define BOOTLOADER_SOC_RSV_MEM_END   (0x10220000)
+#define BOOTLOADER_SOC_RSV_MEM_START   (0x10200000)
+#define BOOTLOADER_SOC_RSV_MEM_END     (0x10220000)
 
-#define BOOTLOADER_SOC_APP_CERT_SIZE (0x1000)
+#define BOOTLOADER_SOC_APP_CERT_SIZE   (0x1000)
+
+#define BOOTLOADER_SOC_CLK_FREQ_400MHZ (uint32_t)(400*1000000)
+#define BOOTLOADER_SOC_CLK_FREQ_200MHZ (uint32_t)(200*1000000)
+#define BOOTLOADER_SOC_CLK_FREQ_450MHZ (uint32_t)(450*1000000)
+#define BOOTLOADER_SOC_CLK_FREQ_550MHZ (uint32_t)(550*1000000)
+#define BOOTLOADER_SOC_CLK_FREQ_300MHZ (uint32_t)(300*1000000)
+#define BOOTLOADER_SOC_CLK_FREQ_600MHZ (uint32_t)(600*1000000)
 
 Bootloader_resMemSections gResMemSection =
 {
@@ -54,17 +61,17 @@ Bootloader_resMemSections gResMemSection =
 Bootloader_CoreBootInfo gCoreBootInfo[] =
 {
     {
-        .defaultClockHz = (uint32_t)(400*1000000),
+        .defaultClockHz = BOOTLOADER_SOC_CLK_FREQ_400MHZ,
         .coreName       = "r5f0-0",
     },
 
     {
-        .defaultClockHz = (uint32_t)(400*1000000),
+        .defaultClockHz = BOOTLOADER_SOC_CLK_FREQ_400MHZ,
         .coreName       = "r5f0-1",
     },
 
     {
-        .defaultClockHz = (uint32_t)(450*1000000),
+        .defaultClockHz = BOOTLOADER_SOC_CLK_FREQ_450MHZ,
         .coreName       = "c66ss0",
     },
 };
@@ -87,6 +94,26 @@ uint32_t Bootloader_socCpuGetClkDefault(uint32_t cpuId)
     if(cpuId < CSL_CORE_ID_MAX)
     {
         defClock = gCoreBootInfo[cpuId].defaultClockHz;
+        uint8_t dspFreqEfuse = (CSL_REG32_RD(BOOTLOADER_SOC_EFUSE_REG_ROW11) & (BOOTLOADER_SOC_DSP_PART_MASK));
+
+        switch(dspFreqEfuse)
+        {
+            case BOOTLOADER_SOC_DSP_PART_300MHZ:
+                defClock = BOOTLOADER_SOC_CLK_FREQ_300MHZ;
+                break;
+
+            case BOOTLOADER_SOC_DSP_PART_550MHZ:
+                defClock = BOOTLOADER_SOC_CLK_FREQ_550MHZ;
+                break;
+
+            case BOOTLOADER_SOC_DSP_PART_450MHZ:
+                defClock = BOOTLOADER_SOC_CLK_FREQ_450MHZ;
+                break;
+
+            default:
+                defClock = BOOTLOADER_SOC_CLK_FREQ_450MHZ;
+                break;
+        }
     }
 
     return defClock;
@@ -223,11 +250,11 @@ int32_t Bootloader_socMemInitCpu(uint32_t cpuId)
         case CSL_CORE_ID_C66SS0:
             if (gDssMemInitDone == FALSE)
             {
-                SOC_rcmStartMemInitDSSL2(SOC_RCM_MEMINIT_DSSL2_MEMBANK_ALL);
                 SOC_rcmStartMemInitDSSL3(SOC_RCM_MEMINIT_DSSL3_MEMBANK_ALL);
-                SOC_rcmWaitMemInitDSSL2(SOC_RCM_MEMINIT_DSSL2_MEMBANK_ALL);
                 SOC_rcmWaitMemInitDSSL3(SOC_RCM_MEMINIT_DSSL3_MEMBANK_ALL);
                 SOC_rcmMemInitDssMailboxMemory();
+                SOC_rcmStartMemInitDSSL2(SOC_RCM_MEMINIT_DSSL2_MEMBANK_ALL);
+                SOC_rcmWaitMemInitDSSL2(SOC_RCM_MEMINIT_DSSL2_MEMBANK_ALL);
                 gDssMemInitDone = TRUE;
             }
             break;
@@ -282,17 +309,59 @@ void Bootloader_socConfigurePll(void)
 {
     SOC_RcmPllHsDivOutConfig hsDivCfg;
 
+    uint32_t eFuseRow11 = CSL_REG32_RD(BOOTLOADER_SOC_EFUSE_REG_ROW11);
+
     hsDivCfg.hsdivOutEnMask = SOC_RCM_PLL_HSDIV_OUTPUT_ENABLE_1 |
                                 SOC_RCM_PLL_HSDIV_OUTPUT_ENABLE_2;
     /* Configure CLKOUT1 to DSS PLL Fout/2. Divider is hsDivOut + 1 so set 1 */
+    uint32_t r5FreqEfuse = (eFuseRow11 & BOOTLOADER_SOC_R5_FREQ_MASK);
     hsDivCfg.hsDivOutFreqHz[1] = SOC_RCM_FREQ_MHZ2HZ(200U);
-    hsDivCfg.hsDivOutFreqHz[2] = SOC_RCM_FREQ_MHZ2HZ(400U);
+    if(r5FreqEfuse == BOOTLOADER_SOC_R5_PART_400MHZ)
+    {
+        gCoreBootInfo[CSL_CORE_ID_R5FSS0_0].defaultClockHz = BOOTLOADER_SOC_CLK_FREQ_400MHZ;
+        gCoreBootInfo[CSL_CORE_ID_R5FSS0_1].defaultClockHz = BOOTLOADER_SOC_CLK_FREQ_400MHZ;
+        hsDivCfg.hsDivOutFreqHz[2] = SOC_RCM_FREQ_MHZ2HZ(400U);
+    }
+    else
+    {
+        gCoreBootInfo[CSL_CORE_ID_R5FSS0_0].defaultClockHz = BOOTLOADER_SOC_CLK_FREQ_200MHZ;
+        gCoreBootInfo[CSL_CORE_ID_R5FSS0_1].defaultClockHz = BOOTLOADER_SOC_CLK_FREQ_200MHZ;
+        hsDivCfg.hsDivOutFreqHz[2] = SOC_RCM_FREQ_MHZ2HZ(200U);
+    }
     SOC_rcmCoreApllHSDivConfig(&hsDivCfg);
 
     hsDivCfg.hsdivOutEnMask = SOC_RCM_PLL_HSDIV_OUTPUT_ENABLE_1;
     /* Configure CLKOUT1 to DSS PLL Fout/2. Divider is hsDivOut + 1 so set 1 */
-    hsDivCfg.hsDivOutFreqHz[1] = gCoreBootInfo[CSL_CORE_ID_C66SS0].defaultClockHz;
-    SOC_rcmDspPllConfig(SOC_RcmPllFoutFreqId_CLK_900MHZ, &hsDivCfg);
+    /* Check the DSP frequency eFUSE register to find out frequency supported by the part */
+
+    uint8_t dspFreqEfuse = (eFuseRow11 & (BOOTLOADER_SOC_DSP_PART_MASK));
+
+    switch(dspFreqEfuse)
+    {
+        case BOOTLOADER_SOC_DSP_PART_300MHZ:
+            gCoreBootInfo[CSL_CORE_ID_C66SS0].defaultClockHz = BOOTLOADER_SOC_CLK_FREQ_300MHZ;
+            hsDivCfg.hsDivOutFreqHz[1] = gCoreBootInfo[CSL_CORE_ID_C66SS0].defaultClockHz;
+            SOC_rcmDspPllConfig(SOC_RcmPllFoutFreqId_CLK_900MHZ, &hsDivCfg);
+            break;
+
+        case BOOTLOADER_SOC_DSP_PART_550MHZ:
+            gCoreBootInfo[CSL_CORE_ID_C66SS0].defaultClockHz = BOOTLOADER_SOC_CLK_FREQ_550MHZ;
+            hsDivCfg.hsDivOutFreqHz[1] = gCoreBootInfo[CSL_CORE_ID_C66SS0].defaultClockHz;
+            SOC_rcmDspPllConfig(SOC_RcmPllFoutFreqId_CLK_1650MHZ, &hsDivCfg);
+            break;
+
+        case BOOTLOADER_SOC_DSP_PART_450MHZ:
+            gCoreBootInfo[CSL_CORE_ID_C66SS0].defaultClockHz = BOOTLOADER_SOC_CLK_FREQ_450MHZ;
+            hsDivCfg.hsDivOutFreqHz[1] = gCoreBootInfo[CSL_CORE_ID_C66SS0].defaultClockHz;
+            SOC_rcmDspPllConfig(SOC_RcmPllFoutFreqId_CLK_900MHZ, &hsDivCfg);
+            break;
+
+        default:
+            gCoreBootInfo[CSL_CORE_ID_C66SS0].defaultClockHz = BOOTLOADER_SOC_CLK_FREQ_450MHZ;
+            hsDivCfg.hsDivOutFreqHz[1] = gCoreBootInfo[CSL_CORE_ID_C66SS0].defaultClockHz;
+            SOC_rcmDspPllConfig(SOC_RcmPllFoutFreqId_CLK_900MHZ, &hsDivCfg);
+            break;
+    }
 
     hsDivCfg.hsdivOutEnMask = (SOC_RCM_PLL_HSDIV_OUTPUT_ENABLE_1 |
                                 SOC_RCM_PLL_HSDIV_OUTPUT_ENABLE_2 |
@@ -313,6 +382,12 @@ uint32_t Bootloader_socRprcToCslCoreId(uint32_t rprcCoreId)
 Bootloader_resMemSections* Bootloader_socGetSBLMem(void)
 {
     return &gResMemSection;
+}
+
+uint32_t Bootloader_socGetCoreVariant(void)
+{
+    uint32_t coreVariant = (CSL_REG32_RD(BOOTLOADER_SOC_EFUSE_REG_ROW11) & (BOOTLOADER_SOC_EFUSE_DUAL_CORE_DIS_MASK));
+    return coreVariant;
 }
 
 int32_t Bootloader_socAuthImage(uint32_t certLoadAddr)

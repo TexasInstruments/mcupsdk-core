@@ -59,6 +59,30 @@ extern "C"
 /** \brief hsmclient ID for bootloader */
 #define BOOTLOADER_CLIENT_ID            (0x02)
 /** @} */
+
+/**
+ * \brief eFUSE information for identifying different SOC variants
+ *
+ */
+#define BOOTLOADER_SOC_EFUSE_REG_ROW11 (0x030E0424)
+
+#define BOOTLOADER_SOC_DSP_PART_MASK   (0x70U)
+#define BOOTLOADER_SOC_DSP_PART_450MHZ (0x00)
+#define BOOTLOADER_SOC_DSP_PART_480MHZ (0x10)
+#define BOOTLOADER_SOC_DSP_PART_500MHZ (0x20)
+#define BOOTLOADER_SOC_DSP_PART_550MHZ (0x30)
+#define BOOTLOADER_SOC_DSP_PART_600MHZ (0x40)
+#define BOOTLOADER_SOC_DSP_PART_DITHER (0x50)
+#define BOOTLOADER_SOC_DSP_PART_300MHZ (0x60)
+
+#define BOOTLOADER_SOC_R5_FREQ_MASK    (uint32_t)(1U << 21U)
+#define BOOTLOADER_SOC_R5_PART_400MHZ  (0x00000000)
+#define BOOTLOADER_SOC_R5_PART_200MHZ  (uint32_t)(1U << 21U)
+
+#define BOOTLOADER_SOC_EFUSE_DUAL_CORE_DIS_MASK    (uint32_t)(1U << 14U)
+#define BOOTLOADER_SOC_VARIANT_DUAL_R5F            (0x00000000)
+#define BOOTLOADER_SOC_VARIANT_SINGLE_R5F          (uint32_t)(1U << 14U)
+
 /**
  * \brief Data structure containing information about a core specific to the AM273x SOC
  *
@@ -274,6 +298,15 @@ void Bootloader_socLoadHsmRtFw(const uint8_t *HsmRtFw, uint32_t hsmRTSize);
  *
  */
 void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid);
+
+/**
+ * \brief API to check R5F core variant of the SOC - whether it's a dual core or
+ * a single core variant
+ *
+ * \return \ref BOOTLOADER_SOC_VARIANT_DUAL_R5F or
+ *         \ref BOOTLOADER_SOC_VARIANT_SINGLE_R5F
+ */
+uint32_t Bootloader_socGetCoreVariant(void);
 
 #ifdef __cplusplus
 }

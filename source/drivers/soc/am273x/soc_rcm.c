@@ -89,6 +89,7 @@
 #define SOC_RCM_UTILS_ARRAYSIZE(x)                  (sizeof(x)/sizeof(x[0]))
 
 #define SOC_RCM_FREQ_1GHZ                           (1000*1000*1000)
+#define SOC_RCM_FREQ_550MHZ                         (uint32_t)(550*1000*1000)
 
 typedef enum SOC_RcmXtalFreqId_e
 {
@@ -149,6 +150,24 @@ typedef struct SOC_RcmADPLLJConfig_s
  */
 static const SOC_RcmADPLLJConfig gSocRcmADPLLJConfigTbl[] =
 {
+    /*DSP_1100_40MHz*/
+    {
+        .Finp = 40U,
+        .N = 19U,
+        .Fout = 1100U,
+        .M2 = 1U,
+        .M = 550U,
+        .FracM = 0U,
+    },
+    /*DSP_1650_40MHz*/
+    {
+        .Finp = 40U,
+        .N = 39U,
+        .Fout = 1650U,
+        .M2 = 1U,
+        .M = 1650U,
+        .FracM = 0U,
+    },
     /* DSP_900_40MHz  */
     {
         .Finp = 40U,
@@ -381,6 +400,8 @@ static const SOC_RcmXtalInfo gSocRcmXtalInfo[] =
 
 static const uint32_t gSocRcmPllFreqId2FOutMap[] =
 {
+    [SOC_RcmPllFoutFreqId_CLK_1100MHZ]        = 1100U,
+    [SOC_RcmPllFoutFreqId_CLK_1650MHZ]        = 1650U,
     [SOC_RcmPllFoutFreqId_CLK_800MHZ]        = 800U,
     [SOC_RcmPllFoutFreqId_CLK_900MHZ]        = 900U,
     [SOC_RcmPllFoutFreqId_CLK_2000MHZ]       = 2000U,
@@ -663,9 +684,9 @@ static const uint16_t gSocRcmCpswClkSrcValMap[] =
 
 static const uint16_t gSocRcmDspCoreClkSrcValMap[] =
 {
-    [SOC_RcmDspClockSource_XTAL_CLK] = 0x111,
-    [SOC_RcmDspClockSource_DPLL_DSP_HSDIV0_CLKOUT1] = 0x222,
-    [SOC_RcmDspClockSource_DPLL_CORE_HSDIV0_CLKOUT1] = 0x444
+    [SOC_RcmDspClockSource_XTAL_CLK] = 0x111U,
+    [SOC_RcmDspClockSource_DPLL_DSP_HSDIV0_CLKOUT1] = 0x222U,
+    [SOC_RcmDspClockSource_DPLL_CORE_HSDIV0_CLKOUT1] = 0x444U
 };
 
 static const uint16_t gSocRcmR5ClkSrcValMap[] =
@@ -1957,6 +1978,11 @@ static void SOC_rcmProgPllDspDivider (uint8_t inputClockDiv , uint8_t divider,
 
     /* program Fractional Multiplier */
     *ptrFracMReg = SOC_rcmInsert32 (*ptrFracMReg, 17U, 0U, fracMultiplier);
+
+    if(multiplier == 1650)
+    {
+        *ptrFracMReg = SOC_rcmInsert32 (*ptrFracMReg, 31U, 24U, 7U);
+    }
 }
 
 static void SOC_rcmProgPllPerDivider (uint8_t inputClockDiv , uint8_t divider,
@@ -2388,7 +2414,7 @@ void SOC_rcmCoreApllHSDivConfig(SOC_RcmPllHsDivOutConfig *hsDivCfg)
     /* If the PLL lock frequency is less than 1GHz, update the sigma delta divider and DCO frequency. Errata: i2389 */
     if(Fout < SOC_RCM_FREQ_1GHZ)
     {
-        ptrFracMReg = &(ptrTopRCMRegs->PLL_DSP_FRACDIV);
+        ptrFracMReg = &(ptrTopRCMRegs->PLL_CORE_FRACDIV);
         /* PLL_CORE_FRACDIV_REGSD_SHIFT, PLL_CORE_FRACDIV_REGSD_MASK */
         *ptrFracMReg = SOC_rcmInsert8 (*ptrFracMReg, 31U, 24U, 0x4);
 
@@ -3306,6 +3332,7 @@ void SOC_rcmWaitMemInitDSSL2(uint32_t l2bankMask)
     uint32_t          clearMemInitMask = 0;
 
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_DSS_CTRL, 0);
+
     if (l2bankMask & SOC_RCM_MEMINIT_DSSL2_MEMBANK_VB00)
     {
         while (CSL_FEXT(dssCtrl->DSS_DSP_L2RAM_MEMINIT_DONE, DSS_CTRL_DSS_DSP_L2RAM_MEMINIT_DONE_DSS_DSP_L2RAM_MEMINIT_DONE_VB00) != 1);

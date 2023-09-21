@@ -26,6 +26,7 @@ docs/datasheet*
 *.tiimage.hs
 *-fw
 *.vscode/
+*.vscode-ctags
 temp_stdout_*.txt
 ccs_projects/
 generated/

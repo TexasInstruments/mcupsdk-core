@@ -78,7 +78,7 @@ int main(void)
         {
             status = Bootloader_bootCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_C66SS0]);
         }
-        if(status == SystemP_SUCCESS)
+        if((status == SystemP_SUCCESS) && (BOOTLOADER_SOC_VARIANT_DUAL_R5F == Bootloader_socGetCoreVariant()))
         {
             status = Bootloader_bootCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
         }

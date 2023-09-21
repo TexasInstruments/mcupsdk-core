@@ -416,6 +416,14 @@ typedef enum SOC_RcmR5ClockSource
 typedef enum SOC_RcmPllFoutFreqId_e
 {
     /**
+     * @brief   Value specifying PLL Fout of 1100 Mhz
+     */
+    SOC_RcmPllFoutFreqId_CLK_1100MHZ,
+    /**
+     * @brief   Value specifying PLL Fout of 1650 Mhz
+     */
+    SOC_RcmPllFoutFreqId_CLK_1650MHZ,
+    /**
      * @brief   Value specifying PLL Fout of 800 Mhz
      */
     SOC_RcmPllFoutFreqId_CLK_800MHZ,
