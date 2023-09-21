@@ -2,12 +2,14 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.13.0+2553"}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const pmic       = scripting.addModule("/board/pmic/pmic", {}, false);
+const pmic1      = pmic.addInstance();
 const adc        = scripting.addModule("/drivers/adc/adc", {}, false);
 const adc1       = adc.addInstance();
 const adc2       = adc.addInstance();
@@ -16,6 +18,8 @@ const adc4       = adc.addInstance();
 const adc5       = adc.addInstance();
 const epwm       = scripting.addModule("/drivers/epwm/epwm", {}, false);
 const epwm1      = epwm.addInstance();
+const mcspi      = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
+const mcspi1     = mcspi.addInstance();
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71 = mpu_armv7.addInstance();
@@ -28,6 +32,8 @@ const int_xbar1  = int_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+pmic1.$name = "CONFIG_PMIC0";
+
 adc1.$name              = "CONFIG_ADC0";
 adc1.soc0Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
 adc1.soc1Trigger        = "ADC_TRIGGER_EPWM0_SOCA";
@@ -111,10 +117,24 @@ epwm1.epwmCounterCompare_cmpA                           = 1000;
 epwm1.epwmCounterCompare_cmpB                           = 1005;
 epwm1.EPWM.$assign                                      = "EPWM0";
 
+mcspi1.$name                 = "CONFIG_MCSPI0";
+pmic1.peripheralDriver       = mcspi1;
+mcspi1.SPI.$assign           = "SPI1";
+mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
+
+const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1                 = edma.addInstance({}, false);
+edma1.$name                 = "CONFIG_EDMA0";
+mcspi1.edmaDriver           = edma1;
+edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
+
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.RXD.$assign = "ball.A7";
-debug_log.uartLog.UART.TXD.$assign = "ball.A6";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -144,36 +164,40 @@ int_xbar1.xbarOutput = ["ADC4_INT1"];
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-adc1.ADC.AIN0.$suggestSolution          = "ball.V15";
-adc1.ADC.AIN1.$suggestSolution          = "ball.U15";
-adc1.ADC.AIN2.$suggestSolution          = "ball.T14";
-adc1.ADC.AIN3.$suggestSolution          = "ball.U14";
-adc1.ADC.AIN4.$suggestSolution          = "ball.U13";
-adc1.ADC.AIN5.$suggestSolution          = "ball.R14";
-adc2.ADC.AIN0.$suggestSolution          = "ball.T11";
-adc2.ADC.AIN1.$suggestSolution          = "ball.U11";
-adc2.ADC.AIN2.$suggestSolution          = "ball.T12";
-adc2.ADC.AIN3.$suggestSolution          = "ball.V12";
-adc2.ADC.AIN4.$suggestSolution          = "ball.U12";
-adc2.ADC.AIN5.$suggestSolution          = "ball.R12";
-adc3.ADC.AIN0.$suggestSolution          = "ball.R10";
-adc3.ADC.AIN1.$suggestSolution          = "ball.T10";
-adc3.ADC.AIN2.$suggestSolution          = "ball.U10";
-adc3.ADC.AIN3.$suggestSolution          = "ball.T9";
-adc3.ADC.AIN4.$suggestSolution          = "ball.V9";
-adc3.ADC.AIN5.$suggestSolution          = "ball.T8";
-adc4.ADC.AIN0.$suggestSolution          = "ball.U7";
-adc4.ADC.AIN1.$suggestSolution          = "ball.U8";
-adc4.ADC.AIN2.$suggestSolution          = "ball.T7";
-adc4.ADC.AIN3.$suggestSolution          = "ball.R7";
-adc4.ADC.AIN4.$suggestSolution          = "ball.V8";
-adc4.ADC.AIN5.$suggestSolution          = "ball.U9";
-adc5.ADC.AIN0.$suggestSolution          = "ball.U6";
-adc5.ADC.AIN1.$suggestSolution          = "ball.V5";
-adc5.ADC.AIN2.$suggestSolution          = "ball.V4";
-adc5.ADC.AIN3.$suggestSolution          = "ball.U5";
-adc5.ADC.AIN4.$suggestSolution          = "ball.V3";
-adc5.ADC.AIN5.$suggestSolution          = "ball.U4";
-epwm1.EPWM.A.$suggestSolution           = "ball.B2";
-epwm1.EPWM.B.$suggestSolution           = "ball.B1";
-debug_log.uartLog.UART.$suggestSolution = "UART0";
+adc1.ADC.AIN0.$suggestSolution              = "ADC0_AIN0";
+adc1.ADC.AIN1.$suggestSolution              = "ADC0_AIN1";
+adc1.ADC.AIN2.$suggestSolution              = "ADC0_AIN2";
+adc1.ADC.AIN3.$suggestSolution              = "ADC0_AIN3";
+adc1.ADC.AIN4.$suggestSolution              = "ADC0_AIN4";
+adc1.ADC.AIN5.$suggestSolution              = "ADC0_AIN5";
+adc2.ADC.AIN0.$suggestSolution              = "ADC1_AIN0";
+adc2.ADC.AIN1.$suggestSolution              = "ADC1_AIN1";
+adc2.ADC.AIN2.$suggestSolution              = "ADC1_AIN2";
+adc2.ADC.AIN3.$suggestSolution              = "ADC1_AIN3";
+adc2.ADC.AIN4.$suggestSolution              = "ADC1_AIN4";
+adc2.ADC.AIN5.$suggestSolution              = "ADC1_AIN5";
+adc3.ADC.AIN0.$suggestSolution              = "ADC2_AIN0";
+adc3.ADC.AIN1.$suggestSolution              = "ADC2_AIN1";
+adc3.ADC.AIN2.$suggestSolution              = "ADC2_AIN2";
+adc3.ADC.AIN3.$suggestSolution              = "ADC2_AIN3";
+adc3.ADC.AIN4.$suggestSolution              = "ADC2_AIN4";
+adc3.ADC.AIN5.$suggestSolution              = "ADC2_AIN5";
+adc4.ADC.AIN0.$suggestSolution              = "ADC3_AIN0";
+adc4.ADC.AIN1.$suggestSolution              = "ADC3_AIN1";
+adc4.ADC.AIN2.$suggestSolution              = "ADC3_AIN2";
+adc4.ADC.AIN3.$suggestSolution              = "ADC3_AIN3";
+adc4.ADC.AIN4.$suggestSolution              = "ADC3_AIN4";
+adc4.ADC.AIN5.$suggestSolution              = "ADC3_AIN5";
+adc5.ADC.AIN0.$suggestSolution              = "ADC4_AIN0";
+adc5.ADC.AIN1.$suggestSolution              = "ADC4_AIN1";
+adc5.ADC.AIN2.$suggestSolution              = "ADC4_AIN2";
+adc5.ADC.AIN3.$suggestSolution              = "ADC4_AIN3";
+adc5.ADC.AIN4.$suggestSolution              = "ADC4_AIN4";
+adc5.ADC.AIN5.$suggestSolution              = "ADC4_AIN5";
+epwm1.EPWM.A.$suggestSolution               = "EPWM0_A";
+epwm1.EPWM.B.$suggestSolution               = "EPWM0_B";
+mcspi1.SPI.CLK.$suggestSolution             = "SPI1_CLK";
+mcspi1.SPI.D0.$suggestSolution              = "SPI1_D0";
+mcspi1.SPI.D1.$suggestSolution              = "SPI1_D1";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution = "SPI1_CS0";
+debug_log.uartLog.UART.$suggestSolution     = "UART0";

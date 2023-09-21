@@ -2,12 +2,14 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.13.0+2553"}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const pmic       = scripting.addModule("/board/pmic/pmic", {}, false);
+const pmic1      = pmic.addInstance();
 const epwm       = scripting.addModule("/drivers/epwm/epwm", {}, false);
 const epwm1      = epwm.addInstance();
 const epwm2      = epwm.addInstance();
@@ -35,6 +37,8 @@ const icl_xbar6  = icl_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+pmic1.$name = "CONFIG_PMIC0";
+
 epwm1.$name                                                    = "CONFIG_EPWM0";
 epwm1.epwmXCMP_SplitCheck                                      = true;
 epwm1.epwmTimebase_counterMode                                 = "EPWM_COUNTER_MODE_UP";
@@ -163,6 +167,21 @@ epwm7.epwmICLB_LUTDEC_6  = "1";
 epwm7.epwmICLB_LUTDEC_7  = "1";
 epwm7.EPWM.$assign       = "EPWM6";
 
+const mcspi                  = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
+const mcspi1                 = mcspi.addInstance({}, false);
+mcspi1.$name                 = "CONFIG_MCSPI0";
+pmic1.peripheralDriver       = mcspi1;
+mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
+
+const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1                 = edma.addInstance({}, false);
+edma1.$name                 = "CONFIG_EDMA0";
+mcspi1.edmaDriver           = edma1;
+edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
+
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
@@ -220,18 +239,23 @@ icl_xbar6.instance   = "ICL_XBAR_5";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution           = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution           = "EPWM0_B";
-epwm2.EPWM.A.$suggestSolution           = "EPWM1_A";
-epwm2.EPWM.B.$suggestSolution           = "EPWM1_B";
-epwm3.EPWM.A.$suggestSolution           = "EPWM2_A";
-epwm3.EPWM.B.$suggestSolution           = "EPWM2_B";
-epwm4.EPWM.A.$suggestSolution           = "EPWM3_A";
-epwm4.EPWM.B.$suggestSolution           = "EPWM3_B";
-epwm5.EPWM.A.$suggestSolution           = "EPWM4_A";
-epwm5.EPWM.B.$suggestSolution           = "EPWM4_B";
-epwm6.EPWM.A.$suggestSolution           = "EPWM5_A";
-epwm6.EPWM.B.$suggestSolution           = "EPWM5_B";
-epwm7.EPWM.A.$suggestSolution           = "EPWM6_A";
-epwm7.EPWM.B.$suggestSolution           = "EPWM6_B";
-debug_log.uartLog.UART.$suggestSolution = "UART0";
+epwm1.EPWM.A.$suggestSolution               = "EPWM0_A";
+epwm1.EPWM.B.$suggestSolution               = "EPWM0_B";
+epwm2.EPWM.A.$suggestSolution               = "EPWM1_A";
+epwm2.EPWM.B.$suggestSolution               = "EPWM4_B";
+epwm3.EPWM.A.$suggestSolution               = "EPWM2_A";
+epwm3.EPWM.B.$suggestSolution               = "EPWM2_B";
+epwm4.EPWM.A.$suggestSolution               = "EPWM3_A";
+epwm4.EPWM.B.$suggestSolution               = "EPWM6_A";
+epwm5.EPWM.A.$suggestSolution               = "EPWM4_A";
+epwm5.EPWM.B.$suggestSolution               = "EPWM1_B";
+epwm6.EPWM.A.$suggestSolution               = "EPWM5_A";
+epwm6.EPWM.B.$suggestSolution               = "EPWM5_B";
+epwm7.EPWM.A.$suggestSolution               = "EPWM3_B";
+epwm7.EPWM.B.$suggestSolution               = "EPWM6_B";
+mcspi1.SPI.$suggestSolution                 = "SPI0";
+mcspi1.SPI.CLK.$suggestSolution             = "SPI0_CLK";
+mcspi1.SPI.D0.$suggestSolution              = "SPI0_D0";
+mcspi1.SPI.D1.$suggestSolution              = "SPI0_D1";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution = "SPI0_CS0";
+debug_log.uartLog.UART.$suggestSolution     = "UART0";
