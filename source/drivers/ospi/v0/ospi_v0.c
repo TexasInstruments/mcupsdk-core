@@ -2057,3 +2057,21 @@ int32_t OSPI_configResetPin(OSPI_Handle handle, uint32_t config)
 
     return status;
 }
+
+int32_t OSPI_configBaudrate(OSPI_Handle handle, uint32_t baud)
+{
+    int32_t status = SystemP_SUCCESS;
+
+    if(NULL != handle && (baud <= 32) && (baud >= 2) && (baud % 2) == 0)
+    {
+        const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
+        const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)(attrs->baseAddr);
+        CSL_REG32_FINS(&pReg->CONFIG_REG, OSPI_FLASH_CFG_CONFIG_REG_MSTR_BAUD_DIV_FLD, CSL_OSPI_BAUD_RATE_DIVISOR(baud));
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}

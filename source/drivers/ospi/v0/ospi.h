@@ -1125,7 +1125,31 @@ int32_t OSPI_norFlashReadSfdp(OSPI_Handle handle, uint32_t offset, uint8_t *buf,
  */
 int32_t OSPI_norFlashErase(OSPI_Handle handle, uint32_t address);
 
+
+/**
+ *  \brief  This function configures reset functionality
+ *
+ *  \pre    OSPI controller has been opened using #OSPI_open()
+ *
+ *  \param  handle    An #OSPI_Handle returned from an #OSPI_open()
+ *  \param  config    reset config
+ *
+ *  \return #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
+ */
 int32_t OSPI_configResetPin(OSPI_Handle handle, uint32_t config);
+
+
+/**
+ *  \brief  Configures baud divider
+ *
+ *  \pre    OSPI controller has been opened using #OSPI_open()
+ *
+ *  \param  handle      An #OSPI_Handle returned from an #OSPI_open()
+ *  \param  baud        baudrate from 2 to 32 and divisible by 2
+ *
+ *  \return #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
+ */
+int32_t OSPI_configBaudrate(OSPI_Handle handle, uint32_t baud);
 
 /** @} */
 

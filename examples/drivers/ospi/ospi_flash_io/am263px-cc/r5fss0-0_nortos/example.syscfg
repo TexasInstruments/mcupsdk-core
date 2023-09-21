@@ -245,6 +245,7 @@ flash1.dummyClksRd                      = 16;
 flash1.dummy_bitP                       = 16;
 flash1.peripheralDriver.$name           = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable       = true;
+flash1.peripheralDriver.phyEnable       = true;
 flash1.peripheralDriver.OSPI.D7.$assign = "MCAN1_TX";
 flash1.peripheralDriver.OSPI.D5.$assign = "MCAN0_TX";
 

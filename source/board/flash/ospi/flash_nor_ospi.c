@@ -1187,10 +1187,13 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
         }
 
         /* Enable PHY if attack vector present and PHY mode is enabled */
+        obj->phyEnable = FALSE;
         uint32_t phyTuningOffset = Flash_getPhyTuningOffset(config);
         if(OSPI_isPhyEnable(obj->ospiHandle))
         {
+            OSPI_configBaudrate(obj->ospiHandle, 32);
             attackVectorStatus = OSPI_phyReadAttackVector(obj->ospiHandle, phyTuningOffset);
+            OSPI_configBaudrate(obj->ospiHandle, 4);
 
             if(attackVectorStatus != SystemP_SUCCESS)
             {
@@ -1218,6 +1221,7 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
                 DebugP_logError("%s : PHY enabling failed!!! Continuing without PHY...\r\n", __func__);
                 obj->phyEnable = FALSE;
                 OSPI_setPhyEnableSuccess(obj->ospiHandle, FALSE);
+                status = SystemP_FAILURE;
             }
         }
         else
