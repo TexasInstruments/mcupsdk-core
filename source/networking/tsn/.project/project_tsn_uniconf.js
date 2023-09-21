@@ -26,11 +26,11 @@ const files = {
         "ieee802-dot1ab-lldp_runconf.c",
         "ietf-interfaces_access.c",
         "ietf-interfaces.c",
-        "ietf-keychain.c",
-        "ietf-keychain_runconf.c",
-        "ietf-netconf-server.c",
         "ietf-interfaces_runconf.c",
-        "ietf-netconf-server_runconf.c",
+        "excelfore-netconf-server.c",
+        "excelfore-netconf-server_runconf.c",
+        "ietf-netconf-monitoring.c",
+        "ietf-netconf-monitoring_runconf.c",
         "uc_hwal.c",
         "tsn_data.c",
         "uc_notice_tilld.c",
@@ -67,23 +67,15 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/rtos",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/rtos/am243x",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs",
+        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara",
     ],
 };
 
 const defines = {
     common: [
         'PRINT_FORMAT_NO_WARNING',
-        'CB_ETHERNET_NON_POSIX_H=\\"tsn_combase/tilld/cb_lld_ethernet.h\\"',
-        'CB_THREAD_NON_POSIX_H=\\"tsn_combase/tilld/cb_lld_thread.h\\"',
-        'CB_EVENT_NON_POSIX_H=\\"tsn_combase/tilld/cb_lld_tmevent.h\\"',
-        'CB_IPCSHMEM_NON_POSIX_H=\\"tsn_combase/tilld/cb_lld_ipcshmem.h\\"',
-        'COMBASE_NO_INET',
-        'COMBASE_NO_XTIMER',
-        'COMBASE_NO_CRC',
-        'COMBASE_NO_IPCSOCK',
         'UB_LOGCAT=4',
         'UB_LOGTSTYPE=UB_CLOCK_REALTIME',
-        'UC_RUNCONF',
     ],
 };
 
@@ -110,6 +102,7 @@ const cflags = {
     common: [
         "-Wno-extra",
         "-Wvisibility",
+        "--include tsn_buildconf/sitara_buildconf.h",
     ],
     release: [
         "-Oz",

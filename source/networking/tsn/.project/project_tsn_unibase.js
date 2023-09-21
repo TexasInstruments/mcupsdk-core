@@ -24,12 +24,13 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack",
+        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara",
     ],
 };
 
 const defines = {
     common: [
-        'TSNPKGVERSION=\\"1.1.5\\"',
+        'TSNPKGVERSION=\\"1.1.4\\"',
         'PRINT_FORMAT_NO_WARNING',
     ],
 };
@@ -57,6 +58,7 @@ const cflags = {
     common: [
         "-Wno-extra",
         "-Wvisibility",
+        "--include tsn_buildconf/sitara_buildconf.h",
     ],
     release: [
         "-Oz",

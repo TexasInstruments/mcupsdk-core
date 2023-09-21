@@ -79,22 +79,14 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/rtos/am243x",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs/generated",
+        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara",
     ],
 };
 
 const defines = {
     common: [
-        'TSNPKGVERSION=\\"1.1.5\\"',
+        'TSNPKGVERSION=\\"1.2.3\\"',
         'PRINT_FORMAT_NO_WARNING',
-        'CB_ETHERNET_NON_POSIX_H=\\"tsn_combase/tilld/cb_lld_ethernet.h\\"',
-        'CB_THREAD_NON_POSIX_H=\\"tsn_combase/tilld/cb_lld_thread.h\\"',
-        'CB_EVENT_NON_POSIX_H=\\"tsn_combase/tilld/cb_lld_tmevent.h\\"',
-        'CB_IPCSHMEM_NON_POSIX_H=\\"tsn_combase/tilld/cb_lld_ipcshmem.h\\"',
-        'COMBASE_NO_INET',
-        'COMBASE_NO_XTIMER',
-        'COMBASE_NO_CRC',
-        'COMBASE_NO_IPCSOCK',
-        'UC_RUNCONF',
     ],
 };
 
@@ -116,11 +108,11 @@ const deviceSpecificIncludes = {
     ],
 };
 
-
 const cflags = {
     common: [
         "-Wno-extra",
         "-Wvisibility",
+        "--include tsn_buildconf/sitara_buildconf.h",
         "--include lld_gptp_private.h",
     ],
     release: [

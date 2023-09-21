@@ -39,6 +39,7 @@ FILES_common := \
 	debug_log.c \
 	enet_custom_board_config.c \
 	tsnapp_main.c \
+	default_flow.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -55,6 +56,7 @@ FILES_common := \
 FILES_PATH_common = \
 	.. \
 	../../.. \
+	../../../nonptp_flow \
 	generated \
 
 INCLUDES_common := \
@@ -74,10 +76,11 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4 \
-	-I${MCU_PLUS_SDK_PATH}/examples/networking/tsn_app \
+	-I${MCU_PLUS_SDK_PATH}/examples/networking/tsn/gptp_app \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/tilld \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/gptpconf \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs \
@@ -87,14 +90,6 @@ DEFINES_common := \
 	-DSOC_AM64X \
 	-DENET_ENABLE_PER_CPSW=1 \
 	-DPRINT_FORMAT_NO_WARNING \
-	-DCB_ETHERNET_NON_POSIX_H=\"tsn_combase/tilld/cb_lld_ethernet.h\" \
-	-DCB_THREAD_NON_POSIX_H=\"tsn_combase/tilld/cb_lld_thread.h\" \
-	-DCB_EVENT_NON_POSIX_H=\"tsn_combase/tilld/cb_lld_tmevent.h\" \
-	-DCB_IPCSHMEM_NON_POSIX_H=\"tsn_combase/tilld/cb_lld_ipcshmem.h\" \
-	-DCOMBASE_NO_INET \
-	-DCOMBASE_NO_XTIMER \
-	-DCOMBASE_NO_CRC \
-	-DCOMBASE_NO_IPCSOCK \
 	-DSITARA \
 	-DDISABLE_UC_CLIENT \
 
@@ -108,7 +103,7 @@ CFLAGS_common := \
 	-g \
 	-Wno-gnu-variable-sized-type-not-at-end \
 	-Wno-unused-function \
-	--include lld_gptp_private.h \
+	--include tsn_buildconf/sitara_buildconf.h \
 
 CFLAGS_release := \
 	-Os \

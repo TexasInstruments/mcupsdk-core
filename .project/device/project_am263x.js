@@ -20,7 +20,11 @@ const component_file_list = [
     "source/networking/mbedtls_library/.project/project.js",
     "test/unity/.project/project.js",
     "docs_src/docs/api_guide/doxy_samples/.project/project.js",
-];
+    "source/networking/tsn/.project/project_tsn_gptp.js",
+    "source/networking/tsn/.project/project_tsn_combase.js",
+    "source/networking/tsn/.project/project_tsn_uniconf.js",
+    "source/networking/tsn/.project/project_tsn_unibase.js",
+ ];
 
 const device_defines = {
     common: [
@@ -276,7 +280,8 @@ const example_file_list = [
     "test/networking/mbedtls_test/test_ssl_x509/.project/project.js",
     "test/networking/mbedtls_benchmark/.project/project.js",
     "test/syscfg/syscfg_combo_1/.project/project.js",
-    "examples/pru_io/empty/firmware/.project/project.js",
+    "examples/networking/tsn/gptp_app/.project/project.js",
+     "examples/pru_io/empty/firmware/.project/project.js",
     "test/security/crypto/test_dthe_aes_cbc/.project/project.js",
     "test/security/crypto/test_dthe_aes_ecb/.project/project.js",
     "test/security/crypto/test_dthe_aes_cmac/.project/project.js",

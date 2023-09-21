@@ -9,6 +9,7 @@ const files = {
         "cb_lld_tmevent.c",
         "ub_lld_binding.c",
         "lldenet.c",
+        "bufring.c",
         "lldtsync.c",
         "cb_link_tilld.c",
     ],
@@ -33,7 +34,6 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include",
-        "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld",
@@ -43,42 +43,38 @@ const includes = {
 
 const defines = {
     common: [
-        'TSNPKGVERSION=\\"1.1.5\\"',
+        'TSNPKGVERSION=\\"1.1.3\\"',
         'PRINT_FORMAT_NO_WARNING',
-        'CB_ETHERNET_NON_POSIX_H=\\"tsn_combase/tilld/cb_lld_ethernet.h\\"',
-        'CB_THREAD_NON_POSIX_H=\\"tsn_combase/tilld/cb_lld_thread.h\\"',
-        'CB_EVENT_NON_POSIX_H=\\"tsn_combase/tilld/cb_lld_tmevent.h\\"',
-        'CB_IPCSHMEM_NON_POSIX_H=\\"tsn_combase/tilld/cb_lld_ipcshmem.h\\"',
-        'COMBASE_NO_INET',
-        'COMBASE_NO_XTIMER',
-        'COMBASE_NO_CRC',
-        'COMBASE_NO_IPCSOCK',
     ],
 };
 
 const deviceSpecificIncludes = {
     am243x : [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/r5f",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x",
     ],
     am64x : [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/r5f",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x",
     ],
     am263x : [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263x",
     ],
     am273x : [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am273x/r5f",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am273x",
     ],
     awr294x : [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/awr294x/r5f",
     ],
 };
 
-
 const cflags = {
     common: [
         "-Wno-extra",
         "-Wvisibility",
+        "--include tsn_buildconf/sitara_buildconf.h",
     ],
     release: [
         "-Oz",

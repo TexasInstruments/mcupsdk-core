@@ -1,3 +1,39 @@
+/*
+ *  Copyright (c) Texas Instruments Incorporated 2023
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions
+ *  are met:
+ *
+ *    Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ *    Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the
+ *    distribution.
+ *
+ *    Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/* ========================================================================== */
+/*                              Include Files                                 */
+/* ========================================================================== */
+
 #include <tsn_combase/combase.h>
 #include <tsn_unibase/unibase_binding.h>
 #include "debug_log.h"
@@ -18,7 +54,7 @@ static uint8_t s_print_buf[4096];
 static void *log_task(void *arg)
 {
     int len;
-    DPRINT("%s: started"LINE_FEED, __func__);
+    DPRINT("%s: started", __func__);
 
     while(1)
     {
@@ -36,7 +72,7 @@ static void *log_task(void *arg)
         {
             /* The print function will take a long time, we should not
              * call it inside the mutex lock. */
-            DPRINT("%s"LINE_FEED, s_print_buf);
+            DPRINT("%s", s_print_buf);
         }
 
         CB_USLEEP(10000);
@@ -73,7 +109,7 @@ static int start_logtask(int log_pri)
 
     if (CB_THREAD_MUTEX_INIT(&g_log_mutex, NULL) < 0)
     {
-        DPRINT("Failed to int mutex!"LINE_FEED);
+        DPRINT("Failed to int mutex!");
         err = -1;
     }
     else
@@ -83,7 +119,7 @@ static int start_logtask(int log_pri)
         cb_tsn_thread_attr_set_stackaddr(&attr, &s_log_stack_buf[0]);
         if (CB_THREAD_CREATE(&g_logtask_handle, &attr, log_task, NULL) < 0)
         {
-            DPRINT("Failed to create log task!"LINE_FEED);
+            DPRINT("Failed to create log task!");
             if (g_log_mutex != NULL)
             {
                 CB_THREAD_MUTEX_DESTROY(&g_log_mutex);
@@ -119,10 +155,10 @@ int direct_log(bool flush, const char *str)
     {
         *lf = 0;
     }
-    DPRINT("%s", (char*)str);
+    s_drv_console_out("%s", (char*)str);
     if (flush || (lf && *lf == 0))
     {
-        DPRINT("\r\n");
+        s_drv_console_out("\r\n");
     }
     return 0;
 }

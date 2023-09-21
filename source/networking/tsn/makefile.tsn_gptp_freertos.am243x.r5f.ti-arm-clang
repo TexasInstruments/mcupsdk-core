@@ -87,21 +87,13 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/rtos/am243x \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs/generated \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/r5f \
 
 DEFINES_common := \
     -DSOC_AM243X \
-    -DTSNPKGVERSION=\"1.1.5\" \
+    -DTSNPKGVERSION=\"1.2.3\" \
     -DPRINT_FORMAT_NO_WARNING \
-    -DCB_ETHERNET_NON_POSIX_H=\"tsn_combase/tilld/cb_lld_ethernet.h\" \
-    -DCB_THREAD_NON_POSIX_H=\"tsn_combase/tilld/cb_lld_thread.h\" \
-    -DCB_EVENT_NON_POSIX_H=\"tsn_combase/tilld/cb_lld_tmevent.h\" \
-    -DCB_IPCSHMEM_NON_POSIX_H=\"tsn_combase/tilld/cb_lld_ipcshmem.h\" \
-    -DCOMBASE_NO_INET \
-    -DCOMBASE_NO_XTIMER \
-    -DCOMBASE_NO_CRC \
-    -DCOMBASE_NO_IPCSOCK \
-    -DUC_RUNCONF \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \
@@ -115,6 +107,7 @@ CFLAGS_common := \
     -Wno-unused-function \
     -Wno-extra \
     -Wvisibility \
+    --include tsn_buildconf/sitara_buildconf.h \
     --include lld_gptp_private.h \
     -mthumb \
     -fno-strict-aliasing \

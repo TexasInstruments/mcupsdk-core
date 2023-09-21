@@ -45,10 +45,11 @@
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4
-            -I${MCU_PLUS_SDK_PATH}/examples/networking/tsn_app
+            -I${MCU_PLUS_SDK_PATH}/examples/networking/tsn/gptp_app
             -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack
             -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp
             -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/tilld
+            -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara
             -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/gptpconf
             -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf
             -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs
@@ -61,18 +62,10 @@
             -g
             -Wno-gnu-variable-sized-type-not-at-end
             -Wno-unused-function
-            --include lld_gptp_private.h
+            --include tsn_buildconf/sitara_buildconf.h
             -DSOC_AM243X
             -DENET_ENABLE_PER_CPSW=1
             -DPRINT_FORMAT_NO_WARNING
-            -DCB_ETHERNET_NON_POSIX_H=\&quot;tsn_combase/tilld/cb_lld_ethernet.h\&quot;
-            -DCB_THREAD_NON_POSIX_H=\&quot;tsn_combase/tilld/cb_lld_thread.h\&quot;
-            -DCB_EVENT_NON_POSIX_H=\&quot;tsn_combase/tilld/cb_lld_tmevent.h\&quot;
-            -DCB_IPCSHMEM_NON_POSIX_H=\&quot;tsn_combase/tilld/cb_lld_ipcshmem.h\&quot;
-            -DCOMBASE_NO_INET
-            -DCOMBASE_NO_XTIMER
-            -DCOMBASE_NO_CRC
-            -DCOMBASE_NO_IPCSOCK
             -DSITARA
             -DDISABLE_UC_CLIENT
         "
@@ -150,6 +143,8 @@
         <file path="../enet_custom_board_config.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../../../tsnapp_main.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="../../../nonptp_flow/default_flow.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>

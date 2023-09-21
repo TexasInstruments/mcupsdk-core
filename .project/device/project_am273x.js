@@ -18,7 +18,11 @@ const component_file_list = [
     "source/security/.project/project.js",
     "test/unity/.project/project.js",
     "docs_src/docs/api_guide/doxy_samples/.project/project.js",
-];
+    "source/networking/tsn/.project/project_tsn_unibase.js",
+    "source/networking/tsn/.project/project_tsn_combase.js",
+    "source/networking/tsn/.project/project_tsn_gptp.js",
+    "source/networking/tsn/.project/project_tsn_uniconf.js",
+ ];
 
 const device_defines = {
     common: [
@@ -84,7 +88,8 @@ const example_file_list = [
     "examples/kernel/freertos/task_switch/.project/project.js",
     "examples/mathlib/benchmark/.project/project.js",
     "examples/networking/enet_loopback/enet_cpsw_loopback/.project/project.js",
-    "examples/networking/lwip/cpsw_lwip_https/.project/project.js",
+    "examples/networking/tsn/gptp_app/.project/project.js",
+     "examples/networking/lwip/cpsw_lwip_https/.project/project.js",
     "examples/networking/lwip/cpsw_lwip_mqtt/.project/project.js",
     "examples/networking/lwip/enet_lwip_cpsw/.project/project.js",
     "examples/networking/lwip/enet_cpsw_tcpserver/.project/project.js",

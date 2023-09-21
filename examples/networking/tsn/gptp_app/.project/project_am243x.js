@@ -8,6 +8,7 @@ const files = {
         "debug_log.c",
         "enet_custom_board_config.c",
         "tsnapp_main.c",
+        "default_flow.c",
         "main.c",
     ],
 };
@@ -19,6 +20,7 @@ const filedirs = {
     common: [
         "..",       /* core_os_combo base */
         "../../..", /* Example base */
+        "../../../nonptp_flow", /* Example base */
     ],
 };
 
@@ -49,10 +51,11 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4",
-        "${MCU_PLUS_SDK_PATH}/examples/networking/tsn_app",
+        "${MCU_PLUS_SDK_PATH}/examples/networking/tsn/gptp_app",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/tilld",
+        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/gptpconf",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs",
@@ -85,14 +88,6 @@ const defines_r5f = {
     common: [
         "ENET_ENABLE_PER_CPSW=1",
         'PRINT_FORMAT_NO_WARNING',
-        'CB_ETHERNET_NON_POSIX_H=\\"tsn_combase/tilld/cb_lld_ethernet.h\\"',
-        'CB_THREAD_NON_POSIX_H=\\"tsn_combase/tilld/cb_lld_thread.h\\"',
-        'CB_EVENT_NON_POSIX_H=\\"tsn_combase/tilld/cb_lld_tmevent.h\\"',
-        'CB_IPCSHMEM_NON_POSIX_H=\\"tsn_combase/tilld/cb_lld_ipcshmem.h\\"',
-        'COMBASE_NO_INET',
-        'COMBASE_NO_XTIMER',
-        'COMBASE_NO_CRC',
-        'COMBASE_NO_IPCSOCK',
         'SITARA',
         'DISABLE_UC_CLIENT', // Add this macro to disable uc_client which configure TAS.
     ],
@@ -100,7 +95,7 @@ const defines_r5f = {
 
 const cflags_r5f = {
     common: [
-        "--include lld_gptp_private.h",
+        "--include tsn_buildconf/sitara_buildconf.h",
     ],
     release: [
         "-Oz",
