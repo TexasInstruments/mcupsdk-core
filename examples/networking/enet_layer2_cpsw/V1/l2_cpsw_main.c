@@ -96,6 +96,9 @@ void EnetApp_mainTask(void *args)
         gEnetApp.perCtxt[i].instId   = testParams[i].instId;
         gEnetApp.perCtxt[i].name     = testParams[i].name; /* shallow copy */
         EnetApp_getEnetInstMacInfo(gEnetApp.perCtxt[i].enetType, gEnetApp.perCtxt[i].instId, macPortList, &numMacPorts);
+
+        /* This example uses only one MAC port. Please refer to enet_layer2_cpsw_switch examplee for 2 ports */
+        EnetAppUtils_assert(numMacPorts == 1);
         gEnetApp.perCtxt[i].macPort  = macPortList[0];
     }
 
