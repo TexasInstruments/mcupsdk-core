@@ -75,7 +75,7 @@ const mpu_firewall_config = [
         ]
     },
     {
-        name: "QSPI0_SLV",
+        name: "OSPI0_SLV",
         regionCount: 8,
         memSpace : [
             { startAddr: 0x48200000, size: 0x40000 },

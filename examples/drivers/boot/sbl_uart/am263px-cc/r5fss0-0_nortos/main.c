@@ -72,7 +72,7 @@ int main(void)
 
     System_init();
     Drivers_open();
-    // Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_socInitL2MailBoxMemory();
 
     status = Board_driversOpen();
