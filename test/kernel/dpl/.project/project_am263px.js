@@ -95,10 +95,6 @@ const syscfgfile = "../example.syscfg";
 const templates_nortos_r5f =
 [
     {
-        input: ".project/templates/am263px/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
-    {
         input: ".project/templates/am263px/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
@@ -109,10 +105,6 @@ const templates_nortos_r5f =
 
 const templates_freertos_r5f =
 [
-    {
-        input: ".project/templates/am263px/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
     {
         input: ".project/templates/am263px/freertos/main_freertos.c.xdt",
         output: "../main.c",

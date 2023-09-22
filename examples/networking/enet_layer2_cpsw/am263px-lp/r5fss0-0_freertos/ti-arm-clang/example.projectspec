@@ -117,8 +117,6 @@
         </file>
         <file path="../../../V1/l2_cpsw_dataflow.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="link">
-        </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263px/EXAMPLES_ENET_LAYER2_CPSW.html"
