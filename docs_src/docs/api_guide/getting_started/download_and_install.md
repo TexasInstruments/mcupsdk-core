@@ -24,32 +24,29 @@ To build applications using this SDK, one needs below host PC machine
   - Linux, ${HOME}/ti
 - `${SDK_INSTALL_PATH}` in this user guide refers to the path, including the SDK folder name, where the SDK is installed.
   Example, in Windows, `${SDK_INSTALL_PATH}` will refer to the path `C:/ti/mcu_plus_sdk_{soc}_{version}`
+\cond !SOC_AM263PX
 - You can also browse, download and install the SDK using TIREX as shown here, \ref TIREX_INTRO_PAGE.
+\endcond
 
 ## Download and Install Additional SDK Tools
 
 ### SysConfig
 
 - The SysConfig download home page is, https://www.ti.com/tool/SYSCONFIG
-- Download SysConfig @VAR_SYSCFG_VERSION from below direct links,
-  - Windows, \htmllink{https://software-dl.ti.com/ccs/esd/sysconfig/sysconfig-@VAR_SYSCFG_VERSION_FULL-setup.exe, WINDOWS INSTALLER}
-  - Linux, \htmllink{https://software-dl.ti.com/ccs/esd/sysconfig/sysconfig-@VAR_SYSCFG_VERSION_FULL-setup.run, LINUX INSTALLER}
-- Install at below path,
+- Download SysConfig 1.17.0 and Install at below path,
   - Windows, C:/ti
   - Linux, ${HOME}/ti
 
 \cond SOC_AM263PX
-
+\note
 - Update the device data for AM263px in syscfg. Contact TI representatives for the device data.
+- Rename "<Sysconfig_install_dir>/dist/deviceData" to "deviceData_org".
+- Copy deviceData folder received by TI representative at "<Sysconfig_install_dir>/dist/"
 - Refer to the instructions in documentation provided with the device data.
-
 \endcond
 
 ### Uniflash
-
-- The Uniflash download home page is, https://www.ti.com/tool/UNIFLASH
-- Download UNiflash @VAR_UNIFLASH_VERSION from the above link
-- Install at below path,
+- Get and install uniflash and install at below path, contact the TI representative to get the uniflash installer. Installer available at https://www.ti.com/tool/UNIFLASH currently doesn't support Sitara MCU devices
   - Windows, C:/ti
   - Linux, ${HOME}/ti
 
@@ -271,7 +268,7 @@ Once the Drivers are installed successfully, user should be able to use the \ref
 
 To download, install and setup CCS, follow instructions on this page, \ref CCS_SETUP_PAGE .
 
-## Download and Install Additional SDK Tools
+<!-- ## Download and Install Additional SDK Tools -->
 
 ### TI CLANG Compiler Toolchain {#INSTALL_TIARMCLANG}
 

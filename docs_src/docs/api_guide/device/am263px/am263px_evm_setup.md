@@ -153,11 +153,6 @@ Important cable connections, ports and switches.
 
 ## Additional Details
 
-\note This section has more details on @VAR_BOARD_NAME. This is mainly for reference and can be skiped unless referred to by
-other pages in this user guide.
-
-\note Make sure boot mode switch is setup to NOBOOT mode to use with CCS Scripting. please refer \ref EVM_SOC_INIT_NOBOOT_MODE
-
 ### BOOT MODE
 
 #### OSPI BOOT MODE  {#BOOTMODE_QSPI}

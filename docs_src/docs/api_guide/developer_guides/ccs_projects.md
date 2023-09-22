@@ -61,11 +61,20 @@ section provides basic instructions and tips on using CCS projects.
     \image html ccs_projects_02_am273x.png "Select Examples Folder"
 
 \endcond
-\cond SOC_AM263X || SOC_AM263PX
+
+\cond SOC_AM263X
 
 - Click "Browse" and go to ${SDK_INSTALL_PATH}/examples/ folder
     \imageStyle{ccs_projects_02_am263x.png,width:40%}
     \image html ccs_projects_02_am263x.png "Select Examples Folder"
+
+\endcond
+
+\cond SOC_AM263PX
+
+- Click "Browse" and go to ${SDK_INSTALL_PATH}/examples/ folder
+    \imageStyle{ccs_projects_02_am263px.png,width:40%}
+    \image html ccs_projects_02_am263px.png "Select Examples Folder"
 
 \endcond
 
@@ -83,12 +92,21 @@ section provides basic instructions and tips on using CCS projects.
     \imageStyle{ccs_projects_03_am273x.png,width:30%}
     \image html ccs_projects_03_am273x.png "Select Project"
 \endcond
-\cond SOC_AM263X || SOC_AM263PX
+
+\cond SOC_AM263X
 - This will list all example projects, now you can select one or more or all projects to import
   into CCS.
 
     \imageStyle{ccs_projects_03_am263x.png,width:30%}
     \image html ccs_projects_03_am263x.png "Select Project"
+\endcond
+
+\cond SOC_AM263PX
+- This will list all example projects, now you can select one or more or all projects to import
+  into CCS.
+
+    \imageStyle{ccs_projects_03_am263px.png,width:30%}
+    \image html ccs_projects_03_am263px.png "Select Project"
 \endcond
 
 - All examples follow below naming convention to help you easily pick the example you need
@@ -123,11 +141,19 @@ section provides basic instructions and tips on using CCS projects.
     \image html ccs_projects_04_am273x.png "Example Readme"
 
 \endcond
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 - Once a example project is imported, you can learn more about the example, by clicking the "README.html" file
 
     \imageStyle{ccs_projects_04_am263x.png,width:50%}
     \image html ccs_projects_04_am263x.png "Example Readme"
+
+\endcond
+
+\cond SOC_AM263PX
+- Once a example project is imported, you can learn more about the example, by clicking the "README.html" file
+
+    \imageStyle{ccs_projects_04_am263px.png,width:50%}
+    \image html ccs_projects_04_am263px.png "Example Readme"
 
 \endcond
 
@@ -144,11 +170,19 @@ section provides basic instructions and tips on using CCS projects.
     \image html ccs_projects_06_am273x.png "Example SysConfig"
 
 \endcond
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 - You can also open the SysConfig GUI by double-clicking the "example.syscfg" file, (see also \ref SYSCONFIG_INTRO_PAGE)
 
     \imageStyle{ccs_projects_06_am263x.png,width:50%}
     \image html ccs_projects_06_am263x.png "Example SysConfig"
+
+\endcond
+
+\cond SOC_AM263PX
+- You can also open the SysConfig GUI by double-clicking the "example.syscfg" file, (see also \ref SYSCONFIG_INTRO_PAGE)
+
+    \imageStyle{ccs_projects_06_am263px.png,width:50%}
+    \image html ccs_projects_06_am263px.png "Example SysConfig"
 
 \endcond
 
@@ -176,13 +210,23 @@ section provides basic instructions and tips on using CCS projects.
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 - By default it builds in "debug" profile, i.e without compiler optimizations. To build with compiler
   optimizations, select "release" profile by clicking, "Build Configurations > Set Active > Release" as shown
   below.
 
     \imageStyle{ccs_projects_05_am263x.png,width:40%}
     \image html ccs_projects_05_am263x.png "Build a Project"
+
+\endcond
+
+\cond SOC_AM263PX
+- By default it builds in "debug" profile, i.e without compiler optimizations. To build with compiler
+  optimizations, select "release" profile by clicking, "Build Configurations > Set Active > Release" as shown
+  below.
+
+    \imageStyle{ccs_projects_05_am263px.png,width:40%}
+    \image html ccs_projects_05_am263px.png "Build a Project"
 
 \endcond
 
@@ -204,13 +248,22 @@ section provides basic instructions and tips on using CCS projects.
     \image html ccs_projects_08.png "System Project Import"
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 
 - System projects make it convenient to import one system project which in turn imports the grouped
   CPU specific projects.
 
     \imageStyle{ccs_projects_08_am263x.png,width:50%}
     \image html ccs_projects_08_am263x.png "System Project Import"
+\endcond
+
+\cond SOC_AM263PX
+
+- System projects make it convenient to import one system project which in turn imports the grouped
+  CPU specific projects.
+
+    \imageStyle{ccs_projects_08_am263px.png,width:50%}
+    \image html ccs_projects_08_am263px.png "System Project Import"
 \endcond
 
 - System project have a naming convention as below
@@ -238,13 +291,22 @@ section provides basic instructions and tips on using CCS projects.
     \image html ccs_projects_10.png "System Project View"
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 
 - After import, one can browse and build the individual CPU specific projects as before
 - You can also build the system project which will in turn build the grouped CPU projects.
 
     \imageStyle{ccs_projects_10_am263x.png,width:50%}
     \image html ccs_projects_10_am263x.png "System Project View"
+\endcond
+
+\cond SOC_AM263PX
+
+- After import, one can browse and build the individual CPU specific projects as before
+- You can also build the system project which will in turn build the grouped CPU projects.
+
+    \imageStyle{ccs_projects_10_am263px.png,width:50%}
+    \image html ccs_projects_10_am263px.png "System Project View"
 \endcond
 
 \cond SOC_AWR294X || SOC_AM243X || SOC_AM64X || SOC_AM273X
@@ -256,7 +318,7 @@ section provides basic instructions and tips on using CCS projects.
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 
 - You can also launch SysConfig GUI using the individual projects that were imported as part of the "system" project. However now, SysConfig will show the configuration of all CPUs in a single SysConfig window. (see also \ref SYSCONFIG_INTRO_PAGE)
 
@@ -264,6 +326,16 @@ section provides basic instructions and tips on using CCS projects.
     \image html ccs_projects_11_am263x.png "SysConfig view with System Projects"
 
 \endcond
+
+\cond SOC_AM263PX
+
+- You can also launch SysConfig GUI using the individual projects that were imported as part of the "system" project. However now, SysConfig will show the configuration of all CPUs in a single SysConfig window. (see also \ref SYSCONFIG_INTRO_PAGE)
+
+    \imageStyle{ccs_projects_11_am263px.png,width:50%}
+    \image html ccs_projects_11_am263px.png "SysConfig view with System Projects"
+
+\endcond
+
 
 \cond SOC_AM64X
 ## 1 Click Debug with CCS Projects {#CCS_PROJECTS_1CLICK_DEBUG}
@@ -305,7 +377,7 @@ section provides basic instructions and tips on using CCS projects.
  - The program output will be seen on CCS console, and/or UART terminal, if enabled.
    Below shows a sample output on both CCS console and UART console, after running the "hello world" program.
 
-    \imageStyle{1click_debug_09.PNG,width:50%}
+    \imageStyle{1click_debug_09.PNG,width:40%}
     \image html 1click_debug_09.PNG "Run the Program"
 
 \endcond
@@ -416,11 +488,12 @@ section provides basic instructions and tips on using CCS projects.
  - The program output will be seen on CCS console, and/or UART terminal, if enabled.
    Below shows a sample output on both CCS console and UART console, after running the "hello world" program.
 
-    \imageStyle{1click_debug_06.png,width:50%}
+    \imageStyle{1click_debug_06.png,width:40%}
     \image html 1click_debug_06.png "Run the Program"
 
-
-
+\cond SOC_AM263PX
+\note Power Cycle the device everytime before launching 1 click debug session
+\endcond
 \endcond
 
 
@@ -446,12 +519,20 @@ section provides basic instructions and tips on using CCS projects.
     \image html ccs_projects_07.png "Delete a Project"
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 
 - It is recommended to check the box as shown below, else you will have trouble re-importing the project
 
     \imageStyle{ccs_projects_07_am263x.png,width:50%}
     \image html ccs_projects_07_am263x.png "Delete a Project"
+\endcond
+
+\cond SOC_AM263PX
+
+- It is recommended to check the box as shown below, else you will have trouble re-importing the project
+
+    \imageStyle{ccs_projects_07_am263px.png,width:40%}
+    \image html ccs_projects_07_am263px.png "Delete a Project"
 \endcond
 
 - Note, that deleting a project, only deletes it from your CCS workspace, the .c, .h and other project files

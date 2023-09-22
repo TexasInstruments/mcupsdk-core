@@ -6,43 +6,20 @@
 
 ## Download CCS
 
-- The Code Composer Studio (CCS) download home page is, https://www.ti.com/tool/CCSTUDIO
-\cond !SOC_AM263X || SOC_AM263PX
-- Download CCS @VAR_CCS_VERSION from above link
-\endcond
-\cond SOC_AM263X || SOC_AM263PX
-- Download CCS @VAR_CCS_VERSION_AM263X
-\endcond
+- Download CCS @VAR_CCS_VERSION, https://www.ti.com/tool/CCSTUDIO
 - Unzip the file for Windows or Linux at any location on your host PC
 
 ## Install CCS
 
-\cond !SOC_AM263X || SOC_AM263PX
 - Install CCS @VAR_CCS_VERSION by double clicking the installer file from the downloaded and un-zipped CCS package file.
 
     \imageStyle{installer_file.png,width:20%}
     \image html installer_file.png "CCS Installer File"
-\endcond
-\cond SOC_AM263X || SOC_AM263PX
-- Install CCS @VAR_CCS_VERSION_AM263X by double clicking the installer file from the downloaded and un-zipped CCS package file.
 
-    \imageStyle{installer_file_11p2.png,width:15%}
-    \image html installer_file_11p2.png "CCS Installer File"
-\endcond
-
-\cond !SOC_AM263X || SOC_AM263PX
 - Follow the steps and at below screen, recommend to keep install directory as default.
 
     \imageStyle{install_directory.png,width:40%}
     \image html install_directory.png "CCS Install Path"
-\endcond
-
-\cond SOC_AM263X || SOC_AM263PX
-- Follow the steps and at below screen, recommend to keep install directory as default.
-
-    \imageStyle{install_directory_11p2.png,width:50%}
-    \image html install_directory_11p2.png "CCS Install Path"
-\endcond
 
 - Follow the steps and at below screen, recommend to keep setup type as "custom"
 
@@ -80,7 +57,8 @@
 
 - Contact TI representative for AM263P CSP data.
 - Copy this CSP inside CCS installation directory at "ccs/ccs_base"
-- Update the Device data for am263p in CCS level syscfg
+- Follow the instructions in the documentation provided with the CSP data for more details.
+- Update the Device data for am263p in CCS level syscfg in the "ccs\utils\sysconfig_@VAR_SYSCFG_VERSION\dist\deviceData" directory
 
 \endcond
 
@@ -98,37 +76,19 @@
     \imageStyle{ccs_setup_00.png,width:20%}
     \image html ccs_setup_00.png "CCS Preferences"
 
-\cond !SOC_AM263X || SOC_AM263PX
 - Goto "Code Composer Studio > Products", make sure you see SysConfig @VAR_SYSCFG_VERSION listed here.
   - Sometimes, you need to click "Restore Defaults" and then "Refresh"
 
     \imageStyle{ccs_setup_01.png,width:50%}
     \image html ccs_setup_01.png "CCS Products"
-\endcond
-\cond SOC_AM263X || SOC_AM263PX
-- Goto "Code Composer Studio > Products", make sure you see SysConfig @VAR_SYSCFG_VERSION_AM263X listed here.
-  - Sometimes, you need to click "Restore Defaults" and then "Refresh"
 
-    \imageStyle{ccs_setup_01_11p2.png,width:50%}
-    \image html ccs_setup_01_11p2.png "CCS Products"
-\endcond
-
-\cond !SOC_AM263X || SOC_AM263PX
 - Goto "Code Composer Studio > Build > Compilers", make sure you see TI CLANG @VAR_TI_ARM_CLANG_VERSION listed here
   - Sometimes, you need to click "Restore Defaults" and then "Refresh"
 
     \imageStyle{ccs_setup_02.png,width:50%}
     \image html ccs_setup_02.png "CCS Compilers"
-\endcond
-\cond SOC_AM263X || SOC_AM263PX
-- Goto "Code Composer Studio > Build > Compilers", make sure you see TI CLANG @VAR_TI_ARM_CLANG_VERSION listed here
-  - Sometimes, you need to click "Restore Defaults" and then "Refresh"
 
-    \imageStyle{ccs_setup_02_11p2.png,width:50%}
-    \image html ccs_setup_02_11p2.png "CCS Compilers"
-\endcond
-
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 ## Update CSP {#CSP_UPDATE}
 - Goto "Help -> Check for updates"
 

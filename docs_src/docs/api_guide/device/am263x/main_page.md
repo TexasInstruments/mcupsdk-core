@@ -63,11 +63,6 @@ The main software components in the block diagram are described below
 </tr>
 <tr><td colspan="3" bgcolor=#F0F0F0><b>Protocol Stacks and Middleware</b></td></tr>
 <tr>
-    <td>Industrial Protocol Stacks
-    <td> INDUSTRIAL_COMMS
-    <td>Industrial protocol stacks for protocols like EtherCAT
-</tr>
-<tr>
     <td>Mbed-TLS
     <td>\ref EXAMPLES_CPSW_LWIP_HTTPS
     <td>TLS and SSL protocol implementation with respective cryptographic algorithm support
@@ -167,10 +162,6 @@ Given below is a overview of the directory structure to help you navigate the SD
     <td>SOC peripheral device drivers</td>
 </tr>
 <tr>
-    <td>industrial_comms/
-    <td>Industrial Communication Protocol stacks and Industrial Protocol FW HAL(Firmware and Hardware Abstraction Layer)</td>
-</tr>
-<tr>
     <td>kernel/
     <td>NO RTOS and RTOS kernel and Driver Porting layer (DPL) for these environments</td>
 </tr>
@@ -182,10 +173,6 @@ Given below is a overview of the directory structure to help you navigate the SD
 <tr>
     <td>empty/
     <td>Template projects to copy into workspace and customize based on application needs</td>
-</tr>
-<tr>
-    <td>industrial_comms/
-    <td>Example for EtherCAT SubDevice</td>
 </tr>
 </table>
 
