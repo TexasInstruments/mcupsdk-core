@@ -589,11 +589,11 @@ function validate(instance, report) {
     macportScript.validate(instance, report);
     hostportScript.validate(instance, report);
 
-    if (instance.BoardType == "am263px-cc")
+    if (instance.BoardType === "am263px-cc")
     {
         if (instance.DisableMacPort1 === false)
         {
-            report.logError(`Port1 is unavailable on the AM263Px-CC Board`, instance, "MAC Port 1 Config");
+            report.logError(`Port1 is unavailable on the AM263Px-CC Board`, instance);
         }
     }
 
