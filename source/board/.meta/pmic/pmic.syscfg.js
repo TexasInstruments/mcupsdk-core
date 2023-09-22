@@ -19,7 +19,7 @@ function getConfigurables() {
 
     config.push(
         {
-            ...common.ui.makeConfig(staticConfig, "name", "")
+            ...common.ui.makeConfig(staticConfig, "name", "PMIC")
         }
     );
 

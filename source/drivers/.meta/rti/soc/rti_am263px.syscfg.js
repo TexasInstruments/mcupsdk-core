@@ -64,7 +64,7 @@ function getRtiClockSourceValue(instance) {
 function getStaticConfigArr() {
     let staticConfig_r5f = [];
 
-    for(let i=0; i<4; i++)
+    for(let i=0; i<8; i++)
     {
         staticConfig_r5f.push(
             {

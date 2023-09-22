@@ -157,21 +157,21 @@ exports =
         },
         {
             name: "rangeStart",
-            displayName: "External Flash cached region start address",
+            displayName: "Flash Cached Region Start Address",
             default: 0x88000000,
             displayFormat: "hex",
             description: "Starting address of external flash which is required to be cached."
         },
         {
             name: "rangeEnd",
-            displayName: "External Flash cached region end address",
+            displayName: "Flash Cached Region End Address",
             default: 0x88100000,
             displayFormat: "hex",
             description: "End address of external flash which is required to be cached."
         },
         {
             name: "cacheSize",
-            displayName: "Size of Cache",
+            displayName: "Size Of Cache",
             default: "RL2_CACHESIZE_8K",
             options: [
                 {name: "RL2_CACHESIZE_8K", displayName: "8K"},
@@ -185,37 +185,37 @@ exports =
         },
         {
             name: "l2Sram0Base",
-            displayName: "base address of remote region 0",
+            displayName: "Base Address Of Remote Region 0",
             default: 0,
             displayFormat: "hex",
         },
         {
             name: "l2Sram0Len",
-            displayName: "Length of remote region 0",
+            displayName: "Length Of Remote Region 0",
             default: 8*1024,
             displayFormat: "dec",
         },
         {
             name: "l2Sram1Base",
-            displayName: "base address of remote region 1",
+            displayName: "Base Address Of Remote Region 1",
             default: 0,
             displayFormat: "hex",
         },
         {
             name: "l2Sram1Len",
-            displayName: "Length of remote region 1",
+            displayName: "Length Of Remote Region 1",
             default: 0,
             displayFormat: "dec",
         },
         {
             name: "l2Sram2Base",
-            displayName: "base address of remote region 2",
+            displayName: "Base Address Of Remote Region 2",
             default: 0,
             displayFormat: "hex",
         },
         {
             name: "l2Sram2Len",
-            displayName: "Length of remote region 2",
+            displayName: "Length Of Remote Region 2",
             default: 0,
             displayFormat: "dec",
         },

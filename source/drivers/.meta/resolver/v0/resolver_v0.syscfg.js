@@ -21,8 +21,8 @@ function getInstanceConfig(moduleInstance) {
 let config = [
     {
         name        :   "advConfig",
-        displayName :   "enable Advanced configurations",
-        description :   "Check this box to enable configurations on the advanced parameters",
+        displayName :   "Enable Advanced Configurations",
+        description :   "Check this box to enable configurations on the advanced parameters.",
         default     :   false,
         onChange    :   (inst, ui) => {
             if(inst["advConfig"] == true)
@@ -144,8 +144,8 @@ config = config.concat([
         config      : [
             {
                 name        : "resolverSignalMode",
-                displayName : "RESOLVER Signal Mode",
-                description : 'Select the RESOLVER signal mode.',
+                displayName : "Resolver Signal Mode",
+                description : 'Select the Resolver signal mode.',
                 hidden      : false,
                 default     : device_peripheral.RESOLVER_SignalMode[0].name,
                 options     : device_peripheral.RESOLVER_SignalMode,
@@ -168,8 +168,8 @@ config = config.concat([
             },
             {
                 name        : "resolverSequencerMode",
-                displayName : "RESOLVER Sequencer Mode",
-                description : 'Sequencer Mode for RESOLVER',
+                displayName : "Resolver Sequencer Mode",
+                description : 'Sequencer Mode for RESOLVER.',
                 longDescription : `![](../source/drivers/.meta/resolver/images/Resolver_Sequencer_Modes.png)`,
                 hidden      : false,
                 default     : device_peripheral.RESOLVER_SequencerMode[0].name,
@@ -240,7 +240,7 @@ config = config.concat([
             },
             {
                 name        : "resolverSequencerModePicture0",
-                displayName : "RESOLVER Sequencer Mode 0",
+                displayName : "Resolver Sequencer Mode 0",
                 description : 'Sequencer Mode for RESOLVER',
                 longDescription : `![size='50%'](../source/drivers/.meta/resolver/images/mode0_Resolver_Sequencer_Modes.png)`,
                 hidden      : false,
@@ -249,7 +249,7 @@ config = config.concat([
             },
             {
                 name        : "resolverSequencerModePicture1",
-                displayName : "RESOLVER Sequencer Mode 1",
+                displayName : "Resolver Sequencer Mode 1",
                 description : 'Sequencer Mode for RESOLVER',
                 longDescription : `![size='50%'](../source/drivers/.meta/resolver/images/mode1_Resolver_Sequencer_Modes.png)`,
                 hidden      : true,
@@ -258,7 +258,7 @@ config = config.concat([
             },
             {
                 name        : "resolverSequencerModePicture2",
-                displayName : "RESOLVER Sequencer Mode 2",
+                displayName : "Resolver Sequencer Mode 2",
                 description : 'Sequencer Mode for RESOLVER',
                 longDescription : `![size='50%'](../source/drivers/.meta/resolver/images/mode2_Resolver_Sequencer_Modes.png)`,
                 hidden      : true,
@@ -267,7 +267,7 @@ config = config.concat([
             },
             {
                 name        : "resolverSequencerModePicture3",
-                displayName : "RESOLVER Sequencer Mode 3",
+                displayName : "Resolver Sequencer Mode 3",
                 description : 'Sequencer Mode for RESOLVER',
                 longDescription : `![size='50%'](../source/drivers/.meta/resolver/images/mode3_Resolver_Sequencer_Modes.png)`,
                 hidden      : true,
@@ -276,7 +276,7 @@ config = config.concat([
             },
             {
                 name        : "resolverSequencerModePicture4",
-                displayName : "RESOLVER Sequencer Mode 4",
+                displayName : "Resolver Sequencer Mode 4",
                 description : 'Sequencer Mode for RESOLVER',
                 longDescription : `![size='50%'](../source/drivers/.meta/resolver/images/mode4_Resolver_Sequencer_Modes.png)`,
                 hidden      : true,
@@ -285,7 +285,7 @@ config = config.concat([
             },
             {
                 name        : "resolverSequencerModePicture5",
-                displayName : "RESOLVER Sequencer Mode 5",
+                displayName : "Resolver Sequencer Mode 5",
                 description : 'Sequencer Mode for RESOLVER',
                 longDescription : `![size='50%'](../source/drivers/.meta/resolver/images/mode5_Resolver_Sequencer_Modes.png)`,
                 hidden      : true,
@@ -325,13 +325,13 @@ config = config.concat([
                 name        : "syncInEnable",
                 displayName : "Enable Sync IN",
                 // FIXME: Find the PWMxBar that syncs to the resolver from integration spec
-                description : 'enables Sync In from the PWMxBar instance 2.',
+                description : 'Enables Sync In from the PWMxBar instance 2.',
                 hidden      : false,
                 default     : false,
             },
             {
                 name        : "socDelayAdv",
-                displayName : "ADC SOC start Delay",
+                displayName : "ADC SOC Start Delay",
                 description : 'Delay of SOC start from the Excitation Frequency start. To enable editing, please select the advanced configurations above',
                 hidden      : false,
                 readOnly    : true,
@@ -448,12 +448,15 @@ config = config.concat([
             {
                 name        : "idealSampleOverride",
                 displayName : "Manual Ideal Sample Override Value",
-                longDescription :   "if the Manual Ideal Sample Override value is set, that value will be reflected in the Ideal Sample Configurations and vice versa",
+                longDescription :   "If the Manual Ideal Sample Override value is set, that value will be reflected in the Ideal Sample Configurations and vice versa",
                 default     :  0,
                 hidden      : false,
                 onChange    : (inst, ui) => {
-                    inst["core0IdealSampleOverrideValueAdv"] =  inst["idealSampleOverride"]
-                    inst["core1IdealSampleOverrideValueAdv"] =  inst["idealSampleOverride"]
+                if((inst["idealSampleOverride"] != inst["core0IdealSampleOverrideValueAdv"]) || (inst["idealSampleOverride"] != inst["core1IdealSampleOverrideValueAdv"]))
+                    {
+                        inst["core0IdealSampleOverrideValueAdv"] =  inst["idealSampleOverride"]
+                        inst["core1IdealSampleOverrideValueAdv"] =  inst["idealSampleOverride"]
+                    }
                 }
             }
         ],
@@ -560,16 +563,16 @@ for( let core = 0; core <= 1; core++)
                         // },
                         {
                             name        :   "core"+core.toString()+"sinDcOffset",
-                            displayName :   "Manual Sin DC Offset value",
+                            displayName :   "Manual Sin DC Offset Value",
                             hidden      :   true,
-                            readOnly    :   true,
+                            readOnly    :   false,
                             default     :   0,
                         },
                         {
                             name        :   "core"+core.toString()+"cosDcOffset",
-                            displayName :   "Manual Cos DC Offset value",
+                            displayName :   "Manual Cos DC Offset Value",
                             hidden      :   true,
-                            readOnly    :   true,
+                            readOnly    :   false,
                             default     :   0,
                         },
                     ],
@@ -588,18 +591,18 @@ for( let core = 0; core <= 1; core++)
                 {
                     name            :   "core"+core.toString()+"IdealSampleOverrideValueAdv",
                     displayName     :   "Ideal Sample Override Value",
-                    description     :   "enable Advanced Configurations to edit this feild",
-                    longDescription :   "if the Manual Ideal Sample Override value from the Tuning Parameters is set, that value will be copied here and vice versa",
+                    description     :   "Enable Advanced Configurations to edit this feild",
+                    longDescription :   "If the Manual Ideal Sample Override value from the Tuning Parameters is set, that value will be copied here and vice versa",
                     default         :   0,
                     readOnly        :   true,
                     onChange        :   (inst, ui) => {
-                        inst["core"+core.toString()+"idealSampleOverride"] =  inst["core"+core.toString()+"IdealSampleOverrideValueAdv"]
+                        inst["idealSampleOverride"] =  inst["core"+core.toString()+"IdealSampleOverrideValueAdv"]
                     }
                 },
                 {
                     name            :   "core"+core.toString()+"IdealSamplePeakAvgLimitAdv",
                     displayName     :   "Peak Averaging Limit",
-                    description     :   "enable Advanced Configurations to edit this feild",
+                    description     :   "Enable Advanced Configurations to edit this feild",
                     longDescription :   `
     This is used for the Ideal Sample detection algorithm. Minimum Number of Peaks to be detected over any sample to check the Peak Histogram Buckets and find the Ideal Sample Time to be overridden in the manual mode.
                     `,
@@ -617,14 +620,14 @@ for( let core = 0; core <= 1; core++)
                 {
                     name            :   "core"+core.toString()+"IdealSampleBpfAdjustAdv",
                     displayName     :   "Ideal Sample BPF Adjust",
-                    description     :   "enable Advanced Configurations to edit this feild",
+                    description     :   "Enable Advanced Configurations to edit this feild",
                     longDescription :   "When the Band Pass filter is enabled, this paramter adjusts the Ideal Sample Detection Algorithm to accommodate the delay posed by the filter",
                     readOnly        :   true,
                     default         :   0,
                 },
                 {
                     name            :   "core"+core.toString()+"IdealSampleModeAdv",
-                    displayName     :   "Ideal Sample Detection Algorithm Mode",
+                    displayName     :   "Ideal Sample Detection Mode",
                     longDescription :   `
     RDC_IDEAL_SAMPLE_TIME_MODE_0_AUTO_DETECT           - Computation on sin and cos
     RDC_IDEAL_SAMPLE_TIME_MODE_1_AUTO_DETECT_ON_SIN    - Computation on sin only
@@ -637,8 +640,8 @@ for( let core = 0; core <= 1; core++)
                 {
                     name            :   "core"+core.toString()+"IdealSampleBottomSamplingAdv",
                     displayName     :   "Enable Bottom Sampling",
-                    description     :   "enable Advanced Configurations to edit this feild",
-                    longDescription :   `when Bottom Sampling is enabled, the HW Track2, ArcTan Loop run twice as fast.
+                    description     :   "Enable Advanced Configurations to edit this feild",
+                    longDescription :   `When Bottom Sampling is enabled, the HW Track2, ArcTan Loop run twice as fast.
     note : If SW Track2 is used, please make sure its running frequency is same as the HW Track2`,
                     readOnly        :   true,
                     default         :   false,
@@ -657,7 +660,7 @@ for( let core = 0; core <= 1; core++)
                 {
                     name            :   "core"+core.toString()+"PgEstimationEnableAdv",
                     displayName     :   "Enable Phase Gain Estimation",
-                    description     :   "enable Advanced Configurations to edit this feild. The Phase Gain Estimation Loop will be enabled",
+                    description     :   "Enable Advanced Configurations to edit this feild. The Phase Gain Estimation Loop will be enabled",
                     longDescription :   "For the Phase Gain Estimation to be enbaled, make sure the Motor connected is in rotational state.",
                     readOnly        :   true,
                     default         :   false,
@@ -696,7 +699,7 @@ for( let core = 0; core <= 1; core++)
                 {
                     name            :   "core"+core.toString()+"PgEstimationTrainLimitAdv",
                     displayName     :   "Phase Gain Estimation Train Limit",
-                    description     :   "enable Advanced Configurations to edit this feild. When the Phase Gain Estimation is enabled, the loop trains on these number of samples.",
+                    description     :   "Enable Advanced Configurations to edit this feild. When the Phase Gain Estimation is enabled, the loop trains on these number of samples.",
                     hidden          :   true,
                     readOnly        :   true,
                     default         :   8,
@@ -704,7 +707,7 @@ for( let core = 0; core <= 1; core++)
                 {
                     name            :   "core"+core.toString()+"PgCorrectionEnableAdv",
                     displayName     :   "Enable Phase Gain Correction",
-                    description     :   "enable Advanced Configurations to edit this feild. The Phase Gain Correction will be enabled",
+                    description     :   "Enable Advanced Configurations to edit this feild. The Phase Gain Correction will be enabled",
                     longDescription :   "For the Phase Gain Correction to be enbaled, make sure the Motor connected is in rotational state.",
                     readOnly        :   true,
                     default         :   true,
@@ -736,8 +739,8 @@ for( let core = 0; core <= 1; core++)
                 {
                     name            :   "core"+core.toString()+"PgAutoPhaseGainCorrectionAdv",
                     displayName     :   "Auto Phase Gain Correction",
-                    description     :   "enable Advanced Configurations to edit this feild. Auto Phase and Gain Correction is enabled, the estimated Phase Correction Value will be used for the Phase Correction.",
-                    hidden          :   false,
+                    description     :   "Enable Advanced Configurations to edit this feild. Auto Phase and Gain Correction is enabled, the estimated Phase Correction Value will be used for the Phase Correction.",
+                    hidden          :   true,
                     readOnly        :   true,
                     default         :   false,
                     onChange        :   (inst, ui) => {
@@ -758,7 +761,7 @@ for( let core = 0; core <= 1; core++)
                 {
                     name            :   "core"+core.toString()+"PgSinGainBypassValueAdv",
                     displayName     :   "Manual Sin Gain Correction",
-                    description     :   "enable Advanced Configurations to edit this feild. Manual value used for Sin Gain Correction.",
+                    description     :   "Enable Advanced Configurations to edit this feild. Manual value used for Sin Gain Correction.",
                     hidden          :   false,
                     readOnly        :   true,
                     default         :   16384,
@@ -769,7 +772,7 @@ for( let core = 0; core <= 1; core++)
                 {
                     name            :   "core"+core.toString()+"PgCosGainBypassValueAdv",
                     displayName     :   "Manual Cos Gain Correction",
-                    description     :   "enable Advanced Configurations to edit this feild. Manual value used for Cos Gain Correction.",
+                    description     :   "Enable Advanced Configurations to edit this feild. Manual value used for Cos Gain Correction.",
                     hidden          :   false,
                     readOnly        :   true,
                     default         :   16384,
@@ -780,7 +783,7 @@ for( let core = 0; core <= 1; core++)
                 {
                     name            :   "core"+core.toString()+"PgCosPhaseBypassValueAdv",
                     displayName     :   "Manual Cos Phase Correction",
-                    description     :   "enable Advanced Configurations to edit this feild. Manual value used for Cos Phase Correction.",
+                    description     :   "Enable Advanced Configurations to edit this feild. Manual value used for Cos Phase Correction.",
                     hidden          :   false,
                     readOnly        :   true,
                     default         :   0,
@@ -822,8 +825,8 @@ for( let core = 0; core <= 1; core++)
                 {
                     name            :   "core"+core.toString()+"track2kvelfiltAdv",
                     displayName     :   "Kvelfilt Value",
-                    readOnly        :   true,
                     default         :   8,
+                    readOnly        :   true,
                 },
                 {
                     name            :   "core"+core.toString()+"track2vboostcoefAdv",
@@ -856,7 +859,7 @@ config = config.concat([
 let int_configs = [
     {
         name        :   "SequencerInterrupt",
-        displayName :   "Sequencer Interrupt enable",
+        displayName :   "Sequencer Interrupt Enable",
         default     :   false,
         hidden      :   false,
     },
@@ -868,8 +871,8 @@ for (let core = 0; core <= 1; core++)
         // RESOLVER_setupPPB(), socNumber
         {
             name        : "Core" + core.toString() + "IntEn" ,
-            displayName : "Interrupt Enable for this Resolver Core",
-            description : "check this box for enabling interrupt sources from this resolver core.",
+            displayName : "Interrupt Enable Resolver Core " + core.toString(),
+            description : "Check this box for enabling interrupt sources from this resolver core.",
             default     : false,
             hidden      : false,
             onChange    : (inst, ui)=>{
@@ -886,7 +889,7 @@ for (let core = 0; core <= 1; core++)
         },
         {
             name: "ResolverCore" + core.toString() + "InterruptConfig",
-            displayName : "Resolver Core " + core.toString() + " Interrupt Configurations",
+            displayName : "Core " + core.toString() + " Interrupt Configurations",
             description : 'Select the Interrupt Sources for this Resovler Core',
             hidden      : true,
             default     : [],
@@ -1009,7 +1012,7 @@ let resolverModule = {
     peripheralName: "RESOLVER",
     displayName: "RESOLVER",
     defaultInstanceName: "CONFIG_RESOLVER",
-    description: "Analog Digital Converter",
+    description: "Resolver to Digital Converter",
     filterHardware : filterHardware,
     config: config,
     templates: {

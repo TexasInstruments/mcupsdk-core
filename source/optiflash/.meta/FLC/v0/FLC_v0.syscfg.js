@@ -53,7 +53,7 @@ exports =
         },
         {
             name: "destinationStartAddress",
-            displayName: "Destination starting address",
+            displayName: "Destination Starting Address",
             default: 0,
             displayFormat: "hex",
             description: "This is the destination address where it is be copied."
