@@ -170,6 +170,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_minimum_deadband/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_protection_pru/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_protection_pru/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_synchronization/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_trip_zone/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_trip_zone/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_valley_switching/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -719,6 +720,7 @@ BUILD_COMBO_EXAMPLE_ALL += epwm_minimum_deadband_am263px-cc_r5fss0-0_nortos_ti-a
 BUILD_COMBO_EXAMPLE_ALL += epwm_minimum_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += epwm_protection_pru_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += epwm_protection_pru_am263px-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += epwm_synchronization_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += epwm_trip_zone_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += epwm_trip_zone_am263px-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += epwm_valley_switching_am263px-cc_r5fss0-0_nortos_ti-arm-clang
@@ -1232,6 +1234,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  epwm_protection_pru_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/epwm/epwm_protection_pru/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ epwm_synchronization_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/epwm/epwm_synchronization/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  epwm_trip_zone_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/epwm/epwm_trip_zone/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -1956,6 +1961,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += epwm_minimum_deadband_am263px-cc_r5fss0-0_norto
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += epwm_minimum_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += epwm_protection_pru_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += epwm_protection_pru_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += epwm_synchronization_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += epwm_trip_zone_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += epwm_trip_zone_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += epwm_valley_switching_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2469,6 +2475,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  epwm_protection_pru_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/epwm/epwm_protection_pru/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ epwm_synchronization_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_synchronization/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  epwm_trip_zone_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/epwm/epwm_trip_zone/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -3193,6 +3202,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += epwm_minimum_deadband_am263px-cc_r5fss0-0_norto
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += epwm_minimum_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += epwm_protection_pru_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += epwm_protection_pru_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += epwm_synchronization_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += epwm_trip_zone_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += epwm_trip_zone_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += epwm_valley_switching_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -3706,6 +3716,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  epwm_protection_pru_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/epwm/epwm_protection_pru/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ epwm_synchronization_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/epwm/epwm_synchronization/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  epwm_trip_zone_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/epwm/epwm_trip_zone/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

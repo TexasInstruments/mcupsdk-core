@@ -79,6 +79,7 @@ const example_file_list = [
     "examples/drivers/epwm/hrpwm_phase_shift_sfo/.project/project.js",
 	"examples/drivers/epwm/epwm_minimum_deadband/.project/project.js",
 	"examples/drivers/epwm/epwm_protection_pru/.project/project.js",
+    "examples/drivers/epwm/epwm_synchronization/.project/project.js",
 	"examples/drivers/epwm/epwm_trip_zone/.project/project.js",
 	"examples/drivers/epwm/epwm_valley_switching/.project/project.js",
 	"examples/drivers/eqep/eqep_frequency_measurement/.project/project.js",
