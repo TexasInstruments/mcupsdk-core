@@ -75,13 +75,11 @@ void test_main(void *args)
     Drivers_open();
     UNITY_BEGIN();
 
-    RUN_TEST((UnityTestFunction)test_flc_configuration, 4441, NULL);
-    RUN_TEST((UnityTestFunction)test_flc_runtimeconfig, 4446, NULL);
-    RUN_TEST((UnityTestFunction)test_flc_interrupt, 4442, NULL);
-    RUN_TEST((UnityTestFunction)test_flc_enable_disable, 4445, NULL);
-    RUN_TEST((UnityTestFunction)test_rl2_config, 4449, NULL);
-    RUN_TEST((UnityTestFunction)test_rl2_config, 4450, NULL);
-    RUN_TEST((UnityTestFunction)test_rl2_config, 4452, NULL);
+    RUN_TEST((UnityTestFunction)test_flc_configuration, 11837, NULL);
+    RUN_TEST((UnityTestFunction)test_flc_runtimeconfig, 11838, NULL);
+    RUN_TEST((UnityTestFunction)test_flc_interrupt, 11839, NULL);
+    RUN_TEST((UnityTestFunction)test_flc_enable_disable, 11840, NULL);
+    RUN_TEST((UnityTestFunction)test_rl2_config, 11841, NULL);
     // RUN_TEST((UnityTestFunction)test_rat_config, 4455, NULL);
     // RUN_TEST((UnityTestFunction)test_rat_config, 4456, NULL);
 
