@@ -574,7 +574,6 @@ static void TestApp_rxTask(void *args)
     uint32_t rxReadyCnt;
     uint32_t loopCnt, loopRxPktCnt;
     int32_t status = ENET_SOK;
-    uint32_t rxPktCnt;
     uint16_t seqId = 0U;
     uint32_t nanoseconds;
     uint64_t seconds;
@@ -584,7 +583,6 @@ static void TestApp_rxTask(void *args)
     for (loopCnt = 0U; loopCnt < ENETLPBK_NUM_ITERATION; loopCnt++)
     {
         loopRxPktCnt = 0U;
-        rxPktCnt     = 0U;
         /* Wait for packet reception */
         do
         {
@@ -597,7 +595,6 @@ static void TestApp_rxTask(void *args)
                 pktInfo = (EnetDma_Pkt *)EnetQueue_deq(&gTestApp.rxReadyQ);
                 while (NULL != pktInfo)
                 {
-                    rxPktCnt++;
                     EnetDma_checkPktState(&pktInfo->pktState,
                                           ENET_PKTSTATE_MODULE_APP,
                                           ENET_PKTSTATE_APP_WITH_READYQ,
