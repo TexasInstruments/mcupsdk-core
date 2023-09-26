@@ -29,6 +29,7 @@ const device_defines = {
 };
 
 const example_file_list = [
+    "examples/benchmarks/ocmc_benchmarking/.project/project_freertos.js",
 	"examples/drivers/adc/adc_burst_mode_epwm/.project/project.js",
 	"examples/drivers/adc/adc_burst_mode_oversampling/.project/project.js",
 	"examples/drivers/adc/adc_differential_mode/.project/project.js",
