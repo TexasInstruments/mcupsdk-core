@@ -63,6 +63,7 @@ FILES_PATH_`prop` = \
 % }
 % obj = args.project.includes;
 % for (prop in obj) {
+% if (prop == "common") {
     % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
 INCLUDES_`prop` := \
             % for(let val of obj[prop]) {
@@ -70,6 +71,7 @@ INCLUDES_`prop` := \
             % }
 
     % }
+% }
 % }
 % obj = args.project.defines;
 % for (prop in obj) {
