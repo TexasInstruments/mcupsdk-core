@@ -94,26 +94,6 @@ uint32_t Bootloader_socCpuGetClkDefault(uint32_t cpuId)
     if(cpuId < CSL_CORE_ID_MAX)
     {
         defClock = gCoreBootInfo[cpuId].defaultClockHz;
-        uint8_t dspFreqEfuse = (CSL_REG32_RD(BOOTLOADER_SOC_EFUSE_REG_ROW11) & (BOOTLOADER_SOC_DSP_PART_MASK));
-
-        switch(dspFreqEfuse)
-        {
-            case BOOTLOADER_SOC_DSP_PART_300MHZ:
-                defClock = BOOTLOADER_SOC_CLK_FREQ_300MHZ;
-                break;
-
-            case BOOTLOADER_SOC_DSP_PART_550MHZ:
-                defClock = BOOTLOADER_SOC_CLK_FREQ_550MHZ;
-                break;
-
-            case BOOTLOADER_SOC_DSP_PART_450MHZ:
-                defClock = BOOTLOADER_SOC_CLK_FREQ_450MHZ;
-                break;
-
-            default:
-                defClock = BOOTLOADER_SOC_CLK_FREQ_450MHZ;
-                break;
-        }
     }
 
     return defClock;

@@ -2849,9 +2849,15 @@ int32_t SOC_rcmSetPeripheralClock (SOC_RcmPeripheralId periphID,
 
         /* Write the Divider Value */
         *ptrClkDivReg = SOC_rcmInsert16 (*ptrClkDivReg, 11U, 0U, clkDivVal);
+        /* Poll the CLKDIV and SRC_SEL registers to make sure the value is synchronized. Errata Fix: i2324 */
+        while(CSL_REG32_RD(ptrClkDivReg) != clkDivVal)
+        {;}
 
         /* Write the Clock Source Selection Value */
         *ptrClkSrcReg = SOC_rcmInsert16 (*ptrClkSrcReg, 11U, 0U, clkSrcVal);
+        while(CSL_REG32_RD(ptrClkSrcReg) != clkSrcVal)
+        {;}
+
         retVal = SystemP_SUCCESS;
     }
     else
@@ -2961,9 +2967,14 @@ int32_t SOC_rcmSetDspClock (SOC_RcmDspClockSource clkSource,
 
         /* Write the Divider Value */
         *ptrClkDivReg = SOC_rcmInsert16 (*ptrClkDivReg, 11U, 0U, clkDivVal);
+        /* Poll the CLKDIV and SRC_SEL register to make sure the value is synchronized. Errata Fix: i2324 */
+        while(CSL_REG32_RD(ptrClkDivReg) != clkDivVal)
+        {;}
 
         /* Write the Clock Source Selection Value */
         *ptrClkSrcReg = SOC_rcmInsert16 (*ptrClkSrcReg, 11U, 0U, clkSrcVal);
+        while(CSL_REG32_RD(ptrClkSrcReg) != clkSrcVal)
+        {;}
         retVal = SystemP_SUCCESS;
     }
     else
