@@ -8782,6 +8782,39 @@
             "example"
         ],
         "resourceSubClass": [
+            "example.basic_smart_placement"
+        ],
+        "description": "A basic smart placement exmaple. This example is intended to be a starting point protraying smart placement. CPU is R5FSS0-0 running NORTOS.",
+        "name": "basic_smart_placement",
+        "location": "../../examples/kernel/nortos/basic_smart_placement/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "nortos",
+            "basic_smart_placement",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
             "example.general"
         ],
         "description": "A Crypto Dthe Aes Cbc 128 Example. CPU is R5FSS0-0 running NORTOS.",
