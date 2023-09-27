@@ -236,8 +236,8 @@ enet_cpsw1.netifInstance[0].$name        = "NETIF_INST_ID0";
  * re-solve from scratch.
  */
 enet_cpsw1.pinmux[0].MDIO.$suggestSolution          = "MDIO";
-enet_cpsw1.pinmux[0].MDIO.MDC.$suggestSolution      = "MDIO0_MDC";
-enet_cpsw1.pinmux[0].MDIO.MDIO.$suggestSolution     = "MDIO0_MDIO";
+enet_cpsw1.pinmux[0].MDIO.MDC.$suggestSolution      = "MDIO_MDC";
+enet_cpsw1.pinmux[0].MDIO.MDIO.$suggestSolution     = "MDIO_MDIO";
 enet_cpsw1.pinmux[0].RGMII1.$suggestSolution        = "RGMII2";
 enet_cpsw1.pinmux[0].RGMII1.RD0.$suggestSolution    = "PR0_PRU0_GPIO0";
 enet_cpsw1.pinmux[0].RGMII1.RD1.$suggestSolution    = "PR0_PRU0_GPIO1";
