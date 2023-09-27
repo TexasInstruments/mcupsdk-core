@@ -37,7 +37,7 @@ More on smart placement can be read at \ref SMART_PLACEMENT
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 
  Parameter      | Value
  ---------------|-----------
@@ -48,6 +48,16 @@ More on smart placement can be read at \ref SMART_PLACEMENT
 
 \endcond
 
+\cond SOC_AM263PX
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | >= ti-arm-clang 3.1.0 STS
+ Boards         | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/kernel/nortos/basic_smart_placement
+
+\endcond
 
 \cond SOC_AM62X
 

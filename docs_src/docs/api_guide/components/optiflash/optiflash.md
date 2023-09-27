@@ -188,7 +188,7 @@ With external flash solution with OpTI-Flash technology, entire internal memory 
 
 However, because OpTI-Flash technology enables XIP, FOTA is difficult to be performed. External flash is connected to microcontroller over 8 data lines (OSPI) and on same data lines, both reads and writes would happen. And in FOTA, writes would be happening while XIP is going on. During writing, reading should be stopped which also mean that XIP needs to be stopped and this would have a huge impact on performance and increased complexity in system design.
 
-Although, FOTA is usually a very low priority task and XIP downtime can be managed in most situation. However, in case, XIP downtime is coming out to be critical the RWW flash can be used with OpTI-Flash FOTA hardware accelerator.
+Although, FOTA is usually a very low priority task and XIP downtime can be managed in most situation. However, in case, XIP downtime is coming out to be critical, then RWW flash can be used with OpTI-Flash FOTA hardware accelerator.
 
 \imageStyle{optiflash_fota_rat_safe_sec_perf.png,width:50%}
 \image html optiflash_fota_rat_safe_sec_perf.png "FOTA hardware accelerator is added as part of OpTI-Flash to schedule reads and writes so as to minimize XIP downtime."

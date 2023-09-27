@@ -8,7 +8,7 @@ This document gives a basic introduction to configuring different IPs, which is 
 
 ## How to configure RL2?
 
-RL2 is basically an L2 cache controller. highlight the controller keyword because, unlike the L1 cache controller, which has internal cache memory, RL2 does not have internal cache memory. RL2 needs to be configured, and a part of SRAM needs to be assigned for RL2 cache memory.
+RL2 is, basically, an L2 cache controller. Highlighting the `controller` keyword here, because, unlike the L1 cache controller, which has internal cache memory, RL2 does not have internal cache memory. RL2 needs to be configured, and a part of On-chip SRAM needs to be assigned for RL2 cache memory.
 
 There are three configurations that are largely needed:
 1. Size of the L2 cache
@@ -32,7 +32,7 @@ By selecting `Layer2 Cache` from the `OpTI-Flash` drop-down, the above configura
 
 \note It is advised to use `remote region 0` only rather than split the cache bank into 3 regions from the perspective of cache efficiency, or `(Length of remote region 1) = (Length of remote region 2) = 0`.
 
-\note Linker should be modified to make sure that no code or data at copmile time or runtime would overwrite the memory that is reserved for the RL2 remote region.
+\note Linker should be modified to make sure that no code or data at compiler time or runtime would overwrite the memory that is reserved for the RL2 remote region.
 
 ## How to configure FLC.
 
