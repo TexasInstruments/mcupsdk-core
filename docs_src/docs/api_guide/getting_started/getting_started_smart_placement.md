@@ -1,14 +1,14 @@
-# Smart Placmenet {#SMART_PLACEMENT_GETTING_STARTED}
+# Getting Started With Smart Placement {#SMART_PLACEMENT_GETTING_STARTED}
 [TOC]
 ## Introduction
 
 Smart placement is to enable profiling based application optimization.
 
-Usually used when application foot print is more than  internal memory size (2.5MB for case of AM263Px) smart placement can be used. More on this can be read at \ref SMART_PLACEMENT
+Usually used when application foot print is more than  internal memory size (2.5MB for case of AM263Px). More on this can be read at \ref SMART_PLACEMENT
 
-The basic assumption is that application needs to be profiled to gather runtime information. This information is then used to optimize the applcaition by moving functions from external slower, but larger, flash to internal memory which is faster but small in size.
+The basic assumption is that application needs to be profiled to gather runtime information. This information is then used to optimize the application by moving functions from external slower, but larger, flash to internal memory which is faster but small in size.
 
-Smart placemnet provide tools and method to make the process easy via specific implementaions of smart placement
+Smart placement provide tools and method to make the process easy via specific implementaions of smart placement
 
 ## Specific implementation of smart placement
 
@@ -16,7 +16,7 @@ Smart placemnet provide tools and method to make the process easy via specific i
 
 Use this when
 1. it is not suitable to run the application on the target and collect runtime profiling data.
-2. Developer of the applicaiton knows the applicaiton.
+2. Developer of the application have knowledge about the criticality of various functions/Tasks.
 
 More on this can be read at \ref MANUAL_SMART_PLACEMENT
 

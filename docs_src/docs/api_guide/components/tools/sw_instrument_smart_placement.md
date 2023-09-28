@@ -15,7 +15,7 @@ Make sure that ti-arm-clang compiler version is more than 3.1.0 STS.
 
 1. Will not work for C++ code.
 2. All static functions are never considered.
-3. Memory constraint applications.
+3. Internal memory constraint applications may not be able to use this.
 
 ## Steps
 
@@ -35,20 +35,38 @@ gmake -j libs DEVICE=am263px INSTRUMENTATION_MODE=yes
 
 The above command will compile all the SDK libraries in `instrumentation mode` and in `release` profile. If it required to build libraries in `debug` mode then `PROFILE=debug` can be added at the end of the command.
 
-Also, in Linux, `gmake` is to be replaced by `make`.
+Also, in Linux, `gmake` is to be replaced by `make`. The above commands assumes that current working directory is defined in `MCU_PLUS_SDK_PATH` environment variable.
 
 ### 2. Recompilation of Application
 
-Application is also required to be compiled with those flags. Use the following command to build the application:
+Application is also required to be compiled with those flags.
+\cond SOC_AM263PX
+\note
+The binary that is generated is an instrumented binary and its size is going to be more than the size of original application size. Therefore, it might be the case that linker.cmd file needs to be changed or if memory configurator is used then memory size needs to be changed.
 
-\code
-gmake scrub && gmake INSTRUMENTATION_MODE=yes
-\endcode
+For the changes that are required to be done for in memory configurator/linker script for instrumentation, please go through the following steps documented at \ref INSTRUMENTED_APPLICATION_SPECIAL_SECTION_ADD.
 
-Again, profile flag can be added as well.
+\endcond
+\cond  SOC_AM263X || SOC_AM243X
+
+The binary that is generated is an instrumented binary and its size is going to be more than the size of original application size. Therefore, it might be the case that linker.cmd file needs to be changed.
+
+For the changes that are required to be done for in linker script for instrumentation, please go through the following steps documented at \ref INSTRUMENTED_APPLICATION_SPECIAL_SECTION_ADD.
+
+
+\endcond
 
 \note
-The binary that is generated is an instrumented binary and its size is going to be more than the size of original application size. Therefore, it might be the case that linker.cmd file needs to be changed or if memory configurator is used then it is it memory size needs to be changed.
+Although these changes are already at-least in empty SDK examples. So, changes can be copied and pasted directly from it and any more changes can be done on top of that.
+
+Once those changes are done, execute following commands:
+
+\code
+gmake -C path/to/folder/with/application/makefile scrub
+gmake -C path/to/folder/with/application/makefile INSTRUMENTATION_MODE=yes
+\endcode
+
+The above two commands assume that current working directory is defined in `MCU_PLUS_SDK_PATH` environment variable. Again, profile flag can be added as well to above commands.
 
 ### 3. Test Run / Profiling Data Generation
 
@@ -72,20 +90,31 @@ What this will do is, make a new `.cnt` file in same place as that of location o
 All the profiling data that is extracted, is stored in `.cnt` file. This `.cnt` file has to be processed and needs to be converted into a format that compiler will understand. To do this, type the following command:
 
 \code
-gmake coverage
+gmake -C path/to/folder/with/application/makefile coverage
 \endcode
 
 Again, if application is being built in debug mode, then make sure to provide `PROFILE` flag to the above command.
 
 The output of this step would an ASM file with `.S` extension.
 
-## 6. Rebuilding the Application
+## 6. Linker update related to Smart Placement
 
-All that is required to be done is recompile the application with new generated ASM file. To do this, add the file in makefile's `ASMFILES_common` variable.
+Update linker as described at \ref SMART_PLACEMENT_LINKER_CHANGE.
 
+\note
+Although these changes are already at-least in \ref BENCHMARK_SMART_PLACEMENT SDK examples. So, changes can be copied and pasted directly from it and any more changes can be done on top of that.
+
+## 7. Rebuilding the Application
+
+Recompile the application with new generated ASM file. To do this, add the file in makefile's `ASMFILES_common` variable. Note that, now INSTRUMENTATION_MODE flag is not required. So rebuild libs and application without these flags.
 
 ## Benchmark Application
 
-\ref BENCHMARK_SMART_PLACEMENT
-
 This demo provides a means of measuring the performance of a realistic application where the text of the application is sitting in various memory locations and the data is sitting in On-Chip-Memory RAM (referred to as OCM, OCMC or OCMRAM).
+
+\note
+All above steps are already done and generated ASM file has been renamed to `annotations.S`.
+
+In case if above steps are required to run, then all linker related changes can be skipped as those are already taken into account.
+
+\ref BENCHMARK_SMART_PLACEMENT

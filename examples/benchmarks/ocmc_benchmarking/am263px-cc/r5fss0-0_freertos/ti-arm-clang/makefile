@@ -46,7 +46,7 @@ FILES_common := \
 	ti_power_clock_config.c \
 
 ASMFILES_common := \
-	ocmc_benchmarking.annotations.release.S \
+	annotations.S \
 
 FILES_PATH_common = \
 	.. \
@@ -95,7 +95,7 @@ CFLAGS_release := \
 	-Os \
 
 LNK_FILES_common = \
-	generated/../linker.cmd \
+	generated/linker.cmd \
 
 LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \

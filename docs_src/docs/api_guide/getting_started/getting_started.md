@@ -29,6 +29,9 @@ On successful completion of below steps, you would have achieved the following
 - One SDK example has been loaded and run on the EVM
 - Output console logs on CCS and UART are working as expected
 - One SDK example has been flashed to the EVM flash and the application booted from the flash without CCS.
+\cond SOC_AM263PX || SOC_AM243X || SOC_AM263X
+- Perform Profiling based system level performance optimization using \ref SMART_PLACEMENT (\ref SMART_PLACEMENT_GETTING_STARTED)
+\endcond
 
 ### Terms and Abbreviations
 
@@ -118,7 +121,9 @@ PTP Sync Receiver       | Ethernet device that is waiting for the master to poll
 
 \endcond
 
-
+\cond  SOC_AM263X || SOC_AM263PX || SOC_AM243X
+- **Step 7:** Optimized system level performance using Smart Placement. See \subpage SMART_PLACEMENT_GETTING_STARTED.
+\endcond
 ### Next Steps
 
 Now you can explore the SDK by running more examples (see \ref EXAMPLES) and browsing through various developer notes (see \ref DEVELOPER_GUIDES), to understand the SDK better and develop your own applications with the SDK.

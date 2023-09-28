@@ -56,7 +56,7 @@ const libs_freertos_r5f = {
 
 const lnkfiles = {
     common: [
-        "../linker.cmd",
+        "linker.cmd",
     ]
 };
 

@@ -12,7 +12,7 @@ CC=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.cc`
 LNK=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.lnk`
 STRIP=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.strip`
 OBJCOPY=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.objcopy`
-% if (args.isInstrumentationMode && args.project.cgt == "ti-arm-clang") {
+% if (args.project.cgt == "ti-arm-clang") {
 COV=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.cov`
 PROFDATA=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.profdata`
 COVERAGE_PATH=$(abspath .)
@@ -775,7 +775,7 @@ endif
 endif
 % }
 % }
-% if (args.isInstrumentationMode && args.project.cgt == "ti-arm-clang") {
+% if (args.project.cgt == "ti-arm-clang") {
 .PHONY: coverage
 coverage:
 	@echo Creating Coverage Report for `args.project.name`.$(PROFILE) ...
@@ -783,7 +783,7 @@ coverage:
 	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o `args.project.name`.$(PROFILE).profdata
 	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=`args.project.name`.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
 	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=`args.project.name`.$(PROFILE).profdata > coverage/`args.project.name`.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/docs_src/code_coverage/clang_coverage_analyse.js --input=coverage/`args.project.name`.$(PROFILE).profdata.json --output-json=coverage/`args.project.name`.$(PROFILE).analysis.json --output-lnk=linker_xip.cmd --top-function-count=500
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/`args.project.name`.$(PROFILE).profdata.json --output-json=coverage/`args.project.name`.$(PROFILE).analysis.json --output=../`args.project.name`.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 % }

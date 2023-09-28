@@ -63,7 +63,7 @@ To build this application, compiler ti-cgt-armllvm >= 3.2.0 LTS or later is requ
 
 # Running benchmark application
 
-This particular application is used to show the effect of smart placement. To do this, we first remove `ENABLE_SMART_PLACEMENT_ANNOTATION` macro (which is in `annotations.S` file.) and compile it.
+This particular application is used to show the effect of smart placement. To do this, we first remove `ENABLE_SMART_PLACEMENT_ANNOTATION` macro (which is in `annotations.S` file.) and compile it. To know how `annotations.S` has been generated then please refer to \ref SW_INSTRUMENT_SMART_PLACEMENT
 
 Flash this application using uart_uniflash. For this please go through \ref TOOLS_FLASH_UART_UNIFLASH
 

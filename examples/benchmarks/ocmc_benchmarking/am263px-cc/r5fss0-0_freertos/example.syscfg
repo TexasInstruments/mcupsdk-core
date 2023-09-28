@@ -33,11 +33,6 @@ const section8   = section.addInstance();
 const section9   = section.addInstance();
 const section10  = section.addInstance();
 const section11  = section.addInstance();
-const section12  = section.addInstance();
-const section13  = section.addInstance();
-const section14  = section.addInstance();
-const RL2        = scripting.addModule("/optiflash/RL2/RL2", {}, false);
-const RL21       = RL2.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -89,7 +84,7 @@ general1.additional_data = "#define TASK_SIZE\t0x8000\n#define TEXT_SIZE\t0x2600
 general1.linker.$name    = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
-region1.memory_region.create(10);
+region1.memory_region.create(7);
 region1.memory_region[0].type               = "TCMA";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].auto               = false;
@@ -106,25 +101,13 @@ region1.memory_region[4].$name              = "NON_CACHE_MEM";
 region1.memory_region[4].size               = 0x8000;
 region1.memory_region[5].auto               = false;
 region1.memory_region[5].manualStartAddress = 0x70080000;
-region1.memory_region[5].size               = 0x5B000;
 region1.memory_region[5].$name              = "MSRAM";
+region1.memory_region[5].size               = 0x160000;
 region1.memory_region[6].type               = "FLASH";
 region1.memory_region[6].$name              = "FLASH";
 region1.memory_region[6].auto               = false;
 region1.memory_region[6].manualStartAddress = 0x60100000;
 region1.memory_region[6].size               = 0x150000;
-region1.memory_region[7].auto               = false;
-region1.memory_region[7].manualStartAddress = 0x701D0000;
-region1.memory_region[7].$name              = "USER_SHM_MEM";
-region1.memory_region[7].size               = 0x180;
-region1.memory_region[8].auto               = false;
-region1.memory_region[8].manualStartAddress = 0x701D0180;
-region1.memory_region[8].size               = 0x3E80;
-region1.memory_region[8].$name              = "LOG_SHM_MEM";
-region1.memory_region[9].$name              = "RTOS_NORTOS_IPC_SHM_MEM";
-region1.memory_region[9].auto               = false;
-region1.memory_region[9].manualStartAddress = 0x701D4000;
-region1.memory_region[9].size               = 0xC000;
 
 section1.$name                   = "Vector Table";
 section1.load_memory             = ["R5F_VECS"];
@@ -177,7 +160,7 @@ section5.output_section[0].$name     = ".TI.offchip";
 section5.output_section[0].alignment = 0;
 
 section6.$name                    = "Task";
-section6.load_memory              = ["FLASH"];
+section6.load_memory              = ["MSRAM"];
 section6.output_section.create(17);
 section6.output_section[0].$name  = ".task_0";
 section6.output_section[1].$name  = ".task_1";
@@ -235,14 +218,11 @@ section7.output_section[16].$name     = ".buf_cpy";
 section7.output_section[16].alignment = 4;
 section7.output_section[17].$name     = ".data";
 
-section8.$name                                   = "Memory Segments";
-section8.load_memory                             = ["MSRAM_STACK"];
-section8.output_section.create(3);
-section8.output_section[0].$name                 = ".bss";
-section8.output_section[0].output_sections_start = "__BSS_START";
-section8.output_section[0].output_sections_end   = "__BSS_END";
-section8.output_section[1].$name                 = ".sysmem";
-section8.output_section[2].$name                 = ".stack";
+section8.$name                   = "Memory Segments";
+section8.load_memory             = ["MSRAM_STACK"];
+section8.output_section.create(2);
+section8.output_section[0].$name = ".sysmem";
+section8.output_section[1].$name = ".stack";
 
 section9.$name                                    = "Stack Segments";
 section9.load_memory                              = ["MSRAM"];
@@ -280,39 +260,11 @@ section10.output_section[0].$name = ".ARM.exidx";
 section10.output_section[1].$name = ".init_array";
 section10.output_section[2].$name = ".fini_array";
 
-section11.load_memory                 = ["USER_SHM_MEM"];
-section11.type                        = "NOLOAD";
-section11.$name                       = "User Shared Memory";
-section11.group                       = false;
-section11.output_section.create(1);
-section11.output_section[0].$name     = ".bss.user_shared_mem";
-section11.output_section[0].alignment = 0;
-
-section12.load_memory                 = ["LOG_SHM_MEM"];
-section12.$name                       = "Log Shared Memory";
-section12.group                       = false;
-section12.output_section.create(1);
-section12.output_section[0].$name     = ".bss.log_shared_mem";
-section12.output_section[0].alignment = 0;
-
-section13.load_memory                 = ["RTOS_NORTOS_IPC_SHM_MEM"];
-section13.type                        = "NOLOAD";
-section13.$name                       = "IPC Shared Memory";
-section13.group                       = false;
-section13.output_section.create(1);
-section13.output_section[0].$name     = ".bss.ipc_vring_mem";
-section13.output_section[0].alignment = 0;
-
-section14.load_memory                 = ["NON_CACHE_MEM"];
-section14.group                       = false;
-section14.$name                       = "No cache";
-section14.output_section.create(1);
-section14.output_section[0].$name     = ".bss.nocache";
-section14.output_section[0].alignment = 0;
-
-RL21.$name       = "RL20";
-RL21.cacheSize   = "RL2_CACHESIZE_128K";
-RL21.l2Sram0Len  = 131072;
-RL21.rangeStart  = 0x60000000;
-RL21.l2Sram0Base = 0x70100000;
-RL21.rangeEnd    = 0x60200000;
+section11.load_memory             = ["MSRAM"];
+section11.$name                   = "uninit";
+section11.group_start             = "__BSS_START";
+section11.group_end               = "__BSS_END";
+section11.output_section.create(3);
+section11.output_section[0].$name = ".bss";
+section11.output_section[1].$name = "__llvm_prf_cnts";
+section11.output_section[2].$name = "__llvm_prf_bits";
