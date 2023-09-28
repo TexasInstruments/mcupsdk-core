@@ -1,0 +1,642 @@
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/sdl/ecc.md:3088: warning: Conditional section with label 'SOC_AM273X' does not have a corresponding \endcond command within this file.
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/ethphy.h:289: warning: unable to resolve reference to 'ETHPHY_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/flash.h:317: warning: unable to resolve reference to 'Flash_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/ioexp/ioexp_tca6424.h:182: warning: unable to resolve reference to 'TCA6424_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/ipc_notify.h:133: warning: unable to resolve reference to 'IpcNotify_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/ipc_rpmsg.h:278: warning: unable to resolve reference to 'RPMessage_Object' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/ipc_rpmsg.h:86: warning: unable to resolve reference to 'RPMessage_Object' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/sipc_notify.h:121: warning: unable to resolve reference to 'SIPC_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/kernel/dpl/TimerP.h:129: warning: unable to resolve reference to 'TimerP_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:116: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:119: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:122: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_ioctl.h:146: warning: explicit link request to 'Enet_IoctlValidate' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_phy.h:74: warning: explicit link request to 'EnetPhy_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_phy.h:75: warning: explicit link request to 'EnetPhy_Version' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_phy.h:83: warning: explicit link request to 'EnetPhy_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_phy.h:92: warning: explicit link request to 'EnetPhy_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_phy.h:101: warning: explicit link request to 'EnetPhy_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_phy.h:110: warning: explicit link request to 'EnetPhy_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_phy.h:120: warning: explicit link request to 'EnetPhy_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_phy.h:121: warning: explicit link request to 'EnetMacPort_LinkCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_phy.h:130: warning: explicit link request to 'EnetPhy_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_phy.h:139: warning: explicit link request to 'EnetPhy_ReadRegInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_phy.h:148: warning: explicit link request to 'EnetPhy_WriteRegInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_phy.h:157: warning: explicit link request to 'EnetPhy_ReadRegInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_phy.h:166: warning: explicit link request to 'EnetPhy_WriteRegInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_phy.h:175: warning: explicit link request to 'EnetPhy_C45ReadRegInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_phy.h:184: warning: explicit link request to 'EnetPhy_C45WriteRegInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_phy.h:193: warning: explicit link request to 'EnetPhy_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_per.h:83: warning: explicit link request to 'Enet_Version' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_per.h:100: warning: explicit link request to 'EnetPer_PortLinkCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_per.h:109: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_per.h:118: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_per.h:127: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_per.h:128: warning: explicit link request to 'EnetMacPort_LinkCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_per.h:137: warning: explicit link request to 'EnetPer_AttachCoreOutArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_per.h:154: warning: explicit link request to 'Enet_DfltFlowInfo' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_per.h:166: warning: explicit link request to 'Enet_DfltFlowInfo' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_per.h:179: warning: explicit link request to 'Enet_MacDstFlowInfo' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_per.h:191: warning: explicit link request to 'Enet_MacDstFlowInfo' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_per.h:222: warning: explicit link request to 'Enet_ExtPhyLinkUpEventInfo' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_per.h:244: warning: explicit link request to 'Enet_IoctlRegisterHandlerInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:468: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:476: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:484: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:499: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_utils.h:337: warning: explicit link request to 'EnetMacPort_Interface' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_utils.h:338: warning: explicit link request to 'EnetPhy_Mii' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/ethphy.h:112: warning: unable to resolve reference to 'ETHPHY_SpeedDuplexConfig' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/ethphy.h:117: warning: unable to resolve reference to 'ETHPHY_SpeedDuplexConfig' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/ethphy.h:289: warning: unable to resolve reference to 'ETHPHY_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/flash.h:317: warning: unable to resolve reference to 'Flash_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/ioexp/ioexp_tca6424.h:182: warning: unable to resolve reference to 'TCA6424_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/ipc_notify.h:133: warning: unable to resolve reference to 'IpcNotify_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/ipc_rpmsg.h:54: warning: unable to resolve reference to 'RPMessage_Object' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/ipc_rpmsg.h:86: warning: unable to resolve reference to 'RPMessage_Object' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/ipc_rpmsg.h:278: warning: unable to resolve reference to 'RPMessage_Object' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/sipc_notify.h:121: warning: unable to resolve reference to 'SIPC_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/kernel/dpl/TimerP.h:129: warning: unable to resolve reference to 'TimerP_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:17: warning: unable to resolve reference to 'EnetHostPort_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:18: warning: unable to resolve reference to 'EnetMacPort_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:19: warning: unable to resolve reference to 'EnetFdb_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:20: warning: unable to resolve reference to 'EnetMdio_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:21: warning: unable to resolve reference to 'EnetStats_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:22: warning: unable to resolve reference to 'EnetTimeSync_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/phy_link_configuration.md:74: warning: explicit link request to 'EnetPhy_Cfg.isStrapped' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/phy_integration.md:14: warning: unable to resolve reference to 'EnetPhy_Mdio' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/phy_integration.md:155: warning: explicit link request to 'EnetPhy_Version' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/phy_integration.md:179: warning: explicit link request to 'EnetPhy_Version' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:80: warning: unable to resolve reference to 'Enet_IoctlPrms' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:83: warning: unable to resolve reference to 'Enet_IoctlPrms' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:97: warning: unable to resolve reference to 'Enet_IoctlPrms' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:100: warning: unable to resolve reference to 'Enet_IoctlPrms' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:159: warning: unable to resolve reference to 'EnetOsal_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:166: warning: unable to resolve reference to 'EnetUtils_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:198: warning: unable to resolve reference to 'Cpsw_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:201: warning: unable to resolve reference to 'EnetDma_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:203: warning: unable to resolve reference to 'Cpsw_VlanCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:204: warning: unable to resolve reference to 'Cpsw_Cfg.txMtu' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:205: warning: unable to resolve reference to 'CpswHostPort_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:206: warning: unable to resolve reference to 'CpswAle_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:207: warning: unable to resolve reference to 'CpswCpts_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:208: warning: unable to resolve reference to 'Mdio_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:209: warning: unable to resolve reference to 'EnetRm_ResCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:214: warning: unable to resolve reference to 'Cpsw_Cfg::dmaCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:226: warning: unable to resolve reference to 'Cpsw_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:226: warning: unable to resolve reference to 'Icssg_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:231: warning: unable to resolve reference to 'Enet_Handle' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:269: warning: unable to resolve reference to 'EnetPer_PortLinkCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:271: warning: unable to resolve reference to 'EnetPer_PortLinkCfg.mii' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:292: warning: unable to resolve reference to 'EnetPer_PortLinkCfg.linkCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:295: warning: unable to resolve reference to 'Enet_Speed' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:295: warning: unable to resolve reference to 'Enet_Duplexity' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:362: warning: unable to resolve reference to 'EnetPer_PortLinkCfg.macPort' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:364: warning: unable to resolve reference to 'EnetPer_PortLinkCfg.mii' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:369: warning: unable to resolve reference to 'EnetPer_PortLinkCfg.linkCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/mdio_manual_mode.md:11: warning: unable to resolve reference to 'Mdio_Cfg::mode' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:67: warning: unable to resolve reference to 'EnetTas_ControlList' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:68: warning: unable to resolve reference to 'EnetTas_ControlList::baseTime' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:74: warning: unable to resolve reference to 'EnetTas_ControlList::gateCmdList' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:78: warning: unable to resolve reference to 'EnetTas_ControlList::listLength' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:80: warning: unable to resolve reference to 'EnetTas_ControlList::cycleTime' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:86: warning: unable to resolve reference to 'EnetTas_ControlList::sduTable' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:95: warning: unable to resolve reference to 'EnetTas_ControlList' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:156: warning: unable to resolve reference to 'EnetTas_ControlList::gateCmdList' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:337: warning: unable to resolve reference to 'CpswMacPort_EstTimestampCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:338: warning: unable to resolve reference to 'CpswMacPort_EstTimestampCfg::mode' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:338: warning: unable to resolve reference to 'CpswMacPort_EstTimestampMode' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:339: warning: unable to resolve reference to 'CpswMacPort_EstTimestampCfg::priority' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:342: warning: unable to resolve reference to 'CpswMacPort_EstTimestampCfg::domain' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:358: warning: unable to resolve reference to 'CpswCpts_EstEvent' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/kernel/dpl/QueueP.md:17: warning: explicit link request to 'QueueP_Object' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/kernel/dpl/QueueP.md:18: warning: explicit link request to 'QueueP_Elem' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/kernel/dpl/QueueP.md:17: warning: explicit link request to 'QueueP_Object' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/kernel/dpl/QueueP.md:18: warning: explicit link request to 'QueueP_Elem' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/drivers/ipc_rpmsg.md:89: warning: unable to resolve reference to 'RPMessage_Object' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/drivers/sipc_notify.md:98: warning: unable to resolve reference to 'SIPC_Params::tx_SipcQueues' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/drivers/sipc_notify.md:100: warning: unable to resolve reference to 'SIPC_Params::rx_SipcQueues' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/drivers/ipc_rpmsg.md:89: warning: unable to resolve reference to 'RPMessage_Object' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/drivers/sipc_notify.md:98: warning: unable to resolve reference to 'SIPC_Params::tx_SipcQueues' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/drivers/sipc_notify.md:100: warning: unable to resolve reference to 'SIPC_Params::rx_SipcQueues' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/board/ethphy.md:74: warning: unable to resolve reference to 'ETHPHY_Fxns' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/board/ethphy.md:74: warning: unable to resolve reference to 'ETHPHY_Fxns' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:122: warning: Found unknown command '\imageStyle'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:162: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:166: warning: Found unknown command '\VAR_SOC_NAME'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:177: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:179: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:183: warning: Found unknown command '\VAR_SOC_NAME'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:193: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:195: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:199: warning: Found unknown command '\VAR_SOC_NAME'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:208: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:210: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:214: warning: Found unknown command '\VAR_SOC_NAME'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:224: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:231: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:233: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:235: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:265: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:267: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:533: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:537: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:539: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:543: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:545: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:549: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:551: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:556: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:560: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:561: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:566: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:577: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:707: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:709: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:719: warning: Found unknown command '\imageStyle'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:763: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:800: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:805: warning: unable to resolve reference to 'INSTALL_DFU_UTIL' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:855: warning: unable to resolve reference to 'EXAMPLES_DRIVERS_SBL_DFU' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:857: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:860: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:902: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:904: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:956: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:960: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:962: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:964: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:990: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:122: warning: Found unknown command '\imageStyle'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:162: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:166: warning: Found unknown command '\VAR_SOC_NAME'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:177: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:179: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:183: warning: Found unknown command '\VAR_SOC_NAME'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:193: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:195: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:199: warning: Found unknown command '\VAR_SOC_NAME'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:208: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:210: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:214: warning: Found unknown command '\VAR_SOC_NAME'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:224: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:231: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:233: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:235: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:265: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:267: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:533: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:537: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:539: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:543: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:545: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:549: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:551: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:556: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:560: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:561: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:566: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:577: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:707: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:709: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:719: warning: Found unknown command '\imageStyle'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:763: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:800: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:805: warning: unable to resolve reference to 'INSTALL_DFU_UTIL' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:855: warning: unable to resolve reference to 'EXAMPLES_DRIVERS_SBL_DFU' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:857: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:860: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:902: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:904: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:956: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:960: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:962: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:964: warning: Found unknown command '\cond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/tools/tools_boot.md:990: warning: Found unknown command '\endcond'
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:17: warning: unable to resolve reference to 'EnetHostPort_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:18: warning: unable to resolve reference to 'EnetMacPort_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:19: warning: unable to resolve reference to 'EnetFdb_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:20: warning: unable to resolve reference to 'EnetMdio_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:21: warning: unable to resolve reference to 'EnetStats_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:22: warning: unable to resolve reference to 'EnetTimeSync_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/phy_link_configuration.md:74: warning: explicit link request to 'EnetPhy_Cfg.isStrapped' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/phy_integration.md:14: warning: unable to resolve reference to 'EnetPhy_Mdio' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/phy_integration.md:155: warning: explicit link request to 'EnetPhy_Version' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/phy_integration.md:179: warning: explicit link request to 'EnetPhy_Version' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:80: warning: unable to resolve reference to 'Enet_IoctlPrms' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:83: warning: unable to resolve reference to 'Enet_IoctlPrms' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:97: warning: unable to resolve reference to 'Enet_IoctlPrms' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:100: warning: unable to resolve reference to 'Enet_IoctlPrms' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:159: warning: unable to resolve reference to 'EnetOsal_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:166: warning: unable to resolve reference to 'EnetUtils_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:198: warning: unable to resolve reference to 'Cpsw_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:201: warning: unable to resolve reference to 'EnetDma_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:203: warning: unable to resolve reference to 'Cpsw_VlanCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:204: warning: unable to resolve reference to 'Cpsw_Cfg.txMtu' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:205: warning: unable to resolve reference to 'CpswHostPort_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:206: warning: unable to resolve reference to 'CpswAle_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:207: warning: unable to resolve reference to 'CpswCpts_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:208: warning: unable to resolve reference to 'Mdio_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:209: warning: unable to resolve reference to 'EnetRm_ResCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:214: warning: unable to resolve reference to 'Cpsw_Cfg::dmaCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:226: warning: unable to resolve reference to 'Cpsw_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:226: warning: unable to resolve reference to 'Icssg_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:231: warning: unable to resolve reference to 'Enet_Handle' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:269: warning: unable to resolve reference to 'EnetPer_PortLinkCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:271: warning: unable to resolve reference to 'EnetPer_PortLinkCfg.mii' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:292: warning: unable to resolve reference to 'EnetPer_PortLinkCfg.linkCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:295: warning: unable to resolve reference to 'Enet_Speed' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:295: warning: unable to resolve reference to 'Enet_Duplexity' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:362: warning: unable to resolve reference to 'EnetPer_PortLinkCfg.macPort' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:364: warning: unable to resolve reference to 'EnetPer_PortLinkCfg.mii' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:369: warning: unable to resolve reference to 'EnetPer_PortLinkCfg.linkCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/mdio_manual_mode.md:11: warning: unable to resolve reference to 'Mdio_Cfg::mode' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:67: warning: unable to resolve reference to 'EnetTas_ControlList' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:68: warning: unable to resolve reference to 'EnetTas_ControlList::baseTime' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:74: warning: unable to resolve reference to 'EnetTas_ControlList::gateCmdList' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:78: warning: unable to resolve reference to 'EnetTas_ControlList::listLength' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:80: warning: unable to resolve reference to 'EnetTas_ControlList::cycleTime' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:86: warning: unable to resolve reference to 'EnetTas_ControlList::sduTable' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:95: warning: unable to resolve reference to 'EnetTas_ControlList' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:156: warning: unable to resolve reference to 'EnetTas_ControlList::gateCmdList' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:337: warning: unable to resolve reference to 'CpswMacPort_EstTimestampCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:338: warning: unable to resolve reference to 'CpswMacPort_EstTimestampCfg::mode' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:338: warning: unable to resolve reference to 'CpswMacPort_EstTimestampMode' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:339: warning: unable to resolve reference to 'CpswMacPort_EstTimestampCfg::priority' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:342: warning: unable to resolve reference to 'CpswMacPort_EstTimestampCfg::domain' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:358: warning: unable to resolve reference to 'CpswCpts_EstEvent' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:80: warning: unable to resolve reference to 'Enet_IoctlPrms' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:83: warning: unable to resolve reference to 'Enet_IoctlPrms' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:97: warning: unable to resolve reference to 'Enet_IoctlPrms' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:100: warning: unable to resolve reference to 'Enet_IoctlPrms' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:159: warning: unable to resolve reference to 'EnetOsal_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:166: warning: unable to resolve reference to 'EnetUtils_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:198: warning: unable to resolve reference to 'Cpsw_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:201: warning: unable to resolve reference to 'EnetDma_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:203: warning: unable to resolve reference to 'Cpsw_VlanCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:204: warning: unable to resolve reference to 'Cpsw_Cfg.txMtu' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:205: warning: unable to resolve reference to 'CpswHostPort_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:206: warning: unable to resolve reference to 'CpswAle_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:207: warning: unable to resolve reference to 'CpswCpts_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:208: warning: unable to resolve reference to 'Mdio_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:209: warning: unable to resolve reference to 'EnetRm_ResCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:214: warning: unable to resolve reference to 'Cpsw_Cfg::dmaCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:226: warning: unable to resolve reference to 'Cpsw_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:226: warning: unable to resolve reference to 'Icssg_Cfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:231: warning: unable to resolve reference to 'Enet_Handle' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:269: warning: unable to resolve reference to 'EnetPer_PortLinkCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:271: warning: unable to resolve reference to 'EnetPer_PortLinkCfg.mii' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:292: warning: unable to resolve reference to 'EnetPer_PortLinkCfg.linkCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:295: warning: unable to resolve reference to 'Enet_Speed' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:295: warning: unable to resolve reference to 'Enet_Duplexity' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:362: warning: unable to resolve reference to 'EnetPer_PortLinkCfg.macPort' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:364: warning: unable to resolve reference to 'EnetPer_PortLinkCfg.mii' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_integration.md:369: warning: unable to resolve reference to 'EnetPer_PortLinkCfg.linkCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:17: warning: unable to resolve reference to 'EnetHostPort_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:18: warning: unable to resolve reference to 'EnetMacPort_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:19: warning: unable to resolve reference to 'EnetFdb_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:20: warning: unable to resolve reference to 'EnetMdio_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:21: warning: unable to resolve reference to 'EnetStats_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/ioctl.md:22: warning: unable to resolve reference to 'EnetTimeSync_Ioctl' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/phy_integration.md:14: warning: unable to resolve reference to 'EnetPhy_Mdio' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/phy_integration.md:155: warning: explicit link request to 'EnetPhy_Version' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/phy_integration.md:179: warning: explicit link request to 'EnetPhy_Version' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/phy_link_configuration.md:74: warning: explicit link request to 'EnetPhy_Cfg.isStrapped' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:67: warning: unable to resolve reference to 'EnetTas_ControlList' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:68: warning: unable to resolve reference to 'EnetTas_ControlList::baseTime' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:74: warning: unable to resolve reference to 'EnetTas_ControlList::gateCmdList' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:78: warning: unable to resolve reference to 'EnetTas_ControlList::listLength' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:80: warning: unable to resolve reference to 'EnetTas_ControlList::cycleTime' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:86: warning: unable to resolve reference to 'EnetTas_ControlList::sduTable' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:95: warning: unable to resolve reference to 'EnetTas_ControlList' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:156: warning: unable to resolve reference to 'EnetTas_ControlList::gateCmdList' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:337: warning: unable to resolve reference to 'CpswMacPort_EstTimestampCfg' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:338: warning: unable to resolve reference to 'CpswMacPort_EstTimestampCfg::mode' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:338: warning: unable to resolve reference to 'CpswMacPort_EstTimestampMode' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:339: warning: unable to resolve reference to 'CpswMacPort_EstTimestampCfg::priority' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:342: warning: unable to resolve reference to 'CpswMacPort_EstTimestampCfg::domain' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/enet_tas.md:358: warning: unable to resolve reference to 'CpswCpts_EstEvent' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/docs_src/docs/api_guide/components/networking/enet_lld/mdio_manual_mode.md:11: warning: unable to resolve reference to 'Mdio_Cfg::mode' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/kernel/dpl/ClockP.h:87: warning: unable to resolve reference to 'ClockP_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/kernel/dpl/TimerP.h:129: warning: unable to resolve reference to 'TimerP_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/kernel/dpl/TimerP.h:129: warning: unable to resolve reference to 'TimerP_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/kernel/dpl/MpuP_armv7.h:155: warning: unable to resolve reference to 'MpuP_RegionSize' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/kernel/dpl/MpuP_armv7.h:156: warning: unable to resolve reference to 'MpuP_RegionAttrs' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/bootloader.h:245: warning: unable to resolve reference to 'Bootloader_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/bootloader.h:252: warning: unable to resolve reference to 'Bootloader_BootImageInfo' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/bootloader.h:259: warning: unable to resolve reference to 'Bootloader_CpuInfo' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/i2c/v0/i2c.h:464: warning: explicit link request to 'I2C_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/ipc_notify.h:133: warning: unable to resolve reference to 'IpcNotify_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/ipc_notify.h:133: warning: unable to resolve reference to 'IpcNotify_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/ipc_rpmsg.h:278: warning: unable to resolve reference to 'RPMessage_Object' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/ipc_rpmsg.h:54: warning: unable to resolve reference to 'RPMessage_Object' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/ipc_rpmsg.h:86: warning: unable to resolve reference to 'RPMessage_Object' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/ipc_rpmsg.h:54: warning: unable to resolve reference to 'RPMessage_Object' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/ipc_rpmsg.h:86: warning: unable to resolve reference to 'RPMessage_Object' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/ipc_rpmsg.h:278: warning: unable to resolve reference to 'RPMessage_Object' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/sipc_notify.h:121: warning: unable to resolve reference to 'SIPC_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/sipc_notify.h:121: warning: unable to resolve reference to 'SIPC_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/sipc_notify.h:194: warning: unable to resolve reference to 'SIPC_coreId' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/sipc_notify.h:201: warning: unable to resolve reference to 'SIPC_SecCoreId' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/sipc_notify.h:208: warning: unable to resolve reference to 'SIPC_coreId' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/mcspi/v0/mcspi.h:707: warning: unable to resolve reference to 'MCSPI_DmaChConfig' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/mcspi/v0/dma/mcspi_dma.h:95: warning: explicit link request to 'MCSPI_DmaChConfig' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/mcspi/v0/dma/mcspi_dma.h:202: warning: explicit link request to 'MCSPI_DmaChConfig' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:380: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:387: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:396: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:398: warning: explicit link request to 'PRUICSS_IntcInitData' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:409: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:432: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:443: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:454: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:465: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:477: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:496: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:515: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:527: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:539: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:551: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:568: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:577: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:595: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:607: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:618: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:630: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:640: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:652: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:663: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:675: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:686: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:697: warning: explicit link request to 'PRUICSS_Handle' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/pruicss/m_v0/pruicss.h:710: warning: unable to resolve reference to 'PRUICSS_HwAttrs' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/soc/am263px/soc.h:81: warning: unable to resolve reference to 'SOC_RcmPeripheralId' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/soc/am263px/soc.h:92: warning: unable to resolve reference to 'SOC_RcmPeripheralId' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/soc/am263px/soc.h:93: warning: unable to resolve reference to 'SOC_RcmPeripheralClockSource' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/eeprom.h:284: warning: unable to resolve reference to 'EEPROM_Attrs' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/ethphy.h:289: warning: unable to resolve reference to 'ETHPHY_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/ethphy.h:112: warning: unable to resolve reference to 'ETHPHY_SpeedDuplexConfig' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/ethphy.h:117: warning: unable to resolve reference to 'ETHPHY_SpeedDuplexConfig' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/ethphy.h:112: warning: unable to resolve reference to 'ETHPHY_SpeedDuplexConfig' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/ethphy.h:117: warning: unable to resolve reference to 'ETHPHY_SpeedDuplexConfig' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/ethphy.h:289: warning: unable to resolve reference to 'ETHPHY_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/ethphy.h:339: warning: unable to resolve reference to 'ETHPHY_Attrs' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/flash.h:317: warning: unable to resolve reference to 'Flash_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/flash.h:317: warning: unable to resolve reference to 'Flash_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/flash.h:483: warning: unable to resolve reference to 'Flash_Attrs' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/ioexp/ioexp_tca6424.h:182: warning: unable to resolve reference to 'TCA6424_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/ioexp/ioexp_tca6424.h:182: warning: unable to resolve reference to 'TCA6424_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_dma.h:578: warning: explicit link request to 'EnetDma_Pkt' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_dma.h:607: warning: explicit link request to 'EnetDma_Pkt' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_dma.h:634: warning: explicit link request to 'EnetDma_Pkt' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_dma.h:648: warning: explicit link request to 'EnetDma_Pkt' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_dma.h:661: warning: explicit link request to 'EnetDma_Pkt' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_dma.h:674: warning: explicit link request to 'EnetDma_Pkt' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_dma_pktutils.h:217: warning: explicit link request to 'EnetDma_Pkt' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_dma_pktutils.h:218: warning: explicit link request to 'EnetDma_PktStateModuleType' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_fdb.h:88: warning: explicit link request to 'Enet_Version' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_hostport.h:82: warning: explicit link request to 'Enet_Version' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_hostport.h:117: warning: explicit link request to 'EnetPort_DscpPriorityMap' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_hostport.h:127: warning: explicit link request to 'EnetPort_DscpPriorityMap' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_hostport.h:135: warning: explicit link request to 'EnetPort_PriorityMap' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_hostport.h:145: warning: explicit link request to 'EnetPort_PriorityMap' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_hostport.h:153: warning: explicit link request to 'EnetPort_PriorityMap' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_hostport.h:163: warning: explicit link request to 'EnetPort_PriorityMap' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_hostport.h:171: warning: explicit link request to 'EnetPort_TrafficShapingCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_hostport.h:190: warning: explicit link request to 'EnetPort_TrafficShapingCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_hostport.h:199: warning: explicit link request to 'EnetPort_MaxLen' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_hostport.h:216: warning: explicit link request to 'EnetPort_CreditBasedShapingCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_hostport.h:226: warning: explicit link request to 'EnetPort_CreditBasedShapingCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:85: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:86: warning: explicit link request to 'Enet_Version' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:94: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:112: warning: explicit link request to 'EnetMacPort_SetIngressDscpPriorityMapInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:121: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:122: warning: explicit link request to 'EnetPort_DscpPriorityMap' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:130: warning: explicit link request to 'EnetMacPort_SetPriorityRegenMapInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:139: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:140: warning: explicit link request to 'EnetPort_PriorityMap' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:148: warning: explicit link request to 'EnetMacPort_SetEgressPriorityMapInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:157: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:158: warning: explicit link request to 'EnetPort_PriorityMap' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:166: warning: explicit link request to 'EnetMacPort_EnableEgressTrafficShapingInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:175: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:184: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:185: warning: explicit link request to 'EnetPort_TrafficShapingCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:193: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:194: warning: explicit link request to 'EnetPort_MaxLen' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:202: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:203: warning: explicit link request to 'EnetMacPort_LinkCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:211: warning: explicit link request to 'EnetMacPort_CreditBasedShaperInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:220: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:221: warning: explicit link request to 'EnetPort_CreditBasedShapingCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:229: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:238: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:247: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:248: warning: explicit link request to 'EnetMacPort_QueuePreemptCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:256: warning: explicit link request to 'EnetMacPort_SetPreemptQueueInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:265: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:274: warning: explicit link request to 'EnetMacPort_SetPreemptMinFragSizeInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:283: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:284: warning: explicit link request to 'EnetMacPort_PreemptVerifyStatus' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:292: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:301: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:310: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:319: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:328: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_macport.h:337: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_mdio.h:107: warning: explicit link request to 'Enet_Version' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_mdio.h:154: warning: explicit link request to 'EnetMdio_C22ReadInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_mdio.h:163: warning: explicit link request to 'EnetMdio_C22WriteInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_mdio.h:172: warning: explicit link request to 'EnetMdio_C45ReadInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_mdio.h:181: warning: explicit link request to 'EnetMdio_C45WriteInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_mdio.h:190: warning: explicit link request to 'EnetMdio_C45ReadInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_mdio.h:199: warning: explicit link request to 'EnetMdio_C45ReadInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_mdio.h:208: warning: explicit link request to 'EnetMdio_C45WriteInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_mdio.h:217: warning: explicit link request to 'EnetMdio_C45WriteInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_mdio.h:226: warning: explicit link request to 'EnetMdio_C45ReadInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_mdio.h:235: warning: explicit link request to 'EnetMdio_C45ReadInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_mdio.h:244: warning: explicit link request to 'EnetMdio_C45WriteInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_mdio.h:253: warning: explicit link request to 'EnetMdio_C45WriteInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_stats.h:81: warning: explicit link request to 'Enet_Version' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_stats.h:120: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_stats.h:147: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_tas.h:97: warning: explicit link request to 'EnetTas_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_tas.h:98: warning: explicit link request to 'Enet_Version' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_tas.h:108: warning: explicit link request to 'EnetTas_SetAdminListInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_tas.h:124: warning: explicit link request to 'EnetTas_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_tas.h:125: warning: explicit link request to 'EnetTas_OperStatus' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_tas.h:135: warning: explicit link request to 'EnetTas_SetStateInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_tas.h:146: warning: explicit link request to 'EnetTas_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_tas.h:147: warning: explicit link request to 'EnetTas_TasState' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_tas.h:157: warning: explicit link request to 'EnetTas_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_tas.h:158: warning: explicit link request to 'EnetTas_ControlList' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_tas.h:168: warning: explicit link request to 'EnetTas_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_tas.h:169: warning: explicit link request to 'EnetTas_ControlList' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_tas.h:179: warning: explicit link request to 'EnetTas_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_tas.h:180: warning: explicit link request to 'EnetTas_ConfigStatus' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_timesync.h:81: warning: explicit link request to 'Enet_Version' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_timesync.h:126: warning: explicit link request to 'EnetTimeSync_TimestampAdj' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_timesync.h:135: warning: explicit link request to 'EnetTimeSync_GetEthTimestampInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_timesync.h:144: warning: explicit link request to 'EnetTimeSync_GetEthTimestampInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_rm.h:113: warning: explicit link request to 'EnetRm_AllocMacAddrOutArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_rm.h:121: warning: explicit link request to 'EnetRm_FreeMacAddrInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_rm.h:131: warning: explicit link request to 'EnetRm_AllocRxFlow' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_rm.h:139: warning: explicit link request to 'EnetRm_FreeRxFlowInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_rm.h:157: warning: explicit link request to 'EnetRm_FreeTxChInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:116: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:119: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:122: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:116: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:119: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:122: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:269: warning: explicit link request to 'CpswAle_SetUcastEntryInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:280: warning: explicit link request to 'CpswAle_SetMcastEntryInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:291: warning: explicit link request to 'CpswAle_VlanEntryInfo' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:301: warning: explicit link request to 'CpswAle_OuiEntryInfo' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:312: warning: explicit link request to 'CpswAle_IPv4EntryInfo' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:323: warning: explicit link request to 'CpswAle_IPv6EntryInfo' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:345: warning: explicit link request to 'CpswAle_MacAddrInfo' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:346: warning: explicit link request to 'CpswAle_GetUcastEntryOutArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:355: warning: explicit link request to 'CpswAle_GetMcastEntryInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:356: warning: explicit link request to 'CpswAle_GetMcastEntryOutArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:366: warning: explicit link request to 'CpswAle_VlanIdInfo' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:367: warning: explicit link request to 'CpswAle_GetVlanEntryOutArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:377: warning: explicit link request to 'CpswAle_MacAddrInfo' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:388: warning: explicit link request to 'CpswAle_VlanIdInfo' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:399: warning: explicit link request to 'CpswAle_OuiEntryInfo' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:410: warning: explicit link request to 'CpswAle_IPv4EntryInfo' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:421: warning: explicit link request to 'CpswAle_IPv6EntryInfo' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:490: warning: explicit link request to 'CpswAle_RxFilter' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:500: warning: explicit link request to 'CpswAle_SetPortStateInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:521: warning: explicit link request to 'CpswAle_GetPortMacAddrInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:522: warning: explicit link request to 'CpswAle_GetPortMacAddrOutArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:532: warning: explicit link request to 'CpswAle_DfltThreadCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:544: warning: explicit link request to 'CpswAle_DfltThreadCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:554: warning: explicit link request to 'CpswAle_PortMirroringCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:577: warning: explicit link request to 'CpswAle_TrunkCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:599: warning: explicit link request to 'CpswAle_SetBcastMcastRateLimitInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:611: warning: explicit link request to 'CpswAle_GetBcastMcastRateLimitOutArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:632: warning: explicit link request to 'CpswAle_SetPolicerEntryInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:633: warning: explicit link request to 'CpswAle_SetPolicerEntryOutArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:643: warning: explicit link request to 'CpswAle_PolicerMatchParams' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:644: warning: explicit link request to 'CpswAle_PolicerEntryOutArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:654: warning: explicit link request to 'CpswAle_PolicerMatchParams' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:678: warning: explicit link request to 'CpswAle_GetPolicerStatsInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:679: warning: explicit link request to 'CpswAle_GetPolicerStatsOutArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:689: warning: explicit link request to 'CpswAle_SetPolicerThreadCfgInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:690: warning: explicit link request to 'CpswAle_PolicerEntryOutArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:699: warning: explicit link request to 'CpswAle_PolicerGlobalCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:711: warning: explicit link request to 'CpswAle_PolicerGlobalCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:736: warning: explicit link request to 'CpswAle_PolicerMatchParams' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:737: warning: explicit link request to 'CpswAle_PolicerEntryOutArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:747: warning: explicit link request to 'CpswAle_SetInterVlanCfgInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_ale.h:748: warning: explicit link request to 'CpswAle_PolicerEntryOutArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_cpts.h:105: warning: explicit link request to 'CpswCpts_RegisterStackInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_cpts.h:123: warning: explicit link request to 'CpswCpts_RegisterHwPushCbInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_cpts.h:132: warning: explicit link request to 'CpswCpts_HwPush' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_cpts.h:153: warning: explicit link request to 'CpswCpts_SetCompValInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_cpts.h:171: warning: explicit link request to 'CpswCpts_SetFxnGenInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_cpts.h:180: warning: explicit link request to 'CpswCpts_SetFxnGenNudgeInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_cpts.h:189: warning: explicit link request to 'CpswCpts_SetFxnGenInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_cpts.h:198: warning: explicit link request to 'CpswCpts_SetFxnGenNudgeInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_cpts.h:207: warning: explicit link request to 'CpswCpts_OutputBitSel' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_cpts.h:216: warning: explicit link request to 'CpswCpts_Event' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_cpts.h:217: warning: explicit link request to 'CpswCpts_Event' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_cpts.h:225: warning: explicit link request to 'CpswCpts_EstEventMatchParams' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_cpts.h:226: warning: explicit link request to 'CpswCpts_EstEvent' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_hostport.h:93: warning: explicit link request to 'CpswHostPort_FifoStats' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_macport.h:148: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_macport.h:149: warning: explicit link request to 'CpswMacPort_FifoStats' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_macport.h:157: warning: explicit link request to 'CpswMacPort_EnableTsEventInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_macport.h:166: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_macport.h:177: warning: explicit link request to 'CpswMacPort_EstTimestampCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_macport.h:186: warning: explicit link request to 'EnetMacPort_GenericInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_stats.h:44: warning: unable to resolve reference to 'CpswStats_HostPort_2g' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_stats.h:45: warning: unable to resolve reference to 'CpswStats_MacPort_2g' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_stats.h:48: warning: unable to resolve reference to 'CpswStats_HostPort_Ng' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_stats.h:49: warning: unable to resolve reference to 'CpswStats_MacPort_Ng' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/icssg_stats.h:42: warning: unable to resolve reference to 'IcssgStats_Pa' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/icssg_stats.h:43: warning: unable to resolve reference to 'IcssgStats_MacPort' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/cpsw.h:148: warning: explicit link request to 'Cpsw_SetInterVlanRouteUniEgressInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/cpsw.h:149: warning: explicit link request to 'Cpsw_SetInterVlanRouteUniEgressOutArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/cpsw.h:157: warning: explicit link request to 'Cpsw_ClearInterVlanRouteUniEgressInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/cpsw.h:158: warning: explicit link request to 'CpswMacPort_InterVlanRouteId' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/cpsw.h:166: warning: explicit link request to 'Cpsw_SetInterVlanRouteMultiEgressInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/cpsw.h:167: warning: explicit link request to 'Cpsw_SetInterVlanRouteMultiEgressOutArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/cpsw.h:175: warning: explicit link request to 'Cpsw_ClearInterVlanRouteMultiEgressInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/cpsw.h:176: warning: explicit link request to 'CpswMacPort_InterVlanRouteId' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/cpsw.h:184: warning: explicit link request to 'Cpsw_SetTxShortIpgCfgInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/cpsw.h:194: warning: explicit link request to 'Cpsw_TxShortIpgCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:330: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:341: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:352: warning: explicit link request to 'Icssg_VlanFidParams' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:363: warning: explicit link request to 'Icssg_VlanFidEntry' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:375: warning: explicit link request to 'Icssg_VlanFidEntry' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:385: warning: unable to resolve reference to 'Icssg_PortState' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:396: warning: explicit link request to 'Icssg_PortState' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:407: warning: explicit link request to 'Icssg_FdbEntry' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:418: warning: explicit link request to 'Icssg_FdbEntry' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:451: warning: explicit link request to 'IcssgMacPort_SetMacAddressInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:462: warning: explicit link request to 'Icssg_MacAddr' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:501: warning: explicit link request to 'EnetPort_VlanCfg' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:512: warning: explicit link request to 'Icssg_MacPortDfltVlanCfgInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:536: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:547: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:558: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:569: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:585: warning: explicit link request to 'Icssg_SetAcceptFrameCheckInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:596: warning: explicit link request to 'Icssg_IngressRateLim' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:607: warning: explicit link request to 'IcssgMacPort_SetQueueCtPremptModeInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/per/icssg.h:618: warning: explicit link request to 'IcssgMacPort_ConfigSpecialFramePrioInArgs' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_ioctl.h:146: warning: explicit link request to 'Enet_IoctlValidate' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:468: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:476: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:484: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:499: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_ioctl.h:146: warning: explicit link request to 'Enet_IoctlValidate' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:468: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:468: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:468: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:476: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:477: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:484: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:484: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:486: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:499: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:499: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_types.h:295: warning: explicit link request to 'Enet_MacPort' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/enet.h:344: warning: explicit link request to 'Enet_Event' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/enet.h:352: warning: explicit link request to 'Enet_Event' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/sdl/esm/v0/esm.h:983: warning: explicit link request to 'esmGroupIntrStatus_t' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/sdl/esm/v0/esm.h:1114: warning: explicit link request to 'esmRevisionId_t' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/sdl/esm/v0/esm.h:1145: warning: explicit link request to 'esmInfo_t' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/sdl/mcrc/v0/sdl_mcrc.h:370: warning: explicit link request to 'SDL_MCRC_Signature_t' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/sdl/mcrc/v0/sdl_mcrc.h:389: warning: explicit link request to 'SDL_MCRC_Signature_t' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/sdl/mcrc/v0/sdl_mcrc.h:522: warning: explicit link request to 'SDL_MCRC_Signature_t' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/sdl/mcrc/v0/sdl_mcrc.h:557: warning: explicit link request to 'SDL_MCRC_Signature_t' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/sdl/mcrc/v0/sdl_mcrc.h:577: warning: explicit link request to 'SDL_MCRC_SignatureRegAddr_t' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/sdl/mcrc/v0/sdl_mcrc.h:610: warning: explicit link request to 'SDL_MCRC_SignatureRegAddr_t' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/kernel/dpl/AddrTranslateP.h:103: warning: unable to resolve reference to 'AddrTranslateP_RegionSize' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/mod/cpsw_cpts.h:433: warning: unable to resolve reference to 'CpswMacPort_EstTimestampCfg::domain' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_ioctl.h:300: warning: explicit link request to 'Enet_IoctlPrms.inArgsSize' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_ioctl.h:303: warning: explicit link request to 'Enet_IoctlPrms.outArgsSize' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/dma/cpdma/enet_cpdma.h:268: warning: explicit link request to 'EnetDma_PktStateModuleType' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/dma/cpdma/enet_cpdma.h:269: warning: explicit link request to 'EnetDma_PktStateMemMgr' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/dma/cpdma/enet_cpdma.h:269: warning: explicit link request to 'EnetDma_PktStateDma' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/dma/cpdma/enet_cpdma.h:270: warning: explicit link request to 'EnetDma_PktStateApp' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/networking/enet/core/include/core/enet_mod_tas.h:266: warning: unable to resolve reference to 'EnetTas_MaxSDUTable' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/ethphy.h:174: warning: unable to resolve reference to 'ETHPHY_Config' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/ethphy.h:176: warning: unable to resolve reference to 'ETHPHY_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/flash.h:64: warning: unable to resolve reference to 'Flash_Config' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/board/flash.h:69: warning: unable to resolve reference to 'Flash_Params' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/mmcsd/v1/mmcsd.h:333: warning: explicit link request to 'MMCSD_cmdType' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/mmcsd/v1/mmcsd.h:335: warning: explicit link request to 'MMCSD_rspType' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/mmcsd/v1/mmcsd.h:337: warning: explicit link request to 'MMCSD_xFerType' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/mmcsd/v1/mmcsd.h:309: warning: explicit link request to 'MMCSD_clkAct' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/mmcsd/v1/mmcsd.h:312: warning: explicit link request to 'MMCSD_standbyMode' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/drivers/mmcsd/v1/mmcsd.h:315: warning: explicit link request to 'MMCSD_idleMode' could not be resolved
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/kernel/dpl/MpuP_armv7.h:115: warning: unable to resolve reference to 'MpuP_AccessPerm' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/kernel/dpl/MpuP_armv7.h:125: warning: unable to resolve reference to 'MpuP_RegionSize' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/kernel/dpl/TimerP.h:78: warning: unable to resolve reference to 'TimerP_Params.inputClkHz' for \ref command
+/home/sanmveg/ti/workarea/mcu_plus_sdk/source/kernel/dpl/TimerP.h:84: warning: unable to resolve reference to 'TimerP_Params.inputClkHz' for \ref command
