@@ -51,7 +51,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_KERNEL_FREERTOS_TASK_SWITCH";
+const readmeDoxygenPageTag = "EXAMPLES_KERNEL_FREERTOS_INTERRUPT_PROFILING";
 
 const templates_r5f =
 [
