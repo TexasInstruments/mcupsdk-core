@@ -4,7 +4,8 @@ let device = "am263px";
 
 const files_r5f = {
     common: [
-        "ti_arm_trig.c",
+        "ti_tmu_trig.c",
+        "ti_arm_trig.c"
     ],
 };
 

@@ -75,6 +75,9 @@ TRIG_DATA_SECTION float gAtanConsts[8] = { 4.17232513427734375e-7f,
                                            5.117702484130859375e-2f };
 
 
+
+
+
 TRIG_TEXT_SECTION float ti_arm_sin(float angleRad)
 {
 
@@ -105,6 +108,7 @@ TRIG_TEXT_SECTION float ti_arm_sin(float angleRad)
     return trigApprox;
 
 }
+
 
 TRIG_TEXT_SECTION float ti_arm_cos(float angleRad)
 {
@@ -275,6 +279,7 @@ TRIG_TEXT_SECTION float ti_arm_acos(float x)
     return acosApprox;
 }
 
+
 TRIG_TEXT_SECTION float ti_arm_atan(float x)
 {
     uint8_t sign = 0;
@@ -382,4 +387,10 @@ TRIG_TEXT_SECTION float ti_arm_atan2(float y, float x)
 
     return atanApprox;
 }
+
+
+
+
+
+
 

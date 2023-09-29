@@ -283,6 +283,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_filter_sync_cpuread/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/tmu/tmu_operations/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/tmu/tmu_operations/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/am263px-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -837,6 +839,8 @@ BUILD_COMBO_EXAMPLE_ALL += sdfm_epwm_sync_cpuread_am263px-cc_r5fss0-0_nortos_ti-
 BUILD_COMBO_EXAMPLE_ALL += sdfm_filter_sync_cpuread_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdfm_filter_sync_cpuread_single_channel_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdfm_filter_sync_cpuread_single_channel_am263px-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += tmu_operations_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += tmu_operations_am263px-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += uart_echo_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += uart_echo_am263px-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += uart_echo_am263px-lp_r5fss0-0_nortos_ti-arm-clang
@@ -1582,6 +1586,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sdfm_filter_sync_cpuread_single_channel_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ tmu_operations_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/tmu/tmu_operations/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ tmu_operations_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/tmu/tmu_operations/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  uart_echo_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/uart/uart_echo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -2094,6 +2104,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdfm_epwm_sync_cpuread_am263px-cc_r5fss0-0_nort
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdfm_filter_sync_cpuread_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdfm_filter_sync_cpuread_single_channel_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdfm_filter_sync_cpuread_single_channel_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += tmu_operations_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += tmu_operations_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += uart_echo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += uart_echo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += uart_echo_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2839,6 +2851,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sdfm_filter_sync_cpuread_single_channel_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ tmu_operations_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/tmu/tmu_operations/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ tmu_operations_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/tmu/tmu_operations/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  uart_echo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/uart/uart_echo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -3351,6 +3369,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdfm_epwm_sync_cpuread_am263px-cc_r5fss0-0_nort
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdfm_filter_sync_cpuread_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdfm_filter_sync_cpuread_single_channel_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdfm_filter_sync_cpuread_single_channel_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += tmu_operations_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += tmu_operations_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += uart_echo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += uart_echo_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += uart_echo_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -4095,6 +4115,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  sdfm_filter_sync_cpuread_single_channel_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ tmu_operations_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/tmu/tmu_operations/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ tmu_operations_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/tmu/tmu_operations/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  uart_echo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/uart/uart_echo/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

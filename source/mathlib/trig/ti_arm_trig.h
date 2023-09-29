@@ -67,6 +67,7 @@
  */
 extern float ti_arm_sin(float angleRad);
 
+
 /**
  * \brief   Computes the trigonometric cosine value of the input angle using polynomial approximation techniques.
  *
@@ -79,6 +80,7 @@ extern float ti_arm_sin(float angleRad);
  *          No error checking is performed on input.
  */
 extern float ti_arm_cos(float angleRad);
+
 
 /**
  * \brief   Computes the trigonometric sine and cosine values of the input angle using polynomial approximation techniques.
@@ -129,6 +131,7 @@ extern float ti_arm_acos(float x);
  *          No error checking is performed on input.
  */
 extern float ti_arm_atan(float x);
+
 
 /**
  * \brief   Computes the trigonometric atan2 value of the input values using polynomial approximation techniques.

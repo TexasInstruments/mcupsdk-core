@@ -16,6 +16,7 @@ ConfigName:=$(PROFILE)
 LIBNAME:=mathlib.am263px.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
+    ti_tmu_trig.c \
     ti_arm_trig.c \
 
 FILES_PATH_common = \
