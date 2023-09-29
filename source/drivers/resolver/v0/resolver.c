@@ -43,7 +43,6 @@
 #define RDC_BPFDC_MANUALSIN_RESET_PARAM_VALUE                      (0U)
 #define RDC_BPFDC_MANUALCOS_RESET_PARAM_VALUE                      (0U)
 #define RDC_IDEALSAMPLE_OVERRIDEVALUE_RESET_PARAM_VALUE            (0U)
-// #define RDC_IDEALSAMPLE_PEAKAVGLIMIT_RESET_PARAM_VALUE             (7U)
 #define RDC_IDEALSAMPLE_ABSTHRESHOLDVALUE_RESET_PARAM_VALUE        (2500U)
 #define RDC_IDEALSAMPLE_SAMPLEADJUSTCOUNT_RESET_PARAM_VALUE        (0U)
 #define RDC_IDEALSAMPLE_MODE_RESET_PARAM_VALUE                     (0U)
@@ -62,21 +61,18 @@ void RDC_coreParamsInit(Core_config_t* coreParams)
 {
     coreParams->BpfDc_bpfEnable                     = RDC_BPFDC_BPFENABLE_RESET_PARAM_VALUE;
     coreParams->BpfDc_offsetCorrectionEnable        = RDC_BPFDC_OFFSETCORRECTIONENABLE_RESET_PARAM_VALUE;
-    // coreParams->BpfDc_autoOffsetCorrectionEnable    = RDC_BPFDC_AUTOOFFSETCORRECTIONENABLE_RESET_PARAM_VALUE;
     coreParams->BpfDc_dcOffCal1                     = RDC_BPFDC_DCOFFCAL1_RESET_PARAM_VALUE;
     coreParams->BpfDc_dcOffCal2                     = RDC_BPFDC_DCOFFCAL2_RESET_PARAM_VALUE;
     coreParams->BpfDc_manualSin                     = RDC_BPFDC_MANUALSIN_RESET_PARAM_VALUE;
     coreParams->BpfDc_manualCos                     = RDC_BPFDC_MANUALCOS_RESET_PARAM_VALUE;
 
     coreParams->IdealSample_overrideValue           = RDC_IDEALSAMPLE_OVERRIDEVALUE_RESET_PARAM_VALUE;
-    // coreParams->IdealSample_peakAvgLimit            = RDC_IDEALSAMPLE_PEAKAVGLIMIT_RESET_PARAM_VALUE;
     coreParams->IdealSample_absThresholdValue       = RDC_IDEALSAMPLE_ABSTHRESHOLDVALUE_RESET_PARAM_VALUE;
     coreParams->IdealSample_sampleAdjustCount       = RDC_IDEALSAMPLE_SAMPLEADJUSTCOUNT_RESET_PARAM_VALUE;
     coreParams->IdealSample_mode                    = RDC_IDEALSAMPLE_MODE_RESET_PARAM_VALUE;
     coreParams->IdealSample_bottomSampleEnable      = RDC_IDEALSAMPLE_BOTTOMSAMPLEENABLE_RESET_PARAM_VALUE;
 
     coreParams->Pg_estimationEnable                 = RDC_PG_ESTIMATIONENABLE_RESET_PARAM_VALUE;
-    // coreParams->Pg_glitchThreshold                  = RDC_PG_GLITCHTHRESHOLD_RESET_PARAM_VALUE;
     coreParams->Pg_estimationLimit                  = RDC_PG_ESTIMATIONLIMIT_RESET_PARAM_VALUE;
 
     coreParams->Pg_correctionEnable                 = RDC_PG_CORRECTIONENABLE_RESET_PARAM_VALUE;
@@ -92,11 +88,11 @@ void RDC_coreParamsInit(Core_config_t* coreParams)
 #define RDC_IDEALSAMPLE_PARAM2_RESET_PARAM_VALUE    (7U)
 #define RDC_DC_PARAM3_RESET_PARAM_VALUE             (2U)
 #define RDC_PG_PARAM4_RESET_PARAM_VALUE             (16384U)
-#define RDC_T2_PARAM5_RESET_PARAM_VALUE             (6U)    // kffw         cfg2
-#define RDC_T2_PARAM6_RESET_PARAM_VALUE             (64U)   // ki           cfg1
-#define RDC_T2_PARAM7_RESET_PARAM_VALUE             (10U)   // kpdiv        cfg3
-#define RDC_T2_PARAM8_RESET_PARAM_VALUE             (7U)    // vboost coef  cfg3
-#define RDC_T2_PARAM9_RESET_PARAM_VALUE             (FALSE) // boost vel    cfg2
+#define RDC_T2_PARAM5_RESET_PARAM_VALUE             (6U)
+#define RDC_T2_PARAM6_RESET_PARAM_VALUE             (64U)
+#define RDC_T2_PARAM7_RESET_PARAM_VALUE             (10U)
+#define RDC_T2_PARAM8_RESET_PARAM_VALUE             (7U)
+#define RDC_T2_PARAM9_RESET_PARAM_VALUE             (FALSE)
 
 void RDC_BaselineParametersInit(uint32_t base)
 {
@@ -105,14 +101,13 @@ void RDC_BaselineParametersInit(uint32_t base)
     params.IdealParam2 = RDC_IDEALSAMPLE_PARAM2_RESET_PARAM_VALUE;
     params.DcParam3    = RDC_DC_PARAM3_RESET_PARAM_VALUE;
     params.PgParam4    = RDC_PG_PARAM4_RESET_PARAM_VALUE;
-    params.t2Param5    = RDC_T2_PARAM5_RESET_PARAM_VALUE;  // kffw         cfg2
-    params.t2Param6    = RDC_T2_PARAM6_RESET_PARAM_VALUE;  // ki           cfg1
-    params.t2Param7    = RDC_T2_PARAM7_RESET_PARAM_VALUE;  // kpdiv        cfg3
-    params.t2Param8    = RDC_T2_PARAM8_RESET_PARAM_VALUE;  // vboost coef  cfg3
-    params.t2Param9    = RDC_T2_PARAM9_RESET_PARAM_VALUE;  // boost vel    cfg2
+    params.t2Param5    = RDC_T2_PARAM5_RESET_PARAM_VALUE;
+    params.t2Param6    = RDC_T2_PARAM6_RESET_PARAM_VALUE;
+    params.t2Param7    = RDC_T2_PARAM7_RESET_PARAM_VALUE;
+    params.t2Param8    = RDC_T2_PARAM8_RESET_PARAM_VALUE;
+    params.t2Param9    = RDC_T2_PARAM9_RESET_PARAM_VALUE;
 
     /* the APIs are removed. so need to write the reg level values */
-    /* TODO: need to add the T2 coefs for the SW track2 as well */
     HW_WR_REG32(
             base + CSL_RESOLVER_REGS_EXCIT_SAMPLE_CFG1,
             (HW_RD_REG32(
@@ -178,7 +173,6 @@ void RDC_paramsInit(RDC_configParams* params)
         params->ExcFrq_amplitude    = 0XEFU;
         params->ExcFrq_enableSyncIn = FALSE;
         params->ExcFrq_socDelay     = 0x190U;
-        // uint8_t     ExcFrq_overSamplingRatio;
 
         RDC_coreParamsInit(&(params->core0));
         RDC_coreParamsInit(&(params->core1));
@@ -257,7 +251,7 @@ void RDC_init(uint32_t base, RDC_configParams* params)
             if(coreParams.BpfDc_offsetCorrectionEnable)
             {
 
-                RDC_enableDcOffsetCorrection(base, resolverCore);
+                RDC_disableDcOffsetAutoCorrection(base, resolverCore);
                 RDC_setDcOffsetManualCorrectionValue(
                     base,
                     resolverCore,
@@ -266,7 +260,7 @@ void RDC_init(uint32_t base, RDC_configParams* params)
             }
             else
             {
-                RDC_disableDcOffsetCorrection(base, resolverCore);
+                RDC_enableDcOffsetAutoCorrection(base, resolverCore);
             }
         }
         /* Ideal Sample Configurations */

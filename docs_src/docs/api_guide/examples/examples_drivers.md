@@ -280,6 +280,10 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 \endcond
 -# RTI
    -# \subpage EXAMPLES_DRIVERS_RTI_LED_BLINK
+\cond SOC_AM263PX
+-# RESOLVER
+   -# \subpage EXAMPLES_DRIVERS_RESOLVER_ANGLE_SPEED
+\endcond
 -# SDFM
    -# \subpage EXAMPLES_DRIVERS_SDFM_EPWM_SYNC_CPUREAD
    -# \subpage EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD

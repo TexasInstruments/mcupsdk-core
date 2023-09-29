@@ -826,7 +826,7 @@ typedef struct
     }
     /**
      * @brief
-     * Enables the Resolver Operation
+     * Disables the Resolver Operation
      * \note this API has to be called before any of the configurations are done.
      * @param base RDC Base Address
      */
@@ -1459,14 +1459,15 @@ typedef struct
     }
 
     /**
-     * @brief Enables DC Offset correction logic
+     * @brief Disbales Auto Offset correction from the estimated values
+     * Enables DC Offset Manual Correction logic
      *
      * @param base RDC Base Address
      * @param core denotes Resolver Core within RDC
      * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
      */
     static inline void
-    RDC_enableDcOffsetCorrection(uint32_t base, uint8_t core)
+    RDC_disableDcOffsetAutoCorrection(uint32_t base, uint8_t core)
     {
         DebugP_assert((core == RDC_RESOLVER_CORE0) || (core == RDC_RESOLVER_CORE1));
         uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF_CFG1_0 + (core * RDC_CORE_OFFSET);
@@ -1480,14 +1481,15 @@ typedef struct
     }
 
     /**
-     * @brief Disables DC Offset Correction logic
+     * @brief Enables Auto DC Offset Correction from the estimated values
+     * Disables DC Offset Manual Correction logic and enabled the Auto correction logic
      *
      * @param base RDC Base Address
      * @param core denotes Resolver Core within RDC
      * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
      */
     static inline void
-    RDC_disableDcOffsetCorrection(uint32_t base, uint8_t core)
+    RDC_enableDcOffsetAutoCorrection(uint32_t base, uint8_t core)
     {
         DebugP_assert((core == RDC_RESOLVER_CORE0) || (core == RDC_RESOLVER_CORE1));
         uint32_t regOffset = CSL_RESOLVER_REGS_DC_OFF_CFG1_0 + (core * RDC_CORE_OFFSET);
@@ -1975,9 +1977,6 @@ typedef struct
      * @brief sets up the Track2 loop constants
      * the following are the constants that can be setup using this API
      * - kvelfilt
-     * - ki
-     * - kffw
-     * - kpdiv
      *
      * @param base RDC Base Address
      * @param core denotes Resolver Core within RDC
@@ -2062,7 +2061,7 @@ typedef struct
     /**
      * @brief Returns Signed 16 bit angle data from Track2 Loop. the data corresponds to
      * -180 to 180 degrees
-     *      angle in degrees : ((16b signed int) + 2^15) * 360 / 2^16
+     *      angle in degrees : ((16b signed int)) * 360 / 2^16
      * @param base RDC Base Address
      * @param core denotes Resolver Core within RDC
      * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
@@ -2081,7 +2080,7 @@ typedef struct
      * @brief Returns Signed 32 bit Velocity data from Track2 Loop.
      *
      *  Velocity in RPS : ((32b singed int)* frequency)/(2^32)  [if RDC_disableIdealSampleBottomSampling() is called]
-     *  Velocity in RPS : ((32b singed int)* frequency)/(2^32 * 2)  [if RDC_enableIdealSampleBottomSampling() is called]
+     *  Velocity in RPS : ((32b singed int)* frequency)/((2^32) * 2)  [if RDC_enableIdealSampleBottomSampling() is called]
      *
      * @param base
      * @param core
@@ -2570,7 +2569,7 @@ typedef struct
      * \e bool      \e zero_cross_rot_en            - if the interrupt is enabled for any of the error status
      * @param base RDC Base Address
      * @param resolverCore Denotes the Resolver Core within the RDC
-     * @param monitorData Diag_Mon_SinCos_Gain_drift_data struct as input
+     * @param monitorData Diag_Mon_Rotational_Signal_Integrity_data struct as input
      */
     static inline void
     RDC_getDiagnosticsRotationalSignalIntegrityData(uint32_t base,
@@ -2620,7 +2619,7 @@ typedef struct
      * \e bool      \e zero_cross_rot_en            - enables interrupt on the errors
      * @param base RDC Base Address
      * @param resolverCore Denotes the Resolver Core within the RDC
-     * @param monitorData Diag_Mon_SinCos_Gain_drift_data struct as input
+     * @param monitorData Diag_Mon_Rotational_Signal_Integrity_data struct as input
      */
     static inline void
     RDC_setDiagnosticsRotationalSignalIntegrityData(uint32_t base,
@@ -2664,7 +2663,7 @@ typedef struct
     }
 
     /**
-     * @brief Returns the MMonitor signal integrity by checking Sin2+Cos2=Constant (DOS) diagnostics data
+     * @brief Returns the Monitor signal integrity by checking Sin2+Cos2=Constant (DOS) diagnostics data
      * \e uint16_t \e sinsqcossq_threshold_hi - the configured threshold hi for sinsq + cossq
      * \e uint16_t \e sinsqcossq_threshold_lo - the configured threshold lo for sinsq + cossq
      * \e uint8_t  \e sinsqcossq_glitchcount  - the configured glitchcount for sinsq + cossq error
@@ -2719,8 +2718,8 @@ typedef struct
      * \e uint8_t  \e sinsqcossq_glitchcount  - the glitchcount for sinsq + cossq error to be configured
      * \e uint16_t \e sinsqcossq_cossq        - no action
      * \e uint16_t \e sinsqcossq_sinsq        - no action
-     * \e bool     \e sinsqcossq_hi           - enabled interrupt on this error if set
-     * \e bool     \e sinsqcossq_lo           - enabled interrupt on this error if set
+     * \e bool     \e sinsqcossq_hi           - enable interrupt on this error if set
+     * \e bool     \e sinsqcossq_lo           - enable interrupt on this error if set
      * @param base RDC Base Address
      * @param resolverCore Denotes the Resolver Core within the RDC
      * @param monitorData Diag_Mon_Signal_Integrity_SinSq_CosSq struct as input

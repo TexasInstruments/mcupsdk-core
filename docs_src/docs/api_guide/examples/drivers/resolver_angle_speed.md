@@ -20,7 +20,7 @@ This example configures the RDC in Single Ended mode, and to take inputs paralle
 ### Input Configurations
 The *Sequencer mode 0* is selected. The sine signal is sample by ADC_R0 on channel AIN0, while the cosine is sampled by ADC_R1 on Channel AIN0. Both signals are sampled simultaneously by the ADC_Rs.
 ADC burst count is disabled, with ADC SoC width is set for 0, i.e., minimum offered from the IP, of 100nS-120nS.
-#### Note
+\note
 The sequencer mode selection automatically takes care of the ADC_R configurations, which the user/ application need not configure any further.
 
 ### Excitation Configurations
@@ -28,23 +28,24 @@ The *Excitation frequency* is set at *20KHz*, with sync in enabled. The *PWM XBa
 ### Tuning Parameters
 Manual Tuning parameters set as following.
 1. Phase offset correction value : 0
-2. Sin Gain Correction Value     : 18000
-3. Cos Gain Correction Value     : 18000
-4. Ideal Sample Override Value   : 0
+2. Sin Gain Correction Value     : 25000
+3. Cos Gain Correction Value     : 25000
+4. Ideal Sample Override Value   : 7
 
 ### Resolver Core Configurations
 - DC offset Correction enabled, for calcoef1,2 being 8,9 and Manual correction offset correction values being 0.
-- Ideal Sample Mode is set to 0 (auto detect), with detection threshold of 2500 and bottom sampling disabled.
-- Phase Gain Estimation is disabled, and Gain Correction with Manual values of 18000 on both sin and cos, is enabled.
+- Ideal Sample Mode is set to 3 (Manual), with detection threshold of 2500 and bottom sampling disabled.
+- Phase Gain Estimation is disabled, and Gain Correction with Manual values of 25000 on both sin and cos, is enabled.
 - track2 kvelfilt is set to 8.
-#### Note
+\note
 In Sequencer Mode 0, the Resolver Core 0 takes in the values form the ADC_R0, ADC_R1 on the sin and cos samples and computes for the angle and the velocity. the Resovler Core 1 is not used in this scenario, and hence need not configure the parameters for the Resolver Core 1.
 
 ### Interrupt Configurations and ISR details
 - EPWM1 is set to generate interrupt from its Event Trigger Submodule when the counter hits compare A value of 20 while incrementing. the interrupt is generated at every period, i.e., the interrupt generation frequency is 20KHz.
 - EPMM1 INT is configured at INTxBar0, which further is used for ISR App_epwm1ISR for reading the HW results from RDC and computing SW track2 loop (optional for more accurate results).
-#### Note
-No Interrupt from the RDC (Resolver to Digital Converter) is enable. Although interrupts may be used for ESM, refer integration details from TRM, the example does not configure them.
+
+\note
+No Interrupt from the RDC (Resolver to Digital Converter) is enabled. Although interrupts may be used for ESM, refer integration details from TRM, the example does not configure them.
 
 ## SW Track2 details
 - The example showcases an additional method for computing the angle and velocity which may be optionally used. For quicker accesses, the loop needs to be placed at TCM and should be strictly timed to the excitation signal frequency.
@@ -56,6 +57,9 @@ Connect the Single ended inputs from the external resolver to the following.
 - Cosine Modulated signal   : ADC_R1_AIN0 or HSEC pin
 Connect the Excitation Frequency generated from RES0_PWMOUT0 or HSEC pin
 
+This example on AM263Px ZCZ-S pacakge with HSEC connecter, has been validated using the resolver LTN-R58 and the Wolfspeed Traction Inverter reference design (https://www.ti.com/tool/TIDM-02014)
+
+\note for the AM263Px CC E1 board, the resolver excitation, ADC_Rx_AINy pins are muxed and are controlled from the IO Expander on board.
 # Watch variables:
 - raw_atan_angle        : Holds the results of Angle, in degrees, from Arc Tan loop of the RDC.
 - raw_track2_angle      : Holds the results of Angle, in degrees, from the raw Track2 Loop of RDC.
@@ -63,7 +67,7 @@ Connect the Excitation Frequency generated from RES0_PWMOUT0 or HSEC pin
 - raw_track2_velocity   : Holds the results of Velocity, in RPS, from the raw Track2 Loop of RDC.
 - sw_track2_velocity    : Holds the results of Velocity, in RPS, from the SW Track2 Loop
 
-# Supported Combinations {#EXAMPLES_DRIVERS_ADC_SOFTWARE_INTERLEAVED_AVERAGING_COMBOS}
+# Supported Combinations {#EXAMPLES_DRIVERS_RESOLVER_ANGLE_SPEED_COMBOS}
 
 \cond SOC_AM263PX
 
@@ -92,9 +96,7 @@ Connect the Excitation Frequency generated from RES0_PWMOUT0 or HSEC pin
 \ref DRIVERS_RESOLVER_PAGE
 
 # Sample Output
+Once the Angle and Velocity results from the watchpoints are plotted, results may be similar to the following, where legends atan, raw angle
 
-Shown below is a sample output when the application is run,
-
-\code
-TODO
-\endcode
+\imageStyle{am263p_resolver_sample_output.png,width:50%}
+\image html am263p_resolver_sample_output.png "Resolver Angle Speed Resolution Sample Output"
