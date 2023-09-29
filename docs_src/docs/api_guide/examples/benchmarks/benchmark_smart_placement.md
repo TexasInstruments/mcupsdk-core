@@ -65,6 +65,8 @@ To build this application, compiler ti-cgt-armllvm >= 3.2.0 LTS or later is requ
 
 This particular application is used to show the effect of smart placement. To do this, we first remove `ENABLE_SMART_PLACEMENT_ANNOTATION` macro (which is in `annotations.S` file.) and compile it.
 
+Flash this application using uart_uniflash. For this please go through \ref TOOLS_FLASH_UART_UNIFLASH
+
 After running the application, console logs prints out in the above table format with different configuration like `Mem Cpy Size` i.e. for different values of `Mem Cpy Size`, `exec time` and `ICM/sec` (among with others) is printed. For example,
 
 
