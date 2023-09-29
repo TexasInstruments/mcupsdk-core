@@ -74,7 +74,7 @@ region1.memory_region[5].manualStartAddress = 0x70040000;
 region1.memory_region[5].size               = 0x1C0000;
 
 section1.$name                                    = "CONFIG_SECTION0";
-section1.load_memory                              = "MSRAM_VECS";
+section1.load_memory                              = ["MSRAM_VECS"];
 section1.run_memory                               = "R5F_VECS";
 section1.group                                    = false;
 section1.output_section.create(1);
@@ -83,7 +83,7 @@ section1.output_section[0].input_section.create(1);
 section1.output_section[0].input_section[0].$name = "*(.vectors). = align(8)";
 
 section2.$name                   = "CONFIG_SECTION1";
-section2.load_memory             = "MSRAM_0";
+section2.load_memory             = ["MSRAM_0"];
 section2.output_section.create(7);
 section2.output_section[0].$name = ".text";
 section2.output_section[1].$name = ".text.hwi";
@@ -94,7 +94,7 @@ section2.output_section[5].$name = ".data";
 section2.output_section[6].$name = ".rodata";
 
 section3.$name                                   = "CONFIG_SECTION2";
-section3.load_memory                             = "MSRAM_0";
+section3.load_memory                             = ["MSRAM_0"];
 section3.group                                   = false;
 section3.output_section.create(3);
 section3.output_section[0].$name                 = ".bss";
@@ -104,7 +104,7 @@ section3.output_section[1].$name                 = ".sysmem";
 section3.output_section[2].$name                 = ".stack";
 
 section4.$name                                    = "CONFIG_SECTION3";
-section4.load_memory                              = "MSRAM_0";
+section4.load_memory                              = ["MSRAM_0"];
 section4.output_section.create(5);
 section4.output_section[0].$name                  = ".irqstack";
 section4.output_section[0].output_sections_start  = "__IRQ_STACK_START";
@@ -134,7 +134,7 @@ section4.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_S
 
 section5.group                   = false;
 section5.type                    = "NOLOAD";
-section5.load_memory             = "MSRAM_1";
+section5.load_memory             = ["MSRAM_1"];
 section5.$name                   = "CONFIG_SECTION4";
 section5.output_section.create(1);
 section5.output_section[0].$name = ".bss.filebuf";

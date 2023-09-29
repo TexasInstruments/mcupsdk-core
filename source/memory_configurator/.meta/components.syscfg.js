@@ -1,6 +1,7 @@
 exports = {
+    displayName: "TI Memory Configurator",
 	topModules: [{
-		displayName: "Memory",
+		displayName: "Memory Configurator",
 		modules: [
 			"memory_configurator/general",
             "memory_configurator/region",

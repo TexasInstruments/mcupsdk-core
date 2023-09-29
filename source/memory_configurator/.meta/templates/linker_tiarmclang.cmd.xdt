@@ -40,7 +40,37 @@ __FIQ_STACK_SIZE = `instance.fiq_stack_size`;
 __SVC_STACK_SIZE = `instance.svc_stack_size`; /* This is the size of stack when R5 is in SVC mode */
 __ABORT_STACK_SIZE = `instance.abort_stack_size`;  /* This is the size of stack when R5 is in ABORT mode */
 __UNDEFINED_STACK_SIZE = `instance.undefined_stack_size`;  /* This is the size of stack when R5 is in UNDEF mode */
+
+`instance.additional_data`
 %}
+
+%%{
+    function format(inst, mem) {
+        let arr=[]
+
+        if(inst.split_across_memories){
+            let mem_reg_arr = inst.split_priority;
+
+            if(mem == "run_memory") return arr
+            for(let i = 0; i < mem_reg_arr.length; i++){
+                arr.push(mem_reg_arr[i][mem])
+            }
+        }
+        else{
+            arr = inst[mem]
+        }
+
+
+        let str=""
+        str=str.concat(arr[0]);
+
+        for(let i=1;i<arr.length;i++)
+        {
+            str=str.concat(" | ",arr[i]);
+        }
+        return str;
+    }
+%%}
 
 SECTIONS
 {
@@ -54,18 +84,24 @@ SECTIONS
 %       type = type.concat(")")
 %}
 %    if(instance.group) {
+
     GROUP `type`:   {
 %    for(let i = 0; i < output_sections.length; i++){
 %       let input_sections = output_sections[i].input_section
-
+%    let palign = ''
     `output_sections[i].$name` : {
 %        for(let j = 0; j < input_sections.length; j++ ) {
 %        let input_section = output_sections[i].input_section
 %        if(input_sections[j].$name.length > 0) {
-        `input_sections[j].$name`;
+        `input_sections[j].$name`
 %}
 %     }
-    } palign(`output_sections[i].alignment`)
+% if (output_sections[i].alignment != 0){
+%    let str = (output_sections[i].alignment).toString();
+%    palign = palign.concat('palign(',str)
+%    palign = palign.concat(')')
+%}
+    } `palign`
 %       if(output_sections[i].output_sections_start.length > 0) {
     RUN_START(`output_sections[i].output_sections_start`)
 % }
@@ -73,9 +109,20 @@ SECTIONS
     RUN_END(`output_sections[i].output_sections_end`)
 % }
 %}
-
-    } > `instance.load_memory` AT > `instance.run_memory`
-
+% let redirection = '>'
+% let place_run_mem = 'AT >'
+% if (instance.split_across_memories){
+%   redirection = '>>'
+%   place_run_mem= ''}
+% let load_memory = format(instance, "load_memory")
+% let run_memory = format(instance, "run_memory")
+    } `redirection` `load_memory` `place_run_mem` `run_memory`
+%       if(instance.group_start.length > 0) {
+    RUN_START(`instance.group_start`)
+% }
+%       if(instance.group_end.length > 0) {
+    RUN_END(`instance.group_end`)
+% }
 %}
 % else {
 %    for(let i = 0; i < output_sections.length; i++){
@@ -83,10 +130,23 @@ SECTIONS
     `output_sections[i].$name` `type`: {
 %        for(let j = 0; j < input_sections.length; j++ ) {
 %        if(input_sections[j].$name.length > 0) {
-        `input_sections[j].$name`;
+        `input_sections[j].$name`
 %}
 %}
-    } > `instance.load_memory` AT > `instance.run_memory` palign(`output_sections[i].alignment`)
+% let redirection = '>'
+% let place_run_mem = 'AT >'
+% let palign = ''
+% if (instance.split_across_memories){
+%   redirection = '>>'
+%   place_run_mem= ''}
+% if (output_sections[i].alignment != 0) {
+%    let str = (output_sections[i].alignment).toString();
+%    palign = palign.concat('palign(',str)
+%    palign = palign.concat(')')
+%}
+% let load_memory = format(instance, "load_memory")
+% let run_memory = format(instance, "run_memory")
+    } `redirection` `load_memory` `place_run_mem` `run_memory` `palign`
 
 %       if(output_sections[i].output_sections_start.length > 0) {
     RUN_START(`output_sections[i].output_sections_start`)
@@ -97,6 +157,7 @@ SECTIONS
 %}
 %}
 %}
+
 %}
 }
 
@@ -138,11 +199,6 @@ MEMORY
 {
     % if (region_module !== undefined ) {
     % let region_module_instances = region_module.$instances
-    % let flag_ocram = false
-    % let flag_flash = false
-    % let flag_shared = false
-    % let flag_custom = false
-    % let flag_r5f = false
     % let groups = region_module_instances.reduce((items, inst) => {
     % let group = (items[inst.type] || []);
     % group.push(inst);
@@ -158,39 +214,7 @@ MEMORY
     %})
     % Object.keys(sorted_groups).forEach((key,value) => {
     % for (let item of sorted_groups[key]) {
-    % if(item.type == "OCRAM" && !item.isShared && !flag_ocram) {
 
-    /* when using multi-core application's i.e more than one R5F/M4F active, make sure
-    * this memory does not overlap with other R5F's
-    */
-
-    %flag_ocram = true
-    %}
-    % else if(item.type == "FLASH" && !item.isShared && !flag_flash) {
-
-    /* This section can be used to put XIP section of the application in flash, make sure this does not overlap with
-    * other CPUs. Also make sure to add a MPU entry for this section and mark it as cached and code executable
-    */
-
-    %flag_flash = true
-    %}
-    % else if(item.isShared && !flag_shared) {
-
-    /* shared memories that are used by RTOS/NORTOS cores */
-    /* On R5F,
-    * - make sure there is a MPU entry which maps below regions as non-cache
-    */
-
-    %flag_shared = true
-    %}
-    % else if(item.type == "CUSTOM" && item.isShared && !flag_custom) {
-    /* MSS mailbox memory is used as shared memory, we dont use bottom 32*12 bytes, since its used as SW queue by ipc_notify */
-    %flag_custom = true
-    %}
-     % else if(item.type.includes("R5f") && !flag_r5f) {
-
-    %flag_r5f = true
-    %}
     % if (item.auto) {
     `item.$name`  : ORIGIN = 0x`item.autoStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`item.size.toString(16).toUpperCase()`
     %}

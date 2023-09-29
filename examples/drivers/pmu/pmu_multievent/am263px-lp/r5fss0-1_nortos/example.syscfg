@@ -105,13 +105,13 @@ region1.memory_region[11].auto               = false;
 region1.memory_region[11].manualStartAddress = 0x50D00000;
 region1.memory_region[11].size               = 0x4000;
 
-section1.load_memory             = "R5F_VECS";
+section1.load_memory             = ["R5F_VECS"];
 section1.group                   = false;
 section1.$name                   = "Vector Table";
 section1.output_section.create(1);
 section1.output_section[0].$name = ".vectors";
 
-section2.load_memory             = "OCRAM";
+section2.load_memory             = ["OCRAM"];
 section2.$name                   = "Text Segments";
 section2.output_section.create(5);
 section2.output_section[0].$name = ".text.hwi";
@@ -120,18 +120,18 @@ section2.output_section[2].$name = ".text.mpu";
 section2.output_section[3].$name = ".text.boot";
 section2.output_section[4].$name = ".text:abort";
 
-section3.load_memory             = "OCRAM";
+section3.load_memory             = ["OCRAM"];
 section3.$name                   = "Code and Read-Only Data";
 section3.output_section.create(2);
 section3.output_section[0].$name = ".text";
 section3.output_section[1].$name = ".rodata";
 
-section4.load_memory             = "OCRAM";
+section4.load_memory             = ["OCRAM"];
 section4.$name                   = "Data Segment";
 section4.output_section.create(1);
 section4.output_section[0].$name = ".data";
 
-section5.load_memory                             = "OCRAM";
+section5.load_memory                             = ["OCRAM"];
 section5.$name                                   = "Memory Segments";
 section5.output_section.create(3);
 section5.output_section[0].$name                 = ".bss";
@@ -140,7 +140,7 @@ section5.output_section[0].output_sections_end   = "__BSS_END";
 section5.output_section[1].$name                 = ".sysmem";
 section5.output_section[2].$name                 = ".stack";
 
-section6.load_memory                              = "OCRAM";
+section6.load_memory                              = ["OCRAM"];
 section6.$name                                    = "Stack Segments";
 section6.output_section.create(5);
 section6.output_section[0].$name                  = ".irqstack";
@@ -169,41 +169,41 @@ section6.output_section[4].output_sections_end    = "__UNDEFINED_STACK_END";
 section6.output_section[4].input_section.create(1);
 section6.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE";
 
-section7.load_memory             = "OCRAM";
+section7.load_memory             = ["OCRAM"];
 section7.$name                   = "Initialization and Exception Handling";
 section7.output_section.create(3);
 section7.output_section[0].$name = ".ARM.exidx";
 section7.output_section[1].$name = ".init_array";
 section7.output_section[2].$name = ".fini_array";
 
-section8.load_memory             = "USER_SHM_MEM";
+section8.load_memory             = ["USER_SHM_MEM"];
 section8.type                    = "NOLOAD";
 section8.$name                   = "User Shared Memory";
 section8.group                   = false;
 section8.output_section.create(1);
 section8.output_section[0].$name = ".bss.user_shared_mem";
 
-section9.load_memory             = "LOG_SHM_MEM";
+section9.load_memory             = ["LOG_SHM_MEM"];
 section9.$name                   = "Log Shared Memory";
 section9.group                   = false;
 section9.output_section.create(1);
 section9.output_section[0].$name = ".bss.log_shared_mem";
 
-section10.load_memory             = "RTOS_NORTOS_IPC_SHM_MEM";
+section10.load_memory             = ["RTOS_NORTOS_IPC_SHM_MEM"];
 section10.type                    = "NOLOAD";
 section10.$name                   = "IPC Shared Memory";
 section10.group                   = false;
 section10.output_section.create(1);
 section10.output_section[0].$name = ".bss.ipc_vring_mem";
 
-section11.load_memory             = "MAILBOX_HSM";
+section11.load_memory             = ["MAILBOX_HSM"];
 section11.type                    = "NOLOAD";
 section11.$name                   = "SIPC HSM Queue Memory";
 section11.group                   = false;
 section11.output_section.create(1);
 section11.output_section[0].$name = ".bss.sipc_hsm_queue_mem";
 
-section12.load_memory             = "MAILBOX_R5F";
+section12.load_memory             = ["MAILBOX_R5F"];
 section12.$name                   = "SIPC R5F Queue Memory";
 section12.group                   = false;
 section12.output_section.create(1);

@@ -59,6 +59,17 @@ let advanced_configs = [
 
 config = config.concat([
     {
+        name: "additional_data",
+        displayName: "Additional Data",
+        description: "Add text to be written in the linker.cmd. Press enter for next line.",
+        multiline: true,
+        default:"",
+        placeholder: " #define TASK_SIZE	0x8000 \n #define TEXT_SIZE	0x26000"
+    }
+])
+
+config = config.concat([
+    {
         name: "group_advanced",
         displayName: "Advanced Tab",
         description: "",

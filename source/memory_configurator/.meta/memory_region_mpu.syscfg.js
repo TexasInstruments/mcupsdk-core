@@ -4,59 +4,28 @@ let general_module = system.modules['/memory_configurator/general'];
 const { getMemoryLayout } = system.getScript("/memory_configurator/memoryLayoutSolver");
 const physicalLayout = system.getScript("/memory_configurator/physicalLayout.json")[system.deviceData.device];
 
-function calculateDefault(){
+function memoryRegions(){
 
-    let addrBase = physicalLayout.OCRAM.start
-    let addrBaseFlash = physicalLayout.FLASH.start
-    let codeDataAddr = 0
-    let codeDataAddrFlash = 0
-    let codeDataSize =  physicalLayout.OCRAM.size
-    let codeDataSizeFlash = physicalLayout.FLASH.size
+    let memory_region_types = [];
     let selfCoreName = common.getSelfSysCfgCoreName();
 
+    for(let key in physicalLayout){
+        // value = physicalLayout[key];
+        core = key.slice(-1, key.indexOf('_')+1);
 
-    if(selfCoreName == "r5fss0-0") {
-        codeDataAddr    = addrBase + codeDataSize*0;
-        codeDataAddrFlash = addrBaseFlash + codeDataSizeFlash*0;
-    }
-    if(selfCoreName == "r5fss0-1") {
-        codeDataAddr    = addrBase + codeDataSize*1;
-        codeDataAddrFlash = addrBaseFlash + codeDataSizeFlash*1;
-    }
-    if(selfCoreName == "r5fss1-0") {
-        codeDataAddr    = addrBase + codeDataSize*2;
-        codeDataAddrFlash = addrBaseFlash + codeDataSizeFlash*2;
-    }
-    if(selfCoreName == "r5fss1-1") {
-        codeDataAddr    = addrBase + codeDataSize*3;
-        codeDataAddrFlash = addrBaseFlash + codeDataSizeFlash*3;
+        if( core == "ALL" || selfCoreName.includes(core.toLowerCase()) || (key.indexOf('_')==-1) ) {
+            let displayName=""
+            if (key.indexOf('_')==-1){
+                displayName = key;
+            }
+            else {
+                displayName = key.slice(0,key.lastIndexOf('_'));
+            }
+            memory_region_types.push({name: key, displayName: displayName})
+        }
     }
 
-
-    let memory_params = {
-
-        OCRAM: {
-                start: codeDataAddr,
-                size: codeDataSize
-        },
-
-        FLASH: {
-                start: codeDataAddrFlash,
-                size: codeDataSizeFlash
-        },
-
-        TCMA: {
-            start: physicalLayout.TCMA.start,
-            size:  physicalLayout.TCMA.size
-        },
-
-        TCMB: {
-            start:  physicalLayout.TCMB.start,
-            size: physicalLayout.TCMB.size
-        },
-    }
-
-    return memory_params
+    return memory_region_types;
 }
 
 function coreList() {
@@ -148,10 +117,15 @@ let config = [
     {
     name: "type",
     displayName: "Type",
-    default: "OCRAM",
-    options: [{ name: "OCRAM" }, { name: "FLASH" }, { name: "TCMA" }, { name: "TCMB" }, { name: "CUSTOM" }],
+    default: Object.keys(physicalLayout)[0],
+    options: () => {return memoryRegions()},
     onChange: (inst) => {
         inst.$name = (inst.type.concat("_x")).toUpperCase()
+        inst.manualStartAddress = physicalLayout[inst.type].start
+        if(physicalLayout[inst.type].access == "individual"){
+            inst.$uiState.isShared.hidden = true;
+        }
+        else inst.$uiState.isShared.hidden = false;
     },
     longDescription: 'Choose CUSTOM if the memory address lies outside of the remaining types.'
 }, {
@@ -162,7 +136,7 @@ let config = [
         inst.$uiState.autoStartAddress.hidden = !inst.auto;
         inst.$uiState.manualStartAddress.hidden = inst.auto;
     },
-    longDescription: 'Check this if placement of the region does not matter. The region will be placed in the smallest hole that fits it.'
+    longDescription:'Check this if placement of the region does not matter. The region will be placed in the smallest hole that fits it.'
 }, {
     name: "autoStartAddress",
     displayName: "Start Address",
@@ -176,7 +150,7 @@ let config = [
     name: "manualStartAddress",
     displayName: "Start Address",
     hidden: true,
-    default: physicalLayout.OCRAM.start,
+    default:  physicalLayout[Object.keys(physicalLayout)[0]].start,
     displayFormat: "hex",
  },
  {
@@ -360,14 +334,12 @@ function valueCheck(inst, report){
         report.logError("Size can't be less than 0", inst, "size")
     }
 
-    let type = inst.type
-    if(type != "CUSTOM") {
-        let mem_params_size = calculateDefault()[type].size;
+    let mem_params_size = physicalLayout[inst.type].size
 
-        if(inst.size > mem_params_size) {
-            report.logError(`Size can't be greater than ${mem_params_size} B`, inst, "size")
-        }
+    if(inst.size > mem_params_size) {
+        report.logError(`Size can't be greater than ${mem_params_size} B`, inst, "size")
     }
+
 
     if(!inst.auto){
         if(inst.manualStartAddress % Math.pow(2,inst.size) != 0){
@@ -465,7 +437,7 @@ function addModuleInstances(inst) {
 
 let regionModule = {
     displayName: "Memory Region",
-    defaultInstanceName: "OCRAM_x",
+    defaultInstanceName: "MEMORY_REGION",
     config : config,
 	validate: validate,
     moduleInstances: addModuleInstances,

@@ -97,9 +97,61 @@ let config = [
         isCIdentifier: false
     },
     {
+        name: "type",
+        displayName: "Type",
+        default:"LOAD",
+        description:'',
+        options: [{ name: "LOAD" }, { name: "DSECT" }, { name: "COPY" }, { name: "NOLOAD" }, { name: "NOINT" }],
+    },
+    {
+        name: "group",
+        displayName: "Group Section",
+        default: true,
+        longDescription:'Check this if all the output sections need to be grouped else uncheck.',
+        onChange: (inst) => {
+            inst.$uiState.group_start.hidden = !inst.group
+            inst.$uiState.group_end.hidden = !inst.group
+        }
+    },
+    {
+        name: "group_start",
+        //multiline: true,
+        displayName: "Start Group",
+        placeholder: "__IRQ_STACK_START",
+        default:"",
+        description:'This field is optional',
+    },
+    {
+        name: "group_end",
+        //multiline: true,
+        displayName: "End Group",
+        placeholder: "__IRQ_STACK_END",
+        default:"",
+        description:'This field is optional',
+    },
+    {
+        name: "opti_share",
+        displayName: "Opti Share",
+        default: false,
+        hidden: true,
+        description:'',
+        getValue: isOptiShare,
+    },
+    {
+        name: "split_across_memories",
+        displayName: "Split Across Memories",
+        default: false,
+        longDescription:'Unchecked: section will placed at the first available space of the region. \
+        Checked: section will split across the memory regions in the given order.',
+        onChange: (inst) => {
+            inst.$uiState.load_memory.hidden = inst.split_across_memories;
+            inst.$uiState.run_memory.hidden = inst.split_across_memories;
+        }
+    },
+    {
         name: "load_memory",
         displayName: "Load Memory",
-        default:"",
+        default:[],
         description:'Choose a memory region from the ones added in the Memory regions section.',
         options: () => {return loadMemoryRegions().memory_regions},
         onChange: (inst) => { inst.run_memory = inst.load_memory
@@ -112,31 +164,11 @@ let config = [
     {
         name: "run_memory",
         displayName: "Run Memory",
-        default: "",
+        default: [],
         description:'Choose a memory region from the ones added in the Memory regions section.',
         options: () => {return loadMemoryRegions().memory_regions},
     },
-    {
-        name: "type",
-        displayName: "Type",
-        default:"LOAD",
-        description:'',
-        options: [{ name: "LOAD" }, { name: "DSECT" }, { name: "COPY" }, { name: "NOLOAD" }, { name: "NOINT" }],
-    },
-    {
-        name: "group",
-        displayName: "Group Section",
-        default: true,
-        longDescription:'Check this if all the output sections need to be grouped else uncheck.',
-    },
-    {
-        name: "opti_share",
-        displayName: "Opti Share",
-        default: false,
-        hidden: true,
-        description:'',
-        getValue: isOptiShare,
-    },
+
 ]
 
 function validate(inst, report) {
@@ -144,10 +176,10 @@ function validate(inst, report) {
     // if(inst.output_sections.length == 0) {
     //     report.logError("This field can't be kept empty", inst, "output_sections")
     // }
-    if(inst.load_memory.length == 0) {
+    if(inst.load_memory.length == 0 && !inst.split_across_memories) {
         report.logError("This field can't be kept empty", inst, "load_memory")
     }
-    if(inst.run_memory.length == 0) {
+    if(inst.run_memory.length == 0 && !inst.split_across_memories) {
         report.logError("This field can't be kept empty", inst, "run_memory")
     }
     if(inst.output_section.length == 0) {
@@ -164,8 +196,20 @@ exports = {
 
 
 
-function addModuleInstances() {
+function addModuleInstances(inst) {
     let modInstances = new Array();
+
+    if(inst.split_across_memories){
+
+        modInstances.push({
+            name: "split_priority",
+            displayName: "Priority",
+            moduleName: "memory_configurator/memory_region_list",
+            useArray: true,
+            minInstanceCount: 1,
+            collapsed: false,
+        });
+    }
 
     modInstances.push({
         name: "output_section",
@@ -175,6 +219,8 @@ function addModuleInstances() {
         minInstanceCount: 0,
         collapsed: false,
     });
+
+
 
     return modInstances;
 }

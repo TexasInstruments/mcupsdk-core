@@ -10,7 +10,7 @@ let config = [
         displayName: "Start Section",
         placeholder: "__IRQ_STACK_START",
         default:"",
-        description:'',
+        description:'This field is optional',
     },
     {
         name: "output_sections_end",
@@ -18,7 +18,7 @@ let config = [
         displayName: "End Section",
         placeholder: "__IRQ_STACK_END",
         default:"",
-        description:'',
+        description:'This field is optional',
     },
     {
         name: "alignment",
