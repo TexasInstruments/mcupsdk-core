@@ -308,7 +308,7 @@ void *test_rat_config(void *args)
     rl2_of_reg = (CSL_rl2_of_r5fss0_core0Regs *)CSL_RL2_REGS_R5SS0_CORE0_U_BASE;
     DebugP_assert((rl2_of_reg->RAT[0].CTL & 0x3f) != 0);
     DebugP_assert(rl2_of_reg->RAT[0].RBA == 0x8000);
-    DebugP_assert(rl2_of_reg->RAT[0].RTA == 0x200);
+    DebugP_assert(rl2_of_reg->RAT[0].RTA == 0x2000);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retval);
     return NULL;
 }

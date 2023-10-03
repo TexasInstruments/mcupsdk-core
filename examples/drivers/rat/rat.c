@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2021 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,21 +30,42 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdlib.h>
+#include <stdio.h>
+#include <kernel/dpl/DebugP.h>
+#include <drivers/pmu.h>
+#include <drivers/optiflash.h>
 #include "ti_drivers_config.h"
-#include "ti_board_config.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 
-void test_main(void *args);
+#include <kernel/dpl/CacheP.h>
 
-int main(void)
+#define RAT_REGION_SIZE (32*1024)
+
+uint32_t __attribute__((aligned(RAT_REGION_SIZE), section(".bss.flashSrcBuffer"))) buffer[RAT_REGION_SIZE / 4];
+
+void rat_main(void *args)
 {
-    System_init();
-    Board_init();
+    Drivers_open();
+    Board_driversOpen();
 
-    test_main(NULL);
+    uint32_t *destPtr = (uint32_t *)0x70200000;
 
-    Board_deinit();
-    System_deinit();
+    for(uint32_t i = 0; i < RAT_REGION_SIZE/4; i++)
+    {
+        *destPtr++ = i;
+    }
 
-    return 0;
+    CacheP_wbInv((void*)0x70200000, RAT_REGION_SIZE, CacheP_TYPE_ALL);
+    CacheP_wbInv((void*)0x70000000, RAT_REGION_SIZE, CacheP_TYPE_ALL);
+
+    for(uint32_t i = 0; i < RAT_REGION_SIZE/4; i++)
+    {
+        DebugP_assert(buffer[i] == i);
+    }
+
+    DebugP_log("All tests have passed!!\r\n");
+
+    Board_driversClose();
+    Drivers_close();
 }

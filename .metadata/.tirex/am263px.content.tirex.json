@@ -6868,6 +6868,38 @@
             "example"
         ],
         "resourceSubClass": [
+            "example.rat"
+        ],
+        "description": "Basic Region Base Address Translation (RAT) example. This shows how to setup Remote Layer 2 cache. CPU is R5FSS0-0 running NORTOS.",
+        "name": "rat",
+        "location": "../../examples/drivers/rat/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "rat",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
             "example.general"
         ],
         "description": "resolver example1 main CPU is R5FSS0-0 running NORTOS.",

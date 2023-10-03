@@ -277,6 +277,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG
    -# \subpage EXAMPLES_RL2
    -# \subpage EXAMPLES_FLC
+   -# \subpage EXAMPLES_RAT
 \endcond
 -# RTI
    -# \subpage EXAMPLES_DRIVERS_RTI_LED_BLINK

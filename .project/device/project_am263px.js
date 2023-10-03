@@ -112,8 +112,9 @@ const example_file_list = [
 	"examples/drivers/ospi/ospi_flash_dma/.project/project.js",
 	"examples/drivers/ospi/ospi_flash_io/.project/project.js",
 	"examples/drivers/pmu/pmu_multievent/.project/project.js",
+    "examples/drivers/rat/.project/project_nortos.js",
 	"examples/drivers/resolver/resolver_angle_speed/.project/project.js",
-    "examples/drivers/rl2/.project/project_nortos_am263px.js",
+    "examples/drivers/rl2/.project/project_nortos.js",
 	"examples/drivers/rti/rti_led_blink/.project/project.js",
 	"examples/drivers/sdfm/sdfm_epwm_sync_cpuread/.project/project.js",
 	"examples/drivers/sdfm/sdfm_filter_sync_cpuread/.project/project.js",
@@ -171,6 +172,7 @@ const example_file_list = [
     "test/drivers/mcspi/mcspi/.project/project_am263px.js",
 	"test/drivers/mcspi/mcspi_controller_peripheral/.project/project.js",
 	"test/drivers/mcspi/mcspi_controller_peripheral_dma/.project/project.js",
+    "test/drivers/optiflash/.project/project.js",
 	//"test/drivers/ospi/.project/project.js",
 	"test/drivers/sdfm/.project/project.js",
 	"test/drivers/resolver/.project/project.js",
@@ -198,7 +200,7 @@ const example_file_list = [
 	"test/kernel/dpl/dpl_ut/nortos/r5/CpuId_armv7r/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/r5/HwiP_armv7r_handlers_nortos/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/r5/PmuP_armv7r/.project/project.js",
-	"test/kernel/freertos/.project/project.js",
+	"test/kernel/freertos/.project/project.js"
 ];
 
 function getProjectSpecCpu(cpu) {

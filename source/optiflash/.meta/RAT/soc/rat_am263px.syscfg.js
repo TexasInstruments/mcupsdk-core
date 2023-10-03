@@ -1,6 +1,6 @@
 exports =
 {
     rat: {
-        maxInstances: 3
+        maxInstances: 4
     }
 }

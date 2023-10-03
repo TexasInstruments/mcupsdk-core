@@ -41,4 +41,15 @@ FLC is a simplified DMA. To configure FLC, in syscfg, it can be done by clicking
 \imageStyle{flc_syscfg_initial.png,width:50%}
 \image html flc_syscfg_initial.png
 
-Use `Add` button to to add FLc instances. For Am263px case, there are a total of 4 FLC instances per R5 core. All info that needs to be given is source address, destination address and size. Make sure that all these fields are 4K aligned.
+Use `Add` button to to add FLC instances. For Am263px case, there are a total of 4 FLC instances per R5 core. All info that needs to be given is source address, destination address and size. Make sure that all these fields are 4K aligned.
+
+## How to configure RAT.
+
+Region base address translation or RAT can be configured using the following fields.
+
+\imageStyle{rat_syscfg.png,width:50%}
+\image html rat_syscfg.png
+
+Region Size: Size of RAT region.
+Region Base Address (hex): Size aligned base address
+Region Translated Address (hex): Size aligned translated address

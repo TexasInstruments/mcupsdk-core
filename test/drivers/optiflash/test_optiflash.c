@@ -80,8 +80,7 @@ void test_main(void *args)
     RUN_TEST((UnityTestFunction)test_flc_interrupt, 11839, NULL);
     RUN_TEST((UnityTestFunction)test_flc_enable_disable, 11840, NULL);
     RUN_TEST((UnityTestFunction)test_rl2_config, 11841, NULL);
-    // RUN_TEST((UnityTestFunction)test_rat_config, 4455, NULL);
-    // RUN_TEST((UnityTestFunction)test_rat_config, 4456, NULL);
+    RUN_TEST((UnityTestFunction)test_rat_config, 11903, NULL);
 
     UNITY_END();
     Drivers_close();

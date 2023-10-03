@@ -53,8 +53,9 @@ static void AddrTranslateP_setRegion(uint32_t ratBaseAddr, uint16_t regionNum,
     {
         value = AddrTranslateP_RegionSize_4G;
     }
-    systemAddr = (uint32_t)(systemAddr & ~( (uint32_t)( ((uint64_t)1U << value) - 1U) ));
-    localAddress = localAddress   & ~( (uint32_t)( ((uint64_t)1U << value) - 1U) );
+    uint32_t mask = ~( (uint32_t)( ((uint32_t)1U << value) - 1U) );
+    systemAddr = (uint32_t)(systemAddr & mask);
+    localAddress = localAddress & mask;
 
     /* disable RAT region first */
     *RAT_CTRL(ratBaseAddr, regionNum) = 0U;
@@ -101,6 +102,45 @@ void AddrTranslateP_init(AddrTranslateP_Params *params)
 
 void *AddrTranslateP_getLocalAddr(uint64_t systemAddr)
 {
-    return NULL;
+    uint32_t found, regionId;
+    void *localAddr;
+
+    DebugP_assertNoLog(gAddrTranslateConfig.numRegions<AddrTranslateP_MAX_REGIONS);
+
+    found = 0;
+    for(regionId=0; regionId<gAddrTranslateConfig.numRegions; regionId++)
+    {
+        uint64_t startAddr, endAddr;
+        uint32_t sizeMask;
+
+        /* we assume gAddrTranslateConfig.regionConfig[] address and size is aligned */
+        sizeMask = ( (uint32_t)( ((uint64_t)1U << gAddrTranslateConfig.regionConfig[regionId].size) - 1U) );
+
+        startAddr = gAddrTranslateConfig.regionConfig[regionId].systemAddr;
+
+        /* calculate end address */
+        endAddr = startAddr + sizeMask;
+
+        /* see if input address falls in this region */
+        if((systemAddr >= startAddr) && (systemAddr <= endAddr))
+        {
+            /* yes, input address falls in this region, break from loop */
+            found = 1;
+            break;
+        }
+    }
+    if(found != 0U)
+    {
+        /* translate input address to output address */
+        uint32_t offset = systemAddr - gAddrTranslateConfig.regionConfig[regionId].systemAddr;
+
+        localAddr = (void *) (gAddrTranslateConfig.regionConfig[regionId].localAddr + offset);
+    }
+    else
+    {
+        /* no mapping found, set output = input with 32b truncation */
+        localAddr = (void *) systemAddr;
+    }
+    return localAddr;
 }
 

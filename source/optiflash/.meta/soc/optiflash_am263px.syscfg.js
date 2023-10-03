@@ -3,7 +3,8 @@ let common = system.getScript("/common");
 
 const topModules_main = [
     "/optiflash/RL2/RL2",
-    "/optiflash/FLC/FLC"
+    "/optiflash/FLC/FLC",
+    "/optiflash/RAT/RAT",
 ];
 
 const driverVersion = {

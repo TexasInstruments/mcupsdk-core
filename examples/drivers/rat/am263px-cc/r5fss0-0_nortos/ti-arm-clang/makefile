@@ -21,19 +21,18 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=test_optiflash.$(PROFILE).out
+OUTNAME:=rat.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=test_optiflash.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=test_optiflash.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=test_optiflash.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=test_optiflash.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=test_optiflash.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=test_optiflash.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME:=rat.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=rat.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=rat.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=rat.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=rat.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=rat.$(PROFILE).rprc_tmp
 
 FILES_common := \
-	test_optiflash_am263px.c\
-	test_optiflash.c \
+	rat.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -45,14 +44,12 @@ FILES_common := \
 
 FILES_PATH_common = \
 	.. \
-	../.. \
 	../../.. \
 	generated \
 
 INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
-	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
 	-Igenerated \
 
 DEFINES_common := \
@@ -88,20 +85,16 @@ CFLAGS_release := \
 	-Os \
 
 LNK_FILES_common = \
-	linker.cmd \
+	generated/linker.cmd \
 
 LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/test/unity/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
 	-lnortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lunity.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -114,22 +107,21 @@ LFLAGS_common = \
 LIBS_NAME = \
 	nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	unity.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
 LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
-	${MCU_PLUS_SDK_PATH}/source/board/lib \
-	${MCU_PLUS_SDK_PATH}/test/unity/lib \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))
 ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
 FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
 CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ifeq ($(INSTRUMENTATION_MODE), yes)
+CFLAGS += -fprofile-instr-generate -fcoverage-mapping
+endif
 DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
 INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 LIBS := $(LIBS_common) $(LIBS_$(PROFILE))
@@ -166,7 +158,15 @@ SYSCFG_GEN_FILES+=generated/ti_pinmux_config.c generated/ti_power_clock_config.c
 SYSCFG_GEN_FILES+=generated/ti_board_config.c generated/ti_board_config.h
 SYSCFG_GEN_FILES+=generated/ti_board_open_close.c generated/ti_board_open_close.h
 
-$(OUTNAME): syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+SYSTEM_FLAG ?= false
+
+ifeq ($(SYSTEM_FLAG), false)
+	SYSTEM_COMMAND := syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+else
+	SYSTEM_COMMAND := $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+endif
+
+$(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
 	@echo  Linking: am263px:r5fss0-0:nortos:ti-arm-clang $@ ...
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)
@@ -185,7 +185,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263px:r5fss0-0:nortos:ti-arm-clang test_optiflash ...
+	@echo  Scrubing: am263px:r5fss0-0:nortos:ti-arm-clang rat ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -217,10 +217,10 @@ $(SYSCFG_GEN_FILES): syscfg
 
 syscfg: ../example.syscfg
 	@echo Generating SysConfig files ...
-	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM263P1 --package ZCZ_C --output generated/ ../example.syscfg
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM263P1 --package ZCZ_S --output generated/ ../example.syscfg
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM263Px --context r5fss0-0 --part AM263P1 --package ZCZ_C --output generated/  ../example.syscfg
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM263Px --context r5fss0-0 --part AM263P1 --package ZCZ_S --output generated/  ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)

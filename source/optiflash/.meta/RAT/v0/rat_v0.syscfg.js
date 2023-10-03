@@ -3,7 +3,82 @@ let soc = system.getScript(`/optiflash/RAT/soc/rat_${common.getSocName()}`);
 
 function validate(inst, report)
 {
-
+    let ba = parseInt(inst['baseAddress']);
+    let ta = parseInt(inst['translatedAddress']);
+    let size = inst['size'];
+    let size_in_bytes = 0;
+    switch(size)
+    {
+        case "AddrTranslateP_RegionSize_4K":
+            size_in_bytes = 4*1024;
+            break;
+        case "AddrTranslateP_RegionSize_8K":
+            size_in_bytes = 8*1024;
+            break;
+        case "AddrTranslateP_RegionSize_16K":
+            size_in_bytes = 16*1024;
+            break;
+        case "AddrTranslateP_RegionSize_32K":
+            size_in_bytes = 32*1024;
+            break;
+        case "AddrTranslateP_RegionSize_64K":
+            size_in_bytes = 64*1024;
+            break;
+        case "AddrTranslateP_RegionSize_128K":
+            size_in_bytes = 128*1024;
+            break;
+        case "AddrTranslateP_RegionSize_256K":
+            size_in_bytes = 256*1024;
+            break;
+        case "AddrTranslateP_RegionSize_512K":
+            size_in_bytes = 512*1024;
+            break;
+        case "AddrTranslateP_RegionSize_1M":
+            size_in_bytes = 1024*1024;
+            break;
+        case "AddrTranslateP_RegionSize_2M":
+            size_in_bytes = 2*1024*1024;
+            break;
+        case "AddrTranslateP_RegionSize_4M":
+            size_in_bytes = 4*1024*1024;
+            break;
+        case "AddrTranslateP_RegionSize_8M":
+            size_in_bytes = 8*1024*1024;
+            break;
+        case "AddrTranslateP_RegionSize_32M":
+            size_in_bytes = 32*1024*1024;
+            break;
+        case "AddrTranslateP_RegionSize_64M":
+            size_in_bytes = 64*1024*1024;
+            break;
+        case "AddrTranslateP_RegionSize_128M":
+            size_in_bytes = 128*1024*1024;
+            break;
+        case "AddrTranslateP_RegionSize_256M":
+            size_in_bytes = 256*1024*1024;
+            break;
+        case "AddrTranslateP_RegionSize_512M":
+            size_in_bytes = 512*1024*1024;
+            break;
+        case "AddrTranslateP_RegionSize_1G":
+            size_in_bytes = 1024*1024*1024;
+            break;
+        case "AddrTranslateP_RegionSize_2G":
+            size_in_bytes = 2*1024*1024*1024;
+            break;
+        case "AddrTranslateP_RegionSize_4G":
+            size_in_bytes = 4*1024*1024*1024;
+            break;
+    }
+    size_in_bytes -= 1;
+    if((ba & size_in_bytes) != 0)
+    {
+        report.logError("Base Address should be aligned to size", inst, "baseAddress");
+    }
+    if((ta & size_in_bytes) != 0)
+    {
+        report.logError("Translated Address should be aligned to size", inst, "translatedAddress");
+    }
 }
 
 exports =
