@@ -1,13 +1,21 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.11.0+2225"}
+ * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P1" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+const mpu_armv76 = mpu_armv7.addInstance();
 const general    = scripting.addModule("/memory_configurator/general", {}, false);
 const general1   = general.addInstance();
 const region     = scripting.addModule("/memory_configurator/region", {}, false);
@@ -25,47 +33,66 @@ const section9   = section.addInstance();
 const section10  = section.addInstance();
 const section11  = section.addInstance();
 const section12  = section.addInstance();
-const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
-const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
-const mpu_armv71 = mpu_armv7.addInstance();
-const mpu_armv72 = mpu_armv7.addInstance();
-const mpu_armv73 = mpu_armv7.addInstance();
-const mpu_armv74 = mpu_armv7.addInstance();
-const mpu_armv75 = mpu_armv7.addInstance();
-const mpu_armv76 = mpu_armv7.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+mpu_armv75.$name        = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr     = 0x50D00000;
+mpu_armv75.size         = 14;
+mpu_armv75.allowExecute = false;
+mpu_armv75.attributes   = "Device";
+
+mpu_armv76.$name        = "CONFIG_MPU_REGION5";
+mpu_armv76.baseAddr     = 0x72000000;
+mpu_armv76.size         = 14;
+mpu_armv76.allowExecute = false;
+mpu_armv76.attributes   = "NonCached";
+
 general1.$name        = "CONFIG_GENERAL0";
 general1.linker.$name = "TIARMCLANG0";
 
-region1.$name                  = "MEMORY_REGION_CONFIGURATION0";
+region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
 region1.memory_region.create(5);
-
-region1.memory_region[0].type  = "TCMA";
-region1.memory_region[0].$name = "R5F_VECS";
-region1.memory_region[0].auto  = false;
-region1.memory_region[0].size  = 0x40;
-
-region1.memory_region[1].type  = "TCMA";
-region1.memory_region[1].$name = "R5F_TCMA";
-region1.memory_region[1].size  = 0x7FC0;
-
-region1.memory_region[2].type  = "TCMB";
-region1.memory_region[2].size  = 0x8000;
-region1.memory_region[2].$name = "R5F_TCMB";
-
-region1.memory_region[3].$name = "OCRAM";
-region1.memory_region[3].auto                = false;
-region1.memory_region[3].manualStartAddress  = 0x70080000;
-region1.memory_region[3].size  = 0x40000;
-
-region1.memory_region[4].type  = "FLASH";
-region1.memory_region[4].auto                = false;
-region1.memory_region[4].manualStartAddress  = 0x60180000;
-region1.memory_region[4].size  = 0x80000;
-region1.memory_region[4].$name = "FLASH";
+region1.memory_region[0].type               = "TCMA";
+region1.memory_region[0].$name              = "R5F_VECS";
+region1.memory_region[0].auto               = false;
+region1.memory_region[0].size               = 0x40;
+region1.memory_region[1].type               = "TCMA";
+region1.memory_region[1].$name              = "R5F_TCMA";
+region1.memory_region[1].size               = 0x7FC0;
+region1.memory_region[2].type               = "TCMB";
+region1.memory_region[2].size               = 0x8000;
+region1.memory_region[2].$name              = "R5F_TCMB";
+region1.memory_region[3].$name              = "OCRAM";
+region1.memory_region[3].auto               = false;
+region1.memory_region[3].manualStartAddress = 0x70080000;
+region1.memory_region[3].size               = 0x40000;
+region1.memory_region[4].type               = "FLASH";
+region1.memory_region[4].auto               = false;
+region1.memory_region[4].manualStartAddress = 0x60180000;
+region1.memory_region[4].size               = 0x80000;
+region1.memory_region[4].$name              = "FLASH";
 
 section1.load_memory             = ["R5F_VECS"];
 section1.group                   = false;
@@ -109,27 +136,27 @@ section6.output_section[0].$name                  = ".irqstack";
 section6.output_section[0].output_sections_start  = "__IRQ_STACK_START";
 section6.output_section[0].output_sections_end    = "__IRQ_STACK_END";
 section6.output_section[0].input_section.create(1);
-section6.output_section[0].input_section[0].$name = ". = . + __IRQ_STACK_SIZE";
+section6.output_section[0].input_section[0].$name = ". = . + __IRQ_STACK_SIZE;";
 section6.output_section[1].$name                  = ".fiqstack";
 section6.output_section[1].output_sections_start  = "__FIQ_STACK_START";
 section6.output_section[1].output_sections_end    = "__FIQ_STACK_END";
 section6.output_section[1].input_section.create(1);
-section6.output_section[1].input_section[0].$name = ". = . + __FIQ_STACK_SIZE";
+section6.output_section[1].input_section[0].$name = ". = . + __FIQ_STACK_SIZE;";
 section6.output_section[2].$name                  = ".svcstack";
 section6.output_section[2].output_sections_start  = "__SVC_STACK_START";
 section6.output_section[2].output_sections_end    = "__SVC_STACK_END";
 section6.output_section[2].input_section.create(1);
-section6.output_section[2].input_section[0].$name = ". = . + __SVC_STACK_SIZE";
+section6.output_section[2].input_section[0].$name = ". = . + __SVC_STACK_SIZE;";
 section6.output_section[3].$name                  = ".abortstack";
 section6.output_section[3].output_sections_start  = "__ABORT_STACK_START";
 section6.output_section[3].output_sections_end    = "__ABORT_STACK_END";
 section6.output_section[3].input_section.create(1);
-section6.output_section[3].input_section[0].$name = ". = . + __ABORT_STACK_SIZE";
+section6.output_section[3].input_section[0].$name = ". = . + __ABORT_STACK_SIZE;";
 section6.output_section[4].$name                  = ".undefinedstack";
 section6.output_section[4].output_sections_start  = "__UNDEFINED_STACK_START";
 section6.output_section[4].output_sections_end    = "__UNDEFINED_STACK_END";
 section6.output_section[4].input_section.create(1);
-section6.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE";
+section6.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE;";
 
 section7.load_memory             = ["OCRAM"];
 section7.$name                   = "Initialization and Exception Handling";
@@ -170,35 +197,3 @@ section12.$name                   = "SIPC R5F Queue Memory";
 section12.group                   = false;
 section12.output_section.create(1);
 section12.output_section[0].$name = ".bss.sipc_r5f_queue_mem";
-
-mpu_armv71.$name             = "CONFIG_MPU_REGION0";
-mpu_armv71.size              = 31;
-mpu_armv71.attributes        = "Device";
-mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
-mpu_armv71.allowExecute      = false;
-
-mpu_armv72.$name             = "CONFIG_MPU_REGION1";
-mpu_armv72.size              = 15;
-mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
-
-mpu_armv73.$name             = "CONFIG_MPU_REGION2";
-mpu_armv73.baseAddr          = 0x80000;
-mpu_armv73.size              = 15;
-mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
-
-mpu_armv74.$name             = "CONFIG_MPU_REGION3";
-mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
-mpu_armv74.baseAddr          = 0x70000000;
-mpu_armv74.size              = 21;
-
-mpu_armv75.$name        = "CONFIG_MPU_REGION4";
-mpu_armv75.baseAddr     = 0x50D00000;
-mpu_armv75.size         = 14;
-mpu_armv75.allowExecute = false;
-mpu_armv75.attributes   = "Device";
-
-mpu_armv76.$name        = "CONFIG_MPU_REGION5";
-mpu_armv76.baseAddr     = 0x72000000;
-mpu_armv76.size         = 14;
-mpu_armv76.allowExecute = false;
-mpu_armv76.attributes   = "NonCached";

@@ -22,7 +22,7 @@ function memoryRegions(){
             else {
                 displayName = key.slice(0,key.lastIndexOf('_'));
             }
-            memory_region_types.push({name: key, displayName: displayName})
+            memory_region_types.push({name: key.toString(), displayName: displayName})
         }
     }
 
@@ -74,7 +74,7 @@ function enableShared_core(inst, ui) {
 function getDriversList()
 {
     let topModules = drivers.topModules;
-    const options = []
+    let options = []
     _.each(topModules, (module) => {
 
         let result = module.substr(module.lastIndexOf('/')+1)
@@ -118,8 +118,8 @@ let config = [
     {
     name: "type",
     displayName: "Type",
-    default: Object.keys(physicalLayout)[0],
-    options: () => {return memoryRegions()},
+    default: (Object.keys(physicalLayout)[0]).toString(),
+    options: memoryRegions(),
     onChange: (inst) => {
         inst.$name = (inst.type.concat("_x")).toUpperCase()
         inst.manualStartAddress = physicalLayout[inst.type].start
