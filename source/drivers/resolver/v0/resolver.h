@@ -1503,7 +1503,8 @@ typedef struct
     }
 
     /**
-     * @brief Sets the Coef1, Coef2 values for the Dc Offset block in the given resolver core.
+     * @brief Sets the Sin, Cosine Manual Correction values for the Dc Offset block
+     * in the given resolver core.
      *
      * @param base RDC Base Address
      * @param core denotes Resolver Core within RDC
@@ -1754,6 +1755,7 @@ typedef struct
 
     /**
      * @brief Sets the Phase Gain Estimation train limit.
+     * if the programmed value is x, 2^x rotations are considered for the train limit.
      *
      * @param base RDC Base Address
      * @param core denotes Resolver Core within RDC
@@ -2042,7 +2044,7 @@ typedef struct
     /**
      * @brief Returns signed 16bit angle data from ArcTan. the data corresponds to
      * -180 to +180 degrees
-     *      angle in degrees : ((16b signed int) + 2^15) * 360 / 2^16
+     *      angle in degrees : ((16b signed int)) * 360 / 2^16
      *
      * @param base RDC Base Address
      * @param core denotes Resolver Core within RDC

@@ -173,6 +173,7 @@ const example_file_list = [
 	"test/drivers/mcspi/mcspi_controller_peripheral_dma/.project/project.js",
 	//"test/drivers/ospi/.project/project.js",
 	"test/drivers/sdfm/.project/project.js",
+	"test/drivers/resolver/.project/project.js",
 	"test/drivers/soc/soc_r5f/.project/project.js",
 	"test/drivers/uart/.project/project.js",
 	"test/kernel/dpl/.project/project.js",

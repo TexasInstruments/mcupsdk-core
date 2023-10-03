@@ -72,6 +72,7 @@ help:
 	@echo  $(MAKE) -s -C drivers/mcspi/mcspi/am263px-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/sdfm/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/sdfm/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/resolver/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/uart/am263px-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/uart/am263px-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/dpl/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -246,6 +247,7 @@ BUILD_COMBO_EXAMPLE_ALL += test_mcspi_am263px-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcspi_am263px-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_sdfm_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_sdfm_am263px-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_resolver_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_uart_am263px-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_uart_am263px-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_dpl_am263px-cc_r5fss0-0_nortos_ti-arm-clang
@@ -412,6 +414,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  test_sdfm_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C drivers/sdfm/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_resolver_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C drivers/resolver/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  test_uart_am263px-cc_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C drivers/uart/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
@@ -655,6 +660,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_am263px-cc_r5fss0-0_freertos_ti-arm-
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sdfm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_sdfm_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_resolver_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_uart_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_uart_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -821,6 +827,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_sdfm_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/sdfm/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_resolver_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/resolver/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  test_uart_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/uart/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -1064,6 +1073,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_am263px-cc_r5fss0-0_freertos_ti-arm-
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_am263px-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sdfm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_sdfm_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_resolver_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_uart_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_uart_am263px-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -1230,6 +1240,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_sdfm_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/sdfm/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_resolver_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/resolver/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_uart_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/uart/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
