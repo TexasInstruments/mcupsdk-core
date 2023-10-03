@@ -5,7 +5,6 @@ let soc = system.getScript(`/drivers/pinmux/pinmux_${common.getSocName()}`);
 function getPinRequirements(interfaceName, pinName, pinDisplayName)
 {
     let pinConfig = soc.getPinConfigurables(interfaceName, pinName);
-
     let pin = {
         name           : pinName,
         displayName    : (pinDisplayName ? pinDisplayName : pinName),

@@ -134,6 +134,11 @@ function getPeripheralRequirements(inst, peripheralName, name)
         pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
     }
+    else if (name == "CPSW_CPTS")
+    {
+       pinResource = pinmux.getPinRequirements(interfaceName, "TS_SYNC", "TS_SYNC");
+       resources.push( pinResource);
+    }
     else
     {
         let pinList = getInterfacePinList(inst, interfaceName);
@@ -245,6 +250,12 @@ function getPeripheralRequirements(inst, peripheralName, name)
         pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
     }
+    else if (name == "CPSW_CPTS")
+    {
+        pinResource = pinmux.getPinRequirements(interfaceName, "TS_SYNC", "TS_SYNC");
+        pinmux.setConfigurableDefault( pinResource, "rx", false );
+        resources.push( pinResource);
+    }
     else
     {
         let pinList = getInterfacePinList(inst, interfaceName);
@@ -288,15 +299,25 @@ function getInterfacePinList(inst, peripheralName)
 
 function pinmuxRequirements(inst) {
 
+    let perRequirements = [];
+
+    if (inst.enableTsOut === true)
+    {
+        let cptsTsSync = getPeripheralRequirements(inst, "CPSW3G", "CPSW_CPTS");
+        pinmux.setPeripheralPinConfigurableDefault( cptsTsSync, "CPSW3G", "rx", false);
+        perRequirements.push(cptsTsSync);
+    }
+
     let mdio = getPeripheralRequirements(inst, "MDIO", "MDIO");
 
     /* set default values for "rx" for different pins, based on use case */
     pinmux.setPeripheralPinConfigurableDefault( mdio, "MDC", "rx", false);
-    if( inst.phyToMacInterfaceMode === "RMII")
+    perRequirements.push(mdio);
+
+    if (inst.phyToMacInterfaceMode === "RMII")
     {
-        let rmiiInterface;
         if (common.getSocName() === "am64x")
-         {
+        {
             let rmii = getPeripheralRequirements(inst, "CPSW", "RMII");
             pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII0_TXD0", "rx", false);
             pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII0_TXD1", "rx", false);
@@ -304,19 +325,19 @@ function pinmuxRequirements(inst) {
             pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII1_TXD0", "rx", false);
             pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII1_TXD1", "rx", false);
             pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII1_TXEN", "rx", false);
-            return [mdio, rmii];
+            perRequirements.push(rmii);
         }
         else
         {
             let rmii = getPeripheralRequirements(inst, "RMII", "RMII");
 
-           pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII0_TXD0", "rx", false);
-           pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII0_TXD1", "rx", false);
-           pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII0_TXEN", "rx", false);
-           pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII1_TXD0", "rx", false);
-           pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII1_TXD1", "rx", false);
-           pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII1_TXEN", "rx", false);
-           return [mdio, rmii];
+            pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII0_TXD0", "rx", false);
+            pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII0_TXD1", "rx", false);
+            pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII0_TXEN", "rx", false);
+            pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII1_TXD0", "rx", false);
+            pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII1_TXD1", "rx", false);
+            pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII1_TXEN", "rx", false);
+            perRequirements.push(rmii);
         }
     }
     else
@@ -324,53 +345,58 @@ function pinmuxRequirements(inst) {
         if (common.getSocName() === "am64x")
         {
             let rgmii1 = getPeripheralRequirements(inst, "CPSW", "RGMII");
-            return [mdio, rgmii1];
+            perRequirements.push(rgmii1);
        	}
        	else
         {
             let rgmii1 = getPeripheralRequirements(inst, "RGMII", "RGMII1");
             let rgmii2 = getPeripheralRequirements(inst, "RGMII", "RGMII2");
-       	    return [mdio, rgmii1, rgmii2];
+            perRequirements.push(rgmii1);
+            perRequirements.push(rgmii2);
        	}
-
     }
+    return perRequirements;
 }
 
-function getInterfaceNameList(inst)
-{
+function getInterfaceNameList(inst) {
+    let interfaceNameList = []
+    if (inst.enableTsOut === true)
+    {
+                interfaceNameList.push("CPSW_CPTS")
+    }
+    interfaceNameList.push(getInterfaceName(inst, "MDIO"));
     if (inst.phyToMacInterfaceMode === "RMII")
     {
-        return [
-            getInterfaceName(inst, "MDIO"),
-            getInterfaceName(inst, "RMII"),
-        ];
+        interfaceNameList.push(getInterfaceName(inst, "RMII"));
     }
     else
     {
         if (common.getSocName() === "am64x")
         {
-            return [
-                getInterfaceName(inst, "MDIO"),
-                getInterfaceName(inst, "RGMII"),
-            ];
+            interfaceNameList.push(getInterfaceName(inst, "RGMII"));
         }
         else
         {
-            return [
-                getInterfaceName(inst, "MDIO"),
-                getInterfaceName(inst, "RGMII1"),
-                getInterfaceName(inst, "RGMII2"),
-            ];
+            interfaceNameList.push(getInterfaceName(inst, "RGMII1"));
+            interfaceNameList.push(getInterfaceName(inst, "RGMII2"));
         }
     }
+
+    return interfaceNameList;
 }
 
 function getPeripheralPinNames(inst)
 {
     let pinList = [];
+
+     if (inst.enableTsOut === true)
+     {
+         pinList = pinList.concat("TS_SYNC");
+     }
+     
     if (common.getSocName() != "am64x")
     {
-        if(inst.phyToMacInterfaceMode === "RMII")
+        if (inst.phyToMacInterfaceMode === "RMII")
         {
             pinList = pinList.concat(getInterfacePinList(inst, "MDIO"),
                             getInterfacePinList(inst, "RMII"));
@@ -413,7 +439,7 @@ function getPeripheralPinNames(inst)
 
 function setNumPorts(inst, numPorts)
 {
-	inst.numPorts = numPorts;
+    inst.numPorts = numPorts;
 }
 
 let enet_cpsw_pinmux_module = {
@@ -443,6 +469,12 @@ let enet_cpsw_pinmux_module = {
             hidden: true,
             isInteger:true,
             range: [0, 2],
+        },
+        {
+            name: "enableTsOut",
+            displayName: "Enable CPTS TS Output",
+            default: false,
+            hidden: false,
         },
     ],
     getInstanceConfig,

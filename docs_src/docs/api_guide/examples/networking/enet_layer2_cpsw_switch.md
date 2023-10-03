@@ -426,7 +426,7 @@ Print statistics
 ## Testing Switch Policer configuration
 
 - Enable the policer using 'p' option in target UART terminal menu option.
-- Send Layer-2 packets with bellow configurations
+- Send Layer-2 packets with below configurations
     - source MAC address - 02:00:00:00:00:08
     - ingress port - PORT 1
     - Destination MAC address - any

@@ -124,7 +124,7 @@ function getInterfacePinList(inst, peripheralName)
 function pinmuxRequirements(inst) {
 
     let mdio = getPeripheralRequirements(inst, "MSS_MDIO");
-    
+
     /* set default values for "rx" for different pins, based on use case */
     pinmux.setPeripheralPinConfigurableDefault( mdio, "MDC", "rx", false);
 

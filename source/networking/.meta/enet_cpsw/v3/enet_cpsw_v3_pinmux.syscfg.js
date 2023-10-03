@@ -76,6 +76,12 @@ function getPeripheralRequirements(inst, peripheralName, name)
         pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
     }
+    else if (name == "CPSW_CPTS")
+    {
+        pinResource = pinmux.getPinRequirements(interfaceName, "CPTS0_TS_SYNC", "CPTS0_TS_SYNC");
+        pinmux.setConfigurableDefault( pinResource, "rx", false );
+        resources.push( pinResource);
+    }
     else
     {
         let pinList = getInterfacePinList(inst, interfaceName);
@@ -117,12 +123,22 @@ function getInterfacePinList(inst, peripheralName)
 
 function pinmuxRequirements(inst) {
 
+    let perRequirements = [];
+
+    if (inst.enableTsOut === true)
+    {
+        let cptsTsSync = getPeripheralRequirements(inst, "CPTS", "CPSW_CPTS");
+        pinmux.setPeripheralPinConfigurableDefault( cptsTsSync, "CPSW_CPTS", "rx", false);
+        perRequirements.push(cptsTsSync);
+    }
+
     let mdio = getPeripheralRequirements(inst, "MDIO", "MDIO");
 
     /* set default values for "rx" for different pins, based on use case */
     pinmux.setPeripheralPinConfigurableDefault( mdio, "MDC", "rx", false);
+    perRequirements.push(mdio);
 
-    if( inst.phyToMacInterfaceMode === "RMII")
+    if (inst.phyToMacInterfaceMode === "RMII")
     {
         let rmii = getPeripheralRequirements(inst, "RMII", "RMII");
 
@@ -133,55 +149,56 @@ function pinmuxRequirements(inst) {
         pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII2_TXD1", "rx", false);
         pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII2_TX_EN", "rx", false);
 
-        return [mdio, rmii];
+        perRequirements.push(rmii);
     }
     else
     {
         let rgmii1 = getPeripheralRequirements(inst, "RGMII", "RGMII1");
         let rgmii2 = getPeripheralRequirements(inst, "RGMII", "RGMII2");
 
-        return [mdio, rgmii1, rgmii2];
+        perRequirements.push(rgmii1);
+        perRequirements.push(rgmii2);
     }
+        return perRequirements;
 }
 
-
-
 function getInterfaceNameList(inst) {
+    let interfaceNameList = []
+    interfaceNameList.push(getInterfaceName(inst, "MDIO"))
 
+    if (inst.enableTsOut === true)
+    {
+        interfaceNameList.push("CPSW_CPTS")
+    }
     if(inst.phyToMacInterfaceMode === "RMII")
     {
-        return [
-            getInterfaceName(inst, "MDIO"),
-            getInterfaceName(inst, "RMII" ),
-        ];
+        interfaceNameList.push(getInterfaceName(inst, "RMII"));
     }
     else
     {
-        return [
-			      getInterfaceName(inst, "MDIO"),
-            getInterfaceName(inst, "RGMII1" ),
-            getInterfaceName(inst, "RGMII2" ),
-        ];
-
+        interfaceNameList.push(getInterfaceName(inst, "RGMII1"));
+        interfaceNameList.push(getInterfaceName(inst, "RGMII2"));
     }
+    return interfaceNameList;
 }
 
 function getPeripheralPinNames(inst)
 {
     let pinList = [];
+    if (inst.enableTsOut === true)
+    {
+      pinList = pinList.concat( "CPTS0_TS_SYNC");
+    }
 
     if(inst.phyToMacInterfaceMode === "RMII")
     {
-        pinList = pinList.concat( getInterfacePinList(inst, "MDIO"),
-                        getInterfacePinList(inst, "RMII" )
-        );
+        pinList = pinList.concat(getInterfacePinList(inst, "MDIO"),
+                        getInterfacePinList(inst, "RMII" ));
     }
     else
     {
         pinList = pinList.concat( getInterfacePinList(inst, "MDIO"),
-                        getInterfacePinList(inst, "RGMII" )
-        );
-
+                        getInterfacePinList(inst, "RGMII" ));
     }
     return pinList;
 }
@@ -193,7 +210,7 @@ let enet_cpsw_pinmux_module = {
     alwaysShowLongDescription: false,
     defaultInstanceName: "ENET_CPSW_PINMUX",
     config: [
-        {    
+        {
             name: "phyToMacInterfaceMode",
             displayName: "RMII/RGMII",
             default: "RGMII",
@@ -205,6 +222,12 @@ let enet_cpsw_pinmux_module = {
                     name: "RGMII",
                 },
             ],
+        },
+        {
+            name: "enableTsOut",
+            displayName: "Enable CPTS TS Output",
+            default: false,
+            hidden: false,
         },
     ],
     getInstanceConfig,

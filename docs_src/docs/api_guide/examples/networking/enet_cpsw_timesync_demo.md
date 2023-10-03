@@ -1,7 +1,9 @@
 # Enet CPSW TimeSync PTP Demo {#EXAMPLES_ENET_LAYER2_MULTI_CHANNEL_PTP}
 
 [TOC]
-
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X
+\warning This example obsolete and will be removed in future releases. Please refer to \ref EXAMPLES_ENET_CPSW_TSN_GPTP for time synchonization demos.
+\endcond
 # Terms and Abbreviations
 
 Acronym | Description
@@ -144,7 +146,7 @@ Need a linux machine for 'ptp4l' tool to run PTP broadcaster on the Linux PC. Be
 \attention If you need to reload and run again, a CPU power-cycle is MUST
 
 - Launch a CCS debug session and run the example \ref EXAMPLES_ENET_LAYER2_MULTI_CHANNEL executable, see \ref CCS_LAUNCH_PAGE
-- You will see logs in the UART terminal as shown in the bellow section.
+- You will see logs in the UART terminal as shown in the below section.
 
 
 ## Sample UART Output
@@ -425,5 +427,12 @@ Avg=114
 
 # See Also
 
-\ref NETWORKING
-\ref EXAMPLES_ENET_LAYER2_MULTI_CHANNEL
+\ref NETWORKING |
+\ref EXAMPLES_ENET_LAYER2_MULTI_CHANNEL |
+
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X
+\ref EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE |
+\ref EXAMPLES_ENET_CPSW_TSN_GPTP_TR |
+\ref EXAMPLES_ENET_CPSW_TSN_GPTP_TT |
+\ref ENET_CPSW_TSN_GPTP
+\endcond

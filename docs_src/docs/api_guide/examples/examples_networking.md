@@ -25,7 +25,9 @@ This page lists all the examples related to Ethernet Communication.
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
 ### Enet TSN Examples on FreeRTOS
--# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TR
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TT
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE
 \endcond
 
 \cond SOC_AM64X
@@ -48,11 +50,13 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_CPSW_LWIP_MQTT
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
-### Enet TSN Examples on FreeRTOS
--# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP
+### Time-Sensitive Networking (TSN) Examples on FreeRTOS
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TR
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TT
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE
 \endcond
 
-\cond  SOC_AM263X || SOC_AM263PX
+\cond  SOC_AM263X
 ### Layer 2 Examples on FreeRTOS
 -# \subpage EXAMPLES_ENET_CPSW_LOOPBACK
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW
@@ -75,8 +79,19 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_CPSW_LWIP_MQTT
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
+### Time-Sensitive Networking (TSN) Examples on FreeRTOS
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TR
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TT
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE
 \endcond
 
+\cond  SOC_AM263PX
+### Layer 2 Examples on FreeRTOS
+-# \subpage EXAMPLES_ENET_CPSW_LOOPBACK
+-# \subpage EXAMPLES_ENET_LAYER2_CPSW
+### TCP/IP Examples using LwIP Stack on FreeRTOS
+-# \subpage EXAMPLES_ENET_LWIP_CPSW
+\endcond
 
 \cond SOC_AM273X
 ### Layer 2 Examples on FreeRTOS
@@ -96,6 +111,10 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_CPSW_LWIP_MQTT
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
+### Time-Sensitive Networking (TSN) Examples on FreeRTOS
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TR
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TT
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE
 \endcond
 
 \cond SOC_AWR294X
