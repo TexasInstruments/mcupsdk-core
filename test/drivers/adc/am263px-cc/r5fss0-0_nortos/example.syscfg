@@ -155,10 +155,7 @@ region1.memory_region[8].type                = "CUSTOM";
 region1.memory_region[8].$name               = "RTOS_NORTOS_IPC_SHM_MEM";
 region1.memory_region[8].auto                = false;
 region1.memory_region[8].manualStartAddress  = 0x72000000;
-<<<<<<< Updated upstream
-region1.memory_region[8].size                = 0x3E80;
-=======
->>>>>>> Stashed changes
+
 region1.memory_region[8].isShared            = true;
 region1.memory_region[8].shared_cores        = ["r5fss0-1","r5fss1-0","r5fss1-1"];
 region1.memory_region[8].size                = 0x3E80;
