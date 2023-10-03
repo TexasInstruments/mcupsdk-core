@@ -214,6 +214,8 @@ static void App_setupNetif()
     {
         /* Open the netif and get it populated*/
         g_pNetif[i] = LwipifEnetApp_netifOpen(hlwipIfApp, NETIF_INST_ID0 + i, &ipaddr, &netmask, &gw);
+        App_setIgmpCpswMacFilter(g_pNetif[i]);
+        igmp_start(g_pNetif[i]);
         netif_set_status_callback(g_pNetif[i], App_netifStatusChangeCb);
         netif_set_link_callback(g_pNetif[i], App_netifLinkChangeCb);
         netif_set_up(g_pNetif[NETIF_INST_ID0 + i]);

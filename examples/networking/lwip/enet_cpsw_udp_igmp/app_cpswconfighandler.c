@@ -204,6 +204,7 @@ void EnetApp_updateCpswInitCfg(Enet_Type enetType, uint32_t instId, Cpsw_Cfg *cp
     EnetAppUtils_assert(EnetAppUtils_isDescCached() == false);
     dmaCfg->rxInterruptPerMSec = 8;
     dmaCfg->txInterruptPerMSec = 2;
+    dmaCfg->enChOverrideFlag = true;
 #endif
 
 
