@@ -150,6 +150,7 @@ const example_file_list = [
     "examples/networking/enet_layer2_cpsw/.project/project.js",
     "examples/networking/enet_layer2_multi_channel/.project/project.js",
     "examples/networking/lwip/cpsw_lwip_https/.project/project.js",
+    "examples/networking/lwip/enet_lwip_cpsw/.project/project.js",
     "examples/networking/lwip/enet_cpsw_udp_igmp/.project/project.js",
 	"test/board/eeprom/.project/project.js",
 	//"test/board/flash/.project/project.js",

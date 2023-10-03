@@ -20,7 +20,12 @@ This example also demonstrates Rx Scatter-Gather. Due to the Limitation with LC-
 On @VAR_SOC_NAME, we can do ethernet based communication using CPSW as HW mechanism
   - CPSW is a standard ethernet switch + port HW
   - It uses ethernet driver underneath with LwIP TCP/IP networking stack
+\cond SOC_AM263X
   - The appication as of now works with Port 1 only.
+\endcond
+\cond SOC_AM263PX
+  - The appication as of now works with Port 2 only.
+\endcond
 
 This example also demonstrates Rx Scatter-Gather, the buffer size on Rx is kept to 512 bytes. Send packets greater than 512 bytes to exercise scatter-gather on Rx.
 \endcond
@@ -68,13 +73,24 @@ This example do below:
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/networking/enet_layer2_cpsw/V1
+
+\endcond
+
+\cond SOC_AM263PX
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER
  Example folder | examples/networking/enet_layer2_cpsw/V1
 
 \endcond

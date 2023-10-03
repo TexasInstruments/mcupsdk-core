@@ -592,7 +592,17 @@ int32_t EnetSoc_getEFusedMacAddrs(uint8_t macAddr[][ENET_MAC_ADDR_LEN],
         macAddr[0][1] = (uint8_t)((val & 0x000000FFU) >> 0U);
         macAddr[0][0] = (uint8_t)((val & 0x0000FF00U) >> 8U);
 
-        *num = val;
+        /* To prevent getting garbage values when EFused mac address is
+         * not set for the board. Will fix after the board gets EFused
+         * mac address */
+        if(val == 1)
+        {
+            *num = val;
+        }
+        else
+        {
+            *num = 0U;
+        }
     }
 
     return ENET_SOK;

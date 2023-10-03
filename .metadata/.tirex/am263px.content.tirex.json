@@ -9481,6 +9481,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Enet Lwip Cpsw Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_lwip_cpsw",
+        "location": "../../examples/networking/lwip/enet_lwip_cpsw/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_lwip_cpsw",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Lwip Cpsw Example. CPU is R5FSS0-1 running FREERTOS.",
+        "name": "enet_lwip_cpsw",
+        "location": "../../examples/networking/lwip/enet_lwip_cpsw/am263px-cc/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_lwip_cpsw",
+            "r5fss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet Cpsw Udp Igmp Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_udp_igmp",
         "location": "../../examples/networking/lwip/enet_cpsw_udp_igmp/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",

@@ -256,6 +256,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_l2_multi_channel_am263px-cc_r5
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_l2_multi_channel_am263px-cc_r5fss0-1_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cpsw_lwip_https_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cpsw_lwip_https_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_lwip_cpsw_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_lwip_cpsw_am263px-cc_r5fss0-1_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_cpsw_udp_igmp_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_cpsw_udp_igmp_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
 # Various System Example Projectspec Build Targets
@@ -1036,6 +1038,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  cpsw_lwip_https_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/networking/lwip/cpsw_lwip_https/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
+ enet_lwip_cpsw_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ enet_lwip_cpsw_am263px-cc_r5fss0-1_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec all
+
  enet_cpsw_udp_igmp_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/networking/lwip/enet_cpsw_udp_igmp/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
@@ -1334,6 +1342,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_l2_multi_channel_am263px-cc_r5
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_l2_multi_channel_am263px-cc_r5fss0-1_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cpsw_lwip_https_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cpsw_lwip_https_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_lwip_cpsw_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_lwip_cpsw_am263px-cc_r5fss0-1_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_cpsw_udp_igmp_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_cpsw_udp_igmp_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
 # Various System Example Projectspec Clean Targets
@@ -2114,6 +2124,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  cpsw_lwip_https_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/networking/lwip/cpsw_lwip_https/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
+ enet_lwip_cpsw_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ enet_lwip_cpsw_am263px-cc_r5fss0-1_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec clean
+
  enet_cpsw_udp_igmp_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/networking/lwip/enet_cpsw_udp_igmp/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
@@ -2412,6 +2428,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_l2_multi_channel_am263px-cc_r
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_l2_multi_channel_am263px-cc_r5fss0-1_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cpsw_lwip_https_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cpsw_lwip_https_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_lwip_cpsw_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_lwip_cpsw_am263px-cc_r5fss0-1_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_cpsw_udp_igmp_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_cpsw_udp_igmp_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
 # Various System Example Projectspec Export Targets
@@ -3192,6 +3210,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  cpsw_lwip_https_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/networking/lwip/cpsw_lwip_https/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
+ enet_lwip_cpsw_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ enet_lwip_cpsw_am263px-cc_r5fss0-1_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/lwip/enet_lwip_cpsw/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec export
+
  enet_cpsw_udp_igmp_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/networking/lwip/enet_cpsw_udp_igmp/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
@@ -3506,6 +3530,8 @@ help:
 	@echo  $(MAKE) -s -C examples/networking/enet_layer2_multi_channel/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/lwip/cpsw_lwip_https/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/lwip/cpsw_lwip_https/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_cpsw/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_cpsw/am263px-cc/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_udp_igmp/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_udp_igmp/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  .

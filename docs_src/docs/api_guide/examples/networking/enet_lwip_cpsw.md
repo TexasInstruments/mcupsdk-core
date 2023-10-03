@@ -12,7 +12,12 @@ ethernet driver (ENET)
 On @VAR_SOC_NAME, we can do ethernet based communication using CPSW as HW mechanism
   - CPSW is a standard ethernet switch + port HW
   - It uses ethernet driver underneath with LwIP TCP/IP networking stack
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM273X || SOC_AWR294X
   - CPSW can be configured in two modes: Switch or MAC. For more details, \ref ENET_LWIP_CPSW_OPERATING_MODES
+\endcond
+\cond SOC_AM263PX
+  - CPSW can be configured in MAC mode only.
+\endcond
 
 The examples do below
 - Initializes the ethernet driver for the underlying HW
@@ -21,8 +26,11 @@ The examples do below
 \cond SOC_AM273X || SOC_AWR294X
 - Example is configured to run in Switch mode.
 \endcond
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X
 - Example is configured to run in Dual MAC mode.
+\endcond
+\cond SOC_AM263PX
+- Example is configured to run in MAC mode only.
 \endcond
 
 \cond SOC_AM263X || SOC_AM263PX
@@ -76,7 +84,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 
  Parameter      | Value
  ---------------|-----------
@@ -87,6 +95,16 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
 
 \endcond
 
+\cond SOC_AM263PX
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos r5fss0-1_freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/networking/lwip/enet_lwip_cpsw
+
+\endcond
 # Configuring Syscfg
 
 - Following Syscfg option allows flexibility to configure memory foot print based on required use case like: Number of DMA descriptors and buffering.
@@ -108,12 +126,21 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
     <td>Default is true. If your silicon is affected with errata <a href="https://www.ti.com/lit/er/sprz457e/sprz457e.pdf" target="_blank">i2329— MDIO interface corruption</a>, then TI suggests to use MDIO_MANUAL_MODE as software workaround.
 </tr>
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X
 <tr>
     <td>Disable Mac Port1, Disable Mac Port2
     <td>TI Networking / Enet (CPSW)
     <td>Select which port to disable.
     <td>Default is Port1 enabled. If both Port1 and Port 2 are enabled, any port can be used and  if operating in switch mode, it enables traffic switching between the two ports.
+</tr>
+\endcond
+
+\cond SOC_AM263PX
+<tr>
+    <td>Disable Mac Port1, Disable Mac Port2
+    <td>TI Networking / Enet (CPSW)
+    <td>Select which port to disable.
+    <td>Default is Port2 enabled.
 </tr>
 \endcond
 
