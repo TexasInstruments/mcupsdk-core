@@ -149,5 +149,5 @@
         "showSignals": true,
         "showUsed": true
     },
-    "minToolVersion" : "1.17.0"
+    "minToolVersion" : "1.18.0"
 }

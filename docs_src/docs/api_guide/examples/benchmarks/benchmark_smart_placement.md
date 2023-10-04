@@ -9,7 +9,7 @@
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 freertos
- Toolchain      | ti-arm-clang V3.1.0 STS
+ Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/benchmarks/ocmc_benchmarking
 
@@ -20,7 +20,7 @@
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 freertos
- Toolchain      | ti-arm-clang V3.1.0 STS
+ Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/benchmarks/ocmc_benchmarking
 
@@ -59,7 +59,7 @@ Here it will be shown how code performance (or CPI) is improved with smart place
 
 # Building benchmark application
 
-To build this application, compiler ti-cgt-armllvm >= 3.1.0 is required. Please make sure that `CGT_TI_ARM_CLANG_PATH` variable in imports.mak points to correct path of the compiler. Once this basic path is setup then compiling this program can be achieved using make command.
+To build this application, compiler ti-cgt-armllvm >= 3.2.0 LTS or later is required. Application can be compiled using make command.
 
 # Running benchmark application
 

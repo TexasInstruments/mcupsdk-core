@@ -97,7 +97,7 @@ This can be determined using
  Here core tracing is employed to determine function execution if sufficient run time trace has been collected. This does not increase function overhead and also does not changes memory footprint. Core Tracing can be done by making use of some Aadvanced tools like Lauterbach Trace32 or Segger.tools. This is required for advanced uasecase.
 
 2. <b>Using function profiling via instrumentation: </b>
-TI-ARM-CLANG provides function profiling which can be leveraged to attain this information. However, this method increases the memory footprint and increases function call overhead. Latest TI-CGT-CLANG can be downloaded from https://www.ti.com/tool/download/ARM-CGT-CLANG/ and example instrumentation documentation can be found at https://software-dl.ti.com/codegen/docs/tiarmclang/rel3_1_0_STS/compiler_manual/code_coverage/source_based_code_coverage.html?highlight=instrumentation.
+TI-ARM-CLANG provides function profiling which can be leveraged to attain this information. However, this method increases the memory footprint and increases function call overhead. Latest TI-CGT-CLANG can be downloaded from https://www.ti.com/tool/download/ARM-CGT-CLANG/ and example instrumentation documentation can be found at https://software-dl.ti.com/codegen/docs/tiarmclang/rel3_2_0_LTS/compiler_manual/code_coverage/source_based_code_coverage.html?highlight=instrumentation.
 
 
 Manual identification on top of automatic critical function identification is also possible.
