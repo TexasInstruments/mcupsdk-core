@@ -17,7 +17,7 @@
 - Smart placement (\ref SMART_PLACEMENT)
 - OptiFlash Support (\ref OPTIFLASH)
 - Memory Configurator (\ref MEMORY_CONFIGURATOR)
-- Uniflash tool support (\ref TI_UNIFLASH_TOOL)
+- Uniflash tool support (\ref TI_UNIFLASH_TOOL) 
 
 # Modules Not tested/supported in this release
 - AM263Px-LP board

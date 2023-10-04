@@ -49,7 +49,7 @@ const includes_nortos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/nortos/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc",
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am64x",
     ],
 };

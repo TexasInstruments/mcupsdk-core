@@ -36,6 +36,7 @@ FILES_common := \
     tcp_out.c \
     timeouts.c \
     udp.c \
+    acd.c \
     autoip.c \
     dhcp.c \
     etharp.c \
@@ -131,7 +132,7 @@ FILES_common := \
     sntp.c \
     mdns.c \
     netbiosns.c \
-    tftp_server.c \
+    tftp.c \
     mqtt.c \
     altcp_tls_mbedtls_mem.c \
     snmpv3_mbedtls.c \

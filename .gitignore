@@ -48,7 +48,6 @@ source/industrial_comms/ethercat_slave/stack/patch/SlaveFiles/src/*.dll
 source/industrial_comms/ethercat_slave/stack/patch/SlaveFiles/src/*.lib
 source/networking/enet/core
 source/networking/lwip/lwip-stack
-source/networking/lwip/lwip-contrib
 source/cmsis
 source/commercial
 source/usb/tinyusb/tinyusb-stack

@@ -16,13 +16,13 @@
 \cond SOC_AM273X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|--------------------------
--                                                                                               | -
+-LwIP stack is upgraded to 2.2.0 version | Networking 
 
 \endcond
 \cond SOC_AWR294X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|--------------------------
--                                                                                               | -
+-LwIP stack is upgraded to 2.2.0 version | Networking
 \endcond
 
 ## Device and Validation Information
@@ -465,6 +465,10 @@ earlier SDKs.
     <th> Change
     <th> Additional Remarks
 </tr>
+<tr>
+    <td> LwIP TCP/IP stack
+    <td> None
+    <td> Upgraded to 2.2.0 version
+    <td> Please refer to \ref NETWORKING_LWIP 'Upgrade' section 
+</tr>
 </table>
-
-

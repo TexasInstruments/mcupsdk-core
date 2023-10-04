@@ -83,7 +83,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am64x \
 	-I${MCU_PLUS_SDK_PATH}/examples/networking/lwip/enet_lwip_cpsw/extPhyMgmt \
 	-Igenerated \

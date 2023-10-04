@@ -12,7 +12,7 @@
 
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
--                                                                                               | -
+-LwIP stack is upgraded to 2.2.0 version | Networking
 
 
 ## Device and Validation Information
@@ -435,5 +435,11 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <th> Affected API
     <th> Change
     <th> Additional Remarks
+</tr>
+<tr>
+    <td> LwIP TCP/IP stack
+    <td> None
+    <td> Upgraded to 2.2.0 version
+    <td> Please refer to \ref NETWORKING_LWIP 'Upgrade' section 
 </tr>
 </table>

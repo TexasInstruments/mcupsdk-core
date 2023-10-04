@@ -51,7 +51,7 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc",
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/awr294x",
     ],
 };

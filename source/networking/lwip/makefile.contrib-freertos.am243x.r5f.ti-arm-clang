@@ -37,31 +37,31 @@ FILES_common := \
     rtp.c \
 
 FILES_PATH_common = \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/examples \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/apps \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/addons \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/examples/httpd/fs_example \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/examples/httpd/ssi_example \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/examples/lwiperf \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/examples/mdns \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/examples/mqtt \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/examples/ppp \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/examples/snmp/snmp_private_mib \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/examples/snmp/snmp_v3 \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/examples/snmp \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/examples/sntp \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/examples/tftp \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/apps/httpserver \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/apps/chargen \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/apps/udpecho \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/apps/tcpecho \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/apps/shell \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/apps/udpecho_raw \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/apps/tcpecho_raw \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/apps/netio \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/apps/ping \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/apps/socket_examples \
-    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/apps/rtp \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/examples \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/apps \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/addons \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/examples/httpd/fs_example \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/examples/httpd/ssi_example \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/examples/lwiperf \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/examples/mdns \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/examples/mqtt \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/examples/ppp \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/examples/snmp/snmp_private_mib \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/examples/snmp/snmp_v3 \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/examples/snmp \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/examples/sntp \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/examples/tftp \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/apps/httpserver \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/apps/chargen \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/apps/udpecho \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/apps/tcpecho \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/apps/shell \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/apps/udpecho_raw \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/apps/tcpecho_raw \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/apps/netio \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/apps/ping \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/apps/socket_examples \
+    ${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/apps/rtp \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
@@ -70,7 +70,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am243x \
 
 DEFINES_common := \

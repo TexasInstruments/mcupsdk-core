@@ -19,13 +19,13 @@
 \cond SOC_AM64X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
--                                                                                               | -
+-LwIP stack is upgraded to 2.2.0 version | Networking and USB 
 \endcond
 
 \cond SOC_AM243X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
--                                                                                               | -
+-LwIP stack is upgraded to 2.2.0 version | Networking and USB 
 \endcond
 
 ## Device and Validation Information
@@ -598,5 +598,11 @@ earlier SDKs.
     <th> Affected API
     <th> Change
     <th> Additional Remarks
+</tr>
+<tr>
+    <td> LwIP TCP/IP stack
+    <td> None
+    <td> Upgraded to 2.2.0 version
+    <td> Please refer to \ref NETWORKING_LWIP 'Upgrade' section 
 </tr>
 </table>

@@ -26,7 +26,7 @@ Scatter-gather RX         | Yes                      |
 CPDMA interrupt pacing    | Yes                      |
 RTOS                            | FreeRTOS                 |
 RTOS application                | \ref EXAMPLES_ENET_LWIP_CPSW example   |
-TCP/IP stack                    | LwIP 2.1.2               |
+TCP/IP stack                    | LwIP version @VAR_LWIP_VERSION               |
 Host PC tool version            | iperf v2.0.10            |
 Number of Rx packet buffers     | 32                       |
 Number of Tx packet buffers     | 16                       |
