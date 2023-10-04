@@ -1,4 +1,4 @@
-# Release Notes 09.00.00 {#RELEASE_NOTES_09_00_00_PAGE}
+# Release Notes 09.00.01 {#RELEASE_NOTES_09_00_01_PAGE}
 
 [TOC]
 
@@ -8,43 +8,28 @@
       Unless explicitly noted otherwise, the SW modules would work in both FreeRTOS and no-RTOS environment. \n
       Unless explicitly noted otherwise, the SW modules would work on any of the R5F's present on the SOC. \n
 
-\attention Klockwork Static Analysis report is not updated for this release
-
 ## New in this Release
 
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
-SFO calibration library and examples                                                            | EPWM
-Optimized IRQ handler and low latency interrupt example                                         | DPL
-Standby (WFI) mode support DPL noRTOS                                                           | DPL
-EDMA example to transfer between different memories                                             | EDMA
-SysConfig option to enable pBIST for SBL                                                        | SBL
-Interrupt profiling support and example                                                         | DPL
-Support for loading HS-FS firmware view CCS load script                                         | Common
-MbedTLS MQTT example                                                                            | Networking
-Support added for Single Packet reception from DMA                                              | Networking
-Smart placement support                                                                         | Common
-IEC60730 Support added. R5F CPU static register read diagnoctic and example added.              | SDL
-SDL is safety certified from TuV for ISO26262/IEC61508 for MCU PLUS SDK version 8.6.0.          | SDL
+-                                                                                               | -
+
 
 ## Device and Validation Information
 
 \cond SOC_AM263PX
-SOC   | Supported CPUs  | EVM                                                                          | Host PC
-------|-----------------|------------------------------------------------------------------------------|-----------------------------------------
-AM263x| R5F             | AM263x ControlCard Revision E1  (referred to as am263x-cc in code). \n       | Windows 10 64b or Ubuntu 18.04 64b
-AM263x| R5F             | AM263x LaunchPad Revision E2  (referred to as am263x-lp in code)             | Windows 10 64b or Ubuntu 18.04 64b
+SOC    | Supported CPUs  | EVM                                                                          | Host PC
+-------|-----------------|------------------------------------------------------------------------------|-----------------------------------------
+AM263Px| R5F             | AM263Px ControlCard Revision E1  (referred to as am263Px-cc in code). \n       | Windows 10 64b or Ubuntu 18.04 64b
+<!-- AM263Px| R5F             | AM263Px LaunchPad Revision E2  (referred to as am263Px-lp in code)             | Windows 10 64b or Ubuntu 18.04 64b -->
 \endcond
-
-<!-- Refer here for information about using this release with E2 revision of ControlCard
-- \subpage RELEASE_NOTES_08_03_00_EVM_REV_E2_SUPPORT_PAGE -->
 
 ## Dependent Tools and Compiler Information
 
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F            | @VAR_CCS_VERSION_AM263X
-SysConfig               | R5F            | @VAR_SYSCFG_VERSION_AM263X, build @VAR_SYSCFG_BUILD_AM263X
+Code Composer Studio    | R5F            | @VAR_CCS_VERSION
+SysConfig               | R5F            | @VAR_SYSCFG_VERSION, build @VAR_SYSCFG_BUILD
 TI ARM CLANG            | R5F            | @VAR_TI_ARM_CLANG_VERSION
 FreeRTOS Kernel         | R5F            | @VAR_FREERTOS_KERNEL_VERSION
 LwIP                    | R5F            | @VAR_LWIP_VERSION
@@ -63,10 +48,6 @@ Mbed-TLS                | R5F            | @VAR_MBEDTLS_VERSION
 
 Feature                                                             | Module
 --------------------------------------------------------------------|--------------------------
-SENT Encoder Example                                                | PRU_IO
-SENT Decoder Example                                                | PRU_IO
-Empty PRU firmware Example                                          | PRU_IO
-GUI for UART Uniflash Tool                                          | Bootloader
 GUI for UART Uniflash Tool                                          | Bootloader
 
 ### OS Kernel
@@ -125,7 +106,7 @@ MMCSD        | R5F            | YES               | NA                          
 PINMUX       | R5F            | YES               | NA                                    | Tested with multiple peripheral pinmuxes
 PMU          | R5F            | NO                | NA                                    | Tested various PMU events                                                                                   | Counter overflow detection is not enabled                                                                                                                        | -
 PRUICSS      | R5F            | YES               | NA                                    | Tested with Ethercat FW HAL                                                                                                                                     | -
-QSPI         | R5F            | YES               | Yes. Example: qspi_flash_dma_transfer | Read direct, Write indirect, Read/Write commands, DMA for read                                                                                                  | -
+OSPI         | R5F            | YES               | Yes. Example: qspi_flash_dma_transfer | Read direct, Write indirect, Read/Write commands, DMA for read                                                                                                  | -
 RTI          | R5F            | YES               | No                                    | Counter read, timebase selction, comparator setup for Interrupt, DMA requests                                                                                   | Capture feature, fast enabling/disabling of events not tested
 SDFM         | R5F            | YES               | No                                    | Filter data read from CPU, Filter data read with PWM sync                                                                                                       | -
 SOC          | R5F            | YES               | NA                                    | Lock/unlock MMRs, clock enable, set Hz, Xbar configuration, SW Warm Reset, Address Translation                                                                  | -
@@ -142,23 +123,6 @@ ETHPHY     | R5F            | YES               | Tested with ethercat_slave_bec
 FLASH      | R5F            | YES               | QSPI Flash                                                  | -
 LED        | R5F            | YES               | GPIO                                                        | -
 
-### CMSIS
-
-Module                      | Supported CPUs | SysConfig Support | OS Support        | Key features tested                                                                         | Key features not tested
-----------------------------|----------------|-------------------|-------------------|---------------------------------------------------------------------------------------------|------------------------
--                           | -              | -                 | -                 | -                                                                                           |  -
-
-### Industrial Communications Toolkit
-
-Module                                | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                                      | Key features not tested
---------------------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------------------------|------------------------
-EtherCAT SubDevice FWHAL                  | R5F            | NO                | FreeRTOS    | Tested with ethercat_slave_beckhoff_ssc_demo example                                                     | Reset isolation
-
-### Motor Control
-
-Module                      | Supported CPUs | SysConfig Support | OS Support        | Key features tested                             | Key features not tested
-----------------------------|----------------|-------------------|-------------------|-------------------------------------------------|------------------------
--                           | -              | -                 | -                 | -                                               |  -
 
 ### Networking
 
@@ -169,12 +133,7 @@ Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    |
 ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Only compiled                                                                          | Not tested
 Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography
 
-### Demos
-
-Module                      | Supported CPUs | SysConfig Support | OS Support        | Key features tested                             | Key features not tested
-----------------------------|----------------|-------------------|-------------------|-------------------------------------------------|------------------------
--                           | -              | -                 | -                 | -                                               |  -
-
+<!--
 ### Safety Diagnostic Library
 
 Module            | Supported CPUs  | SysConfig Support | OS support       | Key features tested                                                                            | Key features not tested / NOT supported
@@ -189,6 +148,8 @@ ECC Bus Safety    | R5F             | NA                |  NORTOS | AHB, AXI, TP
 CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode,Error Forcing Mode and Self Test Error Forcing Mode.                      | -
 R5F STC(LBIST), Static Register Read| R5F               | NA                |  NORTOS | STC of R5F, R5F CPU Static Register Read                                 |-
 
+-->
+
 ## Fixed Issues
 
 <table>
@@ -201,136 +162,10 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <th> Resolution/Comments
 </tr>
 <tr>
-    <td> MCUSDK-8526
-    <td> SBL examples should be calling Bootloader_loadSelfCpu for R5_0-0 core
-    <td> SBL
-    <td> 8.4.0 onwards
     <td> -
-</tr>
-<tr>
-    <td> MCUSDK-9662
-    <td> QSPI LLD EDMA Transfer fails for size (Unaligned) > MAX EDMA CNT
-    <td> QSPI
-    <td> 8.4.0 onwards
-    <td> Initiate trasfer with aligned data
-</tr>
-<tr>
-    <td> MCUSDK-9811
-    <td> IPC Notify unregister client always returns success
-    <td> IPC
-    <td> 8.05.00 onwards
-    <td> Added status variable check
-</tr>
-<tr>
-    <td> MCUSDK-9835
-    <td> SBL should support HS-SE device build via CCS
-    <td> SBL
-    <td> 8.05.00 onwards
-    <td> Added devconfig for CCS build
-</tr>
-<tr>
-    <td> MCUSDK-10102
-    <td> Trip Zone example not working
-    <td> EPWM
-    <td> 8.6.0
-    <td> Gpio changes needed on E1 to E2 migration
-</tr>
-<tr>
-    <td> MCUSDK-10119
-    <td> MCAN External read write example fails for multirun
-    <td> MCAN
-    <td> 8.5.0 onwards
-    <td> Interrupt reset is required during init in example
-</tr>
-<tr>
-    <td> MCUSDK-10144
-    <td> RTI driver Up Counter calculation in driver is incorrect
-    <td> Timer
-    <td> 8.06.00 onwards
-    <td> Updated calculation to subtract reload value by one
-</tr>
-<tr>
-    <td> MCUSDK-10167
-    <td> All the system project are made based on AM2631
-    <td> CCS
-    <td> 8.6.0
-    <td> Updated to CCS12.4 and latest CSP
-</tr>
-<tr>
-    <td> MCUSDK-10295
-    <td> ECAP : driver : Flags read doesn't include the Signal Monitoring errors
-    <td> ECAP
-    <td> 8.5.0 onwards
     <td> -
-</tr>
-<tr>
-    <td> MCUSDK-10550
-    <td> Global Strobe Load Signal from EPWMs is not taking effect on ECAP Signal Monitoring
-    <td> ECAP
-    <td> 8.5.0 onwards
     <td> -
-</tr>
-<tr>
-    <td> MCUSDK-10712
-    <td> GPIO_Input_Interrupt Example not working
-    <td> GPIO
-    <td> 8.6.0
-    <td> Added Interrupt config call in template
-</tr>
-<tr>
-    <td> MCUSDK-10713
-    <td> Interrupt registration fixed in the IPC Driver code
-    <td> IPC
-    <td> 8.5.0 onwards
-    <td> Added Sysconfig based interrupt registration
-</tr>
-<tr>
-    <td> MCUSDK-10841
-    <td> SBL needs to copy the vector table for self core right before the self-core reset release
-    <td> SBL
-    <td> 8.06.00 onwards
-    <td> Move the image load for self core just before the release reset instead of doing it early
-</tr>
-<tr>
-    <td> MCUSDK-11290
-    <td> EPWM: High Resolution DeadBand APIs does not write to registers properly
-    <td> EPWM
-    <td> 8.6.0
     <td> -
-</tr>
-<tr>
-    <td> MCUSDK-11354
-    <td> EPWM_clearTripZoneFlag() function in the SDK does not clear the CAPEVT signal
-    <td> EPWM
-    <td> 8.6.0
-    <td> Updated EPWM_clearTripZoneFlag API to accept CAPEVT as input
-</tr>
-<tr>
-    <td> MCUSDK-11401
-    <td> Mailbox memory needs to be cleared after HSMRt load
-    <td> SBL
-    <td> 8.6.0
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-11207
-    <td> Incorrect IOCTL params for CPSW ENET_TIMESYNC_IOCTL_SET_TIMESTAMP
-    <td> Networking
-    <td> 8.5.0
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-10775
-    <td> Example build failing on enabling External Phy Management
-    <td> Networking
-    <td> 8.6.0
-    <td> -
-</tr>
-<tr>
-    <td> PROC_SDL-5981
-    <td> SDL does not handle CCM callback of R5FSS1.
-    <td> SDL
-    <td> 8.5.0 onwards
     <td> -
 </tr>
 </table>
@@ -345,119 +180,15 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <th> Workaround
 </tr>
 <tr>
-    <td> MCUSDK-4234
-    <td> FSI RX Generic Trigger Test is not working
-    <td> FSI
-    <td> 8.3.0
     <td> -
-</tr>
-<tr>
-    <td> SITARAAPPS-2040
-    <td> Dual Core configuration issue with CSP 1.1.3 (Sitara MCU Device Support) on AM263x
-    <td> CSP Gel Scripts
-    <td> 8.2.1
-    <td> Edit gel file as mentioned in  \ref PREREQUISITES while running  multi core applications.
-</tr>
-<tr>
-    <td> MCUSDK-7030
-    <td> Interrupt nesting is not functional as expected when you have 2 or more interrupts with different priorities
-    <td> MCAN
-    <td> 8.4.0
-    <td> Keep the interrupt priority same in system
-</tr>
-<tr>
-    <td> MCUSDK-7319
-    <td> CONTROLSS-SDFM: Two Back-to-Back Writes to SDCPARMx Register Bit Fields CEVT1SEL, CEVT2SEL, and HZEN Within Three SD-Modulator Clock Cycles can Corrupt SDFM State Machine, Resulting in Spurious Comparator Events
-    <td> SDFM
-    <td> 8.4.0
-    <td> Avoid back-to-back writes within three SD-modulator clock cycles or have the SDCPARMx register bit fields configured in one register write.
-</tr>
-<tr>
-    <td> MCUSDK-8073
-    <td> UART1 not working as expected while configuring two uarts i.e UART0 and UART1 for two different cores
-    <td> UART
-    <td> 8.4.0 onwards
-    <td> UART1 configuration from other core should be done after UART0 is configured and initialized
-</tr>
-<tr>
-    <td> MCUSDK-9082
-    <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
-    <td> Mbed-TLS
-    <td> 8.6.0
     <td> -
-</tr>
-<tr>
-    <td> MCUSDK-10626
-    <td> FSI DMA loopback example TX and RX mismatching on 2nd run
-    <td> FSI
-    <td> 8.6.0
-    <td> Reset board between 2 runs
-</tr>
-<tr>
-    <td> MCUSDK-11462
-    <td> EPWM: Illegal Combo Logic example fails
-    <td> EPWM
-    <td> 9.0.0
     <td> -
-</tr>
-<tr>
-    <td> PROC_SDL-5616
-    <td> ECC Bus Safety SEC and DED Error Injection fails for CPSW.
-    <td> SDL
-    <td> 8.6.0 onwards
-    <td> None.
-</tr>
-<tr>
-    <td> PROC_SDL-5617
-    <td> ECC Bus Safety SEC and DED Error Injection fails for MSS_L2.
-    <td> SDL
-    <td> 8.6.0 onwards
-    <td> None.
-</tr>
-<tr>
-    <td> PROC_SDL-4749
-    <td> ECC Bus Safety DED Error Injection fails for AXI.
-    <td> SDL
-    <td> 8.5.0 onwards
-    <td> None.
-</tr>
-<tr>
-    <td> MCUSDK-11506
-    <td> ENET: CPDMA Goes To Lockup State.
-    <td> CPSW
-    <td> 8.5.0 onwards
-    <td> Disable THOST checksum Offload.
-</tr>
-<tr>
-    <td> MCUSDK-11507
-    <td> ENET: CPSW MAC port is stuck forever and dropping all the Rx/Tx packets with reception of corrupts preamble.
-    <td> CPSW
-    <td> 8.2.0 onwards
-    <td> Disable hostRxTimestampEn flag in CPSW CPST configuration. This does not impact the CPTS Rx or Tx Timestamp Events for PTP packets and is orthogonal feature.
-</tr>
-<tr>
-    <td> MCUSDK-10978
-    <td> CCS build doesn't support for HS appimages generation
-    <td> CCS
-    <td> 09.00.00
-    <td> Use make/gmake based build for HS-SE
-</tr>
-<tr>
-    <td> PROC_SDL-5979
-    <td> R5F Cache ECC diagnostics are not supported.
-    <td> SDL
-    <td> 8.5.0 onwards
-    <td> None.
-</tr>
-<tr>
-    <td> MCUSDK-9309
-    <td> IPC: Issue when Combination of Notify and RPMsg is enabled in SysCfg.
-    <td> IPC
-    <td> 8.01.00 onwards
-    <td> Use Only Notify or Only Notify+RPMsg on all cores.
+    <td> -
+    <td> -
 </tr>
 </table>
 
+<!--
 ## Errata
 <table>
 <tr>
@@ -522,6 +253,8 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
 </tr>
 </table>
 
+-->
+
 ## Limitations
 <table>
 <tr>
@@ -530,13 +263,6 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <th> Module
     <th> Reported in release
     <th> Workaround
-</tr>
-<tr>
-    <td> MCUSDK-9471
-    <td> Ethernet CPSW CPDMA stuck with SOF overrun when TCP/DUP checksum offload is enabled.
-    <td> Ethernet CPSW
-    <td> 08.05.00 onwards
-    <td> Disable TCPUDP checksum offload in receive (THOST) direction.
 </tr>
 </table>
 
@@ -560,18 +286,6 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <th> Affected API
     <th> Change
     <th> Additional Remarks
-</tr>
-<tr>
-    <td> IPC Notify
-    <td> IpcNotify_init
-    <td> IntrPriority added as an element in IpcNotify_Params structure to make interrupt priority configurable.
-    <td> This field is automatically updated by sysconfig
-</tr>
-<tr>
-    <td> ClockP
-    <td> ClockP_init
-    <td> IntrPriority added as an element in ClockP_Params structure to make Tick interrupt priority configurable.
-    <td> This field is automatically updated by sysconfig
 </tr>
 </table>
 
