@@ -3,6 +3,7 @@
 % let general_module = system.modules['/memory_configurator/general'];
 % let group_module = system.modules['/memory_configurator/section'];
 % let common   = system.getScript("/common");
+%let selfCoreName = common.getSelfSysCfgCoreName();
 
  /* This is the stack that is used by code running within main()
   * In case of NORTOS,
@@ -20,8 +21,9 @@
  * This is also the heap used by pvPortMalloc in FreeRTOS
  */
 --heap_size=`instance.heap_size`
--e_vectors  /* This is the entry of the application, _vector MUST be plabed starting address 0x0 */
+`instance.entry_point`  /* This is the entry of the application, _vector MUST be placed starting address 0x0 */
 
+% if(selfCoreName.includes("r5f")){
 /* This is the size of stack when R5 is in IRQ mode
  * In NORTOS,
  * - Here interrupt nesting is enabled
@@ -40,7 +42,7 @@ __FIQ_STACK_SIZE = `instance.fiq_stack_size`;
 __SVC_STACK_SIZE = `instance.svc_stack_size`; /* This is the size of stack when R5 is in SVC mode */
 __ABORT_STACK_SIZE = `instance.abort_stack_size`;  /* This is the size of stack when R5 is in ABORT mode */
 __UNDEFINED_STACK_SIZE = `instance.undefined_stack_size`;  /* This is the size of stack when R5 is in UNDEF mode */
-
+%}
 `instance.additional_data`
 %}
 
@@ -48,27 +50,43 @@ __UNDEFINED_STACK_SIZE = `instance.undefined_stack_size`;  /* This is the size o
     function format(inst, mem) {
         let arr=[]
 
-        if(inst.split_across_memories){
-            let mem_reg_arr = inst.split_priority;
+        if(inst.load_to_memory == "Memory") {
+            let str=""
+            if( inst.split_across_memories || inst.select_multiple_regions){
+                let mem_reg_arr = inst.split_priority;
 
-            if(mem == "run_memory") return arr
-            for(let i = 0; i < mem_reg_arr.length; i++){
-                arr.push(mem_reg_arr[i][mem])
+                if(mem == "run_memory") return arr
+                for(let i = 0; i < mem_reg_arr.length; i++){
+                    arr.push(mem_reg_arr[i][mem])
+                }
+
+                str=str.concat(arr[0]);
+
+                for(let i=1;i<arr.length;i++)
+                {
+                    str=str.concat(" | ",arr[i]);
+                }
             }
+            else{
+                if(mem == "run_memory" && JSON.stringify(inst.load_memory) === JSON.stringify(inst[mem])){
+                    return []
+                }
+                else
+                    str = inst[mem]
+            }
+            return str;
         }
         else{
-            arr = inst[mem]
+            if(mem == "load_memory")
+                return inst.load_to_address;
+            else
+            {
+                if(inst.run_at_address != inst.load_to_address )
+                    return inst.run_at_address;
+                else
+                    return ""
+            }
         }
-
-
-        let str=""
-        str=str.concat(arr[0]);
-
-        for(let i=1;i<arr.length;i++)
-        {
-            str=str.concat(" | ",arr[i]);
-        }
-        return str;
     }
 %%}
 
@@ -85,23 +103,36 @@ SECTIONS
 %}
 %    if(instance.group) {
 
-    GROUP `type`:   {
+    GROUP `type` :   {
 %    for(let i = 0; i < output_sections.length; i++){
 %       let input_sections = output_sections[i].input_section
 %    let palign = ''
+%    let fill = ''
     `output_sections[i].$name` : {
 %        for(let j = 0; j < input_sections.length; j++ ) {
 %        let input_section = output_sections[i].input_section
 %        if(input_sections[j].$name.length > 0) {
         `input_sections[j].$name`
 %}
+%        if(input_sections[j].additional_data.length > 0){
+        `input_sections[j].additional_data`
+%}
 %     }
 % if (output_sections[i].alignment != 0){
 %    let str = (output_sections[i].alignment).toString();
-%    palign = palign.concat('palign(',str)
+%    if(output_sections[i].palignment){
+%           palign = palign.concat('palign(',str)
+%}
+%    else {
+%           palign = palign.concat('align(',str)
+%}
 %    palign = palign.concat(')')
 %}
-    } `palign`
+% if(output_sections[i].fill != 0){
+%   let str =  (output_sections[i].fill).toString();
+%    fill = fill.concat(', fill  = ',str)
+%}
+    } `palign``fill`
 %       if(output_sections[i].output_sections_start.length > 0) {
     RUN_START(`output_sections[i].output_sections_start`)
 % }
@@ -109,13 +140,17 @@ SECTIONS
     RUN_END(`output_sections[i].output_sections_end`)
 % }
 %}
-% let redirection = '>'
-% let place_run_mem = 'AT >'
+% let redirection = 'load='
+% let place_run_mem = ', run='
 % if (instance.split_across_memories){
 %   redirection = '>>'
 %   place_run_mem= ''}
 % let load_memory = format(instance, "load_memory")
 % let run_memory = format(instance, "run_memory")
+% if (run_memory.length == 0) {
+%   redirection = '>'
+%   place_run_mem = ''
+%}
     } `redirection` `load_memory` `place_run_mem` `run_memory`
 %       if(instance.group_start.length > 0) {
     RUN_START(`instance.group_start`)
@@ -123,30 +158,48 @@ SECTIONS
 %       if(instance.group_end.length > 0) {
     RUN_END(`instance.group_end`)
 % }
+
 %}
 % else {
 %    for(let i = 0; i < output_sections.length; i++){
 %       let input_sections = output_sections[i].input_section
-    `output_sections[i].$name` `type`: {
+%       let palign = ''
+%       let fill = ''
+%       if (output_sections[i].alignment != 0) {
+%           let str = (output_sections[i].alignment).toString();
+%           if(output_sections[i].palignment){
+%               palign = palign.concat(', palign(',str)
+%}
+%           else {
+%               palign = palign.concat('align(',str)
+%}
+%           palign = palign.concat(')')
+%}
+% if(output_sections[i].fill != 0){
+%   let str =  (output_sections[i].fill);
+%    fill = fill.concat(', fill  = ',str)
+%}
+    `output_sections[i].$name` `type` : {
 %        for(let j = 0; j < input_sections.length; j++ ) {
 %        if(input_sections[j].$name.length > 0) {
         `input_sections[j].$name`
 %}
+%        if(input_sections[j].additional_data.length > 0){
+        `input_sections[j].additional_data`
 %}
-% let redirection = '>'
-% let place_run_mem = 'AT >'
-% let palign = ''
+%}
+% let redirection = 'load='
+% let place_run_mem = ', run='
 % if (instance.split_across_memories){
 %   redirection = '>>'
 %   place_run_mem= ''}
-% if (output_sections[i].alignment != 0) {
-%    let str = (output_sections[i].alignment).toString();
-%    palign = palign.concat('palign(',str)
-%    palign = palign.concat(')')
-%}
 % let load_memory = format(instance, "load_memory")
 % let run_memory = format(instance, "run_memory")
-    } `redirection` `load_memory` `place_run_mem` `run_memory` `palign`
+% if (run_memory.length == 0) {
+%   redirection = '>'
+%   place_run_mem = ''
+%}
+    } `redirection` `load_memory` `place_run_mem` `run_memory` `palign` `fill`
 
 %       if(output_sections[i].output_sections_start.length > 0) {
     RUN_START(`output_sections[i].output_sections_start`)
@@ -214,12 +267,24 @@ MEMORY
     %})
     % Object.keys(sorted_groups).forEach((key,value) => {
     % for (let item of sorted_groups[key]) {
-
+    % let attr = ""
+    % let last=""
+    % if (item.attributes.length != 4) {
+    %     attr = attr.concat("(")
+    %      _.each(item.attributes, (a) => {
+    %            attr=attr.concat(a)
+    %})
+    %           attr = attr.concat(")")
+    %}
+    % if (item.last_sym != ""){
+    %        last = last.concat("LAST (", item.last_sym)
+    %        last = last.concat(")")
+    %}
     % if (item.auto) {
-    `item.$name`  : ORIGIN = 0x`item.autoStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`item.size.toString(16).toUpperCase()`
+    `item.$name`  `attr` : ORIGIN = 0x`item.autoStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`item.size.toString(16).toUpperCase()` `last`
     %}
     %else {
-    `item.$name`  : ORIGIN = 0x`item.manualStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`item.size.toString(16).toUpperCase()`
+    `item.$name`  `attr` : ORIGIN = 0x`item.manualStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`item.size.toString(16).toUpperCase()` `last`
     % }
     % }
     % });
@@ -229,11 +294,24 @@ MEMORY
 
     % let regions_shared_with_this_core = util_function()
     % _.each(regions_shared_with_this_core, (region) => {
+    % let attr = ""
+    % let last=""
+    % if (region.attributes.length != 4) {
+    %     attr = attr.concat("(")
+    %      _.each(region.attributes, (a) => {
+    %            attr=attr.concat(a)
+    %})
+    %           attr = attr.concat(")")
+    %}
+    % if (region.last_sym != ""){
+    %        last = last.concat("LAST (", region.last_sym)
+    %        last = last.concat(")")
+    %}
     %             if (region.auto) {
-    `region.$name`  : ORIGIN = 0x`region.autoStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`region.size.toString(16).toUpperCase()`
+    `region.$name`  `attr` : ORIGIN = 0x`region.autoStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`region.size.toString(16).toUpperCase()`  `last`
     %}
     %             else {
-    `region.$name`  : ORIGIN = 0x`region.manualStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`region.size.toString(16).toUpperCase()`
+    `region.$name`  `attr` : ORIGIN = 0x`region.manualStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`region.size.toString(16).toUpperCase()`  `last`
     % }
     % })
 

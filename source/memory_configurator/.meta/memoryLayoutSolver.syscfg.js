@@ -1,4 +1,5 @@
-const physicalLayout = system.getScript("/memory_configurator/physicalLayout.json")[system.deviceData.device];
+const device = system.deviceData.device
+const physicalLayout = system.getScript("/memory_configurator/physicalLayout.json")[device];
 let common = system.getScript("/common");
 let selfCoreName = common.getSelfSysCfgCoreName();
 
@@ -33,7 +34,15 @@ let selfCoreName = common.getSelfSysCfgCoreName();
  * 		}],
  * 		Flash: [] // etc
  */
- let moduleName = ""
+let moduleName = ""
+
+function isOptiShare(device){
+
+    if(device == "AM263x_beta" || device == "AM263Px")
+        return true;
+    else if(device == "AM273x")
+        return false;
+}
 
 function sortAndGroupRegions() {
     let region_module = system.modules['/memory_configurator/region'];
@@ -123,20 +132,20 @@ function layoutMemory(groupedRegions) {
 		let layout = [memoryInfo];  //convert memoryInfo object into type array. memoryInfo = size: x start: y, layout = 0: [{size: x , start: y, access: "all"}]
         let regions = groupedRegions[type]
 
-        if(type == "CUSTOM") {
+        if((type.toString()).includes("CUSTOM")) {
             //layout.splice(0,layout.length);
             let block_regions = JSON.parse(JSON.stringify(physicalLayout));
 
             _.chain(block_regions)
             .sortBy((memory_type) => memory_type.start)
             .flatMap(memory_type => {
-                if(memory_type != "CUSTOM") {
+                if((memory_type.toString()).includes("CUSTOM") == -1) {
                     memory_type.inst = true
                 }
             })
             .value();
 
-            delete block_regions.CUSTOM;
+            delete block_regions.type;
 
             _.each(block_regions, (region, type) => {
                     const hole = _.find(layout, (h) => h.start <= region.start && h.start + h.size >= region.start + region.size && !h.inst)
@@ -182,10 +191,10 @@ function layoutMemory(groupedRegions) {
                 const hole = _.chain(layout)
                 .sortBy("size")									// Sort by size first, so we find the biggest first
                 .find((h) => {
-                    if(!region.isShared && moduleName === "/memory_configurator/memory_region"){
+                    if((!region.isShared && moduleName === "/memory_configurator/memory_region") || !isOptiShare(device)){
                         return (h.size >= region.size && !h.inst)
                     }
-                    else {
+                    else {  // For opti-shared enabled devices, the start address of the shared regions should be multiple of region's size
                         let original_start = h.start;
                         let shifted_start = Math.ceil(h.start/region.size)*(region.size)
                         let shift = shifted_start - original_start
@@ -200,10 +209,10 @@ function layoutMemory(groupedRegions) {
 					// is left
 
 					_.pull(layout, hole);
-                    if(!region.isShared && moduleName === "/memory_configurator/memory_region"){
+                    if((!region.isShared && moduleName === "/memory_configurator/memory_region") || !isOptiShare(device)){
                         region.start = hole.start;
                     }
-                    else {
+                    else { // For opti-shared enabled devices, the start address of the shared regions should be multiple of region's size
                         region.start = Math.ceil(hole.start/region.size)*(region.size)
                     }
 					layout.push({ start: region.start + region.size, size: hole.size - region.size });

@@ -3,6 +3,7 @@ exports = {
 	topModules: [{
 		displayName: "Memory Configurator",
 		modules: [
+            "memory_configurator/default_linker",
 			"memory_configurator/general",
             "memory_configurator/region",
             "memory_configurator/section",

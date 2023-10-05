@@ -1,3 +1,31 @@
+let common = system.getScript("/common");
+
+function defaultValues(){
+    let def_obj={
+        "entry_point":"",
+        "irq_stack_size":0,
+        "fiq_stack_size":0,
+        "svc_stack_size":0,
+        "abort_stack_size":0,
+        "undefined_stack_size":0
+    }
+    let selfCoreName = common.getSelfSysCfgCoreName();
+
+    if(selfCoreName.includes("r5f")){
+        def_obj.entry_point="-e_vectors"
+        def_obj.irq_stack_size=256,
+        def_obj.fiq_stack_size=256,
+        def_obj.svc_stack_size=4096,
+        def_obj.abort_stack_size=256,
+        def_obj.undefined_stack_size=256
+    }
+    else  if(selfCoreName.includes("c66")){
+        def_obj.entry_point="--retain=_vectors"
+    }
+
+    return def_obj;
+}
+
 let config = [
     {
         name: "$name",
@@ -22,37 +50,43 @@ let config = [
         default:32768,
         description:'',
     },
+    {
+        name: "entry_point",
+        displayName: "Entry Point",
+        default: defaultValues().entry_point,
+        description:'',
+    },
 ]
 
 let advanced_configs = [
     {
         name: "irq_stack_size",
         displayName: "IRQ Stack Size",
-        default:256,
+        default:defaultValues().irq_stack_size,
         description:'',
     },
     {
         name: "fiq_stack_size",
         displayName: "FIQ Stack Size",
-        default:256,
+        default:defaultValues().fiq_stack_size,
         description:'',
     },
     {
         name: "svc_stack_size",
         displayName: "SVC Stack Size",
-        default:4096,
+        default:defaultValues().svc_stack_size,
         description:'',
     },
     {
         name: "abort_stack_size",
         displayName: "Abort Stack Size",
-        default:256,
+        default:defaultValues().abort_stack_size,
         description:'',
     },
     {
         name: "undefined_stack_size",
         displayName: "Undefined Stack Size",
-        default:256,
+        default:defaultValues().undefined_stack_size,
         description:'',
     },
 ]
@@ -72,7 +106,7 @@ config = config.concat([
     {
         name: "group_advanced",
         displayName: "Advanced Tab",
-        description: "",
+        longDescription: "Applicable only for R5F cores. Any change in values for other cores won't have any effect.",
         config: advanced_configs,
     }
 ]);

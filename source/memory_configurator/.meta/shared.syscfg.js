@@ -2,9 +2,9 @@ let common = system.getScript("/common");
 
 function coreList() {
     let coreNames = common.getSysCfgCoreNames();
-    coreNames = coreNames.filter(function (coreName) {
-        return coreName.includes("r5f");
-    });
+    // coreNames = coreNames.filter(function (coreName) {
+    //     return coreName.includes("r5f");
+    // });
 
     let selfCoreName = common.getSelfSysCfgCoreName();
 

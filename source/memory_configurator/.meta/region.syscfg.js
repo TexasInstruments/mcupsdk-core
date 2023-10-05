@@ -11,7 +11,27 @@ let config = [
         longDescription: 'Checking this would save the user from manually configure MPU for regions.\
         Uncheck this to get flexibility in configuring MPU.'
     },
+    // {
+    //     name: "scriptingButton",
+    //     displayName: "",
+    //     // default: "0",
+    //     buttonText: "Add Basic",
+    //     scriptingOnComplete: (inst) => {
+    //         //const basicInst = scripting.addModule("/memory_configurator/general.syscfg.js", {}, false).addInstance()
+    //         //basicInst.cfgText = inst.from
+    //         let basicInst = scripting.addModule("/memory_configurator/memory_region.syscfg.js", {}, false).addInstance()
+    //         basicInst.memory_region[0].auto=false;
+    //     }
+    // }
 ]
+
+function memoryReg(ind){
+    let obj = {
+        "$name":"MEMORY_REGION_CONFIGURATION2",
+
+    }
+    return obj;
+}
 
 function addModuleInstances(inst) {
     let modInstances = new Array();
@@ -30,11 +50,13 @@ function addModuleInstances(inst) {
         moduleName: module_name,
         useArray: true,
         minInstanceCount: 0,
+        //defaultInstanceCount:10,
         collapsed: false,
     });
 
     return modInstances;
 }
+
 
 exports = {
     defaultInstanceName: "MEMORY_REGION_CONFIGURATION",

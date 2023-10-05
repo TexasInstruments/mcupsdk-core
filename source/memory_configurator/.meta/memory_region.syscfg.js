@@ -11,11 +11,10 @@ function memoryRegions(){
 
     for(let key in physicalLayout){
         // value = physicalLayout[key];
-        core = key.slice(-1, key.indexOf('_')+1);
+        core = key.slice(key.lastIndexOf('_')+1);
 
         if( core == "ALL" || selfCoreName.includes(core.toLowerCase()) || (key.indexOf('_')==-1) ) {
             let displayName=""
-
             if (key.indexOf('_')==-1){
                 displayName = key;
             }
@@ -31,9 +30,9 @@ function memoryRegions(){
 
 function coreList() {
     let coreNames = common.getSysCfgCoreNames();
-    coreNames = coreNames.filter(function (coreName) {
-        return coreName.includes("r5f");
-    });
+    // coreNames = coreNames.filter(function (coreName) {
+    //     return coreName.includes("r5f");
+    // });
 
     let selfCoreName = common.getSelfSysCfgCoreName();
 
@@ -67,44 +66,8 @@ function enableShared_core(inst, ui) {
 
     if(inst.isShared)
         ui.shared_cores.hidden = false;
-    else
+    else{
         ui.shared_cores.hidden = true;
-}
-
-function getDriversList()
-{
-    let topModules = drivers.topModules;
-    let options = []
-    _.each(topModules, (module) => {
-
-        let result = module.substr(module.lastIndexOf('/')+1)
-        options.push({name: result, displayName : result.toUpperCase()})
-    })
-
-    return options;
-}
-
-function update_opti_share(inst) {
-
-    let shared_cores_list = inst.shared_cores
-    if(shared_cores_list.length == 3) {
-        inst.opti_share =  true
-    }
-    else {
-        inst.opti_share =  false
-    }
-}
-
-function update_shared_cores(inst)
-{
-    if(inst.opti_share) {
-        let core_list = coreList();
-        inst.shared_cores = (() => { let list = []
-                                    _.each(core_list, (core) => { list.push(core.name) })
-                                    return list;
-                                })()
-    }
-    else {
         inst.shared_cores = []
     }
 }
@@ -118,18 +81,25 @@ let config = [
     {
     name: "type",
     displayName: "Type",
-    default: (Object.keys(physicalLayout)[0]).toString(),
+    default: memoryRegions()[0].name,
     options: memoryRegions(),
     onChange: (inst) => {
         inst.$name = (inst.type.concat("_x")).toUpperCase()
         inst.manualStartAddress = physicalLayout[inst.type].start
         if(physicalLayout[inst.type].access == "individual"){
             inst.$uiState.isShared.hidden = true;
+            inst.shared_cores = [];
         }
         else inst.$uiState.isShared.hidden = false;
     },
     longDescription: 'Choose CUSTOM if the memory address lies outside of the remaining types.'
 }, {
+    name: "attributes",
+    displayName: "Attributes",
+    default: ["R", "W", "X", "I"],
+    options: [{name:"R", displayName:"Read"}, {name:"W", displayName:"Write"}, {name:"X", displayName:"Execute"}, {name:"I", displayName:"Initialize"}],
+    longDescription:"R: memory can be read; W: memory can be written to; X: memory can contain executable code, I: memory can be initialized."
+},{
     name: "auto",
     displayName: "Calculate Start Address",
     default: true,
@@ -183,6 +153,19 @@ let config = [
     longDescription: "",
     default: 8,
     displayFormat: "dec",
+},
+//{
+//     name: "fill",
+//     displayName: "Fill",
+//     default: 0x0,
+//     longDescription:"R: memory can be read; W: memory can be written to; X: memory can contain executable code, I: memory can be initialized."
+// },
+{
+    name: "last_sym",
+    displayName: "Last Symbol",
+    default: "",
+    longDescription:"Optionally specifies a Symbol that can be used at run-time to find the address of the last allocated byte in the memory \
+    range"
 },{
     name: "isShared",
     displayName: "Shared",
@@ -197,24 +180,6 @@ let config = [
     default: [],
     hidden: true,
     options: coreList,
-    onChange: update_opti_share
-},
-// {
-//     name: "drivers",
-//     displayName: "Choose drivers",
-//     description: "",
-//     longDescription: "",
-//     minSelections : 0,
-//     default: [],
-//     options: getDriversList()
-// },
-{
-    name: "opti_share",
-    displayName: "OptiShare",
-    default: false,
-    description:'',
-    hidden: true,
-    onChange: update_shared_cores
 },
 ]
 
@@ -232,7 +197,6 @@ function valueCheck(inst, report){
         report.logError("Size can't be less than 0", inst, "size")
     }
 
-
     let mem_params_size = physicalLayout[inst.type].size
 
     if(inst.size > mem_params_size) {
@@ -241,14 +205,6 @@ function valueCheck(inst, report){
 
     if(inst.size == 0) {
         report.logError(`Size can't be 0`, inst, "size")
-    }
-
-    if( inst.isShared && !isPowerOfTwo(inst.size) && (inst.type != "CUSTOM") ) {
-        report.logError(`Size has to be power of 2 for Shared memory Region`, inst, "size")
-    }
-
-    if( inst.isShared && (!inst.auto && (inst.manualStartAddress % inst.size) != 0) && (inst.type != "CUSTOM") ) {
-        report.logError(`Address has to be multiple of size for shared memory region`, inst, "manualStartAddress")
     }
 
 }
@@ -313,7 +269,9 @@ function validate (inst, report) {
     checkSameFieldName(inst, report)
     valueCheck(inst, report)
 
-
+    if (inst.isShared && inst.shared_cores.length == 0) {
+        report.logError(`Select at least one core.`, inst, "shared_cores")
+    }
 }
 
 function func(inst) {
@@ -326,13 +284,5 @@ let regionModule = {
     config : config,
 	validate: validate,
 };
-
-// if(general_module !== undefined) {
-//     let general_instances = general_module.$instances
-//     if(general_instances[0].mpu_setting)
-//         exports = {};
-//     else
-//         exports = regionModule;
-// }
 
 exports = regionModule

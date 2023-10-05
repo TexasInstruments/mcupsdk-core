@@ -24,7 +24,20 @@ let config = [
         name: "alignment",
         displayName: "Alignment",
         default: 8,
-        description:'',
+        longDescription:'Output section falls on n-byte boundary where n is a power of 2.',
+    },
+    {
+        name: "palignment",
+        displayName: "Alignment With Padding",
+        default: false,
+        longDescription:'In addition to alignment, ensures that size of this section is muliple of\
+         its placement alignment restriction, padding the section size up to such a boundary, as needed.',
+    },
+    {
+        name: "fill",
+        displayName: "Fill",
+        default: 0x0,
+        longDescription:'The padded space is filled with this value. By default it is 0.',
     },
 ]
 

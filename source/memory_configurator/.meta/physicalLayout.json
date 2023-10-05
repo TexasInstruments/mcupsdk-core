@@ -43,18 +43,46 @@
 		}
 	},
 	"AM273x": {
-		"OCRAM": {
-			"start": 0x8000,
-			"size": 0x1000
+		"TCMA_R5F": {
+			"start": 0x0,
+			"size": 0x24000,
+            "access":"individual"
 		},
-		"Shared": {
-			"start": 0x18000,
-			"size": 0x500
+		"TCMB_R5F": {
+			"start": 0x80000,
+			"size": 0x4000,
+            "access": "individual"
 		},
-		"Flash": {
-			"start": 0x38000,
-			"size": 0x10000
-		}
+		"MSS_L2_R5F": {
+			"start": 0x10200000,
+			"size": 0xF0000,
+            "access": "all"
+		},
+        "MSS_L2_C66": {
+			"start": 0xC0200000,
+			"size": 0x100000,
+            "access": "all"
+		},
+        "DSS_L2_R5F": {
+			"start": 0x80800000,
+			"size": 0x60000,
+            "access": "all"
+		},
+        "DSS_L3_ALL": {
+			"start": 0x88000000,
+			"size": 0x390000,
+            "access": "all"
+		},
+        "DSP_L2_C66": {
+			"start": 0x800000,
+			"size": 0x60000,
+            "access": "all"
+		},
+        "CUSTOM_ALL": {
+			"start": 0x00000000,
+			"size": 0xFFFFFFFF,
+            "access": "all"
+		},
 	},
 	"AWR294X":{
 		"OCRAM": {

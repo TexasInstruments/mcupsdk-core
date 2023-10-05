@@ -138,37 +138,84 @@ let config = [
         getValue: isOptiShare,
     },
     {
+        name: "load_to_memory",
+        displayName: "Load To Memory Region OR Address?",
+        default: "Memory",
+        description: "Load to any added memory region or hard code the address?",
+        options: [{name: "Memory"}, {name: "Address"}],
+        onChange: (inst) => {
+            if(inst.load_to_memory == "Address"){
+                inst.$uiState.load_memory.hidden = true;
+                inst.$uiState.run_memory.hidden = true;
+                inst.$uiState.split_across_memories.hidden = true;
+                inst.$uiState.select_multiple_regions.hidden = true;
+                inst.$uiState.load_to_address.hidden = false;
+                inst.$uiState.run_at_address.hidden = false;
+                //inst.$uiState.split_priority[0]["load_memory"].hidden = true;
+            }
+            else{
+                inst.$uiState.load_memory.hidden = false;
+                inst.$uiState.run_memory.hidden = false;
+                inst.$uiState.split_across_memories.hidden = false;
+                inst.$uiState.select_multiple_regions.hidden = false;
+                inst.$uiState.load_to_address.hidden = true;
+                inst.$uiState.run_at_address.hidden = true;
+            }
+        }
+    },
+    {
+        name: "load_to_address",
+        displayName: "Load Address",
+        hidden: true,
+        default: "0x0",
+        description: "Write the address to where this section needs to be loaded",
+        onChange: (inst) => { inst.run_at_address = inst.load_to_address}
+    },
+    {
+        name: "run_at_address",
+        displayName: "Run Address",
+        hidden: true,
+        default: "0x0",
+        description: "Write the address to where this section needs to be ran. Can be left blank.",
+    },
+    {
+        name: "select_multiple_regions",
+        displayName: "Select Multiple Memory Regions",
+        default: false,
+        description:'Section will be placed in the first memory region (selected in the order below) big enough to fit it.',
+        onChange: (inst) => {
+            inst.$uiState.load_memory.hidden = inst.select_multiple_regions;
+            inst.$uiState.run_memory.hidden = inst.select_multiple_regions;
+            inst.$uiState.split_across_memories.hidden = inst.select_multiple_regions;
+        }
+    },
+    {
         name: "split_across_memories",
         displayName: "Split Across Memories",
         default: false,
-        longDescription:'Unchecked: section will placed at the first available space of the region. \
-        Checked: section will split across the memory regions in the given order.',
+        description:'Section will split across the memory regions in the order selected below.',
         onChange: (inst) => {
             inst.$uiState.load_memory.hidden = inst.split_across_memories;
             inst.$uiState.run_memory.hidden = inst.split_across_memories;
+            inst.$uiState.select_multiple_regions.hidden = inst.split_across_memories;
         }
     },
     {
         name: "load_memory",
         displayName: "Load Memory",
-        default:[],
+        default:"",
         description:'Choose a memory region from the ones added in the Memory regions section.',
         options: () => {return loadMemoryRegions().memory_regions},
         onChange: (inst) => { inst.run_memory = inst.load_memory
-                            // inst.$uiState.output_sections_opti.hidden = !inst.opti_share;
-                            // inst.$uiState.input_sections_opti.hidden = !inst.opti_share;
-                            // inst.$uiState.output_sections.hidden = inst.opti_share;
-                            // inst.$uiState.input_sections.hidden = inst.opti_share;
-                  }
+                }
     },
     {
         name: "run_memory",
         displayName: "Run Memory",
-        default: [],
+        default: "",
         description:'Choose a memory region from the ones added in the Memory regions section.',
         options: () => {return loadMemoryRegions().memory_regions},
     },
-
 ]
 
 function validate(inst, report) {
@@ -176,10 +223,10 @@ function validate(inst, report) {
     // if(inst.output_sections.length == 0) {
     //     report.logError("This field can't be kept empty", inst, "output_sections")
     // }
-    if(inst.load_memory.length == 0 && !inst.split_across_memories) {
+    if(inst.load_memory.length == 0 && !inst.split_across_memories && !inst.select_multiple_regions && inst.load_to_memory=="Memory") {
         report.logError("This field can't be kept empty", inst, "load_memory")
     }
-    if(inst.run_memory.length == 0 && !inst.split_across_memories) {
+    if(inst.run_memory.length == 0 && !inst.split_across_memories && !inst.select_multiple_regions && inst.load_to_memory=="Memory") {
         report.logError("This field can't be kept empty", inst, "run_memory")
     }
     if(inst.output_section.length == 0) {
@@ -199,7 +246,7 @@ exports = {
 function addModuleInstances(inst) {
     let modInstances = new Array();
 
-    if(inst.split_across_memories){
+    if(inst.load_to_memory == "Memory" && (inst.split_across_memories || inst.select_multiple_regions) ){
 
         modInstances.push({
             name: "split_priority",
