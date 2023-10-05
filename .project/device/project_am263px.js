@@ -201,7 +201,16 @@ const example_file_list = [
 	"test/kernel/dpl/dpl_ut/nortos/r5/CpuId_armv7r/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/r5/HwiP_armv7r_handlers_nortos/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/r5/PmuP_armv7r/.project/project.js",
-	"test/kernel/freertos/.project/project.js"
+	"test/kernel/freertos/.project/project.js",
+    "test/security/crypto/test_dthe_aes_cbc/.project/project.js",
+    "test/security/crypto/test_dthe_aes_ecb/.project/project.js",
+    "test/security/crypto/test_dthe_aes_cmac/.project/project.js",
+    "test/security/crypto/test_dthe_sha/.project/project.js",
+    "test/security/crypto/test_dthe_hmac_sha/.project/project.js",
+    "test/security/crypto/test_dthe_pka/test_ecdsa_signing_verification/.project/project.js",
+    "test/security/crypto/test_dthe_pka/test_rsa_encryption_decryption/.project/project.js",
+    "test/security/crypto/test_dthe_pka/test_rsa_signing_verification/.project/project.js",
+    "test/security/crypto/test_dthe_rng/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {

@@ -85,6 +85,9 @@ After setting up one of the above session launch type, Click the Start button to
 ## Existing Limitations
 
   - Loading Multiple Images is currently not Supported in JTAG flashing. If you load multiple flash images, the second will be appended to the end of first image.
+  - Appimage_xip is not supported via JTAG based flashing. Use Serial session to flash xip format binaries.
+  - Custom configurations are not Supported
+  - Custom application offsets are not supported in Serial flashing. The loader takes the default application offset to flash the images.
 
 ## Supported File Formats
 
