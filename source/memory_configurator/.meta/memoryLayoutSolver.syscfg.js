@@ -40,7 +40,7 @@ function isOptiShare(device){
 
     if(device == "AM263x_beta" || device == "AM263Px")
         return true;
-    else if(device == "AM273x")
+    else if(device == "AM273x" || device == "AM243x" || device == "AM64x")
         return false;
 }
 

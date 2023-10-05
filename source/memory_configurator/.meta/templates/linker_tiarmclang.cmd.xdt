@@ -1,9 +1,9 @@
 
-% let region_module = system.modules['/memory_configurator/memory_region'];
+% let region_module = system.modules['/memory_configurator/region'];
 % let general_module = system.modules['/memory_configurator/general'];
 % let group_module = system.modules['/memory_configurator/section'];
 % let common   = system.getScript("/common");
-%let selfCoreName = common.getSelfSysCfgCoreName();
+% let selfCoreName = common.getSelfSysCfgCoreName();
 
  /* This is the stack that is used by code running within main()
   * In case of NORTOS,
@@ -16,11 +16,14 @@
 % if (general_module !== undefined ) {
 % let general_module_instance = general_module.$instances
 % let instance = general_module_instance[0]
---stack_size=`instance.stack_size`
+
+% if (!selfCoreName.includes("a53")){
+ --stack_size=`instance.stack_size`
 /* This is the heap size for malloc() API in NORTOS and FreeRTOS
- * This is also the heap used by pvPortMalloc in FreeRTOS
- */
---heap_size=`instance.heap_size`
+* This is also the heap used by pvPortMalloc in FreeRTOS
+*/
+ --heap_size=`instance.heap_size`
+%}
 `instance.entry_point`  /* This is the entry of the application, _vector MUST be placed starting address 0x0 */
 
 % if(selfCoreName.includes("r5f")){
@@ -48,7 +51,10 @@ __UNDEFINED_STACK_SIZE = `instance.undefined_stack_size`;  /* This is the size o
 
 %%{
     function format(inst, mem) {
+
         let arr=[]
+        let load_memory_new = checkNameChange (inst[mem])
+        let run_memory_new = checkNameChange (inst[mem])
 
         if(inst.load_to_memory == "Memory") {
             let str=""
@@ -68,11 +74,11 @@ __UNDEFINED_STACK_SIZE = `instance.undefined_stack_size`;  /* This is the size o
                 }
             }
             else{
-                if(mem == "run_memory" && JSON.stringify(inst.load_memory) === JSON.stringify(inst[mem])){
+                if(mem == "run_memory" && JSON.stringify(load_memory_new) === JSON.stringify(run_memory_new)){
                     return []
                 }
                 else
-                    str = inst[mem]
+                    str = run_memory_new
             }
             return str;
         }
@@ -115,8 +121,14 @@ SECTIONS
     `output_sections[i].$name` : {
 %        for(let j = 0; j < input_sections.length; j++ ) {
 %        let input_section = output_sections[i].input_section
+%        if(input_section[j].start_symbol.length > 0) {
+        `input_section[j].start_symbol`
+%}
 %        if(input_sections[j].$name.length > 0) {
         `input_sections[j].$name`
+%}
+%        if(input_section[j].end_symbol.length > 0) {
+        `input_section[j].end_symbol`
 %}
 %        if(input_sections[j].additional_data.length > 0){
         `input_sections[j].additional_data`
@@ -178,7 +190,7 @@ SECTIONS
 %               palign = palign.concat(', palign(',str)
 %}
 %           else {
-%               palign = palign.concat('align(',str)
+%               palign = palign.concat(', align(',str)
 %}
 %           palign = palign.concat(')')
 %}
@@ -207,13 +219,13 @@ SECTIONS
 %   place_run_mem = ''
 %}
     } `redirection` `load_memory` `place_run_mem` `run_memory` `palign` `fill`
-
 %       if(output_sections[i].output_sections_start.length > 0) {
     RUN_START(`output_sections[i].output_sections_start`)
 % }
 %       if(output_sections[i].output_sections_end.length > 0) {
     RUN_END(`output_sections[i].output_sections_end`)
 % }
+
 %}
 %}
 %}
@@ -222,10 +234,25 @@ SECTIONS
 }
 
 %%{
-function util_function() {
+function checkNameChange( name ){
+    let selfCore_shared_module = common.getModuleForCore("/memory_configurator/shared_region_references", selfCoreName);
+    let newName = name;
+
+    if( selfCore_shared_module !== undefined){
+        let selfCore_shared_instances = selfCore_shared_module.$instances
+        _.each(selfCore_shared_instances, (each_instance) => {
+            if ( each_instance.shared_region === name){
+                newName =  each_instance.shared_region_name_change
+            }
+        })
+    }
+    return newName
+}
+%%}
+%%{
+function util_function(memory_region_module_name) {
 
     let coreNames =  common.getSysCfgCoreNames();
-    let memory_region_module_name = '/memory_configurator/memory_region';
     let all_core_memory_instances = []
     let regions_shared_with_this_core = []
     let selfCoreName = common.getSelfSysCfgCoreName();
@@ -246,7 +273,10 @@ function util_function() {
     _.each(all_core_memory_instances, (each_core_memory_module) => {
         _.each(each_core_memory_module, (each_instance) => {
             if( each_instance.isShared && each_instance.shared_cores.includes(selfCoreName) ) {
-                regions_shared_with_this_core.push(each_instance)
+                let newName = checkNameChange(each_instance.$name)
+                let obj = JSON.parse(JSON.stringify(each_instance));
+                obj.shared_region = newName;
+                regions_shared_with_this_core.push(obj)
             }
         })
     })
@@ -257,8 +287,20 @@ function util_function() {
 
 MEMORY
 {
-    % if (region_module !== undefined ) {
-    % let region_module_instances = region_module.$instances
+    % let memory_region_module = undefined
+    % let memory_region_module_name = ""
+    % if(region_module !== undefined) {
+    %   if(region_module.$instances[0].mpu_setting){
+    %       memory_region_module = system.modules["/memory_configurator/memory_region_mpu"];
+    %       memory_region_module_name = "/memory_configurator/memory_region_mpu"
+    %}
+    %   else{
+    %       memory_region_module = system.modules["/memory_configurator/memory_region"];
+    %       memory_region_module_name = "/memory_configurator/memory_region"
+    %}
+    %}
+    % if (memory_region_module !== undefined ) {
+    % let region_module_instances = memory_region_module.$instances
     % let groups = region_module_instances.reduce((items, inst) => {
     % let group = (items[inst.type] || []);
     % group.push(inst);
@@ -299,7 +341,7 @@ MEMORY
     %}
     /* For memory Regions not defined in this core but shared by other cores with the current core */
 
-    % let regions_shared_with_this_core = util_function()
+    % let regions_shared_with_this_core = util_function(memory_region_module_name)
     % _.each(regions_shared_with_this_core, (region) => {
     % let attr = ""
     % let last=""
@@ -315,10 +357,10 @@ MEMORY
     %        last = last.concat(")")
     %}
     %             if (region.auto) {
-    `region.$name`  `attr` : ORIGIN = 0x`region.autoStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`region.size.toString(16).toUpperCase()`  `last`
+    `region.shared_region`  `attr` : ORIGIN = 0x`region.autoStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`region.size.toString(16).toUpperCase()`  `last`
     %}
     %             else {
-    `region.$name`  `attr` : ORIGIN = 0x`region.manualStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`region.size.toString(16).toUpperCase()`  `last`
+    `region.shared_region`  `attr` : ORIGIN = 0x`region.manualStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`region.size.toString(16).toUpperCase()`  `last`
     % }
     % })
 

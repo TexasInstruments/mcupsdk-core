@@ -1,6 +1,24 @@
 let common   = system.getScript("/common");
 let book_keeping = []
 
+function checkNameChange( name ){
+
+    let selfCoreName = common.getSelfSysCfgCoreName();
+    let selfCore_shared_module = common.getModuleForCore("/memory_configurator/shared_region_references", selfCoreName);
+    let newName = name;
+
+    if( selfCore_shared_module !== undefined){
+        let selfCore_shared_instances = selfCore_shared_module.$instances
+        _.each(selfCore_shared_instances, (each_instance) => {
+            if ( each_instance.shared_region === name){
+                newName =  each_instance.shared_region_name_change
+            }
+        })
+    }
+    return newName
+
+}
+
 function loadMemoryRegions () {
 
  /*  List should include all the MRs defined in this core as well as shared by other cores with this core*/
@@ -26,19 +44,18 @@ function loadMemoryRegions () {
                 _.each(core_module_instances, instance => {
 
                     let obj = { name: " ",
-                    opti_share: false
                     }
                     let displayName = instance.$name.concat(" Type: ",instance.type)
-                    //displayName = displayName.concat("Opti-share ", instance.opti_share)
                     if (core.includes(selfCoreName)) {
                         memory_regions.push({name: instance.$name, displayName: displayName})
                         obj.name = instance.$name
-                        obj.opti_share = instance.opti_share
                     }
                     else if(instance.isShared && instance.shared_cores.includes(selfCoreName)) {
-                        memory_regions.push({name: instance.$name, displayName: displayName})
+
+                        let newName = checkNameChange(instance.$name)
+                        let displayName_changed = newName.concat(" Type: ",instance.type)
+                        memory_regions.push({name: instance.$name, displayName: displayName_changed})
                         obj.name = instance.$name
-                        obj.opti_share = instance.opti_share
                     }
                     book_keeping.push(obj)
                 })
@@ -49,45 +66,6 @@ function loadMemoryRegions () {
         memory_regions.push({name: "", displayName: ""})
     }
     return {memory_regions}
-}
-
-function isOptiShare(inst) {
-
-    let memory_arr = book_keeping
-    let value = false;
-
-    _.each(memory_arr, item => {
-        if( item.name === inst.load_memory || item.name === inst.run_memory) {
-            // inst.$uiState.output_sections_opti.hidden = !item.opti_share;
-            // inst.$uiState.input_sections_opti.hidden = !item.opti_share;
-            // inst.$uiState.output_sections.hidden = item.opti_share;
-            // inst.$uiState.input_sections.hidden = item.opti_share;
-            // inst.opti_share = item.opti_share
-            // return item.opti_share
-            value = item.opti_share
-    }
-    })
-
-    return value;
-    // let status = false;
-
-    // if(inst.load_memory.includes("true")) {
-    //     status = true;
-    // }
-    //     // inst.$uiState.output_sections_opti.hidden = !status;
-    //     // inst.$uiState.input_sections_opti.hidden = !status;
-    //     // inst.$uiState.output_sections.hidden = status;
-    //     // inst.$uiState.input_sections.hidden = status;
-    // inst.opti_share = status
-}
-
-function updateOptiShareConfig(inst) {
-
-    let status = inst.opti_share
-    inst.$uiState.output_sections_opti.hidden = !status;
-    inst.$uiState.input_sections_opti.hidden = !status;
-    inst.$uiState.output_sections.hidden = status;
-    inst.$uiState.input_sections.hidden = status;
 }
 
 
@@ -128,14 +106,6 @@ let config = [
         placeholder: "__IRQ_STACK_END",
         default:"",
         description:'This field is optional',
-    },
-    {
-        name: "opti_share",
-        displayName: "Opti Share",
-        default: false,
-        hidden: true,
-        description:'',
-        getValue: isOptiShare,
     },
     {
         name: "load_to_memory",

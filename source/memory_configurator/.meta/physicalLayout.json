@@ -1,47 +1,131 @@
 // All the numbers here are 100% made up and exist only to show how we can solve for layouts
 {
 	"AM64x": {
-		"OCRAM": {
-			"start": 0x8000,
-			"size": 0x1000
+        "MSRAM_ALL": {
+			"start": 0x070000000,
+			"size": 0x0200000,
+            "access": "all"
 		},
-		"Shared": {
-			"start": 0x18000,
-			"size": 0x500
+		"TCMA_R5F": {
+			"start": 0x0,
+			"size": 0x10000,
+            "access":"individual"
 		},
-		"Flash": {
-			"start": 0x38000,
-			"size": 0x10000
-		}
+		"TCMB_R5F": {
+			"start": 0x41010000,
+			"size": 0x10000,
+            "access": "individual"
+		},
+        "RAM0_M4F": {
+			"start": 0x00000000,
+			"size": 0x00030000,
+            "access": "all"
+		},
+        "DRAM_M4F": {
+			"start": 0x00030000,
+			"size": 0x00010000,
+            "access": "all"
+		},
+        "DDR_ALL": {
+			"start": 0x80000000,
+			"size": 0x100000000,
+            "access": "all"
+		},
+        "FLASH": {
+			"start": 0x60000000,
+			"size": 0x8000000,
+            "access": "all"
+		},
+        "CUSTOM_ALL": {
+			"start": 0x00000000,
+			"size": 0x100000000,
+            "access": "all"
+		},
 	},
 	"AM243x_ALV_beta": {
-		"OCRAM": {
-			"start": 0x8000,
-			"size": 0x1000
+		 "MSRAM_ALL": {
+			"start": 0x070000000,
+			"size": 0x0200000,
+            "access": "all"
 		},
-		"Shared": {
-			"start": 0x18000,
-			"size": 0x500
+		"TCMA_R5F": {
+			"start": 0x0,
+			"size": 0x10000,
+            "access":"individual"
 		},
-		"Flash": {
-			"start": 0x38000,
-			"size": 0x10000
-		}
+		"TCMB_R5F": {
+			"start": 0x41010000,
+			"size": 0x10000,
+            "access": "individual"
+		},
+        "RAM0_M4F": {
+			"start": 0x00000000,
+			"size": 0x00030000,
+            "access": "all"
+		},
+        "DRAM_M4F": {
+			"start": 0x00030000,
+			"size": 0x00010000,
+            "access": "all"
+		},
+        "DDR_ALL": {
+			"start": 0x80000000,
+			"size": 0x100000000,
+            "access": "all"
+		},
+        "FLASH": {
+			"start": 0x60000000,
+			"size": 0x8000000,
+            "access": "all"
+		},
+        "CUSTOM_ALL": {
+			"start": 0x00000000,
+			"size": 0x100000000,
+            "access": "all"
+		},
 	},
-	"AM243x_ALX_beta": {
-		"OCRAM": {
-			"start": 0x8000,
-			"size": 0x1000
-		},
-		"Shared": {
-			"start": 0x18000,
-			"size": 0x500
-		},
-		"Flash": {
-			"start": 0x38000,
-			"size": 0x10000
-		}
-	},
+    "AM243x_ALX_beta": {
+        "MSRAM_ALL": {
+           "start": 0x070000000,
+           "size": 0x0200000,
+           "access": "all"
+       },
+       "TCMA_R5F": {
+           "start": 0x0,
+           "size": 0x10000,
+           "access":"individual"
+       },
+       "TCMB_R5F": {
+           "start": 0x41010000,
+           "size": 0x10000,
+           "access": "individual"
+       },
+       "RAM0_M4F": {
+           "start": 0x00000000,
+           "size": 0x00030000,
+           "access": "all"
+       },
+       "DRAM_M4F": {
+           "start": 0x00030000,
+           "size": 0x00010000,
+           "access": "all"
+       },
+       "DDR_ALL": {
+           "start": 0x80000000,
+           "size": 0x100000000,
+           "access": "all"
+       },
+       "FLASH": {
+           "start": 0x60000000,
+           "size": 0x8000000,
+           "access": "all"
+       },
+       "CUSTOM_ALL": {
+           "start": 0x00000000,
+           "size": 0x100000000,
+           "access": "all"
+       },
+   },
 	"AM273x": {
 		"TCMA_R5F": {
 			"start": 0x0,

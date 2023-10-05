@@ -72,11 +72,12 @@ function enableShared_core(inst, ui) {
     }
 }
 
+
 let config = [
     {
         name: "$name",
         hidden: false,
-        isCIdentifier: false
+        isCIdentifier: false,
     },
     {
     name: "type",

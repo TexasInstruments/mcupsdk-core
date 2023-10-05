@@ -1,3 +1,7 @@
+let common   = system.getScript("/common");
+let selfCoreName = common.getSelfSysCfgCoreName();
+let region_module = system.modules['/memory_configurator/region'];
+
 let config = [
     {
         name: "$name",
@@ -11,18 +15,6 @@ let config = [
         longDescription: 'Checking this would save the user from manually configure MPU for regions.\
         Uncheck this to get flexibility in configuring MPU.'
     },
-    // {
-    //     name: "scriptingButton",
-    //     displayName: "",
-    //     // default: "0",
-    //     buttonText: "Add Basic",
-    //     scriptingOnComplete: (inst) => {
-    //         //const basicInst = scripting.addModule("/memory_configurator/general.syscfg.js", {}, false).addInstance()
-    //         //basicInst.cfgText = inst.from
-    //         let basicInst = scripting.addModule("/memory_configurator/memory_region.syscfg.js", {}, false).addInstance()
-    //         basicInst.memory_region[0].auto=false;
-    //     }
-    // }
 ]
 
 function memoryReg(ind){
@@ -50,18 +42,39 @@ function addModuleInstances(inst) {
         moduleName: module_name,
         useArray: true,
         minInstanceCount: 0,
-        //defaultInstanceCount:10,
         collapsed: false,
     });
 
     return modInstances;
 }
 
+function validate(inst, report){
+
+    let coreNames =  common.getSysCfgCoreNames();
+    let own_mpu = inst.mpu_setting;
+
+    for (let core of coreNames) {
+
+        if( core.includes(selfCoreName) ) {
+            continue;
+        }
+
+        let core_module = common.getModuleForCore('/memory_configurator/region', core);
+        if(core_module !== undefined) {
+            let others_mpu = core_module.$instances[0].mpu_setting;
+            if( others_mpu !== own_mpu){
+                report.logError(`MPU setting differs from ${core}. All cores should have either Automate MPU ON or OFF`, inst, "mpu_setting");
+            }
+        }
+    }
+}
 
 exports = {
     defaultInstanceName: "MEMORY_REGION_CONFIGURATION",
 	displayName: "Memory Region",
 	config: config,
     maxInstances: 1,
+    longDescription: '',
     moduleInstances: addModuleInstances,
+    validate: validate
 }

@@ -28,6 +28,7 @@
         "/security/security",
         "/usb/usb",
         "/pru_io/pru_io",
+        "/memory_configurator/components"
 % }
 % if((args.device == "am263x")  || (args.device == "am263px")){
         "/kernel/dpl",

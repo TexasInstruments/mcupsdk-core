@@ -72,6 +72,7 @@ function enableShared_core(inst, ui) {
     }
 }
 
+
 let config = [
     {
         name: "$name",
@@ -375,7 +376,7 @@ function validate (inst, report) {
     valueCheck(inst, report)
 
     if (inst.isShared && inst.shared_cores.length == 0) {
-        report.logError(`Select at least one core.`, inst, "isShared")
+        report.logError(`Select at least one core.`, inst, "shared_cores")
     }
 }
 

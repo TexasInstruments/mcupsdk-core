@@ -3,6 +3,8 @@ let common = system.getScript("/common");
 function defaultValues(){
     let def_obj={
         "entry_point":"",
+        "stack_size":16384,
+        "heap_size":32768,
         "irq_stack_size":0,
         "fiq_stack_size":0,
         "svc_stack_size":0,
@@ -22,9 +24,25 @@ function defaultValues(){
     else  if(selfCoreName.includes("c66")){
         def_obj.entry_point="--retain=_vectors"
     }
+    else  if(selfCoreName.includes("m4f")){
+        def_obj.entry_point="--retain=\"*(.vectors)\""
+    }
+    else  if(selfCoreName.includes("a53")){
+        def_obj.entry_point="ENTRY(_c_int00)",
+        def_obj.stack_size=0,
+        def_obj.heap_size=0
+    }
 
     return def_obj;
 }
+
+// function checkCompiler(){
+
+//     let comp = system.compiler
+//     if( comp == "ticlang") return "tiarmclang"
+//     else if ( comp == "gcc" ) return "gcc"
+
+// }
 
 let config = [
     {
@@ -36,18 +54,20 @@ let config = [
         name: "choose_compiler",
         displayName: "Choose Compiler",
         default: "tiarmclang",
-        options: [{name: "tiarmclang", displayName: "TIARMCLANG"}],
+        options: [{name: "tiarmclang", displayName: "TIARMCLANG"},
+                  {name: "gcc", displayName: "GCC"}],
+        // getValue: () => {return checkCompiler()}
     },
     {
         name: "stack_size",
         displayName: "Stack Size",
-        default:16384,
+        default:defaultValues().stack_size,
         description:'',
     },
     {
         name: "heap_size",
         displayName: "Heap Size",
-        default:32768,
+        default:defaultValues().heap_size,
         description:'',
     },
     {

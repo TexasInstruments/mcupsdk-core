@@ -1,0 +1,352 @@
+
+% let region_module = system.modules['/memory_configurator/region'];
+% let general_module = system.modules['/memory_configurator/general'];
+% let group_module = system.modules['/memory_configurator/section'];
+% let common   = system.getScript("/common");
+% let selfCoreName = common.getSelfSysCfgCoreName();
+
+ /* This is the stack that is used by code running within main()
+  * In case of NORTOS,
+  * - This means all the code outside of ISR uses this stack
+  * In case of FreeRTOS
+  * - This means all the code until vTaskStartScheduler() is called in main()
+  *   uses this stack.
+  * - After vTaskStartScheduler() each task created in FreeRTOS has its own stack
+  */
+% if (general_module !== undefined ) {
+% let general_module_instance = general_module.$instances
+% let instance = general_module_instance[0]
+
+% if (!selfCoreName.includes("a53")){
+ --stack_size=`instance.stack_size`
+/* This is the heap size for malloc() API in NORTOS and FreeRTOS
+* This is also the heap used by pvPortMalloc in FreeRTOS
+*/
+ --heap_size=`instance.heap_size`
+%}
+`instance.entry_point`  /* This is the entry of the application, _vector MUST be placed starting address 0x0 */
+
+% if(selfCoreName.includes("r5f")){
+/* This is the size of stack when R5 is in IRQ mode
+ * In NORTOS,
+ * - Here interrupt nesting is enabled
+ * - This is the stack used by ISRs registered as type IRQ
+ * In FreeRTOS,
+ * - Here interrupt nesting is enabled
+ * - This is stack that is used initally when a IRQ is received
+ * - But then the mode is switched to SVC mode and SVC stack is used for all user ISR callbacks
+ * - Hence in FreeRTOS, IRQ stack size is less and SVC stack size is more
+ */
+__IRQ_STACK_SIZE = `instance.irq_stack_size`;
+/* This is the size of stack when R5 is in IRQ mode
+ * - In both NORTOS and FreeRTOS nesting is disabled for FIQ
+ */
+__FIQ_STACK_SIZE = `instance.fiq_stack_size`;
+__SVC_STACK_SIZE = `instance.svc_stack_size`; /* This is the size of stack when R5 is in SVC mode */
+__ABORT_STACK_SIZE = `instance.abort_stack_size`;  /* This is the size of stack when R5 is in ABORT mode */
+__UNDEFINED_STACK_SIZE = `instance.undefined_stack_size`;  /* This is the size of stack when R5 is in UNDEF mode */
+%}
+`instance.additional_data`
+%}
+
+%%{
+    function format(inst, mem) {
+        let arr=[]
+
+        if(inst.load_to_memory == "Memory") {
+            let str=""
+            if( inst.split_across_memories || inst.select_multiple_regions){
+                let mem_reg_arr = inst.split_priority;
+
+                if(mem == "run_memory") return arr
+                for(let i = 0; i < mem_reg_arr.length; i++){
+                    arr.push(mem_reg_arr[i][mem])
+                }
+
+                str=str.concat(arr[0]);
+
+                for(let i=1;i<arr.length;i++)
+                {
+                    str=str.concat(" | ",arr[i]);
+                }
+            }
+            else{
+                if(mem == "run_memory" && JSON.stringify(inst.load_memory) === JSON.stringify(inst[mem])){
+                    return []
+                }
+                else
+                    str = inst[mem]
+            }
+            return str;
+        }
+        else{
+            if(mem == "load_memory")
+                return inst.load_to_address;
+            else
+            {
+                if(inst.run_at_address != inst.load_to_address )
+                    return inst.run_at_address;
+                else
+                    return ""
+            }
+        }
+    }
+%%}
+
+
+MEMORY
+{
+    % let memory_region_module = undefined
+    % let memory_region_module_name = ""
+    % if(region_module !== undefined) {
+    %   if(region_module.$instances[0].mpu_setting){
+    %       memory_region_module = system.modules["/memory_configurator/memory_region_mpu"];
+    %       memory_region_module_name = "/memory_configurator/memory_region_mpu"
+    %}
+    %   else{
+    %       memory_region_module = system.modules["/memory_configurator/memory_region"];
+    %       memory_region_module_name = "/memory_configurator/memory_region"
+    %}
+    %}
+    % if (memory_region_module !== undefined ) {
+    % let region_module_instances = memory_region_module.$instances
+    % let groups = region_module_instances.reduce((items, inst) => {
+    % let group = (items[inst.type] || []);
+    % group.push(inst);
+    % items[inst.type] = group;
+    % return items;
+    % }, {});
+    % let sorted_groups = []
+    %Object.keys(groups).forEach((key,value) => {
+    %    let tmp =  _.chain(groups[key])
+    %        .sortBy((item) => item.isShared)
+    %        .value();
+    %    sorted_groups.push(tmp)
+    %})
+    % Object.keys(sorted_groups).forEach((key,value) => {
+    % for (let item of sorted_groups[key]) {
+    % let attr = ""
+    % let last=""
+    % if (item.attributes.length != 4) {
+    %     attr = attr.concat("(")
+    %      _.each(item.attributes, (a) => {
+    %            attr=attr.concat(a)
+    %})
+    %           attr = attr.concat(")")
+    %}
+    % if (item.last_sym != ""){
+    %        last = last.concat("LAST (", item.last_sym)
+    %        last = last.concat(")")
+    %}
+    % if (item.auto) {
+    `item.$name`  `attr` : ORIGIN = 0x`item.autoStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`item.size.toString(16).toUpperCase()` `last`
+    %}
+    %else {
+    `item.$name`  `attr` : ORIGIN = 0x`item.manualStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`item.size.toString(16).toUpperCase()` `last`
+    % }
+    % }
+    % });
+
+    %}
+    /* For memory Regions not defined in this core but shared by other cores with the current core */
+
+    % let regions_shared_with_this_core = util_function(memory_region_module_name)
+    % _.each(regions_shared_with_this_core, (region) => {
+    % let attr = ""
+    % let last=""
+    % if (region.attributes.length != 4) {
+    %     attr = attr.concat("(")
+    %      _.each(region.attributes, (a) => {
+    %            attr=attr.concat(a)
+    %})
+    %           attr = attr.concat(")")
+    %}
+    % if (region.last_sym != ""){
+    %        last = last.concat("LAST (", region.last_sym)
+    %        last = last.concat(")")
+    %}
+    %             if (region.auto) {
+    `region.shared_region`  `attr` : ORIGIN = 0x`region.autoStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`region.size.toString(16).toUpperCase()`  `last`
+    %}
+    %             else {
+    `region.shared_region`  `attr` : ORIGIN = 0x`region.manualStartAddress.toString(16).toUpperCase()` , LENGTH = 0x`region.size.toString(16).toUpperCase()`  `last`
+    % }
+    % })
+
+}
+
+SECTIONS
+{
+%    if (group_module !== undefined ) {
+%    let group_module_instances = group_module.$instances
+%    for (let instance of group_module_instances) {
+%    let output_sections = instance.output_section;
+%    let type = ""
+%    if (instance.type != "LOAD") {
+%       type = type.concat("(",instance.type)
+%       type = type.concat(")")
+%}
+%    if(instance.group) {
+
+    GROUP `type` :   {
+%    for(let i = 0; i < output_sections.length; i++){
+%       let input_sections = output_sections[i].input_section
+%    let palign = ''
+%    let fill = ''
+    `output_sections[i].$name` : {
+%        for(let j = 0; j < input_sections.length; j++ ) {
+%        let input_section = output_sections[i].input_section
+%        if(input_sections[j].$name.length > 0) {
+        `input_sections[j].$name`
+%}
+%        if(input_sections[j].additional_data.length > 0){
+        `input_sections[j].additional_data`
+%}
+%     }
+% if (output_sections[i].alignment != 0){
+%    let str = (output_sections[i].alignment).toString();
+%    if(output_sections[i].palignment){
+%           palign = palign.concat('palign(',str)
+%}
+%    else {
+%           palign = palign.concat('align(',str)
+%}
+%    palign = palign.concat(')')
+%}
+% if(output_sections[i].fill != 0){
+%   let str =  (output_sections[i].fill).toString();
+%    fill = fill.concat(', fill  = ',str)
+%}
+    } `palign``fill`
+%       if(output_sections[i].output_sections_start.length > 0) {
+    RUN_START(`output_sections[i].output_sections_start`)
+% }
+%       if(output_sections[i].output_sections_end.length > 0) {
+    RUN_END(`output_sections[i].output_sections_end`)
+% }
+%}
+% let redirection = 'load='
+% let place_run_mem = ', run='
+% if (instance.split_across_memories){
+%   redirection = '>>'
+%   place_run_mem= ''}
+% let load_memory = format(instance, "load_memory")
+% let run_memory = format(instance, "run_memory")
+% if (run_memory.length == 0) {
+%   redirection = '>'
+%   place_run_mem = ''
+%}
+    } `redirection` `load_memory` `place_run_mem` `run_memory`
+%       if(instance.group_start.length > 0) {
+    RUN_START(`instance.group_start`)
+% }
+%       if(instance.group_end.length > 0) {
+    RUN_END(`instance.group_end`)
+% }
+
+%}
+% else {
+%    for(let i = 0; i < output_sections.length; i++){
+%       let input_sections = output_sections[i].input_section
+%       let palign = ''
+%       let fill = ''
+%       if (output_sections[i].alignment != 0) {
+%           let str = (output_sections[i].alignment).toString();
+%           if(output_sections[i].palignment){
+%               palign = palign.concat(', palign(',str)
+%}
+%           else {
+%               palign = palign.concat(', align(',str)
+%}
+%           palign = palign.concat(')')
+%}
+% if(output_sections[i].fill != 0){
+%   let str =  (output_sections[i].fill);
+%    fill = fill.concat(', fill  = ',str)
+%}
+    `output_sections[i].$name` `type` : {
+%        for(let j = 0; j < input_sections.length; j++ ) {
+%        if(input_sections[j].$name.length > 0) {
+        `input_sections[j].$name`
+%}
+%        if(input_sections[j].additional_data.length > 0){
+        `input_sections[j].additional_data`
+%}
+%}
+% let redirection = 'load='
+% let place_run_mem = ', run='
+% if (instance.split_across_memories){
+%   redirection = '>>'
+%   place_run_mem= ''}
+% let load_memory = format(instance, "load_memory")
+% let run_memory = format(instance, "run_memory")
+% if (run_memory.length == 0) {
+%   redirection = '>'
+%   place_run_mem = ''
+%}
+    } `redirection` `load_memory` `place_run_mem` `run_memory` `palign` `fill`
+
+%       if(output_sections[i].output_sections_start.length > 0) {
+    RUN_START(`output_sections[i].output_sections_start`)
+% }
+%       if(output_sections[i].output_sections_end.length > 0) {
+    RUN_END(`output_sections[i].output_sections_end`)
+% }
+%}
+%}
+%}
+
+%}
+}
+
+%%{
+function checkNameChange( name ){
+    let selfCore_shared_module = common.getModuleForCore("/memory_configurator/shared_region_references", selfCoreName);
+    let newName = name;
+
+    if( selfCore_shared_module !== undefined){
+        let selfCore_shared_instances = selfCore_shared_module.$instances
+        _.each(selfCore_shared_instances, (each_instance) => {
+            if ( each_instance.shared_region === name){
+                newName =  each_instance.shared_region_name_change
+            }
+        })
+    }
+    return newName
+}
+%%}
+%%{
+function util_function(memory_region_module_name) {
+
+    let coreNames =  common.getSysCfgCoreNames();
+    let all_core_memory_instances = []
+    let regions_shared_with_this_core = []
+    let selfCoreName = common.getSelfSysCfgCoreName();
+
+    for (let core of coreNames) {
+
+        if( core.includes(selfCoreName) ) {
+            continue;
+        }
+
+        let core_module = common.getModuleForCore(memory_region_module_name, core);
+            if(core_module !== undefined) {
+                let core_module_instances = core_module.$instances;
+                all_core_memory_instances.push(core_module_instances)
+            }
+    }
+
+    _.each(all_core_memory_instances, (each_core_memory_module) => {
+        _.each(each_core_memory_module, (each_instance) => {
+            if( each_instance.isShared && each_instance.shared_cores.includes(selfCoreName) ) {
+                let newName = checkNameChange(each_instance.$name)
+                let obj = JSON.parse(JSON.stringify(each_instance));
+                obj.shared_region = newName;
+                regions_shared_with_this_core.push(obj)
+            }
+        })
+    })
+
+    return regions_shared_with_this_core
+}
+%%}

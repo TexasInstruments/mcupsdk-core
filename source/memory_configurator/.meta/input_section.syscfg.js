@@ -1,8 +1,22 @@
 let config = [
     {
+        name: "start_symbol",
+        displayName: "Start Symbol",
+        description: "This field is optional. Add start symbol.",
+        default:"",
+        hidden: true,
+    },
+    {
         name: "$name",
         hidden: false,
         isCIdentifier: false
+    },
+    {
+        name: "end_symbol",
+        displayName: "End Symbol",
+        description: "This field is optional. Add end symbol.",
+        default:"",
+        hidden: true,
     },
     {
         name: "additional_data",
