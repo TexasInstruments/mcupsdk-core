@@ -106,7 +106,8 @@ void test_main(void *args)
     Drivers_open();
 
     RUN_TEST(test_flash_readwrite, 246, NULL);
-#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX)
+
+#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X)
     Drivers_qspiClose();
     Drivers_qspiOpen();
 #else
@@ -168,6 +169,10 @@ static void test_flash_readwrite(void *args)
         Flash_read(gFlashHandle[CONFIG_FLASH0], offset, gFlashTestRxBuf, TEST_FLASH_DATA_SIZE);
         retVal |= memcmp(gFlashTestTxBuf, gFlashTestRxBuf, TEST_FLASH_DATA_SIZE);
     }
+
+#if defined(SOC_AM263PX)
+    Flash_reset(gFlashHandle[CONFIG_FLASH0]);
+#endif
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
 
     Board_driversClose();

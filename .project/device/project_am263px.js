@@ -153,7 +153,7 @@ const example_file_list = [
     "examples/networking/lwip/enet_lwip_cpsw/.project/project.js",
     "examples/networking/lwip/enet_cpsw_udp_igmp/.project/project.js",
 	"test/board/eeprom/.project/project.js",
-	//"test/board/flash/.project/project.js",
+	"test/board/flash/.project/project.js",
 	"test/board/led/.project/project.js",
 	"test/drivers/boot/boot_testapp_mb/.project/project.js",
 	"test/drivers/cmpss/.project/project.js",

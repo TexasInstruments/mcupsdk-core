@@ -45,6 +45,8 @@ help:
 	@echo  ======================
 	@echo  $(MAKE) -s -C board/eeprom/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C board/eeprom/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C board/flash/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C board/flash/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C board/led/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C board/led/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/boot/boot_testapp_mb/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -221,6 +223,8 @@ BUILD_COMBO_EXAMPLE_ALL =
 # Various Example Targets
 BUILD_COMBO_EXAMPLE_ALL += test_eeprom_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_eeprom_am263px-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_flash_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_flash_am263px-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_led_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_led_am263px-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += boot_testapp_mb_am263px-cc_r5fss0-0_nortos_ti-arm-clang
@@ -335,6 +339,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  test_eeprom_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C board/eeprom/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_flash_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C board/flash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_flash_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C board/flash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  test_led_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C board/led/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -638,6 +648,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eeprom_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eeprom_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_flash_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_flash_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_led_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_led_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += boot_testapp_mb_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -752,6 +764,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_eeprom_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C board/eeprom/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_flash_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C board/flash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_flash_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C board/flash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  test_led_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C board/led/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -1055,6 +1073,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eeprom_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eeprom_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_flash_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_flash_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_led_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_led_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += boot_testapp_mb_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -1169,6 +1189,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_eeprom_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C board/eeprom/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_flash_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C board/flash/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_flash_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C board/flash/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_led_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C board/led/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
