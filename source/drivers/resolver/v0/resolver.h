@@ -75,7 +75,7 @@ extern "C"
 //! Defines to be used by the driver
 //
 //*****************************************************************************
-#define RDC_CORE_OFFSET (CSL_RESOLVER_REGS_IRQSTATUS_RAW_SYS_0 - CSL_RESOLVER_REGS_IRQSTATUS_RAW_SYS_1)
+#define RDC_CORE_OFFSET (CSL_RESOLVER_REGS_IRQSTATUS_RAW_SYS_1 - CSL_RESOLVER_REGS_IRQSTATUS_RAW_SYS_0)
 
 /**
  * @brief Minimum Phase value that can be programmed for the Excitation signal */
@@ -1219,8 +1219,8 @@ typedef struct
         HW_WR_REG32(
             base + regOffset,
             HW_RD_REG32(
-                base + regOffset) &
-                ~((uint32_t)interruptSource));
+                base + regOffset) |
+                ((uint32_t)interruptSource));
     }
 
     /**
@@ -1612,7 +1612,7 @@ typedef struct
     static inline void
     RDC_setIdealSampleDetectionThreshold(uint32_t base, uint8_t core, uint16_t absThresholdValue)
     {
-        uint32_t regOffset = CSL_RESOLVER_REGS_SAMPLE_CFG1_0 + (core * RDC_CORE_OFFSET);
+        uint32_t regOffset = CSL_RESOLVER_REGS_SAMPLE_CFG2_0 + (core * RDC_CORE_OFFSET);
         HW_WR_REG32(
             base + regOffset,
             (HW_RD_REG32(
@@ -1672,7 +1672,7 @@ typedef struct
      * @param mode uint8_t input. the following are the Valid arguments
      * - \e RDC_IDEAL_SAMPLE_TIME_MODE_0_AUTO_DETECT           - Computation on sin and cos
      * - \e RDC_IDEAL_SAMPLE_TIME_MODE_1_AUTO_DETECT_ON_SIN    - Computation on sin only
-     * - \e RDC_IDEAL_SAMPLE_TIME_MODE_1_AUTO_DETECT_ON_COS    - Computation on cos only
+     * - \e RDC_IDEAL_SAMPLE_TIME_MODE_2_AUTO_DETECT_ON_COS    - Computation on cos only
      * - \e RDC_IDEAL_SAMPLE_TIME_MODE_3_AUTO_DETECT_OFF       - Manual Override of Ideal Sample Time
      */
     static inline void

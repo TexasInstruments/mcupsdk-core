@@ -238,6 +238,12 @@ void RDC_init(uint32_t base, RDC_configParams* params)
         if(coreParams.BpfDc_bpfEnable == true)
         {
             RDC_enableBPF(base, resolverCore);
+            RDC_disableDcOffsetAutoCorrection(base, resolverCore);
+            RDC_setDcOffsetManualCorrectionValue(
+                base,
+                resolverCore,
+                (int16_t)0,
+                (int16_t)0);
         }
         else
         {
@@ -302,8 +308,8 @@ void RDC_init(uint32_t base, RDC_configParams* params)
             RDC_setGainBypassValue(
                 base,
                 resolverCore,
-                (int16_t) coreParams.Pg_sinGainBypassValue,
-                (int16_t) coreParams.Pg_cosGainBypassValue);
+                (uint16_t) coreParams.Pg_sinGainBypassValue,
+                (uint16_t) coreParams.Pg_cosGainBypassValue);
             RDC_setCosPhaseBypass(
                 base,
                 resolverCore,
