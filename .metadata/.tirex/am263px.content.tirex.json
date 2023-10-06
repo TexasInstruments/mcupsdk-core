@@ -9320,6 +9320,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Enet Loopback Example. CPU is R5FSS0-1 running FREERTOS.",
+        "name": "enet_loopback",
+        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am263px-cc/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_loopback",
+            "enet_cpsw_loopback",
+            "r5fss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_loopback",
         "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am263px-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -9369,6 +9402,38 @@
             "networking",
             "enet_layer2_cpsw",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet L2 Cpsw Example. CPU is R5FSS0-1 running FREERTOS.",
+        "name": "enet_l2_cpsw",
+        "location": "../../examples/networking/enet_layer2_cpsw/am263px-cc/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_layer2_cpsw",
+            "r5fss0-1_freertos"
         ],
         "mainCategories": [
             [

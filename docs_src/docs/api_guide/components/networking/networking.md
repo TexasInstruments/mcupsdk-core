@@ -108,7 +108,7 @@ Ethernet Low-Level Driver (\ref ENET_LLD) is a driver that aims at providing an 
 - \subpage ENET_LLD
 \endcond
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM273X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM273X
 ### Time Sensitive Networking (TSN) Stack
 - \subpage ENET_CPSW_TSN_GPTP
 - \subpage EXAMPLES_ENET_CPSW_TSN_GPTP
