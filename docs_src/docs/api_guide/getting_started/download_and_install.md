@@ -38,14 +38,6 @@ To build applications using this SDK, one needs below host PC machine
   - Linux, ${HOME}/ti
 
 \cond SOC_AM263PX
-\note
-- Update the device data for AM263px in syscfg. Contact TI representatives for the device data.
-- Rename "<Sysconfig_install_dir>/dist/deviceData" to "deviceData_org".
-- Copy deviceData folder received by TI representative at "<Sysconfig_install_dir>/dist/"
-- Refer to the instructions in documentation provided with the device data.
-\endcond
-
-\cond SOC_AM263PX
 ### Uniflash
 - Get and install uniflash and install at below path, contact the TI representative to get the uniflash installer. Installer available at https://www.ti.com/tool/UNIFLASH currently doesn't support Sitara MCU devices
   - Windows, C:/ti
@@ -270,12 +262,12 @@ Once the Drivers are installed successfully, user should be able to use the \ref
 
 To download, install and setup CCS, follow instructions on this page, \ref CCS_SETUP_PAGE .
 
-<!-- ## Download and Install Additional SDK Tools -->
+## Download and Install Additional SDK Tools
 
 ### TI CLANG Compiler Toolchain {#INSTALL_TIARMCLANG}
 
 
-<!-- \attention TI CLANG Compiler Toolchain is part of CCS, however if user wants to build example using makefile and CCS is not installed then this MUST be installed separately -->
+\attention TI CLANG Compiler Toolchain is part of CCS, however if user wants to build example using makefile and CCS is not installed then this MUST be installed separately
 
 - Download TI CLANG compiler toolchain @VAR_TI_ARM_CLANG_VERSION from below link
   - Windows, \htmllink{https://dr-download.ti.com/software-development/ide-configuration-compiler-or-debugger/MD-ayxs93eZNN/3.2.0.LTS/ti_cgt_armllvm_3.2.0.LTS_windows-x64_installer.exe, WINDOWS INSTALLER}

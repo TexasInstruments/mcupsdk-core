@@ -53,15 +53,6 @@
 
 - If using Linux, additionally go through the instructions given at [CCS Linux Host Support](https://software-dl.ti.com/ccs/esd/documents/ccsv11_linux_host_support.html)
 
-\cond SOC_AM263PX
-
-- Contact TI representative for AM263P CSP data.
-- Copy this CSP inside CCS installation directory at "ccs/ccs_base"
-- Follow the instructions in the documentation provided with the CSP data for more details.
-- Update the Device data for am263p in CCS level syscfg in the "ccs\utils\sysconfig_@VAR_SYSCFG_VERSION\dist\deviceData" directory
-
-\endcond
-
 - Launch CCS and select the workspace.
 
     \imageStyle{first_launch.png,width:50%}
