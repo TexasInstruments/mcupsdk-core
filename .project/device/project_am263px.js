@@ -131,6 +131,7 @@ const example_file_list = [
     "examples/empty/.project/project_nortos.js",
 	"examples/hello_world/.project/project.js",
 	"examples/hello_world_cpp/.project/project.js",
+    "examples/mathlib/benchmark/.project/project.js",
 	"examples/kernel/dpl/dpl_demo/.project/project.js",
 	"examples/kernel/dpl/dpl_low_latency_interrupt/.project/project.js",
 	"examples/kernel/dpl/interrupt_prioritization/.project/project.js",
