@@ -4357,6 +4357,39 @@
             "example"
         ],
         "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Gpmc Psram Io Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "gpmc_psram_io",
+        "location": "../../examples/drivers/gpmc/gpmc_psram_io/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "gpmc",
+            "gpmc_psram_io",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
             "example.gettingstarted"
         ],
         "description": "Demonstrate hsm services message CPU is R5FSS0-0 running NORTOS.",

@@ -38,6 +38,8 @@ FILES_common := \
     fsi_rx.c \
     fsi_tx.c \
     gpio.c \
+    gpmc_v0.c \
+    gpmc_dma.c \
     hsmclient.c \
     hsmclient_loadhsmrt.c \
     hsmclient_utils.c \
@@ -89,6 +91,8 @@ FILES_PATH_common = \
     epwm/v1 \
     fsi/v1 \
     gpio/v0 \
+    gpmc/v0 \
+    gpmc/v0/dma \
     hsmclient \
     hsmclient/soc/am263x \
     hsmclient/utils \

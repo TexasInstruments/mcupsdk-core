@@ -10,6 +10,8 @@ const files_r5f = {
         "ethphy_dp83869.c",
         "ethphy_dp83826e.c",
         "flash.c",
+        "psram.c",
+        "psram_gpmc.c",
         "flash_nor_qspi.c",
         "led.c",
         "led_gpio.c",
@@ -30,8 +32,10 @@ const filedirs = {
         "ethphy",
         "flash",
         "flash/sfdp",
+        "psram/gpmc",
         "flash/qspi",
         "led",
+        "psram",
     ],
 };
 

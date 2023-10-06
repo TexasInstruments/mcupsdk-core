@@ -85,6 +85,7 @@ static void GPMC_nandAddressWrite(GPMC_Handle handle, uint32_t address);
 static void GPMC_nandCommandWrite(GPMC_Handle handle, uint32_t cmd);
 static void GPMC_transferCallback(GPMC_Handle handle, GPMC_Transaction *msg);
 static int32_t GPMC_programInstance(GPMC_Config *config);
+static int32_t GPMC_programInstancePsram(GPMC_Config *config);
 static void GPMC_disableInterupt(uint32_t baseAddr, uint32_t interupt);
 static void GPMC_enableInterupt(uint32_t baseAddr, uint32_t interupt);
 static void GPMC_interuptStatusClear(uint32_t baseAddr, uint32_t interupt);
@@ -152,6 +153,58 @@ void GPMC_deinit(void)
     return;
 }
 
+int32_t GPMC_configureTimingParametersPsram(GPMC_Handle handle)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t timeConfig = 0;
+
+    if(handle != NULL)
+    {
+        const GPMC_HwAttrs *hwAttrs = ((GPMC_Config*)handle)->attrs;
+        GPMC_Object *object  = ((GPMC_Config*)handle)->object;
+
+        /* CONFIG2 register timing config, no extra delay */
+        timeConfig = GPMC_CS_TIMING_CONFIG(GPMC_PSRAM_CS_WR_OFF_TIME,GPMC_PSRAM_CS_RD_OFF_TIME,0,GPMC_PSRAM_CS_ON_TIME);
+        CSL_REG32_WR(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG2(object->params.chipSel), timeConfig);
+
+        /* CONFIG3 register timing config, no extra delay */
+        timeConfig = GPMC_ADV_TIMING_CONFIG(GPMC_PSRAM_ADV_AADMUX_WR_OFF_TIME,GPMC_PSRAM_ADV_AADMUX_RD_OFF_TIME,GPMC_PSRAM_ADV_WR_OFF_TIME,GPMC_PSRAM_ADV_RD_OFF_TIME,CSL_GPMC_CONFIG3_ADVEXTRADELAY_NOTDELAYED,GPMC_PSRAM_ADV_AADMUX_ON_TIME,GPMC_PSRAM_ADV_ON_TIME);
+        CSL_REG32_WR(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG3(object->params.chipSel), timeConfig);
+
+        /* CONFIG4 register timing config, no xtra delay */
+        timeConfig = GPMC_WE_OE_TIMING_CONFIG(GPMC_PSRAM_WE_OFF_TIME,CSL_GPMC_CONFIG4_WEEXTRADELAY_NOTDELAYED,GPMC_PSRAM_WE_ON_TIME,GPMC_PSRAM_OE_AADMUX_OFF_TIME,GPMC_PSRAM_OE_OFF_TIME,CSL_GPMC_CONFIG4_OEEXTRADELAY_NOTDELAYED,GPMC_PSRAM_OE_AADMUX_ON_TIME,GPMC_PSRAM_OE_ON_TIME);
+        CSL_REG32_WR(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG4(object->params.chipSel), timeConfig);
+
+        /* CONFIG5 register timing config */
+        timeConfig = GPMC_RDACCESS_CYCLETIME_TIMING_CONFIG(GPMC_PSRAM_RD_CYCLE_TIME,GPMC_PSRAM_WR_CYCLE_TIME,GPMC_PSRAM_RD_ACCESS_TIME,GPMC_PSRAM_PAGEBURST_ACCESS_TIME);
+        CSL_REG32_WR(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG5(object->params.chipSel), timeConfig);
+
+        /* CONFIG6 register timing config */
+        CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG6(object->params.chipSel),
+                    GPMC_CONFIG6_WRACCESSTIME, hwAttrs->timingParams.wrAcessTime);
+        CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG6(object->params.chipSel),
+                    GPMC_CONFIG6_WRDATAONADMUXBUS, hwAttrs->timingParams.wrDataOnMuxBusTime);
+
+
+        timeConfig = GPMC_CYCLE2CYCLE_BUSTURNAROUND_TIMING_CONFIG(hwAttrs->timingParams.cycle2CycleDelay,
+                                                                    hwAttrs->timingParams.cycleDelaySameChipSel,
+                                                                    hwAttrs->timingParams.cycleDelayDiffChipSel,
+                                                                    hwAttrs->timingParams.busTurnAroundTime);
+
+        CSL_REG32_WR(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG6(object->params.chipSel), \
+        (CSL_REG32_RD(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG6(object->params.chipSel)) | timeConfig));
+
+        CSL_REG32_WR(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG7(object->params.chipSel), 0xf28);
+        CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG7(object->params.chipSel), \
+                         GPMC_CONFIG7_CSVALID, CSL_GPMC_CONFIG7_CSVALID_CSENABLED);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+    return status;
+}
+
 int32_t GPMC_configureTimingParameters(GPMC_Handle handle)
 {
     int32_t status = SystemP_SUCCESS;
@@ -202,7 +255,7 @@ int32_t GPMC_configureTimingParameters(GPMC_Handle handle)
         CSL_REG32_WR(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG5(object->params.chipSel), timeConfig);
 
 
-        /* CONFIG6 reister timing config */
+        /* CONFIG6 register timing config */
         CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG6(object->params.chipSel),
                     GPMC_CONFIG6_WRACCESSTIME, hwAttrs->timingParams.wrAcessTime);
         CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG6(object->params.chipSel),
@@ -362,7 +415,14 @@ GPMC_Handle GPMC_open(uint32_t index, const GPMC_Params *prms)
 
     if(status == SystemP_SUCCESS)
     {
-        status += GPMC_programInstance(config);
+        if(object->params.memDevice == GPMC_MEM_TYPE_NAND)
+        {
+            status += GPMC_programInstance(config);
+        }
+        else if(object->params.memDevice == GPMC_MEM_TYPE_PSRAM)
+        {
+            status += GPMC_programInstancePsram(config);
+        }
 
         status += SemaphoreP_constructMutex(&object->mutex);
 
@@ -1243,7 +1303,7 @@ static int32_t GPMC_waitPinStatusReadyWaitTimeout(GPMC_Handle handle, uint32_t t
     if(handle != NULL)
     {
         hwAttrs = ((GPMC_Config*)handle)->attrs;
-        
+
         if(timeOut != 0)
         {
             curTime = ClockP_getTimeUsec();
@@ -1593,6 +1653,66 @@ static int32_t GPMC_programInstance(GPMC_Config *config)
     return status;
 }
 
+static int32_t GPMC_programInstancePsram(GPMC_Config *config)
+{
+    int32_t status = SystemP_SUCCESS;
+
+    if(config != NULL)
+    {
+        const GPMC_HwAttrs *hwAttrs = config->attrs;
+        GPMC_Object *object  = config->object;
+
+        /* Reset GPMC */
+        CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_SYSCONFIG, GPMC_SYSCONFIG_SOFTRESET,CSL_GPMC_SYSCONFIG_SOFTRESET_RESET);
+
+        status += GPMC_moduleResetStatusWaitTimeout(config,GPMC_MODULE_RESET_WAIT_TIME_MAX);
+
+        if(status == SystemP_SUCCESS)
+        {
+            /*set GPMC in NORMAL mode*/
+            CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_SYSCONFIG, GPMC_SYSCONFIG_SOFTRESET,CSL_GPMC_SYSCONFIG_SOFTRESET_NORMAL);
+
+            /* Disable Chip select*/
+            CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG7(object->params.chipSel), GPMC_CONFIG7_CSVALID, CSL_GPMC_CONFIG7_CSVALID_CSDISABLED);
+
+            /* Set CONFIG 1 Parameters*/
+            CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG1(object->params.chipSel),
+                        GPMC_CONFIG1_GPMCFCLKDIVIDER, hwAttrs->clkDivider );
+            CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG1(object->params.chipSel),
+                        GPMC_CONFIG1_MUXADDDATA,  hwAttrs->addrDataMux);
+
+            CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG1(object->params.chipSel),
+                        GPMC_CONFIG1_WAITMONITORINGTIME, CSL_GPMC_CONFIG1_WAITMONITORINGTIME_ATVALID);
+
+            CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG1(object->params.chipSel),
+                        GPMC_CONFIG1_WAITREADMONITORING, CSL_GPMC_CONFIG1_WAITREADMONITORING_WNOTMONIT);
+
+            CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG1(object->params.chipSel),
+                        GPMC_CONFIG1_READTYPE, hwAttrs->readType);
+
+            CSL_REG32_WR(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG1(object->params.chipSel), 0x1000);
+
+            CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG1(object->params.chipSel),
+                        GPMC_CONFIG1_TIMEPARAGRANULARITY, hwAttrs->timeLatency);
+
+            CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG1(object->params.chipSel),
+                        GPMC_CONFIG1_READMULTIPLE,  hwAttrs->accessType);
+
+            /* Set chip select address*/
+            CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG7(object->params.chipSel),
+                        GPMC_CONFIG7_BASEADDRESS, (hwAttrs->chipSelBaseAddr >> GPMC_CS_BASE_ADDR_SHIFT) & 0x3fU);
+
+            CSL_REG32_WR(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG, 0x0);
+
+            /* Set chip select address */
+            CSL_REG32_FINS(hwAttrs->gpmcBaseAddr + CSL_GPMC_CONFIG7(object->params.chipSel),
+                        GPMC_CONFIG7_MASKADDRESS,  hwAttrs->chipSelAddrSize);
+        }
+
+    }
+
+    return status;
+}
 
 static void GPMC_transferCallback(GPMC_Handle handle, GPMC_Transaction *msg)
 {

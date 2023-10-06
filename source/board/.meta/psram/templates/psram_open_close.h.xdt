@@ -1,0 +1,13 @@
+/*
+ * PSRAM
+ */
+#include <board/psram.h>
+
+/* PSRAM Driver handles */
+extern Psram_Handle gPsramHandle[CONFIG_PSRAM_NUM_INSTANCES];
+
+/* PSRAM Driver open/close - can be used by application when Board_driversOpen() and
+ * Board_driversClose() is not used directly and app wants to control the various driver
+ * open/close sequences */
+int32_t Board_psramOpen(void);
+void Board_psramClose(void);

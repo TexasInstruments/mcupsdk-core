@@ -1,0 +1,14 @@
+%%{
+    let module = system.modules['/board/psram/psram'];
+%%}
+/*
+ * PSRAM
+ */
+#include <board/psram.h>
+
+/* PSRAM Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+#define `instance.$name.toUpperCase()` (`i`U)
+% }
+#define CONFIG_PSRAM_NUM_INSTANCES (`module.$instances.length`U)

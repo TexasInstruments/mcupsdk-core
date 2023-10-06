@@ -518,6 +518,64 @@ extern "C" {
 #define GPMC_NAND_BRST_TAROUND_TIME         0U
 /** @} */
 
+/**
+*   GPMC PSRAM Specific Timing Parameters
+*
+* PSRAM specific GPMC timing parameters. These are used to
+* GPMC CONFIG registers.
+*
+* @{
+*/
+/** \brief Chip select on time  (FCLK periods) */
+#define GPMC_PSRAM_CS_ON_TIME                3U
+/** \brief Write enable on time (FCLK periods) */
+#define GPMC_PSRAM_WE_ON_TIME                10U
+/** \brief Address valid on time (FCLK periods) */
+#define GPMC_PSRAM_ADV_ON_TIME               1U
+/** \brief Chip select off time for write (FCLK periods) */
+#define GPMC_PSRAM_CS_WR_OFF_TIME            21U
+/** \brief Write cycle time (FCLK periods) */
+#define GPMC_PSRAM_WR_CYCLE_TIME             23U
+/** \brief Address valid off time for write (FCLK periods) */
+#define GPMC_PSRAM_ADV_WR_OFF_TIME           3U
+/** \brief Chip select off time for read (FCLK periods) */
+#define GPMC_PSRAM_CS_RD_OFF_TIME            21U
+/** \brief Read cycle time (FCLK periods) */
+#define GPMC_PSRAM_RD_CYCLE_TIME             23U
+/** \brief Address valid on time when using AAD- Muxed protocol. (FCLK periods) */
+#define GPMC_PSRAM_ADV_AADMUX_ON_TIME        1U
+/** \brief Address valid on time for read when using AAD- Muxed protocol. (FCLK periods) */
+#define GPMC_PSRAM_ADV_AADMUX_RD_OFF_TIME    2U
+/** \brief Address valid on time for write when using AAD- Muxed protocol. (FCLK periods) */
+#define GPMC_PSRAM_ADV_AADMUX_WR_OFF_TIME    2U
+/** \brief Delay between successive words in a multiple access. (FCLK periods) */
+#define GPMC_PSRAM_PAGEBURST_ACCESS_TIME     3U
+/** \brief Output enable on time (FCLK periods) */
+#define GPMC_PSRAM_OE_ON_TIME                10U
+/** \brief Output enable off time (FCLK periods) */
+#define GPMC_PSRAM_OE_OFF_TIME               1U
+/** \brief Output enable assertion time for the first address phase in an AAD-muxed protocol. (FCLK periods) */
+#define GPMC_PSRAM_OE_AADMUX_ON_TIME         1U
+/** \brief Output enable deassertion time for the first address phase in an AAD-muxed protocol. (FCLK periods) */
+#define GPMC_PSRAM_OE_AADMUX_OFF_TIME        15U
+/** \brief Address valid off time for read (FCLK periods) */
+#define GPMC_PSRAM_ADV_RD_OFF_TIME           3U
+/** \brief Write enable off time (FCLK periods) */
+#define GPMC_PSRAM_WE_OFF_TIME               16U
+/** \brief Read access time (FCLK periods) */
+#define GPMC_PSRAM_RD_ACCESS_TIME            16U
+/** \brief CS high pulse delay (FCLK periods) */
+#define GPMC_PSRAM_C2C_DELAY                 0U
+/** \brief First data write cycle (FCLK) */
+#define GPMC_PSRAM_ADMUX_DATA_VALID          0U
+/** \brief Write access time (FCLK periods) */
+#define GPMC_PSRAM_WR_ACCESS_TIME            8U
+/** \brief Burst turnaround latency (FCLK periods) */
+#define GPMC_PSRAM_BRST_TAROUND_TIME         1U
+/** @} */
+
+
+
 /** \brief size in bytes*/
 #define GPMC_DMA_COPY_LOWER_LIMIT                   (512U)
 /** \brief GPMC CHIP select base address shift value. */
@@ -526,6 +584,9 @@ extern "C" {
 #define GPMC_ECC_WRAP_MODE1                          (1)
 /** \brief Invalid value for params initialisation. */
 #define GPMC_CMD_INVALID                             (0xFFFFFFFFU)
+
+#define GPMC_MEM_TYPE_NAND                           (0)
+#define GPMC_MEM_TYPE_PSRAM                          (1)
 
 /** \brief A handle that is returned from a #GPMC_open() call */
 typedef void* GPMC_Handle;
@@ -698,6 +759,8 @@ typedef struct GPMC_Params_s
     /**< Polling, blocking or callback mode . Refer \ref GPMC_TransferMode */
     GPMC_CallbackFxn        transferCallBckFunc;
     /**< External Callback function pointer*/
+    uint32_t                memDevice;
+    /**< Flag to indicate memory device */
 } GPMC_Params;
 
 /**
@@ -1035,6 +1098,16 @@ int32_t GPMC_setDeviceType(GPMC_Handle handle);
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
 int32_t GPMC_configureTimingParameters(GPMC_Handle handle);
+
+/**
+ *  \brief  Function to configure GPMC timing parameters for PSRAM/NOR Devices.
+ *
+ *  \param  handle  An #GPMC_Handle returned from an #GPMC_open()
+ *
+ *
+ *  \return SystemP_SUCCESS or SystemP_FAILURE
+ */
+int32_t GPMC_configureTimingParametersPsram(GPMC_Handle handle);
 
 /**
  *  \brief  Function to set ECC used and unused bytes size in nibbles.

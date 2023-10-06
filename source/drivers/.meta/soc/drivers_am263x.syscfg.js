@@ -35,6 +35,9 @@ const driverVer = {
     "gpio": {
         version: "v0",
     },
+    "gpmc": {
+        version: "v1",
+    },
     "hsmclient": {
         version: "v0",
     },
@@ -91,6 +94,7 @@ const topModules_main = [
     "/drivers/fsi_rx/fsi_rx",
     "/drivers/fsi_tx/fsi_tx",
     "/drivers/gpio/gpio",
+    "/drivers/gpmc/gpmc",
     "/drivers/hsmclient/hsmclient",
     "/drivers/i2c/i2c",
     "/drivers/ipc/ipc",

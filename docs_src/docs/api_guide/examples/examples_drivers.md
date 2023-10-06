@@ -26,9 +26,14 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 -# GPIO
    -# \subpage EXAMPLES_DRIVERS_GPIO_INPUT_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_GPIO_LED_BLINK
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263X
 -# GPMC
+    \cond SOC_AM64X || SOC_AM243X
    -# \subpage EXAMPLES_DRIVERS_GPMC_FLASH_NAND_IO
+    \endcond
+    \cond SOC_AM263X
+    -# \subpage EXAMPLES_DRIVERS_GPMC_PSRAM_IO
+    \endcond
 \endcond
 -# WATCHDOG
    -# \subpage EXAMPLES_DRIVERS_WATCHDOG_INTERRUPT_MODE

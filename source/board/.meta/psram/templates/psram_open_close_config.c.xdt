@@ -1,0 +1,99 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/board/psram/psram'];
+%%}
+
+/* PSRAM Attrs */
+% for (let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+Psram_Attrs gPsramAttrs_`config.pname` =
+{
+    .psramName = "`config.pname`",
+    .psramSize = 8388608,
+};
+% }
+
+/* PSRAM Driver handles - opened during Board_psramOpen() */
+Psram_Handle gPsramHandle[CONFIG_PSRAM_NUM_INSTANCES];
+
+/* PSRAM Config */
+Psram_Config gPsramConfig[CONFIG_PSRAM_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+{
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    .attrs = &gPsramAttrs_`config.pname`,
+    .fxns = &gPsramGpmcFxns,
+    .object = NULL,
+},
+% }
+};
+
+/* PSRAM Open Params - populated from SysConfig options */
+Psram_Params gPsramParams[CONFIG_PSRAM_NUM_INSTANCES] =
+{
+    % for(let i = 0; i < module.$instances.length; i++) {
+    {
+        % let instance = module.$instances[i];
+        .quirksFxn = NULL,
+        .custProtoFxn = NULL,
+    },
+    % }
+};
+
+uint32_t gPsramConfigNum = CONFIG_PSRAM_NUM_INSTANCES;
+
+int32_t Board_psramOpen()
+{
+    uint32_t instCnt;
+    int32_t  status = SystemP_SUCCESS;
+
+    for(instCnt = 0U; instCnt < CONFIG_PSRAM_NUM_INSTANCES; instCnt++)
+    {
+        gPsramHandle[instCnt] = NULL;   /* Init to NULL so that we can exit gracefully */
+    }
+
+    /* Set the underlying driver instance to the PSRAM config */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    gPsramAttrs_`config.pname`.driverInstance = CONFIG_GPMC0;
+% }
+
+    /* Open all instances */
+    for(instCnt = 0U; instCnt < CONFIG_PSRAM_NUM_INSTANCES; instCnt++)
+    {
+
+        gPsramHandle[instCnt] = Psram_open(instCnt, &gPsramParams[instCnt]);
+        if(NULL == gPsramHandle[instCnt])
+        {
+            DebugP_logError("PSRAM open failed for instance %d !!!\r\n", instCnt);
+            status = SystemP_FAILURE;
+            break;
+        }
+    }
+
+    if(SystemP_FAILURE == status)
+    {
+        Board_psramClose();   /* Exit gracefully */
+    }
+    return status;
+}
+
+void Board_psramClose(void)
+{
+    uint32_t instCnt;
+
+    /* Close all instances that are open */
+    for(instCnt = 0U; instCnt < CONFIG_PSRAM_NUM_INSTANCES; instCnt++)
+    {
+        if(gPsramHandle[instCnt] != NULL)
+        {
+            Psram_close(gPsramHandle[instCnt]);
+            gPsramHandle[instCnt] = NULL;
+        }
+    }
+    return;
+}

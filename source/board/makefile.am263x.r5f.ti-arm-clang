@@ -22,6 +22,8 @@ FILES_common := \
     ethphy_dp83869.c \
     ethphy_dp83826e.c \
     flash.c \
+    psram.c \
+    psram_gpmc.c \
     flash_nor_qspi.c \
     led.c \
     led_gpio.c \
@@ -33,8 +35,10 @@ FILES_PATH_common = \
     ethphy \
     flash \
     flash/sfdp \
+    psram/gpmc \
     flash/qspi \
     led \
+    psram \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

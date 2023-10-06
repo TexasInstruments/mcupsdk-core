@@ -1,0 +1,115 @@
+%%{
+    let module = system.modules['/drivers/gpmc/gpmc'];
+    let gpmcEdmaInstances = [];
+    for(let i=0; i < module.$instances.length; i++) {
+        let instance = module.$instances[i];
+        if(instance.dmaEnable == true) {
+            gpmcEdmaInstances.push(module.getInstanceConfig(instance).edmaDriver);
+        }
+    }
+%%}
+
+% let dmaRestrictRegions = module.getDmaRestrictedRegions();
+/*
+ * GPMC
+ */
+
+/* GPMC attributes */
+static GPMC_HwAttrs gGpmcAttrs[CONFIG_GPMC_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let deviceConfig = module.getGpmcDeviceConfig(instance);
+    % let name = config.name;
+    {
+        .gpmcBaseAddr         = `config.baseAddr`,
+        .dataBaseAddr         = `config.dataBaseAddr`,
+        .inputClkFreq         = `config.inputClkFreq`U,
+        .intrNum              = `config.intrNum`,
+        .intrPriority         = `config.intrPriority`U,
+        .chipSelBaseAddr      = `config.chipSelBaseAddr`U,
+        .chipSelAddrSize      = GPMC_CS_MASK_ADDR_SIZE_`config.chipSelAddrSize`,
+        % if(config.clockRateDiv == 1) {
+        .clkDivider           = CSL_GPMC_CONFIG1_GPMCFCLKDIVIDER_DIVBY1,
+        % } else if (config.clockRateDiv == 2) {
+        .clkDivider           = CSL_GPMC_CONFIG1_GPMCFCLKDIVIDER_DIVBY2,
+        % } else if (config.clockRateDiv == 3) {
+        .clkDivider           = CSL_GPMC_CONFIG1_GPMCFCLKDIVIDER_DIVBY3,
+        % } else {
+        .clkDivider           = CSL_GPMC_CONFIG1_GPMCFCLKDIVIDER_DIVBY4,
+        % }
+        % if(config.waitPinselect == "WAIT0 PIN") {
+        .waitPinNum           = CSL_GPMC_CONFIG1_WAITPINSELECT_W0,
+        % } else {
+        .waitPinNum           = CSL_GPMC_CONFIG1_WAITPINSELECT_W1,
+        % }
+        .addrDataMux          = `deviceConfig.addrDataMux`,
+        .timeLatency          = `deviceConfig.timeLatency`,
+        .waitPinPol           = `deviceConfig.waitPinPol`,
+        .timingParams         =
+        {
+            .csOnTime               =   `deviceConfig.timingParams.csOnTime`,
+            .csRdOffTime            =   `deviceConfig.timingParams.csRdOffTime`,
+            .csWrOffTime            =   `deviceConfig.timingParams.csWrOffTime`,
+            .advOnTime              =   `deviceConfig.timingParams.advOnTime`,
+            .advRdOffTime           =   `deviceConfig.timingParams.advRdOffTime`,
+            .advWrOffTime           =   `deviceConfig.timingParams.advWrOffTime`,
+            .advAadMuxOnTime        =   `deviceConfig.timingParams.advAadMuxOnTime`,
+            .advAadMuxRdOffTime     =   `deviceConfig.timingParams.advAadMuxRdOffTime`,
+            .advAadMuxWrOffTime     =   `deviceConfig.timingParams.advAadMuxWrOffTime`,
+            .weOnTtime              =   `deviceConfig.timingParams.weOnTtime`,
+            .weOffTime              =   `deviceConfig.timingParams.weOffTime`,
+            .oeOnTime               =   `deviceConfig.timingParams.oeOnTime`,
+            .oeOffTime              =   `deviceConfig.timingParams.oeOffTime`,
+            .oeAadMuxOnTime         =   `deviceConfig.timingParams.oeAadMuxOnTime`,
+            .oeAadMuxOffTime        =   `deviceConfig.timingParams.oeAadMuxOffTime`,
+            .pageBurstAccess        =   `deviceConfig.timingParams.pageBurstAccess`,
+            .rdAccessTime           =   `deviceConfig.timingParams.rdAccessTime`,
+            .wrAcessTime            =   `deviceConfig.timingParams.wrAcessTime`,
+            .rdCycleTime            =   `deviceConfig.timingParams.rdCycleTime`,
+            .wrCycleTime            =   `deviceConfig.timingParams.wrCycleTime`,
+            .wrDataOnMuxBusTime     =   `deviceConfig.timingParams.wrDataOnMuxBusTime`,
+            .cycle2CycleDelay       =   `deviceConfig.timingParams.cycle2CycleDelay`,
+            .cycleDelaySameChipSel  =   `deviceConfig.timingParams.cycleDelaySameChipSel`,
+            .cycleDelayDiffChipSel  =   `deviceConfig.timingParams.cycleDelayDiffChipSel`,
+            .busTurnAroundTime      =   `deviceConfig.timingParams.busTurnAroundTime`,
+        },
+        .readType               =   `deviceConfig.readType`,
+        .csExDelay              =   `deviceConfig.csExDelay`,
+        .accessType             =   `deviceConfig.accessType`,
+    },
+% }
+};
+/* GPMC objects - initialized by the driver */
+static GPMC_Object gGpmcObjects[CONFIG_GPMC_NUM_INSTANCES];
+/* GPMC driver configuration */
+GPMC_Config gGpmcConfig[CONFIG_GPMC_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        &gGpmcAttrs[`instance.$name.toUpperCase()`],
+        &gGpmcObjects[`instance.$name.toUpperCase()`],
+    },
+% }
+};
+
+uint32_t gGpmcConfigNum = CONFIG_GPMC_NUM_INSTANCES;
+
+% let instance = module.$instances[0];
+% let config = module.getInstanceConfig(instance);
+
+#include <drivers/gpmc/v0/dma/gpmc_dma.h>
+GPMC_DmaConfig gGpmcDmaConfig[CONFIG_GPMC_NUM_DMA_INSTANCES] =
+{
+%for(let i = 0; i < gpmcEdmaInstances.length; i++) {
+    {
+        .fxns        = &gGpmcDmaEdmaFxns,
+        .gpmcDmaArgs = (void *)&gGpmcEdma`i`Args,
+    }
+%}
+};
+
+uint32_t gGpmcDmaConfigNum = CONFIG_GPMC_NUM_DMA_INSTANCES;
+

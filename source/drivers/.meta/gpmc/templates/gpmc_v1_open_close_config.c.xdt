@@ -5,6 +5,11 @@
     let module = system.modules['/drivers/gpmc/gpmc'];
 %%}
 /*
+ * I2C - io expander pre-requisite for GPMC - PSRAM
+ */
+void i2c_io_expander(void *args);
+
+/*
  * GPMC
  */
 /* GPMC Driver handles */
@@ -25,16 +30,18 @@ GPMC_Params gGpmcParams[CONFIG_GPMC_NUM_INSTANCES] =
         %else {
         .gpmcDmaChIndex = -1,
         %}
-        .devType                =   CSL_GPMC_CONFIG1_DEVICETYPE_NANDLIKE,
-        %if(config.deviceWidth == "8 bit") {
-        .devSize                =   CSL_GPMC_CONFIG1_DEVICESIZE_EIGHTBITS,
+        %if(config.deviceType == "NOR") {
+        .devType                =   CSL_GPMC_CONFIG1_DEVICETYPE_NORLIKE,
+        %}
+        %if(config.deviceWidth == "16 bit") {
+        .devSize                =   CSL_GPMC_CONFIG1_DEVICESIZE_SIXTEENBITS,
         %}
         .chipSel                =   GPMC_CHIP_SELECT_`config.chipSelect`,
         .intrEnable             =   `config.intrEnable.toString(10).toUpperCase()`,
         .dmaEnable              =   `config.dmaEnable.toString(10).toUpperCase()`,
         .transferMode           =   GPMC_TRANSFER_MODE_BLOCKING,
         .transferCallBckFunc    =   NULL,
-        .memDevice              =   GPMC_MEM_TYPE_NAND,
+        .memDevice              =   GPMC_MEM_TYPE_PSRAM,
     },
 % }
 };
@@ -48,6 +55,8 @@ void Drivers_gpmcOpen(void)
     {
         gGpmcHandle[instCnt] = NULL;   /* Init to NULL so that we can exit gracefully */
     }
+
+    i2c_io_expander(NULL);
 
     /* Open all instances */
     for(instCnt = 0U; instCnt < CONFIG_GPMC_NUM_INSTANCES; instCnt++)

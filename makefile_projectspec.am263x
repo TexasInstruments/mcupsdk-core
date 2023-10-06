@@ -128,6 +128,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_input_interrupt_am263x-lp_r5fs
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_led_blink_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_multi_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpmc_psram_io_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hsm_services_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_led_blink_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
@@ -749,6 +750,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  gpio_multi_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/gpio/gpio_multi_led_blink/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ gpmc_psram_io_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/gpmc/gpmc_psram_io/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  hsm_services_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/hsmclient/hsm_services/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1598,6 +1602,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_input_interrupt_am263x-lp_r5fs
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_led_blink_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_multi_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpmc_psram_io_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hsm_services_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_led_blink_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
@@ -2219,6 +2224,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  gpio_multi_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/gpio/gpio_multi_led_blink/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ gpmc_psram_io_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/gpmc/gpmc_psram_io/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  hsm_services_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/hsmclient/hsm_services/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -3068,6 +3076,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_input_interrupt_am263x-lp_r5f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_led_blink_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_multi_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpmc_psram_io_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hsm_services_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_led_blink_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
@@ -3689,6 +3698,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  gpio_multi_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/gpio/gpio_multi_led_blink/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ gpmc_psram_io_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/gpmc/gpmc_psram_io/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  hsm_services_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/hsmclient/hsm_services/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -4554,6 +4566,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_led_blink/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_led_blink/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_multi_led_blink/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/gpmc/gpmc_psram_io/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/hsmclient/hsm_services/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]

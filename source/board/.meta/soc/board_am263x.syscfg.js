@@ -5,6 +5,9 @@ const driverVer = {
     "flash": {
         version: "v1",
     },
+    "psram": {
+        version: "v0",
+    },
 };
 
 const topModules_main = [
@@ -12,6 +15,7 @@ const topModules_main = [
       "/board/led/led",
       "/board/flash/flash",
       "/board/ethphy/ethphy",
+      "/board/psram/psram",
 ];
 const topModules_mcu = [
 ];
