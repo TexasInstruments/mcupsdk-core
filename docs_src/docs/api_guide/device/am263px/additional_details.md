@@ -32,8 +32,8 @@ Below sections describes the various options available for SOC initialization.
 
 - Set AM263PX-CC in NOBOOT mode as shown below
 
-  \imageStyle{boot_pins_noboot_mode.PNG,width:30%}
-  \image html boot_pins_noboot_mode.PNG "NO BOOT MODE"
+  \imageStyle{boot_pins_noboot_mode.jpg,width:30%}
+  \image html boot_pins_noboot_mode.jpg "NO BOOT MODE"
 
 - **POWER-ON** the AM263PX-CC
 
@@ -78,8 +78,8 @@ The `sbl_null` is a secondary bootloader which doesn't load any application bina
 
 - Set boot mode to UART BOOTMODE as shown in below image
 
-  \imageStyle{boot_pins_uart_mode.PNG,width:30%}
-  \image html boot_pins_uart_mode.PNG "UART BOOT MODE"
+  \imageStyle{boot_pins_uart_mode.jpg,width:30%}
+  \image html boot_pins_uart_mode.jpg "UART BOOT MODE"
 
 - **POWER-ON** the EVM
 
@@ -121,8 +121,8 @@ The `sbl_null` is a secondary bootloader which doesn't load any application bina
 
 - Switch the EVM boot mode to OSPI mode as shown below,
 
-  \imageStyle{boot_pins_qspi_mode.PNG,width:30%}
-  \image html boot_pins_qspi_mode.PNG "OSPI BOOT MODE"
+  \imageStyle{boot_pins_ospi_mode.jpg,width:30%}
+  \image html boot_pins_ospi_mode.jpg "OSPI BOOT MODE"
 
 - Re-connect the UART terminal in CCS window as shown in \ref CCS_UART_TERMINAL
 

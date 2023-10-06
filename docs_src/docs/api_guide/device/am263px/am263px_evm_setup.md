@@ -163,8 +163,8 @@ This mode is used to boot flashed applications via EVM flash like OSPI flash
 BOOTMODE [ 1 : 4 ] (SW6) = 1100
 \endcode
 
-  \imageStyle{boot_pins_qspi_mode.PNG,width:30%}
-  \image html boot_pins_qspi_mode.PNG "OSPI BOOT MODE"
+  \imageStyle{boot_pins_ospi_mode.jpg,width:30%}
+  \image html boot_pins_ospi_mode.jpg "OSPI BOOT MODE"
 
 <!-- ##### AM263X-LP
 This mode is used to boot flashed applications via EVM flash like QSPI flash
@@ -181,8 +181,8 @@ This mode is used to flash files to the EVM flash via UART. It can also be used 
 BOOTMODE [ 1 : 4 ] (SW6) = 1000
 \endcode
 
-  \imageStyle{boot_pins_uart_mode.PNG,width:30%}
-  \image html boot_pins_uart_mode.PNG "UART BOOT MODE"
+  \imageStyle{boot_pins_uart_mode.jpg,width:30%}
+  \image html boot_pins_uart_mode.jpg "UART BOOT MODE"
 
 <!-- ##### AM263X-LP
 This mode is used to flash files to the EVM flash via UART. It can also be used to boot applications via UART.
@@ -198,8 +198,8 @@ This mode is used in CCS.
     BOOTMODE [ 1 : 4 ] (SW6) = 1101
     \endcode
 
-  \imageStyle{boot_pins_noboot_mode.PNG,width:30%}
-  \image html boot_pins_noboot_mode.PNG "NO BOOT MODE"
+  \imageStyle{boot_pins_noboot_mode.jpg,width:30%}
+  \image html boot_pins_noboot_mode.jpg "NO BOOT MODE"
 
 <!-- ##### AM263X-LP
 This mode is used in CCS.
