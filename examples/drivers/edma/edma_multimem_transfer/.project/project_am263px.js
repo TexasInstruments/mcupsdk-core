@@ -4,7 +4,7 @@ let device = "am263px";
 
 const files = {
     common: [
-        "epwm_diode_emulation.c",
+        "edma_multimem_transfer_r5.c",
         "main.c",
     ],
 };
@@ -41,9 +41,9 @@ const lnkfiles = {
     ]
 };
 
-const syscfgfile = "../example.syscfg"
+const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_EPWM_DIODE_EMULATION";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_EDMA_MULTIMEM_TRANSFER";
 
 const templates_nortos_r5f =
 [
@@ -51,7 +51,7 @@ const templates_nortos_r5f =
         input: ".project/templates/am263px/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "epwm_diode_emulation_main",
+            entryFunction: "edma_multimem_transfer",
         },
     }
 ];
@@ -61,14 +61,14 @@ const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos"},
 ];
 
-function getComponentProperty(device) {
+function getComponentProperty() {
     let property = {};
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "epwm_diode_emulation";
+    property.name = "edma_multimem_transfer";
     property.isInternal = false;
-    property.description = "This example demonstrates the functionalities of epwm working in DE mode, the trip inputs are sourced from other epwm instances only and not from cmpss."
+    property.description = "An EDMA Multi Memory transfer example. This example demonstrates transfer between multip memory types using EDMA."
     property.buildOptionCombos = buildOptionCombos;
 
     return property;
@@ -85,8 +85,8 @@ function getComponentBuildProperty(buildOption) {
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
     if(buildOption.cpu.match(/r5f*/)) {
-            build_property.libs = libs_nortos_r5f;
-            build_property.templates = templates_nortos_r5f;
+        build_property.libs = libs_nortos_r5f;
+        build_property.templates = templates_nortos_r5f;
     }
 
     return build_property;

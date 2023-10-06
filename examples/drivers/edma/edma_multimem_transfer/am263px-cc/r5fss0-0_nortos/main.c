@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -34,14 +34,14 @@
 #include "ti_drivers_config.h"
 #include "ti_board_config.h"
 
-void epwm_diode_emulation_main(void *args);
+void edma_multimem_transfer(void *args);
 
 int main(void)
 {
     System_init();
     Board_init();
 
-    epwm_diode_emulation_main(NULL);
+    edma_multimem_transfer(NULL);
 
     Board_deinit();
     System_deinit();
