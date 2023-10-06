@@ -91,6 +91,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW
 ### TCP/IP Examples using LwIP Stack on FreeRTOS
 -# \subpage EXAMPLES_ENET_LWIP_CPSW
+-# \subpage EXAMPLES_CPSW_LWIP_HTTPS
 \endcond
 
 \cond SOC_AM273X
