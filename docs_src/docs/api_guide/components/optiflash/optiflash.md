@@ -1,4 +1,4 @@
-# OpTI-Flash {#OPTIFLASH}
+# OptiFlash Memory Technology {#OPTIFLASH}
 
 [TOC]
 
@@ -25,32 +25,32 @@ Since external flash is connected to microcontroller via pins via tracks on PCB 
 
 To make execution from external flash safe and secure, some additional functionality is required. However, these necessary functions also have an impact on performance.
 
-## OpTI-Flash
+## OptiFlash Technology
 
-OpTI-Flash is an ecosystem of patented hardware IP, software tools and drivers which aims to at least overcomes all of the previously described generic challenges.
+OptiFlash technology is an ecosystem of patented hardware IP, software tools and drivers which aims to at least overcomes all of the previously described generic challenges.
 
-The following diagram shows the OpTI-Flash ecosystem.
+The following diagram shows the OptiFlash technology ecosystem.
 
 \imageStyle{optiflash_entire.png,width:70%}
-\image html optiflash_entire.png "OpTI-Flash Ecosystem"
+\image html optiflash_entire.png "OptiFlash technology Ecosystem"
 
-AM263Px is 1st device that comes with OpTI-Flash and is next in series with AM263x.
+AM263Px is 1st device that comes with OptiFlash technology and is next in series with AM263x (AM263x does not have OptiFlash technology).
 
-Following is a representative diagram of AM263x device which does not have OpTI-Flash.
+Following is a representative diagram of AM263x device which does not have OptiFlash technology.
 
 \imageStyle{am263x_hardware_arch.png,width:50%}
 \image html am263x_hardware_arch.png "Communicating with external flash in AM263x device"
 
 Here, external flash is communicated over QSPI. Any data read/write is being forwarded to QSPI IP.
 
-Coming text will explain how OpTI-Flash is addressing all the previous concerns and new features that are introduced with it.
+Coming text will explain how OptiFlash technology is addressing all the previous concerns and new features that are introduced with it.
 
 ### XIP Performance.
 
-With OpTI-Flash the following hardware blocks has been introduced for XIP performance.
+With OptiFlash technology the following hardware blocks has been introduced for XIP performance.
 
 \imageStyle{am263px_perf.png,width:50%}
-\image html am263px_perf.png "AM2x devices with OpTI-Flash. Blocks marked in RED are specifically put to improve XIP performance."
+\image html am263px_perf.png "AM2x devices with OptiFlash technology. Blocks marked in RED are specifically put to improve XIP performance."
 
 #### OSPI
 
@@ -95,7 +95,7 @@ The Logic behind these steps is, suppose, all the functions in a program are in 
 ### Safety & Security
 
 \imageStyle{am263px_saf_sec_perf.png,width:50%}
-\image html am263px_saf_sec_perf.png "AM2x devices with OpTI-Flash. Blocks marked in RED are specifically put to provide safety and security."
+\image html am263px_saf_sec_perf.png "AM2x devices with OptiFlash technology. Blocks marked in RED are specifically put to provide safety and security."
 
 For safety and security, hardware blocks have been provided. These blocks provide on-the-fly safety and security by splitting up the data in external flash into 32bytes chunk and for each chunk, ECC (Error Correction Code) and MAC (Message Authentication Code) is added as header and footer to that data chunk which is also called metadata.
 
@@ -109,7 +109,7 @@ This allows XIP with full safety and security using hardware accelerators. Using
 
 ### Improving startup time
 
-There are many situations, where startup time of any application should be less to achieve system level performance goal. OpTI-Flash brings in some hardware and software features that helps to reduce boot/startup time of an application.
+There are many situations, where startup time of any application should be less to achieve system level performance goal. OptiFlash technology brings in some hardware and software features that helps to reduce boot/startup time of an application.
 
 Startup code is usually a code that is badly cached code and even effectiveness of pre-fetch hardware is less. The reason behind this is, startup code always executes once. Other than this, because, startup code would also be calling different function that would be placed all over the memory by the linker in jumbled order. For same reason, performing XIP with L1 and L2 cache enabled (pre-fetch is enabled by default), would not be sufficient.
 
@@ -141,9 +141,9 @@ This is where FLC comes into picture. FLC allows copying and execution simultane
 In context to the above diagram, the way FLC would solve this problem is that for the amount of time bootloader would wait or is busy in performing some other functions, in the background FLC would be copying application startup code. Now when bootloader is finished and switches over the application, CPU would start executing application code. Now for the amount of code that is copied by the FLC, would be returned from faster internal SRAM, rather than being fetched from slower external flash and for rest of the code would be normal XIP. In this manner, boot time of the application can be reduced.
 
 \imageStyle{xip_flc_boot_process.png,width:50%}
-\image html xip_flc_boot_process.png "Boot flow with OpTI-Flash"
+\image html xip_flc_boot_process.png "Boot flow with OptiFlash technology"
 
-### OpTI-Share Removing Redundant Code
+### OptiShare Removing Redundant Code
 
 When it comes to high performance MCU which has many cores, using traditional method of compilation is not efficient. Normally, for a microcontroller, compilation goes like the follows:
 1. Compilation/assembling of source code written in different programming languages.
@@ -161,19 +161,19 @@ This would change the compilation process to the following:
 4. Relink all the core's binary by removing the common code from each core's binary.
 5. Create a separate binary which only contains shared binary.
 
-To enable this sharing of code, OpTI-Flash provides hardware and software tools solution. Software tool is called OpTI-Share.
+To enable this sharing of code, OptiFlash technology provides hardware and software tools solution. Software tool is called OptiShare.
 
-During compilation of multi-core project, OpTI-Share is responsible to identify common code and separation of it from rest of all core's binaries.
+During compilation of multi-core project, OptiShare is responsible to identify common code and separation of it from rest of all core's binaries.
 
 \imageStyle{optishare_offline.png,width:50%}
-\image html optishare_offline.png "Opti-Share with remove redundant code/data and will put it once in Shared Object"
+\image html optishare_offline.png "OptiShare with remove redundant code/data and will put it once in Shared Object"
 
 However, this way of separating common code does not work standalone. Special hardware needs to be programmed, for this shared code scheme needs to work.
 
-This special hardware that is introduced with OpTI-Flash is called RAT or Region Address Translation.
+This special hardware that is introduced with OptiFlash technology is called RAT or Region Address Translation.
 
 \imageStyle{optiflash_rat_safe_sec_perf.png,width:50%}
-\image html optiflash_rat_safe_sec_perf.png "To address code/data redundancy, RAT hardware is added as part of OpTI-Flash"
+\image html optiflash_rat_safe_sec_perf.png "To address code/data redundancy, RAT hardware is added as part of OptiFlash technology"
 
 At run time, this hardware needs to be programmed by the application software before any shared code be called, otherwise, CPU Abort Exceptions will occur.
 
@@ -184,14 +184,14 @@ At run time, this hardware needs to be programmed by the application software be
 
 In typical microcontroller with embedded flash, to be able to perform FOTA, embedded flash size should be more than the double the size of application, because, at a time 2 copy of same application would be stored, in flash. One would be an active application and other would be different version of the application. However, this puts high constraint on embedded flash requirement and this requirement translates to increased BOM cost. Effectively, for an active application, available internal memory is half of total internal memory.
 
-With external flash solution with OpTI-Flash technology, entire internal memory can be used for active image of application. For example, in AM263Px, internal RAM is 3.5MB of total internal memory. An active image of application can use entire internal memory and for new version image of application can be stored in external Flash. Therefore, when looking from typical microcontroller perspective, effective total memory available in AM263Px is alteast 7MB.
+With external flash solution with OptiFlash technology technology, entire internal memory can be used for active image of application. For example, in AM263Px, internal RAM is 3.5MB of total internal memory. An active image of application can use entire internal memory and for new version image of application can be stored in external Flash. Therefore, when looking from typical microcontroller perspective, effective total memory available in AM263Px is alteast 7MB.
 
-However, because OpTI-Flash technology enables XIP, FOTA is difficult to be performed. External flash is connected to microcontroller over 8 data lines (OSPI) and on same data lines, both reads and writes would happen. And in FOTA, writes would be happening while XIP is going on. During writing, reading should be stopped which also mean that XIP needs to be stopped and this would have a huge impact on performance and increased complexity in system design.
+However, because OptiFlash technology technology enables XIP, FOTA is difficult to be performed. External flash is connected to microcontroller over 8 data lines (OSPI) and on same data lines, both reads and writes would happen. And in FOTA, writes would be happening while XIP is going on. During writing, reading should be stopped which also mean that XIP needs to be stopped and this would have a huge impact on performance and increased complexity in system design.
 
-Although, FOTA is usually a very low priority task and XIP downtime can be managed in most situation. However, in case, XIP downtime is coming out to be critical, then RWW flash can be used with OpTI-Flash FOTA hardware accelerator.
+Although, FOTA is usually a very low priority task and XIP downtime can be managed in most situation. However, in case, XIP downtime is coming out to be critical, then RWW flash can be used with OptiFlash technology FOTA hardware accelerator.
 
 \imageStyle{optiflash_fota_rat_safe_sec_perf.png,width:50%}
-\image html optiflash_fota_rat_safe_sec_perf.png "FOTA hardware accelerator is added as part of OpTI-Flash to schedule reads and writes so as to minimize XIP downtime."
+\image html optiflash_fota_rat_safe_sec_perf.png "FOTA hardware accelerator is added as part of OptiFlash technology to schedule reads and writes so as to minimize XIP downtime."
 
 This role of this accelerator is to schedule reads and writes over same 8 data lines of OSPI. The aim of this hardware is to minimize XIP downtime.
 
@@ -199,7 +199,7 @@ This role of this accelerator is to schedule reads and writes over same 8 data l
 
 ### Benchmark 1
 
-An application has been developed on which XIP performance benchmarks has been done to see how much performance degradation is seen with OpTI-Flash.
+An application has been developed on which XIP performance benchmarks has been done to see how much performance degradation is seen with OptiFlash technology.
 
 The application that is to benchmark performance is an application that would simulate AutoSAR cache miss rate. .text section is in different memories and data in On-Chip RAM. Each test calls 16 separate functions 500 total times in random order. The most instruction intensive example achieves a instruction cache miss rate (ICM/sec) of ~3-4 million per second when run entirely from OCMRAM. This is a rate that we have similarly seen in real-world customer examples.
 
