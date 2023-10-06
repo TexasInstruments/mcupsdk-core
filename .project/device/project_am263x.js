@@ -287,10 +287,6 @@ const example_file_list = [
     "test/security/crypto/test_dthe_aes_cmac/.project/project.js",
     "test/security/crypto/test_dthe_sha/.project/project.js",
     "test/security/crypto/test_dthe_hmac_sha/.project/project.js",
-    "test/security/crypto/test_dthe_pka/test_ecdsa_signing_verification/.project/project.js",
-    "test/security/crypto/test_dthe_pka/test_rsa_encryption_decryption/.project/project.js",
-    "test/security/crypto/test_dthe_pka/test_rsa_signing_verification/.project/project.js",
-    "test/security/crypto/test_dthe_rng/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {
