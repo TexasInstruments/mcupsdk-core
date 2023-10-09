@@ -2180,7 +2180,7 @@ static inline ECAP_Events ECAP_getModuloCounterStatus(uint32_t base)
 {
     uint16_t counterStatusValue;
 
-    counterStatusValue = (((HW_RD_REG32(base + CSL_ECAP_ECCTL2) &
+    counterStatusValue = (((HW_RD_REG16(base + CSL_ECAP_ECCTL2) &
                           CSL_ECAP_ECCTL2_MODCNTRSTS_MASK) >>
                           CSL_ECAP_ECCTL2_MODCNTRSTS_SHIFT));
 

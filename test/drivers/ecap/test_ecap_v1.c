@@ -4140,6 +4140,16 @@ int32_t test_ecap_cases(uint8_t in)
             {
                 failcount++;
             }
+
+            /* Call ECAP_getModuloCounterStatus */
+            ECAP_Events ecap_events = ECAP_getModuloCounterStatus(base);
+
+            /* Check if the value was read correctly */
+            if( (((HW_RD_REG16(base + CSL_ECAP_ECCTL2) & CSL_ECAP_ECCTL2_MODCNTRSTS_MASK) >> CSL_ECAP_ECCTL2_MODCNTRSTS_SHIFT)) != ecap_events)
+            {
+                failcount++;
+            }
+
             break;
         }
         case 1:
