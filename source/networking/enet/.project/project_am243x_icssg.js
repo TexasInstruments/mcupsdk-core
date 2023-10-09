@@ -73,6 +73,7 @@ const filedirs = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/dma/udma",
 		"${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpts",
 
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpts",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio",
 
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3",

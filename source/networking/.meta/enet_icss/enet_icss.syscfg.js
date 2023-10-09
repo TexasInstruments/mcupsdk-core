@@ -627,18 +627,6 @@ function getCpuID() {
     return system.getScript(`/drivers/soc/drivers_${common.getSocName()}`).getCpuID();
 }
 
-
-function getRxDefaultFlowCount(instance)
-{
-    let defaultFlowCount = 0;
-
-    for (let chIdx = 0; chIdx < getRxChannelCount(instance); chIdx++)
-    {
-        defaultFlowCount += (getChannelConfig(instance, "RX", chIdx).useDefaultFlow === true) ? 1 : 0;
-    }
-    return defaultFlowCount;
-}
-
 function getRxChIdxCount(instance, RefChIdx)
 {
     let count = 0;
@@ -773,11 +761,6 @@ function validate(instance, report) {
     }
     if (instance.mode === "DUAL MAC")
     {
-        if (getRxDefaultFlowCount(instance) != 1)
-        {
-            report.logError(`Rx flow associated with dual mac instance should be designated as default rx flow`, instance, "rxDmaChannel");
-        }
-
         let numNetifsCount = getNetifCount(instance);
         if (numNetifsCount > 1)
         {

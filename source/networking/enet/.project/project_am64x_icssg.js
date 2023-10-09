@@ -27,7 +27,7 @@ const files = {
         "enet_udma_priv.c",
 
         /* CSL_FL for CPSW */
-		"csl_cpts.c",
+        "csl_cpts.c",
         "csl_mdio.c",
 
         /* ICSS files */
@@ -99,7 +99,7 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include",
 
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include",
-		"${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpts",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpts",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio",
 
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x",

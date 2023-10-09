@@ -117,7 +117,6 @@ enet_icss1.txDmaChannel[0].$name          = "ENET_DMA_TX_CH0";
 enet_icss1.txDmaChannel[0].PacketsCount   = 8;
 enet_icss1.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH0";
 enet_icss1.rxDmaChannel[0].PacketsCount   = 8;
-enet_icss1.rxDmaChannel[0].useDefaultFlow = true;
 
 enet_icss2.$name                          = "CONFIG_ENET_ICSS1";
 enet_icss2.mode                           = "DUAL MAC";
@@ -131,7 +130,6 @@ enet_icss2.txDmaChannel[0].$name          = "ENET_DMA_TX_CH1";
 enet_icss2.txDmaChannel[0].PacketsCount   = 8;
 enet_icss2.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH1";
 enet_icss2.rxDmaChannel[0].PacketsCount   = 8;
-enet_icss2.rxDmaChannel[0].useDefaultFlow = true;
 
 const pruicss                            = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
 const pruicss1                           = pruicss.addInstance({}, false);
@@ -151,7 +149,6 @@ enet_icss3.txDmaChannel[0].$name          = "ENET_DMA_TX_CH2";
 enet_icss3.txDmaChannel[0].PacketsCount   = 8;
 enet_icss3.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH2";
 enet_icss3.rxDmaChannel[0].PacketsCount   = 8;
-enet_icss3.rxDmaChannel[0].useDefaultFlow = true;
 
 enet_icss4.$name                          = "CONFIG_ENET_ICSS3";
 enet_icss4.phyToMacInterfaceMode          = "RGMII";
@@ -166,7 +163,6 @@ enet_icss4.txDmaChannel[0].$name          = "ENET_DMA_TX_CH3";
 enet_icss4.txDmaChannel[0].PacketsCount   = 8;
 enet_icss4.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH3";
 enet_icss4.rxDmaChannel[0].PacketsCount   = 8;
-enet_icss4.rxDmaChannel[0].useDefaultFlow = true;
 
 const pruicss2                           = pruicss.addInstance({}, false);
 pruicss2.$name                           = "CONFIG_PRU_ICSS0";

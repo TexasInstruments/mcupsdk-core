@@ -115,7 +115,6 @@ enet_icss1.txDmaChannel[0].$name          = "ENET_DMA_TX_CH0";
 enet_icss1.txDmaChannel[0].PacketsCount   = 8;
 enet_icss1.PRU_ICSSG1_RGMII1.$assign      = "PRU_ICSSG1_RGMII1";
 enet_icss1.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH0";
-enet_icss1.rxDmaChannel[0].useDefaultFlow = true;
 enet_icss1.rxDmaChannel[0].PacketsCount   = 8;
 
 enet_icss2.$name                          = "CONFIG_ENET_ICSS1";
@@ -128,7 +127,6 @@ enet_icss2.LargePoolPktCount              = 16;
 enet_icss2.txDmaChannel[0].$name          = "ENET_DMA_TX_CH1";
 enet_icss2.txDmaChannel[0].PacketsCount   = 8;
 enet_icss2.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH1";
-enet_icss2.rxDmaChannel[0].useDefaultFlow = true;
 enet_icss2.rxDmaChannel[0].PacketsCount   = 8;
 
 enet_icss2.icss                          = pruicss1;

@@ -99,7 +99,6 @@ enet_icss1.mode                           = "DUAL MAC";
 enet_icss1.LargePoolPktCount              = 32;
 enet_icss1.txDmaChannel[0].$name          = "ENET_DMA_TX_CH0";
 enet_icss1.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH0";
-enet_icss1.rxDmaChannel[0].useDefaultFlow = true;
 enet_icss1.netifInstance.create(1);
 enet_icss1.netifInstance[0].$name         = "NETIF_INST_ID0";
 enet_icss1.PRU_ICSSG1_RGMII1.$assign      = "PRU_ICSSG1_RGMII1";
@@ -111,7 +110,6 @@ enet_icss2.mdioMdcEnable                  = false;
 enet_icss2.dualMacPortSelected            = "ENET_MAC_PORT_2";
 enet_icss2.txDmaChannel[0].$name          = "ENET_DMA_TX_CH1";
 enet_icss2.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH1";
-enet_icss2.rxDmaChannel[0].useDefaultFlow = true;
 enet_icss2.netifInstance.create(1);
 enet_icss2.netifInstance[0].$name         = "NETIF_INST_ID1";
 

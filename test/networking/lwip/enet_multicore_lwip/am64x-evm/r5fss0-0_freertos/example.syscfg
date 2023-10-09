@@ -132,7 +132,6 @@ enet_icss1.txDmaChannel[0].$name          = "ENET_DMA_TX_CH1";
 enet_icss1.netifInstance.create(1);
 enet_icss1.netifInstance[0].$name         = "NETIF_INST_ID0";
 enet_icss1.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH0";
-enet_icss1.rxDmaChannel[0].useDefaultFlow = true;
 enet_icss1.rxDmaChannel[0].PacketsCount   = 16;
 
 enet_icss2.$name                          = "CONFIG_ENET_ICSS1";
@@ -149,7 +148,6 @@ enet_icss2.netifInstance.create(1);
 enet_icss2.netifInstance[0].$name         = "NETIF_INST_ID1";
 enet_icss2.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH1";
 enet_icss2.rxDmaChannel[0].PacketsCount   = 16;
-enet_icss2.rxDmaChannel[0].useDefaultFlow = true;
 
 pruicss2.$name                           = "CONFIG_PRU_ICSS1";
 pruicss2.instance                        = "ICSSG1";
@@ -177,7 +175,6 @@ enet_icss3.txDmaChannel[0].$name              = "ENET_DMA_TX_CH2";
 enet_icss3.netifInstance.create(1);
 enet_icss3.netifInstance[0].$name             = "NETIF_INST_ID2";
 enet_icss3.rxDmaChannel[0].$name              = "ENET_DMA_RX_CH4";
-enet_icss3.rxDmaChannel[0].useDefaultFlow     = true;
 enet_icss3.rxDmaChannel[0].PacketsCount       = 16;
 enet_icss3.PRU_ICSSG0_MII_G_RT.MII0_COL.$used = false;
 enet_icss3.PRU_ICSSG0_MII_G_RT.MII0_CRS.$used = false;
@@ -199,7 +196,6 @@ enet_icss4.netifInstance.create(1);
 enet_icss4.netifInstance[0].$name         = "NETIF_INST_ID3";
 enet_icss4.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH5";
 enet_icss4.rxDmaChannel[0].PacketsCount   = 16;
-enet_icss4.rxDmaChannel[0].useDefaultFlow = true;
 
 pruicss1.$name                           = "CONFIG_PRU_ICSS0";
 pruicss1.coreClk                         = 250000000;

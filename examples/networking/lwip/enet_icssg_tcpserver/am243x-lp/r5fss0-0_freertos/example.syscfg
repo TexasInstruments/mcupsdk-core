@@ -81,7 +81,6 @@ enet_icss1.phyAddr1                       = 3;
 enet_icss1.phyAddr2                       = 15;
 enet_icss1.txDmaChannel[0].$name          = "ENET_DMA_TX_CH0";
 enet_icss1.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH0";
-enet_icss1.rxDmaChannel[0].useDefaultFlow = true;
 enet_icss1.netifInstance.create(1);
 enet_icss1.netifInstance[0].$name         = "NETIF_INST_ID0";
 enet_icss1.PRU_ICSSG1_RGMII1.$assign      = "PRU_ICSSG1_RGMII1";
@@ -95,7 +94,6 @@ enet_icss2.PktInfoOnlyEnable              = true;
 enet_icss2.LargePoolPktCount              = 32;
 enet_icss2.txDmaChannel[0].$name          = "ENET_DMA_TX_CH1";
 enet_icss2.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH1";
-enet_icss2.rxDmaChannel[0].useDefaultFlow = true;
 enet_icss2.netifInstance.create(1);
 enet_icss2.netifInstance[0].$name         = "NETIF_INST_ID1";
 

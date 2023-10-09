@@ -434,29 +434,14 @@ static void EnetAppUtils_openRxFlowForChIdx(Enet_Type enetType,
     *pRxFlowHandle = EnetDma_openRxCh(hDma, pRxFlowPrms);
     EnetAppUtils_assert(*pRxFlowHandle != NULL);
 
-    if (useDefaultFlow)
+     for (uint32_t i = 0; i < allocMacAddrCnt; i++)
     {
-        if (chIdx == 0U)
+        status = EnetAppUtils_allocMac(hEnet, coreKey, coreId, macAddr[i]);
+        EnetAppUtils_assert(status == ENET_SOK);
         {
-            for (uint32_t i = 0; i < allocMacAddrCnt; i++)
-            {
-                status = EnetAppUtils_allocMac(hEnet, coreKey, coreId, macAddr[i]);
-                EnetAppUtils_assert(status == ENET_SOK);
-
-                {
-                    // Should we add this entry to ICSSG FDB?
-                }
-            }
+            // Should we add this entry to ICSSG FDB?
         }
     }
-    else
-    {
-        if (allocMacAddrCnt > 0)
-        {
-
-        }
-    }
-
     EnetAppUtils_assert(status == ENET_SOK);
 }
 
@@ -481,20 +466,13 @@ static void EnetAppUtils_closeRxFlowForChIdx(Enet_Type enetType,
 
     EnetDma_disableRxEvent(hRxFlow);
 
-    if (useDefaultFlow)
+    for(uint32_t i = 0; i < allocMacAddrCnt; i++)
     {
-        for(uint32_t i = 0; i < allocMacAddrCnt; i++)
-        {
-            status = EnetAppUtils_freeMac(hEnet,
-                                          coreKey,
-                                          coreId,
-                                          macAddr[i]);
-            EnetAppUtils_assert(status == ENET_SOK);
-        }
-    }
-    else
-    {
-
+        status = EnetAppUtils_freeMac(hEnet,
+                                      coreKey,
+                                      coreId,
+                                      macAddr[i]);
+        EnetAppUtils_assert(status == ENET_SOK);
     }
 
     status = EnetDma_closeRxCh(hRxFlow, pFqPktInfoQ, pCqPktInfoQ);

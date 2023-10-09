@@ -112,7 +112,6 @@ enet_icss1.txDmaChannel[0].$name          = "ENET_DMA_TX_CH0";
 enet_icss1.netifInstance.create(1);
 enet_icss1.netifInstance[0].$name         = "NETIF_INST_ID0";
 enet_icss1.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH0";
-enet_icss1.rxDmaChannel[0].useDefaultFlow = true;
 
 enet_icss2.$name                          = "CONFIG_ENET_ICSS1";
 enet_icss2.mode                           = "DUAL MAC";
@@ -125,7 +124,6 @@ enet_icss2.txDmaChannel[0].$name          = "ENET_DMA_TX_CH1";
 enet_icss2.netifInstance.create(1);
 enet_icss2.netifInstance[0].$name         = "NETIF_INST_ID1";
 enet_icss2.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH1";
-enet_icss2.rxDmaChannel[0].useDefaultFlow = true;
 
 const pruicss                            = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
 const pruicss1                           = pruicss.addInstance({}, false);

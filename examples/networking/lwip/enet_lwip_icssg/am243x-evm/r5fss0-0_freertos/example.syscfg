@@ -103,7 +103,6 @@ enet_icss1.PktInfoOnlyEnable              = true;
 enet_icss1.QoS                            = 3;
 enet_icss1.txDmaChannel[0].$name          = "ENET_DMA_TX_CH0";
 enet_icss1.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH0";
-enet_icss1.rxDmaChannel[0].useDefaultFlow = true;
 enet_icss1.rxDmaChannel[0].PacketsCount   = 16;
 enet_icss1.rxDmaChannel[1].$name          = "ENET_DMA_RX_CH1";
 enet_icss1.rxDmaChannel[1].PacketsCount   = 16;
