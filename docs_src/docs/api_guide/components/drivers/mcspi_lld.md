@@ -91,7 +91,7 @@ txBuf and rxBuf size should be uint32_t and the mask bits should be 0x3FFFF.
     - A form of GPIO flow control from the peripheral to the MCSPI controller to notify
       the controller when ready.
 
-\cond !SOC_AM62X
+\cond !SOC_AM62X && !SOC_AM65X
 - In case of DMA mode, as R5F core is not Cache Coherent, Cache Writeback is required if R5F writes to the buffers.
   And before reading the buffers, application needs to invalidate those. Please refer \ref EXAMPLES_DRIVERS_MCSPI_LOOPBACK_DMA_LLD.
 \endcond
