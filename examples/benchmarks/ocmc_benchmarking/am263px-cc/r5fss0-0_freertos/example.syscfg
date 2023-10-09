@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @versions {"tool":"1.18.0+3266"}
  */
 
 /**
@@ -100,14 +100,14 @@ region1.memory_region[3].size               = 0x60000;
 region1.memory_region[4].$name              = "NON_CACHE_MEM";
 region1.memory_region[4].size               = 0x8000;
 region1.memory_region[5].auto               = false;
-region1.memory_region[5].manualStartAddress = 0x70080000;
 region1.memory_region[5].$name              = "MSRAM";
 region1.memory_region[5].size               = 0x160000;
+region1.memory_region[5].manualStartAddress = 0x70068000;
 region1.memory_region[6].type               = "FLASH";
 region1.memory_region[6].$name              = "FLASH";
 region1.memory_region[6].auto               = false;
-region1.memory_region[6].manualStartAddress = 0x60100000;
 region1.memory_region[6].size               = 0x150000;
+region1.memory_region[6].manualStartAddress = 0x60300000;
 
 section1.$name                   = "Vector Table";
 section1.load_memory             = ["R5F_VECS"];
@@ -117,12 +117,13 @@ section1.output_section[0].$name = ".vectors";
 
 section2.$name                   = "Text Segments";
 section2.load_memory             = ["MSRAM"];
-section2.output_section.create(5);
+section2.output_section.create(6);
 section2.output_section[0].$name = ".text.hwi";
 section2.output_section[1].$name = ".text.cache";
 section2.output_section[2].$name = ".text.mpu";
 section2.output_section[3].$name = ".text.boot";
 section2.output_section[4].$name = ".text:abort";
+section2.output_section[5].$name = ".rodata.cfg";
 
 section3.$name                         = "TI Local";
 section3.split_across_memories         = true;
@@ -160,25 +161,26 @@ section5.output_section[0].$name     = ".TI.offchip";
 section5.output_section[0].alignment = 0;
 
 section6.$name                    = "Task";
-section6.load_memory              = ["MSRAM"];
-section6.output_section.create(17);
+section6.load_memory              = ["FLASH"];
+section6.output_section.create(18);
 section6.output_section[0].$name  = ".task_0";
 section6.output_section[1].$name  = ".task_1";
 section6.output_section[2].$name  = ".task_2";
-section6.output_section[3].$name  = ".task_4";
-section6.output_section[4].$name  = ".task_5";
-section6.output_section[5].$name  = ".task_6";
-section6.output_section[6].$name  = ".task_7";
-section6.output_section[7].$name  = ".task_8";
-section6.output_section[8].$name  = ".task_9";
-section6.output_section[9].$name  = ".task_10";
-section6.output_section[10].$name = ".task_11";
-section6.output_section[11].$name = ".task_12";
-section6.output_section[12].$name = ".task_13";
-section6.output_section[13].$name = ".task_14";
-section6.output_section[14].$name = ".task_15";
-section6.output_section[15].$name = ".text";
-section6.output_section[16].$name = ".rodata";
+section6.output_section[3].$name  = ".task_3";
+section6.output_section[4].$name  = ".task_4";
+section6.output_section[5].$name  = ".task_5";
+section6.output_section[6].$name  = ".task_6";
+section6.output_section[7].$name  = ".task_7";
+section6.output_section[8].$name  = ".task_8";
+section6.output_section[9].$name  = ".task_9";
+section6.output_section[10].$name = ".task_10";
+section6.output_section[11].$name = ".task_11";
+section6.output_section[12].$name = ".task_12";
+section6.output_section[13].$name = ".task_13";
+section6.output_section[14].$name = ".task_14";
+section6.output_section[15].$name = ".task_15";
+section6.output_section[16].$name = ".text";
+section6.output_section[17].$name = ".rodata";
 
 section7.$name                        = "Buffer";
 section7.load_memory                  = ["MSRAM"];

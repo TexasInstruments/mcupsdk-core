@@ -127,6 +127,20 @@ int main(void)
             OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
             Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, OSPI_getInputClk(ospiHandle));
 
+
+            if (status == SystemP_SUCCESS)
+            {
+                /* enable Phy and Phy pipeline for XIP execution */
+                if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
+                {
+                    status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
+                    DebugP_assert(status == SystemP_SUCCESS);
+
+                    status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
+                    DebugP_assert(status == SystemP_SUCCESS);
+                }
+            }
+
             if (status == SystemP_SUCCESS)
             {
                 Bootloader_profileAddProfilePoint("SBL End");
@@ -154,6 +168,7 @@ int main(void)
                 {
                     status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
                 }
+
                 if (status == SystemP_SUCCESS)
                 {
                     /* enable Phy and Phy pipeline for XIP execution */
