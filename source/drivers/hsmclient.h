@@ -237,6 +237,27 @@ typedef struct DKEK_t_
 
 /**
  * @brief
+ * This is RNG type which holds the resultPtr for derivation which is returned by TIFS.
+ * This also holds the resultLengthPtr and DRBG Mode along with seedValue and seedSize.
+ *
+ * @param resultPtr		    Pointer to the random number generated
+ * @param resultLengthPtr	Pointer to store the desired length in bytes
+ * @param DRBGMode          Flag that determines whether DRBG mode is required or not
+ * @param seedValue			Stores the seed values
+ * @param seedSizeInWords   Stores the seed size in words
+ */
+typedef struct RNGReq_t_
+{
+    uint8_t* resultPtr; /**< Pointer to the random number.*/
+    uint32_t* resultLengthPtr; /**< Pointer to determine result length.*/
+    uint8_t DRBGMode; /**< Flag to enable DRBG Mode.*/
+    uint32_t* seedValue; /**< Seed Value.*/
+    uint8_t seedSizeInWords; /**< Seed Size in words.*/
+    uint8_t reserved; /**< Reserved Variable.*/
+} RNGReq_t;
+
+/**
+ * @brief
  * Initialize the HSM client for current core.
  *
  * @param params [IN] SIPC_notify params.
@@ -557,6 +578,19 @@ int32_t HsmClient_waitForBootNotify(HsmClient_t* HsmClient,uint32_t timeToWaitIn
  */
 int32_t Hsmclient_loadHSMRtFirmware(const uint8_t *pHSMRt_firmware);
 
+/**
+ *  @brief  Returns the Random Number Generated.
+ *
+ *  @param  HsmClient            [IN] HsmClient object
+ *  @param getRandomNum          [IN] Pointer to RNGReq_t which contains the request
+ *								 structure for Random Number Generated.
+ *
+ * @return
+ * 1. SystemP_SUCCESS if returns successfully
+ * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+ */
+int32_t HsmClient_getRandomNum(HsmClient_t* HsmClient,
+                                        RNGReq_t* getRandomNum);
 /** @} */
 
 #ifdef __cplusplus

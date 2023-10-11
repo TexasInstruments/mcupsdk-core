@@ -81,7 +81,8 @@ extern "C"
 #define HSM_MSG_WRITE_SWREV						 (0x9032)
 /** @brief Get DKEK service type ID*/
 #define HSM_MSG_GET_DKEK                         (0x9029)
-
+/** @brief Get RNG service type ID*/
+#define HSM_MSG_GET_RAND                         (0x9001)
 /* message flags */
 /**
  * @brief
