@@ -92,19 +92,19 @@ pSDL_DPL_HwipHandle SDL_TEST_registerInterrupt(SDL_DPL_HwipParams *pParams)
     int32_t objNum;
 
     hwipParams.args = (void *)pParams->callbackArg;
-#if !defined(SOC_AWR294X) && !defined(SOC_AM273X) && !defined(SOC_AM263X)
+    #if !defined(SOC_AWR294X) && !defined(SOC_AM273X) && !defined(SOC_AM263X) && !defined(SOC_AM263PX)
     /*
-     * For M4F, external interrupt #10 at NVIC is
-     * 16 internal interrupts + external interrupt number at NVIC
-     */
-#if defined (R5F_CORE)
-	hwipParams.intNum = pParams->intNum;
-#else
-	hwipParams.intNum = pParams->intNum + 16;
-#endif
-#else
-    hwipParams.intNum = pParams->intNum;
-#endif
+    * For M4F, external interrupt #10 at NVIC is
+    * 16 internal interrupts + external interrupt number at NVIC
+    */
+    #if defined (R5F_CORE)
+        hwipParams.intNum = pParams->intNum;
+    #else
+        hwipParams.intNum = pParams->intNum + 16;
+    #endif
+    #else
+        hwipParams.intNum = pParams->intNum;
+    #endif
 
     hwipParams.callback = pParams->callback;
 
@@ -133,40 +133,40 @@ int32_t SDL_TEST_deregisterInterrupt(pSDL_DPL_HwipHandle handle)
 
 int32_t SDL_TEST_enableInterrupt(uint32_t intNum)
 {
-#if !defined(SOC_AWR294X) && !defined(SOC_AM273X) && !defined(SOC_AM263X)
+    #if !defined(SOC_AWR294X) && !defined(SOC_AM273X) && !defined(SOC_AM263X) && !defined(SOC_AM263PX)
 	/*
      * For M4F, external interrupt #10 at NVIC is
      * 16 internal interrupts + external interrupt number at NVIC
      */
-
 	#if defined (M4F_CORE)
-    HwiP_enableInt(intNum + 16);
+        HwiP_enableInt(intNum + 16);
 	#endif
 	#if defined (R5F_CORE)
-	HwiP_enableInt(intNum);
+	    HwiP_enableInt(intNum);
 	#endif
-#else
-	HwiP_enableInt(intNum);
-#endif
+    #else
+        HwiP_enableInt(intNum);
+    #endif
+
     return SDL_PASS;
 }
 
 int32_t SDL_TEST_disableInterrupt(uint32_t intNum)
 {
-#if !defined(SOC_AWR294X) && !defined(SOC_AM273X) && !defined(SOC_AM263X)
+    #if !defined(SOC_AWR294X) && !defined(SOC_AM273X) && !defined(SOC_AM263X) && !defined(SOC_AM263PX)
     /*
      * For M4F, external interrupt #10 at NVIC is
      * 16 internal interrupts + external interrupt number at NVIC
      */
-	#if defined (M4F_CORE)
-    HwiP_disableInt(intNum + 16);
-	#endif
-	#if defined (R5F_CORE)
-	HwiP_disableInt(intNum);
-	#endif
-#else
-	HwiP_disableInt(intNum);
-#endif
+    #if defined (M4F_CORE)
+        HwiP_disableInt(intNum + 16);
+    #endif
+    #if defined (R5F_CORE)
+        HwiP_disableInt(intNum);
+    #endif
+    #else
+	    HwiP_disableInt(intNum);
+    #endif
 
     return SDL_PASS;
 }
