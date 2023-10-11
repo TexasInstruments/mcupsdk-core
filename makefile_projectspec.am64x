@@ -8,6 +8,7 @@ include $(MCU_PLUS_SDK_PATH)/imports.mak
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL =
 # Various Example Projectspec Build Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += coremark_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dhrystone_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += adc_singleshot_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += adc_singleshot_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sbl_emmc_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
@@ -429,6 +430,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  coremark_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/benchmarks/coremark_benchmark/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ dhrystone_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/benchmarks/dhrystone_benchmark/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  adc_singleshot_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/adc/adc_singleshot/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1662,6 +1666,7 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
 # Various Example Projectspec Clean Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += coremark_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dhrystone_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += adc_singleshot_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += adc_singleshot_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sbl_emmc_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2083,6 +2088,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  coremark_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/benchmarks/coremark_benchmark/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ dhrystone_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/benchmarks/dhrystone_benchmark/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  adc_singleshot_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/adc/adc_singleshot/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -3316,6 +3324,7 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
 # Various Example Projectspec Export Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += coremark_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dhrystone_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += adc_singleshot_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += adc_singleshot_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sbl_emmc_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
@@ -3737,6 +3746,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  coremark_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/benchmarks/coremark_benchmark/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ dhrystone_benchmark_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/benchmarks/dhrystone_benchmark/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  adc_singleshot_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/adc/adc_singleshot/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -4995,6 +5007,7 @@ help:
 	@echo  Example ProjectSpec build targets,
 	@echo  ==================================
 	@echo  $(MAKE) -s -C examples/benchmarks/coremark_benchmark/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/benchmarks/dhrystone_benchmark/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_singleshot/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_singleshot/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_emmc/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
