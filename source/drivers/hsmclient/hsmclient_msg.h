@@ -71,6 +71,8 @@ extern "C"
 #define HSM_MSG_PROC_AUTH_BOOT					 (0xC120)
 /** @brief Set Firewall service type ID*/
 #define HSM_MSG_SET_FIREWALL                     (0x9000U)
+/** @brief Set Firewall Interrupt service type ID*/
+#define HSM_MSG_SET_FIREWALL_INTR                (0x9002)
 /** @brief send KeyWriter customer key certificate */
 #define HSM_KEYWRITER_SEND_CUST_KEY_CERT         (0x9028)
 /** @brief Read Software Revision service type ID */

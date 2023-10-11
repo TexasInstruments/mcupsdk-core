@@ -806,7 +806,7 @@ int32_t HsmClient_setFirewall(HsmClient_t* HsmClient,
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
     {
-        /* the rowProt has been populated by HSM server
+        /* the firewall regions has been configured by HSM server
          * if this request has been processed correctly */
         if(HsmClient->RespFlag == HSM_FLAG_NACK)
         {
@@ -827,6 +827,66 @@ int32_t HsmClient_setFirewall(HsmClient_t* HsmClient,
             else
             {
                 DebugP_log("\r\n [HSM_CLIENT] CRC check for set firewall response failed \r\n");
+                status = SystemP_FAILURE ;
+            }
+        }
+    }
+    /* If failure occur due to some reason */
+    else if (status == SystemP_FAILURE)
+    {
+        status = SystemP_FAILURE;
+    }
+    /* Indicate timeout error */
+    else
+    {
+        status = SystemP_TIMEOUT;
+    }
+    return status;
+}
+
+int32_t HsmClient_FirewallIntr(HsmClient_t* HsmClient,
+                                        FirewallIntrReq_t* FirewallIntrReqObj,
+                                        uint32_t timeout)
+{
+    /* make the message */
+    int32_t status ;
+    uint16_t crcArgs;
+    /*populate the send message structure */
+    HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
+    HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
+
+    /* Always expect acknowledgement from HSM server */
+    HsmClient->ReqMsg.flags = HSM_FLAG_AOP;
+    HsmClient->ReqMsg.serType = HSM_MSG_SET_FIREWALL_INTR;
+    HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(FirewallIntrReqObj);
+
+    /* Add arg crc */
+    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *) FirewallIntrReqObj, sizeof(FirewallIntrReq_t));
+
+    status = HsmClient_SendAndRecv(HsmClient, timeout);
+    if(status == SystemP_SUCCESS)
+    {
+        /* the firewall interrupt request has been honored by HSM server
+         * if this request has been processed correctly */
+        if(HsmClient->RespFlag == HSM_FLAG_NACK)
+        {
+            DebugP_log("\r\n [HSM_CLIENT] firewall interrupt request NACKed by HSM server\r\n");
+            status = SystemP_FAILURE;
+        }
+        else
+        {
+            /* Change the Arguments Address in Physical Address */
+            HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
+
+            /* check the integrity of args */
+            crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, 0U);
+            if(crcArgs == HsmClient->RespMsg.crcArgs)
+            {
+                status = SystemP_SUCCESS;
+            }
+            else
+            {
+                DebugP_log("\r\n [HSM_CLIENT] CRC check for firewall interrupt response failed \r\n");
                 status = SystemP_FAILURE ;
             }
         }

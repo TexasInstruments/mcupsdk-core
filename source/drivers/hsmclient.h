@@ -190,6 +190,19 @@ typedef struct FirewallReq_t_
 
 /**
  * @brief
+ * This is a FirewallIntrReq type which holds the information
+ * of MPU Firewall request for interrupt enable, interrupt enable clear and fault clear.
+ */
+typedef struct FirewallIntrReq_t_
+{
+    uint16_t  firewallId ;             /**< Index of the firewall. **/
+    uint8_t   interruptEnable;         /**< MPU Interrupt Enable **/
+    uint8_t   interruptEnableClear;    /**< Clear MPU Interrupt **/
+    uint8_t   faultClear;              /**< Clear voilation status MMRs **/
+} FirewallIntrReq_t ;
+
+/**
+ * @brief
  * This is SWRev type which holds the information
  * regarding Revision identifier and value corresponding to it .
  *
@@ -411,6 +424,24 @@ int32_t HsmClient_procAuthBoot(HsmClient_t* HsmClient,
  */
 int32_t HsmClient_setFirewall(HsmClient_t* HsmClient,
                                         FirewallReq_t* FirewallReqObj,
+                                        uint32_t timeout);
+/**
+ * @brief
+ *  The service issued to HSM Server sets the firewall interrupt request for the given firewall id.
+ *
+ * @param timeout           [IN] amount of time to block waiting for
+ * semaphore to be available, in units of system ticks (see KERNEL_DPL_CLOCK_PAGE)
+ * @param HsmClient                  [IN] HsmClient object.
+ * @param FirewallIntrReqObj         [IN] Pointer to FirewallIntrReq_t struct which contains
+ *                                    information required for HSM to process firewall interrupt
+ *                                    request.
+ * @return
+ * 1. SystemP_SUCCESS if returns successfully
+ * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+ * 3. SystemP_TIMEOUT if timeout exception occours.
+ */
+int32_t HsmClient_FirewallIntr(HsmClient_t* HsmClient,
+                                        FirewallIntrReq_t* FirewallIntrReqObj,
                                         uint32_t timeout);
 
 /**
