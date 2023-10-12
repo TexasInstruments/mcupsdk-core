@@ -58,6 +58,9 @@
 #if defined(SOC_AM263X)
 #include <sdl/include/am263x/sdlr_soc_ecc_aggr.h>
 #endif
+#if defined(SOC_AM263PX)
+#include <sdl/include/am263px/sdlr_soc_ecc_aggr.h>
+#endif
 #if defined(SOC_AM273X)
 #include <sdl/include/am273x/sdlr_soc_ecc_aggr.h>
 #endif
@@ -183,26 +186,26 @@ SDL_ESM_NotifyParams ECC_TestparamsMSS[SDL_ESM_MAX_MSS_EXAMPLE_AGGR] =
 };
 #endif
 
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 
 static uint32_t arg;
 
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
-     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-     .enableBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
-                      0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-      /**< All events enable: except clkstop events for unused clocks
-       *   and PCIE events */
-       /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
-     .priorityBitmap = {0x00000000u, 0x00010000u, 0x00000000u, 0x00000000u,
-                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
-     /**< All events high priority: except clkstop events for unused clocks
-      *   and PCIE events */
-     .errorpinBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
-                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-     /**< All events high priority: except clkstop for unused clocks
-      *   and PCIE events */
+    .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+    /**< All events enable: except clkstop events for unused clocks
+     *   and PCIE events */
+    /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
+    .priorityBitmap = {0x00000000u, 0x00010000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
+    /**< All events high priority: except clkstop events for unused clocks
+     *   and PCIE events */
+    .errorpinBitmap = {0x00000000u, 0x00018000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+    /**< All events high priority: except clkstop for unused clocks
+     *   and PCIE events */
 };
 
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
@@ -248,7 +251,7 @@ int32_t ECC_Example_init (void)
 {
     int32_t retValue=0;
     SDL_ErrType_t result;
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
     void *ptr = (void *)&arg;
 #endif
     /* Initialise exception handler */
@@ -257,20 +260,20 @@ int32_t ECC_Example_init (void)
     DebugP_log("\r\nECC_Test_init: Exception init complete \r\n");
 
     if (retValue == 0) {
-             /* Initialize ECC Memory */
-         result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
-         if (result != SDL_PASS) {
-             /* print error and quit */
-             DebugP_log("\r\nECC_Test_init: Error initializing Memory of R5FSS0 CORE0 ECC: result = %d\r\n", result);
+            /* Initialize ECC Memory */
+        result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
+        if (result != SDL_PASS) {
+            /* print error and quit */
+            DebugP_log("\r\nECC_Test_init: Error initializing Memory of R5FSS0 CORE0 ECC: result = %d\r\n", result);
 
-             retValue = -1;
-         } else {
-             DebugP_log("\r\nECC_Test_init: Initialize of R5FSS0 CORE0 ECC Memory is complete \r\n");
-         }
+            retValue = -1;
+        } else {
+            DebugP_log("\r\nECC_Test_init: Initialize of R5FSS0 CORE0 ECC Memory is complete \r\n");
+        }
     }
     if (retValue == 0) {
         /* Initialize ESM module */
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
         result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
 #endif
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
@@ -325,7 +328,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_1BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nR5FSS0 CORE0 ATCM0 BANK0 Single bit error inject: starting \r\n");
-	
+
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(SDL_EXAMPLE_ECC_RAM_ADDR);
 
@@ -365,7 +368,7 @@ int32_t ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_2BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nR5FSS0 CORE0 ATCM0 BANK0 Double bit error inject: starting \r\n");
 
     /* Run one shot test for R5FSS0 CORE0 ATCM0 BANK0 2 bit error */
@@ -408,7 +411,7 @@ static int32_t ECC_sdlFuncTest(void)
 
     if (retVal == 0)
     {
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
         result = ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_2BitInjectTest();
 #endif
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
@@ -429,7 +432,7 @@ static int32_t ECC_sdlFuncTest(void)
             } while (esmError == false);
         }
         if(result == SDL_PASS){
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
             DebugP_log("\r\nUC-1: Injected 2-bit error and got ESM Interrupt\r\n");
 #endif
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
@@ -445,7 +448,7 @@ static int32_t ECC_sdlFuncTest(void)
         }
     }
     if (retVal == 0) {
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 
         result = ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_1BitInjectTest();
 #endif
@@ -460,7 +463,7 @@ static int32_t ECC_sdlFuncTest(void)
                 timeOutCnt += 10;
                 if (timeOutCnt > maxTimeOutMilliSeconds)
                 {
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
                     result = SDL_EFAIL;
 #endif
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
@@ -471,7 +474,7 @@ static int32_t ECC_sdlFuncTest(void)
             } while (esmError == false);
         }
         if(result == SDL_PASS){
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
             DebugP_log("\r\nUC-2: Injected 1-bit error and got ESM Interrupt\r\n");
 #endif
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
@@ -519,7 +522,7 @@ int32_t ECC_funcTest(void)
 
     /*Initializing the DPL*/
     sdlApp_dplInit();
-   
+
    /*Enabling the ECC module*/
     SDL_ECC_UTILS_enableECCATCM();
 

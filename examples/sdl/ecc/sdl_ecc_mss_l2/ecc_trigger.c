@@ -54,6 +54,9 @@
 #if defined(SOC_AM263X)
 #include <sdl/include/am263x/sdlr_soc_ecc_aggr.h>
 #endif
+#if defined(SOC_AM263PX)
+#include <sdl/include/am263px/sdlr_soc_ecc_aggr.h>
+#endif
 #if defined(SOC_AM273X)
 #include <sdl/include/am273x/sdlr_soc_ecc_aggr.h>
 #endif
@@ -90,7 +93,7 @@
 #define SDL_ECC_MSS_L2_BANK_MEM_INIT                (0x2u) /* Bank 2*/
 #endif
 
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x70100008u) /*MSS_L2_SLV2 address*/
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_SOC_ECC_AGGR
 #define SDL_EXAMPLE_ECC_RAM_ID                      SDL_SOC_ECC_AGGR_MSS_L2_SLV2_ECC_RAM_ID
@@ -116,26 +119,26 @@ static SDL_ECC_InitConfig_t ECC_Test_MSS_L2_ECCInitConfig =
     /**< Sub type list  */
 };
 
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 
 static uint32_t arg;
 
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
-     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-     .enableBitmap = {0x00180000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                      0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-      /**< All events enable: except clkstop events for unused clocks
-       *   and PCIE events */
-       /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
-     .priorityBitmap = {0x00180000u, 0x000000000u, 0x00000000u, 0x00000000u,
-                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
-     /**< All events high priority: except clkstop events for unused clocks
-      *   and PCIE events */
-     .errorpinBitmap = {0x00180000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-     /**< All events high priority: except clkstop for unused clocks
-      *   and PCIE events */
+    .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00180000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+    /**< All events enable: except clkstop events for unused clocks
+     *   and PCIE events */
+    /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
+    .priorityBitmap = {0x00180000u, 0x000000000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
+    /**< All events high priority: except clkstop events for unused clocks
+     *   and PCIE events */
+    .errorpinBitmap = {0x00180000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+    /**< All events high priority: except clkstop for unused clocks
+     *   and PCIE events */
 };
 
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
@@ -156,22 +159,22 @@ extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 /* Event BitMap for ECC ESM callback for MSS L2*/
 SDL_ESM_NotifyParams ECC_TestparamsMSS[SDL_ESM_MAX_MSS_EXAMPLE_AGGR] =
 {
-     {
-          /* Event BitMap for ECC ESM callback for MSS Single bit*/
-          .groupNumber = SDL_INTR_GROUP_NUM_1,
-          .errorNumber = SDL_ESMG1_ECCAGGMSS_SERR,
-          .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
-          .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
-          .callBackFunction = &SDL_ESM_applicationCallbackFunction,
-     },
-     {
-          /* Event BitMap for ECC ESM callback for MSS Double bit*/
-          .groupNumber = SDL_INTR_GROUP_NUM_1,
-          .errorNumber = SDL_ESMG1_ECCAGGMSS_UERR,
-          .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
-          .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
-          .callBackFunction = &SDL_ESM_applicationCallbackFunction,
-     },
+    {
+        /* Event BitMap for ECC ESM callback for MSS Single bit*/
+        .groupNumber = SDL_INTR_GROUP_NUM_1,
+        .errorNumber = SDL_ESMG1_ECCAGGMSS_SERR,
+        .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
+        .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+        .callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+    {
+        /* Event BitMap for ECC ESM callback for MSS Double bit*/
+        .groupNumber = SDL_INTR_GROUP_NUM_1,
+        .errorNumber = SDL_ESMG1_ECCAGGMSS_UERR,
+        .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
+        .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+        .callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
 };
 #endif
 /* ========================================================================== */
@@ -195,26 +198,26 @@ int32_t ECC_Example_init (void);
 int32_t ECC_Example_init (void)
 {
     int32_t retValue=0;
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
     void *ptr = (void *)&arg;
 #endif
     SDL_ErrType_t result;
     if (retValue == 0) {
-         /* Initialize ECC Memory */
-         result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
-         if (result != SDL_PASS) {
-             /* print error and quit */
-             DebugP_log("\r\nECC_Test_init: Error initializing Memory of MSS L2 ECC: result = %d\r\n", result);
+        /* Initialize ECC Memory */
+        result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
+        if (result != SDL_PASS) {
+            /* print error and quit */
+            DebugP_log("\r\nECC_Test_init: Error initializing Memory of MSS L2 ECC: result = %d\r\n", result);
 
-             retValue = -1;
-         } else {
-             DebugP_log("\r\nECC_Test_init: Initialize of MSS L2 ECC Memory is complete \r\n");
-         }
+            retValue = -1;
+        } else {
+            DebugP_log("\r\nECC_Test_init: Initialize of MSS L2 ECC Memory is complete \r\n");
+        }
     }
 
     if (retValue == 0) {
         /* Initialize ESM module */
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
         result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
         if (retValue == SDL_PASS)
         {
@@ -404,7 +407,7 @@ static int32_t ECC_sdlFuncTest(void)
         }
 #endif
 
-#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM263X)
+#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM263X) || defined(SOC_AM263PX)
         /* Initialize ECC Memory */
         SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
 #endif
@@ -472,7 +475,7 @@ int32_t ECC_funcTest(void)
     /*Initializing the DPL*/
     sdlApp_dplInit();
 
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
     /* Clear Done memory*/
     SDL_REG32_WR(SDL_MSS_L2_MEM_INIT_DONE_ADDR, 0xfu);
 #endif

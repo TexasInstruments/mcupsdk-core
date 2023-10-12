@@ -337,6 +337,12 @@ help:
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_udp_igmp/am263px-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_cpsw_udp_igmp/am263px-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/dcc/dcc_modes1/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_icssm/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_mcan/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_mss_l2/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_mss_tptc/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_r5_atcm0/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/ecc/sdl_ecc_r5_btcm/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
@@ -852,6 +858,12 @@ BUILD_COMBO_EXAMPLE_ALL += enet_lwip_cpsw_am263px-cc_r5fss0-1_freertos_ti-arm-cl
 BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_udp_igmp_am263px-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_udp_igmp_am263px-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dcc_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_icssm_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_mcan_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_mss_l2_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_mss_tptc_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_r5_atcm0_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_r5_btcm_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am263px-cc_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am263px-lp_system_freertos_nortos
@@ -1666,6 +1678,24 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  dcc_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ sdl_ecc_icssm_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_icssm/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_ecc_mcan_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mcan/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_ecc_mss_l2_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_l2/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_ecc_mss_tptc_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_tptc/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_ecc_r5_atcm0_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_atcm0/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ sdl_ecc_r5_btcm_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_btcm/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  edma_interrupt_transfer_am263px-cc_system_freertos_nortos:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263px-cc/system_freertos_nortos -f makefile all
 
@@ -1953,6 +1983,12 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_lwip_cpsw_am263px-cc_r5fss0-1_freertos_ti-
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_udp_igmp_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_udp_igmp_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_icssm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_mcan_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_mss_l2_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_mss_tptc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_r5_atcm0_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_r5_btcm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am263px-cc_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am263px-lp_system_freertos_nortos_clean
@@ -2766,6 +2802,23 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  dcc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+ sdl_ecc_icssm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_icssm/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_ecc_mcan_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mcan/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_ecc_mss_l2_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_l2/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_ecc_mss_tptc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_tptc/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_ecc_r5_atcm0_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_atcm0/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sdl_ecc_r5_btcm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_btcm/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  edma_interrupt_transfer_am263px-cc_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263px-cc/system_freertos_nortos -f makefile clean
@@ -3054,6 +3107,12 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_lwip_cpsw_am263px-cc_r5fss0-1_freertos_ti-
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_udp_igmp_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_udp_igmp_am263px-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_icssm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_mcan_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_mss_l2_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_mss_tptc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_r5_atcm0_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_r5_btcm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am263px-cc_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am263px-lp_system_freertos_nortos_scrub
@@ -3867,6 +3926,24 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  dcc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/dcc/dcc_modes1/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_ecc_icssm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_icssm/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_ecc_mcan_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mcan/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_ecc_mss_l2_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_l2/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_ecc_mss_tptc_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_mss_tptc/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_ecc_r5_atcm0_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_atcm0/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sdl_ecc_r5_btcm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/sdl/ecc/sdl_ecc_r5_btcm/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  edma_interrupt_transfer_am263px-cc_system_freertos_nortos_scrub:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263px-cc/system_freertos_nortos -f makefile scrub

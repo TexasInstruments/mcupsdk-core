@@ -54,6 +54,9 @@
 #if defined(SOC_AM263X)
 #include <sdl/include/am263x/sdlr_soc_ecc_aggr.h>
 #endif
+#if defined(SOC_AM263PX)
+#include <sdl/include/am263px/sdlr_soc_ecc_aggr.h>
+#endif
 #if defined(SOC_AM273X)
 #include <sdl/include/am273x/sdlr_soc_ecc_aggr.h>
 #endif
@@ -86,7 +89,7 @@
 #define SDL_ECC_AGGR_SEC_ENABLE_SET_REG0_ADDR       (0x02F7F880u)
 #endif
 
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x52600000u) /* MCAN0 address */
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR
@@ -98,7 +101,7 @@
 /* ========================================================================== */
 static SDL_ECC_MemSubType ECC_Test_MCANA_subMemTypeList[SDL_MCANA_MAX_MEM_SECTIONS] =
 {
-     SDL_EXAMPLE_ECC_RAM_ID,
+    SDL_EXAMPLE_ECC_RAM_ID,
 };
 
 static SDL_ECC_InitConfig_t ECC_Test_MCANA_ECCInitConfig =
@@ -109,26 +112,26 @@ static SDL_ECC_InitConfig_t ECC_Test_MCANA_ECCInitConfig =
     /**< Sub type list  */
 };
 
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 
 static uint32_t arg;
 
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
-     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-     .enableBitmap = {0x0000000cu, 0x00000000u, 0x00000000u, 0x00000000u,
-                      0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-      /**< All events enable: except clkstop events for unused clocks
-       *   and PCIE events */
-       /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
-     .priorityBitmap = {0x00000008u, 0x000000000u, 0x00000000u, 0x00000000u,
-                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
-     /**< All events high priority: except clkstop events for unused clocks
-      *   and PCIE events */
-     .errorpinBitmap = {0x0000000cu, 0x00000000u, 0x00000000u, 0x00000000u,
-                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-     /**< All events high priority: except clkstop for unused clocks
-      *   and PCIE events */
+    .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    .enableBitmap = {0x0000000cu, 0x00000000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+    /**< All events enable: except clkstop events for unused clocks
+     *   and PCIE events */
+    /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
+    .priorityBitmap = {0x00000008u, 0x000000000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
+    /**< All events high priority: except clkstop events for unused clocks
+     *   and PCIE events */
+    .errorpinBitmap = {0x0000000cu, 0x00000000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+    /**< All events high priority: except clkstop for unused clocks
+     *   and PCIE events */
 };
 
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
@@ -149,22 +152,22 @@ extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 /* Event BitMap for ECC ESM callback for MCANA*/
 SDL_ESM_NotifyParams ECC_TestparamsMCANA[SDL_ESM_MAX_MCANA_EXAMPLE_AGGR] =
 {
-     {
-          /* Event BitMap for ECC ESM callback for MCANA Single bit*/
-          .groupNumber = SDL_INTR_GROUP_NUM_1,
-          .errorNumber = SDL_ESMG1_MCANA_SERR,
-          .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
-          .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
-          .callBackFunction = &SDL_ESM_applicationCallbackFunction,
-     },
-     {
-          /* Event BitMap for ECC ESM callback for MCANA Double bit*/
-          .groupNumber = SDL_INTR_GROUP_NUM_1,
-          .errorNumber = SDL_ESMG1_MCANA_UERR,
-          .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
-          .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
-          .callBackFunction = &SDL_ESM_applicationCallbackFunction,
-     },
+    {
+    /* Event BitMap for ECC ESM callback for MCANA Single bit*/
+    .groupNumber = SDL_INTR_GROUP_NUM_1,
+    .errorNumber = SDL_ESMG1_MCANA_SERR,
+    .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
+    .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+    .callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+    {
+    /* Event BitMap for ECC ESM callback for MCANA Double bit*/
+    .groupNumber = SDL_INTR_GROUP_NUM_1,
+    .errorNumber = SDL_ESMG1_MCANA_UERR,
+    .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
+    .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+    .callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
 };
 #endif
 /* ========================================================================== */
@@ -188,24 +191,24 @@ int32_t ECC_Example_init (void);
 int32_t ECC_Example_init (void)
 {
     int32_t retValue=0;
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
     void *ptr = (void *)&arg;
 #endif
     SDL_ErrType_t result;
 
     if (retValue == 0) {
-         /* Initialize ECC Memory */
-         result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
-         if (result != SDL_PASS) {
-             /* print error and quit */
-             DebugP_log("\r\nECC_Test_init: Error initializing Memory of MCANA ECC: result = %d\r\n", result);
+        /* Initialize ECC Memory */
+        result = SDL_ECC_initMemory(SDL_EXAMPLE_ECC_AGGR, SDL_EXAMPLE_ECC_RAM_ID);
+        if (result != SDL_PASS) {
+            /* print error and quit */
+            DebugP_log("\r\nECC_Test_init: Error initializing Memory of MCANA ECC: result = %d\r\n", result);
 
-             retValue = -1;
-         } else {
-             DebugP_log("\r\nECC_Test_init: Initialize of MCANA ECC Memory is complete \r\n");
-         }
+            retValue = -1;
+        } else {
+            DebugP_log("\r\nECC_Test_init: Initialize of MCANA ECC Memory is complete \r\n");
+        }
     }
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
     if (retValue == 0) {
         /* Initialize ESM module */
         result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
@@ -251,7 +254,7 @@ int32_t ECC_Test_run_MCANA_1BitInjectTest(void)
 
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
     volatile uint32_t testLocationValue;
-	
+
 	DebugP_log("\r\nMCANA Single bit error inject: starting \r\n");
 
     /* Note the address is relative to start of ram */
@@ -295,7 +298,7 @@ int32_t ECC_Test_run_MCANA_2BitInjectTest(void)
     volatile uint32_t testLocationValue;
 
 	DebugP_log("\r\nMCANA double bit error inject: starting \r\n");
-	
+
     /* Run one shot test for MCANA  2 bit error */
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(SDL_EXAMPLE_ECC_RAM_ADDR);
@@ -351,14 +354,14 @@ static int32_t ECC_sdlFuncTest(void)
         }
 #endif
         for(i=1;i<=num_of_iterations;i++){
-          wr_data = (i)<<24 | (i)<<16 | (i)<<8 | i;
-          SDL_REG32_WR(addr+i*16, wr_data);
+            wr_data = (i)<<24 | (i)<<16 | (i)<<8 | i;
+            SDL_REG32_WR(addr+i*16, wr_data);
         }
         result = ECC_Test_run_MCANA_1BitInjectTest();
 
         for(i=1;i<=num_of_iterations;i++){
-          rd_data = SDL_REG32_RD(addr+i*16);
-		  DebugP_log("\r\nRead data =  0x%p\r\n",rd_data);
+            rd_data = SDL_REG32_RD(addr+i*16);
+            DebugP_log("\r\nRead data =  0x%p\r\n",rd_data);
         }
 
 
@@ -400,15 +403,15 @@ static int32_t ECC_sdlFuncTest(void)
         }
 #endif
         for(i=1;i<=num_of_iterations;i++){
-          wr_data = (i)<<24 | (i)<<16 | (i)<<8 | i;
-          SDL_REG32_WR(addr+i*16, wr_data);
+            wr_data = (i)<<24 | (i)<<16 | (i)<<8 | i;
+            SDL_REG32_WR(addr+i*16, wr_data);
         }
 
         result = ECC_Test_run_MCANA_2BitInjectTest();
 
         for(i=1;i<=num_of_iterations;i++){
-          rd_data = SDL_REG32_RD(addr+i*16);
-		  DebugP_log("\r\nRead data =  0x%p\r\n",rd_data);
+            rd_data = SDL_REG32_RD(addr+i*16);
+            DebugP_log("\r\nRead data =  0x%p\r\n",rd_data);
         }
 
         if (result == SDL_PASS)

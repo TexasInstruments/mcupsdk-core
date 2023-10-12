@@ -142,9 +142,9 @@ static uintptr_t  SDL_ecc_aggrDedStatusRegAddr(uintptr_t base, uint32_t n)
 
 static uintptr_t SDL_ecc_aggrStatusRegAddr(uintptr_t base, uint32_t n, uint32_t et)
 {
-     return (((et)==SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT)? \
-                    SDL_ecc_aggrSecStatusRegAddr(base,n): \
-                    SDL_ecc_aggrDedStatusRegAddr(base,n));
+    return (((et)==SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT)? \
+                SDL_ecc_aggrSecStatusRegAddr(base,n): \
+                SDL_ecc_aggrDedStatusRegAddr(base,n));
 }
 
 static bool SDL_ecc_aggrIsSVBUSRegReadDone(const SDL_ecc_aggrRegs *pEccAggrRegs)

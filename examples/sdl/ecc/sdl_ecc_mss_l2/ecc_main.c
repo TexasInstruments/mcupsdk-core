@@ -101,7 +101,7 @@ volatile bool esmError = false;
 /*                 Internal Function Definitions                              */
 /* ========================================================================== */
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,

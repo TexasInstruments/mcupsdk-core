@@ -89,7 +89,8 @@ uint32_t eventBitMapMCU[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
  * @brief This enumerator defines the values for ecc self test flag
  * ----------------------------------------------------------------------------
  */
-typedef enum {
+typedef enum
+{
     SDL_ECC_ERROR_FLAG_NONE=0,
     /**< Flag set during ECC initialization or end of the ECC self test */
     SDL_ECC_ERROR_FLAG_STARTING=1,
@@ -176,7 +177,8 @@ static uint32_t SDL_ECC_getDetectErrorSource (SDL_ECC_InjectErrorType injectEror
 {
     uint32_t errorSource;
 
-    switch(injectErorType) {
+    switch(injectErorType)
+    {
         case SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE:
         case SDL_INJECT_ECC_ERROR_FORCING_1BIT_N_ROW_ONCE:
         case SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT:
@@ -240,9 +242,12 @@ static int32_t SDL_ECC_mapEccAggrReg(SDL_ECC_MemType eccMemType, SDL_ecc_aggrReg
     mapIdx = SDL_ECC_mapRatEccAggrBaseAddress(SDL_ECC_aggrBaseAddressTable[eccMemType],
                                   (int32_t)(eccMemType),
                                   &eccAggrRegs);
-    if (mapIdx < 0) {
+    if (mapIdx < 0)
+    {
         retVal = SDL_EFAIL;
-    } else {
+    }
+    else
+    {
         /* Mapping was successful, so fill the array with the local address */
         SDL_ECC_aggrTransBaseAddressTable[mapIdx] = eccAggrRegs;
         *ppEccAggr = eccAggrRegs;
@@ -282,7 +287,8 @@ static int32_t SDL_ECC_handleEccAggrEvent (SDL_ECC_MemType eccMemType, uint32_t 
     /* Check which Ram Id triggered the error */
     for (i = ((uint32_t)0U);
          i < SDL_ECC_instance[eccMemType].eccInitConfig.numRams;
-         i++) {
+         i++)
+    {
         /* Get corresponding ram Id */
         memSubType = SDL_ECC_instance[eccMemType].eccInitConfig.pMemSubTypeList[i];
         (void)SDL_ECC_getRamId(eccMemType, memSubType, &ramId, &ramIdType);
@@ -294,7 +300,8 @@ static int32_t SDL_ECC_handleEccAggrEvent (SDL_ECC_MemType eccMemType, uint32_t 
                                                     errorSrc,
                                                     &eventFound1);
 
-        if((sdlResult == SDL_PASS)  && (eventFound1)) {
+        if((sdlResult == SDL_PASS)  && (eventFound1))
+        {
 
             /* Read the locations of the bit errors */
             /* Get the error status information for Wrapper type */
@@ -302,9 +309,12 @@ static int32_t SDL_ECC_handleEccAggrEvent (SDL_ECC_MemType eccMemType, uint32_t 
                                                    ramId,
                                                    &eccErrorStatusWrap);
             /* Get the total number of interrupts pending */
-            if (errorSrc == SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT) {
+            if (errorSrc == SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT)
+            {
                 bitErrCnt = eccErrorStatusWrap.singleBitErrorCount;
-            } else {
+            }
+            else
+            {
                 bitErrCnt = eccErrorStatusWrap.doubleBitErrorCount;
             }
 
@@ -497,11 +507,13 @@ int32_t SDL_ECC_getErrorInfo(SDL_ECC_MemType eccMemType, SDL_Ecc_AggrIntrSrc int
         /* Check which Ram Id triggered the error */
         for (i = ((uint32_t)0U);
              i < SDL_ECC_instance[eccMemType].eccInitConfig.numRams;
-             i++) {
+             i++)
+        {
             /* Get corresponding ram Id */
             pErrorInfo->memSubType = SDL_ECC_instance[eccMemType].eccInitConfig.pMemSubTypeList[i];
             retVal = SDL_ECC_getRamId(eccMemType, pErrorInfo->memSubType, &ramId, &ramIdType);
-            if (retVal != SDL_PASS) {
+            if (retVal != SDL_PASS)
+            {
                 continue;
             }
 
@@ -513,29 +525,38 @@ int32_t SDL_ECC_getErrorInfo(SDL_ECC_MemType eccMemType, SDL_Ecc_AggrIntrSrc int
                                                         &eventFound1);
 
 
-            if((sdlResult == SDL_PASS)  && (eventFound1)) {
+            if((sdlResult == SDL_PASS)  && (eventFound1))
+            {
                 /* Read the locations of the bit errors */
                 /* Get the error status information for Wrapper type */
                 (void)SDL_ecc_aggrGetEccRamErrorStatus(eccAggrRegs,
                                                    ramId,
                                                    &eccErrorStatusWrap);
                 /* Get the total number of interrupts pending */
-                if (intrSrc == SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT) {
+                if (intrSrc == SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT)
+                {
                     pErrorInfo->injectBitErrCnt = ((uint32_t)0U);
                     pErrorInfo->bitErrCnt = eccErrorStatusWrap.singleBitErrorCount;
-                } else  {
+                }
+                else
+                {
                     pErrorInfo->injectBitErrCnt = 0U;
                     pErrorInfo->bitErrCnt = eccErrorStatusWrap.doubleBitErrorCount;
                 }
 
 
-                if ((uint32_t)ramIdType == (uint32_t)SDL_ECC_RAM_ID_TYPE_WRAPPER) {
+                if ((uint32_t)ramIdType == (uint32_t)SDL_ECC_RAM_ID_TYPE_WRAPPER)
+                {
                     retVal = SDL_ECC_getMemConfig(eccMemType, ramId, &memConfig);
-                    if (retVal == SDL_PASS) {
-                        if (intrSrc == SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT) {
+                    if (retVal == SDL_PASS)
+                    {
+                        if (intrSrc == SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT)
+                        {
                             pErrorInfo->bitErrorOffset = (((uint64_t)eccErrorStatusWrap.eccRow * (uint64_t)memConfig.rowSize) +
                                                              ((uint64_t)eccErrorStatusWrap.eccBit1));
-                        } else {
+                        }
+                        else
+                        {
                             /* In case of DED error, eccBit1 is not valid, so calculate
                              * the bit offset of the start of the row with the DED error */
                             pErrorInfo->bitErrorOffset = (uint64_t)eccErrorStatusWrap.eccRow * (uint64_t)memConfig.rowSize;
@@ -633,7 +654,8 @@ int32_t SDL_ECC_initEsm (const SDL_ESM_Inst esmInstType)
                                           NULL);
 
     }
-    else { /* Nothing */
+    else
+    { /* Nothing */
 
     }
     return SDL_PASS;
@@ -666,11 +688,13 @@ int32_t SDL_ECC_init (SDL_ECC_MemType eccMemType,
     SDL_ECC_MemSubType memSubType;
     uint32_t injectOnlyFlag;
 
-    if (pECCInitConfig == NULL) {
+    if (pECCInitConfig == NULL)
+    {
         retVal = SDL_EBADARGS;
     }
 
-    if (retVal == SDL_PASS) {
+    if (retVal == SDL_PASS)
+    {
         retVal = SDL_ECC_mapEccAggrReg(eccMemType, &eccAggrRegs);
         eccAggrRegs = (SDL_ECC_aggrTransBaseAddressTable[eccMemType]);
 
@@ -679,12 +703,14 @@ int32_t SDL_ECC_init (SDL_ECC_MemType eccMemType,
 
         /* Get the number of RAMs */
         sdlResult = SDL_ecc_aggrGetNumRams(eccAggrRegs, &numMemRegions);
-        if ((sdlResult != SDL_PASS) || (numMemRegions == (uint32_t)0U)) {
+        if ((sdlResult != SDL_PASS) || (numMemRegions == (uint32_t)0U))
+        {
             retVal = SDL_EFAIL;
         }
     }
 
-    if (retVal == SDL_PASS) {
+    if (retVal == SDL_PASS)
+    {
         /* Record the Init configuration */
         SDL_ECC_instance[eccMemType].eccInitConfig = *pECCInitConfig;
 
@@ -698,56 +724,69 @@ int32_t SDL_ECC_init (SDL_ECC_MemType eccMemType,
         /* Note: The following statement enables interrupts for all RAMs */
         sdlResult = SDL_ecc_aggrEnableIntrs(eccAggrRegs,
                                 SDL_ECC_AGGR_INTR_SRC_SINGLE_BIT);
-        if (sdlResult != SDL_PASS) {
+        if (sdlResult != SDL_PASS)
+        {
             retVal = SDL_EFAIL;
         }
     }
 
-    if (retVal == SDL_PASS) {
+    if (retVal == SDL_PASS)
+    {
             /* Enable the Double bit ECC Interrupts */
             sdlResult = SDL_ecc_aggrEnableIntrs(eccAggrRegs,
                                 SDL_ECC_AGGR_INTR_SRC_DOUBLE_BIT);
-            if (sdlResult != SDL_PASS) {
+            if (sdlResult != SDL_PASS)
+            {
                 retVal = SDL_EFAIL;
             }
     }
 
-    if (retVal == SDL_PASS) {
+    if (retVal == SDL_PASS)
+    {
         /* Enable ECC */
-        for ( i = ((uint32_t)0U); i < pECCInitConfig->numRams; i++) {
+        for ( i = ((uint32_t)0U); i < pECCInitConfig->numRams; i++)
+        {
 
             /* Get memory Sub type to be configured */
-             memSubType = pECCInitConfig->pMemSubTypeList[i];
+            memSubType = pECCInitConfig->pMemSubTypeList[i];
 
-             /* Get the corresponding ram Id */
-             retVal = SDL_ECC_getRamId(eccMemType, memSubType, &ramId, &ramIdType);
-             if (retVal == SDL_PASS) {
+            /* Get the corresponding ram Id */
+            retVal = SDL_ECC_getRamId(eccMemType, memSubType, &ramId, &ramIdType);
+            if (retVal == SDL_PASS)
+            {
 
-                 /* Get the corresponding ram Id */
-                 retVal = SDL_ECC_getAggregatorType(eccMemType, memSubType, &injectOnlyFlag);
-             }
+                /* Get the corresponding ram Id */
+                retVal = SDL_ECC_getAggregatorType(eccMemType, memSubType, &injectOnlyFlag);
+            }
 #if defined (SUBSYS_MSS)
-             if (retVal == SDL_PASS) {
-                 if (injectOnlyFlag == ((uint32_t)1U)) {
-                     /* Call SDL APIs to enable ECC, specific to the module */
-                     retVal = SDL_ECC_configECCRam(ramId);
-                     if (retVal != SDL_PASS) {
-                         retVal = SDL_EFAIL;
-                     }
-                 } else {
+            if (retVal == SDL_PASS)
+            {
+                if (injectOnlyFlag == ((uint32_t)1U))
+                {
+                    /* Call SDL APIs to enable ECC, specific to the module */
+                    retVal = SDL_ECC_configECCRam(ramId);
+                    if (retVal != SDL_PASS)
+                    {
+                        retVal = SDL_EFAIL;
+                    }
+                }
+                else
+                {
 
-                     /* Enables ECC, ecc checkmreg, rmw parity errors */
-                     sdlResult = SDL_ecc_aggrConfigEccRam(eccAggrRegs,
-                                              ramId, (bool)true, (bool)true, (bool)true);
-                     if (sdlResult != SDL_PASS) {
-                         retVal = SDL_EFAIL;
-                     }
-                 }
-             }
+                    /* Enables ECC, ecc checkmreg, rmw parity errors */
+                    sdlResult = SDL_ecc_aggrConfigEccRam(eccAggrRegs,
+                                            ramId, (bool)true, (bool)true, (bool)true);
+                    if (sdlResult != SDL_PASS)
+                    {
+                        retVal = SDL_EFAIL;
+                    }
+                }
+            }
 #endif
-             if (retVal != SDL_PASS) {
-                 break;
-             }
+            if (retVal != SDL_PASS)
+            {
+                break;
+            }
         }
 
         /* Initialize object for self test */
@@ -781,7 +820,8 @@ static int32_t SDL_ECC_memoryRefresh(uint32_t *memAddr, size_t size)
     volatile uint32_t tmpValue;
 
     /* Simply read and copy back data */
-    for (i = ((uint32_t)0U); i < (size>>(uint32_t)2U); i++) {
+    for (i = ((uint32_t)0U); i < (size>>(uint32_t)2U); i++)
+    {
         tmpValue = memAddr[i];
         memAddr[i] = tmpValue;
     }
@@ -818,7 +858,8 @@ int32_t SDL_ECC_initMemory (SDL_ECC_MemType eccMemType,
         (void)SDL_ECC_getMemConfig(eccMemType, memSubType, &memConfig);
 
         /* Initialize only if readable */
-        if (memConfig.readable) {
+        if (memConfig.readable)
+        {
             /* Initialised the whole memory so that ECC is updated */
             result = SDL_ECC_memoryRefresh((uint32_t *)memConfig.memStartAddr,
                                        (size_t)memConfig.size);
@@ -883,7 +924,8 @@ int32_t SDL_ECC_selfTest(SDL_ECC_MemType eccMemType,
     SDL_MemConfig_t memConfig;
     SDL_GrpChkConfig_t grpChkConfig;
 
-    if (pECCErrorConfig == NULL) {
+    if (pECCErrorConfig == NULL)
+    {
         retVal = SDL_EBADARGS;
     }
 
@@ -896,17 +938,20 @@ int32_t SDL_ECC_selfTest(SDL_ECC_MemType eccMemType,
         /* Get Ram Id */
         retVal = SDL_ECC_getRamId(eccMemType, memSubType,
                                   &ramId, &ramIdType);
-        if (retVal == SDL_PASS) {
+        if (retVal == SDL_PASS)
+        {
             /* Get memory configuration only for Wrapper RAM ID's */
             retVal = SDL_ECC_getMemConfig(eccMemType, memSubType, &memConfig);
 
         }
 
-        if (retVal == SDL_PASS) {
+        if (retVal == SDL_PASS)
+        {
             /* Get actual location address for the memory */
             testLocationAddress = pECCErrorConfig->pErrMem;
 
-            if (memConfig.readable) {
+            if (memConfig.readable)
+            {
                 /* Store test location value */
                 testLocationPreserve = *(testLocationAddress);
             }
@@ -923,8 +968,10 @@ int32_t SDL_ECC_selfTest(SDL_ECC_MemType eccMemType,
                                          pECCErrorConfig);
         }
 
-        if (retVal == SDL_PASS) {
-            if (memConfig.readable) {
+        if (retVal == SDL_PASS)
+        {
+            if (memConfig.readable)
+            {
                 /* Trigger access for ECC error injection to complete */
                (void) SDL_ECC_triggerAccessForEcc(testLocationAddress);
             }
@@ -935,10 +982,12 @@ int32_t SDL_ECC_selfTest(SDL_ECC_MemType eccMemType,
 
                 /* Wait for error to take effect */
                 while((SDL_ECC_instance[eccMemType].eccErrorFlag != SDL_ECC_ERROR_FLAG_TRIGGERED)
-                      && (timeCount < selfTestTimeOut)) {
+                      && (timeCount < selfTestTimeOut))
+                {
                     /* In cases there are no interrupts for the ECC event poll directly */
                     retVal2 = SDL_ECC_pollErrorEvent(eccMemType, memSubType, errorType);
-                    if (retVal2 == SDL_ECC_EVENT_FOUND) {
+                    if (retVal2 == SDL_ECC_EVENT_FOUND)
+                    {
                         SDL_ECC_instance[eccMemType].eccErrorFlag = SDL_ECC_ERROR_FLAG_TRIGGERED;
                     }
 
@@ -962,11 +1011,14 @@ int32_t SDL_ECC_selfTest(SDL_ECC_MemType eccMemType,
             }
 #endif
             /* Check expected error occurred or timeout */
-            if ((SDL_ECC_instance[eccMemType].eccErrorFlag != SDL_ECC_ERROR_FLAG_TRIGGERED)) {
+            if ((SDL_ECC_instance[eccMemType].eccErrorFlag != SDL_ECC_ERROR_FLAG_TRIGGERED))
+            {
                 retVal = SDL_EFAIL;
-            } else {
-
-                if (memConfig.readable) {
+            }
+            else
+            {
+                if (memConfig.readable)
+                {
                     /* correct error injected if not autocorrect by hardware */
                     *(testLocationAddress) = testLocationPreserve;
                 }
@@ -1002,20 +1054,26 @@ static int32_t SDL_ECC_getBitLocation(uint32_t bitMask,
     int32_t result = SDL_PASS;
     uint32_t bitCount;
 
-    if (startBitLocation >= SDL_ECC_BITS_PER_WORD) {
+    if (startBitLocation >= SDL_ECC_BITS_PER_WORD)
+    {
         result = SDL_EFAIL;
-    } else {
+    }
+    else
+    {
         /* Find first bit error for single bit */
-         for (bitCount=startBitLocation; bitCount < SDL_ECC_BITS_PER_WORD; bitCount++) {
-             if ((bitMask
-                 & (((uint32_t)1U) << bitCount)) != 0U  ) {
-                 *pPbitLocation = bitCount;
-                 break;
-             }
-         }
-         if ( bitCount >= SDL_ECC_BITS_PER_WORD) {
-             result = SDL_EFAIL;
-         }
+        for (bitCount=startBitLocation; bitCount < SDL_ECC_BITS_PER_WORD; bitCount++)
+        {
+            if ((bitMask
+                & (((uint32_t)1U) << bitCount)) != 0U  )
+            {
+                *pPbitLocation = bitCount;
+                break;
+            }
+        }
+        if ( bitCount >= SDL_ECC_BITS_PER_WORD)
+        {
+            result = SDL_EFAIL;
+        }
     }
     return result;
 }
@@ -1051,31 +1109,38 @@ int32_t SDL_ECC_injectError(SDL_ECC_MemType eccMemType,
     int32_t sdlRetval;
     SDL_MemConfig_t memConfig;
 
-    if (pECCErrorConfig == NULL) {
+    if (pECCErrorConfig == NULL)
+    {
         retVal = SDL_EBADARGS;
     }
 
-    if (retVal == SDL_PASS) {
+    if (retVal == SDL_PASS)
+    {
         /* Based on ECC MemType (i.e. which aggregator), find the appropriate base address
          * for that ECC Aggegator. */
         retVal = SDL_ECC_getAggrBaseAddr(eccMemType, &eccAggrRegs);
     }
 
-    if (retVal == SDL_PASS) {
+    if (retVal == SDL_PASS)
+    {
         /* Get Ram Id */
         retVal = SDL_ECC_getRamId(eccMemType, memSubType,
                                  &ramId, &ramIdType);
     }
 
-    if (retVal == SDL_PASS) {
+    if (retVal == SDL_PASS)
+    {
         /* Get memory configuration */
         retVal = SDL_ECC_getMemConfig(eccMemType, memSubType, &memConfig);
 
         if ((retVal == SDL_PASS) && (memConfig.readable == (bool)true))
         {
-            if ( ((uintptr_t)pECCErrorConfig->pErrMem) < memConfig.memStartAddr) {
+            if ( ((uintptr_t)pECCErrorConfig->pErrMem) < memConfig.memStartAddr)
+            {
                 retVal = SDL_EFAIL;
-            } else {
+            }
+            else
+            {
                 if((eccMemType == SDL_R5FSS0_CORE0_ECC_AGGR) || (eccMemType == SDL_R5FSS0_CORE1_ECC_AGGR)
                    || (eccMemType == SDL_R5FSS1_CORE0_ECC_AGGR)|| (eccMemType == SDL_R5FSS1_CORE1_ECC_AGGR))
                 {
@@ -1106,137 +1171,163 @@ int32_t SDL_ECC_injectError(SDL_ECC_MemType eccMemType,
                 }
             }
 
-            if (retVal == SDL_PASS) {
+            if (retVal == SDL_PASS)
+            {
                 /* Set error Address in ECC Wrapper RAM ID */
                 sdlRetval = SDL_ecc_aggrWriteEccRamErrCtrlReg(eccAggrRegs,
                                                               ramId, 0U,
                                                               errAddrOffset);
-                if (sdlRetval != SDL_PASS) {
+                if (sdlRetval != SDL_PASS)
+                {
                     retVal = SDL_EFAIL;
                 }
             }
         }
 
-        if (retVal == SDL_PASS) {
+        if (retVal == SDL_PASS)
+        {
             /* Read ECC Ram Control Register */
             sdlRetval = SDL_ecc_aggrReadEccRamCtrlReg(eccAggrRegs,
                                                      ramId, &regValue);
-            if (sdlRetval != SDL_PASS) {
+            if (sdlRetval != SDL_PASS)
+            {
                 retVal = SDL_EFAIL;
             }
         }
 
-        if (retVal == SDL_PASS) {
+        if (retVal == SDL_PASS)
+        {
 
-            switch (errorType) {
-                 case SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE:
-                 case SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT:
-                 case SDL_INJECT_ECC_ERROR_FORCING_1BIT_N_ROW_ONCE:
-                 case SDL_INJECT_ECC_ERROR_FORCING_1BIT_N_ROW_REPEAT:
-                     /* Get bit location */
-                     retVal = SDL_ECC_getBitLocation(pECCErrorConfig->flipBitMask,
-                                                     0U, &firstBitLocation);
-                     if (retVal != SDL_PASS) {
-                         break;
-                     }
-                     /* Write bit error configuration for single bit */
-                     sdlRetval = SDL_ecc_aggrWriteEccRamErrCtrlReg(eccAggrRegs,
-                                                       ramId, 1U, firstBitLocation);
-                     if (sdlRetval != SDL_PASS) {
-                         retVal = SDL_EFAIL;
-                         break;
-                     }
+            switch (errorType)
+            {
+                case SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE:
+                case SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT:
+                case SDL_INJECT_ECC_ERROR_FORCING_1BIT_N_ROW_ONCE:
+                case SDL_INJECT_ECC_ERROR_FORCING_1BIT_N_ROW_REPEAT:
+                    /* Get bit location */
+                    retVal = SDL_ECC_getBitLocation(pECCErrorConfig->flipBitMask,
+                                                    0U, &firstBitLocation);
+                    if (retVal != SDL_PASS)
+                    {
+                        break;
+                    }
+                    /* Write bit error configuration for single bit */
+                    sdlRetval = SDL_ecc_aggrWriteEccRamErrCtrlReg(eccAggrRegs,
+                                                    ramId, 1U, firstBitLocation);
+                    if (sdlRetval != SDL_PASS)
+                    {
+                        retVal = SDL_EFAIL;
+                        break;
+                    }
 
-                     if ((errorType == SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE) ||
-                         (errorType == SDL_INJECT_ECC_ERROR_FORCING_1BIT_N_ROW_ONCE)){
-                         /* Configure settings for inject error once  */
-                         regValue |= SDL_ECC_RAM_CTRL_ERROR_ONCE_MASK;
-                     } else {
-                         /* Configure settings for inject error repeat */
-                         regValue = (regValue & (~SDL_ECC_RAM_CTRL_ERROR_ONCE_MASK));
-                     }
-                     if ((errorType == SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE) ||
-                         (errorType == SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT)){
-                         /* Configure settings for single bit error, specific row */
-                         regValue = (regValue
-                                     & (~(SDL_ECC_RAM_CTRL_FORCE_N_ROW_MASK | SDL_ECC_RAM_CTRL_FORCE_DED_MASK)))
-                                    | SDL_ECC_RAM_CTRL_FORCE_SEC_MASK;
-                     } else {
-                         /* Configure settings for Single bit error N Row */
-                         regValue = (regValue
-                                     & (~SDL_ECC_RAM_CTRL_FORCE_DED_MASK))
-                                    | SDL_ECC_RAM_CTRL_FORCE_SEC_MASK
-                                    | SDL_ECC_RAM_CTRL_FORCE_N_ROW_MASK;
-                     }
-                     break;
+                    if ((errorType == SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE) ||
+                        (errorType == SDL_INJECT_ECC_ERROR_FORCING_1BIT_N_ROW_ONCE))
+                    {
+                        /* Configure settings for inject error once  */
+                        regValue |= SDL_ECC_RAM_CTRL_ERROR_ONCE_MASK;
+                    }
+                    else
+                    {
+                        /* Configure settings for inject error repeat */
+                        regValue = (regValue & (~SDL_ECC_RAM_CTRL_ERROR_ONCE_MASK));
+                    }
+                    if ((errorType == SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE) ||
+                        (errorType == SDL_INJECT_ECC_ERROR_FORCING_1BIT_REPEAT))
+                    {
+                        /* Configure settings for single bit error, specific row */
+                        regValue = (regValue
+                                    & (~(SDL_ECC_RAM_CTRL_FORCE_N_ROW_MASK | SDL_ECC_RAM_CTRL_FORCE_DED_MASK)))
+                                | SDL_ECC_RAM_CTRL_FORCE_SEC_MASK;
+                    }
+                    else
+                    {
+                        /* Configure settings for Single bit error N Row */
+                        regValue = (regValue
+                                    & (~SDL_ECC_RAM_CTRL_FORCE_DED_MASK))
+                                | SDL_ECC_RAM_CTRL_FORCE_SEC_MASK
+                                | SDL_ECC_RAM_CTRL_FORCE_N_ROW_MASK;
+                    }
+                    break;
 
-                 case SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE:
-                 case SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT:
-                 case SDL_INJECT_ECC_ERROR_FORCING_2BIT_N_ROW_ONCE:
-                 case SDL_INJECT_ECC_ERROR_FORCING_2BIT_N_ROW_REPEAT:
-                     /* Get bit location */
-                     retVal = SDL_ECC_getBitLocation(pECCErrorConfig->flipBitMask,
-                                                0U, &firstBitLocation);
-                     if (retVal != SDL_PASS) {
-                         break;
-                     }
+                case SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE:
+                case SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT:
+                case SDL_INJECT_ECC_ERROR_FORCING_2BIT_N_ROW_ONCE:
+                case SDL_INJECT_ECC_ERROR_FORCING_2BIT_N_ROW_REPEAT:
+                    /* Get bit location */
+                    retVal = SDL_ECC_getBitLocation(pECCErrorConfig->flipBitMask,
+                                            0U, &firstBitLocation);
+                    if (retVal != SDL_PASS)
+                    {
+                        break;
+                    }
 
-                     /* Get Second bit location */
-                     retVal = SDL_ECC_getBitLocation(pECCErrorConfig->flipBitMask,
-                                                 firstBitLocation+(uint32_t)1U, &secondBitLocation);
-                     if (retVal != SDL_PASS) {
-                         break;
-                     }
+                    /* Get Second bit location */
+                    retVal = SDL_ECC_getBitLocation(pECCErrorConfig->flipBitMask,
+                                                firstBitLocation+(uint32_t)1U, &secondBitLocation);
+                    if (retVal != SDL_PASS)
+                    {
+                        break;
+                    }
 
-                     /* Record double bit error position */
-                     regValue2 = firstBitLocation | (secondBitLocation << (uint32_t)16U);
+                    /* Record double bit error position */
+                    regValue2 = firstBitLocation | (secondBitLocation << (uint32_t)16U);
 
-                     /* Set bit error configuration settings to register */
-                     sdlRetval = SDL_ecc_aggrWriteEccRamErrCtrlReg(eccAggrRegs,
-                                               ramId, 1U, regValue2);
-                     if (sdlRetval != SDL_PASS) {
-                         retVal = SDL_EFAIL;
-                         break;
-                     }
-                     if ((errorType == SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE) ||
-                             (errorType == SDL_INJECT_ECC_ERROR_FORCING_2BIT_N_ROW_ONCE)){
-                         /* Configure settings for Double bit error */
-                         regValue |= SDL_ECC_RAM_CTRL_ERROR_ONCE_MASK;
-                     } else {
-                         /* Configure settings for single bit error */
-                         regValue = (regValue & (~SDL_ECC_RAM_CTRL_ERROR_ONCE_MASK));
-                     }
+                    /* Set bit error configuration settings to register */
+                    sdlRetval = SDL_ecc_aggrWriteEccRamErrCtrlReg(eccAggrRegs,
+                                            ramId, 1U, regValue2);
+                    if (sdlRetval != SDL_PASS)
+                    {
+                        retVal = SDL_EFAIL;
+                        break;
+                    }
+                    if ((errorType == SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE) ||
+                            (errorType == SDL_INJECT_ECC_ERROR_FORCING_2BIT_N_ROW_ONCE))
+                    {
+                        /* Configure settings for Double bit error */
+                        regValue |= SDL_ECC_RAM_CTRL_ERROR_ONCE_MASK;
+                    }
+                    else
+                    {
+                        /* Configure settings for single bit error */
+                        regValue = (regValue & (~SDL_ECC_RAM_CTRL_ERROR_ONCE_MASK));
+                    }
 
-                     if ((errorType == SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE) ||
-                         (errorType == SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT)) {
-                         /* Configure settings for double bit error, specific row */
-                         regValue = (regValue
-                                     & (~(SDL_ECC_RAM_CTRL_FORCE_N_ROW_MASK+SDL_ECC_RAM_CTRL_FORCE_SEC_MASK)))
-                                    | SDL_ECC_RAM_CTRL_FORCE_DED_MASK;
-                     } else {
-                         /* Configure settings for Double bit error N Row*/
-                         regValue = (regValue
-                                     & (~SDL_ECC_RAM_CTRL_FORCE_SEC_MASK))
-                                    | SDL_ECC_RAM_CTRL_FORCE_DED_MASK
-                                    | SDL_ECC_RAM_CTRL_FORCE_N_ROW_MASK;
-                     }
-                     break;
+                    if ((errorType == SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE) ||
+                        (errorType == SDL_INJECT_ECC_ERROR_FORCING_2BIT_REPEAT))
+                    {
+                        /* Configure settings for double bit error, specific row */
+                        regValue = (regValue
+                                    & (~(SDL_ECC_RAM_CTRL_FORCE_N_ROW_MASK+SDL_ECC_RAM_CTRL_FORCE_SEC_MASK)))
+                                | SDL_ECC_RAM_CTRL_FORCE_DED_MASK;
+                    }
+                    else
+                    {
+                        /* Configure settings for Double bit error N Row*/
+                        regValue = (regValue
+                                    & (~SDL_ECC_RAM_CTRL_FORCE_SEC_MASK))
+                                | SDL_ECC_RAM_CTRL_FORCE_DED_MASK
+                                | SDL_ECC_RAM_CTRL_FORCE_N_ROW_MASK;
+                    }
+                    break;
 
-                 default:
-                     break;
-             }
+                default:
+                    break;
+            }
         }
 
-        if (retVal == SDL_PASS) {
+        if (retVal == SDL_PASS)
+        {
             /* Write bit error configuration to register */
             sdlRetval = SDL_ecc_aggrWriteEccRamCtrlReg(eccAggrRegs,
                                                        ramId, regValue);
-            if (sdlRetval != SDL_PASS) {
+            if (sdlRetval != SDL_PASS)
+            {
                 retVal = SDL_EFAIL;
             }
         }
 
-        if (retVal == SDL_PASS) {
+        if (retVal == SDL_PASS)
+        {
             /* Just read back ctrl register to confirm write */
             /* NOTE: The read value may not be same as what is written as some fields
              * in the register are not writable or can self clear
@@ -1244,7 +1335,8 @@ int32_t SDL_ECC_injectError(SDL_ECC_MemType eccMemType,
             sdlRetval = SDL_ecc_aggrReadEccRamCtrlReg(eccAggrRegs,
                                                 ramId,
                                                 (uint32_t *)((uint32_t)&(regValue2)));
-            if (sdlRetval != SDL_PASS) {
+            if (sdlRetval != SDL_PASS)
+            {
                 retVal = SDL_EFAIL;
             }
         }
@@ -1293,7 +1385,8 @@ static int32_t SDL_ECC_getRamId(SDL_ECC_MemType eccMemType, SDL_ECC_MemSubType m
     const SDL_RAMIdEntry_t *ramTable;
 
     retVal = SDL_ECC_checkMemoryType(eccMemType, memSubType);
-    if (retVal == SDL_PASS) {
+    if (retVal == SDL_PASS)
+    {
         ramTable = SDL_ECC_aggrTable[eccMemType].ramTable;
         *pRAMId = ramTable[memSubType].RAMId;
         *pRAMIdType = ramTable[memSubType].ramIdType;
@@ -1349,7 +1442,8 @@ static int32_t SDL_ECC_getAggregatorType(SDL_ECC_MemType eccMemType,
     const SDL_RAMIdEntry_t *ramTable;
 
     retVal = SDL_ECC_checkMemoryType(eccMemType, memSubType);
-    if (retVal == SDL_PASS) {
+    if (retVal == SDL_PASS)
+    {
         ramTable = SDL_ECC_aggrTable[eccMemType].ramTable;
         *pIinjectOnly = ramTable[memSubType].aggregatorTypeInjectOnly;
     }
@@ -1388,15 +1482,21 @@ static int32_t SDL_ECC_searchMemEntryTable(SDL_ECC_MemSubType memSubType,
     last = length - ((uint32_t)1U);
     middle = (first + last) / 2U;
 
-    while (first <= last) {
-        if (memEntryTable[middle].memSubType < memSubType) {
+    while (first <= last)
+    {
+        if (memEntryTable[middle].memSubType < memSubType)
+        {
             first = middle + ((uint32_t)1U);
-        } else if (memEntryTable[middle].memSubType == memSubType) {
+        }
+        else if (memEntryTable[middle].memSubType == memSubType)
+        {
             /* Fill the memory configuration structure */
             *pMemConfig = memEntryTable[middle];
             retVal = SDL_PASS;
             break;
-        } else {
+        }
+        else
+        {
             last = middle - ((uint32_t)1U);
         }
 
@@ -1423,7 +1523,8 @@ static int32_t SDL_ECC_getMemConfig(SDL_ECC_MemType eccMemType, SDL_ECC_MemSubTy
     const SDL_MemConfig_t *memEntryTable;
 
     retVal = SDL_ECC_checkMemoryType(eccMemType, memSubType);
-    if (retVal == SDL_PASS) {
+    if (retVal == SDL_PASS)
+    {
         memEntryTable = SDL_ECC_aggrTable[eccMemType].memConfigTable;
         tableSize = SDL_ECC_aggrTable[eccMemType].numMemEntries;
         retVal = SDL_ECC_searchMemEntryTable(memSubType,
@@ -1447,10 +1548,12 @@ static int32_t SDL_ECC_getAggrBaseAddr(SDL_ECC_MemType eccMemType, SDL_ecc_aggrR
 {
     int32_t retVal = SDL_PASS;
 
-    if (eccMemType < SDL_ECC_MEMTYPE_MAX){
+    if (eccMemType < SDL_ECC_MEMTYPE_MAX)
+    {
       *pEccAggr = SDL_ECC_aggrTransBaseAddressTable[eccMemType];
     }
-    else{
+    else
+    {
         retVal = SDL_EBADARGS;
     }
 

@@ -322,16 +322,16 @@ int32_t ECC_Example_init (void)
     DebugP_log("\r\nECC_Test_init: Exception init complete \r\n");
 
     if (retValue == 0) {
-             /* Initialize ECC Memory */
-         result = SDL_ECC_initMemory(SDL_ECC_AGGR1, SDL_ECC_AGGR1_IAM64_MAIN_INFRA_CBASS_CBASS_MAIN_0_AM64_MAIN_INFRA_CBASS_CBASS_IK3VTM_N16FFC_MAIN_0_VBUSP_P2P_BRIDGE_IK3VTM_N16FFC_MAIN_0_VBUSP_BRIDGE_BUSECC_RAM_ID);
-         if (result != SDL_PASS) {
-             /* print error and quit */
-             DebugP_log("\r\nECC_Test_init: Error initializing Memory of R5FSS0 CORE0 ECC: result = %d\r\n", result);
+            /* Initialize ECC Memory */
+        result = SDL_ECC_initMemory(SDL_ECC_AGGR1, SDL_ECC_AGGR1_IAM64_MAIN_INFRA_CBASS_CBASS_MAIN_0_AM64_MAIN_INFRA_CBASS_CBASS_IK3VTM_N16FFC_MAIN_0_VBUSP_P2P_BRIDGE_IK3VTM_N16FFC_MAIN_0_VBUSP_BRIDGE_BUSECC_RAM_ID);
+        if (result != SDL_PASS) {
+            /* print error and quit */
+            DebugP_log("\r\nECC_Test_init: Error initializing Memory of R5FSS0 CORE0 ECC: result = %d\r\n", result);
 
-             retValue = -1;
-         } else {
-             DebugP_log("\r\nECC_Test_init: Initialize of R5FSS0 CORE0 ECC Memory is complete \r\n");
-         }
+            retValue = -1;
+        } else {
+            DebugP_log("\r\nECC_Test_init: Initialize of R5FSS0 CORE0 ECC Memory is complete \r\n");
+        }
     }
     #endif
 
@@ -367,7 +367,7 @@ int32_t ECC_Example_init (void)
         result = SDL_ECC_init(SDL_ECC_AGGR1, &ECC_Test_AGGR1A0ECCInitConfig);
         if (result != SDL_APP_TEST_PASS) {
             /* print error and quit */
-             DebugP_log("SDTF_init: Error initializing M4F core ECC: result = %d\n\n", result);
+            DebugP_log("SDTF_init: Error initializing M4F core ECC: result = %d\n\n", result);
 
             retValue = SDL_APP_TEST_FAILED;
         } else {

@@ -231,14 +231,14 @@ void ECC_Example_app(void *args)
   	testResult = ECC_funcTest();
   	DebugP_log("\r\n ECC UC-1 and UC-2 Test\r\n");
   	if (testResult == SDL_PASS)
-      {
-          DebugP_log("\r\nAll Use_Cases have passed. \r\n");
-      }
-      else
-      {
-          DebugP_log("\r\nSome Use_Cases have failed. \r\n");
-   Board_driversClose();
-   Drivers_close();
+    {
+        DebugP_log("\r\nAll Use_Cases have passed. \r\n");
+    }
+    else
+    {
+        DebugP_log("\r\nSome Use_Cases have failed. \r\n");
+        Board_driversClose();
+        Drivers_close();
     }
 }
 

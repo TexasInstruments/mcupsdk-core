@@ -157,6 +157,12 @@ const example_file_list = [
     "examples/networking/lwip/enet_lwip_cpsw/.project/project.js",
     "examples/networking/lwip/enet_cpsw_udp_igmp/.project/project.js",
     "examples/sdl/dcc/dcc_modes1/.project/project.js",
+    "examples/sdl/ecc/sdl_ecc_icssm/.project/project.js",
+    "examples/sdl/ecc/sdl_ecc_mcan/.project/project.js",
+    "examples/sdl/ecc/sdl_ecc_mss_l2/.project/project.js",
+    "examples/sdl/ecc/sdl_ecc_mss_tptc/.project/project.js",
+    "examples/sdl/ecc/sdl_ecc_r5_atcm0/.project/project.js",
+    "examples/sdl/ecc/sdl_ecc_r5_btcm/.project/project.js",
 	"test/board/eeprom/.project/project.js",
 	"test/board/flash/.project/project.js",
 	"test/board/led/.project/project.js",
@@ -216,6 +222,9 @@ const example_file_list = [
     "test/sdl/dcc/dcc_mcu/dcc_unit_test/.project/project.js",
     "test/sdl/esm/v0/esm_func_test/.project/project.js",
     "test/sdl/esm/v0/esm_unit_test/.project/project.js",
+    "test/sdl/ecc/common/.project/project.js",
+    "test/sdl/ecc/ecc_sdl_funcTest/.project/project.js",
+    "test/sdl/ecc/ecc_sdl_unitTest/.project/project.js"
 ];
 
 function getProjectSpecCpu(cpu) {

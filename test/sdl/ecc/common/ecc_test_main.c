@@ -83,12 +83,12 @@
 #define SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS				(0x50D18094u)
 #define SDL_R5SS0_CPU0_ECC_UNCORR_ERRAGG_STATUS_RAW			(0x50D18098u)
 #define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS 				(0x50D18084u)
-#define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW			(0x50D18088u) 
+#define SDL_R5SS0_CPU0_ECC_CORR_ERRAGG_STATUS_RAW			(0x50D18088u)
 
-#define SDL_CLEAR_STATUS									(0xffu) 
+#define SDL_CLEAR_STATUS									(0xffu)
 
 #define R5FSS0_CORE0_ECC_AGGR_SEC_STATUS    				(0x02F7B840u)
-#define R5FSS0_CORE0_ECC_AGGR_DED_STATUS    				(0x02F7B940u) 
+#define R5FSS0_CORE0_ECC_AGGR_DED_STATUS    				(0x02F7B940u)
 #define R5FSS0_CORE1_ECC_AGGR_SEC_STATUS    				(0x02F7BC40u)
 #define R5FSS0_CORE1_ECC_AGGR_DED_STATUS    				(0x02F7BD40u)
 #define MSS_ECC_AGG_SEC_STATUS								(0x02F7C040u)
@@ -155,7 +155,7 @@ void tearDown(void)
 }
 #endif
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,
@@ -181,7 +181,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
         printf("\r\nLow Priority Interrupt Executed\r\n");
     }
     retVal = SDL_ECC_getESMErrorInfo(esmInst, intSrc, &eccmemtype, &eccIntrSrc);
-	
+
 	if(((eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) || (eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) ||
        (eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) || (eccmemtype== SDL_R5FSS0_CORE0_ECC_AGGR)) && ((intSrc != 0x33) && (intSrc != 0x35)))
     {
@@ -255,14 +255,14 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
     SDL_ECC_ErrorInfo_t eccErrorInfo;
     int32_t retVal;
 	uint32_t rd_data = 0U;
-	
+
     printf("\r\nESM Call back function called : instType 0x%x, " \
-                "grpChannel 0x%x, intSrc 0x%x \r\n", 
+                "grpChannel 0x%x, intSrc 0x%x \r\n",
                 esmInstType, grpChannel, intSrc);
     printf("\r\nTake action \r\n");
 
     retVal = SDL_ECC_getESMErrorInfo(esmInstType, intSrc, &eccmemtype, &eccIntrSrc);
-	
+
 	if((eccmemtype == SDL_R5FSS0_CORE0_ECC_AGGR) || (eccmemtype == UNKNOW_MEMTYPE))
     {
         rd_data = SDL_REG32_RD(R5FSS0_CORE0_ECC_AGGR_SEC_STATUS);
@@ -484,7 +484,7 @@ static int32_t ECC_appTest(uint32_t testId)
     switch (testId)
     {
         case ECC_ERROR_TEST_ID:
-#if defined(SOC_AM263X) || defined(SOC_AM273X) || defined(SOC_AWR294X)
+#if defined(SOC_AM263X) || defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263PX)
 #if defined(R5F_INPUTS)
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
             /* Clear all status registers of MSS AGGRA ECC AGGR.*/
@@ -569,7 +569,7 @@ static int32_t ECC_appTest(uint32_t testId)
             break;
 
         case ECC_FUNC_TEST_ID:
-#if defined(SOC_AM263X) || defined(SOC_AM273X) || defined(SOC_AWR294X)
+#if defined(SOC_AM263X) || defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263PX)
 #if defined(R5F_INPUTS)
             testResult = ECC_ip_funcTest();
 #elif defined(C66_INPUTS)
