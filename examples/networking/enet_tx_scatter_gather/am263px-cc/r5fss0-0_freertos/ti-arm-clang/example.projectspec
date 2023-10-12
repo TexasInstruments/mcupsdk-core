@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Enet Lwip Cpsw"
-        name = "enet_lwip_cpsw_am263px-cc_r5fss0-0_freertos_ti-arm-clang"
+        title="Enet Txsg"
+        name = "enet_txsg_am263px-cc_r5fss0-0_freertos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -35,22 +35,15 @@
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet
+            -I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/phy
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core
-            -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263px
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4
-            -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include
-            -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include
-            -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include
-            -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc
-            -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib
-            -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px
-            -I${MCU_PLUS_SDK_PATH}/examples/networking/lwip/enet_lwip_cpsw/extPhyMgmt
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
@@ -67,10 +60,9 @@
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${MCU_PLUS_SDK_PATH}/source/networking/enet/lib
-            -i${MCU_PLUS_SDK_PATH}/source/networking/lwip/lib
             -i${CG_TOOL_ROOT}/lib
             -i${PROJECT_BUILD_DIR}/syscfg
-            -m=enet_lwip_cpsw.${ConfigName}.map
+            -m=enet_txsg.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs
@@ -86,7 +78,7 @@
             --context r5fss0-0 --part AM263P1 --package ZCZ_S
         "
 
-        description="A Enet Lwip Cpsw FREERTOS project">
+        description="A Enet Txsg FREERTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="
@@ -96,10 +88,7 @@
                 -lfreertos.am263px.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am263px.r5f.ti-arm-clang.debug.lib
                 -lenet-cpsw.am263px.r5f.ti-arm-clang.debug.lib
-                -llwipif-cpsw-freertos.am263px.r5f.ti-arm-clang.debug.lib
-                -llwip-freertos.am263px.r5f.ti-arm-clang.debug.lib
                 -lboard.am263px.r5f.ti-arm-clang.debug.lib
-                -llwip-contrib-freertos.am263px.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -107,45 +96,34 @@
         <configuration name="Release"
             compilerBuildOptions="
                 -Os
-                -Oz
+                -O3
                 -flto
             "
             linkerBuildOptions="
                 -lfreertos.am263px.r5f.ti-arm-clang.release.lib
                 -ldrivers.am263px.r5f.ti-arm-clang.release.lib
                 -lenet-cpsw.am263px.r5f.ti-arm-clang.release.lib
-                -llwipif-cpsw-freertos.am263px.r5f.ti-arm-clang.release.lib
-                -llwip-freertos.am263px.r5f.ti-arm-clang.release.lib
                 -lboard.am263px.r5f.ti-arm-clang.release.lib
-                -llwip-contrib-freertos.am263px.r5f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a
             "
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
-        <file path="../../../test.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        <file path="../../../txsg_cfg.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="../../../test_enet.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        <file path="../../../txsg_test.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="../../../test_enet_cpsw.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        <file path="../../../txsg_main.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="../../../udp_iperf.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        <file path="../../../enet_appprofile.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="../../../extPhyMgmt/enetextphy.c" openOnCreation="false" excludeFromBuild="false" action="link">
-        </file>
-        <file path="../../../extPhyMgmt/enetextphy_phymdio_dflt.c" openOnCreation="false" excludeFromBuild="false" action="link">
-        </file>
-        <file path="../../../extPhyMgmt/dp83867.c" openOnCreation="false" excludeFromBuild="false" action="link">
-        </file>
-        <file path="../../../extPhyMgmt/dp83869.c" openOnCreation="false" excludeFromBuild="false" action="link">
-        </file>
-        <file path="../../../extPhyMgmt/generic_phy.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        <file path="../../../csl_arm_r5_pmu.S" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263px/EXAMPLES_ENET_LWIP_CPSW.html"
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263px/EXAMPLES_ENET_CPSW_LOOPBACK.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">

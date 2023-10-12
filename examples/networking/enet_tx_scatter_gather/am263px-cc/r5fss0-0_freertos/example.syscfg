@@ -10,6 +10,8 @@
  */
 const eeprom     = scripting.addModule("/board/eeprom/eeprom", {}, false);
 const eeprom1    = eeprom.addInstance();
+const edma       = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1      = edma.addInstance();
 const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1       = i2c.addInstance();
 const i2c2       = i2c.addInstance();
@@ -42,14 +44,18 @@ const enet_cpsw1 = enet_cpsw.addInstance();
  */
 eeprom1.$name = "CONFIG_EEPROM0";
 
+edma1.$name                 = "CONFIG_EDMA0";
+edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
+
 i2c1.$name               = "CONFIG_I2C0";
 eeprom1.peripheralDriver = i2c1;
-i2c1.I2C.$assign         = "I2C0";
 i2c1.I2C.SCL.$assign     = "I2C0_SCL";
 i2c1.I2C.SDA.$assign     = "I2C0_SDA";
 
 i2c2.$name           = "CONFIG_I2C1";
-i2c2.I2C.$assign     = "I2C2";
 i2c2.I2C.SCL.$assign = "UART0_RTSn";
 i2c2.I2C.SDA.$assign = "UART0_CTSn";
 
@@ -84,10 +90,9 @@ mpu_armv75.$name      = "CONFIG_MPU_REGION4";
 mpu_armv75.baseAddr   = 0x70080000;
 mpu_armv75.size       = 14;
 mpu_armv75.attributes = "NonCached";
-
 general1.$name        = "CONFIG_GENERAL0";
 general1.stack_size   = 8192;
-general1.heap_size    = 200000;
+general1.heap_size    = 1024;
 general1.linker.$name = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
@@ -95,7 +100,6 @@ region1.memory_region.create(7);
 region1.memory_region[0].type               = "TCMA";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].auto               = false;
-region1.memory_region[0].manualStartAddress = 0x0;
 region1.memory_region[0].size               = 0x40;
 region1.memory_region[1].type               = "TCMA";
 region1.memory_region[1].$name              = "R5F_TCMA";
@@ -206,14 +210,19 @@ section9.type                        = "NOLOAD";
 section9.output_section.create(1);
 section9.output_section[0].$name     = ".bss:ENET_DMA_PKT_MEMPOOL";
 section9.output_section[0].alignment = 128;
-enet_cpsw1.$name                         = "CONFIG_ENET_CPSW0";
-enet_cpsw1.DisableMacPort1               = true;
+
+enet_cpsw1.$name                            = "CONFIG_ENET_CPSW0";
 enet_cpsw1.BoardType                     = "am263px-cc";
-enet_cpsw1.LargePoolPktCount             = 32;
-enet_cpsw1.PktInfoOnlyEnable             = true;
-enet_cpsw1.txDmaChannel[0].$name         = "ENET_DMA_TX_CH0";
-enet_cpsw1.rxDmaChannel[0].$name         = "ENET_DMA_RX_CH0";
-enet_cpsw1.pinmux[0].$name               = "ENET_CPSW_PINMUX0";
+enet_cpsw1.LargePoolPktCount                = 128;
+enet_cpsw1.DisableMacPort1                  = true;
+enet_cpsw1.hostportRxCsumOffloadEn          = true; /* Due to a AM263x SOC HW errata, checksum offload on Rx side is disabled */
+enet_cpsw1.txDmaChannel[0].$name            = "ENET_DMA_TX_CH0";
+enet_cpsw1.txDmaChannel[0].PacketsCount     = 64;
+enet_cpsw1.rxDmaChannel[0].$name            = "ENET_DMA_RX_CH0";
+enet_cpsw1.rxDmaChannel[0].PacketsCount     = 64;
+enet_cpsw1.pinmux[0].$name                  = "ENET_CPSW_PINMUX0";
+enet_cpsw1.pinmux[0].RGMII1.$assign      = "RGMII2";
+enet_cpsw1.pinmux[0].RGMII2.$assign      = "RGMII1";
 enet_cpsw1.pinmux[0].RGMII2.RD0.$used    = false;
 enet_cpsw1.pinmux[0].RGMII2.RD1.$used    = false;
 enet_cpsw1.pinmux[0].RGMII2.RD2.$used    = false;
@@ -226,18 +235,17 @@ enet_cpsw1.pinmux[0].RGMII2.TD2.$used    = false;
 enet_cpsw1.pinmux[0].RGMII2.TD3.$used    = false;
 enet_cpsw1.pinmux[0].RGMII2.TX_CTL.$used = false;
 enet_cpsw1.pinmux[0].RGMII2.TXC.$used    = false;
-enet_cpsw1.netifInstance.create(1);
-enet_cpsw1.netifInstance[0].$name        = "NETIF_INST_ID0";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
+i2c1.I2C.$suggestSolution                           = "I2C0";
+i2c2.I2C.$suggestSolution                           = "I2C2";
 enet_cpsw1.pinmux[0].MDIO.$suggestSolution          = "MDIO";
 enet_cpsw1.pinmux[0].MDIO.MDC.$suggestSolution      = "MDIO_MDC";
 enet_cpsw1.pinmux[0].MDIO.MDIO.$suggestSolution     = "MDIO_MDIO";
-enet_cpsw1.pinmux[0].RGMII1.$suggestSolution        = "RGMII2";
 enet_cpsw1.pinmux[0].RGMII1.RD0.$suggestSolution    = "PR0_PRU0_GPIO0";
 enet_cpsw1.pinmux[0].RGMII1.RD1.$suggestSolution    = "PR0_PRU0_GPIO1";
 enet_cpsw1.pinmux[0].RGMII1.RD2.$suggestSolution    = "PR0_PRU0_GPIO2";
@@ -250,4 +258,3 @@ enet_cpsw1.pinmux[0].RGMII1.TD2.$suggestSolution    = "PR0_PRU0_GPIO13";
 enet_cpsw1.pinmux[0].RGMII1.TD3.$suggestSolution    = "PR0_PRU0_GPIO14";
 enet_cpsw1.pinmux[0].RGMII1.TX_CTL.$suggestSolution = "PR0_PRU0_GPIO15";
 enet_cpsw1.pinmux[0].RGMII1.TXC.$suggestSolution    = "PR0_PRU0_GPIO16";
-enet_cpsw1.pinmux[0].RGMII2.$suggestSolution        = "RGMII1";

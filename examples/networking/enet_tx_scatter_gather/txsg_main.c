@@ -91,16 +91,17 @@ void EnetTxSG_mainTask(void *args)
                                 macPortList,
                                 &numMacPorts);
     EnetAppUtils_assert(numMacPorts == 1);
-    gEnetTxSG.macPort          = macPortList[0];
+
 #if (1U == APP_ENABLE_STATIC_CFG)
     gEnetTxSG.instId           = 0U;
-    gEnetTxSG.testLoopBackType = LOOPBACK_TYPE_PHY;
+    gEnetTxSG.testLoopBackType = TXSG_LOOPBACK_TYPE_PHY;
     gEnetTxSG.macPort          = ENET_MAC_PORT_1;
     gEnetTxSG.macMode          = RGMII;
     gEnetTxSG.enetType         = ENET_CPSW_2G;
     gEnetTxSG.boardId          = ENETBOARD_CPB_ID;
 #else
     EnetTxSG_showMenu();
+    gEnetTxSG.macPort          = macPortList[0];
 #endif
 
 

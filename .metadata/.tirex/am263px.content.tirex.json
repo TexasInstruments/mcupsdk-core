@@ -9549,6 +9549,38 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Enet Cpsw Est Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_est",
+        "location": "../../examples/networking/enet_cpsw_est/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_cpsw_est",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet L2 Cpsw Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_l2_cpsw",
         "location": "../../examples/networking/enet_layer2_cpsw/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -9645,70 +9677,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Enet L2 Multi Channel Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "enet_l2_multi_channel",
-        "location": "../../examples/networking/enet_layer2_multi_channel/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDSCNCD263"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "networking",
-            "enet_layer2_multi_channel",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Enet L2 Multi Channel Example. CPU is R5FSS0-1 running FREERTOS.",
-        "name": "enet_l2_multi_channel",
-        "location": "../../examples/networking/enet_layer2_multi_channel/am263px-cc/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDSCNCD263"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "networking",
-            "enet_layer2_multi_channel",
-            "r5fss0-1_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "A Cpsw Lwip Https Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "cpsw_lwip_https",
         "location": "../../examples/networking/lwip/cpsw_lwip_https/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -9758,6 +9726,138 @@
             "networking",
             "lwip",
             "cpsw_lwip_https",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Socket Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_socket",
+        "location": "../../examples/networking/lwip/enet_cpsw_socket/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_cpsw_socket",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Tcpclient Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_tcpclient",
+        "location": "../../examples/networking/lwip/enet_cpsw_tcpclient/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_cpsw_tcpclient",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Tcpserver Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_tcpserver",
+        "location": "../../examples/networking/lwip/enet_cpsw_tcpserver/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_cpsw_tcpserver",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Udpclient Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_udpclient",
+        "location": "../../examples/networking/lwip/enet_cpsw_udpclient/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_cpsw_udpclient",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [
@@ -10122,6 +10222,38 @@
             "ecc",
             "sdl_ecc_r5_btcm",
             "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Txsg Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_txsg",
+        "location": "../../examples/networking/enet_tx_scatter_gather/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_tx_scatter_gather",
+            "r5fss0-0_freertos"
         ],
         "mainCategories": [
             [

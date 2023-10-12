@@ -75,7 +75,7 @@ static EnetApp_TestParams testParams =
     .portTestParams =
     {
         {
-            .macPort = ENET_MAC_PORT_1,
+            .macPort = ENET_MAC_PORT_2,
             .tasControlList =
             {
                 .baseTime    = 0ULL, /* will be updated later */
@@ -91,7 +91,7 @@ static EnetApp_TestParams testParams =
             },
         },
         {
-            .macPort     = ENET_MAC_PORT_2,
+            .macPort     = ENET_MAC_PORT_1,
             .tasControlList =
             {
                 .baseTime    = 0ULL, /* will be updated later */
