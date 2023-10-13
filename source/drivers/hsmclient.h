@@ -191,14 +191,16 @@ typedef struct FirewallReq_t_
 /**
  * @brief
  * This is a FirewallIntrReq type which holds the information
- * of MPU Firewall request for interrupt enable, interrupt enable clear and fault clear.
+ * of MPU Firewall request for interrupt enable, interrupt enable clear,
+ * interrupt enable status clear and fault clear.
  */
 typedef struct FirewallIntrReq_t_
 {
-    uint16_t  firewallId ;             /**< Index of the firewall. **/
-    uint8_t   interruptEnable;         /**< MPU Interrupt Enable **/
-    uint8_t   interruptEnableClear;    /**< Clear MPU Interrupt **/
-    uint8_t   faultClear;              /**< Clear voilation status MMRs **/
+    uint16_t  firewallId ;                  /**< Index of the firewall. **/
+    uint8_t   interruptEnable;              /**< MPU Interrupt Enable **/
+    uint8_t   interruptEnableClear;         /**< Clear MPU Interrupt **/
+    uint8_t   interruptEnableStatusClear;   /**< Clear raw status **/
+    uint8_t   faultClear;                   /**< Clear voilation status MMRs **/
 } FirewallIntrReq_t ;
 
 /**
