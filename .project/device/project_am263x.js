@@ -93,6 +93,7 @@ const example_file_list = [
     "examples/drivers/gpio/gpio_led_blink/.project/project.js",
     "examples/drivers/gpio/gpio_multi_led_blink/.project/project.js",
     "examples/drivers/hsmclient/hsm_services/.project/project.js",
+    "examples/drivers/hsmclient/mpu_firewall_services_demo/.project/project.js",
     "examples/drivers/i2c/i2c_led_blink/.project/project.js",
     "examples/drivers/i2c/i2c_read/.project/project.js",
     "examples/drivers/i2c/i2c_temperature/.project/project.js",

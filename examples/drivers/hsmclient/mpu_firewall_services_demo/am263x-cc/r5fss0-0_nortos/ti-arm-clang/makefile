@@ -24,24 +24,24 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=hsm_services.$(PROFILE).out
+OUTNAME:=mpu_firewall_services_demo.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=hsm_services.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=hsm_services.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=hsm_services.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=hsm_services.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=hsm_services.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=hsm_services.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=hsm_services.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=hsm_services.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=mpu_firewall_services_demo.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=mpu_firewall_services_demo.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=mpu_firewall_services_demo.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=mpu_firewall_services_demo.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=mpu_firewall_services_demo.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=mpu_firewall_services_demo.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=mpu_firewall_services_demo.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=mpu_firewall_services_demo.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
 endif
 
 FILES_common := \
-	hsm_client_app.c \
+	mpu_firewall_services_demo.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -187,7 +187,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263x:r5fss0-0:nortos:ti-arm-clang hsm_services ...
+	@echo  Scrubing: am263x:r5fss0-0:nortos:ti-arm-clang mpu_firewall_services_demo ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -293,12 +293,12 @@ endif
 endif
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for hsm_services.$(PROFILE) ...
+	@echo Creating Coverage Report for mpu_firewall_services_demo.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o hsm_services.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=hsm_services.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=hsm_services.$(PROFILE).profdata > coverage/hsm_services.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/hsm_services.$(PROFILE).profdata.json --output-json=coverage/hsm_services.$(PROFILE).analysis.json --output=../hsm_services.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o mpu_firewall_services_demo.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=mpu_firewall_services_demo.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=mpu_firewall_services_demo.$(PROFILE).profdata > coverage/mpu_firewall_services_demo.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/mpu_firewall_services_demo.$(PROFILE).profdata.json --output-json=coverage/mpu_firewall_services_demo.$(PROFILE).analysis.json --output=../mpu_firewall_services_demo.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))
