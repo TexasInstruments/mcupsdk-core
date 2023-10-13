@@ -45,6 +45,7 @@
         "/drivers/drivers",
         "/board/board",
         "/networking/networking",
+        "/security/security",
 % }
 % if(args.device == "am62x") {
         "/kernel/dpl",
