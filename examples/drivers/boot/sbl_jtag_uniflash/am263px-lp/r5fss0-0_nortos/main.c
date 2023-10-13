@@ -38,7 +38,7 @@
 #include <drivers/bootloader/bootloader_uniflash.h>
 
 #define FILE_MAX_SIZE   (0x1C0000) /* This has to match the size of MSRAM_1 section in linker.cmd */
-uint8_t gFileBuf[FILE_MAX_SIZE] __attribute__((aligned(128), section(".bss.filebuf"))); 
+uint8_t gFileBuf[FILE_MAX_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
 
 #define VERIFY_BUF_MAX_SIZE (32*1024)
 uint8_t gVerifyBuf[VERIFY_BUF_MAX_SIZE] __attribute__((aligned(128), section(".bss")));
@@ -87,7 +87,7 @@ int32_t sbl_jtag_uniflash_load_file(char optype)
     {   /* if file size > buffer size then exit, we will load the file in one shot so
          * so file size has to be < buffer size
          */
-        fseek(fp, 0, SEEK_END); 
+        fseek(fp, 0, SEEK_END);
         fileSize = ftell(fp);
         fseek(fp, 0, SEEK_SET);
         fclose(fp);
@@ -110,9 +110,9 @@ int32_t sbl_jtag_uniflash_load_file(char optype)
         flashAttrs = Flash_getAttrs(CONFIG_FLASH0);
         if(flashAttrs == NULL)
         {
-            status=SystemP_FAILURE; 
+            status=SystemP_FAILURE;
             DebugP_log(" [FLASH WRITER] Flash attributes are invalid !!!\r\n");
-        }    
+        }
         else
         {
             eraseBlkSize = flashAttrs->blockSize;
@@ -262,6 +262,8 @@ int main(void)
         DebugP_log(" [FLASH WRITER] Unable to open FLASH !!!\r\n");
     }
 
+    OSPI_setRdDataCaptureDelay( OSPI_getHandle(CONFIG_OSPI0), 9);
+
     if(status==SystemP_SUCCESS)
     {
         while(1)
@@ -294,7 +296,7 @@ int main(void)
                 break;
                 default:
                     DebugP_log(" Enter valid option !!!\r\n");
-                break;                
+                break;
             }
             if(ch[0] == 'x')
                 break;

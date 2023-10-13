@@ -66,25 +66,28 @@ int main(void)
     Bootloader_UniflashResponseHeader respHeader;
 
     Bootloader_socConfigurePll();
+
+    Bootloader_socSetAutoClock();
     Bootloader_socInitL2MailBoxMemory();
 
     System_init();
     Drivers_open();
-
     status = Board_driversOpen();
+    // taps value to be 9 in case of 8D NON-PHY mode
+    OSPI_setRdDataCaptureDelay( OSPI_getHandle(CONFIG_OSPI0), 9);
     DebugP_assert(status == SystemP_SUCCESS);
 
     while(!done)
     {
-        fileSize = 0U;
         /* Xmodem Receive */
+        fileSize = 0U;
         status = Bootloader_xmodemReceive(CONFIG_UART0, gUniflashFileBuf, BOOTLOADER_UNIFLASH_MAX_FILE_SIZE, &fileSize);
 
-        /* 
-         * The `fileSize` wouldn't be the actual filesize, but (actual filesize + size of the header + padding bytes) added by xmodem. 
+        /*
+         * The `fileSize` wouldn't be the actual filesize, but (actual filesize + size of the header + padding bytes) added by xmodem.
          * This adds ~1KB. We can't know exactly how many bytes will be padded without checking the file header. But doing that
-         * will unnecessary complicate the logic, so since the overhead is as small as ~1KB we could check for file size exceed 
-         * by checking * this `fileSize` returned by xmodem as well. 
+         * will unnecessary complicate the logic, so since the overhead is as small as ~1KB we could check for file size exceed
+         * by checking * this `fileSize` returned by xmodem as well.
         */
 
         if(fileSize >= BOOTLOADER_UNIFLASH_MAX_FILE_SIZE)

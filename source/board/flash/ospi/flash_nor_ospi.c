@@ -1192,7 +1192,14 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
         OSPI_setCmdExtType(obj->ospiHandle, config->devConfig->cmdExtType);
 
         /* Set initial number of address bytes */
-        obj->numAddrBytes = 3;
+        if(config->devConfig->addrByteSupport == 2)
+        {
+            obj->numAddrBytes = 4;
+        }
+        else
+        {
+            obj->numAddrBytes = 3;
+        }
 
         /* Set current protocol as 1s1s1s */
         obj->currentProtocol = FLASH_CFG_PROTO_1S_1S_1S;
