@@ -44,6 +44,8 @@ const files_r5f = {
         "mibspi_v0.c",
         "mibspi_edma.c",
         "mibspi_soc.c",
+        "mpu_firewall.c",
+        "mpu_firewall_v0_cfg.c",
         "pinmux.c",
         "pmu.c",
         "qspi.c",
