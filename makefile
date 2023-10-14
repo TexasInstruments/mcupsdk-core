@@ -133,6 +133,15 @@ projectspec-help:
 
 docs:
 	$(MAKE) -C docs_src/docs/api_guide all DEVICE=$(DEVICE) DOC_COMBO=$(DOC_COMBO)
+	@echo "<script id=\"searchdata\" type=\"text/xmldata\">" >> ./docs/api_guide_$(DEVICE)/search.html
+ifeq ($(OS), Windows_NT),
+	@copy /y docs_src/docs/api_guide/search.js ./docs/api_guide_$(DEVICE)/search/search.js 
+	@type ./docs/api_guide_$(DEVICE)/searchdata.xml >> ./docs/api_guide_$(DEVICE)/search.html
+else
+	@cp docs_src/docs/api_guide/search.js ./docs/api_guide_$(DEVICE)/search/search.js
+	@cat ./docs/api_guide_$(DEVICE)/searchdata.xml >> ./docs/api_guide_$(DEVICE)/search.html
+endif
+	@echo "</script>" >> ./docs/api_guide_$(DEVICE)/search.html
 
 docs-clean:
 	$(MAKE) -C docs_src/docs/api_guide clean DEVICE=$(DEVICE) DOC_COMBO=$(DOC_COMBO)
