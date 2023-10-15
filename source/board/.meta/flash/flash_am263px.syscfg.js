@@ -10,6 +10,8 @@ let defaultFlashConfig = system.getScript("/board/flash/IS25LX256.json");
 
 let defaultFlashConfigLP = system.getScript("/board/flash/IS25LX256.json");
 
+let defaultNandFlashConfig = system.getScript("/board/flash/W25N01GVZEJ.json");
+
 function getDriverOptions()
 {
     return supported_nor_spi_drivers;
@@ -56,11 +58,39 @@ function getDefaultProtocolJson()
     }
 }
 
+function getDefaultNandProtocolJson()
+{
+    if(system.deviceData.device == "AM263Px") {
+        return "p114";
+    } else {
+        return "p444d";
+    }
+}
+
+function getDefaultNandFlashName()
+{
+    return "W25N01GVZEJ";
+}
+
+function getDefaultNandProtocol()
+{
+    return { name : "1s_1s_4s", displayName : "1S-1S-4S" };
+}
+
+function getDefaultNandFlashConfig()
+{
+    return defaultNandFlashConfig;
+}
+
 exports = {
     getDriverOptions,
     getDefaultDriver,
     getDefaultFlashName,
     getDefaultProtocol,
     getDefaultProtocolJson,
+    getDefaultNandProtocolJson,
     getDefaultFlashConfig,
+    getDefaultNandFlashName,
+    getDefaultNandProtocol,
+    getDefaultNandFlashConfig,
 };

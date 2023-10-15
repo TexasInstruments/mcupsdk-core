@@ -11,6 +11,7 @@ const files_r5f = {
         "ethphy_dp83826e.c",
         "flash.c",
         "flash_nor_ospi.c",
+        "flash_nand_ospi.c",
         "led.c",
         "led_gpio.c",
         "led_tpic2810.c",

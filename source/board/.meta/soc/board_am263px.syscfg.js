@@ -3,7 +3,7 @@ let common = system.getScript("/common");
 
 const driverVer = {
     "flash": {
-        version: "v0",
+        version: "v2",
     },
 };
 

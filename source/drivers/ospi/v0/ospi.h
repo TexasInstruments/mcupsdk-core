@@ -180,6 +180,12 @@ typedef void *OSPI_Handle;
                                                            ((uint32_t)(addr) << 8) | \
                                                            ((uint32_t)(data) << 0))
 #define OSPI_NOR_PROTOCOL_INVALID (uint32_t)(0xFFFFFFFF)
+
+#define OSPI_NAND_PROTOCOL(cmd, addr, data, dtr) (uint32_t)(((uint32_t)(dtr) << 24) | \
+                                                           ((uint32_t)(cmd) << 16) | \
+                                                           ((uint32_t)(addr) << 8) | \
+                                                           ((uint32_t)(data) << 0))
+#define OSPI_NAND_PROTOCOL_INVALID (uint32_t)(0xFFFFFFFF)
 /** @} */
 
 /**
@@ -954,6 +960,8 @@ uint32_t OSPI_getFlashDataBaseAddr(OSPI_Handle handle);
  *  \return #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
  */
 int32_t OSPI_phyTuneDDR(OSPI_Handle handle, uint32_t flashOffset);
+
+int32_t OSPI_phyTuneSDR(OSPI_Handle handle, uint32_t flashOffset);
 
 /**
  *  \brief  This function takes a 4x128x128 array and fills it with TX RX DLL data for graphing purpose

@@ -1,5 +1,11 @@
 let common = system.getScript("/common");
 let soc = system.getScript(`/board/flash/flash_${common.getSocName()}`);
+let copyCmd = "cp";
+
+if(system.getOS() == "win")
+{
+    copyCmd = "copy";
+}
 
 let regDataDescription = `
 Certain attributes of the flash are sometimes configured by writing to a register.
@@ -188,6 +194,21 @@ Board_open()
 ~~~
 
 `
+/* Protocol Configs */
+/* 1-1-1 */
+let protoToCfgMap = {
+    "1s_1s_1s" : "p111",
+    "1s_1s_2s" : "p112",
+    "1s_1s_4s" : "p114",
+    "1s_1s_8s" : "p118",
+    "1s_8s_8s" : "p188",
+    "4s_4s_4s" : "p444s",
+    "4s_4d_4d" : "p444d",
+    "8s_8s_8s" : "p888s",
+    "8d_8d_8d" : "p888d",
+    "custom"   : "pCustom",
+}
+
 function getDriver(drvName) {
     return system.getScript(`/drivers/${drvName}/${drvName}`);
 }
@@ -203,14 +224,199 @@ let defaultProtocols = getDriver(soc.getDefaultDriver()).getSupportedProtocols()
 
 let defProtoJson = soc.getDefaultProtocolJson()
 
+let defNandProtoJson = soc.getDefaultNandProtocolJson()
+
 let flash_module_name = "/board/flash/flash";
+
+let serialNorDefaultCfg = soc.getDefaultFlashConfig();
+let serialNandDefaultCfg = soc.getDefaultNandFlashConfig();
+
+let serialNorDefaultName = soc.getDefaultFlashName();
+let serialNorDefaultProtocolName = soc.getDefaultProtocol().name;
+
+let serialNandDefaultName = soc.getDefaultNandFlashName();
+let serialNandDefaultProtocolName = soc.getDefaultNandProtocol().name;
+
+function changeFlashType(inst, ui)
+{
+    if(inst.dummy_isAddrReg == true) {
+        ui.dummy_cfgReg.hidden = false;
+    }
+    else
+    {
+        ui.dummy_cfgReg.hidden = true;
+    }
+
+    if(inst.proto_isAddrReg == true) {
+        ui.proto_cfgReg.hidden = false;
+    }
+    else
+    {
+        ui.proto_cfgReg.hidden = true;
+    }
+
+    if(inst.flashType == "SERIAL_NOR")
+    {
+        ui.cmdWrsr.hidden = true;
+        ui.cmdPageLoad.hidden = true;
+        ui.cmdPageProg.hidden = true;
+        ui.srWriteProtectReg.hidden = true;
+        ui.srWriteProtectMask.hidden = true;
+        ui.flashSectorSize.hidden = false;
+        ui.cmdBlockErase3B.hidden = false;
+        ui.cmdBlockErase4B.hidden = false;
+        ui.cmdSectorErase3B.hidden = false;
+        ui.cmdSectorErase4B.hidden = false;
+        ui.cmdBlockErase.hidden = true;
+
+        ui.modeClksCmd.hidden = false;
+        ui.modeClksRd.hidden = false;
+        ui.flashQeType.hidden = false;
+        ui.flashOeType.hidden = false;
+        ui.flash444Seq.hidden = false;
+        ui.flash888Seq.hidden = false;
+
+        ui.strDtr_isAddrReg.hidden = true;
+        ui.strDtr_cfgReg.hidden = false;
+        ui.strDtr_cmdRegRd.hidden = false;
+        ui.strDtr_cmdRegWr.hidden = false;
+        ui.strDtr_shift.hidden = false;
+        ui.strDtr_mask.hidden = false;
+        ui.strDtr_bitP.hidden = false;
+
+        ui.deviceBusyType.hidden = false;
+        ui.dummyId4.hidden = false;
+        ui.dummyId8.hidden = false;
+
+        ui.srWel.hidden = false;
+        ui.srWipReg.hidden = true;
+        ui.xspiRdsrDummy.hidden = true;
+        ui.xspiWipBit.hidden = false;
+
+        ui.cmdChipErase.hidden = false;
+        ui.enable4BAddr.hidden = false;
+
+        ui.addressByteSupport.hidden = false;
+        ui.fourByteEnableSeq.hidden = false;
+
+        ui.progStatusReg.hidden = true;
+        ui.xspiProgStatusReg.hidden = true;
+        ui.eraseStatusReg.hidden = true;
+        ui.xspiEraseStatusReg.hidden = true;
+        ui.srProgStatus.hidden = true;
+        ui.srEraseStatus.hidden = true;
+        ui.badBlockCheck.hidden = true;
+    } else if(inst.flashType == "SERIAL_NAND") {
+        ui.cmdWrsr.hidden = false;
+        ui.cmdPageLoad.hidden = false;
+        ui.cmdPageProg.hidden = false;
+        ui.srWriteProtectReg.hidden = false;
+        ui.srWriteProtectMask.hidden = false;
+
+        ui.flashSectorSize.hidden = true;
+        ui.cmdBlockErase3B.hidden = true;
+        ui.cmdBlockErase4B.hidden = true;
+        ui.cmdSectorErase3B.hidden = true;
+        ui.cmdSectorErase4B.hidden = true;
+        ui.cmdBlockErase.hidden = false;
+
+        ui.modeClksCmd.hidden = true;
+        ui.modeClksRd.hidden = true;
+        ui.flashQeType.hidden = true;
+        ui.flashOeType.hidden = true;
+        ui.flash444Seq.hidden = true;
+        ui.flash888Seq.hidden = true;
+
+        ui.strDtr_isAddrReg.hidden = true;
+        ui.strDtr_cfgReg.hidden = true;
+        ui.strDtr_cmdRegRd.hidden = true;
+        ui.strDtr_cmdRegWr.hidden = true;
+        ui.strDtr_shift.hidden = true;
+        ui.strDtr_mask.hidden = true;
+        ui.strDtr_bitP.hidden = true;
+
+        ui.deviceBusyType.hidden = true;
+        ui.dummyId4.hidden = true;
+        ui.dummyId8.hidden = true;
+
+        ui.srWel.hidden = true;
+        ui.srWipReg.hidden = false;
+        ui.xspiRdsrDummy.hidden = false;
+        ui.xspiWipBit.hidden = true;
+
+        ui.cmdChipErase.hidden = true;
+        ui.enable4BAddr.hidden = true;
+        ui.addressByteSupport.hidden = true;
+        ui.fourByteEnableSeq.hidden = true;
+
+        ui.progStatusReg.hidden = false;
+        ui.xspiProgStatusReg.hidden = false;
+
+        ui.eraseStatusReg.hidden = false;
+        ui.xspiEraseStatusReg.hidden = false;
+
+        ui.srProgStatus.hidden = false;
+        ui.srEraseStatus.hidden = false;
+        ui.badBlockCheck.hidden = false;
+    } else {
+        ui.cmdWrsr.hidden = true;
+        ui.cmdPageLoad.hidden = true;
+        ui.cmdPageProg.hidden = true;
+        ui.srWriteProtectReg.hidden = true;
+        ui.srWriteProtectMask.hidden = true;
+        ui.flashSectorSize.hidden = false;
+        ui.cmdBlockErase3B.hidden = false;
+        ui.cmdBlockErase4B.hidden = false;
+        ui.cmdSectorErase3B.hidden = false;
+        ui.cmdSectorErase4B.hidden = false;
+        ui.cmdBlockErase.hidden = true;
+
+        ui.modeClksCmd.hidden = false;
+        ui.modeClksRd.hidden = false;
+        ui.flashQeType.hidden = false;
+        ui.flashOeType.hidden = false;
+        ui.flash444Seq.hidden = false;
+        ui.flash888Seq.hidden = false;
+
+        ui.strDtr_isAddrReg.hidden = true;
+        ui.strDtr_cfgReg.hidden = false;
+        ui.strDtr_cmdRegRd.hidden = false;
+        ui.strDtr_cmdRegWr.hidden = false;
+        ui.strDtr_shift.hidden = false;
+        ui.strDtr_mask.hidden = false;
+        ui.strDtr_bitP.hidden = false;
+
+        ui.deviceBusyType.hidden = false;
+        ui.dummyId4.hidden = false;
+        ui.dummyId8.hidden = false;
+
+        ui.srWel.hidden = false;
+        ui.srWipReg.hidden = true;
+        ui.xspiRdsrDummy.hidden = true;
+        ui.xspiWipBit.hidden = false;
+
+        ui.cmdChipErase.hidden = false;
+        ui.enable4BAddr.hidden = false;
+
+        ui.addressByteSupport.hidden = false;
+        ui.fourByteEnableSeq.hidden = false;
+
+        ui.progStatusReg.hidden = true;
+        ui.xspiProgStatusReg.hidden = true;
+        ui.eraseStatusReg.hidden = true;
+        ui.xspiEraseStatusReg.hidden = true;
+        ui.srProgStatus.hidden = true;
+        ui.srEraseStatus.hidden = true;
+        ui.badBlockCheck.hidden = true;
+    }
+}
 
 let flash_module = {
     displayName: "FLASH",
 
     templates: {
         "/board/board/board_open_close.c.xdt": {
-            board_open_close_config: "/board/flash/templates/v0/flash_open_close_config.c.xdt",
+            board_open_close_config: "/board/flash/templates/v2/flash_open_close_config.c.xdt",
             board_open: "/board/flash/templates/flash_open.c.xdt",
             board_close: "/board/flash/templates/flash_close.c.xdt",
         },
@@ -222,8 +428,26 @@ let flash_module = {
         },
 
     },
-    defaultInstanceName: "CONFIG_FLASH",
-    config: [
+    collapsed: false,
+    config:  getConfigurables(),
+    validate: validate,
+    moduleStatic: {
+        modules: function(inst) {
+            return [{
+                name: "system_common",
+                moduleName: "/system_common",
+            }]
+        },
+    },
+    moduleInstances: moduleInstances,
+    getInstanceConfig,
+};
+
+function getConfigurables()
+{
+    let config = [];
+
+    config.push(
         {
             name: "device",
             displayName: "Flash Device",
@@ -242,6 +466,139 @@ let flash_module = {
             }
         },
         {
+            name: "flashType",
+            displayName: "Flash Type",
+            default: "SERIAL_NOR",
+            options: [
+                { name: "SERIAL_NOR", displayName: "Serial Nor Flash" },
+                { name: "SERIAL_NAND", displayName: "Serial Nand Flash" },
+            ],
+            onChange: function(inst, ui) {
+
+                inst.cmdBlockErase = "0x00";
+                inst.cmdPageLoad = "0x00";
+                inst.cmdPageProg = "0x00";
+                inst.srWipReg = "0x00";
+                inst.xspiRdsrDummy = 0;
+                inst.srWriteProtectReg = "0x0";
+                inst.srWriteProtectMask = 0;
+                inst.progStatusReg = "0x0";
+                inst.xspiProgStatusReg = "0x0";
+                inst.eraseStatusReg = "0x0";
+                inst.xspiEraseStatusReg = "0x0";
+                inst.srProgStatus = 0;
+                inst.srEraseStatus = 0;
+                inst.cmdWrsr = "0x00";
+                if(inst.flashType == "SERIAL_NOR") {
+                    inst.fname = serialNorDefaultName;
+                    inst.protocol = serialNorDefaultProtocolName ;
+                    inst.flashSize = serialNorDefaultCfg.flashSize;
+                    inst.flashPageSize = serialNorDefaultCfg.flashPageSize;
+
+                    inst.flashManfId = serialNorDefaultCfg.flashManfId;
+                    inst.flashDeviceId = serialNorDefaultCfg.flashDeviceId;
+
+                    inst.flashBlockSize = serialNorDefaultCfg.flashBlockSize;
+                    inst.flashSectorSize = serialNorDefaultCfg.flashSectorSize;
+                    inst.cmdBlockErase3B = serialNorDefaultCfg.cmdBlockErase3B;
+                    inst.cmdBlockErase4B = serialNorDefaultCfg.cmdBlockErase4B;
+                    inst.cmdSectorErase3B = serialNorDefaultCfg.cmdSectorErase3B;
+                    inst.cmdSectorErase4B = serialNorDefaultCfg.cmdSectorErase4B;
+
+                    inst.cmdRd = serialNorDefaultCfg.protos[defProtoJson].cmdRd;
+                    inst.cmdWr = serialNorDefaultCfg.protos[defProtoJson].cmdWr;
+                    inst.dummyClksCmd = serialNorDefaultCfg.protos[defProtoJson].dummyClksCmd;
+                    inst.dummyClksRd = serialNorDefaultCfg.protos[defProtoJson].dummyClksRd;
+
+                    inst.dummy_isAddrReg = serialNorDefaultCfg.protos[defProtoJson].dummyCfg == null ? false : serialNorDefaultCfg.protos[defProtoJson].dummyCfg.isAddrReg;
+                    inst.dummy_cfgReg = serialNorDefaultCfg.protos[defProtoJson].dummyCfg == null ? "0x00" : serialNorDefaultCfg.protos[defProtoJson].dummyCfg.cfgReg;
+                    inst.dummy_cmdRegRd = serialNorDefaultCfg.protos[defProtoJson].dummyCfg == null ? "0x00" : serialNorDefaultCfg.protos[defProtoJson].dummyCfg.cmdRegRd;
+                    inst.dummy_cmdRegWr = serialNorDefaultCfg.protos[defProtoJson].dummyCfg == null ? "0x00" : serialNorDefaultCfg.protos[defProtoJson].dummyCfg.cmdRegWr;
+
+                    inst.dummy_shift = serialNorDefaultCfg.protos[defProtoJson].dummyCfg == null ? 0 : serialNorDefaultCfg.protos[defProtoJson].dummyCfg.shift;
+                    inst.dummy_mask = serialNorDefaultCfg.protos[defProtoJson].dummyCfg == null ? "0x00" : serialNorDefaultCfg.protos[defProtoJson].dummyCfg.mask;
+                    inst.dummy_bitP = serialNorDefaultCfg.protos[defProtoJson].dummyCfg == null ? 0 : serialNorDefaultCfg.protos[defProtoJson].dummyCfg.bitP;
+
+
+                    inst.proto_isAddrReg = serialNorDefaultCfg.protos[defProtoJson].protoCfg == null ? false : serialNorDefaultCfg.protos[defProtoJson].protoCfg.isAddrReg;
+                    inst.proto_cfgReg = serialNorDefaultCfg.protos[defProtoJson].protoCfg == null ? "0x00" : serialNorDefaultCfg.protos[defProtoJson].protoCfg.cfgReg;
+                    inst.proto_cmdRegRd = serialNorDefaultCfg.protos[defProtoJson].protoCfg == null ? "0x00" : serialNorDefaultCfg.protos[defProtoJson].protoCfg.cmdRegRd;
+                    inst.proto_cmdRegWr = serialNorDefaultCfg.protos[defProtoJson].protoCfg == null ? "0x00" : serialNorDefaultCfg.protos[defProtoJson].protoCfg.cmdRegWr;
+
+                    inst.proto_shift = serialNorDefaultCfg.protos[defProtoJson].protoCfg == null ? 0 : serialNorDefaultCfg.protos[defProtoJson].protoCfg.shift;
+                    inst.proto_mask = serialNorDefaultCfg.protos[defProtoJson].protoCfg == null ? "0x00" : serialNorDefaultCfg.protos[defProtoJson].protoCfg.mask;
+                    inst.proto_bitP = serialNorDefaultCfg.protos[defProtoJson].protoCfg == null ? 0 : serialNorDefaultCfg.protos[defProtoJson].protoCfg.bitP;
+
+                    inst.cmdRdsr = serialNorDefaultCfg.cmdRdsr;
+                    inst.xspiWipRdCmd = serialNorDefaultCfg.xspiWipRdCmd;
+                    inst.quirks = "Flash_quirkSpansionUNHYSADisable";
+                    inst.xspiWipReg = serialNorDefaultCfg.xspiWipReg;
+                    // inst.cmdWrsr = serialNorDefaultCfg.cmdWrsr;
+
+                } else if(inst.flashType == "SERIAL_NAND") {
+                    inst.fname = serialNandDefaultName;
+                    inst.protocol = serialNandDefaultProtocolName;
+                    inst.flashSize = serialNandDefaultCfg.flashSize;
+                    inst.flashPageSize = serialNandDefaultCfg.flashPageSize;
+
+                    inst.flashManfId = serialNandDefaultCfg.flashManfId;
+                    inst.flashDeviceId = serialNandDefaultCfg.flashDeviceId;
+
+                    inst.flashBlockSize = serialNandDefaultCfg.flashBlockSize;
+                    inst.cmdBlockErase = serialNandDefaultCfg.cmdBlockErase;
+
+                    inst.cmdPageLoad = serialNandDefaultCfg.cmdPageLoad;
+                    inst.cmdPageProg = serialNandDefaultCfg.cmdPageProg;
+
+                    inst.cmdRd = serialNandDefaultCfg.protos[defNandProtoJson].cmdRd,
+                    inst.cmdWr = serialNandDefaultCfg.protos[defNandProtoJson].cmdWr,
+                    inst.dummyClksCmd = serialNandDefaultCfg.protos[defNandProtoJson].dummyClksCmd;
+                    inst.dummyClksRd = serialNandDefaultCfg.protos[defNandProtoJson].dummyClksRd;
+
+                    inst.dummy_isAddrReg = serialNandDefaultCfg.protos[defNandProtoJson].dummyCfg == null ? false : serialNandDefaultCfg.protos[defNandProtoJson].dummyCfg.isAddrReg;
+                    inst.dummy_cfgReg = serialNandDefaultCfg.protos[defNandProtoJson].dummyCfg == null ? "0x00" : serialNandDefaultCfg.protos[defNandProtoJson].dummyCfg.cfgReg;
+                    inst.dummy_cmdRegRd = serialNandDefaultCfg.protos[defNandProtoJson].dummyCfg == null ? "0x00" : serialNandDefaultCfg.protos[defNandProtoJson].dummyCfg.cmdRegRd;
+                    inst.dummy_cmdRegWr = serialNandDefaultCfg.protos[defNandProtoJson].dummyCfg == null ? "0x00" : serialNandDefaultCfg.protos[defNandProtoJson].dummyCfg.cmdRegWr;
+
+                    inst.dummy_shift = serialNandDefaultCfg.protos[defNandProtoJson].dummyCfg == null ? 0 : serialNandDefaultCfg.protos[defNandProtoJson].dummyCfg.shift;
+                    inst.dummy_mask = serialNandDefaultCfg.protos[defNandProtoJson].dummyCfg == null ? "0x00" : serialNandDefaultCfg.protos[defNandProtoJson].dummyCfg.mask;
+                    inst.dummy_bitP = serialNandDefaultCfg.protos[defNandProtoJson].dummyCfg == null ? 0 : serialNandDefaultCfg.protos[defNandProtoJson].dummyCfg.bitP;
+
+                    inst.proto_isAddrReg = serialNandDefaultCfg.protos[defNandProtoJson].protoCfg == null ? false : serialNandDefaultCfg.protos[defNandProtoJson].protoCfg.isAddrReg;
+                    inst.proto_cfgReg = serialNandDefaultCfg.protos[defNandProtoJson].protoCfg == null ? "0x00" : serialNandDefaultCfg.protos[defNandProtoJson].protoCfg.cfgReg;
+                    inst.proto_cmdRegRd = serialNandDefaultCfg.protos[defNandProtoJson].protoCfg == null ? "0x00" : serialNandDefaultCfg.protos[defNandProtoJson].protoCfg.cmdRegRd;
+                    inst.proto_cmdRegWr = serialNandDefaultCfg.protos[defNandProtoJson].protoCfg == null ? "0x00" : serialNandDefaultCfg.protos[defNandProtoJson].protoCfg.cmdRegWr;
+
+                    inst.proto_shift = serialNandDefaultCfg.protos[defNandProtoJson].protoCfg == null ? 0 : serialNandDefaultCfg.protos[defNandProtoJson].protoCfg.shift;
+                    inst.proto_mask = serialNandDefaultCfg.protos[defNandProtoJson].protoCfg == null ? "0x00" : serialNandDefaultCfg.protos[defNandProtoJson].protoCfg.mask;
+                    inst.proto_bitP = serialNandDefaultCfg.protos[defNandProtoJson].protoCfg == null ? 0 : serialNandDefaultCfg.protos[defNandProtoJson].protoCfg.bitP;
+
+                    inst.cmdRdsr = serialNandDefaultCfg.cmdRdsr;
+                    inst.cmdWrsr = serialNandDefaultCfg.cmdWrsr;
+                    inst.xspiWipRdCmd = serialNandDefaultCfg.xspiWipRdCmd;
+
+                    inst.srWipReg = serialNandDefaultCfg.srWipReg;
+                    inst.xspiRdsrDummy = serialNandDefaultCfg.xspiRdsrDummy;
+                    inst.xspiWipReg = serialNandDefaultCfg.xspiWipReg;
+
+                    inst.srWriteProtectReg = serialNandDefaultCfg.srWriteProtectReg;
+                    inst.srWriteProtectMask = serialNandDefaultCfg.srWriteProtectMask;
+
+                    inst.progStatusReg = serialNandDefaultCfg.progStatusReg;
+                    inst.xspiProgStatusReg = serialNandDefaultCfg.xspiProgStatusReg;
+
+                    inst.eraseStatusReg = serialNandDefaultCfg.eraseStatusReg;
+                    inst.xspiEraseStatusReg = serialNandDefaultCfg.xspiEraseStatusReg;
+
+                    inst.srProgStatus = serialNandDefaultCfg.srProgStatus;
+                    inst.srEraseStatus = serialNandDefaultCfg.srEraseStatus;
+
+                    inst.quirks = "Flash_quirkSpansionUNHYSADisable";
+                }
+                changeFlashType(inst, ui);
+            }
+        },
+        {
             name: "fname",
             displayName: "Flash Name",
             default: soc.getDefaultFlashName(),
@@ -250,10 +607,187 @@ let flash_module = {
         {
             name: "protocol",
             displayName: "Protocol",
-            description: "The NOR SPI protocol to be used",
+            description: "The Flash SPI protocol to be used",
             default: soc.getDefaultProtocol().name,
             options: defaultProtocols,
+            getDisabledOptions: (inst) => {
+                if(inst.flashType == "SERIAL_NOR")
+                {
+                    return [];
+                } else if(inst.flashType == "SERIAL_NAND") {
+                    let disabledOptions = [
+                            { name : "1s_1s_2s", displayName : "1S-1S-2S", reason:"Not supported for NAND Flash" },
+                            { name : "1s_1s_8s", displayName : "1S-1S-8S", reason:"Not supported for NAND Flash" },
+                            { name : "4s_4s_4s", displayName : "4S-4S-4S", reason:"Not supported for NAND Flash" },
+                            { name : "4s_4d_4d", displayName : "4S-4D-4D", reason:"Not supported for NAND Flash" },
+                            { name : "8s_8s_8s", displayName : "8S-8S-8S", reason:"Not supported for NAND Flash" },
+                            { name : "8d_8d_8d", displayName : "8D-8D-8D", reason:"Not supported for NAND Flash" },
+                            { name : "custom",   displayName : "Custom Protocol", reason:"Not supported for NAND Flash" },
+                    ];
+                    return disabledOptions;
+                }
+            },
             onChange: function(inst, ui) {
+                let pCfg = protoToCfgMap[inst.protocol];
+                if(inst.flashType == "SERIAL_NOR")
+                {
+                    if(serialNorDefaultCfg.protos[pCfg] != null && (inst.protocol != "custom"))
+                    {
+                        inst.cmdRd = serialNorDefaultCfg.protos[pCfg] == null ? "0x00": serialNorDefaultCfg.protos[pCfg].cmdRd;
+                        inst.cmdWr = serialNorDefaultCfg.protos[pCfg] == null ? "0x00": serialNorDefaultCfg.protos[pCfg].cmdWr;
+
+                        inst.dummyClksCmd = serialNorDefaultCfg.protos[pCfg] == null ? 0: serialNorDefaultCfg.protos[pCfg].dummyClksCmd;
+                        inst.dummyClksRd = serialNorDefaultCfg.protos[pCfg] == null ? 0 :serialNorDefaultCfg.protos[pCfg].dummyClksRd;
+
+                        if(serialNorDefaultCfg.protos[pCfg].dummyCfg != null)
+                        {
+                            inst.dummy_isAddrReg = serialNorDefaultCfg.protos[pCfg] == null ? false : serialNorDefaultCfg.protos[pCfg].dummyCfg.isAddrReg;
+                            inst.dummy_cfgReg = serialNorDefaultCfg.protos[pCfg] == null ? "0x00" : serialNorDefaultCfg.protos[pCfg].dummyCfg.cfgReg;
+                            inst.dummy_cmdRegRd = serialNorDefaultCfg.protos[pCfg] == null ? "0x00" : serialNorDefaultCfg.protos[pCfg].dummyCfg.cmdRegRd;
+                            inst.dummy_cmdRegWr = serialNorDefaultCfg.protos[pCfg] == null ? "0x00" : serialNorDefaultCfg.protos[pCfg].dummyCfg.cmdRegWr;
+
+                            inst.dummy_shift = serialNorDefaultCfg.protos[pCfg] == null ? 0 : serialNorDefaultCfg.protos[pCfg].dummyCfg.shift;
+                            inst.dummy_mask = serialNorDefaultCfg.protos[pCfg]== null ? "0x00" : serialNorDefaultCfg.protos[pCfg].dummyCfg.mask;
+                            inst.dummy_bitP = serialNorDefaultCfg.protos[pCfg] == null ? 0 : serialNorDefaultCfg.protos[pCfg].dummyCfg.bitP;
+                        }
+                        else
+                        {
+                            inst.dummy_isAddrReg = false;
+                            inst.dummy_cfgReg = "0x00";
+                            inst.dummy_cmdRegRd = "0x00";
+                            inst.dummy_cmdRegWr = "0x00";
+
+                            inst.dummy_shift = 0;
+                            inst.dummy_mask = "0x00";
+                            inst.dummy_bitP = 0;
+                        }
+
+                        if(serialNorDefaultCfg.protos[pCfg].protoCfg != null)
+                        {
+                            inst.proto_isAddrReg = serialNorDefaultCfg.protos[pCfg] == null ? false : serialNorDefaultCfg.protos[pCfg].protoCfg.isAddrReg;
+                            inst.proto_cfgReg = serialNorDefaultCfg.protos[pCfg] == null ? "0x00" : serialNorDefaultCfg.protos[pCfg].protoCfg.cfgReg;
+                            inst.proto_cmdRegRd = serialNorDefaultCfg.protos[pCfg] == null ? "0x00" : serialNorDefaultCfg.protos[pCfg].protoCfg.cmdRegRd;
+                            inst.proto_cmdRegWr = serialNorDefaultCfg.protos[pCfg] == null ? "0x00" : serialNorDefaultCfg.protos[pCfg].protoCfg.cmdRegWr;
+
+                            inst.proto_shift = serialNorDefaultCfg.protos[pCfg] == null ? 0 : serialNorDefaultCfg.protos[pCfg].protoCfg.shift;
+                            inst.proto_mask = serialNorDefaultCfg.protos[pCfg] == null ? "0x00" : serialNorDefaultCfg.protos[pCfg].protoCfg.mask;
+                            inst.proto_bitP = serialNorDefaultCfg.protos[pCfg] == null ? 0 : serialNorDefaultCfg.protos[pCfg].protoCfg.bitP;
+                        }
+                        else
+                        {
+                            inst.proto_isAddrReg = false;
+                            inst.proto_cfgReg = "0x00";
+                            inst.proto_cmdRegRd = "0x00";
+                            inst.proto_cmdRegWr = "0x00";
+
+                            inst.proto_shift = 0;
+                            inst.proto_mask = "0x00";
+                            inst.proto_bitP = 0;
+                        }
+                    }
+                    else
+                    {
+                        inst.cmdRd = "0x00"
+                        inst.cmdWr = "0x00"
+
+                        inst.dummyClksCmd = 0;
+                        inst.dummyClksRd = 0;
+
+                    }
+                }
+                else if(inst.flashType == "SERIAL_NAND")
+                {
+                    if(serialNandDefaultCfg.protos[pCfg] != null && (inst.protocol != "custom"))
+                    {
+                        inst.cmdRd = serialNandDefaultCfg.protos[pCfg] == null ? "0x00": soc.getDefaultNandFlashConfig().protos[pCfg].cmdRd;
+                        inst.cmdWr = serialNandDefaultCfg.protos[pCfg] == null ? "0x00": soc.getDefaultNandFlashConfig().protos[pCfg].cmdWr;
+
+                        inst.dummyClksCmd = serialNandDefaultCfg.protos[pCfg] == null ? 0: serialNandDefaultCfg.protos[pCfg].dummyClksCmd;
+                        inst.dummyClksRd = serialNandDefaultCfg.protos[pCfg] == null ? 0 :serialNandDefaultCfg.protos[pCfg].dummyClksRd;
+
+                        if(serialNandDefaultCfg.protos[pCfg].dummyCfg != null)
+                        {
+                            inst.dummy_isAddrReg = serialNandDefaultCfg.protos[pCfg] == null ? false : serialNandDefaultCfg.protos[pCfg].dummyCfg.isAddrReg;
+                            inst.dummy_cfgReg = serialNandDefaultCfg.protos[pCfg] == null ? "0x00" : serialNandDefaultCfg.protos[pCfg].dummyCfg.cfgReg;
+                            inst.dummy_cmdRegRd = serialNandDefaultCfg.protos[pCfg] == null ? "0x00" : serialNandDefaultCfg.protos[pCfg].dummyCfg.cmdRegRd;
+                            inst.dummy_cmdRegWr = serialNandDefaultCfg.protos[pCfg] == null ? "0x00" : serialNandDefaultCfg.protos[pCfg].dummyCfg.cmdRegWr;
+
+                            inst.dummy_shift = serialNandDefaultCfg.protos[pCfg] == null ? 0 : serialNandDefaultCfg.protos[pCfg].dummyCfg.shift;
+                            inst.dummy_mask = serialNandDefaultCfg.protos[pCfg] == null ? "0x00" : serialNandDefaultCfg.protos[pCfg].dummyCfg.mask;
+                            inst.dummy_bitP = serialNandDefaultCfg.protos[pCfg] == null ? 0 : serialNandDefaultCfg.protos[pCfg].dummyCfg.bitP;
+                        }
+                        else
+                        {
+                            inst.dummy_isAddrReg = false;
+                            inst.dummy_cfgReg = "0x00";
+                            inst.dummy_cmdRegRd = "0x00";
+                            inst.dummy_cmdRegWr = "0x00";
+
+                            inst.dummy_shift = 0;
+                            inst.dummy_mask = "0x00";
+                            inst.dummy_bitP = 0;
+                        }
+
+                        if(serialNandDefaultCfg.protos[pCfg].protoCfg != null)
+                        {
+                            inst.proto_isAddrReg = serialNandDefaultCfg.protos[pCfg] == null ? false : serialNandDefaultCfg.protos[pCfg].protoCfg.isAddrReg;
+                            inst.proto_cfgReg = serialNandDefaultCfg.protos[pCfg] == null ? "0x00" : serialNandDefaultCfg.protos[pCfg].protoCfg.cfgReg;
+                            inst.proto_cmdRegRd = serialNandDefaultCfg.protos[pCfg] == null ? "0x00" : serialNandDefaultCfg.protos[pCfg].protoCfg.cmdRegRd;
+                            inst.proto_cmdRegWr = serialNandDefaultCfg.protos[pCfg] == null ? "0x00" : serialNandDefaultCfg.protos[pCfg].protoCfg.cmdRegWr;
+
+                            inst.proto_shift = serialNandDefaultCfg.protos[pCfg] == null ? 0 : serialNandDefaultCfg.protos[pCfg].protoCfg.shift;
+                            inst.proto_mask = serialNandDefaultCfg.protos[pCfg] == null ? "0x00" : serialNandDefaultCfg.protos[pCfg].protoCfg.mask;
+                            inst.proto_bitP = serialNandDefaultCfg.protos[pCfg] == null ? 0 : serialNandDefaultCfg.protos[pCfg].protoCfg.bitP;
+                        }
+                        else
+                        {
+                            inst.proto_isAddrReg = false;
+                            inst.proto_cfgReg = "0x00";
+                            inst.proto_cmdRegRd = "0x00";
+                            inst.proto_cmdRegWr = "0x00";
+
+                            inst.proto_shift = 0;
+                            inst.proto_mask = "0x00";
+                            inst.proto_bitP = 0;
+                        }
+                    }
+                    else
+                    {
+                        inst.cmdRd = "0x00"
+                        inst.cmdWr = "0x00"
+
+                        inst.dummyClksCmd = 0;
+                        inst.dummyClksRd = 0;
+
+                    }
+                }
+                else
+                {
+                    inst.dummy_isAddrReg = false;
+                    inst.dummy_cfgReg = "0x00";
+                    inst.dummy_cmdRegRd = "0x00";
+                    inst.dummy_cmdRegWr = "0x00";
+
+                    inst.dummy_shift = 0;
+                    inst.dummy_mask = "0x00";
+                    inst.dummy_bitP = 0;
+
+                    inst.proto_isAddrReg = false;
+                    inst.proto_cfgReg = "0x00";
+                    inst.proto_cmdRegRd = "0x00";
+                    inst.proto_cmdRegWr = "0x00";
+
+                    inst.proto_shift = 0;
+                    inst.proto_mask = "0x00";
+                    inst.proto_bitP = 0;
+
+                    inst.cmdRd = "0x00"
+                    inst.cmdWr = "0x00"
+
+                    inst.dummyClksCmd = 0;
+                    inst.dummyClksRd = 0;
+                }
+
                 let hideLines = true;
                 if(inst.protocol == "custom") {
                     hideLines = false;
@@ -272,7 +806,20 @@ let flash_module = {
                 ui.cmdLines.hidden = hideLines;
                 ui.addrLines.hidden = hideLines;
                 ui.dataLines.hidden = hideLines;
+
+                changeFlashType(inst, ui);
             }
+        },
+        {
+            name: "badBlockCheck",
+            displayName: "Bad Block Checking",
+            description: "Check if block is bad for page reads.",
+            default: "No",
+            options: [
+                { name: "Yes" },
+                { name: "No" },
+            ],
+            hidden: true,
         },
         {
             name: "cmdLines",
@@ -342,6 +889,18 @@ let flash_module = {
                     default: soc.getDefaultFlashConfig().flashDeviceId,
                 },
                 {
+                    name: "cmdPageLoad",
+                    displayName: "Page Load Command",
+                    default: "0x00",
+                    hidden: true,
+                },
+                {
+                    name: "cmdPageProg",
+                    displayName: "Page Program Command",
+                    default: "0x00",
+                    hidden: true,
+                },
+                {
                     name: "eraseConfig",
                     displayName: "Erase Configurations",
                     longDescription: eraseConfigDescription,
@@ -380,7 +939,14 @@ let flash_module = {
                             description: "Command to erase a block in 4-byte addressing mode",
                             default: soc.getDefaultFlashConfig().cmdSectorErase4B,
                         },
-                    ]
+                        {
+                            name: "cmdBlockErase",
+                            displayName: "Block Erase CMD",
+                            description: "Command to erase a block",
+                            default: "0x00",
+                            hidden: true,
+                        }
+                    ],
                 },
                 {
                     name: "protEnCfg",
@@ -475,11 +1041,7 @@ let flash_module = {
                                     displayName: "Config Is Using Addressed Reg",
                                     default: soc.getDefaultFlashConfig().protos[defProtoJson].protoCfg == null ? false : soc.getDefaultFlashConfig().protos[defProtoJson].protoCfg.isAddrReg,
                                     onChange: (inst, ui) => {
-                                        let hideCfgReg = true;
-                                        if(inst.proto_isAddrReg == true) {
-                                            hideCfgReg = false;
-                                        }
-                                        ui.proto_cfgReg.hidden = hideCfgReg;
+                                        changeFlashType(inst, ui);
                                     }
                                 },
                                 {
@@ -532,11 +1094,7 @@ let flash_module = {
                                     displayName: "Config Is Via Addressed Reg",
                                     default: soc.getDefaultFlashConfig().protos[defProtoJson].dummyCfg == null ? false : soc.getDefaultFlashConfig().protos[defProtoJson].dummyCfg.isAddrReg,
                                     onChange: (inst, ui) => {
-                                        let hideCfgReg = true;
-                                        if(inst.dummy_isAddrReg == true) {
-                                            hideCfgReg = false;
-                                        }
-                                        ui.dummy_cfgReg.hidden = hideCfgReg;
+                                        changeFlashType(inst, ui);
                                     }
                                 },
                                 {
@@ -588,6 +1146,7 @@ let flash_module = {
                                     name: "strDtr_isAddrReg",
                                     displayName: "Config Is Via Addressed Reg",
                                     default: soc.getDefaultFlashConfig().protos[defProtoJson].strDtrCfg == null ? false : soc.getDefaultFlashConfig().protos[defProtoJson].strDtrCfg.isAddrReg,
+                                    hidden: true,
                                     onChange: (inst, ui) => {
                                         let hideCfgReg = true;
                                         if(inst.strDtr_isAddrReg == true) {
@@ -689,11 +1248,6 @@ let flash_module = {
                             default: soc.getDefaultFlashConfig().rdIdSettings.addressBytesSize
                         },
                         {
-                            name: "idNumBytes",
-                            displayName: "Number Of Bytes To Read",
-                            default: soc.getDefaultFlashConfig().rdIdSettings.numBytes,
-                        },
-                        {
                             name: "dummyId4",
                             displayName: "Number Of Dummy Cycles In Quad Mode",
                             default: soc.getDefaultFlashConfig().rdIdSettings.dummy4,
@@ -716,6 +1270,19 @@ let flash_module = {
                     displayName: "Read Status Register CMD",
                     description: "Command to read the status register",
                     default: soc.getDefaultFlashConfig().cmdRdsr,
+                },
+                {
+                    name: "cmdWrsr",
+                    displayName: "Write Status Register CMD",
+                    description: "Command to write the status register",
+                    default: "0x00",
+                    hidden: true,
+                },
+                {
+                    name: "srWipReg",
+                    displayName: "WIP Status Reg Addr",
+                    default: "0x00",
+                    hidden: true,
                 },
                 {
                     name: "srWip",
@@ -746,8 +1313,16 @@ let flash_module = {
                     name: "xspiWipBit",
                     displayName: "WIP Bit (xSPI)",
                     description: "WIP bit position in status register (xSPI mode)",
-                    default: soc.getDefaultFlashConfig().xspiWipBit,
+                    default: 0,
                     displayFormat: "dec",
+                },
+                {
+                    name: "xspiRdsrDummy",
+                    displayName: "WIP Read Status Dummy Cycle (xSPI)",
+                    description: "Dummy cycles for reading WIP reg (xSPI mode)",
+                    default: 0,
+                    displayFormat: "dec",
+                    hidden: true,
                 },
                 {
                     name: "cmdChipErase",
@@ -768,6 +1343,56 @@ let flash_module = {
                     description: "Time to wait for a page write to complete",
                     default: soc.getDefaultFlashConfig().flashPageProgTimeout,
                     displayFormat: "dec",
+                },
+                {
+                    name: "progStatusReg",
+                    displayName: "Program Status Register Address",
+                    default: "0x0",
+                    hidden: true,
+                },
+                {
+                    name: "xspiProgStatusReg",
+                    displayName: "Program Status Register Addr (xSPI)",
+                    default: "0x0",
+                    hidden: true,
+                },
+                {
+                    name: "srProgStatus",
+                    displayName: "Program Status Bit Position",
+                    description: "Program Status Bit Position In Status Register",
+                    default: 0,
+                    hidden: true,
+                },
+                {
+                    name: "eraseStatusReg",
+                    displayName: "Erase Status Register Address",
+                    default: "0x0",
+                    hidden: true,
+                },
+                {
+                    name: "xspiEraseStatusReg",
+                    displayName: "Erase Status Register Address (xSPI)",
+                    default: "0x0",
+                    hidden: true,
+                },
+                {
+                    name: "srEraseStatus",
+                    displayName: "Erase Status Bit Position",
+                    description: "Erase Status Bit Position In Status Register",
+                    default: 0,
+                    hidden: true,
+                },
+                {
+                    name: "srWriteProtectReg",
+                    displayName: "Write Protection Status Reg Address",
+                    default: "0x0",
+                    hidden: true,
+                },
+                {
+                    name: "srWriteProtectMask",
+                    displayName: "Write Protection Status Mask",
+                    default: 0,
+                    hidden: true,
                 },
                 {
                     name: "enable4BAddr",
@@ -824,20 +1449,9 @@ let flash_module = {
                     pickDirectory: false,
                     nonSerializable: true,
                     onLaunch: (inst) => {
-                        let products=system.getProducts()
-                        let nodeCmd=common.getNodePath()
-                        let sdkPath = ""
-                        let copyScriptPath = ""
-                        if(system.getOS() == "win") {
-                            sdkPath = products[0].path.split("\\.metadata\\product.json")[0];
-                            copyScriptPath = sdkPath + "//source//board//.meta//flash//copyutil.js";
-                        } else {
-                            sdkPath = products[0].path.split("/.metadata/product.json")[0];
-                            copyScriptPath = sdkPath + "/source/board/.meta/flash/copyutil.js";
-                        }
                         return {
-                            command: nodeCmd,
-                            args: [copyScriptPath, "$browsedFile", "$comFile"],
+                            command: copyCmd,
+                            args: ["$browsedFile", "$comFile"],
                             initialData: "initialData",
                             inSystemPath: true,
                         };
@@ -872,21 +1486,11 @@ let flash_module = {
             description: "Function to handle any vendor specific quirks of the flash",
             longDescription: quirksDescription,
             default: "Flash_quirkSpansionUNHYSADisable",
-        }
-
-    ],
-    validate: validate,
-    moduleStatic: {
-        modules: function(inst) {
-            return [{
-                name: "system_common",
-                moduleName: "/system_common",
-            }]
         },
-    },
-    moduleInstances: moduleInstances,
-    getInstanceConfig,
-};
+    )
+
+    return config;
+}
 
 function isValidHexString(s, n) {
     if("0x" == s.slice(0, 2)) {
@@ -904,7 +1508,7 @@ function validateCmd(inst, cmdName, report) {
 }
 
 function validate(inst, report) {
-    common.validate.checkSameFieldName(inst, "name", report);
+    common.validate.checkSameFieldName(inst, "device", report);
 
     /* Validate flash name */
     common.validate.checkValidCName(inst, report, "fname");
@@ -997,92 +1601,98 @@ function moduleInstances(inst) {
 }
 
 function fillConfigs(inst, cfg) {
-    /* Basic Config */
-    inst.flashSize = cfg.flashSize;
-    inst.flashPageSize = cfg.flashPageSize;
-    inst.flashManfId = cfg.flashManfId;
-    inst.flashDeviceId = cfg.flashDeviceId;
-    inst.flashBlockSize = cfg.flashBlockSize;
-    inst.flashSectorSize = cfg.flashSectorSize;
-    inst.cmdBlockErase3B = cfg.cmdBlockErase3B;
-    inst.cmdBlockErase4B = cfg.cmdBlockErase4B;
-    inst.cmdSectorErase3B = cfg.cmdSectorErase3B;
-    inst.cmdSectorErase4B = cfg.cmdSectorErase4B;
 
-    /* Protocol Configs */
-    /* 1-1-1 */
-    let protoToCfgMap = {
-        "1s_1s_1s" : "p111",
-        "1s_1s_2s" : "p112",
-        "1s_1s_4s" : "p114",
-        "1s_1s_8s" : "p118",
-        "4s_4s_4s" : "p444s",
-        "4s_4d_4d" : "p444d",
-        "8s_8s_8s" : "p888s",
-        "8d_8d_8d" : "p888d",
-        "custom"   : "pCustom",
-    }
-
-    let pCfg = cfg.protos[protoToCfgMap[inst.protocol]];
-
-    if(pCfg != null)
+    if(inst.flashType == "SERIAL_NOR")
     {
-        inst.cmdRd = pCfg.cmdRd;
-        inst.cmdWr = pCfg.cmdWr;
-        inst.modeClksCmd = pCfg.modeClksCmd;
-        inst.modeClksRd = pCfg.modeClksRd;
-        inst.dummyClksCmd = pCfg.dummyClksCmd;
-        inst.dummyClksRd = pCfg.dummyClksRd;
-        /* QE and OE bits */
-        if(inst.protocol.includes("4")) {
-            inst.flashQeType = pCfg.enableType;
-        } else if (inst.protocol.includes("8")) {
-            inst.flashOeType = pCfg.enableType;
-        }
-        /* 4-4-4 and 8-8-8 sequences */
-        if(["4s_4s_4s", "4s_4d_4d"].includes(inst.protocol)) {
-            inst.flash444Seq = pCfg.enableSeq;
-        } else if(["8s_8s_8s", "8d_8d_8d"].includes(inst.protocol)) {
-            inst.flash888Seq = pCfg.enableSeq;
-        }
-        /* Register configs */
-        /* Protocol config */
-        if(pCfg.protoCfg != null) {
-            inst.proto_isAddrReg = pCfg.protoCfg.isAddrReg;
-            inst.proto_cmdRegRd  = pCfg.protoCfg.cmdRegRd;
-            inst.proto_cmdRegWr  = pCfg.protoCfg.cmdRegWr;
-            inst.proto_cfgReg    = pCfg.protoCfg.cfgReg;
-            inst.proto_shift     = pCfg.protoCfg.shift;
-            inst.proto_mask      = pCfg.protoCfg.mask;
-            inst.proto_bitP      = pCfg.protoCfg.bitP;
-        } else {
-            inst.proto_isAddrReg = false;
-        }
-        /* Dummy config */
-        if(pCfg.dummyCfg != null) {
-            inst.dummy_isAddrReg = pCfg.dummyCfg.isAddrReg;
-            inst.dummy_cmdRegRd  = pCfg.dummyCfg.cmdRegRd;
-            inst.dummy_cmdRegWr  = pCfg.dummyCfg.cmdRegWr;
-            inst.dummy_cfgReg    = pCfg.dummyCfg.cfgReg;
-            inst.dummy_shift     = pCfg.dummyCfg.shift;
-            inst.dummy_mask      = pCfg.dummyCfg.mask;
-            inst.dummy_bitP      = pCfg.dummyCfg.bitP;
-        } else {
-            inst.dummy_isAddrReg = false;
-        }
-        /* Str-Dtr config */
-        if(pCfg.strDtrCfg != null) {
-            inst.strDtr_isAddrReg = pCfg.strDtrCfg.isAddrReg;
-            inst.strDtr_cmdRegRd  = pCfg.strDtrCfg.cmdRegRd;
-            inst.strDtr_cmdRegWr  = pCfg.strDtrCfg.cmdRegWr;
-            inst.strDtr_cfgReg    = pCfg.strDtrCfg.cfgReg;
-            inst.strDtr_shift     = pCfg.strDtrCfg.shift;
-            inst.strDtr_mask      = pCfg.strDtrCfg.mask;
-            inst.strDtr_bitP      = pCfg.strDtrCfg.bitP;
-        } else {
-            inst.strDtr_isAddrReg = false;
-        }
+        /* Basic Config */
+        inst.flashSize = cfg.flashSize;
+        inst.flashPageSize = cfg.flashPageSize;
+        inst.flashManfId = cfg.flashManfId;
+        inst.flashDeviceId = cfg.flashDeviceId;
+        inst.flashBlockSize = cfg.flashBlockSize;
+        inst.flashSectorSize = cfg.flashSectorSize;
+        inst.cmdBlockErase3B = cfg.cmdBlockErase3B;
+        inst.cmdBlockErase4B = cfg.cmdBlockErase4B;
+        inst.cmdSectorErase3B = cfg.cmdSectorErase3B;
+        inst.cmdSectorErase4B = cfg.cmdSectorErase4B;
+
+        let pCfg = cfg.protos[protoToCfgMap[inst.protocol]];
+
+        if(pCfg != null)
+        {
+            inst.cmdRd = pCfg.cmdRd;
+            inst.cmdWr = pCfg.cmdWr;
+            inst.modeClksCmd = pCfg.modeClksCmd;
+            inst.modeClksRd = pCfg.modeClksRd;
+            inst.dummyClksCmd = pCfg.dummyClksCmd;
+            inst.dummyClksRd = pCfg.dummyClksRd;
+            /* QE and OE bits */
+            if(inst.protocol.includes("4")) {
+                inst.flashQeType = pCfg.enableType;
+            } else if (inst.protocol.includes("8")) {
+                inst.flashOeType = pCfg.enableType;
+            }
+            /* 4-4-4 and 8-8-8 sequences */
+            if(["4s_4s_4s", "4s_4d_4d"].includes(inst.protocol)) {
+                inst.flash444Seq = pCfg.enableSeq;
+            } else if(["8s_8s_8s", "8d_8d_8d"].includes(inst.protocol)) {
+                inst.flash888Seq = pCfg.enableSeq;
+            }
             /* Custom */
+            if(inst.protocol == "custom") {
+                if(cfg.protos.pCustom != null) {
+                    if(cfg.protos.pCustom != null) {
+                        inst.customProtoFxn = cfg.protos.pCustom.fxn;
+                    } else {
+                        inst.customProtoFxn = "NULL";
+                    }
+                } else {
+                    inst.customProtoFxn = "NULL";
+                }
+            }
+        }
+
+        inst.resetType = cfg.resetType;
+        inst.deviceBusyType = cfg.deviceBusyType;
+        inst.cmdExtType = cfg.cmdExtType;
+        inst.addressByteSupport = cfg.addrByteSupport;
+        inst.cmdWren = cfg.cmdWren;
+        inst.cmdRdsr = cfg.cmdRdsr;
+        inst.srWip = cfg.srWip;
+        inst.srWel = cfg.srWel;
+        inst.xspiWipBit = cfg.xspiWipBit;
+        inst.xspiWipRdCmd = cfg.xspiWipRdCmd;
+        inst.xspiWipReg = cfg.xspiWipReg;
+        inst.cmdChipErase = cfg.cmdChipErase;
+        inst.cmdRdId = cfg.rdIdSettings.cmd;
+        inst.idNumBytes = cfg.rdIdSettings.numBytes;
+        inst.dummyId4 = cfg.rdIdSettings.dummy4;
+        inst.dummyId8 = cfg.rdIdSettings.dummy8;
+    }
+    else if(inst.flashType == "SERIAL_NAND")
+    {
+        /* Basic Config */
+        inst.flashSize = cfg.flashSize;
+        inst.flashPageSize = cfg.flashPageSize;
+        inst.flashManfId = cfg.flashManfId;
+        inst.flashDeviceId = cfg.flashDeviceId;
+        inst.flashBlockSize = cfg.flashBlockSize;
+        inst.cmdBlockErase = cfg.cmdBlockErase;
+        inst.cmdPageLoad = cfg.cmdPageLoad;
+        inst.cmdPageProg = cfg.cmdPageProg;
+
+        let pCfg = cfg.protos[protoToCfgMap[inst.protocol]];
+
+        if(pCfg != null)
+        {
+            inst.isDtr = pCfg.isDtr;
+            inst.cmdRd = pCfg.cmdRd;
+            inst.cmdWr = pCfg.cmdWr;
+            inst.dummyClksCmd = pCfg.dummyClksCmd;
+            inst.dummyClksRd = pCfg.dummyClksRd;
+        }
+
+        /* Custom */
         if(inst.protocol == "custom") {
             if(cfg.protos.pCustom != null) {
                 if(cfg.protos.pCustom != null) {
@@ -1094,24 +1704,35 @@ function fillConfigs(inst, cfg) {
                 inst.customProtoFxn = "NULL";
             }
         }
-    }
 
-    inst.resetType = cfg.resetType;
-    inst.deviceBusyType = cfg.deviceBusyType;
-    inst.cmdExtType = cfg.cmdExtType;
-    inst.addressByteSupport = cfg.addrByteSupport;
-    inst.cmdWren = cfg.cmdWren;
-    inst.cmdRdsr = cfg.cmdRdsr;
-    inst.srWip = cfg.srWip;
-    inst.srWel = cfg.srWel;
-    inst.xspiWipBit = cfg.xspiWipBit;
-    inst.xspiWipRdCmd = cfg.xspiWipRdCmd;
-    inst.xspiWipReg = cfg.xspiWipReg;
-    inst.cmdChipErase = cfg.cmdChipErase;
-    inst.cmdRdId = cfg.rdIdSettings.cmd;
-    inst.idNumBytes = cfg.rdIdSettings.numBytes;
-    inst.dummyId4 = cfg.rdIdSettings.dummy4;
-    inst.dummyId8 = cfg.rdIdSettings.dummy8;
+        inst.cmdExtType = cfg.cmdExtType;
+        inst.cmdWren = cfg.cmdWren;
+        inst.cmdRdsr = cfg.cmdRdsr;
+        inst.cmdWrsr = cfg.cmdWrsr;
+
+        inst.srWip = cfg.srWip;
+        inst.srWipReg = cfg.srWipReg;
+        inst.xspiWipRdCmd = cfg.xspiWipRdCmd;
+        inst.xspiWipReg = cfg.xspiWipReg;
+        inst.xspiRdsrDummy = cfg.xspiRdsrDummy;
+
+        inst.srWriteProtectReg = cfg.srWriteProtectReg;
+        inst.srWriteProtectMask = cfg.srWriteProtectMask;
+
+        inst.progStatusReg = cfg.progStatusReg;
+        inst.xspiProgStatusReg = cfg.xspiProgStatusReg;
+
+        inst.eraseStatusReg = cfg.eraseStatusReg;
+        inst.xspiEraseStatusReg = cfg.xspiEraseStatusReg;
+
+        inst.srProgStatus = cfg.srProgStatus;
+        inst.srEraseStatus = cfg.srEraseStatus;
+
+        inst.cmdRdId = cfg.rdIdSettings.cmd;
+        inst.idNumBytes = cfg.rdIdSettings.numBytes;
+        inst.dummyId4 = cfg.rdIdSettings.dummy4;
+        inst.dummyId8 = cfg.rdIdSettings.dummy8;
+    }
 }
 
 exports = flash_module;

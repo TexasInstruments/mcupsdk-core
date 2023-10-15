@@ -76,6 +76,26 @@ typedef struct Flash_Params_s Flash_Params;
  *        be filled by sysconfig or otherwise before invoking Flash_open
  */
 
+typedef struct
+{
+    /* data */
+    uint8_t  cmdWrsr;
+    uint8_t  cmdPageLoad;
+    uint8_t  cmdPageProg;
+    uint32_t srWipReg;
+    uint32_t xspiRdsrDummy;
+    uint32_t progStatusReg;
+    uint32_t xspiProgStatusReg;
+    uint32_t eraseStatusReg;
+    uint32_t xspiEraseStatusReg;
+    uint8_t  srProgStatus;
+    uint8_t  srEraseStatus;
+    uint8_t  srWriteProtectReg;
+    uint8_t  srWriteProtectMask;
+
+}Flash_NandConfig;
+
+
 typedef struct Flash_DevConfig_s {
 
     uint8_t  cmdExtType;
@@ -114,6 +134,7 @@ typedef struct Flash_DevConfig_s {
     FlashCfg_EraseConfig eraseCfg;
     FlashCfg_ReadIDConfig idCfg;
     FlashCfg_ProtoEnConfig protocolCfg;
+    Flash_NandConfig *nandCfg;
 
 } Flash_DevConfig;
 
@@ -308,6 +329,11 @@ typedef struct Flash_Config_s
 
 #if defined (DRV_VERSION_FLASH_V1)
 #include <board/flash/qspi/flash_nor_qspi.h>
+#endif
+
+#if defined (DRV_VERSION_FLASH_V2)
+#include <board/flash/ospi/flash_nor_ospi.h>
+#include <board/flash/ospi/flash_nand_ospi.h>
 #endif
 
 #if defined (DRV_VERSION_GPMC_V0)
