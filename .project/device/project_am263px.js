@@ -214,6 +214,8 @@ const example_file_list = [
     "test/security/crypto/test_dthe_hmac_sha/.project/project.js",
     "test/sdl/dcc/dcc_mcu/dcc_func_test/.project/project.js",
     "test/sdl/dcc/dcc_mcu/dcc_unit_test/.project/project.js",
+    "test/sdl/esm/v0/esm_func_test/.project/project.js",
+    "test/sdl/esm/v0/esm_unit_test/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {

@@ -53,7 +53,7 @@ SDL_ESM_config SDTF_esmInitConfig_MAIN =
      *   and PCIE events */
 };
 
-#elif defined (SOC_AM263X)
+#elif defined (SOC_AM263X) || defined (SOC_AM263PX)
 SDL_ESM_config SDTF_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */

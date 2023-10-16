@@ -49,7 +49,7 @@
 #define STATUS_NUM (1u)
 #define SDL_ESM_EN_KEY_ENBALE_VAL (0xFU)
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 SDL_ESM_config ESM_esmInitConfig_MAIN_appcallback =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -86,7 +86,7 @@ int32_t SDTF_runESMInjectHigh_MAIN2(void);
 int32_t sdl_Esm_posTest(void)
 {
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
  	SDL_ESM_Inst         i = SDL_ESM_INST_MAIN_ESM0;
 	SDL_ESM_Inst Test_instance = i;
 #endif
@@ -109,7 +109,7 @@ int32_t sdl_Esm_posTest(void)
 
     New_SDL_TEST_ESM_BASE = (uint32_t) AddrTranslateP_getLocalAddr(SDL_TEST_ESM_BASE);
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 
    /* ESMSetInfluenceOnErrPin API test */
     if (testStatus == SDL_APP_TEST_PASS)
@@ -153,8 +153,8 @@ int32_t sdl_Esm_posTest(void)
     {
         if ((SDL_ESM_getStaticRegisters(i, &staticRegs)) != SDL_PASS)
         {
-             testStatus = SDL_APP_TEST_FAILED;
-             DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
 		}
     }
 
@@ -173,11 +173,11 @@ int32_t sdl_Esm_posTest(void)
     /* SDL_ESM_init API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-            if ((SDL_ESM_init(i, &pCofnig, NULL, &apparg)) == SDL_PASS)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-                DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
-            }
+        if ((SDL_ESM_init(i, &pCofnig, NULL, &apparg)) == SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
+        }
     }
 
     if (testStatus == SDL_APP_TEST_PASS)
@@ -717,11 +717,11 @@ int32_t sdl_Esm_posTest(void)
     /* SDL_ESM_init API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-            if ((SDL_ESM_init(Test_instance, &pCofnig, NULL, &apparg)) == SDL_PASS)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-                DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
-            }
+        if ((SDL_ESM_init(Test_instance, &pCofnig, NULL, &apparg)) == SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
+        }
     }
 
 
@@ -736,10 +736,10 @@ int32_t sdl_Esm_posTest(void)
         pCofnig.priorityBitmap[1] = 0x000000ff;
         pCofnig.errorpinBitmap[1] = 0xffffffff;
         if ((SDL_ESM_verifyConfig(i, &pCofnig)) != SDL_EFAIL)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-                DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
-            }
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
+        }
     }
 
     if (testStatus == SDL_APP_TEST_PASS)
@@ -757,10 +757,10 @@ int32_t sdl_Esm_posTest(void)
         pCofnig.priorityBitmap[1] = 0x000000ff;
         pCofnig.errorpinBitmap[1] = 0xffffffff;
         if ((SDL_ESM_verifyConfig(i, &pCofnig)) != SDL_EFAIL)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-                DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
-            }
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
+        }
     }
 
     if (testStatus == SDL_APP_TEST_PASS)
@@ -858,13 +858,13 @@ void  esm_init_appcb(SDL_ESM_Inst esmType)
     void *ptr = (void *)&arg;
     SDL_ErrType_t result;
     result = SDL_ESM_init(esmType, &ESM_esmInitConfig_MAIN_appcallback,SDL_ESM_applicationCallbackFunction,ptr);
-        if (result != SDL_PASS) {
-            /* print error and quit */
-            DebugP_log("ESM_ECC_Example_init: Error initializing MAIN ESM: result = %d\r\n", result);
+    if (result != SDL_PASS) {
+        /* print error and quit */
+        DebugP_log("ESM_ECC_Example_init: Error initializing MAIN ESM: result = %d\r\n", result);
 
-        } else {
-            DebugP_log("\r\nESM_ECC_Example_init: Init MAIN ESM complete \r\n");
-        }
+    } else {
+        DebugP_log("\r\nESM_ECC_Example_init: Init MAIN ESM complete \r\n");
+    }
 }
 /*********************************************************************
  * @fn      SDTF_runESMInject

@@ -46,7 +46,7 @@
     bool event;
     uint32_t esmBaseAddr;
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 static SDL_ESM_config ESM_esmInitConfig_MAIN_appcallback =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -158,7 +158,7 @@ int32_t sdl_Esm_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
         instance = SDL_ESM_INST_MAIN_ESM0;
 #endif
 
@@ -378,7 +378,7 @@ int32_t sdl_Esm_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
         instance = SDL_ESM_INST_MAIN_ESM0;
 #endif
         if (SDL_ESM_getStaticRegisters(instance, NULL) != SDL_EBADARGS)
@@ -442,7 +442,7 @@ int32_t sdl_Esm_negTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         instance = SDL_ESM_INSTANCE_MAX;
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 		if ((SDL_ESM_registerECCCallback(instance, ESM_esmInitConfig_MAIN_appcallback.enableBitmap,
                                              SDL_ESM_applicationCallbackFunction, &apparg) != SDL_EFAIL))
 #endif
@@ -460,7 +460,7 @@ int32_t sdl_Esm_negTest(void)
     /*  Negative test for API SDL_ESM_init  */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
         instance = SDL_ESM_INST_MAIN_ESM0;
 #endif
         if (SDL_ESM_init(instance, NULL, NULL, NULL) != SDL_EBADARGS)
@@ -1092,23 +1092,23 @@ int32_t sdl_Esm_negTest(void)
     /* SDL_ESM_init API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-            if ((SDL_ESM_init(SDL_ESM_INSTANCE_MAX, &pCofnig, NULL, &apparg)) == SDL_PASS)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-                DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
-            }
+        if ((SDL_ESM_init(SDL_ESM_INSTANCE_MAX, &pCofnig, NULL, &apparg)) == SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
     }
     /* SDL_ESM_init API test */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-            if ((SDL_ESM_init(SDL_ESM_INSTANCE_MAX, &pCofnig, SDL_ESM_applicationCallbackFunction, &apparg)) == SDL_PASS)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-                DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
-            }
+        if ((SDL_ESM_init(SDL_ESM_INSTANCE_MAX, &pCofnig, SDL_ESM_applicationCallbackFunction, &apparg)) == SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
     }
 
-      for (uint32_t i=0;i<0xfff;i++);
+    for (uint32_t i=0;i<0xfff;i++);
 
     if (testStatus == SDL_APP_TEST_PASS)
     {

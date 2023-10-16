@@ -72,6 +72,14 @@
 #if defined (SOC_AM263X)
 #include <sdl/include/am263x/sdlr_soc_baseaddress.h>
 #include <sdl/esm/soc/am263x/sdl_esm_core.h>
+#endif
+
+#if defined (SOC_AM263PX)
+#include <sdl/include/am263px/sdlr_soc_baseaddress.h>
+#include <sdl/esm/soc/am263px/sdl_esm_core.h>
+#endif
+
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 #define SDL_TEST_ESM_BASE  SDL_TOP_ESM_U_BASE
 #define ESM_TEST_BASE SDL_TOP_ESM_U_BASE
 
