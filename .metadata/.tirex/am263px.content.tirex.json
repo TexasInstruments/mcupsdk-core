@@ -929,6 +929,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "ADC SOC triggered from ECAP example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_soc_ecap",
+        "location": "../../examples/drivers/adc/adc_soc_ecap/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_soc_ecap",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC SOC triggered from ECAP example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_soc_ecap",
+        "location": "../../examples/drivers/adc/adc_soc_ecap/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_soc_ecap",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "ADC SOC Oversampling example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_soc_oversampling",
         "location": "../../examples/drivers/adc/adc_soc_oversampling/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -6686,6 +6752,138 @@
             "drivers",
             "mcspi",
             "mcspi_performance_8bit",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Turbo Mode Main Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_turbo_mode_main",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_turbo_mode",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Turbo Mode Main Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_turbo_mode_main",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_turbo_mode",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Turbo Mode Main Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_turbo_mode_main",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_turbo_mode",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Turbo Mode Main Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_turbo_mode_main",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am263px-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_turbo_mode",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [

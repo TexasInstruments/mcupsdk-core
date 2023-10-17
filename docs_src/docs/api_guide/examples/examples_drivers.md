@@ -193,6 +193,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_ADC_PPB_EPWM_TRIP
    -# \subpage EXAMPLES_DRIVERS_ADC_SOC_CONTINUOUS_DMA
    -# \subpage EXAMPLES_DRIVERS_ADC_SOC_CONTINUOUS
+   -# \subpage EXAMPLES_DRIVERS_ADC_SOC_ECAP
    -# \subpage EXAMPLES_DRIVERS_ADC_SOC_EPWM
    -# \subpage EXAMPLES_DRIVERS_ADC_SOC_OVERSAMPLING
    -# \subpage EXAMPLES_DRIVERS_ADC_SOC_SOFTWARE

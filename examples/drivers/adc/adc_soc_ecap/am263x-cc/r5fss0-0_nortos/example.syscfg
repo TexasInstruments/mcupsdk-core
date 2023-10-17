@@ -1,0 +1,129 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.18.0+3266"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const adc          = scripting.addModule("/drivers/adc/adc", {}, false);
+const adc1         = adc.addInstance();
+const adc2         = adc.addInstance();
+const ecap         = scripting.addModule("/drivers/ecap/ecap", {}, false);
+const ecap1        = ecap.addInstance();
+const ecap2        = ecap.addInstance();
+const debug_log    = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7    = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71   = mpu_armv7.addInstance();
+const mpu_armv72   = mpu_armv7.addInstance();
+const mpu_armv73   = mpu_armv7.addInstance();
+const mpu_armv74   = mpu_armv7.addInstance();
+const input_xbar   = scripting.addModule("/xbar/input_xbar/input_xbar", {}, false);
+const input_xbar1  = input_xbar.addInstance();
+const int_xbar     = scripting.addModule("/xbar/int_xbar/int_xbar", {}, false);
+const int_xbar1    = int_xbar.addInstance();
+const int_xbar2    = int_xbar.addInstance();
+const output_xbar  = scripting.addModule("/xbar/output_xbar/output_xbar", {}, false);
+const output_xbar1 = output_xbar.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+adc1.$name              = "ADC_APWM_TRIG";
+adc1.enableConverter    = true;
+adc1.interruptPulseMode = "ADC_PULSE_END_OF_CONV";
+adc1.enableInterrupt1   = true;
+adc1.soc0Trigger        = "ADC_TRIGGER_ECAP0_SOCEVT";
+adc1.soc0Channel        = "ADC_CH_ADCIN2";
+adc1.adcClockPrescaler  = "ADC_CLK_DIV_3_0";
+adc1.soc0SampleWindow   = 17;
+adc1.ADC.$assign        = "ADC0";
+
+adc2.soc0Trigger        = "ADC_TRIGGER_ECAP1_SOCEVT";
+adc2.interruptPulseMode = "ADC_PULSE_END_OF_CONV";
+adc2.enableInterrupt1   = true;
+adc2.enableConverter    = true;
+adc2.$name              = "ADC_CAP_TRIG";
+adc2.adcClockPrescaler  = "ADC_CLK_DIV_3_0";
+adc2.soc0SampleWindow   = 17;
+adc2.ADC.$assign        = "ADC1";
+
+ecap1.$name                        = "APWM_ECAP";
+ecap1.ecapMode                     = "APWM";
+ecap1.emulationMode                = "ECAP_EMULATION_FREE_RUN";
+ecap1.apwmPeriod                   = 39999;
+ecap1.apwmCompare                  = 19999;
+ecap1.ecap_AdcSoCtriggerEnable     = true;
+ecap1.ecap_AdcSoCtriggerSourceAPWM = "ECAP_APWM_MODE_SOC_TRIGGER_SRC_CMP";
+
+ecap2.$name                           = "CAPTURE_ECAP";
+ecap2.ecapBase                        = "CSL_CONTROLSS_ECAP1_U_BASE";
+ecap2.eventTwoPolarity                = "ECAP_EVNT_FALLING_EDGE";
+ecap2.eventStop                       = "ECAP_EVENT_2";
+ecap2.useInterrupts                   = false;
+ecap2.ecap_AdcSoCtriggerEnable        = true;
+ecap2.ecap_AdcSoCtriggerSourceCapture = "ECAP_CAP_MODE_SOC_TRIGGER_SRC_CEVT2";
+ecap2.emulationMode                   = "ECAP_EMULATION_FREE_RUN";
+ecap2.ecapInput                       = "ECAP_INPUT_INPUTXBAR0";
+ecap2.syncOutMode                     = "ECAP_SYNC_OUT_DISABLED";
+
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+input_xbar1.$name      = "CONFIG_INPUT_XBAR0";
+input_xbar1.xbarOutput = "GPIO119";
+
+int_xbar1.$name      = "CONFIG_INT_XBAR0";
+int_xbar1.xbarOutput = ["ADC0_INT1"];
+
+int_xbar2.$name      = "CONFIG_INT_XBAR1";
+int_xbar2.xbarOutput = ["ADC1_INT1"];
+int_xbar2.instance   = "INT_XBAR_1";
+
+output_xbar1.$name              = "CONFIG_OUTPUT_XBAR0";
+output_xbar1.xbarOutput         = ["ECAP0_OUT"];
+output_xbar1.OUTPUTXBAR.$assign = "OUTPUTXBAR13";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+adc1.ADC.AIN0.$suggestSolution                      = "ADC0_AIN0";
+adc1.ADC.AIN1.$suggestSolution                      = "ADC0_AIN1";
+adc1.ADC.AIN2.$suggestSolution                      = "ADC0_AIN2";
+adc1.ADC.AIN3.$suggestSolution                      = "ADC0_AIN3";
+adc1.ADC.AIN4.$suggestSolution                      = "ADC0_AIN4";
+adc1.ADC.AIN5.$suggestSolution                      = "ADC0_AIN5";
+adc2.ADC.AIN0.$suggestSolution                      = "ADC1_AIN0";
+adc2.ADC.AIN1.$suggestSolution                      = "ADC1_AIN1";
+adc2.ADC.AIN2.$suggestSolution                      = "ADC1_AIN2";
+adc2.ADC.AIN3.$suggestSolution                      = "ADC1_AIN3";
+adc2.ADC.AIN4.$suggestSolution                      = "ADC1_AIN4";
+adc2.ADC.AIN5.$suggestSolution                      = "ADC1_AIN5";
+debug_log.uartLog.UART.$suggestSolution             = "UART0";
+output_xbar1.OUTPUTXBAR.OUTPUTXBAR.$suggestSolution = "PR0_PRU1_GPIO19";
