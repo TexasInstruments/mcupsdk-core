@@ -37,6 +37,8 @@
 #include <drivers/bootloader/bootloader_uniflash.h>
 #include <drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
 
+const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
+
 #define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x1C0000) /* This has to match the size of MSRAM1 section in linker.cmd */
 uint8_t gUniflashFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
 
@@ -44,6 +46,9 @@ uint8_t gUniflashFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((align
 uint8_t gUniflashVerifyBuf[BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE] __attribute__((aligned(128), section(".bss")));
 
 uint32_t gRunApp;
+extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
+
+void flashFixUpOspiBoot(OSPI_Handle oHandle, Flash_Handle fHandle);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -64,8 +69,9 @@ int main()
     Bootloader_UniflashConfig uniflashConfig;
     Bootloader_UniflashResponseHeader respHeader;
 
+    Bootloader_profileReset();
     Bootloader_socConfigurePll();
-    Bootloader_socInitL2MailBoxMemory();
+    Bootloader_socSetAutoClock();
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");
@@ -74,11 +80,15 @@ int main()
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     DebugP_log("\r\n");
+    Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socInitL2MailBoxMemory();
+    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+
+    flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0], NULL);
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
-
-    Bootloader_socCpuSetClock(CSL_CORE_ID_R5FSS0_0, (uint32_t)(400*1000000));
+    Bootloader_profileAddProfilePoint("Board_driversOpen");
 
     Bootloader_CANInit(CONFIG_MCAN0_BASE_ADDR);
 
@@ -154,12 +164,12 @@ int main()
             {
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
-                status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
+                status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
             }
             Bootloader_profileAddProfilePoint("CPU load");
             Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
-            QSPI_Handle qspiHandle = QSPI_getHandle(CONFIG_QSPI0);
-            Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, QSPI_getInputClk(qspiHandle));
+            OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
+            Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, OSPI_getInputClk(ospiHandle));
 
             if(status == SystemP_SUCCESS)
             {
@@ -184,6 +194,22 @@ int main()
             }
             if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
             {
+               if (bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
+                {
+                    status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
+                }
+                if (status == SystemP_SUCCESS)
+                {
+                    /* enable Phy and Phy pipeline for XIP execution */
+                    if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
+                    {
+                        status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
+                        DebugP_assert(status == SystemP_SUCCESS);
+
+                        status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
+                        DebugP_assert(status == SystemP_SUCCESS);
+                    }
+                }
                 /* If any of the R5 core 0 have valid image reset the R5 core. */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
             }
@@ -201,4 +227,15 @@ int main()
     System_deinit();
 
     return 0;
+}
+
+void flashFixUpOspiBoot(OSPI_Handle oHandle, Flash_Handle fHandle)
+{
+    OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(8, 8, 8, 1));
+    OSPI_enableDDR(oHandle);
+    OSPI_setDualOpCodeMode(oHandle);
+    Flash_reset(fHandle);
+    OSPI_enableSDR(oHandle);
+    OSPI_clearDualOpCodeMode(oHandle);
+    OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1, 1, 1, 0));
 }

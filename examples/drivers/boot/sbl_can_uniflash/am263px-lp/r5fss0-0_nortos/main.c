@@ -37,6 +37,9 @@
 #include <drivers/bootloader/bootloader_uniflash.h>
 #include <drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
 
+const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
+    = HSMRT_IMG;
+
 #define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x1C0000) /* This has to match the size of MSRAM1 section in linker.cmd */
 uint8_t gUniflashFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
 
@@ -76,6 +79,7 @@ int main()
     Bootloader_UniflashConfig uniflashConfig;
     Bootloader_UniflashResponseHeader respHeader;
 
+    Bootloader_profileReset();
     Bootloader_socConfigurePll();
     Bootloader_socInitL2MailBoxMemory();
 
@@ -86,11 +90,13 @@ int main()
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     DebugP_log("\r\n");
+    Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
+    Bootloader_profileAddProfilePoint("Board_driversOpen");
 
-    Bootloader_socCpuSetClock(CSL_CORE_ID_R5FSS0_0, (uint32_t)(400*1000000));
     mcanEnableTransceiver();
 
     Bootloader_CANInit(CONFIG_MCAN0_BASE_ADDR);
@@ -167,12 +173,12 @@ int main()
             {
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
-                status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
+                status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
             }
             Bootloader_profileAddProfilePoint("CPU load");
             Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
-            QSPI_Handle qspiHandle = QSPI_getHandle(CONFIG_QSPI0);
-            Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, QSPI_getInputClk(qspiHandle));
+            OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
+            Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, OSPI_getInputClk(ospiHandle));
 
             if(status == SystemP_SUCCESS)
             {
@@ -197,6 +203,10 @@ int main()
             }
             if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
             {
+                if( bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
+                {
+                    status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
+                }
                 /* If any of the R5 core 0 have valid image reset the R5 core. */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
             }
