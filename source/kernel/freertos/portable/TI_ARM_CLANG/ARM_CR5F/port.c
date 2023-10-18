@@ -102,6 +102,19 @@
 #define OSHST    (2U)        /*   Outer shareable Store-Store            */
 #define OSHLD    (1U)        /*   Outer shareable Load-Load, Load-Store  */
 
+/* The critical section macros only mask interrupts up to an application
+ * determined priority level.  Sometimes it is necessary to turn interrupt off in
+ * the CPU itself before modifying certain hardware registers. */
+#define portCPU_IRQ_DISABLE()                  \
+    __asm volatile ( "CPSID i" ::: "memory" ); \
+    __asm volatile ( "DSB" );                  \
+    __asm volatile ( "ISB" );
+
+#define portCPU_IRQ_ENABLE()                   \
+    __asm volatile ( "CPSIE i" ::: "memory" ); \
+    __asm volatile ( "DSB" );                  \
+    __asm volatile ( "ISB" );
+
 /* A variable is used to keep track of the critical section nesting.  This
  * variable has to be stored as part of the task context and must be initialised to
  * a non zero value to ensure interrupts don't inadvertently become unmasked before
@@ -206,6 +219,11 @@ StackType_t * pxPortInitialiseStack( StackType_t * pxTopOfStack,
     *pxTopOfStack = ( StackType_t ) pvParameters;            /* R0 */
     pxTopOfStack--;
 
+    /* The task will start with a critical nesting count of 0 as interrupts are
+     * enabled. */
+    *pxTopOfStack = portNO_CRITICAL_NESTING;
+    pxTopOfStack--;
+
     /* The task will start without a floating point context.  A task that uses
      * the floating point hardware must call vPortTaskUsesFPU() before executing
      * any floating point instructions. */
@@ -250,7 +268,7 @@ void vPortYeildFromISR( uint32_t xSwitchRequired )
 void vPortTimerTickHandler()
 {
     /* Disable IRQ to prevent preemption */
-    portENTER_CRITICAL();
+    portCPU_IRQ_DISABLE();
 
     if( ulPortSchedularRunning == pdTRUE )
     {
@@ -262,7 +280,7 @@ void vPortTimerTickHandler()
     }
 
     /* Enable IRQ */
-    portEXIT_CRITICAL();
+    portCPU_IRQ_ENABLE();
 }
 
 void vPortTaskUsesFPU( void )

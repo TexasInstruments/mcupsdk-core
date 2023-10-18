@@ -73,6 +73,11 @@
         CPS     #SYS_MODE
         PUSH    {R0-R12, R14}
 
+        /* Push the critical nesting count. */
+        LDR     R2, ulCriticalNestingConst
+        LDR     R1, [R2]
+        PUSH    {R1}
+
         /* Does the task have a floating point context that needs saving?  If
         ulPortTaskHasFPUContext is 0 then no. */
         LDR     R2, ulPortTaskHasFPUContextConst
@@ -113,6 +118,11 @@
         /* VPOPNE       {D16-D31} */
         VPOPNE  {D0-D15}
         VMSRNE  FPSCR, R0
+
+        /* Restore the critical section nesting depth. */
+        LDR     R0, ulCriticalNestingConst
+        POP     {R1}
+        STR     R1, [R0]
 
         /* reset local monitor, this is needed for atomics which use LDREX, STREX to work properly */
         CLREX
@@ -269,6 +279,7 @@ switch_before_exit:
         portRESTORE_CONTEXT
 
 pxCurrentTCBConst: .word pxCurrentTCB
+ulCriticalNestingConst: .word ulCriticalNesting
 ulPortTaskHasFPUContextConst: .word ulPortTaskHasFPUContext
 vTaskSwitchContextConst: .word vTaskSwitchContext
 ulPortInterruptNestingConst: .word ulPortInterruptNesting
