@@ -2,13 +2,28 @@ let path = require('path');
 
 let device = "am263px";
 
-const files = {
+const r5_0_files = {
+    common: [
+        "test_soc.c",
+        "test_soc_am263px.c",
+        "board_e1.c",
+        "main.c",
+    ],
+};
+
+const r5_1_files = {
     common: [
         "test_soc.c",
         "test_soc_am263px.c",
         "main.c",
     ],
 };
+
+const defines_r5_0_0 = {
+    common: [
+        "CPU_R5_0_0",
+    ],
+}
 
 /* Relative to where the makefile will be generated
  * Typically at <example_folder>/<BOARD>/<core_os_combo>/<compiler>
@@ -24,6 +39,7 @@ const libdirs_freertos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/lib",
         "${MCU_PLUS_SDK_PATH}/test/unity/lib",
     ],
 };
@@ -41,6 +57,7 @@ const libs_freertos_r5f = {
     common: [
         "freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "unity.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
@@ -117,8 +134,6 @@ function getComponentProperty() {
 
 function getComponentBuildProperty(buildOption) {
     let build_property = {};
-
-    build_property.files = files;
     build_property.filedirs = filedirs;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
@@ -126,6 +141,15 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/r5f*/)) {
         if(buildOption.os.match(/freertos*/) )
         {
+            if(buildOption.cpu == "r5fss0-0")
+            {
+                build_property.files = r5_0_files;
+                build_property.defines = defines_r5_0_0;
+            }
+            else
+            {
+                build_property.files = r5_1_files;
+            }
             build_property.includes = includes_freertos_r5f;
             build_property.libdirs = libdirs_freertos;
             build_property.libs = libs_freertos_r5f;

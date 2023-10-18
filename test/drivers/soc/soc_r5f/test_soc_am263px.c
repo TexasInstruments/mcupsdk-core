@@ -59,6 +59,7 @@
 void test_socSetFrequencyR5FSS(void *args);
 void test_socPhyToVirtAndVirtToPhy(void *args);
 void test_socSwWarmReset(void *args);
+void i2c_flash_reset();
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -303,6 +304,12 @@ void test_socSwWarmReset(void *args)
         DebugP_log("POR Reset Test Passed\r\n");
         /* Clear and Trigger SW Warm Reset */
         SOC_clearWarmResetCause();
+        /* Do a flash reset before SW warm reset to reset the flash configuration to 1s
+         * and make it available for the ROM to load the image from the flash
+         */
+        #if (CPU_R5_0_0)
+        i2c_flash_reset();
+        #endif
         SOC_generateSwWarmReset();
     }
     else if(resetCause == SOC_WarmResetCause_TOP_RCM_WARM_RESET_REQ)
