@@ -66,21 +66,21 @@ const mpu_firewall_config = [
         name: "L3_BANKB",
         regionCount: 8,
         memSpace : [
-            { startAddr: 0x880E0000, size: 0x100000 },
+            { startAddr: 0x88100000, size: 0x100000 },
         ]
     },
     {
         name: "L3_BANKC",
         regionCount: 8,
         memSpace : [
-            { startAddr: 0x881C0000, size: 0x100000 },
+            { startAddr: 0x88200000, size: 0x100000 },
         ]
     },
     {
         name: "L3_BANKD",
         regionCount: 8,
         memSpace : [
-            { startAddr: 0x882AC000, size: 0x100000 },
+            { startAddr: 0x88300000, size: 0x90000  },
         ]
     },
     {
