@@ -146,7 +146,7 @@ SDL_DCC_verifyConfig(SDL_DCC_Inst instance, const SDL_DCC_config *pConfig)
 	uint32_t clk0Src_chk, clk1Src_chk;
 	uint32_t clk0Seed_chk, clk0ValidSeed_chk, clk1Seed_chk;
 	int32_t  sdlResult;
-   unsigned long int baseAddr;
+    unsigned long int baseAddr;
 
 
 	if((instance <INVALID_INSTANCE) && (pConfig != NULL) )

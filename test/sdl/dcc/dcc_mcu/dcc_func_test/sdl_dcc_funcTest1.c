@@ -175,7 +175,7 @@ int32_t SDL_DCC_funcTest(void)
 		switch(i)
 		{
 			case 0:
-                #if defined (SOC_AM263X)
+                #if defined (SOC_AM263X) || defined (SOC_AM263PX)
 					srcClk = SDL_DCC_CLK0_SRC_CLOCK0_0;
 					testClk = SDL_DCC_CLK1_SRC_CLOCKSRC5;
                     DebugP_log("\n Reference clock source: XTALCLK \r\n");
@@ -198,7 +198,7 @@ int32_t SDL_DCC_funcTest(void)
 			break;
 
 			case 1:
-                #if defined (SOC_AM263X)
+                #if defined (SOC_AM263X) || defined (SOC_AM263PX)
 					srcClk = SDL_DCC_CLK0_SRC_CLOCK0_2;
 					testClk = SDL_DCC_CLK1_SRC_CLOCKSRC0;
 					DebugP_log("\r\n Reference clock source: RCCLK10M\r\n");
@@ -550,7 +550,7 @@ static void SDL_DCCA_Isr(void *args)
 }
 
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,  uint32_t index, uint32_t intSrc, void *arg)
 {

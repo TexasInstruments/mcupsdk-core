@@ -80,7 +80,7 @@ sdlDccTest_t  sdlDccTestList[] = {
     {NULL,             "TERMINATING CONDITION",  SDL_APP_TEST_NOT_RUN }
 };
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 SDL_ESM_config DCC_Test_esmInitConfig_MAIN =
 {
       .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -171,13 +171,13 @@ void SDL_DCCA_clockInit( void )
         SDL_MSS_RCM_MSS_RTIA_CLK_DIV_VAL_MSS_RTIA_CLK_DIV_VAL_CLKDIVR, 0X000U);
 
     HW_WR_FIELD32(SDL_DSS_RCM_U_BASE + SDL_DSS_RCM_DSS_RTIA_CLK_SRC_SEL,\
-         SDL_DSS_RCM_DSS_RTIA_CLK_SRC_SEL_DSS_RTIA_CLK_SRC_SEL_CLKSRCSEL, 0X222U);
+        SDL_DSS_RCM_DSS_RTIA_CLK_SRC_SEL_DSS_RTIA_CLK_SRC_SEL_CLKSRCSEL, 0X222U);
     HW_WR_FIELD32(SDL_DSS_RCM_U_BASE+SDL_DSS_RCM_DSS_RTIA_CLK_DIV_VAL,\
         SDL_DSS_RCM_DSS_RTIA_CLK_DIV_VAL_DSS_RTIA_CLK_DIV_VAL_CLKDIV, 0X000U);
      HW_WR_FIELD32((SDL_DSS_RCM_U_BASE + SDL_DSS_RCM_DSS_WDT_CLK_SRC_SEL),\
-       SDL_DSS_RCM_DSS_WDT_CLK_SRC_SEL_DSS_WDT_CLK_SRC_SEL_CLKSRCSEL, 0X333);
+        SDL_DSS_RCM_DSS_WDT_CLK_SRC_SEL_DSS_WDT_CLK_SRC_SEL_CLKSRCSEL, 0X333);
     HW_WR_FIELD32((SDL_DSS_RCM_U_BASE + SDL_DSS_RCM_DSS_WDT_CLK_DIV_VAL),\
-       SDL_DSS_RCM_DSS_WDT_CLK_DIV_VAL_DSS_WDT_CLK_DIV_VAL_CLKDIV, 0X111);
+        SDL_DSS_RCM_DSS_WDT_CLK_DIV_VAL_DSS_WDT_CLK_DIV_VAL_CLKDIV, 0X111);
 }
 #endif
 
@@ -207,7 +207,7 @@ void test_sdl_dcc_baremetal_test_app (void)
     sdlApp_print("\n DCC Function Test Application\r\n");
 
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
     /* Initialize MAIN DCC module */
     result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &DCC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
 

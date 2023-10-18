@@ -156,6 +156,7 @@ const example_file_list = [
     "examples/networking/lwip/cpsw_lwip_https/.project/project.js",
     "examples/networking/lwip/enet_lwip_cpsw/.project/project.js",
     "examples/networking/lwip/enet_cpsw_udp_igmp/.project/project.js",
+    "examples/sdl/dcc/dcc_modes1/.project/project.js",
 	"test/board/eeprom/.project/project.js",
 	"test/board/flash/.project/project.js",
 	"test/board/led/.project/project.js",
@@ -211,6 +212,8 @@ const example_file_list = [
     "test/security/crypto/test_dthe_aes_cmac/.project/project.js",
     "test/security/crypto/test_dthe_sha/.project/project.js",
     "test/security/crypto/test_dthe_hmac_sha/.project/project.js",
+    "test/sdl/dcc/dcc_mcu/dcc_func_test/.project/project.js",
+    "test/sdl/dcc/dcc_mcu/dcc_unit_test/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {

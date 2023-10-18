@@ -61,10 +61,14 @@ volatile uint32_t doneIsrFlag = 0U;
 /**< Flag used to indecate occurrence of the completion interrupt */
 volatile SDL_DCC_Inst gCurDccInst;
 
-
 #if defined (SOC_AM263X)
-
 #include <sdl/include/am263x/sdlr_intr_r5fss0_core0.h>
+#endif
+#if defined (SOC_AM263PX)
+#include <sdl/include/am263px/sdlr_intr_r5fss0_core0.h>
+#endif
+
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 
 #define NUM_USE_CASES          (0x9U)
 
@@ -213,17 +217,17 @@ void SDL_DCCA_clockInit( void )
     HW_WR_FIELD32(SDL_MSS_RCM_U_BASE+SDL_MSS_RCM_MSS_MCANA_CLK_DIV_VAL,\
         SDL_MSS_RCM_MSS_MCANA_CLK_DIV_VAL_MSS_MCANA_CLK_DIV_VAL_CLKDIVR, 0X777U);
          /* frequency division will be like -> if we want to divide frequency by n,
-   we should write division value n-1. */
+        we should write division value n-1. */
     HW_WR_FIELD32(SDL_MSS_RCM_U_BASE+SDL_MSS_RCM_MSS_RTIA_CLK_SRC_SEL,\
         SDL_MSS_RCM_MSS_RTIA_CLK_SRC_SEL_MSS_RTIA_CLK_SRC_SEL_CLKSRCSEL, 0X333U);
     HW_WR_FIELD32(SDL_MSS_RCM_U_BASE+SDL_MSS_RCM_MSS_RTIA_CLK_DIV_VAL,\
         SDL_MSS_RCM_MSS_RTIA_CLK_DIV_VAL_MSS_RTIA_CLK_DIV_VAL_CLKDIVR, 0X000U);
 
     HW_WR_FIELD32(SDL_DSS_RCM_U_BASE + SDL_DSS_RCM_DSS_RTIA_CLK_SRC_SEL,\
-         SDL_DSS_RCM_DSS_RTIA_CLK_SRC_SEL_DSS_RTIA_CLK_SRC_SEL_CLKSRCSEL, 0X222U);
+        SDL_DSS_RCM_DSS_RTIA_CLK_SRC_SEL_DSS_RTIA_CLK_SRC_SEL_CLKSRCSEL, 0X222U);
     HW_WR_FIELD32(SDL_DSS_RCM_U_BASE+SDL_DSS_RCM_DSS_RTIA_CLK_DIV_VAL,\
         SDL_DSS_RCM_DSS_RTIA_CLK_DIV_VAL_DSS_RTIA_CLK_DIV_VAL_CLKDIV, 0X000U);
-     HW_WR_FIELD32((SDL_DSS_RCM_U_BASE + SDL_DSS_RCM_DSS_WDT_CLK_SRC_SEL),\
+    HW_WR_FIELD32((SDL_DSS_RCM_U_BASE + SDL_DSS_RCM_DSS_WDT_CLK_SRC_SEL),\
        SDL_DSS_RCM_DSS_WDT_CLK_SRC_SEL_DSS_WDT_CLK_SRC_SEL_CLKSRCSEL, 0X333);
     HW_WR_FIELD32((SDL_DSS_RCM_U_BASE + SDL_DSS_RCM_DSS_WDT_CLK_DIV_VAL),\
        SDL_DSS_RCM_DSS_WDT_CLK_DIV_VAL_DSS_WDT_CLK_DIV_VAL_CLKDIV, 0X111);
@@ -524,7 +528,7 @@ static int32_t SDL_DCCAppWaitForCompletion();
 /*                         Global Variables                                  */
 /*===========================================================================*/
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 SDL_ESM_config DCC_Test_esmInitConfig_MAIN =
 {
       .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -697,7 +701,7 @@ static void SDL_DCCAppSetSeedVals(uint32_t       refClkFreq,
     }
     SDL_DCCAppPrint(APP_DCC_STR ": Seed values calculation done.\n");
 }
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,  uint32_t index, uint32_t intSrc, void *arg)
 {
@@ -803,7 +807,7 @@ void test_sdl_dcc_test_app (void)
     SDL_DCCA_clockInit();
     #endif
 
- #if defined (SOC_AM263X)
+    #if defined (SOC_AM263X) || defined (SOC_AM263PX)
     /* Initialize MAIN DCC module */
     retVal = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &DCC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, NULL);
 
@@ -819,7 +823,7 @@ void test_sdl_dcc_test_app (void)
         DebugP_log("DCC_Test_init: Error initializing ESM: result = %d\r\n", retVal);
 
     }
-  #endif
+    #endif
 
     for (i = 0; i < NUM_USE_CASES; i++)
     {
@@ -843,8 +847,9 @@ void test_sdl_dcc_test_app (void)
                 gESM_Params.errorNumber=DCCD_MSS_ESM_ERROR;
             }
 
-                retVal = SDL_ESM_init(SDL_ESM_INST_MSS_ESM, &gESM_Params, &esmOpenParams, NULL);
+            retVal = SDL_ESM_init(SDL_ESM_INST_MSS_ESM, &gESM_Params, &esmOpenParams, NULL);
             #endif
+
             #if defined (C66_INPUTS)
             gESM_Params.groupNumber=ESM_ERROR_GROUP_2;
             if(gCurDccInst==SDL_DCC_INST_DSS_DCCA)
@@ -856,9 +861,7 @@ void test_sdl_dcc_test_app (void)
                 gESM_Params.errorNumber=DCCB_DSS_ESM_ERROR;
             }
 
-
-
-                retVal = SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &gESM_Params, &esmOpenParams, NULL);
+            retVal = SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &gESM_Params, &esmOpenParams, NULL);
             #endif
 
             if (retVal == SDL_PASS)
@@ -922,7 +925,7 @@ void test_sdl_dcc_test_app (void)
                 SDL_DCC_enableIntr(DCC_Test_UseCaseArray[i].dccInst, SDL_DCC_INTERRUPT_ERR);
 
                 /*
-		 * Check for single-shot mode and enable interrupt for Done notification
+		        * Check for single-shot mode and enable interrupt for Done notification
                  * then wait for completion.
                  */
                 if (DCC_Test_UseCaseArray[i].mode != SDL_DCC_MODE_CONTINUOUS)
@@ -1003,7 +1006,7 @@ void test_sdl_dcc_test_app (void)
                 SDL_DCC_disable(DCC_Test_UseCaseArray[i].dccInst);
                 /*esm is not supported for DSP core so manually clear intrrupt for pooling mode */
                 #if defined (SOC_AWR294X) || defined (C66_INPUTS)
-                SDL_DCC_clearIntr(DCC_Test_UseCaseArray[i].dccInst, SDL_DCC_INTERRUPT_ERR);
+                    SDL_DCC_clearIntr(DCC_Test_UseCaseArray[i].dccInst, SDL_DCC_INTERRUPT_ERR);
                 #endif
             }
         }

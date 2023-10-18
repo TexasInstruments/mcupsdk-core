@@ -53,7 +53,7 @@
 #include <sdl/include/awr294x/sdlr_intr_esm_dss.h>
 #include <sdl/include/awr294x/sdlr_intr_esm_mss.h>
 #endif
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X)  || defined (SOC_AM263PX)
 #include <sdl/esm/v0/sdl_esm.h>
 #endif
 
@@ -76,7 +76,7 @@
 /**< Maximum value that can be held in the VALID0 register (ref clock) */
 #define APP_DCC_SRC1_MAX_VAL            (0xFFFFFU)
 /**< Maximum value that can be held in the COUNT1 register (test clock) */
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 /* Defines that control the clock inputs to DCC and allowed variance */
 #define APP_DCC_REF_CLOCK_SRC_0         (SDL_DCC_CLK0_SRC_CLOCK0_0)
 #define APP_DCC_TEST_CLOCK_SRC_1        (SDL_DCC_CLK1_SRC_CLOCKSRC5)

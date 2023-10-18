@@ -98,9 +98,6 @@ void tearDown(void)
 }
 #endif
 
-
-
-
 static int32_t sdlApp_dplInit(void)
 {
     SDL_ErrType_t ret = SDL_PASS;
@@ -123,10 +120,6 @@ void test_sdl_dcc_baremetal_test_app (void)
     int32_t    testResult = SDL_APP_TEST_PASS;
     int32_t    i;
 
-
-
-
-
 	/* Init dpl */
     sdlApp_dplInit();
 
@@ -141,23 +134,23 @@ void test_sdl_dcc_baremetal_test_app (void)
     {
         if (sdlDccTestList[i].testStatus != SDL_APP_TEST_PASS)
         {
-             DebugP_log("Test Name: %s  FAILED \r\n", sdlDccTestList[i].name);
+            DebugP_log("Test Name: %s  FAILED \r\n", sdlDccTestList[i].name);
             testResult = SDL_APP_TEST_FAILED;
             break;
         }
         else
         {
-             DebugP_log("Test Name: %s  PASSED \r\n", sdlDccTestList[i].name);
+            DebugP_log("Test Name: %s  PASSED \r\n", sdlDccTestList[i].name);
         }
     }
 
     if (testResult == SDL_APP_TEST_PASS)
     {
-         DebugP_log("\n All tests have passed. \r\n");
+        DebugP_log("\n All tests have passed. \r\n");
     }
     else
     {
-         DebugP_log("\n Few/all tests Failed \r\n");
+        DebugP_log("\n Few/all tests Failed \r\n");
     }
 #if defined (UNITY_INCLUDE_CONFIG_H)
     TEST_ASSERT_EQUAL_INT32(SDL_APP_TEST_PASS, testResult);
