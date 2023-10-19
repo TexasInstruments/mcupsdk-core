@@ -144,8 +144,14 @@ uint32_t uiPortGetRunTimeCounterValue();
 #define configTIMER_QUEUE_LENGTH                (16)
 #define configTIMER_TASK_STACK_DEPTH            (256)
 
-/* used in M4F, not applicable in R5F, C66x, A53 */
+/* used in M4F & R5F, not applicable in C66x, A53 */
+%if(args.project.cpu.includes("r5f")) {
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY    (0x4U)
+%} else {
 #define configMAX_SYSCALL_INTERRUPT_PRIORITY    (0xE0U)
+%}
+
+/* used in M4F, not applicable in R5F, C66x, A53 */
 #define configKERNEL_INTERRUPT_PRIORITY         (configMAX_SYSCALL_INTERRUPT_PRIORITY)
 #define configMAX_API_CALL_INTERRUPT_PRIORITY   (configMAX_SYSCALL_INTERRUPT_PRIORITY)
 
