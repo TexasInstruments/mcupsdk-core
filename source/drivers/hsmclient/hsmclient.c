@@ -1200,9 +1200,9 @@ int32_t HsmClient_getRandomNum(HsmClient_t* HsmClient,
     HsmClient->ReqMsg.serType = HSM_MSG_GET_RAND;
     HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(getRandomNum);
 
-    getRandomNum->resultPtr = (void*)(uintptr_t)SOC_virtToPhy(getRandomNum->resultPtr);
-    getRandomNum->resultLengthPtr = (void*)(uintptr_t)SOC_virtToPhy(getRandomNum->resultLengthPtr);
-    getRandomNum->seedValue = (void*)(uintptr_t)SOC_virtToPhy(getRandomNum->seedValue);
+    getRandomNum->resultPtr = (uint8_t*)(uintptr_t)SOC_virtToPhy(getRandomNum->resultPtr);
+    getRandomNum->resultLengthPtr = (uint32_t*)(uintptr_t)SOC_virtToPhy(getRandomNum->resultLengthPtr);
+    getRandomNum->seedValue = (uint32_t*)(uintptr_t)SOC_virtToPhy(getRandomNum->seedValue);
 
     /* Add arg crc */
     HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)getRandomNum, sizeof(RNGReq_t));
