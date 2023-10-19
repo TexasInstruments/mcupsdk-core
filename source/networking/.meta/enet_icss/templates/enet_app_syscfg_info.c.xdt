@@ -122,9 +122,9 @@ void EnetApp_getEnetInstMacInfo(Enet_Type enetType,
     if ((instId &0x01) ==  `(macPortInfo.macPortList[0])`)
     {
 %}
-    *numMacPorts += `(macPortInfo.numMacPorts)`;
+        *numMacPorts += `(macPortInfo.numMacPorts)`;
 %for (var i in macPortInfo.macPortList) {
-    macPortList[`i`] = `(macPortInfo.macPortList[i])`;
+        macPortList[`i`] = `(macPortInfo.macPortList[i])`;
 %}
 % if (instances[inst].mode == "DUAL MAC") {
     }

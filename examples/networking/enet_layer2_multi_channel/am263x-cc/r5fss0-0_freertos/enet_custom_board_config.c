@@ -127,8 +127,8 @@ static const Dp83869_Cfg gEnetCpbBoard_dp83869PhyCfg =
 {
     .txClkShiftEn         = true,
     .rxClkShiftEn         = true,
-    .txDelayInPs          = 500U,  /* 0.5 ns */
-    .rxDelayInPs          = 500U,  /* 0.5 ns */
+    .txDelayInPs          = 500U,  /* Value in pecosec. Refer to DLL_RX_DELAY_CTRL_SL field in ANA_RGMII_DLL_CTRL register of DP83869 PHY datasheet */
+    .rxDelayInPs          = 500U,  /* Value in pecosec. Refer to DLL_TX_DELAY_CTRL_SL field in ANA_RGMII_DLL_CTRL register of DP83869 PHY datasheet */
     .txFifoDepth          = 4U,
     .impedanceInMilliOhms = 35000,  /* 35 ohms */
     .idleCntThresh        = 4U,     /* Improves short cable performance */

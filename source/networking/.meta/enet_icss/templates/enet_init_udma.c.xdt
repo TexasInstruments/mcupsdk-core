@@ -6,7 +6,7 @@
 
 %%{
 function getTxNumPkts(module, instance) {
-    let txPktAry = new Array();
+    let txPktAry = new Array();        
 
     for (var i = 0; i < module.getTxChannelCount(instance); i++)
     {
@@ -46,7 +46,7 @@ function getRxAllocMacInfo(module, instance) {
 }
 
 function getTxDmaGlobalEvtCfg(module, instance) {
-    let txDmaCfgAry = new Array();
+    let txDmaCfgAry = new Array();        
 
     for (var i = 0; i < module.getTxChannelCount(instance); i++)
     {
@@ -57,7 +57,7 @@ function getTxDmaGlobalEvtCfg(module, instance) {
 
 function getAllTxDmaGlobalEvtCfg(module, instances) {
     let txAllDmaCfgAry = new Array();
-
+    
     for (let i in instances)
     {
         txAllDmaCfgAry.push(getTxDmaGlobalEvtCfg(module, instances[i]));
@@ -66,7 +66,7 @@ function getAllTxDmaGlobalEvtCfg(module, instances) {
 }
 
 function getRxDmaGlobalEvtCfg(module, instance) {
-    let rxDmaCfgAry = new Array();
+    let rxDmaCfgAry = new Array();        
 
     for (var i = 0; i < module.getRxChannelCount(instance); i++)
     {
@@ -76,7 +76,7 @@ function getRxDmaGlobalEvtCfg(module, instance) {
 }
 
 function getRxDmaSizeThreshEn(module, instance) {
-    let rxDmaCfgAry = new Array();
+    let rxDmaCfgAry = new Array();        
 
     for (var i = 0; i < module.getRxChannelCount(instance); i++)
     {
@@ -86,7 +86,7 @@ function getRxDmaSizeThreshEn(module, instance) {
 }
 
 function getRxDmaIsDefaultFlow(module, instance) {
-    let rxDmaCfgAry = new Array();
+    let rxDmaCfgAry = new Array();        
 
     for (var i = 0; i < module.getRxChannelCount(instance); i++)
     {
@@ -106,7 +106,7 @@ function getDmaCfgInitArray(module, instances, indent) {
             let matchInstId = module.getInstId(instance);
             let rxChCfg = module.getChannelConfig(instance, "RX", j);
             let rxChCfgInitStr = "\n\t[" + count + "] = " +
-                                 "\n\t{"              +
+                                 "\n\t{"              + 
                                     "\n\t\t.maxNumRxPkts    = " + rxChCfg.PacketsCount + "," +
                                     "\n\t\t.numValidMacAddress = " + rxChCfg.macAddrCount + "," +
                                     "\n\t\t.useGlobalEvt    = " + rxChCfg.useGlobalEvt + "," +
@@ -122,7 +122,7 @@ function getDmaCfgInitArray(module, instances, indent) {
             count++;
         }
     }
-
+    
     return rxDmaCfgAry;
 }
 
@@ -137,7 +137,7 @@ function getDmaCfgOnlyInitArray(module, instances, indent) {
             let matchInstId = module.getInstId(instance);
             let rxChCfg = module.getChannelConfig(instance, "RX", j);
             let rxChCfgInitStr = "\n\t[" + count + "] = " +
-                                 "\n\t{"              +
+                                 "\n\t{"              + 
                                     "\n\t\t.maxNumRxPkts    = " + rxChCfg.PacketsCount + "," +
                                     "\n\t\t.numValidMacAddress = " + rxChCfg.macAddrCount + "," +
                                     "\n\t\t.useGlobalEvt    = " + rxChCfg.useGlobalEvt + "," +
@@ -150,7 +150,7 @@ function getDmaCfgOnlyInitArray(module, instances, indent) {
             count++;
         }
     }
-
+    
     return rxDmaCfgAry;
 }
 
@@ -165,7 +165,7 @@ function getTxDmaHandleArray(module, instances, indent) {
             let matchInstId = module.getInstId(instance);
             let txChCfg = module.getChannelConfig(instance, "TX", j);
             let txChCfgInitStr = "\n\t[" + count + "] = " +
-                                 "\n\t{"              +
+                                 "\n\t{"              + 
                                     "\n\t\t.useGlobalEvt    = " + (module.getChannelConfig(instance, "TX", j)).useGlobalEvt + "," +
                                     "\n\t\t.packetsCount    = " + (module.getChannelConfig(instance, "TX", j)).PacketsCount + "," +
                                     "\n\t\t.enetType        = " + matchInstId.enetType + "," +
@@ -177,7 +177,7 @@ function getTxDmaHandleArray(module, instances, indent) {
             count++;
         }
     }
-
+    
     return txDmaHandleAry;
 }
 
@@ -204,7 +204,7 @@ function getTotalTxChCount(instances)
 function getTxDmaCfgInitArray(module, instances, indent) {
     let txDmaCfgAry = new Array();
     let count = 0;
-
+    
     for(let i in instances)
     {
         let matchInstId = module.getInstId(instances[i]);
@@ -212,7 +212,7 @@ function getTxDmaCfgInitArray(module, instances, indent) {
         {
             let instance = instances[i];
             let txChCfgInitStr = "\n\t[" + count + "] = " +
-                                 "\n\t{"              +
+                                 "\n\t{"              + 
                                     "\n\t\t.useGlobalEvt    = " + (module.getChannelConfig(instance, "TX", j)).useGlobalEvt + "," +
                                     "\n\t\t.hUdmaDrv        = " + "NULL" + "," +
                                     "\n\t\t.enetType        = " + matchInstId.enetType + "," +
@@ -549,7 +549,7 @@ static void EnetApp_rxPktNotifyCb(void *cbArg)
 
 static void EnetApp_openTxDma(EnetAppTxDmaSysCfg_Obj *tx,
                               uint32_t numTxPkts,
-                              Enet_Handle hEnet,
+                              Enet_Handle hEnet, 
                               uint32_t coreKey,
                               uint32_t coreId,
                               EnetAppTxDmaCfg_Info *txCfg)
@@ -576,7 +576,7 @@ static void EnetApp_openTxDma(EnetAppTxDmaSysCfg_Obj *tx,
 }
 
 static void EnetApp_openRxDma(EnetAppRxDmaSysCfg_Obj *rx,
-                              Enet_Handle hEnet,
+                              Enet_Handle hEnet, 
                               uint32_t coreKey,
                               uint32_t coreId,
                               uint32_t chIdx,
@@ -596,7 +596,7 @@ static void EnetApp_openRxDma(EnetAppRxDmaSysCfg_Obj *rx,
 
     EnetDma_initRxChParams(&enetRxFlowCfg);
     EnetAppUtils_setCommonRxFlowPrms(&enetRxFlowCfg);
-    /* Plugin dummy callback. This will be overridden by
+    /* Plugin dummy callback. This will be overridden by 
      * application provided callback when getHandle is done */
     enetRxFlowCfg.notifyCb  = EnetApp_rxPktNotifyCb;
     enetRxFlowCfg.cbArg     = rx;
@@ -645,7 +645,7 @@ static void EnetApp_openRxDma(EnetAppRxDmaSysCfg_Obj *rx,
 }
 
 void EnetApp_closeTxDma(uint32_t enetTxDmaChId,
-                        Enet_Handle hEnet,
+                        Enet_Handle hEnet, 
                         uint32_t coreKey,
                         uint32_t coreId,
                         EnetDma_PktQ *fqPktInfoQ,
@@ -672,7 +672,7 @@ void EnetApp_closeTxDma(uint32_t enetTxDmaChId,
 }
 
 void EnetApp_closeRxDma(uint32_t enetRxDmaChId,
-                        Enet_Handle hEnet,
+                        Enet_Handle hEnet, 
                         uint32_t coreKey,
                         uint32_t coreId,
                         EnetDma_PktQ *fqPktInfoQ,
@@ -681,10 +681,10 @@ void EnetApp_closeRxDma(uint32_t enetRxDmaChId,
     Enet_Type enetType;
     uint32_t instId;
     int32_t status;
-    const EnetAppRxDmaCfg_Info rxDmaInfo[ENET_SYSCFG_RX_FLOWS_NUM] =
+    const EnetAppRxDmaCfg_Info rxDmaInfo[ENET_SYSCFG_RX_FLOWS_NUM] = 
     {
         `getDmaCfgInitArray(module, instances, 4)`
-
+    
     };
 
     status = Enet_getHandleInfo(hEnet,
@@ -724,7 +724,7 @@ void EnetApp_txChInPeripheral(Enet_Type enetType, uint32_t instId, uint32_t *sta
                            {
                                `getTxDmaHandleArray(module, instances, 4)`
                            };
-
+    
     for (i = 0; i < ENET_SYSCFG_TX_CHANNELS_NUM; i++)
     {
         if (enetType == txChInfo[i].enetType && instId == txChInfo[i].instId)
@@ -748,7 +748,7 @@ void EnetApp_rxChInPeripheral(Enet_Type enetType, uint32_t instId, uint32_t *sta
                            {
                                `getDmaCfgInitArray(module, instances, 4)`
                            };
-
+    
     for (i = 0; i < ENET_SYSCFG_RX_FLOWS_NUM; i++)
     {
         if (enetType == rxChInfo[i].enetType && instId == rxChInfo[i].instId)
@@ -771,7 +771,7 @@ void EnetApp_getTxDmaHandle(uint32_t enetTxDmaChId,
     int32_t status;
     EnetAppTxDmaSysCfg_Obj *tx;
     const uint32_t module = 0;
-    const uint32_t txNumPkts[ENET_SYSCFG_TX_CHANNELS_NUM] =
+    const uint32_t txNumPkts[ENET_SYSCFG_TX_CHANNELS_NUM] = 
                            {
                             `getAllTxNumPkts(module, instances)`
                            };
@@ -800,7 +800,7 @@ void EnetApp_getMacAddress(uint32_t enetRxDmaChId,
 {
 
     EnetAppUtils_assert(enetRxDmaChId < ENET_ARRAYSIZE(gEnetAppSysCfgObj.dma[0].rx));
-    EnetAppRxDmaSysCfg_Obj* rx = &gEnetAppSysCfgObj.dma[0].rx[enetRxDmaChId]; //
+    EnetAppRxDmaSysCfg_Obj* rx = &gEnetAppSysCfgObj.dma[0].rx[enetRxDmaChId]; // 
 
     outArgs->macAddressCnt = rx->numValidMacAddress;
     EnetAppUtils_assert(outArgs->macAddressCnt <= ENET_MAX_NUM_MAC_PER_PHER);
@@ -820,7 +820,7 @@ void EnetApp_getRxDmaHandle(uint32_t enetRxDmaChId,
     EnetAppRxDmaSysCfg_Obj *rx;
 
     const uint32_t module = 0;
-    const EnetApp_GetRxDmaHandleOutArgs rxDmaInfo[ENET_SYSCFG_RX_FLOWS_NUM] =
+    const EnetApp_GetRxDmaHandleOutArgs rxDmaInfo[ENET_SYSCFG_RX_FLOWS_NUM] = 
     {
         `getDmaCfgInitArray(module, instances, 4)`
     };
@@ -838,7 +838,7 @@ void EnetApp_getRxDmaHandle(uint32_t enetRxDmaChId,
     EnetAppUtils_assert(rx->hRxCh != NULL);
     status = EnetDma_registerRxEventCb(rx->hRxCh, inArgs->notifyCb, inArgs->cbArg);
     EnetAppUtils_assert(status == ENET_SOK);
-
+    
     outArgs->hRxCh = rx->hRxCh;
     outArgs->rxFlowIdx = rx->rxFlowIdx;
     outArgs->rxFlowStartIdx = rx->rxFlowStartIdx;
@@ -857,15 +857,15 @@ void EnetApp_getRxDmaHandle(uint32_t enetRxDmaChId,
 }
 
 static void EnetApp_openAllTxDmaChannels(EnetAppDmaSysCfg_Obj *dma,
-                                         Enet_Handle hEnet,
+                                         Enet_Handle hEnet, 
                                          uint32_t coreKey,
                                          uint32_t coreId)
 {
-    const uint32_t txNumPkts[ENET_SYSCFG_TX_CHANNELS_NUM] =
+    const uint32_t txNumPkts[ENET_SYSCFG_TX_CHANNELS_NUM] = 
                            {
                             `getAllTxNumPkts(module, instances)`
                            };
-
+                           
     EnetAppTxDmaCfg_Info txDmaCfg[ENET_SYSCFG_TX_CHANNELS_NUM] =
                            {
                             `getTxDmaCfgInitArray(module, instances, 4)`
@@ -882,12 +882,12 @@ static void EnetApp_openAllTxDmaChannels(EnetAppDmaSysCfg_Obj *dma,
 }
 
 static void EnetApp_openAllRxDmaChannels(EnetAppDmaSysCfg_Obj *dma,
-                                         Enet_Handle hEnet,
+                                         Enet_Handle hEnet, 
                                          uint32_t coreKey,
                                          uint32_t coreId)
 {
     uint32_t flowIdx;
-    const EnetAppRxDmaCfg_Info rxDmaCfg[ENET_SYSCFG_RX_FLOWS_NUM] =
+    const EnetAppRxDmaCfg_Info rxDmaCfg[ENET_SYSCFG_RX_FLOWS_NUM] = 
     {
         `getDmaCfgInitArray(module, instances, 4)`
     };

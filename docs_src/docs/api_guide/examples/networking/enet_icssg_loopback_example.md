@@ -11,7 +11,7 @@ Note that ICSSG pheripheral does not support MAC loopback mode, unlike CPSW.
 On @VAR_SOC_NAME, we can do ethernet based communication using ICSSG Hardware peripheral
 - ICSS
   - This is a firmware enabled ethernet switch + port HW
-  - This HW can be used with industrial communication protocols as well (see \ref EXAMPLES_INDUSTRIAL_COMMS)
+  - This HW can be used with industrial communication protocols as well
   - In this example we use ICSS as a standard ethernet port
 
 

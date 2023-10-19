@@ -83,19 +83,19 @@ static int32_t EnetApp_enablePorts(Enet_Handle hEnet,
 
 
 static void EnetApp_openDmaChannels(EnetAppDmaSysCfg_Obj *dma,
-                                    Enet_Type enetType,
+                                    Enet_Type enetType, 
                                     uint32_t instId,
-                                    Enet_Handle hEnet,
+                                    Enet_Handle hEnet, 
                                     uint32_t coreKey,
                                     uint32_t coreId);
 
 static void EnetApp_openAllRxDmaChannels(EnetAppDmaSysCfg_Obj *dma,
-                                         Enet_Handle hEnet,
+                                         Enet_Handle hEnet, 
                                          uint32_t coreKey,
                                          uint32_t coreId);
 
 static void EnetApp_openAllTxDmaChannels(EnetAppDmaSysCfg_Obj *dma,
-                                         Enet_Handle hEnet,
+                                         Enet_Handle hEnet, 
                                          uint32_t coreKey,
                                          uint32_t coreId);
 
@@ -244,20 +244,6 @@ void EnetApp_phyStateHandler()
 % }
 % }
 
-%if(instance.RtosVariant == "NoRTOS"){
-void EnetApp_phyStateHandler()
-{
-    for  (uint32_t idx = 0; idx < ENET_SYSCFG_NUM_PERIPHERAL; idx++)
-    {
-        if (gEnetAppSysCfgObj.hEnet[idx] != NULL)
-        {
-            Enet_periodicTick(gEnetAppSysCfgObj.hEnet[idx]);
-        }
-    }
-}
-% }
-% }
-
 static void EnetApp_ConfigureDscpMapping(Enet_Type enetType,
                                          uint32_t instId)
 {
@@ -345,7 +331,7 @@ int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
     icssgCfg.dmaCfg = (void *)&dmaCfg;
 
     EnetApp_getIcssgInitCfg(enetType, instId, &icssgCfg);
-
+    
     resCfg = &icssgCfg.resCfg;
     EnetAppUtils_initResourceConfig(enetType, selfCoreId, resCfg);
     EnetApp_updateIcssgInitCfg(enetType, instId, &icssgCfg);
@@ -360,7 +346,12 @@ int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
     EnetAppUtils_assert(NULL != gEnetAppSysCfgObj.hEnet[hEnetIndex]);
 
     EnetApp_enablePorts(gEnetAppSysCfgObj.hEnet[hEnetIndex], enetType, instId, selfCoreId, macPortList, numMacPorts);
-    EnetApp_ConfigureDscpMapping(enetType, instId);
+
+    /* Enabling DSCP handler will overwrite the PCP filters and 
+     * will direct all untagged packets to 0th Rx flow.
+     * Enable DSCP only when handling Layer2 packets doesn't need QoS support. */
+    //EnetApp_ConfigureDscpMapping(enetType, instId);
+
 % if(instance.McmEnable == true){
     enetMcmCfg.enetType           = enetType;
     enetMcmCfg.instId             = instId;
@@ -383,19 +374,19 @@ int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
 % }
 % }
     /* Open all DMA channels */
-    EnetApp_acquireHandleInfo(enetType,
+    EnetApp_acquireHandleInfo(enetType, 
                               instId,
                               &handleInfo);
 
     (void)handleInfo; /* Handle info not used. Kill warning */
-    EnetApp_coreAttach(enetType,
+    EnetApp_coreAttach(enetType, 
                        instId,
                        selfCoreId,
                        &attachInfo);
     EnetApp_openDmaChannels(&gEnetAppSysCfgObj.dma[0],
-                            enetType,
+                            enetType, 
                             instId,
-                            gEnetAppSysCfgObj.hEnet[hEnetIndex],
+                            gEnetAppSysCfgObj.hEnet[hEnetIndex], 
                             attachInfo.coreKey,
                             selfCoreId);
     return status;
@@ -657,12 +648,12 @@ static uint32_t EnetApp_retrieveFreeTxPkts(EnetDma_TxChHandle hTxCh, EnetDma_Pkt
 static void EnetApp_openDmaChannels(EnetAppDmaSysCfg_Obj *dma,
                                     Enet_Type enetType,
                                     uint32_t instId,
-                                    Enet_Handle hEnet,
+                                    Enet_Handle hEnet, 
                                     uint32_t coreKey,
                                     uint32_t coreId)
 {
     EnetApp_openAllTxDmaChannels(dma,
-                                 hEnet,
+                                 hEnet, 
                                  coreKey,
                                  coreId);
     EnetApp_openAllRxDmaChannels(dma,
@@ -671,47 +662,6 @@ static void EnetApp_openDmaChannels(EnetAppDmaSysCfg_Obj *dma,
                                  coreId);
 }
 
-%if(instance.RtosVariant == "NoRTOS"){
-static void EnetApp_postPollEvent(ClockP_Object *clkInst, void *pArg)
-{
-    EventP_Object* pEvent = (EventP_Object *) pArg;
-    const int32_t status = EventP_setBits(pEvent, AppEventId_ICSSG_PERIODIC_POLL);
-
-    if (status != SystemP_SUCCESS)
-    {
-        EnetAppUtils_print("Failed to post Poll Event handle\r\n");
-        EnetAppUtils_assert(false);
-    }
-}
-
-void EnetApp_initPhyStateHandlerTask(EventP_Object *pEvent)
-{
-    int32_t status;
-    ClockP_Params clkParams;
-    uint32_t timPeriodTicks = ClockP_usecToTicks((ENETPHY_FSM_TICK_PERIOD_MS)*1000U);  // Set timer expiry time in OS ticks
-
-    ClockP_Params_init(&clkParams);
-    clkParams.start     = TRUE;
-    clkParams.timeout   = timPeriodTicks;
-    clkParams.period    = timPeriodTicks;
-    clkParams.args      = pEvent;
-    clkParams.callback  = &EnetApp_postPollEvent;
-
-    /* Creating timer and setting timer callback function*/
-    status = ClockP_construct(&gEnetAppSysCfgObj.timerObj ,
-                              &clkParams);
-
-    if (status == SystemP_SUCCESS)
-    {
-        gEnetAppSysCfgObj.timerTaskShutDownFlag = false;
-    }
-    else
-    {
-        EnetAppUtils_print("Failed to construct clock handle\r\n");
-        EnetAppUtils_assert(false);
-    }
-}
-%}
 
 %if(instance.RtosVariant == "NoRTOS"){
 static void EnetApp_postPollEvent(ClockP_Object *clkInst, void *pArg)

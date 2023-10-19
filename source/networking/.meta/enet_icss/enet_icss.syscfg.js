@@ -113,18 +113,6 @@ const enet_icssg_board_config = {
             displayFormat: "dec",
             isInteger:true,
             range: [0, 31],
-               readOnly: true,
-            getValue:function (inst) {
-                const icssgPhyAddrInfoMap = new Map(
-                                           [
-                                             ['am64x-evm',{phyAddr1: 15, phyAddr2: 3}],
-                                             ['am243x-evm', {phyAddr1: 15, phyAddr2: 3}],
-                                             ['am243x-lp',{phyAddr1: 3, phyAddr2: 15,}],
-                                           ],
-                                         );
-                let phyInfo =  icssgPhyAddrInfoMap.get(device);
-                return phyInfo.phyAddr1;
-            },
         },
         {
             name: "phyAddr2",
@@ -134,18 +122,6 @@ const enet_icssg_board_config = {
             displayFormat: "dec",
             isInteger:true,
             range: [0, 31],
-            readOnly: true,
-            getValue:function (inst) {
-                const icssgPhyAddrInfoMap = new Map(
-                                           [
-                                             ['am64x-evm',{phyAddr1: 15, phyAddr2: 3}],
-                                             ['am243x-evm', {phyAddr1: 15, phyAddr2: 3}],
-                                             ['am243x-lp',{phyAddr1: 3, phyAddr2: 15,}],
-                                           ],
-                                         );
-                let phyInfo =  icssgPhyAddrInfoMap.get(device);
-                return phyInfo.phyAddr2;
-            },
         },
     ],
 };
@@ -264,6 +240,8 @@ function pinmuxRequirements(inst) {
         return interfaceNameList;
     }
 }
+
+
 
 function getInterfaceNameList(inst)
 {
@@ -452,7 +430,7 @@ function getPacketsCount(instance, channelType) {
     {
         dma_ch_instances = instance.txDmaChannel;
         module_dma_ch = system.modules[`/networking/enet_icss/enet_icssg_tx_channel`];
-
+        
         for(let ch = 0; ch < dma_ch_instances.length; ch++) {
         	let ch_instance = dma_ch_instances[ch];
         	let ch_config = module_dma_ch.getInstanceConfig(ch_instance);
@@ -464,7 +442,7 @@ function getPacketsCount(instance, channelType) {
         dma_ch_instances = instance.rxDmaChannel;
         module_dma_ch = system.modules[`/networking/enet_icss/enet_icssg_rx_channel`];
 
-        for(let ch = 0; ch < dma_ch_instances.length; ch++)
+        for(let ch = 0; ch < dma_ch_instances.length; ch++) 
         {
         	let ch_instance = dma_ch_instances[ch];
         	let ch_config = module_dma_ch.getInstanceConfig(ch_instance);
@@ -673,7 +651,7 @@ function validate(instance, report) {
         if (getRxChIdxCount(instance, 0) != getRxChIdxCount(instance, 1))
         {
             report.logError(`Number of Rx Ch Index with value '1' should be same as'0'`, instance);
-        }
+        } 
     }
     if (instance.mode === "DUAL MAC")
     {
@@ -705,8 +683,22 @@ function validate(instance, report) {
 function moduleInstances(instance) {
 
     let Instances = new Array();
-    let maxCh     = 8;
+    let maxTxCh     = 8;
+    let maxRxCh     = 8;
+    let minRxChNum  = 1;
     let maxNetif  = 2;
+
+    if (instance.mode === 'SWITCH')
+    {
+        maxRxCh = 16;
+        minRxChNum = 2;
+    }
+    else
+    {
+        maxRxCh = 8;
+        minRxChNum = 1;
+    }
+
 
     Instances.push({
         name: "txDmaChannel",
@@ -714,9 +706,9 @@ function moduleInstances(instance) {
         moduleName: `/networking/enet_icss/enet_icssg_tx_channel`,
         useArray: true,
         minInstanceCount: 1,
-        maxInstanceCount: maxCh,
+        maxInstanceCount: maxTxCh,
         defaultInstanceCount: 1,
-        collapsed:false,
+        collapsed: false,
         group: "udmaChConfig",
     });
 
@@ -725,10 +717,10 @@ function moduleInstances(instance) {
         displayName: "ENET rx dma channel",
         moduleName: `/networking/enet_icss/enet_icssg_rx_channel`,
         useArray: true,
-        minInstanceCount: 1,
-        maxInstanceCount: maxCh,
-        defaultInstanceCount: 1,
-        collapsed:false,
+        minInstanceCount: minRxChNum,
+        maxInstanceCount: maxRxCh,
+        defaultInstanceCount: minRxChNum,
+        collapsed: false,
         group: "udmaChConfig",
     });
 

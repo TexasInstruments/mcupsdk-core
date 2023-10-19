@@ -11732,6 +11732,464 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Enet Icssg Loopback Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "enet_icssg_loopback",
+        "location": "../../examples/networking/enet_loopback/enet_icssg_loopback/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_loopback",
+            "enet_icssg_loopback",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Icssg Loopback Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "enet_icssg_loopback",
+        "location": "../../examples/networking/enet_loopback/enet_icssg_loopback/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_loopback",
+            "enet_icssg_loopback",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Icssg Tas Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_icssg_tas",
+        "location": "../../examples/networking/enet_icssg_tas/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_icssg_tas",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Icssg Tas Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_icssg_tas",
+        "location": "../../examples/networking/enet_icssg_tas/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_icssg_tas",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Icssg Layer2 Dualmac Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "icssg_layer2_dualmac",
+        "location": "../../examples/networking/enet_layer2_icssg/icssg_layer2_dualmac/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_layer2_icssg",
+            "icssg_layer2_dualmac",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Icssg Layer2 Dualmac Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "icssg_layer2_dualmac",
+        "location": "../../examples/networking/enet_layer2_icssg/icssg_layer2_dualmac/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_layer2_icssg",
+            "icssg_layer2_dualmac",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Layer2 Icssg Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_layer2_icssg",
+        "location": "../../examples/networking/enet_layer2_icssg/icssg_layer2_switch/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_layer2_icssg",
+            "icssg_layer2_switch",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Layer2 Icssg Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_layer2_icssg",
+        "location": "../../examples/networking/enet_layer2_icssg/icssg_layer2_switch/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_layer2_icssg",
+            "icssg_layer2_switch",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Vlan Icssg Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_vlan_icssg",
+        "location": "../../examples/networking/enet_vlan_icssg/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_vlan_icssg",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Vlan Icssg Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_vlan_icssg",
+        "location": "../../examples/networking/enet_vlan_icssg/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_vlan_icssg",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Icssg Tcpserver Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_icssg_tcpserver",
+        "location": "../../examples/networking/lwip/enet_icssg_tcpserver/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_icssg_tcpserver",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Icssg Tcpserver Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_icssg_tcpserver",
+        "location": "../../examples/networking/lwip/enet_icssg_tcpserver/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_icssg_tcpserver",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Lwip Icssg Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_lwip_icssg",
+        "location": "../../examples/networking/lwip/enet_lwip_icssg/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_lwip_icssg",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Lwip Icssg Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_lwip_icssg",
+        "location": "../../examples/networking/lwip/enet_lwip_icssg/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "lwip",
+            "enet_lwip_icssg",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies VTM operation CPU is M4FSS0-0 running NORTOS.",
         "name": "vtm_example",
         "location": "../../examples/sdl/vtm/vtm_uc/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",

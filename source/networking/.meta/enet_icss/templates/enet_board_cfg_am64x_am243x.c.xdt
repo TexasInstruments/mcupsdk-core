@@ -80,7 +80,7 @@ function getBoardPhydelayInfo() {
                             ['am243x-lp',{txDelay: "500U" , rxDelay: "500U"}],
                         ],
                         );
-    return enetBoardPhyDelayInfoMap.get(device);;
+    return enetBoardPhyDelayInfoMap.get(device);
 }
 %%}
 
@@ -91,8 +91,8 @@ static const Dp83869_Cfg gEnetCpbBoard_dp83869PhyCfg =
 {
     .txClkShiftEn         = true,
     .rxClkShiftEn         = true,
-    .rxDelayInPs          = `getBoardPhydelayInfo().rxDelay`,
-    .txDelayInPs          = `getBoardPhydelayInfo().txDelay`,
+    .rxDelayInPs          = `getBoardPhydelayInfo().rxDelay`,  /* Value in pecosec. Refer to DLL_RX_DELAY_CTRL_SL field in ANA_RGMII_DLL_CTRL register of DP83869 PHY datasheet */
+    .txDelayInPs          = `getBoardPhydelayInfo().txDelay`,  /* Value in pecosec. Refer to DLL_RX_DELAY_CTRL_SL field in ANA_RGMII_DLL_CTRL register of DP83869 PHY datasheet */
     .txFifoDepth          = 4U,
     .impedanceInMilliOhms = 35000,  /* 35 ohms */
     .idleCntThresh        = 4U,     /* Improves short cable performance */
@@ -107,6 +107,15 @@ static const Dp83869_Cfg gEnetCpbBoard_dp83869PhyCfg =
     },
 };
 
+/*!
+ * \brief ICSSG0 extention card (Ext) board's DP83826 PHY configuration.
+ */
+static const Dp83869_Cfg gEnetCpbBoard_dp83826PhyCfg =
+{
+    /* This feature is not supported on standard issue TI EVMs and LP boards.
+     * Please fill this function with appropriate extended config for the PHY used.
+     */
+};
 /*
  * `device` board configuration.
  *
@@ -243,6 +252,36 @@ static const EnetBoard_PortCfg gEnetCpbBoard_`device.replace('-','_')`_EthPort[]
  */
 static const EnetBoard_PortCfg gEnetMiiBoard_`device.replace('-','_')`_EthPort[] =
 {
+    {    /* "ETH0" (ICSSG0 Dual-MAC port 1) */
+        .enetType = ENET_ICSSG_DUALMAC,
+        .instId   = 0U,
+        .macPort  = ENET_MAC_PORT_1,
+        .mii      = { ENET_MAC_LAYER_MII, ENET_MAC_SUBLAYER_STANDARD },
+        .phyCfg   =
+        {
+            .phyAddr         = `instance.phyAddr1`U,
+            .isStrapped      = false,
+            .skipExtendedCfg = false,
+            .extendedCfg     = &gEnetCpbBoard_dp83826PhyCfg,
+            .extendedCfgSize = sizeof(gEnetCpbBoard_dp83826PhyCfg),
+        },
+        .flags    = 0U,
+    },
+    {    /* "ETH1" (ICSSG0 Dual-MAC port 2) */
+        .enetType = ENET_ICSSG_DUALMAC,
+        .instId   = 1U,
+        .macPort  = ENET_MAC_PORT_2,
+        .mii      = { ENET_MAC_LAYER_MII, ENET_MAC_SUBLAYER_STANDARD },
+        .phyCfg   =
+        {
+            .phyAddr         = `instance.phyAddr2`U,
+            .isStrapped      = false,
+            .skipExtendedCfg = false,
+            .extendedCfg     = &gEnetCpbBoard_dp83826PhyCfg,
+            .extendedCfgSize = sizeof(gEnetCpbBoard_dp83826PhyCfg),
+        },
+        .flags    = 0U,
+    },
     {    /* "ETH2" (ICSSG1 Dual-MAC port 1) */
         .enetType = ENET_ICSSG_DUALMAC,
         .instId   = 2U,
@@ -270,6 +309,36 @@ static const EnetBoard_PortCfg gEnetMiiBoard_`device.replace('-','_')`_EthPort[]
             .skipExtendedCfg = false,
             .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,
             .extendedCfgSize = sizeof(gEnetCpbBoard_dp83869PhyCfg),
+        },
+        .flags    = 0U,
+    },
+    {    /* "ETH0" (ICSSG0 Switch port 1) */
+        .enetType = ENET_ICSSG_SWITCH,
+        .instId   = 0U,
+        .macPort  = ENET_MAC_PORT_1,
+        .mii      = { ENET_MAC_LAYER_MII, ENET_MAC_SUBLAYER_STANDARD },
+        .phyCfg   =
+        {
+            .phyAddr         = `instance.phyAddr1`U,
+            .isStrapped      = false,
+            .skipExtendedCfg = false,
+            .extendedCfg     = &gEnetCpbBoard_dp83826PhyCfg,
+            .extendedCfgSize = sizeof(gEnetCpbBoard_dp83826PhyCfg),
+        },
+        .flags    = 0U,
+    },
+    {    /* "ETH1" (ICSSG0 Switch port 2) */
+        .enetType = ENET_ICSSG_SWITCH,
+        .instId   = 0U,
+        .macPort  = ENET_MAC_PORT_2,
+        .mii      = { ENET_MAC_LAYER_MII, ENET_MAC_SUBLAYER_STANDARD },
+        .phyCfg   =
+        {
+            .phyAddr         = `instance.phyAddr2`U,
+            .isStrapped      = false,
+            .skipExtendedCfg = false,
+            .extendedCfg     = &gEnetCpbBoard_dp83826PhyCfg,
+            .extendedCfgSize = sizeof(gEnetCpbBoard_dp83826PhyCfg),
         },
         .flags    = 0U,
     },

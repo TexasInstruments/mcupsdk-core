@@ -47,7 +47,7 @@ function enet_pkt_pool_validate(instance, report) {
 function getPktInfoNum(instances)
 {
     let count = 0;
-
+    
     for (let i in instances)
     {
         if (instances[i].PktInfoOnlyEnable)
@@ -61,7 +61,7 @@ function getPktInfoNum(instances)
 function getLargePoolNumPkts(instances)
 {
     let count = 0;
-
+    
     for (let i in instances)
     {
         count = count + instances[i].LargePoolPktCount;
@@ -72,7 +72,7 @@ function getLargePoolNumPkts(instances)
 function getMediumPoolNumPkts(instances)
 {
     let count = 0;
-
+    
     for (let i in instances)
     {
         count = count + instances[i].MediumPoolPktCount;
@@ -83,13 +83,14 @@ function getMediumPoolNumPkts(instances)
 function getSmallPoolNumPkts(instances)
 {
     let count = 0;
-
+    
     for (let i in instances)
     {
         count = count + instances[i].SmallPoolPktCount;
     }
     return count;
 }
+
 
 const enet_pkt_pool_config = {
     name: "enetPktPoolConfig",
@@ -168,7 +169,7 @@ const enet_pkt_pool_config = {
         },
         {
             name: "PktInfoOnlyEnable",
-            description: "Flag to allocate only the DMA Packet Info structures, this does not include the buffer memory. This is useful when the buffer memory is internally allocated by the application. (Ex- Lwip pools)",
+            description: "Flag to enable packet Info from enet utils library. It should be disabled to avoid utils memory wastage, in case aplication allots packet via other mechanism. (Ex- Lwip pools)",
             displayName: "Only Enable Packet Info Allocation",
             default: false,
             onChange: function (inst, ui) {

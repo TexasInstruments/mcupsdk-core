@@ -155,7 +155,7 @@ static uint8_t gEnetSoc_icssg0PortPoolMem_0[ICSSG_PORT_POOL_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
 %if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
-static uint8_t gEnetSoc_icssg0HostPoolMem_0[ICSSG_HOST_POOL_`i`_TOTAL_SIZE]
+static uint8_t gEnetSoc_icssg0HostPoolMem_0[ICSSG_HOST_POOL_0_TOTAL_SIZE]
         __attribute__ ((aligned (ICSSG_CACHELINE_ALIGNMENT)));
 %}
 %if (module.isIcssgIfEnabled(instances[i], "SWITCH", "ICSSG0") || module.isIcssgIfEnabled(instances[i], "DUAL MAC", "ICSSG0", "ENET_MAC_PORT_1")) {
