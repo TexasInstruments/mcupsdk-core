@@ -56,10 +56,6 @@ const syscfgfile = "../example.syscfg"
 const templates_freertos_m4f =
 [
     {
-        input: ".project/templates/am64x/common/linker_m4f.cmd.xdt",
-        output: "linker.cmd",
-    },
-    {
         input: ".project/templates/am64x/freertos/main_freertos.c.xdt",
         output: "../main.c",
         options: {

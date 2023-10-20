@@ -83,7 +83,7 @@ const libs_freertos_m4f = {
 
 const lnkfiles = {
     common: [
-        "linker.cmd",
+        "../linker.cmd",
     ]
 };
 
@@ -91,10 +91,6 @@ const syscfgfile = "../example.syscfg";
 
 const templates_nortos_m4f =
 [
-    {
-        input: ".project/templates/am243x/common/linker_m4f.cmd.xdt",
-        output: "linker.cmd",
-    },
     {
         input: ".project/templates/am243x/nortos/main_nortos.c.xdt",
         output: "../main.c",
@@ -106,10 +102,6 @@ const templates_nortos_m4f =
 
 const templates_freertos_m4f =
 [
-    {
-        input: ".project/templates/am243x/common/linker_m4f.cmd.xdt",
-        output: "linker.cmd",
-    },
     {
         input: ".project/templates/am243x/freertos/main_freertos.c.xdt",
         output: "../main.c",

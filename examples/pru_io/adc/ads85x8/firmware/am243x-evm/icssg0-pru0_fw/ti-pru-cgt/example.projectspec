@@ -67,8 +67,6 @@
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
         <file path="../../../main.asm" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="link">
-        </file>
         <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am243x/EXAMPLES_PRU_ADC_ADS85x8.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>

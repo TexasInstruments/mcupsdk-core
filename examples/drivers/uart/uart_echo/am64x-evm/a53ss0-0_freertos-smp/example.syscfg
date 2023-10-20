@@ -2,15 +2,15 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "a53ss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"data":"2021040816","timestamp":"2021040816","tool":"1.8.1+1900","templates":null}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
 const uart       = scripting.addModule("/drivers/uart/uart", {}, false);
 const uart1      = uart.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
 const mmu_armv8  = scripting.addModule("/kernel/dpl/mmu_armv8", {}, false);
 const mmu_armv81 = mmu_armv8.addInstance();
 const mmu_armv82 = mmu_armv8.addInstance();
@@ -19,10 +19,10 @@ const mmu_armv83 = mmu_armv8.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-debug_log.enableCssLog = false;
+uart1.$name        = "CONFIG_UART_CONSOLE";
+uart1.UART.$assign = "USART0";
 
-uart1.$name          = "CONFIG_UART_CONSOLE";
-uart1.UART.$assign   = "USART0";
+debug_log.enableCssLog = false;
 
 mmu_armv81.$name = "CONFIG_MMU_REGION0";
 mmu_armv81.size  = 0x80000000;
@@ -44,5 +44,5 @@ mmu_armv83.attribute = "MAIR7";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-uart1.UART.RXD.$suggestSolution = "D15";
-uart1.UART.TXD.$suggestSolution = "C16";
+uart1.UART.RXD.$suggestSolution = "UART0_RXD";
+uart1.UART.TXD.$suggestSolution = "UART0_TXD";

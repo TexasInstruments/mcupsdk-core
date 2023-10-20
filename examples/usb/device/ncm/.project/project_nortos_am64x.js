@@ -61,7 +61,7 @@ const libdirs_nortos = {
 
 const lnkfiles = {
     common: [
-        "linker.cmd",
+        "../linker.cmd",
     ]
 };
 

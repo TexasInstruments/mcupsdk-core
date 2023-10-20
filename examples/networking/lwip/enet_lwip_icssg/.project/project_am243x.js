@@ -119,7 +119,7 @@ const loptflags_r5f = {
 
 const lnkfiles = {
     common: [
-        "linker.cmd",
+        "../linker.cmd",
     ]
 };
 

@@ -2,24 +2,36 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM243x_ALX_beta" --package "ALX" --part "ALX" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.14.0+2667"}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const flash       = scripting.addModule("/board/flash/flash", {}, false);
-const flash1      = flash.addInstance();
-const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
-const bootloader1 = bootloader.addInstance();
-const uart        = scripting.addModule("/drivers/uart/uart", {}, false);
-const uart1       = uart.addInstance();
-const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
-const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
-const mpu_armv71  = mpu_armv7.addInstance();
-const mpu_armv72  = mpu_armv7.addInstance();
-const mpu_armv73  = mpu_armv7.addInstance();
-const mpu_armv74  = mpu_armv7.addInstance();
+const flash           = scripting.addModule("/board/flash/flash", {}, false);
+const flash1          = flash.addInstance();
+const bootloader      = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
+const bootloader1     = bootloader.addInstance();
+const uart            = scripting.addModule("/drivers/uart/uart", {}, false);
+const uart1           = uart.addInstance();
+const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71      = mpu_armv7.addInstance();
+const mpu_armv72      = mpu_armv7.addInstance();
+const mpu_armv73      = mpu_armv7.addInstance();
+const mpu_armv74      = mpu_armv7.addInstance();
+const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
+const default_linker1 = default_linker.addInstance();
+const general         = scripting.addModule("/memory_configurator/general", {}, false);
+const general1        = general.addInstance();
+const region          = scripting.addModule("/memory_configurator/region", {}, false);
+const region1         = region.addInstance();
+const section         = scripting.addModule("/memory_configurator/section", {}, false);
+const section1        = section.addInstance();
+const section2        = section.addInstance();
+const section3        = section.addInstance();
+const section4        = section.addInstance();
+const section5        = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -65,17 +77,124 @@ mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 21;
 
+default_linker1.$name = "memory_configurator_default_linker0";
+
+general1.$name          = "CONFIG_GENERAL0";
+general1.entry_point    = "-e_vectors_sbl";
+general1.irq_stack_size = 4096;
+general1.svc_stack_size = 256;
+general1.linker.$name   = "TIARMCLANG0";
+
+region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
+region1.memory_region.create(7);
+region1.memory_region[0].type               = "TCMA_R5F";
+region1.memory_region[0].$name              = "R5F_VECS";
+region1.memory_region[0].size               = 0x40;
+region1.memory_region[0].auto               = false;
+region1.memory_region[1].type               = "TCMA_R5F";
+region1.memory_region[1].$name              = "R5F_TCMA";
+region1.memory_region[1].size               = 0x7FC0;
+region1.memory_region[2].type               = "TCMB_R5F";
+region1.memory_region[2].$name              = "R5F_TCMB0";
+region1.memory_region[2].size               = 0x8000;
+region1.memory_region[3].$name              = "MSRAM_VECS";
+region1.memory_region[3].auto               = false;
+region1.memory_region[3].size               = 0x100;
+region1.memory_region[4].$name              = "MSRAM_0";
+region1.memory_region[4].auto               = false;
+region1.memory_region[4].manualStartAddress = 0x70000100;
+region1.memory_region[4].size               = 0x70F00;
+region1.memory_region[5].$name              = "MSRAM_1";
+region1.memory_region[5].auto               = false;
+region1.memory_region[5].manualStartAddress = 0x70071000;
+region1.memory_region[5].size               = 0x1F000;
+region1.memory_region[6].auto               = false;
+region1.memory_region[6].$name              = "MSRAM_2";
+region1.memory_region[6].manualStartAddress = 0x70090000;
+region1.memory_region[6].size               = 0x150000;
+
+section1.$name                        = "Vector Table";
+section1.group                        = false;
+section1.load_memory                  = "MSRAM_VECS";
+section1.output_section.create(1);
+section1.output_section[0].$name      = ".vectors";
+section1.output_section[0].palignment = true;
+
+section2.$name                        = "Text Segments";
+section2.load_memory                  = "MSRAM_0";
+section2.output_section.create(5);
+section2.output_section[0].$name      = ".text.hwi";
+section2.output_section[0].palignment = true;
+section2.output_section[1].$name      = ".text.cache";
+section2.output_section[1].palignment = true;
+section2.output_section[2].$name      = ".text.mpu";
+section2.output_section[2].palignment = true;
+section2.output_section[3].$name      = ".text.boot";
+section2.output_section[3].palignment = true;
+section2.output_section[4].$name      = ".text:abort";
+section2.output_section[4].palignment = true;
+
+section3.$name                                   = "Memory Segments";
+section3.load_memory                             = "MSRAM_1";
+section3.group                                   = false;
+section3.output_section.create(3);
+section3.output_section[0].$name                 = ".bss";
+section3.output_section[0].palignment            = true;
+section3.output_section[0].output_sections_start = "__BSS_START";
+section3.output_section[0].output_sections_end   = "__BSS_END";
+section3.output_section[1].$name                 = ".sysmem";
+section3.output_section[1].palignment            = true;
+section3.output_section[2].$name                 = ".stack";
+section3.output_section[2].palignment            = true;
+
+section4.$name                                    = "Stack Segments";
+section4.load_memory                              = "MSRAM_1";
+section4.output_section.create(5);
+section4.output_section[0].$name                  = ".irqstack";
+section4.output_section[0].output_sections_start  = "__IRQ_STACK_START";
+section4.output_section[0].output_sections_end    = "__IRQ_STACK_END";
+section4.output_section[0].input_section.create(1);
+section4.output_section[0].input_section[0].$name = ". = . + __IRQ_STACK_SIZE;";
+section4.output_section[1].$name                  = ".fiqstack";
+section4.output_section[1].output_sections_start  = "__FIQ_STACK_START";
+section4.output_section[1].output_sections_end    = "__FIQ_STACK_END";
+section4.output_section[1].input_section.create(1);
+section4.output_section[1].input_section[0].$name = ". = . + __FIQ_STACK_SIZE;";
+section4.output_section[2].$name                  = ".svcstack";
+section4.output_section[2].output_sections_start  = "__SVC_STACK_START";
+section4.output_section[2].output_sections_end    = "__SVC_STACK_END";
+section4.output_section[2].input_section.create(1);
+section4.output_section[2].input_section[0].$name = ". = . + __SVC_STACK_SIZE;";
+section4.output_section[3].$name                  = ".abortstack";
+section4.output_section[3].output_sections_start  = "__ABORT_STACK_START";
+section4.output_section[3].output_sections_end    = "__ABORT_STACK_END";
+section4.output_section[3].input_section.create(1);
+section4.output_section[3].input_section[0].$name = ". = . + __ABORT_STACK_SIZE;";
+section4.output_section[4].$name                  = ".undefinedstack";
+section4.output_section[4].output_sections_start  = "__UNDEFINED_STACK_START";
+section4.output_section[4].output_sections_end    = "__UNDEFINED_STACK_END";
+section4.output_section[4].input_section.create(1);
+section4.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE;";
+
+section5.$name                       = "CONFIG_SECTION0";
+section5.type                        = "NOLOAD";
+section5.group                       = false;
+section5.load_memory                 = "MSRAM_2";
+section5.output_section.create(1);
+section5.output_section[0].$name     = ".bss.filebuf";
+section5.output_section[0].alignment = 0;
+
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
 flash1.peripheralDriver.OSPI.$suggestSolution      = "OSPI0";
-flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "ball.P20";
-flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "ball.L20";
-flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "ball.N19";
-flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "ball.L21";
-flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "ball.N20";
-flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "ball.L19";
-uart1.UART.RXD.$suggestSolution                    = "ball.B10";
-uart1.UART.TXD.$suggestSolution                    = "ball.B11";
+flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "OSPI0_CLK";
+flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "OSPI0_CSn0";
+flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "OSPI0_D3";
+flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "OSPI0_D2";
+flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "OSPI0_D1";
+flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "OSPI0_D0";
+uart1.UART.RXD.$suggestSolution                    = "UART0_RXD";
+uart1.UART.TXD.$suggestSolution                    = "UART0_TXD";

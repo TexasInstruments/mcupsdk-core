@@ -110,10 +110,6 @@ const templates_r5f_gcc =
 const templates_m4f =
 [
     {
-        input: ".project/templates/am243x/common/linker_m4f.cmd.xdt",
-        output: "linker.cmd",
-    },
-    {
         input: ".project/templates/am243x/freertos/main_freertos.c.xdt",
         output: "../main.c",
         options: {

@@ -174,7 +174,7 @@ CFLAGS_`prop` := \
 	% if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
 LNK_FILES_`prop` = \
 		% for(let val of obj[prop]) {
-            %if( args.project.device == "am263px" && (args.project.cpu).includes("r5f") || (args.project.device == "am273x")) {
+            %if( (args.project.cgt == "ti-arm-clang" || args.project.cgt == "ti-c6000") && (args.project.device == "am263px" || (args.project.device == "am273x") || (args.project.device == "am64x") || (args.project.device == "am243x")) ) {
 	generated/`val` \
     %}
     %else{

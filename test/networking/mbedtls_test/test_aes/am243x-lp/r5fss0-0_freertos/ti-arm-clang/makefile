@@ -114,7 +114,7 @@ CFLAGS_debug := \
 	-D_DEBUG_=1 \
 
 LNK_FILES_common = \
-	linker.cmd \
+	generated/linker.cmd \
 
 LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \

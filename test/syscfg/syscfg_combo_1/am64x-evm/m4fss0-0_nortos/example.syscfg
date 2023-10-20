@@ -2,40 +2,57 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "m4fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.9.0+2015","templates":null}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const gpio            = scripting.addModule("/drivers/gpio/gpio", {}, false);
-const gpio1           = gpio.addInstance();
-const gpio2           = gpio.addInstance();
-const i2c             = scripting.addModule("/drivers/i2c/i2c", {}, false);
-const i2c1            = i2c.addInstance();
-const i2c2            = i2c.addInstance();
-const ipc             = scripting.addModule("/drivers/ipc/ipc");
-const mcspi           = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
-const mcspi1          = mcspi.addInstance();
-const mcspi2          = mcspi.addInstance();
-const uart            = scripting.addModule("/drivers/uart/uart", {}, false);
-const uart1           = uart.addInstance();
-const uart2           = uart.addInstance();
-const addr_translate  = scripting.addModule("/kernel/dpl/addr_translate", {}, false);
-const addr_translate1 = addr_translate.addInstance();
-const addr_translate2 = addr_translate.addInstance();
-const addr_translate3 = addr_translate.addInstance();
-const addr_translate4 = addr_translate.addInstance();
-const clock           = scripting.addModule("/kernel/dpl/clock");
-const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
-const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
-const mpu_armv71      = mpu_armv7.addInstance();
-const mpu_armv72      = mpu_armv7.addInstance();
-const timer           = scripting.addModule("/kernel/dpl/timer", {}, false);
-const timer1          = timer.addInstance();
-const timer2          = timer.addInstance();
-const timer3          = timer.addInstance();
-const timer4          = timer.addInstance();
+const gpio                      = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1                     = gpio.addInstance();
+const gpio2                     = gpio.addInstance();
+const i2c                       = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1                      = i2c.addInstance();
+const i2c2                      = i2c.addInstance();
+const ipc                       = scripting.addModule("/drivers/ipc/ipc");
+const mcspi                     = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
+const mcspi1                    = mcspi.addInstance();
+const mcspi2                    = mcspi.addInstance();
+const uart                      = scripting.addModule("/drivers/uart/uart", {}, false);
+const uart1                     = uart.addInstance();
+const uart2                     = uart.addInstance();
+const addr_translate            = scripting.addModule("/kernel/dpl/addr_translate", {}, false);
+const addr_translate1           = addr_translate.addInstance();
+const addr_translate2           = addr_translate.addInstance();
+const addr_translate3           = addr_translate.addInstance();
+const addr_translate4           = addr_translate.addInstance();
+const clock                     = scripting.addModule("/kernel/dpl/clock");
+const debug_log                 = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7                 = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71                = mpu_armv7.addInstance();
+const mpu_armv72                = mpu_armv7.addInstance();
+const timer                     = scripting.addModule("/kernel/dpl/timer", {}, false);
+const timer1                    = timer.addInstance();
+const timer2                    = timer.addInstance();
+const timer3                    = timer.addInstance();
+const timer4                    = timer.addInstance();
+const default_linker            = scripting.addModule("/memory_configurator/default_linker", {}, false);
+const default_linker1           = default_linker.addInstance();
+const general                   = scripting.addModule("/memory_configurator/general", {}, false);
+const general1                  = general.addInstance();
+const region                    = scripting.addModule("/memory_configurator/region", {}, false);
+const region1                   = region.addInstance();
+const section                   = scripting.addModule("/memory_configurator/section", {}, false);
+const section1                  = section.addInstance();
+const section2                  = section.addInstance();
+const section3                  = section.addInstance();
+const section4                  = section.addInstance();
+const section5                  = section.addInstance();
+const section6                  = section.addInstance();
+const section7                  = section.addInstance();
+const section8                  = section.addInstance();
+const shared_region_references  = scripting.addModule("/memory_configurator/shared_region_references", {}, false);
+const shared_region_references1 = shared_region_references.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -53,10 +70,10 @@ i2c1.MCU_I2C.$assign = "MCU_I2C0";
 
 i2c2.$name           = "CONFIG_I2C1";
 i2c2.advanced        = true;
-i2c2.ownTargetAddr1   = 0x1E;
-i2c2.ownTargetAddr2   = 0x12;
-i2c2.ownTargetAddr3   = 0x13;
-i2c2.ownTargetAddr4   = 0x15;
+i2c2.ownTargetAddr1  = 0x1E;
+i2c2.ownTargetAddr2  = 0x12;
+i2c2.ownTargetAddr3  = 0x13;
+i2c2.ownTargetAddr4  = 0x15;
 i2c2.MCU_I2C.$assign = "MCU_I2C1";
 
 ipc.r5fss0_0 = "notify";
@@ -111,29 +128,123 @@ timer3.$name = "CONFIG_TIMER2";
 
 timer4.$name = "CONFIG_TIMER3";
 
+default_linker1.$name = "memory_configurator_default_linker0";
+
+general1.$name        = "CONFIG_GENERAL0";
+general1.linker.$name = "TIARMCLANG0";
+
+region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
+region1.memory_region.create(3);
+region1.memory_region[0].type               = "RAM0_M4F";
+region1.memory_region[0].$name              = "M4F_VECS";
+region1.memory_region[0].size               = 0x200;
+region1.memory_region[1].type               = "RAM0_M4F";
+region1.memory_region[1].$name              = "M4F_IRAM";
+region1.memory_region[1].size               = 0x2FE00;
+region1.memory_region[1].auto               = false;
+region1.memory_region[1].manualStartAddress = 0x200;
+region1.memory_region[2].type               = "DRAM_M4F";
+region1.memory_region[2].$name              = "M4F_DRAM";
+region1.memory_region[2].size               = 0x10000;
+region1.memory_region[2].auto               = false;
+
+section1.load_memory                  = "M4F_VECS";
+section1.group                        = false;
+section1.$name                        = "Vector Table";
+section1.output_section.create(1);
+section1.output_section[0].$name      = ".vectors";
+section1.output_section[0].palignment = true;
+
+section2.load_memory                  = "M4F_IRAM";
+section2.group                        = false;
+section2.$name                        = "Text Segments";
+section2.output_section.create(1);
+section2.output_section[0].$name      = ".text";
+section2.output_section[0].palignment = true;
+
+section3.group                                   = false;
+section3.load_memory                             = "M4F_DRAM";
+section3.$name                                   = "Bss Segment";
+section3.output_section.create(1);
+section3.output_section[0].$name                 = ".bss";
+section3.output_section[0].output_sections_start = "__BSS_START";
+section3.output_section[0].output_sections_end   = "__BSS_END";
+
+section4.load_memory                  = "M4F_DRAM";
+section4.group                        = false;
+section4.$name                        = "Code and Read-Only Data";
+section4.output_section.create(2);
+section4.output_section[0].$name      = ".data";
+section4.output_section[0].palignment = true;
+section4.output_section[1].$name      = ".rodata";
+section4.output_section[1].palignment = true;
+
+section5.load_memory                  = "M4F_IRAM";
+section5.group                        = false;
+section5.$name                        = "Memory and Stack Segments";
+section5.output_section.create(5);
+section5.output_section[0].$name      = ".sysmem";
+section5.output_section[0].palignment = true;
+section5.output_section[1].$name      = ".stack";
+section5.output_section[1].palignment = true;
+section5.output_section[2].$name      = ".ARM.exidx";
+section5.output_section[2].palignment = true;
+section5.output_section[3].$name      = ".init_array";
+section5.output_section[3].palignment = true;
+section5.output_section[4].$name      = ".fini_array";
+section5.output_section[4].palignment = true;
+
+section6.type                        = "NOLOAD";
+section6.load_memory                 = "USER_SHM_MEM";
+section6.group                       = false;
+section6.$name                       = "User Shared Memory";
+section6.output_section.create(1);
+section6.output_section[0].$name     = ".bss.user_shared_mem";
+section6.output_section[0].alignment = 0;
+
+section7.load_memory                 = "LOG_SHM_MEM";
+section7.group                       = false;
+section7.type                        = "NOLOAD";
+section7.$name                       = "Log Shared Memory";
+section7.output_section.create(1);
+section7.output_section[0].$name     = ".bss.log_shared_mem";
+section7.output_section[0].alignment = 0;
+
+section8.load_memory                 = "IPC_VRING_MEM";
+section8.type                        = "NOLOAD";
+section8.group                       = false;
+section8.$name                       = "IPC Shared Memory";
+section8.output_section.create(1);
+section8.output_section[0].$name     = ".bss.ipc_vring_mem";
+section8.output_section[0].alignment = 0;
+
+shared_region_references1.$name                     = "CONFIG_SHARED0";
+shared_region_references1.shared_region             = "RTOS_NORTOS_IPC_SHM_MEM";
+shared_region_references1.shared_region_name_change = "IPC_VRING_MEM";
+
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-gpio1.MCU_GPIO.gpioPin.$suggestSolution         = "ball.D8";
-gpio2.MCU_GPIO.gpioPin.$suggestSolution         = "ball.E8";
-i2c1.MCU_I2C.SCL.$suggestSolution               = "ball.E9";
-i2c1.MCU_I2C.SDA.$suggestSolution               = "ball.A10";
-i2c2.MCU_I2C.SCL.$suggestSolution               = "ball.A11";
-i2c2.MCU_I2C.SDA.$suggestSolution               = "ball.B10";
-mcspi1.MCU_SPI.CLK.$suggestSolution             = "ball.D7";
-mcspi1.MCU_SPI.D0.$suggestSolution              = "ball.C7";
-mcspi1.MCU_SPI.D1.$suggestSolution              = "ball.C8";
-mcspi1.mcspiChannel[0].MCU_CSn.$suggestSolution = "ball.A7";
-mcspi2.MCU_SPI.CLK.$suggestSolution             = "ball.E6";
-mcspi2.MCU_SPI.D0.$suggestSolution              = "ball.E7";
-mcspi2.MCU_SPI.D1.$suggestSolution              = "ball.B6";
-mcspi2.mcspiChannel[0].MCU_CSn.$suggestSolution = "ball.D6";
-uart1.MCU_UART.RXD.$suggestSolution             = "ball.A9";
-uart1.MCU_UART.TXD.$suggestSolution             = "ball.A8";
-uart2.MCU_UART.RXD.$suggestSolution             = "ball.C9";
-uart2.MCU_UART.TXD.$suggestSolution             = "ball.D9";
+gpio1.MCU_GPIO.gpioPin.$suggestSolution         = "MCU_UART0_CTSn";
+gpio2.MCU_GPIO.gpioPin.$suggestSolution         = "MCU_UART0_RTSn";
+i2c1.MCU_I2C.SCL.$suggestSolution               = "MCU_I2C0_SCL";
+i2c1.MCU_I2C.SDA.$suggestSolution               = "MCU_I2C0_SDA";
+i2c2.MCU_I2C.SCL.$suggestSolution               = "MCU_I2C1_SCL";
+i2c2.MCU_I2C.SDA.$suggestSolution               = "MCU_I2C1_SDA";
+mcspi1.MCU_SPI.CLK.$suggestSolution             = "MCU_SPI1_CLK";
+mcspi1.MCU_SPI.D0.$suggestSolution              = "MCU_SPI1_D0";
+mcspi1.MCU_SPI.D1.$suggestSolution              = "MCU_SPI1_D1";
+mcspi1.mcspiChannel[0].MCU_CSn.$suggestSolution = "MCU_SPI1_CS0";
+mcspi2.MCU_SPI.CLK.$suggestSolution             = "MCU_SPI0_CLK";
+mcspi2.MCU_SPI.D0.$suggestSolution              = "MCU_SPI0_D0";
+mcspi2.MCU_SPI.D1.$suggestSolution              = "MCU_SPI0_D1";
+mcspi2.mcspiChannel[0].MCU_CSn.$suggestSolution = "MCU_SPI0_CS0";
+uart1.MCU_UART.RXD.$suggestSolution             = "MCU_UART0_RXD";
+uart1.MCU_UART.TXD.$suggestSolution             = "MCU_UART0_TXD";
+uart2.MCU_UART.RXD.$suggestSolution             = "MCU_UART1_RXD";
+uart2.MCU_UART.TXD.$suggestSolution             = "MCU_UART1_TXD";
 timer1.MCU_TIMER.$suggestSolution               = "MCU_DMTIMER3";
 timer2.MCU_TIMER.$suggestSolution               = "MCU_DMTIMER2";
 timer3.MCU_TIMER.$suggestSolution               = "MCU_DMTIMER1";

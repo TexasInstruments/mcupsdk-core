@@ -2,37 +2,55 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"data":"2021040816","timestamp":"2021040816","tool":"1.8.1+1900","templates":null}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const fsi_rx     = scripting.addModule("/drivers/fsi_rx/fsi_rx", {}, false);
-const fsi_rx1    = fsi_rx.addInstance();
-const fsi_rx2    = fsi_rx.addInstance();
-const fsi_rx3    = fsi_rx.addInstance();
-const fsi_rx4    = fsi_rx.addInstance();
-const fsi_rx5    = fsi_rx.addInstance();
-const fsi_rx6    = fsi_rx.addInstance();
-const fsi_tx     = scripting.addModule("/drivers/fsi_tx/fsi_tx", {}, false);
-const fsi_tx1    = fsi_tx.addInstance();
-const fsi_tx2    = fsi_tx.addInstance();
-const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
-const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
-const mpu_armv71 = mpu_armv7.addInstance();
-const mpu_armv72 = mpu_armv7.addInstance();
-const mpu_armv73 = mpu_armv7.addInstance();
-const mpu_armv74 = mpu_armv7.addInstance();
+const fsi_rx          = scripting.addModule("/drivers/fsi_rx/fsi_rx", {}, false);
+const fsi_rx1         = fsi_rx.addInstance();
+const fsi_rx2         = fsi_rx.addInstance();
+const fsi_rx3         = fsi_rx.addInstance();
+const fsi_rx4         = fsi_rx.addInstance();
+const fsi_rx5         = fsi_rx.addInstance();
+const fsi_rx6         = fsi_rx.addInstance();
+const fsi_tx          = scripting.addModule("/drivers/fsi_tx/fsi_tx", {}, false);
+const fsi_tx1         = fsi_tx.addInstance();
+const fsi_tx2         = fsi_tx.addInstance();
+const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71      = mpu_armv7.addInstance();
+const mpu_armv72      = mpu_armv7.addInstance();
+const mpu_armv73      = mpu_armv7.addInstance();
+const mpu_armv74      = mpu_armv7.addInstance();
+const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
+const default_linker1 = default_linker.addInstance();
+const general         = scripting.addModule("/memory_configurator/general", {}, false);
+const general1        = general.addInstance();
+const region          = scripting.addModule("/memory_configurator/region", {}, false);
+const region1         = region.addInstance();
+const section         = scripting.addModule("/memory_configurator/section", {}, false);
+const section1        = section.addInstance();
+const section2        = section.addInstance();
+const section3        = section.addInstance();
+const section4        = section.addInstance();
+const section5        = section.addInstance();
+const section6        = section.addInstance();
+const section7        = section.addInstance();
+const section8        = section.addInstance();
+const section9        = section.addInstance();
+const section10       = section.addInstance();
+const section11       = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
 fsi_rx1.$name              = "CONFIG_FSI_RX0";
 fsi_rx1.FSI_RX.$assign     = "FSI_RX0";
-fsi_rx1.FSI_RX.CLK.$assign = "V19";
-fsi_rx1.FSI_RX.D0.$assign  = "T17";
-fsi_rx1.FSI_RX.D1.$assign  = "R16";
+fsi_rx1.FSI_RX.CLK.$assign = "GPMC0_AD8";
+fsi_rx1.FSI_RX.D0.$assign  = "GPMC0_AD9";
+fsi_rx1.FSI_RX.D1.$assign  = "GPMC0_AD10";
 
 fsi_rx2.$name          = "CONFIG_FSI_RX1";
 fsi_rx2.FSI_RX.$assign = "FSI_RX1";
@@ -50,17 +68,17 @@ fsi_rx6.FSI_RX.$assign = "FSI_RX5";
 
 fsi_tx1.$name              = "CONFIG_FSI_TX0";
 fsi_tx1.FSI_TX.$assign     = "FSI_TX0";
-fsi_tx1.FSI_TX.CLK.$assign = "T19";
-fsi_tx1.FSI_TX.D0.$assign  = "Y21";
-fsi_tx1.FSI_TX.D1.$assign  = "Y20";
+fsi_tx1.FSI_TX.CLK.$assign = "GPMC0_BE1n";
+fsi_tx1.FSI_TX.D0.$assign  = "GPMC0_AD14";
+fsi_tx1.FSI_TX.D1.$assign  = "GPMC0_AD15";
 
 fsi_tx2.$name = "CONFIG_FSI_TX1";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
 debug_log.uartLog.UART.$assign     = "USART0";
-debug_log.uartLog.UART.RXD.$assign = "D15";
-debug_log.uartLog.UART.TXD.$assign = "C16";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -82,28 +100,195 @@ mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 21;
 mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 
+default_linker1.$name = "memory_configurator_default_linker0";
+
+general1.$name        = "CONFIG_GENERAL0";
+general1.linker.$name = "TIARMCLANG0";
+
+region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
+region1.memory_region.create(9);
+region1.memory_region[0].type               = "TCMA_R5F";
+region1.memory_region[0].$name              = "R5F_VECS";
+region1.memory_region[0].size               = 0x40;
+region1.memory_region[0].auto               = false;
+region1.memory_region[1].type               = "TCMA_R5F";
+region1.memory_region[1].$name              = "R5F_TCMA";
+region1.memory_region[1].size               = 0x7FC0;
+region1.memory_region[2].type               = "TCMB_R5F";
+region1.memory_region[2].$name              = "R5F_TCMB0";
+region1.memory_region[2].size               = 0x8000;
+region1.memory_region[3].$name              = "NON_CACHE_MEM";
+region1.memory_region[3].auto               = false;
+region1.memory_region[3].manualStartAddress = 0x70060000;
+region1.memory_region[3].size               = 0x8000;
+region1.memory_region[4].$name              = "MSRAM";
+region1.memory_region[4].auto               = false;
+region1.memory_region[4].manualStartAddress = 0x70080000;
+region1.memory_region[4].size               = 0x40000;
+region1.memory_region[5].type               = "FLASH";
+region1.memory_region[5].$name              = "FLASH";
+region1.memory_region[5].auto               = false;
+region1.memory_region[5].manualStartAddress = 0x60100000;
+region1.memory_region[5].size               = 0x80000;
+region1.memory_region[6].$name              = "USER_SHM_MEM";
+region1.memory_region[6].auto               = false;
+region1.memory_region[6].manualStartAddress = 0x701D0000;
+region1.memory_region[6].size               = 0x80;
+region1.memory_region[6].isShared           = true;
+region1.memory_region[6].shared_cores       = ["a53ss0-0","a53ss0-1","m4fss0-0","r5fss0-1","r5fss1-0","r5fss1-1"];
+region1.memory_region[7].auto               = false;
+region1.memory_region[7].manualStartAddress = 0x701D0080;
+region1.memory_region[7].size               = 0x3F80;
+region1.memory_region[7].$name              = "LOG_SHM_MEM";
+region1.memory_region[7].isShared           = true;
+region1.memory_region[7].shared_cores       = ["a53ss0-0","a53ss0-1","m4fss0-0","r5fss0-1","r5fss1-0","r5fss1-1"];
+region1.memory_region[8].auto               = false;
+region1.memory_region[8].manualStartAddress = 0x701D4000;
+region1.memory_region[8].size               = 0xC000;
+region1.memory_region[8].$name              = "RTOS_NORTOS_IPC_SHM_MEM";
+region1.memory_region[8].isShared           = true;
+region1.memory_region[8].shared_cores       = ["a53ss0-0","a53ss0-1","m4fss0-0","r5fss0-1","r5fss1-0","r5fss1-1"];
+
+section1.$name                        = "Vector Table";
+section1.load_memory                  = "R5F_VECS";
+section1.group                        = false;
+section1.output_section.create(1);
+section1.output_section[0].$name      = ".vectors";
+section1.output_section[0].palignment = true;
+
+section2.$name                        = "Text Segments";
+section2.load_memory                  = "MSRAM";
+section2.output_section.create(5);
+section2.output_section[0].$name      = ".text.hwi";
+section2.output_section[0].palignment = true;
+section2.output_section[1].$name      = ".text.cache";
+section2.output_section[1].palignment = true;
+section2.output_section[2].$name      = ".text.mpu";
+section2.output_section[2].palignment = true;
+section2.output_section[3].$name      = ".text.boot";
+section2.output_section[3].palignment = true;
+section2.output_section[4].$name      = ".text:abort";
+section2.output_section[4].palignment = true;
+
+section3.$name                        = "Code and Read-Only Data";
+section3.load_memory                  = "MSRAM";
+section3.output_section.create(2);
+section3.output_section[0].$name      = ".text";
+section3.output_section[0].palignment = true;
+section3.output_section[1].$name      = ".rodata";
+section3.output_section[1].palignment = true;
+
+section4.$name                        = "Data Segment";
+section4.load_memory                  = "MSRAM";
+section4.output_section.create(1);
+section4.output_section[0].$name      = ".data";
+section4.output_section[0].palignment = true;
+
+section5.$name                                   = "Memory Segments";
+section5.load_memory                             = "MSRAM";
+section5.output_section.create(3);
+section5.output_section[0].$name                 = ".bss";
+section5.output_section[0].palignment            = true;
+section5.output_section[0].output_sections_start = "__BSS_START";
+section5.output_section[0].output_sections_end   = "__BSS_END";
+section5.output_section[1].$name                 = ".sysmem";
+section5.output_section[1].palignment            = true;
+section5.output_section[2].$name                 = ".stack";
+section5.output_section[2].palignment            = true;
+
+section6.$name                                    = "Stack Segments";
+section6.load_memory                              = "MSRAM";
+section6.output_section.create(5);
+section6.output_section[0].$name                  = ".irqstack";
+section6.output_section[0].output_sections_start  = "__IRQ_STACK_START";
+section6.output_section[0].output_sections_end    = "__IRQ_STACK_END";
+section6.output_section[0].input_section.create(1);
+section6.output_section[0].input_section[0].$name = ". = . + __IRQ_STACK_SIZE;";
+section6.output_section[1].$name                  = ".fiqstack";
+section6.output_section[1].output_sections_start  = "__FIQ_STACK_START";
+section6.output_section[1].output_sections_end    = "__FIQ_STACK_END";
+section6.output_section[1].input_section.create(1);
+section6.output_section[1].input_section[0].$name = ". = . + __FIQ_STACK_SIZE;";
+section6.output_section[2].$name                  = ".svcstack";
+section6.output_section[2].output_sections_start  = "__SVC_STACK_START";
+section6.output_section[2].output_sections_end    = "__SVC_STACK_END";
+section6.output_section[2].input_section.create(1);
+section6.output_section[2].input_section[0].$name = ". = . + __SVC_STACK_SIZE;";
+section6.output_section[3].$name                  = ".abortstack";
+section6.output_section[3].output_sections_start  = "__ABORT_STACK_START";
+section6.output_section[3].output_sections_end    = "__ABORT_STACK_END";
+section6.output_section[3].input_section.create(1);
+section6.output_section[3].input_section[0].$name = ". = . + __ABORT_STACK_SIZE;";
+section6.output_section[4].$name                  = ".undefinedstack";
+section6.output_section[4].output_sections_start  = "__UNDEFINED_STACK_START";
+section6.output_section[4].output_sections_end    = "__UNDEFINED_STACK_END";
+section6.output_section[4].input_section.create(1);
+section6.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE;";
+
+section7.$name                        = "Initialization and Exception Handling";
+section7.load_memory                  = "MSRAM";
+section7.output_section.create(3);
+section7.output_section[0].$name      = ".ARM.exidx";
+section7.output_section[0].palignment = true;
+section7.output_section[1].$name      = ".init_array";
+section7.output_section[1].palignment = true;
+section7.output_section[2].$name      = ".fini_array";
+section7.output_section[2].palignment = true;
+
+section8.$name                       = "User Shared Memory";
+section8.type                        = "NOLOAD";
+section8.load_memory                 = "USER_SHM_MEM";
+section8.group                       = false;
+section8.output_section.create(1);
+section8.output_section[0].$name     = ".bss.user_shared_mem";
+section8.output_section[0].alignment = 0;
+
+section9.$name                       = "Log Shared Memory";
+section9.load_memory                 = "LOG_SHM_MEM";
+section9.type                        = "NOLOAD";
+section9.group                       = false;
+section9.output_section.create(1);
+section9.output_section[0].$name     = ".bss.log_shared_mem";
+section9.output_section[0].alignment = 0;
+
+section10.$name                       = "IPC Shared Memory";
+section10.type                        = "NOLOAD";
+section10.load_memory                 = "RTOS_NORTOS_IPC_SHM_MEM";
+section10.group                       = false;
+section10.output_section.create(1);
+section10.output_section[0].$name     = ".bss.ipc_vring_mem";
+section10.output_section[0].alignment = 0;
+
+section11.$name                       = "Non Cacheable Memory";
+section11.load_memory                 = "NON_CACHE_MEM";
+section11.group                       = false;
+section11.type                        = "NOLOAD";
+section11.output_section.create(1);
+section11.output_section[0].$name     = ".bss.nocache";
+section11.output_section[0].alignment = 0;
+
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-fsi_rx2.FSI_RX.CLK.$suggestSolution = "W20";
-fsi_rx2.FSI_RX.D0.$suggestSolution  = "W21";
-fsi_rx2.FSI_RX.D1.$suggestSolution  = "V18";
-fsi_rx3.FSI_RX.CLK.$suggestSolution = "T20";
-fsi_rx3.FSI_RX.D0.$suggestSolution  = "U21";
-fsi_rx3.FSI_RX.D1.$suggestSolution  = "T18";
+fsi_rx2.FSI_RX.CLK.$suggestSolution = "GPMC0_AD11";
+fsi_rx2.FSI_RX.D0.$suggestSolution  = "GPMC0_AD12";
+fsi_rx2.FSI_RX.D1.$suggestSolution  = "GPMC0_AD13";
+fsi_rx3.FSI_RX.CLK.$suggestSolution = "GPMC0_AD0";
+fsi_rx3.FSI_RX.D0.$suggestSolution  = "GPMC0_AD1";
+fsi_rx3.FSI_RX.D1.$suggestSolution  = "GPMC0_AD2";
 fsi_rx4.FSI_RX.$suggestSolution     = "FSI_RX3";
-fsi_rx4.FSI_RX.CLK.$suggestSolution = "U20";
-fsi_rx4.FSI_RX.D0.$suggestSolution  = "U18";
-fsi_rx4.FSI_RX.D1.$suggestSolution  = "U19";
-fsi_rx5.FSI_RX.CLK.$suggestSolution = "R17";
-fsi_rx5.FSI_RX.D0.$suggestSolution  = "V20";
-fsi_rx5.FSI_RX.D1.$suggestSolution  = "V21";
-fsi_rx6.FSI_RX.CLK.$suggestSolution = "P16";
-fsi_rx6.FSI_RX.D0.$suggestSolution  = "R18";
-fsi_rx6.FSI_RX.D1.$suggestSolution  = "T21";
+fsi_rx4.FSI_RX.CLK.$suggestSolution = "GPMC0_AD3";
+fsi_rx4.FSI_RX.D0.$suggestSolution  = "GPMC0_AD4";
+fsi_rx4.FSI_RX.D1.$suggestSolution  = "GPMC0_AD5";
+fsi_rx5.FSI_RX.CLK.$suggestSolution = "GPMC0_CLK";
+fsi_rx5.FSI_RX.D0.$suggestSolution  = "GPMC0_AD6";
+fsi_rx5.FSI_RX.D1.$suggestSolution  = "GPMC0_AD7";
+fsi_rx6.FSI_RX.CLK.$suggestSolution = "GPMC0_ADVn_ALE";
+fsi_rx6.FSI_RX.D0.$suggestSolution  = "GPMC0_OEn_REn";
+fsi_rx6.FSI_RX.D1.$suggestSolution  = "GPMC0_WEn";
 fsi_tx2.FSI_TX.$suggestSolution     = "FSI_TX1";
-fsi_tx2.FSI_TX.CLK.$suggestSolution = "N16";
-fsi_tx2.FSI_TX.D0.$suggestSolution  = "P17";
-fsi_tx2.FSI_TX.D1.$suggestSolution  = "Y18";
+fsi_tx2.FSI_TX.CLK.$suggestSolution = "GPMC0_WPn";
+fsi_tx2.FSI_TX.D0.$suggestSolution  = "GPMC0_BE0n_CLE";
+fsi_tx2.FSI_TX.D1.$suggestSolution  = "GPMC0_WAIT1";

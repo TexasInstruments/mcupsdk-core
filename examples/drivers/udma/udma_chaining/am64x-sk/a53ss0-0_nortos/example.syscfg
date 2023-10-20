@@ -2,19 +2,33 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "a53ss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"data":"2021040816","timestamp":"2021040816","tool":"1.8.1+1900","templates":null}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const udma       = scripting.addModule("/drivers/udma/udma", {}, false);
-const udma1      = udma.addInstance();
-const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
-const mmu_armv8  = scripting.addModule("/kernel/dpl/mmu_armv8", {}, false);
-const mmu_armv81 = mmu_armv8.addInstance();
-const mmu_armv82 = mmu_armv8.addInstance();
-const mmu_armv83 = mmu_armv8.addInstance();
+const udma            = scripting.addModule("/drivers/udma/udma", {}, false);
+const udma1           = udma.addInstance();
+const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const mmu_armv8       = scripting.addModule("/kernel/dpl/mmu_armv8", {}, false);
+const mmu_armv81      = mmu_armv8.addInstance();
+const mmu_armv82      = mmu_armv8.addInstance();
+const mmu_armv83      = mmu_armv8.addInstance();
+const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
+const default_linker1 = default_linker.addInstance();
+const general         = scripting.addModule("/memory_configurator/general", {}, false);
+const general1        = general.addInstance();
+const region          = scripting.addModule("/memory_configurator/region", {}, false);
+const region1         = region.addInstance();
+const section         = scripting.addModule("/memory_configurator/section", {}, false);
+const section1        = section.addInstance();
+const section2        = section.addInstance();
+const section3        = section.addInstance();
+const section4        = section.addInstance();
+const section5        = section.addInstance();
+const section6        = section.addInstance();
+const section7        = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -27,9 +41,9 @@ udma1.udmaBlkCopyChannel[1].intrEnable          = true;
 udma1.udmaBlkCopyChannel[1].transferCallbackFxn = "App_udmaEventCb";
 
 debug_log.enableUartLog        = true;
+debug_log.enableCssLog         = false;
 debug_log.uartLog.$name        = "CONFIG_UART_CONSOLE";
 debug_log.uartLog.UART.$assign = "USART0";
-debug_log.enableCssLog = false;
 
 mmu_armv81.$name = "CONFIG_MMU_REGION0";
 mmu_armv81.size  = 0x80000000;
@@ -45,6 +59,92 @@ mmu_armv83.vAddr     = 0x80000000;
 mmu_armv83.pAddr     = 0x80000000;
 mmu_armv83.size      = 0x80000000;
 mmu_armv83.attribute = "MAIR7";
+
+default_linker1.$name = "memory_configurator_default_linker0";
+
+general1.$name           = "CONFIG_GENERAL0";
+general1.choose_compiler = "gcc";
+general1.linker.$name    = "GCC0";
+
+region1.$name                  = "MEMORY_REGION_CONFIGURATION0";
+region1.memory_region.create(4);
+region1.memory_region[0].$name = "MEMORY_REGION0";
+region1.memory_region[1].$name = "MEMORY_REGION1";
+region1.memory_region[2].$name = "MEMORY_REGION2";
+region1.memory_region[3].$name = "MEMORY_REGION3";
+
+section1.$name                       = "CONFIG_1";
+section1.load_memory                 = "DDR";
+section1.group                       = false;
+section1.output_section.create(3);
+section1.output_section[0].$name     = ".vecs";
+section1.output_section[0].alignment = 0;
+section1.output_section[1].$name     = ".text";
+section1.output_section[1].alignment = 0;
+section1.output_section[2].$name     = ".rodata";
+section1.output_section[2].alignment = 0;
+
+section2.$name                                    = "CONFIG_2";
+section2.load_memory                              = "DDR";
+section2.group                                    = false;
+section2.output_section.create(1);
+section2.output_section[0].$name                  = ".data";
+section2.output_section[0].input_section.create(1);
+section2.output_section[0].input_section[0].$name = " ";
+
+section3.$name                                    = "CONFIG_3";
+section3.load_memory                              = "USER_SHM_MEM";
+section3.group                                    = false;
+section3.type                                     = "NOLOAD";
+section3.output_section.create(1);
+section3.output_section[0].$name                  = ".bss.user_shared_mem";
+section3.output_section[0].alignment              = 0;
+section3.output_section[0].input_section.create(1);
+section3.output_section[0].input_section[0].$name = "KEEP(*(.bss.user_shared_mem))";
+
+section4.$name                                    = "CONFIG_4";
+section4.type                                     = "NOLOAD";
+section4.load_memory                              = "LOG_SHM_MEM";
+section4.group                                    = false;
+section4.output_section.create(1);
+section4.output_section[0].$name                  = ".bss.log_shared_mem";
+section4.output_section[0].alignment              = 0;
+section4.output_section[0].input_section.create(1);
+section4.output_section[0].input_section[0].$name = "KEEP(*(.bss.log_shared_mem))";
+
+section5.$name                                    = "CONFIG_5";
+section5.load_memory                              = "RTOS_NORTOS_IPC_SHM_MEM";
+section5.group                                    = false;
+section5.type                                     = "NOLOAD";
+section5.output_section.create(1);
+section5.output_section[0].$name                  = ".bss.ipc_vring_mem";
+section5.output_section[0].alignment              = 0;
+section5.output_section[0].input_section.create(1);
+section5.output_section[0].input_section[0].$name = "KEEP(*(.bss.ipc_vring_mem))";
+
+section6.$name                                    = "CONFIG_6";
+section6.load_memory                              = "DDR";
+section6.group                                    = false;
+section6.output_section.create(1);
+section6.output_section[0].$name                  = ".bss";
+section6.output_section[0].alignment              = 0;
+section6.output_section[0].input_section.create(1);
+section6.output_section[0].input_section[0].$name = "  ";
+
+section7.$name                                              = "CONFIG_7";
+section7.load_memory                                        = "DDR";
+section7.type                                               = "NOLOAD";
+section7.group                                              = false;
+section7.output_section.create(2);
+section7.output_section[0].$name                            = ".heap";
+section7.output_section[0].alignment                        = 0;
+section7.output_section[0].input_section.create(1);
+section7.output_section[0].input_section[0].$name           = "   ";
+section7.output_section[1].$name                            = ".stack";
+section7.output_section[1].alignment                        = 16;
+section7.output_section[1].input_section.create(1);
+section7.output_section[1].input_section[0].$name           = "    ";
+section7.output_section[1].input_section[0].additional_data = "__TI_STACK_BASE = .;";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
