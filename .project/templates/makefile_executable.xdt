@@ -4,7 +4,11 @@
 
 export `args.sdkPath`?=$(abspath `args.relPath`)
 include $(`args.sdkPath`)/imports.mak
+%if (args.tifsR5Core == "TRUE") {
+include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
+% } else {
 include $(`args.sdkPath`)/devconfig/devconfig.mak
+% }
 
 CG_TOOL_ROOT=$(`args.cgtOptions.path`)
 
