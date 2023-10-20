@@ -284,8 +284,8 @@ void HsmClient_deInit(void);
  *
  * @param timeToWaitInTick  [IN] amount of time to block waiting for
  * semaphore to be available, in units of system ticks (see KERNEL_DPL_CLOCK_PAGE)
- * @param HsmClient         [IN] Client object which is using this getversion API.
- * @param verId             [OUT] populates HsmVer_t struct which describes current version.
+ * @param HsmClient         [IN] Client object which is using this getversion API. This object's memory address needs to be cache aligned.
+ * @param verId             [OUT] populates HsmVer_t struct which describes current version. This object's memory address needs to be cache aligned.
  *
  * @return
  * 1. SystemP_SUCCESS if returns successfully
@@ -470,8 +470,8 @@ int32_t HsmClient_FirewallIntr(HsmClient_t* HsmClient,
 /**
  * @brief
  * The service issued to HSM Server verifies the certificate and process the keywriter operations,
- * @param HsmClient         [IN] Client object which is using this API.
- * @param certHeader        [IN] point to the location of certificate in the device memory.
+ * @param HsmClient         [IN] Client object which is using this API.  This object's memory address needs to be cache aligned.
+ * @param certHeader        [IN] point to the location of certificate in the device memory.  This object's memory address needs to be cache aligned.
  * @param timeout           [IN] amount of time to block waiting for
  * semaphore to be available, in units of system ticks (see KERNEL_DPL_CLOCK_PAGE)
  * @return
