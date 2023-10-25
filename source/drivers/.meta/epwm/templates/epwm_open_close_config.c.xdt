@@ -265,12 +265,6 @@ void Drivers_epwmOpen(void)
     `epwm_json_resolver.getCode(instance, instance,"epwmXLOADCTL_RepeatBuf2")`
     `epwm_json_resolver.getCode(instance, instance,"epwmXLOADCTL_RepeatBuf3")`
 
-    `epwm_json_resolver.getCode(instance, instance,"epwmXLOADCTL_Loadmode")`
-    `epwm_json_resolver.getCode(instance, instance,"epwmXLOADCTL_Shadowlevel")`
-    `epwm_json_resolver.getCode(instance, instance,"epwmXLOADCTL_Loadonce")`
-    `epwm_json_resolver.getCode(instance, instance,"epwmXLOADCTL_RepeatBuf2")`
-    `epwm_json_resolver.getCode(instance, instance,"epwmXLOADCTL_RepeatBuf3")`
-
     /* Write values to Reg */
     `epwm_json_resolver.getCode(instance, instance,"epwmXCMP1_Active")`
     `epwm_json_resolver.getCode(instance, instance,"epwmXCMP2_Active")`
