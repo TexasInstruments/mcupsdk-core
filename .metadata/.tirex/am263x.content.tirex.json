@@ -3497,6 +3497,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example demonstrates the xcmp features of the epwm, and registers populated by edma. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_xcmp_dma",
+        "location": "../../examples/drivers/epwm/epwm_xcmp_dma/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_xcmp_dma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates the xcmp features of the epwm, and registers populated by edma. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_xcmp_dma",
+        "location": "../../examples/drivers/epwm/epwm_xcmp_dma/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_xcmp_dma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An EPWM HR duty test example. This example generates a 1KHz wave with 25% duty cycle. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_hr_duty_cycle",
         "location": "../../examples/drivers/epwm/epwm_hr_duty_cycle/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
