@@ -2317,6 +2317,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An ECAP triggering EDMA example. This example demonstrates EDMA triggering from ECAP. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ecap_edma",
+        "location": "../../examples/drivers/ecap/ecap_edma/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ecap",
+            "ecap_edma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ECAP triggering EDMA example. This example demonstrates EDMA triggering from ECAP. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ecap_edma",
+        "location": "../../examples/drivers/ecap/ecap_edma/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "ecap",
+            "ecap_edma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An EDMA chain transfer example. This example demonstrates chain in EDMA. CPU is R5FSS0-0 running NORTOS.",
         "name": "edma_chain_transfer",
         "location": "../../examples/drivers/edma/edma_chain_transfer/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

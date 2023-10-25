@@ -65,6 +65,7 @@ const example_file_list = [
 	"examples/drivers/dac/dac_square_wave/.project/project.js",
 	"examples/drivers/ecap/ecap_apwm_mode/.project/project.js",
 	"examples/drivers/ecap/ecap_capture_pwm/.project/project.js",
+	"examples/drivers/ecap/ecap_edma/.project/project.js",
 	"examples/drivers/edma/edma_chain_transfer/.project/project.js",
 	"examples/drivers/edma/edma_interrupt_transfer/.project/project.js",
 	"examples/drivers/edma/edma_link_transfer/.project/project.js",

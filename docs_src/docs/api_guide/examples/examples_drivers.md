@@ -211,6 +211,8 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 -# ECAP
    -# \subpage EXAMPLES_DRIVERS_ECAP_APWM_MODE
    -# \subpage EXAMPLES_DRIVERS_ECAP_CAPTURE_PWM
+   -# \subpage EXAMPLES_DRIVERS_ECAP_EDMA
+
 -# EDMA
    -# \subpage EXAMPLES_DRIVERS_EDMA_CHAIN_TRANSFER
    -# \subpage EXAMPLES_DRIVERS_EDMA_INTERRUPT_TRANSFER
