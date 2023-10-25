@@ -469,6 +469,7 @@ int32_t SIPC_init(SIPC_Params *params)
             hwiParams.intNum = pInterruptConfig->intNum;
             hwiParams.callback = SIPC_isr;
             hwiParams.args = (void*)pInterruptConfig;
+            hwiParams.priority = params->intrPriority;
             hwiParams.eventId = pInterruptConfig->eventId;
             /* READ_ACK interrupt line is a pulse interrupt */
             hwiParams.isPulse = 1;

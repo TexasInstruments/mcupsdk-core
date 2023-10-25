@@ -1,5 +1,7 @@
 let common = system.getScript("/common");
+let hwi = system.getScript("/kernel/dpl/hwi.js");
 let soc = system.getScript(`/drivers/hsmclient/soc/hsmclient_${common.getSocName()}`);
+let gHideIntrPri = !hwi.getPriorityConfigSupported();
 
 let hsmclient_module_name = "/drivers/hsmclient/hsmclient";
 
@@ -45,6 +47,13 @@ let hsmclient_module = {
 			default: 32,
 			displayFormat: "dec",
 		},
+        {
+            name: "intrPriority",
+            displayName: "Interrupt Priority",
+            default: 7,
+            hidden: gHideIntrPri,
+            description: `Interrupt Priority: 0 (highest) to ${hwi.getHwiMaxPriority()} (lowest)`,
+        },
 		{
 			name: "sipc_r5cores",
 			displayName:"Number Of Secure Hosts",
@@ -66,9 +75,9 @@ let hsmclient_module = {
                 }]
 		},
 	],
-    longDescription: 
+    longDescription:
     "The objective of HSM client is to provide APIs for accessing HSM services. It uses Secure IPC Notify driver as a low level message passing mechanism to talk to HSM M4 core. HSM client APIs can be used with either FreeRTOS or NoRTOS application.",
-    validate: validate, 
+    validate: validate,
     getInterfaceName,
     getInstanceConfig
 }
@@ -84,28 +93,31 @@ function validate(inst,report)
         report.logError("There can be at least 1 and atmost 2 secure hosts at a time.",inst);
     }
 
-    let coreNames = common.getSysCfgCoreNames(); 
-    let selfCoreName = common.getSelfSysCfgCoreName(); 
+    let coreNames = common.getSysCfgCoreNames();
+    let selfCoreName = common.getSelfSysCfgCoreName();
 
-    let remoteCoreInstArr = new Array(); 
+    let remoteCoreInstArr = new Array();
 
-    /* populate all hsmclient instances */ 
-    for(let remoteCoreName of coreNames) 
-    { 
+    /* populate all hsmclient instances */
+    for(let remoteCoreName of coreNames)
+    {
         let remote_core_instance = common.getModuleForCore('/drivers/hsmclient/hsmclient',remoteCoreName);
         if (!_.isEmpty(remote_core_instance))
         {
             remoteCoreInstArr.push(remote_core_instance);
         }
     }
-    /* if more than two hsmclient modules are instansiated then throw error */ 
+
+    common.validate.checkNumberRange(inst, report, "intrPriority", 0, hwi.getHwiMaxPriority(), "dec");
+
+    /* if more than two hsmclient modules are instansiated then throw error */
     if(remoteCoreInstArr.length > 2)
     {
         report.logError("Max number of secure cores is 2",inst);
     }
     else
     {
-        for(let remoteCoreName of coreNames) 
+        for(let remoteCoreName of coreNames)
         {
             if(remoteCoreName != selfCoreName)
             {
@@ -128,6 +140,6 @@ function validate(inst,report)
             }
         }
     }
-    
+
 }
 exports = hsmclient_module;

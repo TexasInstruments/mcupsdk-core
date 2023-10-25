@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -104,6 +104,7 @@ typedef struct SIPC_Params_ {
     uint32_t secHostCoreId[MAX_SEC_CORES_WITH_HSM - 1];
     /* This field is for soc extension if user wants to configure different interrupt for SIPC communication*/
     /* for am263x it is fixed to zero */
+    uint8_t  intrPriority; /**< Interrupt priority */
     uint8_t interruptConfig_Num ;
 
 } SIPC_Params;

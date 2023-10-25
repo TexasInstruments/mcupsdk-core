@@ -4,8 +4,8 @@
     let hsm_soc = system.getScript(`/drivers/hsmclient/soc/hsmclient_${common.getSocName()}`);
     let driverVer = soc.getDriverVer("hsmclient");
     let module = system.modules['/drivers/hsmclient/hsmclient'];
-    let instance = module.$instances[0]; 
-    let config = module.getInstanceConfig(instance); 
+    let instance = module.$instances[0];
+    let config = module.getInstanceConfig(instance);
 %%}
 /*
  * HSM Client
@@ -30,8 +30,12 @@ void HsmClient_config(void)
     */
     sipcParams.numCores = 1;
     sipcParams.coreIdList[0] = CORE_INDEX_HSM;
+
+    /* specify the priority of SIPC Notify interrupt */
+    sipcParams.intrPriority = `instance.intrPriority`U;
+
     %if(config.sec_core_option == "secure_host_id_0"){
-    
+
     /* This is HSM -> R5F queue */
     sipcParams.tx_SipcQueues[CORE_INDEX_HSM] = (uintptr_t)gQueue_R5ToHsm[0] ;
     sipcParams.rx_SipcQueues[CORE_INDEX_HSM] = (uintptr_t)gQueue_HsmToR5[0] ;
