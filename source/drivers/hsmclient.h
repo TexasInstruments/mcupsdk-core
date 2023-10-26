@@ -244,7 +244,7 @@ typedef struct DKEK_t_
  * @param resultLengthPtr	Pointer to store the desired length in bytes
  * @param DRBGMode          Flag that determines whether DRBG mode is required or not
  * @param seedValue			Stores the seed values
- * @param seedSizeInWords   Stores the seed size in words
+ * @param seedSizeInDWords   Stores the seed size in double words
  */
 typedef struct RNGReq_t_
 {
@@ -252,7 +252,7 @@ typedef struct RNGReq_t_
     uint32_t* resultLengthPtr; /**< Pointer to determine result length.*/
     uint8_t DRBGMode; /**< Flag to enable DRBG Mode.*/
     uint32_t* seedValue; /**< Seed Value.*/
-    uint8_t seedSizeInWords; /**< Seed Size in words.*/
+    uint8_t seedSizeInDWords; /**< Seed Size in double words.*/
     uint8_t reserved; /**< Reserved Variable.*/
 } RNGReq_t;
 
