@@ -254,7 +254,7 @@ extern "C" {
 #define CSL_FW_HSM_START_ADDR0                  (0x20008000)
 #define CSL_FW_HSM_REGION_SIZE0                 (224*1024)
 #define CSL_FW_HSM_START_ADDR1                  (0x40000000)
-#define CSL_FW_HSM_REGION_SIZE1                 (96*1024*1024)
+#define CSL_FW_HSM_REGION_SIZE1                 (128*1024*1024)
 
 #ifdef __cplusplus
 }
