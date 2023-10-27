@@ -30,11 +30,6 @@ const lnkfiles = {
     ]
 };
 
-const lflags = {
-    common: [
-        "--disable_auto_rts",
-    ],
-};
 
 const readmeDoxygenPageTag = "EXAMPLES_PRU_EMPTY";
 
@@ -44,6 +39,10 @@ const templates_pru =
         input: ".project/templates/am263x/common/pru/linker_pru0.cmd.xdt",
         output: "linker.cmd",
     },
+    {
+        input: ".project/templates/am263x/common/pru/hexpru.cmd.xdt",
+        output: "hexpru.cmd",
+    },
 ];
 
 const buildOptionCombos = [
@@ -51,12 +50,6 @@ const buildOptionCombos = [
     { device: device, cpu: "icssm-pru0", cgt: "ti-pru-cgt", board: "am263x-cc", os: "fw"},
 ];
 
-const hexBuildOptions = [
-    "--diag_wrap=off",
-    "--array",
-    "--array:name_prefix=PRUFirmware",
-    "-o=firmware_binary.h",
-];
 
 function getComponentProperty() {
     let property = {};
@@ -72,8 +65,7 @@ function getComponentProperty() {
     property.pru_linker_file = "linker";
     property.isSkipTopLevelBuild = true;
     property.skipUpdatingTirex = true;
-    property.enableHexTool = true;
-    property.hexBuildOptions = hexBuildOptions;
+    property.defaultPruPostBuildSteps = true;
 
     return property;
 }
@@ -86,7 +78,6 @@ function getComponentBuildProperty(buildOption) {
     build_property.lnkfiles = lnkfiles;
     build_property.includes = includes;
     build_property.templates = templates_pru;
-    build_property.lflags = lflags;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
     build_property.projecspecFileAction = "link";
     build_property.skipMakefileCcsBootimageGen = true;

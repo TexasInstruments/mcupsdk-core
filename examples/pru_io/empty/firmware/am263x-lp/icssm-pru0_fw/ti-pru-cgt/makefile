@@ -19,7 +19,6 @@ ORDERED_OBJS += \
 "./main.obj" \
 "$(MCU_PLUS_SDK_PATH)/examples/pru_io/empty/firmware/am263x-lp/icssm-pru0_fw/ti-pru-cgt/linker.cmd" \
 $(GEN_CMDS__FLAG) \
--llibc.a \
 
 -include ../makefile.init
 
@@ -56,11 +55,10 @@ ASM_SRCS__QUOTED += \
 main.obj: $(MCU_PLUS_SDK_PATH)/examples/pru_io/empty/firmware/main.asm $(GEN_OPTS) | $(GEN_FILES) $(GEN_MISC_FILES)
 	@echo 'Building file: "$<"'
 	@echo 'Invoking: PRU Compiler'
-	"$(CG_TOOL_ROOT)/bin/clpru" -DPRU0 -DSLICE0 -v4 --define=SOC_AM263X --include_path="$(CCS_PATH)" --include_path="${CG_TOOL_ROOT}/include" --include_path="${MCU_PLUS_SDK_PATH}/source" --include_path="${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/common"  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little --preproc_with_compile --preproc_dependency="$(basename $(<F)).d_raw" $(GEN_OPTS__FLAG) "$<"
+	"$(CG_TOOL_ROOT)/bin/clpru" -DPRU0 -DSLICE0 -v4 --define=SOC_AM263X --include_path="$(CCS_PATH)" --include_path="$(SYSCFG_DIR)" --include_path="${CG_TOOL_ROOT}/include" --include_path="${MCU_PLUS_SDK_PATH}/source" --include_path="${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/common"  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little --preproc_with_compile --preproc_dependency="$(basename $(<F)).d_raw" $(GEN_OPTS__FLAG) "$<"
 	@echo 'Finished building: "$<"'
 	@echo ' '
 
-LIBS := -llibc.a
 
 -include ../makefile.defs
 
@@ -86,7 +84,7 @@ all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: PRU Linker'
-	"$(CG_TOOL_ROOT)/bin/clpru" -DPRU0 -DSLICE0 -v4 --define=SOC_AM263X  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt.map" -i"$(CG_TOOL_ROOT)/lib" --diag_wrap=off --display_error_number --warn_sections --xml_link_info="empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt_linkInfo.xml" --rom_model -o "empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt.out" $(ORDERED_OBJS)
+	"$(CG_TOOL_ROOT)/bin/clpru" -DPRU0 -DSLICE0 -v4 --define=SOC_AM263X  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt.map" --disable_auto_rts   --diag_wrap=off --display_error_number --warn_sections --xml_link_info="empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt_linkInfo.xml" --rom_model -o "empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build
@@ -107,6 +105,9 @@ clean:
 	-@echo 'Finished clean'
 	-@echo ' '
 
+post-build:
+	-$(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=PRUFirmware  -o pru_load_bin.h empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt.out
+	-@echo ' '
 
 .PHONY: all clean dependents
 .SECONDARY:

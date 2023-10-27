@@ -38,7 +38,7 @@
 #include "ti_board_open_close.h"
 
 #include <drivers/pruicss.h>
-#include <pru_load_bin.h> // > PRUFirmware array
+#include <pru_load_bin.h> // > PRUFirmware_0 array
 #include <pru_ipc.h>
 
 #include <board/ioexp/ioexp_tca6424.h>
@@ -156,7 +156,7 @@ void ADC_init()
 
     /* Load firmware. Set buffer = write to Pru memory */
     status = PRUICSS_writeMemory(gPruIcss0Handle, PRUICSS_IRAM_PRU(PRUICSS_PRUx), 0,
-                       (uint32_t *) PRUFirmware, sizeof(PRUFirmware));
+                       (uint32_t *) PRUFirmware_0, sizeof(PRUFirmware_0));
     DebugP_assert(status != 0);
 
     status = PRUICSS_resetCore(gPruIcss0Handle, PRUICSS_PRUx);

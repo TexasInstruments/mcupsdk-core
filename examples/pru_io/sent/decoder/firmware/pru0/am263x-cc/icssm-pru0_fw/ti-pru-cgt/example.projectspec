@@ -39,9 +39,8 @@
             -DSOC_AM263X
         "
         linkerBuildOptions="
-            -i${CG_TOOL_ROOT}/lib
             -m=sent_decoder_pru0_fw.${ConfigName}.map
-            -llibc.a
+            --disable_auto_rts
             --entry_point=main
             --disable_auto_rts
         "

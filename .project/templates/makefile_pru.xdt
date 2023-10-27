@@ -22,7 +22,6 @@ ORDERED_OBJS += \
 "./`obj.pru_main_file`.obj" \
 "$(MCU_PLUS_SDK_PATH)/`projectPath`/`obj.pru_linker_file`.cmd" \
 $(GEN_CMDS__FLAG) \
--llibc.a \
 
 % // review these include files
 -include ../makefile.init
@@ -94,7 +93,6 @@ ASM_SRCS__QUOTED += \
 	@echo 'Finished building: "$<"'
 	@echo ' '
 
-LIBS := -llibc.a
 
 -include ../makefile.defs
 
@@ -121,7 +119,7 @@ all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 `projectName`.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: PRU Linker'
-	"$(CG_TOOL_ROOT)/bin/clpru" `cmdSubStr` --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"`projectName`.map" -i"$(CG_TOOL_ROOT)/lib" --diag_wrap=off --display_error_number --warn_sections --xml_link_info="`projectName`_linkInfo.xml" --rom_model -o "`projectName`.out" $(ORDERED_OBJS)
+	"$(CG_TOOL_ROOT)/bin/clpru" `cmdSubStr` --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"`projectName`.map" --disable_auto_rts   --diag_wrap=off --display_error_number --warn_sections --xml_link_info="`projectName`_linkInfo.xml" --rom_model -o "`projectName`.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build
@@ -152,8 +150,7 @@ post-build:
 % }
 % if(obj["defaultPruPostBuildSteps"]) {
 post-build:
-	-$(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/`projectPath`/hexpru.cmd `projectName`.out
-	-${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe `projectName`.b00 pru_load_bin.h PRUFirmware 4
+	-$(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=PRUFirmware  -o pru_load_bin.h `projectName`.out
 	-@echo ' '
 % }
 

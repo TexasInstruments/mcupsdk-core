@@ -93,12 +93,12 @@ const cgt_common = {
     },
     lflags: {
         common: [
-            "-llibc.a"
+            "--disable_auto_rts"
         ],
     },
     libdirs: {
         common: [
-            "${CG_TOOL_ROOT}/lib"
+            
         ],
     },
 };

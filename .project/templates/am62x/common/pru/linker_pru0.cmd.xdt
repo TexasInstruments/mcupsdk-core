@@ -57,9 +57,6 @@ MEMORY
 
 /* Specify the sections allocation into memory */
 SECTIONS {
-    /* Forces _c_int00 to the start of PRU IRAM. Not necessary when loading
-       an ELF file, but useful when loading a binary */
-    .text:_c_int00* >  0x0, PAGE 0
 
     .text           >  PRU_IMEM,    PAGE 0
     .bss            >  PRU0_DMEM_0, PAGE 1

@@ -94,4 +94,5 @@ init:
 ; Write 2 byte register value to SMEM0 at offset 0x22
     sbco    &TEMP_REG, ICSS_SMEM_CONST,  0x22, 2
 
+	set R30,R30,0
     halt ; end of program

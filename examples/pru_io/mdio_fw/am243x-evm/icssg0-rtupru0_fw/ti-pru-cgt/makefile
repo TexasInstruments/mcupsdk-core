@@ -19,7 +19,6 @@ ORDERED_OBJS += \
 "./main.obj" \
 "$(MCU_PLUS_SDK_PATH)/examples/pru_io/mdio_fw/am243x-evm/icssg0-rtupru0_fw/ti-pru-cgt/linker.cmd" \
 $(GEN_CMDS__FLAG) \
--llibc.a \
 
 -include ../makefile.init
 
@@ -60,7 +59,6 @@ main.obj: $(MCU_PLUS_SDK_PATH)/examples/pru_io/mdio_fw/main.asm $(GEN_OPTS) | $(
 	@echo 'Finished building: "$<"'
 	@echo ' '
 
-LIBS := -llibc.a
 
 -include ../makefile.defs
 
@@ -86,7 +84,7 @@ all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 mdio_am243x-evm_icssg0-rtupru0_fw_ti-pru-cgt.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: PRU Linker'
-	"$(CG_TOOL_ROOT)/bin/clpru" -DICSSG0 -DPRU0 -DSLICE0 -v4 --define=SOC_AM243X  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"mdio_am243x-evm_icssg0-rtupru0_fw_ti-pru-cgt.map" -i"$(CG_TOOL_ROOT)/lib" --diag_wrap=off --display_error_number --warn_sections --xml_link_info="mdio_am243x-evm_icssg0-rtupru0_fw_ti-pru-cgt_linkInfo.xml" --rom_model -o "mdio_am243x-evm_icssg0-rtupru0_fw_ti-pru-cgt.out" $(ORDERED_OBJS)
+	"$(CG_TOOL_ROOT)/bin/clpru" -DICSSG0 -DPRU0 -DSLICE0 -v4 --define=SOC_AM243X  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"mdio_am243x-evm_icssg0-rtupru0_fw_ti-pru-cgt.map" --disable_auto_rts   --diag_wrap=off --display_error_number --warn_sections --xml_link_info="mdio_am243x-evm_icssg0-rtupru0_fw_ti-pru-cgt_linkInfo.xml" --rom_model -o "mdio_am243x-evm_icssg0-rtupru0_fw_ti-pru-cgt.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build

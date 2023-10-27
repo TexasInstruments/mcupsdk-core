@@ -172,8 +172,7 @@
         % let projectPath = `${obj.relpath}/${obj.board}/${obj.cpu}_${obj.os}/${obj.cgt}`;
         % if(args.project["defaultPruPostBuildSteps"]) {
         postBuildStep="
-            $(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/`projectPath`/hexpru.cmd `projectName`.out;
-            ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe `projectName`.b00 pru_load_bin.h PRUFirmware 4;
+            -$(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=PRUFirmware  -o pru_load_bin.h `projectName`.out
         "
         % }
         % if("postBuildSteps" in args.project) {

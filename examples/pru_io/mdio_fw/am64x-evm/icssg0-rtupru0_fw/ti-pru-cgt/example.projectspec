@@ -39,9 +39,8 @@
             -DSOC_AM64X
         "
         linkerBuildOptions="
-            -i${CG_TOOL_ROOT}/lib
             -m=mdio.${ConfigName}.map
-            -llibc.a
+            --disable_auto_rts
         "
 
         enableHexTool="true"
