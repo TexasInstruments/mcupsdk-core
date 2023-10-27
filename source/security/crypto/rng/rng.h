@@ -64,6 +64,8 @@ extern "C" {
 /* ========================================================================== */
 /** Rng drbg mode macro */
 #define RNG_DRBG_MODE                                           (TRUE)
+/** Rng drbg mode disable*/
+#define RNG_DRBG_DISABLE_MODE                                   (FALSE)
 /** Rng control request data mask */
 #define RNG_CONTROL_REQUEST_DATA_MASK                           (0x00010000U)
 /** Rng control data block mask */
