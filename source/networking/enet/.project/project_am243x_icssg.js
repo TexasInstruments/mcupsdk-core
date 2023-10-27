@@ -29,7 +29,7 @@ const files = {
         "enet_udma_priv.c",
 
         /* CSL_FL for CPSW */
-
+        "csl_cpts.c",
         "csl_mdio.c",
 
         /* ICSS files */
@@ -71,6 +71,7 @@ const filedirs = {
 		"${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/per/V1",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/common",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/dma/udma",
+		"${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpts",
 
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio",
 
@@ -101,6 +102,7 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include",
 
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include",
+		"${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpts",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio",
 
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x",
