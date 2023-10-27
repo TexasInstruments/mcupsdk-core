@@ -868,7 +868,8 @@ int32_t PRUICSS_setSaMuxMode(PRUICSS_Handle handle, uint8_t mode)
         regVal = HW_RD_REG32(hwAttrs->cfgRegBase + CSL_ICSSCFG_PIN_MX);
         /*FIXME: SHIFT macro to be used from CSL instead of 7.
                 CSL_ICSSCFG_PIN_MX_PIN_MUX_SEL_SHIFT value is incorrect */
-        regVal |= (mode << 7);
+        regVal &= ~(1   << 7);
+        regVal |=  (mode << 7);
         HW_WR_REG32(hwAttrs->cfgRegBase + CSL_ICSSCFG_PIN_MX, regVal);
     }
 

@@ -71,8 +71,8 @@ SECTIONS {
     .text:_c_int00* >  0x0, PAGE 0
 
     .text           >  PRU_IMEM, PAGE 0
-    .stack          >  PRU_IMEM, PAGE 1
     /* TODO: review if this should be PRU1_DMEM_1 */
+    .stack          >  PRU1_DMEM_0, PAGE 1
     .bss            >  PRU1_DMEM_0, PAGE 1
     /*
     .cio            >  PRU1_DMEM_0, PAGE 1

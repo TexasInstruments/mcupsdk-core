@@ -71,7 +71,7 @@ SECTIONS {
     .text:_c_int00* >  0x0, PAGE 0
 
     .text           >  RTU_PRU_IMEM,    PAGE 0
-    .stack          >  RTU_PRU_IMEM,    PAGE 0
+    .stack          >  RTU_PRU0_DMEM_0, PAGE 0
     .bss            >  RTU_PRU0_DMEM_0, PAGE 1
     /*
     .cio            >  RTU_PRU0_DMEM_0, PAGE 1

@@ -133,8 +133,15 @@ ____icss_constant_defines_h   .set    1
     .asg c21, ICSS_MDIO_CONST
     .asg c22, ICSS_RAT_CONST
     .asg c23, ICSS_RAT_REGION6_CONST ;0xC000_0000
+
+    .if $isdefed("PRU0")
     .asg c24, ICSS_DMEM0_CONST
     .asg c25, ICSS_DMEM1_CONST
+    .else ;PRU1
+    .asg c24, ICSS_DMEM1_CONST
+    .asg c25, ICSS_DMEM0_CONST
+    .endif
+
     .asg c26, ICSS_IEP_CONST
     .asg c27, ICSS_MII_RT_CONST
     .asg c28, ICSS_SMEM_CONST

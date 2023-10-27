@@ -71,7 +71,7 @@ SECTIONS {
     .text:_c_int00*	>  0x0, PAGE 0
 
     .text		>  PRU_IMEM,    PAGE 0
-    .stack		>  PRU_IMEM,    PAGE 0
+    .stack		>  PRU0_DMEM_0, PAGE 0
     .bss		>  PRU0_DMEM_0, PAGE 1
     /*
     .cio		>  PRU0_DMEM_0, PAGE 1
