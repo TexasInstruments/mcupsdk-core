@@ -37,8 +37,6 @@
 #include <kernel/dpl/CacheP.h>
 #include <kernel/dpl/HwiP.h>
 
-#define CSL_MSS_TOP_PBIST_RINFOL_OFFSET    (0x000000C8U)
-#define CSL_MSS_TOP_PBIST_RINFOU_OFFSET    (0x000000CCU)
 #define BOOTLOADER_SOC_APP_CERT_SIZE (0x1000)
 
 Bootloader_resMemSections gResMemSection =
@@ -255,8 +253,8 @@ int32_t Bootloader_socCpuResetRelease(uint32_t cpuId, uintptr_t entryPoint)
             if(SOC_rcmGetEfusePGVer() == SOC_RCM_ES2_PG_VER)
             {
                 /* Save and publish TOP PBIST peripheral memories executed by RBL. */
-                gR5TopPbistRinfol = CSL_REG32_RD((CSL_TOP_PBIST_U_BASE + CSL_MSS_TOP_PBIST_RINFOL_OFFSET));
-                gR5TopPBISTRinfou = CSL_REG32_RD((CSL_TOP_PBIST_U_BASE + CSL_MSS_TOP_PBIST_RINFOU_OFFSET));
+                gR5TopPbistRinfol = CSL_REG32_RD((CSL_TOP_PBIST_U_BASE + CSL_PBIST_PBIST_RINFOL));
+                gR5TopPBISTRinfou = CSL_REG32_RD((CSL_TOP_PBIST_U_BASE + CSL_PBIST_PBIST_RINFOU));
                 DebugP_logInfo("PBIST memory tests exeucted by RBL, RINFOL : 0x%X and RINFOU : 0x%X\r\n",
                                 (uint32_t)gR5TopPbistRinfol, (uint32_t)gR5TopPBISTRinfou);
 

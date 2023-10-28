@@ -2,7 +2,7 @@
 *
 * SOC memory map header file
 *
-* Copyright (C) 2020 Texas Instruments Incorporated.
+* Copyright (C) 2020-23 Texas Instruments Incorporated.
 *
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
@@ -61,7 +61,7 @@ extern "C"
 #define CSL_MSS_TOPRCM_U_BASE                   (0x02140000U)
 #define CSL_MSS_DEBUGSS_U_BASE                  (0x02A00000U)
 #define CSL_MSS_PCR1_U_BASE                     (0x02F78000U)
-#define CSL_TOP_PBIST_U_BASE                    (0x02F79500U)
+#define CSL_TOP_PBIST_U_BASE                    (0x02F79400U)
 #define CSL_MSS_R5SS_STC_U_BASE                 (0x02F79800U)
 #define CSL_MSS_DCCA_U_BASE                     (0x02F79C00U)
 #define CSL_MSS_DCCB_U_BASE                     (0x02F79D00U)
