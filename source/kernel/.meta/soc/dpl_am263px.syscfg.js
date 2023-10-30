@@ -1,14 +1,6 @@
 let common = system.getScript("/common");
 
-const topModules_main = [
-    "/kernel/dpl/addr_translate",
-    "/kernel/dpl/clock",
-    "/kernel/dpl/debug_log",
-    "/kernel/dpl/mpu_armv7",
-    "/kernel/dpl/timer",
-];
-
-const topModules_mcu = [
+const topModules = [
     "/kernel/dpl/clock",
     "/kernel/dpl/debug_log",
     "/kernel/dpl/mpu_armv7",
@@ -17,6 +9,6 @@ const topModules_mcu = [
 
 exports = {
     getTopModules: function() {
-        return common.getSelfSysCfgCoreName().includes("hsm")?topModules_mcu:topModules_main;
+        return topModules;
     },
 };

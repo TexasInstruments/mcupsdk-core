@@ -98,7 +98,7 @@ typedef enum AddrTranslateP_RegionSize_e {
  */
 typedef struct AddrTranslateP_RegionConfig_ {
 
-    uint64_t systemAddr; /**< translated 48b system addr as seen by the SOC, MUST align to region size */
+    uint64_t systemAddr; /**< translated system addr as seen by the SOC, MUST align to region size */
     uint32_t localAddr;  /**< region start address as seen by the CPU, MUST align to region size */
     uint32_t size;       /**< region size, see \ref AddrTranslateP_RegionSize */
 
@@ -132,14 +132,14 @@ void AddrTranslateP_Params_init(AddrTranslateP_Params *params);
 void AddrTranslateP_init(AddrTranslateP_Params *params);
 
 /**
- * \brief Translate from 48b system address to a CPU address as seen via the RAT module
+ * \brief Translate from system address to a CPU address as seen via the RAT module
  *
  * \note If no mapping is found then lower 32b are returned as the local address,
  *       i.e no translation is done for 32b address, and address truncation for > 32b input addresses.
  * \note All drivers MUST call this API to translate peripheral MMR base addresses to CPU visible base addr.
  *       It is recommended to call this once to get the base address during driver module init.
  *
- * \param systemAddr    [in] 48b system address or SOC view address
+ * \param systemAddr    [in] system address or SOC view address
  *
  * \return void * CPU view or local address
  */
