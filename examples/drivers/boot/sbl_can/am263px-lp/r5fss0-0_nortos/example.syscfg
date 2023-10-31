@@ -1,23 +1,13 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P2" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.15.0+2826"}
+ * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P2" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.18.0+3266"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const general     = scripting.addModule("/memory_configurator/general", {}, false);
-const general1    = general.addInstance();
-const region      = scripting.addModule("/memory_configurator/region", {}, false);
-const region1     = region.addInstance();
-const section     = scripting.addModule("/memory_configurator/section", {}, false);
-const section1    = section.addInstance();
-const section2    = section.addInstance();
-const section3    = section.addInstance();
-const section4    = section.addInstance();
-const section5    = section.addInstance();
 const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
 const bootloader1 = bootloader.addInstance();
 const gpio        = scripting.addModule("/drivers/gpio/gpio", {}, false);
@@ -36,10 +26,78 @@ const mpu_armv72  = mpu_armv7.addInstance();
 const mpu_armv73  = mpu_armv7.addInstance();
 const mpu_armv74  = mpu_armv7.addInstance();
 const mpu_armv75  = mpu_armv7.addInstance();
+const general     = scripting.addModule("/memory_configurator/general", {}, false);
+const general1    = general.addInstance();
+const region      = scripting.addModule("/memory_configurator/region", {}, false);
+const region1     = region.addInstance();
+const section     = scripting.addModule("/memory_configurator/section", {}, false);
+const section1    = section.addInstance();
+const section2    = section.addInstance();
+const section3    = section.addInstance();
+const section4    = section.addInstance();
+const section5    = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
+bootloader1.$name     = "CONFIG_BOOTLOADER_0";
+bootloader1.bootMedia = "MEM";
+
+gpio1.$name                = "CONFIG_GPIO0";
+gpio1.GPIO.gpioPin.$assign = "EPWM4_A";
+
+hsmclient1.$name = "CONFIG_HSMCLIENT0";
+
+mcan1.$name           = "CONFIG_MCAN0";
+mcan1.MCAN.$assign    = "MCAN0";
+mcan1.MCAN.RX.$assign = "MCAN0_RX";
+mcan1.MCAN.TX.$assign = "MCAN0_TX";
+
+mcan2.$name           = "CONFIG_MCAN1";
+mcan2.MCAN.$assign    = "MCAN1";
+mcan2.MCAN.RX.$assign = "MCAN1_RX";
+mcan2.MCAN.TX.$assign = "MCAN1_TX";
+
+mcan3.$name        = "CONFIG_MCAN2";
+mcan3.MCAN.$assign = "MCAN2";
+
+mcan4.$name        = "CONFIG_MCAN3";
+mcan4.MCAN.$assign = "MCAN3";
+
+debug_log.enableUartLog            = true;
+debug_log.enableCssLog             = false;
+debug_log.enableLogZoneInfo        = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.intrEnable       = "DISABLE";
+debug_log.uartLog.UART.$assign     = "UART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+mpu_armv75.$name        = "CONFIG_MPU_REGION4";
+mpu_armv75.allowExecute = false;
+mpu_armv75.attributes   = "Device";
+mpu_armv75.size         = 24;
+mpu_armv75.baseAddr     = 0x80000000;
 
 general1.$name          = "CONFIG_GENERAL0";
 general1.irq_stack_size = 4096;
@@ -73,38 +131,48 @@ region1.memory_region[5].auto               = false;
 region1.memory_region[5].manualStartAddress = 0x70040000;
 region1.memory_region[5].size               = 0x1C0000;
 
-section1.$name                                    = "CONFIG_SECTION0";
-section1.load_memory                              = ["MSRAM_VECS"];
-section1.run_memory                               = ["R5F_VECS"];
+section1.load_memory                              = "MSRAM_VECS";
 section1.group                                    = false;
+section1.run_memory                               = "R5F_VECS";
+section1.$name                                    = "Sbl Initialization Code";
 section1.output_section.create(1);
 section1.output_section[0].$name                  = ".sbl_init_code";
 section1.output_section[0].input_section.create(1);
 section1.output_section[0].input_section[0].$name = "*(.vectors). = align(8);";
 
-section2.$name                   = "CONFIG_SECTION1";
-section2.load_memory             = ["MSRAM_0"];
+section2.load_memory                  = "MSRAM_0";
+section2.$name                        = "Text Segments";
 section2.output_section.create(7);
-section2.output_section[0].$name = ".text";
-section2.output_section[1].$name = ".text.hwi";
-section2.output_section[2].$name = ".text.cache";
-section2.output_section[3].$name = ".text.mpu";
-section2.output_section[4].$name = ".text.boot";
-section2.output_section[5].$name = ".data";
-section2.output_section[6].$name = ".rodata";
+section2.output_section[0].$name      = ".text";
+section2.output_section[0].palignment = true;
+section2.output_section[1].$name      = ".text.hwi";
+section2.output_section[1].palignment = true;
+section2.output_section[2].$name      = ".text.cache";
+section2.output_section[2].palignment = true;
+section2.output_section[3].$name      = ".text.mpu";
+section2.output_section[3].palignment = true;
+section2.output_section[4].$name      = ".text.boot";
+section2.output_section[4].palignment = true;
+section2.output_section[5].$name      = ".data";
+section2.output_section[5].palignment = true;
+section2.output_section[6].$name      = ".rodata";
+section2.output_section[6].palignment = true;
 
-section3.$name                                   = "CONFIG_SECTION2";
-section3.load_memory                             = ["MSRAM_0"];
+section3.load_memory                             = "MSRAM_0";
 section3.group                                   = false;
+section3.$name                                   = "Memory Segments";
 section3.output_section.create(3);
 section3.output_section[0].$name                 = ".bss";
 section3.output_section[0].output_sections_start = "__BSS_START";
 section3.output_section[0].output_sections_end   = "__BSS_END";
+section3.output_section[0].palignment            = true;
 section3.output_section[1].$name                 = ".sysmem";
+section3.output_section[1].palignment            = true;
 section3.output_section[2].$name                 = ".stack";
+section3.output_section[2].palignment            = true;
 
-section4.$name                                    = "CONFIG_SECTION3";
-section4.load_memory                              = ["MSRAM_0"];
+section4.load_memory                              = "MSRAM_0";
+section4.$name                                    = "Stack Segments";
 section4.output_section.create(5);
 section4.output_section[0].$name                  = ".irqstack";
 section4.output_section[0].output_sections_start  = "__IRQ_STACK_START";
@@ -132,71 +200,13 @@ section4.output_section[4].output_sections_end    = "__UNDEFINED_STACK_END";
 section4.output_section[4].input_section.create(1);
 section4.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE;";
 
-section5.group                   = false;
-section5.type                    = "NOLOAD";
-section5.load_memory             = ["MSRAM_1"];
-section5.$name                   = "CONFIG_SECTION4";
+section5.group                       = false;
+section5.type                        = "NOLOAD";
+section5.load_memory                 = "MSRAM_1";
+section5.$name                       = "Bss File Buffer";
 section5.output_section.create(1);
-section5.output_section[0].$name = ".bss.filebuf";
-
-bootloader1.$name     = "CONFIG_BOOTLOADER_0";
-bootloader1.bootMedia = "MEM";
-
-gpio1.$name                = "CONFIG_GPIO0";
-gpio1.GPIO.gpioPin.$assign = "ball.D1";
-
-hsmclient1.$name = "CONFIG_HSMCLIENT0";
-
-mcan1.$name           = "CONFIG_MCAN0";
-mcan1.MCAN.$assign    = "MCAN0";
-mcan1.MCAN.RX.$assign = "ball.M1";
-mcan1.MCAN.TX.$assign = "ball.L1";
-
-mcan2.$name           = "CONFIG_MCAN1";
-mcan2.MCAN.$assign    = "MCAN1";
-mcan2.MCAN.RX.$assign = "ball.L2";
-mcan2.MCAN.TX.$assign = "ball.K1";
-
-mcan3.$name        = "CONFIG_MCAN2";
-mcan3.MCAN.$assign = "MCAN2";
-
-mcan4.$name        = "CONFIG_MCAN3";
-mcan4.MCAN.$assign = "MCAN3";
-
-debug_log.enableUartLog            = true;
-debug_log.enableCssLog             = false;
-debug_log.enableLogZoneInfo        = true;
-debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.intrEnable       = "DISABLE";
-debug_log.uartLog.UART.$assign     = "UART0";
-debug_log.uartLog.UART.RXD.$assign = "ball.A7";
-debug_log.uartLog.UART.TXD.$assign = "ball.A6";
-
-mpu_armv71.$name             = "CONFIG_MPU_REGION0";
-mpu_armv71.size              = 31;
-mpu_armv71.attributes        = "Device";
-mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
-mpu_armv71.allowExecute      = false;
-
-mpu_armv72.$name             = "CONFIG_MPU_REGION1";
-mpu_armv72.size              = 15;
-mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
-
-mpu_armv73.$name             = "CONFIG_MPU_REGION2";
-mpu_armv73.baseAddr          = 0x80000;
-mpu_armv73.size              = 15;
-mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
-
-mpu_armv74.$name             = "CONFIG_MPU_REGION3";
-mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
-mpu_armv74.baseAddr          = 0x70000000;
-mpu_armv74.size              = 21;
-
-mpu_armv75.$name        = "CONFIG_MPU_REGION4";
-mpu_armv75.allowExecute = false;
-mpu_armv75.attributes   = "Device";
-mpu_armv75.size         = 24;
-mpu_armv75.baseAddr     = 0x80000000;
+section5.output_section[0].$name     = ".bss.filebuf";
+section5.output_section[0].alignment = 0;
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
@@ -204,7 +214,7 @@ mpu_armv75.baseAddr     = 0x80000000;
  * re-solve from scratch.
  */
 gpio1.GPIO.$suggestSolution    = "GPIO";
-mcan3.MCAN.RX.$suggestSolution = "ball.A12";
-mcan3.MCAN.TX.$suggestSolution = "ball.B12";
-mcan4.MCAN.RX.$suggestSolution = "ball.B7";
-mcan4.MCAN.TX.$suggestSolution = "ball.C7";
+mcan3.MCAN.RX.$suggestSolution = "MCAN2_RX";
+mcan3.MCAN.TX.$suggestSolution = "MCAN2_TX";
+mcan4.MCAN.RX.$suggestSolution = "SDFM0_D3";
+mcan4.MCAN.TX.$suggestSolution = "SDFM0_CLK3";

@@ -1,8 +1,8 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P2" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.18.0+3266"}
  */
 
 /**
@@ -93,7 +93,6 @@ region1.memory_region.create(7);
 region1.memory_region[0].type               = "TCMA";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].auto               = false;
-region1.memory_region[0].manualStartAddress = 0x0;
 region1.memory_region[0].size               = 0x40;
 region1.memory_region[1].type               = "TCMA";
 region1.memory_region[1].$name              = "R5F_TCMA";
@@ -118,42 +117,54 @@ region1.memory_region[6].$name              = "SBL";
 region1.memory_region[6].size               = 0x40000;
 region1.memory_region[6].auto               = false;
 
-section1.load_memory             = ["R5F_VECS"];
-section1.group                   = false;
-section1.$name                   = "Vector Table";
+section1.load_memory                  = "R5F_VECS";
+section1.group                        = false;
+section1.$name                        = "Vector Table";
 section1.output_section.create(1);
-section1.output_section[0].$name = ".vectors";
+section1.output_section[0].$name      = ".vectors";
+section1.output_section[0].palignment = true;
 
-section2.load_memory             = ["OCRAM"];
-section2.$name                   = "Text Segments";
+section2.load_memory                  = "OCRAM";
+section2.$name                        = "Text Segments";
 section2.output_section.create(5);
-section2.output_section[0].$name = ".text.hwi";
-section2.output_section[1].$name = ".text.cache";
-section2.output_section[2].$name = ".text.mpu";
-section2.output_section[3].$name = ".text.boot";
-section2.output_section[4].$name = ".text:abort";
+section2.output_section[0].$name      = ".text.hwi";
+section2.output_section[0].palignment = true;
+section2.output_section[1].$name      = ".text.cache";
+section2.output_section[1].palignment = true;
+section2.output_section[2].$name      = ".text.mpu";
+section2.output_section[2].palignment = true;
+section2.output_section[3].$name      = ".text.boot";
+section2.output_section[3].palignment = true;
+section2.output_section[4].$name      = ".text:abort";
+section2.output_section[4].palignment = true;
 
-section3.load_memory             = ["OCRAM"];
-section3.$name                   = "Code and Read-Only Data";
+section3.load_memory                  = "OCRAM";
+section3.$name                        = "Code and Read-Only Data";
 section3.output_section.create(2);
-section3.output_section[0].$name = ".text";
-section3.output_section[1].$name = ".rodata";
+section3.output_section[0].$name      = ".text";
+section3.output_section[0].palignment = true;
+section3.output_section[1].$name      = ".rodata";
+section3.output_section[1].palignment = true;
 
-section4.load_memory             = ["OCRAM"];
-section4.$name                   = "Data Segment";
+section4.load_memory                  = "OCRAM";
+section4.$name                        = "Data Segment";
 section4.output_section.create(1);
-section4.output_section[0].$name = ".data";
+section4.output_section[0].$name      = ".data";
+section4.output_section[0].palignment = true;
 
-section5.load_memory                             = ["OCRAM"];
+section5.load_memory                             = "OCRAM";
 section5.$name                                   = "Memory Segments";
 section5.output_section.create(3);
 section5.output_section[0].$name                 = ".bss";
 section5.output_section[0].output_sections_start = "__BSS_START";
 section5.output_section[0].output_sections_end   = "__BSS_END";
+section5.output_section[0].palignment            = true;
 section5.output_section[1].$name                 = ".sysmem";
+section5.output_section[1].palignment            = true;
 section5.output_section[2].$name                 = ".stack";
+section5.output_section[2].palignment            = true;
 
-section6.load_memory                              = ["OCRAM"];
+section6.load_memory                              = "OCRAM";
 section6.$name                                    = "Stack Segments";
 section6.output_section.create(5);
 section6.output_section[0].$name                  = ".irqstack";
@@ -182,15 +193,18 @@ section6.output_section[4].output_sections_end    = "__UNDEFINED_STACK_END";
 section6.output_section[4].input_section.create(1);
 section6.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE;";
 
-section7.load_memory             = ["OCRAM"];
-section7.$name                   = "C++ Section";
+section7.load_memory                  = "OCRAM";
+section7.$name                        = "Initialization and Exception Handling";
 section7.output_section.create(3);
-section7.output_section[0].$name = ".ARM.exidx";
-section7.output_section[1].$name = ".init_array";
-section7.output_section[2].$name = ".fini_array";
+section7.output_section[0].$name      = ".ARM.exidx";
+section7.output_section[0].palignment = true;
+section7.output_section[1].$name      = ".init_array";
+section7.output_section[1].palignment = true;
+section7.output_section[2].$name      = ".fini_array";
+section7.output_section[2].palignment = true;
 
 section8.group                       = false;
-section8.load_memory                 = ["CPPI_DESC"];
+section8.load_memory                 = "CPPI_DESC";
 section8.type                        = "NOLOAD";
 section8.$name                       = "ENET_CPPI_DESC";
 section8.output_section.create(1);
@@ -198,7 +212,7 @@ section8.output_section[0].$name     = ".bss:ENET_CPPI_DESC";
 section8.output_section[0].alignment = 128;
 
 section9.$name                       = "ENET_DMA_PKT_MEMPOOL";
-section9.load_memory                 = ["OCRAM"];
+section9.load_memory                 = "OCRAM";
 section9.group                       = false;
 section9.type                        = "NOLOAD";
 section9.output_section.create(1);
