@@ -78,18 +78,6 @@
 #define CSL_OSPI_CHIP_SELECT(x)   ((~((1U) << (x))) & 0xFU)
 
 /**
- * \brief   OSPI controller controller mode baud rate divisor.
- *          OSPI baud rate = controller_ref_clk/BD, where BD is:
- *          0000 = /2
- *          0001 = /4
- *          0010 = /6
- *          ...
- *          1111 = /32
- */
-#define CSL_OSPI_BAUD_RATE_DIVISOR(x)        (((x) - 2U) >> 1U)
-#define CSL_OSPI_BAUD_RATE_DIVISOR_DEFAULT   (CSL_OSPI_BAUD_RATE_DIVISOR(32U))
-
-/**
  *  \brief   OSPI device delay parameter array size.
  */
 #define CSL_OSPI_DEV_DELAY_ARRAY_SIZE  (4U)
@@ -2073,5 +2061,32 @@ int32_t OSPI_configBaudrate(OSPI_Handle handle, uint32_t baud)
         status = SystemP_FAILURE;
     }
 
+    return status;
+}
+
+int32_t OSPI_readBaudRateDivFromReg(OSPI_Handle handle, uint32_t *baudDiv)
+{
+    int32_t status = SystemP_SUCCESS;
+    if(NULL != baudDiv && NULL != handle)
+    {
+        const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
+        const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)(attrs->baseAddr);
+        uint32_t progBaudDiv = CSL_REG32_FEXT(&pReg->CONFIG_REG, OSPI_FLASH_CFG_CONFIG_REG_MSTR_BAUD_DIV_FLD);
+        // see CSL_OSPI_BAUD_RATE_DIVISOR
+        progBaudDiv = (progBaudDiv << 1) + 2;
+        *baudDiv = progBaudDiv;
+    }
+    return status;
+}
+
+int32_t OSPI_getBaudRateDivFromObj(OSPI_Handle handle, uint32_t *baudDiv)
+{
+
+    int32_t status = SystemP_SUCCESS;
+    if(NULL != baudDiv && NULL != handle)
+    {
+        const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
+        *baudDiv = attrs->baudRateDiv;
+    }
     return status;
 }

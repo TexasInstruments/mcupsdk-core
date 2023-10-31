@@ -202,6 +202,18 @@ typedef void *OSPI_Handle;
 #define OSPI_RESETPIN_DEDICATED (1U)
 
 /**
+ * \brief   OSPI controller controller mode baud rate divisor.
+ *          OSPI baud rate = controller_ref_clk/BD, where BD is:
+ *          0000 = /2
+ *          0001 = /4
+ *          0010 = /6
+ *          ...
+ *          1111 = /32
+ */
+#define CSL_OSPI_BAUD_RATE_DIVISOR(x)        (((x) - 2U) >> 1U)
+#define MAX_BAUDRATE_DIVIDER                 (32U)
+#define CSL_OSPI_BAUD_RATE_DIVISOR_DEFAULT   (CSL_OSPI_BAUD_RATE_DIVISOR(MAX_BAUDRATE_DIVIDER))
+/**
 *  \anchor OSPI_DecChipSelect
 *  \name Decoder Chip Selects
 *
@@ -1150,6 +1162,30 @@ int32_t OSPI_configResetPin(OSPI_Handle handle, uint32_t config);
  *  \return #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
  */
 int32_t OSPI_configBaudrate(OSPI_Handle handle, uint32_t baud);
+
+/**
+ *  \brief  Return value of baudrate that is programmed in IP register
+ *
+ *  \pre    OSPI controller has been opened using #OSPI_open()
+ *
+ *  \param  handle      An #OSPI_Handle returned from an #OSPI_open()
+ *  \param  baudDiv     pointer to memory into which baudrate will be written
+ *
+ *  \return #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
+ */
+int32_t OSPI_readBaudRateDivFromReg(OSPI_Handle handle, uint32_t *baudDiv);
+
+/**
+ *  \brief  Return value of baudrate that is saved in OSPI Object
+ *
+ *  \pre    OSPI controller has been opened using #OSPI_open()
+ *
+ *  \param  handle      An #OSPI_Handle returned from an #OSPI_open()
+ *  \param  baudDiv     pointer to memory into which baudrate will be written
+ *
+ *  \return #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
+ */
+int32_t OSPI_getBaudRateDivFromObj(OSPI_Handle handle, uint32_t *baudDiv);
 
 /** @} */
 

@@ -1175,16 +1175,16 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
         status += Flash_norOspiSetModeDummy(config, obj->ospiHandle);
 
         /* Set RD Capture Delay by reading ID */
-        uint32_t readDataCapDelay = 4U;
-        OSPI_setRdDataCaptureDelay(obj->ospiHandle, readDataCapDelay);
-        status = Flash_norOspiReadId(config);
+        uint32_t origBaudRateDiv = 0U;
+        uint32_t readDataCapDelay = 0U;
+        OSPI_getBaudRateDivFromObj(obj->ospiHandle, &origBaudRateDiv);
 
-        while((status != SystemP_SUCCESS) && (readDataCapDelay > 0U))
+        do
         {
-            readDataCapDelay--;
             OSPI_setRdDataCaptureDelay(obj->ospiHandle, readDataCapDelay);
             status = Flash_norOspiReadId(config);
         }
+        while((status != SystemP_SUCCESS) && (++readDataCapDelay < origBaudRateDiv));
 
         /* Enable PHY if attack vector present and PHY mode is enabled */
         obj->phyEnable = FALSE;
@@ -1192,11 +1192,11 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
         if(OSPI_isPhyEnable(obj->ospiHandle))
         {
 #if defined (SOC_AM263PX)
-            OSPI_configBaudrate(obj->ospiHandle, 32);
+            OSPI_configBaudrate(obj->ospiHandle, MAX_BAUDRATE_DIVIDER);
 #endif
             attackVectorStatus = OSPI_phyReadAttackVector(obj->ospiHandle, phyTuningOffset);
 #if defined (SOC_AM263PX)
-            OSPI_configBaudrate(obj->ospiHandle, 4);
+            OSPI_configBaudrate(obj->ospiHandle, origBaudRateDiv);
 #endif
 
             if(attackVectorStatus != SystemP_SUCCESS)
