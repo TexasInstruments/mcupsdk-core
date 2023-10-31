@@ -48,6 +48,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+#include <inttypes.h>
 
 #include <drivers/udma.h>
 #include <drivers/udma/udma_priv.h>

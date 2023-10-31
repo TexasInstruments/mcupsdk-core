@@ -409,6 +409,13 @@ extern "C"
     /*------------------------------------------------------------------------*/
     extern volatile int *__aeabi_errno_addr(void);
     #define errno (* __aeabi_errno_addr())
+#elif defined(__ARM_ARCH) && defined(__GNUC__)
+    /*------------------------------------------------------------------------*/
+    /* Under EABI, use function to access errno since it likely has TLS in    */
+    /* a thread-safe version of the RTS library.                              */
+    /*------------------------------------------------------------------------*/
+    extern int *__errno(void);
+    #define errno (* __errno())
 #elif !defined(__C6X_MIGRATION__) && defined(__TMS320C6X__) && defined(__TI_EABI__)
     /*------------------------------------------------------------------------*/
     /* Under EABI, use function to access errno since it likely has TLS in    */
@@ -434,4 +441,3 @@ extern "C"
 #endif
 
 #endif /* LWIP_LWIPOPTS_H */
-

@@ -123,7 +123,9 @@ const defines_r5f = {
     ],
 };
 
-const buildOptionCombos = [    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
+const buildOptionCombos = [
+    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: device, cpu: "r5f", cgt: "gcc-armv7"},
 ];
 function getComponentProperty() {
     let property = {};
@@ -142,7 +144,9 @@ function getComponentBuildProperty(buildOption) {
     build_property.files = files;
     build_property.filedirs = filedirs;
     build_property.includes = includes;
-    build_property.cflags = cflags;
+    if(buildOption.cgt.match(/ti-arm-clang*/)){
+        build_property.cflags = cflags;
+    }
     build_property.defines = defines_r5f;
     return build_property;
 }

@@ -75,6 +75,19 @@ const libs_freertos_r5f = {
     ],
 };
 
+const libs_freertos_r5f_gcc = {
+    common: [
+        "freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "enet-cpsw.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "lwipif-cpsw-freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "lwip-freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "lwip-contrib-freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "board.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "mbedtls.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+    ],
+};
+
 const linker_includePath_freertos = {
     common: [
         "${PROJECT_BUILD_DIR}/syscfg",
@@ -107,6 +120,12 @@ const lnkfiles = {
     ]
 };
 
+const lnkpreprocessor_gcc = {
+    common: [
+        "linker_preprocessor.cmd",
+    ]
+};
+
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_CPSW_LWIP_HTTPS";
@@ -125,6 +144,7 @@ const templates_freertos_r5f =
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "freertos"},
+    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-lp", os: "freertos"},
 ];
 
 function getComponentProperty() {
@@ -164,11 +184,18 @@ function getComponentBuildProperty(buildOption) {
             }
             build_property.includes = includes_freertos_r5f;
             build_property.libdirs = libdirs_freertos_cpy;
-            build_property.libs = libs_freertos_r5f;
             build_property.templates = templates_freertos_r5f;
-            build_property.defines = defines_r5f;
-            build_property.cflags = cflags_r5f;
-            build_property.lflags = lflags_r5f;
+            if(buildOption.cgt.match(/gcc*/))
+            {
+                build_property.libs = libs_freertos_r5f_gcc;
+                build_property.lnkpreprocessor_gcc = lnkpreprocessor_gcc;
+            }
+            else
+            {
+                build_property.libs = libs_freertos_r5f;
+                build_property.cflags = cflags_r5f;
+                build_property.lflags = lflags_r5f;
+            }
             build_property.defines = defines_r5f;
             build_property.projectspecLnkPath = linker_includePath_freertos;
         }

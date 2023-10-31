@@ -118,6 +118,7 @@ const buildOptionCombos = [
     { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am243x", cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: "am243x", cpu: "r5f", cgt: "gcc-armv7"},
     { device: "am273x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am64x",  cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "awr294x", cpu: "r5f", cgt: "ti-arm-clang"},
@@ -153,8 +154,9 @@ function getComponentBuildProperty(buildOption) {
     build_property.files = files;
 
     cflags.common = _.union(cflags.common, soc_cflags[device])
-    build_property.cflags = cflags;
-
+    if(buildOption.cgt.match(/ti-arm-clang*/)){
+        build_property.cflags = cflags;
+    }
     includes.common = _.union(includes.common, socIncludes[device]);
     build_property.includes = includes;
 

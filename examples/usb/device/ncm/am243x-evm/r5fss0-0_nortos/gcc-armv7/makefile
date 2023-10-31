@@ -79,6 +79,7 @@ CFLAGS_common := \
 	-Wno-unused-function \
 	-Wno-enum-compare \
 	-Wno-uninitialized \
+	-Wno-address-of-packed-member \
 	-Wno-int-to-pointer-cast \
 	-fgnu89-inline \
 	-Wno-pointer-to-int-cast \

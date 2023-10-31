@@ -58,10 +58,10 @@ FILES_common := \
 	ti_dpl_config.c \
 	ti_pinmux_config.c \
 	ti_power_clock_config.c \
-    ti_enet_config.c \
-    ti_enet_open_close.c \
-    ti_enet_soc.c \
-    ti_enet_lwipif.c \
+	ti_enet_config.c \
+	ti_enet_open_close.c \
+	ti_enet_soc.c \
+	ti_enet_lwipif.c \
 
 FILES_PATH_common = \
 	.. \
@@ -160,12 +160,12 @@ LFLAGS_common = \
 	-Wl,--use_memcpy=fast \
 
 LNKOPTFLAGS_release = \
-	       -mcpu=cortex-r5 \
-	       -mfloat-abi=hard \
-	       -mfpu=vfpv3-d16 \
-	       -mthumb \
-	       -Oz \
-	       -flto \
+		   -mcpu=cortex-r5 \
+		   -mfloat-abi=hard \
+		   -mfpu=vfpv3-d16 \
+		   -mthumb \
+		   -Oz \
+		   -flto \
 
 LIBS_NAME = \
 	freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \

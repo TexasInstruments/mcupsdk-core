@@ -168,6 +168,7 @@ const defines_r5f = {
 
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: device, cpu: "r5f", cgt: "gcc-armv7"},
 ];
 
 function getComponentProperty() {
@@ -188,7 +189,9 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.filedirs = filedirs;
     build_property.files = files;
-    build_property.cflags = cflags;
+    if(buildOption.cgt.match(/ti-arm-clang*/)){
+        build_property.cflags = cflags;
+    }
     build_property.includes = includes;
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.defines = defines_r5f;

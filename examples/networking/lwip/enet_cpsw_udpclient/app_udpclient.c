@@ -41,6 +41,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <inttypes.h>
 #include <kernel/dpl/TaskP.h>
 #include <kernel/dpl/ClockP.h>
 #include <kernel/dpl/CacheP.h>
@@ -128,8 +129,8 @@ static void AppSocket_simpleClient(void* pArg)
 
     for (uint32_t i = 0; i < APP_SOCKET_NUM_ITERATIONS; i++)
     {
-        EnetAppUtils_print("<<< Iteration %d >>>> \r\n", i+1);
-        EnetAppUtils_print(" Connecting to: %s:%d \r\n", gHostServerIp4, SOCK_HOST_SERVER_PORT);
+        EnetAppUtils_print("<<< Iteration %" PRId32 ">>>> \r\n", i+1);
+        EnetAppUtils_print(" Connecting to: %s:%" PRId32 "\r\n", gHostServerIp4, SOCK_HOST_SERVER_PORT);
 
         /* create the socket */
         sock = lwip_socket(pAddr->sa_family, SOCK_DGRAM, 0);
@@ -154,7 +155,7 @@ static void AppSocket_simpleClient(void* pArg)
         for ( uint32_t i = 0; i < APP_SEND_DATA_NUM_ITERATIONS; i++)
         {
             memset(&snd_buf, 0, sizeof(snd_buf));
-            buf_len = snprintf(snd_buf, sizeof(snd_buf), "Hello over UDP %d\r\n", i);
+            buf_len = snprintf(snd_buf, sizeof(snd_buf), "Hello over UDP %" PRId32 "\r\n", i);
 
             CacheP_wbInv(snd_buf, sizeof(snd_buf), CacheP_TYPE_ALLD);
             ret = lwip_sendto(sock, snd_buf, buf_len, 0,

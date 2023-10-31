@@ -44,6 +44,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <inttypes.h>
 
 #include <drivers/hw_include/cslr_soc.h>
 #include <csl_cpswitch.h>
@@ -195,7 +196,7 @@ int32_t EnetAppUtils_getNum(void)
 #if defined(UART_ENABLED) && defined(ENETAPPUTILS_UART_ALLOWED)
     UART_scanFmt("%d", &num);
 #else
-    scanf("%d", &num);
+    scanf("%" SCNd32, &num);
 #endif
 
     return num;
@@ -208,7 +209,7 @@ uint32_t EnetAppUtils_getHex(void)
 #if defined(UART_ENABLED) && defined(ENETAPPUTILS_UART_ALLOWED)
     UART_scanFmt("%x", &num);
 #else
-    scanf("%x", &num);
+    scanf("%" SCNx32, &num);
 #endif
 
     return num;

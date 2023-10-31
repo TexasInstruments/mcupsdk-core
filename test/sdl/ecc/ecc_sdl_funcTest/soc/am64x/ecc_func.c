@@ -44,6 +44,7 @@
 /* ========================================================================== */
 #include <stdint.h>
 #include <stdio.h>
+#include <inttypes.h>
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdl_ecc.h>
 #include <kernel/dpl/DebugP.h>
@@ -296,7 +297,7 @@ int32_t ecc_aggr_test(void)
     while (exit != (bool)true)
     {
         DebugP_log("\r\n Select the memory to test...");
-        scanf("%d", &selectedIndex);
+        scanf("%" SCNd32, &selectedIndex);
 
         if (selectedIndex == -1)
         {

@@ -26,7 +26,7 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/phy",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/phy",
-        
+
        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc",
        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include",
        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/nortos/include",
@@ -77,6 +77,7 @@ const defines_r5f = {
 const buildOptionCombos = [
     { device: "am64x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am243x", cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: "am243x", cpu: "r5f", cgt: "gcc-armv7"},
 ];
 
 function getComponentProperty(device) {
@@ -87,7 +88,7 @@ function getComponentProperty(device) {
     property.name = "lwipif-icssg-nortos";
     property.tag = "lwipif-icssg-nortos";
     property.isInternal = false;
-    
+
     deviceBuildCombos = []
     for (buildCombo of buildOptionCombos)
     {
@@ -107,7 +108,9 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.filedirs = filedirs;
     build_property.files = files;
-    build_property.cflags = cflags;
+    if(buildOption.cgt.match(/ti-arm-clang*/)){
+        build_property.cflags = cflags;
+    }
 
     includes.common = _.union(includes.common, socIncludes[device]);
     build_property.includes = includes;

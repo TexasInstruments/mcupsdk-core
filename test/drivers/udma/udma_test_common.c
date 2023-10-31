@@ -246,7 +246,7 @@ int32_t AppUtils_getNum(void)
 #if defined (APPUTILS_UART_INPUT)
     UART_scanFmt("%d", &num);
 #else
-    scanf("%d", &num);
+    scanf("%" SCNd32, &num);
 #endif
 
     return (num);
