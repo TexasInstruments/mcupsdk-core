@@ -45,6 +45,7 @@
         "/drivers/drivers",
         "/board/board",
         "/networking/networking",
+        "/memory_configurator/components",
         "/security/security",
 % }
 % if(args.device == "am62x") {

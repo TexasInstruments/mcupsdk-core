@@ -282,7 +282,7 @@
         % for (prop in obj) {
             % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == 'common') {
                 % for(let val of obj[prop]) {
-            % if (! ((proj.cpu).includes("r5f") && (proj.device == "am263px")) ) {
+            % if (! ((proj.cpu).includes("r5f") && (proj.device == "am263px") || (proj.device == "am273x")) ) {
         <file path="`val`" openOnCreation="false" excludeFromBuild="false" action="`defaultAction`">
         </file>
         %}

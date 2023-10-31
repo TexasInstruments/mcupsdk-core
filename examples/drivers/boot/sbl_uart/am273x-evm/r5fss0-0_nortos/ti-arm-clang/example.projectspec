@@ -90,8 +90,6 @@
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
-        </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am273x/EXAMPLES_DRIVERS_SBL_UART.html"

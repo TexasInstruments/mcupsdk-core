@@ -41,7 +41,7 @@ CORES = \
     $(CORE_`i`) \
 % }
 
-%if(args.project.device == "am263px") {
+%if(args.project.device == "am263px" || args.project.device == "am273x") {
 SYSTEM_FLAG := true
 
 all: syscfg

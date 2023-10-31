@@ -108,8 +108,6 @@
         </file>
         <file path="../../../../../dpl/dpl_interface.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
-        </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am273x/EXAMPLES_SDL_ECC_BUS_SAFETY_MAIN.html"
