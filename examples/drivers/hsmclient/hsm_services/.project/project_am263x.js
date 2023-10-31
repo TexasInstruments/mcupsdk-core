@@ -6,6 +6,10 @@ const files = {
     common: [
         "hsm_client_app.c",
         "main.c",
+        "hsm_debug_auth.c",
+        "hsm_getVersion.c",
+        "trng_service_app.c",
+        "hsm_firewall_services.c",
     ],
 };
 

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -56,31 +56,34 @@
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-/* ========================================================================== */
-/*                          Function Prototypes                               */
-/* ========================================================================== */
-
-void getUIDApp(HsmClient_t *client);
-void getVersionApp(HsmClient_t *client);
-void HsmRngApp_start(HsmClient_t *client);
-void HsmFirewallApp(HsmClient_t *client);
-
-/* ========================================================================== */
-/*                          Function Definitions                              */
-/* ========================================================================== */
-
 /* Demo Application code on R5 */
-void HsmClientApp_start(void)
+void getUIDApp(HsmClient_t *client)
 {
+    /* loop through and request get version from HSM */
+    /* also calculate the time spent doing get version */
     int32_t status ;
-    HsmClient_t client ;
+    uint16_t uidSize;
+    uint8_t *uid = malloc(HSM_UID_SIZE) ;
+    uint32_t startCycleCount, endCycleCount;
+    const uint32_t cpuMHz = SOC_getSelfCpuClk()/1000000;
 
-    status = HsmClient_register(&client,APP_CLIENT_ID);
+    CycleCounterP_reset();
+    DebugP_log("\r\n [HSM CLIENT] Sending UID Request to HSM Server..");
+
+    startCycleCount = CycleCounterP_getCount32();
+
+    /* Send Request for UID to HSM Server */
+    status = HsmClient_getUID(client, (uint8_t *)uid, SystemP_WAIT_FOREVER);
+    endCycleCount = CycleCounterP_getCount32();
+
     DebugP_assert(status == SystemP_SUCCESS);
+    DebugP_log("\r\n [HSM CLIENT] Device UID Successfully retrived from the HSM Server.");
+    DebugP_log("\r\n\r\n [HSM CLIENT_PROFILE] Time taken by GetUID Request : %dus\r\n", ((endCycleCount - startCycleCount)/cpuMHz));
 
-    /*Function call to the desired services*/
-    getUIDApp(&client);
-    getVersionApp(&client);
-    HsmRngApp_start(&client);
-    HsmFirewallApp(&client);
+    /* print UID */
+    DebugP_log("\r\n [HSM CLIENT] Device UID is : ");
+    for(uidSize = 0; uidSize<HSM_UID_SIZE; uidSize++)
+    {
+        DebugP_log("%02X", uid[uidSize]);
+    }
 }

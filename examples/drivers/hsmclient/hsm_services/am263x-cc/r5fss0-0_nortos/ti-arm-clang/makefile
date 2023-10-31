@@ -43,6 +43,10 @@ endif
 FILES_common := \
 	hsm_client_app.c \
 	main.c \
+	hsm_debug_auth.c \
+	hsm_getVersion.c \
+	trng_service_app.c \
+	hsm_firewall_services.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \

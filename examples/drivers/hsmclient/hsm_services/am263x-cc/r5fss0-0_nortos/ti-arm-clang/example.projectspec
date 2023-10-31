@@ -91,6 +91,14 @@
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
+        <file path="../../../hsm_debug_auth.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../hsm_getVersion.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../trng_service_app.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../../../hsm_firewall_services.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
         <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">

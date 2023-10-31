@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -56,31 +56,24 @@
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-/* ========================================================================== */
-/*                          Function Prototypes                               */
-/* ========================================================================== */
-
-void getUIDApp(HsmClient_t *client);
-void getVersionApp(HsmClient_t *client);
-void HsmRngApp_start(HsmClient_t *client);
-void HsmFirewallApp(HsmClient_t *client);
-
-/* ========================================================================== */
-/*                          Function Definitions                              */
-/* ========================================================================== */
-
 /* Demo Application code on R5 */
-void HsmClientApp_start(void)
+void getVersionApp(HsmClient_t *client)
 {
+    /* loop through and request get version from HSM */
+    /* also calculate the time spent doing get version */
     int32_t status ;
-    HsmClient_t client ;
+    char parsedVer[PARSED_VER_SIZE];
+    HsmVer_t *hsmVer = malloc(sizeof(HsmVer_t)) ;
 
-    status = HsmClient_register(&client,APP_CLIENT_ID);
+    memset(parsedVer, '\0' , PARSED_VER_SIZE);
+
+    /* Send Request for TIFS-MCU version to HSM Server */
+    status = HsmClient_getVersion(client,hsmVer,SystemP_WAIT_FOREVER);
     DebugP_assert(status == SystemP_SUCCESS);
 
-    /*Function call to the desired services*/
-    getUIDApp(&client);
-    getVersionApp(&client);
-    HsmRngApp_start(&client);
-    HsmFirewallApp(&client);
+    /* print version */
+    DebugP_log("[HSM CLIENT] TIFS-MCU 64bit version string = 0x00%llx\r\n",hsmVer->HsmrtVer);
+    DebugP_log("\r\n [HSM CLIENT] TIFS-MCU Information");
+    status = HsmClient_parseVersion(hsmVer, parsedVer);
+    DebugP_log("%s \r\n\r\n", parsedVer);
 }

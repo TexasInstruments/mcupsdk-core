@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -31,7 +31,6 @@
  */
 
 #include <stdio.h>
-#include <kernel/dpl/CycleCounterP.h>
 #include <kernel/dpl/SemaphoreP.h>
 #include <kernel/dpl/SystemP.h>
 #include <drivers/hsmclient.h>
@@ -39,48 +38,47 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <kernel/dpl/SystemP.h>
-#include <string.h>
 #include <drivers/hw_include/csl_types.h>
 #include <drivers/hw_include/cslr_soc.h>
-#include <drivers/mpu_firewall.h>
-#include <drivers/soc.h>
 
-/* ========================================================================== */
-/*                          Macros And Typedefs                               */
-/* ========================================================================== */
-
-#define APP_CLIENT_ID                  (0x02)
-#define PARSED_VER_SIZE                (0X96)
-
-/* ========================================================================== */
-/*                          Function Definitions                              */
-/* ========================================================================== */
-
-/* ========================================================================== */
-/*                          Function Prototypes                               */
-/* ========================================================================== */
-
-void getUIDApp(HsmClient_t *client);
-void getVersionApp(HsmClient_t *client);
-void HsmRngApp_start(HsmClient_t *client);
-void HsmFirewallApp(HsmClient_t *client);
-
-/* ========================================================================== */
-/*                          Function Definitions                              */
-/* ========================================================================== */
+#define APP_CLIENT_ID (0x02)
+#define SEED_SIZE_IN_DWORDS (12U)
 
 /* Demo Application code on R5 */
-void HsmClientApp_start(void)
+void HsmRngApp_start(HsmClient_t *client)
 {
-    int32_t status ;
-    HsmClient_t client ;
+    /* loop through and request random number from HSM */
+    /* also calculate the time spent doing the generation */
+    int32_t status;
+    uint32_t length = 16,startCycleCount, endCycleCount;
+    uint32_t val[length/4];
+    const uint32_t cpuMHz = SOC_getSelfCpuClk()/1000000;
+    /* struct instance used for sending get random num request */
+    RNGReq_t getRNG;
 
-    status = HsmClient_register(&client,APP_CLIENT_ID);
+    /* initialize parameters of the getRNG struct */
+    uint32_t RngDrbgSeed[12] = {0x949db311, 0x1b53c4bf, 0x1d6cb9de, 0x75c85f23,
+                                 0xfe6bfe37, 0xae1c6462, 0x9e45f958, 0x62493581,
+                                 0x8b5df32b, 0x7bc94d49, 0xa8e69e31, 0x9237ca9f};
+    getRNG.DRBGMode = 0x5A;
+    getRNG.seedSizeInDWords = SEED_SIZE_IN_DWORDS;
+    getRNG.seedValue = (uint32_t *)&RngDrbgSeed;
+    getRNG.resultLengthPtr = &length;
+    getRNG.resultPtr = (uint8_t *)val;
+
+    CycleCounterP_reset();
+
+    startCycleCount = CycleCounterP_getCount32();
+    status = HsmClient_getRandomNum(client, &getRNG);
+    endCycleCount = CycleCounterP_getCount32();
+
     DebugP_assert(status == SystemP_SUCCESS);
 
-    /*Function call to the desired services*/
-    getUIDApp(&client);
-    getVersionApp(&client);
-    HsmRngApp_start(&client);
-    HsmFirewallApp(&client);
+    /* print the random numbers generated */
+    for (int i = 0; i < length / 4; i++)
+    {
+        DebugP_log("RNG output word -- 0x%X\r\n", val[i]);
+    }
+
+    DebugP_log("\r\n\r\n [HSM CLIENT_PROFILE] Time taken by get RNG request : %dus\r\n", ((endCycleCount - startCycleCount)/cpuMHz));
 }
