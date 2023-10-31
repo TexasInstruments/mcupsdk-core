@@ -2,47 +2,64 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM273x" --package "ZCE" --part "Default" --context "c66ss0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.13.0+2553"}
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const edma      = scripting.addModule("/drivers/edma/edma", {}, false);
-const edma1     = edma.addInstance();
-const gpio      = scripting.addModule("/drivers/gpio/gpio", {}, false);
-const gpio1     = gpio.addInstance();
-const gpio2     = gpio.addInstance();
-const gpio3     = gpio.addInstance();
-const i2c       = scripting.addModule("/drivers/i2c/i2c", {}, false);
-const i2c1      = i2c.addInstance();
-const mcasp     = scripting.addModule("/drivers/mcasp/mcasp", {}, false);
-const mcasp1    = mcasp.addInstance();
-const cache_c6x = scripting.addModule("/kernel/dpl/cache_c6x");
-const debug_log = scripting.addModule("/kernel/dpl/debug_log");
+const edma            = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1           = edma.addInstance();
+const gpio            = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1           = gpio.addInstance();
+const gpio2           = gpio.addInstance();
+const gpio3           = gpio.addInstance();
+const i2c             = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1            = i2c.addInstance();
+const mcasp           = scripting.addModule("/drivers/mcasp/mcasp", {}, false);
+const mcasp1          = mcasp.addInstance();
+const cache_c6x       = scripting.addModule("/kernel/dpl/cache_c6x");
+const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
+const default_linker1 = default_linker.addInstance();
+const general         = scripting.addModule("/memory_configurator/general", {}, false);
+const general1        = general.addInstance();
+const region          = scripting.addModule("/memory_configurator/region", {}, false);
+const region1         = region.addInstance();
+const section         = scripting.addModule("/memory_configurator/section", {}, false);
+const section1        = section.addInstance();
+const section2        = section.addInstance();
+const section3        = section.addInstance();
+const section4        = section.addInstance();
+const section5        = section.addInstance();
+const section6        = section.addInstance();
+const section7        = section.addInstance();
+const section8        = section.addInstance();
+const section9        = section.addInstance();
+const section10       = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
 gpio1.pinDir                    = "OUTPUT";
 gpio1.$name                     = "GPIO_DAC_RST";
-gpio1.RCSS_GPIO.gpioPin.$assign = "ball.W15";
+gpio1.RCSS_GPIO.gpioPin.$assign = "PAD_BJ";
 
 gpio2.$name                     = "GPIO_DAC_AMUTEIN";
 gpio2.pinDir                    = "OUTPUT";
-gpio2.RCSS_GPIO.gpioPin.$assign = "ball.V14";
+gpio2.RCSS_GPIO.gpioPin.$assign = "PAD_BK";
 
 gpio3.$name                     = "GPIO_LINEIN_RST";
 gpio3.pinDir                    = "OUTPUT";
-gpio3.RCSS_GPIO.gpioPin.$assign = "ball.V15";
+gpio3.RCSS_GPIO.gpioPin.$assign = "PAD_BI";
 
 i2c1.$name               = "CONFIG_I2C0";
 i2c1.instance            = "MSS_I2CA";
 i2c1.enableIntr          = false;
 i2c1.MSS_I2C.$assign     = "MSS_I2CA";
-i2c1.MSS_I2C.SCL.$assign = "ball.U15";
+i2c1.MSS_I2C.SCL.$assign = "PAD_BG";
 i2c1.MSS_I2C.SCL.$used   = false;
-i2c1.MSS_I2C.SDA.$assign = "ball.V16";
+i2c1.MSS_I2C.SDA.$assign = "PAD_BF";
 i2c1.MSS_I2C.SDA.$used   = false;
 
 mcasp1.$name               = "CONFIG_MCASP0";
@@ -55,8 +72,8 @@ mcasp1.rxDataMask          = 0xFFFFFFFF;
 mcasp1.rxActiveSlotMask    = 0x3;
 mcasp1.fsx                 = 48;
 mcasp1.fsr                 = 48;
-mcasp1.controllerClkx          = 128;
-mcasp1.controllerClkr          = 128;
+mcasp1.controllerClkx      = 128;
+mcasp1.controllerClkr      = 128;
 mcasp1.clkSyncMode         = "ASYNC";
 mcasp1.RCSS_MCASP.$assign  = "RCSS_MCASPB";
 mcasp1.mcaspSer.create(2);
@@ -67,8 +84,8 @@ mcasp1.mcaspSer[1].dataDir = "Receive";
 
 debug_log.enableUartLog               = true;
 debug_log.uartLog.$name               = "CONFIG_UART0";
-debug_log.uartLog.DSS_UART.RX.$assign = "ball.H19";
-debug_log.uartLog.DSS_UART.TX.$assign = "ball.J19";
+debug_log.uartLog.DSS_UART.RX.$assign = "PAD_DD";
+debug_log.uartLog.DSS_UART.TX.$assign = "PAD_DC";
 
 edma1.$name                             = "CONFIG_EDMA0";
 mcasp1.edmaConfig                       = edma1;
@@ -83,6 +100,142 @@ edma1.edmaRmReservedDmaCh[0].$name      = "CONFIG_EDMA_RM4";
 edma1.edmaRmReservedDmaCh[0].startIndex = 49;
 edma1.edmaRmReservedDmaCh[0].endIndex   = 52;
 
+default_linker1.$name = "memory_configurator_default_linker0";
+
+general1.$name        = "CONFIG_GENERAL0";
+general1.linker.$name = "TIARMCLANG0";
+
+region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
+region1.memory_region.create(7);
+region1.memory_region[0].type               = "DSP_L2_C66";
+region1.memory_region[0].$name              = "DSS_L2";
+region1.memory_region[0].size               = 0x60000;
+region1.memory_region[1].type               = "DSS_L3_ALL";
+region1.memory_region[1].size               = 0x390000;
+region1.memory_region[1].$name              = "DSS_L3";
+region1.memory_region[2].$name              = "USER_SHM_MEM";
+region1.memory_region[2].auto               = false;
+region1.memory_region[2].manualStartAddress = 0xC02E8000;
+region1.memory_region[2].size               = 0x4000;
+region1.memory_region[3].$name              = "LOG_SHM_MEM";
+region1.memory_region[3].size               = 0x4000;
+
+region1.memory_region[4].type               = "CUSTOM_ALL";
+region1.memory_region[4].$name              = "RTOS_NORTOS_IPC_SHM_MEM";
+region1.memory_region[4].auto               = false;
+region1.memory_region[4].manualStartAddress = 0xC5000000;
+region1.memory_region[4].size               = 0x1F40;
+region1.memory_region[5].type               = "CUSTOM_ALL";
+region1.memory_region[5].auto               = false;
+region1.memory_region[5].$name              = "MAILBOX_HSM";
+region1.memory_region[5].manualStartAddress = 0x44000000;
+region1.memory_region[5].size               = 0x3CE;
+region1.memory_region[6].type               = "CUSTOM_ALL";
+region1.memory_region[6].auto               = false;
+region1.memory_region[6].manualStartAddress = 0x44000400;
+region1.memory_region[6].size               = 0x3CE;
+region1.memory_region[6].$name              = "MAILBOX_R5F";
+
+section1.load_to_memory              = "Address";
+section1.group                       = false;
+section1.load_to_address             = "0x00800000";
+section1.$name                       = "Vector Table";
+section1.output_section.create(1);
+section1.output_section[0].$name     = ".text:vectors";
+section1.output_section[0].alignment = 1024;
+
+section2.load_memory                 = "DSS_L2";
+section2.group                       = false;
+section2.$name                       = "Memory Segments";
+section2.output_section.create(10);
+section2.output_section[0].$name     = ".text";
+section2.output_section[0].alignment = 0;
+section2.output_section[1].$name     = ".const";
+section2.output_section[1].alignment = 0;
+section2.output_section[2].$name     = ".cinit";
+section2.output_section[2].alignment = 0;
+section2.output_section[3].$name     = ".data";
+section2.output_section[3].alignment = 0;
+section2.output_section[4].$name     = ".stack";
+section2.output_section[4].alignment = 0;
+section2.output_section[5].$name     = ".switch";
+section2.output_section[5].alignment = 0;
+section2.output_section[6].$name     = ".cio";
+section2.output_section[6].alignment = 0;
+section2.output_section[7].$name     = ".sysmem";
+section2.output_section[7].alignment = 0;
+section2.output_section[8].$name     = ".fardata";
+section2.output_section[8].alignment = 0;
+section2.output_section[9].$name     = ".far";
+section2.output_section[9].alignment = 0;
+
+section3.load_memory                 = "DSS_L2";
+section3.$name                       = "Code and Read-Only Data";
+section3.output_section.create(3);
+section3.output_section[0].$name     = ".rodata";
+section3.output_section[0].alignment = 0;
+section3.output_section[1].$name     = ".bss";
+section3.output_section[1].alignment = 0;
+section3.output_section[2].$name     = ".neardata";
+section3.output_section[2].alignment = 0;
+
+section4.load_memory                  = "DSS_L2";
+section4.$name                        = "Initialization and Exception Handling";
+section4.output_section.create(3);
+section4.output_section[0].$name      = ".c6xabi.exidx";
+section4.output_section[0].palignment            = true;
+section4.output_section[1].$name      = ".init_array";
+section4.output_section[1].palignment            = true;
+section4.output_section[2].$name      = ".fini_array";
+section4.output_section[2].palignment = true;
+
+section5.$name                       = "BSS DSS L3";
+section5.load_memory                 = "DSS_L3";
+section5.group                       = false;
+section5.output_section.create(1);
+section5.output_section[0].$name     = ".bss.dss_l3";
+section5.output_section[0].alignment = 0;
+
+section6.$name                       = "User Shared Memory";
+section6.load_memory                 = "USER_SHM_MEM";
+section6.type                        = "NOLOAD";
+section6.group                       = false;
+section6.output_section.create(1);
+section6.output_section[0].$name     = ".bss.user_shared_mem";
+section6.output_section[0].alignment = 0;
+
+section7.$name                       = "Log Shared Memory";
+section7.type                        = "NOLOAD";
+section7.load_memory                 = "LOG_SHM_MEM";
+section7.group                       = false;
+section7.output_section.create(1);
+section7.output_section[0].$name     = ".bss.log_shared_mem";
+section7.output_section[0].alignment = 0;
+
+section8.$name                       = "IPC Shared Memory";
+section8.type                        = "NOLOAD";
+section8.load_memory                 = "RTOS_NORTOS_IPC_SHM_MEM";
+section8.group                       = false;
+section8.output_section.create(1);
+section8.output_section[0].alignment = 0;
+section8.output_section[0].$name     = ".bss.ipc_vring_mem";
+
+section9.$name                       = "SIPC HSM Queue Memory";
+section9.type                        = "NOLOAD";
+section9.load_memory                 = "MAILBOX_HSM";
+section9.group                       = false;
+section9.output_section.create(1);
+section9.output_section[0].alignment = 0;
+section9.output_section[0].$name     = ".bss.sipc_hsm_queue_mem";
+
+section10.$name                       = "SIPC R5F Queue Memory";
+section10.type                        = "NOLOAD";
+section10.group                       = false;
+section10.load_memory                 = "MAILBOX_R5F";
+section10.output_section.create(1);
+section10.output_section[0].alignment = 0;
+section10.output_section[0].$name     = ".bss.sipc_r5f_queue_mem";
+
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
@@ -91,11 +244,11 @@ edma1.edmaRmReservedDmaCh[0].endIndex   = 52;
 gpio1.RCSS_GPIO.$suggestSolution            = "RCSS_GPIO0";
 gpio2.RCSS_GPIO.$suggestSolution            = "RCSS_GPIO0";
 gpio3.RCSS_GPIO.$suggestSolution            = "RCSS_GPIO0";
-mcasp1.RCSS_MCASP.FSX.$suggestSolution      = "ball.V13";
-mcasp1.RCSS_MCASP.ACLKX.$suggestSolution    = "ball.W14";
-mcasp1.RCSS_MCASP.AHCLKX.$suggestSolution   = "ball.V12";
-mcasp1.RCSS_MCASP.FSR.$suggestSolution      = "ball.U11";
-mcasp1.RCSS_MCASP.ACLKR.$suggestSolution    = "ball.W13";
-mcasp1.mcaspSer[0].DAT0.$suggestSolution    = "ball.V11";
-mcasp1.mcaspSer[1].DAT4.$suggestSolution    = "ball.T10";
+mcasp1.RCSS_MCASP.FSX.$suggestSolution      = "PAD_BN";
+mcasp1.RCSS_MCASP.ACLKX.$suggestSolution    = "PAD_BM";
+mcasp1.RCSS_MCASP.AHCLKX.$suggestSolution   = "PAD_BW";
+mcasp1.RCSS_MCASP.FSR.$suggestSolution      = "PAD_BP";
+mcasp1.RCSS_MCASP.ACLKR.$suggestSolution    = "PAD_BO";
+mcasp1.mcaspSer[0].DAT0.$suggestSolution    = "PAD_BQ";
+mcasp1.mcaspSer[1].DAT4.$suggestSolution    = "PAD_BU";
 debug_log.uartLog.DSS_UART.$suggestSolution = "DSS_UARTA";

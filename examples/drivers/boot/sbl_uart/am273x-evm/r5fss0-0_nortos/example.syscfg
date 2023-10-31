@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM273x" --package "ZCE" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.13.0+2553"}
+ * @versions {"tool":"1.18.0+3266"}
  */
 
 /**
@@ -30,6 +30,26 @@ const mpu_armv76  = mpu_armv7.addInstance();
 const mpu_armv77  = mpu_armv7.addInstance();
 const timer       = scripting.addModule("/kernel/dpl/timer", {}, false);
 const timer1      = timer.addInstance();
+const general     = scripting.addModule("/memory_configurator/general", {}, false);
+const general1    = general.addInstance();
+const region      = scripting.addModule("/memory_configurator/region", {}, false);
+const region1     = region.addInstance();
+const section     = scripting.addModule("/memory_configurator/section", {}, false);
+const section1    = section.addInstance();
+const section2    = section.addInstance();
+const section3    = section.addInstance();
+const section4    = section.addInstance();
+const section5    = section.addInstance();
+const section6    = section.addInstance();
+const section7    = section.addInstance();
+const section8    = section.addInstance();
+const section9    = section.addInstance();
+const section10   = section.addInstance();
+const section11   = section.addInstance();
+const section12   = section.addInstance();
+const section13   = section.addInstance();
+const section14   = section.addInstance();
+const section15   = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -45,8 +65,8 @@ hsmclient1.$name = "CONFIG_HSMCLIENT0";
 
 uart1.$name               = "CONFIG_UART0";
 uart1.intrEnable          = "DISABLE";
-uart1.MSS_UART.RX.$assign = "ball.U3";
-uart1.MSS_UART.TX.$assign = "ball.W2";
+uart1.MSS_UART.RX.$assign = "PAD_DA";
+uart1.MSS_UART.TX.$assign = "PAD_DB";
 
 uart1.edmaConfig                   = edma1;
 edma1.$name                        = "CONFIG_EDMA0";
@@ -92,17 +112,235 @@ mpu_armv77.baseAddr = 0xC3800000;
 
 timer1.$name = "CONFIG_TIMER0";
 
+general1.$name           = "CONFIG_GENERAL0";
+general1.irq_stack_size  = 4096;
+general1.svc_stack_size  = 256;
+general1.additional_data = "#define SBL_INIT_CODE_SIZE          640";
+general1.stack_size      = 8192;
+general1.heap_size       = 8192;
+general1.linker.$name    = "TIARMCLANG0";
+
+region1.$name                                = "MEMORY_REGION_CONFIGURATION0";
+region1.memory_region.create(13);
+region1.memory_region[0].auto                = false;
+region1.memory_region[0].$name               = "R5F_VECS";
+region1.memory_region[0].size                = 0x280;
+region1.memory_region[1].$name               = "R5F_TCMA";
+region1.memory_region[1].size                = 0x7D80;
+region1.memory_region[2].type                = "TCMB_R5F";
+region1.memory_region[2].$name               = "R5F_TCMB";
+region1.memory_region[2].size                = 0x4000;
+region1.memory_region[3].type                = "MSS_L2_R5F";
+region1.memory_region[3].size                = 0x280;
+region1.memory_region[3].$name               = "MSS_L2_RSVD";
+region1.memory_region[3].auto                = false;
+region1.memory_region[4].type                = "MSS_L2_R5F";
+region1.memory_region[4].$name               = "MSS_L2";
+region1.memory_region[4].auto                = false;
+region1.memory_region[4].manualStartAddress  = 0x10200280;
+region1.memory_region[4].size                = 0x1FD80;
+region1.memory_region[5].type                = "DSS_L3_ALL";
+region1.memory_region[5].$name               = "DSS_L3";
+region1.memory_region[5].size                = 0x100000;
+region1.memory_region[6].type                = "MSS_L2_R5F";
+region1.memory_region[6].auto                = false;
+region1.memory_region[6].manualStartAddress  = 0x102E8000;
+region1.memory_region[6].$name               = "USER_SHM_MEM";
+region1.memory_region[6].size                = 0x4000;
+region1.memory_region[6].isShared            = true;
+region1.memory_region[6].shared_cores        = ["r5fss0-1"];
+region1.memory_region[7].type                = "MSS_L2_R5F";
+region1.memory_region[7].auto                = false;
+region1.memory_region[7].manualStartAddress  = 0x102EC000;
+region1.memory_region[7].$name               = "LOG_SHM_MEM";
+region1.memory_region[7].size                = 0x4000;
+region1.memory_region[7].isShared            = true;
+region1.memory_region[7].shared_cores        = ["r5fss0-1"];
+region1.memory_region[8].type                = "CUSTOM_ALL";
+region1.memory_region[8].$name               = "RTOS_NORTOS_IPC_SHM_MEM";
+region1.memory_region[8].auto                = false;
+region1.memory_region[8].manualStartAddress  = 0xC5000000;
+region1.memory_region[8].size                = 0x1F40;
+region1.memory_region[9].auto                = false;
+region1.memory_region[9].size                = 0x20000;
+region1.memory_region[9].type                = "CUSTOM_ALL";
+region1.memory_region[9].manualStartAddress  = 0x1220000;
+region1.memory_region[9].$name               = "MSRAM_HSMRT";
+region1.memory_region[10].type               = "CUSTOM_ALL";
+region1.memory_region[10].$name              = "MAILBOX_HSM";
+region1.memory_region[10].auto               = false;
+region1.memory_region[10].manualStartAddress = 0x44000000;
+region1.memory_region[10].size               = 0x3CE;
+region1.memory_region[11].type               = "CUSTOM_ALL";
+region1.memory_region[11].$name              = "MAILBOX_R5F";
+region1.memory_region[11].auto               = false;
+region1.memory_region[11].manualStartAddress = 0x44000400;
+region1.memory_region[11].size               = 0x3CE;
+region1.memory_region[12].type               = "DSS_L3_ALL";
+region1.memory_region[12].$name              = "DSS_L3_SCRATCH";
+region1.memory_region[12].size               = 0x100000;
+
+section1.load_memory                                        = "MSS_L2_RSVD";
+section1.run_memory                                         = "R5F_VECS";
+section1.group                                              = false;
+section1.$name                                              = "Sbl Init";
+section1.output_section.create(1);
+section1.output_section[0].$name                            = ".sbl_init_code";
+section1.output_section[0].fill                             = 2882382797;
+section1.output_section[0].palignment                       = true;
+section1.output_section[0].input_section.create(2);
+section1.output_section[0].input_section[0].$name           = "*(.vectors)";
+section1.output_section[0].input_section[0].additional_data = ". = align(8);";
+section1.output_section[0].input_section[1].$name           = "*(.text.boot)";
+section1.output_section[0].input_section[1].additional_data = ". = align(8);";
+
+section2.$name                        = "Vector Table";
+section2.group                        = false;
+section2.load_memory                  = "R5F_VECS";
+section2.output_section.create(2);
+section2.output_section[0].$name      = ".vectors";
+section2.output_section[0].palignment = true;
+section2.output_section[1].$name      = ".text.boot";
+section2.output_section[1].palignment = true;
+
+section3.load_memory                  = "MSS_L2";
+section3.$name                        = "Text section";
+section3.output_section.create(4);
+section3.output_section[0].$name      = ".text.hwi";
+section3.output_section[0].palignment = true;
+section3.output_section[1].$name      = ".text.cache";
+section3.output_section[1].palignment = true;
+section3.output_section[2].$name      = ".text.mpu";
+section3.output_section[3].$name      = ".text:abort";
+section3.output_section[3].palignment = true;
+
+section4.$name                        = "Code and Read-Only Data";
+section4.load_memory                  = "MSS_L2";
+section4.output_section.create(2);
+section4.output_section[0].$name      = ".text";
+section4.output_section[0].palignment = true;
+section4.output_section[1].$name      = ".rodata";
+section4.output_section[1].palignment = true;
+
+section5.$name                        = "Data Segment";
+section5.load_memory                  = "MSS_L2";
+section5.output_section.create(1);
+section5.output_section[0].$name      = ".data";
+section5.output_section[0].palignment = true;
+
+section6.$name                                   = "Memory Segments";
+section6.load_memory                             = "MSS_L2";
+section6.output_section.create(3);
+section6.output_section[0].$name                 = ".bss";
+section6.output_section[0].palignment            = true;
+section6.output_section[0].output_sections_start = "__BSS_START";
+section6.output_section[0].output_sections_end   = "__BSS_END";
+section6.output_section[1].$name                 = ".sysmem";
+section6.output_section[1].palignment            = true;
+section6.output_section[2].$name                 = ".stack";
+section6.output_section[2].palignment            = true;
+
+section7.$name                                    = "Stack Segments";
+section7.load_memory                              = "MSS_L2";
+section7.output_section.create(5);
+section7.output_section[0].$name                  = ".irqstack";
+section7.output_section[0].output_sections_start  = "__IRQ_STACK_START";
+section7.output_section[0].output_sections_end    = "__IRQ_STACK_END";
+section7.output_section[0].input_section.create(1);
+section7.output_section[0].input_section[0].$name = ". = . + __IRQ_STACK_SIZE;";
+section7.output_section[1].$name                  = ".fiqstack";
+section7.output_section[1].output_sections_start  = "__FIQ_STACK_START";
+section7.output_section[1].output_sections_end    = "__FIQ_STACK_END";
+section7.output_section[1].input_section.create(1);
+section7.output_section[1].input_section[0].$name = ". = . + __FIQ_STACK_SIZE;";
+section7.output_section[2].$name                  = ".svcstack";
+section7.output_section[2].output_sections_start  = "__SVC_STACK_START";
+section7.output_section[2].output_sections_end    = "__SVC_STACK_END";
+section7.output_section[2].input_section.create(1);
+section7.output_section[2].input_section[0].$name = ". = . + __SVC_STACK_SIZE;";
+section7.output_section[3].$name                  = ".abortstack";
+section7.output_section[3].output_sections_start  = "__ABORT_STACK_START";
+section7.output_section[3].output_sections_end    = "__ABORT_STACK_END";
+section7.output_section[3].input_section.create(1);
+section7.output_section[3].input_section[0].$name = ". = . + __ABORT_STACK_SIZE;";
+section7.output_section[4].$name                  = ".undefinedstack";
+section7.output_section[4].output_sections_start  = "__UNDEFINED_STACK_START";
+section7.output_section[4].output_sections_end    = "__UNDEFINED_STACK_END";
+section7.output_section[4].input_section.create(1);
+section7.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE;";
+
+section8.$name                       = "CONFIG_SECTION0";
+section8.load_memory                 = "DSS_L3_SCRATCH";
+section8.group                       = false;
+section8.output_section.create(1);
+section8.output_section[0].$name     = ".bss.sbl_scratch";
+section8.output_section[0].alignment = 0;
+
+section9.load_memory                  = "MSRAM_HSMRT";
+section9.$name                        = "hsmrt";
+section9.group                        = false;
+section9.output_section.create(1);
+section9.output_section[0].$name      = ".rodata.hsmrt";
+section9.output_section[0].palignment = true;
+
+section10.load_memory                 = "MAILBOX_HSM";
+section10.type                        = "NOLOAD";
+section10.group                       = false;
+section10.$name                       = "Hsm queue";
+section10.output_section.create(1);
+section10.output_section[0].$name     = ".bss.sipc_hsm_queue_mem";
+section10.output_section[0].alignment = 0;
+
+section11.$name                       = "R5f queue";
+section11.type                        = "NOLOAD";
+section11.load_memory                 = "MAILBOX_R5F";
+section11.group                       = false;
+section11.output_section.create(1);
+section11.output_section[0].$name     = ".bss.sipc_r5f_queue_mem";
+section11.output_section[0].alignment = 0;
+
+section12.$name                       = "BSS DSS L3";
+section12.load_memory                 = "DSS_L3";
+section12.group                       = false;
+section12.output_section.create(1);
+section12.output_section[0].$name     = ".bss.dss_l3";
+section12.output_section[0].alignment = 0;
+
+section13.$name                       = "User Shared Memory";
+section13.load_memory                 = "USER_SHM_MEM";
+section13.type                        = "NOLOAD";
+section13.group                       = false;
+section13.output_section.create(1);
+section13.output_section[0].$name     = ".bss.user_shared_mem";
+section13.output_section[0].alignment = 0;
+
+section14.$name                       = "Log Shared Memory";
+section14.type                        = "NOLOAD";
+section14.load_memory                 = "LOG_SHM_MEM";
+section14.group                       = false;
+section14.output_section.create(1);
+section14.output_section[0].$name     = ".bss.log_shared_mem";
+section14.output_section[0].alignment = 0;
+
+section15.$name                       = "IPC Shared Memory";
+section15.type                        = "NOLOAD";
+section15.load_memory                 = "RTOS_NORTOS_IPC_SHM_MEM";
+section15.group                       = false;
+section15.output_section.create(1);
+section15.output_section[0].alignment = 0;
+section15.output_section[0].$name     = ".bss.ipc_vring_mem";
+
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-flash1.peripheralDriver.MSS_QSPI["0"].$suggestSolution = "ball.C2";
-flash1.peripheralDriver.MSS_QSPI["1"].$suggestSolution = "ball.D2";
-flash1.peripheralDriver.MSS_QSPI["2"].$suggestSolution = "ball.D1";
-flash1.peripheralDriver.MSS_QSPI["3"].$suggestSolution = "ball.E2";
+flash1.peripheralDriver.MSS_QSPI["0"].$suggestSolution = "PAD_AL";
+flash1.peripheralDriver.MSS_QSPI["1"].$suggestSolution = "PAD_AM";
+flash1.peripheralDriver.MSS_QSPI["2"].$suggestSolution = "PAD_AN";
+flash1.peripheralDriver.MSS_QSPI["3"].$suggestSolution = "PAD_AO";
 flash1.peripheralDriver.MSS_QSPI.$suggestSolution      = "MSS_QSPI0";
-flash1.peripheralDriver.MSS_QSPI.CLK.$suggestSolution  = "ball.E1";
-flash1.peripheralDriver.MSS_QSPI.CS.$suggestSolution   = "ball.F2";
+flash1.peripheralDriver.MSS_QSPI.CLK.$suggestSolution  = "PAD_AP";
+flash1.peripheralDriver.MSS_QSPI.CS.$suggestSolution   = "PAD_AQ";
 uart1.MSS_UART.$suggestSolution                        = "MSS_UARTA";
-timer1.MSS_RTI.$suggestSolution                        = "MSS_RTIC";
+timer1.MSS_RTI.$suggestSolution                        = "MSS_RTIB";
