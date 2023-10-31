@@ -1191,9 +1191,13 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
         uint32_t phyTuningOffset = Flash_getPhyTuningOffset(config);
         if(OSPI_isPhyEnable(obj->ospiHandle))
         {
+#if defined (SOC_AM263PX)
             OSPI_configBaudrate(obj->ospiHandle, 32);
+#endif
             attackVectorStatus = OSPI_phyReadAttackVector(obj->ospiHandle, phyTuningOffset);
+#if defined (SOC_AM263PX)
             OSPI_configBaudrate(obj->ospiHandle, 4);
+#endif
 
             if(attackVectorStatus != SystemP_SUCCESS)
             {
