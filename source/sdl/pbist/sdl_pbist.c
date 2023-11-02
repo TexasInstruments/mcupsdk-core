@@ -144,18 +144,18 @@ static int32_t SDL_PBIST_runTest(SDL_PBIST_testType testType, SDL_pbistRegs *pRe
         if (testType == SDL_PBIST_TEST)
         {
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
-          if (gInst == (uint32_t)SDL_PBIST_INST_TOP)
-          {
+            if (gInst == (uint32_t)SDL_PBIST_INST_TOP)
+            {
                 ret = SDL_PBIST_start(pRegs, &pInfo->PBISTConfigRun1[i]);
-          }
-          else if (gInst == (uint32_t)SDL_PBIST_INST_DSS)
-          {
-                  ret = SDL_PBIST_start(pRegs, &pInfo->PBISTConfigRun2[i]);
-          }
-          else
-          {
-             ret = SDL_EBADARGS ;
-          }
+            }
+            else if (gInst == (uint32_t)SDL_PBIST_INST_DSS)
+            {
+                    ret = SDL_PBIST_start(pRegs, &pInfo->PBISTConfigRun2[i]);
+            }
+            else
+            {
+                ret = SDL_EBADARGS ;
+            }
 #else
             ret = SDL_PBIST_start(pRegs, &pInfo->PBISTConfigRun[i]);
 #endif

@@ -103,12 +103,12 @@ void VIM_main(void *args)
 {
     /* Declaration of variables */
     int32_t  testResult;
-	
+
 	Drivers_open();
     Board_driversOpen();
     /* DPL Init */
     testResult = sdlApp_dplInit();
-	
+
 	if (testResult == SDL_PASS)
     {
 		DebugP_log("R5 VIM Application\r\n");

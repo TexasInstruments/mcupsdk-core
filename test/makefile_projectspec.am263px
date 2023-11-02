@@ -5,6 +5,7 @@
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL =
 # Various Example Projectspec Build Targets
 # Various System Example Projectspec Build Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += stc_func_test_am263px-cc_system_nortos_nortos_build
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
 # Various Private Example Projectspec Build Targets
@@ -14,11 +15,15 @@ all: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL)
 
 all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
+ stc_func_test_am263px-cc_system_nortos_nortos_build:
+	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am263px-cc/system_nortos_nortos -f makefile_projectspec all
+
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
 # Various Example Projectspec Clean Targets
 # Various System Example Projectspec Clean Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += stc_func_test_am263px-cc_system_nortos_nortos_clean
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
 # Various Private Example Projectspec Clean Targets
@@ -28,11 +33,15 @@ clean: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL)
 
 clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
+ stc_func_test_am263px-cc_system_nortos_nortos_clean:
+	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am263px-cc/system_nortos_nortos -f makefile_projectspec clean
+
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
 # Various Example Projectspec Export Targets
 # Various System Example Projectspec Export Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += stc_func_test_am263px-cc_system_nortos_nortos_export
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
 # Various Private Example Projectspec Export Targets
@@ -41,6 +50,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
 export: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL)
 
 export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
+
+ stc_func_test_am263px-cc_system_nortos_nortos_export:
+	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am263px-cc/system_nortos_nortos -f makefile_projectspec export
 
 
 
@@ -65,6 +77,7 @@ help:
 	@echo  .
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================
+	@echo  $(MAKE) -s -C sdl/stc/stc_mcu/stc_func_test/am263px-cc/system_nortos_nortos -f makefile_projectspec [export all clean]
 	@echo  .
 
 .PHONY: all all-private

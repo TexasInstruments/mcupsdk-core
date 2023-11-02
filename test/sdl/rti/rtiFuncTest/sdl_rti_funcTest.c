@@ -83,7 +83,7 @@ static void RTISetClockSource(uint32_t rtiModuleSelect,
 {
 #if !defined(SOC_TPR12) && !defined (SOC_AWR294X) /* No need to set clock for TPR12 */
     switch (rtiModuleSelect) {
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
         case SDL_WDT0_U_BASE:
             HW_WR_FIELD32(SDL_MCU_CTRL_MMR0_CFG0_BASE +
                           SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL,
@@ -100,7 +100,7 @@ static void RTISetClockSource(uint32_t rtiModuleSelect,
             break;
 #endif
         default:
-           DebugP_log ("Error : RTI Instance not supported "
+            DebugP_log ("Error : RTI Instance not supported "
                 "!!!\r\n");
             break;
     }
@@ -154,7 +154,7 @@ int32_t SDL_RTI_funcTest(void)
     DebugP_log("RTI Function test started\r\n");
 
     /* Register Interrupt */
-        isrFlag = RTI_NO_INTERRUPT;
+    isrFlag = RTI_NO_INTERRUPT;
 
     /* Configure RTI parameters */
     pConfig.SDL_RTI_dwwdPreloadVal = RTIGetPreloadValue(RTI_CLOCK_SOURCE_32KHZ, RTI_WDT_TIMEOUT);
@@ -187,21 +187,21 @@ int32_t SDL_RTI_funcTest(void)
         switch(pStaticRegs.RTI_WWDSIZECTRL)
         {
             case RTI_RTIDWWDSIZECTRL_DWWDSIZE_100_PERCENT:
-                 DebugP_log("    DWWD configured to 100 percent window size\r\n");
-                 break;
+                DebugP_log("    DWWD configured to 100 percent window size\r\n");
+                break;
             case RTI_RTIDWWDSIZECTRL_DWWDSIZE_50_PERCENT:
-                 DebugP_log("    DWWD configured to 50 percent window size\r\n");
-                 break;
+                DebugP_log("    DWWD configured to 50 percent window size\r\n");
+                break;
             case RTI_RTIDWWDSIZECTRL_DWWDSIZE_25_PERCENT:
-                 DebugP_log("    DWWD configured to 25 percent window size\r\n");
-                 break;
+                DebugP_log("    DWWD configured to 25 percent window size\r\n");
+                break;
             case RTI_RTIDWWDSIZECTRL_DWWDSIZE_12_5_PERCENT:
-                 DebugP_log("    DWWD configured to 6.25 percent window size\r\n");
-                 break;
+                DebugP_log("    DWWD configured to 6.25 percent window size\r\n");
+                break;
             case RTI_RTIDWWDSIZECTRL_DWWDSIZE_6_25_PERCENT:
-                 DebugP_log("    DWWD configured to 3.125 percent window size\r\n");
-                 break;
-         }
+                DebugP_log("    DWWD configured to 3.125 percent window size\r\n");
+                break;
+        }
 
         /* Configure RTI and do not service. Generates End time violation. */
         DebugP_log("    DWWD is configured for %u ms time-out \r\n", RTI_WDT_TIMEOUT);
@@ -225,9 +225,9 @@ int32_t SDL_RTI_funcTest(void)
         }
         else
         {
-          DebugP_log("RTI End time violation test failed. \r\n");
+            DebugP_log("RTI End time violation test failed. \r\n");
         }
-     }
+    }
 
 
     if ((retVal == SDL_PASS) &&
@@ -257,7 +257,7 @@ int32_t SDL_RTI_funcTest(void)
                 /* DWWD is in open window, just service it. */
                 SDL_RTI_service(SDL_INSTANCE_RTI);
             }
-      }
+        }
         if (retVal == SDL_PASS)
         {
           DebugP_log("RTI DWWD closed window violation test successful. \r\n\n");
@@ -316,7 +316,7 @@ int32_t SDL_RTI_funcTest(void)
 static void IntrDisable(uint32_t intsrc)
 {
     uint32_t intrStatus;
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
     SDL_RTI_getStatus(SDL_INSTANCE_WDT0, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_WDT0, intrStatus);
 #elif defined (R5F_INPUTS)
@@ -324,9 +324,9 @@ static void IntrDisable(uint32_t intsrc)
     SDL_RTI_clearStatus(SDL_INSTANCE_MSS_WDT, intrStatus);
 	RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
 #elif defined (C66_INPUTS)
-	  SDL_RTI_getStatus(SDL_INSTANCE_DSS_WDT, &intrStatus);
-	  SDL_RTI_clearStatus(SDL_INSTANCE_DSS_WDT, intrStatus);
-		RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
+    SDL_RTI_getStatus(SDL_INSTANCE_DSS_WDT, &intrStatus);
+    SDL_RTI_clearStatus(SDL_INSTANCE_DSS_WDT, intrStatus);
+    RTIAppExpiredDwwdService(rtiModule, pConfig.SDL_RTI_dwwdWindowSize);
 #endif
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
 #if defined (M4F_CORE)
@@ -343,9 +343,9 @@ static void IntrDisable(uint32_t intsrc)
 #endif
 #endif
    /* Clear ESM registers. */
-#if defined (SOC_AM263X)
-  SDL_ESM_disableIntr(SDL_ESM_U_BASE, intsrc);
-  SDL_ESM_clrNError(SDL_INSTANCE_ESM0);
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+    SDL_ESM_disableIntr(SDL_ESM_U_BASE, intsrc);
+    SDL_ESM_clrNError(SDL_INSTANCE_ESM0);
 #endif
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
     SDL_ESM_clrNError(SDL_INSTANCE_ESM0);
@@ -355,17 +355,17 @@ static void IntrDisable(uint32_t intsrc)
 
 }
 
-#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,  uint32_t index, uint32_t intSrc, void *arg)
 {
     int32_t retVal = SDL_PASS;
 
-   DebugP_log("\nInterrupt is generated to ESM\n");
-   DebugP_log("    ESM Call back function called : instType 0x%x, intType 0x%x, " \
-               "grpChannel 0x%x, index 0x%x, intSrc 0x%x \r\n",
-               esmInst, esmIntrType, grpChannel, index, intSrc);
-   DebugP_log("  Take action \r\n");
+    DebugP_log("\nInterrupt is generated to ESM\n");
+    DebugP_log("    ESM Call back function called : instType 0x%x, intType 0x%x, " \
+                "grpChannel 0x%x, index 0x%x, intSrc 0x%x \r\n",
+                esmInst, esmIntrType, grpChannel, index, intSrc);
+    DebugP_log("  Take action \r\n");
 
     /* For clearing the interrupt */
     IntrDisable(intSrc);
@@ -377,13 +377,13 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntTyp
 #elif defined (SOC_AM273X) || defined (SOC_AWR294X)
 int32_t SDL_ESM_applicationCallbackFunction (SDL_ESM_Inst instance, int32_t grpChannel, int32_t vecNum, void *arg)
 {
-  int32_t retVal = SDL_PASS;
-  IntrDisable(vecNum);
+    int32_t retVal = SDL_PASS;
+    IntrDisable(vecNum);
 
-  isrFlag  |= RTI_ESM_INTRPT;
+    isrFlag  |= RTI_ESM_INTRPT;
 
-  /* For clearing the interrupt */
-  return retVal;
+    /* For clearing the interrupt */
+    return retVal;
 }
 #endif
 

@@ -88,7 +88,7 @@ volatile uint32_t Done_flag=0;
         1U);
     asm(" idle");
 
- }
+}
 
 void STC_func_test_main(void *args)
 {

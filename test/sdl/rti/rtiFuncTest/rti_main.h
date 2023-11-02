@@ -50,7 +50,7 @@
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 #include <sdl/esm/v0/sdl_esm.h>
 #include <sdl/esm/v0/v0_0/sdl_ip_esm.h>
 #elif defined (SOC_AM273X) || defined (SOC_AWR294X)
@@ -81,7 +81,7 @@
 #endif
 #define SOC_MODULES_END     (0xFFFFFFFFu)
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
 #define SDL_WDT_BASE SDL_WDT0_U_BASE
 #define SDL_ESM_U_BASE SDL_TOP_ESM_U_BASE
@@ -111,7 +111,7 @@
 #define SDL_WDT_BASE  SDL_DSS_WDT_U_BASE
 #define SDL_ESM_U_BASE SDL_DSS_ESM_U_BASE
 #endif
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 
 #elif defined (R5F_INPUTS)
 #define SDL_INSTANCE_ESM0 SDL_ESM_INST_MSS_ESM
@@ -204,7 +204,7 @@ void sdlApp_print(const char * str);
  */
 #define RTI_DWD_MIN_PRELOAD_VAL             (0x1FFFU)
 
-#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,
@@ -221,7 +221,7 @@ int32_t RTIDwwdIsClosedWindow(uint32_t baseAddr, uint32_t *pWinStatus);
 
 extern int32_t SDL_RTI_funcTest(void);
 
-#if defined (SOC_AM263X)|| defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (SOC_AM263X)|| defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX)
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,

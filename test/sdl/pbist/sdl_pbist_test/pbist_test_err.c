@@ -136,8 +136,8 @@ static int32_t PBIST_errNegativeTest(void)
     if (testResult == 0)
     {
         pInfo = SDL_PBIST_getInstInfo(APP_PBIST_TEST_NEG_INST);
-	/* Force instance info to support interrupt for code coverage */
-	pInfo->interruptNumber = 0x1;
+        /* Force instance info to support interrupt for code coverage */
+        pInfo->interruptNumber = 0x1;
         PBIST_TEST1_dplInit();
         sdlRet = SDL_PBIST_selfTest(APP_PBIST_TEST_NEG_INST, SDL_PBIST_TEST, APP_PBIST_TIMEOUT, &PBISTresult);
         if (sdlRet == SDL_PASS)

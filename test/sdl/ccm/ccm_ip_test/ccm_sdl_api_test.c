@@ -50,7 +50,7 @@
 #include <ccm_test_main.h>
 #include <sdl/r5/v0/sdl_mcu_armss_ccmr5.h>
 #include <sdl/r5/v0/sdl_ip_ccm.h>
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 #include <sdl/esm/v0/sdl_esm.h>
 #endif
 #if defined (SOC_AM273X)
@@ -71,7 +71,7 @@
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
-								   												   
+
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -121,7 +121,7 @@ static int32_t CCM_API_test(uint32_t instanceId)
             testResult = -1;
         }
     }
-	
+
     return (testResult);
 }
 
@@ -130,7 +130,7 @@ int32_t CCM_sdlApiTest(void)
 {
     int32_t    testResult = 0;
 	int32_t    j = 0;
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 	int32_t loop=2;
 #endif
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)

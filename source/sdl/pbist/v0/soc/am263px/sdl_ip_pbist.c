@@ -87,34 +87,34 @@ static void SDL_PBIST_setRAMInfoMaskStatus(SDL_pbistRegs* ptrPBISTRegs, uint64_t
 {
     uint64_t     index;
 
-     if (status == 0U)
-     {
-         /* Check if we need to disable all the memory groups? */
-         if (memGroupIndex == 0xFFU)
-         {
-             ptrPBISTRegs->RINFOL = 0U;
-             ptrPBISTRegs->RINFOU = 0U;
-         }
-         else
-         {
-            /*do nothing*/
-         }
-     }
-     else
-     {
-         /* Check if we need to enable all the memory groups? */
+    if (status == 0U)
+    {
+        /* Check if we need to disable all the memory groups? */
+        if (memGroupIndex == 0xFFU)
+        {
+            ptrPBISTRegs->RINFOL = 0U;
+            ptrPBISTRegs->RINFOU = 0U;
+        }
+        else
+        {
+        /*do nothing*/
+        }
+    }
+    else
+    {
+        /* Check if we need to enable all the memory groups? */
 
-             /* Enable the memory group for self-test. */
-             if (memGroupIndex < 32U)
-             {
-                 SDL_FINSR(ptrPBISTRegs->RINFOL, memGroupIndex, memGroupIndex, 1U);
-             }
-             else
-             {
-                 index = memGroupIndex - 32U;
-                 SDL_FINSR(ptrPBISTRegs->RINFOU, index, index, 1U);
-             }
-     }
+        /* Enable the memory group for self-test. */
+        if (memGroupIndex < 32U)
+        {
+            SDL_FINSR(ptrPBISTRegs->RINFOL, memGroupIndex, memGroupIndex, 1U);
+        }
+        else
+        {
+            index = memGroupIndex - 32U;
+            SDL_FINSR(ptrPBISTRegs->RINFOU, index, index, 1U);
+        }
+    }
 }
 
 static void SDL_PBIST_setAlgoStatus(SDL_pbistRegs* ptrPBISTRegs, uint32_t algoIndex, uint8_t status)
@@ -132,23 +132,23 @@ static void SDL_PBIST_setAlgoStatus(SDL_pbistRegs* ptrPBISTRegs, uint32_t algoIn
     }
     else
     {
-            /* Enable the algorithm for self-test. */
-            SDL_FINSR(ptrPBISTRegs->ALGO, algoIndex, algoIndex, 1U);
+        /* Enable the algorithm for self-test. */
+        SDL_FINSR(ptrPBISTRegs->ALGO, algoIndex, algoIndex, 1U);
     }
 }
 
 static void __attribute__((noinline)) SDL_PBIST_delay(void)
 {
-	 asm(" nop");
-     asm(" nop");
-     asm(" nop");
-     asm(" nop");
-     asm(" nop");
-     asm(" nop");
-     asm(" nop");
-     asm(" nop");
-     asm(" nop");
-     asm(" nop");
+    asm(" nop");
+    asm(" nop");
+    asm(" nop");
+    asm(" nop");
+    asm(" nop");
+    asm(" nop");
+    asm(" nop");
+    asm(" nop");
+    asm(" nop");
+    asm(" nop");
 }
 
 /**
@@ -185,7 +185,7 @@ int32_t SDL_PBIST_softReset(SDL_pbistRegs *pPBISTRegs)
         /* Zero out Clock Mux Select register */
         pPBISTRegs->CMS = ((uint32_t)0x0u);
 
-      SDL_MSS_disableTopPbist();
+        SDL_MSS_disableTopPbist();
     }
     return  sdlResult;
 }
@@ -255,14 +255,14 @@ int32_t SDL_PBIST_start(SDL_pbistRegs *pPBISTRegs,
         /*----------------------------------------------------------------
          * Program the Override register.
          *----------------------------------------------------------------*/
-		     pPBISTRegs->OVER = 0U;
+            pPBISTRegs->OVER = 0U;
 
         /*----------------------------------------------------------------
          * Configure ROM MASK Register to ensure both Algorithm and
          * memory information is picked from PBIST ROM.
          *----------------------------------------------------------------*/
 
-        pPBISTRegs->ROM = 0x3u;
+            pPBISTRegs->ROM = 0x3u;
         /*----------------------------------------------------------------
         * Configure Interrupt and call-back function.
         *----------------------------------------------------------------*/
@@ -279,7 +279,7 @@ int32_t SDL_PBIST_start(SDL_pbistRegs *pPBISTRegs,
          *   will execute test algorithms that are stored in the PBIST ROM.
          * - This should cause the PBIST done interrupt
          *************************************************************/
-		     pPBISTRegs->DLR = 0x21CU;
+            pPBISTRegs->DLR = 0x21CU;
 
     }
 

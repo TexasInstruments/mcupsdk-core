@@ -256,7 +256,7 @@ void STC_func_test_main(void *args)
 {
     Drivers_open();
     Board_driversOpen();
-     /* disable IRQ */
+    /* disable IRQ */
     HwiP_disable();
 
     int32_t testTypePos = SDL_STC_TEST;

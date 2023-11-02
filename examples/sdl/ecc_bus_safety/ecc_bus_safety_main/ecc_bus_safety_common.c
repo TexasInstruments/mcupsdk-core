@@ -388,7 +388,7 @@ void SDL_ECC_BUS_SAFETY_DSS_getEDMAParameters(uint32_t busSftyNode , uint32_t *d
 #endif
 #endif
 
-#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X)
+#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX)
 #if defined (SUBSYS_MSS)
 /********************************************************************************************************
 *   Function to select the parameters for EDMA config according to Nodes
@@ -451,7 +451,7 @@ void SDL_ECC_BUS_SAFETY_MSS_getEDMAParameters(uint32_t busSftyNode , uint32_t *d
             break;
         }
         #endif
-        #if defined (SOC_AM263X)
+        #if defined (SOC_AM263X) || defined (SOC_AM263PX)
         /* MSS TPTC A0 RD */
         case SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD :
         {
@@ -520,34 +520,34 @@ void test_edmaATransfer(uint32_t busSftyNode, uint32_t dmaCh, uint32_t tcc,uint3
      */
     srcBuffPtr = (uint32_t *) gEdmaTestSrcBuff;
     dstBuffPtr = (uint32_t *) gEdmaTestDstBuff;
-#if defined (SOC_AM273X) || defined (SOC_AWR294X)
-#if defined (SUBSYS_MSS)
-   if(busSftyNode == SDL_ECC_BUS_SAFETY_MSS_PCR)
-   {
-       dstBuffPtr = (uint32_t *) (SDL_MSS_CTRL_U_BASE);
-       srcBuffPtr = (uint32_t *) (SDL_MSS_L2_U_BASE);
-   }
-   else if(busSftyNode == SDL_ECC_BUS_SAFETY_MSS_PCR2)
-   {
-       dstBuffPtr = (uint32_t *) (SDL_MSS_GPADC_REG_U_BASE);
-       srcBuffPtr = (uint32_t *) (SDL_MSS_L2_U_BASE);
-   }
-   else
-   {
-       dstBuffPtr = (uint32_t *) gEdmaTestDstBuff;
-   }
-#endif
-#endif
-#if defined (SUBSYS_DSS)
-   if( busSftyNode == SDL_ECC_BUS_SAFETY_DSS_PCR)
-   {
-       dstBuffPtr = (uint32_t *) (SDL_DSS_CTRL_U_BASE);
-   }
-   else
-   {
-       dstBuffPtr = (uint32_t *) gEdmaTestDstBuff;
-   }
-#endif
+    #if defined (SOC_AM273X) || defined (SOC_AWR294X)
+    #if defined (SUBSYS_MSS)
+    if(busSftyNode == SDL_ECC_BUS_SAFETY_MSS_PCR)
+    {
+        dstBuffPtr = (uint32_t *) (SDL_MSS_CTRL_U_BASE);
+        srcBuffPtr = (uint32_t *) (SDL_MSS_L2_U_BASE);
+    }
+    else if(busSftyNode == SDL_ECC_BUS_SAFETY_MSS_PCR2)
+    {
+        dstBuffPtr = (uint32_t *) (SDL_MSS_GPADC_REG_U_BASE);
+        srcBuffPtr = (uint32_t *) (SDL_MSS_L2_U_BASE);
+    }
+    else
+    {
+        dstBuffPtr = (uint32_t *) gEdmaTestDstBuff;
+    }
+    #endif
+    #endif
+    #if defined (SUBSYS_DSS)
+    if( busSftyNode == SDL_ECC_BUS_SAFETY_DSS_PCR)
+    {
+        dstBuffPtr = (uint32_t *) (SDL_DSS_CTRL_U_BASE);
+    }
+    else
+    {
+        dstBuffPtr = (uint32_t *) gEdmaTestDstBuff;
+    }
+    #endif
     /* Request channel */
     EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
          dmaCh, tcc, param, queNum);
@@ -613,19 +613,19 @@ void reg_writes(UWORD32 wdth, UWORD32 addrs, UWORD32 wr_data)
 
 void test_mem_write(UWORD32 strt_addr, unsigned char* ptr, UWORD32 sz)
 {
-  int i;
-  UWORD32* write_data;
-  write_data = (UWORD32*)ptr;
-  for(i=0; i<(sz/4); i++) {
-    reg_writes(32,(strt_addr+(i * 4)), write_data[i]);
-  }
+    int i;
+    UWORD32* write_data;
+    write_data = (UWORD32*)ptr;
+    for(i=0; i<(sz/4); i++) {
+        reg_writes(32,(strt_addr+(i * 4)), write_data[i]);
+    }
 }
 
 void cpsw_transfer()
 {
-  /*WRITE TO HDPs*/
-  HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_FH0_HDP, NON_CPU_TX_BUFFER_DESC);
-  HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_TH0_HDP, NON_CPU_RX_BUFFER_DESC);
+    /*WRITE TO HDPs*/
+    HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_FH0_HDP, NON_CPU_TX_BUFFER_DESC);
+    HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_TH0_HDP, NON_CPU_RX_BUFFER_DESC);
 }
 
 
@@ -726,7 +726,7 @@ void setup_CPSW()
     /*CPDMA_FH_Control > bit 0 >  1 - FHost Enabled */
     HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_FH_Control, 0x00000001);
     /*CPDMA_TH_Control > bit 0 >  1 - THost DMA Enabled */
-  HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_TH_Control, 0x00000001);
+    HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_TH_Control, 0x00000001);
 }
 
 #endif

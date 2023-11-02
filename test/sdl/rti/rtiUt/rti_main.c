@@ -104,7 +104,7 @@ typedef struct {
 
 } SOC_SDL_ModuleClockFrequency;
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 SOC_SDL_ModuleClockFrequency sdl_gSocModulesClockFrequency[] = {
     { SOC_RcmPeripheralId_WDT0, SOC_RcmPeripheralClockSource_SYS_CLK, 32000 },
 
@@ -122,26 +122,26 @@ SOC_SDL_ModuleClockFrequency sdl_gSocModulesClockFrequency[] = {
 static int32_t Sdl_Module_clockEnable()
 {
     int32_t status;
-#if defined (SOC_AM263X)
-        status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_WDT0, 1);
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+    status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_WDT0, 1);
 #endif
 #if defined (SOC_AM273X) || (SOC_AWR294X)
-        status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_MSS_WDT, 1);
+    status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_MSS_WDT, 1);
 #endif
-        DebugP_assertNoLog(status == SystemP_SUCCESS);
+    DebugP_assertNoLog(status == SystemP_SUCCESS);
 
-  return status;
+    return status;
 }
 static int32_t Sdl_Module_clockSetFrequency()
 {
     int32_t status;
-        status = SOC_moduleSetClockFrequency(
-                    sdl_gSocModulesClockFrequency[0].moduleId,
-                    sdl_gSocModulesClockFrequency[0].clkId,
-                    sdl_gSocModulesClockFrequency[0].clkRate
-                    );
-        DebugP_assertNoLog(status == SystemP_SUCCESS);
-  return status;
+    status = SOC_moduleSetClockFrequency(
+                sdl_gSocModulesClockFrequency[0].moduleId,
+                sdl_gSocModulesClockFrequency[0].clkId,
+                sdl_gSocModulesClockFrequency[0].clkRate
+                );
+    DebugP_assertNoLog(status == SystemP_SUCCESS);
+    return status;
 }
 #endif
 static int32_t sdlApp_dplInit(void)

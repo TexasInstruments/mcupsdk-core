@@ -36,7 +36,7 @@
  *  \brief Common across use-cases using MCRC Semi-CPU mode.
  *
  */
- 
+
 /*===========================================================================*/
 /*                         Include Files                                     */
 /*===========================================================================*/
@@ -68,7 +68,7 @@
 #define MCRC_APP_CRC_PATTERN_CNT             ((uint32_t)(MCRC_APP_USER_DATA_SIZE / MCRC_APP_CRC_PATTERN_SIZE))
 #define MCRC_APP_CRC_SECT_CNT                (1U)
 
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #define MCRC_USECASES   (4U)
 #elif defined(SOC_AM273X)||defined(SOC_AWR294X)
 #define MCRC_USECASES   (2U)
@@ -93,11 +93,11 @@ uint64_t semiModeTime, cpuModeTime;
 static    SDL_MCRC_ConfigParams_t params[MCRC_USECASES] =
 {
     {
-#if defined(SOC_AM263X)
-     MCRC0,
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+        MCRC0,
 #endif
 #if defined(SOC_AM273X)||defined(SOC_AWR294X)
-     MCRC_INSTANCE,
+        MCRC_INSTANCE,
 #endif
         (uint32_t) SDL_MCRC_CHANNEL_1,
         (uint32_t) SDL_MCRC_OPERATION_MODE_SEMICPU,
@@ -112,11 +112,11 @@ static    SDL_MCRC_ConfigParams_t params[MCRC_USECASES] =
         (uint32_t) &gMCRCSrcBuffer[0],
     },
     {
-#if defined(SOC_AM263X)
-     MCRC0,
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+        MCRC0,
 #endif
 #if defined(SOC_AM273X)||defined(SOC_AWR294X)
-     MCRC_INSTANCE,
+        MCRC_INSTANCE,
 #endif
         (uint32_t) SDL_MCRC_CHANNEL_2,
         (uint32_t) SDL_MCRC_OPERATION_MODE_SEMICPU,
@@ -130,7 +130,7 @@ static    SDL_MCRC_ConfigParams_t params[MCRC_USECASES] =
         MCRC_APP_USER_DATA_SIZE,
         (uint32_t) &gMCRCSrcBuffer[0],
     },
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
     {
         MCRC0,
         (uint32_t) SDL_MCRC_CHANNEL_3,
@@ -166,8 +166,8 @@ static    SDL_MCRC_ConfigParams_t params[MCRC_USECASES] =
 /*===========================================================================*/
 void EDMA_mcrcInit(void)
 {
-   Drivers_open();
-   Board_driversOpen();
+    Drivers_open();
+    Board_driversOpen();
 }
 
 void EDMA_mcrcDeinit(void)
@@ -239,7 +239,7 @@ int32_t mcrcSemiCPU_main(void)
             signBuffPtr = (uint32_t *)gTestSignBuff;
 
             cpuModeTime = ClockP_getTimeUsec();
-			
+
             /* compute the MCRC by writing the data buffer on which MCRC computation is needed */
             for (loopCnt = 0; loopCnt < MCRC_APP_CRC_PATTERN_CNT; loopCnt++)
             {

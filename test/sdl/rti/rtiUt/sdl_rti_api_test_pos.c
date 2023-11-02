@@ -58,16 +58,16 @@ int32_t SDL_RTI_posTest(void)
 *******************************************************************************************/
 
     if (testStatus == SDL_APP_TEST_PASS)
-     {
+    {
 
-            sdlRet = SDL_RTI_config(( SDL_INSTANCE_RTI), &pConfig);
+        sdlRet = SDL_RTI_config(( SDL_INSTANCE_RTI), &pConfig);
 
-            if (sdlRet != SDL_PASS)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-                DebugP_log("SDL_RTI_config: failure on line no. %d \r\n", __LINE__);
-            }
-     }
+        if (sdlRet != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDL_RTI_config: failure on line no. %d \r\n", __LINE__);
+        }
+    }
 
 
 
@@ -76,16 +76,16 @@ int32_t SDL_RTI_posTest(void)
 *******************************************************************************************/
 
     if (testStatus == SDL_APP_TEST_PASS)
-     {
-            sdlRet = SDL_RTI_verifyConfig((SDL_INSTANCE_RTI), &pConfig);
+    {
+        sdlRet = SDL_RTI_verifyConfig((SDL_INSTANCE_RTI), &pConfig);
 
-            if (sdlRet != SDL_PASS)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-                DebugP_log("SDL_RTI_verifyConfig: failure on line no. %d \r\n", __LINE__);
-            }
+        if (sdlRet != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDL_RTI_verifyConfig: failure on line no. %d \r\n", __LINE__);
+        }
 
-     }
+    }
 
 
 
@@ -95,15 +95,15 @@ int32_t SDL_RTI_posTest(void)
 *******************************************************************************************/
 
      if (testStatus == SDL_APP_TEST_PASS)
-     {
-            sdlRet = SDL_RTI_start((SDL_INSTANCE_RTI));
+    {
+        sdlRet = SDL_RTI_start((SDL_INSTANCE_RTI));
 
-            if (sdlRet != SDL_PASS)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-                DebugP_log("SDL_RTI_start: failure on line no. %d \r\n", __LINE__);
-            }
-     }
+        if (sdlRet != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDL_RTI_start: failure on line no. %d \r\n", __LINE__);
+        }
+    }
 
 
 
@@ -113,13 +113,13 @@ int32_t SDL_RTI_posTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-            sdlRet = SDL_RTI_service((SDL_INSTANCE_RTI));
+        sdlRet = SDL_RTI_service((SDL_INSTANCE_RTI));
 
-            if (sdlRet != SDL_PASS)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-                DebugP_log("\n  SDL_RTI_service positive test failed on line no: %d \r\n", __LINE__);
-            }
+        if (sdlRet != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("\n  SDL_RTI_service positive test failed on line no: %d \r\n", __LINE__);
+        }
     }
 
 
@@ -130,13 +130,13 @@ int32_t SDL_RTI_posTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-            sdlRet = SDL_RTI_clearStatus((SDL_INSTANCE_RTI), STATUS_VLD);
+        sdlRet = SDL_RTI_clearStatus((SDL_INSTANCE_RTI), STATUS_VLD);
 
-            if (sdlRet != SDL_PASS)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-                DebugP_log("\n  SDL_RTI_clearStatus positive test failed on line no: %d \r\n", __LINE__);
-            }
+        if (sdlRet != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("\n  SDL_RTI_clearStatus positive test failed on line no: %d \r\n", __LINE__);
+        }
     }
 
 
@@ -147,13 +147,13 @@ int32_t SDL_RTI_posTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-            sdlRet = SDL_RTI_getStatus((SDL_INSTANCE_RTI), &status);
+        sdlRet = SDL_RTI_getStatus((SDL_INSTANCE_RTI), &status);
 
-            if (sdlRet != SDL_PASS)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-                DebugP_log("\n  SDL_RTI_getStatus positive test failed on line no: %d \r\n", __LINE__);
-            }
+        if (sdlRet != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("\n  SDL_RTI_getStatus positive test failed on line no: %d \r\n", __LINE__);
+        }
     }
 
 
@@ -164,13 +164,13 @@ int32_t SDL_RTI_posTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-            sdlRet = SDL_RTI_readStaticRegs((SDL_INSTANCE_RTI), &pstaticRegs);
+        sdlRet = SDL_RTI_readStaticRegs((SDL_INSTANCE_RTI), &pstaticRegs);
 
-            if (sdlRet != SDL_PASS)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-                DebugP_log("\n  SDL_RTI_readStaticRegs positive test failed on line no: %d \r\n", __LINE__);
-            }
+        if (sdlRet != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("\n  SDL_RTI_readStaticRegs positive test failed on line no: %d \r\n", __LINE__);
+        }
     }
 
 
@@ -186,20 +186,20 @@ int32_t SDL_RTI_posTest(void)
             switch (i)
             {
                 case 0:
-                        pConfig.SDL_RTI_dwwdWindowSize = RTI_DWWD_WINDOWSIZE_50_PERCENT;
-                        break;
+                    pConfig.SDL_RTI_dwwdWindowSize = RTI_DWWD_WINDOWSIZE_50_PERCENT;
+                    break;
                 case 1:
-                        pConfig.SDL_RTI_dwwdWindowSize = RTI_DWWD_WINDOWSIZE_25_PERCENT;
-                        break;
+                    pConfig.SDL_RTI_dwwdWindowSize = RTI_DWWD_WINDOWSIZE_25_PERCENT;
+                    break;
                 case 2:
-                        pConfig.SDL_RTI_dwwdWindowSize = RTI_DWWD_WINDOWSIZE_12_5_PERCENT;
-                        break;
+                    pConfig.SDL_RTI_dwwdWindowSize = RTI_DWWD_WINDOWSIZE_12_5_PERCENT;
+                    break;
                 case 3:
-                        pConfig.SDL_RTI_dwwdWindowSize = RTI_DWWD_WINDOWSIZE_6_25_PERCENT;
-                        break;
+                    pConfig.SDL_RTI_dwwdWindowSize = RTI_DWWD_WINDOWSIZE_6_25_PERCENT;
+                    break;
                 case 4:
-                        pConfig.SDL_RTI_dwwdWindowSize = RTI_DWWD_WINDOWSIZE_3_125_PERCENT;
-                        break;
+                    pConfig.SDL_RTI_dwwdWindowSize = RTI_DWWD_WINDOWSIZE_3_125_PERCENT;
+                    break;
             }
 
             sdlRet = SDL_RTI_config(validInstance, &pConfig);

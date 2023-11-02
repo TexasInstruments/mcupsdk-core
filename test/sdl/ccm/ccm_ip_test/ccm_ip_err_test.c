@@ -77,7 +77,7 @@ static int32_t CCM_errTest(void)
 	/* initialize the address */
 	pRegs        = (SDL_vimRegs *)(uintptr_t)SDL_MSS_VIM_R5A_U_BASE;
 #endif
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 	/* initialize the address */
 	pRegs        = (SDL_vimRegs *)(uintptr_t)SDL_VIM_U_BASE;
 #endif
@@ -107,7 +107,7 @@ static int32_t CCM_errTest(void)
 			testResult = -1;
 		}
 	}
-	
+
     if (testResult == 0)
     {
 		sdlResult = SDL_armR5ConfigureCCMRegister((uintptr_t) NULL, (SDL_McuArmssCcmR5RegId)0U, valToBeRead, &metaInfo);
@@ -117,7 +117,7 @@ static int32_t CCM_errTest(void)
 			testResult = -1;
 		}
 	}
-	
+
     if (testResult == 0)
     {
 		sdlResult = SDL_armR5CCMSetOperationModeKey((uintptr_t) NULL, (SDL_McuArmssCcmR5ModuleId)0U, (SDL_McuArmssCcmR5OpModeKey)0U, &metaInfo);
@@ -147,7 +147,7 @@ static int32_t CCM_errTest(void)
             testResult = -1;
         }
     }
-	
+
     if (testResult == 0)
     {
 		sdlResult = SDL_armR5CCMGetCompareError((uintptr_t) NULL, (SDL_McuArmssCcmR5ModuleId)0U, &cmpError, &metaInfo);
@@ -177,7 +177,7 @@ static int32_t CCM_errTest(void)
             testResult = -1;
         }
     }
-	
+
     if (testResult == 0)
     {
 		sdlResult = SDL_armR5CCMGetOperationModeKey((uintptr_t) NULL, (SDL_McuArmssCcmR5ModuleId)0U, &opModeKey, &metaInfo);
@@ -306,7 +306,7 @@ static int32_t CCM_errTest(void)
             testResult = -1;
             DebugP_log("\n  VIM Error test failed on line no: %d \n", __LINE__);
         }
-    }	
+    }
     if (testResult == 0)
     {
         sdlResult = SDL_VIM_cfgIntr(pRegs, 0xFFU, 0xFFU, 0x1U, 0x1U, 0xF0U);
@@ -518,7 +518,7 @@ static int32_t CCM_errTest(void)
             testResult = 0;
         }
     }
-	
+
     if (testResult == 0)
     {
         sdlResult = SDL_VIM_verifyCfgIntr(pRegs, 11U, 0xFU, 0x1U, 0x1U, 1U);
@@ -542,8 +542,8 @@ static int32_t CCM_errTest(void)
             DebugP_log("\n  VIM Error test failed on line no: %d \n", __LINE__);
         }
         else{
-                    testResult = 0;
-                }
+            testResult = 0;
+        }
     }
     if (testResult == 0)
     {
@@ -555,8 +555,8 @@ static int32_t CCM_errTest(void)
             DebugP_log("\n  VIM Error test failed on line no: %d \n", __LINE__);
         }
         else{
-                    testResult = 0;
-                }
+            testResult = 0;
+        }
     }
     if (testResult == 0)
     {
@@ -568,8 +568,8 @@ static int32_t CCM_errTest(void)
             DebugP_log("\n  VIM Error test failed on line no: %d \n", __LINE__);
         }
         else{
-                            testResult = 0;
-                        }
+            testResult = 0;
+        }
     }
     if (testResult == 0)
     {
@@ -581,8 +581,8 @@ static int32_t CCM_errTest(void)
             DebugP_log("\n  VIM Error test failed on line no: %d \n", __LINE__);
         }
         else{
-                            testResult = 0;
-                        }
+            testResult = 0;
+        }
     }
     if (testResult == 0)
     {
@@ -594,8 +594,8 @@ static int32_t CCM_errTest(void)
             DebugP_log("\n  VIM Error test failed on line no: %d \n", __LINE__);
         }
         else{
-                            testResult = 0;
-                        }
+            testResult = 0;
+        }
     }
 	if (testResult == 0)
     {

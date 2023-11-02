@@ -232,7 +232,7 @@ void STC_main(void *args)
 {
     Drivers_open();
     Board_driversOpen();
-     /* disable IRQ */
+    /* disable IRQ */
     HwiP_disable();
 
     int32_t core_Instance, core_IndexMax = 1;

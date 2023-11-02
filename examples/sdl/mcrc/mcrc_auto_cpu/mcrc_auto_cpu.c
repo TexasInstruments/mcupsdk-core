@@ -36,7 +36,7 @@
  *  \brief Common across use-cases using MCRC Auto-CPU mode.
  *
  */
- 
+
 /*===========================================================================*/
 /*                         Include Files                                     */
 /*===========================================================================*/
@@ -59,7 +59,7 @@
 #define MCRC_DMCH_VALUE1 EDMA_DSS_TPCC_A_EVT_MCRC_DMA_REQ1
 #endif
 #endif
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #define MCRC_DMCH_VALUE0 DMA_TRIG_XBAR_EDMA_MODULE_0
 #define MCRC_DMCH_VALUE1 DMA_TRIG_XBAR_EDMA_MODULE_1
 #define MCRC_DMCH_VALUE2 DMA_TRIG_XBAR_EDMA_MODULE_2
@@ -81,7 +81,7 @@
 #define MCRC_APP_CRC_PATTERN_CNT             ((uint32_t)(MCRC_APP_USER_DATA_SIZE / MCRC_APP_CRC_PATTERN_SIZE))
 #define MCRC_APP_CRC_SECT_CNT                (1U)
 
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #define MCRC_USECASES	(4U)
 #elif defined(SOC_AM273X)||defined(SOC_AWR294X)
 #define MCRC_USECASES	(2U)
@@ -106,11 +106,11 @@ uint64_t autoModeTime, cpuModeTime;
 static    SDL_MCRC_ConfigParams_t params[MCRC_USECASES] =
 {
     {
-#if defined(SOC_AM263X)
-     MCRC0,
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+        MCRC0,
 #endif
 #if defined(SOC_AM273X)||defined(SOC_AWR294X)
-     MCRC_INSTANCE,
+        MCRC_INSTANCE,
 #endif
         (uint32_t) SDL_MCRC_CHANNEL_1,
         (uint32_t) SDL_MCRC_OPERATION_MODE_AUTO,
@@ -125,11 +125,11 @@ static    SDL_MCRC_ConfigParams_t params[MCRC_USECASES] =
 		(uint32_t) &gMCRCSrcBuffer[0],
     },
 	{
-#if defined(SOC_AM263X)
-     MCRC0,
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+        MCRC0,
 #endif
 #if defined(SOC_AM273X)||defined(SOC_AWR294X)
-     MCRC_INSTANCE,
+        MCRC_INSTANCE,
 #endif
         (uint32_t) SDL_MCRC_CHANNEL_2,
         (uint32_t) SDL_MCRC_OPERATION_MODE_AUTO,
@@ -143,7 +143,7 @@ static    SDL_MCRC_ConfigParams_t params[MCRC_USECASES] =
         MCRC_APP_USER_DATA_SIZE,
 		(uint32_t) &gMCRCSrcBuffer[0],
     },
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 	{
 		MCRC0,
         (uint32_t) SDL_MCRC_CHANNEL_3,
@@ -179,8 +179,8 @@ static    SDL_MCRC_ConfigParams_t params[MCRC_USECASES] =
 /*===========================================================================*/
 void EDMA_mcrcInit(void)
 {
-   Drivers_open();
-   Board_driversOpen();
+    Drivers_open();
+    Board_driversOpen();
 }
 
 void EDMA_mcrcDeinit(void)
@@ -211,17 +211,17 @@ int32_t mcrcAutoCPU_main(void)
 	SDL_MCRC_Signature_t        psaSignRegVal,refSignVal;
 
     EDMA_mcrcInit();
-	
+
 	for(testCase=0;testCase<MCRC_USECASES;testCase++)
 	{
 		DebugP_log("\nMCRC AUTO CPU mode on Channel %d: Transfer Test Started...\r\n", testCase+1);
-		
+
 		for (loopCnt = 0U; loopCnt < MCRC_APP_USER_DATA_SIZE; loopCnt++)
 		{
 			gMCRCSrcBuffer[loopCnt] = (uint8_t)loopCnt;
 		}
 		CacheP_wb((void *)gMCRCSrcBuffer, MCRC_APP_USER_DATA_SIZE, CacheP_TYPE_ALL);
-	
+
 		/* Get the reference crc sign value. The reference crc sign value is retrieved
 		by performing auto cpu mode CRC on the same set of data used for autoCPU mode.
 		This is done in the test app to get the reference value for the test, but is
@@ -235,29 +235,29 @@ int32_t mcrcAutoCPU_main(void)
 			patternCnt  = params[testCase].mcrcPatternSize;
 			sectCnt     = params[testCase].mcrcSectorCount;
 			uint32_t *srcBufferPtr;
-			
+
 			/* Reset the CRC channel*/
 			SDL_MCRC_channelReset(instance, mcrcChannel);
 			/* Get CRC PSA signature register address */
 			SDL_MCRC_getPSASigRegAddr(instance, mcrcChannel, &psaSignRegAddr);
-			
+
 			/* Configure CRC channel */
 			SDL_MCRC_configCRCType(instance, mcrcChannel);
 			SDL_MCRC_config(instance, mcrcChannel, patternCnt, sectCnt, SDL_MCRC_OPERATION_MODE_FULLCPU);
-			
+
 			/* Get CRC PSA signature register address */
 			SDL_MCRC_getPSASigRegAddr(instance, mcrcChannel, &psaSignRegAddr);
-						
+
 			srcBufferPtr = (uint32_t *)gMCRCSrcBuffer;
 			signBuffPtr = (uint32_t *)gTestSignBuff;
-			
+
 			cpuModeTime = ClockP_getTimeUsec();
 			/* compute the MCRC by writing the data buffer on which MCRC computation is needed */
 			for (loopCnt = 0; loopCnt < MCRC_APP_CRC_PATTERN_CNT; loopCnt++)
 			{
 				HW_WR_REG32(psaSignRegAddr.regL, srcBufferPtr[loopCnt]);
 			}
-			
+
 			/* Fetch MCRC signature value */
 			SDL_MCRC_getPSASig(instance, mcrcChannel, &refSignVal);
 			DebugP_log("\n MCRC signature value : 0x%x%xU",
@@ -323,7 +323,7 @@ int32_t mcrcAutoCPU_main(void)
 			testStatus = EDMA_allocDmaChannel(gEdmaHandle[0], &dmaCh0);
 			DebugP_assert(testStatus == SystemP_SUCCESS);
 #endif
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 			if(testCase==0)
 			{
 				dmaCh0 = MCRC_DMCH_VALUE0;
@@ -351,7 +351,7 @@ int32_t mcrcAutoCPU_main(void)
 			param0 = EDMA_RESOURCE_ALLOC_ANY;
 			testStatus = EDMA_allocParam(gEdmaHandle[0], &param0);
 			DebugP_assert(testStatus == SystemP_SUCCESS);
-	
+
 			dmaCh1 = EDMA_RESOURCE_ALLOC_ANY;
 			testStatus = EDMA_allocDmaChannel(gEdmaHandle[0], &dmaCh1);
 			DebugP_assert(testStatus == SystemP_SUCCESS);
@@ -363,22 +363,22 @@ int32_t mcrcAutoCPU_main(void)
 			param1 = EDMA_RESOURCE_ALLOC_ANY;
 			testStatus = EDMA_allocParam(gEdmaHandle[0], &param1);
 			DebugP_assert(testStatus == SystemP_SUCCESS);
-	
+
 			srcBuffPtr = (uint8_t *)gMCRCSrcBuffer;
 
 			signBuffPtr[0] = (uint32_t)refSignVal.regL;
 			signBuffPtr[1] = (uint32_t)refSignVal.regH;
-	
+
 			CacheP_wb((void *)signBuffPtr, MCRC_APP_CRC_PATTERN_SIZE, CacheP_TYPE_ALL);
-	
+
 			EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
 						dmaCh0, tcc0, param0, EDMA_TEST_EVT_QUEUE_NO);
 			EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
 						dmaCh1, tcc1, param1, EDMA_TEST_EVT_QUEUE_NO);
-				
+
 			/* Disable the interrupt for the channel*/
 			EDMA_enableEvtIntrRegion(baseAddr, regionId, dmaCh0);
-	
+
 			/* Program Param Set */
 			EDMA_ccPaRAMEntry_init(&edmaParam0);
 			edmaParam0.srcAddr      = (uint32_t)SOC_virtToPhy(signBuffPtr);
@@ -426,10 +426,10 @@ int32_t mcrcAutoCPU_main(void)
 			/* config.paramSetConfig.destinationAddressingMode = (uint8_t) EDMA_ADDRESSING_MODE_FIFO_WRAP; */
 			edmaParam1.opt |= (EDMA_ADDRESSING_MODE_FIFO_WRAP << EDMA_TPCC_OPT_DAM_SHIFT) & EDMA_TPCC_OPT_DAM_MASK;
 			edmaParam1.opt |= (EDMA_FIFO_WIDTH_32BIT << EDMA_TPCC_OPT_FWID_SHIFT) & EDMA_TPCC_OPT_FWID_MASK;
-	
+
 			EDMA_setPaRAM(baseAddr, param0, &edmaParam0);
 			EDMA_setPaRAM(baseAddr, param1, &edmaParam1);
-	
+
 			testStatus = SemaphoreP_constructBinary(&gEdmaTransferDoneSem, 0);
 			DebugP_assert(SystemP_SUCCESS == testStatus);
 
@@ -439,14 +439,14 @@ int32_t mcrcAutoCPU_main(void)
 			intrObj.appData = (void *)&gEdmaTransferDoneSem;
 			testStatus = EDMA_registerIntr(gEdmaHandle[0], &intrObj);
 			DebugP_assert(testStatus == SystemP_SUCCESS);
-	
+
 			autoModeTime = ClockP_getTimeUsec();
 			EDMA_enableTransferRegion(baseAddr, regionId, dmaCh0,
 	                          EDMA_TRIG_MODE_EVENT);
-						
+
 			/* Trigger channel dma2 using SW */
 			for (loopCnt = 0; loopCnt < (MCRC_APP_CRC_SECT_CNT); loopCnt++)
-			{	
+			{
 				EDMA_enableTransferRegion(baseAddr, regionId, dmaCh1, EDMA_TRIG_MODE_MANUAL);
 				SemaphoreP_pend(&gEdmaTransferDoneSem, SystemP_WAIT_FOREVER);
 			}
@@ -456,13 +456,13 @@ int32_t mcrcAutoCPU_main(void)
 			testStatus = EDMA_unregisterIntr(gEdmaHandle[0], &intrObj);
 			SemaphoreP_destruct(&gEdmaTransferDoneSem);
 			DebugP_assert(testStatus == SystemP_SUCCESS);
-	
+
 			/* Free channel */
 			EDMA_freeChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
 					dmaCh0, EDMA_TRIG_MODE_MANUAL, tcc0, EDMA_TEST_EVT_QUEUE_NO);
 			EDMA_freeChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
 					dmaCh1, EDMA_TRIG_MODE_MANUAL, tcc1, EDMA_TEST_EVT_QUEUE_NO);
-			
+
 			/* Free the EDMA resources managed by driver. */
 			testStatus = EDMA_freeDmaChannel(gEdmaHandle[0], &dmaCh0);
 			DebugP_assert(testStatus == SystemP_SUCCESS);
@@ -476,8 +476,8 @@ int32_t mcrcAutoCPU_main(void)
 			DebugP_assert(testStatus == SystemP_SUCCESS);
 			testStatus = EDMA_freeParam(gEdmaHandle[0], &param1);
 			DebugP_assert(testStatus == SystemP_SUCCESS);
-	
-	
+
+
 			/* Get MCRC PSA signature register address */
 			SDL_MCRC_getPSASectorSig(instance, mcrcChannel, &psaSignRegVal);
 			SDL_MCRC_getIntrStatus(instance, mcrcChannel, &intrStatus);
@@ -507,7 +507,7 @@ int32_t mcrcAutoCPU_main(void)
 			}
 			SDL_MCRC_clearIntr(instance, mcrcChannel, SDL_MCRC_CHANNEL_IRQSTATUS_RAW_MAIN_ALL);
 		}
-	}	
+	}
     EDMA_mcrcDeinit();
 	return (retVal + retVal1);
 }

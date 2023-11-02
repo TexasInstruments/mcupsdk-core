@@ -59,7 +59,7 @@
 #define  CCM_IP_API_TEST_ID       (0U)
 #define  CCM_IP_ERROR_TEST_ID     (1U)
 #define  CCM_TOTAL_NUM_TESTS      (2U)
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 #define  CCM_NUM_INSTANCE         (3U)
 #define INSTANCE 		SDL_R5SS0_CCM
 #endif
@@ -185,10 +185,10 @@ void ccm_test_main(void *args)
 {
     /* Declaration of variables */
     int32_t  testResult;
-	
+
 	Drivers_open();
     Board_driversOpen();
-	
+
     /* Initialize DPL module */
     testResult = sdlApp_dplInit();
 

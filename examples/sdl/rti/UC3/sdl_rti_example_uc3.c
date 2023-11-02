@@ -56,7 +56,7 @@
 #define SDL_RTI_BASE SDL_RTI8_CFG_BASE
 #endif
 #endif
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 #define SDL_INSTANCE_RTI SDL_INSTANCE_WDT0
 #define SDL_RTI_BASE SDL_WDT0_U_BASE
 #endif
@@ -78,8 +78,8 @@
 
 volatile uint32_t isrFlag = RTI_NO_INTERRUPT;
 /**< Flag used to indicate interrupt is generated */
-  SDL_RTI_configParms     pConfig;
-  uint32_t rtiModule = SDL_RTI_BASE;
+SDL_RTI_configParms     pConfig;
+uint32_t rtiModule = SDL_RTI_BASE;
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -305,7 +305,7 @@ static void RTISetClockSource(uint32_t rtiModuleSelect,
 {
 #if !defined (SOC_AWR294X)
     switch (rtiModuleSelect) {
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
         case SDL_WDT0_U_BASE:
             HW_WR_FIELD32(SDL_MCU_CTRL_MMR0_CFG0_BASE +
                           SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL,
@@ -354,7 +354,7 @@ static void RTISetClockSource(uint32_t rtiModuleSelect,
 static uint32_t RTIGetPreloadValue(uint32_t rtiClkSource, uint32_t timeoutVal)
 {
     uint32_t clkFreqKHz       = (uint32_t) RTI_CLOCK_SOURCE_32KHZ_FREQ_KHZ,
-             timeoutNumCycles = 0;
+            timeoutNumCycles = 0;
 
     switch (rtiClkSource)
     {
@@ -379,7 +379,7 @@ static void IntrDisable(uint32_t intsrc)
     SDL_RTI_getStatus(SDL_INSTANCE_RTI, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_RTI, intrStatus);
     /* Clear ESM registers. */
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX)
     SDL_ESM_disableIntr(SDL_TOP_ESM_U_BASE, intsrc);
     SDL_ESM_clrNError(SDL_ESM_INST_MAIN_ESM0);
 #endif
@@ -389,7 +389,7 @@ static void IntrDisable(uint32_t intsrc)
 #endif
 }
 
-#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,  uint32_t index, uint32_t intSrc, void *arg)
 {

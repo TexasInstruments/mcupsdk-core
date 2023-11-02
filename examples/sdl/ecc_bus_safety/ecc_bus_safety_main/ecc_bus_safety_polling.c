@@ -87,7 +87,7 @@ int32_t SDL_ECC_BUS_SAFETY_DSS_MDO_FIFO_DED_Test_Polling(void)
 int32_t SDL_ECC_BUS_SAFETY_DSS_MDO_FIFO_RED_Test_Polling(void)
 {
     return ( SDL_ECC_BUS_SAFETY_DSS_RED_Test_Polling(SDL_ECC_BUS_SAFETY_DSS_MDO_FIFO,\
-             SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
+            SDL_ECC_BUS_SAFETY_FI_GLOBAL_SAFE, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
 
 /********************************************************************************************************

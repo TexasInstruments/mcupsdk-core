@@ -51,7 +51,7 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX)
 #define INSTANCE 		SDL_R5SS0_CCM
 #define ESM_INSTANCE 	SDL_ESM_INST_MAIN_ESM0
 #elif defined(SOC_AM273X) || defined(SOC_AWR294X)
@@ -107,7 +107,7 @@ static int32_t CCM_errTest(void)
     		testResult = -1;
     	}
     }
-	
+
    if(testResult == 0)
 	{
 		/* To get EFAIL, set differnt TEST MODE */
@@ -122,14 +122,14 @@ static int32_t CCM_errTest(void)
     		testResult = -1;
     	}
 	}
-	
+
 	if(testResult == 0)
 	{
 		/* To get EFAIL, set differnt TEST MODE */
 	    SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[instanceId],   \
                                                    SDL_MCU_ARMSS_CCMR5_CCMKEYR1_REGID, \
                                                    SDL_MCU_ARMSS_CCMR5_MKEY_SELF_TEST_MODE, \
-    	    									   NULL );												   
+    	    									   NULL );
     	sdlResult = SDL_CCM_verifyConfig(instanceId);
     	if (sdlResult != SDL_EFAIL)
     	{
@@ -155,8 +155,8 @@ static int32_t CCM_errTest(void)
             DebugP_log("sdlCcm_negTest: failure on line no. %d \n", __LINE__);
             testResult = -1;
         }
-    }	
-	
+    }
+
     if (testResult == 0)
     {
         sdlResult = SDL_CCM_getStaticRegisters(INSTANCE, NULL);
@@ -165,8 +165,8 @@ static int32_t CCM_errTest(void)
             DebugP_log("sdlCcm_negTest: failure on line no. %d \n", __LINE__);
             testResult = -1;
         }
-    }	
-	
+    }
+
 	if (testResult == 0)
     {
         sdlResult = SDL_CCM_clearError(SDL_CCM_MAX_INSTANCE, SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK);
@@ -175,8 +175,8 @@ static int32_t CCM_errTest(void)
             DebugP_log("sdlCcm_negTest: failure on line no. %d \n", __LINE__);
             testResult = -1;
         }
-    }	
-	
+    }
+
     if (testResult == 0)
     {
         sdlResult = SDL_CCM_clearError(INSTANCE, SDL_CCM_MONITOR_TYPE_INVALID);
@@ -196,7 +196,7 @@ static int32_t CCM_errTest(void)
             testResult = -1;
         }
     }
-	
+
     if (testResult == 0)
     {
         sdlResult = SDL_CCM_selfTest(INSTANCE, SDL_CCM_MONITOR_TYPE_INVALID, \
@@ -207,7 +207,7 @@ static int32_t CCM_errTest(void)
             testResult = -1;
         }
     }
-	
+
     if (testResult == 0)
     {
         sdlResult = SDL_CCM_selfTest(INSTANCE, SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK, \
@@ -219,7 +219,7 @@ static int32_t CCM_errTest(void)
         }
     }
 
-	
+
     if (testResult == 0)
     {
         sdlResult = SDL_CCM_selfTest(INSTANCE, SDL_CCM_MONITOR_TYPE_VIM, \
@@ -230,7 +230,7 @@ static int32_t CCM_errTest(void)
             testResult = -1;
         }
     }
-	
+
     if (testResult == 0)
     {
         sdlResult = SDL_CCM_selfTest(INSTANCE, SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK, \
@@ -251,7 +251,7 @@ static int32_t CCM_errTest(void)
             testResult = -1;
         }
     }
-	
+
     if (testResult == 0)
     {
         sdlResult = SDL_CCM_injectError(INSTANCE, SDL_CCM_MONITOR_TYPE_INVALID);
@@ -271,7 +271,7 @@ static int32_t CCM_errTest(void)
             testResult = -1;
         }
     }
-	
+
     if (testResult == 0)
     {
         sdlResult = SDL_CCM_getErrorType(INSTANCE, 0x00, &monitorType);
@@ -281,7 +281,7 @@ static int32_t CCM_errTest(void)
             testResult = -1;
         }
     }
-	
+
     if (testResult == 0)
     {
         sdlResult = SDL_CCM_getErrorType(INSTANCE, ESM_INSTANCE, NULL);
@@ -290,7 +290,7 @@ static int32_t CCM_errTest(void)
             DebugP_log("sdlCcm_negTest: failure on line no. %d \n", __LINE__);
             testResult = -1;
         }
-    }	
+    }
     return (testResult);
 }
 

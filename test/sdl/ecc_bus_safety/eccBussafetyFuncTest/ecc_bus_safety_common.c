@@ -451,7 +451,7 @@ void SDL_ECC_BUS_SAFETY_MSS_getEDMAParameters(uint32_t busSftyNode , uint32_t *d
             break;
         }
 #endif
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
         /* MSS TPTC A0 RD */
         case SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD :
         {
@@ -603,29 +603,29 @@ void test_edmaATransfer(uint32_t busSftyNode, uint32_t dmaCh, uint32_t tcc,uint3
 /*Register/Memory Read/Write Functions */
 void reg_write_32(UWORD32 addr,UWORD32 write_data)
 {
-  (*(UWORD32 volatile *) (addr)) = write_data;
+    (*(UWORD32 volatile *) (addr)) = write_data;
 }
 
 void reg_writes(UWORD32 wdth, UWORD32 addrs, UWORD32 wr_data)
 {
-   reg_write_32(addrs, wr_data);
+    reg_write_32(addrs, wr_data);
 }
 
 void test_mem_write(UWORD32 strt_addr, unsigned char* ptr, UWORD32 sz)
 {
-  int i;
-  UWORD32* write_data;
-  write_data = (UWORD32*)ptr;
-  for(i=0; i<(sz/4); i++) {
-    reg_writes(32,(strt_addr+(i * 4)), write_data[i]);
-  }
+    int i;
+    UWORD32* write_data;
+    write_data = (UWORD32*)ptr;
+    for(i=0; i<(sz/4); i++) {
+        reg_writes(32,(strt_addr+(i * 4)), write_data[i]);
+    }
 }
 
 void cpsw_transfer()
 {
   /*WRITE TO HDPs*/
-  HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_FH0_HDP, NON_CPU_TX_BUFFER_DESC);
-  HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_TH0_HDP, NON_CPU_RX_BUFFER_DESC);
+    HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_FH0_HDP, NON_CPU_TX_BUFFER_DESC);
+    HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_TH0_HDP, NON_CPU_RX_BUFFER_DESC);
 }
 
 
@@ -671,34 +671,34 @@ void setup_CPSW()
     HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPSW_ENET_BASE + Enet_Pn_Mac_Control, 0x20);
 
     /* Enet_Pn_Mac_Control REG Configs
-     Enet_Pn_Mac_Control bit 5  : pn_gmii_en > 1 >> GMII RX and TX released from reset.
-     Enet_Pn_Mac_Control bit 24 : pn_rx_cmf_en > RX Copy MAC Control Frames Enable  > 0 >> MAC control frames are filtered (but acted upon if enabled).
-     Enet_Pn_Mac_Control bit 23 : pn_rx_csf_en > RX Copy Short Frames Enable        > 0 >> Short frames are filtered
-     Enet_Pn_Mac_Control bit 22 : pn_rx_cef_en > RX Copy Error Frames Enable        > 0 >> Frames containing errors are filter
-     Enet_Pn_Mac_Control bit 0  : pn_fullduplex > Full Duplex mode                  > 1 >> full duplex mode set
-     Enet_Pn_Mac_Control bit 4  : pn_tx_flow_en > Transmit Flow Control Enable      > 0 >> Transmit Flow Control Disabled.  Full-duplex mode � Incoming pause frames are not acted upon.
-     Enet_Pn_Mac_Control bit 3  : pn_rr_flow_en > Receive Flow Control Enable       > 0 >> Receive  Flow Control Disabled.  Full-duplex mode � No outgoing pause frames are sent.
-     Enet_Pn_Mac_Control bit 10 : pn_tx_short_gap_en > Transmit Short Gap Enable    > 1 >> Transmit with a short IPG (when TX_SHORT_GAP input is asserted) is enabled
-     Enet_Pn_Mac_Control bit 12 : pn_crc_type   >  Port CRC Type   > 0 >> Ethernet CRC
-     Enet_Pn_Mac_Control bit 1  : pn_loopback   >  Loop Back Mode  > 0 >> Not loop back mode : // FIXME : CHECK IF THIS CAN BE WRITTEN ALONG WITH pn_gmii_en. Loopback mode forces internal fullduplex mode regardless of whether the pn_fullduplex bit is set or not.
-     Enet_Pn_Mac_Control bit 8  : pn_xgig >  10 Gigabit Mode > 0 - 10/100/1G mode as determined by pn_gig
-     Enet_Pn_Mac_Control bit 7  : pn_gig  >  1  Gigabit Mode > 0 - 10/100 mode
-     Enet_Pn_Mac_Control bit 5  : pn_gmii_en > 1 >> GMII RX and TX released from reset.
-     Enet_Pn_Mac_Control bit 13 : pn_xgmii_en > 0 >> 0 � XGMII RX and TX held in reset. */
+    Enet_Pn_Mac_Control bit 5  : pn_gmii_en > 1 >> GMII RX and TX released from reset.
+    Enet_Pn_Mac_Control bit 24 : pn_rx_cmf_en > RX Copy MAC Control Frames Enable  > 0 >> MAC control frames are filtered (but acted upon if enabled).
+    Enet_Pn_Mac_Control bit 23 : pn_rx_csf_en > RX Copy Short Frames Enable        > 0 >> Short frames are filtered
+    Enet_Pn_Mac_Control bit 22 : pn_rx_cef_en > RX Copy Error Frames Enable        > 0 >> Frames containing errors are filter
+    Enet_Pn_Mac_Control bit 0  : pn_fullduplex > Full Duplex mode                  > 1 >> full duplex mode set
+    Enet_Pn_Mac_Control bit 4  : pn_tx_flow_en > Transmit Flow Control Enable      > 0 >> Transmit Flow Control Disabled.  Full-duplex mode � Incoming pause frames are not acted upon.
+    Enet_Pn_Mac_Control bit 3  : pn_rr_flow_en > Receive Flow Control Enable       > 0 >> Receive  Flow Control Disabled.  Full-duplex mode � No outgoing pause frames are sent.
+    Enet_Pn_Mac_Control bit 10 : pn_tx_short_gap_en > Transmit Short Gap Enable    > 1 >> Transmit with a short IPG (when TX_SHORT_GAP input is asserted) is enabled
+    Enet_Pn_Mac_Control bit 12 : pn_crc_type   >  Port CRC Type   > 0 >> Ethernet CRC
+    Enet_Pn_Mac_Control bit 1  : pn_loopback   >  Loop Back Mode  > 0 >> Not loop back mode : // FIXME : CHECK IF THIS CAN BE WRITTEN ALONG WITH pn_gmii_en. Loopback mode forces internal fullduplex mode regardless of whether the pn_fullduplex bit is set or not.
+    Enet_Pn_Mac_Control bit 8  : pn_xgig >  10 Gigabit Mode > 0 - 10/100/1G mode as determined by pn_gig
+    Enet_Pn_Mac_Control bit 7  : pn_gig  >  1  Gigabit Mode > 0 - 10/100 mode
+    Enet_Pn_Mac_Control bit 5  : pn_gmii_en > 1 >> GMII RX and TX released from reset.
+    Enet_Pn_Mac_Control bit 13 : pn_xgmii_en > 0 >> 0 � XGMII RX and TX held in reset. */
     HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPSW_ENET_BASE + Enet_Pn_Mac_Control, 0x421);
     HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPSW_ENET_BASE + Enet_Pn_Rx_Maxlen, 0x2020);
 
     /*WAIT for cprgmii_tx.pkt_en to go high. Downcounter cprgmii_tx.cnt should reset to 0 from 0xFFF and only then pkt_en will go high and any transmit packet is accepted */
     for(j = 0; j <= 0x100; j++) {}
     /*(0x01008) >> p0_flow_id_offset > This value adds to the transmit (egress) FLOW ID.  This register is unused and should remain at the default 0x00. */
-     HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + 0x1008, 0x3FFF);
+    HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + 0x1008, 0x3FFF);
 
     /*---------------------------------------------------------------------------
     We are ready to go
     ---------------------------------------------------------------------------
     SETUP CPDMA
     ZERO OUT CPDMA HDPs*/
-   for (i=0;i<8;i++)
+    for (i=0;i<8;i++)
     {
         HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_TH0_HDP + (i*4), 0x00000000);
     }
@@ -726,7 +726,7 @@ void setup_CPSW()
     /*CPDMA_FH_Control > bit 0 >  1 - FHost Enabled */
     HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_FH_Control, 0x00000001);
     /*CPDMA_TH_Control > bit 0 >  1 - THost DMA Enabled */
-  HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_TH_Control, 0x00000001);
+    HW_WR_REG32_RAW(CSL_MSS_CPSW_U_BASE + CPSW_NC_BASE + CPDMA_TH_Control, 0x00000001);
 }
 
 #endif

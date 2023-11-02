@@ -43,7 +43,9 @@
 int32_t sdl_ecc_bus_safety_posTest(void)
 {
     int32_t  testStatus = SDL_APP_TEST_PASS;
+#if !defined (SOC_AM263PX)
     SDL_ECC_BUS_SAFETY_staticRegs regs;
+#endif
     uint32_t writeData = 0x1234567U;
 
 #if defined (SOC_AM273X) ||  defined (SOC_AWR294X)
@@ -195,12 +197,12 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
-      {
-          if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_QSPI) != SDL_PASS)
-          {
-              testStatus = SDL_APP_TEST_FAILED;
-          }
-      }
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_QSPI) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
     if (testStatus != SDL_APP_TEST_PASS)
     {
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
@@ -236,12 +238,12 @@ int32_t sdl_ecc_bus_safety_posTest(void)
     }
 
     if (testStatus == SDL_APP_TEST_PASS)
-      {
-          if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_SCRP) != SDL_PASS)
-          {
-              testStatus = SDL_APP_TEST_FAILED;
-          }
-      }
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_SCRP) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
     if (testStatus != SDL_APP_TEST_PASS)
     {
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
@@ -298,7 +300,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
     }
 #endif
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD) != SDL_PASS)
@@ -420,12 +422,12 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
-      {
-          if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_QSPI) != SDL_PASS)
-          {
-              testStatus = SDL_APP_TEST_FAILED;
-          }
-      }
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_QSPI) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
     if (testStatus != SDL_APP_TEST_PASS)
     {
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
@@ -469,48 +471,48 @@ int32_t sdl_ecc_bus_safety_posTest(void)
     }
 
     if (testStatus == SDL_APP_TEST_PASS)
-      {
-          if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_ICSSM_PDSP0) != SDL_PASS)
-          {
-              testStatus = SDL_APP_TEST_FAILED;
-          }
-      }
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_ICSSM_PDSP0) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
     if (testStatus != SDL_APP_TEST_PASS)
     {
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
-      {
-          if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_ICSSM_PDSP1) != SDL_PASS)
-          {
-              testStatus = SDL_APP_TEST_FAILED;
-          }
-      }
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_ICSSM_PDSP1) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
     if (testStatus != SDL_APP_TEST_PASS)
     {
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
-      {
-          if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_ICSSM_S) != SDL_PASS)
-          {
-              testStatus = SDL_APP_TEST_FAILED;
-          }
-      }
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_ICSSM_S) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
     if (testStatus != SDL_APP_TEST_PASS)
     {
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
-      {
-          if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_DAP) != SDL_PASS)
-          {
-              testStatus = SDL_APP_TEST_FAILED;
-          }
-      }
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_DAP) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
     if (testStatus != SDL_APP_TEST_PASS)
     {
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
@@ -797,7 +799,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
 #endif
 
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_redErrorClear(SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD) != SDL_PASS)
@@ -1169,18 +1171,18 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         return (testStatus);
     }
 
-        if (testStatus == SDL_APP_TEST_PASS)
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD,0U, writeData) != SDL_PASS)
         {
-            if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_TPTC_A1_RD,0U, writeData) != SDL_PASS)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-            }
+            testStatus = SDL_APP_TEST_FAILED;
         }
-        if (testStatus != SDL_APP_TEST_PASS)
-        {
-            DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
-            return (testStatus);
-        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_TPTC_B0_RD,0U, writeData) != SDL_PASS)
@@ -1206,7 +1208,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-if (testStatus == SDL_APP_TEST_PASS)
+    if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_MCRC,SDL_MSS_MCRC_U_BASE, writeData) != SDL_PASS)
         {
@@ -1218,7 +1220,7 @@ if (testStatus == SDL_APP_TEST_PASS)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-if (testStatus == SDL_APP_TEST_PASS)
+    if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_SWBUF,SDL_MSS_SWBUF_U_BASE, writeData) != SDL_PASS)
         {
@@ -1230,7 +1232,7 @@ if (testStatus == SDL_APP_TEST_PASS)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-if (testStatus == SDL_APP_TEST_PASS)
+    if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_TO_MDO,SDL_MSS_TO_MDO_U_BASE, writeData) != SDL_PASS)
         {
@@ -1242,7 +1244,7 @@ if (testStatus == SDL_APP_TEST_PASS)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-if (testStatus == SDL_APP_TEST_PASS)
+    if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_MSS_TO_MDO,0XCA000000, writeData) != SDL_PASS)
         {
@@ -1254,7 +1256,7 @@ if (testStatus == SDL_APP_TEST_PASS)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-if (testStatus == SDL_APP_TEST_PASS)
+    if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secExecute(SDL_ECC_BUS_SAFETY_DAP_R232,0U, writeData) != SDL_PASS)
         {
@@ -1319,66 +1321,66 @@ if (testStatus == SDL_APP_TEST_PASS)
         return (testStatus);
     }
     if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_QSPI,SDL_MSS_QSPI_U_BASE, writeData) != SDL_PASS)
         {
-            if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_QSPI,SDL_MSS_QSPI_U_BASE, writeData) != SDL_PASS)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-            }
+            testStatus = SDL_APP_TEST_FAILED;
         }
-        if (testStatus != SDL_APP_TEST_PASS)
-        {
-            DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
-            return (testStatus);
-        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
     if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_MCRC,SDL_MSS_MCRC_U_BASE, writeData) != SDL_PASS)
         {
-            if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_MCRC,SDL_MSS_MCRC_U_BASE, writeData) != SDL_PASS)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-            }
+            testStatus = SDL_APP_TEST_FAILED;
         }
-        if (testStatus != SDL_APP_TEST_PASS)
-        {
-            DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
-            return (testStatus);
-        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
     if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_SWBUF,SDL_MSS_SWBUF_U_BASE, writeData) != SDL_PASS)
         {
-            if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_SWBUF,SDL_MSS_SWBUF_U_BASE, writeData) != SDL_PASS)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-            }
+            testStatus = SDL_APP_TEST_FAILED;
         }
-        if (testStatus != SDL_APP_TEST_PASS)
-        {
-            DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
-            return (testStatus);
-        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
 
     if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_TO_MDO,SDL_MSS_TO_MDO_U_BASE, writeData) != SDL_PASS)
         {
-            if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_MSS_TO_MDO,SDL_MSS_TO_MDO_U_BASE, writeData) != SDL_PASS)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-            }
+            testStatus = SDL_APP_TEST_FAILED;
         }
-        if (testStatus != SDL_APP_TEST_PASS)
-        {
-            DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
-            return (testStatus);
-        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
     if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_DAP_R232,0U, writeData) != SDL_PASS)
         {
-            if (SDL_ECC_BUS_SAFETY_MSS_dedExecute(SDL_ECC_BUS_SAFETY_DAP_R232,0U, writeData) != SDL_PASS)
-            {
-                testStatus = SDL_APP_TEST_FAILED;
-            }
+            testStatus = SDL_APP_TEST_FAILED;
         }
-        if (testStatus != SDL_APP_TEST_PASS)
-        {
-            DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
-            return (testStatus);
-        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
+        return (testStatus);
+    }
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -1513,7 +1515,7 @@ if (testStatus == SDL_APP_TEST_PASS)
 #endif
 
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -1619,7 +1621,7 @@ if (testStatus == SDL_APP_TEST_PASS)
 
 #endif
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_getSecErrorStatus(SDL_ECC_BUS_SAFETY_MSS_MBOX,&status) != SDL_PASS)
@@ -1644,7 +1646,7 @@ if (testStatus == SDL_APP_TEST_PASS)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-      if (testStatus == SDL_APP_TEST_PASS)
+    if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_getRedErrorStatus(SDL_ECC_BUS_SAFETY_MSS_MBOX,&status) != SDL_PASS)
         {
@@ -1773,6 +1775,8 @@ if (testStatus == SDL_APP_TEST_PASS)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+
+    #if !defined(SOC_AM263PX)
     /* Test cases for SDL_ECC_BUS_SAFETY_MSS_secErrorClear with different input parameter */
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -1781,6 +1785,8 @@ if (testStatus == SDL_APP_TEST_PASS)
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
+    #endif
+
     if (testStatus != SDL_APP_TEST_PASS)
     {
         DebugP_log("SDL_ECC_BUS_SAFETY_Neg_Test: failure on line no. %d \r\n", __LINE__);
@@ -1985,7 +1991,7 @@ if (testStatus == SDL_APP_TEST_PASS)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
-      if (testStatus == SDL_APP_TEST_PASS)
+    if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_getRedErrorStatus(SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD,&status) != SDL_PASS)
         {
@@ -2010,6 +2016,8 @@ if (testStatus == SDL_APP_TEST_PASS)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+
+    #if !defined(SOC_AM263PX)
     /* Test cases for SDL_ECC_BUS_SAFETY_MSS_readStaticRegs */
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -2018,6 +2026,8 @@ if (testStatus == SDL_APP_TEST_PASS)
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
+    #endif
+
     if (testStatus != SDL_APP_TEST_PASS)
     {
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
@@ -2036,6 +2046,8 @@ if (testStatus == SDL_APP_TEST_PASS)
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
         return (testStatus);
     }
+
+    #if !defined(SOC_AM263PX)
     /* Test cases for SDL_ECC_BUS_SAFETY_MSS_readStaticRegs */
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -2044,6 +2056,8 @@ if (testStatus == SDL_APP_TEST_PASS)
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
+    #endif
+
     if (testStatus != SDL_APP_TEST_PASS)
     {
         DebugP_log("SDL_ECC_BUS_SAFETY_Pos_Test: failure on line no. %d \r\n", __LINE__);
@@ -2051,7 +2065,7 @@ if (testStatus == SDL_APP_TEST_PASS)
     }
     if (testStatus == SDL_APP_TEST_PASS)
     {
-            if (SDL_ECC_BUS_SAFETY_MSS_getRedErrorStatus(SDL_ECC_BUS_SAFETY_MSS_QSPI,&status) != SDL_PASS)
+        if (SDL_ECC_BUS_SAFETY_MSS_getRedErrorStatus(SDL_ECC_BUS_SAFETY_MSS_QSPI,&status) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
         }

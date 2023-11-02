@@ -67,7 +67,7 @@ extern "C"
 #define SDL_INTR_PRIORITY_LVL      1U
 #define SDL_ENABLE_ERR_PIN         1U
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 #define SDL_INTR_GROUP_NUM      1U
 #define ESM_INSTANCE 			SDL_ESM_INST_MAIN_ESM0
 #elif defined (SOC_AM273X) || defined (SOC_AWR294X)

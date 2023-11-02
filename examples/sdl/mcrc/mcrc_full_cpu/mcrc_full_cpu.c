@@ -131,45 +131,45 @@ static SDL_MCRC_ConfigParams_t params[MCRC_NUM_USE_CASES] =
 {
     {
 #if defined(SOC_AM64X) || defined (SOC_AM243X)
-    MCU_MCRC64_0,
-#elif defined(SOC_AM263X)
-	 MCRC0,
+        MCU_MCRC64_0,
+#elif defined(SOC_AM263X) || defined (SOC_AM263PX)
+	    MCRC0,
 #elif defined(SOC_AWR294X) || defined(SOC_AM273X)
-     MCRC_INSTANCE,
+        MCRC_INSTANCE,
 #endif
 
-     (uint32_t) SDL_MCRC_CHANNEL_1,
-     (uint32_t) SDL_MCRC_OPERATION_MODE_FULLCPU,
-     4U,
-     MCRC_DEF_PATTERN_COUNT,
-     MCRC_DEF_SECTOR_COUNT,
-     MCRC_DEF_WATCHDOG_PRELOAD,
-     MCRC_DEF_BLOCK_PRELOAD,
-     0x3668f7eaU,
-     0xaef33083U,
-     MCRC_BUF_MAX_SIZE,
-     (uint32_t) &gMCRCSrcBuffer[0],
+        (uint32_t) SDL_MCRC_CHANNEL_1,
+        (uint32_t) SDL_MCRC_OPERATION_MODE_FULLCPU,
+        4U,
+        MCRC_DEF_PATTERN_COUNT,
+        MCRC_DEF_SECTOR_COUNT,
+        MCRC_DEF_WATCHDOG_PRELOAD,
+        MCRC_DEF_BLOCK_PRELOAD,
+        0x3668f7eaU,
+        0xaef33083U,
+        MCRC_BUF_MAX_SIZE,
+        (uint32_t) &gMCRCSrcBuffer[0],
     },
     {
 #if defined(SOC_AM64X) || defined (SOC_AM243X)
-     MCU_MCRC64_0 ,
-#elif defined(SOC_AM263X)
-	 MCRC0,
+        MCU_MCRC64_0 ,
+#elif defined(SOC_AM263X) || defined (SOC_AM263PX)
+	    MCRC0,
 #elif defined(SOC_AWR294X) || defined(SOC_AM273X)
-     MCRC_INSTANCE,
+        MCRC_INSTANCE,
 #endif
 
-     (uint32_t) SDL_MCRC_CHANNEL_2,
-     (uint32_t) SDL_MCRC_OPERATION_MODE_FULLCPU,
-     4U,
-     MCRC_DEF_PATTERN_COUNT,
-     MCRC_DEF_SECTOR_COUNT,
-     MCRC_DEF_WATCHDOG_PRELOAD,
-     MCRC_DEF_BLOCK_PRELOAD,
-     0x3668f7eaU,
-     0xaef33083U,
-     MCRC_BUF_MAX_SIZE,
-     (uint32_t) &gMCRCSrcBuffer[0],
+        (uint32_t) SDL_MCRC_CHANNEL_2,
+        (uint32_t) SDL_MCRC_OPERATION_MODE_FULLCPU,
+        4U,
+        MCRC_DEF_PATTERN_COUNT,
+        MCRC_DEF_SECTOR_COUNT,
+        MCRC_DEF_WATCHDOG_PRELOAD,
+        MCRC_DEF_BLOCK_PRELOAD,
+        0x3668f7eaU,
+        0xaef33083U,
+        MCRC_BUF_MAX_SIZE,
+        (uint32_t) &gMCRCSrcBuffer[0],
     },
 };
 
@@ -241,7 +241,7 @@ static int32_t sdl_mcrc_full_cpu_test(void)
 
         if (result != SDL_PASS)
         {
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
             if (params[useCase].instance == MCRC0 )
             {
                 DebugP_log("\n Full_CPU mode MCRC signature verification failed for the instance MCRC0 \r\n");
@@ -267,7 +267,7 @@ static int32_t sdl_mcrc_full_cpu_test(void)
         }
         else
         {
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
             if (params[useCase].instance == MCRC0 )
             {
                 DebugP_log("\n Full_CPU mode MCRC signature verification done successfully for the instance MCRC0 \r\n ");

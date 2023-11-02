@@ -292,7 +292,7 @@ sdlEccBusSafetyApp_t  sdlEccBusSafetyAppTestList[] = {
 #endif
 #endif
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
     {SDL_ECC_BUS_SAFETY_MSS_CR5A_AHB_RED_Test,                "CR5A_AHB_RED_Test in Interrupt  Method",         SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_CR5B_AHB_RED_Test,                "CR5B_AHB_RED_Test in Interrupt  Method",         SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_CR5C_AHB_RED_Test,                "CR5C_AHB_RED_Test in Interrupt  Method",         SDL_APP_NOT_RUN },
@@ -396,10 +396,12 @@ sdlEccBusSafetyApp_t  sdlEccBusSafetyAppTestList[] = {
     {SDL_ECC_BUS_SAFETY_MSS_MMC_SEC_Test,                     "MSS_MMC_S_SEC_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_MMC_DED_Test,                     "MSS_MMC_S_DED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_MMC_RED_Test,                     "MSS_MMC_S_RED_Test in Interrupt  Method",          SDL_APP_NOT_RUN },
+    #if !defined(SOC_AM263PX)
     /* Node MSS_GPMC */
     {SDL_ECC_BUS_SAFETY_MSS_GPMC_SEC_Test,                    "MSS_GPMC_SEC_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_GPMC_DED_Test,                    "MSS_GPMC_DED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_GPMC_RED_Test,                    "MSS_GPMC_RED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
+    #endif
     /* Node MSS_L2_A */
     {SDL_ECC_BUS_SAFETY_MSS_L2_A_RED_Test,                    "MSS_L2_A_RED_Test in Interrupt  Method",           SDL_APP_NOT_RUN },
     /* Node MSS_L2_B */
@@ -440,30 +442,32 @@ static void ecc_bus_safety_testExecute(void)
     uint64_t testEndTime;
     uint64_t diffTime;
     ecc_bus_safety_edma_boardInit();
-#if defined (SOC_AWR294X) || defined(SOC_AM273X)
-#if defined (SUBSYS_MSS)
+    #if defined (SOC_AWR294X) || defined(SOC_AM273X)
+    #if defined (SUBSYS_MSS)
     for( count =0; count<30U; count++)
     {
-	    result = SDL_ESM_init(SDL_ESM_INST_MSS_ESM, &ECC_BUS_SAFETY_TestparamsMSS[count],NULL,NULL);
+        result = SDL_ESM_init(SDL_ESM_INST_MSS_ESM, &ECC_BUS_SAFETY_TestparamsMSS[count],NULL,NULL);
     }
-#endif
-#endif
-#if defined (SOC_AWR294X)
-#if defined (SUBSYS_DSS)
+    #endif
+    #endif
+
+    #if defined (SOC_AWR294X)
+    #if defined (SUBSYS_DSS)
     for( count =0; count<33U; count++)
     {
-	    result = SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_BUS_SAFETY_TestparamsDSS[count],NULL,NULL);
+        result = SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_BUS_SAFETY_TestparamsDSS[count],NULL,NULL);
     }
-#endif
-#endif
-#if defined (SOC_AM273X)
-#if defined (SUBSYS_DSS)
+    #endif
+    #endif
+
+    #if defined (SOC_AM273X)
+    #if defined (SUBSYS_DSS)
     for( count =0; count<33U; count++)
     {
-	    result = SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_BUS_SAFETY_TestparamsDSS[count],NULL,NULL);
+        result = SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_BUS_SAFETY_TestparamsDSS[count],NULL,NULL);
     }
-#endif
-#endif
+    #endif
+    #endif
     if( SDL_APP_PASS== result)
     {
         DebugP_log("\n ECC BUS SAFETY TEST START : starting\r\n");

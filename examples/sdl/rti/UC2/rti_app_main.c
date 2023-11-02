@@ -59,7 +59,7 @@
 /*                         Macros                                            */
 /*===========================================================================*/
 /* None */
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 #define SDL_ESM0_INSTANCE SDL_ESM_INST_MAIN_ESM0
 #endif
 /* R5F Core for AM273x & AWR294x */
@@ -90,7 +90,7 @@ typedef struct {
 
 } SOC_SDL_ModuleClockFrequency;
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 SOC_SDL_ModuleClockFrequency sdl_gSocModulesClockFrequency[] = {
     { SOC_RcmPeripheralId_WDT0, SOC_RcmPeripheralClockSource_SYS_CLK, 32000 },
 
@@ -109,7 +109,7 @@ SOC_SDL_ModuleClockFrequency sdl_gSocModulesClockFrequency[] = {
 static int32_t Sdl_Module_clockEnable()
 {
     int32_t status;
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
         status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_WDT0, 1);
 #endif
 #if defined (SOC_AM273X) || (SOC_AWR294X)
@@ -132,23 +132,23 @@ static int32_t Sdl_Module_clockSetFrequency()
 }
 #endif
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 SDL_ESM_config RTI_Test_esmInitConfig_MAIN =
 {
-  .esmErrorConfig = {1u, 8u}, /* Self test error config */
-  .enableBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
-              0x00000000u, 0x00000000u, 0x00000000u,0x00000000u},
-   /**< All events enable: except clkstop events for unused clocks
-    *   and PCIE events */
-    /* CCM_1_SELFTEST_ERR and _R5FSS1_COMPARE_ERR_PULSE_0 */
-  .priorityBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
-              0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-  /**< All events high priority: except clkstop events for unused clocks
-   *   and PCIE events */
-  .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
-              0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-  /**< All events high priority: except clkstop for unused clocks
-   *   and PCIE events */
+    .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
+                0x00000000u, 0x00000000u, 0x00000000u,0x00000000u},
+    /**< All events enable: except clkstop events for unused clocks
+        *   and PCIE events */
+        /* CCM_1_SELFTEST_ERR and _R5FSS1_COMPARE_ERR_PULSE_0 */
+    .priorityBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
+                0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+    /**< All events high priority: except clkstop events for unused clocks
+     *   and PCIE events */
+    .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
+                0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+    /**< All events high priority: except clkstop for unused clocks
+     *   and PCIE events */
 };
 #elif defined (R5F_INPUTS)
 SDL_ESM_NotifyParams params =
@@ -193,26 +193,26 @@ SDL_ESM_config RTI_Test_esmInitConfig_MCU =
 #if defined (R5F_CORE)
 SDL_ESM_config RTI_Test_esmInitConfig_MAIN =
 {
- .esmErrorConfig = {0u, 3u}, /* Self test error config */
- .enableBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
-                  0x00000000u, 0x00000004u,
-                 },
-      /**< All events enable: except timer and self test  events, */
-     /*    and Main ESM output.Configured based off esmErrorConfig to test high or low priorty events.*/
- .priorityBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
+    .esmErrorConfig = {0u, 3u}, /* Self test error config */
+    .enableBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
                     0x00000000u, 0x00000004u,
-                   },
-     /**< Configured based off esmErrorConfig to test high or low priorty events. */
-  .errorpinBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
-                     0x00000000u, 0x00000004u,
                     },
-    /**< All events high priority:  */
+        /**< All events enable: except timer and self test  events, */
+        /*    and Main ESM output.Configured based off esmErrorConfig to test high or low priorty events.*/
+    .priorityBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
+                        0x00000000u, 0x00000004u,
+                    },
+        /**< Configured based off esmErrorConfig to test high or low priorty events. */
+    .errorpinBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
+                        0x00000000u, 0x00000004u,
+                        },
+        /**< All events high priority:  */
 };
 #endif
 #endif
 
 
-#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX)
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                    SDL_ESM_IntType esmIntType,
                                                    uint32_t grpChannel,
@@ -281,11 +281,11 @@ void test_sdl_rti_baremetal_test_app (void)
     int32_t    i, result;
 
     /* Open drivers to open the UART driver for console */
-     Drivers_open();
-     Board_driversOpen();
+    Drivers_open();
+    Board_driversOpen();
 
 
-#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX)
     void *ptr = (void *)&arg;
 #endif
 
@@ -299,7 +299,7 @@ void test_sdl_rti_baremetal_test_app (void)
 	#endif
 
     /* Initialize MCU RTI module */
-    #if defined (SOC_AM263X)
+    #if defined (SOC_AM263X) || defined (SOC_AM263PX)
     result = SDL_ESM_init(SDL_INSTANCE_ESM0, &RTI_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
     #elif defined (SOC_AM273X)
     result = SDL_ESM_init (SDL_INSTANCE_ESM0,&params,NULL,NULL);
@@ -358,8 +358,8 @@ void test_sdl_rti_baremetal_test_app (void)
         DebugP_log("\n Few/all tests Failed \r\n");
     }
 
-     Board_driversClose();
-     Drivers_close();
+    Board_driversClose();
+    Drivers_close();
 }
 
 

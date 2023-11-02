@@ -54,7 +54,7 @@
 #include <sdl/r5/v0/sdl_mcu_armss_ccmr5.h>
 #include <dpl_interface.h>
 #include <sdl/sdl_ecc.h>
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX)
 #include <sdl/esm/v0/sdl_esm.h>
 #endif
 #if defined(SOC_AM273X)
@@ -70,7 +70,7 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX)
 #define INSTANCE 		SDL_R5SS0_CCM
 #elif defined(SOC_AM273X) || defined(AWR294X)
 #define INSTANCE 		SDL_MSS_CCMR
@@ -82,7 +82,7 @@
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                    SDL_ESM_IntType esmIntType,
                                                    uint32_t grpChannel,
@@ -95,12 +95,12 @@ int32_t SDL_ESM_applicationCallback(SDL_ESM_Inst esmInstType,
 										   int32_t grpChannel,
 										   int32_t intSrc,
 										   void *arg);
-#endif	
+#endif
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 SDL_ESM_config CCM_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -121,24 +121,24 @@ SDL_ESM_config CCM_Test_esmInitConfig_MAIN =
 SDL_ESM_NotifyParams SDL_CCM_eventBitMap[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
 {
     {
-          /* Event BitMap for CCM ESM callback */
-          .groupNumber = SDL_INTR_GROUP_NUM,
-          .errorNumber = SDL_ESMG1_CCMR5_ST_ERR,
-          .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL,
-          .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
-          .callBackFunction = &SDL_ESM_applicationCallback,
+        /* Event BitMap for CCM ESM callback */
+        .groupNumber = SDL_INTR_GROUP_NUM,
+        .errorNumber = SDL_ESMG1_CCMR5_ST_ERR,
+        .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL,
+        .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+        .callBackFunction = &SDL_ESM_applicationCallback,
     },
 	{
-          /* Event BitMap for CCM ESM callback */
-          .groupNumber = SDL_INTR_GROUP_NUMBER,
-          .errorNumber = SDL_ESMG2_VIM_LOCK_ERR,
-          .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL,
-          .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
-          .callBackFunction = &SDL_ESM_applicationCallback,
+        /* Event BitMap for CCM ESM callback */
+        .groupNumber = SDL_INTR_GROUP_NUMBER,
+        .errorNumber = SDL_ESMG2_VIM_LOCK_ERR,
+        .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL,
+        .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+        .callBackFunction = &SDL_ESM_applicationCallback,
     },
 };
 #endif
-												   
+
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
@@ -272,7 +272,7 @@ int32_t SDL_TEST_CCMInjectError(uint32_t InstanceCCM)
 
     if (result != SDL_PASS ) {
         DebugP_log("\n CCM inject failed\r\n");
-       retVal = -1;
+        retVal = -1;
     } else {
         DebugP_log("\n CCM inject Test complete\r\n");
     }
@@ -291,7 +291,7 @@ int32_t SDL_TEST_CCMInjectVIMError(uint32_t InstanceIDccm)
 
     if (result != SDL_PASS ) {
         DebugP_log("\n CCM inject VIM failed\r\n");
-       retVal = -1;
+        retVal = -1;
     } else {
         DebugP_log("\n CCM inject VIM Test complete\r\n");
     }
@@ -310,7 +310,7 @@ int32_t SDL_TEST_CCMInjectInactivityError(uint32_t Instccm)
 
     if (result != SDL_PASS ) {
         DebugP_log("\n CCM inject failed\r\n");
-       retVal = -1;
+        retVal = -1;
     } else {
         DebugP_log("\n CCM inject inactivity monitor Test complete\r\n");
     }
@@ -341,7 +341,7 @@ int32_t SDL_TEST_CCMSelftestPolarityInvert(uint32_t ccmInst)
 
     if (result != SDL_PASS ) {
         DebugP_log("\n CCM polarity invert self test failed\r\n");
-       retVal = -1;
+        retVal = -1;
     } else {
         DebugP_log("\n CCM polarity invert self test complete\r\n");
     }
@@ -524,7 +524,7 @@ int32_t CCM_Test_init (int32_t instNum, uint32_t indexNum)
     void *ptr = (void *)&arg;
 
     if (retValue == 0) {
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX)
         result = SDL_ESM_init(ESM_INSTANCE, &CCM_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
 #endif
 #if defined(SOC_AM273X)||defined(SOC_AWR294X)
@@ -571,7 +571,7 @@ int32_t CCM_funcTest(void)
 {
     int32_t    testResult = 0;
 	int32_t    loop= 0;
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 	int32_t loopCnt=2;
 #endif
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
@@ -597,23 +597,23 @@ int32_t CCM_funcTest(void)
 		else
 		{
 			DebugP_log("\r\nCCM Init failed. Exiting the app.\r\n");
-		}	
+		}
 	}
 	Board_driversClose();
     Drivers_close();
-	
+
 	return (testResult);
 }
 
 void func_test_main(void *args)
 {
 	SDL_ErrType_t ret = SDL_PASS;
-	
+
 	Drivers_open();
     Board_driversOpen();
-	
+
     ret = SDL_TEST_dplInit();
-	
+
     if (ret != SDL_PASS)
     {
         DebugP_log("Error: DPL Init Failed\r\n");
@@ -628,7 +628,7 @@ void func_test_main(void *args)
 /* ========================================================================== */
 /*                            Internal Function Definition                    */
 /* ========================================================================== */
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                    SDL_ESM_IntType esmIntType,
                                                    uint32_t grpChannel,
@@ -661,13 +661,13 @@ int32_t SDL_ESM_applicationCallback(SDL_ESM_Inst esmInstType,
     SDL_Ecc_AggrIntrSrc eccIntrSrc;
     SDL_ECC_ErrorInfo_t eccErrorInfo;
     int32_t retVal;
-    
+
     retVal = SDL_ECC_getESMErrorInfo(esmInstType, intSrc, &eccmemtype, &eccIntrSrc);
 
     /* Any additional customer specific actions can be added here */
     retVal = SDL_ECC_getErrorInfo(eccmemtype, eccIntrSrc, &eccErrorInfo);
 
-    
+
     if (eccErrorInfo.injectBitErrCnt != 0)
     {
         SDL_ECC_clearNIntrPending(eccmemtype, eccErrorInfo.memSubType, eccIntrSrc, SDL_ECC_AGGR_ERROR_SUBTYPE_INJECT, eccErrorInfo.injectBitErrCnt);

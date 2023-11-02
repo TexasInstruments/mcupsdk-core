@@ -72,7 +72,6 @@ extern "C" {
 #define SDL_MSS_CR5B_TCM_U_END                 (SDL_R5SS0_CORE0_TCMB_U_BASE + SDL_R5SS0_CORE0_TCMB_U_SIZE)
 #define SDL_MBOX_SRAM_U_BASE_END               (SDL_MBOX_SRAM_U_BASE+100U)
 #define SDL_MMC0_U_BASE_END                    (SDL_MMC0_U_BASE+0X1FFCU-DWORD)
-#define SDL_GPMC0_CFG_U_BASE_END               (SDL_GPMC0_CFG_U_BASE+0X3FCU-DWORD)
 #define SDL_CORE_VBUSP_START                   (0x50800000U)
 #define SDL_CORE_VBUSP_START_END               (SDL_CORE_VBUSP_START+0X1FFCU)
 #define SDL_PERI_VBUSP_START                   (0x50200000)
@@ -130,7 +129,6 @@ extern "C" {
 #define SDL_ECC_BUS_SAFETY_MSS_SCRP            31U
 #define SDL_ECC_BUS_SAFETY_MSS_DAP             32U
 #define SDL_ECC_BUS_SAFETY_MSS_MMC             33U
-#define SDL_ECC_BUS_SAFETY_MSS_GPMC            34U
 #define SDL_ECC_BUS_SAFETY_MSS_SCRP0           35U
 #define SDL_ECC_BUS_SAFETY_MSS_SCRP1           36U
 #define SDL_ECC_BUS_SAFETY_ICSSM_PDSP0         37U

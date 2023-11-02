@@ -74,17 +74,17 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 	int32_t     metaInfo;
     SDL_McuArmssCcmR5OpModeKey    opModeKey;
     uint32_t      cmpError;
-	SDL_vimRegs *pRegs; 
+	SDL_vimRegs *pRegs;
 #if defined(SOC_AM273X)||defined(SOC_AWR294X)
 	uint32_t intrNum = SDL_ESMG1_HSM_ESM_HI_INT;
 	/* initialize the address */
 	pRegs        = (SDL_vimRegs *)(uintptr_t)SDL_MSS_VIM_R5A_U_BASE;
 #endif
-#if defined(SOC_AM263X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 	uint32_t intrNum = SDL_R5FSS0_CORE0_INTR_ESM0_ESM_INT_HI;
 	/* initialize the address */
 	pRegs        = (SDL_vimRegs *)(uintptr_t)SDL_VIM_U_BASE;
-#endif	
+#endif
     for(i = SDL_MCU_ARMSS_CCMR5_CCMSR1_REGID; i <= 	SDL_MCU_ARMSS_CCMR5_POLCNTRL_REGID; i++)
 	{
 		if(testResult == 0)
@@ -106,10 +106,10 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 				DebugP_log("sdlCcm_apiTest: failure on line no. %d \n", __LINE__);
 				testResult = -1;
 				break;
-			}	
+			}
 		}
 	}
-	
+
 	if(testResult == 0)
 	{
 		sdlResult = SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[instanceId], SDL_MCU_ARMSS_CCMR5_POLCNTRL_REGID, valToBeRead, NULL);
@@ -117,25 +117,25 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 		{
 			DebugP_log("sdlCcm_apiTest: failure on line no. %d \n", __LINE__);
 			testResult = -1;
-		}	
+		}
 	}
-	
+
     for(i = SDL_MCU_ARMSS_CCMR5_CPU_MODULE_ID; i <= SDL_MCU_ARMSS_CCMR5_INACTIVITY_MONITOR_MODULE_ID; i++)
 	{
     	if(testResult == 0)
     	{
-    		sdlResult = SDL_armR5CCMSetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i, 
+    		sdlResult = SDL_armR5CCMSetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i,
 			                                            SDL_MCU_ARMSS_CCMR5_MKEY_CMP_MODE_ACTIVE, &metaInfo);
     		if (sdlResult != SDL_PASS)
     		{
     			DebugP_log("sdlCcm_apiTest: failure on line no. %d \n", __LINE__);
     			testResult = -1;
-    		}	
+    		}
     	}
-    	
+
     	if(testResult == 0)
     	{
-    		sdlResult = SDL_armR5CCMGetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i, 
+    		sdlResult = SDL_armR5CCMGetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i,
 			                                            &opModeKey, &metaInfo);
     		if (sdlResult != SDL_PASS)
     		{
@@ -143,21 +143,21 @@ static int32_t CCM_IP_test(uint32_t instanceId)
     			testResult = -1;
     		}
     	}
-    
+
     	if(testResult == 0)
     	{
-    		sdlResult = SDL_armR5CCMSetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i, 
+    		sdlResult = SDL_armR5CCMSetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i,
 			                                            SDL_MCU_ARMSS_CCMR5_MKEY_SELF_TEST_MODE, &metaInfo);
     		if (sdlResult != SDL_PASS)
     		{
     			DebugP_log("sdlCcm_apiTest: failure on line no. %d \n", __LINE__);
     			testResult = -1;
-    		}	
+    		}
     	}
-    	
+
     	if(testResult == 0)
     	{
-    		sdlResult = SDL_armR5CCMGetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i, 
+    		sdlResult = SDL_armR5CCMGetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i,
 			                                            &opModeKey, &metaInfo);
     		if (sdlResult != SDL_PASS)
     		{
@@ -165,23 +165,23 @@ static int32_t CCM_IP_test(uint32_t instanceId)
     			testResult = -1;
     		}
     	}
-    	
+
     	if(testResult == 0)
     	{
-    		(void)SDL_armR5CCMSetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i, 
+    		(void)SDL_armR5CCMSetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i,
 			                                            SDL_MCU_ARMSS_CCMR5_MKEY_CMP_MODE_ACTIVE, &metaInfo);
-    		sdlResult = SDL_armR5CCMSetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i, 
+    		sdlResult = SDL_armR5CCMSetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i,
 			                                            SDL_MCU_ARMSS_CCMR5_MKEY_ERR_FORCE_MODE, &metaInfo);
     		if (sdlResult != SDL_PASS)
     		{
     			DebugP_log("sdlCcm_apiTest: failure on line no. %d \n", __LINE__);
     			testResult = -1;
-    		}	
+    		}
     	}
-    	
+
     	if(testResult == 0)
     	{
-    		sdlResult = SDL_armR5CCMGetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i, 
+    		sdlResult = SDL_armR5CCMGetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i,
 			                                            &opModeKey, &metaInfo);
     		if (sdlResult != SDL_PASS)
     		{
@@ -189,23 +189,23 @@ static int32_t CCM_IP_test(uint32_t instanceId)
     			testResult = -1;
     		}
     	}
-    
+
     	if(testResult == 0)
     	{
-    		(void)SDL_armR5CCMSetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i, 
+    		(void)SDL_armR5CCMSetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i,
 			                                            SDL_MCU_ARMSS_CCMR5_MKEY_CMP_MODE_ACTIVE, &metaInfo);
-    		sdlResult = SDL_armR5CCMSetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i, 
+    		sdlResult = SDL_armR5CCMSetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i,
 			                                            SDL_MCU_ARMSS_CCMR5_MKEY_SELF_TEST_ERR_FORCE_MODE, &metaInfo);
     		if (sdlResult != SDL_PASS)
     		{
     			DebugP_log("sdlCcm_apiTest: failure on line no. %d \n", __LINE__);
     			testResult = -1;
-    		}	
+    		}
     	}
-    	
+
     	if(testResult == 0)
     	{
-    		sdlResult = SDL_armR5CCMGetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i, 
+    		sdlResult = SDL_armR5CCMGetOperationModeKey(SDL_CCM_baseAddress[instanceId], (SDL_McuArmssCcmR5ModuleId)i,
 			                                            &opModeKey, &metaInfo);
     		if (sdlResult != SDL_PASS)
     		{
@@ -214,7 +214,7 @@ static int32_t CCM_IP_test(uint32_t instanceId)
     		}
     	}
     }
-	
+
 	if(testResult == 0)
 	{
 		sdlResult = SDL_armR5CCMGetOperationModeKey(SDL_CCM_baseAddress[instanceId], SDL_MCU_ARMSS_CCMR5_INACTIVITY_MONITOR_MODULE_ID, &opModeKey, NULL);
@@ -231,9 +231,9 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 		{
 			DebugP_log("sdlCcm_apiTest: failure on line no. %d \n", __LINE__);
 			testResult = -1;
-		}	
+		}
 	}
-	
+
 	if(testResult == 0)
 	{
 		for(i = SDL_MCU_ARMSS_CCMR5_CPU_MODULE_ID; i <= 	SDL_MCU_ARMSS_CCMR5_INACTIVITY_MONITOR_MODULE_ID; i++)
@@ -247,7 +247,7 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 			}
 		}
 	}
-	
+
 	if(testResult == 0)
 	{
 		sdlResult = SDL_armR5CCMGetCompareError(SDL_CCM_baseAddress[instanceId], SDL_MCU_ARMSS_CCMR5_INACTIVITY_MONITOR_MODULE_ID, \
@@ -258,7 +258,7 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 			testResult = -1;
 		}
 	}
-	
+
 	if(testResult == 0)
 	{
 		for(i = SDL_MCU_ARMSS_CCMR5_CPU_MODULE_ID; i <= 	SDL_MCU_ARMSS_CCMR5_INACTIVITY_MONITOR_MODULE_ID; i++)

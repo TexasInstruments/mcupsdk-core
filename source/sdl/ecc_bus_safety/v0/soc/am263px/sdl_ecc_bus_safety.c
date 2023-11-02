@@ -483,11 +483,11 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_dedExecute(uint32_t busSftyNode, uint32_t addr, u
                 /* enable the bus safety for MSS */
                 SDL_ECC_BUS_SAFETY_MSS_SAFETY_CTRL_enable();
                 /* enable the bus safety for  node */
-	              HW_WR_FIELD32((baseAddrOffst.baseAddr+baseAddrOffst.busSftyCtrl),\
+	            HW_WR_FIELD32((baseAddrOffst.baseAddr+baseAddrOffst.busSftyCtrl),\
                     SDL_CTRL_BUS_SAFETY_CTRL_BUS_SAFETY_CTRL_ENABLE,\
 		            0x7U);
                 /* enable fault injection for node with: double error correction, appropriate 32 bits of bus */
-	              HW_WR_FIELD32((baseAddrOffst.baseAddr+baseAddrOffst.busSftyFi),\
+	            HW_WR_FIELD32((baseAddrOffst.baseAddr+baseAddrOffst.busSftyFi),\
                     SDL_CTRL_BUS_SAFETY_FI_BUS_SAFETY_FI_DED,\
 		            0x1U);
                 /* Enable data */
@@ -532,7 +532,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_dedExecute(uint32_t busSftyNode, uint32_t addr, u
  *  Design: PROC_SDL-3732
  */
 int32_t SDL_ECC_BUS_SAFETY_MSS_redExecute(uint32_t busSftyNode,\
-         SDL_ECC_BUS_SAFETY_busSftyFiType fiType, SDL_ECC_BUS_SAFETY_busSftyFiRedType redType )
+        SDL_ECC_BUS_SAFETY_busSftyFiType fiType, SDL_ECC_BUS_SAFETY_busSftyFiRedType redType )
 {
     int32_t retval = SDL_EFAIL;
     SDL_ECC_BUS_SAFETY_Base_Addr_Offset_S baseAddrOffst;
@@ -925,20 +925,6 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_getRegOffset(uint32_t busSftyNode , SDL_EC
             baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_MMC0_BUS_SAFETY_ERR_STAT_WRITERESP;
             baseAddrOffst->nodeEndAddr          = SDL_MMC0_U_BASE_END;
             baseAddrOffst->nodeStartAddr        = SDL_MMC0_U_BASE;
-            break;
-        }
-        /* MSS_GPMC*/
-        case SDL_ECC_BUS_SAFETY_MSS_GPMC  :
-        {
-            baseAddrOffst->busSftyCtrl          = SDL_MSS_CTRL_GPMC0_BUS_SAFETY_CTRL;
-            baseAddrOffst->busSftyErr           = SDL_MSS_CTRL_GPMC0_BUS_SAFETY_ERR;
-            baseAddrOffst->busSftyFi            = SDL_MSS_CTRL_GPMC0_BUS_SAFETY_FI;
-            baseAddrOffst->busSftyErrStatCmd    = SDL_MSS_CTRL_GPMC0_BUS_SAFETY_ERR_STAT_CMD;
-            baseAddrOffst->busSftyErrStatRd     = SDL_MSS_CTRL_GPMC0_BUS_SAFETY_ERR_STAT_READ;
-            baseAddrOffst->busSftyErrStatWr     = SDL_MSS_CTRL_GPMC0_BUS_SAFETY_ERR_STAT_WRITE;
-            baseAddrOffst->busSftyErrStatWrResp = SDL_MSS_CTRL_GPMC0_BUS_SAFETY_ERR_STAT_WRITERESP;
-            baseAddrOffst->nodeEndAddr          = SDL_GPMC0_CFG_U_BASE_END;
-            baseAddrOffst->nodeStartAddr        = SDL_GPMC0_CFG_U_BASE;
             break;
         }
         /* MSS_VBUSP*/

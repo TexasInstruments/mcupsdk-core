@@ -90,7 +90,7 @@ typedef struct {
 
 } SOC_SDL_ModuleClockFrequency;
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 SOC_SDL_ModuleClockFrequency sdl_gSocModulesClockFrequency[] = {
     { SOC_RcmPeripheralId_WDT0, SOC_RcmPeripheralClockSource_SYS_CLK, 32000 },
 
@@ -108,26 +108,26 @@ SOC_SDL_ModuleClockFrequency sdl_gSocModulesClockFrequency[] = {
 static int32_t Sdl_Module_clockEnable()
 {
     int32_t status;
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
     status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_WDT0, 1);
 #endif
 #if defined (SOC_AM273X) || (SOC_AWR294X)
     status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_MSS_WDT, 1);
 #endif
-        DebugP_assertNoLog(status == SystemP_SUCCESS);
+    DebugP_assertNoLog(status == SystemP_SUCCESS);
 
-  return status;
+    return status;
 }
 static int32_t Sdl_Module_clockSetFrequency()
 {
     int32_t status;
-        status = SOC_moduleSetClockFrequency(
-                    sdl_gSocModulesClockFrequency[0].moduleId,
-                    sdl_gSocModulesClockFrequency[0].clkId,
-                    sdl_gSocModulesClockFrequency[0].clkRate
-                    );
-        DebugP_assertNoLog(status == SystemP_SUCCESS);
-  return status;
+    status = SOC_moduleSetClockFrequency(
+                sdl_gSocModulesClockFrequency[0].moduleId,
+                sdl_gSocModulesClockFrequency[0].clkId,
+                sdl_gSocModulesClockFrequency[0].clkRate
+                );
+    DebugP_assertNoLog(status == SystemP_SUCCESS);
+    return status;
 }
 #endif
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
@@ -221,17 +221,17 @@ SDL_ESM_config RTI_Test_esmInitConfig_MCU =
 #if defined (R5F_CORE)
 SDL_ESM_config RTI_Test_esmInitConfig_MAIN =
 {
- .esmErrorConfig = {0u, 3u}, /* Self test error config */
- .enableBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
-                  0x00000000u, 0x00000004u,
-                 },
-      /**< All events enable: except timer and self test  events, */
-     /*    and Main ESM output.Configured based off esmErrorConfig to test high or low priorty events.*/
- .priorityBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
+    .esmErrorConfig = {0u, 3u}, /* Self test error config */
+    .enableBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
                     0x00000000u, 0x00000004u,
-                   },
-     /**< Configured based off esmErrorConfig to test high or low priorty events. */
-  .errorpinBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
+                    },
+        /**< All events enable: except timer and self test  events, */
+        /*    and Main ESM output.Configured based off esmErrorConfig to test high or low priorty events.*/
+    .priorityBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
+                        0x00000000u, 0x00000004u,
+                    },
+        /**< Configured based off esmErrorConfig to test high or low priorty events. */
+    .errorpinBitmap = {0x00000000u, 0x000000e0u, 0x00000000u, 0x00000000u,
                      0x00000000u, 0x00000004u,
                     },
     /**< All events high priority:  */
@@ -239,23 +239,23 @@ SDL_ESM_config RTI_Test_esmInitConfig_MAIN =
 #endif
 #endif
 
-#if defined (SOC_AM263X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 SDL_ESM_config RTI_Test_esmInitConfig_MAIN =
 {
-  .esmErrorConfig = {1u, 8u}, /* Self test error config */
-  .enableBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
-              0x00000000u, 0x00000000u, 0x00000000u,0x00000000u},
-   /**< All events enable: except clkstop events for unused clocks
-    *   and PCIE events */
-    /* CCM_1_SELFTEST_ERR and _R5FSS1_COMPARE_ERR_PULSE_0 */
-  .priorityBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
-              0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-  /**< All events high priority: except clkstop events for unused clocks
-   *   and PCIE events */
-  .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
-              0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-  /**< All events high priority: except clkstop for unused clocks
-   *   and PCIE events */
+    .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
+                0x00000000u, 0x00000000u, 0x00000000u,0x00000000u},
+    /**< All events enable: except clkstop events for unused clocks
+        *   and PCIE events */
+        /* CCM_1_SELFTEST_ERR and _R5FSS1_COMPARE_ERR_PULSE_0 */
+    .priorityBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
+                0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+    /**< All events high priority: except clkstop events for unused clocks
+     *   and PCIE events */
+    .errorpinBitmap = {0x00000000u, 0x00000000u, 0x00000001u, 0x00000000u,
+                0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+    /**< All events high priority: except clkstop for unused clocks
+     *   and PCIE events */
 };
 #elif defined (R5F_INPUTS)
 SDL_ESM_NotifyParams params =
@@ -363,7 +363,7 @@ int32_t RTIDwwdIsClosedWindow(uint32_t baseAddr, uint32_t *pIsClosedWindow)
     }
     return (retVal);
 }
-#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X)
+#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX)
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                    SDL_ESM_IntType esmIntType,
                                                    uint32_t grpChannel,
@@ -416,7 +416,7 @@ void test_sdl_rti_baremetal_test_app (void)
 
     /* Open drivers to open the UART driver for console */
 
-  #if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X)
+  #if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX)
     void *ptr = (void *)&arg;
   #endif
 
@@ -429,7 +429,7 @@ void test_sdl_rti_baremetal_test_app (void)
     Sdl_Module_clockSetFrequency();
 	#endif
     /* Initialize MCU RTI module */
-    #if defined (SOC_AM263X)
+    #if defined (SOC_AM263X) || defined (SOC_AM263PX)
     result = SDL_ESM_init(SDL_INSTANCE_ESM0, &RTI_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
     #elif defined (SOC_AM273X)
     result = SDL_ESM_init (SDL_INSTANCE_ESM0,&params,NULL,NULL);
@@ -452,11 +452,11 @@ void test_sdl_rti_baremetal_test_app (void)
     if (result != SDL_PASS)
     {
         /* print error and quit */
-         DebugP_log("RTI_Test_init: Error initializing MCU ESM: result = %d\r\n", result);
+        DebugP_log("RTI_Test_init: Error initializing MCU ESM: result = %d\r\n", result);
     }
     else
     {
-       DebugP_log("\nRTI_Test_init: Init MCU ESM complete \r\n\n");
+        DebugP_log("\nRTI_Test_init: Init MCU ESM complete \r\n\n");
     }
 
     for ( i = 0; sdlRtiTestList[i].testFunction != NULL; i++)
@@ -476,13 +476,13 @@ void test_sdl_rti_baremetal_test_app (void)
         }
         else
         {
-           DebugP_log("Test Name: %s  PASSED \r\n", sdlRtiTestList[i].name);
+            DebugP_log("Test Name: %s  PASSED \r\n", sdlRtiTestList[i].name);
         }
     }
 
     if (testResult == SDL_APP_TEST_PASS)
     {
-       DebugP_log("\n All tests have passed. \r\n");
+        DebugP_log("\n All tests have passed. \r\n");
     }
     else
     {
