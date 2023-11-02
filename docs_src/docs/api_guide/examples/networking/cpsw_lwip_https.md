@@ -109,25 +109,24 @@ Mbed TLS is a C library that implements cryptographic primitives, X.509 certific
 
 # TLS certificates used
 
-Here we use self signed openSSL generated certificates for TLS handshake. The steps for generation of certificate are shown below
+Here we use self signed openSSL generated certificates for TLS handshake. The steps for generation of certificate are shown below.
+First we generate the certificates and then convert it to DER format, which is further converted to hex and used in "server_certificates.h" file.
+
 ## Certificate Authority
 
 - Generate unencrypted 2048-bits RSA private key for the certificate authority (CA).
-
 \code
 $ openssl genrsa -out ca-prk.pem 2048
 \endcode
 
 - Generate certificate signing request (CSR) for the CA
-
 \code
 $ openssl req -new -sha256 -key ca-prk.pem -out ca-csr.pem -subj "/C={country}/ST={state}/L={locality}/O={organization} CA"
 \endcode
 
 - Self-sign the CSR and to generate a certificate for the CA
-
 \code
-$ openssl x509 -req -signkey ca-prk.pem -in ca-csr.pem -out ca-cer.pem -days 365
+$ openssl x509 -req -signkey ca-prk.pem -in ca-csr.pem -out ca-cer.pem -days 3650
 \endcode
 
 ## Server Certificates
@@ -154,9 +153,16 @@ $ openssl req -in server-csr.pem -noout -text
 $ openssl x509 -req -sha256 -in server-csr.pem -CA ca-cer.pem -CAkey ca-prk.pem -CAcreateserial -out server-cer.pem -days 365
 \endcode
 
+- Follow the steps below to convert certificates from PEM to DER format
+\code
+$ openssl x509 -outform der -in ca-cer.pem -out certificate.der
+$ openssl rsa -outform der -in ca-prk.pem -out keys.der
+\endcode
+
 - Convert .pem and .key files to byte array. This will produce a header file with the byte array of certificate/key and the size of the array
 \code
-$ xxd -i server-csr.pem byte_array.h
+$ xxd -i keys.der keys.h
+$ xxd -i certificate.der certificate.h
 \endcode
 
 \note In this implementation of HTTPS server, we have not enabled the file system support. We directly use the certificate's and key's data as hex dump array. The server_certificates.h file has both the Certificate and the private key. The variable 'Certificate' is the hex dump of certificate.pem and the variable 'PrivateKey' is the hex dump of key.pem.
