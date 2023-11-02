@@ -56,22 +56,22 @@
         if (instance.icssInstance === "ICSSG0") {
             switch(instance.pruCore) {
                 case "PRU0":
-                    memAddr = "CSL_PRU_ICSSG0_DRAM0_SLV_RAM_BASE + " + offset;
+                    memAddr = "(Config_Mem_Struct *)"+"CSL_PRU_ICSSG0_DRAM0_SLV_RAM_BASE + " + offset;
                     break;
                 case "PRU1":
-                    memAddr = "CSL_PRU_ICSSG0_DRAM1_SLV_RAM_BASE + " + offset;
+                    memAddr = "(Config_Mem_Struct *)"+"CSL_PRU_ICSSG0_DRAM1_SLV_RAM_BASE + " + offset;
                     break;
                 case "RTU_PRU0":
-                    memAddr = "CSL_PRU_ICSSG0_DRAM0_SLV_RAM_BASE + " + RTU_OFFSET + offset;
+                    memAddr = "(Config_Mem_Struct *)"+"CSL_PRU_ICSSG0_DRAM0_SLV_RAM_BASE + " + RTU_OFFSET + offset;
                     break;
                 case "RTU_PRU1":
-                    memAddr = "CSL_PRU_ICSSG0_DRAM1_SLV_RAM_BASE + " + RTU_OFFSET + offset;
+                    memAddr = "(Config_Mem_Struct *)"+"CSL_PRU_ICSSG0_DRAM1_SLV_RAM_BASE + " + RTU_OFFSET + offset;
                     break;
                 case "TX_PRU0":
-                    memAddr = "CSL_PRU_ICSSG0_DRAM0_SLV_RAM_BASE + " + TX_OFFSET + offset;
+                    memAddr = "(Config_Mem_Struct *)"+"CSL_PRU_ICSSG0_DRAM0_SLV_RAM_BASE + " + TX_OFFSET + offset;
                     break;
                 case "TX_PRU1":
-                    memAddr = "CSL_PRU_ICSSG0_DRAM1_SLV_RAM_BASE + " + TX_OFFSET + offset;
+                    memAddr = "(Config_Mem_Struct *)"+"CSL_PRU_ICSSG0_DRAM1_SLV_RAM_BASE + " + TX_OFFSET + offset;
                     break;
                 default:
                     // Nothing
@@ -80,22 +80,22 @@
         if (instance.icssInstance === "ICSSG1") {
             switch(instance.pruCore) {
                 case "PRU0":
-                    memAddr = "CSL_PRU_ICSSG1_DRAM0_SLV_RAM_BASE + " + offset;
+                    memAddr = "(Config_Mem_Struct *)"+"CSL_PRU_ICSSG1_DRAM0_SLV_RAM_BASE + " + offset;
                     break;
                 case "PRU1":
-                    memAddr = "CSL_PRU_ICSSG1_DRAM1_SLV_RAM_BASE + " + offset;
+                    memAddr = "(Config_Mem_Struct *)"+"CSL_PRU_ICSSG1_DRAM1_SLV_RAM_BASE + " + offset;
                     break;
                 case "RTU_PRU0":
-                    memAddr = "CSL_PRU_ICSSG1_DRAM0_SLV_RAM_BASE + " + RTU_OFFSET + offset;
+                    memAddr = "(Config_Mem_Struct *)"+"CSL_PRU_ICSSG1_DRAM0_SLV_RAM_BASE + " + RTU_OFFSET + offset;
                     break;
                 case "RTU_PRU1":
-                    memAddr = "CSL_PRU_ICSSG1_DRAM1_SLV_RAM_BASE + " + RTU_OFFSET + offset;
+                    memAddr = "(Config_Mem_Struct *)"+"CSL_PRU_ICSSG1_DRAM1_SLV_RAM_BASE + " + RTU_OFFSET + offset;
                     break;
                 case "TX_PRU0":
-                    memAddr = "CSL_PRU_ICSSG1_DRAM0_SLV_RAM_BASE + " + TX_OFFSET + offset;
+                    memAddr = "(Config_Mem_Struct *)"+"CSL_PRU_ICSSG1_DRAM0_SLV_RAM_BASE + " + TX_OFFSET + offset;
                     break;
                 case "TX_PRU1":
-                    memAddr = "CSL_PRU_ICSSG1_DRAM1_SLV_RAM_BASE + " + TX_OFFSET + offset;
+                    memAddr = "(Config_Mem_Struct *)"+"CSL_PRU_ICSSG1_DRAM1_SLV_RAM_BASE + " + TX_OFFSET + offset;
                     break;
                 default:
                     // Nothing

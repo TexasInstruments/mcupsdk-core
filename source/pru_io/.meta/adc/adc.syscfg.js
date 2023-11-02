@@ -27,6 +27,9 @@ const adcList = {
     "ADS127L11": {
         "AM64xAdapterBoard": baseDirName + "ads127/adc_phi_pru_evm_adapter",
     },
+    "ADS131M08": {
+        "AM64xAdapterBoard": baseDirName + "ads131/adc_phi_pru_evm_adapter",
+    },
 }
 
 function modifyAdcConfigOptions(inst) {
@@ -112,7 +115,7 @@ let adc_top_module = {
             options: getAdcOptions(),
             default: "ADS8598H",
             onChange: (inst, ui) => {
-                if(inst.adcIC === "ADS127L11"){
+                if(inst.adcIC === "ADS127L11" || inst.adcIC === "ADS131M08"){
                     inst.adaptor = "AM64xAdapterBoard";
                     ui.adaptor.readOnly = true;
                 } else {
