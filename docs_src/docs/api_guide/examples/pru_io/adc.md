@@ -6,4 +6,5 @@ These example shows interfacing of Sitara Devices with Precision ADCs:
 - \subpage EXAMPLES_PRU_ADC_EVAL
 - \subpage EXAMPLES_PRU_ADC_ADS85x8
 - \subpage EXAMPLES_PRU_ADC_ADS127
+- \subpage EXAMPLES_PRU_ADC_ADS131
 \endcond
