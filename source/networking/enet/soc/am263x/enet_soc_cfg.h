@@ -118,6 +118,12 @@ extern "C" {
 
 #define ENET_SOC_CFG_XGE_CPSW_ID_VER_REG_RTL_VER    (2U)
 
+/*! \brief Maximum number of TX channels allocated for Resource Manager */
+#define ENET_CFG_RM_TX_CH_MAX                       (8U)
+
+/*! \brief Maximum number of RX channels allocated for Resource Manager */
+#define ENET_CFG_RM_RX_CH_MAX                       (8U)
+
 /* --------------------------------------------------------------------------*/
 /*        GMAC Peripheral and CPSW Module related config options             */
 /* --------------------------------------------------------------------------*/
