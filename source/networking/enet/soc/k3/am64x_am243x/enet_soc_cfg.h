@@ -57,7 +57,7 @@ extern "C" {
 /*                         Enet generic config options                       */
 /* --------------------------------------------------------------------------*/
 /*! \brief Maximum number of supported PHYs (allocated PHY objects). */
-#define ENET_CFG_ENETPHY_PHY_MAX                    (2U)
+#define ENET_CFG_ENETPHY_PHY_MAX                    (4U)
 
 /* --------------------------------------------------------------------------*/
 /*        CPSW Peripheral and CPSW Module related config options             */

@@ -118,17 +118,36 @@ void EnetApp_getEnetInstMacInfo(Enet_Type enetType,
     *numMacPorts = 0;
 %for (var inst in instances) {
 %let macPortInfo = module.getMacPortInfo(instances[inst]);
-% if (instances[inst].mode == "DUAL MAC") {
-    if ((instId &0x01) ==  `(macPortInfo.macPortList[0])`)
+%let instId = module.getInstId(instances[inst]);
+% if (instances[inst].mode == "DUAL MAC" && instances[inst].instance == "ICSSG0" && instances[inst].dualMacPortSelected == "ENET_MAC_PORT_1") {
+    if (enetType == ENET_ICSSG_DUALMAC && (instId == 0))
+    {
+%}
+% if (instances[inst].mode == "DUAL MAC" && instances[inst].instance == "ICSSG0" && instances[inst].dualMacPortSelected == "ENET_MAC_PORT_2") {
+    if (enetType == ENET_ICSSG_DUALMAC && (instId == 1))
+    {
+%}
+% if (instances[inst].mode == "DUAL MAC" && instances[inst].instance == "ICSSG1" && instances[inst].dualMacPortSelected == "ENET_MAC_PORT_1") {
+    if (enetType == ENET_ICSSG_DUALMAC && (instId == 2))
+    {
+%}
+% if (instances[inst].mode == "DUAL MAC" && instances[inst].instance == "ICSSG1" && instances[inst].dualMacPortSelected == "ENET_MAC_PORT_2") {
+    if (enetType == ENET_ICSSG_DUALMAC && (instId == 3))
+    {
+%}
+% else if (instances[inst].mode == "SWITCH" && instances[inst].instance == "ICSSG0") {
+    if ((enetType == ENET_ICSSG_SWITCH) && (instId == 0))
+    {
+%}
+% else if (instances[inst].mode == "SWITCH" && instances[inst].instance == "ICSSG1") {
+    if ((enetType == ENET_ICSSG_SWITCH) && (instId == 1))
     {
 %}
         *numMacPorts += `(macPortInfo.numMacPorts)`;
 %for (var i in macPortInfo.macPortList) {
         macPortList[`i`] = `(macPortInfo.macPortList[i])`;
 %}
-% if (instances[inst].mode == "DUAL MAC") {
     }
-%}
 %}
 }
 

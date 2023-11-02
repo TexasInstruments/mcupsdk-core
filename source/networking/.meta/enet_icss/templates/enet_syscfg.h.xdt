@@ -56,6 +56,16 @@ function checkModeEn(value)
     return check;
 }
 
+function checkInstEn(value)
+{
+    let check = 0;
+    for(let i in instances)
+    {
+        check = (check || (instances[i].instance == value));
+    }
+    return check;
+}
+
 function getTotalRxChCount(instances)
 {
     let num = 0;
@@ -88,8 +98,8 @@ function getTotalTxChCount(instances)
 % }
 #define ENET_SYSCFG_MAX_ENET_INSTANCES           (`instances.length`U)
 
-#define ENET_SYSCFG_ICSSG0_ENABLED               (`Number((instance.instance === "ICSSG0"))`U)
-#define ENET_SYSCFG_ICSSG1_ENABLED               (`Number((instance.instance === "ICSSG1"))`U)
+#define ENET_SYSCFG_ICSSG0_ENABLED               (`Number(checkInstEn('ICSSG0'))`U)
+#define ENET_SYSCFG_ICSSG1_ENABLED               (`Number(checkInstEn('ICSSG1'))`U)
 #define ENET_SYSCFG_NUM_PERIPHERAL               (`module.$instances.length`U)
 #define ENET_SYSCFG_TOTAL_NUM_TX_PKT             (`getTotalTxPacketsCount(instances)`U)
 #define ENET_SYSCFG_TOTAL_NUM_RX_PKT             (`getTotalRxPacketsCount(instances)`U)
@@ -119,11 +129,8 @@ function getTotalTxChCount(instances)
 
 
 /*! \brief Number of external mac ports. */
-%var count = 0; 
-%for(let i in instances) {
-%count += Number(module.getMacPortInfo(instances[i]).numMacPorts);
-%}
-#define ENET_SYSCFG_NUM_EXT_MAC_PORTS       (`count`U)
+// One external port for Dualmac. Switch will have 2 external ports.
+#define ENET_SYSCFG_NUM_EXT_MAC_PORTS       (1U + `Number(checkModeEn('SWITCH'))`U)
 
 /*! \brief Number of host buffer pools required for Dual-MAC. */
 %for(let i in instances) {

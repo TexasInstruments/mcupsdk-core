@@ -2,7 +2,36 @@
     let module = system.modules["/networking/enet_icss/enet_icss"];
 %%}
 % let instance = module.$instances[0];
+% let instances = module.$instances;
 % let enetutilsScript = system.getScript("./../../common/enet_cpsw_utils");
+
+%%{
+function getInstanceInfo(module, instances, indent) {
+
+    let instInfoAry = new Array();
+    let count = 0;
+    for (let i in instances)
+    {
+        let instance = instances[i];
+        let matchInstId = module.getInstId(instance);
+        let instInfoInitStr = "\n\t[" + count + "] = " +
+                             "\n\t{"              + 
+                                "\n\t\t.enetType       = " + matchInstId.enetType + "," +
+                                "\n\t\t.instId         = " + matchInstId.instId + "," +
+                                "\n\t\t.rgmiiEn        = " + (instance.phyToMacInterfaceMode == "RGMII") + "," +
+                                "\n\t\t.startRxChId    = " + instance.$name + "_RX_CH_START" + "," +
+                                "\n\t\t.startTxChId    = " + instance.$name + "_TX_CH_START" + "," +
+                                "\n\t\t.rxChCount      = " + instance.$name + "_RX_CH_COUNT" + "," +
+                                "\n\t\t.txChCount      = " + instance.$name + "_TX_CH_COUNT" + "," +
+                             "\n\t}";
+        const numSpaces = 4 + indent;
+        let instInfoInitStrFormat = instInfoInitStr.replace(/\t/g, ' '.repeat(numSpaces));
+        instInfoAry.push(instInfoInitStrFormat);
+        count++;
+    }
+    return instInfoAry;
+}
+%%}
 
 /* ========================================================================== */
 /*                             Include Files                                  */
@@ -50,7 +79,6 @@ typedef struct EnetAppDmaSysCfg_Obj_s
     EnetAppTxDmaSysCfg_Obj tx[ENET_SYSCFG_TX_CHANNELS_NUM];
     EnetAppRxDmaSysCfg_Obj rx[ENET_SYSCFG_RX_FLOWS_NUM];
 } EnetAppDmaSysCfg_Obj;
-
 
 typedef struct EnetAppSysCfg_Obj_s
 {
@@ -111,18 +139,25 @@ void EnetApp_phyStateHandler();
 static void EnetApp_phyStateHandler(void * appHandle);
 %}
 
+const EnetAppInstInfo gInstInfo []= 
+    {
+        `getInstanceInfo(module, instances, 4)`
+    };
+
 static uint32_t EnetApp_getEnetIdx(Enet_Type enetType, uint32_t instId)
 {
-%if (module.$instances.length == 1){
-    return 0;
-%}else{
-%if (instance.mode == "SWITCH"){
-    return 0;
-%}
-%else {
-    return instId & 0x01;
-%}
-%}
+    uint32_t i, index = 0;
+
+    for (i = 0; i < ENET_SYSCFG_MAX_ENET_INSTANCES; i++)
+    {
+        if ((instId == gInstInfo[i].instId) && (enetType == gInstInfo[i].enetType))
+        {
+            index = i;
+            break;
+        }
+    }
+    EnetAppUtils_assert(index < ENET_SYSCFG_MAX_ENET_INSTANCES);
+    return index;
 }
 
 static Enet_Handle EnetApp_doIcssgOpen(Enet_Type enetType, uint32_t instId, const Icssg_Cfg *icssgCfg)
@@ -301,6 +336,16 @@ void EnetApp_driverInit()
     Enet_initOsalCfg(&osalPrms);
     Enet_initUtilsCfg(&utilsPrms);
     Enet_init(&osalPrms, &utilsPrms);
+}
+
+void EnetApp_driverDeInit()
+{
+/* keep this implementation that is generic across enetType and instId.
+ * Denitialization should be done only once.
+ */
+
+    EnetMem_deInit();
+    Enet_deinit();
 }
 
 int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
@@ -557,30 +602,20 @@ static void EnetApp_deleteClock(EnetAppSysCfg_Obj *hEnetAppObj)
     ClockP_destruct(&hEnetAppObj->timerObj);
 }
 %}
-void EnetApp_driverClose(Enet_Type enetType, uint32_t instId)
+
+void EnetApp_closePortLink(Enet_Type enetType, uint32_t instId)
 {
     Enet_IoctlPrms prms;
     int32_t status;
-    uint32_t selfCoreId;
-    uint32_t i;
     Enet_MacPort macPortList[ENET_MAC_PORT_NUM];
     uint8_t numMacPorts;
     Enet_Handle hEnet = Enet_getHandle(enetType, instId);
-
-    EnetAppUtils_assert(Enet_isIcssFamily(enetType) == true);
+    uint32_t selfCoreId;
+    uint32_t i;
     selfCoreId   = EnetSoc_getCoreId();
+    
     EnetApp_getEnetInstMacInfo(enetType, instId, macPortList, &numMacPorts);
-%if(instance.ExternalPhyMgmtEnable == false){
-    EnetApp_deleteClock(&gEnetAppSysCfgObj);
-%}
-    Enet_unregisterEventCb(hEnet,
-                            ENET_EVT_ASYNC_CMD_RESP,
-                            0U);
 
-    EnetAppUtils_print("Unregister TX timestamp callback\r\n");
-    Enet_unregisterEventCb(hEnet,
-                            ENET_EVT_TIMESTAMP_TX,
-                            0U);
     for (i = 0U; i < numMacPorts; i++)
     {
         Enet_MacPort macPort = macPortList[i];
@@ -596,12 +631,29 @@ void EnetApp_driverClose(Enet_Type enetType, uint32_t instId)
             EnetAppUtils_print("close() failed to close MAC port: %d\r\n", status);
         }
     }
+}
+
+void EnetApp_driverClose(Enet_Type enetType, uint32_t instId)
+{
+    Enet_MacPort macPortList[ENET_MAC_PORT_NUM];
+    uint8_t numMacPorts;
+    Enet_Handle hEnet = Enet_getHandle(enetType, instId);
+
+    EnetAppUtils_assert(Enet_isIcssFamily(enetType) == true);
+    EnetApp_getEnetInstMacInfo(enetType, instId, macPortList, &numMacPorts);
+%if(instance.ExternalPhyMgmtEnable == false){
+    EnetApp_deleteClock(&gEnetAppSysCfgObj);
+%}
+    Enet_unregisterEventCb(hEnet,
+                            ENET_EVT_ASYNC_CMD_RESP,
+                            0U);
+
+    EnetAppUtils_print("Unregister TX timestamp callback\r\n");
+    Enet_unregisterEventCb(hEnet,
+                            ENET_EVT_TIMESTAMP_TX,
+                            0U);
 
     Enet_close(hEnet);
-
-    EnetMem_deInit();
-
-    Enet_deinit();
 }
 
 % }

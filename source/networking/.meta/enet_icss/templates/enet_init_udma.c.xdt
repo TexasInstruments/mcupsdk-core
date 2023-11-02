@@ -652,12 +652,10 @@ void EnetApp_closeTxDma(uint32_t enetTxDmaChId,
                         EnetDma_PktQ *cqPktInfoQ)
 {
     EnetAppTxDmaSysCfg_Obj *tx;
-    uint32_t i;
-    for (i = 0; i< ENET_SYSCFG_NUM_PERIPHERAL; i++)
-    {
-        EnetAppUtils_assert(enetTxDmaChId < ENET_ARRAYSIZE(gEnetAppSysCfgObj.dma[i].tx));
-        tx = &gEnetAppSysCfgObj.dma[i].tx[enetTxDmaChId];
-    }
+
+    EnetAppUtils_assert(enetTxDmaChId < ENET_ARRAYSIZE(gEnetAppSysCfgObj.dma[0U].tx));
+    tx = &gEnetAppSysCfgObj.dma[0].tx[enetTxDmaChId];
+
     EnetQueue_initQ(fqPktInfoQ);
     EnetQueue_initQ(cqPktInfoQ);
     EnetApp_retrieveFreeTxPkts(tx->hTxCh, cqPktInfoQ);
@@ -706,7 +704,7 @@ void EnetApp_closeRxDma(uint32_t enetRxDmaChId,
                                          rxDmaInfo[enetRxDmaChId].useDefaultFlow,
                                          fqPktInfoQ,
                                          cqPktInfoQ,
-                                         enetRxDmaChId,
+                                         rxDmaInfo[enetRxDmaChId].chIdx,
                                          pRx->rxFlowStartIdx,
                                          pRx->rxFlowIdx,
                                          pRx->numValidMacAddress,

@@ -130,14 +130,17 @@ PRUICSS_Handle PRUICSS_open(uint32_t instance)
     PRUICSS_Object          *object = NULL;
     PRUICSS_HwAttrs const   *hwAttrs = NULL;
 
-    /* Check index */
-    if(instance >= gPruIcssConfigNum)
+    for (uint32_t i = 0; i < gPruIcssConfigNum; i++)
     {
-        return NULL;
-    }
-    else
-    {
-        handle = (PRUICSS_Handle)(&gPruIcssConfig[instance]);
+        handle = (PRUICSS_Handle)(&gPruIcssConfig[i]);
+        if (handle->hwAttrs->instance == instance)
+        {
+            break;
+        }
+        else
+        {
+        	handle = NULL;
+        }
     }
     hwAttrs = (PRUICSS_HwAttrs const *)handle->hwAttrs;
     object = (PRUICSS_Object *)handle->object;

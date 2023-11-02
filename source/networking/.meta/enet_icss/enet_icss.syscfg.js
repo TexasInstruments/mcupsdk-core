@@ -189,6 +189,7 @@ function pinmuxRequirements(inst) {
 
     let mdio = getPeripheralRequirements(inst, "MDIO");
     let iep = getPeripheralRequirements(inst, "IEP");
+    let interfaceNameList = [];
 
     /* set default values for "rx" for different pins, based on use case */
     pinmux.setPeripheralPinConfigurableDefault( mdio, "MDC", "rx", false);
@@ -209,7 +210,14 @@ function pinmuxRequirements(inst) {
         pinmux.setPeripheralPinConfigurableDefault( mii_g_rt, "MII1_TXD3", "rx", false);
         pinmux.setPeripheralPinConfigurableDefault( mii_g_rt, "MII1_TXEN", "rx", false);
 
-        return [mdio, iep, mii_g_rt];
+        if (inst.mdioMdcEnable == true)
+        {
+            return [mdio, iep, mii_g_rt];
+        }
+        else
+        {
+            return interfaceNameList;
+        }
     }
     else
     {
@@ -248,10 +256,26 @@ function getInterfaceNameList(inst)
     let interfaceNameList = [];
     if (inst.phyToMacInterfaceMode === "MII")
     {
-        interfaceNameList.push(
-            getInterfaceName(inst, "MDIO"),
-            getInterfaceName(inst, "IEP"),
-            getInterfaceName(inst, "MII_G_RT" ));
+        if (inst.mdioMdcEnable == true)
+        {
+            interfaceNameList.push(
+                getInterfaceName(inst, "MDIO"),
+                getInterfaceName(inst, "IEP"));
+        }
+        
+        if (inst.mode == 'SWITCH')
+        {
+            interfaceNameList.push(
+                getInterfaceName(inst, "MII_G_RT" ));
+        }
+        else
+        {
+            if (inst.dualMacPortSelected == 'ENET_MAC_PORT_1')
+            {
+                interfaceNameList.push(
+                    getInterfaceName(inst, "MII_G_RT" ));
+            }
+        }
     }
     else if (inst.phyToMacInterfaceMode === "RGMII")
     {
@@ -607,19 +631,68 @@ function getRxChIdxCount(instance, RefChIdx)
     return count;
 }
 
+function getMatchInstances(inst)
+{
+    let instances = system.modules["/networking/enet_icss/enet_icss"].$instances;
+    let matchedInst = new Array();
+    let i = 0;
+    let j = 0;
+    for(let i = 0; i < instances.length; i++)
+    {
+        if (instances[i].instance == inst)
+        {
+            matchedInst.push(i);
+        }
+    }
+    return matchedInst;
+}
 
 function validateInstances(instance, report) {
     let instances = system.modules["/networking/enet_icss/enet_icss"].$instances;
+    let matchedInst0 = new Array();
+    let matchedInst1 = new Array();
 
-    if (instances.length == 2)
+    if (instances.length >= 2)
     {
-        if (instances[0].mode != "DUAL MAC")
+        matchedInst0 = getMatchInstances ("ICSSG0")
+        matchedInst1 = getMatchInstances ("ICSSG1")
+        if (matchedInst0.length > 2)
         {
-            report.logError(`ENET ICSSG mode setting should "DUAL MAC" in both the instances`, instance);
+            report.logError(`Exceeded maximum count for ICSSG0 instances`, instance);
         }
-        if (instances[1].mode != "DUAL MAC")
+        if (matchedInst1.length > 2)
         {
-            report.logError(`ENET ICSSG mode setting should "DUAL MAC" in both the instances`, instance);
+            report.logError(`Exceeded maximum count for ICSSG1 instances`, instance);
+        }
+        if (matchedInst0.length == 2)
+        {
+            if (instances[matchedInst0[0]].mode != "DUAL MAC")
+            {
+                report.logError(`ENET ICSSG0 mode setting should "DUAL MAC" in both the instances`, instance);
+            }
+            if (instances[matchedInst0[1]].mode != "DUAL MAC")
+            {
+                report.logError(`ENET ICSSG0 mode setting should "DUAL MAC" in both the instances`, instance);
+            }
+            if (instances[matchedInst0[0]].dualMacPortSelected === instances[matchedInst0[1]].dualMacPortSelected)
+            {
+                report.logError(`ENET ICSSG0 'Dual Mac Port' setting should be different across both the instances`, instance);
+            }
+        }
+        if (matchedInst1.length == 2)
+        {
+            if (instances[matchedInst1[0]].mode != "DUAL MAC")
+            {
+                report.logError(`ENET ICSSG1 mode setting should "DUAL MAC" in both the instances`, instance);
+            }
+            if (instances[matchedInst1[1]].mode != "DUAL MAC")
+            {
+                report.logError(`ENET ICSSG1 mode setting should "DUAL MAC" in both the instances`, instance);
+            }
+            if (instances[matchedInst1[0]].dualMacPortSelected === instances[matchedInst1[1]].dualMacPortSelected)
+            {
+                report.logError(`ENET ICSSG1 'Dual Mac Port' setting should be different across both the instances`, instance);
+            }
         }
 
     /* if (instances[0].mdioMdcEnable != instances[1].mdioMdcEnable)
@@ -628,10 +701,7 @@ function validateInstances(instance, report) {
         }
     */
 
-        if (instances[0].dualMacPortSelected === instances[1].dualMacPortSelected)
-        {
-            report.logError(`ENET ICSSG 'Dual Mac Port' setting should be different across both the instances`, instance);
-        }
+
     }
     return instances;
 }

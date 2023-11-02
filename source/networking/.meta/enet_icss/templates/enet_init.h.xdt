@@ -20,6 +20,17 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
+typedef struct EnetAppInstInfo_s
+{
+    Enet_Type enetType;
+    uint32_t instId;
+    uint32_t rgmiiEn;
+    uint32_t startRxChId;
+    uint32_t startTxChId;
+    uint32_t rxChCount;
+    uint32_t txChCount;
+} EnetAppInstInfo;
+
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -33,6 +44,11 @@
  *
  */
 void EnetApp_driverInit();
+/*!
+ * \brief  Denitialize Enet Driver from Application.
+ *
+ */
+void EnetApp_driverDeInit();
 /*!
  * \brief  Opens Enet Driver from Application.
  *
@@ -49,6 +65,8 @@ extern int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId);
  * \param instId    Enet Peripheral instance id
  */
 void EnetApp_driverClose(Enet_Type enetType, uint32_t instId);
+
+void EnetApp_closePortLink(Enet_Type enetType, uint32_t instId);
 % }
 
 void EnetApp_txChInPeripheral(Enet_Type enetType, uint32_t instId, uint32_t *startIdx, uint32_t *chCount);

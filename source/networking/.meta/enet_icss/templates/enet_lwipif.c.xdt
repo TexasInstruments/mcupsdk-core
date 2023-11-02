@@ -47,9 +47,9 @@
 
 #define ENETLWIP_APP_POLL_PERIOD       (500U)
 
-#define LWIPIF_NUM_RX_PACKET_TASKS     (2U)
+#define LWIPIF_NUM_RX_PACKET_TASKS     (4U)
 
-#define LWIPIF_NUM_TX_PACKET_TASKS     (2U)
+#define LWIPIF_NUM_TX_PACKET_TASKS     (4U)
 
 /*! \brief RX packet task stack size */
 #define LWIPIF_RX_PACKET_TASK_STACK    (1024U)
@@ -566,7 +566,7 @@ int32_t LwipifEnetApp_getNetifIdx(LwipifEnetApp_Handle handle, struct netif* net
 
     int32_t idx = -1;
 
-    for (uint32_t i = 0; i < 2; i++)
+    for (uint32_t i = 0; i < ENET_SYSCFG_NETIF_COUNT; i++)
     {
         if (&pObj->gNetif[i] == netif)
         {
