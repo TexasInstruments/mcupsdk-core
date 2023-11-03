@@ -157,7 +157,6 @@ function def_memory_regions(regionInst, ind, device, core){
             else if(ind == 3){
                 regionInst.memory_region[ind].$name              = "LOG_SHM_MEM";
                 regionInst.memory_region[ind].size               = 0x4000;
-                regionInst.memory_region[ind].isShared           = true;
             }
             else if(ind == 4){
                 regionInst.memory_region[ind].type               = "CUSTOM_ALL";

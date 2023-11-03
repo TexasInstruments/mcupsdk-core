@@ -69,10 +69,6 @@ const readmeDoxygenPageTag = "EXAMPLES_EMPTY";
 const templates_freertos_r5f =
 [
     {
-        input: ".project/templates/am273x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
-    {
         input: ".project/templates/am273x/freertos/main_freertos.c.xdt",
         output: "../main.c",
         options: {
@@ -83,10 +79,6 @@ const templates_freertos_r5f =
 
 const templates_freertos_c66 =
 [
-    {
-        input: ".project/templates/am273x/common/linker_c66.cmd.xdt",
-        output: "linker.cmd",
-    },
     {
         input: ".project/templates/am273x/freertos/main_freertos.c.xdt",
         output: "../main.c",

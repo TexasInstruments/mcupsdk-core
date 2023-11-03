@@ -58,7 +58,7 @@ region1.memory_region[1].manualStartAddress = 0xC02E8000;
 region1.memory_region[1].size               = 0x4000;
 region1.memory_region[2].$name              = "LOG_SHM_MEM";
 region1.memory_region[2].size               = 0x4000;
-region1.memory_region[2].isShared           = true;
+
 
 section1.load_to_memory              = "Address";
 section1.group                       = false;

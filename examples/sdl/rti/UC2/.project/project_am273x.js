@@ -84,13 +84,6 @@ const readmeDoxygenPageTag = "EXAMPLES_SDL_RTI";
 const templates_nortos_r5f =
 [
     {
-        input: ".project/templates/am273x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-        options: {
-            isSingleCore: true,
-        },
-    },
-    {
         input: ".project/templates/am273x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {

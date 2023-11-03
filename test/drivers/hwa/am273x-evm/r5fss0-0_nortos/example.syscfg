@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM273x" --package "ZCE" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @versions {"tool":"1.18.0+3266"}
  */
 
 /**
@@ -99,7 +99,7 @@ region1.memory_region[3].type               = "MSS_L2_R5F";
 region1.memory_region[3].$name              = "MSS_L2";
 region1.memory_region[3].auto               = false;
 region1.memory_region[3].manualStartAddress = 0x10260000;
-region1.memory_region[3].size               = 0x40000;
+region1.memory_region[3].size               = 0x80000;
 region1.memory_region[4].type               = "DSS_L3_ALL";
 region1.memory_region[4].isShared           = true;
 region1.memory_region[4].shared_cores       = ["c66ss0","r5fss0-1"];
@@ -207,9 +207,9 @@ section6.output_section.create(3);
 section6.output_section[0].$name      = ".ARM.exidx";
 section6.output_section[0].palignment = true;
 section6.output_section[1].$name      = ".init_array";
-section6.output_section[1].palignment            = true;
+section6.output_section[1].palignment = true;
 section6.output_section[2].$name      = ".fini_array";
-section6.output_section[2].palignment            = true;
+section6.output_section[2].palignment = true;
 
 section7.$name                       = "BSS DSS L3";
 section7.load_memory                 = "DSS_L3";

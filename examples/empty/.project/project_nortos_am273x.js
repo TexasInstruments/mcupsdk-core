@@ -53,10 +53,6 @@ const readmeDoxygenPageTag = "EXAMPLES_EMPTY";
 const templates_nortos_r5f =
 [
     {
-        input: ".project/templates/am273x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
-    {
         input: ".project/templates/am273x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
@@ -67,10 +63,7 @@ const templates_nortos_r5f =
 
 const templates_nortos_c66 =
 [
-    {
-        input: ".project/templates/am273x/common/linker_c66.cmd.xdt",
-        output: "linker.cmd",
-    },
+
     {
         input: ".project/templates/am273x/nortos/main_nortos.c.xdt",
         output: "../main.c",

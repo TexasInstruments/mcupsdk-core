@@ -79,13 +79,6 @@ const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_MIBSPI_LOOPBACK_ICOUNT";
 const templates_nortos_r5f =
 [
     {
-        input: ".project/templates/am273x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-        options: {
-            isSingleCore: true,
-        },
-    },
-    {
         input: ".project/templates/am273x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
@@ -157,7 +150,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
-   
+
     if(buildOption.cpu.match(/r5f*/)) {
         if(buildOption.os.match(/freertos*/) )
         {

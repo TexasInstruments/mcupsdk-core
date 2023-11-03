@@ -118,13 +118,6 @@ const templates_freertos_r5f =
 const templates_nortos_c66 =
 [
     {
-        input: ".project/templates/am273x/common/linker_c66.cmd.xdt",
-        output: "linker.cmd",
-        options: {
-            isSingleCore: true,
-        },
-    },
-    {
         input: ".project/templates/am273x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
@@ -162,12 +155,12 @@ function getComponentBuildProperty(buildOption) {
 
     if(buildOption.cpu.match(/r5f*/)) {
         if(buildOption.os.match(/freertos*/) )
-        {                                      
+        {
             build_property.includes = includes_freertos_r5f;
             build_property.libdirs = libdirs_freertos;
             build_property.libs = libs_freertos_r5f;
             build_property.templates = templates_freertos_r5f;
-			
+
         }
 		else
 		{
@@ -175,7 +168,7 @@ function getComponentBuildProperty(buildOption) {
 			build_property.libs = libs_r5f;
 			build_property.includes = includes_nortos;
 			build_property.templates = templates_nortos_r5f;
-			
+
 		}
     }
     if(buildOption.cpu.match(/c66*/)) {
