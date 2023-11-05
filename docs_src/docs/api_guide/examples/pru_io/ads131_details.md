@@ -10,11 +10,14 @@ In example, the interfacing with ADS131M08 operates in following configuration:
 -  Continous sampling of data
 -  Signal trace for the current implementation is shown in figure below (can check timing details from this)
 
-  \imageStyle{ads131_timing_capture.png,width:80%}
+  \imageStyle{ads131_timing_capture.png,width:50% height:120%}
   \image html ads131_timing_capture.png " "
+  \imageStyle{ads131_timing_capture_1.png,width:50% height:120%}
+  \image html ads131_timing_capture_1.png " "
 
 <!-- ### R5F Role/Job?: -->
 ### R5F Function:
+- Configure the IO Expander to connect the PRU IOs to HSE
 - Send ADC register configuration information to the PRU core
 - Send instructions to PRU core
 - Wait for interrupt from PRU indicating 1 block of adc samples has been received

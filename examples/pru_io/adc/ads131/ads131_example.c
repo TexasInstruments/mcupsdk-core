@@ -40,6 +40,9 @@
 #include <drivers/pruicss.h>
 #include <pru_ipc.h>
 
+
+#define WRITE_CLOCK_REG_COMMAND     (0x00618400)  
+#define CLOCK_REG_VALUE             (0x00FF0200)
 /*
  *  This is an example project to show ADC samples transfered to R5F TCM
  *  by PRU and read by R5F on interrupt.
@@ -85,6 +88,14 @@ void PRU_IPC_Isr(void *args)
 
 void ads_example_main(void *args)
 {
+
+    /*
+    *  In example, the interfacing with ADS131M08 operates in following configuration:
+    *  8 simultaneously sampling differential inputs
+    *  Programmable data rate up to 32 kSPS
+    *  Continous sampling of data
+    */  
+
     Drivers_open(); // check return status
     int status;
     status = Board_driversOpen();
@@ -94,14 +105,34 @@ void ads_example_main(void *args)
     status = PRUICSS_intcInit(gPruIcss0Handle, &icss0_intc_initdata);
     DebugP_assert(SystemP_SUCCESS == status);
 
+    /* R5F Function:
+    *  Configure the IO Expander to connect the PRU IOs to HSE
+    *  Send ADC register configuration information to the PRU core
+    *  Send instructions to PRU core
+    *  Wait for interrupt from PRU indicating 1 block of adc samples has been received
+    *  On interrupt fetch the block id to read and read the samples
+    *  Process them as needed
+    */
+
     /* Construct semaphore for ADC samples received */
     SemaphoreP_constructBinary(&gAdcDataRecSem, 0);
     /*  Total number of Commands to send to ADC */
     uint32_t noOfCommands = 2;
+
     /*  Commands array
      *  Add your commands to this (maximum = noOfCommands)
      */
-    uint32_t adcConfigCommands[2] = {0x00618400,0x00FF0200};
+
+    /*
+    * command length or word length default value set to 24bits
+    * So Each command sent to adc is of size 24bit, MSb 24bits[32:9] are sent by PRU
+    * Write Reg: 0000 0000 011a aaaa annn nnnn, Writes nnn nnnn plus 1 registers beginning at address aa aaaa
+    * With  0000 0000 dddd dddd dddd dddd (nnn nnnn plus 1 registers values) 
+    * To configure ADC sampling rate to 32KSPS write to CLOCK_REG With value 0x00FF02 (WRITE_CLOCK_REG_COMMAND & CLOCK_REG_VALUE)
+    * Refer Section 8.6 of ADS131M08_Datasheet,to find Register offset address & Register contents
+    */
+
+    uint32_t adcConfigCommands[2] = {WRITE_CLOCK_REG_COMMAND,CLOCK_REG_VALUE};
 
     DebugP_log("--------------------------------------------------\r\n");
     DebugP_log("Initializing App \r\n");

@@ -72,9 +72,9 @@ extern void PRU_IPC_Isr(void *args);
 static TCA6424_Config  gTCA6424_Config;
 
 /**
- * \brief   This function writes the specified core's DRAM memory with sectionID
- *           and creates an interrupt event to PRU
- *
+ * \brief   This function is used to indicate PRU core to go to the specified section
+ *          It writes the specified core's DRAM memory with sectionID and creates 
+ *          an interrupt event to PRU as signaling mechanism.    
  * \param   handle
  * \param   pruCore
  * \param   sectionId

@@ -60,6 +60,10 @@
 #define RESET_SECTION            4
 #define CONFIG_ADC0_SMEM_OFFSET  0 // should be received from sysconfig
 
+/*Each command sent to adc is of size 24bit, MSb 24bits[32:9] are sent by PRU*/
+#define RESET_COMMAND               (0x00001100)
+#define NULL_COMMAND                (0x00000000)
+
 /** \brief Global PRUICSS Handle */
 extern PRUICSS_Handle gPruIcss0Handle;
 
@@ -70,9 +74,9 @@ static TCA6424_Config  gTCA6424_Config;
 extern void PRU_IPC_Isr(void *args);
 
 /**
- * \brief   This function writes the specified core's DRAM memory with sectionID
- *           and creates an interrupt event to PRU
- *
+ * \brief   This function is used to indicate PRU core to go to the specified section
+ *          It writes the specified core's DRAM memory with sectionID and creates 
+ *          an interrupt event to PRU as signaling mechanism.    
  * \param   handle
  * \param   pruCore
  * \param   sectionId
@@ -222,7 +226,7 @@ void ADC_reset()
     /*  Commands array
      *  Add your commands to this (maximum = noOfCommands)
      */
-    uint32_t adcConfigCommands[10] = {0x00001100,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000};
+    uint32_t adcConfigCommands[10] = {RESET_COMMAND,NULL_COMMAND,NULL_COMMAND,NULL_COMMAND,NULL_COMMAND,NULL_COMMAND,NULL_COMMAND,NULL_COMMAND,NULL_COMMAND,NULL_COMMAND};
     ADC_configure(noOfCommands, adcConfigCommands);
 }
 
