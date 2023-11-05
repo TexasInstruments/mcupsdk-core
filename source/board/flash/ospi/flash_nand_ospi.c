@@ -358,7 +358,7 @@ static int32_t Flash_nandOspiRead(Flash_Config *config, uint32_t offset, uint8_t
         if(status == SystemP_SUCCESS)
         {
             OSPI_Transaction_init(&transaction);
-            transaction.buf = (void *)buf + readAddr - offset;
+            transaction.buf = (void *)((uint32_t)buf + readAddr - offset);
 
             if(numPages == 1)
             {
@@ -739,7 +739,7 @@ static int32_t Flash_nandOspiDisableWriteProtection(Flash_Config *config)
     {
         cmd = nandCfg->cmdWrsr;
         cmdAddr = nandCfg->srWriteProtectReg;
-        txBuf = nandCfg->srWriteProtectMask && 0;
+        txBuf = nandCfg->srWriteProtectMask & 0;
 
         status = Flash_nandOspiCmdWrite(config, cmd, cmdAddr, 1, &txBuf, 1);
     }
