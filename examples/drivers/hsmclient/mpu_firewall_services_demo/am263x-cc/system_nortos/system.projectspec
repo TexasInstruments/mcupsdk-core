@@ -3,7 +3,7 @@
     <import spec="../r5fss0-0_nortos/ti-arm-clang/example.projectspec"/>
     <import spec="../r5fss0-1_nortos/ti-arm-clang/example.projectspec"/>
     <project
-        name="mpu_firewall_demo_am263x-cc_system_nortos"
+        name="mpu_firewall_services_demo_am263x-cc_system_nortos"
         products="com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Debug,

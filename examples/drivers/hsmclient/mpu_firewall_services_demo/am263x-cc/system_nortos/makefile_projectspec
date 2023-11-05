@@ -7,7 +7,7 @@ include $(MCU_PLUS_SDK_PATH)/imports.mak
 
 export PROFILE?=Release
 
-PROJECT_NAME=mpu_firewall_demo_am263x-cc_system_nortos
+PROJECT_NAME=mpu_firewall_services_demo_am263x-cc_system_nortos
 
 all:
 	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE)

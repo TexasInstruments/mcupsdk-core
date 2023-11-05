@@ -201,6 +201,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Sbl Emmc Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sbl_emmc",
+        "location": "../../examples/drivers/boot/sbl_emmc/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "boot",
+            "sbl_emmc",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Sbl Emmc Linux Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_emmc_linux",
         "location": "../../examples/drivers/boot/sbl_emmc_linux/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

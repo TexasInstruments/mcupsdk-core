@@ -36,6 +36,7 @@ FILES_common := \
     enet_hostport.c \
     enet_udma.c \
     enet_udma_priv.c \
+    csl_cpts.c \
     csl_mdio.c \
     icssg.c \
     icssg_ioctl_register.c \
@@ -65,6 +66,7 @@ FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/per/V1 \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/common \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/dma/udma \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpts \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3 \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x \
@@ -88,6 +90,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/src/phy \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/cpts \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/board \

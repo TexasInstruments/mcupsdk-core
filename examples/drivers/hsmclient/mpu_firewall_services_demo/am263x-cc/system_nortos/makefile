@@ -15,9 +15,9 @@ endif
 PROFILE?=release
 
 MULTI_CORE_BOOTIMAGE_PATH=$(abspath .)
-MULTI_CORE_BOOTIMAGE_NAME:=mpu_firewall_demo_system.$(PROFILE).appimage
+MULTI_CORE_BOOTIMAGE_NAME:=mpu_firewall_services_demo_system.$(PROFILE).appimage
 MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(MULTI_CORE_BOOTIMAGE_NAME).signed
-MULTI_CORE_BOOTIMAGE_NAME_XIP:=mpu_firewall_demo_system.$(PROFILE).appimage_xip
+MULTI_CORE_BOOTIMAGE_NAME_XIP:=mpu_firewall_services_demo_system.$(PROFILE).appimage_xip
 MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 
 CORE_0=--script ../r5fss0-0_nortos/example.syscfg --context r5fss0-0 --output ../r5fss0-0_nortos/ti-arm-clang/generated
@@ -84,16 +84,16 @@ OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.j
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 
 MULTI_CORE_APP_PARAMS = \
-    ../r5fss0-0_nortos/ti-arm-clang/mpu_firewall_demo.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
-    ../r5fss0-1_nortos/ti-arm-clang/mpu_firewall_demo.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+    ../r5fss0-0_nortos/ti-arm-clang/mpu_firewall_services_demo.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+    ../r5fss0-1_nortos/ti-arm-clang/mpu_firewall_services_demo.$(PROFILE).rprc@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
 
 MULTI_CORE_APP_PARAMS_XIP = \
-    ../r5fss0-0_nortos/ti-arm-clang/mpu_firewall_demo.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
-    ../r5fss0-1_nortos/ti-arm-clang/mpu_firewall_demo.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+    ../r5fss0-0_nortos/ti-arm-clang/mpu_firewall_services_demo.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+    ../r5fss0-1_nortos/ti-arm-clang/mpu_firewall_services_demo.$(PROFILE).rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
 
 MULTI_CORE_BOOTIMAGE_DEPENDENCY = \
-    ../r5fss0-0_nortos/ti-arm-clang/mpu_firewall_demo.$(PROFILE).rprc \
-    ../r5fss0-1_nortos/ti-arm-clang/mpu_firewall_demo.$(PROFILE).rprc \
+    ../r5fss0-0_nortos/ti-arm-clang/mpu_firewall_services_demo.$(PROFILE).rprc \
+    ../r5fss0-1_nortos/ti-arm-clang/mpu_firewall_services_demo.$(PROFILE).rprc \
 
 $(MULTI_CORE_BOOTIMAGE_DEPENDENCY):
 

@@ -36,12 +36,12 @@ MULTI_CORE_IMAGE_GEN = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImag
 OUTRPRC_CMD = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
 
 MULTI_CORE_APP_PARAMS = \
-    ../mpu_firewall_demo_am263x-cc_r5fss0-0_nortos_ti-arm-clang/$(PROFILE)/mpu_firewall_demo_am263x-cc_r5fss0-0_nortos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
-    ../mpu_firewall_demo_am263x-cc_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/mpu_firewall_demo_am263x-cc_r5fss0-1_nortos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+    ../mpu_firewall_services_demo_am263x-cc_r5fss0-0_nortos_ti-arm-clang/$(PROFILE)/mpu_firewall_services_demo_am263x-cc_r5fss0-0_nortos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+    ../mpu_firewall_services_demo_am263x-cc_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/mpu_firewall_services_demo_am263x-cc_r5fss0-1_nortos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
 
 MULTI_CORE_APP_PARAMS_XIP = \
-    ../mpu_firewall_demo_am263x-cc_r5fss0-0_nortos_ti-arm-clang/$(PROFILE)/mpu_firewall_demo_am263x-cc_r5fss0-0_nortos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
-    ../mpu_firewall_demo_am263x-cc_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/mpu_firewall_demo_am263x-cc_r5fss0-1_nortos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+    ../mpu_firewall_services_demo_am263x-cc_r5fss0-0_nortos_ti-arm-clang/$(PROFILE)/mpu_firewall_services_demo_am263x-cc_r5fss0-0_nortos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+    ../mpu_firewall_services_demo_am263x-cc_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/mpu_firewall_services_demo_am263x-cc_r5fss0-1_nortos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
 
 all:
 ifeq ($(CCS_IDE_MODE),cloud)

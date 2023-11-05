@@ -109,6 +109,7 @@ FILES_PATH_common = \
     sciclient/soc/am64x_am243x \
     soc/am64x_am243x \
     spinlock/v0 \
+    timer_mgr/v0/priv \
     uart/v0 \
     uart/v0/dma \
     uart/v0/dma/udma \

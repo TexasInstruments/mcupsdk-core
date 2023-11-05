@@ -12,7 +12,7 @@
     <project
         title="Adc Soc Software Sync"
         name = "adc_soc_software_sync_am263px-lp_r5fss0-0_nortos_ti-arm-clang"
-        products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
+        products="sysconfig;com.ti.MCU_PLUS_SDK_AM263PX"
         configurations="
             Release,
             Debug,
@@ -86,7 +86,7 @@
                 -llibsysbm.a
             "
         ></configuration>
-        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
+        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AM263PX_INSTALL_DIR}" scope="project" />
         <file path="../../../adc_soc_software_sync.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">

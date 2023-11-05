@@ -4,7 +4,7 @@
     <import spec="../r5fss0-1_freertos/ti-arm-clang/example.projectspec"/>
     <project
         name="empty_am263px-lp_system_freertos"
-        products="com.ti.MCU_PLUS_SDK_AMXXX"
+        products="com.ti.MCU_PLUS_SDK_AM263PX"
         configurations="
             Debug,
             Release,
@@ -14,7 +14,7 @@
         outputType="system"
         toolChain="TICLANG"
         >
-        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
+        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AM263PX_INSTALL_DIR}" scope="project" />
         <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263px/EXAMPLES_EMPTY.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
