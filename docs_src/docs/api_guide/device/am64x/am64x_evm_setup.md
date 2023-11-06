@@ -755,8 +755,8 @@ This mode is used to flash files to the EVM flash via UART. It can also be used 
 
 This mode is used to flash files to the AM64X-SK flash via UART. It can also be used to boot applications via UART.
     \code
-    BOOTMODE [ 0 :  7 ] (SW2) = 1101 1100
-    BOOTMODE [ 8 : 15 ] (SW3) = 1011 0000
+    BOOTMODE [ 15 : 8 ] (SW2) = 0000 1101
+    BOOTMODE [  7 : 0 ] (SW3) = 0011 1011
     \endcode
 
   \imageStyle{sk_boot_pins_uart_mode.png,width:30%}
@@ -791,8 +791,8 @@ This mode is used to boot flashed applications via EVM flash like OSPI flash
 
 This mode is used to boot flashed applications via AM64X-SK flash like OSPI flash
     \code
-    BOOTMODE [ 0 :  7 ] (SW2) = 1100 1110
-    BOOTMODE [ 8 : 15 ] (SW3) = 0100 0000
+    BOOTMODE [ 15 : 8 ] (SW2) = 0000 0010
+    BOOTMODE [  7 : 0 ] (SW3) = 0111 0011
     \endcode
 
   \imageStyle{sk_boot_pins_ospi_mode.png,width:30%}
@@ -813,8 +813,8 @@ This mode is used to boot applications via SD card on the EVM.
 ##### AM64X-SK
 This mode is used to boot applications via SD card on the AM64X-SK.
     \code
-    BOOTMODE [ 0 :  7 ] (SW2) = 1100 0011
-    BOOTMODE [ 8 : 15 ] (SW3) = 0110 1100
+    BOOTMODE [ 15 :  8 ] (SW2) = 0011 0110
+    BOOTMODE [  7 :  0 ] (SW3) = 1100 0011
     \endcode
 
   \imageStyle{sk_boot_pins_sd_mode.png,width:30%}
@@ -834,8 +834,8 @@ This mode is used in conjunction with the `load_dmsc_hsfs.js` script described h
 ##### AM64X-SK
 This mode is used in conjunction with the `load_dmsc.js` script described here \ref EVM_SOC_INIT_NOBOOT_MODE,
     \code
-    BOOTMODE [ 0 :  7 ] (SW2) = 1101 1111
-    BOOTMODE [ 8 : 15 ] (SW3) = 0000 0000
+    BOOTMODE [ 0 :  7 ] (SW2) = 0000 0000
+    BOOTMODE [ 8 : 15 ] (SW3) = 1111 1011
     \endcode
 
   \imageStyle{sk_boot_pins_noboot_mode.png,width:30%}
