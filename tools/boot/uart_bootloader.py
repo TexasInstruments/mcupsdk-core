@@ -71,7 +71,7 @@ def xmodem_send_receive_file(filename, serialport, baudrate=115200, get_response
         bar_filesize = os.path.getsize(filename)
         mySerPort = serialport
         myBaudRate = baudrate
-        open_serial_port(); 
+        open_serial_port()
         stream = open(filename, 'rb')
     except FileNotFoundError:
         print('[ERROR] File [' + filename + '] not found !!!')
@@ -171,19 +171,20 @@ def main(argv):
         sys.exit()
 
     if(appimage_file == None):
-        status = "[ERROR] Provide path to an appimage binary to be sent via UART with option -f or --file=, , use -h option to see detailed help !!!"
-        print(status)
-        sys.exit()
+        print("No appimage binary provided to be sent via UART with option -f or --file=, , use -h option to see detailed help !!!")
 
     if(status == 0):
-        # Check both SBL and appimage files exists
-        try:
-            appimage_file_handle = open(appimage_file, "r")
-        except FileNotFoundError:
-            status = '[ERROR] Application file [' + appimage_file + '] not found !!!'
-            print(status)
-            sys.exit()
 
+        if (appimage_file):
+            # Check appimage files exists
+            try:
+                appimage_file_handle = open(appimage_file, "r")
+            except FileNotFoundError:
+                status = '[ERROR] Application file [' + appimage_file + '] not found !!!'
+                print(status)
+                sys.exit()
+
+        # Check SBL files exists
         try:
             bootloader_file_handle = open(bootloader_file, "r")
         except FileNotFoundError:
@@ -197,12 +198,13 @@ def main(argv):
         print("Sent bootloader {} of size {} bytes in {}s.".format(bootloader_file, os.path.getsize(bootloader_file), timetaken))
         print("")
 
-        print("Sending the application {} ...".format(appimage_file))
-        send_status, timetaken = xmodem_send_receive_file(appimage_file, serialport, get_response=True)
-        print("Sent application {} of size {} bytes in {}s.".format(appimage_file, os.path.getsize(appimage_file), timetaken))
-        print(send_status)
-        if("SUCCESS" in send_status):
-            print("Connect to UART in 2 seconds to see logs from UART !!!")
+        if (appimage_file):
+            print("Sending the application {} ...".format(appimage_file))
+            send_status, timetaken = xmodem_send_receive_file(appimage_file, serialport, get_response=True)
+            print("Sent application {} of size {} bytes in {}s.".format(appimage_file, os.path.getsize(appimage_file), timetaken))
+            print(send_status)
+            if("SUCCESS" in send_status):
+                print("Connect to UART in 2 seconds to see logs from UART !!!")
 
 if __name__ == "__main__":
     main(sys.argv[1:])
