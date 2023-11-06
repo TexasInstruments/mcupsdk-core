@@ -46,6 +46,23 @@ void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak)) HwiP_data_ab
 /* compile flag to enable or disable interrupt nesting */
 #define HWIP_NESTED_INTERRUPTS_IRQ_ENABLE
 
+/* Save FPU context, used in FIQ Handler */
+static inline  void Hwip_save_fpu_context(void)
+{
+    __asm__ __volatile__ ( "FMRX  R0, FPSCR"  "\n\t": : : "memory");
+    __asm__ __volatile__ ( "VPUSH {D0-D15}"  "\n\t": : : "memory");
+    __asm__ __volatile__ ( "PUSH  {R0}"  "\n\t": : : "memory");
+}
+
+/* Restore FPU context, used in FIQ Handler */
+static inline  void Hwip_restore_fpu_context(void)
+{
+    __asm__ __volatile__ ( "POP   {R0}"  "\n\t": : : "memory");
+    __asm__ __volatile__ ( "VPOP  {D0-D15}"  "\n\t": : : "memory");
+    __asm__ __volatile__ ( "VMSR  FPSCR, R0"  "\n\t": : : "memory");
+}
+
+
 /* IRQ handler starts execution in HwiP_irq_handler, defined in HwiP_armv7r_handlers_nortos_asm.S
  * After some initial assembly logic it then branches to this function.
  * After exiting this function it does some more assembly before exiting
@@ -110,6 +127,10 @@ void __attribute__((interrupt("FIQ"), section(".text.hwi"))) HwiP_fiq_handler(vo
     uint32_t intNum;
     volatile uint32_t dummy;
 
+    #ifdef EN_SAVE_RESTORE_FPU_CONTEXT
+    Hwip_save_fpu_context();
+    #endif
+
     /* Read to force prioritization logic to take effect */
     dummy = HwiP_getFIQVecAddr();
     (void)dummy;
@@ -154,6 +175,10 @@ void __attribute__((interrupt("FIQ"), section(".text.hwi"))) HwiP_fiq_handler(vo
         gHwiCtrl.spuriousFIQCount++;
         HwiP_ackFIQ(0);
     }
+
+    #ifdef EN_SAVE_RESTORE_FPU_CONTEXT
+    Hwip_restore_fpu_context();
+    #endif
 }
 
 void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_reserved_handler(void)

@@ -40,6 +40,8 @@ extern "C" {
 #include <stdint.h>
 #include <kernel/dpl/SystemP.h>
 
+// #define EN_SAVE_RESTORE_FPU_CONTEXT
+
 /**
  * \defgroup KERNEL_DPL_HWI APIs for HW Interrupts
  * \ingroup KERNEL_DPL
