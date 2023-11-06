@@ -6,6 +6,7 @@ const files = {
     common: [
         "main.c",
         "ecc_main.c",
+        "ecc_main.h",
         "dpl_interface.c",
         "ecc_trigger.c",
     ],

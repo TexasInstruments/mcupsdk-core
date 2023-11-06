@@ -24,7 +24,8 @@ const files_m4f = {
     common: [
         "ddr_ecc_mcu_esm_handle.c",
         "main.c",
-        "dpl_interface.c"
+        "dpl_interface.c",
+        "dpl_interface.h"
     ],
 };
 

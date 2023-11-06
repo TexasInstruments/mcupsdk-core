@@ -91,6 +91,8 @@
         </file>
         <file path="../../../ecc_main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
+        <file path="../../../ecc_main.h" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
         <file path="../../../../dpl/dpl_interface.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../../../ecc_trigger.c" openOnCreation="false" excludeFromBuild="false" action="copy">
