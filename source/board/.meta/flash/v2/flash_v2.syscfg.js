@@ -1248,6 +1248,11 @@ function getConfigurables()
                             default: soc.getDefaultFlashConfig().rdIdSettings.addressBytesSize
                         },
                         {
+                            name: "idNumBytes",
+                            displayName: "Number Of Bytes To Read",
+                            default: soc.getDefaultFlashConfig().rdIdSettings.numBytes,
+                        },
+                        {
                             name: "dummyId4",
                             displayName: "Number Of Dummy Cycles In Quad Mode",
                             default: soc.getDefaultFlashConfig().rdIdSettings.dummy4,

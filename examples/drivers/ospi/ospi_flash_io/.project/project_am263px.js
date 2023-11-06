@@ -9,6 +9,12 @@ const files = {
     ],
 };
 
+const defines_board = {
+    common: [
+        "AM263P_LP",
+    ],
+}
+
 /* Relative to where the makefile will be generated
  * Typically at <example_folder>/<BOARD>/<core_os_combo>/<compiler>
  */
@@ -86,6 +92,10 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.libs = libs_r5f;
         build_property.templates = templates_nortos_r5f;
+    }
+
+    if(buildOption.board == "am263px-lp") {
+        build_property.defines = defines_board;
     }
 
     return build_property;
