@@ -366,6 +366,7 @@ help:
 	@echo  =============================
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am263px-cc/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am263px-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/hsmclient/mpu_firewall_services_demo/am263px-cc/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_notify_echo/am263px-cc/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_notify_echo/am263px-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_rpmsg_echo/am263px-cc/system_freertos_nortos [all clean syscfg-gui syscfg]
@@ -904,6 +905,7 @@ BUILD_COMBO_EXAMPLE_ALL += enet_txsg_am263px-cc_r5fss0-0_freertos_ti-arm-clang
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am263px-cc_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am263px-lp_system_freertos_nortos
+BUILD_COMBO_EXAMPLE_ALL += mpu_firewall_services_demo_am263px-cc_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_notify_echo_am263px-cc_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_notify_echo_am263px-lp_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_rpmsg_echo_am263px-cc_system_freertos_nortos
@@ -1794,6 +1796,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  edma_interrupt_transfer_am263px-lp_system_freertos_nortos:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263px-lp/system_freertos_nortos -f makefile all
 
+ mpu_firewall_services_demo_am263px-cc_system_nortos:
+	$(MAKE) -C examples/drivers/hsmclient/mpu_firewall_services_demo/am263px-cc/system_nortos -f makefile all
+
  ipc_notify_echo_am263px-cc_system_freertos_nortos:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am263px-cc/system_freertos_nortos -f makefile all
 
@@ -2105,6 +2110,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_txsg_am263px-cc_r5fss0-0_freertos_ti-arm-c
 # Various System Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am263px-cc_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am263px-lp_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += mpu_firewall_services_demo_am263px-cc_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_notify_echo_am263px-cc_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_notify_echo_am263px-lp_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_rpmsg_echo_am263px-cc_system_freertos_nortos_clean
@@ -2995,6 +3001,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  edma_interrupt_transfer_am263px-lp_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263px-lp/system_freertos_nortos -f makefile clean
 
+ mpu_firewall_services_demo_am263px-cc_system_nortos_clean:
+	$(MAKE) -C examples/drivers/hsmclient/mpu_firewall_services_demo/am263px-cc/system_nortos -f makefile clean
+
  ipc_notify_echo_am263px-cc_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am263px-cc/system_freertos_nortos -f makefile clean
 
@@ -3306,6 +3315,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_txsg_am263px-cc_r5fss0-0_freertos_ti-arm-c
 # Various System Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am263px-cc_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am263px-lp_system_freertos_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += mpu_firewall_services_demo_am263px-cc_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_notify_echo_am263px-cc_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_notify_echo_am263px-lp_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_rpmsg_echo_am263px-cc_system_freertos_nortos_scrub
@@ -4195,6 +4205,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  edma_interrupt_transfer_am263px-lp_system_freertos_nortos_scrub:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263px-lp/system_freertos_nortos -f makefile scrub
+
+ mpu_firewall_services_demo_am263px-cc_system_nortos_scrub:
+	$(MAKE) -C examples/drivers/hsmclient/mpu_firewall_services_demo/am263px-cc/system_nortos -f makefile scrub
 
  ipc_notify_echo_am263px-cc_system_freertos_nortos_scrub:
 	$(MAKE) -C examples/drivers/ipc/ipc_notify_echo/am263px-cc/system_freertos_nortos -f makefile scrub
