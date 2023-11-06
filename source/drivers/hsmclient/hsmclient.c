@@ -223,9 +223,8 @@ int32_t HsmClient_getVersion(HsmClient_t* HsmClient ,
     int32_t status ;
     uint16_t crcArgs;
 
-    /* Cache Aligned Size for HsmVer_t and HsmClient_t */
+    /* Cache Aligned Size for HsmVer_t */
     uint32_t alignedHsmVerCacheSize = (sizeof(HsmVer_t) + CacheP_CACHELINE_ALIGNMENT) & ~(CacheP_CACHELINE_ALIGNMENT - 1);
-    uint32_t alignedHsmClientCacheSize = (sizeof(HsmClient_t) + CacheP_CACHELINE_ALIGNMENT) & ~(CacheP_CACHELINE_ALIGNMENT - 1);
 
     /*populate the send message structure */
     HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
@@ -242,10 +241,9 @@ int32_t HsmClient_getVersion(HsmClient_t* HsmClient ,
     HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(hsmVer);
 
     /*
-       Write back the HsmClient and HsmVer structs and
-       invalidate the cache before passing them to HSM
+       Write back the HsmVer struct and
+       invalidate the cache before passing it to HSM
     */
-    CacheP_wbInv(HsmClient, alignedHsmClientCacheSize, CacheP_TYPE_ALL);
     CacheP_wbInv(hsmVer, alignedHsmVerCacheSize, CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient,timeout);
@@ -265,7 +263,6 @@ int32_t HsmClient_getVersion(HsmClient_t* HsmClient ,
             HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
 
             /* Invalidate the cache before reading the struct fields from HSM */
-            CacheP_inv(HsmClient, alignedHsmClientCacheSize, CacheP_TYPE_ALL);
             CacheP_inv(HsmClient->RespMsg.args, alignedHsmVerCacheSize, CacheP_TYPE_ALL);
 
             /* check the integrity of args */
@@ -1019,9 +1016,8 @@ int32_t HsmClient_keyWriter(HsmClient_t* HsmClient, KeyWriterCertHeader_t* certH
     int32_t status ;
     uint16_t crcArgs;
 
-    /* Cache Aligned Size for KeyWriterCertHeader_t and HsmClient_t */
+    /* Cache Aligned Size for KeyWriterCertHeader_t */
     uint32_t alignedKeywrCertHeaderCacheSize = (sizeof(KeyWriterCertHeader_t) + CacheP_CACHELINE_ALIGNMENT) & ~(CacheP_CACHELINE_ALIGNMENT - 1);
-    uint32_t alignedHsmClientCacheSize = (sizeof(HsmClient_t) + CacheP_CACHELINE_ALIGNMENT) & ~(CacheP_CACHELINE_ALIGNMENT - 1);
 
     /*populate the send message structure */
     HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
@@ -1039,10 +1035,9 @@ int32_t HsmClient_keyWriter(HsmClient_t* HsmClient, KeyWriterCertHeader_t* certH
     HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(certHeader);
 
     /*
-       Write back the HsmClient and KwrCertHeader structs and
-       invalidate the cache before passing them to HSM
+       Write back the KwrCertHeader struct and
+       invalidate the cache before passing it to HSM
     */
-    CacheP_wbInv(HsmClient, alignedHsmClientCacheSize, CacheP_TYPE_ALL);
     CacheP_wbInv(certHeader, alignedKeywrCertHeaderCacheSize, CacheP_TYPE_ALL);
 
 
@@ -1063,7 +1058,6 @@ int32_t HsmClient_keyWriter(HsmClient_t* HsmClient, KeyWriterCertHeader_t* certH
             HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
 
             /* Invalidate the cache before reading the struct fields from HSM */
-            CacheP_inv(HsmClient, alignedHsmClientCacheSize, CacheP_TYPE_ALL);
             CacheP_inv(HsmClient->RespMsg.args, alignedKeywrCertHeaderCacheSize, CacheP_TYPE_ALL);
 
             /* check the integrity of args */
