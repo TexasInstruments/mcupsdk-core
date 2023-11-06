@@ -89,7 +89,7 @@
     %   }
 % }
 % }
-% if((device === "am263x-cc") || (device === "am263x-lp") || (device === "am263px-cc"))
+% if((device === "am263x-cc") || (device === "am263x-lp") || (device === "am263px-cc") || (device === "am263px-lp"))
 % {
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];

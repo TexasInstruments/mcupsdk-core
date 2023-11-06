@@ -114,8 +114,8 @@ static const Dp83869_Cfg gEnetCpbBoard_dp83869PhyCfg =
 {
     .txClkShiftEn         = true,
     .rxClkShiftEn         = true,
-    .txDelayInPs          = 500U,   /* Value in pecosec. Refer to DLL_RX_DELAY_CTRL_SL field in ANA_RGMII_DLL_CTRL register of DP83869 PHY datasheet */
-    .rxDelayInPs          = 500U,   /* Value in pecosec. Refer to DLL_TX_DELAY_CTRL_SL field in ANA_RGMII_DLL_CTRL register of DP83869 PHY datasheet */
+    .txDelayInPs          = 2000U,   /* Value in pecosec. Refer to DLL_RX_DELAY_CTRL_SL field in ANA_RGMII_DLL_CTRL register of DP83869 PHY datasheet */
+    .rxDelayInPs          = 2000U,   /* Value in pecosec. Refer to DLL_TX_DELAY_CTRL_SL field in ANA_RGMII_DLL_CTRL register of DP83869 PHY datasheet */
     .txFifoDepth          = 4U,
     .impedanceInMilliOhms = 35000,  /* 35 ohms */
     .idleCntThresh        = 4U,     /* Improves short cable performance */
@@ -253,26 +253,19 @@ const EnetBoard_PhyCfg *EnetBoard_getPhyCfg(const EnetBoard_EthPort *ethPort)
 
 static void EnetBoard_enableExternalMux()
 {
-%if( (instance.BoardType === "am263px-lp") ){
-    /* Enable the  External MUX selection. Applicable for AM263Px LP E2 ver board.
-     * Has no effect on AM263Px LP E1 ver board.
+%if (instance.BoardType === "am263px-lp") {
+    /* Enable the  External MUX selection. Applicable for AM263Px LP board.
      *
-     * For AM263Px-LP E2 board:
-     *  - GPIO0_1 - RGMII1 MUX Enable PIN:
-     *        HIGH to enable
-     *        LOW  to disable
-     *  - GPIO_58 - MII MUX Enable PIN:
-     *        HIGH to enable
-     *        LOW  to disable
+     * For AM263Px-LP board:
+     *  - GPIO_105 - RGMII1 MUX Enable PIN:
+     *        LOW to enable
+     *        HIGH to disable
      */
 
-    uint32_t rgmii1MuxEnPinAddr = (uint32_t) AddrTranslateP_getLocalAddr(CONFIG_GPIO1_BASE_ADDR);
-    uint32_t miiMuxEnPinAddr    = (uint32_t) AddrTranslateP_getLocalAddr(CONFIG_GPIO58_BASE_ADDR);
+    uint32_t rgmii1MuxEnPinAddr = (uint32_t) AddrTranslateP_getLocalAddr(CONFIG_GPIO105_BASE_ADDR);
 
-    GPIO_setDirMode(rgmii1MuxEnPinAddr, CONFIG_GPIO1_PIN, CONFIG_GPIO1_DIR);
-    GPIO_setDirMode(miiMuxEnPinAddr, CONFIG_GPIO58_PIN, CONFIG_GPIO58_DIR);
-    GPIO_pinWriteHigh(rgmii1MuxEnPinAddr, CONFIG_GPIO1_PIN);
-    GPIO_pinWriteHigh(miiMuxEnPinAddr, CONFIG_GPIO58_PIN);
+    GPIO_setDirMode(rgmii1MuxEnPinAddr, CONFIG_GPIO105_PIN, CONFIG_GPIO105_DIR);
+    GPIO_pinWriteLow(rgmii1MuxEnPinAddr, CONFIG_GPIO105_PIN);
 %} else {
     /* Enable external MUXes, if any, as per the board design */
 %}

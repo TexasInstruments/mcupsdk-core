@@ -2,7 +2,7 @@
 # Auto generated makefile
 #
 
-export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../..)
+export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
 include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 
@@ -24,33 +24,27 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=enet_lwip_cpsw.$(PROFILE).out
+OUTNAME:=enet_l2_cpsw_switch.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=enet_lwip_cpsw.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=enet_lwip_cpsw.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=enet_lwip_cpsw.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=enet_lwip_cpsw.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=enet_lwip_cpsw.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=enet_lwip_cpsw.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=enet_lwip_cpsw.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=enet_lwip_cpsw.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=enet_l2_cpsw_switch.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=enet_l2_cpsw_switch.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=enet_l2_cpsw_switch.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=enet_l2_cpsw_switch.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=enet_l2_cpsw_switch.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=enet_l2_cpsw_switch.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=enet_l2_cpsw_switch.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=enet_l2_cpsw_switch.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
 endif
 
 FILES_common := \
-	test.c \
-	test_enet.c \
-	test_enet_cpsw.c \
+	l2_cpsw_main.c \
 	main.c \
-	udp_iperf.c \
-	enetextphy.c \
-	enetextphy_phymdio_dflt.c \
-	dp83867.c \
-	dp83869.c \
-	generic_phy.c \
+	l2_cpsw_cfg.c \
+	l2_cpsw_dataflow.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \
@@ -65,8 +59,7 @@ FILES_common := \
 
 FILES_PATH_common = \
 	.. \
-	../../.. \
-	../../../extPhyMgmt \
+	../../../V1 \
 	generated \
 
 INCLUDES_common := \
@@ -76,22 +69,15 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/phy \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263px \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4 \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px \
-	-I${MCU_PLUS_SDK_PATH}/examples/networking/lwip/enet_lwip_cpsw/extPhyMgmt \
 	-Igenerated \
 
 DEFINES_common := \
@@ -137,17 +123,13 @@ LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/networking/enet/lib \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/networking/lwip/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
 	-lfreertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lenet-cpsw.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-llwipif-cpsw-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-llwip-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lboard.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-llwip-contrib-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -171,10 +153,7 @@ LIBS_NAME = \
 	freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	enet-cpsw.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	lwipif-cpsw-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	lwip-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	board.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	lwip-contrib-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
@@ -184,7 +163,6 @@ LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
 	${MCU_PLUS_SDK_PATH}/source/networking/enet/lib \
-	${MCU_PLUS_SDK_PATH}/source/networking/lwip/lib \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))
@@ -261,7 +239,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263px:r5fss0-0:freertos:ti-arm-clang enet_lwip_cpsw ...
+	@echo  Scrubing: am263px:r5fss0-0:freertos:ti-arm-clang enet_l2_cpsw_switch ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -367,12 +345,12 @@ endif
 endif
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for enet_lwip_cpsw.$(PROFILE) ...
+	@echo Creating Coverage Report for enet_l2_cpsw_switch.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o enet_lwip_cpsw.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=enet_lwip_cpsw.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=enet_lwip_cpsw.$(PROFILE).profdata > coverage/enet_lwip_cpsw.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/enet_lwip_cpsw.$(PROFILE).profdata.json --output-json=coverage/enet_lwip_cpsw.$(PROFILE).analysis.json --output=../enet_lwip_cpsw.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o enet_l2_cpsw_switch.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=enet_l2_cpsw_switch.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=enet_l2_cpsw_switch.$(PROFILE).profdata > coverage/enet_l2_cpsw_switch.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/enet_l2_cpsw_switch.$(PROFILE).profdata.json --output-json=coverage/enet_l2_cpsw_switch.$(PROFILE).analysis.json --output=../enet_l2_cpsw_switch.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

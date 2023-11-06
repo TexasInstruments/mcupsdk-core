@@ -1,7 +1,7 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P2" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @versions {"tool":"1.18.0+3266"}
  */
 
@@ -10,6 +10,8 @@
  */
 const eeprom     = scripting.addModule("/board/eeprom/eeprom", {}, false);
 const eeprom1    = eeprom.addInstance();
+const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1      = gpio.addInstance();
 const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1       = i2c.addInstance();
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
@@ -41,6 +43,9 @@ const enet_cpsw1 = enet_cpsw.addInstance();
  */
 eeprom1.$name      = "CONFIG_EEPROM0";
 eeprom1.i2cAddress = 0x53;
+
+gpio1.$name                = "CONFIG_GPIO105";
+gpio1.GPIO.gpioPin.$assign = "PR0_PRU1_GPIO10";
 
 i2c1.$name               = "CONFIG_I2C0";
 eeprom1.peripheralDriver = i2c1;
@@ -82,7 +87,7 @@ mpu_armv75.attributes = "NonCached";
 
 general1.$name        = "CONFIG_GENERAL0";
 general1.stack_size   = 8192;
-general1.heap_size    = 1024;
+general1.heap_size    = 34000;
 general1.linker.$name = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
@@ -217,21 +222,22 @@ section9.output_section[0].$name     = ".bss:ENET_DMA_PKT_MEMPOOL";
 section9.output_section[0].alignment = 128;
 
 enet_cpsw1.$name                    = "CONFIG_ENET_CPSW0";
-enet_cpsw1.LargePoolPktCount        = 16;
-enet_cpsw1.MediumPoolPktCount       = 32;
+enet_cpsw1.PktInfoOnlyEnable        = true;
+enet_cpsw1.LargePoolPktCount        = 32;
 enet_cpsw1.BoardType                = "am263px-lp";
-enet_cpsw1.DisableMacPort2          = true;
 enet_cpsw1.txDmaChannel[0].$name    = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel[0].$name    = "ENET_DMA_RX_CH0";
 enet_cpsw1.pinmux[0].$name          = "ENET_CPSW_PINMUX0";
 enet_cpsw1.pinmux[0].RGMII1.$assign = "RGMII1";
-enet_cpsw1.pinmux[0].RGMII2.$assign = "RGMII2";
+enet_cpsw1.netifInstance.create(1);
+enet_cpsw1.netifInstance[0].$name   = "NETIF_INST_ID0";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
+gpio1.GPIO.$suggestSolution                         = "GPIO";
 enet_cpsw1.pinmux[0].MDIO.$suggestSolution          = "MDIO";
 enet_cpsw1.pinmux[0].MDIO.MDC.$suggestSolution      = "MDIO_MDC";
 enet_cpsw1.pinmux[0].MDIO.MDIO.$suggestSolution     = "MDIO_MDIO";
@@ -247,6 +253,7 @@ enet_cpsw1.pinmux[0].RGMII1.TD2.$suggestSolution    = "RGMII1_TD2";
 enet_cpsw1.pinmux[0].RGMII1.TD3.$suggestSolution    = "RGMII1_TD3";
 enet_cpsw1.pinmux[0].RGMII1.TX_CTL.$suggestSolution = "RGMII1_TX_CTL";
 enet_cpsw1.pinmux[0].RGMII1.TXC.$suggestSolution    = "RGMII1_TXC";
+enet_cpsw1.pinmux[0].RGMII2.$suggestSolution        = "RGMII2";
 enet_cpsw1.pinmux[0].RGMII2.RD0.$suggestSolution    = "PR0_PRU0_GPIO0";
 enet_cpsw1.pinmux[0].RGMII2.RD1.$suggestSolution    = "PR0_PRU0_GPIO1";
 enet_cpsw1.pinmux[0].RGMII2.RD2.$suggestSolution    = "PR0_PRU0_GPIO2";

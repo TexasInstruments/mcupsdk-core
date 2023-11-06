@@ -101,7 +101,7 @@ Note: To run the example on any core other than r5fss0-0, user needs to change t
  ---------------|-----------
  CPU + OS       | r5fss0-0_freertos r5fss0-1_freertos
  Toolchain      | ti-arm-clang
- Boards         | @VAR_BOARD_NAME_LOWER
+ Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/networking/lwip/enet_lwip_cpsw
 
 \endcond

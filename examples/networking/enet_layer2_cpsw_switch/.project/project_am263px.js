@@ -4,16 +4,10 @@ let device = "am263px";
 
 const files = {
     common: [
-            "test.c",
-            "test_enet.c",
-            "test_enet_cpsw.c",
+            "l2_cpsw_main.c",
             "main.c",
-            "udp_iperf.c",
-            "enetextphy.c",
-            "enetextphy_phymdio_dflt.c",
-            "dp83867.c",
-            "dp83869.c",
-            "generic_phy.c",
+            "l2_cpsw_cfg.c",
+            "l2_cpsw_dataflow.c",
     ],
 };
 
@@ -23,8 +17,7 @@ const files = {
 const filedirs = {
     common: [
         "..",       /* core_os_combo base */
-        "../../..", /* Example base */
-        "../../../extPhyMgmt", /* Example base */
+        "../../../V1", /* Example base */
     ],
 };
 
@@ -35,7 +28,6 @@ const libdirs_freertos = {
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/lib",
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lib",
 
     ],
 };
@@ -46,22 +38,16 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/phy",
-        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core",
-        "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include",
+                "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263px",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4",
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include",
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include",
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include",
-        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc",
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib",
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px",
-        "${MCU_PLUS_SDK_PATH}/examples/networking/lwip/enet_lwip_cpsw/extPhyMgmt"
+
     ],
 };
 
@@ -70,10 +56,7 @@ const libs_freertos_r5f = {
         "freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "enet-cpsw.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
-        "lwipif-cpsw-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
-        "lwip-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
-        "lwip-contrib-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -125,7 +108,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_ENET_LWIP_CPSW";
+const readmeDoxygenPageTag = "EXAMPLES_ENET_LAYER2_CPSW_SWITCH";
 
 const templates_freertos_r5f =
 [
@@ -133,16 +116,14 @@ const templates_freertos_r5f =
         input: ".project/templates/am263px/freertos/main_freertos.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "enet_lwip_example",
+            entryFunction: "EnetApp_mainTask",
+            taskPri : "2",
             stackSize : "8192",
         },
     },
-
 ];
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos"},
-    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "freertos"},
 ];
 
@@ -151,7 +132,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "enet_lwip_cpsw";
+    property.name = "enet_l2_cpsw_switch";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
 
