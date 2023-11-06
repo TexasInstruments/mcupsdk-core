@@ -76,22 +76,30 @@ void Bootloader_socLoadHsmRtFw(const uint8_t *HsmRtFw, uint32_t hsmRTSize)
         DebugP_logInfo("DevType : HSSE  \r\n");
         retVal = Hsmclient_loadHSMRtFirmware((uint8_t*)HsmRtFw);
         DebugP_logInfo("HSMRT Size in Bytes : %ld \r\n", (uint32_t)hsmRTSize);
-        if(retVal == SystemP_SUCCESS)
-        {
-            DebugP_logInfo("hsm runtime firmware load complete ... \r\n");
-        }
-        else
-        {
-            DebugP_logInfo("hsm runtime firmware load failure ... \r\n");
-        }
     }
     else if(ptrTopCtrlRegs->EFUSE_DEVICE_TYPE == BOOTLOADER_DEVTYPE_HSFS)
     {
         DebugP_logInfo("Device Type : HSFS  \r\n");
+        retVal = Hsmclient_loadHSMRtFirmware((uint8_t*)HsmRtFw);
+        DebugP_logInfo("HSMRT Size in Bytes : %ld \r\n", (uint32_t)hsmRTSize);
     }
     else
     {
         /* None */
     }
+
+    if(retVal == SystemP_FAILURE)
+    {
+        DebugP_logInfo("hsm runtime firmware load failure ... \r\n");
+    }
+    else if(retVal == SystemP_SUCCESS)
+    {
+        DebugP_logInfo("hsm runtime firmware load complete ... \r\n");
+    }
+    else
+    {
+        /* None */
+    }
+    
     DebugP_assertNoLog(retVal==SystemP_SUCCESS);
 }
