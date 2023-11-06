@@ -91,7 +91,7 @@ void HsmFirewallApp(HsmClient_t *client)
     FirewallReqObj.regionCount = FIREWALL_ARRAY0_NUM_REGIONS;
     FirewallReqObj.FirewallRegionArr = gMpuFirewallRegionConfig_0;
 
-    /* This requests configures CONTROLSS_CTRL region and allow all permissions to only R5FSS0_0 */
+    /* This requests configures user given firewall request-1 in syscfg and allow all permissions to only R5FSS0_0 */
     status = HsmClient_setFirewall(client,&FirewallReqObj,SystemP_WAIT_FOREVER);
 
     DebugP_log("Firewall request #1 status = "BYTE_TO_BINARY_PATTERN" "BYTE_TO_BINARY_PATTERN "\r\n",
@@ -127,7 +127,7 @@ void HsmFirewallApp(HsmClient_t *client)
     FirewallReqObj.regionCount = FIREWALL_ARRAY1_NUM_REGIONS;
     FirewallReqObj.FirewallRegionArr = gMpuFirewallRegionConfig_1;
 
-    /* This requests configures a subset of MBOX_SRAM region (0x502F0000 - 0x50240FFF) and allow
+     /* This requests configures user given firewall request-2 in syscfg and and allow
         all permissions to all R5 cores except R5FSS0_0 */
     status = HsmClient_setFirewall(client,&FirewallReqObj,SystemP_WAIT_FOREVER);
 

@@ -1193,6 +1193,39 @@
             "example"
         ],
         "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "Demonstrate hsm services message CPU is R5FSS0-0 running NORTOS.",
+        "name": "hsm_services",
+        "location": "../../examples/drivers/hsmclient/hsm_services/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "hsmclient",
+            "hsm_services",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
             "example.general"
         ],
         "description": "HWA based FFT example. This example demonstrates HWA FFT operation for real input data CPU is R5FSS0-0 running NORTOS.",

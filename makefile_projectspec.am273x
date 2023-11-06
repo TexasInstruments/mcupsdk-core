@@ -36,6 +36,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpadc_temperature_sensor_read_am273
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_input_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_led_blink_am273x-evm_c66ss0_nortos_ti-c6000_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hsm_services_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hwa_real_fft_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hwa_real_fft_am273x-evm_c66ss0_nortos_ti-c6000_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hwa_bfp_compression_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
@@ -276,6 +277,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  gpio_led_blink_am273x-evm_c66ss0_nortos_ti-c6000_build:
 	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec all
+
+ hsm_services_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/hsmclient/hsm_services/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  hwa_real_fft_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/hwa/hwa_real_fft/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -718,6 +722,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpadc_temperature_sensor_read_am273
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_input_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_led_blink_am273x-evm_c66ss0_nortos_ti-c6000_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hsm_services_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hwa_real_fft_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hwa_real_fft_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hwa_bfp_compression_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -958,6 +963,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  gpio_led_blink_am273x-evm_c66ss0_nortos_ti-c6000_clean:
 	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec clean
+
+ hsm_services_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/hsmclient/hsm_services/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  hwa_real_fft_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/hwa/hwa_real_fft/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -1400,6 +1408,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpadc_temperature_sensor_read_am27
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_input_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_led_blink_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_led_blink_am273x-evm_c66ss0_nortos_ti-c6000_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hsm_services_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hwa_real_fft_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hwa_real_fft_am273x-evm_c66ss0_nortos_ti-c6000_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hwa_bfp_compression_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
@@ -1640,6 +1649,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  gpio_led_blink_am273x-evm_c66ss0_nortos_ti-c6000_export:
 	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec export
+
+ hsm_services_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/hsmclient/hsm_services/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  hwa_real_fft_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/hwa/hwa_real_fft/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -2098,6 +2110,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_input_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_led_blink/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_led_blink/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/hsmclient/hsm_services/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/hwa/hwa_real_fft/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/hwa/hwa_real_fft/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/hwa/hwa_bfp_compression/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
