@@ -12,11 +12,7 @@
     <project
         title="Sdl Ecc Mcan"
         name = "sdl_ecc_mcan_am263px-cc_r5fss0-0_nortos_ti-arm-clang"
-<<<<<<< HEAD
-        products="sysconfig;com.ti.MCU_PLUS_SDK_AM263PX"
-=======
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
->>>>>>> 2562ba2ba4 (am263px: sdl: port sdl modules.)
         configurations="
             Release,
             Debug,
@@ -96,7 +92,7 @@
                 -llibsysbm.a
             "
         ></configuration>
-        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
+        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AM263PX_INSTALL_DIR}" scope="project" />
         <file path="../../../ecc_trigger.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../../../../../dpl/dpl_interface.c" openOnCreation="false" excludeFromBuild="false" action="copy">
