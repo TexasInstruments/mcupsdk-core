@@ -71,6 +71,7 @@ mpu_armv74.$name             = "CONFIG_MPU_REGION3";
 mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 21;
+mpu_armv74.attributes        = "Cached+Sharable";
 
 default_linker1.$name = "memory_configurator_default_linker0";
 
