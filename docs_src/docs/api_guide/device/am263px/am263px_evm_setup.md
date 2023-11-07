@@ -190,7 +190,7 @@ This mode is used to flash files to the EVM flash via UART. It can also be used 
   \imageStyle{am263x_lp_boot_pins_uart_mode.png,width:30%}
   \image html am263x_lp_boot_pins_uart_mode.png "UART BOOT MODE" -->
 
-#### NOBOOT MODE  {#BOOTMODE_NOBOOT}
+#### DEVBOOT MODE  {#BOOTMODE_NOBOOT}
 
 ##### AM263PX-CC
 This mode is used in CCS.

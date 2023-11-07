@@ -156,7 +156,7 @@ Important cable connections, ports and switches.
 \note This section has more details on @VAR_BOARD_NAME and @VAR_LP_BOARD_NAME. This is mainly for reference and can be skiped unless referred to by
 other pages in this user guide.
 
-\note Make sure boot mode switch is setup to NOBOOT mode to use with CCS Scripting. please refer \ref EVM_SOC_INIT_NOBOOT_MODE
+\note Make sure boot mode switch is setup to DEVBOOT mode to use with CCS Scripting. please refer \ref EVM_SOC_INIT_NOBOOT_MODE
 
 ### BOOT MODE
 
@@ -195,7 +195,7 @@ This mode is used to flash files to the EVM flash via UART. It can also be used 
   \imageStyle{am263x_lp_boot_pins_uart_mode.png,width:30%}
   \image html am263x_lp_boot_pins_uart_mode.png "UART BOOT MODE"
 
-#### NOBOOT MODE  {#BOOTMODE_NOBOOT}
+#### DEVBOOT MODE  {#BOOTMODE_NOBOOT}
 
 ##### AM263X-CC
 This mode is used in CCS.
@@ -204,10 +204,10 @@ This mode is used in CCS.
     \endcode
 
   \imageStyle{boot_pins_noboot_mode.PNG,width:30%}
-  \image html boot_pins_noboot_mode.PNG "NO BOOT MODE"
+  \image html boot_pins_noboot_mode.PNG "DEVBOOT MODE"
 
 ##### AM263X-LP
 This mode is used in CCS.
 
   \imageStyle{am263x_lp_boot_pins_noboot_mode.png,width:30%}
-  \image html am263x_lp_boot_pins_noboot_mode.png "NO BOOT MODE"
+  \image html am263x_lp_boot_pins_noboot_mode.png "DEVBOOT MODE"

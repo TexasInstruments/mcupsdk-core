@@ -30,7 +30,7 @@ Below sections describes the various options available for SOC initialization.
   - Power cable
   - JTAG cable
 
-- Set AM263PX-CC in NOBOOT mode as shown below
+- Set AM263PX-CC in DEVBOOT mode as shown below
 
   \imageStyle{boot_pins_noboot_mode.jpg,width:30%}
   \image html boot_pins_noboot_mode.jpg "NO BOOT MODE"
