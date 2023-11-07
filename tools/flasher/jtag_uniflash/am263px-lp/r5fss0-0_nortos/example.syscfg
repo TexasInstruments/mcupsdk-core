@@ -140,7 +140,7 @@ region1.memory_region[5].size               = 0x1C0000;
 
 section1.$name                                    = "CONFIG_SECTION0";
 section1.load_memory                              = "MSRAM_VECS";
-section1.run_memory                               = ["R5F_VECS"];
+section1.run_memory                               = "R5F_VECS";
 section1.group                                    = false;
 section1.output_section.create(1);
 section1.output_section[0].$name                  = ".sbl_init_code";
