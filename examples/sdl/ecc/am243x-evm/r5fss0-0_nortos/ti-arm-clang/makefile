@@ -40,7 +40,6 @@ TARGETS := $(BOOTIMAGE_NAME)
 FILES_common := \
 	main.c \
 	ecc_main.c \
-	ecc_main.h \
 	dpl_interface.c \
 	ecc_trigger.c \
 	ti_drivers_config.c \

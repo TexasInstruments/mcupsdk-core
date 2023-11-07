@@ -41,7 +41,6 @@ FILES_common := \
 	ddr_ecc_mcu_esm_handle.c \
 	main.c \
 	dpl_interface.c \
-	dpl_interface.h \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \

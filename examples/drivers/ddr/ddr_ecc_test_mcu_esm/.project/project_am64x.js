@@ -25,6 +25,11 @@ const files_m4f = {
         "ddr_ecc_mcu_esm_handle.c",
         "main.c",
         "dpl_interface.c",
+    ],
+};
+
+const projectspecfiles = {
+    common: [
         "dpl_interface.h"
     ],
 };
@@ -174,6 +179,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.libs = libs_nortos_m4f;
         build_property.templates = templates_nortos_m4f;
         build_property.includes = includes_m4f;
+        build_property.projectspecfiles = projectspecfiles;
     }
 
     return build_property;

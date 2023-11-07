@@ -6,7 +6,6 @@ const files = {
     common: [
         "main.c",
         "ecc_main.c",
-        "ecc_main.h",
         "dpl_interface.c",
         "ecc_trigger.c",
     ],
@@ -24,6 +23,13 @@ const m4_macro = {
     ],
 
 };
+
+const projectspecfiles = {
+    common: [
+        "ecc_main.h"
+    ],
+};
+
 
 /* Relative to where the makefile will be generated
  * Typically at <example_folder>/<BOARD>/<core_os_combo>/<compiler>
@@ -131,6 +137,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
+    build_property.projectspecfiles = projectspecfiles;
 
     if(buildOption.cpu.match(/m4f*/)) {
         build_property.libs = libs_m4f;
