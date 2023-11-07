@@ -211,37 +211,62 @@ let ADC_FORCE = [
 	{ name: "ADC_FORCE_SOC15", displayName: "SW trigger ADC SOC 15" },
 ]
 let ADC_Sysclk_Mhz = 200
-function getInterfaceName(instance) {
-    return "ADC";
+function getInterfaceName(inst) {
+
+	return "ADC";
+}
+
+function getInterfaceNameAdcR(inst) {
+    return "ADC_R";
 }
 const staticConfig = [
     {
         name: "ADC0",
         baseAddr: "CSL_CONTROLSS_ADC0_U_BASE",
         resultBaseAddr : "CSL_CONTROLSS_ADC0_RESULT_U_BASE",
+        instanceNumber : "0",
     },
     {
         name: "ADC1",
         baseAddr: "CSL_CONTROLSS_ADC1_U_BASE",
         resultBaseAddr : "CSL_CONTROLSS_ADC1_RESULT_U_BASE",
+        instanceNumber : "1",
     },
     {
         name: "ADC2",
         baseAddr: "CSL_CONTROLSS_ADC2_U_BASE",
         resultBaseAddr : "CSL_CONTROLSS_ADC2_RESULT_U_BASE",
+        instanceNumber : "2",
     },
     {
         name: "ADC3",
         baseAddr: "CSL_CONTROLSS_ADC3_U_BASE",
         resultBaseAddr : "CSL_CONTROLSS_ADC3_RESULT_U_BASE",
+        instanceNumber : "3",
     },
     {
         name: "ADC4",
         baseAddr: "CSL_CONTROLSS_ADC4_U_BASE",
         resultBaseAddr : "CSL_CONTROLSS_ADC4_RESULT_U_BASE",
+        instanceNumber : "4",
+    },
+    {
+        name: "ADC_R0",
+        baseAddr: "CSL_CONTROLSS_ADC_R0_U_BASE",
+        resultBaseAddr : "CSL_CONTROLSS_ADC_R0_RESULT_U_BASE",
+        instanceNumber : "5",
+    },
+    {
+        name: "ADC_R1",
+        baseAddr: "CSL_CONTROLSS_ADC_R1_U_BASE",
+        resultBaseAddr : "CSL_CONTROLSS_ADC_R1_RESULT_U_BASE",
+        instanceNumber : "6",
     },
 ];
-function getStaticConfigArr() {
+
+const staticConfigAdcR = [
+];
+function getStaticConfigArr(instance) {
     return staticConfig;
 }
 exports = {
@@ -261,5 +286,6 @@ exports = {
 	ADC_FORCE: ADC_FORCE,
     ADC_Sysclk_Mhz: ADC_Sysclk_Mhz,
     getInterfaceName,
+    getInterfaceNameAdcR,
     getStaticConfigArr,
 }
