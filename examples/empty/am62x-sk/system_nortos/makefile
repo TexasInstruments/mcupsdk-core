@@ -18,8 +18,10 @@ CORE_0=--script ../m4fss0-0_nortos/example.syscfg --context m4fss0-0 --output ..
 CORES = \
     $(CORE_0) \
 
+SYSTEM_FLAG := true
+
 all: syscfg
-	$(MAKE) -C ../m4fss0-0_nortos/ti-arm-clang/ all
+	$(MAKE) -C ../m4fss0-0_nortos/ti-arm-clang/ all SYSTEM_FLAG=${SYSTEM_FLAG}
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME)
 
 clean:

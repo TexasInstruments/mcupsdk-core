@@ -365,7 +365,6 @@ SYSCFG_GEN_FILES+=generated/ti_enet_lwipif.c generated/ti_enet_lwipif.h
          % }
     % }
 % }
-%if(args.project.device == "am263px" || args.project.device == "am273x") {
 
 SYSTEM_FLAG ?= false
 
@@ -380,11 +379,6 @@ $(OUTNAME):  $(SYSTEM_COMMAND)
 % } else {
 $(OUTNAME): $(OBJS) $(LNK_FILES) $(LIBS_NAME)
 % }
-%}
-%else{
-
-$(OUTNAME): syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
-%}
 	@echo  .
 	@echo  Linking: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $@ ...
 % if (args.project.cgt == "ti-arm-clang" || args.project.cgt == "ti-c6000") {

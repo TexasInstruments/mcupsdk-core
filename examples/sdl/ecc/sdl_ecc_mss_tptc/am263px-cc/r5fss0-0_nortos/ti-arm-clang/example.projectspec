@@ -93,7 +93,7 @@
                 -llibsysbm.a
             "
         ></configuration>
-        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AM263PX_INSTALL_DIR}" scope="project" />
+        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
         <file path="../../../../../ecc/sdl_ecc_mss_tptc/am263px-cc//ecc_trigger.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../../../../../dpl/dpl_interface.c" openOnCreation="false" excludeFromBuild="false" action="copy">

@@ -12,6 +12,9 @@ CC=$(CG_TOOL_ROOT)/bin/tiarmclang
 LNK=$(CG_TOOL_ROOT)/bin/tiarmclang
 STRIP=$(CG_TOOL_ROOT)/bin/tiarmstrip
 OBJCOPY=$(CG_TOOL_ROOT)/bin/tiarmobjcopy
+COV=$(CG_TOOL_ROOT)/bin/tiarmcov
+PROFDATA=$(CG_TOOL_ROOT)/bin/tiarmprofdata
+COVERAGE_PATH=$(abspath .)
 ifeq ($(OS), Windows_NT)
 	PYTHON=python
 else
@@ -162,7 +165,15 @@ SYSCFG_GEN_FILES+=generated/ti_pinmux_config.c generated/ti_power_clock_config.c
 SYSCFG_GEN_FILES+=generated/ti_board_config.c generated/ti_board_config.h
 SYSCFG_GEN_FILES+=generated/ti_board_open_close.c generated/ti_board_open_close.h
 
-$(OUTNAME): syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+SYSTEM_FLAG ?= false
+
+ifeq ($(SYSTEM_FLAG), false)
+	SYSTEM_COMMAND := syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+else
+	SYSTEM_COMMAND := $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+endif
+
+$(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
 	@echo  Linking: am243x:r5fss0-0:nortos:ti-arm-clang $@ ...
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)
@@ -293,4 +304,14 @@ else
 	@echo  Boot image: am243x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS_FS) Done !!!
 	@echo  .
 endif
+.PHONY: coverage
+coverage:
+	@echo Creating Coverage Report for ospi_flash_xip.$(PROFILE) ...
+	$(MKDIR) coverage
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o ospi_flash_xip.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=ospi_flash_xip.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=ospi_flash_xip.$(PROFILE).profdata > coverage/ospi_flash_xip.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/ospi_flash_xip.$(PROFILE).profdata.json --output-json=coverage/ospi_flash_xip.$(PROFILE).analysis.json --output=../ospi_flash_xip.annotations.$(PROFILE).S --top-function-count=500
+	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
+
 -include $(addprefix $(OBJDIR)/, $(DEPS))

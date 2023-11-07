@@ -27,9 +27,11 @@ CORES = \
     $(CORE_1) \
     $(CORE_0) \
 
+SYSTEM_FLAG := true
+
 all: syscfg
-	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ all
-	$(MAKE) -C ../m4fss0-0_freertos/ti-arm-clang/ all
+	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ all SYSTEM_FLAG=${SYSTEM_FLAG}
+	$(MAKE) -C ../m4fss0-0_freertos/ti-arm-clang/ all SYSTEM_FLAG=${SYSTEM_FLAG}
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)

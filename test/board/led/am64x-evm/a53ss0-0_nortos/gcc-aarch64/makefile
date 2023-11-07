@@ -160,7 +160,15 @@ SYSCFG_GEN_FILES+=generated/ti_pinmux_config.c generated/ti_power_clock_config.c
 SYSCFG_GEN_FILES+=generated/ti_board_config.c generated/ti_board_config.h
 SYSCFG_GEN_FILES+=generated/ti_board_open_close.c generated/ti_board_open_close.h
 
-$(OUTNAME): syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+SYSTEM_FLAG ?= false
+
+ifeq ($(SYSTEM_FLAG), false)
+	SYSTEM_COMMAND := syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+else
+	SYSTEM_COMMAND := $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+endif
+
+$(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
 	@echo  Linking: am64x:a53ss0-0:nortos:gcc-aarch64 $@ ...
 	$(LNK) $(LIBS_PATH) -Wl,-Map=$(OUTNAME:%.out=%.map) -o $@ -Wl,--start-group $(LFLAGS) $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) -Wl,--end-group -Wl,-T,$(LNK_FILES)

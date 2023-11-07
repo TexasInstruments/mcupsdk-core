@@ -164,7 +164,15 @@ SYSCFG_GEN_FILES+=generated/ti_pinmux_config.c generated/ti_power_clock_config.c
 SYSCFG_GEN_FILES+=generated/ti_board_config.c generated/ti_board_config.h
 SYSCFG_GEN_FILES+=generated/ti_board_open_close.c generated/ti_board_open_close.h
 
-$(OUTNAME): syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+SYSTEM_FLAG ?= false
+
+ifeq ($(SYSTEM_FLAG), false)
+	SYSTEM_COMMAND := syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+else
+	SYSTEM_COMMAND := $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+endif
+
+$(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
 	@echo  Linking: am243x:r5fss1-0:freertos:ti-arm-clang $@ ...
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)

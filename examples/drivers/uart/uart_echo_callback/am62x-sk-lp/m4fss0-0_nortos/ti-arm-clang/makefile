@@ -12,6 +12,9 @@ CC=$(CG_TOOL_ROOT)/bin/tiarmclang
 LNK=$(CG_TOOL_ROOT)/bin/tiarmclang
 STRIP=$(CG_TOOL_ROOT)/bin/tiarmstrip
 OBJCOPY=$(CG_TOOL_ROOT)/bin/tiarmobjcopy
+COV=$(CG_TOOL_ROOT)/bin/tiarmcov
+PROFDATA=$(CG_TOOL_ROOT)/bin/tiarmprofdata
+COVERAGE_PATH=$(abspath .)
 ifeq ($(OS), Windows_NT)
 	PYTHON=python
 else
@@ -157,7 +160,15 @@ SYSCFG_GEN_FILES+=generated/ti_pinmux_config.c generated/ti_power_clock_config.c
 SYSCFG_GEN_FILES+=generated/ti_board_config.c generated/ti_board_config.h
 SYSCFG_GEN_FILES+=generated/ti_board_open_close.c generated/ti_board_open_close.h
 
-$(OUTNAME): syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+SYSTEM_FLAG ?= false
+
+ifeq ($(SYSTEM_FLAG), false)
+	SYSTEM_COMMAND := syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+else
+	SYSTEM_COMMAND := $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+endif
+
+$(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
 	@echo  Linking: am62x:m4fss0-0:nortos:ti-arm-clang $@ ...
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)
@@ -266,5 +277,15 @@ endif
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo  Boot image: am62x:m4fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
+
+.PHONY: coverage
+coverage:
+	@echo Creating Coverage Report for uart_echo_callback.$(PROFILE) ...
+	$(MKDIR) coverage
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o uart_echo_callback.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=uart_echo_callback.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=uart_echo_callback.$(PROFILE).profdata > coverage/uart_echo_callback.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/uart_echo_callback.$(PROFILE).profdata.json --output-json=coverage/uart_echo_callback.$(PROFILE).analysis.json --output=../uart_echo_callback.annotations.$(PROFILE).S --top-function-count=500
+	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))
