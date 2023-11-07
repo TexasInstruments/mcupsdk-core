@@ -174,7 +174,7 @@ CFLAGS_`prop` := \
 	% if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
 LNK_FILES_`prop` = \
 		% for(let val of obj[prop]) {
-            %if( (args.project.cgt == "ti-arm-clang" || args.project.cgt == "ti-c6000") && (args.project.device == "am263px" || (args.project.device == "am273x") || (args.project.device == "am64x") || (args.project.device == "am243x")) ) {
+            %if( (args.project.cgt == "ti-arm-clang" || args.project.cgt == "ti-c6000") && (args.project.device == "am263px" || (args.project.device == "am273x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x")) ) {
 	generated/`val` \
     %}
     %else{
@@ -365,6 +365,7 @@ SYSCFG_GEN_FILES+=generated/ti_enet_lwipif.c generated/ti_enet_lwipif.h
          % }
     % }
 % }
+%if(args.project.device == "am263px" || args.project.device == "am263x" || args.project.device == "am273x") {
 
 SYSTEM_FLAG ?= false
 
@@ -373,7 +374,7 @@ ifeq ($(SYSTEM_FLAG), false)
 else
 	SYSTEM_COMMAND := $(OBJS) $(LNK_FILES) $(LIBS_NAME)
 endif
-
+%}
 % if ( args.project.syscfgfile ) {
 $(OUTNAME):  $(SYSTEM_COMMAND)
 % } else {

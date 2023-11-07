@@ -41,7 +41,9 @@ CORES = \
     $(CORE_`i`) \
 % }
 
+%if(args.project.device == "am263px" || args.project.device == "am263x" || args.project.device == "am273x") {
 SYSTEM_FLAG := true
+% }
 
 all: syscfg
 % for (let project of args.project.projects) {

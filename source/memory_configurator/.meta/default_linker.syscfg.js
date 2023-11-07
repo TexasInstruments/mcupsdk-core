@@ -23,6 +23,12 @@ exports = {
                             sections_count = 10;
                         }
                     }
+                    else if(device == "AM263x_beta") {
+                        if(selfCoreName.includes("r5fss")){
+                            memory_regions_count = 11;
+                            sections_count = 12;
+                        }
+                    }
                     else if(device == "AM263Px"){
                         if(selfCoreName.includes("r5fss")){
                             memory_regions_count = 11;

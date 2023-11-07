@@ -74,8 +74,6 @@
         </file>
         <file path="../../../decoder_pru1_hexpru.cmd" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="link">
-        </file>
         <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263x/EXAMPLES_PRU_EMPTY.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>

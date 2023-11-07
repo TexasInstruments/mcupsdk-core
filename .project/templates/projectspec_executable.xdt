@@ -286,7 +286,7 @@
         <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="`defaultAction`">
         </file>
         %}
-        % else if ((proj.cgt).includes("gcc") || (proj.device == "am263x") ){
+        % else if ((proj.cgt).includes("gcc")){
         <file path="`val`" openOnCreation="false" excludeFromBuild="false" action="`defaultAction`">
         </file>
         %}
