@@ -6,7 +6,7 @@
 
 Flashing tools allow to flash binaries to the flash on a EVM.
 
-\cond SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X
 - \ref TOOLS_TI_UNIFLASH_TOOL
 \endcond
 - \ref TOOLS_FLASH_UART_UNIFLASH
@@ -21,51 +21,136 @@ Flashing tools allow to flash binaries to the flash on a EVM.
 - \ref TOOLS_FLASH_CAN_UNIFLASH
 \endcond
 
-\cond SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X
 ## TI Uniflash {#TOOLS_TI_UNIFLASH_TOOL}
 
-\note AM263P now supports TI Uniflash Tool for loading/flashing images into the target. Please refer \ref TI_UNIFLASH_TOOL for more details.
-\endcond
+\note Sitara MCU devices now supports TI Uniflash Tool for loading/flashing images into the target. Please refer \ref TI_UNIFLASH_TOOL for more details.
 
-### JTAG based flashing with TI Uniflash
+\cond SOC_AM243X
+### JTAG Session
+\attention It is recommended to do \ref EVM_SOC_INIT_NOBOOT_MODE and disconnect the R5 Core from CCS before flashing the image from UNIFLASH.
 
 1.  Set the board in \ref BOOTMODE_NOBOOT mode and do a power cycle prior to loading.
 
 2.  Choose a Program to Flash:
     - Click the "Browse" button to select the program you want to flash.
-    - If you're loading a ELF File(.out), the address and informations are obtained by the flash loader and the program gets loaded into the target. The program will run once after it loads if the **Run Target After Program Load/Flash Operation** is enabled.
-    \imageStyle{load_elf.png,width:90%}
-    \image html load_elf.png "Load ELF"
-    -   Check the "Binary" checkbox if you are loading a binary file. You must provide a start address for binary files. UniFlash currently does not support flash offsets, so the full address is required.
-    \imageStyle{load_image.png,width:90%}
-    \image html load_image.png "Load Binary Image"
-
+    - The default start address is automatically filled. UniFlash requires the full address since flash offsets are not supported.
+    \imageStyle{load_jtag.png,width:70%}
+    \image html load_jtag.png "Load Binary Image"
+    - Do not modify the address field for XIP file type. The field is used by the flash loader to recognize XIP files.
 3.  Flash Address Table:
     - The table below shows the flash addresses accepted by the ROM/SBL to load programs onto the target:
-| Program     | Start Address |
-|-------------|---------------|
-| SBL         | 0x60000000    |
-| Application | 0x60080000    |
+        | Program     | Start Address |
+        |-------------|---------------|
+        | SBL         | 0x60000000    |
+        | Application | 0x60080000    |
+    - Edit the application offset field only, if your sbl is configured with custom application offset
+4.  Initiating Programming:
+    - After clicking "Load Image," UniFlash starts the programming process, and the console displays a log of each operation. **[SUCCESS] Program Load completed successfully** will get printed in the console, if the program loads into the target successfully.
+\endcond
+
+\cond SOC_AM263PX
+### JTAG Session
+1.  Set the board in \ref BOOTMODE_NOBOOT mode and do a power cycle prior to loading.
+
+2.  Choose a Program to Flash:
+    - Click the "Browse" button to select the program you want to flash.
+    - The default start address is automatically filled. UniFlash requires the full address since flash offsets are not supported.
+    \imageStyle{load_jtag_2.png,width:70%}
+    \image html load_jtag_2.png "Load Binary Image"
+    - Do not modify the address field for XIP file type. The field is used by the flash loader to recognize XIP files.
+3.  Flash Address Table:
+    - The table below shows the flash addresses accepted by the ROM/SBL to load programs onto the target:
+        | Program     | Start Address |
+        |-------------|---------------|
+        | SBL         | 0x60000000    |
+        | Application | 0x60080000    |
+    - Edit the application offset field only, if your sbl is configured with custom application offset
+4.  Initiating Programming:
+    - After clicking "Load Image," UniFlash starts the programming process, and the console displays a log of each operation. **[SUCCESS] Program Load completed successfully** will get printed in the console, if the program loads into the target successfully.
+\endcond
+
+\cond SOC_AM263X
+### JTAG Session
+1.  Set the board in \ref BOOTMODE_NOBOOT mode and do a power cycle prior to loading.
+
+2.  Choose a Program to Flash:
+    - Click the "Browse" button to select the program you want to flash.
+    - The default start address is automatically filled. UniFlash requires the full address since flash offsets are not supported.
+    \imageStyle{load_jtag_1.png,width:70%}
+    \image html load_jtag_1.png "Load Binary Image"
+    - Do not modify the address field for XIP file type. The field is used by the flash loader to recognize XIP files.
+3.  Flash Address Table:
+    - The table below shows the flash addresses accepted by the ROM/SBL to load programs onto the target:
+        | Program     | Start Address |
+        |-------------|---------------|
+        | SBL         | 0x60000000    |
+        | Application | 0x60080000    |
+    - Edit the application offset field only, if your sbl is configured with custom application offset
+4.  Initiating Programming:
+    - After clicking "Load Image," UniFlash starts the programming process, and the console displays a log of each operation. **[SUCCESS] Program Load completed successfully** will get printed in the console, if the program loads into the target successfully.
+\endcond
+
+\cond SOC_AM243X
+### Serial (UART) Session
+1.  Set the board in \ref BOOTMODE_UART mode and do a power cycle.
+
+2. Enter the appropriate COM Port and select the board type. Make sure the UART port used for terminal is identified as mentioned in \ref CCS_UART_TERMINAL
+    \image html com_board.png "COM Port Selection"
+
+3.  Choose a Program to Flash:
+    - Click the "Browse" button to select the program you want to flash. Serial Uniflash session supports three binary image formats - SBL, application image, XIP application image. It is not necessary to have three images in order to carry out the operation.
+    - The SBL and application image flash offsets are handled internally based on the device's SBL configuration.
+    \imageStyle{uart_load.png,width:80%}
+    \image html uart_load.png "Load Binary Image"
+    - Change the application offset from the settings. This step is only needed if you are using sbl with custom application offset.
+    \imageStyle{image_offset.png,width:80%}
+    \image html image_offset.png "Custom Application Offset"
 
 4.  Initiating Programming:
     - After clicking "Load Image," UniFlash starts the programming process, and the console displays a log of each operation. **[SUCCESS] Program Load completed successfully** will get printed in the console, if the program loads into the target successfully.
+\endcond
 
-### UART based flashing with TI Uniflash
+\cond SOC_AM263PX
+### Serial (UART) Session
+1.  Set the board in \ref BOOTMODE_UART mode and do a power cycle.
 
-
-1.  Set the board in \ref BOOTMODE_UART mode and do a power cycle prior to loading.
-
-2. Enter the appropriate COM Port. Make sure the UART port used for terminal is identified as mentioned in \ref CCS_UART_TERMINAL
+2. Enter the appropriate COM Port and select the board type. Make sure the UART port used for terminal is identified as mentioned in \ref CCS_UART_TERMINAL
     \image html uart_com.png "COM Port Selection"
 
 3.  Choose a Program to Flash:
     - Click the "Browse" button to select the program you want to flash. Serial Uniflash session supports three binary image formats - SBL, application image, XIP application image. It is not necessary to have three images in order to carry out the operation.
     - The SBL and application image flash offsets are handled internally based on the device's SBL configuration.
-    \imageStyle{uart_load.png,width:90%}
-    \image html uart_load.png "COM Port Selection"
+    \imageStyle{uart_load_2.png,width:80%}
+    \image html uart_load_2.png "Load Binary Image"
+    - Change the application offset from the settings. This step is only needed if you are using sbl with custom application offset.
+    \imageStyle{image_offset.png,width:80%}
+    \image html image_offset.png "Custom Application Offset"
 
 4.  Initiating Programming:
     - After clicking "Load Image," UniFlash starts the programming process, and the console displays a log of each operation. **[SUCCESS] Program Load completed successfully** will get printed in the console, if the program loads into the target successfully.
+\endcond
+
+\cond SOC_AM263X || SOC_AM273X
+### Serial (UART) Session
+1.  Set the board in \ref BOOTMODE_UART mode and do a power cycle.
+
+2. Enter the appropriate COM Port and select the board type. Make sure the UART port used for terminal is identified as mentioned in \ref CCS_UART_TERMINAL
+    \image html uart_com.png "COM Port Selection"
+
+3.  Choose a Program to Flash:
+    - Click the "Browse" button to select the program you want to flash. Serial Uniflash session supports three binary image formats - SBL, application image, XIP application image. It is not necessary to have three images in order to carry out the operation.
+    - The SBL and application image flash offsets are handled internally based on the device's SBL configuration.
+    \imageStyle{uart_load_1.png,width:80%}
+    \image html uart_load_1.png "Load Binary Image"
+    - Change the application offset from the settings. This step is only needed if you are using sbl with custom application offset.
+    \imageStyle{image_offset.png,width:80%}
+    \image html image_offset.png "Custom Application Offset"
+
+4.  Initiating Programming:
+    - After clicking "Load Image," UniFlash starts the programming process, and the console displays a log of each operation. **[SUCCESS] Program Load completed successfully** will get printed in the console, if the program loads into the target successfully.
+\endcond
+\endcond
 
 ## UART Uniflash {#TOOLS_FLASH_UART_UNIFLASH}
 

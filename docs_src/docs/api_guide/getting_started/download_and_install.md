@@ -37,12 +37,12 @@ To build applications using this SDK, one needs below host PC machine
   - Windows, C:/ti
   - Linux, ${HOME}/ti
 
-\cond SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X
 ### Uniflash
-- Get and install uniflash and install at below path, contact the TI representative to get the uniflash installer. Installer available at https://www.ti.com/tool/UNIFLASH currently doesn't support Sitara MCU devices
+- The TI Uniflash download home page is, https://www.ti.com/tool/UNIFLASH
+- Download the latest Uniflash @VAR_UNIFLASH_VERSION and install at below path,
   - Windows, C:/ti
   - Linux, ${HOME}/ti
-- Launch the Uniflash Application
 \endcond
 
 \cond SOC_AM64X

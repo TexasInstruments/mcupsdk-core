@@ -12,9 +12,6 @@ It consists of below sub-modules
 - \subpage TOOLS_BOOT
 - \subpage TOOLS_CCS
 - \subpage TOOLS_FLASH
-\cond SOC_AM263PX
-- \subpage TI_UNIFLASH_TOOL
-\endcond
 \cond SOC_AM64X || SOC_AM243X
 - \subpage TOOLS_SYSFW
 \endcond
@@ -22,6 +19,12 @@ It consists of below sub-modules
 - \subpage SMART_PLACEMENT
 - \subpage SW_INSTRUMENT_SMART_PLACEMENT
 - \subpage MANUAL_SMART_PLACEMENT
+- \subpage TI_UNIFLASH_TOOL
+- \subpage TOOLS_UNIFLASH_CUSTOM_FLASHER
+\endcond
+
+\cond SOC_AM273X
+- \subpage TI_UNIFLASH_TOOL
 \endcond
 
 \cond  SOC_AM263PX
