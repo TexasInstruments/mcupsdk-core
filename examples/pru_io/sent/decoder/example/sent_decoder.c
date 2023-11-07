@@ -61,53 +61,6 @@ uint8_t crc_lut_arr[] = {0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xa, 
  0xb, 0xc, 0xd, 0xe, 0xf, 0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x5, 0x4, 0x7, 0x6, 0x1, 0x0, 0x3, 0x2,
  0xd, 0xc, 0xf, 0xe, 0x9, 0x8, 0xb, 0xa};
 
-Pinmux_PerCfg_t gPinMuxMainDomainCfg_1[] = {
-            /* ICSSM_IEP pin config */
-
-    /* PR0_PRU0_GPIO0 -> PR0_PRU0_GPIO0 (K17) */
-    {
-        PIN_PR0_PRU0_GPIO0,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-    /* PR0_PRU0_GPIO1 -> PR0_PRU0_GPIO1 (K18) */
-    {
-        PIN_PR0_PRU0_GPIO1,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-    /* PR0_PRU0_GPIO2 -> PR0_PRU0_GPIO2 (J18) */
-    {
-        PIN_PR0_PRU0_GPIO2,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-    /* PR0_PRU0_GPIO3 -> PR0_PRU0_GPIO3 (J17) */
-    {
-        PIN_PR0_PRU0_GPIO3,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-    /* PR0_PRU0_GPIO4 -> PR0_PRU0_GPIO4 (K16) */
-    {
-        PIN_PR0_PRU0_GPIO4,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-    /* PR0_PRU0_GPIO5 -> PR0_PRU0_GPIO5 (G17) */
-    {
-        PIN_PR0_PRU0_GPIO5,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-    /* PR0_PRU0_GPIO6 -> PR0_PRU0_GPIO6 (K15) */
-    {
-        PIN_PR0_PRU0_GPIO6,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-    /* PR0_PRU0_GPIO8 -> PR0_PRU0_GPIO8 (G15) */
-    {
-        PIN_PR0_PRU0_GPIO8,
-        ( PIN_MODE(0) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW )
-    },
-
-    {PINMUX_END, PINMUX_END}
-};
-
 Sent_Obj gSentDataHandle[8];
 uint32_t ch_flag_offset[] = {CH0_DATA_READY_FLAG_OFFSET, CH1_DATA_READY_FLAG_OFFSET, CH2_DATA_READY_FLAG_OFFSET, CH3_DATA_READY_FLAG_OFFSET,
                              CH4_DATA_READY_FLAG_OFFSET, CH5_DATA_READY_FLAG_OFFSET, CH6_DATA_READY_FLAG_OFFSET, CH7_DATA_READY_FLAG_OFFSET};
@@ -226,11 +179,6 @@ void sent_main(void *args)
     Drivers_open(); // check return status
     status = Board_driversOpen();
     DebugP_assert(SystemP_SUCCESS == status);
-    Pinmux_config(gPinMuxMainDomainCfg_1, PINMUX_DOMAIN_ID_MAIN);
-
-    /* Set bits for input pins in ICSSM_PRU0_GPIO_OUT_CTRL and ICSSM_PRU1_GPIO_OUT_CTRL registers */
-    HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU0_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
-    HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU1_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
 
     /*Enable GPIO Mode for ICSS*/
     enable_board_mux();

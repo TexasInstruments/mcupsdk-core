@@ -268,7 +268,7 @@ m_ch_data0 .macro ch_buf, ch_state, ch_data0_spad_base, ch_data1, ch_crc4_res
     xout  PRU_SPAD_B2_XID, &ch_buf, 4
   	ldi   ch_state, $CODE(ch_data1)
     ldi   ch_crc4_res, CRC4_SEED
-    lsr   ch_crc4_res, ch_crc4_res, 4
+    lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b3
     lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
     jmp   return_addr1
@@ -298,7 +298,7 @@ m_ch_data1 .macro ch_buf, ch_state, ch_data2, ch_crc4_res
     jal   return_addr2, FN_BINARY_SEARCH
     mvib  ch_buf.b0, *BNS_ARG_RETVAL_ADDR
     ldi   ch_state, $CODE(ch_data2)
-    lsr   ch_crc4_res, ch_crc4_res, 4
+    lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b0
     lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
     jmp   return_addr1
@@ -328,7 +328,7 @@ m_ch_data2 .macro ch_buf, ch_state, ch_data3, ch_crc4_res
     jal   return_addr2, FN_BINARY_SEARCH
     mvib  ch_buf.b1, *BNS_ARG_RETVAL_ADDR
   	ldi   ch_state, $CODE(ch_data3)
-    lsr   ch_crc4_res, ch_crc4_res, 4
+    lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b1
     lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
     jmp   return_addr1
@@ -358,7 +358,7 @@ m_ch_data3 .macro ch_buf, ch_state, ch_data4, ch_crc4_res
     jal   return_addr2, FN_BINARY_SEARCH
     mvib  ch_buf.b2, *BNS_ARG_RETVAL_ADDR
     ldi   ch_state, $CODE(ch_data4)
-    lsr   ch_crc4_res, ch_crc4_res, 4
+    lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b2
     lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
     jmp   return_addr1
@@ -392,7 +392,7 @@ m_ch_data4 .macro ch_buf, ch_state, ch_data4_spad_base, ch_data5, ch_crc4_res
     ldi   R0.b0, ch_data4_spad_base
     xout  PRU_SPAD_B2_XID, &ch_buf, 4
   	ldi   ch_state, $CODE(ch_data5)
-    lsr   ch_crc4_res, ch_crc4_res, 4
+    lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b3
     lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
     jmp   return_addr1
@@ -422,7 +422,7 @@ m_ch_data5 .macro ch_buf, ch_state, ch_crc, ch_crc4_res
     jal   return_addr2, FN_BINARY_SEARCH
     mvib  ch_buf.b0, *BNS_ARG_RETVAL_ADDR
     ldi   ch_state, $CODE(ch_crc)
-    lsr   ch_crc4_res, ch_crc4_res, 4
+    lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b0
     lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
     jmp   return_addr1
@@ -452,7 +452,7 @@ m_ch_data5 .macro ch_buf, ch_state, ch_crc, ch_crc4_res
 m_ch_crc .macro ch_buf, ch_state, ch_crcdata_spad_base, ch_crc4_res, ch_crc_error
     jal   return_addr2, FN_BINARY_SEARCH
     mvib  ch_buf.b1, *BNS_ARG_RETVAL_ADDR
-    lsr   ch_crc4_res, ch_crc4_res, 4
+    lsl   ch_crc4_res, ch_crc4_res, 4
     lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
     mov   ch_buf.b2, ch_crc4_res
     mov   ch_buf.b3, BNS_ARG_STATUS

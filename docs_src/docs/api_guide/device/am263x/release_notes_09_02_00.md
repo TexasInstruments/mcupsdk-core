@@ -262,6 +262,13 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> 09.02.00
     <td> Fixed example.
 </tr>
+<tr>
+    <td> PINDSW-7750
+    <td> PRUICSS SENT: fix bug while computing crc
+    <td> PRUICSS SENT
+    <td> 09.00.00 onwards
+    <td> Updated the code.
+</tr>
 </table>
 
 ## Known Issues
