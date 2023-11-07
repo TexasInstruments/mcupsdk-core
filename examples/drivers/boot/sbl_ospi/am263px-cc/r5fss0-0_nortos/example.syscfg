@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @versions {"tool":"1.18.0+3266"}
  */
 
 /**
@@ -42,30 +42,18 @@ const section7    = section.addInstance();
 bootloader1.$name          = "CONFIG_BOOTLOADER0";
 bootloader1.appImageOffset = "0x00080000";
 
-flash1.$name                            = "CONFIG_FLASH0";
 bootloader1.flashDriver                 = flash1;
-flash1.proto_isAddrReg                  = true;
-flash1.proto_cmdRegRd                   = "0x85";
-flash1.proto_cmdRegWr                   = "0x81";
-flash1.proto_mask                       = "0xff";
-flash1.dummy_isAddrReg                  = true;
-flash1.dummy_cfgReg                     = "1";
-flash1.dummy_cmdRegRd                   = "0x85";
-flash1.dummy_cmdRegWr                   = "0x81";
+flash1.$name                            = "CONFIG_FLASH0";
 flash1.strDtr_isAddrReg                 = true;
 flash1.strDtr_cmdRegRd                  = "0x85";
 flash1.strDtr_cmdRegWr                  = "0x81";
 flash1.strDtr_mask                      = "255";
 flash1.xspiWipRdCmd                     = "0x05";
 flash1.strDtr_shift                     = 255;
-flash1.proto_cfgReg                     = "0";
-flash1.dummy_mask                       = "0xFF";
 flash1.protocol                         = "8d_8d_8d";
-flash1.proto_bitP                       = 231;
 flash1.fourByteEnableSeq                = "0";
-flash1.dummyClksCmd                     = 16;
-flash1.dummyClksRd                      = 16;
-flash1.dummy_bitP                       = 16;
+flash1.cmdRd                            = "0x7c";
+flash1.dummy_mask                       = "0xff";
 flash1.peripheralDriver.$name           = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable       = true;
 flash1.peripheralDriver.phyEnable       = true;

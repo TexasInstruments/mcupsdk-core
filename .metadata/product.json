@@ -14,7 +14,7 @@
         "/networking/networking",
         "/security/security",
         "/usb/usb",
-        "/pru_io/pru_io"
+        "/pru_io/pru_io",
     ],
     "devices": [
         "AM64x",

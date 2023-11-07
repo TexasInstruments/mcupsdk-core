@@ -255,6 +255,14 @@ function changeFlashType(inst, ui)
         ui.proto_cfgReg.hidden = true;
     }
 
+    if(inst.strDtr_isAddrReg == true) {
+        ui.strDtr_isAddrReg.hidden = false;
+    }
+    else
+    {
+        ui.strDtr_isAddrReg.hidden = true;
+    }
+
     if(inst.flashType == "SERIAL_NOR")
     {
         ui.cmdWrsr.hidden = true;
@@ -276,7 +284,6 @@ function changeFlashType(inst, ui)
         ui.flash444Seq.hidden = false;
         ui.flash888Seq.hidden = false;
 
-        ui.strDtr_isAddrReg.hidden = true;
         ui.strDtr_cfgReg.hidden = false;
         ui.strDtr_cmdRegRd.hidden = false;
         ui.strDtr_cmdRegWr.hidden = false;
@@ -1146,7 +1153,6 @@ function getConfigurables()
                                     name: "strDtr_isAddrReg",
                                     displayName: "Config Is Via Addressed Reg",
                                     default: soc.getDefaultFlashConfig().protos[defProtoJson].strDtrCfg == null ? false : soc.getDefaultFlashConfig().protos[defProtoJson].strDtrCfg.isAddrReg,
-                                    hidden: true,
                                     onChange: (inst, ui) => {
                                         let hideCfgReg = true;
                                         if(inst.strDtr_isAddrReg == true) {
