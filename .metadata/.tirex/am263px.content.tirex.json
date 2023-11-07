@@ -4325,72 +4325,6 @@
             "example"
         ],
         "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "Demonstrate mpu firewall services and interrupt handling CPU is R5FSS0-0 running NORTOS.",
-        "name": "mpu_firewall_services_demo",
-        "location": "../../examples/drivers/hsmclient/mpu_firewall_services_demo/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDSCNCD263"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "hsmclient",
-            "mpu_firewall_services_demo",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "Demonstrate mpu firewall services and interrupt handling CPU is R5FSS0-1 running NORTOS.",
-        "name": "mpu_firewall_services_demo",
-        "location": "../../examples/drivers/hsmclient/mpu_firewall_services_demo/am263px-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDSCNCD263"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "hsmclient",
-            "mpu_firewall_services_demo",
-            "r5fss0-1_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
             "example.general"
         ],
         "description": "A I2C LED Blink Example. This example blinks a EVM LED for few seconds. CPU is R5FSS0-0 running NORTOS.",
@@ -11226,6 +11160,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies error inject operations for DMA Parity CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_dma_parity",
+        "location": "../../examples/sdl/parity/sdl_dma_parity/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "parity",
+            "sdl_dma_parity",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies error inject operations for TCM Parity CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_tcm_parity",
+        "location": "../../examples/sdl/parity/sdl_tcm_parity/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "parity",
+            "sdl_tcm_parity",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet Txsg Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_txsg",
         "location": "../../examples/networking/enet_tx_scatter_gather/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -11302,36 +11302,6 @@
             "edma",
             "edma_interrupt_transfer",
             "system_freertos_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "Demonstrate mpu firewall services and interrupt handling System project.",
-        "name": "mpu_firewall_services_demo",
-        "location": "../../examples/drivers/hsmclient/mpu_firewall_services_demo/am263px-cc/system_nortos/system.projectspec",
-        "devtools": [
-            "TMDSCNCD263"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "subCategories": [
-            "drivers",
-            "hsmclient",
-            "mpu_firewall_services_demo",
-            "system_nortos"
         ],
         "mainCategories": [
             [
