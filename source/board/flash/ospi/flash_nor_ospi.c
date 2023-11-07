@@ -1219,16 +1219,17 @@ static int32_t Flash_norOspiOpen(Flash_Config *config, Flash_Params *params)
 
         /* Set RD Capture Delay by reading ID */
         uint32_t origBaudRateDiv = 0U;
-        uint32_t readDataCapDelay = 0U;
         OSPI_getBaudRateDivFromObj(obj->ospiHandle, &origBaudRateDiv);
+        uint32_t readDataCapDelay = origBaudRateDiv;
+        OSPI_setRdDataCaptureDelay(obj->ospiHandle, readDataCapDelay);
+        status = Flash_norOspiReadId(config);
 
-        do
+        while((status != SystemP_SUCCESS) && (readDataCapDelay > 0U))
         {
+            readDataCapDelay--;
             OSPI_setRdDataCaptureDelay(obj->ospiHandle, readDataCapDelay);
             status = Flash_norOspiReadId(config);
         }
-        while((status != SystemP_SUCCESS) && (++readDataCapDelay < origBaudRateDiv));
-
         /* Enable PHY if attack vector present and PHY mode is enabled */
         obj->phyEnable = FALSE;
         uint32_t phyTuningOffset = Flash_getPhyTuningOffset(config);
