@@ -35,6 +35,9 @@ const section11      = section.addInstance();
 const section12      = section.addInstance();
 const dma_trig_xbar  = scripting.addModule("/xbar/dma_trig_xbar/dma_trig_xbar", {}, false);
 const dma_trig_xbar1 = dma_trig_xbar.addInstance();
+const dma_trig_xbar2 = dma_trig_xbar.addInstance();
+const dma_trig_xbar3 = dma_trig_xbar.addInstance();
+const dma_trig_xbar4 = dma_trig_xbar.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -241,6 +244,18 @@ section12.output_section[0].$name = ".bss.sipc_r5f_queue_mem";
 
 dma_trig_xbar1.$name      = "CONFIG_DMA_TRIG_XBAR0";
 dma_trig_xbar1.xbarOutput = "DMA_TRIG_XBAR_MCRC_DMA_EVENT_0";
+
+dma_trig_xbar2.$name      = "CONFIG_DMA_TRIG_XBAR1";
+dma_trig_xbar2.xbarOutput = "DMA_TRIG_XBAR_MCRC_DMA_EVENT_1";
+dma_trig_xbar2.instance   = "DMA_TRIG_XBAR_EDMA_MODULE_1";
+
+dma_trig_xbar3.$name      = "CONFIG_DMA_TRIG_XBAR2";
+dma_trig_xbar3.xbarOutput = "DMA_TRIG_XBAR_MCRC_DMA_EVENT_2";
+dma_trig_xbar3.instance   = "DMA_TRIG_XBAR_EDMA_MODULE_2";
+
+dma_trig_xbar4.$name      = "CONFIG_DMA_TRIG_XBAR3";
+dma_trig_xbar4.xbarOutput = "DMA_TRIG_XBAR_MCRC_DMA_EVENT_3";
+dma_trig_xbar4.instance   = "DMA_TRIG_XBAR_EDMA_MODULE_3";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
