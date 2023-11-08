@@ -843,7 +843,7 @@ void test_clockConfig(void *args)
     overhead = end - start;
     DebugP_log("Total Overhead: %d Cycles\r\n", overhead);
     CycleCounterP_reset();
- 
+
     start = CycleCounterP_getCount32();
     ClockP_usleep(1);
     end = CycleCounterP_getCount32();
@@ -1023,7 +1023,47 @@ void test_mainToIsrWithFloatOperations(void *args)
     TEST_ASSERT_UINT32_WITHIN(1, 10 + (numInterrupts / 10), (uint32_t)gFloat);
 }
 
+static void test_floatOperationsFiqIsr(void *arg)
+{
+    gFloat = gFloat + floatLoadAndMultiply(0.1, 1.0);
 
+    gMyISRCount = 1;
+}
+
+/* switch between main and fiq isr and do float operations in both */
+void test_mainToFiqWithFloatOperations(void *args)
+{
+    uint32_t count; /* loop `count` times */
+    uint32_t numInterrupts = 100000;
+    double f;
+    HwiP_Params hwiParams;
+    HwiP_Object hwiObj;
+
+    HwiP_Params_init(&hwiParams);
+    hwiParams.intNum = TEST_INT_NUM;
+    hwiParams.callback = test_floatOperationsFiqIsr;
+    hwiParams.priority = 8;
+    hwiParams.isFIQ = 1;
+    HwiP_construct(&hwiObj, &hwiParams);
+
+    gFloat = 10.0;
+    f = 0.0;
+    floatLoadAndMultiply(0.1, 0.1);
+    count = numInterrupts;
+    while (count--)
+    {
+        gMyISRCount = 0;
+        f = f + floatMultiply();
+        HwiP_post(TEST_INT_NUM);
+        while(gMyISRCount == 0)
+            ;
+    }
+
+    HwiP_destruct(&hwiObj);
+
+    TEST_ASSERT_UINT32_WITHIN(1, (numInterrupts / 100), (uint32_t)f);
+    TEST_ASSERT_UINT32_WITHIN(1, 10 + (numInterrupts / 10), (uint32_t)gFloat);
+}
 
 void test_addrconversion(void *args)
 {
@@ -1219,6 +1259,13 @@ void test_main(void *args)
     #if defined(__ARM_ARCH_7R__)
     /* floating point operations in ISR supported in R5F only */
     RUN_TEST(test_mainToIsrWithFloatOperations, 1571, NULL);
+
+    #ifdef EN_SAVE_RESTORE_FPU_CONTEXT
+    /** floating point operations in FIQ supported in R5F only
+     *  Make sure the macro EN_SAVE_RESTORE_FPU_CONTEXT is uncommented in source/kernel/dpl/HwiP.h, otherwise the test will fail.
+    */
+    RUN_TEST(test_mainToFiqWithFloatOperations, 12213, NULL);
+    #endif
     #endif
 
     /* disabled by default since otherwise the application wait for user input */
@@ -1232,8 +1279,8 @@ void test_main(void *args)
 #endif
 
     RUN_TEST(test_addrconversion, 898, NULL);
-    
+
     UNITY_END();
-    
+
     Drivers_close();
 }
