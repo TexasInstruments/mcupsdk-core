@@ -495,6 +495,46 @@ void test_taskToIsrWithFloatOperations(void *args)
     TEST_ASSERT_UINT32_WITHIN(1, 10 + (NUM_TASK_SWITCHES / 10), (uint32_t)gFloat);
 }
 
+/* switch between ping task and fiq isr and do float operations in both */
+void test_taskToFiqIsrWithFloatOperations(void *args)
+{
+    uint32_t count; /* loop `count` times */
+    uint64_t curTime;
+    double f;
+    HwiP_Params hwiParams;
+
+    HwiP_Params_init(&hwiParams);
+    hwiParams.intNum = PING_INT_NUM;
+    hwiParams.callback = ping_isr_6;
+    hwiParams.isFIQ = 1;
+    hwiParams.priority = PING_INT_PRIORITY;
+    HwiP_construct(&gPingHwiObj, &hwiParams);
+
+
+
+    gFloat = 10.0;
+    f = 0.0;
+    floatLoadAndMultiply(0.1, 0.1);
+    count = NUM_TASK_SWITCHES;
+    curTime = ClockP_getTimeUsec();
+    while (count--)
+    {
+        f = f + floatMultiply();
+        HwiP_post(PING_INT_NUM);
+        xSemaphoreTake(gPingSem, portMAX_DELAY); /* wait for fiq isr to signal */
+    }
+    curTime = ClockP_getTimeUsec() - curTime;
+
+    HwiP_destruct(&gPingHwiObj);
+
+    DebugP_log("\r\n");
+    DebugP_log("execution time for task - ISR - task switches = %" PRId64 " us\r\n", curTime);
+    DebugP_log("number of ISRs = %" PRId32 " \r\n", (uint32_t)NUM_TASK_SWITCHES * 2);
+    DebugP_log("time per task - ISR - task switch (semaphore give/take) = %" PRId32 " ns\r\n", (uint32_t)(curTime * 1000 / (2 * NUM_TASK_SWITCHES)));
+    TEST_ASSERT_UINT32_WITHIN(1, (NUM_TASK_SWITCHES / 100), (uint32_t)f);
+    TEST_ASSERT_UINT32_WITHIN(1, 10 + (NUM_TASK_SWITCHES / 10), (uint32_t)gFloat);
+}
+
 /* wait some msecs, this is just to show how delay API can be used,
 * there is no need to delay before deleting the task
 */
@@ -702,6 +742,13 @@ void ping_main(void *args)
 #if defined(__ARM_ARCH_7R__)
     /* floating point operations in ISR supported in R5F only */
     RUN_TEST(test_taskToIsrWithFloatOperations, 639, NULL);
+
+    #ifdef EN_SAVE_RESTORE_FPU_CONTEXT
+    /** floating point operations in FIQ ISR supported in R5F only.
+     *  Make sure the macro EN_SAVE_RESTORE_FPU_CONTEXT is uncommented in source/kernel/dpl/HwiP.h, otherwise the test will fail.
+    */
+    RUN_TEST(test_taskToFiqIsrWithFloatOperations, 12213, NULL);
+    #endif
 #endif
     RUN_TEST(test_taskDelay, 280, NULL);
     RUN_TEST(test_timer, 281, NULL);
