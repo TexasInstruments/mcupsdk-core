@@ -18,8 +18,8 @@ MEMORY
     R5F_TCMA : ORIGIN = 0x00000040 , LENGTH = 0x00007FC0
     R5F_TCMB0 : ORIGIN = 0x41010000 , LENGTH = 0x00008000
     MSRAM_VECS : ORIGIN = 0x70000000 , LENGTH = 0x100
-    MSRAM_0  : ORIGIN = 0x70000100 , LENGTH = 0x10000 - 0x100
-    MSRAM_1  : ORIGIN = 0x70010000 , LENGTH = 0x70000
+    MSRAM_0  : ORIGIN = 0x70000100 , LENGTH = 0x50000 - 0x100
+    MSRAM_1  : ORIGIN = 0x70050000 , LENGTH = 0x30000
     MSRAM_2  : ORIGIN = 0x70180000 , LENGTH = 0x60000
 }
 
@@ -34,6 +34,8 @@ SECTIONS
     .text.boot  : ALIGN(8) {} > MSRAM_0
     .data       : ALIGN(8) {} > MSRAM_0
     .rodata     : ALIGN(8) {} > MSRAM_0
+
+    .bss.filebuf (NOLOAD) : { KEEP(*(.bss.filebuf)) } > MSRAM_2
 
     .bss : {
         __bss_start__ = .;
@@ -86,7 +88,7 @@ SECTIONS
         __STACK_END = .;
     } > MSRAM_1
 
-    .bss.filebuf (NOLOAD) : { KEEP(*(.bss.filebuf)) } > MSRAM_2
+
 }
 
 
