@@ -275,6 +275,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_IO
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DMA
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG
+   -# \subpage EXAMPLES_DRIVERS_OSPI_NAND_FLASH_IO
    -# \subpage EXAMPLES_RL2
    -# \subpage EXAMPLES_FLC
    -# \subpage EXAMPLES_RAT

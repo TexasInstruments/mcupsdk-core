@@ -2,10 +2,10 @@
 
 [TOC]
 
-\cond SOC_AM243X || SOC_AM273X || SOC_AM64X || SOC_AWR294X
+\cond SOC_AM243X || SOC_AM273X || SOC_AM64X || SOC_AWR294X || SOC_AM263PX
 The Flash driver provides API to read and write to xSPI based flash devices present in the board.
 \endcond
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 The Flash driver provides API to read and write to QSPI based flash devices present in the board.
 \endcond
 The driver takes care of all sequencing necessary to perform writes across pages and
@@ -16,7 +16,9 @@ the application need not take care of the programming intricacies.
 - APIs to read and write to a flash offset
 - Provides API to return flash attributes like block size, page size etc
 - API for block erases
-
+\cond SOC_AM263PX
+- Supports Nand Flash
+\endcond
 ## SysConfig Features
 
 @VAR_SYSCFG_USAGE_NOTE
@@ -35,6 +37,7 @@ the application need not take care of the programming intricacies.
 \cond SOC_AM263PX
 - Supported flash devices
     - IS25LX256
+    - W25N01GVZEJ
 \endcond
 \cond SOC_AM273X || SOC_AWR294X
 - Supported flash devices
@@ -43,7 +46,13 @@ the application need not take care of the programming intricacies.
 
 ## Features NOT Supported
 
-NA
+\cond !(SOC_AM263PX)
+NA 
+\endcond
+
+\cond SOC_AM263PX
+- DMA for NAND FLASH
+\endcond
 
 ## Important Usage Guidelines
 
