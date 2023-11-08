@@ -7,7 +7,6 @@ const cgt_r5f = {
             "-mcpu=cortex-r5",
             "-mfloat-abi=hard",
             "-mfpu=vfpv3-d16",
-            "-marm",
         ],
     },
     lflags: {
@@ -15,7 +14,6 @@ const cgt_r5f = {
             "-mcpu=cortex-r5",
             "-mfloat-abi=hard",
             "-mfpu=vfpv3-d16",
-            "-marm",
         ],
     },
 }
@@ -25,23 +23,28 @@ const cgt_common = {
     cc: "arm-none-eabi-gcc",
     ar: "arm-none-eabi-gcc-ar",
     lnk: "arm-none-eabi-gcc",
+    cpp: "arm-none-eabi-cpp",
     strip: "arm-none-eabi-strip",
     objcopy: "arm-none-eabi-objcopy",
 
     includes: {
         common: [
-            "${MCU_PLUS_SDK_PATH}/source"
+            "${CG_TOOL_ROOT}/arm-none-eabi/include",
+            "${MCU_PLUS_SDK_PATH}/source",
         ],
     },
     cflags: {
         common: [
             "-Wall",
+            "-mthumb",
             "-Werror",
             "-g",
-            "-Wno-gnu-variable-sized-type-not-at-end",
             "-Wno-unused-function",
+            "-Wno-enum-compare",
+            "-Wno-uninitialized",
             "-Wno-int-to-pointer-cast",
             "-Wno-pointer-to-int-cast",
+            "-Wno-unused-variable",
             "-Wno-unused-but-set-variable",
             "-fdata-sections", /* this option is needed so that compiler throws away unused sections */
 	        "-ffunction-sections", /* this option is needed so that compiler throws away unused sections */

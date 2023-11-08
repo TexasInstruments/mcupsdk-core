@@ -35,6 +35,14 @@ const libs_r5f = {
     ],
 };
 
+const libs_r5f_gcc = {
+    common: [
+        "nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "board.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+    ],
+};
+
 const libs_m4f = {
     common: [
         "nortos.am243x.m4f.ti-arm-clang.${ConfigName}.lib",
@@ -57,6 +65,21 @@ const templates_nortos_r5f =
 [
     {
         input: ".project/templates/am243x/common/linker_r5f.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/am243x/nortos/main_nortos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "sciclient_get_version_main",
+        },
+    }
+];
+
+const templates_nortos_r5f_gcc =
+[
+    {
+        input: ".project/templates/am243x/common/linker_r5f_gcc.cmd.xdt",
         output: "linker.cmd",
     },
     {
@@ -94,6 +117,14 @@ const buildOptionCombos = [
     { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos"},
     { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos"},
     { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm",   os: "nortos"},
+    { device: device, cpu: "r5fss0-1", cgt: "gcc-armv7", board: "am243x-evm",   os: "nortos"},
+    { device: device, cpu: "r5fss1-0", cgt: "gcc-armv7", board: "am243x-evm",   os: "nortos"},
+    { device: device, cpu: "r5fss1-1", cgt: "gcc-armv7", board: "am243x-evm",   os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-lp",    os: "nortos"},
+    { device: device, cpu: "r5fss0-1", cgt: "gcc-armv7", board: "am243x-lp",    os: "nortos"},
+    { device: device, cpu: "r5fss1-0", cgt: "gcc-armv7", board: "am243x-lp",    os: "nortos"},
+    { device: device, cpu: "r5fss1-1", cgt: "gcc-armv7", board: "am243x-lp",    os: "nortos"},
 ];
 
 function getComponentProperty() {
@@ -118,8 +149,18 @@ function getComponentBuildProperty(buildOption) {
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
     if(buildOption.cpu.match(/r5f*/)) {
-        build_property.libs = libs_r5f;
-        build_property.templates = templates_nortos_r5f;
+
+        if(buildOption.cgt.match(/gcc*/) )
+        {
+            build_property.libs = libs_r5f_gcc;
+            build_property.templates = templates_nortos_r5f_gcc;
+        }
+        else
+        {
+            build_property.libs = libs_r5f;
+            build_property.templates = templates_nortos_r5f;
+        }
+
     }
     if(buildOption.cpu.match(/m4f*/)) {
         build_property.libs = libs_m4f;

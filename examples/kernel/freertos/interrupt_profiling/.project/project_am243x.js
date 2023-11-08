@@ -51,6 +51,14 @@ const libs_r5f = {
     ],
 };
 
+const libs_r5f_gcc = {
+    common: [
+        "freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "board.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+    ],
+};
+
 const libs_m4f = {
     common: [
         "freertos.am243x.m4f.ti-arm-clang.${ConfigName}.lib",
@@ -84,6 +92,21 @@ const templates_r5f =
     },
 ];
 
+const templates_r5f_gcc =
+[
+    {
+        input: ".project/templates/am243x/common/linker_r5f_gcc.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/am243x/freertos/main_freertos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "interrupt_profiling_main",
+        },
+    }
+];
+
 const templates_m4f =
 [
     {
@@ -101,6 +124,7 @@ const templates_m4f =
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos"},
+    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm", os: "freertos"},
 ];
 
 function getComponentProperty() {
@@ -127,9 +151,17 @@ function getComponentBuildProperty(buildOption) {
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
     if(buildOption.cpu.includes("r5f")) {
-        build_property.templates = templates_r5f;
         build_property.includes = includes_r5f;
-        build_property.libs = libs_r5f;
+        if(buildOption.cgt.match(/gcc*/) )
+        {
+            build_property.libs = libs_r5f_gcc;
+            build_property.templates = templates_r5f_gcc;
+        }
+        else
+        {
+            build_property.libs = libs_r5f;
+            build_property.templates = templates_r5f;
+        }
     }
     if(buildOption.cpu.includes("m4f")) {
         build_property.templates = templates_m4f;

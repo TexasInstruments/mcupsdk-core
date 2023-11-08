@@ -7,8 +7,15 @@ all:
 	$(MAKE) -f makefile.am243x sbl
 	$(MAKE) -f makefile.am243x examples
 
+all_gcc:
+	$(MAKE) -f makefile.am243x libs_gcc
+	$(MAKE) -f makefile.am243x sbl_gcc
+	$(MAKE) -f makefile.am243x examples_gcc
+
 clean: libs-clean sbl-clean examples-clean
 scrub: libs-scrub sbl-scrub examples-scrub
+clean_gcc: libs_gcc-clean sbl_gcc-clean examples_gcc-clean
+scrub_gcc: libs_gcc-scrub sbl_gcc-scrub examples_gcc-scrub
 
 help:
 	@echo  Notes,
@@ -33,21 +40,21 @@ help:
 	@echo  .
 	@echo  Library build targets,
 	@echo  ======================
-	@echo  $(MAKE) -s -f makefile.am243x board_r5f.ti-arm-clang board_m4f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am243x board_r5f.ti-arm-clang board_r5f.gcc-armv7 board_m4f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x cmsis_r5f.ti-arm-clang
-	@echo  $(MAKE) -s -f makefile.am243x drivers_r5f.ti-arm-clang drivers_m4f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am243x drivers_r5f.ti-arm-clang drivers_r5f.gcc-armv7 drivers_m4f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x freertos_fat_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x sdl_m4f.ti-arm-clang sdl_r5f.ti-arm-clang
-	@echo  $(MAKE) -s -f makefile.am243x nortos_r5f.ti-arm-clang nortos_m4f.ti-arm-clang
-	@echo  $(MAKE) -s -f makefile.am243x freertos_r5f.ti-arm-clang freertos_m4f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am243x nortos_r5f.ti-arm-clang nortos_r5f.gcc-armv7 nortos_m4f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am243x freertos_r5f.ti-arm-clang freertos_r5f.gcc-armv7 freertos_m4f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x mathlib_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x pru_ipc_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x security_r5f.ti-arm-clang
-	@echo  $(MAKE) -s -f makefile.am243x usbd_cdn_nortos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am243x usbd_cdn_nortos_r5f.ti-arm-clang usbd_cdn_nortos_r5f.gcc-armv7
 	@echo  $(MAKE) -s -f makefile.am243x usbd_cdn_freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_cdc_nortos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_cdc_freertos_r5f.ti-arm-clang
-	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_dfu_nortos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_dfu_nortos_r5f.ti-arm-clang usbd_tusb_dfu_nortos_r5f.gcc-armv7
 	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_dfu_freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_ncm_nortos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_ncm_freertos_r5f.ti-arm-clang
@@ -71,21 +78,21 @@ help:
 	@echo  .
 	@echo  Library clean targets,
 	@echo  ======================
-	@echo  $(MAKE) -s -f makefile.am243x board_r5f.ti-arm-clang_clean board_m4f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am243x board_r5f.ti-arm-clang_clean board_r5f.gcc-armv7_clean board_m4f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x cmsis_r5f.ti-arm-clang_clean
-	@echo  $(MAKE) -s -f makefile.am243x drivers_r5f.ti-arm-clang_clean drivers_m4f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am243x drivers_r5f.ti-arm-clang_clean drivers_r5f.gcc-armv7_clean drivers_m4f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x freertos_fat_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x sdl_m4f.ti-arm-clang_clean sdl_r5f.ti-arm-clang_clean
-	@echo  $(MAKE) -s -f makefile.am243x nortos_r5f.ti-arm-clang_clean nortos_m4f.ti-arm-clang_clean
-	@echo  $(MAKE) -s -f makefile.am243x freertos_r5f.ti-arm-clang_clean freertos_m4f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am243x nortos_r5f.ti-arm-clang_clean nortos_r5f.gcc-armv7_clean nortos_m4f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am243x freertos_r5f.ti-arm-clang_clean freertos_r5f.gcc-armv7_clean freertos_m4f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x mathlib_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x pru_ipc_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x security_r5f.ti-arm-clang_clean
-	@echo  $(MAKE) -s -f makefile.am243x usbd_cdn_nortos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am243x usbd_cdn_nortos_r5f.ti-arm-clang_clean usbd_cdn_nortos_r5f.gcc-armv7_clean
 	@echo  $(MAKE) -s -f makefile.am243x usbd_cdn_freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_cdc_nortos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_cdc_freertos_r5f.ti-arm-clang_clean
-	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_dfu_nortos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_dfu_nortos_r5f.ti-arm-clang_clean usbd_tusb_dfu_nortos_r5f.gcc-armv7_clean
 	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_dfu_freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_ncm_nortos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x usbd_tusb_ncm_freertos_r5f.ti-arm-clang_clean
@@ -129,6 +136,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_sd/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_uart_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/boot/sbl_dfu_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -245,6 +254,14 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss1-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss1-1_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss0-1_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss1-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss1-1_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss0-1_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss1-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss1-1_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_ccs_init/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_ccs_init/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -279,18 +296,36 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss0-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss1-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss1-1_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss0-1_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss1-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss1-1_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss0-1_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss1-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss1-1_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_polling/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_polling/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_polling/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_polling/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_polling/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_polling/am243x-evm/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_polling/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/udma/udma_memcpy_polling/am243x-lp/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_sw_trigger/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_sw_trigger/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/watchdog/watchdog_interrupt/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/watchdog/watchdog_interrupt/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/hello_world/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/hello_world/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/hello_world/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/hello_world/am243x-evm/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/hello_world/am243x-evm/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/hello_world/am243x-evm/m4fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/hello_world/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/hello_world/am243x-lp/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/hello_world/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/hello_world/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/hello_world/am243x-lp/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -311,7 +346,12 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am243x-lp/m4fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am243x-lp/m4fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am243x-evm/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am243x-lp/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/interrupt_profiling/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/interrupt_profiling/am243x-evm/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am243x-evm/m4fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -463,21 +503,21 @@ help:
 	@echo  .
 
 # Various Component Targets
-BUILD_COMBO_board = board_r5f.ti-arm-clang board_m4f.ti-arm-clang
+BUILD_COMBO_board = board_r5f.ti-arm-clang board_r5f.gcc-armv7 board_m4f.ti-arm-clang
 BUILD_COMBO_cmsis = cmsis_r5f.ti-arm-clang
-BUILD_COMBO_drivers = drivers_r5f.ti-arm-clang drivers_m4f.ti-arm-clang
+BUILD_COMBO_drivers = drivers_r5f.ti-arm-clang drivers_r5f.gcc-armv7 drivers_m4f.ti-arm-clang
 BUILD_COMBO_freertos_fat = freertos_fat_r5f.ti-arm-clang
 BUILD_COMBO_sdl = sdl_m4f.ti-arm-clang sdl_r5f.ti-arm-clang
-BUILD_COMBO_nortos = nortos_r5f.ti-arm-clang nortos_m4f.ti-arm-clang
-BUILD_COMBO_freertos = freertos_r5f.ti-arm-clang freertos_m4f.ti-arm-clang
+BUILD_COMBO_nortos = nortos_r5f.ti-arm-clang nortos_r5f.gcc-armv7 nortos_m4f.ti-arm-clang
+BUILD_COMBO_freertos = freertos_r5f.ti-arm-clang freertos_r5f.gcc-armv7 freertos_m4f.ti-arm-clang
 BUILD_COMBO_mathlib = mathlib_r5f.ti-arm-clang
 BUILD_COMBO_pru_ipc = pru_ipc_r5f.ti-arm-clang
 BUILD_COMBO_security = security_r5f.ti-arm-clang
-BUILD_COMBO_usbd_cdn_nortos = usbd_cdn_nortos_r5f.ti-arm-clang
+BUILD_COMBO_usbd_cdn_nortos = usbd_cdn_nortos_r5f.ti-arm-clang usbd_cdn_nortos_r5f.gcc-armv7
 BUILD_COMBO_usbd_cdn_freertos = usbd_cdn_freertos_r5f.ti-arm-clang
 BUILD_COMBO_usbd_tusb_cdc_nortos = usbd_tusb_cdc_nortos_r5f.ti-arm-clang
 BUILD_COMBO_usbd_tusb_cdc_freertos = usbd_tusb_cdc_freertos_r5f.ti-arm-clang
-BUILD_COMBO_usbd_tusb_dfu_nortos = usbd_tusb_dfu_nortos_r5f.ti-arm-clang
+BUILD_COMBO_usbd_tusb_dfu_nortos = usbd_tusb_dfu_nortos_r5f.ti-arm-clang usbd_tusb_dfu_nortos_r5f.gcc-armv7
 BUILD_COMBO_usbd_tusb_dfu_freertos = usbd_tusb_dfu_freertos_r5f.ti-arm-clang
 BUILD_COMBO_usbd_tusb_ncm_nortos = usbd_tusb_ncm_nortos_r5f.ti-arm-clang
 BUILD_COMBO_usbd_tusb_ncm_freertos = usbd_tusb_ncm_freertos_r5f.ti-arm-clang
@@ -502,6 +542,9 @@ BUILD_COMBO_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang
 # Combine all Components
 BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos_fat) $(BUILD_COMBO_sdl) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_pru_ipc) $(BUILD_COMBO_security) $(BUILD_COMBO_usbd_cdn_nortos) $(BUILD_COMBO_usbd_cdn_freertos) $(BUILD_COMBO_usbd_tusb_cdc_nortos) $(BUILD_COMBO_usbd_tusb_cdc_freertos) $(BUILD_COMBO_usbd_tusb_dfu_nortos) $(BUILD_COMBO_usbd_tusb_dfu_freertos) $(BUILD_COMBO_usbd_tusb_ncm_nortos) $(BUILD_COMBO_usbd_tusb_ncm_freertos) $(BUILD_COMBO_usbd_tusb_rndis_nortos) $(BUILD_COMBO_usbd_tusb_rndis_freertos) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwipif-icssg-freertos) $(BUILD_COMBO_lwipif-icssg-nortos) $(BUILD_COMBO_enet-icssg) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_tsn_gptp-freertos) $(BUILD_COMBO_tsn_combase-freertos) $(BUILD_COMBO_tsn_uniconf-freertos) $(BUILD_COMBO_tsn_unibase-freertos)
 
+# Combine all gcc Components
+BUILD_COMBO_ALL_GCC = $(BUILD_COMBO_board) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos) $(BUILD_COMBO_nortos)
+
 # Combine all Pre-built Components
 BUILD_COMBO_PREBUILT_ALL = $(BUILD_COMBO_cmsis)
 
@@ -509,6 +552,8 @@ BUILD_COMBO_PREBUILT_ALL = $(BUILD_COMBO_cmsis)
 BUILD_COMBO_PRIVATE_ALL =
 
 libs: $(BUILD_COMBO_ALL)
+
+libs_gcc: $(BUILD_COMBO_ALL_GCC)
 
 libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
 
@@ -621,21 +666,21 @@ $(BUILD_COMBO_tsn_unibase-freertos):
 
 
 # Various Component Clean Targets
-BUILD_COMBO_CLEAN_board = board_r5f.ti-arm-clang_clean board_m4f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_board = board_r5f.ti-arm-clang_clean board_r5f.gcc-armv7_clean board_m4f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_cmsis = cmsis_r5f.ti-arm-clang_clean
-BUILD_COMBO_CLEAN_drivers = drivers_r5f.ti-arm-clang_clean drivers_m4f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_drivers = drivers_r5f.ti-arm-clang_clean drivers_r5f.gcc-armv7_clean drivers_m4f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_freertos_fat = freertos_fat_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_sdl = sdl_m4f.ti-arm-clang_clean sdl_r5f.ti-arm-clang_clean
-BUILD_COMBO_CLEAN_nortos = nortos_r5f.ti-arm-clang_clean nortos_m4f.ti-arm-clang_clean
-BUILD_COMBO_CLEAN_freertos = freertos_r5f.ti-arm-clang_clean freertos_m4f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_nortos = nortos_r5f.ti-arm-clang_clean nortos_r5f.gcc-armv7_clean nortos_m4f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_freertos = freertos_r5f.ti-arm-clang_clean freertos_r5f.gcc-armv7_clean freertos_m4f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_mathlib = mathlib_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_pru_ipc = pru_ipc_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_security = security_r5f.ti-arm-clang_clean
-BUILD_COMBO_CLEAN_usbd_cdn_nortos = usbd_cdn_nortos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_usbd_cdn_nortos = usbd_cdn_nortos_r5f.ti-arm-clang_clean usbd_cdn_nortos_r5f.gcc-armv7_clean
 BUILD_COMBO_CLEAN_usbd_cdn_freertos = usbd_cdn_freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_usbd_tusb_cdc_nortos = usbd_tusb_cdc_nortos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_usbd_tusb_cdc_freertos = usbd_tusb_cdc_freertos_r5f.ti-arm-clang_clean
-BUILD_COMBO_CLEAN_usbd_tusb_dfu_nortos = usbd_tusb_dfu_nortos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_usbd_tusb_dfu_nortos = usbd_tusb_dfu_nortos_r5f.ti-arm-clang_clean usbd_tusb_dfu_nortos_r5f.gcc-armv7_clean
 BUILD_COMBO_CLEAN_usbd_tusb_dfu_freertos = usbd_tusb_dfu_freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_usbd_tusb_ncm_nortos = usbd_tusb_ncm_nortos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_usbd_tusb_ncm_freertos = usbd_tusb_ncm_freertos_r5f.ti-arm-clang_clean
@@ -660,10 +705,14 @@ BUILD_COMBO_CLEAN_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang_c
 # Combine all Components Clean
 BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos_fat) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_pru_ipc) $(BUILD_COMBO_CLEAN_security) $(BUILD_COMBO_CLEAN_usbd_cdn_nortos) $(BUILD_COMBO_CLEAN_usbd_cdn_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_rndis_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_rndis_freertos) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwipif-icssg-freertos) $(BUILD_COMBO_CLEAN_lwipif-icssg-nortos) $(BUILD_COMBO_CLEAN_enet-icssg) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_tsn_gptp-freertos) $(BUILD_COMBO_CLEAN_tsn_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_uniconf-freertos) $(BUILD_COMBO_CLEAN_tsn_unibase-freertos)
 
+BUILD_COMBO_CLEAN_ALL_GCC=$(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_nortos)
+
 # Combine all Pre-built Components Clean
 BUILD_COMBO_PREBUILT_CLEAN_ALL = $(BUILD_COMBO_CLEAN_cmsis)
 
 libs-clean: $(BUILD_COMBO_CLEAN_ALL)
+
+libs_gcc-clean: $(BUILD_COMBO_CLEAN_ALL_GCC)
 
 libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
 
@@ -774,21 +823,21 @@ $(BUILD_COMBO_CLEAN_tsn_unibase-freertos):
 
 
 # Various Component Scrub Targets
-BUILD_COMBO_SCRUB_board = board_r5f.ti-arm-clang_scrub board_m4f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_board = board_r5f.ti-arm-clang_scrub board_r5f.gcc-armv7_scrub board_m4f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_cmsis = cmsis_r5f.ti-arm-clang_scrub_scrub
-BUILD_COMBO_SCRUB_drivers = drivers_r5f.ti-arm-clang_scrub drivers_m4f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_drivers = drivers_r5f.ti-arm-clang_scrub drivers_r5f.gcc-armv7_scrub drivers_m4f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_freertos_fat = freertos_fat_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_sdl = sdl_m4f.ti-arm-clang_scrub sdl_r5f.ti-arm-clang_scrub_scrub
-BUILD_COMBO_SCRUB_nortos = nortos_r5f.ti-arm-clang_scrub nortos_m4f.ti-arm-clang_scrub_scrub
-BUILD_COMBO_SCRUB_freertos = freertos_r5f.ti-arm-clang_scrub freertos_m4f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_nortos = nortos_r5f.ti-arm-clang_scrub nortos_r5f.gcc-armv7_scrub nortos_m4f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_freertos = freertos_r5f.ti-arm-clang_scrub freertos_r5f.gcc-armv7_scrub freertos_m4f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_mathlib = mathlib_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_pru_ipc = pru_ipc_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_security = security_r5f.ti-arm-clang_scrub_scrub
-BUILD_COMBO_SCRUB_usbd_cdn_nortos = usbd_cdn_nortos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_usbd_cdn_nortos = usbd_cdn_nortos_r5f.ti-arm-clang_scrub usbd_cdn_nortos_r5f.gcc-armv7_scrub_scrub
 BUILD_COMBO_SCRUB_usbd_cdn_freertos = usbd_cdn_freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_usbd_tusb_cdc_nortos = usbd_tusb_cdc_nortos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_usbd_tusb_cdc_freertos = usbd_tusb_cdc_freertos_r5f.ti-arm-clang_scrub_scrub
-BUILD_COMBO_SCRUB_usbd_tusb_dfu_nortos = usbd_tusb_dfu_nortos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_usbd_tusb_dfu_nortos = usbd_tusb_dfu_nortos_r5f.ti-arm-clang_scrub usbd_tusb_dfu_nortos_r5f.gcc-armv7_scrub_scrub
 BUILD_COMBO_SCRUB_usbd_tusb_dfu_freertos = usbd_tusb_dfu_freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_usbd_tusb_ncm_nortos = usbd_tusb_ncm_nortos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_usbd_tusb_ncm_freertos = usbd_tusb_ncm_freertos_r5f.ti-arm-clang_scrub_scrub
@@ -813,10 +862,14 @@ BUILD_COMBO_SCRUB_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang_s
 # Combine all Components Scrub Targets
 BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos_fat) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_pru_ipc) $(BUILD_COMBO_SCRUB_security) $(BUILD_COMBO_SCRUB_usbd_cdn_nortos) $(BUILD_COMBO_SCRUB_usbd_cdn_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_rndis_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_rndis_freertos) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwipif-icssg-freertos) $(BUILD_COMBO_SCRUB_lwipif-icssg-nortos) $(BUILD_COMBO_SCRUB_enet-icssg) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_tsn_gptp-freertos) $(BUILD_COMBO_SCRUB_tsn_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_uniconf-freertos) $(BUILD_COMBO_SCRUB_tsn_unibase-freertos)
 
+BUILD_COMBO_SCRUB_ALL_GCC=$(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_nortos)
+
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL = $(BUILD_COMBO_SCRUB_cmsis)
 
 libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
+
+libs_gcc-scrub: $(BUILD_COMBO_SCRUB_ALL_GCC)
 
 libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
 
@@ -1252,6 +1305,40 @@ BUILD_COMBO_EXAMPLE_ALL += cdc_echo_freertos_am243x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += cdc_echo_freertos_am243x-lp_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += sdl_stog_r5f_am243x-evm_system_nortos
 
+BUILD_COMBO_EXAMPLE_ALL_GCC =
+# Various Gcc Example Targets
+BUILD_COMBO_EXAMPLE_ALL_GCC += sciclient_get_version_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += sciclient_get_version_am243x-evm_r5fss0-1_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += sciclient_get_version_am243x-evm_r5fss1-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += sciclient_get_version_am243x-evm_r5fss1-1_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += sciclient_get_version_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += sciclient_get_version_am243x-lp_r5fss0-1_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += sciclient_get_version_am243x-lp_r5fss1-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += sciclient_get_version_am243x-lp_r5fss1-1_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += udma_memcpy_interrupt_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += udma_memcpy_interrupt_am243x-evm_r5fss0-0_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += udma_memcpy_interrupt_am243x-evm_r5fss0-1_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += udma_memcpy_interrupt_am243x-evm_r5fss1-0_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += udma_memcpy_interrupt_am243x-evm_r5fss1-1_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += udma_memcpy_interrupt_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += udma_memcpy_interrupt_am243x-lp_r5fss0-0_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += udma_memcpy_interrupt_am243x-lp_r5fss0-1_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += udma_memcpy_interrupt_am243x-lp_r5fss1-0_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += udma_memcpy_interrupt_am243x-lp_r5fss1-1_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += udma_memcpy_polling_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += udma_memcpy_polling_am243x-evm_r5fss0-0_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += udma_memcpy_polling_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += udma_memcpy_polling_am243x-lp_r5fss0-0_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += hello_world_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += hello_world_am243x-evm_r5fss0-0_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += hello_world_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += hello_world_am243x-lp_r5fss0-0_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += dpl_demo_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += dpl_demo_am243x-evm_r5fss0-0_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += dpl_demo_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += dpl_demo_am243x-lp_r5fss0-0_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += interrupt_profiling_am243x-evm_r5fss0-0_freertos_gcc-armv7
+
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
 # Various Private Example Targets
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += adc_am243x-evm_r5fss0-0_freertos_ti-arm-clang
@@ -1263,7 +1350,77 @@ BUILD_COMBO_EXAMPLE_PRIVATE_ALL += empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL += empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt
 # Various Private System Example Targets
 
+
 examples: $(BUILD_COMBO_EXAMPLE_ALL)
+
+examples_gcc: $(BUILD_COMBO_EXAMPLE_ALL_GCC)
+
+ sbl_uart_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ sbl_uart_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ sciclient_get_version_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ sciclient_get_version_am243x-evm_r5fss0-1_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss0-1_nortos/gcc-armv7 -f makefile all
+ sciclient_get_version_am243x-evm_r5fss1-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss1-0_nortos/gcc-armv7 -f makefile all
+ sciclient_get_version_am243x-evm_r5fss1-1_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss1-1_nortos/gcc-armv7 -f makefile all
+ sciclient_get_version_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ sciclient_get_version_am243x-lp_r5fss0-1_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss0-1_nortos/gcc-armv7 -f makefile all
+ sciclient_get_version_am243x-lp_r5fss1-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss1-0_nortos/gcc-armv7 -f makefile all
+ sciclient_get_version_am243x-lp_r5fss1-1_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss1-1_nortos/gcc-armv7 -f makefile all
+ udma_memcpy_interrupt_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ udma_memcpy_interrupt_am243x-evm_r5fss0-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile all
+ udma_memcpy_interrupt_am243x-evm_r5fss0-1_freertos_gcc-armv7:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss0-1_freertos/gcc-armv7 -f makefile all
+ udma_memcpy_interrupt_am243x-evm_r5fss1-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss1-0_freertos/gcc-armv7 -f makefile all
+ udma_memcpy_interrupt_am243x-evm_r5fss1-1_freertos_gcc-armv7:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss1-1_freertos/gcc-armv7 -f makefile all
+ udma_memcpy_interrupt_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ udma_memcpy_interrupt_am243x-lp_r5fss0-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile all
+ udma_memcpy_interrupt_am243x-lp_r5fss0-1_freertos_gcc-armv7:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss0-1_freertos/gcc-armv7 -f makefile all
+ udma_memcpy_interrupt_am243x-lp_r5fss1-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss1-0_freertos/gcc-armv7 -f makefile all
+ udma_memcpy_interrupt_am243x-lp_r5fss1-1_freertos_gcc-armv7:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss1-1_freertos/gcc-armv7 -f makefile all
+ udma_memcpy_polling_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_polling/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ udma_memcpy_polling_am243x-evm_r5fss0-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_polling/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile all
+ udma_memcpy_polling_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_polling/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ udma_memcpy_polling_am243x-lp_r5fss0-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_polling/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile all
+ hello_world_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/hello_world/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ hello_world_am243x-evm_r5fss0-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/hello_world/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile all
+ hello_world_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/hello_world/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ hello_world_am243x-lp_r5fss0-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/hello_world/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile all
+ dpl_demo_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ dpl_demo_am243x-evm_r5fss0-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile all
+ dpl_demo_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ dpl_demo_am243x-lp_r5fss0-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile all
+ interrupt_profiling_am243x-evm_r5fss0-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/kernel/freertos/interrupt_profiling/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile all
 
 examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
@@ -2146,23 +2303,11 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  adc_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/pru_io/adc/ads85x8/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- adc_am243x-evm_icssg0-pru0_fw_ti-pru-cgt:
-	$(MAKE) -C examples/pru_io/adc/ads85x8/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile all
-
- ads127_am243x-evm_icssg0-pru0_fw_ti-pru-cgt:
-	$(MAKE) -C examples/pru_io/adc/ads127/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile all
-
  empty_pru_io_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/pru_io/empty/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  empty_pru_io_am243x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/pru_io/empty/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
-
- empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt:
-	$(MAKE) -C examples/pru_io/empty/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile all
-
- empty_am243x-lp_icssg0-pru0_fw_ti-pru-cgt:
-	$(MAKE) -C examples/pru_io/empty/firmware/am243x-lp/icssg0-pru0_fw/ti-pru-cgt -f makefile all
 
  vtm_example_am243x-evm_m4fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/vtm/vtm_uc/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
@@ -2638,6 +2783,40 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_freertos_am243x-evm_system_freertos_cl
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_freertos_am243x-lp_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stog_r5f_am243x-evm_system_nortos_clean
 
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC =
+# Various Example_Gcc Clean Targets
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += sciclient_get_version_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += sciclient_get_version_am243x-evm_r5fss0-1_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += sciclient_get_version_am243x-evm_r5fss1-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += sciclient_get_version_am243x-evm_r5fss1-1_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += sciclient_get_version_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += sciclient_get_version_am243x-lp_r5fss0-1_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += sciclient_get_version_am243x-lp_r5fss1-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += sciclient_get_version_am243x-lp_r5fss1-1_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += udma_memcpy_interrupt_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += udma_memcpy_interrupt_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += udma_memcpy_interrupt_am243x-evm_r5fss0-1_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += udma_memcpy_interrupt_am243x-evm_r5fss1-0_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += udma_memcpy_interrupt_am243x-evm_r5fss1-1_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += udma_memcpy_interrupt_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += udma_memcpy_interrupt_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += udma_memcpy_interrupt_am243x-lp_r5fss0-1_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += udma_memcpy_interrupt_am243x-lp_r5fss1-0_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += udma_memcpy_interrupt_am243x-lp_r5fss1-1_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += udma_memcpy_polling_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += udma_memcpy_polling_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += udma_memcpy_polling_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += udma_memcpy_polling_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += hello_world_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += hello_world_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += hello_world_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += hello_world_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += dpl_demo_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += dpl_demo_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += dpl_demo_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += dpl_demo_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += interrupt_profiling_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
+
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
 # Various Private Example Targets
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += adc_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
@@ -2650,6 +2829,8 @@ BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL += empty_am243x-lp_icssg0-pru0_fw_ti-pru-c
 # Various Private System Example Targets
 
 examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
+
+examples_gcc-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC)
 
 examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
@@ -2712,6 +2893,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  sbl_uart_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sbl_uart_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ sbl_uart_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
 
  sbl_uart_uniflash_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -3061,6 +3248,30 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sciclient_get_version_am243x-lp_m4fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/m4fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ sciclient_get_version_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ sciclient_get_version_am243x-evm_r5fss0-1_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss0-1_nortos/gcc-armv7 -f makefile clean
+
+ sciclient_get_version_am243x-evm_r5fss1-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss1-0_nortos/gcc-armv7 -f makefile clean
+
+ sciclient_get_version_am243x-evm_r5fss1-1_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss1-1_nortos/gcc-armv7 -f makefile clean
+
+ sciclient_get_version_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ sciclient_get_version_am243x-lp_r5fss0-1_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss0-1_nortos/gcc-armv7 -f makefile clean
+
+ sciclient_get_version_am243x-lp_r5fss1-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss1-0_nortos/gcc-armv7 -f makefile clean
+
+ sciclient_get_version_am243x-lp_r5fss1-1_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss1-1_nortos/gcc-armv7 -f makefile clean
+
  sciclient_ccs_init_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/sciclient/sciclient_ccs_init/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -3163,6 +3374,36 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  udma_memcpy_interrupt_am243x-lp_r5fss1-1_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss1-1_freertos/ti-arm-clang -f makefile clean
 
+ udma_memcpy_interrupt_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ udma_memcpy_interrupt_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile clean
+
+ udma_memcpy_interrupt_am243x-evm_r5fss0-1_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss0-1_freertos/gcc-armv7 -f makefile clean
+
+ udma_memcpy_interrupt_am243x-evm_r5fss1-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss1-0_freertos/gcc-armv7 -f makefile clean
+
+ udma_memcpy_interrupt_am243x-evm_r5fss1-1_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss1-1_freertos/gcc-armv7 -f makefile clean
+
+ udma_memcpy_interrupt_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ udma_memcpy_interrupt_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile clean
+
+ udma_memcpy_interrupt_am243x-lp_r5fss0-1_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss0-1_freertos/gcc-armv7 -f makefile clean
+
+ udma_memcpy_interrupt_am243x-lp_r5fss1-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss1-0_freertos/gcc-armv7 -f makefile clean
+
+ udma_memcpy_interrupt_am243x-lp_r5fss1-1_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss1-1_freertos/gcc-armv7 -f makefile clean
+
  udma_memcpy_polling_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/udma/udma_memcpy_polling/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -3174,6 +3415,18 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  udma_memcpy_polling_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/udma/udma_memcpy_polling/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ udma_memcpy_polling_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_polling/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ udma_memcpy_polling_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_polling/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile clean
+
+ udma_memcpy_polling_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_polling/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ udma_memcpy_polling_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_polling/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile clean
 
  udma_sw_trigger_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/udma/udma_sw_trigger/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -3193,11 +3446,23 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  hello_world_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/hello_world/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
+ hello_world_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/hello_world/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ hello_world_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/hello_world/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile clean
+
  hello_world_am243x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/hello_world/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile clean
 
  hello_world_am243x-evm_m4fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/hello_world/am243x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ hello_world_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/hello_world/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ hello_world_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/hello_world/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile clean
 
  hello_world_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/hello_world/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -3259,8 +3524,23 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  dpl_demo_am243x-lp_m4fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am243x-lp/m4fss0-0_freertos/ti-arm-clang -f makefile clean
 
+ dpl_demo_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ dpl_demo_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile clean
+
+ dpl_demo_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ dpl_demo_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile clean
+
  interrupt_profiling_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/freertos/interrupt_profiling/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ interrupt_profiling_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/kernel/freertos/interrupt_profiling/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile clean
 
  posix_demo_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/freertos/posix_demo/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -4024,6 +4304,40 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_freertos_am243x-evm_system_freertos_sc
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_freertos_am243x-lp_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stog_r5f_am243x-evm_system_nortos_scrub
 
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC =
+# Various Example_Gcc Scrub Targets
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += sciclient_get_version_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += sciclient_get_version_am243x-evm_r5fss0-1_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += sciclient_get_version_am243x-evm_r5fss1-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += sciclient_get_version_am243x-evm_r5fss1-1_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += sciclient_get_version_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += sciclient_get_version_am243x-lp_r5fss0-1_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += sciclient_get_version_am243x-lp_r5fss1-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += sciclient_get_version_am243x-lp_r5fss1-1_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += udma_memcpy_interrupt_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += udma_memcpy_interrupt_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += udma_memcpy_interrupt_am243x-evm_r5fss0-1_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += udma_memcpy_interrupt_am243x-evm_r5fss1-0_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += udma_memcpy_interrupt_am243x-evm_r5fss1-1_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += udma_memcpy_interrupt_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += udma_memcpy_interrupt_am243x-lp_r5fss0-0_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += udma_memcpy_interrupt_am243x-lp_r5fss0-1_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += udma_memcpy_interrupt_am243x-lp_r5fss1-0_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += udma_memcpy_interrupt_am243x-lp_r5fss1-1_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += udma_memcpy_polling_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += udma_memcpy_polling_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += udma_memcpy_polling_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += udma_memcpy_polling_am243x-lp_r5fss0-0_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += hello_world_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += hello_world_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += hello_world_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += hello_world_am243x-lp_r5fss0-0_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += dpl_demo_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += dpl_demo_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += dpl_demo_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += dpl_demo_am243x-lp_r5fss0-0_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += interrupt_profiling_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub
+
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
 # Various Private Example Targets
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += adc_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
@@ -4036,6 +4350,8 @@ BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL += empty_am243x-lp_icssg0-pru0_fw_ti-pru-c
 # Various Private System Example Targets
 
 examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
+
+examples_gcc-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC)
 
 examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
@@ -4098,6 +4414,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  sbl_uart_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sbl_uart_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ sbl_uart_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
 
  sbl_uart_uniflash_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -4447,6 +4769,30 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  sciclient_get_version_am243x-lp_m4fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ sciclient_get_version_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ sciclient_get_version_am243x-evm_r5fss0-1_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss0-1_nortos/gcc-armv7 -f makefile scrub
+
+ sciclient_get_version_am243x-evm_r5fss1-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss1-0_nortos/gcc-armv7 -f makefile scrub
+
+ sciclient_get_version_am243x-evm_r5fss1-1_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-evm/r5fss1-1_nortos/gcc-armv7 -f makefile scrub
+
+ sciclient_get_version_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ sciclient_get_version_am243x-lp_r5fss0-1_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss0-1_nortos/gcc-armv7 -f makefile scrub
+
+ sciclient_get_version_am243x-lp_r5fss1-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss1-0_nortos/gcc-armv7 -f makefile scrub
+
+ sciclient_get_version_am243x-lp_r5fss1-1_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am243x-lp/r5fss1-1_nortos/gcc-armv7 -f makefile scrub
+
  sciclient_ccs_init_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/sciclient/sciclient_ccs_init/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -4549,6 +4895,36 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  udma_memcpy_interrupt_am243x-lp_r5fss1-1_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss1-1_freertos/ti-arm-clang -f makefile scrub
 
+ udma_memcpy_interrupt_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ udma_memcpy_interrupt_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile scrub
+
+ udma_memcpy_interrupt_am243x-evm_r5fss0-1_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss0-1_freertos/gcc-armv7 -f makefile scrub
+
+ udma_memcpy_interrupt_am243x-evm_r5fss1-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss1-0_freertos/gcc-armv7 -f makefile scrub
+
+ udma_memcpy_interrupt_am243x-evm_r5fss1-1_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-evm/r5fss1-1_freertos/gcc-armv7 -f makefile scrub
+
+ udma_memcpy_interrupt_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ udma_memcpy_interrupt_am243x-lp_r5fss0-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile scrub
+
+ udma_memcpy_interrupt_am243x-lp_r5fss0-1_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss0-1_freertos/gcc-armv7 -f makefile scrub
+
+ udma_memcpy_interrupt_am243x-lp_r5fss1-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss1-0_freertos/gcc-armv7 -f makefile scrub
+
+ udma_memcpy_interrupt_am243x-lp_r5fss1-1_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_interrupt/am243x-lp/r5fss1-1_freertos/gcc-armv7 -f makefile scrub
+
  udma_memcpy_polling_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/udma/udma_memcpy_polling/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -4560,6 +4936,18 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  udma_memcpy_polling_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/udma/udma_memcpy_polling/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ udma_memcpy_polling_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_polling/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ udma_memcpy_polling_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_polling/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile scrub
+
+ udma_memcpy_polling_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_polling/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ udma_memcpy_polling_am243x-lp_r5fss0-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/udma/udma_memcpy_polling/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile scrub
 
  udma_sw_trigger_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/udma/udma_sw_trigger/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
@@ -4579,11 +4967,23 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  hello_world_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/hello_world/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
+ hello_world_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/hello_world/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ hello_world_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/hello_world/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile scrub
+
  hello_world_am243x-evm_m4fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/hello_world/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  hello_world_am243x-evm_m4fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/hello_world/am243x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ hello_world_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/hello_world/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ hello_world_am243x-lp_r5fss0-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/hello_world/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile scrub
 
  hello_world_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/hello_world/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -4645,8 +5045,23 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  dpl_demo_am243x-lp_m4fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am243x-lp/m4fss0-0_freertos/ti-arm-clang -f makefile scrub
 
+ dpl_demo_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ dpl_demo_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile scrub
+
+ dpl_demo_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ dpl_demo_am243x-lp_r5fss0-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/kernel/dpl/dpl_demo/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile scrub
+
  interrupt_profiling_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/kernel/freertos/interrupt_profiling/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ interrupt_profiling_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/kernel/freertos/interrupt_profiling/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile scrub
 
  posix_demo_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/kernel/freertos/posix_demo/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
@@ -5105,6 +5520,10 @@ sbl: libs
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+sbl_gcc: libs_gcc
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+
 sbl-clean:
 	$(MAKE) -C examples/drivers/boot/sbl_emmc/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 	$(MAKE) -C examples/drivers/boot/sbl_jtag_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -5147,6 +5566,14 @@ sbl-scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 	$(MAKE) -C examples/drivers/boot/sbl_dfu/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+sbl_gcc-clean:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+sbl_gcc-scrub:
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
 sbl-hs:
 	$(MAKE) -C examples/drivers/boot/sbl_emmc/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_jtag_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
@@ -5161,6 +5588,8 @@ sbl-hs:
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all DEVICE_TYPE=HS
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all DEVICE_TYPE=HS
@@ -5182,6 +5611,8 @@ sbl-hs-clean:
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean DEVICE_TYPE=HS
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean DEVICE_TYPE=HS
@@ -5203,6 +5634,8 @@ sbl-hs-scrub:
 	$(MAKE) -C examples/drivers/boot/sbl_sd/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub DEVICE_TYPE=HS
+	$(MAKE) -C examples/drivers/boot/sbl_uart/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_uart_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS
 	$(MAKE) -C examples/drivers/boot/sbl_dfu_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub DEVICE_TYPE=HS

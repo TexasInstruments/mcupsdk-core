@@ -49,6 +49,7 @@ const filedirs = {
 
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: device, cpu: "r5f", cgt: "gcc-armv7"},
     { device: device, cpu: "m4f", cgt: "ti-arm-clang"},
 ];
 

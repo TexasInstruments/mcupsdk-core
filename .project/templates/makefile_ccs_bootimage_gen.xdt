@@ -120,7 +120,7 @@ ifeq ($(CCS_IDE_MODE),cloud)
 #	No post build steps
 else
 	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_NAME) ...
-	$(OBJCOPY) --strip-sections -O binary $(OUTFILE) $(BOOTIMAGE_BIN_NAME)
+	$(OBJCOPY) --strip-all -O binary $(OUTFILE) $(BOOTIMAGE_BIN_NAME)
 % if (args.project.device == "awr294x") {
 ifeq ($(DEVICE_TYPE),HS)
 ifeq ($(DEBUG_TIFS), yes)

@@ -55,11 +55,20 @@ endif
 all:
 	$(MAKE) -C . -f makefile.$(DEVICE) all PROFILE=$(PROFILE)
 
+all_gcc:
+	$(MAKE) -C . -f makefile.$(DEVICE) all_gcc PROFILE=$(PROFILE)
+
 clean:
 	$(MAKE) -C . -f makefile.$(DEVICE) clean PROFILE=$(PROFILE)
 
+clean_gcc:
+	$(MAKE) -C . -f makefile.$(DEVICE) clean_gcc PROFILE=$(PROFILE)
+
 scrub:
 	$(MAKE) -C . -f makefile.$(DEVICE) scrub PROFILE=$(PROFILE)
+
+scrub_gcc:
+	$(MAKE) -C . -f makefile.$(DEVICE) scrub_gcc PROFILE=$(PROFILE)
 
 libs:
 	$(MAKE) -C . -f makefile.$(DEVICE) libs PROFILE=$(PROFILE) DEVICE_TYPE=$(DEVICE_TYPE)
