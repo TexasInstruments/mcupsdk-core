@@ -28,11 +28,7 @@ By selecting `Layer2 Cache` from the `OptiFlash` drop-down, the above configurat
 
 3. `Size of cache` is the size of L2 cache that is required to be configured.
 
-4. After this, remote regions need to be configured. The remote region should have an address that is L2 SRAM, which in the case of am263px is 0x70000000 and has a size of 3MB. Please check the datasheet for the particular device. In the context of am263px, `0x70000000 <= base address of remote region 0/1/2 <= (0x70000000 + 3MB)`. The total size of the remote region should not be less than the size of the cache; otherwise, this would lead to CPU data/prefetch aborts or undefined aborts. That means `(Length of remote region 0) + (Length of remote region 1) + (Length of remote region 2) <= (Size of Cache)`.
-
-\note It is advised to use `remote region 0` only rather than split the cache bank into 3 regions from the perspective of cache efficiency, or `(Length of remote region 1) = (Length of remote region 2) = 0`.
-
-\note Linker should be modified to make sure that no code or data at compiler time or runtime would overwrite the memory that is reserved for the RL2 remote region.
+4. After this, select the memory region where the L2 cache bank should be located. This should be L2 memory (In case of am263px, L2 memory is OCRAM)
 
 ## How to configure FLC.
 
@@ -50,6 +46,8 @@ Region base address translation or RAT can be configured using the following fie
 \imageStyle{rat_syscfg.png,width:50%}
 \image html rat_syscfg.png
 
-Region Size: Size of RAT region.
-Region Base Address (hex): Size aligned base address
-Region Translated Address (hex): Size aligned translated address
+`Region Size`: Size of RAT region.
+
+`Region Base Address (hex)`: Size aligned base address
+
+`Region Translated Address (hex)`: Size aligned translated address

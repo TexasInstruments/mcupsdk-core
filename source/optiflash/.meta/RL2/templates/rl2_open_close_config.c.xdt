@@ -3,6 +3,8 @@
     var soc = system.getScript(`/optiflash/soc/optiflash_${common.getSocName()}`);
     var driverVer = soc.getDriverVer("rl2");
     var module = system.modules['/optiflash/RL2/RL2'];
+    var rl2_mem_start = module.rl2_mem_start;
+    var rl2_mem_end = module.rl2_mem_end;
     var selfCoreName = common.getSelfSysCfgCoreName();
     var baseaddress = 0;
     switch(selfCoreName)
@@ -28,6 +30,9 @@
  *   RL2
  */
 
+extern int `rl2_mem_start`;
+extern int `rl2_mem_end`;
+
 RL2_Params gRL2Config[] =
 {
 % for(var j = 0; j < module.$instances.length; j++)
@@ -38,12 +43,12 @@ RL2_Params gRL2Config[] =
         .rangeStart     = `instance.rangeStart`,
         .rangeEnd       = `instance.rangeEnd`,
         .cacheSize      = `instance.cacheSize`,
-        .l2Sram0Base    = `instance.l2Sram0Base`,
-        .l2Sram0Len     = `instance.l2Sram0Len`,
-        .l2Sram1Base    = `instance.l2Sram1Base`,
-        .l2Sram1Len     = `instance.l2Sram1Len`,
-        .l2Sram2Base    = `instance.l2Sram2Base`,
-        .l2Sram2Len     = `instance.l2Sram2Len`,
+        .l2Sram0Base    = (unsigned int)&`rl2_mem_start`,
+        .l2Sram0Len     = (unsigned int)&`rl2_mem_end`,
+        .l2Sram1Base    = 0,
+        .l2Sram1Len     = 0,
+        .l2Sram2Base    = 0,
+        .l2Sram2Len     = 0,
         .baseAddress    = `baseaddress`
     },
     %}

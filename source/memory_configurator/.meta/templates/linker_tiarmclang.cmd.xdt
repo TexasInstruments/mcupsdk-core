@@ -95,6 +95,7 @@ SECTIONS
 %    if (group_module !== undefined ) {
 %    let group_module_instances = group_module.$instances
 %    for (let instance of group_module_instances) {
+%    let rl2 = instance.$ownedBy;
 %    let output_sections = instance.output_section;
 %    let type = ""
 %    if (instance.type != "LOAD") {
@@ -104,7 +105,10 @@ SECTIONS
 %    if(instance.group) {
 
     GROUP `type` :   {
-%    for(let i = 0; i < output_sections.length; i++){
+%   if( rl2 !== undefined){
+    `instance.generic_text`
+%}
+%    for(let i = 0; (rl2 === undefined) && i < output_sections.length; i++){
 %       let input_sections = output_sections[i].input_section
 %    let palign = ''
 %    let fill = ''
@@ -161,7 +165,10 @@ SECTIONS
 
 %}
 % else {
-%    for(let i = 0; i < output_sections.length; i++){
+% if( rl2 !== undefined){
+    `instance.generic_text`
+%}
+%    for(let i = 0; (rl2 === undefined) && i < output_sections.length; i++){
 %       let input_sections = output_sections[i].input_section
 %       let palign = ''
 %       let fill = ''

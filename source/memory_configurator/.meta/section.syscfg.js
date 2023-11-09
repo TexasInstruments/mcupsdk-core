@@ -216,6 +216,13 @@ let config = [
         description:'Choose a memory region from the ones added in the Memory regions section.',
         options: () => {return loadMemoryRegions().memory_regions},
     },
+    {
+        name: "generic_text",
+        displayName: "Generic Text",
+        hidden: true,
+        default: "",
+        multiline: true,
+    },
 ]
 
 function validate(inst, report) {
@@ -229,7 +236,7 @@ function validate(inst, report) {
     if(inst.run_memory.length == 0 && !inst.split_across_memories && !inst.select_multiple_regions && inst.load_to_memory=="Memory") {
         report.logError("This field can't be kept empty", inst, "run_memory")
     }
-    if(inst.output_section.length == 0) {
+    if(inst.$ownedBy === undefined && inst.output_section.length == 0) {
         report.logError("Add atleast 1 output section", inst, "output_section")
     }
 }
@@ -258,16 +265,15 @@ function addModuleInstances(inst) {
         });
     }
 
-    modInstances.push({
-        name: "output_section",
-        displayName: "Output Sections",
-        moduleName: "memory_configurator/output_section",
-        useArray: true,
-        minInstanceCount: 0,
-        collapsed: false,
-    });
-
-
-
+    if(inst.$ownedBy === undefined){
+        modInstances.push({
+            name: "output_section",
+            displayName: "Output Sections",
+            moduleName: "memory_configurator/output_section",
+            useArray: true,
+            minInstanceCount: 0,
+            collapsed: false,
+        });
+    }
     return modInstances;
 }

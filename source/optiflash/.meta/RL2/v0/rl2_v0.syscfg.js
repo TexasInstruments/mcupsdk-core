@@ -1,20 +1,59 @@
 let common = system.getScript("/common");
 let soc = system.getScript(`/optiflash/RL2/soc/rl2_${common.getSocName()}`);
 
+const linkerStartSymbol =  "__RL2_" + toCVariableName(common.getSelfSysCfgCoreName()) + "_cachebank_start";
+const linkerEndSymbol = "__RL2_" + toCVariableName(common.getSelfSysCfgCoreName()) + "_cachebank_end";
+
+function toCVariableName(str) {
+    let result = '';
+    for (let i = 0; i < str.length; i++) {
+        let char = str[i];
+        if (/^[a-zA-Z0-9_]$/.test(char)) {
+            result += char;
+        }
+    }
+    return result;
+}
+
+function convertRL2CacheSizeTokenToNumbercacheLen(cacheLen) {
+    let reqLen = 0;
+    switch (cacheLen) {
+        case "RL2_CACHESIZE_8K":
+            reqLen = 8 * 1024;
+            break;
+
+        case "RL2_CACHESIZE_16K":
+            reqLen = 16 * 1024;
+            break;
+
+        case "RL2_CACHESIZE_32K":
+            reqLen = 32 * 1024;
+            break;
+
+        case "RL2_CACHESIZE_64K":
+            reqLen = 64 * 1024;
+            break;
+
+        case "RL2_CACHESIZE_128K":
+            reqLen = 128 * 1024;
+            break;
+
+        case "RL2_CACHESIZE_256K":
+            reqLen = 256 * 1024;
+            break;
+    }
+
+    return reqLen;
+}
+
 /*
     This script export optiflash module.
     All settings that are required to be exported should be inside this struct.
 */
-function validate(inst, report)
-{
+function validate(inst, report) {
+
     let rangeStart =    parseInt(inst['rangeStart']);
     let rangeEnd =      parseInt(inst['rangeEnd']);
-    let l2Sram0Base =   parseInt(inst['l2Sram0Base']);
-    let l2Sram0Len =    parseInt(inst['l2Sram0Len']);
-    let l2Sram1Base =   parseInt(inst['l2Sram1Base']);
-    let l2Sram1Len =    parseInt(inst['l2Sram1Len']);
-    let l2Sram2Base =   parseInt(inst['l2Sram2Base']);
-    let l2Sram2Len =    parseInt(inst['l2Sram2Len']);
     let cacheLen =      inst["cacheSize"];
 
     let resp;
@@ -34,122 +73,100 @@ function validate(inst, report)
     {
         report.logError("Should not be less than or equal to external flash cached range end address.", inst, "rangeEnd");
     }
-
-    resp = soc.rl2.validate_remote_address(l2Sram0Base);
-    if(resp.status === false)
-    {
-        report.logError(resp.msg, inst, "l2Sram0Base");
-    }
-
-    resp = soc.rl2.validate_remote_size(l2Sram0Len);
-    if(resp.status === false)
-    {
-        report.logError(resp.msg, inst, "l2Sram0Len");
-    }
-
-    resp = soc.rl2.validate_remote_address(l2Sram1Base);
-    if(resp.status === false)
-    {
-        report.logError(resp.msg, inst, "l2Sram1Base");
-    }
-
-    resp = soc.rl2.validate_remote_size(l2Sram1Len);
-    if(resp.status === false)
-    {
-        report.logError(resp.msg, inst, "l2Sram1Len");
-    }
-
-    resp = soc.rl2.validate_remote_address(l2Sram2Base);
-    if(resp.status === false)
-    {
-        report.logError(resp.msg, inst, "l2Sram2Base");
-    }
-
-    resp = soc.rl2.validate_remote_size(l2Sram2Len);
-    if(resp.status === false)
-    {
-        report.logError(resp.msg, inst, "l2Sram2Len");
-    }
-
-    // check for intersection of different ranges.
-    var ranges = [];
-    if(l2Sram0Base !== 0 || l2Sram0Len !== 0)
-    {
-        ranges.push({ start: l2Sram0Base, end : l2Sram0Base + l2Sram0Len });
-    }
-    if(l2Sram1Base !== 0 || l2Sram1Len !== 0)
-    {
-        ranges.push({ start: l2Sram1Base, end : l2Sram1Base + l2Sram1Len });
-    }
-    if(l2Sram2Base !== 0 || l2Sram2Len !== 0)
-    {
-        ranges.push({ start: l2Sram2Base, end : l2Sram2Base + l2Sram2Len });
-    }
-
-    function checkIfRangesIntersect(ranges) {
-        // Check if any of the ranges intersect.
-        for (var i = 0; i < ranges.length; i++) {
-            for (var j = 0; j < ranges.length; j++)
-            {
-                if (i !== j && (ranges[i].start <= ranges[j].end && ranges[i].end >= ranges[j].start))
-                {
-                    return true;
-                }
-            }
-        }
-
-        // No ranges intersect.
-        return false;
-    }
-
-    if(checkIfRangesIntersect(ranges) === true)
-    {
-        report.logError("Ranges should not intersect each others.", inst, "l2Sram2Len");
-    }
-
-    // check if the total length amongst different ranges are equal to the size selected.
-    let totalLen = l2Sram0Len + l2Sram1Len + l2Sram2Len;
-    let reqLen = 0;
-    switch(cacheLen)
-    {
-        case "RL2_CACHESIZE_8K":
-            reqLen = 8*1024;
-            break;
-
-        case "RL2_CACHESIZE_16K":
-            reqLen = 16*1024;
-            break;
-
-        case "RL2_CACHESIZE_32K":
-            reqLen = 32*1024;
-            break;
-
-        case "RL2_CACHESIZE_64K":
-            reqLen = 64*1024;
-            break;
-
-        case "RL2_CACHESIZE_128K":
-            reqLen = 128 * 1024;
-            break;
-
-        case "RL2_CACHESIZE_256K":
-            reqLen = 256 * 1024;
-            break;
-    }
-
-    if(totalLen < reqLen)
-    {
-        report.logError("Size of cache should fit in memory allocated.", inst, "cacheSize");
-    }
 }
 
+function loadMemoryRegions() {
+
+    /*  List should include all the MRs defined in this core as well as shared by other cores with this core*/
+    let memory_regions = []
+
+    let coreNames = common.getSysCfgCoreNames();
+    let memory_region_module_name = ""
+    let region_module = system.modules['/memory_configurator/region'];
+    if (region_module !== undefined) {
+        if (region_module.$instances[0].mpu_setting)
+            memory_region_module_name = "/memory_configurator/memory_region_mpu";
+        else
+            memory_region_module_name = "/memory_configurator/memory_region";
+
+        let selfCoreName = common.getSelfSysCfgCoreName();
+        for (let core of coreNames) {
+
+            let core_module = common.getModuleForCore(memory_region_module_name, core);
+            let core_module_instances;
+            if (core_module != undefined) {
+                core_module_instances = core_module.$instances;
+                _.each(core_module_instances, instance => {
+
+                    let obj = {
+                        name: " ",
+                        opti_share: false
+                    }
+                    let displayName = instance.$name.concat(" Type: ", instance.type)
+                    //displayName = displayName.concat("Opti-share ", instance.opti_share)
+                    if (core.includes(selfCoreName)) {
+                        memory_regions.push({ name: instance.$name, displayName: displayName })
+                        obj.name = instance.$name
+                        obj.opti_share = instance.opti_share
+                    }
+                    else if (instance.isShared && instance.shared_cores.includes(selfCoreName)) {
+                        memory_regions.push({ name: instance.$name, displayName: displayName })
+                        obj.name = instance.$name
+                        obj.opti_share = instance.opti_share
+                    }
+                })
+            }
+        }
+    }
+    else {
+        memory_regions.push({ name: "", displayName: "" })
+    }
+    return { memory_regions }
+}
+
+function dummyFunc(inst) {
+    let cacheSize = convertRL2CacheSizeTokenToNumbercacheLen(inst.cacheSize);
+    let linkerStr = ".rl2CacheBank: { . = . + " + cacheSize + ";} palign(4096)";
+
+    return linkerStr;
+}
+
+function addModuleInstances(inst) {
+    let modInstances = new Array();
+    let module_name = "memory_configurator/section"
+
+    modInstances.push({
+        name: "memory_section",
+        displayName: "Memory Section",
+        moduleName: module_name,
+        useArray: false,
+        collapsed: true,
+        requiredArgs: {
+            load_memory: inst.memoryRegion,
+            run_memory: inst.memoryRegion,
+            $name: "RL2CacheBank",
+            type: "NOLOAD",
+            group: true,
+            group_start: linkerStartSymbol,
+            group_end: linkerEndSymbol,
+            load_to_memory: "Memory",
+            select_multiple_regions: false,
+            split_across_memories: false,
+        },
+        args: {
+            generic_text: dummyFunc(inst)
+        }
+    });
+
+    return modInstances;
+}
 
 exports =
 {
     displayName: "Layer2 Cache (RL2)",
     maxInstances: soc.rl2.max_instance(),
     defaultInstanceName: "RL2",
-    config:[
+    config: [
         {
             name: "enable",
             displayName: "Enable",
@@ -158,14 +175,14 @@ exports =
         {
             name: "rangeStart",
             displayName: "Flash Cached Region Start Address",
-            default: 0x88000000,
+            default: 0x60000000,
             displayFormat: "hex",
             description: "Starting address of external flash which is required to be cached."
         },
         {
             name: "rangeEnd",
             displayName: "Flash Cached Region End Address",
-            default: 0x88100000,
+            default: 0x68000000,
             displayFormat: "hex",
             description: "End address of external flash which is required to be cached."
         },
@@ -174,52 +191,22 @@ exports =
             displayName: "Size Of Cache",
             default: "RL2_CACHESIZE_8K",
             options: [
-                {name: "RL2_CACHESIZE_8K", displayName: "8K"},
-                {name: "RL2_CACHESIZE_16K", displayName: "16K"},
-                {name: "RL2_CACHESIZE_32K", displayName: "32K"},
-                {name: "RL2_CACHESIZE_64K", displayName: "64K"},
-                {name: "RL2_CACHESIZE_128K", displayName: "128K"},
-                {name: "RL2_CACHESIZE_256K", displayName: "256K"},
+                { name: "RL2_CACHESIZE_8K", displayName: "8K" },
+                { name: "RL2_CACHESIZE_16K", displayName: "16K" },
+                { name: "RL2_CACHESIZE_32K", displayName: "32K" },
+                { name: "RL2_CACHESIZE_64K", displayName: "64K" },
+                { name: "RL2_CACHESIZE_128K", displayName: "128K" },
+                { name: "RL2_CACHESIZE_256K", displayName: "256K" },
             ],
             description: "Size of Cache."
         },
         {
-            name: "l2Sram0Base",
-            displayName: "Base Address Of Remote Region 0",
-            default: 0,
-            displayFormat: "hex",
+            name: "memoryRegion",
+            displayName: "Memory Region",
+            default: "",
+            description: 'Chose in which Memory cache bank for this L2 cache will locate. Mostly L2 memory',
+            options: () => { return loadMemoryRegions().memory_regions },
         },
-        {
-            name: "l2Sram0Len",
-            displayName: "Length Of Remote Region 0",
-            default: 8*1024,
-            displayFormat: "dec",
-        },
-        {
-            name: "l2Sram1Base",
-            displayName: "Base Address Of Remote Region 1",
-            default: 0,
-            displayFormat: "hex",
-        },
-        {
-            name: "l2Sram1Len",
-            displayName: "Length Of Remote Region 1",
-            default: 0,
-            displayFormat: "dec",
-        },
-        {
-            name: "l2Sram2Base",
-            displayName: "Base Address Of Remote Region 2",
-            default: 0,
-            displayFormat: "hex",
-        },
-        {
-            name: "l2Sram2Len",
-            displayName: "Length Of Remote Region 2",
-            default: 0,
-            displayFormat: "dec",
-        },
-
     ],
     validate: validate,
     templates:
@@ -244,7 +231,10 @@ exports =
         {
             driver_open_close_config: "/optiflash/RL2/templates/rl2_open_close.h.xdt",
         }
-    }
-
+    },
+    moduleInstances: addModuleInstances,
+    toCVariableName: toCVariableName,
+    rl2_mem_start:linkerStartSymbol,
+    rl2_mem_end: linkerEndSymbol
 };
 
