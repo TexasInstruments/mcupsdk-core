@@ -15,7 +15,7 @@
 To make smart placement functional (\ref SMART_PLACEMENT), linker script needs to be changed to account new section that compiler generates.
 
 \cond SOC_AM263PX
-If linker script is generated using Memory Configurator (\ref MEMORY_CONFIGURATOR) then memory confiurator needs to changed.
+If linker script is generated using Memory Configurator (\ref MEMORY_CONFIGURATOR) then memory configurator needs to changed.
 \endcond
 This page will show what changes needs to be done.
 
@@ -51,12 +51,12 @@ It should be noted that although annotating using assembler directive is conveni
 \cond SOC_AM263PX
 ## Memory Configurator Changes
 
-Memory configruator generated the linker script only, therefore, goal is such that the generated linker script would also have same changes.
+Memory configurator generated the linker script only, therefore, goal is such that the generated linker script would also have same changes.
 
 Open `Memory Configurator`. And under that, open "`Section`". Something like following will be shown:
 \image html sw_instr_sp_mc_sec_open.png
 
-Click on Add button at top of the image. This would allows to add a new section. A Total of 3 new sections needs to be added. These are shows as following:
+Click on Add button at top of the image. This would allow to add a new section. A Total of 3 new sections needs to be added. These are shows as following:
 
 \image html ti_local_sp_section.png
 

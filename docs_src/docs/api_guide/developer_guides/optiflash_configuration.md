@@ -1,10 +1,10 @@
-# Configuring OpTI-Flash various IP {#OPTIFLASH_CONFIGURE}
+# Configuring OptiFlash various IP {#OPTIFLASH_CONFIGURE}
 
 [TOC]
 
 ## Introduction
 
-This document gives a basic introduction to configuring different IPs, which is part of OpTI-Flash.
+This document gives a basic introduction to configuring different IPs, which is part of OptiFlash.
 
 ## How to configure RL2?
 
@@ -20,7 +20,7 @@ These configurations can be done from syscfg as follows:
 \imageStyle{syscfg.png,width:50%}
 \image html syscfg.png
 
-By selecting `Layer2 Cache` from the `OpTI-Flash` drop-down, the above configurations come:
+By selecting `Layer2 Cache` from the `OptiFlash` drop-down, the above configurations come:
 
 1. Make sure the above module is enabled. This helps in enabling and disabling Layer 2 caches without losing configurations.
 
@@ -36,7 +36,7 @@ By selecting `Layer2 Cache` from the `OpTI-Flash` drop-down, the above configura
 
 ## How to configure FLC.
 
-FLC is a simplified DMA. To configure FLC, in syscfg, it can be done by clicking to the `Fast Local Copy` nav menu item under OpTI-Flash drop down menu at the bottom.
+FLC is a simplified DMA. To configure FLC, in syscfg, it can be done by clicking to the `Fast Local Copy` nav menu item under OptiFlash drop down menu at the bottom.
 
 \imageStyle{flc_syscfg_initial.png,width:50%}
 \image html flc_syscfg_initial.png

@@ -64,6 +64,8 @@ What this allows is to have a L1 and L2 cache architecture in microcontroller. L
 
 #### FLC For Overlays
 
+\note This will be part of future release.
+
 FLC or Fast Local Copy is essentially a very simplified DMA but with the ability to allow concurrent execution.
 
 \imageStyle{flc_lookup_function.png,width:50%}
@@ -94,6 +96,8 @@ The Logic behind these steps is, suppose, all the functions in a program are in 
 
 ### Safety & Security
 
+\note This will be part of future release.
+
 \imageStyle{am263px_saf_sec_perf.png,width:50%}
 \image html am263px_saf_sec_perf.png "AM2x devices with OptiFlash technology. Blocks marked in RED are specifically put to provide safety and security."
 
@@ -108,6 +112,8 @@ The way this hardware works is that when CPU requests to fetch an instruction, t
 This allows XIP with full safety and security using hardware accelerators. Using hardware accelerators reduces the impact on performance.
 
 ### Improving startup time
+
+\note This will be part of future release.
 
 There are many situations, where startup time of any application should be less to achieve system level performance goal. OptiFlash technology brings in some hardware and software features that helps to reduce boot/startup time of an application.
 
@@ -143,7 +149,9 @@ In context to the above diagram, the way FLC would solve this problem is that fo
 \imageStyle{xip_flc_boot_process.png,width:50%}
 \image html xip_flc_boot_process.png "Boot flow with OptiFlash technology"
 
-### OptiShare Removing Redundant Code
+### OptiShare: Removing Redundant Code
+
+\note This will be part of future release.
 
 When it comes to high performance MCU which has many cores, using traditional method of compilation is not efficient. Normally, for a microcontroller, compilation goes like the follows:
 1. Compilation/assembling of source code written in different programming languages.
@@ -181,6 +189,8 @@ At run time, this hardware needs to be programmed by the application software be
 \image html optishare_online.png "At runtime, RAT is programmed, and this maps the CPU specific data to shared code."
 
 ### How to perform Firmware-Upgrade-Over-Air
+
+\note This will be part of future release.
 
 In typical microcontroller with embedded flash, to be able to perform FOTA, embedded flash size should be more than the double the size of application, because, at a time 2 copy of same application would be stored, in flash. One would be an active application and other would be different version of the application. However, this puts high constraint on embedded flash requirement and this requirement translates to increased BOM cost. Effectively, for an active application, available internal memory is half of total internal memory.
 
