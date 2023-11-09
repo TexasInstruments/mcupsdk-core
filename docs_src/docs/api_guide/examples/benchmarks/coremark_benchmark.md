@@ -2,6 +2,7 @@
 
 [TOC]
 
+\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX
 # Supported Combinations {#EXAMPLES_COREMARK_COMBOS}
 
  Parameter      | Value
@@ -10,7 +11,18 @@
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/benchmarks/coremark_benchmark
+\endcond
 
+\cond SOC_AM273X || SOC_AM64X
+# Supported Combinations {#EXAMPLES_COREMARK_COMBOS}
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER,
+ Example folder | examples/benchmarks/coremark_benchmark
+\endcond
 # Introduction
 
 - Coremark is an industry standard benchmark used for testing processor's core features
