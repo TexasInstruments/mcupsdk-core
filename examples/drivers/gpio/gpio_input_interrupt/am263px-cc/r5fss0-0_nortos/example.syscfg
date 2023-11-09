@@ -43,6 +43,7 @@ const gpio_int_xbar1  = gpio_int_xbar.addInstance();
  */
 gpio1.$name                = "GPIO_PUSH_BUTTON";
 gpio1.trigType             = "RISE_EDGE";
+gpio1.enableIntr           = true;
 gpio1.GPIO.gpioPin.$assign = "LIN2_RXD";
 
 debug_log.enableUartLog            = true;

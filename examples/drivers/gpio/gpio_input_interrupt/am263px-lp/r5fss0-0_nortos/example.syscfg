@@ -41,8 +41,12 @@ const gpio_int_xbar1  = gpio_int_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-gpio1.$name    = "GPIO_PUSH_BUTTON";
-gpio1.trigType = "RISE_EDGE";
+gpio1.$name                = "GPIO_PUSH_BUTTON";
+gpio1.trigType             = "RISE_EDGE";
+gpio1.enableIntr           = true;
+gpio1.GPIO.$assign         = "GPIO";
+gpio1.GPIO.gpioPin.$assign = "SDFM0_D0";
+scripting.suppress("Solution has changed,The suggested solution was invalid\\.  As such, this specific entry differs from what was suggested", gpio1.GPIO, "$assign");
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
@@ -262,11 +266,3 @@ section12.output_section[0].alignment = 0;
 gpio_int_xbar1.$name      = "CONFIG_GPIO_INT_XBAR0";
 gpio_int_xbar1.instance   = "GPIO_INT_XBAR_VIM_MODULE0_0";
 gpio_int_xbar1.xbarOutput = "GPIO_INT_XBAR_GPIO_0_BANK_INTR_7";
-
-/**
- * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
- * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
- * re-solve from scratch.
- */
-gpio1.GPIO.$suggestSolution         = "GPIO";
-gpio1.GPIO.gpioPin.$suggestSolution = "OSPI0_CSn0";
