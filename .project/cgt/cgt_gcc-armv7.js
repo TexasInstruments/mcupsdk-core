@@ -43,6 +43,7 @@ const cgt_common = {
             "-Wno-enum-compare",
             "-Wno-uninitialized",
             "-Wno-int-to-pointer-cast",
+            "-fgnu89-inline",
             "-Wno-pointer-to-int-cast",
             "-Wno-unused-variable",
             "-Wno-unused-but-set-variable",
