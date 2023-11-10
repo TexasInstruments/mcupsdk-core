@@ -115,7 +115,7 @@ SemaphoreP_Object gRxDoneSem;
 uint64_t gOnewayMsgLatency[CSL_CORE_ID_MAX] = {0};
 
 /* message handler to receive ack's in any to any test */
-void test_ipc_notify_ack_msg_handler(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
+void test_ipc_notify_ack_msg_handler(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args)
 {
     /* increment msgValue and send it back until gMsgEchoCount iterations are done */
     if(msgValue != (gMsgEchoCount-1))
@@ -134,7 +134,7 @@ void test_ipc_notify_ack_msg_handler(uint32_t remoteCoreId, uint16_t localClient
 }
 
 /* message handler to receive messages in any to any test */
-void test_ipc_notify_rx_msg_handler(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
+void test_ipc_notify_rx_msg_handler(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args)
 {
     /* on remote core, we have registered handler on the same client ID and current core client ID */
     IpcNotify_sendMsg(remoteCoreId, gAckClientId, msgValue, 1);
@@ -228,7 +228,7 @@ void test_notifyAnyToAny(void *args)
 }
 
 /* server handler on remote core, it simply echos the message to gClientId */
-void test_ipc_notify_server_msg_handler(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
+void test_ipc_notify_server_msg_handler(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args)
 {
     /* send ACK to sender */
     IpcNotify_sendMsg(remoteCoreId, gClientId, msgValue, 1);
@@ -237,7 +237,7 @@ void test_ipc_notify_server_msg_handler(uint32_t remoteCoreId, uint16_t localCli
 /* client handler on main core core, it sneds a message back to server untll gMsgEchoCount
  * messages have been exchanged and then posts a semaphore to indicate done to main core
  */
-void test_ipc_notify_client_msg_handler(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
+void test_ipc_notify_client_msg_handler(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args)
 {
     /* increment msgValue and send it back until gMsgEchoCount iterations are done */
     if(msgValue != (gMsgEchoCount-1))
@@ -303,7 +303,7 @@ void test_notifyOneToOne(void *args)
 /* client handler on main core core, when gMsgEchoCount
  * messages have been exchanged it posts a semaphore to indicate done to main core
  */
-void test_ipc_notify_client_back_to_back_msg_handler(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
+void test_ipc_notify_client_back_to_back_msg_handler(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args)
 {
     if(msgValue != (gMsgEchoCount-1))
     {

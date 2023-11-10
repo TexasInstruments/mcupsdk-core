@@ -50,8 +50,8 @@
  #include <drivers/ipc_rpmsg/ipc_rpmsg_priv.h>
 
 void RPMessage_forceRecvMsgHandlers(void);
-void RPMessage_notifyCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args);
-void RPMessage_controlEndPtHandler(RPMessage_Object *obj, void *arg, void *data, uint16_t dataLen, uint16_t remoteCoreId, uint16_t remoteEndPt);
+void RPMessage_notifyCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args);
+void RPMessage_controlEndPtHandler(RPMessage_Object *obj, void *arg, void *data, uint16_t dataLen, int32_t crcStatus, uint16_t remoteCoreId, uint16_t remoteEndPt);
 void RPMessage_recvHandler(uint32_t remoteCoreId) ;
 
 typedef struct{
@@ -189,7 +189,7 @@ void negTest_RPMessage_controlEndPtHandler_dataLen(void *args)
     if (testStatus == SystemP_SUCCESS)
     {
         RPMessage_controlEndPtHandler(&obj, NULL,
-        &data, 0,
+        &data, 0, SystemP_SUCCESS,
         remoteCoreId, 10);
     }
     else
@@ -213,7 +213,7 @@ void negTest_RPMessage_controlEndPtHandler(void *args)
     if (testStatus == SystemP_SUCCESS)
     {
         RPMessage_controlEndPtHandler(&obj, NULL,
-        &data, 120,
+        &data, 120, SystemP_SUCCESS,
         remoteCoreId, 10);
     }
     else
@@ -236,7 +236,7 @@ void negTest_RPMessage_controlEndPtHandler_dataLen_Announce(void * args )
     dataLen = sizeof ( RPMessage_AnnounceMsg ) - 1U ;
     if(testStatus == SystemP_SUCCESS)
     {
-        RPMessage_controlEndPtHandler ( & obj , NULL , &data, dataLen , remoteCoreId , 10);
+        RPMessage_controlEndPtHandler ( & obj , NULL , &data, dataLen , SystemP_SUCCESS, remoteCoreId , 10);
     }
     else
     {
@@ -282,7 +282,7 @@ void negTest_RPMessage_notifyCallback(void *args)
 
     if (testStatus == SystemP_SUCCESS)
     {
-        RPMessage_notifyCallback(remoteCoreId, IPC_NOTIFY_CLIENT_ID_RPMSG, RPMESSAGE_MSG_VRING_NEW_FULL, NULL);
+        RPMessage_notifyCallback(remoteCoreId, IPC_NOTIFY_CLIENT_ID_RPMSG, RPMESSAGE_MSG_VRING_NEW_FULL, SystemP_SUCCESS, NULL);
     }
     else
     {
@@ -303,7 +303,7 @@ void negTest_RPMessage_notifyCallback_mcdcOne(void *args)
 
     if (testStatus == SystemP_SUCCESS)
     {
-        RPMessage_notifyCallback(remoteCoreId, 10, 4, NULL);
+        RPMessage_notifyCallback(remoteCoreId, 10, 4, SystemP_SUCCESS, NULL);
     }
     else
     {
@@ -326,7 +326,7 @@ void negTest_RPMessage_notifyCallback_mcdcTwo(void *args)
 
     if (testStatus == SystemP_SUCCESS)
     {
-        RPMessage_notifyCallback(remoteCoreId, 11, 4, NULL);
+        RPMessage_notifyCallback(remoteCoreId, 11, 4, SystemP_SUCCESS, NULL);
     }
     else
     {

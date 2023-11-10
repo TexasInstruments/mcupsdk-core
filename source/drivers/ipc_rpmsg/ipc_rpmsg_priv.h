@@ -278,6 +278,8 @@ typedef struct
     void  *controlEndPtCallbackArgs; /* user callback args for control message */
     const RPMessage_ResourceTable *linuxResourceTable; /* resource table used with linux */
     uint16_t linuxCoreId; /* Core ID of core running linux */
+    uint8_t  isCrcEnabled; /* CRC Enable/Disable flag */
+    RPMessage_CrcHookFxn crcHookFxn; /* Hook Function provided by application for CRC calculation. */
 } IpcRpmsg_Ctrl;
 
 /* global varaible that holds the state of this module, this is the only global within this module */
@@ -323,11 +325,11 @@ uint32_t RPMessage_freeEndPtMsg(uint16_t remoteCoreId, RPMessage_LocalMsg *pMsg)
 void RPMessage_putEndPtMsg(RPMessage_Struct *obj, RPMessage_LocalMsg *pMsg);
 int32_t RPMessage_getEndPtMsg(RPMessage_Struct *obj, RPMessage_LocalMsg **pMsg, uint32_t timeout);
 void RPMessage_recvHandler(uint32_t remoteCoreId);
-void RPMessage_notifyCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args);
+void RPMessage_notifyCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args);
 int32_t  RPMessage_coreInit(uint16_t remoteCoreId, const RPMessage_Params *params);
 void RPMessage_coreDeInit(uint16_t remoteCoreId);
 void RPMessage_forceRecvMsgHandlers(void);
-void RPMessage_controlEndPtHandler(RPMessage_Object *obj, void *arg,void *data, uint16_t dataLen,uint16_t remoteCoreId, uint16_t remoteEndPt);
+void RPMessage_controlEndPtHandler(RPMessage_Object *obj, void *arg,void *data, uint16_t dataLen, int32_t crcStatus, uint16_t remoteCoreId, uint16_t remoteEndPt);
 int32_t RPMessage_controlEndPtInit(void);
 void RPMessage_controlEndPtDeInit(void);
 

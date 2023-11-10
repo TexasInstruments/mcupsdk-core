@@ -76,6 +76,26 @@ extern "C" {
 #define IPC_NOTIFY_MSG_VALUE_MAX    (0x10000000U)
 
 /**
+ * \brief Maximum value of message that can be sent and received when CRC is enabled.
+ */
+#define IPC_NOTIFY_CRC_MSG_VALUE_MAX    (0x100000U)
+
+/**
+ * \brief Maximum value of CRC that can be sent and received.
+ */
+#define IPC_NOTIFY_CRC_MAX    (0x100U)
+
+/**
+ * \brief CRC size in bytes for IPC Notify.
+ */
+#define IPC_NOTIFY_CRC_SIZE    (1U)
+
+/**
+ * \brief Data size in bytes for IPC Notify.
+ */
+#define IPC_NOTIFY_CRC_DATASIZE    (4U)
+
+/**
  * \brief User callback that is invoked when a message is received from a reote core for a given client ID
  *
  * Before invoking the API, the IPC module would have 'popped` the message from the HW or SW FIFO already.
@@ -88,10 +108,10 @@ extern "C" {
  * \param remoteCoreId  [in] Remote core that has sent the message
  * \param localClientId [in] Local client ID to which the message is sent
  * \param msgValue      [in] Message value that is sent
+ * \param crcStatus     [in] CRC Check status. SystemP_SUCCESS on success, else SystemP_FAILURE.
  * \param args          [in] Argument pointer passed by user when \ref IpcNotify_registerClient is called
  */
-typedef void (*IpcNotify_FxnCallback)(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args);
-
+typedef void (*IpcNotify_FxnCallback)(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args);
 
 /**
  * \brief This is a driver library internal API and is used in certain SOCs by the separate mailbox driver
@@ -101,6 +121,18 @@ typedef void (*IpcNotify_FxnCallback)(uint32_t remoteCoreId, uint16_t localClien
  * \param remoteCoreId [in] remote core ID that generated the interrupt
  */
 typedef void (*IpcNotify_NonNotifyCallback)(uint32_t remoteCoreId);
+
+/**
+ * \brief This is the API defined in application for CRC Calculation.
+ *
+ * \note IPC Notify uses 8 Bit CRC and driver invokes this API with crcSize = 1 and passes an 8 bit variable as crc pointer.
+ * 
+ * \param data  [in] Pointer to data.
+ * \param dataLen [in] Length of message in bytes.
+ * \param crcSize [in] Size of CRC to be calculated in bytes.
+ * \param crc [out] Pointer to the calculated CRC value.
+ */
+typedef int32_t (*IpcNotify_CrcHookFxn)(uint8_t *data, uint16_t dataLen, uint8_t crcSize, void *crc);
 
 /**
  * \brief Parameters used by \ref IpcNotify_init
@@ -123,10 +155,10 @@ typedef struct IpcNotify_Params_ {
                           *
                           * See \ref CSL_CoreID for valid values for this field.
                           */
-
     uint32_t linuxCoreId; /**< When linux IPC is enabled, this is the core ID of linux */
     uint8_t  intrPriority; /**< Interrupt priority */
-
+    uint8_t  isCrcEnabled; /* CRC Enable/Disable flag */
+    IpcNotify_CrcHookFxn crcHookFxn; /* Hook Function to be provided by application for CRC calculation. */
     uint8_t  isMailboxIpcEnabled; /**< This is used to check if Mailbox IPC is enabled*/
 } IpcNotify_Params;
 

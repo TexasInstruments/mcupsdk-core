@@ -76,13 +76,13 @@ uint32_t gRemoteCoreId[] = {
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void remote_core_handler(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
+void remote_core_handler(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args)
 {
     /*Read CSL_UART0_U_BASE register */
     CSL_REG32_RD((uint32_t *) CSL_UART0_U_BASE);
 }
 
-void host_core_handler(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
+void host_core_handler(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args)
 {
     /* empty */
 }

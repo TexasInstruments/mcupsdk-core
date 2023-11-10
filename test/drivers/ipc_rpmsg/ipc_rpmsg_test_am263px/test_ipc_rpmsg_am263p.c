@@ -41,7 +41,7 @@
 #include "ti_drivers_open_close.h"
 #include "test_ipc_rpmsg_am263p.h"
 
-extern uint8_t gRPMessageVringMem[12][1312];
+extern uint8_t gIpcSharedMem[15744];
 
 RPMessage_Object gRecvMsgObject;
 
@@ -158,7 +158,7 @@ void test_rpmsgControlEndPtCallback(void *arg,
 }
 
 /* Ack message handler when messages are sent back to back, here after required messages are received semaphore is posted */
-void test_rpmsgAckHandler(RPMessage_Object *obj, void *arg, void *data, uint16_t dataLen, uint16_t remoteCoreId, uint16_t remoteEndPt)
+void test_rpmsgAckHandler(RPMessage_Object *obj, void *arg, void *data, uint16_t dataLen, int32_t crcStatus, uint16_t remoteCoreId, uint16_t remoteEndPt)
 {
     Msg_BackToBack *pMsg = (Msg_BackToBack*)data;
 
@@ -172,7 +172,7 @@ void test_rpmsgAckHandler(RPMessage_Object *obj, void *arg, void *data, uint16_t
 
 
 /* server task which simply echos the receive message back to the sender */
-void echocallback(RPMessage_Object *obj, void *arg, void *data, uint16_t dataLen, uint16_t remoteCoreId, uint16_t remoteEndPt)
+void echocallback(RPMessage_Object *obj, void *arg, void *data, uint16_t dataLen, int32_t crcStatus, uint16_t remoteCoreId, uint16_t remoteEndPt)
 {
     int32_t status;
 
@@ -685,13 +685,13 @@ void test_ipc_rpmsg_sendmsgto_core0_1_timeout(void *args)
             r5fss1_1 => {"r5fss0_0":9,"r5fss0_1":10,"r5fss1_0":11,"r5fss1_1":-1}
          */
         /* TX VRINGs */
-        rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS0_1] = (uintptr_t)gRPMessageVringMem[0];
-        rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS1_0] = (uintptr_t)gRPMessageVringMem[1];
-        rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS1_1] = (uintptr_t)gRPMessageVringMem[2];
+        rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS0_1] = (uintptr_t)(&gIpcSharedMem[0]);
+        rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS1_0] = (uintptr_t)(&gIpcSharedMem[2624]);
+        rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS1_1] = (uintptr_t)(&gIpcSharedMem[5248]);
         /* RX VRINGs */
-        rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS0_1] = (uintptr_t)gRPMessageVringMem[3];
-        rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS1_0] = (uintptr_t)gRPMessageVringMem[6];
-        rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS1_1] = (uintptr_t)gRPMessageVringMem[9];
+        rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS0_1] = (uintptr_t)(&gIpcSharedMem[1312]);
+        rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS1_0] = (uintptr_t)(&gIpcSharedMem[3936]);
+        rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS1_1] = (uintptr_t)(&gIpcSharedMem[6560]);
         /* Other VRING properties */
         rpmsgParams.vringSize = 1312U;
         rpmsgParams.vringNumBuf = 8U;
@@ -748,13 +748,13 @@ void test_ipc_rpmsg_sendmsgto_core0_0_timeout(void *args)
             r5fss1_1 => {"r5fss0_0":9,"r5fss0_1":10,"r5fss1_0":11,"r5fss1_1":-1}
          */
         /* TX VRINGs */
-        rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS0_0] = (uintptr_t)gRPMessageVringMem[3];
-        rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS1_0] = (uintptr_t)gRPMessageVringMem[4];
-        rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS1_1] = (uintptr_t)gRPMessageVringMem[5];
+        rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS0_0] = (uintptr_t)(&gIpcSharedMem[1312]);
+        rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS1_0] = (uintptr_t)(&gIpcSharedMem[7872]);
+        rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_R5FSS1_1] = (uintptr_t)(&gIpcSharedMem[10496]);
         /* RX VRINGs */
-        rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS0_0] = (uintptr_t)gRPMessageVringMem[0];
-        rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS1_0] = (uintptr_t)gRPMessageVringMem[7];
-        rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS1_1] = (uintptr_t)gRPMessageVringMem[10];
+        rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS0_0] = (uintptr_t)(&gIpcSharedMem[0]);
+        rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS1_0] = (uintptr_t)(&gIpcSharedMem[9184]);
+        rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_R5FSS1_1] = (uintptr_t)(&gIpcSharedMem[11808]);
         /* Other VRING properties */
         rpmsgParams.vringSize = 1312U;
         rpmsgParams.vringNumBuf = 8U;

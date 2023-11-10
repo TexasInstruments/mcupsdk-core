@@ -33,19 +33,31 @@ let config = [
 function getConfigurables() {
 
     let configurables = [];
+    let cpuConfig1, cpuConfig2;
 
     for( let cpuConfig of config)
     {
-        if(cpuConfig.name == getSelfIpcCoreName())
-        {
-            /* mark self CPU with the text 'self' and make it read only */
-            cpuConfig = _.cloneDeep(cpuConfig);
+        cpuConfig1 = _.cloneDeep(cpuConfig);
+        cpuConfig2 = _.cloneDeep(cpuConfig);
 
-            cpuConfig.displayName += " (self)";
-            cpuConfig.readOnly = true;
-            cpuConfig.description = "CPU on which this application is running";
+        /* mark self CPU with the text 'self' and make it read only */
+        if(cpuConfig1.name == getSelfIpcCoreName())
+        {
+            cpuConfig1.displayName += " (self)";
+            cpuConfig1.readOnly = true;
+            cpuConfig1.description = "CPU on which this application is running";
         }
-        configurables.push(cpuConfig);
+        configurables.push(cpuConfig1);
+        
+        if(cpuConfig2.name != getSelfIpcCoreName())
+        {
+            cpuConfig2.name += "_safeipc";
+            cpuConfig2.displayName += " SafeIPC";
+            cpuConfig2.description = "Enable Safe IPC with remote core.";
+            cpuConfig2.default = false;
+            cpuConfig2.hidden = true;
+            configurables.push(cpuConfig2);
+        }
     }
     configurables.push (
         {
@@ -95,11 +107,11 @@ function getSysCfgCoreName(ipcCoreName)
         case "m4fss0_0":
             return "m4fss0-0";
         case "a53ss0_0":
-            return "a53-0";
+            return "a53ss0-0";
     }
 }
 
-function getMaxVringSize()
+function getIpcSharedMemAvailable()
 {
     /* The limit is determined by space set aside in OCRAM, but keep a reasonable default
      */
@@ -111,10 +123,22 @@ function getImplementationVersion()
     return "v0";
 }
 
+function getFirewallGranularity()
+{
+    return 4096;
+}
+
+function getSharedMemAddress()
+{
+    return 0x701D4000;
+}
+
 exports = {
     getConfigurables,
     getSelfIpcCoreName,
     getSysCfgCoreName,
-    getMaxVringSize,
+    getIpcSharedMemAvailable,
     getImplementationVersion,
+    getFirewallGranularity,
+    getSharedMemAddress,
 };

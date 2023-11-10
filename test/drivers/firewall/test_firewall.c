@@ -99,12 +99,12 @@ void HwiP_data_abort_handler_c(void)
     gDataAbortRecived++;
 }
 
-void test_firewall_msg_handler_main_core(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
+void test_firewall_msg_handler_main_core(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args)
 {
     SemaphoreP_post(&gMainDoneSem);
 }
 
-void test_firewall_msg_handler_remote_core(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
+void test_firewall_msg_handler_remote_core(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args)
 {
     SemaphoreP_post(&gRemoteDoneSem);
 }

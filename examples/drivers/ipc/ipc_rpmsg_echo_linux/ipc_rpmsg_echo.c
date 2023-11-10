@@ -355,7 +355,7 @@ void ipc_rpmsg_create_recv_tasks(void)
     DebugP_assert(status == SystemP_SUCCESS);
 }
 
-void ipc_rp_mbox_callback(uint32_t remoteCoreId, uint16_t clientId, uint32_t msgValue, void *args)
+void ipc_rp_mbox_callback(uint32_t remoteCoreId, uint16_t clientId, uint32_t msgValue, int32_t crcStatus, void *args)
 {
     if (clientId == IPC_NOTIFY_CLIENT_ID_RP_MBOX)
     {

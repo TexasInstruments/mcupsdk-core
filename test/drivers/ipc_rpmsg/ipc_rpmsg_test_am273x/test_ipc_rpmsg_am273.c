@@ -41,7 +41,7 @@
 #include "ti_drivers_open_close.h"
 #include "test_ipc_rpmsg_am273.h"
 
-extern uint8_t gRPMessageVringMem[12][1312];
+extern uint8_t gIpcSharedMem[15744];
 
 RPMessage_Object gRecvMsgObject;
 
@@ -157,7 +157,7 @@ void test_rpmsgControlEndPtCallback(void *arg,
 }
 
 /* Ack message handler when messages are sent back to back, here after required messages are received semaphore is posted */
-void test_rpmsgAckHandler(RPMessage_Object *obj, void *arg, void *data, uint16_t dataLen, uint16_t remoteCoreId, uint16_t remoteEndPt)
+void test_rpmsgAckHandler(RPMessage_Object *obj, void *arg, void *data, uint16_t dataLen, int32_t crcStatus, uint16_t remoteCoreId, uint16_t remoteEndPt)
 {
     Msg_BackToBack *pMsg = (Msg_BackToBack*)data;
 
@@ -171,7 +171,7 @@ void test_rpmsgAckHandler(RPMessage_Object *obj, void *arg, void *data, uint16_t
 
 
 /* server task which simply echos the receive message back to the sender */
-void echocallback(RPMessage_Object *obj, void *arg, void *data, uint16_t dataLen, uint16_t remoteCoreId, uint16_t remoteEndPt)
+void echocallback(RPMessage_Object *obj, void *arg, void *data, uint16_t dataLen, int32_t crcStatus, uint16_t remoteCoreId, uint16_t remoteEndPt)
 {
     int32_t status;
 

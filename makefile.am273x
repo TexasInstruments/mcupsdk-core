@@ -244,6 +244,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_notify_echo/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_rpmsg_echo/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_safeipc_echo/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_external_loopback_interrupt/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/empty/am273x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/empty/am273x-evm/system_nortos [all clean syscfg-gui syscfg]
@@ -684,6 +685,7 @@ BUILD_COMBO_EXAMPLE_ALL += ecap_epwm_loopback_am273x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_notify_echo_am273x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_rpmsg_echo_am273x-evm_system_freertos_nortos
+BUILD_COMBO_EXAMPLE_ALL += ipc_safeipc_echo_am273x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += empty_am273x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += empty_am273x-evm_system_nortos
@@ -1189,6 +1191,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  ipc_rpmsg_echo_am273x-evm_system_freertos_nortos:
 	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/am273x-evm/system_freertos_nortos -f makefile all
 
+ ipc_safeipc_echo_am273x-evm_system_freertos_nortos:
+	$(MAKE) -C examples/drivers/ipc/ipc_safeipc_echo/am273x-evm/system_freertos_nortos -f makefile all
+
  mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos:
 	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt/am273x-evm/system_freertos_nortos -f makefile all
 
@@ -1364,6 +1369,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += ecap_epwm_loopback_am273x-evm_system_nortos_cle
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_notify_echo_am273x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_rpmsg_echo_am273x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_safeipc_echo_am273x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am273x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am273x-evm_system_nortos_clean
@@ -1869,6 +1875,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  ipc_rpmsg_echo_am273x-evm_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/am273x-evm/system_freertos_nortos -f makefile clean
 
+ ipc_safeipc_echo_am273x-evm_system_freertos_nortos_clean:
+	$(MAKE) -C examples/drivers/ipc/ipc_safeipc_echo/am273x-evm/system_freertos_nortos -f makefile clean
+
  mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt/am273x-evm/system_freertos_nortos -f makefile clean
 
@@ -2044,6 +2053,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += ecap_epwm_loopback_am273x-evm_system_nortos_scr
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_notify_echo_am273x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_rpmsg_echo_am273x-evm_system_freertos_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_safeipc_echo_am273x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am273x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am273x-evm_system_nortos_scrub
@@ -2548,6 +2558,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  ipc_rpmsg_echo_am273x-evm_system_freertos_nortos_scrub:
 	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/am273x-evm/system_freertos_nortos -f makefile scrub
+
+ ipc_safeipc_echo_am273x-evm_system_freertos_nortos_scrub:
+	$(MAKE) -C examples/drivers/ipc/ipc_safeipc_echo/am273x-evm/system_freertos_nortos -f makefile scrub
 
  mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos_scrub:
 	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt/am273x-evm/system_freertos_nortos -f makefile scrub

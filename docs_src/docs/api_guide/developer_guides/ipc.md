@@ -167,6 +167,18 @@ A similar design pattern can be used with IPC Notify APIs, only in this case, th
 And the end point values MUST be less than \ref IPC_NOTIFY_CLIENT_ID_MAX
 \endcond
 
+\cond !SOC_AM62X
+### SafeIPC Design
+
+SafeIPC in a Multi core system requires both Firewalling of shared memory and Data integrity check of payload. SafeIPC can be enabled using SysCfg
+which configures the shared memory in a way that firewalling is possible(limitation being number of firewalls and firewall granularity).
+Firewall configuration is not automatic and need to be manually enabled and configured. The SysCfg generated code for IPC has details on 
+Cores involved as well as Start and End addresses which help in firewall configuration.
+Data Integrity check has to be enabled using SysCfg. Once Enabled, Data Integrity Check using CRC is enabled for IPC Notify and RPMsg Data. The 
+calculated CRC is sent as a part of IPC Payload and decoded in the receiver end. Application has to define a hook function which will be used by driver for CRC calculation. 8 Bit CRC is used by IPC Notify and 16 Bit CRC is used by IPC RPMsg.
+
+\endcond
+
 ## Enabling IPC in applications
 Below are the summary of steps a application writer on RTOS/NORTOS needs to do enable IPC for their applications
 \cond !SOC_AM62X

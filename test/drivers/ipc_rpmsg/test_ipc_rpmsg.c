@@ -185,7 +185,7 @@ void test_rpmsgControlEndPtCallback(void *arg,
 }
 
 /* Ack message handler when messages are sent back to back, here after required messages are received semaphore is posted */
-void test_rpmsgAckHandler(RPMessage_Object *obj, void *arg, void *data, uint16_t dataLen, uint16_t remoteCoreId, uint16_t remoteEndPt)
+void test_rpmsgAckHandler(RPMessage_Object *obj, void *arg, void *data, uint16_t dataLen, int32_t crcStatus, uint16_t remoteCoreId, uint16_t remoteEndPt)
 {
     Msg_BackToBack *pMsg = (Msg_BackToBack*)data;
 

@@ -65,7 +65,7 @@ uint32_t gRemoteCoreId = CSL_CORE_ID_R5FSS1_0;
 /* semaphore used to indicate a remote core */
 SemaphoreP_Object gRemoteDoneSem;
 
-void wfe_demo_handler_remote_core(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
+void wfe_demo_handler_remote_core(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args)
 {
     HwiP_enableInt(TIMER_INTERRUPT);
     SemaphoreP_post(&gRemoteDoneSem);

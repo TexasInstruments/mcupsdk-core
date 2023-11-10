@@ -1,0 +1,93 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM273x" --package "ZCE" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.18.0+3266"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const hsmclient         = scripting.addModule("/drivers/hsmclient/hsmclient", {}, false);
+const hsmclient1        = hsmclient.addInstance();
+const ipc               = scripting.addModule("/drivers/ipc/ipc");
+const clock             = scripting.addModule("/kernel/dpl/clock");
+const debug_log         = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7         = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71        = mpu_armv7.addInstance();
+const mpu_armv72        = mpu_armv7.addInstance();
+const mpu_armv73        = mpu_armv7.addInstance();
+const mpu_armv74        = mpu_armv7.addInstance();
+const mpu_armv75        = mpu_armv7.addInstance();
+const mpu_armv76        = mpu_armv7.addInstance();
+const firewall_service  = scripting.addModule("/security/firewall_service/firewall_service", {}, false);
+const firewall_service1 = firewall_service.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+hsmclient1.$name = "CONFIG_HSMCLIENT0";
+
+ipc.c66ss0           = "notify";
+ipc.enableSafeIpc    = true;
+ipc.r5fss0_1_safeipc = true;
+
+debug_log.enableUartLog               = true;
+debug_log.enableSharedMemLog          = true;
+debug_log.enableSharedMemLogReader    = true;
+debug_log.uartLog.$name               = "CONFIG_UART0";
+debug_log.uartLog.MSS_UART.$assign    = "MSS_UARTA";
+debug_log.uartLog.MSS_UART.RX.$assign = "PAD_DA";
+debug_log.uartLog.MSS_UART.TX.$assign = "PAD_DB";
+
+const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1                        = edma.addInstance({}, false);
+edma1.$name                        = "CONFIG_EDMA0";
+debug_log.uartLog.edmaConfig       = edma1;
+edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
+edma1.edmaRmReservedDmaCh[0].$name = "CONFIG_EDMA_RM4";
+
+mpu_armv71.$name        = "CONFIG_MPU_REGION0";
+mpu_armv71.attributes   = "Device";
+mpu_armv71.allowExecute = false;
+
+mpu_armv72.$name = "CONFIG_MPU_REGION1";
+mpu_armv72.size  = 14;
+
+mpu_armv73.$name    = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr = 0x80000;
+mpu_armv73.size     = 14;
+
+mpu_armv74.$name      = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr   = 0x10200000;
+mpu_armv74.size       = 20;
+mpu_armv74.attributes = "Cached+Sharable";
+
+mpu_armv75.$name        = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr     = 0x102E0000;
+mpu_armv75.size         = 16;
+mpu_armv75.attributes   = "NonCached";
+mpu_armv75.allowExecute = false;
+
+mpu_armv76.$name        = "CONFIG_MPU_REGION5";
+mpu_armv76.baseAddr     = 0xC5000000;
+mpu_armv76.size         = 13;
+mpu_armv76.attributes   = "NonCached";
+mpu_armv76.allowExecute = false;
+
+firewall_service1.$name                        = "SET_MPU_FIREWALL_REQUEST_0";
+firewall_service1.mpu_region.create(2);
+firewall_service1.mpu_region[0].$name          = "CONFIG_MPU_FIREWALL_REGION0";
+firewall_service1.mpu_region[0].firewallId     = "MSS_MBOX";
+firewall_service1.mpu_region[0].endAddr        = 0xC5000BFF;
+firewall_service1.mpu_region[0].aidConfig      = ["R5FSS"];
+firewall_service1.mpu_region[0].allPermissions = true;
+firewall_service1.mpu_region[1].$name          = "CONFIG_MPU_FIREWALL_REGION1";
+firewall_service1.mpu_region[1].firewallId     = "MSS_MBOX";
+firewall_service1.mpu_region[1].startAddr      = 0xC5000C00;
+firewall_service1.mpu_region[1].regionNum      = 1;
+firewall_service1.mpu_region[1].allaidConfig   = true;
+firewall_service1.mpu_region[1].allPermissions = true;

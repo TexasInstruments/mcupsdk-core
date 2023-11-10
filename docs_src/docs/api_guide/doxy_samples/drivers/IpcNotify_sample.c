@@ -22,7 +22,7 @@ int32_t MyQueue_wait(MyQueue_Obj *obj, uint32_t *value);
 /* local Q to hold received messages */
 MyQueue_Obj gMyLocalQ;
 
-void MyMsg_handler(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
+void MyMsg_handler(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args)
 {
     MyQueue_Obj *myLocalQ = (MyQueue_Obj*)args;
 

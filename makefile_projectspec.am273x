@@ -169,6 +169,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecap_epwm_loopback_am273x-evm_syste
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_notify_echo_am273x-evm_system_freertos_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_rpmsg_echo_am273x-evm_system_freertos_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_safeipc_echo_am273x-evm_system_freertos_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am273x-evm_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am273x-evm_system_nortos_build
@@ -674,6 +675,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  ipc_rpmsg_echo_am273x-evm_system_freertos_nortos_build:
 	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/am273x-evm/system_freertos_nortos -f makefile_projectspec all
 
+ ipc_safeipc_echo_am273x-evm_system_freertos_nortos_build:
+	$(MAKE) -C examples/drivers/ipc/ipc_safeipc_echo/am273x-evm/system_freertos_nortos -f makefile_projectspec all
+
  mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos_build:
 	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt/am273x-evm/system_freertos_nortos -f makefile_projectspec all
 
@@ -855,6 +859,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecap_epwm_loopback_am273x-evm_syste
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_notify_echo_am273x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_rpmsg_echo_am273x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_safeipc_echo_am273x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am273x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am273x-evm_system_nortos_clean
@@ -1360,6 +1365,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  ipc_rpmsg_echo_am273x-evm_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/am273x-evm/system_freertos_nortos -f makefile_projectspec clean
 
+ ipc_safeipc_echo_am273x-evm_system_freertos_nortos_clean:
+	$(MAKE) -C examples/drivers/ipc/ipc_safeipc_echo/am273x-evm/system_freertos_nortos -f makefile_projectspec clean
+
  mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt/am273x-evm/system_freertos_nortos -f makefile_projectspec clean
 
@@ -1541,6 +1549,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecap_epwm_loopback_am273x-evm_syst
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_interrupt_transfer_am273x-evm_system_freertos_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_notify_echo_am273x-evm_system_freertos_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_rpmsg_echo_am273x-evm_system_freertos_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_safeipc_echo_am273x-evm_system_freertos_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am273x-evm_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am273x-evm_system_nortos_export
@@ -2046,6 +2055,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  ipc_rpmsg_echo_am273x-evm_system_freertos_nortos_export:
 	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo/am273x-evm/system_freertos_nortos -f makefile_projectspec export
 
+ ipc_safeipc_echo_am273x-evm_system_freertos_nortos_export:
+	$(MAKE) -C examples/drivers/ipc/ipc_safeipc_echo/am273x-evm/system_freertos_nortos -f makefile_projectspec export
+
  mcan_external_loopback_interrupt_am273x-evm_system_freertos_nortos_export:
 	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt/am273x-evm/system_freertos_nortos -f makefile_projectspec export
 
@@ -2245,6 +2257,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am273x-evm/system_freertos_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_notify_echo/am273x-evm/system_freertos_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_rpmsg_echo/am273x-evm/system_freertos_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_safeipc_echo/am273x-evm/system_freertos_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_external_loopback_interrupt/am273x-evm/system_freertos_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/empty/am273x-evm/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/empty/am273x-evm/system_nortos -f makefile_projectspec [export all clean]

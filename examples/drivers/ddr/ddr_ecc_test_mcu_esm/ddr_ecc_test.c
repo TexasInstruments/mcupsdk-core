@@ -320,7 +320,7 @@ int32_t DDR_dedErrTest (void)
 }
 
 void ipc_notify_handler1bECC (uint32_t remoteCoreId, uint16_t localClientId,
-                                uint32_t msgValue, void *args)
+                                uint32_t msgValue, int32_t crcStatus, void *args)
 {
     if (remoteCoreId == CSL_CORE_ID_M4FSS0_0)
     {
@@ -332,7 +332,7 @@ void ipc_notify_handler1bECC (uint32_t remoteCoreId, uint16_t localClientId,
 }
 
 void ipc_notify_handler2bECC (uint32_t remoteCoreId, uint16_t localClientId,
-                                uint32_t msgValue, void *args)
+                                uint32_t msgValue, int32_t crcStatus, void *args)
 {
     if (remoteCoreId == CSL_CORE_ID_M4FSS0_0)
     {

@@ -317,7 +317,7 @@ int32_t I2C_measurePower(I2C_Handle i2cHandle, uint8_t  deviceAddress)
     return status;
 }
 
-void wfe_demo_handler_main_core(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
+void wfe_demo_handler_main_core(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args)
 {
     /* there is one semaphore for each core ID, so post the semaphore for the remote core that
      * has finished all message exchange iterations

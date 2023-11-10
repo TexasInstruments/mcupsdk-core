@@ -219,6 +219,7 @@ help:
 	@echo  $(MAKE) -s -C drivers/ipc_notify/ipc_notify_ut/ipc_notify_ut_am273x/am273x-evm/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ipc_rpmsg/am273x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ipc_rpmsg/ipc_rpmsg_test_am273x/am273x-evm/system_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/ipc_rpmsg/ipc_safeipc_test/am273x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/soc/soc_r5f/am273x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  .
 
@@ -465,6 +466,7 @@ BUILD_COMBO_EXAMPLE_ALL += test_ipc_notify_am273x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_notify_ut_am273_am273x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_ipc_rpmsg_am273x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += ipc_rpmsg_ut_am273x-evm_system_nortos
+BUILD_COMBO_EXAMPLE_ALL += ipc_safeipc_test_am273x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_soc_r5f_am273x-evm_system_freertos
 
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
@@ -994,6 +996,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  ipc_rpmsg_ut_am273x-evm_system_nortos:
 	$(MAKE) -C drivers/ipc_rpmsg/ipc_rpmsg_test_am273x/am273x-evm/system_nortos -f makefile all
 
+ ipc_safeipc_test_am273x-evm_system_freertos_nortos:
+	$(MAKE) -C drivers/ipc_rpmsg/ipc_safeipc_test/am273x-evm/system_freertos_nortos -f makefile all
+
  test_soc_r5f_am273x-evm_system_freertos:
 	$(MAKE) -C drivers/soc/soc_r5f/am273x-evm/system_freertos -f makefile all
 
@@ -1173,6 +1178,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_notify_am273x-evm_system_freertos_nort
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_notify_ut_am273_am273x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ipc_rpmsg_am273x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_rpmsg_ut_am273x-evm_system_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_safeipc_test_am273x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_soc_r5f_am273x-evm_system_freertos_clean
 
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
@@ -1702,6 +1708,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  ipc_rpmsg_ut_am273x-evm_system_nortos_clean:
 	$(MAKE) -C drivers/ipc_rpmsg/ipc_rpmsg_test_am273x/am273x-evm/system_nortos -f makefile clean
 
+ ipc_safeipc_test_am273x-evm_system_freertos_nortos_clean:
+	$(MAKE) -C drivers/ipc_rpmsg/ipc_safeipc_test/am273x-evm/system_freertos_nortos -f makefile clean
+
  test_soc_r5f_am273x-evm_system_freertos_clean:
 	$(MAKE) -C drivers/soc/soc_r5f/am273x-evm/system_freertos -f makefile clean
 
@@ -1881,6 +1890,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_notify_am273x-evm_system_freertos_nort
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_notify_ut_am273_am273x-evm_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ipc_rpmsg_am273x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_rpmsg_ut_am273x-evm_system_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_safeipc_test_am273x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_soc_r5f_am273x-evm_system_freertos_scrub
 
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
@@ -2409,6 +2419,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  ipc_rpmsg_ut_am273x-evm_system_nortos_scrub:
 	$(MAKE) -C drivers/ipc_rpmsg/ipc_rpmsg_test_am273x/am273x-evm/system_nortos -f makefile scrub
+
+ ipc_safeipc_test_am273x-evm_system_freertos_nortos_scrub:
+	$(MAKE) -C drivers/ipc_rpmsg/ipc_safeipc_test/am273x-evm/system_freertos_nortos -f makefile scrub
 
  test_soc_r5f_am273x-evm_system_freertos_scrub:
 	$(MAKE) -C drivers/soc/soc_r5f/am273x-evm/system_freertos -f makefile scrub

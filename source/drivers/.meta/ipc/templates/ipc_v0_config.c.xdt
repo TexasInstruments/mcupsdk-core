@@ -5,6 +5,7 @@
     let enabledCpus = module.getEnabledCpus(instance);
     let enabledRPMessageCpus = module.getEnabledRPMessageCpus(instance);
     let implementationVersion = module.getImplementationVersion();
+    let ipcSharedMemData = module.getIpcSharedMemData(instance);
 %%}
 % if ( enabledCpus.length > 0 || instance.enableLinuxIpc === true || instance.enableMailboxIpc === true) {
 /*
@@ -13,16 +14,9 @@
 #include <drivers/ipc_notify.h>
 #include <drivers/ipc_notify/`implementationVersion`/ipc_notify_`implementationVersion`.h>
 
-/* this function is called within IpcNotify_init, this function returns core specific IPC config */
-void IpcNotify_getConfig(IpcNotify_InterruptConfig **interruptConfig, uint32_t *interruptConfigNum)
-{
-    /* extern globals that are specific to this core */
-    extern IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_`selfCpuName`[];
-    extern uint32_t gIpcNotifyInterruptConfigNum_`selfCpuName`;
-
-    *interruptConfig = &gIpcNotifyInterruptConfig_`selfCpuName`[0];
-    *interruptConfigNum = gIpcNotifyInterruptConfigNum_`selfCpuName`;
-}
+% if( implementationVersion == "v1" && ipcSharedMemData.safeIpcEnabled == false) {
+`module.getIpcStaticMemory()`
+% }
 
 % }
 % if ( enabledRPMessageCpus.length > 0 || instance.enableLinuxIpc === true ) {
@@ -31,7 +25,8 @@ void IpcNotify_getConfig(IpcNotify_InterruptConfig **interruptConfig, uint32_t *
  */
 #include <drivers/ipc_rpmsg.h>
 
-    % if ( enabledRPMessageCpus.length > 0) {
+% }
+% if ( enabledRPMessageCpus.length > 0) {
 /* Number of CPUs that are enabled for IPC RPMessage */
 #define IPC_RPMESSAGE_NUM_CORES           (`enabledRPMessageCpus.length+1`U)
 /* Number of VRINGs for the numner of CPUs that are enabled for IPC */
@@ -45,19 +40,22 @@ void IpcNotify_getConfig(IpcNotify_InterruptConfig **interruptConfig, uint32_t *
  */
 #define IPC_RPMESSAGE_VRING_SIZE          RPMESSAGE_VRING_SIZE(IPC_RPMESSAGE_NUM_VRING_BUF, IPC_RPMESSAGE_MAX_VRING_BUF_SIZE)
 
-/* VRING base address, all VRINGs are put one after other in the below region.
- *
- * IMPORTANT: Make sure of below,
- * - The section defined below should be placed at the exact same location in memory for all the CPUs
- * - The memory should be marked as non-cached for all the CPUs
- * - The section should be marked as NOLOAD in all the CPUs linker command file
- */
-/* In this case gRPMessageVringMem size is `module.getRPMessageVringSize(instance)` bytes */
-uint8_t gRPMessageVringMem[IPC_RPMESSAGE_NUM_VRINGS][IPC_RPMESSAGE_VRING_SIZE] __attribute__((aligned(128), section(".bss.ipc_vring_mem")));
+% }
+% if((((implementationVersion == "v0") || (implementationVersion == "v1")) && (enabledRPMessageCpus.length > 0)) || ((implementationVersion == "v1" && ipcSharedMemData.safeIpcEnabled == true) && (enabledCpus.length > 0 || instance.enableMailboxIpc === true))) {
+/* Total Shared memory size used for IPC */
+#define IPC_SHARED_MEM_SIZE               (`ipcSharedMemData.sharedMemUsed`U)
 
-    % }
-    % if (instance.enableLinuxIpc === true ) {
+/* Shared Memory Used for IPC.
+*
+* IMPORTANT: Make sure of below,
+* - The section defined below should be placed at the exact same location in memory for all the CPUs
+* - The memory should be marked as non-cached for all the CPUs
+* - The section should be marked as NOLOAD in all the CPUs linker command file
+*/
+uint8_t gIpcSharedMem[IPC_SHARED_MEM_SIZE] __attribute__((aligned(128), section(".bss.ipc_vring_mem")));
 
+% }
+% if (instance.enableLinuxIpc === true ) {
 /* Buffer used for trace, address and size of this buffer is put in the resource table so that Linux can read it */
 extern char gDebugMemLog[];
 
@@ -88,6 +86,40 @@ const RPMessage_ResourceTable gRPMessage_linuxResourceTable __attribute__ ((sect
     },
 };
 
-    % }
 % }
+% if ( enabledCpus.length > 0 || instance.enableLinuxIpc === true || instance.enableMailboxIpc === true) {
+/* This function is called within IpcNotify_init, this function returns core specific IPC config */
+void IpcNotify_getConfig(IpcNotify_InterruptConfig **interruptConfig, uint32_t *interruptConfigNum)
+{
+    /* extern globals that are specific to this core */
+    extern IpcNotify_InterruptConfig gIpcNotifyInterruptConfig_`selfCpuName`[];
+    extern uint32_t gIpcNotifyInterruptConfigNum_`selfCpuName`;
 
+    *interruptConfig = &gIpcNotifyInterruptConfig_`selfCpuName`[0];
+    *interruptConfigNum = gIpcNotifyInterruptConfigNum_`selfCpuName`;
+}
+
+% if(implementationVersion =="v1") {
+/* This function is called within IpcNotify_init, this function allocates SW queue */
+void IpcNotify_allocSwQueue(IpcNotify_MailboxConfig *mailboxConfig)
+{
+    IpcNotify_MailboxConfig (*mailboxConfigPtr)[CSL_CORE_ID_MAX] = (void *)mailboxConfig;
+
+    % for(let coreName of enabledCpus) {
+        % if( implementationVersion == "v1" && ipcSharedMemData.safeIpcEnabled == false) {
+    mailboxConfigPtr[CSL_CORE_ID_`selfCpuName.toUpperCase()`][CSL_CORE_ID_`coreName.toUpperCase()`].swQ = `selfCpuName.toUpperCase()`_TO_`coreName.toUpperCase()`_SW_QUEUE;
+        % } else {
+    mailboxConfigPtr[CSL_CORE_ID_`selfCpuName.toUpperCase()`][CSL_CORE_ID_`coreName.toUpperCase()`].swQ = (IpcNotify_SwQueue *)(&gIpcSharedMem[`ipcSharedMemData.ipcNotifyOffsetArr[selfCpuName][coreName]`]);
+        % }
+    % }
+    % for(let coreName of enabledCpus) {
+        % if( implementationVersion == "v1" && ipcSharedMemData.safeIpcEnabled == false) {
+    mailboxConfigPtr[CSL_CORE_ID_`coreName.toUpperCase()`][CSL_CORE_ID_`selfCpuName.toUpperCase()`].swQ = `coreName.toUpperCase()`_TO_`selfCpuName.toUpperCase()`_SW_QUEUE;
+        % } else {
+    mailboxConfigPtr[CSL_CORE_ID_`coreName.toUpperCase()`][CSL_CORE_ID_`selfCpuName.toUpperCase()`].swQ = (IpcNotify_SwQueue *)(&gIpcSharedMem[`ipcSharedMemData.ipcNotifyOffsetArr[coreName][selfCpuName]`]);
+        % }
+    % }
+}
+
+% }
+% }

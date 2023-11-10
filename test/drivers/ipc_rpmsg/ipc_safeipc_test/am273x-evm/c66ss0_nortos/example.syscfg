@@ -1,0 +1,162 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM273x" --package "ZCE" --part "Default" --context "c66ss0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.18.0+3266"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const ipc             = scripting.addModule("/drivers/ipc/ipc");
+const cache_c6x       = scripting.addModule("/kernel/dpl/cache_c6x");
+const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
+const default_linker1 = default_linker.addInstance();
+const general         = scripting.addModule("/memory_configurator/general", {}, false);
+const general1        = general.addInstance();
+const region          = scripting.addModule("/memory_configurator/region", {}, false);
+const region1         = region.addInstance();
+const section         = scripting.addModule("/memory_configurator/section", {}, false);
+const section1        = section.addInstance();
+const section2        = section.addInstance();
+const section3        = section.addInstance();
+const section4        = section.addInstance();
+const section5        = section.addInstance();
+const section6        = section.addInstance();
+const section7        = section.addInstance();
+const section8        = section.addInstance();
+const section9        = section.addInstance();
+const section10       = section.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+ipc.crcHookFxn = "App_CrcHookFxn";
+ipc.r5fss0_0   = "notify";
+ipc.r5fss0_1   = "NONE";
+ipc.c66ss0     = "notify";
+
+cache_c6x.marRegionConfig.create(1);
+cache_c6x.marRegionConfig[0].$name    = "kernel_dpl_cache_c6x_mar0";
+cache_c6x.marRegionConfig[0].baseAddr = 0xC5000000;
+
+debug_log.enableCssLog       = false;
+debug_log.enableSharedMemLog = true;
+
+default_linker1.$name = "memory_configurator_default_linker0";
+
+general1.$name        = "CONFIG_GENERAL0";
+general1.linker.$name = "TIARMCLANG0";
+
+region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
+region1.memory_region.create(3);
+region1.memory_region[0].type               = "DSP_L2_C66";
+region1.memory_region[0].$name              = "DSS_L2";
+region1.memory_region[0].size               = 0x60000;
+region1.memory_region[1].$name              = "USER_SHM_MEM";
+region1.memory_region[1].auto               = false;
+region1.memory_region[1].manualStartAddress = 0xC02E8000;
+region1.memory_region[1].size               = 0x4000;
+region1.memory_region[2].$name              = "LOG_SHM_MEM";
+region1.memory_region[2].size               = 0x4000;
+
+section1.load_to_memory              = "Address";
+section1.group                       = false;
+section1.load_to_address             = "0x00800000";
+section1.$name                       = "Vector Table";
+section1.output_section.create(1);
+section1.output_section[0].$name     = ".text:vectors";
+section1.output_section[0].alignment = 1024;
+
+section2.load_memory                 = "DSS_L2";
+section2.group                       = false;
+section2.$name                       = "Memory Segments";
+section2.output_section.create(10);
+section2.output_section[0].$name     = ".text";
+section2.output_section[0].alignment = 0;
+section2.output_section[1].$name     = ".const";
+section2.output_section[1].alignment = 0;
+section2.output_section[2].$name     = ".cinit";
+section2.output_section[2].alignment = 0;
+section2.output_section[3].$name     = ".data";
+section2.output_section[3].alignment = 0;
+section2.output_section[4].$name     = ".stack";
+section2.output_section[4].alignment = 0;
+section2.output_section[5].$name     = ".switch";
+section2.output_section[5].alignment = 0;
+section2.output_section[6].$name     = ".cio";
+section2.output_section[6].alignment = 0;
+section2.output_section[7].$name     = ".sysmem";
+section2.output_section[7].alignment = 0;
+section2.output_section[8].$name     = ".fardata";
+section2.output_section[8].alignment = 0;
+section2.output_section[9].$name     = ".far";
+section2.output_section[9].alignment = 0;
+
+section3.load_memory                 = "DSS_L2";
+section3.$name                       = "Code and Read-Only Data";
+section3.output_section.create(3);
+section3.output_section[0].$name     = ".rodata";
+section3.output_section[0].alignment = 0;
+section3.output_section[1].$name     = ".bss";
+section3.output_section[1].alignment = 0;
+section3.output_section[2].$name     = ".neardata";
+section3.output_section[2].alignment = 0;
+
+section4.load_memory                  = "DSS_L2";
+section4.$name                        = "Initialization and Exception Handling";
+section4.output_section.create(3);
+section4.output_section[0].$name      = ".c6xabi.exidx";
+section4.output_section[0].palignment = true;
+section4.output_section[1].$name      = ".init_array";
+section4.output_section[1].palignment = true;
+section4.output_section[2].$name      = ".fini_array";
+section4.output_section[2].palignment = true;
+
+section5.$name                       = "BSS DSS L3";
+section5.load_memory                 = "DSS_L3";
+section5.group                       = false;
+section5.output_section.create(1);
+section5.output_section[0].$name     = ".bss.dss_l3";
+section5.output_section[0].alignment = 0;
+
+section6.$name                       = "User Shared Memory";
+section6.load_memory                 = "USER_SHM_MEM";
+section6.type                        = "NOLOAD";
+section6.group                       = false;
+section6.output_section.create(1);
+section6.output_section[0].$name     = ".bss.user_shared_mem";
+section6.output_section[0].alignment = 0;
+
+section7.$name                       = "Log Shared Memory";
+section7.type                        = "NOLOAD";
+section7.load_memory                 = "LOG_SHM_MEM";
+section7.group                       = false;
+section7.output_section.create(1);
+section7.output_section[0].$name     = ".bss.log_shared_mem";
+section7.output_section[0].alignment = 0;
+
+section8.$name                       = "IPC Shared Memory";
+section8.type                        = "NOLOAD";
+section8.load_memory                 = "RTOS_NORTOS_IPC_SHM_MEM";
+section8.group                       = false;
+section8.output_section.create(1);
+section8.output_section[0].alignment = 0;
+section8.output_section[0].$name     = ".bss.ipc_vring_mem";
+
+section9.$name                       = "SIPC HSM Queue Memory";
+section9.type                        = "NOLOAD";
+section9.load_memory                 = "MAILBOX_HSM";
+section9.group                       = false;
+section9.output_section.create(1);
+section9.output_section[0].alignment = 0;
+section9.output_section[0].$name     = ".bss.sipc_hsm_queue_mem";
+
+section10.$name                       = "SIPC R5F Queue Memory";
+section10.type                        = "NOLOAD";
+section10.group                       = false;
+section10.load_memory                 = "MAILBOX_R5F";
+section10.output_section.create(1);
+section10.output_section[0].alignment = 0;
+section10.output_section[0].$name     = ".bss.sipc_r5f_queue_mem";

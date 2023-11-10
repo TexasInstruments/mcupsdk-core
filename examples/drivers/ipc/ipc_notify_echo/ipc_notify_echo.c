@@ -120,7 +120,7 @@ SemaphoreP_Object gMainDoneSem[CSL_CORE_ID_MAX];
 /* semaphore used to indicate a remote core has finished all message xchange */
 SemaphoreP_Object gRemoteDoneSem;
 
-void ipc_notify_msg_handler_main_core(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
+void ipc_notify_msg_handler_main_core(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args)
 {
     /* increment msgValue and send it back until gMsgEchoCount iterations are done */
     if(msgValue != (gMsgEchoCount-1))
@@ -180,7 +180,7 @@ void ipc_notify_echo_main_core_start(void)
     DebugP_log("All tests have passed!!\r\n");
 }
 
-void ipc_notify_msg_handler_remote_core(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
+void ipc_notify_msg_handler_remote_core(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args)
 {
     /* on remote core, we have registered handler on the same client ID and current core client ID */
     IpcNotify_sendMsg(remoteCoreId, localClientId, msgValue, 1);

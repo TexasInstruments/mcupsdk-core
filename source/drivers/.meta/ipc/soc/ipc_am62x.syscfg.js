@@ -60,7 +60,7 @@ function getSysCfgCoreName(ipcCoreName)
     }
 }
 
-function getMaxVringSize()
+function getIpcSharedMemAvailable()
 {
     /* The limit is determined by space set aside in OCRAM, but keep a reasonable default
      */
@@ -72,10 +72,22 @@ function getImplementationVersion()
     return "v0";
 }
 
+function getFirewallGranularity()
+{
+    return 4096;
+}
+
+function getSharedMemAddress()
+{
+    return 0x701D4000;
+}
+
 exports = {
     getConfigurables,
     getSelfIpcCoreName,
     getSysCfgCoreName,
-    getMaxVringSize,
+    getIpcSharedMemAvailable,
     getImplementationVersion,
+    getFirewallGranularity,
+    getSharedMemAddress,
 };

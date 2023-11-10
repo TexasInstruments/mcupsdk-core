@@ -38,6 +38,11 @@
  */
 #define IPC_NOTIFY_CLIENT_ID_SHIFT      (28U)
 
+/* This shift value MUST be in sync with IPC_NOTIFY_CLIENT_ID_MAX
+ * and IPC_NOTIFY_CRC_MSG_VALUE_MAX
+ */
+#define IPC_NOTIFY_CRC_SHIFT      (20U)
+
 /*
  * global internal module state
  */
@@ -53,6 +58,8 @@ typedef struct
     uint32_t                interruptConfigNum; /* number of interrupts to setup, i.e number of element in interruptConfig array */
     uint16_t                syncMsgPend[CSL_CORE_ID_MAX]; /* Number of sync messages pending */
     uint32_t                linuxCoreId; /* core ID of core running linux */
+    uint8_t                 isCrcEnabled; /* CRC Enable/Disable flag */
+    IpcNotify_CrcHookFxn    crcHookFxn; /* Hook Function to be provided by application for CRC calculation. */
 } IpcNotify_Ctrl;
 
 IpcNotify_Ctrl gIpcNotifyCtrl;
@@ -68,9 +75,10 @@ void IpcNotify_isr(void *args);
  * \param remoteCoreId  [in] Remote core that has sent the message
  * \param localClientId [in] Local client ID to which the message is sent
  * \param msgValue      [in] Message value that is sent
+ * \param crcStatus     [in] CRC Check status. SystemP_SUCCESS on success, else SystemP_FAILURE.
  * \param args          [in] Argument pointer passed by user when \ref IpcNotify_registerClient is called
  */
-void IpcNotify_syncCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args);
+void IpcNotify_syncCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args);
 
 static inline void IpcNotify_getWriteMailbox(uint32_t remoteCoreId, uint32_t *mailboxBaseAddr, uint32_t *hwFifoId)
 {
@@ -94,11 +102,29 @@ static inline void IpcNotify_getReadMailbox(uint32_t remoteCoreId, uint32_t *mai
     *userId = pMailboxConfig->userId;
 }
 
-static inline uint32_t IpcNotify_makeMsg(uint16_t clientId, uint32_t msgValue)
+static uint32_t IpcNotify_makeMsg(uint16_t clientId, uint32_t msgValue)
 {
-    return ((clientId & (IPC_NOTIFY_CLIENT_ID_MAX-1U)) << IPC_NOTIFY_CLIENT_ID_SHIFT) |
-            (msgValue & (IPC_NOTIFY_MSG_VALUE_MAX-1U))
-            ;
+    uint32_t msg;
+    uint8_t crc = 0;
+    uint32_t crcData;
+
+    if(gIpcNotifyCtrl.isCrcEnabled)
+    {
+        crcData = msgValue & (IPC_NOTIFY_CRC_MSG_VALUE_MAX-1U);
+
+        gIpcNotifyCtrl.crcHookFxn(((uint8_t *)(&crcData)), IPC_NOTIFY_CRC_DATASIZE, IPC_NOTIFY_CRC_SIZE, &crc);
+
+        msg = ((clientId & (IPC_NOTIFY_CLIENT_ID_MAX-1U)) << IPC_NOTIFY_CLIENT_ID_SHIFT) |
+            (crc << IPC_NOTIFY_CRC_SHIFT) |
+            (msgValue & (IPC_NOTIFY_CRC_MSG_VALUE_MAX-1U));
+    }
+    else
+    {
+        msg = ((clientId & (IPC_NOTIFY_CLIENT_ID_MAX-1U)) << IPC_NOTIFY_CLIENT_ID_SHIFT) |
+            (msgValue & (IPC_NOTIFY_MSG_VALUE_MAX-1U));
+    }
+
+    return msg;
 }
 
 void IpcNotify_isr(void *args)
@@ -107,6 +133,9 @@ void IpcNotify_isr(void *args)
     uint32_t mailboxBaseAddr, hwFifoId, userId;
     uint32_t core, msg, value, numMsgs;
     uint16_t clientId;
+    uint8_t inputCrc, calcCrc;
+    uint32_t crcData;
+    int32_t crcStatus = SystemP_SUCCESS;
 
     for(core=0; core<pInterruptConfig->numCores; core++)
     {
@@ -121,14 +150,42 @@ void IpcNotify_isr(void *args)
             value = IpcNotify_mailboxRead(mailboxBaseAddr, hwFifoId);
             clientId = (value >> IPC_NOTIFY_CLIENT_ID_SHIFT) & (IPC_NOTIFY_CLIENT_ID_MAX-1U);
 
+            if(gIpcNotifyCtrl.isCrcEnabled)
+            {
+                crcData = (value & (IPC_NOTIFY_CRC_MSG_VALUE_MAX-1U));
+                crcStatus = SystemP_FAILURE;
+
+                inputCrc = (uint8_t)((value >> IPC_NOTIFY_CRC_SHIFT) & (IPC_NOTIFY_CRC_MAX - 1U));
+                crcStatus = gIpcNotifyCtrl.crcHookFxn((uint8_t *)(&crcData), IPC_NOTIFY_CRC_DATASIZE, IPC_NOTIFY_CRC_SIZE, &calcCrc);
+
+                if((crcStatus == SystemP_SUCCESS) && (inputCrc == calcCrc))
+                {
+                    crcStatus = SystemP_SUCCESS;
+                }
+            }
+
             if(gIpcNotifyCtrl.callback[clientId]!=NULL)
             {
-                gIpcNotifyCtrl.callback[clientId](
-                        pInterruptConfig->coreIdList[core],
-                        clientId,
-                        (value & (IPC_NOTIFY_MSG_VALUE_MAX-1U)),
-                        gIpcNotifyCtrl.callbackArgs[clientId]
-                        );
+                if(gIpcNotifyCtrl.isCrcEnabled)
+                {
+                    gIpcNotifyCtrl.callback[clientId](
+                            pInterruptConfig->coreIdList[core],
+                            clientId,
+                            (value & (IPC_NOTIFY_CRC_MSG_VALUE_MAX-1U)),
+                            crcStatus,
+                            gIpcNotifyCtrl.callbackArgs[clientId]
+                            );
+                }
+                else
+                {
+                    gIpcNotifyCtrl.callback[clientId](
+                            pInterruptConfig->coreIdList[core],
+                            clientId,
+                            (value & (IPC_NOTIFY_MSG_VALUE_MAX-1U)),
+                            crcStatus,
+                            gIpcNotifyCtrl.callbackArgs[clientId]
+                            );
+                }
             }
         }
     }
@@ -208,7 +265,7 @@ int32_t IpcNotify_unregisterClient(uint16_t localClientId)
     return SystemP_SUCCESS;
 }
 
-void IpcNotify_syncCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, void *args)
+void IpcNotify_syncCallback(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args)
 {
     if(remoteCoreId < CSL_CORE_ID_MAX)
     {
@@ -228,6 +285,8 @@ void IpcNotify_Params_init(IpcNotify_Params *params)
     }
     params->selfCoreId = CSL_CORE_ID_MAX;
     params->linuxCoreId = CSL_CORE_ID_MAX;
+    params->isCrcEnabled = 0;
+    params->crcHookFxn = NULL;
 }
 
 int32_t IpcNotify_init(const IpcNotify_Params *params)
@@ -248,6 +307,8 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
     uint32_t selfCoreId_Check = (params->selfCoreId < CSL_CORE_ID_MAX)?1U:0U;
     DebugP_assert(selfCoreId_Check != 0U);
     gIpcNotifyCtrl.selfCoreId = params->selfCoreId;
+    gIpcNotifyCtrl.isCrcEnabled = params->isCrcEnabled;
+    gIpcNotifyCtrl.crcHookFxn = params->crcHookFxn;
     for(i=0; i<IPC_NOTIFY_CLIENT_ID_MAX; i++)
     {
         IpcNotify_unregisterClient(i);

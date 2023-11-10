@@ -89,6 +89,11 @@ extern "C" {
 #define RPMESSAGE_OBJECT_SIZE_MAX    (192U)
 
 /**
+ * \brief CRC size in bytes for IPC RPMsg.
+ */
+#define RPMESSAGE_CRC_SIZE           (2U)
+
+/**
  * \brief Opaque RPMessage object used with the RPMessage APIs
  */
 typedef struct RPMessage_Object_s {
@@ -108,11 +113,12 @@ typedef struct RPMessage_Object_s {
  * \param arg  [in] Arguments specified by user during \ref RPMessage_construct
  * \param data  [in] Pointer to message
  * \param dataLen [in] Length of message
+ * \param crcStatus     [in] CRC Check status. SystemP_SUCCESS on success, else SystemP_FAILURE.
  * \param remoteCoreId [in] Core ID of sender
  * \param remoteEndPt [in] End point of sender
  */
 typedef void (*RPMessage_RecvCallback)(RPMessage_Object *obj, void *arg,
-    void *data, uint16_t dataLen,
+    void *data, uint16_t dataLen, int32_t crcStatus,
     uint16_t remoteCoreId, uint16_t remoteEndPt);
 
 /**
@@ -147,6 +153,17 @@ typedef void (*RPMessage_RecvNotifyCallback)(RPMessage_Object *obj, void *arg);
  */
 typedef void (*RPMessage_ControlEndPtCallback)(void *arg,
     uint16_t remoteCoreId, uint16_t remoteEndPt, const char *remoteServiceName);
+
+/**
+ * \brief This is the CRC Hook function to be defined in application for CRC Calculation.
+ *
+ * \note IPC Notify uses 16 Bit CRC and driver invokes this API with crcSize = 2 and passes a 16 bit variable as crc pointer.
+ * \param data  [in] Pointer to data.
+ * \param dataLen [in] Length of message in bytes.
+ * \param crcSize [in] Size of CRC to be calculated in bytes.
+ * \param crc [out] Pointer to the calculated CRC value.
+ */
+typedef int32_t (*RPMessage_CrcHookFxn)(uint8_t *data, uint16_t dataLen, uint8_t crcSize, void *crc);
 
 /**
  * \brief Parameters passed to \ref RPMessage_construct
@@ -193,6 +210,8 @@ typedef struct
                                                    * is specified in the resource table
                                                    */
     uint16_t linuxCoreId; /** ID of linux core */
+    uint8_t  isCrcEnabled; /* CRC Enable/Disable flag */
+    RPMessage_CrcHookFxn crcHookFxn; /* Hook Function to be provided by application for CRC calculation */
 } RPMessage_Params;
 
 /**
