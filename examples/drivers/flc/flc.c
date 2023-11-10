@@ -131,21 +131,20 @@ void fill_buffers(void)
     for(i = 0U; i < BUFFER_DATA_SIZE; i++)
     {
         gTxBuff[i] = i % 256;
-        gRxBuf[i] = 0U;
     }
 }
 
 int32_t compare_buffers(void)
 {
     int32_t status = SystemP_SUCCESS;
-    uint32_t i;
+    volatile uint32_t i;
 
     for(i = 0U; i < BUFFER_DATA_SIZE; i++)
     {
         if(gTxBuff[i] != gRxBuf[i])
         {
             status = SystemP_FAILURE;
-            DebugP_logError("OSPI read data mismatch !!!\r\n");
+            DebugP_logError("OSPI read data mismatch at %d!!!\r\n", i);
             break;
         }
     }

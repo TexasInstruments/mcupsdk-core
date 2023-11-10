@@ -3899,6 +3899,38 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Flc Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "flc",
+        "location": "../../examples/drivers/flc/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "flc",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Fsi Loopback Dma Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "fsi_loopback_dma",
         "location": "../../examples/drivers/fsi/fsi_loopback_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
