@@ -256,11 +256,11 @@ function changeFlashType(inst, ui)
     }
 
     if(inst.strDtr_isAddrReg == true) {
-        ui.strDtr_isAddrReg.hidden = false;
+        ui.strDtr_cfgReg.hidden = false;
     }
     else
     {
-        ui.strDtr_isAddrReg.hidden = true;
+        ui.strDtr_cfgReg.hidden = true;
     }
 
     if(inst.flashType == "SERIAL_NOR")
@@ -283,13 +283,6 @@ function changeFlashType(inst, ui)
         ui.flashOeType.hidden = false;
         ui.flash444Seq.hidden = false;
         ui.flash888Seq.hidden = false;
-
-        ui.strDtr_cfgReg.hidden = false;
-        ui.strDtr_cmdRegRd.hidden = false;
-        ui.strDtr_cmdRegWr.hidden = false;
-        ui.strDtr_shift.hidden = false;
-        ui.strDtr_mask.hidden = false;
-        ui.strDtr_bitP.hidden = false;
 
         ui.deviceBusyType.hidden = false;
         ui.dummyId4.hidden = false;
@@ -334,14 +327,6 @@ function changeFlashType(inst, ui)
         ui.flash444Seq.hidden = true;
         ui.flash888Seq.hidden = true;
 
-        ui.strDtr_isAddrReg.hidden = true;
-        ui.strDtr_cfgReg.hidden = true;
-        ui.strDtr_cmdRegRd.hidden = true;
-        ui.strDtr_cmdRegWr.hidden = true;
-        ui.strDtr_shift.hidden = true;
-        ui.strDtr_mask.hidden = true;
-        ui.strDtr_bitP.hidden = true;
-
         ui.deviceBusyType.hidden = true;
         ui.dummyId4.hidden = true;
         ui.dummyId8.hidden = true;
@@ -384,14 +369,6 @@ function changeFlashType(inst, ui)
         ui.flashOeType.hidden = false;
         ui.flash444Seq.hidden = false;
         ui.flash888Seq.hidden = false;
-
-        ui.strDtr_isAddrReg.hidden = true;
-        ui.strDtr_cfgReg.hidden = false;
-        ui.strDtr_cmdRegRd.hidden = false;
-        ui.strDtr_cmdRegWr.hidden = false;
-        ui.strDtr_shift.hidden = false;
-        ui.strDtr_mask.hidden = false;
-        ui.strDtr_bitP.hidden = false;
 
         ui.deviceBusyType.hidden = false;
         ui.dummyId4.hidden = false;
@@ -1055,6 +1032,7 @@ function getConfigurables()
                                     name: "proto_cfgReg",
                                     displayName: "Address Of Config Reg",
                                     default: soc.getDefaultFlashConfig().protos[defProtoJson].protoCfg == null ? "0x00000000" : soc.getDefaultFlashConfig().protos[defProtoJson].protoCfg.cfgReg,
+                                    hidden: true,
                                 },
                                 {
                                     name: "proto_cmdRegRd",
@@ -1108,6 +1086,7 @@ function getConfigurables()
                                     name: "dummy_cfgReg",
                                     displayName: "Address Of Config Reg",
                                     default: soc.getDefaultFlashConfig().protos[defProtoJson].dummyCfg == null ? "0x00000000" : soc.getDefaultFlashConfig().protos[defProtoJson].dummyCfg.cfgReg,
+                                    hidden: true,
                                 },
                                 {
                                     name: "dummy_cmdRegRd",
@@ -1154,17 +1133,14 @@ function getConfigurables()
                                     displayName: "Config Is Via Addressed Reg",
                                     default: soc.getDefaultFlashConfig().protos[defProtoJson].strDtrCfg == null ? false : soc.getDefaultFlashConfig().protos[defProtoJson].strDtrCfg.isAddrReg,
                                     onChange: (inst, ui) => {
-                                        let hideCfgReg = true;
-                                        if(inst.strDtr_isAddrReg == true) {
-                                            hideCfgReg = false;
-                                        }
-                                        ui.strDtr_cfgReg.hidden = hideCfgReg;
+                                        changeFlashType(inst, ui);
                                     }
                                 },
                                 {
                                     name: "strDtr_cfgReg",
                                     displayName: "Address Of Config Reg",
                                     default: soc.getDefaultFlashConfig().protos[defProtoJson].strDtrCfg == null ? "0x00000000" : soc.getDefaultFlashConfig().protos[defProtoJson].strDtrCfg.cfgReg,
+                                    hidden: true,
                                 },
                                 {
                                     name: "strDtr_cmdRegRd",
