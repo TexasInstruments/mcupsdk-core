@@ -48,10 +48,6 @@ const syscfgfile = "../example.syscfg";
 
 const templates_nortos_r5f =
 [
-    {
-        input: ".project/templates/am263x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
 ];
 
 const readmeDoxygenPageTag = "EXAMPLES_MPU_FIREWALL_SERVICES_DEMO";

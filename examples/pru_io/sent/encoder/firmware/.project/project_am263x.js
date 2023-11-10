@@ -34,10 +34,7 @@ const readmeDoxygenPageTag = "EXAMPLES_SENT_ENCODER";
 
 const templates_pru =
 [
-    {
-        input: ".project/templates/am263x/common/pru/linker_pru0.cmd.xdt",
-        output: "linker.cmd",
-    },
+
 ];
 
 const buildOptionCombos = [

@@ -56,10 +56,6 @@ const readmeDoxygenPageTag = "EXAMPLES_SENT_ENCODER";
 const templates_freertos_r5f =
 [
     {
-        input: ".project/templates/am263x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
-    {
         input: ".project/templates/am263x/freertos/main_freertos.c.xdt",
         output: "../main.c",
         options: {

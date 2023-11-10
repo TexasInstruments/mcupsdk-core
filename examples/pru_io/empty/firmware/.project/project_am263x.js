@@ -36,10 +36,6 @@ const readmeDoxygenPageTag = "EXAMPLES_PRU_EMPTY";
 const templates_pru =
 [
     {
-        input: ".project/templates/am263x/common/pru/linker_pru0.cmd.xdt",
-        output: "linker.cmd",
-    },
-    {
         input: ".project/templates/am263x/common/pru/hexpru.cmd.xdt",
         output: "hexpru.cmd",
     },
