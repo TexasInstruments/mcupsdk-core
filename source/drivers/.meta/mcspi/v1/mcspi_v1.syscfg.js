@@ -104,22 +104,6 @@ let mcspi_module = {
     displayName: "MCSPI",
 
     templates: {
-        "/drivers/system/system_config.c.xdt": {
-            driver_config: "/drivers/mcspi/templates/mcspi_v1_config.c.xdt",
-            driver_init: "/drivers/mcspi/templates/mcspi_init.c.xdt",
-            driver_deinit: "/drivers/mcspi/templates/mcspi_deinit.c.xdt",
-        },
-        "/drivers/system/system_config.h.xdt": {
-            driver_config: "/drivers/mcspi/templates/mcspi.h.xdt",
-        },
-        "/drivers/system/drivers_open_close.c.xdt": {
-            driver_open_close_config: "/drivers/mcspi/templates/mcspi_v1_open_close_config.c.xdt",
-            driver_open: "/drivers/mcspi/templates/mcspi_open.c.xdt",
-            driver_close: "/drivers/mcspi/templates/mcspi_close.c.xdt",
-        },
-        "/drivers/system/drivers_open_close.h.xdt": {
-            driver_open_close_config: "/drivers/mcspi/templates/mcspi_v1_open_close.h.xdt",
-        },
         "/drivers/pinmux/pinmux_config.c.xdt": {
             moduleName: mcspi_module_name,
         },
@@ -148,16 +132,41 @@ let mcspi_module = {
     getClockEnableIds,
 };
 
-function addModuleInstances(inst) {
+function addModuleInstances(instance) {
     let modInstances = new Array();
 
-    modInstances.push({
-        name: "edmaDriver",
-        displayName: "EDMA Configuration",
-        moduleName: "/drivers/edma/edma",
-    });
+    if(instance.sdkInfra == "HLD") {
+        modInstances.push({
+            name: "edmaDriver",
+            displayName: "EDMA Configuration",
+            moduleName: "/drivers/edma/edma",
+        });
+    }
+
+    if((instance.intrEnable == "DMA") && (instance.sdkInfra == "LLD")) {
+        modInstances.push({
+            name: "edmaDriver",
+            displayName: "EDMA Configuration",
+            moduleName: "/drivers/edma/edma",
+        });
+    }
 
     return modInstances;
+}
+
+function checkTrigLevel(instance, report, property) {
+    let flag = 0;
+    let trigLevel = instance[property];
+    if((trigLevel == 2) | (trigLevel == 4) | (trigLevel == 8) |(trigLevel == 16) |(trigLevel == 32)) {
+        flag = 1;
+    }
+
+    if ((flag != 1) & (property == "txFifoTrigLevel")) {
+        report.logError("Trigger level must be in power of 2", instance, "txFifoTrigLevel");
+    }
+    if ((flag != 1) & (property == "rxFifoTrigLevel")) {
+        report.logError("Trigger level must be in power of 2", instance, "rxFifoTrigLevel");
+    }
 }
 
 function getConfigurables()
@@ -172,18 +181,19 @@ function getConfigurables()
             options: [
                 {
                     name: "SINGLE_CONTROLLER",
-                    displayName: "Single Controller"
+                    displayName: "Single Channel Controller"
                 },
                 {
                     name: "MULTI_CONTROLLER",
-                    displayName: "Multi Controller"
+                    displayName: "Multi Channel Controller"
                 },
                 {
                     name: "PERIPHERAL",
-                    displayName: "Single Peripheral"
+                    displayName: "Peripheral"
                 },
             ],
-            description: "Controller/Peripheral or Single/Multi channel mode of operation",
+            description: 'Controller/Peripheral or Single/Multi channel mode of operation. '+
+                         'Configure other channels in case of multi controller mode. ',
             onChange: function (inst, ui) {
                 /* Init delay applicable only for single controller mode */
                 if((inst.advanced == true) &&
@@ -199,6 +209,12 @@ function getConfigurables()
                 }
                 else {
                     ui.pinMode.hidden = true;
+                }
+                if(inst.mode == "SINGLE_CONTROLLER") {
+                    ui.advanced.hidden = false;
+                }
+                else {
+                    ui.advanced.hidden = true;
                 }
             },
         },
@@ -330,7 +346,7 @@ function getConfigurables()
         },
         {
             name: "intrEnable", /* Did not change name to avoid interface break */
-            displayName: "Operating Mode",
+            displayName: "Transfer Mode",
             default: "INTERRUPT",
             hidden: false,
             options: [
@@ -352,11 +368,15 @@ function getConfigurables()
                     ui.intrPriority.hidden = true;
                     ui.transferMode.hidden = true;
                     ui.transferTimeout.hidden = true;
+                    ui.transferCallbackFxn.hidden = true;
+                    ui.errorCallbackFxn.hidden = true;
                 }
                 if((inst.intrEnable == "INTERRUPT") || (inst.intrEnable == "DMA")) {
                     ui.intrPriority.hidden = false;
                     ui.transferMode.hidden = false;
                     ui.transferTimeout.hidden = false;
+                    ui.transferCallbackFxn.hidden = false;
+                    ui.errorCallbackFxn.hidden = false;
                 }
             },
             description: "Driver Operating Mode. In case of DMA mode, Default TX Data feature is not supported"
@@ -386,6 +406,7 @@ function getConfigurables()
             onChange: function (inst, ui) {
                 if(inst.transferMode == "CALLBACK") {
                     ui.transferCallbackFxn.hidden = false;
+                    ui.transferTimeout.hidden = true;
                     if(inst.transferCallbackFxn == "NULL") {
                         /* Clear NULL entry as user need to provide a fxn */
                         inst.transferCallbackFxn = "";
@@ -393,7 +414,9 @@ function getConfigurables()
                 }
                 else {
                     ui.transferCallbackFxn.hidden = true;
+                    ui.errorCallbackFxn.hidden = true;
                     inst.transferCallbackFxn = "NULL";
+                    ui.transferTimeout.hidden = false;
                 }
             },
             description: "This determines whether the driver operates synchronously or asynchronously",
@@ -406,6 +429,13 @@ function getConfigurables()
             description: "Transfer callback function when callback mode is selected",
         },
         {
+            name: "errorCallbackFxn",
+            displayName: "Error Callback",
+            default: "NULL",
+            hidden: true,
+            description: "Error callback function when callback mode is selected",
+        },
+        {
             name: "transferTimeout",
             displayName: "Transfer Timeout",
             default: 0xFFFFFFFF,
@@ -413,11 +443,64 @@ function getConfigurables()
             description: "Transfer timeout in system ticks. Provide 0xFFFFFFFF to wait forever",
             displayFormat: "hex",
         },
+        {
+            name: "sdkInfra",
+            displayName: "SDK Infra",
+            default: "HLD",
+            options: [
+                {
+                    name: "HLD",
+                    displayName: "HLD"
+                },
+                {
+                    name: "LLD",
+                    displayName: "LLD"
+                },
+            ],
+            onChange: function (inst, ui) {
+                if((inst.sdkInfra == "LLD")) {
+                    ui.transferMode.hidden = true;
+                    ui.transferCallbackFxn.hidden = false;
+                    ui.errorCallbackFxn.hidden = false;
+                    if(inst.intrEnable == "POLLED")
+                    {
+                        ui.transferCallbackFxn.hidden = true;
+                        ui.errorCallbackFxn.hidden = true;
+                    }
+                }
+                else {
+                    ui.transferMode.hidden = false;
+                    if(inst.transferMode != "BLOCKING")
+                    {
+                        ui.transferCallbackFxn.hidden = false;
+                    }
+                    ui.errorCallbackFxn.hidden = true;
+                }
+            },
+            description: "SDK Infra",
+        },
+        {
+            name: "multiWordAccess",
+            displayName: "Enable Multi Word Access",
+            default: "false",
+            options: [
+                {
+                    name: "false",
+                    displayName: "false"
+                },
+                {
+                    name: "true",
+                    displayName: "true"
+                },
+            ],
+            description: "Perform multiple MCSPI word access"
+        },
         /* Advanced parameters */
         {
             name: "advanced",
             displayName: "Show Advanced Config",
             default: false,
+            description: "This feature is only applicable for Single Controller Mode of Operation",
             onChange: function (inst, ui) {
                 /* Init delay applicable only for single controller mode */
                 if((inst.advanced == true) &&
@@ -464,10 +547,12 @@ function getConfigurables()
 function validate(inst, report) {
     common.validate.checkNumberRange(inst, report, "transferTimeout", 0x0, 0xFFFFFFFF, "hex");
     common.validate.checkValidCName(inst, report, "transferCallbackFxn");
-    if((inst.transferMode == "CALLBACK") &&
-        ((inst.transferCallbackFxn == "NULL") ||
-            (inst.transferCallbackFxn == ""))) {
+    common.validate.checkValidCName(inst, report, "errorCallbackFxn");
+    if((inst.transferMode == "CALLBACK") && ((inst.transferCallbackFxn == "NULL") || (inst.transferCallbackFxn == ""))) {
         report.logError("Callback function MUST be provided for callback transfer mode", inst, "transferCallbackFxn");
+    }
+    if(((inst.sdkInfra == "LLD") && ((inst.errorCallbackFxn == "NULL") || (inst.errorCallbackFxn == ""))) && (inst.intrEnable != "POLLED")) {
+        report.logError("Callback function MUST be provided for callback transfer mode", inst, "errorCallbackFxn");
     }
     common.validate.checkNumberRange(inst, report, "intrPriority", 0, hwi.getHwiMaxPriority(), "dec");
     if(inst.intrEnable == "DMA")
@@ -480,12 +565,16 @@ function validate(inst, report) {
     if (inst.trMode == "TX_RX") {
         common.validate.checkNumberRange(inst, report, "txFifoTrigLevel", 1, 32, "dec");
         common.validate.checkNumberRange(inst, report, "rxFifoTrigLevel", 1, 32, "dec");
+        checkTrigLevel(inst, report, "txFifoTrigLevel");
+        checkTrigLevel(inst, report, "rxFifoTrigLevel");
     }
     if (inst.trMode == "TX_ONLY") {
         common.validate.checkNumberRange(inst, report, "txFifoTrigLevel", 1, 64, "dec");
+        checkTrigLevel(inst, report, "txFifoTrigLevel");
     }
     if (inst.trMode == "RX_ONLY") {
         common.validate.checkNumberRange(inst, report, "rxFifoTrigLevel", 1, 64, "dec");
+        checkTrigLevel(inst, report, "rxFifoTrigLevel");
     }
 }
 
@@ -510,6 +599,23 @@ function moduleInstances(inst) {
             pinMode: inst.pinMode,
         },
     });
+
+    if( inst.sdkInfra == "HLD")
+    {
+        modInstances.push({
+            name: "child",
+            moduleName: '/drivers/mcspi/v1/mcspi_v1_template',
+            },
+        );
+    }
+    else
+    {
+        modInstances.push({
+            name: "child",
+            moduleName: '/drivers/mcspi/v1/mcspi_v1_template_lld',
+            },
+        );
+    }
 
     return (modInstances);
 }

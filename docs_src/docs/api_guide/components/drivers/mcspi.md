@@ -65,13 +65,9 @@ calls the following APIs:
 - #MCSPI_open():  Open an instance of the MCSPI driver, passing the
   initialized parameters, or NULL, and an index to the configuration to
   open (detailed later).
-- #MCSPI_chConfig():  Configure the required channels
-- #MCSPI_dmaChConfig(): Configure the required DMA channels(in DMA mode only)
 - #MCSPI_transfer():  Transmit/receive data.  This function takes a
   #MCSPI_Transaction argument that describes the transfer that is requested.
- -#MCSPI_dmaClose(): De-initialize the DMA channels(in DMA mode only)
 - #MCSPI_close():  De-initialize the MCSPI instance.
-- #MCSPI_deinit(): De-Initialize the MCSPI driver.
 
 ### Initializing the MCSPI Driver
 

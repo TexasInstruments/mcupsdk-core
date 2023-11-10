@@ -102,7 +102,7 @@ const templates_freertos_m4f =
         input: ".project/templates/am64x/freertos/main_freertos.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "test_mcspi_master_main",
+            entryFunction: "test_mcspi_controller_main",
         },
     }
 ];

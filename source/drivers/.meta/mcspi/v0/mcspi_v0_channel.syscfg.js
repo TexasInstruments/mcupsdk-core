@@ -110,6 +110,24 @@ PHA1 = Data are latched on even-numbered edges of SPICLK`,
             ],
             description: "Polarity of the chip select signal",
         },
+        {
+            name: "turboEnable",
+            displayName: "Enable Turbo Mode",
+            default: "false",
+            options: [
+                {
+                    name: "false",
+                    displayName: "false"
+                },
+                {
+                    name: "true",
+                    displayName: "true"
+                },
+            ],
+            description: ' Turbo mode improves the throughput of the MCSPI interface when a single channel is enabled by allowing' +
+                         ' transfers until the shift register and the MCSPI_RX_0/1/2/3 register are full. Turbo mode is time ' +
+                         ' saving when a transfer exceeds two words.'
+        },
         /* Advanced parameters */
         {
             name: "advanced",

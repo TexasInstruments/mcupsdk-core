@@ -86,6 +86,22 @@ void EDMA_initParamsInit (EDMA_InitParams *initParam)
     }
 }
 
+uint32_t EDMA_isInitialized(EDMA_Handle handle)
+{
+    EDMA_Config    *config;
+    EDMA_Object    *object;
+    uint32_t        edmaStatus = FALSE;
+
+    if (handle != NULL)
+    {
+        config = (EDMA_Config *) handle;
+        object = config->object;
+        edmaStatus = object->isOpen;
+    }
+
+    return edmaStatus;
+}
+
 static int32_t EDMA_initialize (uint32_t baseAddr, const EDMA_InitParams *initParam)
 {
     int32_t retVal = SystemP_SUCCESS;

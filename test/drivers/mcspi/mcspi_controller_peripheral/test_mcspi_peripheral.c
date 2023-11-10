@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -31,17 +31,24 @@
  */
 
 /*
- *  The application demonstrates MCSPI slave operation by receiving
+ *  The application demonstrates MCSPI peripheral operation by receiving
  *  a known data from the master and then sending the same
  *  and finally compare the results.Ipc sync is used for syncronization
  *  between the cores.
+ *
  *  Please connect pins as described below on AM64X/AM243X EVM.
  *  All the pins are available at SAFETY CONNECTOR J1 near power supply.
  *  MCU SPI1 pins are muxed with GPIO.
  *  MCU_SPI0_CS0(Pin 6)   ------------->   MCU_SPI1_CS0(Pin 7)
  *  MCU_SPI0_CLK(Pin 16)  ------------->   MCU_SPI1_CLK(Pin 9)
- *  MCU_SPI0_D0(Pin 4)    ------------->   MCU_SPI1_D1(Pin 12)
- *  MCU_SPI0_D1(Pin 2)    ------------->   MCU_SPI1_D0(Pin 5)
+ *  MCU_SPI0_D0(Pin 4)    ------------->   MCU_SPI1_D0(Pin 5)
+ *  MCU_SPI0_D1(Pin 2)    ------------->   MCU_SPI1_D1(Pin 12)
+ *
+ * Please connect pins as described below on AM263x LP.
+ *  MCU_SPI0_CS0(Pin 18)   ------------->   MCU_SPI1_CS0(Pin 58)
+ *  MCU_SPI0_CLK(Pin 7)    ------------->   MCU_SPI1_CLK(Pin 47)
+ *  MCU_SPI0_D0(Pin 55)    ------------->   MCU_SPI1_D1(Pin 14)
+ *  MCU_SPI0_D1(Pin 54)    ------------->   MCU_SPI1_D0(Pin 15)
  */
 
 #include "string.h"
@@ -64,11 +71,11 @@
     } while(0) \
 
 typedef struct MCSPI_TestParams_s {
-    MCSPI_ChConfig      mcspiChConfigParams;
+    MCSPI_ChConfig     *mcspiChConfigParams;
     MCSPI_OpenParams    mcspiOpenParams;
     uint32_t            testcaseId;
     uint32_t            dataSize;
-} MCSPI_SlaveTestParams;
+} MCSPI_PeripheralTestParams;
 
 static uint32_t   gClkDividerTestListRampUp[] =
 {
@@ -92,121 +99,128 @@ uint8_t gMcspiTxBuffer[APP_MCSPI_MSGSIZE];
 uint8_t gMcspiRxBuffer[APP_MCSPI_MSGSIZE];
 uint32_t gMcspiMasterTxBuffer[APP_MCSPI_MSGSIZE];
 uint32_t gMcspiMasterRxBuffer[APP_MCSPI_MSGSIZE];
+
+extern MCSPI_Handle     gMcspiHandle[];
+extern MCSPI_Config     gMcspiConfig[];
+extern MCSPI_ChConfig  *gConfigMcspiChCfg[];
+
 /* Semaphore to indicate Tx/Rx completion used in callback api's */
 static SemaphoreP_Object gMcspiTransferDoneSem;
 
-static int32_t mcspi_slave_transfer(uint32_t size);
-void mcspi_slave_main(void *args);
+static int32_t mcspi_peripheral_transfer(uint32_t size);
+void mcspi_peripheral_main(void *args);
 void test_mcspi_callback(MCSPI_Handle handle, MCSPI_Transaction *trans);
-static void test_mcspi_set_slave_params(MCSPI_SlaveTestParams *testParams, uint32_t tcId);
-static void test_mcspi_slave_transfer(void *args);
-static void test_mcspi_slave_transfer_performance(void *args);
-static void test_mcspi_slave_transfer_8_16_32bit(void *args);
+static void test_mcspi_set_peripheral_params(MCSPI_PeripheralTestParams *testParams, uint32_t tcId);
+static void test_mcspi_peripheral_transfer(void *args);
+static void test_mcspi_peripheral_transfer_performance(void *args);
+static void test_mcspi_peripheral_transfer_8_16_32bit(void *args);
 
 void test_mcspi_peripheral_main(void *args)
 {
-    MCSPI_SlaveTestParams  testParams;
+    MCSPI_PeripheralTestParams  testParams;
     uint32_t          clkList;
     MCSPI_ChConfig   *chConfigParams;
     MCSPI_Config     *config;
     MCSPI_Attrs      *attrParams;
 
+    testParams.mcspiChConfigParams = gConfigMcspiChCfg[MCSPI_CHANNEL_0];
+
     Drivers_open();
 
     UNITY_BEGIN();
 
-    test_mcspi_set_slave_params(&testParams, 260);
-    RUN_TEST(mcspi_slave_main,  260, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 943);
-    RUN_TEST(test_mcspi_slave_transfer,  943, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 944);
-    RUN_TEST(test_mcspi_slave_transfer,  944, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 945);
-    RUN_TEST(test_mcspi_slave_transfer,  945, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 946);
-    RUN_TEST(test_mcspi_slave_transfer,  946, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 947);
-    RUN_TEST(test_mcspi_slave_transfer,  947, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 948);
-    RUN_TEST(test_mcspi_slave_transfer,  948, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 949);
-    RUN_TEST(test_mcspi_slave_transfer,  949, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 950);
-    RUN_TEST(test_mcspi_slave_transfer,  950, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 951);
-    RUN_TEST(test_mcspi_slave_transfer,  951, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 952);
-    RUN_TEST(test_mcspi_slave_transfer,  952, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 953);
-    RUN_TEST(test_mcspi_slave_transfer,  953, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 954);
-    RUN_TEST(test_mcspi_slave_transfer,  954, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 955);
+    test_mcspi_set_peripheral_params(&testParams, 260);
+    RUN_TEST(mcspi_peripheral_main,  260, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 943);
+    RUN_TEST(test_mcspi_peripheral_transfer,  943, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 944);
+    RUN_TEST(test_mcspi_peripheral_transfer,  944, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 945);
+    RUN_TEST(test_mcspi_peripheral_transfer,  945, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 946);
+    RUN_TEST(test_mcspi_peripheral_transfer,  946, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 947);
+    RUN_TEST(test_mcspi_peripheral_transfer,  947, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 948);
+    RUN_TEST(test_mcspi_peripheral_transfer,  948, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 949);
+    RUN_TEST(test_mcspi_peripheral_transfer,  949, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 950);
+    RUN_TEST(test_mcspi_peripheral_transfer,  950, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 951);
+    RUN_TEST(test_mcspi_peripheral_transfer,  951, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 952);
+    RUN_TEST(test_mcspi_peripheral_transfer,  952, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 953);
+    RUN_TEST(test_mcspi_peripheral_transfer,  953, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 954);
+    RUN_TEST(test_mcspi_peripheral_transfer,  954, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 955);
     /* Change clock divider as per test list */
-    chConfigParams = &(testParams.mcspiChConfigParams);
+    chConfigParams = testParams.mcspiChConfigParams;
     config = &gMcspiConfig[CONFIG_MCSPI0];
     attrParams = (MCSPI_Attrs *)config->attrs;
     for (clkList = 0U; clkList < SPI_TEST_NUM_CLK_LIST; clkList++)
     {
         chConfigParams->bitRate = (attrParams->inputClkFreq / (gClkDividerTestListRampUp[clkList] + 1));
-        RUN_TEST(test_mcspi_slave_transfer,  955, (void*)&testParams);
+        RUN_TEST(test_mcspi_peripheral_transfer,  955, (void*)&testParams);
     }
-    test_mcspi_set_slave_params(&testParams, 956);
-    chConfigParams = &(testParams.mcspiChConfigParams);
+    test_mcspi_set_peripheral_params(&testParams, 956);
+    chConfigParams = testParams.mcspiChConfigParams;
     config = &gMcspiConfig[CONFIG_MCSPI0];
     attrParams = (MCSPI_Attrs *)config->attrs;
     for (clkList = 0U; clkList < SPI_TEST_NUM_CLK_LIST; clkList++)
     {
         chConfigParams->bitRate = (attrParams->inputClkFreq / (gClkDividerTestListRampDown[clkList] + 1));
-        RUN_TEST(test_mcspi_slave_transfer,  956, (void*)&testParams);
+        RUN_TEST(test_mcspi_peripheral_transfer,  956, (void*)&testParams);
     }
-    test_mcspi_set_slave_params(&testParams, 957);
-    RUN_TEST(test_mcspi_slave_transfer,  957, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 958);
-    RUN_TEST(test_mcspi_slave_transfer,  958, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 959);
-    RUN_TEST(test_mcspi_slave_transfer,  959, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 960);
-    RUN_TEST(test_mcspi_slave_transfer,  960, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 961);
-    RUN_TEST(test_mcspi_slave_transfer,  961, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 962);
-    RUN_TEST(test_mcspi_slave_transfer,  962, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 963);
-    RUN_TEST(test_mcspi_slave_transfer,  963, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 964);
-    RUN_TEST(test_mcspi_slave_transfer,  964, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 965);
-    RUN_TEST(test_mcspi_slave_transfer,  965, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 966);
-    RUN_TEST(test_mcspi_slave_transfer,  966, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 967);
-    RUN_TEST(test_mcspi_slave_transfer,  967, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 968);
+    test_mcspi_set_peripheral_params(&testParams, 957);
+    RUN_TEST(test_mcspi_peripheral_transfer,  957, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 958);
+    RUN_TEST(test_mcspi_peripheral_transfer,  958, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 959);
+    RUN_TEST(test_mcspi_peripheral_transfer,  959, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 960);
+    RUN_TEST(test_mcspi_peripheral_transfer,  960, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 961);
+    RUN_TEST(test_mcspi_peripheral_transfer,  961, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 962);
+    RUN_TEST(test_mcspi_peripheral_transfer,  962, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 963);
+    RUN_TEST(test_mcspi_peripheral_transfer,  963, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 964);
+    RUN_TEST(test_mcspi_peripheral_transfer,  964, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 965);
+    RUN_TEST(test_mcspi_peripheral_transfer,  965, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 966);
+    RUN_TEST(test_mcspi_peripheral_transfer,  966, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 967);
+    RUN_TEST(test_mcspi_peripheral_transfer,  967, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 968);
     /* Change clock divider as per test list */
-    chConfigParams = &(testParams.mcspiChConfigParams);
+    chConfigParams = testParams.mcspiChConfigParams;
     config = &gMcspiConfig[CONFIG_MCSPI0];
     attrParams = (MCSPI_Attrs *)config->attrs;
     for (clkList = 0U; clkList < SPI_TEST_NUM_CLK_LIST; clkList++)
     {
         chConfigParams->bitRate = (attrParams->inputClkFreq / (gClkDividerTestListRampUp[clkList] + 1));
-        RUN_TEST(test_mcspi_slave_transfer,  968, (void*)&testParams);
+        RUN_TEST(test_mcspi_peripheral_transfer,  968, (void*)&testParams);
     }
-    test_mcspi_set_slave_params(&testParams, 969);
-    chConfigParams = &(testParams.mcspiChConfigParams);
+    test_mcspi_set_peripheral_params(&testParams, 969);
+    chConfigParams = testParams.mcspiChConfigParams;
     config = &gMcspiConfig[CONFIG_MCSPI0];
     attrParams = (MCSPI_Attrs *)config->attrs;
     for (clkList = 0U; clkList < SPI_TEST_NUM_CLK_LIST; clkList++)
     {
         chConfigParams->bitRate = (attrParams->inputClkFreq / (gClkDividerTestListRampDown[clkList] + 1));
-        RUN_TEST(test_mcspi_slave_transfer,  969, (void*)&testParams);
+        RUN_TEST(test_mcspi_peripheral_transfer,  969, (void*)&testParams);
     }
-    test_mcspi_set_slave_params(&testParams, 976);
-    RUN_TEST(test_mcspi_slave_transfer_performance,  976, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 1013);
-    RUN_TEST(test_mcspi_slave_transfer,  1013, (void*)&testParams);
-    test_mcspi_set_slave_params(&testParams, 2302);
-    RUN_TEST(test_mcspi_slave_transfer_8_16_32bit,  2302, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 976);
+    RUN_TEST(test_mcspi_peripheral_transfer_performance,  976, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 1013);
+    RUN_TEST(test_mcspi_peripheral_transfer,  1013, (void*)&testParams);
+    test_mcspi_set_peripheral_params(&testParams, 2302);
+    RUN_TEST(test_mcspi_peripheral_transfer_8_16_32bit,  2302, (void*)&testParams);
 
     UNITY_END();
 
@@ -218,52 +232,52 @@ void test_mcspi_peripheral_main(void *args)
     return;
 }
 
-void mcspi_slave_main(void *args)
+void mcspi_peripheral_main(void *args)
 {
     int32_t             status = SystemP_SUCCESS, statusAll = SystemP_SUCCESS;
     uint32_t            size;
 
-    DebugP_log("[MCSPI Slave] example started ...\r\n");
+    DebugP_log("[MCSPI Peripheral] example started ...\r\n");
 
     size = APP_MCSPI_MSGSIZE/4;
-    status = mcspi_slave_transfer(size);
+    status = mcspi_peripheral_transfer(size);
     if (status != SystemP_SUCCESS)
     {
         statusAll = status;
-        DebugP_log("[MCSPI Slave] test failed for size: %d!!\r\n", size);
+        DebugP_log("[MCSPI Peripheral] test failed for size: %d!!\r\n", size);
     }
 
     size = APP_MCSPI_MSGSIZE/2;
-    status = mcspi_slave_transfer(size);
+    status = mcspi_peripheral_transfer(size);
     if (status != SystemP_SUCCESS)
     {
         statusAll = status;
-        DebugP_log("[MCSPI Slave] test failed for size: %d!!\r\n", size);
+        DebugP_log("[MCSPI Peripheral] test failed for size: %d!!\r\n", size);
     }
 
     size = APP_MCSPI_MSGSIZE;
-    status = mcspi_slave_transfer(size);
+    status = mcspi_peripheral_transfer(size);
     if (status != SystemP_SUCCESS)
     {
         statusAll = status;
-        DebugP_log("[MCSPI Slave] test failed for size: %d!!\r\n", size);
+        DebugP_log("[MCSPI Peripheral] test failed for size: %d!!\r\n", size);
     }
 
-    /* wait for mcspi slave to be ready */
+    /* wait for mcspi peripheral to be ready */
     IpcNotify_syncAll(SystemP_WAIT_FOREVER);
 
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, statusAll);
 
 }
 
-static int32_t mcspi_slave_transfer(uint32_t size)
+static int32_t mcspi_peripheral_transfer(uint32_t size)
 {
     int32_t             status = SystemP_SUCCESS;
     uint32_t            i;
     int32_t             transferOK;
     MCSPI_Transaction   spiTransaction;
 
-    DebugP_log("[MCSPI Slave] transfer test with size:%d ...\r\n", size);
+    DebugP_log("[MCSPI Peripheral] transfer test with size:%d ...\r\n", size);
 
     /* Memfill buffers */
     for(i = 0U; i < size; i++)
@@ -272,7 +286,7 @@ static int32_t mcspi_slave_transfer(uint32_t size)
         gMcspiRxBuffer[i] = 0U;
     }
 
-    /* indicate mcspi master that slave is ready */
+    /* indicate mcspi master that peripheral is ready */
     IpcNotify_syncAll(SystemP_WAIT_FOREVER);
 
     /* Initiate transfer */
@@ -292,7 +306,7 @@ static int32_t mcspi_slave_transfer(uint32_t size)
         if(gMcspiTxBuffer[i] != gMcspiRxBuffer[i])
         {
             status = SystemP_FAILURE;   /* Data mismatch */
-            DebugP_log("[MCSPI Slave] Data Mismatch at offset %d\r\n", i);
+            DebugP_log("[MCSPI Peripheral] Data Mismatch at offset %d\r\n", i);
             break;
         }
     }
@@ -300,7 +314,7 @@ static int32_t mcspi_slave_transfer(uint32_t size)
     return status;
 }
 
-static void test_mcspi_slave_transfer(void *args)
+static void test_mcspi_peripheral_transfer(void *args)
 {
     int32_t             status = SystemP_SUCCESS;
     uint32_t            i, dataWidth, fifoBitMask, tempTxData, dataWidthIdx;
@@ -308,12 +322,12 @@ static void test_mcspi_slave_transfer(void *args)
     int32_t             transferOK;
     MCSPI_Transaction   spiTransaction;
     MCSPI_Handle        mcspiHandle;
-    MCSPI_SlaveTestParams   *testParams = (MCSPI_SlaveTestParams *)args;
+    MCSPI_PeripheralTestParams   *testParams = (MCSPI_PeripheralTestParams *)args;
     uint8_t            *tempRxPtr8 = NULL, *tempTxPtr8 = NULL;
     uint16_t           *tempRxPtr16 = NULL, *tempTxPtr16 = NULL;
     uint32_t           *tempRxPtr32 = NULL, *tempTxPtr32 = NULL;
     MCSPI_OpenParams   *mcspiOpenParams = &(testParams->mcspiOpenParams);
-    MCSPI_ChConfig     *mcspiChConfigParams = &(testParams->mcspiChConfigParams);
+    MCSPI_ChConfig     *mcspiChConfigParams = testParams->mcspiChConfigParams;
 
     /* Memset Buffers */
     memset(&gMcspiMasterTxBuffer[0U], 0, APP_MCSPI_MSGSIZE * sizeof(uint32_t));
@@ -323,11 +337,6 @@ static void test_mcspi_slave_transfer(void *args)
 
     mcspiHandle = MCSPI_open(CONFIG_MCSPI0, mcspiOpenParams);
     TEST_ASSERT_NOT_NULL(mcspiHandle);
-
-    status = MCSPI_chConfig(
-                 gMcspiHandle[CONFIG_MCSPI0],
-                 mcspiChConfigParams);
-    DebugP_assert(status == SystemP_SUCCESS);
 
     if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
     {
@@ -384,11 +393,11 @@ static void test_mcspi_slave_transfer(void *args)
         }
     }
 
-    /* wait for mcspi slave to be ready */
+    /* wait for mcspi peripheral to be ready */
     IpcNotify_syncAll(SystemP_WAIT_FOREVER);
 
     /* Initiate transfer */
-    spiTransaction.channel   = testParams->mcspiChConfigParams.chNum;
+    spiTransaction.channel   = testParams->mcspiChConfigParams->chNum;
     spiTransaction.dataSize  = testParams->dataSize;
     spiTransaction.csDisable = TRUE;
     spiTransaction.count     = (APP_MCSPI_MSGSIZE  * (sizeof(uint32_t) / (1 << bufWidthShift)));
@@ -456,7 +465,7 @@ static void test_mcspi_slave_transfer(void *args)
         SemaphoreP_destruct(&gMcspiTransferDoneSem);
     }
 
-    /* wait for mcspi slave to be ready */
+    /* wait for mcspi peripheral to be ready */
     IpcNotify_syncAll(SystemP_WAIT_FOREVER);
 
     MCSPI_close(gMcspiHandle[CONFIG_MCSPI0]);
@@ -466,7 +475,7 @@ static void test_mcspi_slave_transfer(void *args)
     return;
 }
 
-static void test_mcspi_slave_transfer_8_16_32bit(void *args)
+static void test_mcspi_peripheral_transfer_8_16_32bit(void *args)
 {
     int32_t             status = SystemP_SUCCESS;
     uint32_t            i, dataWidth, fifoBitMask, tempTxData, dataWidthIdx;
@@ -474,12 +483,12 @@ static void test_mcspi_slave_transfer_8_16_32bit(void *args)
     int32_t             transferOK;
     MCSPI_Transaction   spiTransaction;
     MCSPI_Handle        mcspiHandle;
-    MCSPI_SlaveTestParams   *testParams = (MCSPI_SlaveTestParams *)args;
+    MCSPI_PeripheralTestParams   *testParams = (MCSPI_PeripheralTestParams *)args;
     uint8_t            *tempRxPtr8 = NULL, *tempTxPtr8 = NULL;
     uint16_t           *tempRxPtr16 = NULL, *tempTxPtr16 = NULL;
     uint32_t           *tempRxPtr32 = NULL, *tempTxPtr32 = NULL;
     MCSPI_OpenParams   *mcspiOpenParams = &(testParams->mcspiOpenParams);
-    MCSPI_ChConfig     *mcspiChConfigParams = &(testParams->mcspiChConfigParams);
+    MCSPI_ChConfig     *mcspiChConfigParams = testParams->mcspiChConfigParams;
     uint8_t *tempTxPtr, *tempRxPtr;
 
     /* Memset Buffers */
@@ -490,11 +499,6 @@ static void test_mcspi_slave_transfer_8_16_32bit(void *args)
 
     mcspiHandle = MCSPI_open(CONFIG_MCSPI0, mcspiOpenParams);
     TEST_ASSERT_NOT_NULL(mcspiHandle);
-
-    status = MCSPI_chConfig(
-                 gMcspiHandle[CONFIG_MCSPI0],
-                 mcspiChConfigParams);
-    DebugP_assert(status == SystemP_SUCCESS);
 
     if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
     {
@@ -524,11 +528,11 @@ static void test_mcspi_slave_transfer_8_16_32bit(void *args)
         *tempRxPtr8++ = 0U;
     }
 
-    /* wait for mcspi slave to be ready */
+    /* wait for mcspi peripheral to be ready */
     IpcNotify_syncAll(SystemP_WAIT_FOREVER);
 
     /* Initiate transfer */
-    spiTransaction.channel   = testParams->mcspiChConfigParams.chNum;
+    spiTransaction.channel   = testParams->mcspiChConfigParams->chNum;
     spiTransaction.dataSize  = dataWidth;
     spiTransaction.csDisable = FALSE;
     spiTransaction.count     = (APP_MCSPI_MSGSIZE  * (sizeof(uint32_t) / (1 << bufWidthShift)));
@@ -616,7 +620,7 @@ static void test_mcspi_slave_transfer_8_16_32bit(void *args)
     }
 
     /* Initiate transfer */
-    spiTransaction.channel   = testParams->mcspiChConfigParams.chNum;
+    spiTransaction.channel   = testParams->mcspiChConfigParams->chNum;
     spiTransaction.dataSize  = dataWidth;
     spiTransaction.csDisable = FALSE;
     spiTransaction.count     = (APP_MCSPI_MSGSIZE  * (sizeof(uint32_t) / (1 << bufWidthShift)));
@@ -703,7 +707,7 @@ static void test_mcspi_slave_transfer_8_16_32bit(void *args)
     }
 
     /* Initiate transfer */
-    spiTransaction.channel   = testParams->mcspiChConfigParams.chNum;
+    spiTransaction.channel   = testParams->mcspiChConfigParams->chNum;
     spiTransaction.dataSize  = dataWidth;
     spiTransaction.csDisable = TRUE;
     spiTransaction.count     = (APP_MCSPI_MSGSIZE  * (sizeof(uint32_t) / (1 << bufWidthShift)));
@@ -737,7 +741,7 @@ static void test_mcspi_slave_transfer_8_16_32bit(void *args)
         SemaphoreP_destruct(&gMcspiTransferDoneSem);
     }
 
-    /* wait for mcspi slave to be ready */
+    /* wait for mcspi peripheral to be ready */
     IpcNotify_syncAll(SystemP_WAIT_FOREVER);
 
     MCSPI_close(gMcspiHandle[CONFIG_MCSPI0]);
@@ -747,7 +751,7 @@ static void test_mcspi_slave_transfer_8_16_32bit(void *args)
     return;
 }
 
-static void test_mcspi_slave_transfer_performance(void *args)
+static void test_mcspi_peripheral_transfer_performance(void *args)
 {
     int32_t             status = SystemP_SUCCESS;
     uint32_t            i,j, dataWidth, fifoBitMask, tempTxData, dataWidthIdx;
@@ -755,12 +759,12 @@ static void test_mcspi_slave_transfer_performance(void *args)
     int32_t             transferOK;
     MCSPI_Transaction   spiTransaction;
     MCSPI_Handle        mcspiHandle;
-    MCSPI_SlaveTestParams   *testParams = (MCSPI_SlaveTestParams *)args;
+    MCSPI_PeripheralTestParams   *testParams = (MCSPI_PeripheralTestParams *)args;
     uint8_t            *tempRxPtr8 = NULL, *tempTxPtr8 = NULL;
     uint16_t           *tempRxPtr16 = NULL, *tempTxPtr16 = NULL;
     uint32_t           *tempRxPtr32 = NULL, *tempTxPtr32 = NULL;
     MCSPI_OpenParams   *mcspiOpenParams = &(testParams->mcspiOpenParams);
-    MCSPI_ChConfig     *mcspiChConfigParams = &(testParams->mcspiChConfigParams);
+    MCSPI_ChConfig     *mcspiChConfigParams = testParams->mcspiChConfigParams;
 
     for(j = 0U; j < APP_PERF_LOOP_ITER_CNT; j++)
     {
@@ -772,11 +776,6 @@ static void test_mcspi_slave_transfer_performance(void *args)
 
         mcspiHandle = MCSPI_open(CONFIG_MCSPI0, mcspiOpenParams);
         TEST_ASSERT_NOT_NULL(mcspiHandle);
-
-        status = MCSPI_chConfig(
-                     gMcspiHandle[CONFIG_MCSPI0],
-                     mcspiChConfigParams);
-        DebugP_assert(status == SystemP_SUCCESS);
 
         if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
         {
@@ -833,11 +832,11 @@ static void test_mcspi_slave_transfer_performance(void *args)
             }
         }
 
-        /* wait for mcspi slave to be ready */
+        /* wait for mcspi peripheral to be ready */
         IpcNotify_syncAll(SystemP_WAIT_FOREVER);
 
         /* Initiate transfer */
-        spiTransaction.channel  = testParams->mcspiChConfigParams.chNum;
+        spiTransaction.channel  = testParams->mcspiChConfigParams->chNum;
         spiTransaction.dataSize  = testParams->dataSize;
         spiTransaction.csDisable = TRUE;
         spiTransaction.count    = (APP_MCSPI_MSGSIZE  * (sizeof(uint32_t) / (1 << bufWidthShift)));
@@ -905,7 +904,7 @@ static void test_mcspi_slave_transfer_performance(void *args)
         SemaphoreP_destruct(&gMcspiTransferDoneSem);
     }
 
-    /* wait for mcspi slave to be ready */
+    /* wait for mcspi peripheral to be ready */
     IpcNotify_syncAll(SystemP_WAIT_FOREVER);
 
     MCSPI_close(gMcspiHandle[CONFIG_MCSPI0]);
@@ -931,12 +930,13 @@ void tearDown(void)
 {
 }
 
-static void test_mcspi_set_slave_params(MCSPI_SlaveTestParams *testParams, uint32_t tcId)
+static void test_mcspi_set_peripheral_params(MCSPI_PeripheralTestParams *testParams, uint32_t tcId)
 {
     MCSPI_Config     *config = &gMcspiConfig[CONFIG_MCSPI0];
     MCSPI_Attrs      *attrParams = (MCSPI_Attrs *)config->attrs;
     MCSPI_OpenParams *openParams = &(testParams->mcspiOpenParams);
-    MCSPI_ChConfig   *chConfigParams = &(testParams->mcspiChConfigParams);
+    MCSPI_ChConfig   *chConfigParams = testParams->mcspiChConfigParams;
+    testParams->testcaseId             = 0U;
 
     /* Default Attribute Parameters */
     attrParams->inputClkFreq       = 50000000U;

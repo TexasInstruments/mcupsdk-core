@@ -6,10 +6,12 @@
  * MCSPI
  */
 #include <drivers/mcspi.h>
+#include <drivers/edma.h>
+#include <drivers/mcspi/v0/lld/dma/mcspi_dma.h>
+#include <drivers/mcspi/v0/lld/dma/edma/mcspi_dma_edma.h>
 
 /* MCSPI Driver handles */
 extern MCSPI_Handle gMcspiHandle[CONFIG_MCSPI_NUM_INSTANCES];
-
 /*
  * MCSPI Driver Advance Parameters - to be used only when Driver_open() and
  * Driver_close() is not used by the application
@@ -28,7 +30,7 @@ extern MCSPI_OpenParams gMcspiOpenParams[CONFIG_MCSPI_NUM_INSTANCES];
     % let instNameCamelCase = common.camelSentence(instance.$name);
 extern MCSPI_ChConfig g`instNameCamelCase`ChCfg[`instance.$name.toUpperCase()`_NUM_CH];
 %      if(instance.intrEnable == "DMA") {
-extern MCSPI_DmaChConfig g`instNameCamelCase`DmaChCfg[`instance.$name.toUpperCase()`_NUM_CH];
+extern MCSPI_EdmaChConfig g`instNameCamelCase`DmaChCfg[`instance.$name.toUpperCase()`_NUM_CH];
 % }
 % }
 /* MCSPI Driver open/close - can be used by application when Driver_open() and

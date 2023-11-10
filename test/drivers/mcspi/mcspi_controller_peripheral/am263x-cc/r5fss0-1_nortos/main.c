@@ -34,14 +34,14 @@
 #include "ti_drivers_config.h"
 #include "ti_board_config.h"
 
-void test_mcspi_master_main(void *args);
+void test_mcspi_controller_main(void *args);
 
 int main(void)
 {
     System_init();
     Board_init();
 
-    test_mcspi_master_main(NULL);
+    test_mcspi_controller_main(NULL);
 
     Board_deinit();
     System_deinit();

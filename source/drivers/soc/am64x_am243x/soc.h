@@ -49,6 +49,8 @@ extern "C"
 
 #include <drivers/sciclient.h>
 #include <kernel/dpl/CpuIdP.h>
+#include <drivers/mcspi.h>
+#include <drivers/hw_include/am64x_am243x/cslr_soc_baseaddress.h>
 
 /**
  *  \anchor SOC_DomainId_t
@@ -99,6 +101,29 @@ extern "C"
  * \brief Software defined MAGIC number to indicate SRAM firewall open by SBL
  */
 #define SOC_FWL_OPEN_MAGIC_NUM  (0XFEDCBA98u)
+
+/*! LLD_PARAM_CHECK_DEBUG_ASSERT */
+#define LLD_PARAMS_CHECK(expression) \
+if (status == SystemP_SUCCESS) { \
+    if(!(expression)) { \
+        status = MCSPI_INVALID_PARAM; \
+    } \
+}
+/* MCU Base address to be used after Adress translation in MCU Domain. */
+#define MCU_MCSPI0_CFG_BASE_AFTER_ADDR_TRANSLATE   (CSL_MCU_MCSPI0_CFG_BASE + 0x80000000)
+#define MCU_MCSPI1_CFG_BASE_AFTER_ADDR_TRANSLATE   (CSL_MCU_MCSPI1_CFG_BASE + 0x80000000)
+
+/** \brief Macro to check if the MCSPI base address is valid */
+#define IS_MCSPI_BASE_ADDR_VALID(baseAddr)    ((baseAddr == CSL_MCSPI0_CFG_BASE) || \
+                                               (baseAddr == CSL_MCSPI1_CFG_BASE) || \
+                                               (baseAddr == CSL_MCSPI2_CFG_BASE) || \
+                                               (baseAddr == CSL_MCSPI3_CFG_BASE) || \
+                                               (baseAddr == CSL_MCSPI4_CFG_BASE) || \
+                                               (baseAddr == CSL_MCU_MCSPI0_CFG_BASE) || \
+                                               (baseAddr == CSL_MCU_MCSPI1_CFG_BASE) || \
+                                               (baseAddr == MCU_MCSPI0_CFG_BASE_AFTER_ADDR_TRANSLATE) || \
+                                               (baseAddr == MCU_MCSPI1_CFG_BASE_AFTER_ADDR_TRANSLATE))
+
 /**
  * \brief Enable clock to specified module
  *

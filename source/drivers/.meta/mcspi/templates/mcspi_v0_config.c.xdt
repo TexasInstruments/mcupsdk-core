@@ -14,6 +14,16 @@
  * MCSPI
  */
 
+#include "ti_drivers_open_close.h"
+
+uint32_t gMcspiNumCh[`module.$instances.length`] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    `instance.$name.toUpperCase()`_NUM_CH,
+% }
+};
+
 /* MCSPI atrributes */
 static MCSPI_Attrs gMcspiAttrs[CONFIG_MCSPI_NUM_INSTANCES] =
 {
@@ -33,6 +43,8 @@ static MCSPI_Attrs gMcspiAttrs[CONFIG_MCSPI_NUM_INSTANCES] =
         .chMode             = MCSPI_CH_MODE_`chMode`,
         .pinMode            = MCSPI_PINMODE_`config.pinMode`PIN,
         .initDelay          = MCSPI_INITDLY_`config.initDelay`,
+        .multiWordAccess    = `config.multiWordAccess.toString(10).toUpperCase()`,
+
     },
 % }
 };
@@ -52,9 +64,9 @@ MCSPI_Config gMcspiConfig[CONFIG_MCSPI_NUM_INSTANCES] =
 
 uint32_t gMcspiConfigNum = CONFIG_MCSPI_NUM_INSTANCES;
 
-#include <drivers/mcspi/v0/dma/mcspi_dma.h>
+#include <drivers/mcspi/v0/lld/dma/mcspi_dma.h>
 %if(mcspiUdmaInstances.length > 0) {
-#include <drivers/mcspi/v0/dma/udma/mcspi_dma_udma.h>
+#include <drivers/mcspi/v0/lld/dma/udma/mcspi_dma_udma.h>
 #include <drivers/udma.h>
 
 McspiDma_UdmaArgs gMcspiUdmaArgs =
@@ -68,6 +80,13 @@ MCSPI_DmaConfig gMcspiDmaConfig =
     .mcspiDmaArgs = (void *)&gMcspiUdmaArgs,
 };
 
+MCSPI_DmaHandle gMcspiDmaHandle[`mcspiUdmaInstances.length`] =
+{
+% for(let i = 0; i < mcspiUdmaInstances.length; i++) {
+    (void *)&gUdmaDrvObj[`mcspiUdmaInstances[0].$name`],
+% }
+};
+
 %}
 %else {
 MCSPI_DmaConfig gMcspiDmaConfig =
@@ -75,7 +94,14 @@ MCSPI_DmaConfig gMcspiDmaConfig =
     .fxns        = NULL,
     .mcspiDmaArgs = (void *)NULL,
 };
-%}
 
+MCSPI_DmaHandle gMcspiDmaHandle[`mcspiUdmaInstances.length`] =
+{
+% for(let i = 0; i < mcspiUdmaInstances.length; i++) {
+    (void *)NULL,
+% }
+};
+
+%}
 
 uint32_t gMcspiDmaConfigNum = CONFIG_MCSPI_NUM_DMA_INSTANCES;

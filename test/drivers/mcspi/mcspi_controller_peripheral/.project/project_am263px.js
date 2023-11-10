@@ -87,7 +87,7 @@ const templates_nortos_r5f =
         input: ".project/templates/am263px/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "test_mcspi_master_main",
+            entryFunction: "test_mcspi_controller_main",
         },
     }
 ];

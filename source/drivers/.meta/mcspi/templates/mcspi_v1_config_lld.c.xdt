@@ -1,0 +1,160 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let module = system.modules['/drivers/mcspi/mcspi'];
+    let mcspiEdmaInstances = [];
+    let driverVer = soc.getDriverVer("mcspi");
+    let module_ch = system.modules[`/drivers/mcspi/${driverVer}/mcspi_${driverVer}_channel`];
+    for(let i=0; i < module.$instances.length; i++) {
+        let instance = module.$instances[i];
+        let ch_instances = instance.mcspiChannel;
+        if(instance.intrEnable == "DMA") {
+            mcspiEdmaInstances.push(module.getInstanceConfig(instance).edmaDriver);
+        }
+    }
+%%}
+
+#include "ti_drivers_open_close.h"
+#include <drivers/mcspi/v0/lld/mcspi_lld.h>
+#include <kernel/dpl/ClockP.h>
+/*
+ * MCSPI
+ */
+
+uint32_t gMcspiNumCh[`module.$instances.length`] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    `instance.$name.toUpperCase()`_NUM_CH,
+% }
+};
+
+/* MCSPI Driver Channel Configurations */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+MCSPI_ChConfig gMcspiChCfg[`instance.$name.toUpperCase()`_NUM_CH] =
+{
+    % let ch_instances = instance.mcspiChannel;
+    % for(let ch = 0; ch < ch_instances.length; ch++) {
+        % let ch_instance = ch_instances[ch];
+        % let ch_config = module_ch.getInstanceConfig(ch_instance);
+        % if(config.mode == "PERIPHERAL") {
+        %   ch_config.cs = 0;
+        % }
+    {
+        .chNum              = MCSPI_CHANNEL_`ch_config.cs`,
+        .frameFormat        = MCSPI_FF_`ch_config.frameFormat`,
+        .bitRate            = `ch_config.bitRate`,
+        .csPolarity         = MCSPI_CS_POL_`ch_config.csPolarity`,
+        .trMode             = MCSPI_TR_MODE_`config.trMode`,
+        .inputSelect        = MCSPI_IS_D`config.inputSelect`,
+        .dpe0               = MCSPI_DPE_`config.dpe0`,
+        .dpe1               = MCSPI_DPE_`config.dpe1`,
+        .slvCsSelect        = MCSPI_SLV_CS_SELECT_`ch_config.slvCsSelect`,
+        .startBitEnable     = `ch_config.startBitEnable.toString(10).toUpperCase()`,
+        .startBitPolarity   = MCSPI_SB_POL_`ch_config.startBitPolarity`,
+        .turboEnable        = `ch_config.turboEnable.toString(10).toUpperCase()`,
+        .csIdleTime         = MCSPI_TCS0_`ch_config.csIdleTime`_CLK,
+        .defaultTxData      = 0x`ch_config.defaultTxData.toString(16).toUpperCase()`U,
+        .txFifoTrigLvl      = `config.txFifoTrigLevel`U,
+        .rxFifoTrigLvl      = `config.rxFifoTrigLevel`U,
+    },
+    % }
+};
+% }
+
+uint32_t gMcspiConfigNum = CONFIG_MCSPI_NUM_INSTANCES;
+
+%if(mcspiEdmaInstances.length > 0) {
+%  for(let i=0; i < module.$instances.length; i++) {
+%      let instance = module.$instances[i];
+%      let ch_instances = instance.mcspiChannel;
+%      let config = module.getInstanceConfig(instance);
+%      if(instance.intrEnable == "DMA") {
+extern MCSPI_EdmaChConfig gMcspiDmaChCfg[`instance.$name.toUpperCase()`_NUM_CH];
+%}
+%}
+%}
+/* MCSPI init objects */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+%if(config.intrEnable != "POLLED") {
+/* MCSPI Transfer Callback Function */
+void `config.transferCallbackFxn`(void *args);
+/* MCSPI Error Callback Function */
+void `config.errorCallbackFxn`(void *args);
+%}
+MCSPILLD_InitObject gMcspiInitObject[`instance.$name.toUpperCase()`_NUM_CH] =
+{
+    % let ch_instances = instance.mcspiChannel;
+    % for(let ch = 0; ch < ch_instances.length; ch++) {
+        % let ch_instance = ch_instances[ch];
+        % let ch_config = module_ch.getInstanceConfig(ch_instance);
+        % let chMode = "SINGLE";
+        % let msMode = "CONTROLLER";
+        % if(config.mode == "CONTROLLER") {
+        %   chMode = "CONTROLLER";
+        % }
+        % if(config.mode == "PERIPHERAL") {
+        %   chMode = "PERIPHERAL";
+        % }
+    {
+        .inputClkFreq                = `config.inputClkFreq`,
+        .intrNum                     = `config.intrNum`,
+        .operMode                    = MCSPI_OPER_MODE_`config.intrEnable`,
+        .intrPriority                = `config.intrPriority`U,
+        .chMode                      = MCSPI_CH_MODE_`chMode`,
+        .pinMode                     = MCSPI_PINMODE_`config.pinMode`PIN,
+        .initDelay                   = MCSPI_INITDLY_`config.initDelay`,
+        .multiWordAccess             = FALSE,
+        .msMode                      = MCSPI_MS_MODE_`msMode`,
+        .chCnt                       = `instance.$name.toUpperCase()`_NUM_CH,
+        .mcspiDmaHandle              = (MCSPI_DmaHandle ) &gEdmaConfig,
+        .chObj[`ch`].chCfg           = &gMcspiChCfg[`ch`],
+        % if(instance.intrEnable == "DMA") {
+        .chObj[`ch`].dmaChCfg        = (MCSPI_DmaChConfig)(&gMcspiDmaChCfg),
+        %}
+        % else {
+        .chObj[`ch`].dmaChCfg        = NULL,
+        %}
+        .clockP_get                  = ClockP_getTicks,
+        .clockP_usecToTick           = ClockP_usecToTicks,
+    % if(config.intrEnable != "POLLED") {
+        .transferCompleteCallbackFxn = `config.transferCallbackFxn`,
+        .errorCallbackFxn            = `config.errorCallbackFxn`,
+    % }
+    %else {
+        .transferCompleteCallbackFxn = NULL,
+        .errorCallbackFxn            = NULL,
+    % }
+    },
+    % }
+};
+% }
+
+
+%if(mcspiEdmaInstances.length > 0) {
+#include <drivers/mcspi/v0/lld/dma/mcspi_dma.h>
+#include <drivers/edma.h>
+
+%}
+%else {
+EDMA_Config gEdmaConfig[1] =
+{
+    {
+        NULL,
+        NULL,
+    }
+};
+
+uint32_t gEdmaConfigNum = 0;
+
+%}
+
+uint32_t gMcspiDmaConfigNum = CONFIG_MCSPI_NUM_DMA_INSTANCES;
+
+MCSPI_Config         gMcspiConfig[1];   //TODO

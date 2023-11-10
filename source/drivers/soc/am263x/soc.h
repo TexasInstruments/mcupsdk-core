@@ -51,6 +51,8 @@ extern "C"
 #include <drivers/hw_include/cslr_soc.h>
 #include "soc_xbar.h"
 #include "soc_rcm.h"
+#include <drivers/mcspi.h>
+#include <drivers/hw_include/am263x/cslr_soc_baseaddress.h>
 
 /**
  *  \anchor SOC_DomainId_t
@@ -77,6 +79,21 @@ extern "C"
 #define KICK_LOCK_VAL                           (0x00000000U)
 #define KICK0_UNLOCK_VAL                        (0x01234567U)
 #define KICK1_UNLOCK_VAL                        (0x0FEDCBA8U)
+
+/*! LLD_PARAM_CHECK_DEBUG_ASSERT */
+#define LLD_PARAMS_CHECK(expression) \
+if (status == SystemP_SUCCESS) { \
+    if(!(expression)) { \
+        status = MCSPI_INVALID_PARAM; \
+    } \
+}
+
+/** \brief Macro to check if the MCSPI base address is valid */
+#define IS_MCSPI_BASE_ADDR_VALID(baseAddr)    ((baseAddr == CSL_MCSPI0_U_BASE) || \
+                                               (baseAddr == CSL_MCSPI1_U_BASE) || \
+                                               (baseAddr == CSL_MCSPI2_U_BASE) || \
+                                               (baseAddr == CSL_MCSPI3_U_BASE) || \
+                                               (baseAddr == CSL_MCSPI4_U_BASE) )
 
 /**
  * \brief Enable clock to specified module

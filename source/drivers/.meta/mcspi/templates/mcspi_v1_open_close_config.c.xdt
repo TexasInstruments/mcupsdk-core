@@ -17,7 +17,7 @@
     % let config = module.getInstanceConfig(instance);
     % if(config.transferMode == "CALLBACK" && config.transferCallbackFxn != "NULL") {
 /* MCSPI Transfer Callback */
-void `config.transferCallbackFxn`(MCSPI_Handle handle, MCSPI_Transaction *transaction);
+void `config.transferCallbackFxn`(MCSPI_Handle handle);
     % }
 % }
 /* MCSPI Driver handles */
@@ -78,6 +78,7 @@ MCSPI_ChConfig g`instNameCamelCase`ChCfg[`instance.$name.toUpperCase()`_NUM_CH] 
         .startBitEnable     = `ch_config.startBitEnable.toString(10).toUpperCase()`,
         .startBitPolarity   = MCSPI_SB_POL_`ch_config.startBitPolarity`,
         .csIdleTime         = MCSPI_TCS0_`ch_config.csIdleTime`_CLK,
+        .turboEnable        = `ch_config.turboEnable.toString(10).toUpperCase()`,
         .defaultTxData      = 0x`ch_config.defaultTxData.toString(16).toUpperCase()`U,
         .txFifoTrigLvl      = `config.txFifoTrigLevel`U,
         .rxFifoTrigLvl      = `config.rxFifoTrigLevel`U,
@@ -86,11 +87,20 @@ MCSPI_ChConfig g`instNameCamelCase`ChCfg[`instance.$name.toUpperCase()`_NUM_CH] 
 };
 % }
 
-#include <drivers/mcspi/v0/dma/mcspi_dma.h>
+MCSPI_ChConfig *gConfigMcspiChCfg[`module.$instances.length`] =
+{
+    % for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+    % let config = module.getInstanceConfig(instance);
+    g`instNameCamelCase`ChCfg,
+    % }
+};
+
+
 %if(mcspiEdmaInstances.length > 0) {
-#include <drivers/mcspi/v0/dma/edma/mcspi_dma_edma.h>
+#include <drivers/mcspi/v0/lld/dma/mcspi_dma.h>
 #include <drivers/edma.h>
-%}
 
 %  for(let i=0; i < module.$instances.length; i++) {
 %      let instance = module.$instances[i];
@@ -99,25 +109,38 @@ MCSPI_ChConfig g`instNameCamelCase`ChCfg[`instance.$name.toUpperCase()`_NUM_CH] 
 %      let instNameCamelCase = common.camelSentence(instance.$name);
 %      if(instance.intrEnable == "DMA") {
 
-
-MCSPI_DmaChConfig g`instNameCamelCase`DmaChCfg[`instance.$name.toUpperCase()`_NUM_CH] =
+MCSPI_EdmaChConfig g`instNameCamelCase`DmaChCfg[`instance.$name.toUpperCase()`_NUM_CH] =
 {
-% for(let ch = 0; ch < ch_instances.length; ch++) {
-% let ch_instance = ch_instances[ch];
-% let ch_config = module_ch.getInstanceConfig(ch_instance);
-{
-.edmaRxChId = `ch_instance.mcspiRxConfigXbar.instance`,
-.edmaTxChId = `ch_instance.mcspiTxConfigXbar.instance`,
-},
-% }
+    % for(let ch = 0; ch < ch_instances.length; ch++) {
+    % let ch_instance = ch_instances[ch];
+    % let ch_config = module_ch.getInstanceConfig(ch_instance);
+    {
+        .edmaRxChId = `ch_instance.mcspiRxConfigXbar.instance`,
+        .edmaTxChId = `ch_instance.mcspiTxConfigXbar.instance`,
+    },
+    %}
 };
 %}
 %}
+%}
 
+MCSPI_DmaChConfig gMcspiDmaChConfig[`module.$instances.length`] =
+{
+    % for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+    %if(instance.intrEnable == "DMA") {
+    &g`instNameCamelCase`DmaChCfg,
+    %}
+    % else {
+    NULL,
+    %}
+    %}
+};
 
 void Drivers_mcspiOpen(void)
 {
-    uint32_t instCnt, chCnt;
+    uint32_t instCnt;
     int32_t  status = SystemP_SUCCESS;
 
     for(instCnt = 0U; instCnt < CONFIG_MCSPI_NUM_INSTANCES; instCnt++)
@@ -137,34 +160,6 @@ void Drivers_mcspiOpen(void)
         }
     }
 
-    /* Channel configuration */
-% for(let i = 0; i < module.$instances.length; i++) {
-    % let instance = module.$instances[i];
-    % let instNameCamelCase = common.camelSentence(instance.$name);
-    for(chCnt = 0U; chCnt < `instance.$name.toUpperCase()`_NUM_CH; chCnt++)
-    {
-        status = MCSPI_chConfig(
-                     gMcspiHandle[`instance.$name.toUpperCase()`],
-                     &g`instNameCamelCase`ChCfg[chCnt]);
-        if(status != SystemP_SUCCESS)
-        {
-            DebugP_logError("`instance.$name.toUpperCase()` channel %d config failed !!!\r\n", chCnt);
-            break;
-        }
-    % if(instance.intrEnable == "DMA") {
-        status = MCSPI_dmaChConfig(
-                     gMcspiHandle[`instance.$name.toUpperCase()`],
-                     &g`instNameCamelCase`ChCfg[chCnt],
-                     &g`instNameCamelCase`DmaChCfg[chCnt]);
-        if(status != SystemP_SUCCESS)
-        {
-            DebugP_logError("`instance.$name.toUpperCase()` DMA channel %d config failed !!!\r\n", chCnt);
-            break;
-        }
-     %}
-    }
-% }
-
     if(SystemP_FAILURE == status)
     {
         Drivers_mcspiClose();   /* Exit gracefully */
@@ -176,25 +171,6 @@ void Drivers_mcspiOpen(void)
 void Drivers_mcspiClose(void)
 {
     uint32_t instCnt;
-%if(mcspiEdmaInstances.length > 0) {
-    int32_t status, chCnt;
-% }
-% for(let i = 0; i < module.$instances.length; i++) {
-    % let instance = module.$instances[i];
-    % let instNameCamelCase = common.camelSentence(instance.$name);
-    % if(instance.intrEnable == "DMA") {
-    for(chCnt = 0U; chCnt < `instance.$name.toUpperCase()`_NUM_CH; chCnt++)
-    {
-        status = MCSPI_dmaClose(gMcspiHandle[`instance.$name.toUpperCase()`],
-                                &g`instNameCamelCase`ChCfg[chCnt]);
-        if(status != SystemP_SUCCESS)
-        {
-            DebugP_logError("`instance.$name.toUpperCase()` DMA close %d failed !!!\r\n", chCnt);
-            break;
-        }
-    }
-         %}
-% }
     /* Close all instances that are open */
     for(instCnt = 0U; instCnt < CONFIG_MCSPI_NUM_INSTANCES; instCnt++)
     {
@@ -204,6 +180,5 @@ void Drivers_mcspiClose(void)
             gMcspiHandle[instCnt] = NULL;
         }
     }
-
     return;
 }

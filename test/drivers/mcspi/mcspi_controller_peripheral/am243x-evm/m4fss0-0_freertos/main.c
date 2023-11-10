@@ -45,11 +45,11 @@ StackType_t gMainTaskStack[MAIN_TASK_SIZE] __attribute__((aligned(32)));
 StaticTask_t gMainTaskObj;
 TaskHandle_t gMainTask;
 
-void test_mcspi_master_main(void *args);
+void test_mcspi_controller_main(void *args);
 
 void freertos_main(void *args)
 {
-    test_mcspi_master_main(NULL);
+    test_mcspi_controller_main(NULL);
 
     vTaskDelete(NULL);
 }

@@ -1635,6 +1635,19 @@ void EDMA_init(void);
 void EDMA_deinit(void);
 
 /**
+ *  \brief  Function to check if EDMA is enabled or not.
+ *
+ *  \pre    #EDMA_open() has to be called first
+ *
+ *  \param  handle      #EDMA_Handle returned from #EDMA_open()
+ *
+ *  \return TRUE or FALSE.
+ *
+ *  \sa     #EDMA_open()
+ */
+uint32_t EDMA_isInitialized(EDMA_Handle handle);
+
+/**
  *  \brief  This function opens a given EDMA instance.
  *
  *  \param  index       Index of config to use in the *EDMA_Config* array

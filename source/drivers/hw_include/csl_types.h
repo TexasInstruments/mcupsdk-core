@@ -58,8 +58,8 @@ extern "C"
  *  @{
  */
 #ifndef TRUE
-#define TRUE		(1)
-#define FALSE		(0)
+#define TRUE		(1U)
+#define FALSE		(0U)
 #endif
 
 /* Define CSL_TRUE/CSL_FALSE to go with uint32_t */

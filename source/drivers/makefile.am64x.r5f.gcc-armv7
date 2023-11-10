@@ -72,8 +72,8 @@ FILES_common := \
     ddr_soc.c \
     mcan.c \
     mcspi_v0.c \
-    mcspi_dma.c \
     mcspi_dma_udma.c \
+    mcspi_v0_lld.c \
     mdio_v0.c \
     mmcsd_v0.c \
     mmcsd_priv.c \
@@ -158,8 +158,9 @@ FILES_PATH_common = \
     ipc_rpmsg/ \
     mcan/v0 \
     mcspi/v0 \
-    mcspi/v0/dma \
-    mcspi/v0/dma/udma \
+    mcspi/v0/lld \
+    mcspi/v0/lld/dma \
+    mcspi/v0/lld/dma/udma \
     mdio/v0 \
     mmcsd/v0 \
     ospi \

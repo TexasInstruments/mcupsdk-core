@@ -1,0 +1,24 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/drivers/mcspi/mcspi'];
+%%}
+/*
+ * MCSPI
+ */
+/*
+ * MCSPI Driver Advance Parameters - to be used only when Driver_open() and
+ * Driver_close() is not used by the application
+ */
+
+/* MCSPI Channel Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let ch_instances = instance.mcspiChannel;
+#define `instance.$name.toUpperCase()`_NUM_CH (`ch_instances.length`U)
+% }
+
+/* MCSPI Driver open/close - can be used by application when Driver_open() and
+ * Driver_close() is not used directly and app wants to control the various driver
+ * open/close sequences */
+void Drivers_mcspiOpen(void);
+void Drivers_mcspiClose(void);

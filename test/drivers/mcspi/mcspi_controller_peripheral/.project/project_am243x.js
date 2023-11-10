@@ -116,7 +116,7 @@ const templates_nortos_r5f =
         input: ".project/templates/am243x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "test_mcspi_master_main",
+            entryFunction: "test_mcspi_controller_main",
         },
     }
 ];
@@ -146,7 +146,7 @@ const templates_freertos_m4f =
         input: ".project/templates/am243x/freertos/main_freertos.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "test_mcspi_master_main",
+            entryFunction: "test_mcspi_controller_main",
         },
     }
 ];

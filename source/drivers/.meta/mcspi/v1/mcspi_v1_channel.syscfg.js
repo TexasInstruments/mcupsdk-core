@@ -111,6 +111,24 @@ PHA1 = Data are latched on even-numbered edges of SPICLK`,
             ],
             description: "Polarity of the chip select signal",
         },
+        {
+            name: "turboEnable",
+            displayName: "Enable Turbo Mode",
+            default: "false",
+            options: [
+                {
+                    name: "false",
+                    displayName: "false"
+                },
+                {
+                    name: "true",
+                    displayName: "true"
+                },
+            ],
+            description: ' Turbo mode improves the throughput of the MCSPI interface when a single channel is enabled by allowing' +
+                         ' transfers until the shift register and the MCSPI_RX_0/1/2/3 register are full. Turbo mode is time ' +
+                         ' saving when a transfer exceeds two words.'
+        },
         /* Advanced parameters */
         {
             name: "advanced",
@@ -145,9 +163,8 @@ PHA1 = Data are latched on even-numbered edges of SPICLK`,
             name: "slvCsSelect",
             displayName: "Peripheral Chip-select",
             default: 0,
+            description: "Peripheral select signal detection. Applicable for Channel 0 and in single peripheral mode only",
             hidden: true,
-            description: "Peripheral select signal detection. Applicable for Channel 0 and in peripheral mode only",
-            //TODO: Hide for controller mode
         },
         {
             name: "startBitEnable",

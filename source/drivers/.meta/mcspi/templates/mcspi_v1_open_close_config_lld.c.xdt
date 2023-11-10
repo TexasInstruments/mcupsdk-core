@@ -1,0 +1,99 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("mcspi");
+    let module = system.modules['/drivers/mcspi/mcspi'];
+    let mcspiEdmaInstances = [];
+    let module_ch = system.modules[`/drivers/mcspi/${driverVer}/mcspi_${driverVer}_channel`];
+%%}
+/*
+ * MCSPI
+ */
+#include <drivers/mcspi/v0/lld/mcspi_lld.h>
+
+/* MCSPI Driver handles */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+MCSPILLD_Object gMcspiObject`i`;
+MCSPILLD_Handle gMcspiHandle`i` = &gMcspiObject`i`;
+extern MCSPILLD_InitObject gMcspiInitObject[`instance.$name.toUpperCase()`_NUM_CH];
+extern MCSPI_ChConfig gMcspiChCfg[`instance.$name.toUpperCase()`_NUM_CH];
+
+%}
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % if(instance.intrEnable == "DMA") {
+    %    mcspiEdmaInstances.push(module.getInstanceConfig(instance).edmaDriver);
+    % }
+% }
+/* MCSPI Driver handles */
+
+%if(mcspiEdmaInstances.length > 0) {
+#include <drivers/mcspi/v0/lld/dma/mcspi_dma.h>
+#include <drivers/edma.h>
+
+/* EDMA Driver handles */
+extern EDMA_Handle gEdmaHandle[CONFIG_EDMA_NUM_INSTANCES];
+
+%  for(let i=0; i < module.$instances.length; i++) {
+%      let instance = module.$instances[i];
+%      let ch_instances = instance.mcspiChannel;
+%      let config = module.getInstanceConfig(instance);
+%      if(instance.intrEnable == "DMA") {
+
+MCSPI_EdmaChConfig gMcspiDmaChCfg[`instance.$name.toUpperCase()`_NUM_CH] =
+{
+    % for(let ch = 0; ch < ch_instances.length; ch++) {
+    % let ch_instance = ch_instances[ch];
+    % let ch_config = module_ch.getInstanceConfig(ch_instance);
+    {
+        .edmaRxChId = `ch_instance.mcspiRxConfigXbar.instance`,
+        .edmaTxChId = `ch_instance.mcspiTxConfigXbar.instance`,
+    },
+    % }
+};
+%}
+%}
+%}
+
+void Drivers_mcspiOpen(void)
+{
+    int32_t status = MCSPI_STATUS_SUCCESS;
+
+    % for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    gMcspiHandle`i`->state = MCSPI_STATE_RESET;
+    gMcspiHandle`i`->baseAddr = `config.baseAddr`;
+    gMcspiHandle`i`->hMcspiInit = &gMcspiInitObject[0];
+
+    % if(config.intrEnable == "DMA") {
+    status = MCSPI_lld_initDma(gMcspiHandle`i`);
+    % }
+    % else {
+    status = MCSPI_lld_init(gMcspiHandle`i`);
+    % }
+    % }
+    DebugP_assert(status == MCSPI_STATUS_SUCCESS);
+    return;
+}
+
+void Drivers_mcspiClose(void)
+{
+    int32_t status = MCSPI_STATUS_SUCCESS;
+
+    % for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if(config.intrEnable == "DMA") {
+    status = MCSPI_lld_deInitDma(gMcspiHandle`i`);
+    % } else {
+    status = MCSPI_lld_deInit(gMcspiHandle`i`);
+    % }
+    % }
+    DebugP_assert(status == MCSPI_STATUS_SUCCESS);
+    return;
+}
+

@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM243x_ALX_beta" --package "ALX" --part "ALX" --context "r5fss0-1" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.10.0+2127"}
+ * @versions {"tool":"1.18.0+3266"}
  */
 
 /**
@@ -12,8 +12,6 @@ const ipc        = scripting.addModule("/drivers/ipc/ipc");
 const mcspi      = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
 const mcspi1     = mcspi.addInstance();
 const mcspi2     = mcspi.addInstance();
-const udma       = scripting.addModule("/drivers/udma/udma", {}, false);
-const udma1      = udma.addInstance();
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71 = mpu_armv7.addInstance();
@@ -33,13 +31,18 @@ ipc.r5fss0_0 = "notify";
 mcspi1.$name                 = "CONFIG_MCSPI0";
 mcspi1.SPI.$assign           = "SPI0";
 mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
+mcspi1.child.$name           = "drivers_mcspi_v0_mcspi_v0_template0";
 
 mcspi2.$name                 = "CONFIG_MCSPI1";
 mcspi2.SPI.$assign           = "SPI4";
 mcspi2.mcspiChannel[0].$name = "CONFIG_MCSPI_CH1";
+mcspi2.child.$name           = "drivers_mcspi_v0_mcspi_v0_template1";
 
-udma1.$name    = "CONFIG_UDMA0";
-udma1.instance = "PKTDMA_0";
+const udma        = scripting.addModule("/drivers/udma/udma", {}, false);
+const udma1       = udma.addInstance({}, false);
+udma1.$name       = "CONFIG_UDMA0";
+mcspi1.udmaDriver = udma1;
+mcspi2.udmaDriver = udma1;
 
 debug_log.enableCssLog       = false;
 debug_log.enableSharedMemLog = true;
@@ -75,11 +78,11 @@ mpu_armv75.size         = 16;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-mcspi1.SPI.CLK.$suggestSolution             = "ball.B8";
-mcspi1.SPI.D0.$suggestSolution              = "ball.A8";
-mcspi1.SPI.D1.$suggestSolution              = "ball.C9";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "ball.B7";
-mcspi2.SPI.CLK.$suggestSolution             = "ball.B9";
-mcspi2.SPI.D0.$suggestSolution              = "ball.A9";
-mcspi2.SPI.D1.$suggestSolution              = "ball.C11";
-mcspi2.mcspiChannel[0].CSn.$suggestSolution = "ball.A11";
+mcspi1.SPI.CLK.$suggestSolution             = "SPI0_CLK";
+mcspi1.SPI.D0.$suggestSolution              = "SPI0_D0";
+mcspi1.SPI.D1.$suggestSolution              = "SPI0_D1";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution = "SPI0_CS1";
+mcspi2.SPI.CLK.$suggestSolution             = "UART0_CTSn";
+mcspi2.SPI.D0.$suggestSolution              = "UART0_RTSn";
+mcspi2.SPI.D1.$suggestSolution              = "UART1_CTSn";
+mcspi2.mcspiChannel[0].CSn.$suggestSolution = "UART1_RTSn";

@@ -126,6 +126,7 @@ const example_file_list = [
     "examples/drivers/udma/udma_memcpy_polling/.project/project.js",
     "examples/drivers/udma/udma_sw_trigger/.project/project.js",
     "examples/drivers/watchdog/watchdog_interrupt/.project/project.js",
+    "examples/drivers/mcspi/mcspi_loopback_turbo_mode/.project/project.js",
     "examples/empty/.project/project_freertos.js",
     "examples/empty/.project/project_nortos.js",
     "examples/hello_world/.project/project.js",
