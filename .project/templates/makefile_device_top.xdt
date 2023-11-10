@@ -4,9 +4,9 @@
 	let component_target_prebuilt_list_string = [];
 	let component_target_clean_list_string = [];
 	let component_target_scrub_list_string = [];
-	let component_target_list_string_gcc = "$(BUILD_COMBO_board) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos) $(BUILD_COMBO_nortos)";
-	let component_target_clean_list_string_gcc = "$(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_nortos)";
-	let component_target_scrub_list_string_gcc = "$(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_nortos)";
+	let component_target_list_string_gcc = [];
+	let component_target_clean_list_string_gcc = [];
+	let component_target_scrub_list_string_gcc = [];
 	let component_target_prebuilt_clean_list_string = [];
 	let component_target_prebuilt_scrub_list_string = [];
 	for (component of args.component_list) {
@@ -24,6 +24,14 @@
 			component_target_list_string +=` \$(BUILD_COMBO_${component.name})`
 			component_target_clean_list_string +=` \$(BUILD_COMBO_CLEAN_${component.name})`
 			component_target_scrub_list_string +=` \$(BUILD_COMBO_SCRUB_${component.name})`
+
+			if((device == "am64x") || (device == "am243x")){
+			if (["board","drivers","freertos","nortos"].includes(component.name)) {
+			component_target_list_string_gcc +=` \$(BUILD_COMBO_GCC_${component.name})`
+			component_target_clean_list_string_gcc +=` \$(BUILD_COMBO_CLEAN_GCC_${component.name})`
+			component_target_scrub_list_string_gcc +=` \$(BUILD_COMBO_SCRUB_GCC_${component.name})`
+			}
+			}
 		}
 	}
 %%}
@@ -36,15 +44,19 @@ all:
 	$(MAKE) -f makefile.`device` sbl
 	$(MAKE) -f makefile.`device` examples
 
+% if ((device == "am64x") || (device == "am243x")) {
 all_gcc:
 	$(MAKE) -f makefile.`device` libs_gcc
 	$(MAKE) -f makefile.`device` sbl_gcc
 	$(MAKE) -f makefile.`device` examples_gcc
+% }
 
 clean: libs-clean sbl-clean examples-clean
 scrub: libs-scrub sbl-scrub examples-scrub
+% if ((device == "am64x") || (device == "am243x")) {
 clean_gcc: libs_gcc-clean sbl_gcc-clean examples_gcc-clean
 scrub_gcc: libs_gcc-scrub sbl_gcc-scrub examples_gcc-scrub
+% }
 
 help:
 	@echo  Notes,
@@ -97,11 +109,22 @@ help:
 BUILD_COMBO_`component.name` =`component.buildTarget`
 % }
 
+% if ((device == "am64x") || (device == "am243x")) {
+# Various GCC Component Targets
+% for (component of args.component_list) {
+%     if (["board","drivers","freertos","nortos"].includes(component.name)) {
+BUILD_COMBO_GCC_`component.name` =`component.buildTarget_gcc`
+%  }
+% }
+%}
+
 # Combine all Components
 BUILD_COMBO_ALL =`component_target_list_string`
 
+% if ((device == "am64x") || (device == "am243x")) {
 # Combine all gcc Components
 BUILD_COMBO_ALL_GCC = `component_target_list_string_gcc`
+% }
 
 # Combine all Pre-built Components
 BUILD_COMBO_PREBUILT_ALL =`component_target_prebuilt_list_string`
@@ -110,8 +133,9 @@ BUILD_COMBO_PREBUILT_ALL =`component_target_prebuilt_list_string`
 BUILD_COMBO_PRIVATE_ALL =`component_target_private_list_string`
 
 libs: $(BUILD_COMBO_ALL)
-
+% if ((device == "am64x") || (device == "am243x")) {
 libs_gcc: $(BUILD_COMBO_ALL_GCC)
+%}
 
 libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
 
@@ -123,23 +147,44 @@ $(BUILD_COMBO_`component.name`):
 
 % }
 
+% if ((device == "am64x") || (device == "am243x")) {
+% for (component of args.component_list) {
+%     if (["board","drivers","freertos","nortos"].includes(component.name)) {
+$(BUILD_COMBO_GCC_`component.name`):
+	$(MAKE) -C `component.relpath` -f makefile`component.tag`.`args.device`.$(subst `component.name`_,,$@) all
+
+%  }
+% }
+% }
+
 # Various Component Clean Targets
 % for (component of args.component_list) {
 BUILD_COMBO_CLEAN_`component.name` =`component.buildTargetClean`
 % }
 
+% if ((device == "am64x") || (device == "am243x")) {
+# Various GCC Component Clean Targets
+% for (component of args.component_list) {
+%     if (["board","drivers","freertos","nortos"].includes(component.name)) {
+BUILD_COMBO_CLEAN_GCC_`component.name` =`component.buildTargetClean_gcc`
+%  }
+% }
+% }
+
 # Combine all Components Clean
 BUILD_COMBO_CLEAN_ALL =`component_target_clean_list_string`
 
+% if ((device == "am64x") || (device == "am243x")) {
 BUILD_COMBO_CLEAN_ALL_GCC=`component_target_clean_list_string_gcc`
+% }
 
 # Combine all Pre-built Components Clean
 BUILD_COMBO_PREBUILT_CLEAN_ALL =`component_target_prebuilt_clean_list_string`
 
 libs-clean: $(BUILD_COMBO_CLEAN_ALL)
-
+% if ((device == "am64x") || (device == "am243x")) {
 libs_gcc-clean: $(BUILD_COMBO_CLEAN_ALL_GCC)
-
+% }
 libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
 
 % for (component of args.component_list) {
@@ -148,29 +193,58 @@ $(BUILD_COMBO_CLEAN_`component.name`):
 
 % }
 
+% if ((device == "am64x") || (device == "am243x")) {
+% for (component of args.component_list) {
+%     if (["board","drivers","freertos","nortos"].includes(component.name)) {
+$(BUILD_COMBO_CLEAN_GCC_`component.name`):
+	$(MAKE) -C `component.relpath` -f makefile`component.tag`.`args.device`.$(subst `component.name`_,,$(subst _clean,,$@)) clean
+
+%  }
+% }
+% }
+
 # Various Component Scrub Targets
 % for (component of args.component_list) {
 BUILD_COMBO_SCRUB_`component.name` =`component.buildTargetScrub`_scrub
 % }
 
+% if ((device == "am64x") || (device == "am243x")) {
+# Various GCC Component Scrub Targets
+% for (component of args.component_list) {
+%     if (["board","drivers","freertos","nortos"].includes(component.name)) {
+BUILD_COMBO_SCRUB_GCC_`component.name` =`component.buildTargetScrub_gcc`_scrub
+%  }
+% }
+% }
+
 # Combine all Components Scrub Targets
 BUILD_COMBO_SCRUB_ALL =`component_target_scrub_list_string`
-
+% if ((device == "am64x") || (device == "am243x")) {
 BUILD_COMBO_SCRUB_ALL_GCC=`component_target_scrub_list_string_gcc`
+% }
 
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =`component_target_prebuilt_scrub_list_string`
 
 libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
-
+% if ((device == "am64x") || (device == "am243x")) {
 libs_gcc-scrub: $(BUILD_COMBO_SCRUB_ALL_GCC)
-
+% }
 libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
 
 % for (component of args.component_list) {
 $(BUILD_COMBO_SCRUB_`component.name`):
 	$(MAKE) -C `component.relpath` -f makefile`component.tag`.`args.device`.$(subst `component.name`_,,$(subst _scrub,,$@)) scrub
 
+% }
+% if ((device == "am64x") || (device == "am243x")) {
+% for (component of args.component_list) {
+%     if (["board","drivers","freertos","nortos"].includes(component.name)) {
+$(BUILD_COMBO_SCRUB_GCC_`component.name`):
+	$(MAKE) -C `component.relpath` -f makefile`component.tag`.`args.device`.$(subst `component.name`_,,$(subst _scrub,,$@)) scrub
+
+%  }
+% }
 % }
 
 BUILD_COMBO_EXAMPLE_ALL =
@@ -179,7 +253,7 @@ BUILD_COMBO_EXAMPLE_ALL =
 %   if(!example.isSkipTopLevelBuild && !example.isBootLoader) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if (end === "ti-arm-clang") {
+%     if (end !== "gcc-armv7") {
 BUILD_COMBO_EXAMPLE_ALL +=`example.buildTarget`
 %   }
 %  }
@@ -191,6 +265,7 @@ BUILD_COMBO_EXAMPLE_ALL +=`example.buildTarget`
 %   }
 % }
 
+% if ((device == "am64x") || (device == "am243x")) {
 BUILD_COMBO_EXAMPLE_ALL_GCC =
 # Various Gcc Example Targets
 % for (example of args.example_list) {
@@ -201,6 +276,7 @@ BUILD_COMBO_EXAMPLE_ALL_GCC =
 BUILD_COMBO_EXAMPLE_ALL_GCC +=`example.buildTarget`
 %     }
 %   }
+% }
 % }
 
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
@@ -220,8 +296,11 @@ BUILD_COMBO_EXAMPLE_PRIVATE_ALL +=`example.buildTarget`
 
 examples: $(BUILD_COMBO_EXAMPLE_ALL)
 
+% if ((device == "am64x") || (device == "am243x")) {
 examples_gcc: $(BUILD_COMBO_EXAMPLE_ALL_GCC)
+% }
 
+% if ((device == "am64x") || (device == "am243x")) {
 % for (example of args.example_list) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
@@ -230,13 +309,14 @@ examples_gcc: $(BUILD_COMBO_EXAMPLE_ALL_GCC)
 	$(MAKE) -C `example.relpath` -f makefile all
 %         }
 %       }
+%       }
 
 examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
 % for (example of args.example_list) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if (end === "ti-arm-clang") {
+%     if (end !== "gcc-armv7") {
 `example.buildTarget`:
 	$(MAKE) -C `example.relpath` -f makefile all
 
@@ -254,7 +334,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 %   if(!example.isSkipTopLevelBuild && !example.isBootLoader) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if (end === "ti-arm-clang") {
+%     if (end !== "gcc-armv7") {
 BUILD_COMBO_EXAMPLE_CLEAN_ALL +=`example.buildTargetClean`
 %   }
 % }
@@ -266,6 +346,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL +=`example.buildTargetClean`
 %   }
 % }
 
+% if ((device == "am64x") || (device == "am243x")) {
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC =
 # Various Example_Gcc Clean Targets
 % for (example of args.example_list) {
@@ -276,6 +357,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC =
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC +=`example.buildTargetClean`
 %     }
 %   }
+% }
 % }
 
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
@@ -293,8 +375,9 @@ BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL +=`example.buildTargetClean`
 % }
 
 examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
-
+% if ((device == "am64x") || (device == "am243x")) {
 examples_gcc-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC)
+% }
 
 examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
@@ -315,7 +398,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 %   if(!example.isSkipTopLevelBuild && !example.isBootLoader) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if (end === "ti-arm-clang") {
+%     if (end !== "gcc-armv7") {
 BUILD_COMBO_EXAMPLE_SCRUB_ALL +=`example.buildTargetScrub`
 %   }
 % }
@@ -327,6 +410,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL +=`example.buildTargetScrub`
 %   }
 % }
 
+% if ((device == "am64x") || (device == "am243x")) {
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC =
 # Various Example_Gcc Scrub Targets
 % for (example of args.example_list) {
@@ -337,6 +421,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC =
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC +=`example.buildTargetScrub`
 %     }
 %   }
+% }
 % }
 
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
@@ -354,8 +439,9 @@ BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL +=`example.buildTargetScrub`
 % }
 
 examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
-
+% if ((device == "am64x") || (device == "am243x")) {
 examples_gcc-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC)
+% }
 
 examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
@@ -375,12 +461,12 @@ sbl: libs
 % if(example.isBootLoader) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if (end === "ti-arm-clang") {
+%     if (end !== "gcc-armv7") {
 	$(MAKE) -C `example.relpath` -f makefile all
 %}
 %}
 %}
-
+% if ((device == "am64x") || (device == "am243x")) {
 sbl_gcc: libs_gcc
 % for (example of args.example_list) {
 % if(example.isBootLoader) {
@@ -391,13 +477,14 @@ sbl_gcc: libs_gcc
 %     }
 %    }
 %   }
+% }
 
 sbl-clean:
 % for (example of args.example_list) {
 % if(example.isBootLoader) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if (end === "ti-arm-clang") {
+%     if (end !== "gcc-armv7") {
 	$(MAKE) -C `example.relpath` -f makefile clean
 %}
 %}
@@ -408,12 +495,13 @@ sbl-scrub:
 % if(example.isBootLoader) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if (end === "ti-arm-clang") {
+%     if (end !== "gcc-armv7") {
 	$(MAKE) -C `example.relpath` -f makefile scrub
 %}
 %}
 %}
 
+% if ((device == "am64x") || (device == "am243x")) {
 sbl_gcc-clean:
 % for (example of args.example_list) {
 % if(example.isBootLoader) {
@@ -424,7 +512,9 @@ sbl_gcc-clean:
 %     }
 %    }
 %   }
+% }
 
+% if ((device == "am64x") || (device == "am243x")) {
 sbl_gcc-scrub:
 % for (example of args.example_list) {
 % if(example.isBootLoader) {
@@ -435,6 +525,7 @@ sbl_gcc-scrub:
 %     }
 %    }
 %   }
+% }
 
 % if ((device == "am64x") || (device == "am243x")) {
 sbl-hs:

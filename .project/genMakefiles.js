@@ -20,6 +20,9 @@ function genMakefileDeviceTop(component_file_list, example_file_list, device, is
     for(component of component_file_list) {
         let component_make = [];
         let buildTarget = [];
+        let buildTarget_gcc = [];
+        let buildTargetClean_gcc = [];
+        let buildTargetScrub_gcc = [];
         let buildTargetClean = [];
         let buildTargetScrub = [];
 
@@ -43,9 +46,22 @@ function genMakefileDeviceTop(component_file_list, example_file_list, device, is
             component_make.isPrebuilt = true;
         }
         for(buildOption of property.buildOptionCombos) {
-            buildTarget +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}`;
-            buildTargetClean +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}_clean`;
-            buildTargetScrub +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}_scrub`;
+            if(buildOption.cgt === "gcc-armv7" && (device === "am64x" ||  device === "am243x")){
+                buildTarget_gcc +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}`;
+                buildTargetClean_gcc +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}_clean`;
+                buildTargetScrub_gcc +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}_scrub`;
+            }
+            else{
+                buildTarget +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}`;
+                buildTargetClean +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}_clean`;
+                buildTargetScrub +=` ${property.name}_${buildOption.cpu}.${buildOption.cgt}_scrub`;
+            }
+
+        }
+        if((device === "am64x" ||  device === "am243x")){
+            component_make.buildTarget_gcc = buildTarget_gcc;
+            component_make.buildTargetClean_gcc = buildTargetClean_gcc;
+            component_make.buildTargetScrub_gcc = buildTargetScrub_gcc;
         }
         component_make.buildTarget = buildTarget;
         component_make.buildTargetClean = buildTargetClean;

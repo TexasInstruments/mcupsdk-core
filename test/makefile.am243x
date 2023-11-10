@@ -381,11 +381,13 @@ help:
 BUILD_COMBO_unity = unity_r5f.ti-arm-clang unity_m4f.ti-arm-clang
 BUILD_COMBO_doxy_samples = doxy_samples_r5f.ti-arm-clang
 
+# Various GCC Component Targets
+
 # Combine all Components
 BUILD_COMBO_ALL = $(BUILD_COMBO_unity) $(BUILD_COMBO_doxy_samples)
 
 # Combine all gcc Components
-BUILD_COMBO_ALL_GCC = $(BUILD_COMBO_board) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos) $(BUILD_COMBO_nortos)
+BUILD_COMBO_ALL_GCC = 
 
 # Combine all Pre-built Components
 BUILD_COMBO_PREBUILT_ALL =
@@ -394,7 +396,6 @@ BUILD_COMBO_PREBUILT_ALL =
 BUILD_COMBO_PRIVATE_ALL =
 
 libs: $(BUILD_COMBO_ALL)
-
 libs_gcc: $(BUILD_COMBO_ALL_GCC)
 
 libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
@@ -408,22 +409,23 @@ $(BUILD_COMBO_doxy_samples):
 	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.am243x.$(subst doxy_samples_,,$@) all
 
 
+
 # Various Component Clean Targets
 BUILD_COMBO_CLEAN_unity = unity_r5f.ti-arm-clang_clean unity_m4f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_doxy_samples = doxy_samples_r5f.ti-arm-clang_clean
 
+# Various GCC Component Clean Targets
+
 # Combine all Components Clean
 BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_unity) $(BUILD_COMBO_CLEAN_doxy_samples)
 
-BUILD_COMBO_CLEAN_ALL_GCC=$(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_nortos)
+BUILD_COMBO_CLEAN_ALL_GCC=
 
 # Combine all Pre-built Components Clean
 BUILD_COMBO_PREBUILT_CLEAN_ALL =
 
 libs-clean: $(BUILD_COMBO_CLEAN_ALL)
-
 libs_gcc-clean: $(BUILD_COMBO_CLEAN_ALL_GCC)
-
 libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
 
 $(BUILD_COMBO_CLEAN_unity):
@@ -433,22 +435,22 @@ $(BUILD_COMBO_CLEAN_doxy_samples):
 	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.am243x.$(subst doxy_samples_,,$(subst _clean,,$@)) clean
 
 
+
 # Various Component Scrub Targets
 BUILD_COMBO_SCRUB_unity = unity_r5f.ti-arm-clang_scrub unity_m4f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_doxy_samples = doxy_samples_r5f.ti-arm-clang_scrub_scrub
 
+# Various GCC Component Scrub Targets
+
 # Combine all Components Scrub Targets
 BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_unity) $(BUILD_COMBO_SCRUB_doxy_samples)
-
-BUILD_COMBO_SCRUB_ALL_GCC=$(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_nortos)
+BUILD_COMBO_SCRUB_ALL_GCC=
 
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
 
 libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
-
 libs_gcc-scrub: $(BUILD_COMBO_SCRUB_ALL_GCC)
-
 libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
 
 $(BUILD_COMBO_SCRUB_unity):
@@ -2096,7 +2098,6 @@ BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
 # Various Private System Example Targets
 
 examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
-
 examples_gcc-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC)
 
 examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
@@ -3400,7 +3401,6 @@ BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
 # Various Private System Example Targets
 
 examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
-
 examples_gcc-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC)
 
 examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
@@ -4375,7 +4375,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 sbl: libs
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 	$(MAKE) -C ../tools/flasher/jtag_uniflash/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
 sbl_gcc: libs_gcc
 
 sbl-clean:
