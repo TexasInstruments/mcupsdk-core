@@ -37,14 +37,13 @@ const libs_nortos_r5f = {
     ],
 };
 
-
 const lnkfiles = {
     common: [
         "linker.cmd",
     ]
 };
 
-const syscfgfile = "../example.syscfg";
+const syscfgfile = "../example.syscfg"
 
 const readmeDoxygenPageTag = "EXAMPLES_MATHLIB_BENCHMARK";
 
@@ -59,12 +58,10 @@ const templates_nortos_r5f =
     }
 ];
 
-
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos", isPartOfSystemProject: true},
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos"},
 ];
-
 
 function getComponentProperty() {
     let property = {};
@@ -83,11 +80,12 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.files = files;
     build_property.filedirs = filedirs;
-    build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
+
     if(buildOption.cpu.match(/r5f*/)) {
+        build_property.libdirs = libdirs_nortos;
         build_property.libs = libs_nortos_r5f;
         build_property.templates = templates_nortos_r5f;
     }
@@ -95,13 +93,7 @@ function getComponentBuildProperty(buildOption) {
     return build_property;
 }
 
-function getSystemProjects(device)
-{
-    return systemProjects;
-}
-
 module.exports = {
     getComponentProperty,
     getComponentBuildProperty,
-    getSystemProjects,
 };
