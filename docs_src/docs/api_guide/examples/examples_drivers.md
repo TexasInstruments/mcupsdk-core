@@ -246,6 +246,9 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_GPIO_MULTI_LED_BLINK
 -# HSMCLIENT
    -# \subpage EXAMPLES_HSM_SERVICES
+\cond SOC_AM263X || SOC_AM263PX
+   -# \subpage EXAMPLES_MPU_FIREWALL_SERVICES_DEMO
+\endcond
 -# I2C
    -# \subpage EXAMPLES_DRIVERS_I2C_LED_BLINK
    -# \subpage EXAMPLES_DRIVERS_I2C_READ

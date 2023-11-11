@@ -260,122 +260,33 @@ Emulation = 1
 
 //![hsm_services_example_qspi]
 
-//![hsm_services_example_uart]
+//![mpu_firewall_services_demo_qspi]
+ [HSM_CLIENT] New Client Registered with Client Id = 0
+ Starting QSPI Bootloader ...
+[BOOTLOADER_PROFILE] Boot Media       : NOR SPI FLASH
+[BOOTLOADER_PROFILE] Boot Media Clock : 80.000 MHz
+[BOOTLOADER_PROFILE] Boot Image Size  : 28 KB
+[BOOTLOADER_PROFILE] Cores present    :
+r5f0-1
+r5f0-0
+[BOOTLOADER PROFILE] System_init                      :        286us
+[BOOTLOADER PROFILE] Drivers_open                     :         75us
+[BOOTLOADER PROFILE] LoadHsmRtFw                      :      14503us
+[BOOTLOADER PROFILE] Board_driversOpen                :       2975us
+[BOOTLOADER PROFILE] CPU load                         :       2292us
+[BOOTLOADER_PROFILE] SBL Total Time Taken             :      20134us
+
+Image loading done, switching to application ...
 
  [HSM_CLIENT] New Client Registered with Client Id = 2
 
- [HSM CLIENT] Sending UID Request to HSM Server..
- [HSM CLIENT] Device UID Suceessfully retrived from the HSM Server.
+ Enabling the interrupt for both address violation and protection violation for MPU_R5SS0_CORE1_AHB
+Firewall request #1 status = 11111111 11111111
 
- [HSM CLIENT_PROFILE] Time taken by GetUID Request : 84us
+ Permissions for peripheral region(0x5230 0000 - 0x5230 03FF) are revoked for R5FSS0_1
 
- [HSM CLIENT] Device UID is : 06D3BF416160CDD6DDF8CB8D7DEE63DFB42EDFE805726C0DE705D76CC586BD03E18B601A6D5854C810CBD00
+ [HSM_CLIENT] New Client Registered with Client Id = 2
 
- [HSM CLIENT] TIFS-MCU Information
-[Soc Type]          = AM263x
-[Device Type]       = HS-FS
-[HSM Type]          = HSM_V1
-[Bin Type]          = STANDARD
-[TIFS-MCU Version]  = 9.0.0
-
-Firewall request status = 11111111 11111111
-Firewall Id = 12
-Firewall region number = 2
-Start Address = 0x502f0000
-End Address = 0x502f0fff
-Aid Config = 0x10
-Supervisor Read = 1
-Supervisor Write = 1
-Supervisor Execute = 1
-User Read = 1
-User Write = 1
-User Execute = 1
-Non Secure Access = 1
-Emulation = 1
-
-Firewall Id = 13
-Firewall region number = 2
-Start Address = 0x502f0000
-End Address = 0x502f0fff
-Aid Config = 0x10
-Supervisor Read = 1
-Supervisor Write = 1
-Supervisor Execute = 1
-User Read = 1
-User Write = 1
-User Execute = 1
-Non Secure Access = 1
-Emulation = 1
-
-Firewall Id = 14
-Firewall region number = 2
-Start Address = 0x502f0000
-End Address = 0x502f0fff
-Aid Config = 0x10
-Supervisor Read = 1
-Supervisor Write = 1
-Supervisor Execute = 1
-User Read = 1
-User Write = 1
-User Execute = 1
-Non Secure Access = 1
-Emulation = 1
-
-Firewall Id = 15
-Firewall region number = 2
-Start Address = 0x502f0000
-End Address = 0x502f0fff
-Aid Config = 0x10
-Supervisor Read = 1
-Supervisor Write = 1
-Supervisor Execute = 1
-User Read = 1
-User Write = 1
-User Execute = 1
-Non Secure Access = 1
-Emulation = 1
-
-Firewall Id = 16
-Firewall region number = 2
-Start Address = 0x502f0000
-End Address = 0x502f0fff
-Aid Config = 0x10
-Supervisor Read = 1
-Supervisor Write = 1
-Supervisor Execute = 1
-User Read = 1
-User Write = 1
-User Execute = 1
-Non Secure Access = 1
-Emulation = 1
-
-Firewall Id = 17
-Firewall region number = 2
-Start Address = 0x502f0000
-End Address = 0x502f0fff
-Aid Config = 0x10
-Supervisor Read = 1
-Supervisor Write = 1
-Supervisor Execute = 1
-User Read = 1
-User Write = 1
-User Execute = 1
-Non Secure Access = 1
-Emulation = 1
-
-Firewall request status = 11111111 11111111
-Firewall Id = 8
-Firewall region number = 0
-Start Address = 0x72000400
-End Address = 0x720007ff
-Aid Config = 0xe0
-Supervisor Read = 0
-Supervisor Write = 0
-Supervisor Execute = 0
-User Read = 0
-User Write = 0
-User Execute = 0
-Non Secure Access = 1
-Emulation = 1
-
-//![hsm_services_example_uart]
+ Interrupt registeration successful, notifying remote core to read CSL_UART0_U_BASE register
+Success
+//![mpu_firewall_services_demo_qspi]

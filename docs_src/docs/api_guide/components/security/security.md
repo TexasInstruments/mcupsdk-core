@@ -95,17 +95,8 @@ accessing the MMR regions for the crypto accelerator.
 
 ### Services
 
-The TIFS-MCU firmware that gets loaded on HSM provides the following services.
-
-* Get Version
-	- This service when invoked provides the version of the TIFS-MCU firmware
-      loaded on HSM. Please refer to \ref DRIVERS_HSMCLIENT_GET_VERSION.
-
-* Get UID
-	- This service when invoked provides the unique identifier (UID) of the device.
-       Please refer to \ref DRIVERS_HSMCLIENT_GET_UID.
-* Set Firewall
-    - This service when invoked is used to configure MPU firewall regions. Please refer to \ref DRIVERS_HSMCLIENT_SET_FIREWALL.
+The TIFS-MCU firmware that gets loaded on HSM provides the variety of services. For more
+information refer @ref DRIVERS_HSMCLIENT_PAGE
 
 \endcond
 
