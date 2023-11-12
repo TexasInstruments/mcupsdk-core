@@ -1,7 +1,7 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @versions {"tool":"1.18.0+3266"}
  */
 
@@ -49,6 +49,7 @@ ipc.r5fss1_1 = "NONE";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign     = "UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
 
@@ -271,10 +272,3 @@ firewall_service1.mpu_region[0].startAddr        = 0x52300000;
 firewall_service1.mpu_region[0].endAddr          = 0x523003FF;
 firewall_service1.mpu_region[0].aidConfig        = ["R5FSS0_1"];
 firewall_service1.mpu_region[0].permissionConfig = [];
-
-/**
- * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
- * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
- * re-solve from scratch.
- */
-debug_log.uartLog.UART.$suggestSolution = "UART0";
