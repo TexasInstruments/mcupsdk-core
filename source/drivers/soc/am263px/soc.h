@@ -51,6 +51,7 @@ extern "C"
 #include <drivers/hw_include/cslr_soc.h>
 #include "soc_xbar.h"
 #include "soc_rcm.h"
+#include <drivers/mcspi/v0/lld/mcspi_lld.h>
 
 /**
  *  \anchor SOC_DomainId_t
@@ -78,23 +79,25 @@ extern "C"
 #define KICK0_UNLOCK_VAL                        (0x01234567U)
 #define KICK1_UNLOCK_VAL                        (0x0FEDCBA8U)
 
-/*! LLD_PARAM_CHECK_DEBUG_ASSERT */
-#define LLD_PARAMS_CHECK(expression) \
-if (status == SystemP_SUCCESS) { \
-    if(!(expression)) { \
-        status = MCSPI_INVALID_PARAM; \
-    } \
-}
+/** \brief API to validate MCSPI base address. */
+static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
+{
+    int32_t status = MCSPI_INVALID_PARAM;
 
-/** \brief Macro to check if the MCSPI base address is valid */
-#define IS_MCSPI_BASE_ADDR_VALID(baseAddr)    ((baseAddr == CSL_MCSPI0_U_BASE) || \
-                                               (baseAddr == CSL_MCSPI1_U_BASE) || \
-                                               (baseAddr == CSL_MCSPI2_U_BASE) || \
-                                               (baseAddr == CSL_MCSPI3_U_BASE) || \
-                                               (baseAddr == CSL_MCSPI4_U_BASE) || \
-                                               (baseAddr == CSL_MCSPI5_U_BASE) || \
-                                               (baseAddr == CSL_MCSPI6_U_BASE) || \
-                                               (baseAddr == CSL_MCSPI7_U_BASE) )
+    if ((baseAddr == CSL_MCSPI0_U_BASE) || \
+        (baseAddr == CSL_MCSPI1_U_BASE) || \
+        (baseAddr == CSL_MCSPI2_U_BASE) || \
+        (baseAddr == CSL_MCSPI3_U_BASE) || \
+        (baseAddr == CSL_MCSPI4_U_BASE) || \
+        (baseAddr == CSL_MCSPI5_U_BASE) || \
+        (baseAddr == CSL_MCSPI6_U_BASE) || \
+        (baseAddr == CSL_MCSPI7_U_BASE) )
+    {
+        status = MCSPI_STATUS_SUCCESS;
+    }
+
+    return status;
+}
 
 /**
  * \brief Enable clock to specified module

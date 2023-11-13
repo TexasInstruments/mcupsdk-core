@@ -129,6 +129,10 @@ static inline int32_t MCSPI_lld_isInitDelayValid(uint32_t initDelay);
 static inline int32_t MCSPI_lld_isMsModeValid(uint32_t msMode);
 static inline int32_t MCSPI_lld_isChCountValid(uint32_t chCnt);
 static inline int32_t MCSPI_lld_isDataSizeValid(uint32_t dataSize);
+static inline int32_t MCSPI_lld_isHandleValid(MCSPI_DmaHandle);
+static inline int32_t MCSPI_lld_isParameterValid(uint32_t handleParameters);
+static inline int32_t MCSPI_lld_isChannelValid(uint32_t channel);
+static inline int32_t MCSPI_lld_isChCfgValid(const MCSPI_ChConfig *chCfg);
 static int32_t MCSPI_lld_chConfig(MCSPILLD_Handle hMcspi,
                                    const MCSPI_ChConfig *chCfg,
                                    uint32_t chCnt);
@@ -201,9 +205,8 @@ int32_t MCSPI_lld_init(MCSPILLD_Handle hMcspi)
         hMcspiInit = hMcspi->hMcspiInit;
 
         /* Check the MCSPI Input parameters */
-        LLD_PARAMS_CHECK(IS_MCSPI_BASE_ADDR_VALID(hMcspi->baseAddr));
-        LLD_PARAMS_CHECK(hMcspiInit->inputClkFreq != 0U);
-
+        status =  MCSPI_lld_isBaseAddrValid(hMcspi->baseAddr);
+        status += MCSPI_lld_isParameterValid(hMcspiInit->inputClkFreq);
         status += MCSPI_lld_isOperModeValid(hMcspiInit->operMode);
         status += MCSPI_lld_isChModeValid(hMcspiInit->chMode);
         status += MCSPI_lld_isPinModeValid(hMcspiInit->pinMode);
@@ -273,10 +276,9 @@ int32_t MCSPI_lld_initDma(MCSPILLD_Handle hMcspi)
         hMcspiInit = hMcspi->hMcspiInit;
 
         /* Check the MCSPI Input parameters */
-        LLD_PARAMS_CHECK(IS_MCSPI_BASE_ADDR_VALID(hMcspi->baseAddr));
-        LLD_PARAMS_CHECK(hMcspiInit->inputClkFreq != 0U);
-        LLD_PARAMS_CHECK(hMcspiInit->mcspiDmaHandle != NULL_PTR);
-
+        status =  MCSPI_lld_isBaseAddrValid(hMcspi->baseAddr);
+        status += MCSPI_lld_isParameterValid(hMcspiInit->inputClkFreq);
+        status += MCSPI_lld_isHandleValid(hMcspiInit->mcspiDmaHandle);
         status += MCSPI_lld_isOperModeValid(hMcspiInit->operMode);
         status += MCSPI_lld_isChModeValid(hMcspiInit->chMode);
         status += MCSPI_lld_isPinModeValid(hMcspiInit->pinMode);
@@ -301,8 +303,8 @@ int32_t MCSPI_lld_initDma(MCSPILLD_Handle hMcspi)
         {
             chCfg = hMcspiInit->chObj[chCnt].chCfg;
 
-            LLD_PARAMS_CHECK(chCfg != NULL_PTR);
-            LLD_PARAMS_CHECK(chCfg->chNum < MCSPI_MAX_NUM_CHANNELS);
+            status =  MCSPI_lld_isChCfgValid(chCfg);
+            status += MCSPI_lld_isChannelValid(chCfg->chNum);
 
             if(MCSPI_STATUS_SUCCESS == status)
             {
@@ -419,10 +421,9 @@ int32_t MCSPI_lld_write(MCSPILLD_Handle hMcspi, void *txBuf, uint32_t count,
             transaction->timeout = timeout;
             transaction->txBuf   = txBuf;
 
-            LLD_PARAMS_CHECK(count != 0U);
-            LLD_PARAMS_CHECK(timeout != 0U);
-            LLD_PARAMS_CHECK(transaction->channel < MCSPI_MAX_NUM_CHANNELS);
-
+            status =  MCSPI_lld_isParameterValid(count);
+            status += MCSPI_lld_isParameterValid(timeout);
+            status += MCSPI_lld_isChannelValid(transaction->channel);
             status += MCSPI_lld_isDataSizeValid(transaction->dataSize);
             if(status != MCSPI_STATUS_SUCCESS)
             {
@@ -529,10 +530,9 @@ int32_t MCSPI_lld_writeIntr(MCSPILLD_Handle hMcspi, void *txBuf, uint32_t count,
             transaction->timeout = timeout;
             transaction->txBuf   = txBuf;
 
-            LLD_PARAMS_CHECK(count != 0U);
-            LLD_PARAMS_CHECK(timeout != 0U);
-            LLD_PARAMS_CHECK(transaction->channel < MCSPI_MAX_NUM_CHANNELS);
-
+            status =  MCSPI_lld_isParameterValid(count);
+            status += MCSPI_lld_isParameterValid(timeout);
+            status += MCSPI_lld_isChannelValid(transaction->channel);
             status += MCSPI_lld_isDataSizeValid(transaction->dataSize);
             if(status != MCSPI_STATUS_SUCCESS)
             {
@@ -626,10 +626,9 @@ int32_t MCSPI_lld_writeDma(MCSPILLD_Handle hMcspi, void *txBuf, uint32_t count, 
             transaction->timeout = timeout;
             transaction->txBuf   = txBuf;
 
-            LLD_PARAMS_CHECK(count != 0U);
-            LLD_PARAMS_CHECK(timeout != 0U);
-            LLD_PARAMS_CHECK(transaction->channel < MCSPI_MAX_NUM_CHANNELS);
-
+            status =  MCSPI_lld_isParameterValid(count);
+            status += MCSPI_lld_isParameterValid(timeout);
+            status += MCSPI_lld_isChannelValid(transaction->channel);
             status += MCSPI_lld_isDataSizeValid(transaction->dataSize);
             if(status != MCSPI_STATUS_SUCCESS)
             {
@@ -715,10 +714,9 @@ int32_t MCSPI_lld_read(MCSPILLD_Handle hMcspi, void *rxBuf, uint32_t count,
             transaction->timeout = timeout;
             transaction->rxBuf   = rxBuf;
 
-            LLD_PARAMS_CHECK(count != 0U);
-            LLD_PARAMS_CHECK(timeout != 0U);
-            LLD_PARAMS_CHECK(transaction->channel < MCSPI_MAX_NUM_CHANNELS);
-
+            status  = MCSPI_lld_isParameterValid(count);
+            status += MCSPI_lld_isParameterValid(timeout);
+            status += MCSPI_lld_isChannelValid(transaction->channel);
             status += MCSPI_lld_isDataSizeValid(transaction->dataSize);
             /* Check if the channel is configured */
             if(TRUE != hMcspiInit->chObj[transaction->channel].isOpen)
@@ -821,10 +819,9 @@ int32_t MCSPI_lld_readIntr(MCSPILLD_Handle hMcspi, void *rxBuf, uint32_t count,
             transaction->timeout = timeout;
             transaction->rxBuf   = rxBuf;
 
-            LLD_PARAMS_CHECK(count != 0U);
-            LLD_PARAMS_CHECK(timeout != 0U);
-            LLD_PARAMS_CHECK(transaction->channel < MCSPI_MAX_NUM_CHANNELS);
-
+            status  = MCSPI_lld_isParameterValid(count);
+            status += MCSPI_lld_isParameterValid(timeout);
+            status += MCSPI_lld_isChannelValid(transaction->channel);
             status += MCSPI_lld_isDataSizeValid(transaction->dataSize);
             if(status != MCSPI_STATUS_SUCCESS)
             {
@@ -918,10 +915,9 @@ int32_t MCSPI_lld_readDma(MCSPILLD_Handle hMcspi, void *rxBuf, uint32_t count,
             transaction->timeout = timeout;
             transaction->rxBuf   = rxBuf;
 
-            LLD_PARAMS_CHECK(count != 0U);
-            LLD_PARAMS_CHECK(timeout != 0U);
-            LLD_PARAMS_CHECK(transaction->channel < MCSPI_MAX_NUM_CHANNELS);
-
+            status = MCSPI_lld_isParameterValid(count);
+            status += MCSPI_lld_isParameterValid(timeout);
+            status += MCSPI_lld_isChannelValid(transaction->channel);
             status += MCSPI_lld_isDataSizeValid(transaction->dataSize);
             if(status != MCSPI_STATUS_SUCCESS)
             {
@@ -1004,10 +1000,8 @@ int32_t MCSPI_lld_readWrite(MCSPILLD_Handle hMcspi, void *txBuf, void *rxBuf, ui
             transaction->txBuf   = txBuf;
             transaction->rxBuf   = rxBuf;
 
-            LLD_PARAMS_CHECK(count != 0U);
-            LLD_PARAMS_CHECK(timeout != 0U);
-            LLD_PARAMS_CHECK(transaction->channel < MCSPI_MAX_NUM_CHANNELS);
-
+            status = MCSPI_lld_isParameterValid(timeout);
+            status += MCSPI_lld_isChannelValid(transaction->channel);
             status += MCSPI_lld_isDataSizeValid(transaction->dataSize);
             if(status != MCSPI_STATUS_SUCCESS)
             {
@@ -1112,10 +1106,9 @@ int32_t MCSPI_lld_readWriteIntr(MCSPILLD_Handle hMcspi, void *txBuf, void *rxBuf
             transaction->txBuf   = txBuf;
             transaction->rxBuf   = rxBuf;
 
-            LLD_PARAMS_CHECK(count != 0U);
-            LLD_PARAMS_CHECK(timeout != 0U);
-            LLD_PARAMS_CHECK(transaction->channel < MCSPI_MAX_NUM_CHANNELS);
-
+            status = MCSPI_lld_isParameterValid(count);
+            status += MCSPI_lld_isParameterValid(timeout);
+            status += MCSPI_lld_isChannelValid(transaction->channel);
             status += MCSPI_lld_isDataSizeValid(transaction->dataSize);
             if(status != MCSPI_STATUS_SUCCESS)
             {
@@ -1210,10 +1203,9 @@ int32_t MCSPI_lld_readWriteDma(MCSPILLD_Handle hMcspi, void *txBuf, void *rxBuf,
             transaction->txBuf   = txBuf;
             transaction->rxBuf   = rxBuf;
 
-            LLD_PARAMS_CHECK(count != 0U);
-            LLD_PARAMS_CHECK(timeout != 0U);
-            LLD_PARAMS_CHECK(transaction->channel < MCSPI_MAX_NUM_CHANNELS);
-
+            status = MCSPI_lld_isParameterValid(count);
+            status += MCSPI_lld_isParameterValid(timeout);
+            status += MCSPI_lld_isChannelValid(transaction->channel);
             status += MCSPI_lld_isDataSizeValid(transaction->dataSize);
             if(status != MCSPI_STATUS_SUCCESS)
             {
@@ -2769,53 +2761,48 @@ int32_t MCSPI_lld_reConfigFifo(MCSPILLD_Handle hMcspi,
 
 static inline int32_t MCSPI_lld_isOperModeValid(uint32_t operMode)
 {
-    int32_t status = MCSPI_STATUS_SUCCESS;
+    int32_t status = MCSPI_INVALID_PARAM;
+
     if((operMode == MCSPI_OPER_MODE_POLLED) ||
        (operMode == MCSPI_OPER_MODE_INTERRUPT) ||
        (operMode == MCSPI_OPER_MODE_DMA))
     {
         status = MCSPI_STATUS_SUCCESS;
     }
-    else
-    {
-        status = MCSPI_INVALID_PARAM;
-    }
+
     return status;
 }
 
 static inline int32_t MCSPI_lld_isChModeValid(uint32_t chMode)
 {
-    int32_t status = MCSPI_STATUS_SUCCESS;
+    int32_t status = MCSPI_INVALID_PARAM;
+
     if((chMode == MCSPI_CH_MODE_SINGLE) || (chMode == MCSPI_CH_MODE_MULTI))
     {
         status = MCSPI_STATUS_SUCCESS;
     }
-    else
-    {
-        status = MCSPI_INVALID_PARAM;
-    }
+
     return status;
 }
 
 static inline int32_t MCSPI_lld_isPinModeValid(uint32_t pinMode)
 {
-    int32_t status = MCSPI_STATUS_SUCCESS;
+    int32_t status = MCSPI_INVALID_PARAM;
+
     if((pinMode == MCSPI_PINMODE_3PIN) ||
        (pinMode == MCSPI_PINMODE_4PIN))
 
     {
         status = MCSPI_STATUS_SUCCESS;
     }
-    else
-    {
-        status = MCSPI_INVALID_PARAM;
-    }
+
     return status;
 }
 
 static inline int32_t MCSPI_lld_isInitDelayValid(uint32_t initDelay)
 {
-    int32_t status = MCSPI_STATUS_SUCCESS;
+    int32_t status = MCSPI_INVALID_PARAM;
+
     if((initDelay == MCSPI_INITDLY_0) ||
        (initDelay == MCSPI_INITDLY_4) ||
        (initDelay == MCSPI_INITDLY_8) ||
@@ -2824,37 +2811,30 @@ static inline int32_t MCSPI_lld_isInitDelayValid(uint32_t initDelay)
     {
         status = MCSPI_STATUS_SUCCESS;
     }
-    else
-    {
-        status = MCSPI_INVALID_PARAM;
-    }
+
     return status;
 }
 
 static inline int32_t MCSPI_lld_isMsModeValid(uint32_t msMode)
 {
-    int32_t status = MCSPI_STATUS_SUCCESS;
-    if((msMode == MCSPI_MS_MODE_CONTROLLER) || (msMode == MCSPI_MS_MODE_PERIPHERAL))
+    int32_t status = MCSPI_INVALID_PARAM;
+
+    if((msMode == MCSPI_MS_MODE_CONTROLLER) ||
+       (msMode == MCSPI_MS_MODE_PERIPHERAL))
     {
         status = MCSPI_STATUS_SUCCESS;
     }
-    else
-    {
-        status = MCSPI_INVALID_PARAM;
-    }
+
     return status;
 }
 
 static inline int32_t MCSPI_lld_isChCountValid(uint32_t chCnt)
 {
-    int32_t status = MCSPI_STATUS_SUCCESS;
+    int32_t status = MCSPI_INVALID_PARAM;
+
     if((chCnt > 0U) && (chCnt <= MCSPI_MAX_NUM_CHANNELS))
     {
         status = MCSPI_STATUS_SUCCESS;
-    }
-    else
-    {
-        status = MCSPI_INVALID_PARAM;
     }
 
     return status;
@@ -2862,14 +2842,59 @@ static inline int32_t MCSPI_lld_isChCountValid(uint32_t chCnt)
 
 static inline int32_t MCSPI_lld_isDataSizeValid(uint32_t dataSize)
 {
-    int32_t status = MCSPI_STATUS_SUCCESS;
+    int32_t status = MCSPI_INVALID_PARAM;
+
     if((dataSize >= 4U) && (dataSize <= 32U))
     {
         status = MCSPI_STATUS_SUCCESS;
     }
-    else
+
+    return status;
+}
+
+static inline int32_t MCSPI_lld_isHandleValid(MCSPI_DmaHandle handle)
+{
+    int32_t status = MCSPI_INVALID_PARAM;
+
+    if(handle != NULL_PTR)
     {
-        status = MCSPI_INVALID_PARAM;
+        status = MCSPI_STATUS_SUCCESS;
     }
+
+    return status;
+}
+static inline int32_t MCSPI_lld_isParameterValid(uint32_t handleParameters)
+{
+    int32_t status = MCSPI_INVALID_PARAM;
+
+    if(handleParameters != 0)
+    {
+        status = MCSPI_STATUS_SUCCESS;
+    }
+
+    return status;
+}
+
+static inline int32_t MCSPI_lld_isChannelValid(uint32_t channel)
+{
+    int32_t status = MCSPI_INVALID_PARAM;
+
+    if(channel < MCSPI_MAX_NUM_CHANNELS)
+    {
+        status = MCSPI_STATUS_SUCCESS;
+    }
+
+    return status;
+}
+
+static inline int32_t MCSPI_lld_isChCfgValid(const MCSPI_ChConfig *chCfg)
+{
+    int32_t status = MCSPI_INVALID_PARAM;
+
+    if((void *)chCfg != NULL_PTR)
+    {
+        status = MCSPI_STATUS_SUCCESS;
+    }
+
     return status;
 }

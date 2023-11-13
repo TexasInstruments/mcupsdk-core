@@ -51,6 +51,7 @@ extern "C"
 #include <kernel/dpl/CpuIdP.h>
 #include <drivers/mcspi.h>
 #include <drivers/hw_include/am64x_am243x/cslr_soc_baseaddress.h>
+#include <drivers/mcspi/v0/lld/mcspi_lld.h>
 
 /**
  *  \anchor SOC_DomainId_t
@@ -102,27 +103,30 @@ extern "C"
  */
 #define SOC_FWL_OPEN_MAGIC_NUM  (0XFEDCBA98u)
 
-/*! LLD_PARAM_CHECK_DEBUG_ASSERT */
-#define LLD_PARAMS_CHECK(expression) \
-if (status == SystemP_SUCCESS) { \
-    if(!(expression)) { \
-        status = MCSPI_INVALID_PARAM; \
-    } \
-}
 /* MCU Base address to be used after Adress translation in MCU Domain. */
 #define MCU_MCSPI0_CFG_BASE_AFTER_ADDR_TRANSLATE   (CSL_MCU_MCSPI0_CFG_BASE + 0x80000000)
 #define MCU_MCSPI1_CFG_BASE_AFTER_ADDR_TRANSLATE   (CSL_MCU_MCSPI1_CFG_BASE + 0x80000000)
 
-/** \brief Macro to check if the MCSPI base address is valid */
-#define IS_MCSPI_BASE_ADDR_VALID(baseAddr)    ((baseAddr == CSL_MCSPI0_CFG_BASE) || \
-                                               (baseAddr == CSL_MCSPI1_CFG_BASE) || \
-                                               (baseAddr == CSL_MCSPI2_CFG_BASE) || \
-                                               (baseAddr == CSL_MCSPI3_CFG_BASE) || \
-                                               (baseAddr == CSL_MCSPI4_CFG_BASE) || \
-                                               (baseAddr == CSL_MCU_MCSPI0_CFG_BASE) || \
-                                               (baseAddr == CSL_MCU_MCSPI1_CFG_BASE) || \
-                                               (baseAddr == MCU_MCSPI0_CFG_BASE_AFTER_ADDR_TRANSLATE) || \
-                                               (baseAddr == MCU_MCSPI1_CFG_BASE_AFTER_ADDR_TRANSLATE))
+/** \brief API to validate MCSPI base address. */
+static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
+{
+    int32_t status = MCSPI_INVALID_PARAM;
+
+    if ((baseAddr == CSL_MCSPI0_CFG_BASE) || \
+        (baseAddr == CSL_MCSPI1_CFG_BASE) || \
+        (baseAddr == CSL_MCSPI2_CFG_BASE) || \
+        (baseAddr == CSL_MCSPI3_CFG_BASE) || \
+        (baseAddr == CSL_MCSPI4_CFG_BASE) || \
+        (baseAddr == CSL_MCU_MCSPI0_CFG_BASE) || \
+        (baseAddr == CSL_MCU_MCSPI1_CFG_BASE) || \
+        (baseAddr == MCU_MCSPI0_CFG_BASE_AFTER_ADDR_TRANSLATE) || \
+        (baseAddr == MCU_MCSPI1_CFG_BASE_AFTER_ADDR_TRANSLATE))
+    {
+        status = MCSPI_STATUS_SUCCESS;
+    }
+
+    return status;
+}
 
 /**
  * \brief Enable clock to specified module
