@@ -2,7 +2,6 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
  * @versions {"tool":"1.18.0+3266"}
  */
 
@@ -16,8 +15,6 @@ const mcspi3          = mcspi.addInstance();
 const mcspi4          = mcspi.addInstance();
 const mcspi5          = mcspi.addInstance();
 const mcspi6          = mcspi.addInstance();
-const udma            = scripting.addModule("/drivers/udma/udma", {}, false);
-const udma1           = udma.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
@@ -42,19 +39,6 @@ const section8        = section.addInstance();
 const section9        = section.addInstance();
 const section10       = section.addInstance();
 const section11       = section.addInstance();
-const mcspi      = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
-const mcspi1     = mcspi.addInstance();
-const mcspi2     = mcspi.addInstance();
-const mcspi3     = mcspi.addInstance();
-const mcspi4     = mcspi.addInstance();
-const mcspi5     = mcspi.addInstance();
-const mcspi6     = mcspi.addInstance();
-const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
-const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
-const mpu_armv71 = mpu_armv7.addInstance();
-const mpu_armv72 = mpu_armv7.addInstance();
-const mpu_armv73 = mpu_armv7.addInstance();
-const mpu_armv74 = mpu_armv7.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -74,14 +58,11 @@ mcspi2.child.$name                    = "drivers_mcspi_v0_mcspi_v0_template1";
 mcspi2.mcspiChannel.create(4);
 mcspi2.mcspiChannel[0].$name          = "CONFIG_MCSPI_CH1";
 mcspi2.mcspiChannel[0].CSn.$assign    = "SPI1_CS1";
-mcspi2.mcspiChannel[0].CSn.$assign    = "SPI1_CS1";
 mcspi2.mcspiChannel[1].$name          = "CONFIG_MCSPI_CH7";
 mcspi2.mcspiChannel[1].advanced       = true;
 mcspi2.mcspiChannel[1].startBitEnable = true;
 mcspi2.mcspiChannel[1].CSn.$assign    = "SPI1_CS0";
-mcspi2.mcspiChannel[1].CSn.$assign    = "SPI1_CS0";
 mcspi2.mcspiChannel[2].$name          = "CONFIG_MCSPI_CH6";
-mcspi2.mcspiChannel[2].CSn.$assign    = "UART1_RTSn";
 mcspi2.mcspiChannel[2].CSn.$assign    = "UART1_RTSn";
 mcspi2.mcspiChannel[3].$name          = "CONFIG_MCSPI_CH11";
 
@@ -173,7 +154,7 @@ region1.memory_region[3].size               = 0x8000;
 region1.memory_region[4].$name              = "MSRAM";
 region1.memory_region[4].auto               = false;
 region1.memory_region[4].manualStartAddress = 0x70080000;
-region1.memory_region[4].size               = 0x52000;
+region1.memory_region[4].size               = 0x40000;
 region1.memory_region[5].type               = "FLASH";
 region1.memory_region[5].$name              = "FLASH";
 region1.memory_region[5].auto               = false;
