@@ -2315,9 +2315,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  empty_pru_io_am243x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/pru_io/empty/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- ads131_am243x-evm_icssg0-pru0_fw_ti-pru-cgt:
-	$(MAKE) -C examples/pru_io/adc/ads131/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile all
-
  vtm_example_am243x-evm_m4fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/vtm/vtm_uc/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile all
 

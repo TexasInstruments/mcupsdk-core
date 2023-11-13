@@ -90,7 +90,7 @@ function updateScriptVars()
 function connectTargets()
 {
     /* Set timeout of 20 seconds */
-    script.setScriptTimeout(200000);
+    script.setScriptTimeout(20000);
     updateScriptVars();
 
     //Init_M4()
