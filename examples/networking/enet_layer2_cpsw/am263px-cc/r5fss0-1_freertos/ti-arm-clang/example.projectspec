@@ -75,7 +75,7 @@
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --context r5fss0-1 --part AM263P1 --package ZCZ_S
+            --context r5fss0-1 --part AM263P4 --package ZCZ_S
         "
 
         description="A Enet L2 Cpsw FREERTOS project">

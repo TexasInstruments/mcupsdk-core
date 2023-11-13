@@ -333,20 +333,20 @@ function getSysCfgPkg(board) {
 function getSysCfgPart(board) {
     switch (board) {
         case "am263px-lp":
-            return "AM263P2";
+            return "AM263P4";
         default:
         case "am263px-cc":
-            return "AM263P1";
+            return "AM263P4";
     }
 }
 
 function getDevToolTirex(board) {
     switch (board) {
         case "am263px-lp":
-            return "LP-AM263";
+            return "LP-AM263P";
         default:
         case "am263px-cc":
-            return "TMDSCNCD263";
+            return "TMDSCNCD263P";
     }
 }
 

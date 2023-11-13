@@ -57,7 +57,7 @@
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --context r5fss0-0 --part AM263Px --package XYZ
+            --context r5fss1-0 --part AM263P4 --package ZCZ_S
         "
 
         description="A Qspi Flash Dma Transfer NORTOS project">
