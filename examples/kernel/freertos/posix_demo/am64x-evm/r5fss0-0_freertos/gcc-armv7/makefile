@@ -51,6 +51,7 @@ FILES_PATH_common = \
 	generated \
 
 INCLUDES_common := \
+	-I${CG_TOOL_ROOT}/arm-none-eabi/include \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
@@ -68,14 +69,17 @@ CFLAGS_common := \
 	-mcpu=cortex-r5 \
 	-mfloat-abi=hard \
 	-mfpu=vfpv3-d16 \
-	-marm \
 	-Wall \
+	-mthumb \
 	-Werror \
 	-g \
-	-Wno-gnu-variable-sized-type-not-at-end \
 	-Wno-unused-function \
+	-Wno-enum-compare \
+	-Wno-uninitialized \
 	-Wno-int-to-pointer-cast \
+	-fgnu89-inline \
 	-Wno-pointer-to-int-cast \
+	-Wno-unused-variable \
 	-Wno-unused-but-set-variable \
 	-fdata-sections \
 	-ffunction-sections \
@@ -104,7 +108,6 @@ LFLAGS_common = \
 	-mcpu=cortex-r5 \
 	-mfloat-abi=hard \
 	-mfpu=vfpv3-d16 \
-	-marm \
 	-Wl,-static \
 	-Wl,--gc-sections \
 	-Wl,--build-id=none \

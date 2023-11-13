@@ -63,7 +63,7 @@ ifeq ($(CCS_IDE_MODE),cloud)
 #	No post build steps
 else
 	@echo  Boot image: am263px:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_NAME) ...
-	$(OBJCOPY) --strip-sections -O binary $(OUTFILE) $(BOOTIMAGE_BIN_NAME)
+	$(OBJCOPY) --strip-all -O binary $(OUTFILE) $(BOOTIMAGE_BIN_NAME)
 ifeq ($(DEVICE_TYPE),HS)
 ifeq ($(DEBUG_TIFS), yes)
 ifeq ($(ENC_SBL_ENABLED),yes)
