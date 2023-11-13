@@ -66,13 +66,6 @@ const readmeDoxygenPageTag = "EXAMPLES_SDL_MCRC_FULL_CPU";
 const templates_nortos_m4f =
 [
     {
-        input: ".project/templates/am64x/common/linker_m4f.cmd.xdt",
-        output: "linker.cmd",
-        options: {
-            isSingleCore: true,
-        },
-    },
-    {
         input: ".project/templates/am64x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
@@ -83,13 +76,6 @@ const templates_nortos_m4f =
 
 const templates_nortos_r5f =
 [
-    {
-        input: ".project/templates/am64x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-        options: {
-            isSingleCore: true,
-        },
-    },
     {
         input: ".project/templates/am64x/nortos/main_nortos.c.xdt",
         output: "../main.c",
@@ -132,7 +118,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.libs = libs_nortos_m4f;
         build_property.templates = templates_nortos_m4f;
     }
-	
+
 	if(buildOption.cpu.match(/r5f*/))
     {
         build_property.libs = libs_nortos_r5f;

@@ -150,10 +150,6 @@ const readmeDoxygenPageTag = "EXAMPLE_BENCHMARKDEMO";
 const templates_nortos_r5fss0_0 =
 [
     {
-        input: ".project/templates/am64x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
-    {
         input: ".project/templates/am64x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
@@ -164,10 +160,6 @@ const templates_nortos_r5fss0_0 =
 
 const templates_nortos_r5fss0_1 =
 [
-    {
-        input: ".project/templates/am64x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
     {
         input: ".project/templates/am64x/nortos/main_nortos.c.xdt",
         output: "../main.c",
@@ -180,10 +172,6 @@ const templates_nortos_r5fss0_1 =
 const templates_nortos_r5fss1_0 =
 [
     {
-        input: ".project/templates/am64x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
-    {
         input: ".project/templates/am64x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
@@ -194,10 +182,6 @@ const templates_nortos_r5fss1_0 =
 
 const templates_nortos_r5fss1_1 =
 [
-    {
-        input: ".project/templates/am64x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
     {
         input: ".project/templates/am64x/nortos/main_nortos.c.xdt",
         output: "../main.c",

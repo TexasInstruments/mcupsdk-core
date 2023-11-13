@@ -56,14 +56,6 @@ const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_UDMA_ADC_READ";
 const templates_freertos_r5f =
 [
     {
-        input: ".project/templates/am64x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-        options: {
-            heapSize: 16*1024,
-            isSingleCore: true,
-        },
-    },
-    {
         input: ".project/templates/am64x/freertos/main_freertos.c.xdt",
         output: "../main.c",
         options: {

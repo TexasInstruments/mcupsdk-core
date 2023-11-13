@@ -87,13 +87,7 @@ const projectspecfiles = {
 
 const templates_nortos_m4f =
 [
-    {
-        input: ".project/templates/am243x/common/linker_m4f.cmd.xdt",
-        output: "linker.cmd",
-        options: {
-            isSingleCore: true,
-        },
-    },
+
     {
         input: ".project/templates/am243x/nortos/main_nortos.c.xdt",
         output: "../main.c",
@@ -105,13 +99,6 @@ const templates_nortos_m4f =
 
 const templates_nortos_r5f =
 [
-    {
-        input: ".project/templates/am243x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-        options: {
-            isSingleCore: true,
-        },
-    },
     {
         input: ".project/templates/am243x/nortos/main_nortos.c.xdt",
         output: "../main.c",

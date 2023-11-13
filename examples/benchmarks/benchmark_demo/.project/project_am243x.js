@@ -162,10 +162,6 @@ const templates_nortos_r5fss0_0 =
 [
     /* We have manually modified the linker command file, so dont generate it */
     /*
-    {
-        input: ".project/templates/am243x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
     */
     {
         input: ".project/templates/am243x/nortos/main_nortos.c.xdt",
@@ -179,10 +175,6 @@ const templates_nortos_r5fss0_0 =
 const templates_nortos_r5fss0_1 =
 [
     {
-        input: ".project/templates/am243x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
-    {
         input: ".project/templates/am243x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
@@ -194,10 +186,6 @@ const templates_nortos_r5fss0_1 =
 const templates_nortos_r5fss1_0 =
 [
     {
-        input: ".project/templates/am243x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
-    {
         input: ".project/templates/am243x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
@@ -208,10 +196,6 @@ const templates_nortos_r5fss1_0 =
 
 const templates_nortos_r5fss1_1 =
 [
-    {
-        input: ".project/templates/am243x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
     {
         input: ".project/templates/am243x/nortos/main_nortos.c.xdt",
         output: "../main.c",

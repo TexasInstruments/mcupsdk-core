@@ -69,10 +69,6 @@ const readmeDoxygenPageTag = "EXAMPLES_USB_CDC_ECHO";
 
 const templates_freertos_r5f =
 [
-    {
-        input: ".project/templates/am243x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
 ];
 
 const buildOptionCombos = [

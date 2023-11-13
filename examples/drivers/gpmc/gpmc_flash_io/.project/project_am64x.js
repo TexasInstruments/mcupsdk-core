@@ -48,10 +48,6 @@ const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_GPMC_FLASH_NAND_IO";
 const templates_nortos_r5f =
 [
     {
-        input: ".project/templates/am64x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
-    {
         input: ".project/templates/am64x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {

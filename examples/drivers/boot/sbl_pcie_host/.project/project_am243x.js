@@ -57,10 +57,6 @@ const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_PCIE_HOST";
 
 const templates_nortos_r5f =
 [
-    {
-        input: ".project/templates/am243x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
 ];
 
 const buildOptionCombos = [
