@@ -35,6 +35,12 @@ const libs_nortos_r5f = {
     ],
 };
 
+const lnkfiles = {
+    common: [
+        "linker.cmd",
+    ]
+};
+
 const syscfgfile = "../example.syscfg"
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_EPWM_SYNCHRONIZATION";
