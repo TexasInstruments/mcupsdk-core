@@ -147,17 +147,17 @@ function addModuleInstances(instance) {
                 instance: "PKTDMA_0",
             }
         });
+    }
 
-        if((instance.intrEnable == "DMA") && (instance.sdkInfra == "LLD")) {
-            modInstances.push({
-                name: "udmaDriver",
-                displayName: "UDMA Configuration",
-                moduleName: "/drivers/udma/udma",
-                requiredArgs: {
-                    instance: "PKTDMA_0",
-                }
-            });
-        }
+    if((instance.intrEnable == "DMA") && (instance.sdkInfra == "LLD")) {
+        modInstances.push({
+            name: "udmaDriver",
+            displayName: "UDMA Configuration",
+            moduleName: "/drivers/udma/udma",
+            requiredArgs: {
+                instance: "PKTDMA_0",
+            }
+        });
     }
 
     return modInstances;

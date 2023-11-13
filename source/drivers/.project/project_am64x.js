@@ -113,6 +113,12 @@ const files_m4f = {
     common: [
         "adc.c",
         "crc.c",
+        "csl_bcdma.c",
+        "csl_emif.c",
+        "csl_intaggr.c",
+        "csl_lcdma_ringacc.c",
+        "csl_pktdma.c",
+        "csl_ringacc.c",
         "csl_sec_proxy.c",
         "ecap.c",
         "epwm.c",
@@ -158,8 +164,6 @@ const files_m4f = {
         "udma_rmcfg_common.c",
         "udma_soc.c",
         "udma_utils.c",
-        "csl_bcdma.c",
-        "csl_emif.c",
     ],
 };
 

@@ -49,9 +49,7 @@ extern "C"
 
 #include <drivers/sciclient.h>
 #include <kernel/dpl/CpuIdP.h>
-#include <drivers/mcspi.h>
 #include <drivers/hw_include/am64x_am243x/cslr_soc_baseaddress.h>
-#include <drivers/mcspi/v0/lld/mcspi_lld.h>
 
 /**
  *  \anchor SOC_DomainId_t
@@ -110,7 +108,7 @@ extern "C"
 /** \brief API to validate MCSPI base address. */
 static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
 {
-    int32_t status = MCSPI_INVALID_PARAM;
+    int32_t status = (int32_t)-3;
 
     if ((baseAddr == CSL_MCSPI0_CFG_BASE) || \
         (baseAddr == CSL_MCSPI1_CFG_BASE) || \
@@ -122,7 +120,7 @@ static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
         (baseAddr == MCU_MCSPI0_CFG_BASE_AFTER_ADDR_TRANSLATE) || \
         (baseAddr == MCU_MCSPI1_CFG_BASE_AFTER_ADDR_TRANSLATE))
     {
-        status = MCSPI_STATUS_SUCCESS;
+        status = 0;
     }
 
     return status;

@@ -51,7 +51,6 @@ extern "C"
 #include <drivers/hw_include/cslr_soc.h>
 #include "soc_xbar.h"
 #include "soc_rcm.h"
-#include <drivers/mcspi/v0/lld/mcspi_lld.h>
 
 /**
  *  \anchor SOC_DomainId_t
@@ -82,7 +81,7 @@ extern "C"
 /** \brief API to validate MCSPI base address. */
 static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
 {
-    int32_t status = MCSPI_INVALID_PARAM;
+    int32_t status = (int32_t)-3;
 
     if ((baseAddr == CSL_MCSPI0_U_BASE) || \
         (baseAddr == CSL_MCSPI1_U_BASE) || \
@@ -93,7 +92,7 @@ static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
         (baseAddr == CSL_MCSPI6_U_BASE) || \
         (baseAddr == CSL_MCSPI7_U_BASE) )
     {
-        status = MCSPI_STATUS_SUCCESS;
+        status = 0;
     }
 
     return status;

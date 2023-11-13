@@ -51,9 +51,7 @@ extern "C"
 #include <drivers/hw_include/cslr_soc.h>
 #include "soc_xbar.h"
 #include "soc_rcm.h"
-#include <drivers/mcspi.h>
 #include <drivers/hw_include/am263x/cslr_soc_baseaddress.h>
-#include <drivers/mcspi/v0/lld/mcspi_lld.h>
 
 /**
  *  \anchor SOC_DomainId_t
@@ -75,7 +73,6 @@ extern "C"
 /*Pinmux MMR*/
 //#define IOMUX_PARTITION0                                   (6)
 
-
 /* define the unlock and lock values for MSS_CTRL, TOP_CTRL, MSS_RCM, TOP_RCM*/
 #define KICK_LOCK_VAL                           (0x00000000U)
 #define KICK0_UNLOCK_VAL                        (0x01234567U)
@@ -84,7 +81,7 @@ extern "C"
 /** \brief API to validate MCSPI base address. */
 static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
 {
-    int32_t status = MCSPI_INVALID_PARAM;
+    int32_t status = (int32_t)-3;
 
     if ((baseAddr == CSL_MCSPI0_U_BASE) || \
         (baseAddr == CSL_MCSPI1_U_BASE) || \
@@ -92,7 +89,7 @@ static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
         (baseAddr == CSL_MCSPI3_U_BASE) || \
         (baseAddr == CSL_MCSPI4_U_BASE) )
     {
-        status = MCSPI_STATUS_SUCCESS;
+        status = 0;
     }
 
     return status;

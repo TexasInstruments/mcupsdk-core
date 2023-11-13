@@ -19,6 +19,12 @@ LIBNAME:=drivers.am64x.m4f.ti-arm-clang.$(PROFILE).lib
 FILES_common := \
     adc.c \
     crc.c \
+    csl_bcdma.c \
+    csl_emif.c \
+    csl_intaggr.c \
+    csl_lcdma_ringacc.c \
+    csl_pktdma.c \
+    csl_ringacc.c \
     csl_sec_proxy.c \
     ecap.c \
     epwm.c \
@@ -64,8 +70,6 @@ FILES_common := \
     udma_rmcfg_common.c \
     udma_soc.c \
     udma_utils.c \
-    csl_bcdma.c \
-    csl_emif.c \
 
 FILES_PATH_common = \
     adc/v0 \
