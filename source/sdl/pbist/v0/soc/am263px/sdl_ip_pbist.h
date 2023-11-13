@@ -1,5 +1,5 @@
 /********************************************************************
- * Copyright (C) 2022 Texas Instruments Incorporated.
+ * Copyright (C) 2022-2023 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -61,7 +61,7 @@ extern "C" {
 #include <stdbool.h>
 #include <sdl/pbist/v0/sdlr_pbist.h>
 #include <sdl/pbist/v0/soc/sdl_soc_pbist.h>
-#define PBIST_MAX_NUM_RUNS    19
+#define PBIST_MAX_NUM_RUNS    31
 /** ---------------------------------------------------------------------------
  * @brief   This structure contains the different configuration used for PBIST
  *

@@ -56,7 +56,7 @@ Use Cases
 
 Shown below is a sample output when the application is run,
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 \code
 [Cortex_R5_0]
 PBIST Application
@@ -108,6 +108,53 @@ PBIST Failure Insertion Test completed in 47 micro secs
   PBIST complete for MSS CR5A BTCM1
 
   All tests have passed.
+\endcode
+\endcond
+
+\cond SOC_AM263PX
+\code
+[Cortex_R5_0]
+PBIST Application
+
+ Starting PBIST failure insertion test on TOP PBIST
+ PBIST failure Insertion test complete for TOP BIST
+PBIST Failure Insertion Test completed in 47 micro secs
+
+ Starting PBIST test on TOP PBIST
+ PBIST complete for R5 STC
+ PBIST complete for R51 STC
+ PBIST complete for R50 TMU1
+ PBIST complete for R50 TMU2
+ PBIST complete for R50 TMU3
+ PBIST complete for R50 TMU4
+ PBIST complete for R50 TMU5
+ PBIST complete for R50 TMU6
+ PBIST complete for R51 TMU1
+ PBIST complete for R51 TMU2
+ PBIST complete for R51 TMU3
+ PBIST complete for R51 TMU4
+ PBIST complete for R51 TMU5
+ PBIST complete for R51 TMU6
+ PBIST complete for PBISTROM
+ PBIST complete for ROM0
+ PBIST complete for ROM1
+ PBIST complete for CPSW
+ PBIST complete for ECU_PERIPH
+ PBIST complete for FOTA
+ PBIST complete for ICSSM
+ PBIST complete for MBOX
+ PBIST complete for MSS_L2_1
+ PBIST complete for MSS_L2_2
+ PBIST complete for MSS_L2_3
+ PBIST complete for MSS_L2_4
+ PBIST complete for MSS_L2_5
+ PBIST complete for TPCC
+ PBIST complete for OSPI
+ PBIST complete for MSS R5SS1 C0
+ PBIST complete for MSS R5SS1 C1
+
+ All tests have passed.
+
 \endcode
 \endcond
 

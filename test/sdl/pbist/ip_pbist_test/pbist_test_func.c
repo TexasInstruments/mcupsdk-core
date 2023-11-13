@@ -939,7 +939,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     #endif
   }
 #endif
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X)
 #if defined (R5F0_INPUTS)
     if((status == SDL_PASS) && (testType == SDL_PBIST_TEST))
     {
@@ -980,6 +980,54 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     }
 #endif
 #endif
+
+#if defined (SOC_AM263PX)
+    if((status == SDL_PASS) && (testType == SDL_PBIST_TEST))
+    {
+        {
+            DebugP_log(" PBIST complete for R5 STC\r\n");
+            DebugP_log(" PBIST complete for R51 STC\r\n");
+            DebugP_log(" PBIST complete for R50 TMU1\r\n");
+            DebugP_log(" PBIST complete for R50 TMU2\r\n");
+            DebugP_log(" PBIST complete for R50 TMU3\r\n");
+            DebugP_log(" PBIST complete for R50 TMU4\r\n");
+            DebugP_log(" PBIST complete for R50 TMU5\r\n");
+            DebugP_log(" PBIST complete for R50 TMU6\r\n");
+            DebugP_log(" PBIST complete for R51 TMU1\r\n");
+            DebugP_log(" PBIST complete for R51 TMU2\r\n");
+            DebugP_log(" PBIST complete for R51 TMU3\r\n");
+            DebugP_log(" PBIST complete for R51 TMU4\r\n");
+            DebugP_log(" PBIST complete for R51 TMU5\r\n");
+            DebugP_log(" PBIST complete for R51 TMU6\r\n");
+            DebugP_log(" PBIST complete for PBISTROM\r\n");
+            DebugP_log(" PBIST complete for ROM0\r\n");
+            DebugP_log(" PBIST complete for ROM1\r\n");
+            DebugP_log(" PBIST complete for CPSW\r\n");
+            DebugP_log(" PBIST complete for ECU_PERIPH\r\n");
+            DebugP_log(" PBIST complete for FOTA\r\n");
+            DebugP_log(" PBIST complete for ICSSM\r\n");
+            DebugP_log(" PBIST complete for MBOX\r\n");
+            DebugP_log(" PBIST complete for MSS_L2_1\r\n");
+            DebugP_log(" PBIST complete for MSS_L2_2\r\n");
+            DebugP_log(" PBIST complete for MSS_L2_3\r\n");
+            DebugP_log(" PBIST complete for MSS_L2_4\r\n");
+            DebugP_log(" PBIST complete for MSS_L2_5\r\n");
+            DebugP_log(" PBIST complete for TPCC\r\n");
+            DebugP_log(" PBIST complete for OSPI\r\n");
+            DebugP_log(" PBIST complete for MSS R5SS1 C0\r\n");
+            DebugP_log(" PBIST complete for MSS R5SS1 C1\r\n");
+        }
+        if (testResult == SDL_PASS)
+        {
+            DebugP_log("\r\nAll tests have passed. \r\n");
+        }
+        else
+        {
+            DebugP_log("\r\nSome tests have failed. \r\n");
+        }
+    }
+#endif
+
     if((status == SDL_PASS) && (testType == SDL_PBIST_NEG_TEST))
     {
         DebugP_log(" PBIST failure Insertion test complete for TOP BIST\r\n");
