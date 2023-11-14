@@ -303,7 +303,7 @@ coverage:
 	@echo Creating Coverage Report for rat.$(PROFILE) ...
 	$(MKDIR) coverage
 	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o rat.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=rat.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=rat.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
 	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=rat.$(PROFILE).profdata > coverage/rat.$(PROFILE).profdata.json
 	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/rat.$(PROFILE).profdata.json --output-json=coverage/rat.$(PROFILE).analysis.json --output=../rat.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!

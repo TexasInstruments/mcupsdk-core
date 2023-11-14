@@ -314,7 +314,7 @@ coverage:
 	@echo Creating Coverage Report for test_optiflash.$(PROFILE) ...
 	$(MKDIR) coverage
 	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o test_optiflash.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=test_optiflash.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=test_optiflash.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
 	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=test_optiflash.$(PROFILE).profdata > coverage/test_optiflash.$(PROFILE).profdata.json
 	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/test_optiflash.$(PROFILE).profdata.json --output-json=coverage/test_optiflash.$(PROFILE).analysis.json --output=../test_optiflash.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!

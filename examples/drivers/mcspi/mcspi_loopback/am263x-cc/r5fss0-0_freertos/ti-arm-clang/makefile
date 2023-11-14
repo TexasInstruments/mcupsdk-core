@@ -178,6 +178,7 @@ ifeq ($(SYSTEM_FLAG), false)
 else
 	SYSTEM_COMMAND := $(OBJS) $(LNK_FILES) $(LIBS_NAME)
 endif
+
 $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
 	@echo  Linking: am263x:r5fss0-0:freertos:ti-arm-clang $@ ...
@@ -306,7 +307,7 @@ coverage:
 	@echo Creating Coverage Report for mcspi_loopback.$(PROFILE) ...
 	$(MKDIR) coverage
 	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o mcspi_loopback.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=mcspi_loopback.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=mcspi_loopback.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
 	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=mcspi_loopback.$(PROFILE).profdata > coverage/mcspi_loopback.$(PROFILE).profdata.json
 	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/mcspi_loopback.$(PROFILE).profdata.json --output-json=coverage/mcspi_loopback.$(PROFILE).analysis.json --output=../mcspi_loopback.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!

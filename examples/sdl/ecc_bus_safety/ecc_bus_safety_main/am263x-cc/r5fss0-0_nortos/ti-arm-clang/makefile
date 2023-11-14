@@ -187,6 +187,7 @@ ifeq ($(SYSTEM_FLAG), false)
 else
 	SYSTEM_COMMAND := $(OBJS) $(LNK_FILES) $(LIBS_NAME)
 endif
+
 $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
 	@echo  Linking: am263x:r5fss0-0:nortos:ti-arm-clang $@ ...
@@ -315,7 +316,7 @@ coverage:
 	@echo Creating Coverage Report for sdl_ecc_bus_safety_example.$(PROFILE) ...
 	$(MKDIR) coverage
 	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o sdl_ecc_bus_safety_example.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=sdl_ecc_bus_safety_example.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=sdl_ecc_bus_safety_example.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
 	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=sdl_ecc_bus_safety_example.$(PROFILE).profdata > coverage/sdl_ecc_bus_safety_example.$(PROFILE).profdata.json
 	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/sdl_ecc_bus_safety_example.$(PROFILE).profdata.json --output-json=coverage/sdl_ecc_bus_safety_example.$(PROFILE).analysis.json --output=../sdl_ecc_bus_safety_example.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!

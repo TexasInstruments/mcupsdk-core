@@ -175,6 +175,7 @@ ifeq ($(SYSTEM_FLAG), false)
 else
 	SYSTEM_COMMAND := $(OBJS) $(LNK_FILES) $(LIBS_NAME)
 endif
+
 $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
 	@echo  Linking: am263x:r5fss0-0:nortos:ti-arm-clang $@ ...
@@ -303,7 +304,7 @@ coverage:
 	@echo Creating Coverage Report for adc_burst_mode_oversampling.$(PROFILE) ...
 	$(MKDIR) coverage
 	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o adc_burst_mode_oversampling.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=adc_burst_mode_oversampling.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=adc_burst_mode_oversampling.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
 	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=adc_burst_mode_oversampling.$(PROFILE).profdata > coverage/adc_burst_mode_oversampling.$(PROFILE).profdata.json
 	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/adc_burst_mode_oversampling.$(PROFILE).profdata.json --output-json=coverage/adc_burst_mode_oversampling.$(PROFILE).analysis.json --output=../adc_burst_mode_oversampling.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!

@@ -314,7 +314,7 @@ coverage:
 	@echo Creating Coverage Report for ecdsa_signing_verification.$(PROFILE) ...
 	$(MKDIR) coverage
 	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o ecdsa_signing_verification.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=ecdsa_signing_verification.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=ecdsa_signing_verification.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
 	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=ecdsa_signing_verification.$(PROFILE).profdata > coverage/ecdsa_signing_verification.$(PROFILE).profdata.json
 	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/ecdsa_signing_verification.$(PROFILE).profdata.json --output-json=coverage/ecdsa_signing_verification.$(PROFILE).analysis.json --output=../ecdsa_signing_verification.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!

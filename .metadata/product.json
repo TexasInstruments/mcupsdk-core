@@ -15,6 +15,7 @@
         "/security/security",
         "/usb/usb",
         "/pru_io/pru_io",
+        "/memory_configurator/components"
     ],
     "devices": [
         "AM64x",

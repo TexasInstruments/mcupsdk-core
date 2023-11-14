@@ -180,6 +180,7 @@ ifeq ($(SYSTEM_FLAG), false)
 else
 	SYSTEM_COMMAND := $(OBJS) $(LNK_FILES) $(LIBS_NAME)
 endif
+
 $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
 	@echo  Linking: am263x:r5fss0-1:nortos:ti-arm-clang $@ ...
@@ -308,7 +309,7 @@ coverage:
 	@echo Creating Coverage Report for ipc_safeipc_test.$(PROFILE) ...
 	$(MKDIR) coverage
 	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o ipc_safeipc_test.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=ipc_safeipc_test.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=ipc_safeipc_test.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
 	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=ipc_safeipc_test.$(PROFILE).profdata > coverage/ipc_safeipc_test.$(PROFILE).profdata.json
 	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/ipc_safeipc_test.$(PROFILE).profdata.json --output-json=coverage/ipc_safeipc_test.$(PROFILE).analysis.json --output=../ipc_safeipc_test.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!

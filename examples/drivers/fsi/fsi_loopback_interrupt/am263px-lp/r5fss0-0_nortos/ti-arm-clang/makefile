@@ -307,7 +307,7 @@ coverage:
 	@echo Creating Coverage Report for fsi_loopback_interrupt.$(PROFILE) ...
 	$(MKDIR) coverage
 	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o fsi_loopback_interrupt.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=fsi_loopback_interrupt.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=fsi_loopback_interrupt.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
 	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=fsi_loopback_interrupt.$(PROFILE).profdata > coverage/fsi_loopback_interrupt.$(PROFILE).profdata.json
 	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/fsi_loopback_interrupt.$(PROFILE).profdata.json --output-json=coverage/fsi_loopback_interrupt.$(PROFILE).analysis.json --output=../fsi_loopback_interrupt.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
