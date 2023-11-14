@@ -1,0 +1,127 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("uart");
+    let uartUdmaInstances = [];
+    let module = system.modules['/drivers/uart/uart'];
+%%}
+
+/*
+ * UART
+ */
+#include <drivers/uart/v0/lld/uart_lld.h>
+UARTLLD_Object gUartObject[CONFIG_UART_NUM_INSTANCES];
+UARTLLD_Handle gUartHandle[CONFIG_UART_NUM_INSTANCES];
+
+/* UART Driver handles */
+extern UARTLLD_InitObject gUartInitObject[CONFIG_UART_NUM_INSTANCES];
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % if(instance.intrEnable == "DMA") {
+    %    uartUdmaInstances.push(module.getInstanceConfig(instance).udmaDriver);
+    % }
+% }
+
+/* UART Driver handles */
+%if(uartUdmaInstances.length > 0) {
+#include <drivers/uart/v0/lld/dma/uart_dma.h>
+#include <drivers/uart/v0/lld/dma/udma/uart_dma_udma.h>
+#include <drivers/udma.h>
+
+/*
+ * Ring parameters
+ */
+/** \brief Number of ring entries - we can prime this much UART operations */
+#define UART_UDMA_TEST_RING_ENTRIES          (1U)
+/** \brief Size (in bytes) of each ring entry (Size of pointer - 64-bit) */
+#define UART_UDMA_TEST_RING_ENTRY_SIZE       (sizeof(uint64_t))
+/** \brief Total ring memory */
+#define UART_UDMA_TEST_RING_MEM_SIZE         (UART_UDMA_TEST_RING_ENTRIES * UART_UDMA_TEST_RING_ENTRY_SIZE)
+/** \brief UDMA host mode buffer descriptor memory size. */
+#define UART_UDMA_TEST_DESC_SIZE             (sizeof(CSL_UdmapCppi5HMPD))
+
+%for(let i = 0; i < uartUdmaInstances.length; i++) {
+/* UART UDMA TX Channel Objects */
+static Udma_ChObject gUart`i`UdmaTxObj;
+
+/* UART UDMA RX Channel Objects */
+static Udma_ChObject gUart`i`UdmaRxObj;
+
+/**< UDMA TX completion queue object */
+static Udma_EventObject        gUart`i`UdmaCqTxEventObj;
+/**< UDMA RX completion queue object */
+static Udma_EventObject        gUart`i`UdmaCqRxEventObj;
+
+/* UART UDMA Channel Ring Mem */
+static uint8_t gUart`i`UdmaRxRingMem[UART_UDMA_TEST_RING_MEM_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
+static uint8_t gUart`i`UdmaTxRingMem[UART_UDMA_TEST_RING_MEM_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
+
+/* UART UDMA Channel HPD Mem */
+static uint8_t gUart`i`UdmaTxHpdMem[UART_UDMA_TEST_DESC_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
+static uint8_t gUart`i`UdmaRxHpdMem[UART_UDMA_TEST_DESC_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
+
+UART_UdmaChConfig gUartDmaChCfg[CONFIG_UART_NUM_DMA_INSTANCES] =
+{{
+    .drvHandle        = &gUdmaDrvObj,
+    .txChHandle       = &gUart`i`UdmaTxObj,
+    .rxChHandle       = &gUart`i`UdmaRxObj,
+    .cqTxEvtHandle    = &gUart`i`UdmaCqTxEventObj,
+    .cqRxEvtHandle    = &gUart`i`UdmaCqRxEventObj,
+    .txHpdMem         = &gUart`i`UdmaTxHpdMem,
+    .rxHpdMem         = &gUart`i`UdmaRxHpdMem,
+    .hpdMemSize       = UART_UDMA_TEST_DESC_SIZE,
+    .txRingMem        = &gUart`i`UdmaTxRingMem,
+    .rxRingMem        = &gUart`i`UdmaRxRingMem,
+    .ringMemSize      = UART_UDMA_TEST_RING_MEM_SIZE,
+    .ringElemCnt      = UART_UDMA_TEST_RING_ENTRIES,
+    .isOpen           = FALSE,
+}};
+
+%}
+%}
+
+void Drivers_uartOpen(void)
+{
+    int32_t status = UART_STATUS_SUCCESS;
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+     % let instNameCamelCase = common.camelSentence(instance.$name);
+    gUartHandle[`instance.$name.toUpperCase()`]             = &gUartObject[`instance.$name.toUpperCase()`];
+    gUartHandle[`instance.$name.toUpperCase()`]->state      = UART_STATE_RESET;
+    gUartHandle[`instance.$name.toUpperCase()`]->baseAddr   = `config.baseAddr`;
+    gUartHandle[`instance.$name.toUpperCase()`]->hUartInit = &gUartInitObject[`instance.$name.toUpperCase()`];
+
+% if(config.intrEnable == "DMA") {
+    status = UART_lld_initDma(gUartHandle[`instance.$name.toUpperCase()`]);
+%}
+%else{
+    status += UART_lld_init(gUartHandle[`instance.$name.toUpperCase()`]);
+%}
+% }
+
+    DebugP_assert(status == UART_STATUS_SUCCESS);
+    return;
+
+}
+
+void Drivers_uartClose(void)
+{
+    int32_t status = UART_STATUS_SUCCESS;
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+%if(config.intrEnable == "DMA") {
+    status = UART_lld_deInitDma(gUartHandle[`instance.$name.toUpperCase()`]);
+%}
+%else{
+    status += UART_lld_deInit(gUartHandle[`instance.$name.toUpperCase()`]);
+%}
+% }
+
+    DebugP_assert(status == UART_STATUS_SUCCESS);
+    return;
+}

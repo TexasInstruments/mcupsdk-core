@@ -104,7 +104,7 @@ FILES_common := \
     spinlock.c \
     csl_timer_mgr.c \
     uart_v0.c \
-    uart_dma.c \
+    uart_v0_lld.c \
     uart_dma_udma.c \
     udma.c \
     udma_ch.c \
@@ -179,8 +179,9 @@ FILES_PATH_common = \
     spinlock/v0 \
     timer_mgr/v0/priv \
     uart/v0 \
-    uart/v0/dma \
-    uart/v0/dma/udma \
+    uart/v0/lld \
+    uart/v0/lld/dma \
+    uart/v0/lld/dma/udma \
     udma \
     udma/hw_include \
     udma/soc \

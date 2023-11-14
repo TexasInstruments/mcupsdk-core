@@ -7034,6 +7034,138 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Uart Echo Dma Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "uart_echo_dma_lld",
+        "location": "../../examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_dma_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Dma Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "uart_echo_dma_lld",
+        "location": "../../examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_dma_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Interrupt Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "uart_echo_interrupt_lld",
+        "location": "../../examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_interrupt_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Interrupt Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "uart_echo_interrupt_lld",
+        "location": "../../examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_interrupt_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Uart Echo Callback Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo_callback",
         "location": "../../examples/drivers/uart/uart_echo_callback/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -7149,6 +7281,72 @@
             "drivers",
             "uart",
             "uart_echo_dma",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Polling Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "uart_echo_polling_lld",
+        "location": "../../examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_polling_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Polling Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "uart_echo_polling_lld",
+        "location": "../../examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_polling_lld",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [

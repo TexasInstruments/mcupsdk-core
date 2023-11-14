@@ -48,6 +48,7 @@ const files = {
         "TaskP_sample.c",
         "TimerP_sample.c",
         "Uart_sample.c",
+        "Uart_lld_sample.c",
         "Udma_sample.c",
         "Pru_ipc_sample.c",
     ],
@@ -113,6 +114,7 @@ const files_am263x = {
         "TaskP_sample.c",
         "TimerP_sample.c",
         "Uart_sample.c",
+        "Uart_lld_sample.c",
         "Watchdog_sample.c",
     ],
 };
@@ -146,6 +148,7 @@ const files_am263px = {
         "TaskP_sample.c",
         "TimerP_sample.c",
         "Uart_sample.c",
+        "Uart_lld_sample.c",
         "Watchdog_sample.c",
     ],
 };

@@ -57,7 +57,7 @@ FILES_common := \
     sciclient_soc_priv.c \
     soc.c \
     uart_v0.c \
-    uart_dma.c \
+    uart_v0_lld.c \
     uart_dma_udma.c \
     udma.c \
     udma_ch.c \
@@ -70,6 +70,13 @@ FILES_common := \
     udma_rmcfg_common.c \
     udma_soc.c \
     udma_utils.c \
+    csl_bcdma.c \
+    csl_emif.c \
+    csl_intaggr.c \
+    csl_lcdma_ringacc.c \
+    csl_pktdma.c \
+    csl_ringacc.c \
+    csl_sec_proxy.c \
 
 FILES_PATH_common = \
     adc/v0 \
@@ -127,8 +134,9 @@ FILES_PATH_common = \
     spinlock/v0 \
     timer_mgr/v0/priv \
     uart/v0 \
-    uart/v0/dma \
-    uart/v0/dma/udma \
+    uart/v0/lld \
+    uart/v0/lld/dma \
+    uart/v0/lld/dma/udma \
     udma \
     udma/hw_include \
     udma/soc \

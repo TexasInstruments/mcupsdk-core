@@ -47,6 +47,7 @@ extern "C"
  *  @{
  */
 
+#include <kernel/dpl/SystemP.h>
 #include <drivers/sciclient.h>
 #include <kernel/dpl/CpuIdP.h>
 #include <drivers/hw_include/am64x_am243x/cslr_soc_baseaddress.h>
@@ -119,6 +120,25 @@ static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
         (baseAddr == CSL_MCU_MCSPI1_CFG_BASE) || \
         (baseAddr == MCU_MCSPI0_CFG_BASE_AFTER_ADDR_TRANSLATE) || \
         (baseAddr == MCU_MCSPI1_CFG_BASE_AFTER_ADDR_TRANSLATE))
+    {
+        status = 0;
+    }
+
+    return status;
+}
+
+/** \brief API to validate UART base address */
+static inline int32_t UART_IsBaseAddrValid(uint32_t baseAddr)
+{
+    int32_t status = (int32_t)-3;
+
+    if(((baseAddr == CSL_UART0_BASE) ||
+        (baseAddr == CSL_UART1_BASE) ||
+        (baseAddr == CSL_UART2_BASE) ||
+        (baseAddr == CSL_UART3_BASE) ||
+        (baseAddr == CSL_UART4_BASE) ||
+        (baseAddr == CSL_UART5_BASE) ||
+        (baseAddr == CSL_UART6_BASE)))
     {
         status = 0;
     }

@@ -1,0 +1,104 @@
+%%{
+    let module = system.modules['/drivers/uart/uart'];
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let uartUdmaInstances = [];
+    let driverVer = soc.getDriverVer("uart");
+    for(let i=0; i < module.$instances.length; i++) {
+        let instance = module.$instances[i];
+        if(instance.intrEnable == "DMA") {
+            uartUdmaInstances.push(module.getInstanceConfig(instance).udmaDriver);
+        }
+    }
+%%}
+
+#include "ti_drivers_open_close.h"
+#include <drivers/uart/v0/lld/uart_lld.h>
+#include <kernel/dpl/ClockP.h>
+
+/*
+ * UART
+ */
+extern UARTLLD_Object gUartObject[CONFIG_UART_NUM_INSTANCES];
+extern UARTLLD_Handle gUartHandle[CONFIG_UART_NUM_INSTANCES];
+
+uint32_t gUartConfigNum = CONFIG_UART_NUM_INSTANCES;
+
+/*
+ * UART
+ */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if(config.intrEnable != "DISABLE") {
+/* UART Read Callback */
+void `config.readCallbackFxn`(void *args);
+    % }
+% }
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if(config.intrEnable != "DISABLE") {
+/* UART Write Callback */
+void `config.writeCallbackFxn`(void *args);
+    % }
+% }
+
+/* UART init objects */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let name = config.name.replace('USART', 'UART');
+UARTLLD_InitObject gUartInitObject[CONFIG_UART_NUM_INSTANCES] =
+{{
+    .inputClkFreq       = 48000000U,
+    .baudRate           = `config.baudRate`,
+    .dataLength         = UART_LEN_`config.dataLength`,
+    .stopBits           = UART_STOPBITS_`config.stopBits`,
+    .parityType         = UART_PARITY_`config.parityType`,
+    .readReturnMode     = UART_READ_RETURN_MODE_`config.readReturnMode`,
+    .hwFlowControl      = `config.hwFlowControl.toString(10).toUpperCase()`,
+    .hwFlowControlThr   = UART_RXTRIGLVL_`config.hwFlowControlThr`,
+     % if(config.intrEnable == "DISABLE") {
+    .transferMode       = UART_CONFIG_MODE_POLLED,
+    % }
+    % if(config.intrEnable == "ENABLE") {
+    .transferMode       = UART_CONFIG_MODE_INTERRUPT,
+    % }
+    % if(config.intrEnable == "USER_INTR") {
+    .transferMode       = UART_CONFIG_MODE_USER_INTR,
+    % }
+    % if(config.intrEnable == "DMA") {
+    .transferMode       = UART_CONFIG_MODE_DMA,
+    %}
+    .intrNum            = `config.intrNum`U,
+    .intrPriority       = `config.intrPriority`U,
+    .operMode           = UART_OPER_MODE_`config.operMode`,
+     %if(config.intrEnable == "DMA") {
+    .rxTrigLvl          = UART_RXTRIGLVL_1,
+    .txTrigLvl          = UART_TXTRIGLVL_1,
+    .rxEvtNum           = `config.udmaPdmaChannels[0].rxCh`,
+    .txEvtNum           = `config.udmaPdmaChannels[0].txCh`,
+    .uartDmaHandle      = (UART_DmaHandle) &gUdmaDrvObj[`uartUdmaInstances[0].$name`],
+    .dmaChCfg           = (UART_DmaChConfig) &gUartDmaChCfg,
+    %}
+    %else {
+    .rxTrigLvl          = UART_RXTRIGLVL_`config.rxTrigLvl`,
+    .txTrigLvl          = UART_TXTRIGLVL_`config.txTrigLvl`,
+    .rxEvtNum           = 0U,
+    .txEvtNum           = 0U,
+    %}
+    .clockP_get         = ClockP_getTicks,
+    .clockP_usecToTick  = ClockP_usecToTicks,
+    % if(config.intrEnable != "DISABLE") {
+    .writeCompleteCallbackFxn = `config.writeCallbackFxn`,
+    .readCompleteCallbackFxn  = `config.readCallbackFxn`,
+    % }
+    %else {
+    .writeCompleteCallbackFxn = NULL,
+    .readCompleteCallbackFxn  = NULL,
+    % }
+}};
+% }
+
+uint32_t gUartDmaConfigNum = CONFIG_UART_NUM_DMA_INSTANCES;

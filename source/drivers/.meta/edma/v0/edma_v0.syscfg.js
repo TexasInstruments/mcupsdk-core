@@ -245,27 +245,27 @@ let edma_module = {
         },
         {
             name: "enableOwnDmaChannelConfig",
-            displayName: "Enable Own Dma Channel Config",
+            displayName: "Enable Core Dma Channel Config",
             default: true,
-            description: `Enable Own Dma Channel Config`,
+            description: `Enable Core Dma Channel Config`,
         },
         {
             name: "enableOwnQdmaChannelConfig",
-            displayName: "Enable Own Qdma Channel Config",
+            displayName: "Enable Core Qdma Channel Config",
             default: true,
-            description: `Enable Own Qdma Channel Config`,
+            description: `Enable Core Qdma Channel Config`,
         },
         {
             name: "enableOwnTccConfig",
-            displayName: "Enable Own Tcc Config",
+            displayName: "Enable Core Tcc Config",
             default: true,
-            description: `Enable Own Tcc Config`,
+            description: `Enable Core Tcc Config`,
         },
         {
             name: "enableOwnParamConfig",
-            displayName: "Enable Own Param Config",
+            displayName: "Enable Core Param Config",
             default: true,
-            description: `Enable Own Param Config`,
+            description: `Enable Core Param Config`,
         },
         {
             name: "enableReservedChannelConfig",
@@ -390,7 +390,7 @@ function moduleInstances(instance) {
 
         rmInstances.push({
             name: "edmaRmDmaCh",
-            displayName: "Own Dma Channel Resource Manager",
+            displayName: "Core Dma Channel Resource Manager",
             moduleName: '/drivers/edma/v0/edma_v0_rm',
             useArray: true,
             minInstanceCount: 1,
@@ -410,7 +410,7 @@ function moduleInstances(instance) {
 
         rmInstances.push({
             name: "edmaRmQdmaCh",
-            displayName: "Own Qdma Channel Resource Manager",
+            displayName: "Core Qdma Channel Resource Manager",
             moduleName: '/drivers/edma/v0/edma_v0_rm',
             useArray: true,
             minInstanceCount: 1,
@@ -430,7 +430,7 @@ function moduleInstances(instance) {
 
         rmInstances.push({
             name: "edmaRmTcc",
-            displayName: "Own Tcc Resource Manager",
+            displayName: "Core Tcc Resource Manager",
             moduleName: '/drivers/edma/v0/edma_v0_rm',
             useArray: true,
             minInstanceCount: 1,
@@ -450,7 +450,7 @@ function moduleInstances(instance) {
 
         rmInstances.push({
             name: "edmaRmParam",
-            displayName: "Own Param Resource Manager",
+            displayName: "Core Param Resource Manager",
             moduleName: '/drivers/edma/v0/edma_v0_rm',
             useArray: true,
             minInstanceCount: 1,

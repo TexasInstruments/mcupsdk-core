@@ -1,10 +1,10 @@
 %%{
     let module = system.modules['/drivers/uart/uart'];
     let common = system.getScript("/common");
+    let edmaModule = system.modules['/drivers/edma/edma'];
     let uartEdmaInstances = [];
     for(let i=0; i < module.$instances.length; i++) {
         let instance = module.$instances[i];
-        let ch_instances = instance.uartChannel;
         if(instance.intrEnable == "DMA") {
             uartEdmaInstances.push(module.getInstanceConfig(instance).edmaDriver);
         }
@@ -43,39 +43,45 @@ UART_Config gUartConfig[CONFIG_UART_NUM_INSTANCES] =
 
 uint32_t gUartConfigNum = CONFIG_UART_NUM_INSTANCES;
 
-#include <drivers/uart/v0/dma/uart_dma.h>
-%if(uartEdmaInstances.length > 0) {
-#include <drivers/uart/v0/dma/edma/uart_dma_edma.h>
+#include <drivers/uart/v0/lld/dma/uart_dma.h>
 #include <drivers/edma.h>
-%}
-
-%  let j = 0;
-%  for(let i=0; i < module.$instances.length; i++) {
-%      let instance = module.$instances[i];
-%      if(instance.intrEnable == "DMA") {
-
-UartDma_EdmaArgs gUartEdma`j`Args =
-{
-    .drvHandle        = (void *)&gEdmaConfig[`uartEdmaInstances[0].$name`],
-    .edmaRxChId       = `instance.uartRxConfigXbar.instance`,
-    .edmaTxChId       = `instance.uartTxConfigXbar.instance`,
-};
-% j++;
-%}
-%}
-
+%if(uartEdmaInstances.length > 0) {
+#include <drivers/uart/v0/lld/dma/edma/uart_dma_edma.h>
+extern UART_EdmaChConfig gUartEdmaChConfig[];
 UART_DmaConfig gUartDmaConfig[CONFIG_UART_NUM_DMA_INSTANCES] =
 {
-%for(let i = 0; i < uartEdmaInstances.length; i++) {
+% for(let i = 0; i < edmaModule.$instances.length; i++) {
     {
-        .fxns        = &gUartDmaEdmaFxns,
-        .uartDmaArgs = (void *)&gUartEdma`i`Args,
+        .fxns        = NULL,
+        .uartDmaArgs = (void *)&gUartEdmaChConfig[`i`],
     },
 %}
 };
 
-uint32_t gUartDmaConfigNum = CONFIG_UART_NUM_DMA_INSTANCES;
+UART_DmaHandle gUartDmaHandle[CONFIG_UART_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    %if(instance.intrEnable == "DMA") {
+        (void *)&gEdmaConfig[CONFIG_EDMA0],
+    % }
+    %else {
+        NULL,
+    %}
+% }
+};
+%}
+% else {
+uint32_t gEdmaConfigNum = CONFIG_UART_NUM_DMA_INSTANCES;
+UART_DmaHandle gUartDmaHandle[] =
+{
+};
+EDMA_Config gEdmaConfig[] =
+{
+};
+%}
 
+uint32_t gUartDmaConfigNum = CONFIG_UART_NUM_DMA_INSTANCES;
 
 void Drivers_uartInit(void)
 {

@@ -188,10 +188,16 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_am243x-evm_r5fss0-0_n
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_interrupt_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_low_latency_interrupt_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_low_latency_interrupt_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_low_latency_polling_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_low_latency_polling_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += udma_adc_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += udma_adc_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += udma_chaining_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
@@ -968,6 +974,18 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  uart_echo_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_interrupt_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
  uart_echo_low_latency_interrupt_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_interrupt/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -979,6 +997,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  uart_echo_low_latency_polling_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_polling/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  udma_adc_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/udma/udma_adc_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
@@ -1834,10 +1858,16 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_am243x-evm_r5fss0-0_n
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_interrupt_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_low_latency_interrupt_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_low_latency_interrupt_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_low_latency_polling_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_low_latency_polling_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += udma_adc_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += udma_adc_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += udma_chaining_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
@@ -2614,6 +2644,18 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  uart_echo_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_interrupt_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
  uart_echo_low_latency_interrupt_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_interrupt/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -2625,6 +2667,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  uart_echo_low_latency_polling_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_polling/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  udma_adc_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/udma/udma_adc_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
@@ -3480,10 +3528,16 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_am243x-evm_r5fss0-0_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_interrupt_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_low_latency_interrupt_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_low_latency_interrupt_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_low_latency_polling_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_low_latency_polling_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += udma_adc_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += udma_adc_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += udma_chaining_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
@@ -4260,6 +4314,18 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  uart_echo_dma_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_interrupt_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
  uart_echo_low_latency_interrupt_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_interrupt/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -4271,6 +4337,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  uart_echo_low_latency_polling_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_polling/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  udma_adc_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/udma/udma_adc_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
@@ -5151,10 +5223,16 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_low_latency_interrupt/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_low_latency_interrupt/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_low_latency_polling/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_low_latency_polling/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_adc_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_adc_read/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_chaining/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]

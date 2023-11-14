@@ -97,4 +97,3 @@ unlock_mutex:
     bx      lr
 
         .end
-

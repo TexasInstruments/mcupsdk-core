@@ -357,7 +357,7 @@ exports = {
     ui:
     {
         makeInstanceConfig: function(staticConfigArr) {
-            return makeConfig(staticConfigArr, "instance", "Instance");
+            return makeConfig(staticConfigArr, "instance", "XBar Instance");
         },
         makeConfig: makeConfig,
     }

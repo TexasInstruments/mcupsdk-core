@@ -72,9 +72,9 @@ FILES_common := \
     soc.c \
     soc_rcm.c \
     spinlock.c \
-    uart_dma.c \
-    uart_dma_edma.c \
     uart_v0.c \
+    uart_v0_lld.c \
+    uart_dma_edma.c \
     watchdog_rti.c \
     watchdog_soc.c \
     rl2.c \
@@ -132,8 +132,9 @@ FILES_PATH_common = \
     soc/am263px \
     spinlock/v0 \
     uart/v0 \
-    uart/v0/dma \
-    uart/v0/dma/edma \
+    uart/v0/lld \
+    uart/v0/lld/dma \
+    uart/v0/lld/dma/edma \
     watchdog/v0 \
     optiflash/v0/flc \
     optiflash/v0/rl2 \

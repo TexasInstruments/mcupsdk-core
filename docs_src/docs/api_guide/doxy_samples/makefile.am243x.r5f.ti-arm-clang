@@ -62,6 +62,7 @@ FILES_common := \
     TaskP_sample.c \
     TimerP_sample.c \
     Uart_sample.c \
+    Uart_lld_sample.c \
     Udma_sample.c \
     Pru_ipc_sample.c \
     Soc_am64x_sample.c \

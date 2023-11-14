@@ -105,6 +105,7 @@ extern "C"
 
 /* Driver DMA integration */
 #define DMA_VERSION_MCSPI_UDMA
+#define DMA_VERSION_UART_UDMA
 
 #ifdef __cplusplus
 }

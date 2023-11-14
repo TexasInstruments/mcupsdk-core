@@ -621,16 +621,10 @@ static EDMA_Attrs gEdmaAttrs[CONFIG_EDMA_NUM_INSTANCES] =
         },
     },
 };
-EDMA_Config gEdmaConfig[CONFIG_EDMA_NUM_INSTANCES] =
-{
-    {
-        &gEdmaAttrs[CONFIG_EDMA0],
-        &gEdmaObjects[CONFIG_EDMA0],
-    },
-};
+extern EDMA_Config gEdmaConfig[];
 
 /* EDMA global variables */
-uint32_t gEdmaConfigNum = CONFIG_EDMA_NUM_INSTANCES;
+extern uint32_t gEdmaConfigNum;
 EDMACCPaRAMEntry    edmaParam;
 uint32_t            edma_base_addr, regionId;
 uint32_t            dmaCh, tcc, param;
@@ -750,6 +744,12 @@ void test_main(void *args)
     /* Open drivers */
     Drivers_open();
     Board_driversOpen();
+
+    gEdmaConfig[0].attrs = &gEdmaAttrs[CONFIG_EDMA0];
+    gEdmaConfig[0].object =  &gEdmaObjects[CONFIG_EDMA0];
+
+   /* EDMA global variables */
+   gEdmaConfigNum = CONFIG_EDMA_NUM_INSTANCES;
 
     tester_init();
     UNITY_BEGIN();

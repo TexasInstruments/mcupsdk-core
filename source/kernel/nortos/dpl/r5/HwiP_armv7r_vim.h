@@ -249,7 +249,8 @@ static inline void HWI_SECTION HwiP_ackFIQ(uint32_t intNum)
     *addr= intNum;
 }
 
-#define ISR_CALL_LEVEL_NONFLOAT_NONREENTRANT(fn, arg, intNum, vim_sts_addr, vim_sts_clr_mask, vim_addr)                  \
+
+#define ISR_CALL_LEVEL_NONFLOAT_NONREENTRANT(fn, arg, intNum, vim_sts_addr, vim_sts_clr_mask, vim_addr)                 \
     __asm__ volatile(                  \
     "   SUB     lr, lr, #4                  \n"    \
     "   PUSH    {lr}                        \n"    \

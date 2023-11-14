@@ -43,6 +43,7 @@ FILES_common := \
     TaskP_sample.c \
     TimerP_sample.c \
     Uart_sample.c \
+    Uart_lld_sample.c \
     Watchdog_sample.c \
 
 FILES_PATH_common = \

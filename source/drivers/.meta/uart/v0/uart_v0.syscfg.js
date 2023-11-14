@@ -103,22 +103,6 @@ let uart_module = {
     displayName: "UART",
 
     templates: {
-        "/drivers/system/system_config.c.xdt": {
-            driver_config: uart_driver_config_file,
-            driver_init: "/drivers/uart/templates/uart_init.c.xdt",
-            driver_deinit: "/drivers/uart/templates/uart_deinit.c.xdt",
-        },
-        "/drivers/system/system_config.h.xdt": {
-            driver_config: "/drivers/uart/templates/uart.h.xdt",
-        },
-        "/drivers/system/drivers_open_close.c.xdt": {
-            driver_open_close_config: uart_driver_open_close_config,
-            driver_open: "/drivers/uart/templates/uart_open.c.xdt",
-            driver_close: "/drivers/uart/templates/uart_close.c.xdt",
-        },
-        "/drivers/system/drivers_open_close.h.xdt": {
-            driver_open_close_config: "/drivers/uart/templates/uart_open_close.h.xdt",
-        },
         "/drivers/pinmux/pinmux_config.c.xdt": {
             moduleName: uart_module_name,
         },
@@ -160,6 +144,22 @@ function addModuleInstances(instance) {
         });
     }
 
+    if( instance.sdkInfra == "HLD")
+    {
+        modInstances.push({
+            name: "child",
+            moduleName: '/drivers/uart/v0/uart_v0_template',
+            },
+        );
+    }
+    else
+    {
+        modInstances.push({
+            name: "child",
+            moduleName: '/drivers/uart/v0/uart_v0_template_lld',
+            },
+        );
+    }
     return modInstances;
 }
 
@@ -168,6 +168,14 @@ function getConfigurables()
     let config = [];
 
     config.push(
+        {
+            name: "inputClkFreq",
+            displayName: "Clock Frequency",
+            default: soc.getDefaultClkRate(),
+            description: "Source Clock Frequency",
+            displayFormat: "dec",
+            options: soc.getClockOptions()
+        },
         {
             name: "baudRate",
             displayName: "Baudrate",
@@ -197,14 +205,6 @@ function getConfigurables()
                 },
             ],
             description: "Operational Mode",
-        },
-        {
-            name: "inputClkFreq",
-            displayName: "Clock Frequency",
-            default: soc.getDefaultClkRate(),
-            description: "Source Clock Frequency",
-            displayFormat: "dec",
-            options: soc.getClockOptions()
         },
         {
             name: "dataLength",
@@ -310,6 +310,22 @@ function getConfigurables()
             ],
             description: "UART HW Flow Control Threshold, should be greater than or equal to Rx Trigger level",
         },
+        {
+            name: "sdkInfra",
+            displayName: "SDK Infra",
+            default: "HLD",
+            options: [
+                {
+                    name: "HLD",
+                    displayName: "HLD"
+                },
+                {
+                    name: "LLD",
+                    displayName: "LLD"
+                },
+            ],
+            description: "SDK Infra",
+        },
         /* Advanced parameters */
         {
             name: "intrEnable",
@@ -414,6 +430,8 @@ function getConfigurables()
                 },
             ],
             description: "RX trigger level",
+            longDescription:`
+- Triggers the interrupt when RX FIFO reaches the trigger level`,
         },
         {
             name: "txTrigLvl",
@@ -438,11 +456,13 @@ function getConfigurables()
                 },
             ],
             description: "TX trigger level",
+            longDescription:`
+- Triggers the interrupt when TX FIFO reaches the trigger level`,
         },
         /* Open attributes */
         {
             name: "readMode",
-            displayName: "Read Transfer Mode",
+            displayName: "Read Mode",
             default: "BLOCKING",
             hidden: false,
             options: [
@@ -456,17 +476,26 @@ function getConfigurables()
                 },
             ],
             description: "This determines whether the driver operates synchronously or asynchronously",
+            longDescription:`
+- **Blocking Mode:** Blocks code execution until the transaction has completed
+- **CallBack Mode:** Does not block code execution and instead calls a #UART_CallbackFxn callback function when the transaction has completed`,
+            onChange: function (inst, ui) {
+                if(inst.readMode == "BLOCKING") {
+                ui.readCallbackFxn.hidden = true;
+                ui.writeCallbackFxn.hidden = true;
+            }
+            },
         },
         {
             name: "readCallbackFxn",
-            displayName: "Read Transfer Callback",
+            displayName: "Read Callback",
             default: "NULL",
             hidden: false,
-            description: "Read Transfer callback function when callback mode is selected",
+            description: "Read callback function when callback mode is selected",
         },
         {
             name: "writeMode",
-            displayName: "Write Transfer Mode",
+            displayName: "Write Mode",
             default: "BLOCKING",
             hidden: false,
             options: [
@@ -480,13 +509,22 @@ function getConfigurables()
                 },
             ],
             description: "This determines whether the driver operates synchronously or asynchronously",
+            longDescription:`
+- **Blocking Mode:** Blocks code execution until the transaction has completed
+- **CallBack Mode:** Does not block code execution and instead calls a #UART_CallbackFxn callback function when the transaction has completed`,
+            onChange: function (inst, ui) {
+                if(inst.writeMode == "BLOCKING") {
+                    ui.readCallbackFxn.hidden = true;
+                    ui.writeCallbackFxn.hidden = true;
+                }
+            },
         },
         {
             name: "writeCallbackFxn",
-            displayName: "Write Transfer Callback",
+            displayName: "Write Callback",
             default: "NULL",
             hidden: false,
-            description: "Write transfer callback function when callback mode is selected",
+            description: "Write callback function when callback mode is selected",
         },
         {
             name: "readReturnMode",

@@ -105,6 +105,7 @@ extern "C"
 #define UART_XOFF2                                                                                          ((uint32_t)0x1cU)
 #define UART_TLR                                                                                            ((uint32_t)0x1cU)
 #define UART_UASR                                                                                           ((uint32_t)0x38U)
+#define UART_TIMEGUARD                                                                                      ((uint32_t)0x94U)
 
 /****************************************************************************************************
 * Field Definition Macros
@@ -1192,6 +1193,9 @@ extern "C"
 
 #define UART_UASR_RESERVED_24_SHIFT                                                                          ((uint32_t)8U)
 #define UART_UASR_RESERVED_24_MASK                                                                           ((uint32_t)0xffffff00U)
+
+#define UART_TIMEGUARD_TIMEGUARD_SHIFT                                                                       ((uint32_t)0U)
+#define UART_TIMEGUARD_TIMEGUARD_MASK                                                                        ((uint32_t)0x000000ffU)
 
 #ifdef __cplusplus
 }
