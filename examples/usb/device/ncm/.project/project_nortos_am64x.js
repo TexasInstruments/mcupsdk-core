@@ -70,10 +70,6 @@ const syscfgfile = "../example.syscfg";
 
 const templates_nortos_r5f =
 [
-    {
-        input: ".project/templates/am64x/common/linker_r5f.cmd.xdt",
-        output: "linker.cmd",
-    },
 ];
 
 const buildOptionCombos = [

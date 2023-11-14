@@ -101,6 +101,7 @@ const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_UDMA_CHAINING";
 
 const templates_freertos_r5f =
 [
+
     {
         input: ".project/templates/am64x/freertos/main_freertos.c.xdt",
         output: "../main.c",

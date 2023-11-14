@@ -82,6 +82,7 @@ const syscfgfile = "../example.syscfg"
 
 const templates_nortos_m4f =
 [
+
 ];
 
 const templates_nortos_r5f =

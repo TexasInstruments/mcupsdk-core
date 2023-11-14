@@ -84,6 +84,7 @@ const projectspecfiles = {
 
 const templates_nortos_m4f =
 [
+
     {
         input: ".project/templates/am64x/nortos/main_nortos.c.xdt",
         output: "../main.c",
@@ -95,6 +96,7 @@ const templates_nortos_m4f =
 
 const templates_nortos_r5f =
 [
+
     {
         input: ".project/templates/am64x/nortos/main_nortos.c.xdt",
         output: "../main.c",

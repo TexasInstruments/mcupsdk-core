@@ -87,6 +87,7 @@ const projectspecfiles = {
 
 const templates_nortos_r5f =
 [
+
     {
         input: ".project/templates/am243x/nortos/main_nortos.c.xdt",
         output: "../main.c",
