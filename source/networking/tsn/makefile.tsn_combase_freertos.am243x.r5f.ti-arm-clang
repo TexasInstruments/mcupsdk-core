@@ -25,6 +25,7 @@ FILES_common := \
     bufring.c \
     lldtsync.c \
     cb_link_tilld.c \
+    cb_xtimer.c \
 
 FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase \

@@ -120,6 +120,15 @@ void SemaphoreP_post(SemaphoreP_Object *obj);
  */
 int32_t SemaphoreP_pend(SemaphoreP_Object *obj, uint32_t timeToWaitInTicks);
 
+/*!
+ *  @brief  Function to return the count of a semaphore.
+ *
+ *  @param  obj  A SemaphoreP_Handle
+ *
+ *  @return The count of the semaphore
+ */
+
+int32_t SemaphoreP_getCount(SemaphoreP_Object *obj);
 /** @} */
 
 #ifdef __cplusplus

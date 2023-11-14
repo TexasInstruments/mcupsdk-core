@@ -38,6 +38,7 @@ BOOTIMAGE_NAME_HS_FS:=gptp_app.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 FILES_common := \
+	gptp_init.c \
 	tsninit.c \
 	debug_log.c \
 	enet_custom_board_config.c \

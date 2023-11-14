@@ -12,6 +12,7 @@ const files = {
         "bufring.c",
         "lldtsync.c",
         "cb_link_tilld.c",
+        "cb_xtimer.c",
     ],
 };
 const filedirs = {

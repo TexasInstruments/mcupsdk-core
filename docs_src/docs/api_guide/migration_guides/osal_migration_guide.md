@@ -276,7 +276,8 @@ There are changes in functions names, structure names and macro names. The chang
     <tr>
         <td>SemaphoreP_getCount
         <td>NONE
-        <td>NOT needed
+        <td>\ref SemaphoreP_getCount
+        <td>NO CHANGE
     </tr>
     <tr>
         <td>SemaphoreP_reset

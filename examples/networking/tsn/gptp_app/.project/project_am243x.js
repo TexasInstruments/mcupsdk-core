@@ -4,6 +4,7 @@ let device = "am243x";
 
 const files = {
     common: [
+        "gptp_init.c",
         "tsninit.c",
         "debug_log.c",
         "enet_custom_board_config.c",
@@ -140,7 +141,7 @@ const templates_freertos_r5f =
         options: {
             entryFunction: "EnetApp_mainTask",
             taskPri : "2",
-            stackSize : "8192",
+            stackSize : "16384",
         },
     },
 ];

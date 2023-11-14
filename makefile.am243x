@@ -40,6 +40,7 @@ help:
 	@echo  .
 	@echo  Library build targets,
 	@echo  ======================
+	@echo  $(MAKE) -s -f makefile.am243x tsn_lldp-freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x board_r5f.ti-arm-clang board_m4f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x cmsis_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am243x drivers_r5f.ti-arm-clang drivers_m4f.ti-arm-clang
@@ -78,6 +79,7 @@ help:
 	@echo  .
 	@echo  Library clean targets,
 	@echo  ======================
+	@echo  $(MAKE) -s -f makefile.am243x tsn_lldp-freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x board_r5f.ti-arm-clang_clean board_m4f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x cmsis_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am243x drivers_r5f.ti-arm-clang_clean drivers_m4f.ti-arm-clang_clean
@@ -116,6 +118,8 @@ help:
 	@echo  .
 	@echo  Example build targets,
 	@echo  ======================
+	@echo  $(MAKE) -s -C examples/networking/tsn/lldp_app/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/tsn/lldp_app/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/benchmarks/coremark_benchmark/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/benchmarks/coremark_benchmark/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_singleshot/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -511,6 +515,7 @@ help:
 	@echo  .
 
 # Various Component Targets
+BUILD_COMBO_tsn_lldp-freertos = tsn_lldp-freertos_r5f.ti-arm-clang
 BUILD_COMBO_board = board_r5f.ti-arm-clang board_m4f.ti-arm-clang
 BUILD_COMBO_cmsis = cmsis_r5f.ti-arm-clang
 BUILD_COMBO_drivers = drivers_r5f.ti-arm-clang drivers_m4f.ti-arm-clang
@@ -554,7 +559,7 @@ BUILD_COMBO_GCC_nortos = nortos_r5f.gcc-armv7
 BUILD_COMBO_GCC_freertos = freertos_r5f.gcc-armv7
 
 # Combine all Components
-BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos_fat) $(BUILD_COMBO_sdl) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_pru_ipc) $(BUILD_COMBO_security) $(BUILD_COMBO_usbd_cdn_nortos) $(BUILD_COMBO_usbd_cdn_freertos) $(BUILD_COMBO_usbd_tusb_cdc_nortos) $(BUILD_COMBO_usbd_tusb_cdc_freertos) $(BUILD_COMBO_usbd_tusb_dfu_nortos) $(BUILD_COMBO_usbd_tusb_dfu_freertos) $(BUILD_COMBO_usbd_tusb_ncm_nortos) $(BUILD_COMBO_usbd_tusb_ncm_freertos) $(BUILD_COMBO_usbd_tusb_rndis_nortos) $(BUILD_COMBO_usbd_tusb_rndis_freertos) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwipif-icssg-freertos) $(BUILD_COMBO_lwipif-icssg-nortos) $(BUILD_COMBO_enet-icssg) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_tsn_gptp-freertos) $(BUILD_COMBO_tsn_combase-freertos) $(BUILD_COMBO_tsn_uniconf-freertos) $(BUILD_COMBO_tsn_unibase-freertos)
+BUILD_COMBO_ALL = $(BUILD_COMBO_tsn_lldp-freertos) $(BUILD_COMBO_board) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos_fat) $(BUILD_COMBO_sdl) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_pru_ipc) $(BUILD_COMBO_security) $(BUILD_COMBO_usbd_cdn_nortos) $(BUILD_COMBO_usbd_cdn_freertos) $(BUILD_COMBO_usbd_tusb_cdc_nortos) $(BUILD_COMBO_usbd_tusb_cdc_freertos) $(BUILD_COMBO_usbd_tusb_dfu_nortos) $(BUILD_COMBO_usbd_tusb_dfu_freertos) $(BUILD_COMBO_usbd_tusb_ncm_nortos) $(BUILD_COMBO_usbd_tusb_ncm_freertos) $(BUILD_COMBO_usbd_tusb_rndis_nortos) $(BUILD_COMBO_usbd_tusb_rndis_freertos) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwipif-icssg-freertos) $(BUILD_COMBO_lwipif-icssg-nortos) $(BUILD_COMBO_enet-icssg) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_tsn_gptp-freertos) $(BUILD_COMBO_tsn_combase-freertos) $(BUILD_COMBO_tsn_uniconf-freertos) $(BUILD_COMBO_tsn_unibase-freertos)
 
 # Combine all gcc Components
 BUILD_COMBO_ALL_GCC =  $(BUILD_COMBO_GCC_board) $(BUILD_COMBO_GCC_drivers) $(BUILD_COMBO_GCC_nortos) $(BUILD_COMBO_GCC_freertos)
@@ -571,6 +576,9 @@ libs_gcc: $(BUILD_COMBO_ALL_GCC)
 libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
 
 libs-private: $(BUILD_COMBO_PRIVATE_ALL)
+
+$(BUILD_COMBO_tsn_lldp-freertos):
+	$(MAKE) -C source/networking/tsn -f makefile.tsn_lldp_freertos.am243x.$(subst tsn_lldp-freertos_,,$@) all
 
 $(BUILD_COMBO_board):
 	$(MAKE) -C source/board -f makefile.am243x.$(subst board_,,$@) all
@@ -692,6 +700,7 @@ $(BUILD_COMBO_GCC_freertos):
 
 
 # Various Component Clean Targets
+BUILD_COMBO_CLEAN_tsn_lldp-freertos = tsn_lldp-freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_board = board_r5f.ti-arm-clang_clean board_m4f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_cmsis = cmsis_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_drivers = drivers_r5f.ti-arm-clang_clean drivers_m4f.ti-arm-clang_clean
@@ -735,7 +744,7 @@ BUILD_COMBO_CLEAN_GCC_nortos = nortos_r5f.gcc-armv7_clean
 BUILD_COMBO_CLEAN_GCC_freertos = freertos_r5f.gcc-armv7_clean
 
 # Combine all Components Clean
-BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos_fat) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_pru_ipc) $(BUILD_COMBO_CLEAN_security) $(BUILD_COMBO_CLEAN_usbd_cdn_nortos) $(BUILD_COMBO_CLEAN_usbd_cdn_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_rndis_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_rndis_freertos) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwipif-icssg-freertos) $(BUILD_COMBO_CLEAN_lwipif-icssg-nortos) $(BUILD_COMBO_CLEAN_enet-icssg) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_tsn_gptp-freertos) $(BUILD_COMBO_CLEAN_tsn_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_uniconf-freertos) $(BUILD_COMBO_CLEAN_tsn_unibase-freertos)
+BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_tsn_lldp-freertos) $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos_fat) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_pru_ipc) $(BUILD_COMBO_CLEAN_security) $(BUILD_COMBO_CLEAN_usbd_cdn_nortos) $(BUILD_COMBO_CLEAN_usbd_cdn_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_rndis_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_rndis_freertos) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwipif-icssg-freertos) $(BUILD_COMBO_CLEAN_lwipif-icssg-nortos) $(BUILD_COMBO_CLEAN_enet-icssg) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_tsn_gptp-freertos) $(BUILD_COMBO_CLEAN_tsn_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_uniconf-freertos) $(BUILD_COMBO_CLEAN_tsn_unibase-freertos)
 
 BUILD_COMBO_CLEAN_ALL_GCC= $(BUILD_COMBO_CLEAN_GCC_board) $(BUILD_COMBO_CLEAN_GCC_drivers) $(BUILD_COMBO_CLEAN_GCC_nortos) $(BUILD_COMBO_CLEAN_GCC_freertos)
 
@@ -745,6 +754,9 @@ BUILD_COMBO_PREBUILT_CLEAN_ALL = $(BUILD_COMBO_CLEAN_cmsis)
 libs-clean: $(BUILD_COMBO_CLEAN_ALL)
 libs_gcc-clean: $(BUILD_COMBO_CLEAN_ALL_GCC)
 libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
+
+$(BUILD_COMBO_CLEAN_tsn_lldp-freertos):
+	$(MAKE) -C source/networking/tsn -f makefile.tsn_lldp_freertos.am243x.$(subst tsn_lldp-freertos_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_board):
 	$(MAKE) -C source/board -f makefile.am243x.$(subst board_,,$(subst _clean,,$@)) clean
@@ -866,6 +878,7 @@ $(BUILD_COMBO_CLEAN_GCC_freertos):
 
 
 # Various Component Scrub Targets
+BUILD_COMBO_SCRUB_tsn_lldp-freertos = tsn_lldp-freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_board = board_r5f.ti-arm-clang_scrub board_m4f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_cmsis = cmsis_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_drivers = drivers_r5f.ti-arm-clang_scrub drivers_m4f.ti-arm-clang_scrub_scrub
@@ -909,7 +922,7 @@ BUILD_COMBO_SCRUB_GCC_nortos = nortos_r5f.gcc-armv7_scrub_scrub
 BUILD_COMBO_SCRUB_GCC_freertos = freertos_r5f.gcc-armv7_scrub_scrub
 
 # Combine all Components Scrub Targets
-BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos_fat) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_pru_ipc) $(BUILD_COMBO_SCRUB_security) $(BUILD_COMBO_SCRUB_usbd_cdn_nortos) $(BUILD_COMBO_SCRUB_usbd_cdn_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_rndis_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_rndis_freertos) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwipif-icssg-freertos) $(BUILD_COMBO_SCRUB_lwipif-icssg-nortos) $(BUILD_COMBO_SCRUB_enet-icssg) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_tsn_gptp-freertos) $(BUILD_COMBO_SCRUB_tsn_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_uniconf-freertos) $(BUILD_COMBO_SCRUB_tsn_unibase-freertos)
+BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_tsn_lldp-freertos) $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos_fat) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_pru_ipc) $(BUILD_COMBO_SCRUB_security) $(BUILD_COMBO_SCRUB_usbd_cdn_nortos) $(BUILD_COMBO_SCRUB_usbd_cdn_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_rndis_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_rndis_freertos) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwipif-icssg-freertos) $(BUILD_COMBO_SCRUB_lwipif-icssg-nortos) $(BUILD_COMBO_SCRUB_enet-icssg) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_tsn_gptp-freertos) $(BUILD_COMBO_SCRUB_tsn_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_uniconf-freertos) $(BUILD_COMBO_SCRUB_tsn_unibase-freertos)
 BUILD_COMBO_SCRUB_ALL_GCC= $(BUILD_COMBO_SCRUB_GCC_board) $(BUILD_COMBO_SCRUB_GCC_drivers) $(BUILD_COMBO_SCRUB_GCC_nortos) $(BUILD_COMBO_SCRUB_GCC_freertos)
 
 # Combine all Pre-built Components Scrub Targets
@@ -918,6 +931,9 @@ BUILD_COMBO_PREBUILT_SCRUB_ALL = $(BUILD_COMBO_SCRUB_cmsis)
 libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
 libs_gcc-scrub: $(BUILD_COMBO_SCRUB_ALL_GCC)
 libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
+
+$(BUILD_COMBO_SCRUB_tsn_lldp-freertos):
+	$(MAKE) -C source/networking/tsn -f makefile.tsn_lldp_freertos.am243x.$(subst tsn_lldp-freertos_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_board):
 	$(MAKE) -C source/board -f makefile.am243x.$(subst board_,,$(subst _scrub,,$@)) scrub
@@ -1039,6 +1055,8 @@ $(BUILD_COMBO_SCRUB_GCC_freertos):
 
 BUILD_COMBO_EXAMPLE_ALL =
 # Various Example Targets
+BUILD_COMBO_EXAMPLE_ALL += lldp_app_am243x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += lldp_app_am243x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += coremark_benchmark_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += coremark_benchmark_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_singleshot_am243x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -1489,6 +1507,12 @@ examples_gcc: $(BUILD_COMBO_EXAMPLE_ALL_GCC)
 	$(MAKE) -C examples/kernel/freertos/interrupt_profiling/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile all
 
 examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
+
+ lldp_app_am243x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/networking/tsn/lldp_app/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ lldp_app_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/networking/tsn/lldp_app/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  coremark_benchmark_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/benchmarks/coremark_benchmark/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -2561,6 +2585,8 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
 BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += lldp_app_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += lldp_app_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += coremark_benchmark_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += coremark_benchmark_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_singleshot_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2942,6 +2968,12 @@ examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
 examples_gcc-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC)
 
 examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
+
+ lldp_app_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/tsn/lldp_app/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ lldp_app_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/tsn/lldp_app/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  coremark_benchmark_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/benchmarks/coremark_benchmark/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -4113,6 +4145,8 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
 BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += lldp_app_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += lldp_app_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += coremark_benchmark_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += coremark_benchmark_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_singleshot_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -4494,6 +4528,12 @@ examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
 examples_gcc-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC)
 
 examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
+
+ lldp_app_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/tsn/lldp_app/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ lldp_app_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/networking/tsn/lldp_app/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  coremark_benchmark_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/benchmarks/coremark_benchmark/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

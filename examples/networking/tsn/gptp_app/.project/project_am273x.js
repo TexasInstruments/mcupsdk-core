@@ -4,6 +4,7 @@ let device = "am273x";
 
 const files = {
     common: [
+        "gptp_init.c",
         "tsninit.c",
         "debug_log.c",
         "enet_custom_board_config.c",
@@ -139,13 +140,14 @@ const templates_freertos_r5f =
         options: {
             entryFunction: "EnetApp_mainTask",
             taskPri : "2",
-            stackSize : "8192",
+            stackSize : "16384",
         },
     },
 ];
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am273x-evm", os: "freertos"},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am273x-evm", os: "freertos"},
 ];
 
 function getComponentProperty() {

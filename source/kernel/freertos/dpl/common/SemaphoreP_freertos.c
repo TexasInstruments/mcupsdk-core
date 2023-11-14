@@ -211,6 +211,16 @@ void SemaphoreP_post(SemaphoreP_Object *obj)
     }
 }
 
+/*
+ *  ======== SemaphoreP_getCount ========
+ */
+int32_t SemaphoreP_getCount(SemaphoreP_Object *obj)
+{
+    SemaphoreP_Struct *pSemaphore = (SemaphoreP_Struct *)obj;
+
+    return ((int32_t)uxSemaphoreGetCount(pSemaphore->semHndl));
+}
+
 /* IMPORTANT:
    This structure is copied from source\kernel\freertos\FreeRTOS-Kernel\queue.c
    and is used for ROV based views in CCS

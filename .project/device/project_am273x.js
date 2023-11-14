@@ -1,6 +1,7 @@
 const common = require("../common.js");
 
 const component_file_list = [
+    "source/networking/tsn/.project/project_tsn_lldp.js",
     "source/board/.project/project.js",
     "source/drivers/.project/project.js",
     "source/kernel/freertos/.project/project.js",
@@ -31,6 +32,7 @@ const device_defines = {
 };
 
 const example_file_list = [
+    "examples/networking/tsn/lldp_app/.project/project.js",
     "examples/benchmarks/coremark_benchmark/.project/project.js",
     "examples/drivers/boot/sbl_can_uniflash/.project/project.js",
     "examples/drivers/boot/sbl_jtag_uniflash/.project/project.js",

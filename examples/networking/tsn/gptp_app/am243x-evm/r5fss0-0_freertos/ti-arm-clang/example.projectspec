@@ -136,6 +136,8 @@
             "
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
+        <file path="../../../gptp_init.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
         <file path="../../../tsninit.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../../../debug_log.c" openOnCreation="false" excludeFromBuild="false" action="link">
