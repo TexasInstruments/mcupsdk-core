@@ -13,7 +13,7 @@
  *          Valid input is limited to values between 0 to 2PI.
  *          No error checking is performed on input.
  */
-extern float __attribute__((always_inline, naked)) ti_tmu_sin_pu(float angleRad);
+extern float __attribute__((noinline, naked)) ti_tmu_sin_pu(float angleRad);
 
 
 /**
@@ -27,7 +27,7 @@ extern float __attribute__((always_inline, naked)) ti_tmu_sin_pu(float angleRad)
  *          Valid input is limited to values between 0 to 2PI.
  *          No error checking is performed on input.
  */
-extern float __attribute__((always_inline, naked)) ti_tmu_cos_pu(float angleRad);
+extern float __attribute__((noinline, naked)) ti_tmu_cos_pu(float angleRad);
 
 
 /**
@@ -41,7 +41,7 @@ extern float __attribute__((always_inline, naked)) ti_tmu_cos_pu(float angleRad)
  *          Valid input is limited to values between -1.0 to 1.0 per unit value.
  *          No error checking is performed on input.
  */
-extern float __attribute__((always_inline, naked)) ti_tmu_atan_pu(float angleRad);
+extern float __attribute__((noinline, naked)) ti_tmu_atan_pu(float angleRad);
 
 
 /**
@@ -55,7 +55,7 @@ extern float __attribute__((always_inline, naked)) ti_tmu_atan_pu(float angleRad
  *          Valid input is limited to values between negative infinity to positive infinity.
  *          No error checking is performed on input.
  */
-extern float __attribute__((always_inline, naked)) ti_tmu_log_pu(float angleRad);
+extern float __attribute__((noinline, naked)) ti_tmu_log_pu(float x);
 
 
 /**
@@ -69,7 +69,7 @@ extern float __attribute__((always_inline, naked)) ti_tmu_log_pu(float angleRad)
  *          No valid input range.
  *          No error checking is performed on input.
  */
-extern float __attribute__((always_inline, naked)) ti_tmu_iexp_pu(float angleRad);
+extern float __attribute__((noinline, naked)) ti_tmu_iexp_pu(float x);
 
 
 /**
@@ -83,7 +83,7 @@ extern float __attribute__((always_inline, naked)) ti_tmu_iexp_pu(float angleRad
  *          Valid input is limited to values between 0 to 2PI. The input is multiplied with 1/2PI to convert it to per unit value.
  *          No error checking is performed on input.
  */
-extern float __attribute__((always_inline, naked)) ti_tmu_sin(float angleRad);
+extern float __attribute__((noinline, naked)) ti_tmu_sin(float angleRad);
 
 
 /**
@@ -97,7 +97,7 @@ extern float __attribute__((always_inline, naked)) ti_tmu_sin(float angleRad);
  *          Valid input is limited to values between 0 to 2PI. The input is multiplied with 1/2PI to convert it to per unit value.
  *          No error checking is performed on input.
  */
-extern float __attribute__((always_inline, naked)) ti_tmu_cos(float angleRad);
+extern float __attribute__((noinline, naked)) ti_tmu_cos(float angleRad);
 
 /**
  * \brief   Computes the trigonometric atan value of the input angle using TMU.
@@ -110,7 +110,7 @@ extern float __attribute__((always_inline, naked)) ti_tmu_cos(float angleRad);
  *          Valid input is limited to values between -1.0 to 1.0 per unit value. The computed output value is multiplied with 2PI to change it to radians.
  *          No error checking is performed on input.
  */
-extern float __attribute__((always_inline, naked)) ti_tmu_atan(float angleRad);
+extern float __attribute__((noinline, naked)) ti_tmu_atan(float angleRad);
 
 
 /**
@@ -124,5 +124,5 @@ extern float __attribute__((always_inline, naked)) ti_tmu_atan(float angleRad);
  * \note    Usage Considerations:
  *          No error checking is performed on input.
  */
-extern float __attribute__((always_inline, naked)) ti_tmu_atan2(float x, float y);
+extern float __attribute__((noinline, naked)) ti_tmu_atan2(float x, float y);
 

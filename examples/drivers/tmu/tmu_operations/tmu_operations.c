@@ -49,6 +49,7 @@
 #define ATAN2               5
 
 
+
 #define TESTSIZE            500
 #define TESTSIZE1           490
 #define MAX_TRIG_ERR        0.00001
@@ -66,6 +67,7 @@
 #ifndef ReciprocalOf2PI
 #define ReciprocalOf2PI                0.159154943091895335768f
 #endif
+
 
 TEST_DATA_SECTION float xvals[TESTSIZE];
 TEST_DATA_SECTION float yvals[TESTSIZE];
@@ -102,13 +104,14 @@ void runTrigBench(uint32_t n);
 void runTMUBench(uint32_t n);
 int32_t printOutput(uint32_t n);
 
+
 // float ti_arm_atan2(float e);
 
 
 /*
  * Trig Bench Example
  * ----------------------------
- *   Benchmarks the speed and accuracy of the trigonometric functions in the TI Arm Trig Math Lib.
+ *   Benchmarks the speed and accuracy of the trigonometric functions in the Trigonometric Math Unit and TI Arm Trig Math Lib.
  *   Selects values along the unit circle to be used as input.
  *   Uses the double-precision trigonometric functions from Math.h to check against.
  */
@@ -615,6 +618,7 @@ void createInputs(uint32_t n)
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("log function mathlib input (NEG_INF/POS_NAN) %f %f : %f \r\n", input , input2 , trigVal);
+                    break;
 
 
                 default:
@@ -667,6 +671,7 @@ void runTrigBench(uint32_t n)
     uint32_t t1, t2, t3;
     volatile float trigVal;
     float  input, input_tan1, input_tan2, tan_input;
+
 
     switch (n)
     {
@@ -921,7 +926,6 @@ void runTrigBench(uint32_t n)
         }
         break;
 
-
     default:
         DebugP_log("Invalid fxn\r\n");
     }
@@ -932,8 +936,8 @@ void runTMUBench(uint32_t n)
     uint32_t i, j;
     uint32_t t1, t2, t3;
     volatile float tmuVal;
-    float  input, input2, tan_input,
-    input_tan1, input_tan2;
+    float  input, input2, tan_input, input_tan1, input_tan2;
+
 
 
     switch (n)
@@ -1464,5 +1468,6 @@ int32_t printOutput(uint32_t n)
     }
     return status;
 }
+
 
 
