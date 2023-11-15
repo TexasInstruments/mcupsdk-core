@@ -45,6 +45,49 @@ extern "C"
 * Hardware Region  :
 **************************************************************************/
 
+/**************************************************************************
+    XBAR INPUT Macros
+**************************************************************************/
+
+#define SOC_TIMESYNC_XBAR0_CPTS_COMP	0
+#define SOC_TIMESYNC_XBAR0_CPTS_GENF0	1
+#define SOC_TIMESYNC_XBAR0_CPTS_GENF1	2
+#define SOC_TIMESYNC_XBAR0_CPTS_SYNC	3
+#define SOC_TIMESYNC_XBAR0_PR1_EDC0_SYNC_OUT_0	    4
+#define SOC_TIMESYNC_XBAR0_PR1_EDC0_SYNC_OUT_1	    5
+#define SOC_TIMESYNC_XBAR0_PR1_IEP0_CMP_INTR_REQ_0	    6
+#define SOC_TIMESYNC_XBAR0_PR1_IEP0_CMP_INTR_REQ_1	    7
+#define SOC_TIMESYNC_XBAR0_PR1_IEP0_CMP_INTR_REQ_2	    8
+#define SOC_TIMESYNC_XBAR0_PR1_IEP0_CMP_INTR_REQ_3	    9
+#define SOC_TIMESYNC_XBAR0_PR1_IEP0_CMP_INTR_REQ_4	    10
+#define SOC_TIMESYNC_XBAR0_PR1_IEP0_CMP_INTR_REQ_5	    11
+#define SOC_TIMESYNC_XBAR0_PR1_IEP0_CMP_INTR_REQ_6	    12
+#define SOC_TIMESYNC_XBAR0_PR1_IEP0_CMP_INTR_REQ_7	    13
+#define SOC_TIMESYNC_XBAR0_PR1_IEP0_CMP_INTR_REQ_8	    14
+#define SOC_TIMESYNC_XBAR0_PR1_IEP0_CMP_INTR_REQ_9	    15
+#define SOC_TIMESYNC_XBAR0_PR1_IEP0_CMP_INTR_REQ_10	16
+#define SOC_TIMESYNC_XBAR0_PR1_IEP0_CMP_INTR_REQ_11 	17
+#define SOC_TIMESYNC_XBAR0_PR1_IEP0_CMP_INTR_REQ_12	18
+#define SOC_TIMESYNC_XBAR0_PR1_IEP0_CMP_INTR_REQ_13	19
+#define SOC_TIMESYNC_XBAR0_PR1_IEP0_CMP_INTR_REQ_14	20
+#define SOC_TIMESYNC_XBAR0_PR1_IEP0_CMP_INTR_REQ_15	21
+
+/**************************************************************************
+    XBAR OUTPUT Macros
+**************************************************************************/
+
+#define SOC_TIMESYNC_XBAR0_EPWM_MODULE_0   0
+#define SOC_TIMESYNC_XBAR0_EPWM_MODULE_1   1
+#define SOC_TIMESYNC_XBAR0_RTI_MODULE_0    2
+#define SOC_TIMESYNC_XBAR0_RTI_MODULE_1    3
+#define SOC_TIMESYNC_XBAR0_RTI_MODULE_2    4
+#define SOC_TIMESYNC_XBAR0_RTI_MODULE_3    5
+#define SOC_TIMESYNC_XBAR0_RTI_MODULE_4    6
+#define SOC_TIMESYNC_XBAR0_RTI_MODULE_5    7
+#define SOC_TIMESYNC_XBAR0_RTI_MODULE_6    8
+#define SOC_TIMESYNC_XBAR0_RTI_MODULE_7    9
+#define SOC_TIMESYNC_XBAR0_DMA_TRIG_XBAR_0      10
+#define SOC_TIMESYNC_XBAR0_DMA_TRIG_XBAR_1      11
 
 /**************************************************************************
 * Register Overlay Structure

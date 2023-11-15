@@ -1047,14 +1047,6 @@ static void SOC_rcmGetClkSrcAndDivReg (SOC_RcmPeripheralId periphId,
             *clkSrcVal = gCptsClkSrcValMap[clkSource];
             break;
         }
-        // FIXME : REMOVE GPMC FOR AM263PX
-        // case SOC_RcmPeripheralId_GPMC:
-        // {
-        //     *clkSrcReg  = &(ptrMSSRCMRegs->GPMC_CLK_SRC_SEL);
-        //     *clkdDivReg = &(ptrMSSRCMRegs->GPMC_CLK_DIV_VAL);
-        //     *clkSrcVal = gGpmcClkSrcValMap[clkSource];
-        //     break;
-        // }
         case SOC_RcmPeripheralId_CONTROLSS_PLL:
         {
             *clkSrcReg  = &(ptrMSSRCMRegs->CONTROLSS_PLL_CLK_SRC_SEL);

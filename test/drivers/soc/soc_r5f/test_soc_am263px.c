@@ -153,10 +153,6 @@ void test_socSetFrequencyR5FSS(void *args)
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_CPTS, SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1, 250 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
 
-    DebugP_log("Set GPMC clock\r\n");
-    retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_GPMC, SOC_RcmPeripheralClockSource_SYS_CLK, 100 * MHZ);
-    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-
     DebugP_log("Set ControlSS PLL clock\r\n");
     retVal = SOC_rcmSetPeripheralClock(SOC_RcmPeripheralId_CONTROLSS_PLL, SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2, 400 * MHZ);
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);

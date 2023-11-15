@@ -375,7 +375,7 @@ static void test_uart_set_params(UART_TestParams *testParams, uint32_t tcId)
     #if defined(SOC_AM64X) || defined(SOC_AM243X)
     params->intrNum = CSLR_R5FSS0_CORE0_INTR_UART0_USART_IRQ_0;
     #endif
-    #if defined(SOC_AM263X)
+    #if defined(SOC_AM263X) || defined(SOC_AM263PX)
     params->intrNum = CSLR_R5FSS0_CORE0_INTR_UART0_IRQ;
     #endif
     #if defined(SOC_AM62X)

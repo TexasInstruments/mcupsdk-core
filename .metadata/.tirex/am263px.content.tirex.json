@@ -10272,7 +10272,7 @@
         "name": "enet_l2_cpsw_switch",
         "location": "../../examples/networking/enet_layer2_cpsw_switch/am263px-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263"
+            "LP-AM263P"
         ],
         "kernel": [
             "freertos"
@@ -10568,7 +10568,7 @@
         "name": "enet_lwip_cpsw",
         "location": "../../examples/networking/lwip/enet_lwip_cpsw/am263px-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263"
+            "LP-AM263P"
         ],
         "kernel": [
             "freertos"
