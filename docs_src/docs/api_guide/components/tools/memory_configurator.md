@@ -52,7 +52,8 @@ If the user opts to check this option, it signifies that each memory region inst
 
 The tool employs a specific algorithm for memory region allocation:
 
-1. It initially identifies all memory region instances of a particular type.
+1. It initially identifies all memory region instances of a particular type for eg whether it's FLASH/ RAM etc.
+    - to know more on this, please refer section "Enhanced Visualization View" at the bottom.
 
 2. Instances with manually assigned start addresses take precedence and are positioned at the forefront within the memory region of that type.
 
@@ -88,15 +89,37 @@ Afterwards, OCRAM_1 is placed in the gap adjacent to OCRAM_2, as it is the small
     \image html memory_region_eg_layout.png "Memory Region Configuration Layout"
 
 \note
-Once a memory region is assigned to a core, it is prohibited from being overlapped by any other region, whether by the same core or a different one. For memory types like TCMA and TCMB, which are core-specific and distinct at the physical level, it is permissible to use the same start address and size. This is because, at the physical level, it does not constitute actual overlap.
+Once a memory region is assigned to a core, it is prohibited from being overlapped by any other region, whether by the same core or a different one. For memory types which are core-specific i.e. belong exclusively to a core, it is permissible to use the same start address and size. This is because, at the physical level, it does not constitute actual overlap.
 
+The other fields which we have for configuring a memory region are:
+
+1. Attributes: It's a multi-select drop down option button with options as Read, Write, Execute and Initialize. By default all of them are selected.
+    - R specifies that the memory can be read.
+    - W specifies that the memory can be written to.
+    - X specifies that the memory can contain executable code.
+    - I specifies that the memory can be initialized.
+
+2. Last Symbol: LAST optionally specifies a symbol that can be used at run-time to find the address of the last allocated byte in the memory range.
+3. Shared: On checking this box, we get an option to choose what all cores the user wants to share the current memory region with.
+   As already mentioned that once a region is assigned to a core, it can't be overlapped by other.
+   - Another feature which might be required sometimes is the renaming of a shared core. This is can done from the "Rename Shared Region" module. In the below example we can see R5FSS0-0 is sharing all these regions with R5FSS0-1.
+   \imageStyle{rename_shared_region_1.png,width:90%}
+    \image html rename_shared_region_1.png "Rename Shared Region: Options to rename"
+   - Now, if R5FSS0-1 wants to rename any of them, then select and rename. Here LOG_SHM_MEM is changed to LOG_SHM_MEM_X.
+   \imageStyle{rename_shared_region_2.png,width:90%}
+    \image html rename_shared_region_2.png "Rename Shared Region: After renaming"
+   - In the linker.cmd of R5FSS0_1 we can see all those shared regions appearing with the LOG_MEM_SHM name changed.
+    The section redirecting to this memory region also gets updated accordingly.
+
+\cond  SOC_AM263PX || SOC_AM263X
 
 #### Shared Memory Region Configuration
 
 It's important to note that if a memory region is designated as "Shared," the user will have the option to select the cores with which it will be shared. As a result, this region will automatically be included in the linker files of all the chosen core. Therefore, there is no need for the user to manually add the same region to the other cores. In fact, doing so would not be possible. For shared memory regions, it's essential to ensure that the size is a power of 2 else an error will be triggered. Also, the start address has to be aligned with the size of the memory region.
+\endcond
 
 \note
-The same shared region instances will not appear in the GUI for the selected cores.
+The same shared region instances will not appear in the GUI for the selected cores but will get reflected in their linker files.
 
 #### Impact of Automate MPU Setting
 
@@ -113,26 +136,56 @@ Other parameters, such as Access Permissions, Region Attributes, Allow Code Exec
 \imageStyle{memory_region_mpu.png,width:90%}
     \image html memory_region_mpu.png "Sysconfig view of Memory Region with Automate MPU Setting"
 
+\note
+All cores should follow the same MPU setting i.e. either it should be enabled for all or disabled for all.
+
 ### Section
 
-Within this section, the user has the option to set various parameters for a section.
-
-1. Load Memory and Run Memory Options: These will list all available memory regions added by the user in the previous "Memory Region". By default, the run memory will match the load memory, unless the user chooses to make a specific change.
 
 \imageStyle{section_load_memory.png,width:60%}
     \image html section_load_memory.png "Sysconfig view of Section: Load memory options"
 
-2. Section Type Selection: The user can choose from options like LOAD, DSECT, COPY, NOLOAD, and NOINT.
+Within this section, the user has the option to set various parameters for a section.
+
+1. Section Type Selection: The user can choose from options like LOAD, DSECT, COPY, NOLOAD, and NOINT.
+
+2. Load Memory and Run Memory Options: These will list all available memory regions added by the user in the previous "Memory Region". By default, the run memory will match the load memory, unless the user chooses to make a specific change.
+    - Sometimes instead of directing a section into a memory region, we may want to directly specify the memory address. This is possible when we select the option "Address" in "Load to Memory Regions or Address?".
+    - In this case options will appear to enter the value of load and run memory.
+
+    \imageStyle{load_to_address.png,width:60%}
+        \image html load_to_address.png "Sysconfig view of Section: Load to Address"
 
 3. Output Section Requirement: It is mandatory for the user to add at least one output section.
 
 4. Output Section Grouping: The user can opt to either group all output sections together or keep them separate. The configurations for load and run memory, as well as section type, will apply to all output sections under a given instance.
+    - User can mention the Group's Start and End symbols.
+    - User can also mention the output section's start and end symbols.
+    - Option for alignment and alignment with padding (palign) can also be added. 
+        - align: linker to place an output section at an address that falls on an n-byte boundary,
+        where n is a power of 2
+        - palign: additionally ensures that the size of the section is a multiple of its placement alignment restrictions, padding the section size up to such a boundary, as needed.
+    - User can mention the fill value which is used to fill uninitialized holes.
 
 5. Input Section Addition: The user also has the flexibility to add zero or more input sections under a specific output section.
+    - Any additonal data can also be added in a multiline field called "Additional data". This would appear after the input section data.
 
 \imageStyle{section.png,width:90%}
     \image html section.png "Sysconfig view of Section and the corresponding Linker File generation"
 
+
+### Default Linker Configuration
+
+\imageStyle{before_default_config.png,width:60%}
+    \image html before_default_config.png "Sysconfig view of Linker: Before button Click"
+
+Initially when we open an empty project, no memory configurator related configuration will be there and hence linker.cmd won't generate. User can either add the configurations manually or may take the help of this CLICK button to populate the default instances of these modules to generate a default linker. Later it can be edited/ added/ removed as per our needs.
+
+\imageStyle{after_default_config.png,width:60%}
+    \image html after_default_config.png "Sysconfig view of Linker: After button Click"
+
+\note
+When user opens a multi core project and clicks this button in each core, he/she will get conflicts in the Memory Region module because of the shared regions being added in sysconfig of all the cores. Here, user has to manually delete the conflicting regions.
 
 ### MPU Settings
 
@@ -147,7 +200,7 @@ Even with the automate option enabled, users still retain the ability to add cus
 
 When "Automate MPU Setting" is not selected within the memory region, it results in the loss of the direct one-to-one mapping of the memory region to the MPU configuration view. In such cases, it is beneficial to provide users with a comprehensive overview of how the region is composed.
 
-This should encompass the following information:
+This should encompass the following information :
 
 1. Constituent Regions: Display all the individual regions added within the memory region section that collectively constitute this particular region.
 
@@ -162,7 +215,7 @@ This approach ensures that users have a clear understanding of how the manually 
 
 ### Enhanced Visualization View
 
-To facilitate user understanding and ease of navigation, a specialized view has been incorporated. This view provides a visual representation of the memory type, displaying crucial details such as start address, size, accessibility across cores, and direct links to the respective memory regions for seamless navigation.
+To facilitate user understanding and ease of navigation, a specialized view has been incorporated. This view provides a visual representation of the memory types available in this device, displaying crucial details such as start address, size, accessibility across cores, and direct links to the respective memory regions for seamless navigation.
 
 \imageStyle{memory_region_summary.png,width:70%}
     \image html memory_region_summary.png "Consolidated view of Memory Regions"

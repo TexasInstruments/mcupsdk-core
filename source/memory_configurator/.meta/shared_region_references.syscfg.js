@@ -44,7 +44,7 @@ function util_function() {
 let config = [
     {
         name: "shared_region",
-        displayName: "Shared region",
+        displayName: "Shared Region",
         description: "",
         longDescription: "",
         default: "",
@@ -52,7 +52,7 @@ let config = [
     },
     {
         name: "shared_region_name_change",
-        displayName: "Name this region",
+        displayName: "Name This Region",
         description: "",
         longDescription: "",
         default: "",

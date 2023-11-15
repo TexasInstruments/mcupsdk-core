@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @versions {"tool":"1.18.0+3266"}
  */
 
 /**
@@ -38,6 +38,7 @@ const section8        = section.addInstance();
 const section9        = section.addInstance();
 const section10       = section.addInstance();
 const section11       = section.addInstance();
+const section12       = section.addInstance();
 const crypto          = scripting.addModule("/security/crypto/crypto", {}, false);
 const crypto1         = crypto.addInstance();
 
@@ -258,6 +259,14 @@ section11.type                        = "NOLOAD";
 section11.output_section.create(1);
 section11.output_section[0].$name     = ".bss.nocache";
 section11.output_section[0].alignment = 0;
+
+section12.$name                       = "CONFIG_SECTION0";
+section12.load_memory                 = "DDR";
+section12.type                        = "NOLOAD";
+section12.group                       = false;
+section12.output_section.create(1);
+section12.output_section[0].$name     = ".bss.filebuf";
+section12.output_section[0].alignment = 0;
 
 crypto1.$name       = "CONFIG_CRYPTO0";
 crypto1.sa2ul.$name = "CONFIG_SA2UL0";

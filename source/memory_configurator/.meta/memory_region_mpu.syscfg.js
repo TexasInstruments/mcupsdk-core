@@ -4,6 +4,8 @@ let general_module = system.modules['/memory_configurator/general'];
 const { getMemoryLayout } = system.getScript("/memory_configurator/memoryLayoutSolver");
 const physicalLayout = system.getScript("/memory_configurator/physicalLayout.json")[system.deviceData.device];
 
+let g_memory_region_types = [];
+
 function memoryRegions(){
 
     let memory_region_types = [];
@@ -25,27 +27,31 @@ function memoryRegions(){
         }
     }
 
+    g_memory_region_types = memory_region_types
     return memory_region_types;
 }
 
-function coreList() {
+function coreList(inst) {
     let coreNames = common.getSysCfgCoreNames();
-    // coreNames = coreNames.filter(function (coreName) {
-    //     return coreName.includes("r5f");
-    // });
-
     let selfCoreName = common.getSelfSysCfgCoreName();
 
     let tmp_list = coreNames.filter(function (coreName) {
         return coreName !== selfCoreName;
     });
 
+    let memoryRegType = inst.type;
+    let applicable_cores = (memoryRegType.slice(memoryRegType.lastIndexOf('_')+1)).toLowerCase();
+    if ( memoryRegType.indexOf('_')== -1 ) memoryRegType = memoryRegType+"_ALL"; // This is for types which do not follow the _ALL type format, it's assumed that this region could be shared among all
+
     let options = [];
 
     for (let core of tmp_list)
     {
         let ele = {name: core, displayName: core}
-        options.push(ele)
+        if( memoryRegType.includes("_ALL") ) // This means that the memory type can be accessed across all cores
+            options.push(ele)
+        else if ( core.includes(applicable_cores) && physicalLayout[memoryRegType].access === "all" ) //Display only those which cores with which the current core can access given the memory time
+            options.push(ele)
     }
 	return options;
 }
@@ -87,6 +93,8 @@ let config = [
     onChange: (inst) => {
         inst.$name = (inst.type.concat("_x")).toUpperCase()
         inst.manualStartAddress = physicalLayout[inst.type].start
+        inst.isShared = false;
+        inst.$uiState.shared_cores.hidden = true;
         if(physicalLayout[inst.type].access == "individual"){
             inst.$uiState.isShared.hidden = true;
             inst.shared_cores = [];
@@ -264,6 +272,7 @@ let config = [
     description: "",
     longDescription: "",
     default: 8,
+    hidden: true,
     displayFormat: "dec",
 },
 //{
@@ -282,8 +291,9 @@ let config = [
     name: "isShared",
     displayName: "Shared",
     default: false,
+    hidden: !(g_memory_region_types[0].name.includes("_ALL") || ( physicalLayout[g_memory_region_types[0].name].access === "all")) ,
     onChange: enableShared_core,
-    longDescription: 'Check it if this region has to be shared among multiple cores. Once done, no need to select the same in other cores.'
+    longDescription: 'Check if this region has to be shared among multiple cores. Once done, no need to select the same in other cores.'
  }, {
     name: "shared_cores",
     displayName: "Share With Cores",
@@ -291,7 +301,7 @@ let config = [
     longDescription: "",
     default: [],
     hidden: true,
-    options: coreList,
+    options: (inst) => {return coreList(inst)},
 },
 ]
 
@@ -377,6 +387,27 @@ function validate (inst, report) {
 
     if (inst.isShared && inst.shared_cores.length == 0) {
         report.logError(`Select at least one core.`, inst, "shared_cores")
+    }
+
+    let selfCoreName = common.getSelfSysCfgCoreName();
+    let coreNames = common.getSysCfgCoreNames();
+
+    let other_core_list = coreNames.filter(function (coreName) {
+        return coreName !== selfCoreName;
+    });
+
+    let invalid_option = false;
+
+    if ( inst.shared_cores.length > 0 ){
+        _.each(inst.shared_cores, shared_core => {
+            if(other_core_list.indexOf(shared_core) == -1 )
+            invalid_option = invalid_option || true;
+        })
+    }
+
+    if (invalid_option)
+    {
+        report.logError(`Not a valid option.`, inst, "shared_cores")
     }
 }
 

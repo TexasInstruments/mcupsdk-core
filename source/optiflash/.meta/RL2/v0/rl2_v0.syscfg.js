@@ -73,6 +73,19 @@ function validate(inst, report) {
     {
         report.logError("Should not be less than or equal to external flash cached range end address.", inst, "rangeEnd");
     }
+
+    let valid_option = false;
+    let valid_mr_options = loadMemoryRegions().memory_regions;
+
+    _.each(valid_mr_options, vmr =>{
+        if( inst.memoryRegion.length > 0 && vmr.name === inst.memoryRegion )
+            valid_option = valid_option || true;
+    })
+
+    if (!valid_option)
+    {
+        report.logError(`Not a valid option.`, inst, "memoryRegion")
+    }
 }
 
 function loadMemoryRegions() {

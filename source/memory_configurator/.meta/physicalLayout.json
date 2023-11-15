@@ -168,20 +168,6 @@
             "access": "all"
 		},
 	},
-	"AWR294X":{
-		"OCRAM": {
-			"start": 0x8000,
-			"size": 0x1000
-		},
-		"Shared": {
-			"start": 0x18000,
-			"size": 0x500
-		},
-		"Flash": {
-			"start": 0x38000,
-			"size": 0x10000
-		}
-	},
 	"AM263x_beta": {
 		"OCRAM": {
 			"start": 0x70000000,
@@ -235,19 +221,5 @@
 			"size": 0xFFFFFFFF,
             "access": "all"
 		},
-	},
-	"AM62x": {
-		"OCRAM": {
-			"start": 0x8000,
-			"size": 0x1000
-		},
-		"Shared": {
-			"start": 0x18000,
-			"size": 0x500
-		},
-		"Flash": {
-			"start": 0x38000,
-			"size": 0x10000
-		}
 	},
 }

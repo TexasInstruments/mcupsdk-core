@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM243x_ALV_beta" --package "ALV" --part "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @versions {"tool":"1.18.0+3266"}
  */
 
 /**
@@ -63,10 +63,9 @@ pcie1.obAtu[1].lowerBase   = "0x69000000UL";
 pcie1.obAtu[1].lowerTarget = "0x70000000UL";
 pcie1.obAtu[1].windowSize  = 0x7FFFFF;
 
-freertos_fat1.$name                     = "CONFIG_FREERTOS_FAT0";
-freertos_fat1.peripheralDriver.$name    = "CONFIG_MMCSD0";
-freertos_fat1.peripheralDriver.cardType = "SD";
-freertos_fat1.peripheralDriver.phyType  = "SW_PHY";
+freertos_fat1.$name                    = "CONFIG_FREERTOS_FAT0";
+freertos_fat1.peripheralDriver.$name   = "CONFIG_MMCSD0";
+freertos_fat1.peripheralDriver.phyType = "SW_PHY";
 
 debug_log.enableUartLog        = true;
 debug_log.uartLog.$name        = "CONFIG_UART_CONSOLE";
@@ -142,20 +141,20 @@ region1.memory_region[6].$name              = "USER_SHM_MEM";
 region1.memory_region[6].auto               = false;
 region1.memory_region[6].manualStartAddress = 0x701D0000;
 region1.memory_region[6].isShared           = true;
-region1.memory_region[6].shared_cores       = ["a53ss0-0","a53ss0-1","m4fss0-0","r5fss0-1","r5fss1-0","r5fss1-1"];
 region1.memory_region[6].size               = 0x180;
+region1.memory_region[6].shared_cores       = ["m4fss0-0","r5fss0-1","r5fss1-0","r5fss1-1"];
 region1.memory_region[7].auto               = false;
 region1.memory_region[7].$name              = "LOG_SHM_MEM";
 region1.memory_region[7].isShared           = true;
-region1.memory_region[7].shared_cores       = ["a53ss0-0","a53ss0-1","m4fss0-0","r5fss0-1","r5fss1-0","r5fss1-1"];
 region1.memory_region[7].manualStartAddress = 0x701D0180;
 region1.memory_region[7].size               = 0x3E80;
+region1.memory_region[7].shared_cores       = ["m4fss0-0","r5fss0-1","r5fss1-0","r5fss1-1"];
 region1.memory_region[8].auto               = false;
 region1.memory_region[8].manualStartAddress = 0x701D4000;
 region1.memory_region[8].size               = 0xC000;
 region1.memory_region[8].$name              = "RTOS_NORTOS_IPC_SHM_MEM";
 region1.memory_region[8].isShared           = true;
-region1.memory_region[8].shared_cores       = ["a53ss0-0","a53ss0-1","m4fss0-0","r5fss0-1","r5fss1-0","r5fss1-1"];
+region1.memory_region[8].shared_cores       = ["m4fss0-0","r5fss0-1","r5fss1-0","r5fss1-1"];
 
 section1.$name                        = "Vector Table";
 section1.load_memory                  = "R5F_VECS";
