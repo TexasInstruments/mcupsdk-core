@@ -90,6 +90,7 @@ mpu_armv75.$name      = "CONFIG_MPU_REGION4";
 mpu_armv75.baseAddr   = 0x70080000;
 mpu_armv75.size       = 14;
 mpu_armv75.attributes = "NonCached";
+
 general1.$name        = "CONFIG_GENERAL0";
 general1.stack_size   = 8192;
 general1.heap_size    = 1024;
@@ -211,16 +212,15 @@ section9.output_section.create(1);
 section9.output_section[0].$name     = ".bss:ENET_DMA_PKT_MEMPOOL";
 section9.output_section[0].alignment = 128;
 
-enet_cpsw1.$name                            = "CONFIG_ENET_CPSW0";
+enet_cpsw1.$name                         = "CONFIG_ENET_CPSW0";
 enet_cpsw1.BoardType                     = "am263px-cc";
-enet_cpsw1.LargePoolPktCount                = 128;
-enet_cpsw1.DisableMacPort1                  = true;
-enet_cpsw1.hostportRxCsumOffloadEn          = true; /* Due to a AM263x SOC HW errata, checksum offload on Rx side is disabled */
-enet_cpsw1.txDmaChannel[0].$name            = "ENET_DMA_TX_CH0";
-enet_cpsw1.txDmaChannel[0].PacketsCount     = 64;
-enet_cpsw1.rxDmaChannel[0].$name            = "ENET_DMA_RX_CH0";
-enet_cpsw1.rxDmaChannel[0].PacketsCount     = 64;
-enet_cpsw1.pinmux[0].$name                  = "ENET_CPSW_PINMUX0";
+enet_cpsw1.LargePoolPktCount             = 128;
+enet_cpsw1.DisableMacPort1               = true;
+enet_cpsw1.txDmaChannel[0].$name         = "ENET_DMA_TX_CH0";
+enet_cpsw1.txDmaChannel[0].PacketsCount  = 64;
+enet_cpsw1.rxDmaChannel[0].$name         = "ENET_DMA_RX_CH0";
+enet_cpsw1.rxDmaChannel[0].PacketsCount  = 64;
+enet_cpsw1.pinmux[0].$name               = "ENET_CPSW_PINMUX0";
 enet_cpsw1.pinmux[0].RGMII1.$assign      = "RGMII2";
 enet_cpsw1.pinmux[0].RGMII2.$assign      = "RGMII1";
 enet_cpsw1.pinmux[0].RGMII2.RD0.$used    = false;

@@ -95,7 +95,6 @@ region1.memory_region.create(7);
 region1.memory_region[0].type               = "TCMA";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].auto               = false;
-region1.memory_region[0].manualStartAddress = 0x0;
 region1.memory_region[0].size               = 0x40;
 region1.memory_region[1].type               = "TCMA";
 region1.memory_region[1].$name              = "R5F_TCMA";
@@ -206,6 +205,7 @@ section9.type                        = "NOLOAD";
 section9.output_section.create(1);
 section9.output_section[0].$name     = ".bss:ENET_DMA_PKT_MEMPOOL";
 section9.output_section[0].alignment = 128;
+
 enet_cpsw1.$name                         = "CONFIG_ENET_CPSW0";
 enet_cpsw1.DisableMacPort1               = true;
 enet_cpsw1.BoardType                     = "am263px-cc";

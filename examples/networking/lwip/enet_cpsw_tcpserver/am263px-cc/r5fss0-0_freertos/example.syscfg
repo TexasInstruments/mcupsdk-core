@@ -95,7 +95,6 @@ region1.memory_region.create(7);
 region1.memory_region[0].type               = "TCMA";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].auto               = false;
-region1.memory_region[0].manualStartAddress = 0x0;
 region1.memory_region[0].size               = 0x40;
 region1.memory_region[1].type               = "TCMA";
 region1.memory_region[1].$name              = "R5F_TCMA";
@@ -206,18 +205,19 @@ section9.type                        = "NOLOAD";
 section9.output_section.create(1);
 section9.output_section[0].$name     = ".bss:ENET_DMA_PKT_MEMPOOL";
 section9.output_section[0].alignment = 128;
-enet_cpsw1.$name                            = "CONFIG_ENET_CPSW0";
-enet_cpsw1.DisableMacPort1                  = true;
+
+enet_cpsw1.$name                         = "CONFIG_ENET_CPSW0";
+enet_cpsw1.DisableMacPort1               = true;
 enet_cpsw1.BoardType                     = "am263px-cc";
-enet_cpsw1.PktInfoOnlyEnable                = true;
-enet_cpsw1.RxCustomSizeEnable               = true;
-enet_cpsw1.RxCustomSize                     = 384;
-enet_cpsw1.MediumPoolPktSize                = 384;
-enet_cpsw1.LargePoolPktCount                = 0;
-enet_cpsw1.MediumPoolPktCount               = 32;
-enet_cpsw1.txDmaChannel[0].$name            = "ENET_DMA_TX_CH0";
-enet_cpsw1.rxDmaChannel[0].$name            = "ENET_DMA_RX_CH0";
-enet_cpsw1.pinmux[0].$name                  = "ENET_CPSW_PINMUX0";
+enet_cpsw1.PktInfoOnlyEnable             = true;
+enet_cpsw1.RxCustomSizeEnable            = true;
+enet_cpsw1.RxCustomSize                  = 384;
+enet_cpsw1.MediumPoolPktSize             = 384;
+enet_cpsw1.LargePoolPktCount             = 0;
+enet_cpsw1.MediumPoolPktCount            = 32;
+enet_cpsw1.txDmaChannel[0].$name         = "ENET_DMA_TX_CH0";
+enet_cpsw1.rxDmaChannel[0].$name         = "ENET_DMA_RX_CH0";
+enet_cpsw1.pinmux[0].$name               = "ENET_CPSW_PINMUX0";
 enet_cpsw1.pinmux[0].RGMII2.RD0.$used    = false;
 enet_cpsw1.pinmux[0].RGMII2.RD1.$used    = false;
 enet_cpsw1.pinmux[0].RGMII2.RD2.$used    = false;
@@ -231,7 +231,7 @@ enet_cpsw1.pinmux[0].RGMII2.TD3.$used    = false;
 enet_cpsw1.pinmux[0].RGMII2.TX_CTL.$used = false;
 enet_cpsw1.pinmux[0].RGMII2.TXC.$used    = false;
 enet_cpsw1.netifInstance.create(1);
-enet_cpsw1.netifInstance[0].$name           = "NETIF_INST_ID0";
+enet_cpsw1.netifInstance[0].$name        = "NETIF_INST_ID0";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

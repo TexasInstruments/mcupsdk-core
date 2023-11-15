@@ -220,6 +220,7 @@ section9.type                        = "NOLOAD";
 section9.output_section.create(1);
 section9.output_section[0].$name     = ".bss:ENET_DMA_PKT_MEMPOOL";
 section9.output_section[0].alignment = 128;
+
 enet_cpsw1.$name                         = "CONFIG_ENET_CPSW0";
 enet_cpsw1.DisableMacPort1               = true;
 enet_cpsw1.BoardType                     = "am263px-cc";

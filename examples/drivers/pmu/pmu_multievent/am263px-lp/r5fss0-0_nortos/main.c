@@ -34,14 +34,14 @@
 #include "ti_drivers_config.h"
 #include "ti_board_config.h"
 
-void  pmu_multievent(void *args);
+void pmu_multievent(void *args);
 
 int main(void)
 {
     System_init();
     Board_init();
 
-     pmu_multievent(NULL);
+    pmu_multievent(NULL);
 
     Board_deinit();
     System_deinit();

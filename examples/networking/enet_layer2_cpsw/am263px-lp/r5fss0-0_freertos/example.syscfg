@@ -10,6 +10,8 @@
  */
 const eeprom     = scripting.addModule("/board/eeprom/eeprom", {}, false);
 const eeprom1    = eeprom.addInstance();
+const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1      = gpio.addInstance();
 const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1       = i2c.addInstance();
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
@@ -41,6 +43,10 @@ const enet_cpsw1 = enet_cpsw.addInstance();
  */
 eeprom1.$name      = "CONFIG_EEPROM0";
 eeprom1.i2cAddress = 0x53;
+
+gpio1.$name                = "CONFIG_GPIO105";
+gpio1.pinDir               = "OUTPUT";
+gpio1.GPIO.gpioPin.$assign = "PR0_PRU1_GPIO10";
 
 i2c1.$name               = "CONFIG_I2C0";
 eeprom1.peripheralDriver = i2c1;
@@ -232,6 +238,7 @@ enet_cpsw1.pinmux[0].RGMII2.$assign = "RGMII2";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
+gpio1.GPIO.$suggestSolution                         = "GPIO";
 enet_cpsw1.pinmux[0].MDIO.$suggestSolution          = "MDIO";
 enet_cpsw1.pinmux[0].MDIO.MDC.$suggestSolution      = "MDIO_MDC";
 enet_cpsw1.pinmux[0].MDIO.MDIO.$suggestSolution     = "MDIO_MDIO";

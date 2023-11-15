@@ -1,7 +1,7 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P2" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
  * @versions {"tool":"1.18.0+3266"}
  */
 
@@ -10,9 +10,10 @@
  */
 const eeprom     = scripting.addModule("/board/eeprom/eeprom", {}, false);
 const eeprom1    = eeprom.addInstance();
+const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1      = gpio.addInstance();
 const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1       = i2c.addInstance();
-const i2c2       = i2c.addInstance();
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71 = mpu_armv7.addInstance();
@@ -40,18 +41,18 @@ const enet_cpsw1 = enet_cpsw.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-eeprom1.$name = "CONFIG_EEPROM0";
+eeprom1.$name      = "CONFIG_EEPROM0";
+eeprom1.i2cAddress = 0x53;
+
+gpio1.pinDir               = "OUTPUT";
+gpio1.$name                = "CONFIG_GPIO105";
+gpio1.GPIO.gpioPin.$assign = "PR0_PRU1_GPIO10";
 
 i2c1.$name               = "CONFIG_I2C0";
 eeprom1.peripheralDriver = i2c1;
-i2c1.I2C.$assign         = "I2C0";
-i2c1.I2C.SCL.$assign     = "I2C0_SCL";
-i2c1.I2C.SDA.$assign     = "I2C0_SDA";
-
-i2c2.$name           = "CONFIG_I2C1";
-i2c2.I2C.$assign     = "I2C2";
-i2c2.I2C.SCL.$assign = "UART0_RTSn";
-i2c2.I2C.SDA.$assign = "UART0_CTSn";
+i2c1.I2C.$assign         = "I2C1";
+i2c1.I2C.SCL.$assign     = "I2C1_SCL";
+i2c1.I2C.SDA.$assign     = "I2C1_SDA";
 
 debug_log.enableUartLog            = true;
 debug_log.enableCssLog             = false;
@@ -221,48 +222,48 @@ section9.output_section.create(1);
 section9.output_section[0].$name     = ".bss:ENET_DMA_PKT_MEMPOOL";
 section9.output_section[0].alignment = 128;
 
-enet_cpsw1.$name                         = "CONFIG_ENET_CPSW0";
-enet_cpsw1.LargePoolPktCount             = 32;
-enet_cpsw1.PktInfoOnlyEnable             = true;
-enet_cpsw1.BoardType                     = "am263px-cc";
-enet_cpsw1.DisableMacPort1               = true;
-enet_cpsw1.txDmaChannel[0].$name         = "ENET_DMA_TX_CH0";
-enet_cpsw1.rxDmaChannel[0].$name         = "ENET_DMA_RX_CH0";
-enet_cpsw1.pinmux[0].$name               = "ENET_CPSW_PINMUX0";
-enet_cpsw1.pinmux[0].RGMII2.RD0.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.RD1.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.RD2.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.RD3.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.RX_CTL.$used = false;
-enet_cpsw1.pinmux[0].RGMII2.RXC.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.TD0.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.TD1.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.TD2.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.TD3.$used    = false;
-enet_cpsw1.pinmux[0].RGMII2.TX_CTL.$used = false;
-enet_cpsw1.pinmux[0].RGMII2.TXC.$used    = false;
+enet_cpsw1.$name                    = "CONFIG_ENET_CPSW0";
+enet_cpsw1.PktInfoOnlyEnable        = true;
+enet_cpsw1.LargePoolPktCount        = 32;
+enet_cpsw1.BoardType                = "am263px-lp";
+enet_cpsw1.txDmaChannel[0].$name    = "ENET_DMA_TX_CH0";
+enet_cpsw1.rxDmaChannel[0].$name    = "ENET_DMA_RX_CH0";
+enet_cpsw1.pinmux[0].$name          = "ENET_CPSW_PINMUX0";
+enet_cpsw1.pinmux[0].RGMII1.$assign = "RGMII1";
 enet_cpsw1.netifInstance.create(1);
-enet_cpsw1.netifInstance[0].$name        = "NETIF_INST_ID0";
+enet_cpsw1.netifInstance[0].$name   = "NETIF_INST_ID0";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
+gpio1.GPIO.$suggestSolution                         = "GPIO";
 enet_cpsw1.pinmux[0].MDIO.$suggestSolution          = "MDIO";
 enet_cpsw1.pinmux[0].MDIO.MDC.$suggestSolution      = "MDIO_MDC";
 enet_cpsw1.pinmux[0].MDIO.MDIO.$suggestSolution     = "MDIO_MDIO";
-enet_cpsw1.pinmux[0].RGMII1.$suggestSolution        = "RGMII2";
-enet_cpsw1.pinmux[0].RGMII1.RD0.$suggestSolution    = "PR0_PRU0_GPIO0";
-enet_cpsw1.pinmux[0].RGMII1.RD1.$suggestSolution    = "PR0_PRU0_GPIO1";
-enet_cpsw1.pinmux[0].RGMII1.RD2.$suggestSolution    = "PR0_PRU0_GPIO2";
-enet_cpsw1.pinmux[0].RGMII1.RD3.$suggestSolution    = "PR0_PRU0_GPIO3";
-enet_cpsw1.pinmux[0].RGMII1.RX_CTL.$suggestSolution = "PR0_PRU0_GPIO4";
-enet_cpsw1.pinmux[0].RGMII1.RXC.$suggestSolution    = "PR0_PRU0_GPIO6";
-enet_cpsw1.pinmux[0].RGMII1.TD0.$suggestSolution    = "PR0_PRU0_GPIO11";
-enet_cpsw1.pinmux[0].RGMII1.TD1.$suggestSolution    = "PR0_PRU0_GPIO12";
-enet_cpsw1.pinmux[0].RGMII1.TD2.$suggestSolution    = "PR0_PRU0_GPIO13";
-enet_cpsw1.pinmux[0].RGMII1.TD3.$suggestSolution    = "PR0_PRU0_GPIO14";
-enet_cpsw1.pinmux[0].RGMII1.TX_CTL.$suggestSolution = "PR0_PRU0_GPIO15";
-enet_cpsw1.pinmux[0].RGMII1.TXC.$suggestSolution    = "PR0_PRU0_GPIO16";
-enet_cpsw1.pinmux[0].RGMII2.$suggestSolution        = "RGMII1";
+enet_cpsw1.pinmux[0].RGMII1.RD0.$suggestSolution    = "RGMII1_RD0";
+enet_cpsw1.pinmux[0].RGMII1.RD1.$suggestSolution    = "RGMII1_RD1";
+enet_cpsw1.pinmux[0].RGMII1.RD2.$suggestSolution    = "RGMII1_RD2";
+enet_cpsw1.pinmux[0].RGMII1.RD3.$suggestSolution    = "RGMII1_RD3";
+enet_cpsw1.pinmux[0].RGMII1.RX_CTL.$suggestSolution = "RGMII1_RX_CTL";
+enet_cpsw1.pinmux[0].RGMII1.RXC.$suggestSolution    = "RGMII1_RXC";
+enet_cpsw1.pinmux[0].RGMII1.TD0.$suggestSolution    = "RGMII1_TD0";
+enet_cpsw1.pinmux[0].RGMII1.TD1.$suggestSolution    = "RGMII1_TD1";
+enet_cpsw1.pinmux[0].RGMII1.TD2.$suggestSolution    = "RGMII1_TD2";
+enet_cpsw1.pinmux[0].RGMII1.TD3.$suggestSolution    = "RGMII1_TD3";
+enet_cpsw1.pinmux[0].RGMII1.TX_CTL.$suggestSolution = "RGMII1_TX_CTL";
+enet_cpsw1.pinmux[0].RGMII1.TXC.$suggestSolution    = "RGMII1_TXC";
+enet_cpsw1.pinmux[0].RGMII2.$suggestSolution        = "RGMII2";
+enet_cpsw1.pinmux[0].RGMII2.RD0.$suggestSolution    = "PR0_PRU0_GPIO0";
+enet_cpsw1.pinmux[0].RGMII2.RD1.$suggestSolution    = "PR0_PRU0_GPIO1";
+enet_cpsw1.pinmux[0].RGMII2.RD2.$suggestSolution    = "PR0_PRU0_GPIO2";
+enet_cpsw1.pinmux[0].RGMII2.RD3.$suggestSolution    = "PR0_PRU0_GPIO3";
+enet_cpsw1.pinmux[0].RGMII2.RX_CTL.$suggestSolution = "PR0_PRU0_GPIO4";
+enet_cpsw1.pinmux[0].RGMII2.RXC.$suggestSolution    = "PR0_PRU0_GPIO6";
+enet_cpsw1.pinmux[0].RGMII2.TD0.$suggestSolution    = "PR0_PRU0_GPIO11";
+enet_cpsw1.pinmux[0].RGMII2.TD1.$suggestSolution    = "PR0_PRU0_GPIO12";
+enet_cpsw1.pinmux[0].RGMII2.TD2.$suggestSolution    = "PR0_PRU0_GPIO13";
+enet_cpsw1.pinmux[0].RGMII2.TD3.$suggestSolution    = "PR0_PRU0_GPIO14";
+enet_cpsw1.pinmux[0].RGMII2.TX_CTL.$suggestSolution = "PR0_PRU0_GPIO15";
+enet_cpsw1.pinmux[0].RGMII2.TXC.$suggestSolution    = "PR0_PRU0_GPIO16";
