@@ -188,8 +188,10 @@ void TimerP_clearOverflowInt(uint32_t baseAddr)
 
     /* [MCUSDK-177] read back and make sure interrupt was indeed cleared, if not clear it again
      */
-    if((*addr & value) != 0U) {}
+    if((*addr & value) != 0U)
+    {
         *addr = value;
+    }
 
     #if 0 /* should not be used for level interrupts */
     /* apply SW EOI */
