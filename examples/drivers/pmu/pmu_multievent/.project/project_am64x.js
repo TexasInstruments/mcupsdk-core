@@ -49,7 +49,7 @@ const templates_nortos_r5f =
         input: ".project/templates/am64x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: " pmu_multievent",
+            entryFunction: "pmu_multievent",
         },
     }
 ];
