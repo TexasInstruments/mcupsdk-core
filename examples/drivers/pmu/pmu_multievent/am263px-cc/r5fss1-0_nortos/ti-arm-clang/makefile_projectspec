@@ -7,7 +7,7 @@ include $(MCU_PLUS_SDK_PATH)/imports.mak
 
 PROFILE?=Release
 
-PROJECT_NAME= pmu_multievent_am263px-cc_r5fss1-0_nortos_ti-arm-clang
+PROJECT_NAME=pmu_multievent_am263px-cc_r5fss1-0_nortos_ti-arm-clang
 
 all:
 	$(CCS_ECLIPSE) -noSplash -data $(MCU_PLUS_SDK_PATH)/ccs_projects -application com.ti.ccstudio.apps.projectBuild -ccs.projects $(PROJECT_NAME) -ccs.configuration $(PROFILE)

@@ -70,7 +70,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = " pmu_multievent";
+    property.name = "pmu_multievent";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
 
