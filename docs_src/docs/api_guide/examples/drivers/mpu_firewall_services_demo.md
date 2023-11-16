@@ -40,5 +40,16 @@ This example demonstrates the use of HSM Firewall services.
 
 On successful boot, following message will be seen on terminal. Please note that
 the R5F application has not been side-loaded yet.
+
+\cond SOC_AM263X
+
 \snippet hsmclient.c hsm_services_example_qspi
+
+\endcond
+
+\cond SOC_AM263PX
+
+\snippet hsmclient.c hsm_services_example_ospi
+
+\endcond
 
