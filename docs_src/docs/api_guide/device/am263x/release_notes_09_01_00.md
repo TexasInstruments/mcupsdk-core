@@ -375,6 +375,18 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> GPMC
     <td> Open
 </tr>
+<tr>
+    <td> i2401
+    <td> CPSW: Host Timestamps Cause CPSW Port to Lock up
+    <td> CPSW
+    <td> Open
+</tr>
+<tr>
+    <td> i2402
+    <td> CPSW: Ethernet to Host Checksum Offload does not work
+    <td> CPSW
+    <td> Open
+</tr>
 </table>
 
 ## Limitations

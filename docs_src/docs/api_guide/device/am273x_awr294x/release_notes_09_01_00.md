@@ -403,6 +403,18 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F a
     <td> HWA
     <td> Open
 </tr>
+<tr>
+    <td> i2401
+    <td> CPSW: Host Timestamps Cause CPSW Port to Lock up
+    <td> CPSW
+    <td> Open
+</tr>
+<tr>
+    <td> i2402
+    <td> CPSW: Ethernet to Host Checksum Offload does not work
+    <td> CPSW
+    <td> Open
+</tr>
 </table>
 \endcond
 

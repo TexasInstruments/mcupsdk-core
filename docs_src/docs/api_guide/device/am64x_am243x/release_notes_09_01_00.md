@@ -515,6 +515,24 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> MCAN
     <td> Open
 </tr>
+<tr>
+    <td> i2401
+    <td> CPSW: Host Timestamps Cause CPSW Port to Lock up
+    <td> CPSW
+    <td> Open
+</tr>
+<tr>
+    <td> i2402
+    <td> CPSW: Ethernet to Host Checksum Offload does not work
+    <td> CPSW
+    <td> Open
+</tr>
+<tr>
+    <td> i2329
+    <td> MDIO interface corruption,
+    <td> CPSW, ICSSG
+    <td> Open
+</tr>
 </table>
 
 ## Limitations

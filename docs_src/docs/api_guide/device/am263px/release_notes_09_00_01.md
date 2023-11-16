@@ -141,7 +141,7 @@ LED        | R5F            | YES               | GPIO                          
 Module                      | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                    | Key features not tested
 ----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------|------------------------
 LwIP                        | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping                         | Other LwIP features
-Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping | RMII mode, CPSW EST, interrupt pacing, Policer and Classifier, MDIO Manual Mode, CBS (IEEE 802.1Qav), Strapped PHY (Early Ethernet)
+Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping,  interrupt pacing, Policer and Classifier  | RMII mode, CPSW EST, MDIO Manual Mode, CBS (IEEE 802.1Qav), Strapped PHY (Early Ethernet)
 
 <!-- ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Only compiled                                                                          | Not tested
 Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography -->
@@ -289,6 +289,12 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> i2313
     <td> GPMC: Sub-32-bit read issue with NAND and FPGA/FIFO
     <td> GPMC
+    <td> Open
+</tr>
+<tr>
+    <td> i2401
+    <td> CPSW: Host Timestamps Cause CPSW Port to Lock up
+    <td> CPSW
     <td> Open
 </tr>
 </table>
