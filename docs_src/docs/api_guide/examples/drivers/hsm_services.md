@@ -36,13 +36,13 @@ Three services are available.
 
 On successful boot, following message will be seen on terminal.
 
-cond SOC_AM263X
+\cond SOC_AM263X
 
 \snippet hsmclient.c mpu_firewall_services_demo_qspi
 
 \endcond
 
-cond SOC_AM263PX
+\cond SOC_AM263PX
 
 \snippet hsmclient.c mpu_firewall_services_demo_ospi
 
