@@ -2,12 +2,22 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM243x_ALV_beta" --package "ALV" --part "ALV" --context "r5fss1-1" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"data":"2021040816","timestamp":"2021040816","tool":"1.8.1+1900","templates":null}
+ * @versions {"tool":"1.18.0+3266"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const ipc             = scripting.addModule("/drivers/ipc/ipc");
+const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71      = mpu_armv7.addInstance();
+const mpu_armv72      = mpu_armv7.addInstance();
+const mpu_armv73      = mpu_armv7.addInstance();
+const mpu_armv74      = mpu_armv7.addInstance();
+const mpu_armv75      = mpu_armv7.addInstance();
+const mpu_armv76      = mpu_armv7.addInstance();
+const mpu_armv77      = mpu_armv7.addInstance();
 const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
 const default_linker1 = default_linker.addInstance();
 const general         = scripting.addModule("/memory_configurator/general", {}, false);
@@ -26,21 +36,51 @@ const section8        = section.addInstance();
 const section9        = section.addInstance();
 const section10       = section.addInstance();
 const section11       = section.addInstance();
-
-const ipc        = scripting.addModule("/drivers/ipc/ipc");
-const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
-const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
-const mpu_armv71 = mpu_armv7.addInstance();
-const mpu_armv72 = mpu_armv7.addInstance();
-const mpu_armv73 = mpu_armv7.addInstance();
-const mpu_armv74 = mpu_armv7.addInstance();
-const mpu_armv75 = mpu_armv7.addInstance();
-const mpu_armv76 = mpu_armv7.addInstance();
-const mpu_armv77 = mpu_armv7.addInstance();
+const section12       = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
+ipc.m4fss0_0 = "NONE";
+
+debug_log.enableCssLog       = false;
+debug_log.enableSharedMemLog = true;
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv75.$name        = "CONFIG_MPU_REGION4";
+mpu_armv75.attributes   = "NonCached";
+mpu_armv75.allowExecute = false;
+mpu_armv75.baseAddr     = 0x701D0000;
+mpu_armv75.size         = 16;
+
+mpu_armv76.$name             = "CONFIG_MPU_REGION5";
+mpu_armv76.baseAddr          = 0x60000000;
+mpu_armv76.size              = 28;
+mpu_armv76.accessPermissions = "Supervisor RD, User RD";
+
+mpu_armv77.$name    = "CONFIG_MPU_REGION6";
+mpu_armv77.baseAddr = 0x80000000;
+mpu_armv77.size     = 31;
+
 default_linker1.$name = "memory_configurator_default_linker0";
 
 general1.$name        = "CONFIG_GENERAL0";
@@ -81,7 +121,7 @@ section1.output_section[0].palignment = true;
 
 section2.$name                        = "Text Segments";
 section2.load_memory                  = "MSRAM";
-section2.output_section.create(5);
+section2.output_section.create(6);
 section2.output_section[0].$name      = ".text.hwi";
 section2.output_section[0].palignment = true;
 section2.output_section[1].$name      = ".text.cache";
@@ -92,9 +132,10 @@ section2.output_section[3].$name      = ".text.boot";
 section2.output_section[3].palignment = true;
 section2.output_section[4].$name      = ".text:abort";
 section2.output_section[4].palignment = true;
+section2.output_section[5].$name      = ".text.main";
 
 section3.$name                        = "Code and Read-Only Data";
-section3.load_memory                  = "MSRAM";
+section3.load_memory                  = "FLASH";
 section3.output_section.create(2);
 section3.output_section[0].$name      = ".text";
 section3.output_section[0].palignment = true;
@@ -103,9 +144,10 @@ section3.output_section[1].palignment = true;
 
 section4.$name                        = "Data Segment";
 section4.load_memory                  = "MSRAM";
-section4.output_section.create(1);
+section4.output_section.create(2);
 section4.output_section[0].$name      = ".data";
 section4.output_section[0].palignment = true;
+section4.output_section[1].$name      = ".rodata.cfg";
 
 section5.$name                                   = "Memory Segments";
 section5.load_memory                             = "MSRAM";
@@ -190,42 +232,9 @@ section11.output_section.create(1);
 section11.output_section[0].$name     = ".bss.nocache";
 section11.output_section[0].alignment = 0;
 
-ipc.m4fss0_0 = "NONE";
-
-debug_log.enableCssLog       = false;
-debug_log.enableSharedMemLog = true;
-
-mpu_armv71.$name             = "CONFIG_MPU_REGION0";
-mpu_armv71.size              = 31;
-mpu_armv71.attributes        = "Device";
-mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
-mpu_armv71.allowExecute      = false;
-
-mpu_armv72.$name             = "CONFIG_MPU_REGION1";
-mpu_armv72.size              = 15;
-mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
-
-mpu_armv73.$name             = "CONFIG_MPU_REGION2";
-mpu_armv73.baseAddr          = 0x41010000;
-mpu_armv73.size              = 15;
-mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
-
-mpu_armv74.$name             = "CONFIG_MPU_REGION3";
-mpu_armv74.baseAddr          = 0x70000000;
-mpu_armv74.size              = 21;
-mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
-
-mpu_armv75.$name             = "CONFIG_MPU_REGION4";
-mpu_armv75.attributes        = "NonCached";
-mpu_armv75.allowExecute      = false;
-mpu_armv75.baseAddr          = 0x701D0000;
-mpu_armv75.size              = 16;
-
-mpu_armv76.$name             = "CONFIG_MPU_REGION5";
-mpu_armv76.baseAddr          = 0x60000000;
-mpu_armv76.size              = 28;
-mpu_armv76.accessPermissions = "Supervisor RD, User RD";
-
-mpu_armv77.$name             = "CONFIG_MPU_REGION6";
-mpu_armv77.baseAddr          = 0x80000000;
-mpu_armv77.size              = 31;
+section12.$name                                    = "CIO";
+section12.load_memory                              = "MSRAM";
+section12.output_section.create(1);
+section12.output_section[0].$name                  = "cio";
+section12.output_section[0].input_section.create(1);
+section12.output_section[0].input_section[0].$name = "-llibsysbm.a<trgmsg.c.obj> (.text)";

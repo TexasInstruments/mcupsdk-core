@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @versions {"tool":"1.18.0+3266"}
  */
 
 /**
@@ -36,6 +36,7 @@ const section8        = section.addInstance();
 const section9        = section.addInstance();
 const section10       = section.addInstance();
 const section11       = section.addInstance();
+const section12       = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -117,21 +118,21 @@ region1.memory_region[5].size               = 0x80000;
 region1.memory_region[6].$name              = "USER_SHM_MEM";
 region1.memory_region[6].auto               = false;
 region1.memory_region[6].manualStartAddress = 0x701D0000;
-region1.memory_region[6].size               = 0x80;
+region1.memory_region[6].size               = 0x180;
 region1.memory_region[6].isShared           = true;
-region1.memory_region[6].shared_cores       = ["a53ss0-0","a53ss0-1","m4fss0-0","r5fss0-1","r5fss1-0","r5fss1-1"];
+region1.memory_region[6].shared_cores       = ["m4fss0-0","r5fss0-1","r5fss1-0","r5fss1-1"];
 region1.memory_region[7].auto               = false;
-region1.memory_region[7].manualStartAddress = 0x701D0080;
-region1.memory_region[7].size               = 0x3F80;
+region1.memory_region[7].manualStartAddress = 0x701D0180;
+region1.memory_region[7].size               = 0x3E80;
 region1.memory_region[7].$name              = "LOG_SHM_MEM";
 region1.memory_region[7].isShared           = true;
-region1.memory_region[7].shared_cores       = ["a53ss0-0","a53ss0-1","m4fss0-0","r5fss0-1","r5fss1-0","r5fss1-1"];
+region1.memory_region[7].shared_cores       = ["m4fss0-0","r5fss0-1","r5fss1-0","r5fss1-1"];
 region1.memory_region[8].auto               = false;
 region1.memory_region[8].manualStartAddress = 0x701D4000;
 region1.memory_region[8].size               = 0xC000;
 region1.memory_region[8].$name              = "RTOS_NORTOS_IPC_SHM_MEM";
 region1.memory_region[8].isShared           = true;
-region1.memory_region[8].shared_cores       = ["a53ss0-0","a53ss0-1","m4fss0-0","r5fss0-1","r5fss1-0","r5fss1-1"];
+region1.memory_region[8].shared_cores       = ["m4fss0-0","r5fss0-1","r5fss1-0","r5fss1-1"];
 
 section1.$name                        = "Vector Table";
 section1.load_memory                  = "R5F_VECS";
@@ -142,7 +143,7 @@ section1.output_section[0].palignment = true;
 
 section2.$name                        = "Text Segments";
 section2.load_memory                  = "MSRAM";
-section2.output_section.create(5);
+section2.output_section.create(6);
 section2.output_section[0].$name      = ".text.hwi";
 section2.output_section[0].palignment = true;
 section2.output_section[1].$name      = ".text.cache";
@@ -153,9 +154,10 @@ section2.output_section[3].$name      = ".text.boot";
 section2.output_section[3].palignment = true;
 section2.output_section[4].$name      = ".text:abort";
 section2.output_section[4].palignment = true;
+section2.output_section[5].$name      = ".text.main";
 
 section3.$name                        = "Code and Read-Only Data";
-section3.load_memory                  = "MSRAM";
+section3.load_memory                  = "FLASH";
 section3.output_section.create(2);
 section3.output_section[0].$name      = ".text";
 section3.output_section[0].palignment = true;
@@ -164,9 +166,10 @@ section3.output_section[1].palignment = true;
 
 section4.$name                        = "Data Segment";
 section4.load_memory                  = "MSRAM";
-section4.output_section.create(1);
+section4.output_section.create(2);
 section4.output_section[0].$name      = ".data";
 section4.output_section[0].palignment = true;
+section4.output_section[1].$name      = ".rodata.cfg";
 
 section5.$name                                   = "Memory Segments";
 section5.load_memory                             = "MSRAM";
@@ -250,6 +253,13 @@ section11.type                        = "NOLOAD";
 section11.output_section.create(1);
 section11.output_section[0].$name     = ".bss.nocache";
 section11.output_section[0].alignment = 0;
+
+section12.$name                                    = "CIO";
+section12.load_memory                              = "MSRAM";
+section12.output_section.create(1);
+section12.output_section[0].$name                  = "cio";
+section12.output_section[0].input_section.create(1);
+section12.output_section[0].input_section[0].$name = "-llibsysbm.a<trgmsg.c.obj> (.text)";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
