@@ -84,11 +84,15 @@
         % if ( enabledRPMessageCpus.length > 0 ) {
         /* TX VRINGs */
         % for( let cpuName of enabledRPMessageCpus) {
+        % if(ipcSharedMemData.ipcRpMsgOffsetArr[selfCpuName] !== undefined) {
         rpmsgParams.vringTxBaseAddr[CSL_CORE_ID_`cpuName.toUpperCase()`] = (uintptr_t)(&gIpcSharedMem[`ipcSharedMemData.ipcRpMsgOffsetArr[selfCpuName][cpuName]`]);
+        % }
         % }
         /* RX VRINGs */
         % for( let cpuName of enabledRPMessageCpus) {
+        % if(ipcSharedMemData.ipcRpMsgOffsetArr[cpuName] !== undefined) {
         rpmsgParams.vringRxBaseAddr[CSL_CORE_ID_`cpuName.toUpperCase()`] = (uintptr_t)(&gIpcSharedMem[`ipcSharedMemData.ipcRpMsgOffsetArr[cpuName][selfCpuName]`]);
+        % }
         % }
         /* Other VRING properties */
         rpmsgParams.vringSize = IPC_RPMESSAGE_VRING_SIZE;

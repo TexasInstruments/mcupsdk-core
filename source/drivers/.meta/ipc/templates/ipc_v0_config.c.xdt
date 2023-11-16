@@ -109,14 +109,18 @@ void IpcNotify_allocSwQueue(IpcNotify_MailboxConfig *mailboxConfig)
         % if( implementationVersion == "v1" && ipcSharedMemData.safeIpcEnabled == false) {
     mailboxConfigPtr[CSL_CORE_ID_`selfCpuName.toUpperCase()`][CSL_CORE_ID_`coreName.toUpperCase()`].swQ = `selfCpuName.toUpperCase()`_TO_`coreName.toUpperCase()`_SW_QUEUE;
         % } else {
+            % if(ipcSharedMemData.ipcNotifyOffsetArr[selfCpuName] !== undefined) {
     mailboxConfigPtr[CSL_CORE_ID_`selfCpuName.toUpperCase()`][CSL_CORE_ID_`coreName.toUpperCase()`].swQ = (IpcNotify_SwQueue *)(&gIpcSharedMem[`ipcSharedMemData.ipcNotifyOffsetArr[selfCpuName][coreName]`]);
+            % }
         % }
     % }
     % for(let coreName of enabledCpus) {
         % if( implementationVersion == "v1" && ipcSharedMemData.safeIpcEnabled == false) {
     mailboxConfigPtr[CSL_CORE_ID_`coreName.toUpperCase()`][CSL_CORE_ID_`selfCpuName.toUpperCase()`].swQ = `coreName.toUpperCase()`_TO_`selfCpuName.toUpperCase()`_SW_QUEUE;
         % } else {
+            % if(ipcSharedMemData.ipcNotifyOffsetArr[coreName] !== undefined) {
     mailboxConfigPtr[CSL_CORE_ID_`coreName.toUpperCase()`][CSL_CORE_ID_`selfCpuName.toUpperCase()`].swQ = (IpcNotify_SwQueue *)(&gIpcSharedMem[`ipcSharedMemData.ipcNotifyOffsetArr[coreName][selfCpuName]`]);
+            % }
         % }
     % }
 }

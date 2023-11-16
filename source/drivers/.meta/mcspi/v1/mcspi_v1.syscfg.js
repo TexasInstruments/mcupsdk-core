@@ -369,14 +369,23 @@ function getConfigurables()
                     ui.transferMode.hidden = true;
                     ui.transferTimeout.hidden = true;
                     ui.transferCallbackFxn.hidden = true;
-                    ui.errorCallbackFxn.hidden = true;
+                    if(inst.sdkInfra == "LLD")
+                    {
+                        ui.errorCallbackFxn.hidden = true;
+                    }
                 }
                 if((inst.intrEnable == "INTERRUPT") || (inst.intrEnable == "DMA")) {
                     ui.intrPriority.hidden = false;
                     ui.transferMode.hidden = false;
                     ui.transferTimeout.hidden = false;
-                    ui.transferCallbackFxn.hidden = false;
-                    ui.errorCallbackFxn.hidden = false;
+                    if(inst.transferMode == "CALLBACK")
+                    {
+                        ui.transferCallbackFxn.hidden = false;
+                    }
+                    if(inst.sdkInfra == "LLD")
+                    {
+                        ui.errorCallbackFxn.hidden = false;
+                    }
                 }
             },
             description: "Driver Operating Mode. In case of DMA mode, Default TX Data feature is not supported"
@@ -467,11 +476,29 @@ function getConfigurables()
                         ui.transferCallbackFxn.hidden = true;
                         ui.errorCallbackFxn.hidden = true;
                     }
-                }
-                else {
-                    ui.transferMode.hidden = false;
-                    if(inst.transferMode != "BLOCKING")
+                    else
                     {
+                        ui.transferCallbackFxn.hidden = false;
+                        ui.errorCallbackFxn.hidden = false;
+                    }
+                }
+                else 
+                {
+                    if((inst.intrEnable == "INTERRUPT") || (inst.intrEnable == "DMA"))
+                    {
+                        ui.transferMode.hidden = false;
+                        if(inst.transferMode == "CALLBACK")
+                        {
+                            ui.transferCallbackFxn.hidden = false;
+                        }
+                        else
+                        {
+                            ui.transferCallbackFxn.hidden = true;
+                        }
+                    }
+                    else
+                    {
+                        ui.transferMode.hidden = true;
                         ui.transferCallbackFxn.hidden = false;
                     }
                     ui.errorCallbackFxn.hidden = true;

@@ -111,7 +111,7 @@ function getConfigurables()
             name: "crcHookFxn",
             displayName: "CRC Hook Function",
             default: "NULL",
-            hidden: false,
+            hidden: true,
             description: "Hook function in application for CRC calculation.",
         },
     );
@@ -145,7 +145,7 @@ function getConfigurables()
 
     /* add onChange to each configurable in config, except the 'sharedMemUsed' since we update this inside onChange and 'sharedMemAvailable' since it's fixed */
     config.forEach( function (element) {
-        if(element.name != "sharedMemUsed" && element.name != "sharedMemAvailable" && !element.readOnly)
+        if(element.name != "sharedMemUsed" && element.name != "sharedMemAvailable" && element.name != "crcHookFxn" && !element.readOnly)
             element.onChange = onChange;
       });
 
@@ -459,8 +459,8 @@ function getEnabledCpus(instance) {
 
     for( let cpuConfig of config)
     {
-        if(cpuConfig.name != "enableLinuxIpc" && cpuConfig.name != "enableMailboxIpc" && cpuConfig.name.search("_safeipc") == -1) {
-            if(instance[cpuConfig.name] != "NONE" && cpuConfig.name != ipc_soc.getSelfIpcCoreName())
+        if(cpuConfig.name != "enableLinuxIpc" && cpuConfig.name != "enableMailboxIpc" ) {
+            if(((instance[cpuConfig.name] == "notify") || (instance[cpuConfig.name] == "notify_rpmsg")) && cpuConfig.name != ipc_soc.getSelfIpcCoreName())
             {
                 enabledCpus.push(cpuConfig.name);
             }

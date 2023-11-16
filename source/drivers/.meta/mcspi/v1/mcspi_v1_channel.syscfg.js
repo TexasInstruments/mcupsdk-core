@@ -125,7 +125,8 @@ PHA1 = Data are latched on even-numbered edges of SPICLK`,
                     displayName: "true"
                 },
             ],
-            description: ' Turbo mode improves the throughput of the MCSPI interface when a single channel is enabled by allowing' +
+            description: "Enable/Disable Turbo mode",
+            longDescription: ' Turbo mode improves the throughput of the MCSPI interface when a single channel is enabled by allowing' +
                          ' transfers until the shift register and the MCSPI_RX_0/1/2/3 register are full. Turbo mode is time ' +
                          ' saving when a transfer exceeds two words.'
         },
