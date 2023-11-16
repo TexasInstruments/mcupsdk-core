@@ -5,6 +5,7 @@ let device = "am263px";
 const files = {
     common: [
         "main.c",
+        "board.c",
     ],
 };
 
@@ -46,7 +47,7 @@ const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_OSPI";
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos"},
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos"},
+
 ];
 
 function getComponentProperty() {

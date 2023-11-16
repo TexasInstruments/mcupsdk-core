@@ -37,20 +37,12 @@
 #include <drivers/bootloader.h>
 #include <drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
 
-#define I2C_TARGET_ADDRESS              (0x20U)
-
-#define I2C_OUTPUT_CMD_REG              (0x2U)
-#define I2C_CONFIGURATION_CMD_REG       (0x6U)
-
-#define I2C_CONFIGURATION_REG_VALUE     (0xFEU)
-#define I2C_OUTPUT_REG_RESET_LOW        (0x0U)
-#define I2C_OUTPUT_REG_RESET_HIGH       (0x1U)
-
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
 extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle);
+void i2c_flash_reset(void);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -210,62 +202,7 @@ int main(void)
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle)
 {
-    int32_t                 status;
-    uint8_t                 txBuffer[2], rxBuffer[2];
-    I2C_Handle              i2cHandle;
-    I2C_Transaction         i2cTransaction;
-
-    i2cHandle = gI2cHandle[CONFIG_I2C2];
-
-    status = I2C_probe(i2cHandle, I2C_TARGET_ADDRESS);
-    DebugP_assert(status == SystemP_SUCCESS);
-
-    I2C_Transaction_init(&i2cTransaction);
-    i2cTransaction.writeBuf      = txBuffer;
-    i2cTransaction.readBuf       = rxBuffer;
-    i2cTransaction.writeCount    = 2;
-    i2cTransaction.targetAddress = I2C_TARGET_ADDRESS;
-
-    txBuffer[0] = I2C_CONFIGURATION_CMD_REG;
-    txBuffer[1] = I2C_CONFIGURATION_REG_VALUE;
-    status = I2C_transfer(i2cHandle, &i2cTransaction);
-    DebugP_assert(status == SystemP_SUCCESS);
-
-    i2cTransaction.writeCount = 1;
-    status = I2C_transfer(i2cHandle, &i2cTransaction);
-    i2cTransaction.readCount = 1;
-    rxBuffer[0] = rxBuffer[1] = 0;
-    status = I2C_transfer(i2cHandle, &i2cTransaction);
-    DebugP_assert(rxBuffer[0] == txBuffer[1]);
-
-    /* Give OSPI_RST output as Low */
-    i2cTransaction.writeCount = 2;
-    txBuffer[0] = I2C_OUTPUT_CMD_REG;
-    txBuffer[1] = I2C_OUTPUT_REG_RESET_LOW;
-    status = I2C_transfer(i2cHandle, &i2cTransaction);
-    DebugP_assert(status == SystemP_SUCCESS);
-
-    i2cTransaction.writeCount = 1;
-    status = I2C_transfer(i2cHandle, &i2cTransaction);
-    i2cTransaction.readCount = 1;
-    rxBuffer[0] = rxBuffer[1] = 0;
-    status = I2C_transfer(i2cHandle, &i2cTransaction);
-    DebugP_assert(rxBuffer[0] == txBuffer[1]);
-
-    /* Give OSPI_RST output as High */
-    i2cTransaction.writeCount = 2;
-    txBuffer[0] = I2C_OUTPUT_CMD_REG;
-    txBuffer[1] = I2C_OUTPUT_REG_RESET_HIGH;
-    status = I2C_transfer(i2cHandle, &i2cTransaction);
-    DebugP_assert(status == SystemP_SUCCESS);
-
-    i2cTransaction.writeCount = 1;
-    status = I2C_transfer(i2cHandle, &i2cTransaction);
-    i2cTransaction.readCount = 1;
-    rxBuffer[0] = rxBuffer[1] = 0;
-    status = I2C_transfer(i2cHandle, &i2cTransaction);
-    DebugP_assert(rxBuffer[0] == txBuffer[1]);
-
+    i2c_flash_reset();
     OSPI_enableSDR(oHandle);
     OSPI_clearDualOpCodeMode(oHandle);
     OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));

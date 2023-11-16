@@ -43,7 +43,7 @@ endif
 FILES_common := \
 	test_soc.c \
 	test_soc_am263px.c \
-	board_e1.c \
+	board.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \

@@ -1556,39 +1556,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Sbl Ospi Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "sbl_ospi",
-        "location": "../../examples/drivers/boot/sbl_ospi/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM263P"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "boot",
-            "sbl_ospi",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "A Sbl Sd Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_sd",
         "location": "../../examples/drivers/boot/sbl_sd/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

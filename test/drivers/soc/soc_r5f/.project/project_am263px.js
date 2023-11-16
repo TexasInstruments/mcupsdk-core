@@ -6,7 +6,7 @@ const r5_0_files = {
     common: [
         "test_soc.c",
         "test_soc_am263px.c",
-        "board_e1.c",
+        "board.c",
         "main.c",
     ],
 };
