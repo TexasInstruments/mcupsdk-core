@@ -43,7 +43,7 @@ endif
 FILES_common := \
 	resolver_angle_speed.c \
 	main.c \
-	board_e1.c \
+	board.c \
 	sw_track2.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \

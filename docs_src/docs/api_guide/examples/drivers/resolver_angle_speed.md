@@ -96,7 +96,39 @@ This example on AM263Px ZCZ-S pacakge with HSEC connecter, has been validated us
 \ref DRIVERS_RESOLVER_PAGE
 
 # Sample Output
-Once the Angle and Velocity results from the watchpoints are plotted, results may be similar to the following, where legends atan, raw angle
+the following is a sample CCS Console output for the example run.,
+
+\code
+[Cortex_R5_0] Detected CC version is E2. Calling TCA6424 Drivers for io expander configurations
+Setting RESOLVER ADC Mux Select Lines, Index : 14, State : 1
+Setting RESOLVER ADC Mux Select Lines, Index : 15, State : 0
+Setting RESOLVER ADC Mux Select Lines, Index : 5, State : 0
+Setting RESOLVER ADC Mux Select Lines, Index : 6, State : 1
+Setting RESOLVER ADC Mux Select Lines, Index : 8, State : 1
+Setting RESOLVER ADC Mux Select Lines, Index : 2, State : 1
+setting up the EPWM ISR!!
+setting up the EPWM ISR Complete!!
+Resolver Enabled!!
+Forcing the Sync Pulse from the EPMW0!!
+4000 Iterations complete. Printing some of the values
+	    ANGLES (DEGREES)					||	VELOCITIES (RPS)
+----------------------------------------------------------------||-----------------------------------------------
+	ATAN		RAW_TRACK2	SW_TRAKC2		||	HW_TRACK2		SW_TRACK2
+	193.304443	193.441772	0.000196		||	193.359375	193.386841
+	193.348389	193.359375	193.375854		||	-0.000494	-0.000494
+	193.304443	193.364868	193.381348		||	-0.000494	-0.000494
+	193.414307	193.364868	193.381348		||	0.001355	0.001355
+	193.331909	193.364868	193.381348		||	0.000773	0.000773
+	193.359375	193.359375	193.375854		||	-0.000754	-0.000754
+	193.348389	193.359375	193.375854		||	-0.000470	-0.000470
+	193.331909	193.375854	193.392334		||	0.001644	0.001644
+	193.293457	193.364868	193.381348		||	-0.000391	-0.000391
+	193.265991	193.359375	193.375854		||	-0.003041	-0.003041
+All tests have passed!!
+\endcode
+
+Once the Angle and Velocity results from the watchpoints are plotted, results may be similar to the following, where legends atan, raw angle.
+Sample output for a constant velocity may be as follows.
 
 \imageStyle{am263p_resolver_sample_output.png,width:50%}
 \image html am263p_resolver_sample_output.png "Resolver Angle Speed Resolution Sample Output"

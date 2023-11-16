@@ -8,6 +8,8 @@
 /**
  * Import the modules used in this configuration.
  */
+const eeprom             = scripting.addModule("/board/eeprom/eeprom", {}, false);
+const eeprom1            = eeprom.addInstance();
 const pmic               = scripting.addModule("/board/pmic/pmic", {}, false);
 const pmic1              = pmic.addInstance();
 const epwm               = scripting.addModule("/drivers/epwm/epwm", {}, false);
@@ -15,6 +17,7 @@ const epwm1              = epwm.addInstance();
 const epwm2              = epwm.addInstance();
 const i2c                = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1               = i2c.addInstance();
+const i2c2               = i2c.addInstance();
 const mcspi              = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
 const mcspi1             = mcspi.addInstance();
 const resolver           = scripting.addModule("/drivers/resolver/resolver", {}, false);
@@ -54,6 +57,8 @@ const int_xbar1          = int_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+eeprom1.$name = "CONFIG_EEPROM0";
+
 pmic1.$name = "CONFIG_PMIC0";
 
 epwm1.$name                         = "CONFIG_EPWM0";
@@ -76,15 +81,20 @@ epwm2.epwmTimebase_emulationMode                     = "EPWM_EMULATION_FREE_RUN"
 epwm2.epwmTimebase_counterMode                       = "EPWM_COUNTER_MODE_UP";
 epwm2.EPWM.$assign                                   = "EPWM1";
 
-i2c1.$name           = "CONFIG_I2C0";
+i2c1.$name           = "IOEXPANDER_I2C_INSTANCE";
 i2c1.I2C.$assign     = "I2C2";
 i2c1.I2C.SCL.$assign = "UART0_RTSn";
 i2c1.I2C.SDA.$assign = "UART0_CTSn";
+
+i2c2.$name               = "EEPROM_I2C_INSTANCE";
+eeprom1.peripheralDriver = i2c2;
+i2c2.I2C.$assign         = "I2C0";
 
 mcspi1.$name                 = "CONFIG_MCSPI0";
 pmic1.peripheralDriver       = mcspi1;
 mcspi1.SPI.$assign           = "SPI1";
 mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
+mcspi1.child.$name           = "drivers_mcspi_v1_mcspi_v1_template1";
 
 const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                 = edma.addInstance({}, false);
@@ -346,6 +356,8 @@ epwm1.EPWM.A.$suggestSolution               = "EPWM0_A";
 epwm1.EPWM.B.$suggestSolution               = "EPWM0_B";
 epwm2.EPWM.A.$suggestSolution               = "EPWM1_A";
 epwm2.EPWM.B.$suggestSolution               = "EPWM1_B";
+i2c2.I2C.SCL.$suggestSolution               = "I2C0_SCL";
+i2c2.I2C.SDA.$suggestSolution               = "I2C0_SDA";
 mcspi1.SPI.CLK.$suggestSolution             = "SPI1_CLK";
 mcspi1.SPI.D0.$suggestSolution              = "SPI1_D0";
 mcspi1.SPI.D1.$suggestSolution              = "SPI1_D1";
