@@ -30,9 +30,9 @@
 #include <ti_drivers_config.h>
 #include <drivers/i2c.h>
 
-#define IO_EXPANDER_PORT0_OUTPUT_REG (0x02U)
-#define IO_EXPANDER_PORT0_DIR_REG (0x06U)
-#define IO_EXPANDER_I2C_ADDR (0x20U)
+#define IO_EXPANDER_PORT0_OUTPUT_REG (0x04U)
+#define IO_EXPANDER_PORT0_DIR_REG (0x0CU)
+#define IO_EXPANDER_I2C_ADDR (0x22U)
 
 static void EnetBoard_setMacPort2IOExpanderCfg(void);
 %}
@@ -384,25 +384,27 @@ static void EnetBoard_setMacPort2IOExpanderCfg(void)
 
     /* Configure MDIO sel pin */
     /* Set output to high */
-    buffer[0] = IO_EXPANDER_PORT0_OUTPUT_REG + 1; /* Port 1 */
-    buffer[1] = (0x01 << 4); /* Pin 4 */
-    I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
+    buffer[0] = IO_EXPANDER_PORT0_OUTPUT_REG + 2; /* Port 2 */
+    buffer[1] = (0x01 << 2); /* Pin 2 */
+    status = I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
+    DebugP_assert(status == I2C_STS_SUCCESS);
 
     /* set pin to output */
-    buffer[0] = IO_EXPANDER_PORT0_DIR_REG + 1;
-    buffer[1] = ~(0x1 << 4);
+    buffer[0] = IO_EXPANDER_PORT0_DIR_REG + 2;
+    buffer[1] = ~(0x1 << 2);
     status = I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
     DebugP_assert(status == I2C_STS_SUCCESS);
 
     /* Configure RGMII2 sel pin */
     /* Set output to low */
     buffer[0] = IO_EXPANDER_PORT0_OUTPUT_REG + 0; /* Port 0 */
-    buffer[1] = ~(0x03 << 2); /* Pin 2 & 3 */
+    buffer[1] = ~(0x01 << 3); /* Pin 3 */
     status = I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
     DebugP_assert(status == 0);
+
     /* set pin to output */
     buffer[0] = IO_EXPANDER_PORT0_DIR_REG + 0;
-    buffer[1] = ~(0x3 << 2);
+    buffer[1] = ~(0x1 << 3);
     status = I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
     DebugP_assert(status == 0);
 }
