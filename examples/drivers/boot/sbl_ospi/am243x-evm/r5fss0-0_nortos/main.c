@@ -36,6 +36,9 @@
 #include "ti_board_open_close.h"
 #include <drivers/sciclient.h>
 #include <drivers/bootloader.h>
+#include <kernel/dpl/ClockP.h>
+
+#define FLASH_RESET_USEC (100U)
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle);
 
@@ -284,6 +287,8 @@ void flashFixUpOspiBoot(OSPI_Handle oHandle)
         wrParams.cmd          = 0x99;
         status = OSPI_writeCmd(oHandle, &wrParams);
     }
+    /* Wait for the flash to reset */
+    ClockP_usleep(FLASH_RESET_USEC);
 
     OSPI_enableSDR(oHandle);
     OSPI_clearDualOpCodeMode(oHandle);
