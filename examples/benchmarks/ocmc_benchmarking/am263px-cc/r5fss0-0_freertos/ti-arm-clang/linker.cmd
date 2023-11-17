@@ -54,8 +54,14 @@ SECTIONS
         .text.cache: palign(8)
         .text.mpu: palign(8)
         .text.boot: palign(8)
+        .text.main: palign(8)
         .text:abort: palign(8) /* this helps in loading symbols when using XIP mode */
     } > MSRAM
+
+    cio > MSRAM
+    {
+        -llibsysbm.a<trgmsg.c.obj> (.text)
+    }
 
     .TI.local   : {} >> R5F_TCMA | R5F_TCMB0 | MSRAM | FLASH
     .TI.onchip  : {} >> MSRAM | FLASH

@@ -92,6 +92,7 @@ After setting up one of the above session launch type, Click the Start button to
     - Edit the application offset field only, if your sbl is configured with custom application offset
 4.  Initiating Programming:
     - After clicking "Load Image," UniFlash starts the programming process, and the console displays a log of each operation. **[SUCCESS] Program Load completed successfully** will get printed in the console, if the program loads into the target successfully.
+\note The default flasher included in the uniflash package is incompatible with the E2 revision of the board. Please refer to the \ref TI_UNIFLASH_TROUBLESHOOTING for instructions on how to make it work on the E2 board.
 \endcond
 
 \cond SOC_AM263X
@@ -189,6 +190,17 @@ After setting up one of the above session launch type, Click the Start button to
 
 ## Existing Limitations
   - If the flashing operation hangs in the serial session, the Cancel button will be unresponsive. To resolve the issue, close uniflash, relaunch it, and ensure that your board selection and flash configurations are correct.
+
+## Troubleshooting {#TI_UNIFLASH_TROUBLESHOOTING}
+  - If the default flashing algorithm that comes with Uniflash is not working for you, you can try using the one that comes with the SDK.
+  - You can find the prebuilt flashers at the following location:
+    \code
+    <MCU_SDK_ROOT>\tools\flasher\prebuilt
+    \endcode
+  - To use the flasher packaged with the SDK, you can either enter the path in the custom flasher field or replace the Uniflash flasher directly from the below path:
+    \code
+    <uniflash_root>deskdb\content\TICloudAgent\win\ccs_base\sitara_mcu\flasher
+    \endcode
 
 ## Supported File Formats
 

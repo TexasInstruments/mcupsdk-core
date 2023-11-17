@@ -91,3 +91,4 @@ examples/pru_io/empty/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt/*.b00
 examples/pru_io/empty/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt/*.xml
 examples/pru_io/empty/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt/*.h
 !*boardcfg_*.bin
+!tools/flasher/prebuilt/am*.out
