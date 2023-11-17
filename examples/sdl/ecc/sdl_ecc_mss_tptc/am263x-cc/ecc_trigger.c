@@ -52,6 +52,8 @@
 #include <sdl/include/sdl_types.h>
 #include <sdl/include/hw_types.h>
 #include "ecc_main.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 
 /* ========================================================================== */
 /*                                Macros                                      */
@@ -77,7 +79,7 @@
 #define SDL_ECC_DED						(2U)
 
 #define SDL_EXAMPLE_ECC_AGGR            SDL_SOC_ECC_AGGR
-/* 	
+/*
 *	To test other RAMID, then change the SDL_SOC_ECC_AGGR_TPTC_A0_ECC_RAM_ID macro according to the test RAMIDs
 *  		Refer sdlr_soc_ecc_aggr.h file
 */
@@ -96,7 +98,7 @@ static SemaphoreP_Object gEdmaTestDoneSem;
 
 static SDL_ECC_MemSubType ECC_Test_MSS_subMemTypeList[SDL_MSS_MAX_MEM_SECTIONS] =
 {
-     SDL_EXAMPLE_ECC_RAM_ID,
+    SDL_EXAMPLE_ECC_RAM_ID,
 };
 
 static SDL_ECC_InitConfig_t ECC_Test_MSS_ECCInitConfig =
@@ -106,25 +108,25 @@ static SDL_ECC_InitConfig_t ECC_Test_MSS_ECCInitConfig =
     .pMemSubTypeList = &(ECC_Test_MSS_subMemTypeList[0]),
     /**< Sub type list  */
 };
-													
+
 static uint32_t arg;
 
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
-     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-     .enableBitmap = {0x00180000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                      0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-      /**< All events enable: except clkstop events for unused clocks
-       *   and PCIE events */
-       /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
-     .priorityBitmap = {0x00180000u, 0x000000000u, 0x00000000u, 0x00000000u,
-                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
-     /**< All events high priority: except clkstop events for unused clocks
-      *   and PCIE events */
-     .errorpinBitmap = {0x00180000u, 0x00000000u, 0x00000000u, 0x00000000u,
-                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
-     /**< All events high priority: except clkstop for unused clocks
-      *   and PCIE events */
+    .esmErrorConfig = {1u, 8u}, /* Self test error config */
+    .enableBitmap = {0x00180000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+    /**< All events enable: except clkstop events for unused clocks
+     *   and PCIE events */
+    /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
+    .priorityBitmap = {0x00180000u, 0x000000000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
+    /**< All events high priority: except clkstop events for unused clocks
+     *   and PCIE events */
+    .errorpinBitmap = {0x00180000u, 0x00000000u, 0x00000000u, 0x00000000u,
+                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+    /**< All events high priority: except clkstop for unused clocks
+     *   and PCIE events */
 };
 
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
@@ -155,15 +157,16 @@ int32_t ECC_Example_init (void)
 	int32_t retValue=0;
     SDL_ErrType_t result;
 	void *ptr = (void *)&arg;
-    
-	if (retValue == 0) 
+
+	if (retValue == 0)
 	{
 		result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
 		if (retValue == SDL_PASS)
 		{
 			DebugP_log("\r\nESM_Test_init: Init MSS ESM complete \r\n");
 		}
-		else {
+		else
+        {
 			DebugP_log("\r\nECC_Example_init: Error initializing ESM: result = %d\r\n", result);
 			retValue = -1;
 		}
@@ -173,12 +176,15 @@ int32_t ECC_Example_init (void)
     if (retValue == 0) {
         /* Initialize ECC */
         result = SDL_ECC_init(SDL_EXAMPLE_ECC_AGGR, &ECC_Test_MSS_ECCInitConfig);
-        if (result != SDL_PASS) {
+        if (result != SDL_PASS)
+        {
             /* print error and quit */
             DebugP_log("ECC_Test_init: Error initializing MSS ECC AGGR: result = %d\n", result);
 
             retValue = -1;
-        } else {
+        }
+        else
+        {
             DebugP_log("\r\nECC_Test_init: MSS ECC AGGR initialization is completed \n");
         }
     }
@@ -198,7 +204,7 @@ int32_t ECC_Test_run_MSS_TPTC_A0_1Bit_InjectTest(void)
 {
     SDL_ErrType_t result;
     int32_t retVal=0;
-		
+
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
 
     DebugP_log("\r\nMSS TPTC_A0 Single bit error inject: test starting");
@@ -211,13 +217,16 @@ int32_t ECC_Test_run_MSS_TPTC_A0_1Bit_InjectTest(void)
                                  SDL_EXAMPLE_ECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                  &injectErrorConfig);
-	
-    if (result != SDL_PASS ) {
+
+    if (result != SDL_PASS )
+    {
         DebugP_log("\r\nMSS TPTC_A0 Single bit error inject at pErrMem 0x%p test failed",
                     injectErrorConfig.pErrMem);
         retVal = -1;
-    } else {
-        
+    }
+    else
+    {
+
         DebugP_log("\r\nMSS TPTC_A0 Single bit error inject at pErrMem 0x%p",
                    injectErrorConfig.pErrMem);
     }
@@ -254,11 +263,14 @@ int32_t ECC_Test_run_MSS_TPTC_A0_2Bit_InjectTest(void)
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
 
-    if (result != SDL_PASS ) {
+    if (result != SDL_PASS )
+    {
         DebugP_log("\r\nMSS TPTC_A0 Double bit error inject: at pErrMem 0x%p: fixed location once test failed",
                     injectErrorConfig.pErrMem);
        retVal = -1;
-    } else {
+    }
+    else
+    {
 
         DebugP_log("\r\nMSS TPTC_A0 Double bit error inject at pErrMem 0x%p ",
                    injectErrorConfig.pErrMem);
@@ -315,7 +327,8 @@ static int32_t edma_interrupt_transfer(uint32_t edmaConfigNum, uint32_t injectTy
 	{
 		ECC_Test_run_MSS_TPTC_A0_2Bit_InjectTest();
 	}
-	else{
+	else
+    {
 		/* No ECC inject */
 	}
 
