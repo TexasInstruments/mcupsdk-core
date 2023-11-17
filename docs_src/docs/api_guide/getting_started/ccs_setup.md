@@ -79,8 +79,10 @@
     \imageStyle{ccs_setup_02.png,width:50%}
     \image html ccs_setup_02.png "CCS Compilers"
 
-\cond SOC_AM263X
+\cond SOC_AM263PX
 ## Update CSP {#CSP_UPDATE}
+\note AM263Px now supports one-click XIP .out application debugging with CSP 1.2.6. Refer to the guide below to update CSP and check for its availability.
+
 - Goto "Help -> Check for updates"
 
     \imageStyle{ccs_update_check.png,width:30%}
@@ -113,12 +115,12 @@
     \imageStyle{ccs_update_inst_details.png,width:20%}
     \image html ccs_update_inst_details.png "About CCS"
 
-- Scroll down to "Sitara device support". The CSP version should be 1.2.4 or above.
+- Scroll down to "Sitara device support". The CSP version should be 1.2.6 or above.
 
     \imageStyle{ccs_update_csp_version.png,width:40%}
     \image html ccs_update_csp_version.png "CSP version"
 
-\note If user is still seeing an single core while importing/using the system project, user will need to update the timestamp of CSP.
+\note If the CSP changes are not taking effect, update the CSP timestamp.
 \note Close CCS, go to "<ccs_insall_dir>\ccs\ccs_base\common\targetdb" and update the 'timestamp' file to current date and start the CCS
 \endcond
 

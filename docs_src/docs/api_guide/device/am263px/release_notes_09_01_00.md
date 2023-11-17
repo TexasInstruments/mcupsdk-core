@@ -11,6 +11,7 @@
 \attention Current PMIC support in SDK is bare minimum meant to power up the modules and should not be used beyond this including safety use-case etc
 
 \note This SDK release supports AM263Px-LP board (ZCZ_C) package with limited validation. Please refer to test report for details
+\note CSP 1.2.6 or beyond needs to be used for XIP load/run from CCS. Refer \ref CSP_UPDATE for installation steps.
 
 ## Key New features
 - Hardware resolver support (\ref DRIVERS_RESOLVER_PAGE)
@@ -18,7 +19,7 @@
 - OptiFlash Support (\ref OPTIFLASH)
 - Memory Configurator (\ref MEMORY_CONFIGURATOR)
 - Uniflash tool support (\ref TI_UNIFLASH_TOOL)
-- OSPI NAND flash support without DMA (\ref EXAMPLES_DRIVERS_OSPI_NAND_FLASH_IO) 
+- OSPI NAND flash support without DMA (\ref EXAMPLES_DRIVERS_OSPI_NAND_FLASH_IO)
 - Trigonometric Math Unit (TMU) support (\ref EXAMPLES_DRIVERS_TMU_OPERATIONS)
 
 # Modules Not tested/supported in this release
@@ -132,7 +133,7 @@ Peripheral | Supported CPUs | SysConfig Support | Key features tested           
 EEPROM     | R5F            | YES               | Only compiled                                               | -
 FLASH      | R5F            | YES               | OSPI Flash                                                  | -
 LED        | R5F            | YES               | GPIO                                                        | -
-ETHPHY     | R5F            | YES               | Tested with ethercat_slave_beckhoff_ssc_demo example        | - 
+ETHPHY     | R5F            | YES               | Tested with ethercat_slave_beckhoff_ssc_demo example        | -
 
 ### Networking
 
@@ -373,7 +374,7 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
 <tr>
     <td> Memory configurator
     <td> SysConfig
-    <td> Remove array for memory region names 
+    <td> Remove array for memory region names
     <td> User needs to delete the memory configurator entry and add the memory configuration again via SysConfig. A button to initialize the memory configuration to default is provided.
 </tr>
 </table>
