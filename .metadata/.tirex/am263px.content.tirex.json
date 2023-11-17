@@ -7296,8 +7296,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
@@ -7329,8 +7329,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS0-1 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
@@ -7362,8 +7362,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS1-0 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS1-0 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
@@ -7395,8 +7395,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS1-1 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS1-1 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263px-cc/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
@@ -7428,8 +7428,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263P"
@@ -7461,8 +7461,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS0-1 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS0-1 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263P"
@@ -7494,8 +7494,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS1-0 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS1-0 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263P"
@@ -7527,8 +7527,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A  Pmu Multievent Example. CPU is R5FSS1-1 running NORTOS.",
-        "name": " pmu_multievent",
+        "description": "A Pmu Multievent Example. CPU is R5FSS1-1 running NORTOS.",
+        "name": "pmu_multievent",
         "location": "../../examples/drivers/pmu/pmu_multievent/am263px-lp/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263P"

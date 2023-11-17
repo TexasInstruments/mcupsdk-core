@@ -683,7 +683,7 @@ void test_ipc_main_core_start()
     testArgs.remoteCoreId = CSL_CORE_ID_R5FSS0_1;
     RUN_TEST(test_rpmsgOneToOne, 298, &testArgs);
 
-    #if defined(SOC_AM64X) || defined(SOC_AM243X) || defined(SOC_AM263X)
+    #if defined(SOC_AM64X) || defined(SOC_AM243X) || defined(SOC_AM263X) || defined (SOC_AM263PX)
     testArgs.remoteCoreId = CSL_CORE_ID_R5FSS1_0;
     RUN_TEST(test_rpmsgOneToOne, 300, &testArgs);
     testArgs.remoteCoreId = CSL_CORE_ID_R5FSS1_1;

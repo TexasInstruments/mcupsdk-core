@@ -7,6 +7,7 @@ all:
 	$(MAKE) -f makefile.am62x sbl
 	$(MAKE) -f makefile.am62x examples
 
+
 clean: libs-clean sbl-clean examples-clean
 scrub: libs-scrub sbl-scrub examples-scrub
 
@@ -68,8 +69,10 @@ help:
 BUILD_COMBO_unity = unity_m4f.ti-arm-clang
 BUILD_COMBO_doxy_samples = doxy_samples_m4f.ti-arm-clang
 
+
 # Combine all Components
 BUILD_COMBO_ALL = $(BUILD_COMBO_unity) $(BUILD_COMBO_doxy_samples)
+
 
 # Combine all Pre-built Components
 BUILD_COMBO_PREBUILT_ALL =
@@ -90,18 +93,20 @@ $(BUILD_COMBO_doxy_samples):
 	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.am62x.$(subst doxy_samples_,,$@) all
 
 
+
 # Various Component Clean Targets
 BUILD_COMBO_CLEAN_unity = unity_m4f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_doxy_samples = doxy_samples_m4f.ti-arm-clang_clean
 
+
 # Combine all Components Clean
 BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_unity) $(BUILD_COMBO_CLEAN_doxy_samples)
+
 
 # Combine all Pre-built Components Clean
 BUILD_COMBO_PREBUILT_CLEAN_ALL =
 
 libs-clean: $(BUILD_COMBO_CLEAN_ALL)
-
 libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
 
 $(BUILD_COMBO_CLEAN_unity):
@@ -111,9 +116,11 @@ $(BUILD_COMBO_CLEAN_doxy_samples):
 	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.am62x.$(subst doxy_samples_,,$(subst _clean,,$@)) clean
 
 
+
 # Various Component Scrub Targets
 BUILD_COMBO_SCRUB_unity = unity_m4f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_doxy_samples = doxy_samples_m4f.ti-arm-clang_scrub_scrub
+
 
 # Combine all Components Scrub Targets
 BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_unity) $(BUILD_COMBO_SCRUB_doxy_samples)
@@ -122,7 +129,6 @@ BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_unity) $(BUILD_COMBO_SCRUB_doxy_samp
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
 
 libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
-
 libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
 
 $(BUILD_COMBO_SCRUB_unity):
@@ -152,11 +158,15 @@ BUILD_COMBO_EXAMPLE_ALL += test_gpio_am62x-sk_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_gpio_am62x-sk-lp_m4fss0-0_nortos_ti-arm-clang
 # Various System Example Targets
 
+
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
 # Various Private Example Targets
 # Various Private System Example Targets
 
+
 examples: $(BUILD_COMBO_EXAMPLE_ALL)
+
+
 
 examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
@@ -228,6 +238,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_uart_am62x-sk-lp_m4fss0-0_freertos_ti-arm-
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_gpio_am62x-sk_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_gpio_am62x-sk-lp_m4fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Clean Targets
+
 
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
 # Various Private Example Targets
@@ -306,6 +317,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_gpio_am62x-sk_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_gpio_am62x-sk-lp_m4fss0-0_nortos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
 
+
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
 # Various Private Example Targets
 # Various Private System Example Targets
@@ -368,6 +380,8 @@ sbl: libs
 sbl-clean:
 
 sbl-scrub:
+
+
 
 
 .PHONY: all clean scrub help

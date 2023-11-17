@@ -282,7 +282,7 @@
         % for (prop in obj) {
             % if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) && prop == 'common') {
                 % for(let val of obj[prop]) {
-            % if ( val == "../linker.cmd" ) {
+            % if ( (val == "../linker.cmd") || ! (["am263x", "am263px", "am273x", "am243x", "am64x"].includes(proj.device)) ) {
         <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="`defaultAction`">
         </file>
         %}

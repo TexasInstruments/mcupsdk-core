@@ -29,7 +29,7 @@ CORES = \
 
 SYSTEM_FLAG := true
 
-all: syscfg
+all: clean syscfg
 	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ all SYSTEM_FLAG=${SYSTEM_FLAG}
 	$(MAKE) -C ../c66ss0_freertos/ti-c6000/ all SYSTEM_FLAG=${SYSTEM_FLAG}
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME)

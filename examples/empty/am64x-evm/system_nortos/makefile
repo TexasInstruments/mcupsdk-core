@@ -37,7 +37,7 @@ CORES = \
 
 SYSTEM_FLAG := true
 
-all: syscfg
+all: clean syscfg
 	$(MAKE) -C ../r5fss0-0_nortos/ti-arm-clang/ all SYSTEM_FLAG=${SYSTEM_FLAG}
 	$(MAKE) -C ../r5fss0-1_nortos/ti-arm-clang/ all SYSTEM_FLAG=${SYSTEM_FLAG}
 	$(MAKE) -C ../r5fss1-0_nortos/ti-arm-clang/ all SYSTEM_FLAG=${SYSTEM_FLAG}

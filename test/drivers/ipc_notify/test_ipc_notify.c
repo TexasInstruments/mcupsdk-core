@@ -484,7 +484,7 @@ void test_ipc_main_core_start()
     RUN_TEST(test_notifyOneToOneBackToBack, 313, (void*)CSL_CORE_ID_M4FSS0_0);
     RUN_TEST(test_notifyErrorChecks, 314, (void*)CSL_CORE_ID_R5FSS0_1);
     #endif
-    #if defined(SOC_AM263X)
+    #if defined(SOC_AM263X) || defined (SOC_AM263PX)
     RUN_TEST(test_notifyOneToOne, 308, (void*)CSL_CORE_ID_R5FSS0_1);
     RUN_TEST(test_notifyOneToOne, 309, (void*)CSL_CORE_ID_R5FSS1_0);
     RUN_TEST(test_notifyOneToOne, 310, (void*)CSL_CORE_ID_R5FSS1_1);
