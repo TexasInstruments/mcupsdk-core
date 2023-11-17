@@ -53,6 +53,8 @@
 #include <sdl/include/sdl_types.h>
 #include <sdl/include/hw_types.h>
 #include "ecc_main.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 
 /* ========================================================================== */
 /*                                Macros                                      */
@@ -83,7 +85,7 @@
 #define SDL_ECC_DED						(2U)
 
 #define SDL_EXAMPLE_ECC_AGGR            SDL_MSS_ECC_AGG_MSS
-/* 	
+/*
 *	To test other RAMID, then change the SDL_MSS_ECC_AGG_MSS_MSS_TPTC_A0_ECC_RAM_ID macro according to the test RAMIDs
 *  		Refer sdlr_soc_ecc_aggr.h file
 */
@@ -103,7 +105,7 @@ static SemaphoreP_Object gEdmaTestDoneSem;
 
 static SDL_ECC_MemSubType ECC_Test_MSS_subMemTypeList[SDL_MSS_MAX_MEM_SECTIONS] =
 {
-     SDL_EXAMPLE_ECC_RAM_ID,
+    SDL_EXAMPLE_ECC_RAM_ID,
 };
 
 static SDL_ECC_InitConfig_t ECC_Test_MSS_ECCInitConfig =
@@ -118,26 +120,26 @@ extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 													int32_t grpChannel,
 													int32_t intSrc,
 													void *arg);
-													
+
 /* Event BitMap for ECC ESM callback for MSS L2*/
 SDL_ESM_NotifyParams ECC_TestparamsMSS[SDL_ESM_MAX_MSS_EXAMPLE_AGGR] =
 {
-     {
-          /* Event BitMap for ECC ESM callback for MSS Single bit*/
-          .groupNumber = SDL_INTR_GROUP_NUM_1,
-          .errorNumber = SDL_ESMG1_ECCAGGMSS_SERR,
-          .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
-          .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
-          .callBackFunction = &SDL_ESM_applicationCallbackFunction,
-     },
-     {
-          /* Event BitMap for ECC ESM callback for MSS Double bit*/
-          .groupNumber = SDL_INTR_GROUP_NUM_1,
-          .errorNumber = SDL_ESMG1_ECCAGGMSS_UERR,
-          .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
-          .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
-          .callBackFunction = &SDL_ESM_applicationCallbackFunction,
-     },
+    {
+        /* Event BitMap for ECC ESM callback for MSS Single bit*/
+        .groupNumber = SDL_INTR_GROUP_NUM_1,
+        .errorNumber = SDL_ESMG1_ECCAGGMSS_SERR,
+        .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_LOW,
+        .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+        .callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
+    {
+        /* Event BitMap for ECC ESM callback for MSS Double bit*/
+        .groupNumber = SDL_INTR_GROUP_NUM_1,
+        .errorNumber = SDL_ESMG1_ECCAGGMSS_UERR,
+        .setIntrPriorityLvl = SDL_INTR_PRIORITY_LVL_HIGH,
+        .enableInfluenceOnErrPin = SDL_ENABLE_ERR_PIN,
+        .callBackFunction = &SDL_ESM_applicationCallbackFunction,
+    },
 };
 
 static int32_t edma_interrupt_transfer(uint32_t edmaConfigNum, uint32_t injectType, uint32_t queueType, uint32_t channelEvent);
@@ -162,7 +164,7 @@ int32_t ECC_Example_init (void)
 	int32_t retValue=0;
     SDL_ErrType_t result;
     int counter = 0;
-    
+
     for(counter = 0; counter<2; counter++)
     {
         /* Initialize ESM module */
@@ -178,21 +180,26 @@ int32_t ECC_Example_init (void)
                 DebugP_log("\r\nESM_Test_init: Init MSS ESM double bit complete\r\n");
             }
         }
-        else {
+        else
+        {
             DebugP_log("\r\nECC_Example_init: Error initializing ESM for single bit: result = %d\r\n", result);
             result = SDL_EFAIL;
         }
     }
 
-    if (retValue == 0) {
+    if (retValue == 0)
+    {
         /* Initialize ECC */
         result = SDL_ECC_init(SDL_EXAMPLE_ECC_AGGR, &ECC_Test_MSS_ECCInitConfig);
-        if (result != SDL_PASS) {
+        if (result != SDL_PASS)
+        {
             /* print error and quit */
             DebugP_log("ECC_Test_init: Error initializing MSS ECC AGGR: result = %d\n", result);
 
             retValue = -1;
-        } else {
+        }
+        else
+        {
             DebugP_log("\r\nECC_Test_init: MSS ECC AGGR initialization is completed \n");
         }
     }
@@ -212,7 +219,7 @@ int32_t ECC_Test_run_MSS_TPTC_A0_1Bit_InjectTest(void)
 {
     SDL_ErrType_t result;
     int32_t retVal=0;
-		
+
     SDL_ECC_InjectErrorConfig_t injectErrorConfig;
 
     DebugP_log("\r\nMSS TPTC_A0 Single bit error inject: test starting");
@@ -225,13 +232,16 @@ int32_t ECC_Test_run_MSS_TPTC_A0_1Bit_InjectTest(void)
                                  SDL_EXAMPLE_ECC_RAM_ID,
                                  SDL_INJECT_ECC_ERROR_FORCING_1BIT_ONCE,
                                  &injectErrorConfig);
-	
-    if (result != SDL_PASS ) {
+
+    if (result != SDL_PASS )
+    {
         DebugP_log("\r\nMSS TPTC_A0 Single bit error inject at pErrMem 0x%p test failed",
                     injectErrorConfig.pErrMem);
         retVal = -1;
-    } else {
-        
+    }
+    else
+    {
+
         DebugP_log("\r\nMSS TPTC_A0 Single bit error inject at pErrMem 0x%p",
                    injectErrorConfig.pErrMem);
     }
@@ -268,11 +278,14 @@ int32_t ECC_Test_run_MSS_TPTC_A0_2Bit_InjectTest(void)
                                  SDL_INJECT_ECC_ERROR_FORCING_2BIT_ONCE,
                                  &injectErrorConfig);
 
-    if (result != SDL_PASS ) {
+    if (result != SDL_PASS )
+    {
         DebugP_log("\r\nMSS TPTC_A0 Double bit error inject: at pErrMem 0x%p: fixed location once test failed",
                     injectErrorConfig.pErrMem);
        retVal = -1;
-    } else {
+    }
+    else
+    {
 
         DebugP_log("\r\nMSS TPTC_A0 Double bit error inject at pErrMem 0x%p ",
                    injectErrorConfig.pErrMem);
@@ -329,7 +342,8 @@ static int32_t edma_interrupt_transfer(uint32_t edmaConfigNum, uint32_t injectTy
 	{
 		ECC_Test_run_MSS_TPTC_A0_2Bit_InjectTest();
 	}
-	else{
+	else
+    {
 		/* No ECC inject */
 	}
 
@@ -435,7 +449,7 @@ static int32_t edma_interrupt_transfer(uint32_t edmaConfigNum, uint32_t injectTy
         result = SDL_EFAIL;
         DebugP_log("\r\nSome tests have failed!!\r\n");
     }
-	
+
     return(result);
 }
 
