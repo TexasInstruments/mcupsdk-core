@@ -29,3 +29,34 @@ NA
 ## API
 
 \ref DRV_MATHLIB_MODULE
+
+\cond SOC_AM263PX
+
+## TMU library
+
+MCU PLUS SDK integrates a software library to use the TMU (Trigonometric Math Unit) hardware in AM263Px. This TMU library provides efficient (assembly level functions) and MATHLIB compatible API interface for performing trigonometric calculations, a critical component in many real-time applications such as Motor Control and Digital Power.
+
+
+### Features Supported:
+
+TMU library supports below trignometric and math functions
+- sin, sin_pu
+- cos, cos_pu
+- atan, atan_pu
+- log_pu (base of 2)
+- iexp_pu (base of 2)
+- atan2
+
+
+### Features Not Supported:
+
+- div, sqrt and quad operations
+- Pipelined operation. 8 result registers for taking advantage of the pipelined architecture of TMU
+- Re-entrancy. Context save and restore operation
+- Underflow and Overflow interrupts to show mathematical operation errors
+
+### API
+
+\ref DRV_TMU_MODULE
+
+\endcond
