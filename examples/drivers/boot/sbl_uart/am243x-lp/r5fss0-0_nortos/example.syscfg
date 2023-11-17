@@ -115,17 +115,21 @@ section1.output_section[0].palignment = true;
 
 section2.$name                        = "Text Segments";
 section2.load_memory                  = "MSRAM_0";
-section2.output_section.create(5);
-section2.output_section[0].$name      = ".text.hwi";
+section2.output_section.create(7);
 section2.output_section[0].palignment = true;
-section2.output_section[1].$name      = ".text.cache";
+section2.output_section[0].$name      = ".text";
 section2.output_section[1].palignment = true;
-section2.output_section[2].$name      = ".text.mpu";
+section2.output_section[1].$name      = ".text.hwi";
 section2.output_section[2].palignment = true;
-section2.output_section[3].$name      = ".text.boot";
+section2.output_section[2].$name      = ".text.cache";
 section2.output_section[3].palignment = true;
-section2.output_section[4].$name      = ".text:abort";
+section2.output_section[3].$name      = ".text.mpu";
 section2.output_section[4].palignment = true;
+section2.output_section[4].$name      = ".text.boot";
+section2.output_section[5].$name      = ".data";
+section2.output_section[5].palignment = true;
+section2.output_section[6].$name      = ".rodata";
+section2.output_section[6].palignment = true;
 
 section3.$name                                   = "Memory Segments";
 section3.group                                   = false;

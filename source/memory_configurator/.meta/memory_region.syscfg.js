@@ -95,9 +95,10 @@ let config = [
         inst.manualStartAddress = physicalLayout[inst.type].start
         inst.isShared = false;
         inst.$uiState.shared_cores.hidden = true;
+        inst.shared_cores = [];
         if(physicalLayout[inst.type].access == "individual"){
             inst.$uiState.isShared.hidden = true;
-            inst.shared_cores = [];
+            //inst.shared_cores = [];
         }
         else {
             inst.$uiState.isShared.hidden = false;
