@@ -29,10 +29,8 @@
 %if ((device === "am263px-cc") && (instance.DisableMacPort2 === false) && (instance.BoardType === "am263px-cc")){
 #include <ti_drivers_config.h>
 #include <drivers/i2c.h>
-
-#define IO_EXPANDER_PORT0_OUTPUT_REG (0x04U)
-#define IO_EXPANDER_PORT0_DIR_REG (0x0CU)
-#define IO_EXPANDER_I2C_ADDR (0x22U)
+#include <board/ioexp/ioexp_tca6424.h>
+#include <board/ioexp/ioexp_tca6416.h>
 
 static void EnetBoard_setMacPort2IOExpanderCfg(void);
 %}
@@ -79,8 +77,12 @@ const EnetPhy_DrvInfoTbl gEnetPhyDrvTbl =
 #define MSS_CPSW_CONTROL_PORT_MODE_RMII                                   (0x1U)
 #define MSS_CPSW_CONTROL_PORT_MODE_RGMII                                  (0x2U)
 
-#define I2C_EEPROM_MAC_DATA_OFFSET                                        (0x3D)
-#define I2C_EEPROM_MAC_CTRL_OFFSET                                        (0x3B)
+#define EEPROM_MAGIC_NUMBER_VAL                                         (0xEE3355AAU)
+#define EEPROM_MAGIC_NUMBER_OFFSET                                 (0x0U)
+#define EEPROM_READ_PCB_REV_DATA_OFFSET                     (0x0022)
+
+#define I2C_EEPROM_MAC_DATA_OFFSET                                      (0x3D)
+#define I2C_EEPROM_MAC_CTRL_OFFSET                                       (0x3B)
 
 #define ENET_BOARD_NUM_MACADDR_MAX                                        (3U)
 #define ENET_GET_NUM_MAC_ADDR(num) ((num>>3)+1)
@@ -372,41 +374,131 @@ int32_t EnetBoard_setupPorts(EnetBoard_EthPort *ethPorts,
 %if ((device === "am263px-cc") && (instance.DisableMacPort2 === false) && (instance.BoardType === "am263px-cc")){
 static void EnetBoard_setMacPort2IOExpanderCfg(void)
 {
-    I2C_Transaction i2cTransaction;
-    uint8_t buffer[2];
-    int32_t status = -1;
+    EEPROM_Handle  eepromHandle = gEepromHandle[CONFIG_EEPROM0];
+    uint8_t    readBuffer[10] = {0};
+    uint8_t* pEepromRdPtr = (uint8_t *) &readBuffer;
+    int32_t status    = SystemP_SUCCESS;
+    uint32_t magicNum = 0;
 
-    I2C_Transaction_init(&i2cTransaction);
+    status = EEPROM_read(eepromHandle, EEPROM_MAGIC_NUMBER_OFFSET,  pEepromRdPtr, 4);
+    memcpy(&magicNum, pEepromRdPtr, sizeof(uint32_t));
 
-    i2cTransaction.writeBuf     = buffer;
-    i2cTransaction.writeCount   = 2U;
-    i2cTransaction.targetAddress = IO_EXPANDER_I2C_ADDR;
+    /* Check magic number header */
+    if (magicNum == EEPROM_MAGIC_NUMBER_VAL)
+    {
+        /* Read from Am263Px PCB revision */
+        status = EEPROM_read(eepromHandle, EEPROM_READ_PCB_REV_DATA_OFFSET, pEepromRdPtr, 2);
+        
+        if ((pEepromRdPtr[0] == 'E') && (pEepromRdPtr[1] == '1')) /* Checking PCB revision E1 */
+        {
+                DebugP_logInfo("AM263Px CC E1 Board found\r\n");
 
-    /* Configure MDIO sel pin */
-    /* Set output to high */
-    buffer[0] = IO_EXPANDER_PORT0_OUTPUT_REG + 2; /* Port 2 */
-    buffer[1] = (0x01 << 2); /* Pin 2 */
-    status = I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
-    DebugP_assert(status == I2C_STS_SUCCESS);
+                const uint32_t mdioMuxSelLine = 8*1 + 4; // PORT 1, PIN 4
+                const uint32_t rgmii1MuxSelLine = 8*0 + 2; // PORT 0, PIN 2
+                const uint32_t rgmii2MuxSelLine = 8*0 + 3; // PORT 0, PIN 3
+                static TCA6416_Config  gTCA6416_Config;
 
-    /* set pin to output */
-    buffer[0] = IO_EXPANDER_PORT0_DIR_REG + 2;
-    buffer[1] = ~(0x1 << 2);
-    status = I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
-    DebugP_assert(status == I2C_STS_SUCCESS);
+                TCA6416_Params      TCA6416Params;
+                TCA6416_Params_init(&TCA6416Params);
+                status = TCA6416_open(&gTCA6416_Config, &TCA6416Params);
 
-    /* Configure RGMII2 sel pin */
-    /* Set output to low */
-    buffer[0] = IO_EXPANDER_PORT0_OUTPUT_REG + 0; /* Port 0 */
-    buffer[1] = ~(0x01 << 3); /* Pin 3 */
-    status = I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
-    DebugP_assert(status == 0);
+                if (status == SystemP_SUCCESS)
+                {
+                    /* Configure as output  */
+                    status = TCA6416_config(&gTCA6416_Config,
+                                mdioMuxSelLine,
+                                TCA6416_MODE_OUTPUT);
+                }
+                if (status == SystemP_SUCCESS)
+                {
+                    status =  TCA6416_setOutput(&gTCA6416_Config, mdioMuxSelLine, TCA6416_OUT_STATE_HIGH);
+                }
 
-    /* set pin to output */
-    buffer[0] = IO_EXPANDER_PORT0_DIR_REG + 0;
-    buffer[1] = ~(0x1 << 3);
-    status = I2C_transfer(I2C_getHandle(CONFIG_I2C1), &i2cTransaction);
-    DebugP_assert(status == 0);
+                if (status == SystemP_SUCCESS)
+                {
+                    /* Configure as output  */
+                    status = TCA6416_config(&gTCA6416_Config,
+                                rgmii1MuxSelLine,
+                                TCA6416_MODE_OUTPUT);
+                }
+                if (status == SystemP_SUCCESS)
+                {
+                    status =  TCA6416_setOutput(&gTCA6416_Config, rgmii1MuxSelLine, TCA6416_OUT_STATE_LOW);
+                }
+
+                if (status == SystemP_SUCCESS)
+                {
+                    /* Configure as output  */
+                    status = TCA6416_config(&gTCA6416_Config,
+                                rgmii2MuxSelLine,
+                                TCA6416_MODE_OUTPUT);
+                }
+                if (status == SystemP_SUCCESS)
+                {
+                    status =  TCA6416_setOutput(&gTCA6416_Config, rgmii2MuxSelLine, TCA6416_OUT_STATE_LOW);
+                }
+
+            }
+            else if ((pEepromRdPtr[0] == 'E') && (pEepromRdPtr[1] == '2')) /* Checking PCB revision E2 */
+            {
+                DebugP_logInfo("AM263Px CC E2 Board found\r\n");
+                const uint32_t mdioMuxSelLine = 8*2 + 2; // PORT 2, PIN 2
+                const uint32_t rgmii1MuxSelLine = 8*0 + 2; // PORT 0, PIN 2
+                const uint32_t rgmii2MuxSelLine = 8*0 + 3; // PORT 0, PIN 3
+                static TCA6424_Config  gTCA6424_Config;
+
+                TCA6424_Params      TCA6424Params;
+                TCA6424_Params_init(&TCA6424Params);
+                status = TCA6424_open(&gTCA6424_Config, &TCA6424Params);
+
+                if (status == SystemP_SUCCESS)
+                {
+                    /* Configure as output  */
+                    status = TCA6424_config(&gTCA6424_Config,
+                                mdioMuxSelLine,
+                                TCA6424_MODE_OUTPUT);
+                }
+                if (status == SystemP_SUCCESS)
+                {
+                    status =  TCA6424_setOutput(&gTCA6424_Config, mdioMuxSelLine, TCA6424_OUT_STATE_HIGH);
+                }
+
+                if (status == SystemP_SUCCESS)
+                {
+                    /* Configure as output  */
+                    status = TCA6424_config(&gTCA6424_Config,
+                                rgmii1MuxSelLine,
+                                TCA6424_MODE_OUTPUT);
+                }
+                if (status == SystemP_SUCCESS)
+                {
+                    status =  TCA6424_setOutput(&gTCA6424_Config, rgmii1MuxSelLine, TCA6424_OUT_STATE_LOW);
+                }
+
+                if (status == SystemP_SUCCESS)
+                {
+                    /* Configure as output  */
+                    status = TCA6424_config(&gTCA6424_Config,
+                                rgmii2MuxSelLine,
+                                TCA6424_MODE_OUTPUT);
+                }
+                if (status == SystemP_SUCCESS)
+                {
+                    status =  TCA6424_setOutput(&gTCA6424_Config, rgmii2MuxSelLine, TCA6424_OUT_STATE_LOW);
+                }
+            }
+            else
+            {
+                DebugP_logInfo("AM263Px CC Unable to get version\r\n");
+                status = SystemP_FAILURE;
+            }
+    }
+    else
+    {
+        DebugP_logInfo("AM263Px CC EEPROM NOT FOUND or CURRUPTED\r\n");
+        status = SystemP_FAILURE;
+    }
+
 }
 %}
 

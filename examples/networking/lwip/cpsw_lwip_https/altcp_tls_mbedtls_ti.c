@@ -92,8 +92,20 @@
 #define ALTCP_MBEDTLS_ENTROPY_LEN   0
 #endif
 #ifndef ALTCP_MBEDTLS_RNG_FN
-#define ALTCP_MBEDTLS_RNG_FN   mbedtls_entropy_func
-#endif
+/** ATTENTION: It is *really* important to *NOT* use this dummy RNG in production code!!!! */
+static int
+dummy_rng(void *ctx, unsigned char *buffer, size_t len)
+{
+static size_t ctr;
+size_t i;
+LWIP_UNUSED_ARG(ctx);
+for (i = 0; i < len; i++) {
+buffer[i] = (unsigned char)++ctr;
+}
+return 0;
+}
+#define ALTCP_MBEDTLS_RNG_FN dummy_rng
+#endif /* ALTCP_MBEDTLS_RNG_FN */
 
 /* Variable prototype, the actual declaration is at the end of this file
    since it contains pointers to static functions declared here */
@@ -381,7 +393,7 @@ altcp_mbedtls_handle_rx_appldata(struct altcp_pcb *conn, altcp_mbedtls_state_t *
   }
   do {
     /* allocate a full-sized unchained PBUF_POOL: this is for RX! */
-    struct pbuf *buf = pbuf_alloc(PBUF_RAW, PBUF_POOL_BUFSIZE, PBUF_POOL);
+    struct pbuf *buf = pbuf_alloc(PBUF_RAW, PBUF_POOL_BUFSIZE, PBUF_RAM);
     if (buf == NULL) {
       /* We're short on pbufs, try again later from 'poll' or 'recv' callbacks.
          @todo: close on excessive allocation failures or leave this up to upper conn? */
