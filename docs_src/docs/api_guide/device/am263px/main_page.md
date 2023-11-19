@@ -12,8 +12,8 @@ To get started, see \ref GETTING_STARTED
 
 Given below is a block diagram of the SW modules in this SDK,
 
-\imageStyle{block_diagram_am263x.png,width:70%}
-\image html block_diagram_am263x.png "Software Block Diagram"
+\imageStyle{block_diagram_am263px.png,width:70%}
+\image html block_diagram_am263px.png "Software Block Diagram"
 
 The main software components in the block diagram are described below
 
@@ -186,11 +186,11 @@ In Linux, the tools are installed by default in ${HOME}/ti.
     <th>Description
 </tr>
 <tr>
-    <td>C:/ti/ccs@VAR_CCS_FOLDER_VERSION_AM263X
+    <td>C:/ti/ccs@VAR_CCS_FOLDER_VERSION
     <td>Code Composer Studio</td>
 </tr>
 <tr>
-    <td>C:/ti/sysconfig_@VAR_SYSCFG_VERSION_AM263X
+    <td>C:/ti/sysconfig_@VAR_SYSCFG_VERSION
     <td>SysConfig. **NOTE**, SysConfig is also installed as part of CCS at ${CCS_INSTALL_PATH}/ccs/utils/sysconfig_x.x.x</td>
 </tr>
 <tr>

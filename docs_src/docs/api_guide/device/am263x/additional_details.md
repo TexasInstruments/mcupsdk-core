@@ -298,5 +298,5 @@ The `sbl_null` is a secondary bootloader which doesn't load any application bina
 
 - Now you can run the example built (see \ref CCS_LAUNCH_PAGE)
 
-- Connect to any of the Cortex_R5_0/Cortex_R5_1/C66xx_DSP cores, load programs and run (see \ref CCS_LOAD_RUN)
+- Connect to any of the Cortex_R5_0/Cortex_R5_1 cores, load programs and run (see \ref CCS_LOAD_RUN)
 
