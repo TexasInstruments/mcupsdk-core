@@ -182,20 +182,27 @@ int appMain(void *args)
     ClockP_sleep(1);
 
     /* HTTPS FUNCTION CALLS */
-    struct altcp_tls_config *conf;
-    conf = altcp_tls_create_config_server_privkey_cert(PrivateKey, PrivateKey_Size,
-        NULL, 0, Certificate, Certificate_Size);
-    if(conf==NULL)
-    {
-        DebugP_log("Failed to create TLS config");
-    }
     sys_lock_tcpip_core();
-    httpd_inits(conf);
+    struct altcp_tls_config *pConf = altcp_tls_create_config_server_privkey_cert(
+                        PrivateKey,
+                        PrivateKey_Size,
+                        NULL,
+                        0,
+                        Certificate,
+                        Certificate_Size);
+    if (pConf == NULL)
+    {
+        DebugP_log("ERROR: Failed to create TLS config");
+    }
+    else
+    {
+        httpd_inits(pConf);
+    }
+
     sys_unlock_tcpip_core();
     while (1)
     {
-        // ClockP_usleep(1000);
-        sys_msleep(1);
+        ClockP_usleep(1000);;
         App_printCpuLoad();
     }
     App_shutdownNetworkStack();

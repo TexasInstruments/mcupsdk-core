@@ -2,7 +2,7 @@
 # Auto generated makefile
 #
 
-export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../..)
+export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
 include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 
@@ -24,32 +24,27 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=enet_l2_multi_channel.$(PROFILE).out
+OUTNAME:=enet_cpsw_rawhttpserver.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=enet_l2_multi_channel.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=enet_l2_multi_channel.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=enet_l2_multi_channel.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=enet_l2_multi_channel.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=enet_l2_multi_channel.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=enet_l2_multi_channel.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=enet_l2_multi_channel.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=enet_l2_multi_channel.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=enet_cpsw_rawhttpserver.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=enet_cpsw_rawhttpserver.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=enet_cpsw_rawhttpserver.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=enet_cpsw_rawhttpserver.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=enet_cpsw_rawhttpserver.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=enet_cpsw_rawhttpserver.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=enet_cpsw_rawhttpserver.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=enet_cpsw_rawhttpserver.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
 endif
 
 FILES_common := \
-	multi_channel_main.c \
+	app_cpswconfighandler.c \
+	app_main.c \
 	main.c \
-	multi_channel_cfg.c \
-	multi_channel_dataflow.c \
-	enet_custom_board_config.c \
-	timeSync_ptp.c \
-	timeSync_ptp_init_priv.c \
-	timeSync_ptp_osal_priv.c \
-	timeSync_tools.c \
+	app_httpsever.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
 	ti_board_config.c \
@@ -64,28 +59,28 @@ FILES_common := \
 
 FILES_PATH_common = \
 	.. \
-	../../../V1 \
-	../../../ptp_stack \
+	../../.. \
 	generated \
 
 INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
-	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
-	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
-	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/phy \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263px \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4 \
-	-I${MCU_PLUS_SDK_PATH}/examples/networking/enet_layer2_multi_channel/am263px \
-	-I${MCU_PLUS_SDK_PATH}/examples/networking/enet_layer2_multi_channel/ptp_stack \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/nortos/include \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px \
 	-Igenerated \
 
 DEFINES_common := \
@@ -102,11 +97,6 @@ CFLAGS_common := \
 	-Wno-gnu-variable-sized-type-not-at-end \
 	-Wno-unused-function \
 
-CFLAGS_release := \
-	-Os \
-	-Oz \
-	-flto \
-
 CFLAGS_cpp_common := \
 	-Wno-c99-designator \
 	-Wno-extern-c-compat \
@@ -122,22 +112,29 @@ CFLAGS_cpp_common := \
 CFLAGS_debug := \
 	-D_DEBUG_=1 \
 
+CFLAGS_release := \
+	-Os \
+
 LNK_FILES_common = \
 	generated/linker.cmd \
 
 LIBS_PATH_common = \
 	-Wl,-igenerated \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/networking/enet/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/networking/lwip/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
-	-lfreertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lnortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lenet-cpsw.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	-llwipif-cpsw-nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	-llwip-nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lboard.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	-llwip-contrib-nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -146,31 +143,26 @@ LFLAGS_common = \
 	-Wl,--ram_model \
 	-Wl,--reread_libs \
 	-Wl,--zero_init=on \
-	-Wl,--use_memset=fast \
-	-Wl,--use_memcpy=fast \
 
-LNKOPTFLAGS_release = \
-	       -mcpu=cortex-r5 \
-	       -mfloat-abi=hard \
-	       -mfpu=vfpv3-d16 \
-	       -mthumb \
-	       -Oz \
-	       -flto \
 
 LIBS_NAME = \
-	freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	enet-cpsw.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	lwipif-cpsw-nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	lwip-nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	board.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	lwip-contrib-nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
 LIBS_PATH_NAME = \
 	generated \
-	${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \
+	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
 	${MCU_PLUS_SDK_PATH}/source/networking/enet/lib \
+	${MCU_PLUS_SDK_PATH}/source/networking/lwip/lib \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))
@@ -200,11 +192,11 @@ vpath %.lib $(LIBS_PATH_NAME)
 vpath %.a $(LIBS_PATH_NAME)
 
 $(OBJDIR)/%.obj %.obj: %.c
-	@echo  Compiling: am263px:r5fss0-1:freertos:ti-arm-clang $(OUTNAME): $<
+	@echo  Compiling: am263px:r5fss0-0:nortos:ti-arm-clang $(OUTNAME): $<
 	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
 
 $(OBJDIR)/%.obj %.obj: %.S
-	@echo  Compiling: am263px:r5fss0-1:freertos:ti-arm-clang $(LIBNAME): $<
+	@echo  Compiling: am263px:r5fss0-0:nortos:ti-arm-clang $(LIBNAME): $<
 	$(CC) -c $(CFLAGS) -o $(OBJDIR)/$@ $<
 
 all: $(TARGETS)
@@ -230,13 +222,13 @@ endif
 
 $(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
-	@echo  Linking: am263px:r5fss0-1:freertos:ti-arm-clang $@ ...
+	@echo  Linking: am263px:r5fss0-0:nortos:ti-arm-clang $@ ...
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)
-	@echo  Linking: am263px:r5fss0-1:freertos:ti-arm-clang $@ Done !!!
+	@echo  Linking: am263px:r5fss0-0:nortos:ti-arm-clang $@ Done !!!
 	@echo  .
 
 clean:
-	@echo  Cleaning: am263px:r5fss0-1:freertos:ti-arm-clang $(OUTNAME) ...
+	@echo  Cleaning: am263px:r5fss0-0:nortos:ti-arm-clang $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
 	$(RM) $(OUTNAME)
 	$(RM) $(BOOTIMAGE_NAME)
@@ -247,7 +239,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263px:r5fss0-1:freertos:ti-arm-clang enet_l2_multi_channel ...
+	@echo  Scrubing: am263px:r5fss0-0:nortos:ti-arm-clang enet_cpsw_rawhttpserver ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -279,10 +271,10 @@ $(SYSCFG_GEN_FILES): syscfg
 
 syscfg: ../example.syscfg
 	@echo Generating SysConfig files ...
-	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-1 --part AM263P1 --package ZCZ_S --output generated/ ../example.syscfg
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM263P4 --package ZCZ_C --output generated/ ../example.syscfg
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM263Px --context r5fss0-1 --part AM263P1 --package ZCZ_S --output generated/  ../example.syscfg
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM263Px --context r5fss0-0 --part AM263P4 --package ZCZ_C --output generated/  ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)
@@ -316,13 +308,13 @@ else
 endif
 
 MULTI_CORE_IMAGE_PARAMS = \
-	$(BOOTIMAGE_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+	$(BOOTIMAGE_RPRC_NAME)@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
 
 MULTI_CORE_IMAGE_PARAMS_XIP = \
-	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
 
 $(BOOTIMAGE_NAME): $(OUTNAME)
-	@echo  Boot image: am263px:r5fss0-1:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
+	@echo  Boot image: am263px:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
 ifneq ($(OS),Windows_NT)
 	$(CHMOD) a+x $(XIPGEN_CMD)
 endif
@@ -334,7 +326,7 @@ endif
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
-	@echo  Boot image: am263px:r5fss0-1:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  Boot image: am263px:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
 
 $(BOOTIMAGE_NAME_HS): $(BOOTIMAGE_NAME)
@@ -348,17 +340,17 @@ else
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --output $(BOOTIMAGE_NAME_HS)
 	$(RM) $(BOOTIMAGE_NAME)-enc
 endif
-	@echo  Boot image: am263px:r5fss0-1:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
+	@echo  Boot image: am263px:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
 	@echo  .
 endif
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for enet_l2_multi_channel.$(PROFILE) ...
+	@echo Creating Coverage Report for enet_cpsw_rawhttpserver.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o enet_l2_multi_channel.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=enet_l2_multi_channel.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=enet_l2_multi_channel.$(PROFILE).profdata > coverage/enet_l2_multi_channel.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/enet_l2_multi_channel.$(PROFILE).profdata.json --output-json=coverage/enet_l2_multi_channel.$(PROFILE).analysis.json --output=../enet_l2_multi_channel.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o enet_cpsw_rawhttpserver.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=enet_cpsw_rawhttpserver.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=enet_cpsw_rawhttpserver.$(PROFILE).profdata > coverage/enet_cpsw_rawhttpserver.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/enet_cpsw_rawhttpserver.$(PROFILE).profdata.json --output-json=coverage/enet_cpsw_rawhttpserver.$(PROFILE).analysis.json --output=../enet_cpsw_rawhttpserver.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

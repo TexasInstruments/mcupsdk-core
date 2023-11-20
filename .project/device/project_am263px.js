@@ -172,6 +172,7 @@ const example_file_list = [
     "examples/networking/enet_layer2_cpsw/.project/project.js",
     "examples/networking/enet_layer2_cpsw_switch/.project/project.js",
     "examples/networking/lwip/cpsw_lwip_https/.project/project.js",
+    "examples/networking/lwip/enet_cpsw_rawhttpserver/.project/project.js",
     "examples/networking/lwip/enet_cpsw_socket/.project/project.js",
     "examples/networking/lwip/enet_cpsw_tcpclient/.project/project.js",
     "examples/networking/lwip/enet_cpsw_tcpserver/.project/project.js",
