@@ -159,6 +159,9 @@ ECC Bus Safety    | R5F             | NA                |  NORTOS | AHB, AXI, TP
 CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode,Error Forcing Mode and Self Test Error Forcing Mode.                      | -
 R5F STC(LBIST), Static Register Read| R5F               | NA                |  NORTOS | STC of R5F, R5F CPU Static Register Read                                 |-
 
+**Note**: This is Engineering Release for SDL. \n
+**Note**: SDL is validate only on ControlCard.
+
 ## Fixed Issues
 
 <table>
