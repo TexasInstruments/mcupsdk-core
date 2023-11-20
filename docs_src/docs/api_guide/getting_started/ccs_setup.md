@@ -81,7 +81,7 @@
 
 \cond SOC_AM263PX
 ## Update CSP {#CSP_UPDATE}
-\note AM263Px now supports one-click XIP .out application debugging with CSP 1.2.6. Refer to the guide below to update CSP and check for its availability.
+\note AM263Px now supports one-click XIP .out application debugging with CSP 1.2.7. Refer to the guide below to update CSP and check for its availability.
 
 - Goto "Help -> Check for updates"
 
@@ -115,7 +115,7 @@
     \imageStyle{ccs_update_inst_details.png,width:20%}
     \image html ccs_update_inst_details.png "About CCS"
 
-- Scroll down to "Sitara device support". The CSP version should be 1.2.6 or above.
+- Scroll down to "Sitara device support". The CSP version should be 1.2.7 or above.
 
     \imageStyle{ccs_update_csp_version.png,width:40%}
     \image html ccs_update_csp_version.png "CSP version"

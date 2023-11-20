@@ -323,7 +323,7 @@ However the steps to convert the application `.out` into a bootable image are di
 
 \inlineVideo{sbl_boot.mp4,SBL BOOT,width=50%}
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM263PX
 - To understand the steps to use XIP, see \subpage BOOTFLOW_XIP
 \endcond
 

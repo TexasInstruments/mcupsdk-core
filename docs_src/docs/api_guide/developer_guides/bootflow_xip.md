@@ -16,9 +16,16 @@
 ## Additional References
 
 See also these additional pages for more details and examples about XIP,
-
+\cond SOC_AM64X || SOC_AM243X
 - To understand and run a example in XIP mode see
   - \ref EXAMPLES_KERNEL_DPL_XIP_BENCHMARK
+\endcond
+
+\cond SOC_AM263PX
+- To understand and run a example in XIP mode see
+  - \ref BENCHMARK_SMART_PLACEMENT_COMBOS
+\endcond
+
 - To understand overall boot flow see, \ref BOOTFLOW_GUIDE
 
 ## Pre-requisites
@@ -45,13 +52,31 @@ To enable XIP for a application, below changes need to be done,
 
 - Update the linker command file to re-direct required `.text` and `.rodata` sections to `FLASH` region as shown below
     \code
+
     SECTIONS {
+        ...
+        GROUP {
+            .text.hwi: palign(8)
+            .text.cache: palign(8)
+            .text.mpu: palign(8)
+            .text.boot: palign(8)
+            .text.main: palign(8) /*  this helps ccs to put breakpoint at main */
+            .text:abort: palign(8) /* this helps in loading symbols when using XIP mode */
+        } > MSRAM
+
+        cio > MSRAM
+        {
+            -llibsysbm.a<trgmsg.c.obj> (.text)
+        }
         ...
         GROUP {
             .text:   {} palign(8)   /* This is where code resides */
             .rodata: {} palign(8)   /* This is where const's go */
         } > FLASH
         ...
+        GROUP {
+            .rodata.cfg: {} palign(8)   /* MPU configurations */
+        } > MSRAM
     }
 
     MEMORY
@@ -61,6 +86,8 @@ To enable XIP for a application, below changes need to be done,
         ...
     }
     \endcode
+
+- When printing logs, CCS utilizes CIO breakpoints. For loading and running XIP .out from CCS, it's essential to keep -llibsysbm.a<trgmsg.c.obj> (.text) inside MSRAM. Additionally, ensure that the main symbol is also kept in the MSRAM because CCS uses it to halt the core at the main when loading the .out.
 
 - The same process can be repeated for multiple CPUs if needed, only make sure the `FLASH` defined in `MEMORY { ... }` for the
   linker command files of each CPU are non-overlapping.

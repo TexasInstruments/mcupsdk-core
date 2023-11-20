@@ -10,6 +10,7 @@ SDK features and tools.
 - \subpage IPC_GUIDE
 - \subpage MEMORY_MAP
 - \subpage BOOTFLOW_GUIDE
+- \subpage BOOTFLOW_XIP
 - \subpage CCS_PROJECTS_PAGE
 - \subpage MAKEFILE_BUILD_PAGE
 - \subpage ROV_INTRO_PAGE
@@ -71,6 +72,7 @@ SDK features and tools.
 \endcond
 
 \cond SOC_AM263PX
+- \subpage BOOTFLOW_XIP
 - \subpage OPTIFLASH_CONFIGURE
 \endcond
 
