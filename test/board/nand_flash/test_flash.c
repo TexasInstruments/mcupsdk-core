@@ -163,7 +163,7 @@ void test_main(void *args)
 
     nand_flash_chip_select(gpioBaseAddr,pinNum);
 
-    RUN_TEST(test_flash_readwrite_fullpage, 0, NULL);
+    RUN_TEST(test_flash_readwrite_fullpage, 12256, NULL);
 
     /* Close OSPI and other drivers */
     Drivers_close();
@@ -174,7 +174,7 @@ void test_main(void *args)
 
     nand_flash_chip_select(gpioBaseAddr,pinNum);
 
-    RUN_TEST(test_flash_readwrite_halfpage, 1, NULL);
+    RUN_TEST(test_flash_readwrite_halfpage, 12257, NULL);
 
     /* Close OSPI and other drivers */
     Drivers_close();
@@ -185,7 +185,7 @@ void test_main(void *args)
 
     nand_flash_chip_select(gpioBaseAddr,pinNum);
 
-    RUN_TEST(test_flash_readwrite_block, 2, NULL);
+    RUN_TEST(test_flash_readwrite_block, 12258, NULL);
 
     /* Close OSPI and other drivers */
     Drivers_close();
@@ -196,7 +196,7 @@ void test_main(void *args)
 
     nand_flash_chip_select(gpioBaseAddr,pinNum);
 
-    RUN_TEST(test_flash_readwrite_1MB, 3, NULL);
+    RUN_TEST(test_flash_readwrite_1MB, 12259, NULL);
 
     /* Close OSPI and other drivers */
     Drivers_close();
