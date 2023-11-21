@@ -47,6 +47,13 @@ Get Core Name String
 Get CPU Clock Frequency
 \snippet Soc_am64x_sample.c get_selfcpuclk
 
+Set CPU Clock Frequency
+\snippet Soc_am64x_sample.c set_moduleclk
+
+Set CPU Clock Frequency with a specific parent clock
+\snippet Soc_am64x_sample.c set_moduleclkwithparent
+
+
 ## API
 
 \ref DRV_SOC_MODULE
