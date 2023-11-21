@@ -39,7 +39,7 @@
 
 #define MAIN_TASK_PRI  (2)
 
-#define MAIN_TASK_SIZE (8192U/sizeof(configSTACK_DEPTH_TYPE))
+#define MAIN_TASK_SIZE (16384U/sizeof(configSTACK_DEPTH_TYPE))
 StackType_t gMainTaskStack[MAIN_TASK_SIZE] __attribute__((aligned(32)));
 
 StaticTask_t gMainTaskObj;

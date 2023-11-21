@@ -295,6 +295,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_cpsw_est_am263x-cc_r5fss0-0_fr
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_cpsw_est_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_txsg_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_txsg_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lldp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += lldp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sent_encoder_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sent_decoder_r5f_example_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += real_time_debug_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
@@ -336,8 +340,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_mcrc_full_cpu_example_am263x-cc
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_mcrc_full_cpu_example_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_mcrc_semi_cpu_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_mcrc_semi_cpu_example_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
 # Various System Example Projectspec Build Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_interrupt_transfer_am263x-cc_system_freertos_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_interrupt_transfer_am263x-lp_system_freertos_nortos_build
@@ -1245,6 +1247,18 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  enet_txsg_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/networking/enet_tx_scatter_gather/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
+ lldp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/tsn/lldp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ lldp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/tsn/lldp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
  sent_encoder_pru_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt_build:
 	$(MAKE) -C examples/pru_io/sent/encoder/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec all
 
@@ -1376,12 +1390,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  sdl_mcrc_semi_cpu_example_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_semi_cpu/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
-
- gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  empty_pru_io_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/pru_io/empty/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
@@ -1741,6 +1749,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_cpsw_est_am263x-cc_r5fss0-0_fr
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_cpsw_est_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_txsg_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_txsg_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lldp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += lldp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sent_encoder_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sent_decoder_r5f_example_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += real_time_debug_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1782,8 +1794,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_mcrc_full_cpu_example_am263x-cc
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_mcrc_full_cpu_example_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_mcrc_semi_cpu_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_mcrc_semi_cpu_example_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 # Various System Example Projectspec Clean Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_interrupt_transfer_am263x-cc_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_interrupt_transfer_am263x-lp_system_freertos_nortos_clean
@@ -2691,6 +2701,18 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  enet_txsg_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/networking/enet_tx_scatter_gather/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
+ lldp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/tsn/lldp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ lldp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/tsn/lldp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
  sent_encoder_pru_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt_clean:
 	$(MAKE) -C examples/pru_io/sent/encoder/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec clean
 
@@ -2822,12 +2844,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  sdl_mcrc_semi_cpu_example_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_semi_cpu/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
-
- gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  empty_pru_io_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/pru_io/empty/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
@@ -3187,6 +3203,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_cpsw_est_am263x-cc_r5fss0-0_f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_cpsw_est_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_txsg_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_txsg_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lldp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += lldp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sent_encoder_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sent_decoder_r5f_example_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += real_time_debug_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
@@ -3228,8 +3248,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_mcrc_full_cpu_example_am263x-c
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_mcrc_full_cpu_example_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_mcrc_semi_cpu_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_mcrc_semi_cpu_example_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
 # Various System Example Projectspec Export Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_interrupt_transfer_am263x-cc_system_freertos_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_interrupt_transfer_am263x-lp_system_freertos_nortos_export
@@ -4137,6 +4155,18 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  enet_txsg_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/networking/enet_tx_scatter_gather/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
+ lldp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/tsn/lldp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ lldp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/tsn/lldp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
  sent_encoder_pru_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt_export:
 	$(MAKE) -C examples/pru_io/sent/encoder/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec export
 
@@ -4268,12 +4298,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  sdl_mcrc_semi_cpu_example_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_semi_cpu/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
-
- gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  empty_pru_io_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/pru_io/empty/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
@@ -4649,6 +4673,10 @@ help:
 	@echo  $(MAKE) -s -C examples/networking/enet_cpsw_est/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/enet_tx_scatter_gather/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/enet_tx_scatter_gather/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/tsn/lldp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/tsn/lldp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/tsn/gptp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/networking/tsn/gptp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/encoder/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/encoder/example/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/decoder/example/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -4693,8 +4721,6 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_full_cpu/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_semi_cpu/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_semi_cpu/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/tsn/gptp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/networking/tsn/gptp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am263x-lp/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]

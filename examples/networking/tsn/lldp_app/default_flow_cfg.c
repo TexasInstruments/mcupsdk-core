@@ -30,28 +30,33 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __TSNINIT_H__
-#define __TSNINIT_H__
+/* ========================================================================== */
+/*                              Include Files                                 */
+/* ========================================================================== */
+#include <tsn_combase/combase.h>
+#include <nrt_flow/dataflow.h>
 
-#if defined(SAFERTOS)
-#define TSN_TSK_STACK_SIZE                         (16U * 1024U)
-#define TSN_TSK_STACK_ALIGN                        TSN_TSK_STACK_SIZE
-#else
-/* 16k is enough for debug mode */
-#define TSN_TSK_STACK_SIZE                         (16U * 1024U)
-#define TSN_TSK_STACK_ALIGN                        (32U)
-#endif
+int EnetApp_lldCfgUpdateCb(cb_socket_lldcfg_update_t *update_cfg)
+{
+    int res = 0;
 
-typedef struct AppTsnCfg {
-	Logger_onConsoleOut consoleOutCb; //<! A callback function for log output on console.
-	char *netdevs[MAX_NUMBER_ENET_DEVS+1]; //!< A list of network interfaces each is a string, terminated by NULL;
-} AppTsnCfg_t;
-
-int EnetApp_initTsnByCfg(AppTsnCfg_t *cfg);
-
-void EnetApp_deInitTsn(void);
-
-int EnetApp_startTsn(void);
-void EnetApp_stopTsn(void);
-
-#endif
+    if (update_cfg->proto == ETH_P_LLDP)
+    {
+        update_cfg->dmaTxChId = ENET_DMA_TX_CH_LLDP;
+        update_cfg->dmaRxChId = ENET_DMA_RX_CH_LLDP;
+        update_cfg->nTxPkts = ENET_DMA_TX_CH_LLDP_NUM_PKTS;
+        update_cfg->nRxPkts = ENET_DMA_RX_CH_LLDP_NUM_PKTS;
+        update_cfg->pktSize = ENET_MEM_LARGE_POOL_PKT_SIZE;
+    }
+    else if (update_cfg->proto == ETH_P_NETLINK)
+    {
+        update_cfg->unusedDmaRx = true;
+        update_cfg->unusedDmaTx = true;
+    }
+    else
+    {
+        EnetAppUtils_print("%s:unsupported other than PTP\r\n", __func__);
+        res = -1;
+    }
+    return res;
+}

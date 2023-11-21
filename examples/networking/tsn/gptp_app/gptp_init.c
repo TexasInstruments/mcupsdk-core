@@ -55,7 +55,7 @@
 /* ========================================================================== */
 #define GPTP_TASK_PRIORITY      (2)
 #define GPTP_TASK_NAME          "gptp2d_task"
-#define MAX_DOMAINS             (2)
+#define MAX_DOMAINS             (1)
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */

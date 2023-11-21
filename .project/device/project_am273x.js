@@ -1,7 +1,6 @@
 const common = require("../common.js");
 
 const component_file_list = [
-    "source/networking/tsn/.project/project_tsn_lldp.js",
     "source/board/.project/project.js",
     "source/drivers/.project/project.js",
     "source/kernel/freertos/.project/project.js",
@@ -23,6 +22,7 @@ const component_file_list = [
     "source/networking/tsn/.project/project_tsn_combase.js",
     "source/networking/tsn/.project/project_tsn_gptp.js",
     "source/networking/tsn/.project/project_tsn_uniconf.js",
+    "source/networking/tsn/.project/project_tsn_lldp.js",
  ];
 
 const device_defines = {
@@ -32,7 +32,6 @@ const device_defines = {
 };
 
 const example_file_list = [
-    "examples/networking/tsn/lldp_app/.project/project.js",
     "examples/benchmarks/coremark_benchmark/.project/project.js",
     "examples/drivers/boot/sbl_can_uniflash/.project/project.js",
     "examples/drivers/boot/sbl_jtag_uniflash/.project/project.js",
@@ -94,6 +93,7 @@ const example_file_list = [
     "examples/mathlib/benchmark/.project/project.js",
     "examples/networking/enet_loopback/enet_cpsw_loopback/.project/project.js",
     "examples/networking/tsn/gptp_app/.project/project.js",
+    "examples/networking/tsn/lldp_app/.project/project.js",
      "examples/networking/lwip/cpsw_lwip_https/.project/project.js",
     "examples/networking/lwip/cpsw_lwip_mqtt/.project/project.js",
     "examples/networking/lwip/enet_lwip_cpsw/.project/project.js",

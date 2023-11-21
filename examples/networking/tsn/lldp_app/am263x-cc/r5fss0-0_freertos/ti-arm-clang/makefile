@@ -42,9 +42,9 @@ endif
 
 FILES_common := \
 	lldp_init.c \
+	default_flow_cfg.c \
 	tsninit.c \
 	debug_log.c \
-	enet_custom_board_config.c \
 	tsnapp_main.c \
 	default_flow.c \
 	main.c \
@@ -63,7 +63,8 @@ FILES_common := \
 FILES_PATH_common = \
 	.. \
 	../../.. \
-	../../../nonptp_flow \
+	../../../.. \
+	../../../../nrt_flow \
 	generated \
 
 INCLUDES_common := \
@@ -83,7 +84,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263x \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4 \
-	-I${MCU_PLUS_SDK_PATH}/examples/networking/tsn/lldp_app \
+	-I${MCU_PLUS_SDK_PATH}/examples/networking/tsn \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_lldp \
@@ -133,7 +134,7 @@ CFLAGS_debug := \
 	-D_DEBUG_=1 \
 
 LNK_FILES_common = \
-	./linker.cmd \
+	generated/./linker.cmd \
 
 LIBS_PATH_common = \
 	-Wl,-igenerated \
@@ -377,7 +378,7 @@ coverage:
 	@echo Creating Coverage Report for lldp_app.$(PROFILE) ...
 	$(MKDIR) coverage
 	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o lldp_app.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=lldp_app.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=lldp_app.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
 	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=lldp_app.$(PROFILE).profdata > coverage/lldp_app.$(PROFILE).profdata.json
 	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/lldp_app.$(PROFILE).profdata.json --output-json=coverage/lldp_app.$(PROFILE).analysis.json --output=../lldp_app.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!

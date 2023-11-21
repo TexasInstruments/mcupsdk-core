@@ -29,17 +29,50 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef _DATAFLOW_H_
-#define _DATAFLOW_H_
 
 /* ========================================================================== */
 /*                              Include Files                                 */
 /* ========================================================================== */
-#include "enetapp.h"
-#include <tsn_combase/tilld/cb_lld_ethernet.h>
+#include <tsn_combase/combase.h>
+#include <nrt_flow/dataflow.h>
 
-void EnetApp_destroyRxTask();
-void EnetApp_createRxTask();
-int EnetApp_lldCfgUpdateCb(cb_socket_lldcfg_update_t *update_cfg);
 
-#endif //_DATAFLOW_H_
+int EnetApp_lldCfgUpdateCb(cb_socket_lldcfg_update_t *update_cfg)
+{
+    int res = 0;
+    if (update_cfg->proto == ETH_P_1588)
+    {
+        update_cfg->dmaTxChId = ENET_DMA_TX_CH_PTP;
+        update_cfg->dmaRxChId = ENET_DMA_RX_CH0;
+        update_cfg->nTxPkts = ENET_DMA_TX_CH_PTP_NUM_PKTS;
+        update_cfg->nRxPkts = ENET_DMA_RX_CH0_NUM_PKTS;
+        update_cfg->pktSize = ENET_MEM_LARGE_POOL_PKT_SIZE;
+        /* We make the PTP RX DMA channel shared between multiples app,
+         * gptp2d apps is owner of this channel.
+         * The rxDefaultDataCb is called inside gptp task when the packet
+         * does not match any filters on this RX DMA channel.
+         */
+        update_cfg->dmaRxShared = true;
+        update_cfg->dmaRxOwner = true;
+        update_cfg->rxDefaultDataCb = rxDefaultDataCb;
+        update_cfg->rxDefaultCbArg = NULL;
+    }
+    else if (update_cfg->proto == ETH_P_IPV4)
+    {
+        /* share the RX Dma channel with PTP */
+        update_cfg->dmaRxChId = ENET_DMA_RX_CH0;
+        update_cfg->dmaRxOwner = false; /* gptp is RX dma owner */
+        update_cfg->unusedDmaTx = true;
+    }
+    else if (update_cfg->proto == ETH_P_NETLINK)
+    {
+        update_cfg->unusedDmaRx = true;
+        update_cfg->unusedDmaTx = true;
+    }
+    else
+    {
+        EnetAppUtils_print("%s:unsupported other than PTP\r\n", __func__);
+        res = -1;
+    }
+    return res;
+}

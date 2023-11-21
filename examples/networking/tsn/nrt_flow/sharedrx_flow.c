@@ -34,12 +34,7 @@
 /*                              Include Files                                 */
 /* ========================================================================== */
 #include <tsn_combase/combase.h>
-#include "dataflow.h"
-
-/* ========================================================================== */
-/*                           Macros & Typedefs                                */
-/* ========================================================================== */
-#define ETH_P_IPV4 (0x0800U)
+#include <nrt_flow/dataflow.h>
 
 /* ========================================================================== */
 /*                                Function Declarations                       */
@@ -61,60 +56,6 @@ void rxDefaultDataCb(void *data, int size, int port, void *cbArg)
     }
 }
 
-int EnetApp_lldCfgUpdateCb(cb_socket_lldcfg_update_t *update_cfg)
-{
-    int res = 0;
-    if (update_cfg->proto == ETH_P_1588)
-    {
-        update_cfg->dmaTxChId = ENET_DMA_TX_CH_PTP;
-        update_cfg->dmaRxChId = ENET_DMA_RX_CH_PTP;
-        update_cfg->nTxPkts = ENET_DMA_TX_CH_PTP_NUM_PKTS;
-        update_cfg->nRxPkts = ENET_DMA_RX_CH_PTP_NUM_PKTS;
-        update_cfg->pktSize = ENET_MEM_LARGE_POOL_PKT_SIZE;
-        /* We make the PTP RX DMA channel is shared betweens multiples app,
-         * gptp2d apps is owner of this channel.
-         * The rxDefaultDataCb is called inside gptp task when the packet
-         * does not match any filters on this RX DMA channel.
-         */
-        update_cfg->dmaRxShared = true;
-        update_cfg->dmaRxOwner = true;
-        update_cfg->rxDefaultDataCb = rxDefaultDataCb;
-        update_cfg->rxDefaultCbArg = NULL;
-    }
-    else if (update_cfg->proto == ETH_P_LLDP)
-    {
-        update_cfg->dmaTxChId = ENET_DMA_TX_CH_LLDP;
-        update_cfg->nTxPkts = ENET_DMA_TX_CH_LLDP_NUM_PKTS;
-        update_cfg->pktSize = ENET_MEM_LARGE_POOL_PKT_SIZE;
-
-        /* share the RX Dma channel with PTP */
-        update_cfg->dmaRxChId = ENET_DMA_RX_CH_PTP;
-        update_cfg->dmaRxOwner = false; /* gptp is RX dma owner */
-
-        // This CB is call while cb_raw_socket_open is called.
-        // Delay some time in here to ensure GPTP is opened DMA.
-        CB_USLEEP(1000000); //1s
-    }
-    else if (update_cfg->proto == ETH_P_NETLINK)
-    {
-        update_cfg->unusedDmaRx = true;
-        update_cfg->unusedDmaTx = true;
-    }
-    else if (update_cfg->proto == ETH_P_IPV4)
-    {
-        /* share the RX Dma channel with PTP */
-        update_cfg->dmaRxChId = ENET_DMA_RX_CH_PTP;
-        update_cfg->dmaRxOwner = false; /* gptp is RX dma owner */
-        update_cfg->unusedDmaTx = true;
-    }
-    else
-    {
-        EnetAppUtils_print("%s:unsupported other than PTP\r\n", __func__);
-        res = -1;
-    }
-    return res;
-}
-
 static void rxNotifyCb(void *cbArg)
 {
     SemaphoreP_post(cbArg);
@@ -130,8 +71,8 @@ static void EthIpv4RxTask(void *args)
     int res;
 
     /* The RX DMA channel is shared with gptp, we need to make sure the
-     * gptp is already done its DMA initialization before reusing that channel.
-     * Some delays is needed otherwise it will fail to create socket */
+     * gptp has already done its DMA initialization before re-using that channel.
+     * Some delay is needed otherwise it will fail to create socket */
     ClockP_usleep(3000000);
     EnetAppUtils_print("%s: RX task for IPv4 running\r\n", __func__);
 
@@ -185,7 +126,7 @@ void EnetApp_createRxTask()
     EnetApp_GetMacAddrOutArgs outArgs;
 
     /* get the source mac address */
-    EnetApp_getMacAddress(ENET_DMA_RX_CH_PTP, &outArgs);
+    EnetApp_getMacAddress(ENET_DMA_RX_CH0, &outArgs);
     if (outArgs.macAddressCnt > 0)
     {
         EnetUtils_copyMacAddr(gEnetAppCfg.macAddr, outArgs.macAddr[0]);

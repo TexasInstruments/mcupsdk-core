@@ -30,65 +30,33 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __COMMON_H__
-#define __COMMON_H__
-
 /* ========================================================================== */
-/*                           Macros & Typedefs                                */
+/*                              Include Files                                 */
 /* ========================================================================== */
+#include <tsn_combase/combase.h>
+#include <nrt_flow/dataflow.h>
 
-#define MAX_KEY_SIZE            (256)
 
-typedef enum {
-	ENETAPP_UNICONF_TASK_IDX,
-	ENETAPP_GPTP_TASK_IDX,
-	ENETAPP_LLDP_TASK_IDX,
-	ENETAPP_MAX_TASK_IDX
-} EnetApp_TsnTask_Idx_t;
-
-typedef struct EnetApp_ModuleCtx EnetApp_ModuleCtx_t;
-typedef int (*EnetApp_OnModuleDBInit)(EnetApp_ModuleCtx_t* mdctx,
-                                      yang_db_runtime_dataq_t *ydrd);
-typedef void* (*EnetApp_OnModuleStart)(void *arg);
-
-/* ========================================================================== */
-/*                         Structure Declarations                             */
-/* ========================================================================== */
-typedef struct
+int EnetApp_lldCfgUpdateCb(cb_socket_lldcfg_update_t *update_cfg)
 {
-    char *dbName; // Specify same DB for all modules.
-    bool initFlag;
-    ucman_data_t ucCtx;
-    char netdev[MAX_NUMBER_ENET_DEVS][CB_MAX_NETDEVNAME];
-    uint8_t netdevSize;
-    CB_SEM_T ucReadySem;
-} EnetApp_Ctx_t;
-
-struct EnetApp_ModuleCtx
-{
-    bool stopFlag;
-    int taskPriority;
-    CB_THREAD_T hTaskHandle;
-    const char *taskName;
-    uint8_t *stackBuffer;
-    uint32_t stackSize;
-    EnetApp_OnModuleDBInit onModuleDBInit;
-    EnetApp_OnModuleStart onModuleRunner;
-    EnetApp_Ctx_t *appCtx;
-    bool enable;
-};
-
-typedef struct
-{
-    char *name;
-    char *val;
-} EnetApp_DbNameVal_t;
-
-typedef struct
-{
-    char *name;
-    int item;
-    int val;
-} EnetApp_DbIntVal_t;
-
-#endif
+    int res = 0;
+    if (update_cfg->proto == ETH_P_1588)
+    {
+        update_cfg->dmaTxChId = ENET_DMA_TX_CH_PTP;
+        update_cfg->dmaRxChId = ENET_DMA_RX_CH_PTP;
+        update_cfg->nTxPkts = ENET_DMA_TX_CH_PTP_NUM_PKTS;
+        update_cfg->nRxPkts = ENET_DMA_RX_CH_PTP_NUM_PKTS;
+        update_cfg->pktSize = ENET_MEM_LARGE_POOL_PKT_SIZE;
+    }
+    else if (update_cfg->proto == ETH_P_NETLINK)
+    {
+        update_cfg->unusedDmaRx = true;
+        update_cfg->unusedDmaTx = true;
+    }
+    else
+    {
+        EnetAppUtils_print("%s:unsupported other than PTP\r\n", __func__);
+        res = -1;
+    }
+    return res;
+}

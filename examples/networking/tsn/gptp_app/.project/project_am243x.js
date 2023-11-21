@@ -5,9 +5,9 @@ let device = "am243x";
 const files = {
     common: [
         "gptp_init.c",
+        "default_flow_cfg.c",
         "tsninit.c",
         "debug_log.c",
-        "enet_custom_board_config.c",
         "tsnapp_main.c",
         "default_flow.c",
         "main.c",
@@ -21,7 +21,8 @@ const filedirs = {
     common: [
         "..",       /* core_os_combo base */
         "../../..", /* Example base */
-        "../../../nonptp_flow", /* Example base */
+        "../../../..", /* Example base */
+        "../../../../nrt_flow", /* Example base */
     ],
 };
 
@@ -52,7 +53,7 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4",
-        "${MCU_PLUS_SDK_PATH}/examples/networking/tsn/gptp_app",
+        "${MCU_PLUS_SDK_PATH}/examples/networking/tsn",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/tilld",

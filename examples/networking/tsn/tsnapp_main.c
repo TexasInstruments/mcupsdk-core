@@ -42,7 +42,7 @@
 
 #include <stdint.h>
 #include <tsn_combase/combase.h>
-#include "nonptp_flow/dataflow.h"
+#include "nrt_flow/dataflow.h"
 #include "debug_log.h"
 #include "tsninit.h"
 

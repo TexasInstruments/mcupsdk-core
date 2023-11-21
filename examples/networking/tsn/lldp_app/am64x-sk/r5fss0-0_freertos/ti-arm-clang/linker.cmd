@@ -48,28 +48,27 @@ SECTIONS
         .text.mpu: palign(8)
         .text.boot: palign(8)
         .text:abort: palign(8) /* this helps in loading symbols when using XIP mode */
-    } > MSS_L2
+    } > MSRAM
 
     /* This is rest of code. This can be placed in DDR if DDR is available and needed */
     GROUP {
         .text:   {} palign(8)   /* This is where code resides */
         .rodata: {} palign(8)   /* This is where const's go */
-    } > DSS_L3
+    } > MSRAM
 
     /* This is rest of initialized data. This can be placed in DDR if DDR is available and needed */
     GROUP {
         .data:   {} palign(8)   /* This is where initialized globals and static go */
-    } > MSS_L2
+    } > MSRAM
 
     /* This is rest of uninitialized data. This can be placed in DDR if DDR is available and needed */
     GROUP {
         .bss:    {} palign(8)   /* This is where uninitialized globals go */
         RUN_START(__BSS_START)
         RUN_END(__BSS_END)
-    } > SBL_RESERVED_L2_RAM | MSS_L2
-
-    .sysmem: {} palign(8)  > SBL_RESERVED_L2_RAM | MSS_L2 /* This is where the malloc heap goes */
-    .stack:  {} palign(8)  > SBL_RESERVED_L2_RAM | MSS_L2 /* This is where the main() stack goes */
+        .sysmem: {} palign(8)   /* This is where the malloc heap goes */
+        .stack:  {} palign(8)   /* This is where the main() stack goes */
+    } > MSRAM
 
     /* This is where the stacks for different R5F modes go */
     GROUP {
@@ -88,42 +87,64 @@ SECTIONS
         .undefinedstack: {. = . + __UNDEFINED_STACK_SIZE;} align(8)
         RUN_START(__UNDEFINED_STACK_START)
         RUN_END(__UNDEFINED_STACK_END)
-    } > SBL_RESERVED_L2_RAM | MSS_L2
+    } > MSRAM
 
-    /* Sections needed for C++ projects */
-    GROUP {
-        .ARM.exidx:  {} palign(8)   /* Needed for C++ exception handling */
-        .init_array: {} palign(8)   /* Contains function pointers called before main */
-        .fini_array: {} palign(8)   /* Contains function pointers called after main */
-    } > MSS_L2
-
-    /* any data buffer needed to be put in L3 can be assigned this section name */
-    .bss.dss_l3 {} > DSS_L3
-
-    /* For NDK packet memory*/
-    .bss:ENET_CPPI_DESC        (NOLOAD) {} ALIGN (128) > CPPI_DESC
-    .enet_dma_mem{
+    .enet_dma_mem {
+        *(*ENET_DMA_DESC_MEMPOOL)
+        *(*ENET_DMA_RING_MEMPOOL)
 #if (ENET_SYSCFG_PKT_POOL_ENABLE == 1)
         *(*ENET_DMA_PKT_MEMPOOL)
 #endif
-    } (NOLOAD) > DSS_L3
+    } (NOLOAD) > MSRAM
+
+    /* General purpose user shared memory, used in some examples */
+    /*.bss.user_shared_mem (NOLOAD) : {} > USER_SHM_MEM*/
+    /* this is used when Debug log's to shared memory are enabled, else this is not used */
+    /*.bss.log_shared_mem  (NOLOAD) : {} > LOG_SHM_MEM*/
+    /* this is used only when IPC RPMessage is enabled, else this is not used */
+    /*.bss.ipc_vring_mem   (NOLOAD) : {} > RTOS_NORTOS_IPC_SHM_MEM*/
+    /* General purpose non cacheable memory, used in some examples */
+    /*.bss.nocache (NOLOAD) : {} > NON_CACHE_MEM*/
 }
+
+/*
+NOTE: Below memory is reserved for DMSC usage
+ - During Boot till security handoff is complete
+   0x701E0000 - 0x701FFFFF (128KB)
+ - After "Security Handoff" is complete (i.e at run time)
+   0x701FC000 - 0x701FFFFF (16KB)
+
+ Security handoff is complete when this message is sent to the DMSC,
+   TISCI_MSG_SEC_HANDOVER
+
+ This should be sent once all cores are loaded and all application
+ specific firewall calls are setup.
+*/
 
 MEMORY
 {
     R5F_VECS  : ORIGIN = 0x00000000 , LENGTH = 0x00000040
-    R5F_TCMA  : ORIGIN = 0x00000040 , LENGTH = 0x00003FC0
-    R5F_TCMB  : ORIGIN = 0x00080000 , LENGTH = 0x00004000
-    SBL_RESERVED_L2_RAM (RW)   : origin=0x10200000 length=(0x00020000 - 0x00004000)
+    R5F_TCMA  : ORIGIN = 0x00000040 , LENGTH = 0x00007FC0
+    R5F_TCMB0 : ORIGIN = 0x41010000 , LENGTH = 0x00008000
 
-    /* CPPI descriptor memory */
-    CPPI_DESC : ORIGIN = (0x10220000 - 0x00004000), LENGTH = 0x00004000
+    /* memory segment used to hold CPU specific non-cached data, MAKE to add a MPU entry to mark this as non-cached */
+    /*NON_CACHE_MEM : ORIGIN = 0x70060000 , LENGTH = 0x8000*/
 
-    /* when using multi-core application's i.e more than one R5F active, make sure
+    /* when using multi-core application's i.e more than one R5F/M4F active, make sure
      * this memory does not overlap with other R5F's
      */
-    MSS_L2     : ORIGIN = 0x10220000 , LENGTH = 0x000D0000
+    MSRAM     : ORIGIN = 0x70080000 , LENGTH = 0x130000
 
-    /* This is typically used to hold data IO buffers from accelerators like CSI, HWA, DSP */
-    DSS_L3:   ORIGIN = 0x88000000, LENGTH = 0x00390000
+    /* This section can be used to put XIP section of the application in flash, make sure this does not overlap with
+     * other CPUs. Also make sure to add a MPU entry for this section and mark it as cached and code executable
+     */
+    FLASH     : ORIGIN = 0x60100000 , LENGTH = 0x80000
+
+    /* shared memory segments */
+    /* On R5F,
+     * - make sure there is a MPU entry which maps below regions as non-cache
+     */
+    /*USER_SHM_MEM            : ORIGIN = 0x701D0000, LENGTH = 0x00004000
+    LOG_SHM_MEM             : ORIGIN = 0x701D4000, LENGTH = 0x00004000
+    RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0x701D8000, LENGTH = 0x00008000*/
 }

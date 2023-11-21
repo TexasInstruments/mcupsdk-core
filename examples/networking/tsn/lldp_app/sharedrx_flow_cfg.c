@@ -33,28 +33,46 @@
 /* ========================================================================== */
 /*                              Include Files                                 */
 /* ========================================================================== */
+#include <tsn_combase/combase.h>
+#include <nrt_flow/dataflow.h>
 
-#ifndef __DEBUG_LOG_H__
-#define __DEBUG_LOG_H__
 
-typedef void (*Logger_onConsoleOut)(const char *str, ...);
+int EnetApp_lldCfgUpdateCb(cb_socket_lldcfg_update_t *update_cfg)
+{
+    int res = 0;
 
-extern Logger_onConsoleOut sDrvConsoleOut;
-#if defined(SITARA)
-#define DPRINT(str,...) sDrvConsoleOut(str"\r\n", ##__VA_ARGS__)
-#else
-#define DPRINT(str,...) sDrvConsoleOut(str"\n", ##__VA_ARGS__)
-#endif
-
-int Logger_logToBuffer(bool flush, const char *str);
-int Logger_directLog(bool flush, const char *str);
-#ifdef TSN_USE_LOG_BUFFER
-#define LOG_OUTPUT Logger_logToBuffer
-#else
-#define LOG_OUTPUT Logger_directLog
-#endif
-
-int Logger_init(Logger_onConsoleOut consoleOutCb);
-void Logger_deInit(void);
-
-#endif
+    if (update_cfg->proto == ETH_P_LLDP)
+    {
+        update_cfg->dmaTxChId = ENET_DMA_TX_CH_LLDP;
+        update_cfg->dmaRxChId = ENET_DMA_RX_CH0;
+        update_cfg->nTxPkts = ENET_DMA_TX_CH_LLDP_NUM_PKTS;
+        update_cfg->nRxPkts = ENET_DMA_RX_CH0_NUM_PKTS;
+        update_cfg->pktSize = ENET_MEM_LARGE_POOL_PKT_SIZE;
+        /* LLDP Rx DMA channel is shared between multiple apps and
+         * LLDP app is the owner of this channel.
+         * The rxDefaultDataCb is called inside lldp task when the packet
+         * does not match any filters on this Rx DMA channel */
+        update_cfg->dmaRxOwner = true;
+        update_cfg->dmaRxShared = true;
+        update_cfg->rxDefaultDataCb = rxDefaultDataCb;
+        update_cfg->rxDefaultCbArg = NULL;
+    }
+    else if (update_cfg->proto == ETH_P_IPV4)
+    {
+        /* share the RX Dma channel with LLDP */
+        update_cfg->dmaRxChId = ENET_DMA_RX_CH0;
+        update_cfg->dmaRxOwner = false; /* LLDP is RX dma owner */
+        update_cfg->unusedDmaTx = true;
+    }
+    else if (update_cfg->proto == ETH_P_NETLINK)
+    {
+        update_cfg->unusedDmaRx = true;
+        update_cfg->unusedDmaTx = true;
+    }
+    else
+    {
+        EnetAppUtils_print("%s:unsupported other than PTP\r\n", __func__);
+        res = -1;
+    }
+    return res;
+}

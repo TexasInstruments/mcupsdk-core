@@ -21,34 +21,39 @@ FILES_common := \
     simpledb.c \
     simpledb_ucbind.c \
     yang_config_init.c \
-    excelfore-tsn-remote_runconf.c \
-    excelfore-tsn-remote.c \
     yang_modules.c \
+    yang_modules_capability.c \
     yang_db_identiyref.c \
     yang_db_enumeration.c \
     yang_db_runtime.c \
     yang_db_access.c \
-    ieee802-dot1q-tsn-config-uni_runconf.c \
+    ietf-netconf-monitoring.c \
+    ietf-netconf-monitoring_runconf.c \
+    ietf-yang-library.c \
+    ietf-yang-library_runconf.c \
+    ietf-interfaces.c \
+    ietf-interfaces_runconf.c \
+    ietf-interfaces_access.c \
+    ieee1588-ptp.c \
     ieee1588-ptp_runconf.c \
+    ieee1588-ptp_access.c \
+    ieee802-dot1q-bridge.c \
     ieee802-dot1q-bridge_runconf.c \
     ieee802-dot1q-tsn-config-uni.c \
-    ieee1588-ptp.c \
-    ieee802-dot1q-bridge.c \
-    ieee1588-ptp_access.c \
+    ieee802-dot1q-tsn-config-uni_runconf.c \
     ieee802-dot1ab-lldp.c \
     ieee802-dot1ab-lldp_runconf.c \
+    excelfore-tsn-remote.c \
+    excelfore-tsn-remote_runconf.c \
+    ieee802-dot1ab-lldp_access.c \
     ietf-interfaces_access.c \
     ietf-interfaces.c \
     ietf-interfaces_runconf.c \
     excelfore-netconf-server.c \
     excelfore-netconf-server_runconf.c \
-    ietf-netconf-monitoring.c \
-    ietf-netconf-monitoring_runconf.c \
     uc_hwal.c \
     tsn_data.c \
     uc_notice_tilld.c \
-    ietf-yang-library.c \
-    ietf-yang-library_runconf.c \
 
 FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf \
@@ -65,12 +70,12 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/$(MCU_PLUS_SDK_MCU)/r5f \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/ \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/ \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/mod \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/rtos \
     -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/rtos/am243x \
@@ -81,7 +86,7 @@ INCLUDES_common := \
 DEFINES_common := \
     -DSOC_AM263X \
     -DPRINT_FORMAT_NO_WARNING \
-    -DUB_LOGCAT=4 \
+    -DUB_LOGCAT=2 \
     -DUB_LOGTSTYPE=UB_CLOCK_REALTIME \
 
 CFLAGS_common := \

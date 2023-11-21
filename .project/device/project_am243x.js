@@ -1,7 +1,6 @@
 const common = require("../common.js");
 
 const component_file_list = [
-    "source/networking/tsn/.project/project_tsn_lldp.js",
     "source/board/.project/project.js",
     "source/cmsis/.project/project.js",
     "source/drivers/.project/project.js",
@@ -37,6 +36,7 @@ const component_file_list = [
     "source/networking/tsn/.project/project_tsn_combase.js",
     "source/networking/tsn/.project/project_tsn_uniconf.js",
     "source/networking/tsn/.project/project_tsn_unibase.js",
+    "source/networking/tsn/.project/project_tsn_lldp.js",
     "test/unity/.project/project.js",
     "docs_src/docs/api_guide/doxy_samples/.project/project.js",
 ];
@@ -48,7 +48,6 @@ const device_defines = {
 };
 
 const example_file_list = [
-    "examples/networking/tsn/lldp_app/.project/project.js",
     "examples/benchmarks/benchmark_demo/.project/project.js",
     "examples/benchmarks/coremark_benchmark/.project/project.js",
     "examples/drivers/adc/adc_singleshot/.project/project.js",
@@ -172,6 +171,7 @@ const example_file_list = [
     "examples/networking/enet_cpsw_est/.project/project.js",
     "examples/networking/enet_cpsw_fast_startup/.project/project.js",
     "examples/networking/tsn/gptp_app/.project/project.js",
+    "examples/networking/tsn/lldp_app/.project/project.js",
     "examples/networking/enet_loopback/enet_icssg_loopback/.project/project.js",
     "examples/networking/enet_icssg_tas/.project/project.js",
     "examples/networking/enet_layer2_icssg/icssg_layer2_dualmac/.project/project.js",

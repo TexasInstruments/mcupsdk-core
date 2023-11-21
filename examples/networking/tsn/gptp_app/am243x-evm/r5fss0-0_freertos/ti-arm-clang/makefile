@@ -39,9 +39,9 @@ TARGETS := $(BOOTIMAGE_NAME)
 
 FILES_common := \
 	gptp_init.c \
+	default_flow_cfg.c \
 	tsninit.c \
 	debug_log.c \
-	enet_custom_board_config.c \
 	tsnapp_main.c \
 	default_flow.c \
 	main.c \
@@ -60,7 +60,8 @@ FILES_common := \
 FILES_PATH_common = \
 	.. \
 	../../.. \
-	../../../nonptp_flow \
+	../../../.. \
+	../../../../nrt_flow \
 	generated \
 
 INCLUDES_common := \
@@ -80,7 +81,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4 \
-	-I${MCU_PLUS_SDK_PATH}/examples/networking/tsn/gptp_app \
+	-I${MCU_PLUS_SDK_PATH}/examples/networking/tsn \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/tilld \

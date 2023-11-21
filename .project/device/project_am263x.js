@@ -1,7 +1,6 @@
 const common = require("../common.js");
 
 const component_file_list = [
-    "source/networking/tsn/.project/project_tsn_lldp.js",
     "source/board/.project/project.js",
     "source/calibration/.project/project.js",
     "source/drivers/.project/project.js",
@@ -25,6 +24,7 @@ const component_file_list = [
     "source/networking/tsn/.project/project_tsn_combase.js",
     "source/networking/tsn/.project/project_tsn_uniconf.js",
     "source/networking/tsn/.project/project_tsn_unibase.js",
+    "source/networking/tsn/.project/project_tsn_lldp.js",
  ];
 
 const device_defines = {
@@ -34,7 +34,6 @@ const device_defines = {
 };
 
 const example_file_list = [
-    "examples/networking/tsn/lldp_app/.project/project.js",
     "examples/benchmarks/coremark_benchmark/.project/project.js",
     "examples/drivers/adc/adc_multiple_soc_epwm/.project/project.js",
     "examples/drivers/adc/adc_ppb_epwm_trip/.project/project.js",
@@ -165,6 +164,8 @@ const example_file_list = [
     "examples/networking/enet_layer2_multi_channel/.project/project.js",
     "examples/networking/enet_cpsw_est/.project/project.js",
     "examples/networking/enet_tx_scatter_gather/.project/project.js",
+    "examples/networking/tsn/lldp_app/.project/project.js",
+    "examples/networking/tsn/gptp_app/.project/project.js",
     "examples/pru_io/sent/encoder/firmware/.project/project.js",
     "examples/pru_io/sent/encoder/example/.project/project.js",
     "examples/pru_io/sent/decoder/example/.project/project.js",
@@ -294,7 +295,6 @@ const example_file_list = [
     "test/networking/mbedtls_test/test_ssl_x509/.project/project.js",
     "test/networking/mbedtls_benchmark/.project/project.js",
     "test/syscfg/syscfg_combo_1/.project/project.js",
-    "examples/networking/tsn/gptp_app/.project/project.js",
     "examples/pru_io/empty/.project/project.js",
     "examples/pru_io/empty/firmware/.project/project.js",
     "test/security/crypto/test_dthe_aes_cbc/.project/project.js",

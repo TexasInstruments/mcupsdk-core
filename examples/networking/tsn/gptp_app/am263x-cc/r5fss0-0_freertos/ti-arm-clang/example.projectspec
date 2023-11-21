@@ -45,7 +45,7 @@
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263x
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4
-            -I${MCU_PLUS_SDK_PATH}/examples/networking/tsn/gptp_app
+            -I${MCU_PLUS_SDK_PATH}/examples/networking/tsn
             -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack
             -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp
             -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/tilld
@@ -136,15 +136,17 @@
             "
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
-        <file path="../../../tsninit.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        <file path="../../../gptp_init.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="../../../debug_log.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        <file path="../../../default_flow_cfg.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="../enet_custom_board_config.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        <file path="../../../../tsninit.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="../../../tsnapp_main.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        <file path="../../../../debug_log.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="../../../nonptp_flow/default_flow.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        <file path="../../../../tsnapp_main.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="../../../../nrt_flow/default_flow.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>

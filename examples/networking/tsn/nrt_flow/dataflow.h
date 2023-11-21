@@ -38,8 +38,17 @@
 #include "enetapp.h"
 #include <tsn_combase/tilld/cb_lld_ethernet.h>
 
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
+#define ETH_P_IPV4 (0x0800U)
+
+/* ========================================================================== */
+/*                                Function Declarations                       */
+/* ========================================================================== */
 void EnetApp_destroyRxTask();
 void EnetApp_createRxTask();
 int EnetApp_lldCfgUpdateCb(cb_socket_lldcfg_update_t *update_cfg);
+void rxDefaultDataCb(void *data, int size, int port, void *cbArg);
 
 #endif //_DATAFLOW_H_

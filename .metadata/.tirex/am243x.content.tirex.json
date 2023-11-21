@@ -7,72 +7,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Lldp App Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "lldp_app",
-        "location": "../../examples/networking/tsn/lldp_app/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_LAUNCHPAD"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "networking",
-            "tsn",
-            "lldp_app",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Lldp App Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "lldp_app",
-        "location": "../../examples/networking/tsn/lldp_app/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM243x_GP_EVM"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "networking",
-            "tsn",
-            "lldp_app",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "A Benchmark Demo Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "benchmark_demo",
         "location": "../../examples/benchmarks/benchmark_demo/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -13339,6 +13273,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Lldp App Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "lldp_app",
+        "location": "../../examples/networking/tsn/lldp_app/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "tsn",
+            "lldp_app",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Lldp App Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "lldp_app",
+        "location": "../../examples/networking/tsn/lldp_app/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "tsn",
+            "lldp_app",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet Icssg Loopback Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "enet_icssg_loopback",
         "location": "../../examples/networking/enet_loopback/enet_icssg_loopback/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -15453,8 +15453,8 @@
         "name": "User Guide",
         "location": "../../docs/api_guide_am243x/index.html",
         "devtools": [
-            "AM243x_LAUNCHPAD",
-            "AM243x_GP_EVM"
+            "AM243x_GP_EVM",
+            "AM243x_LAUNCHPAD"
         ],
         "mainCategories": [
             [
