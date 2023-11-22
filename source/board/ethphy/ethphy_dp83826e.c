@@ -541,7 +541,7 @@ static int32_t ETHPHY_DP83826E_enableOddNibbleDetection(ETHPHY_Attrs *attrs)
 
     if(status == SystemP_SUCCESS)
     {
-        phyRegVal &= ~(ETHPHY_DP83826E_CR2_ODD_NIBBLE_DETECTION_DISABLE_MASK);
+        phyRegVal |= (ETHPHY_DP83826E_CR2_ODD_NIBBLE_DETECTION_DISABLE_MASK);
         status = MDIO_phyRegWrite(attrs->mdioBaseAddress, NULL, attrs->phyAddress, ETHPHY_DP83826E_CR2_REG, phyRegVal);
     }
 
