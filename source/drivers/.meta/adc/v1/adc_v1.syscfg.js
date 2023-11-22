@@ -100,6 +100,9 @@ for (let soci = 0; soci < 16; soci++)
                 description : 'Select the sample window (1-512) for this SOC',
                 hidden      : false,
                 default     : 16,
+                onChange    : (inst,ui)=>{
+                    inst["soc" + soci.toString() + "SampleTime"] = adc_sampletime_sysclk_ns*(inst["soc" + soci.toString() + "SampleWindow"])
+                }
             },
             {
                 name: "soc" + soci.toString() + "SampleTime",
@@ -107,7 +110,7 @@ for (let soci = 0; soci < 16; soci++)
                 description : 'Selected the sample time in ns for this SOC',
                 hidden      : false,
                 readOnly    : true,
-                default     : adc_sampletime_sysclk_ns
+                default     : adc_sampletime_sysclk_ns*16
             },
 
         ]
