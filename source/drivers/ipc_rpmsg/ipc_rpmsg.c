@@ -166,7 +166,7 @@ void RPMessage_recvHandler(uint32_t remoteCoreId)
                         status = SystemP_SUCCESS;
 
                         /* pMsg is not used, free it */
-                        RPMessage_freeEndPtMsg(remoteCoreId, pMsg);
+                        (void)RPMessage_freeEndPtMsg(remoteCoreId, pMsg);
                         /* done using vring buf, free it */
                         RPMessage_vringPutEmptyRxBuf(remoteCoreId, vringBufId);
                     }
@@ -200,7 +200,7 @@ void RPMessage_recvHandler(uint32_t remoteCoreId)
             * or no object registered for local end pt, so no need handle the message pointer,
             * free it
             */
-            RPMessage_freeEndPtMsg(remoteCoreId, pMsg);
+            (void)RPMessage_freeEndPtMsg(remoteCoreId, pMsg);
         }
     }
 }
