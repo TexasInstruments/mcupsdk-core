@@ -729,6 +729,7 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  coremark_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/benchmarks/coremark_benchmark/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  dhrystone_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/benchmarks/dhrystone_benchmark/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -1421,6 +1422,7 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  coremark_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/benchmarks/coremark_benchmark/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  dhrystone_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/benchmarks/dhrystone_benchmark/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -2113,6 +2115,7 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  coremark_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/benchmarks/coremark_benchmark/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  dhrystone_benchmark_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/benchmarks/dhrystone_benchmark/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 

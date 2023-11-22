@@ -313,7 +313,7 @@ coverage:
 	@echo Creating Coverage Report for dhrystone_benchmark.$(PROFILE) ...
 	$(MKDIR) coverage
 	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o dhrystone_benchmark.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=dhrystone_benchmark.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=dhrystone_benchmark.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
 	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=dhrystone_benchmark.$(PROFILE).profdata > coverage/dhrystone_benchmark.$(PROFILE).profdata.json
 	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/dhrystone_benchmark.$(PROFILE).profdata.json --output-json=coverage/dhrystone_benchmark.$(PROFILE).analysis.json --output=../dhrystone_benchmark.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!

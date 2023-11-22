@@ -43,7 +43,9 @@ CORES = \
 
 SYSTEM_FLAG := true
 
-all: clean syscfg
+all:
+	$(MAKE) clean
+	$(MAKE) syscfg
 % for (let project of args.project.projects) {
 	$(MAKE) -C ../`project.cpu`_`project.os`/`project.cgt`/ all SYSTEM_FLAG=${SYSTEM_FLAG}
 % }

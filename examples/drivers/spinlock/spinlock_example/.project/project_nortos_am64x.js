@@ -4,7 +4,6 @@ let device = "am64x";
 
 const files = {
     common: [
-        "spinlock_example.c",
         "main.c",
     ],
 };

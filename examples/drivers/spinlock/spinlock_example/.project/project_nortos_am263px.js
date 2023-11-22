@@ -4,7 +4,6 @@ let device = "am263px";
 
 const files = {
     common: [
-        "spinlock_example.c",
         "main.c",
     ],
 };

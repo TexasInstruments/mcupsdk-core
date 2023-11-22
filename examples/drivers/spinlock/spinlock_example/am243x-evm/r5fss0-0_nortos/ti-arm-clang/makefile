@@ -38,7 +38,6 @@ BOOTIMAGE_NAME_HS_FS:=spinlock_example.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 FILES_common := \
-	spinlock_example.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \

@@ -39,6 +39,38 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Dhrystone Benchmark Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "dhrystone_benchmark",
+        "location": "../../examples/benchmarks/dhrystone_benchmark/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM273x_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "dhrystone_benchmark",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Sbl Can Uniflash Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_can_uniflash",
         "location": "../../examples/drivers/boot/sbl_can_uniflash/am273x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
