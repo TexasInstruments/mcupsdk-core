@@ -75,7 +75,7 @@ const libs_r5f = {
 
 const lnkfiles = {
     common: [
-        "../linker.cmd",
+        "linker.cmd",
     ]
 };
 
@@ -116,9 +116,10 @@ const templates_nortos_r5f =
 ];
 
 const buildOptionCombos = [
-    { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
+    { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos", isPartOfSystemProject: true},
 ];
+
 
 function getComponentProperty() {
     let property = {};
