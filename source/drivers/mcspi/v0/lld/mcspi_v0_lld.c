@@ -443,50 +443,47 @@ int32_t MCSPI_lld_write(MCSPILLD_Handle hMcspi, void *txBuf, uint32_t count,
         }
     }
 
-    if(MCSPI_STATUS_SUCCESS == status)
+    if (MCSPI_STATUS_SUCCESS == status)
     {
-        if (MCSPI_STATUS_SUCCESS == status)
+        /* Reset counter and other params */
+        chNum = transaction->channel;
+        chObj = &hMcspiInit->chObj[chNum];
+        chObj->curTxBufPtr = (uint8_t *) transaction->txBuf;
+        chObj->curRxBufPtr = NULL;
+        chObj->curTxWords  = 0U;
+        chObj->curRxWords  = 0U;
+
+        /* Initialize channel dataSize */
+        MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
+                            transaction->csDisable);
+
+        if(MCSPI_MS_MODE_CONTROLLER == hMcspiInit->msMode)
         {
-            /* Reset counter and other params */
-            chNum = transaction->channel;
-            chObj = &hMcspiInit->chObj[chNum];
-            chObj->curTxBufPtr = (uint8_t *) transaction->txBuf;
-            chObj->curRxBufPtr = NULL;
-            chObj->curTxWords  = 0U;
-            chObj->curRxWords  = 0U;
+            /* Enable FIFO*/
+            MCSPI_setFifoConfig(hMcspi, chObj, baseAddr, transaction->count);
+            MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
 
-            /* Initialize channel dataSize */
-            MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
-                                transaction->csDisable);
+            status = MCSPI_transferControllerPoll(hMcspi, chObj, transaction);
+        }
+        else
+        {
+            /* Enable FIFO*/
+            MCSPI_setPeripheralFifoConfig(chObj, baseAddr, count);
+            MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
 
-            if(MCSPI_MS_MODE_CONTROLLER == hMcspiInit->msMode)
-            {
-                /* Enable FIFO*/
-                MCSPI_setFifoConfig(hMcspi, chObj, baseAddr, transaction->count);
-                MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
+            status = MCSPI_transferPeripheralPoll(hMcspi, chObj, transaction);
+        }
 
-                status = MCSPI_transferControllerPoll(hMcspi, chObj, transaction);
-            }
-            else
-            {
-                /* Enable FIFO*/
-                MCSPI_setPeripheralFifoConfig(chObj, baseAddr, count);
-                MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
-
-                status = MCSPI_transferPeripheralPoll(hMcspi, chObj, transaction);
-            }
-
-            if (status == MCSPI_STATUS_SUCCESS)
-            {
-                /* transfer completed */
-                status  = MCSPI_TRANSFER_COMPLETED;
-                hMcspi->state = MCSPI_STATE_READY;
-            }
-            if(status == MCSPI_TIMEOUT)
-            {
-                status = MCSPI_TRANSFER_TIMEOUT;
-                hMcspi->state = MCSPI_STATE_READY;
-            }
+        if (status == MCSPI_STATUS_SUCCESS)
+        {
+            /* transfer completed */
+            status  = MCSPI_TRANSFER_COMPLETED;
+            hMcspi->state = MCSPI_STATE_READY;
+        }
+        if(status == MCSPI_TIMEOUT)
+        {
+            status = MCSPI_TRANSFER_TIMEOUT;
+            hMcspi->state = MCSPI_STATE_READY;
         }
     }
 
@@ -554,34 +551,31 @@ int32_t MCSPI_lld_writeIntr(MCSPILLD_Handle hMcspi, void *txBuf, uint32_t count,
 
     if(MCSPI_STATUS_SUCCESS == status)
     {
-        if (MCSPI_STATUS_SUCCESS == status)
+        /* Reset counter and other params */
+        chNum = transaction->channel;
+        chObj = &hMcspiInit->chObj[chNum];
+        chObj->curTxBufPtr = (uint8_t *) transaction->txBuf;
+        chObj->curRxBufPtr = NULL;
+        chObj->curTxWords  = 0U;
+        chObj->curRxWords  = 0U;
+
+        /* Initialize channel dataSize */
+        MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
+                            transaction->csDisable);
+
+        if(MCSPI_MS_MODE_CONTROLLER == hMcspiInit->msMode)
         {
-            /* Reset counter and other params */
-            chNum = transaction->channel;
-            chObj = &hMcspiInit->chObj[chNum];
-            chObj->curTxBufPtr = (uint8_t *) transaction->txBuf;
-            chObj->curRxBufPtr = NULL;
-            chObj->curTxWords  = 0U;
-            chObj->curRxWords  = 0U;
-
-            /* Initialize channel dataSize */
-            MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
-                                transaction->csDisable);
-
-            if(MCSPI_MS_MODE_CONTROLLER == hMcspiInit->msMode)
-            {
-                /* Enable FIFO*/
-                MCSPI_setFifoConfig(hMcspi,chObj, baseAddr, transaction->count);
-                MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
-                MCSPI_transferControllerIntr(hMcspi, chObj);
-            }
-            else
-            {
-                /* Enable FIFO*/
-                MCSPI_setPeripheralFifoConfig(chObj, baseAddr, count);
-                MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
-                MCSPI_transferPeripheralIntr(hMcspi, chObj);
-            }
+            /* Enable FIFO*/
+            MCSPI_setFifoConfig(hMcspi,chObj, baseAddr, transaction->count);
+            MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
+            MCSPI_transferControllerIntr(hMcspi, chObj);
+        }
+        else
+        {
+            /* Enable FIFO*/
+            MCSPI_setPeripheralFifoConfig(chObj, baseAddr, count);
+            MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
+            MCSPI_transferPeripheralIntr(hMcspi, chObj);
         }
     }
 
@@ -648,30 +642,27 @@ int32_t MCSPI_lld_writeDma(MCSPILLD_Handle hMcspi, void *txBuf, uint32_t count, 
         }
     }
 
-    if(MCSPI_STATUS_SUCCESS == status)
+    /* Check if any transaction is in progress */
+    if(MCSPI_STATE_READY != hMcspi->state)
     {
-        /* Check if any transaction is in progress */
-        if(MCSPI_STATE_READY != hMcspi->state)
-        {
-            status = MCSPI_TRANSFER_CANCELLED;
-        }
+        status = MCSPI_TRANSFER_CANCELLED;
+    }
 
-        if (MCSPI_STATUS_SUCCESS == status)
-        {
-            /* Reset counter and other params */
-            chNum = transaction->channel;
-            chObj = &hMcspiInit->chObj[chNum];
-            chObj->curTxBufPtr = (uint8_t *) transaction->txBuf;
-            chObj->curRxBufPtr = NULL;
-            chObj->curTxWords  = 0U;
-            chObj->curRxWords  = 0U;
+    if (MCSPI_STATUS_SUCCESS == status)
+    {
+        /* Reset counter and other params */
+        chNum = transaction->channel;
+        chObj = &hMcspiInit->chObj[chNum];
+        chObj->curTxBufPtr = (uint8_t *) transaction->txBuf;
+        chObj->curRxBufPtr = NULL;
+        chObj->curTxWords  = 0U;
+        chObj->curRxWords  = 0U;
 
-            /* Initialize channel dataSize */
-            MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
-                                transaction->csDisable);
+        /* Initialize channel dataSize */
+        MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
+                            transaction->csDisable);
 
-            status = MCSPI_lld_dmaTransfer(hMcspi, chObj, transaction);
-        }
+        status = MCSPI_lld_dmaTransfer(hMcspi, chObj, transaction);
     }
 
     return (status);
@@ -731,45 +722,42 @@ int32_t MCSPI_lld_read(MCSPILLD_Handle hMcspi, void *rxBuf, uint32_t count,
         }
     }
 
-    if(MCSPI_STATUS_SUCCESS == status)
+    if (MCSPI_STATUS_SUCCESS == status)
     {
-        if (MCSPI_STATUS_SUCCESS == status)
+        /* Reset counter and other params */
+        chNum = transaction->channel;
+        chObj = &hMcspiInit->chObj[chNum];
+        chObj->curTxBufPtr = NULL;
+        chObj->curRxBufPtr = (uint8_t *) transaction->rxBuf;
+        chObj->curTxWords  = 0U;
+        chObj->curRxWords  = 0U;
+
+        /* Initialize channel dataSize */
+        MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
+                            transaction->csDisable);
+
+        if(MCSPI_MS_MODE_CONTROLLER == hMcspiInit->msMode)
         {
-            /* Reset counter and other params */
-            chNum = transaction->channel;
-            chObj = &hMcspiInit->chObj[chNum];
-            chObj->curTxBufPtr = NULL;
-            chObj->curRxBufPtr = (uint8_t *) transaction->rxBuf;
-            chObj->curTxWords  = 0U;
-            chObj->curRxWords  = 0U;
+            /* Enable FIFO*/
+            MCSPI_setFifoConfig(hMcspi,chObj, baseAddr, transaction->count);
+            MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
 
-            /* Initialize channel dataSize */
-            MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
-                                transaction->csDisable);
+            status = MCSPI_transferControllerPoll(hMcspi, chObj, transaction);
+        }
+        else
+        {
+            /* Enable FIFO*/
+            MCSPI_setPeripheralFifoConfig(chObj, baseAddr, count);
+            MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
 
-            if(MCSPI_MS_MODE_CONTROLLER == hMcspiInit->msMode)
-            {
-                /* Enable FIFO*/
-                MCSPI_setFifoConfig(hMcspi,chObj, baseAddr, transaction->count);
-                MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
+            status = MCSPI_transferPeripheralPoll(hMcspi, chObj, transaction);
+        }
 
-                status = MCSPI_transferControllerPoll(hMcspi, chObj, transaction);
-            }
-            else
-            {
-                /* Enable FIFO*/
-                MCSPI_setPeripheralFifoConfig(chObj, baseAddr, count);
-                MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
-
-                status = MCSPI_transferPeripheralPoll(hMcspi, chObj, transaction);
-            }
-
-            if (status == MCSPI_STATUS_SUCCESS)
-            {
-                /* transfer completed */
-                status  = MCSPI_TRANSFER_COMPLETED;
-                hMcspi->state = MCSPI_STATE_READY;
-            }
+        if (status == MCSPI_STATUS_SUCCESS)
+        {
+            /* transfer completed */
+            status  = MCSPI_TRANSFER_COMPLETED;
+            hMcspi->state = MCSPI_STATE_READY;
         }
 
         if(status == MCSPI_TIMEOUT)
@@ -841,36 +829,33 @@ int32_t MCSPI_lld_readIntr(MCSPILLD_Handle hMcspi, void *rxBuf, uint32_t count,
         }
     }
 
-    if(MCSPI_STATUS_SUCCESS == status)
+    if (MCSPI_STATUS_SUCCESS == status)
     {
-        if (MCSPI_STATUS_SUCCESS == status)
+        /* Reset counter and other params */
+        chNum = transaction->channel;
+        chObj = &hMcspiInit->chObj[chNum];
+        chObj->curTxBufPtr = NULL;
+        chObj->curRxBufPtr = (uint8_t *) transaction->rxBuf;
+        chObj->curTxWords  = 0U;
+        chObj->curRxWords  = 0U;
+
+        /* Initialize channel dataSize */
+        MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
+                            transaction->csDisable);
+
+        if(MCSPI_MS_MODE_CONTROLLER == hMcspiInit->msMode)
         {
-            /* Reset counter and other params */
-            chNum = transaction->channel;
-            chObj = &hMcspiInit->chObj[chNum];
-            chObj->curTxBufPtr = NULL;
-            chObj->curRxBufPtr = (uint8_t *) transaction->rxBuf;
-            chObj->curTxWords  = 0U;
-            chObj->curRxWords  = 0U;
-
-            /* Initialize channel dataSize */
-            MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
-                                transaction->csDisable);
-
-            if(MCSPI_MS_MODE_CONTROLLER == hMcspiInit->msMode)
-            {
-                /* Enable FIFO*/
-                MCSPI_setFifoConfig(hMcspi,chObj, baseAddr, transaction->count);
-                MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
-                MCSPI_transferControllerIntr(hMcspi, chObj);
-            }
-            else
-            {
-                /* Enable FIFO*/
-                MCSPI_setPeripheralFifoConfig(chObj, baseAddr, count);
-                MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
-                MCSPI_transferPeripheralIntr(hMcspi, chObj);
-            }
+            /* Enable FIFO*/
+            MCSPI_setFifoConfig(hMcspi,chObj, baseAddr, transaction->count);
+            MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
+            MCSPI_transferControllerIntr(hMcspi, chObj);
+        }
+        else
+        {
+            /* Enable FIFO*/
+            MCSPI_setPeripheralFifoConfig(chObj, baseAddr, count);
+            MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
+            MCSPI_transferPeripheralIntr(hMcspi, chObj);
         }
     }
 
@@ -937,24 +922,21 @@ int32_t MCSPI_lld_readDma(MCSPILLD_Handle hMcspi, void *rxBuf, uint32_t count,
         }
     }
 
-    if(MCSPI_STATUS_SUCCESS == status)
+    if (MCSPI_STATUS_SUCCESS == status)
     {
-        if (MCSPI_STATUS_SUCCESS == status)
-        {
-            /* Reset counter and other params */
-            chNum = transaction->channel;
-            chObj = &hMcspiInit->chObj[chNum];
-            chObj->curTxBufPtr = NULL;
-            chObj->curRxBufPtr = (uint8_t *) transaction->txBuf;
-            chObj->curTxWords  = 0U;
-            chObj->curRxWords  = 0U;
+        /* Reset counter and other params */
+        chNum = transaction->channel;
+        chObj = &hMcspiInit->chObj[chNum];
+        chObj->curTxBufPtr = NULL;
+        chObj->curRxBufPtr = (uint8_t *) transaction->txBuf;
+        chObj->curTxWords  = 0U;
+        chObj->curRxWords  = 0U;
 
-            /* Initialize channel dataSize */
-            MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
-                                transaction->csDisable);
+        /* Initialize channel dataSize */
+        MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
+                            transaction->csDisable);
 
-            status = MCSPI_lld_dmaTransfer(hMcspi, chObj, transaction);
-        }
+        status = MCSPI_lld_dmaTransfer(hMcspi, chObj, transaction);
     }
 
     return (status);
@@ -1225,24 +1207,21 @@ int32_t MCSPI_lld_readWriteDma(MCSPILLD_Handle hMcspi, void *txBuf, void *rxBuf,
         }
     }
 
-    if(MCSPI_STATUS_SUCCESS == status)
+    if (MCSPI_STATUS_SUCCESS == status)
     {
-        if (MCSPI_STATUS_SUCCESS == status)
-        {
-            /* Reset counter and other params */
-            chNum = transaction->channel;
-            chObj = &hMcspiInit->chObj[chNum];
-            chObj->curTxBufPtr = (uint8_t *) transaction->txBuf;
-            chObj->curRxBufPtr = (uint8_t *) transaction->rxBuf;
-            chObj->curTxWords  = 0U;
-            chObj->curRxWords  = 0U;
+        /* Reset counter and other params */
+        chNum = transaction->channel;
+        chObj = &hMcspiInit->chObj[chNum];
+        chObj->curTxBufPtr = (uint8_t *) transaction->txBuf;
+        chObj->curRxBufPtr = (uint8_t *) transaction->rxBuf;
+        chObj->curTxWords  = 0U;
+        chObj->curRxWords  = 0U;
 
-            /* Initialize channel dataSize */
-            MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
-                                transaction->csDisable);
+        /* Initialize channel dataSize */
+        MCSPI_setChDataSize(baseAddr, chObj, transaction->dataSize,
+                            transaction->csDisable);
 
-            status = MCSPI_lld_dmaTransfer(hMcspi, chObj, transaction);
-        }
+        status = MCSPI_lld_dmaTransfer(hMcspi, chObj, transaction);
     }
 
     return (status);

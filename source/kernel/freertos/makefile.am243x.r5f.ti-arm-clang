@@ -71,6 +71,7 @@ ASMFILES_common := \
     HwiP_armv7r_vectors_freertos_asm.S \
     HwiP_armv7r_handlers_freertos_asm.S \
     portASM.S \
+    Mutex_armv7r_asm.S \
 
 FILES_PATH_common = \
     ../nortos/dpl/r5 \

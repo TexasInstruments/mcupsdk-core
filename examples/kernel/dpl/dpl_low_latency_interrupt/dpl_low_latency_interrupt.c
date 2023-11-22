@@ -43,6 +43,8 @@
 #include <drivers/dac.h>
 #include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
 
+uint32_t gVimBaseAddr = CSL_VIM_U_BASE;
+
 void util_epwm_periodic_interrupt_config(uint32_t base, uint16_t period)
 {
     EPWM_setClockPrescaler(base, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);
@@ -97,7 +99,7 @@ void util_iomux_config_for_gpio(uint32_t gpioNum)
 {
     HW_WR_REG32(CSL_IOMUX_U_BASE + CSL_IOMUX_IO_CFG_KICK0,0x83E70B13);
     HW_WR_REG32(CSL_IOMUX_U_BASE + CSL_IOMUX_IO_CFG_KICK1,0x95A4F1E0);
-    
+
     HW_WR_REG32(CSL_IOMUX_U_BASE + gpioNum*4, 0x07) ;
 }
 
@@ -117,7 +119,7 @@ uint32_t gEpwm_vim_sts_clr_mask_tc1;
 void *epwmArgs_tc1;
 static __attribute__((__section__(".text.hwi"), noinline, naked, target("arm"), aligned(4))) void irq_handler1_tc1(void)
 {
-    ISR_CALL_PULSE_NONFLOAT_NONREENTRANT(user_isr1_tc1, epwmArgs_tc1, gEpwmIntrNum_tc1, gEpwm_vim_sts_addr_tc1, gEpwm_vim_sts_clr_mask_tc1);
+    ISR_CALL_PULSE_NONFLOAT_NONREENTRANT(user_isr1_tc1, epwmArgs_tc1, gEpwmIntrNum_tc1, gEpwm_vim_sts_addr_tc1, gEpwm_vim_sts_clr_mask_tc1, gVimBaseAddr);
 }
 
 int32_t test_case_1()
@@ -133,7 +135,7 @@ int32_t test_case_1()
 
     DebugP_log("\r\nRegistering interrupt handler in R5F VIM... ");
     gEpwmIntrNum_tc1 = intNum;
-    gEpwm_vim_sts_addr_tc1 = CSL_VIM_U_BASE +  (0x404u + (((intNum)>> 5) & 0xFu) * 0x20u);
+    gEpwm_vim_sts_addr_tc1 = gVimBaseAddr +  (0x404u + (((intNum)>> 5) & 0xFu) * 0x20u);
     gEpwm_vim_sts_clr_mask_tc1 = 0x1u << ((intNum) & 0x1Fu);
     epwmArgs_tc1 = NULL;
     util_vim_register_irq(intNum, 4, (uintptr_t)&irq_handler1_tc1);
@@ -225,7 +227,7 @@ void *epwmArgs_1_tc2;
 
 static __attribute__((__section__(".text.hwi"), noinline, naked, target("arm"), aligned(4))) void irq_handler1_tc2(void)
 {
-    ISR_CALL_PULSE_FLOAT_REENTRANT(user_isr1_tc2, epwmArgs_1_tc2, gEpwmIntrNum_1_tc2, gEpwm_vim_sts_addr_1_tc2, gEpwm_vim_sts_clr_mask_1_tc2);
+    ISR_CALL_PULSE_FLOAT_REENTRANT(user_isr1_tc2, epwmArgs_1_tc2, gEpwmIntrNum_1_tc2, gEpwm_vim_sts_addr_1_tc2, gEpwm_vim_sts_clr_mask_1_tc2, gVimBaseAddr);
 }
 
 void user_isr2_tc2()
@@ -251,7 +253,7 @@ void *epwmArgs_2_tc2;
 
 static __attribute__((__section__(".controlfnc"), noinline, naked, target("arm"), aligned(4))) void irq_handler2_tc2(void)
 {
-    ISR_CALL_PULSE_FLOAT_REENTRANT(user_isr2_tc2, epwmArgs_2_tc2, gEpwmIntrNum_2_tc2, gEpwm_vim_sts_addr_2_tc2, gEpwm_vim_sts_clr_mask_2_tc2);
+    ISR_CALL_PULSE_FLOAT_REENTRANT(user_isr2_tc2, epwmArgs_2_tc2, gEpwmIntrNum_2_tc2, gEpwm_vim_sts_addr_2_tc2, gEpwm_vim_sts_clr_mask_2_tc2, gVimBaseAddr);
 }
 
 int32_t test_case_2()
@@ -270,12 +272,12 @@ int32_t test_case_2()
     count_isr1_tc2 = 0;
     count_isr2_tc2 = 0;
     gEpwmIntrNum_1_tc2 = intNum1;
-    gEpwm_vim_sts_addr_1_tc2 = CSL_VIM_U_BASE +  (0x404u + (((intNum1)>> 5) & 0xFu) * 0x20u);
+    gEpwm_vim_sts_addr_1_tc2 = gVimBaseAddr +  (0x404u + (((intNum1)>> 5) & 0xFu) * 0x20u);
     gEpwm_vim_sts_clr_mask_1_tc2 = 0x1u << ((intNum1) & 0x1Fu);
     epwmArgs_1_tc2 = NULL;
     util_vim_register_irq(intNum1, 4, (uintptr_t)&irq_handler1_tc2);
     gEpwmIntrNum_2_tc2 = intNum2;
-    gEpwm_vim_sts_addr_2_tc2 = CSL_VIM_U_BASE +  (0x404u + (((intNum2)>> 5) & 0xFu) * 0x20u);
+    gEpwm_vim_sts_addr_2_tc2 = gVimBaseAddr +  (0x404u + (((intNum2)>> 5) & 0xFu) * 0x20u);
     gEpwm_vim_sts_clr_mask_2_tc2 = 0x1u << ((intNum2) & 0x1Fu);
     epwmArgs_2_tc2 = NULL;
     util_vim_register_irq(intNum2, 3, (uintptr_t)&irq_handler2_tc2);

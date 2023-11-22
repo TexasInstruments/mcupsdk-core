@@ -2,15 +2,13 @@
     let common = system.getScript("/common");
     let module = system.modules['/drivers/mcspi/mcspi'];
 %%}
+
+#include <drivers/mcspi/v0/lld/dma/udma/mcspi_dma_udma.h>
+#include <drivers/udma.h>
+
 /*
  * MCSPI
  */
-
-/*
- * MCSPI Driver Advance Parameters - to be used only when Driver_open() and
- * Driver_close() is not used by the application
- */
-
 /* MCSPI Channel Macros */
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
@@ -18,13 +16,24 @@
 #define `instance.$name.toUpperCase()`_NUM_CH (`ch_instances.length`U)
 % }
 
+extern MCSPILLD_Object gMcspiObject[];
+extern MCSPILLD_Handle gMcspiHandle[];
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+extern MCSPILLD_InitObject g`instNameCamelCase`InitObject[];
+extern MCSPI_ChConfig g`instNameCamelCase`ChCfg[];
+%}
+
 /* MCSPI Driver Channel Configurations */
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let instNameCamelCase = common.camelSentence(instance.$name);
-extern MCSPI_ChConfig g`instNameCamelCase`ChCfg[`instance.$name.toUpperCase()`_NUM_CH];
+extern MCSPI_ChConfig g`instNameCamelCase`ChCfg[];
 %      if(instance.intrEnable == "DMA") {
-extern MCSPI_UdmaChConfig g`instNameCamelCase`DmaChCfg[`instance.$name.toUpperCase()`_NUM_CH];
+extern MCSPI_UdmaChConfig g`instNameCamelCase`DmaChCfg[];
 % }
 % }
 /* MCSPI Driver open/close - can be used by application when Driver_open() and

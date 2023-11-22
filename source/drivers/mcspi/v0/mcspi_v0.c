@@ -432,7 +432,7 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
         key = HwiP_disable();
 
         /* Check if any transaction is in progress */
-        if(mcspiLldHandle->state == MCSPI_STATE_READY)
+        if(NULL != transaction)
         {
             /* Start transfer */
             obj->transaction = transaction;
@@ -514,12 +514,11 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
         }
         else
         {
+            HwiP_restore(key);
             /* other transaction is in progress */
             status = SystemP_FAILURE;
             transaction->status = MCSPI_TRANSFER_CANCELLED;
         }
-
-        HwiP_restore(key);
     }
 
     return (status);

@@ -45,6 +45,7 @@ FILES_common := \
     Led_sample.c \
     Mcan_sample.c \
     Mcspi_sample.c \
+    Mcspi_lld_sample.c \
     Mdio_sample.c \
     MpuP_arm_v7_sample.c \
     Ospi_sample.c \

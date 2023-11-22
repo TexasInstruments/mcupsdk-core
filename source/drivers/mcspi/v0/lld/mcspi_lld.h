@@ -524,6 +524,9 @@ typedef struct
  *         #MCSPI_lld_readDma(), #MCSPI_lld_write(), #MCSPI_lld_writeIntr,
  *         #MCSPI_lld_writeDma, #MCSPI_lld_readWrite(), #MCSPI_lld_readWriteIntr(),
  *         #MCSPI_lld_readWriteDma().
+ *         MCSPI ExtendedParams to be used in case, one's don't want to use
+ *         default parameters, else pass NULL.
+ *
  */
 typedef struct MCSPI_ExtendedParams_s
 {

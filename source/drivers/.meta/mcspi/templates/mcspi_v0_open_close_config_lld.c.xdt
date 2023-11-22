@@ -6,28 +6,29 @@
     let mcspiUdmaInstances = [];
     let module_ch = system.modules[`/drivers/mcspi/${driverVer}/mcspi_${driverVer}_channel`];
 %%}
+#include <drivers/mcspi/v0/lld/mcspi_lld.h>
+
 /*
  * MCSPI
  */
-#include <drivers/mcspi/v0/lld/mcspi_lld.h>
+MCSPILLD_Object gMcspiObject[CONFIG_MCSPI_NUM_INSTANCES];
+MCSPILLD_Handle gMcspiHandle[CONFIG_MCSPI_NUM_INSTANCES];
 
 /* MCSPI Driver handles */
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
-MCSPILLD_Object gMcspiObject`i`;
-MCSPILLD_Handle gMcspiHandle`i` = &gMcspiObject`i`;
-extern MCSPILLD_InitObject gMcspiInitObject[`instance.$name.toUpperCase()`_NUM_CH];
-extern MCSPI_ChConfig gMcspiChCfg[`instance.$name.toUpperCase()`_NUM_CH];
-
-% }
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+extern MCSPILLD_InitObject g`instNameCamelCase`InitObject[];
+extern MCSPI_ChConfig g`instNameCamelCase`ChCfg[];
+%}
 
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % if(instance.intrEnable == "DMA") {
     %    mcspiUdmaInstances.push(module.getInstanceConfig(instance).udmaDriver);
     % }
-% }
+%}
 
 %if(mcspiUdmaInstances.length > 0) {
 #include <drivers/mcspi/v0/lld/dma/udma/mcspi_dma_udma.h>
@@ -72,57 +73,32 @@ static uint8_t gMcspi`i`UdmaTxRingMemCh`ch`[MCSPI_UDMA_TEST_RING_MEM_SIZE] __att
 /* MCSPI UDMA Channel HPD Mem */
 static uint8_t gMcspi`i`UdmaTxHpdMemCh`ch`[MCSPI_UDMA_TEST_DESC_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
 static uint8_t gMcspi`i`UdmaRxHpdMemCh`ch`[MCSPI_UDMA_TEST_DESC_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
-
 %}
 
 MCSPI_UdmaChConfig g`instNameCamelCase`DmaChCfg[`instance.$name.toUpperCase()`_NUM_CH] =
 {
-% for(let ch = 0; ch < ch_instances.length; ch++) {
-% let ch_instance = ch_instances[ch];
-% let ch_config = module_ch.getInstanceConfig(ch_instance);
-{
-    .txChHandle       = &gMcspi`i`UdmaTxChObj`ch`,
-    .rxChHandle       = &gMcspi`i`UdmaRxChObj`ch`,
-    .cqTxEvtHandle    = &gMcspi`i`UdmaCqTxEventObjCh`ch`,
-    .cqRxEvtHandle    = &gMcspi`i`UdmaCqRxEventObjCh`ch`,
-    .txHpdMem         = &gMcspi`i`UdmaTxHpdMemCh`ch`,
-    .rxHpdMem         = &gMcspi`i`UdmaRxHpdMemCh`ch`,
-    .hpdMemSize       = MCSPI_UDMA_TEST_DESC_SIZE,
-    .txRingMem        = &gMcspi`i`UdmaTxRingMemCh`ch`,
-    .rxRingMem        = &gMcspi`i`UdmaRxRingMemCh`ch`,
-    .ringMemSize      = MCSPI_UDMA_TEST_RING_MEM_SIZE,
-    .ringElemCnt      = MCSPI_UDMA_TEST_RING_ENTRIES,
-    .rxEvtNum         = `config.udmaPdmaChannels[ch_config.cs].rxCh`,
-    .txEvtNum         = `config.udmaPdmaChannels[ch_config.cs].txCh`,
-    .isOpen           = FALSE,
-},
-% }
-
+    % for(let ch = 0; ch < ch_instances.length; ch++) {
+    % let ch_instance = ch_instances[ch];
+    % let ch_config = module_ch.getInstanceConfig(ch_instance);
+    {
+        .txChHandle       = &gMcspi`i`UdmaTxChObj`ch`,
+        .rxChHandle       = &gMcspi`i`UdmaRxChObj`ch`,
+        .cqTxEvtHandle    = &gMcspi`i`UdmaCqTxEventObjCh`ch`,
+        .cqRxEvtHandle    = &gMcspi`i`UdmaCqRxEventObjCh`ch`,
+        .txHpdMem         = &gMcspi`i`UdmaTxHpdMemCh`ch`,
+        .rxHpdMem         = &gMcspi`i`UdmaRxHpdMemCh`ch`,
+        .hpdMemSize       = MCSPI_UDMA_TEST_DESC_SIZE,
+        .txRingMem        = &gMcspi`i`UdmaTxRingMemCh`ch`,
+        .rxRingMem        = &gMcspi`i`UdmaRxRingMemCh`ch`,
+        .ringMemSize      = MCSPI_UDMA_TEST_RING_MEM_SIZE,
+        .ringElemCnt      = MCSPI_UDMA_TEST_RING_ENTRIES,
+        .rxEvtNum         = `config.udmaPdmaChannels[ch_config.cs].rxCh`,
+        .txEvtNum         = `config.udmaPdmaChannels[ch_config.cs].txCh`,
+        .isOpen           = FALSE,
+    },
+%}
 };
 %}
-%}
-%}
-
-% for(let i = 0; i < module.$instances.length; i++) {
-    % let instance = module.$instances[i];
-%if(instance.intrEnable == "DMA") {
-MCSPI_DmaChConfig gMcspiDmaChConfig[`module.$instances.length`] =
-{
-    % for(let i = 0; i < module.$instances.length; i++) {
-    % let instance = module.$instances[i];
-    % let instNameCamelCase = common.camelSentence(instance.$name);
-    &g`instNameCamelCase`DmaChCfg,
-    %}
-};
-% }
-% else {
-MCSPI_DmaChConfig gMcspiDmaChConfig[`module.$instances.length`] =
-{
-    % for(let i = 0; i < module.$instances.length; i++) {
-    % let instNameCamelCase = common.camelSentence(instance.$name);
-    NULL,
-    %}
-};
 %}
 %}
 
@@ -133,18 +109,21 @@ void Drivers_mcspiOpen(void)
     % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
-    gMcspiHandle`i`->state = MCSPI_STATE_RESET;
-    gMcspiHandle`i`->baseAddr = `config.baseAddr`;
-    gMcspiHandle`i`->hMcspiInit = &gMcspiInitObject[0];
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+    gMcspiHandle[`instance.$name.toUpperCase()`]             = &gMcspiObject[`instance.$name.toUpperCase()`];
+    gMcspiHandle[`instance.$name.toUpperCase()`]->state      = MCSPI_STATE_RESET;
+    gMcspiHandle[`instance.$name.toUpperCase()`]->baseAddr   = `config.baseAddr`;
+    gMcspiHandle[`instance.$name.toUpperCase()`]->hMcspiInit = &g`instNameCamelCase`InitObject[`instance.$name.toUpperCase()`];
 
     % if(config.intrEnable == "DMA") {
-    status = MCSPI_lld_initDma(gMcspiHandle`i`);
-    % }
+    status = MCSPI_lld_initDma(gMcspiHandle[`instance.$name.toUpperCase()`]);
+    %}
     % else {
-    status = MCSPI_lld_init(gMcspiHandle`i`);
-    % }
-    % }
+    status = MCSPI_lld_init(gMcspiHandle[`instance.$name.toUpperCase()`]);
+    %}
+    %}
     DebugP_assert(status == MCSPI_STATUS_SUCCESS);
+
     return;
 }
 
@@ -156,11 +135,12 @@ void Drivers_mcspiClose(void)
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
     % if(config.intrEnable == "DMA") {
-    status = MCSPI_lld_deInitDma(gMcspiHandle`i`);
-    % } else {
-    status = MCSPI_lld_deInit(gMcspiHandle`i`);
-    % }
-    % }
+    status = MCSPI_lld_deInitDma(gMcspiHandle[`instance.$name.toUpperCase()`]);
+    %} else {
+    status = MCSPI_lld_deInit(gMcspiHandle[`instance.$name.toUpperCase()`]);
+    %}
+    %}
     DebugP_assert(status == MCSPI_STATUS_SUCCESS);
+
     return;
 }

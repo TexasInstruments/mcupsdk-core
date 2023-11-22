@@ -32,6 +32,7 @@ FILES_common := \
     IpcNotify_sample.c \
     IpcRPMessage_sample.c \
     Mcspi_sample.c \
+    Mcspi_lld_sample.c \
     Mdio_sample.c \
     MpuP_arm_v7_sample.c \
     Pmu_sample.c \

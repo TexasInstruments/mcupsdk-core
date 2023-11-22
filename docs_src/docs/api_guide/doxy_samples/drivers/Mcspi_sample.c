@@ -18,29 +18,13 @@ MCSPI_ChConfig      gMcspiChConfig[APP_MCSPI_NUM_CH];
 void open(void)
 {
 //! [open]
-    int32_t             status;
     MCSPI_OpenParams    spiParams;
-    uint32_t            chCnt;
-    MCSPI_ChConfig     *chCfg;
 
     MCSPI_OpenParams_init(&spiParams);      /* Initialize SPI parameters */
     spiParams.transferMode  = MCSPI_TRANSFER_MODE_BLOCKING;
     gMcspiHandle = MCSPI_open(CONFIG_MCSPI0, &spiParams);
     DebugP_assert(gMcspiHandle != NULL);
 
-    /* Channel configuration */
-    for(chCnt = 0U; chCnt < APP_MCSPI_NUM_CH; chCnt++)
-    {
-        chCfg = &gMcspiChConfig[chCnt];
-        /* Init to default value */
-        MCSPI_ChConfig_init(chCfg);
-
-        /* Override based on need */
-        chCfg->chNum = chCnt;
-        chCfg->bitRate = 2000000U;
-        status = MCSPI_chConfig(gMcspiHandle, chCfg);
-        DebugP_assert(status == SystemP_SUCCESS);
-    }
 //! [open]
 }
 

@@ -295,6 +295,7 @@ const asmfiles_r5f = {
         "HwiP_armv7r_handlers_freertos_asm.S",
         // picked from freertos "portable"
         "portASM.S",
+        "Mutex_armv7r_asm.S",
     ],
 };
 
