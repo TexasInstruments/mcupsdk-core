@@ -142,7 +142,12 @@ void CSL_CPSW_SS_getRGMIIStatus(CSL_Xge_cpsw_ss_sRegs * hCpswSsRegs,
         pRgmiiStatus->speed = CSL_FEXT(hCpswSsRegs->RGMII1_STATUS_REG,XGE_CPSW_SS_S_RGMII1_STATUS_REG_SPEED);
     	pRgmiiStatus->fullDuplex = CSL_FEXT(hCpswSsRegs->RGMII1_STATUS_REG,XGE_CPSW_SS_S_RGMII1_STATUS_REG_FULLDUPLEX);
     }
-    
+    if (macPortNum == 1U)
+    {
+        pRgmiiStatus->link = CSL_FEXT(hCpswSsRegs->RGMII2_STATUS_REG, XGE_CPSW_SS_S_RGMII2_STATUS_REG_LINK);
+        pRgmiiStatus->speed = CSL_FEXT(hCpswSsRegs->RGMII2_STATUS_REG,XGE_CPSW_SS_S_RGMII2_STATUS_REG_SPEED);
+        pRgmiiStatus->fullDuplex = CSL_FEXT(hCpswSsRegs->RGMII2_STATUS_REG,XGE_CPSW_SS_S_RGMII2_STATUS_REG_FULLDUPLEX);
+    }
     return;
 }
 

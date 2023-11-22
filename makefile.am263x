@@ -378,10 +378,10 @@ help:
 	@echo  $(MAKE) -s -C examples/networking/enet_cpsw_est/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/enet_tx_scatter_gather/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/enet_tx_scatter_gather/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/tsn/lldp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/tsn/lldp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/tsn/gptp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/networking/tsn/gptp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/tsn/lldp_cpsw_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/tsn/lldp_cpsw_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/tsn/gptp_cpsw_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/networking/tsn/gptp_cpsw_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/encoder/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/encoder/example/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/pru_io/sent/decoder/example/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -2015,16 +2015,16 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 	$(MAKE) -C examples/networking/enet_tx_scatter_gather/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  lldp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/tsn/lldp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C examples/networking/tsn/lldp_cpsw_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  lldp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/tsn/lldp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C examples/networking/tsn/lldp_cpsw_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C examples/networking/tsn/gptp_cpsw_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C examples/networking/tsn/gptp_cpsw_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  sent_encoder_pru_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt:
 	$(MAKE) -C examples/pru_io/sent/encoder/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile all
@@ -3473,16 +3473,16 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 	$(MAKE) -C examples/networking/enet_tx_scatter_gather/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  lldp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/tsn/lldp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C examples/networking/tsn/lldp_cpsw_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  lldp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/tsn/lldp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C examples/networking/tsn/lldp_cpsw_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C examples/networking/tsn/gptp_cpsw_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C examples/networking/tsn/gptp_cpsw_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  sent_encoder_pru_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt_clean:
 	$(MAKE) -C examples/pru_io/sent/encoder/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile clean
@@ -4931,16 +4931,16 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 	$(MAKE) -C examples/networking/enet_tx_scatter_gather/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  lldp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/tsn/lldp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C examples/networking/tsn/lldp_cpsw_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  lldp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/tsn/lldp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C examples/networking/tsn/lldp_cpsw_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  gptp_app_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C examples/networking/tsn/gptp_cpsw_app/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  gptp_app_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/networking/tsn/gptp_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C examples/networking/tsn/gptp_cpsw_app/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  sent_encoder_pru_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt_scrub:
 	$(MAKE) -C examples/pru_io/sent/encoder/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile scrub

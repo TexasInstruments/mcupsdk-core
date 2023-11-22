@@ -43,7 +43,7 @@
 
 /* Maximum number of MAC address to be set per CPSW peripheral.
 Since CPSW_3G can support upto two MACs, this is set to 2 here */
-#define MAC_ADDR_LIST_LEN_SHARED_PER_PER (1U)
+#define MAC_ADDR_LIST_LEN_SHARED_PER_PER (3U)
 
 #define ENET_MAX_NUM_MAC_ADDR_STORED (5U)
 

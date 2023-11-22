@@ -2099,7 +2099,7 @@ static EnetRm_ResPrms gEnetAppRmDefCfg_iccsgSwt =
             .coreId        = `module.getCpuID()`,
             .numTxCh       = ENET_SYSCFG_TX_CHANNELS_NUM,    /* numTxCh */
             .numRxFlows    = ENET_SYSCFG_RX_FLOWS_NUM,    /* numRxFlows */
-            .numMacAddress = 1U,
+            .numMacAddress = 4U,
         },
     },
     .numCores = 1U,

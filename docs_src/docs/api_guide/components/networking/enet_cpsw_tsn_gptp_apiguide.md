@@ -45,7 +45,7 @@ The TSN Stack library is composed of the following source modules:
 
 ## Stack Initialization
 
-A reference example of the TSN stack initialization can be found in ``<mcu_plus_sdk>/examples/networking/tsn/gptp_app/tsninit.c``.
+A reference example of the TSN stack initialization can be found in ``<mcu_plus_sdk>/examples/networking/tsn/tsninit.c``.
 Prior to any module calls, it is necessary to initialize the unibase library once.
 This can be achieved by invoking the ``tsn_app_init()`` function.
 
@@ -109,7 +109,7 @@ To deinitialize the TSN modules, you can invoke the ``tsn_app_stop();`` and ``ts
 To integrate the TSN stack into your application, follow these steps:
 
 - Initialize Enet LLD and setup board dependencies.  In the TSN example application,
-  the initialization routines can be found at ``<mcu_plus_sdk>/examples/networking/tsn/gptp_app/tsnapp_main.c``,
+  the initialization routines can be found at ``<mcu_plus_sdk>/examples/networking/tsn/tsnapp_main.c``,
   which can be used as reference.
 
   The main functions related to EVM board initialization are::
@@ -252,7 +252,7 @@ for persistence.
 Example usage:
 ``gptpgcfg_set_item(gpoptd.instnum, XL4_EXTMOD_XL4GPTP_USE_HW_PHASE_ADJUSTMENT,
   YDBI_CONFIG, &use_hwphase, sizeof(use_hwphase));``
-- As a reference, please consult the ``<mcu_plus_sdk>/examples/networking/tsn/gptp_app/tsninit.c``
+- As a reference, please consult the ``<mcu_plus_sdk>/examples/networking/tsn/tsninit.c``
 file.
 
 - The configuration must be done before calling the ``gptpman_run()`` function

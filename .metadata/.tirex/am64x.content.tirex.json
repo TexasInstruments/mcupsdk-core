@@ -13253,7 +13253,7 @@
         ],
         "description": "A Gptp App Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "gptp_app",
-        "location": "../../examples/networking/tsn/gptp_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/tsn/gptp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_GP_EVM"
         ],
@@ -13266,7 +13266,7 @@
         "subCategories": [
             "networking",
             "tsn",
-            "gptp_app",
+            "gptp_cpsw_app",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [
@@ -13286,7 +13286,7 @@
         ],
         "description": "A Gptp App Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "gptp_app",
-        "location": "../../examples/networking/tsn/gptp_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/tsn/gptp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_SK_EVM"
         ],
@@ -13299,7 +13299,7 @@
         "subCategories": [
             "networking",
             "tsn",
-            "gptp_app",
+            "gptp_cpsw_app",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [
@@ -13317,9 +13317,9 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Lldp App Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "lldp_app",
-        "location": "../../examples/networking/tsn/lldp_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "description": "A Gptp Icssg App Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "gptp_icssg_app",
+        "location": "../../examples/networking/tsn/gptp_icssg_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_GP_EVM"
         ],
@@ -13332,7 +13332,7 @@
         "subCategories": [
             "networking",
             "tsn",
-            "lldp_app",
+            "gptp_icssg_app",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [
@@ -13352,7 +13352,40 @@
         ],
         "description": "A Lldp App Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "lldp_app",
-        "location": "../../examples/networking/tsn/lldp_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/tsn/lldp_cpsw_app/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "tsn",
+            "lldp_cpsw_app",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Lldp App Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "lldp_app",
+        "location": "../../examples/networking/tsn/lldp_cpsw_app/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM64x_SK_EVM"
         ],
@@ -13365,7 +13398,7 @@
         "subCategories": [
             "networking",
             "tsn",
-            "lldp_app",
+            "lldp_cpsw_app",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [

@@ -111,7 +111,7 @@ extern "C" {
 #define ENET_CTRL_RGMII_ID_NODELAY          (1U)
 
 #define ENET_UTILS_MCU2_0_UART_INSTANCE     (2U)
-#define ENET_MAX_NUM_MAC_PER_PHER           (2U)
+#define ENET_MAX_NUM_MAC_PER_PHER           (3U)
 
 #if defined(__KLOCWORK__)
 #define EnetAppUtils_assert(cond)       do { if (!(cond)) abort(); } while (0)

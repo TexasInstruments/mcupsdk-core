@@ -35,12 +35,33 @@
 /* ========================================================================== */
 /*                              Include Files                                 */
 /* ========================================================================== */
-#include "enetapp.h"
+/* ========================================================================== */
+/*                              Include Files                                 */
+/* ========================================================================== */
+#include <enet.h>
+#include <kernel/dpl/ClockP.h>
+#include "FreeRTOS.h"
+#include <kernel/dpl/TaskP.h>
+#include <task.h>
+#include <networking/enet/utils/include/enet_apputils.h>
+#include <networking/enet/utils/include/enet_appmemutils.h>
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
+#include "ti_enet_open_close.h"
+ /* include this header is very important, otherwise some macro is not exported here.
+  * e.g. ENET_SYSCFG_ENABLE_MDIO_MANUALMODE */
+#include "ti_enet_config.h"
 #include <tsn_combase/tilld/cb_lld_ethernet.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
+
+#define MAX_NUM_MAC_PORTS (3U)
+
+/* Task stack size */
+#define ENETAPP_TASK_STACK_SZ                     (10U * 1024U)
+
 #define ETH_P_IPV4 (0x0800U)
 
 /* ========================================================================== */

@@ -662,6 +662,32 @@ static void EnetApp_openDmaChannels(EnetAppDmaSysCfg_Obj *dma,
                                  coreId);
 }
 
+int32_t EnetApp_enablePortTsEvent(Enet_Handle hEnet, uint32_t coreId, Enet_MacPort macPort[], uint32_t numPorts)
+{
+    /* Per MacPort timestamping enabling is not supported in ICSSG */
+    /* Need this funtion definition to align CPSW and ICSSG for TSN libs */
+    return ENET_SOK;
+}
+
+int32_t EnetApp_getRxTimeStamp(Enet_Handle hEnet, uint32_t coreId, EnetTimeSync_GetEthTimestampInArgs* inArgs, uint64_t *ts)
+{
+    /* Not supported for ICSSG, the dmaPktInfo has the time stamp of the pkt */
+    /* Need this funtion definition to align CPSW and ICSSG for TSN libs */
+    return ENET_SOK;
+}
+
+int32_t EnetApp_setTimeStampComplete(Enet_Handle hEnet, uint32_t coreId)
+{
+    int32_t status = ENET_SOK;
+    Enet_IoctlPrms prms;
+    EnetUtils_delayNs(1000*1000); // wait for 1ms, assuming the ioctl will complete.
+    // TODO: Need to replace by registering proper PRU isr which hits after completion
+
+    /* Pass the completion ioctl, so that get current time stamp ioctl works */
+    memset((void *)(&prms), 0, sizeof(prms));
+    ENET_IOCTL(hEnet, coreId, ENET_TIMESYNC_IOCTL_SET_TIMESTAMP_COMPLETE, &prms, status);
+    return status;
+}
 
 %if(instance.RtosVariant == "NoRTOS"){
 static void EnetApp_postPollEvent(ClockP_Object *clkInst, void *pArg)

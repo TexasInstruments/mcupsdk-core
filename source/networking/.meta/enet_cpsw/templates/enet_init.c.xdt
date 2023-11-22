@@ -719,6 +719,60 @@ void EnetApp_doIetVerification(Enet_Handle hEnet,
 }
 %}
 
+static void EnetApp_setPortTsEventPrms(CpswMacPort_TsEventCfg *tsPortEventCfg)
+{
+    memset(tsPortEventCfg, 0, sizeof(CpswMacPort_TsEventCfg));
+
+    tsPortEventCfg->txAnnexFEn = true;
+    tsPortEventCfg->rxAnnexFEn = true;
+    tsPortEventCfg->txHostTsEn = true;
+    /* Enable ts for SYNC, PDELAY_REQUEST, PDELAY_RESPONSE */
+    tsPortEventCfg->messageType = 13;
+    tsPortEventCfg->seqIdOffset = 30;
+    tsPortEventCfg->domainOffset = 4;
+}
+
+int32_t EnetApp_enablePortTsEvent(Enet_Handle hEnet, uint32_t coreId, uint32_t macPort[], uint32_t numPorts)
+{
+    int32_t status = ENET_SOK;
+    Enet_IoctlPrms prms;
+    CpswMacPort_EnableTsEventInArgs enableTsEventInArgs;
+    uint8_t i = 0U;
+    
+    EnetApp_setPortTsEventPrms(&(enableTsEventInArgs.tsEventCfg));
+    for (i = 0U; i < numPorts; i++) 
+    {
+        enableTsEventInArgs.macPort = (Enet_MacPort)macPort[i];
+        ENET_IOCTL_SET_IN_ARGS(&prms, &enableTsEventInArgs);
+        ENET_IOCTL(hEnet, coreId, CPSW_MACPORT_IOCTL_ENABLE_CPTS_EVENT, &prms, status);
+        if (status != ENET_SOK) 
+        {
+            EnetAppUtils_print("Enet_ioctl ENABLE_CPTS_EVENT failed %d port %d\n", status, macPort[i]);
+        }
+    }
+
+    return status;
+}
+
+int32_t EnetApp_getRxTimeStamp(Enet_Handle hEnet, uint32_t coreId, EnetTimeSync_GetEthTimestampInArgs* inArgs, uint64_t *ts)
+{
+    int32_t status = ENET_SOK;
+    Enet_IoctlPrms prms;
+
+    ENET_IOCTL_SET_INOUT_ARGS(&prms, inArgs, ts);
+    ENET_IOCTL(hEnet, coreId, ENET_TIMESYNC_IOCTL_GET_ETH_RX_TIMESTAMP, &prms, status);
+
+    return status;
+}
+
+int32_t EnetApp_setTimeStampComplete(Enet_Handle hEnet, uint32_t coreId)
+{
+    int32_t status = ENET_SOK;
+    /* Not supported for CPSW, the completion ioctl is only vaild for ICSSG */
+    /* Need this funtion definition to align CPSW and ICSSG for TSN libs */
+    return status;
+}
+
 %if(instance.RtosVariant == "NoRTOS"){
 static void EnetApp_postPollEvent(ClockP_Object *clkInst, void *pArg)
 {

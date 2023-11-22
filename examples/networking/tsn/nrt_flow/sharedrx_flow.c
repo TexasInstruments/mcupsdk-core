@@ -35,6 +35,7 @@
 /* ========================================================================== */
 #include <tsn_combase/combase.h>
 #include <nrt_flow/dataflow.h>
+#include "enetapp_cpsw.h"
 
 /* ========================================================================== */
 /*                                Function Declarations                       */
