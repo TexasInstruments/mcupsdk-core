@@ -43,7 +43,6 @@ const section12       = section.addInstance();
  */
 ipc.m4fss0_0 = "NONE";
 
-debug_log.enableCssLog             = false;
 debug_log.enableUartLog            = true;
 debug_log.enableSharedMemLog       = true;
 debug_log.enableSharedMemLogReader = true;
