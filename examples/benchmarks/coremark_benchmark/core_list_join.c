@@ -156,7 +156,7 @@ ee_s16 calc_func(ee_s16 *pdata, core_results *res)
 				retval = data;
 				break;
 		}
-		res->crc = crcu16(retval,res->crc);
+		res->crc = crcu16(retval, res->crc);
 		retval &= 0x007f;
 		*pdata = (data & 0xff00) | 0x0080 | retval; /* cache the result */
 		return retval;
@@ -170,8 +170,8 @@ ee_s16 calc_func(ee_s16 *pdata, core_results *res)
 */
 ee_s32 cmp_complex(list_data *a, list_data *b, core_results *res)
 {
-	ee_s16 val1 = calc_func(&(a->data16),res);
-	ee_s16 val2 = calc_func(&(b->data16),res);
+	ee_s16 val1 = calc_func(&(a->data16), res);
+	ee_s16 val2 = calc_func(&(b->data16), res);
 	return (val1 - val2);
 }
 
@@ -180,7 +180,8 @@ ee_s32 cmp_complex(list_data *a, list_data *b, core_results *res)
 
 	Can be used by mergesort.
 */
-ee_s32 cmp_idx(list_data *a, list_data *b, core_results *res) {
+ee_s32 cmp_idx(list_data *a, list_data *b, core_results *res)
+{
 	if (res==NULL)
     {
 		a->data16 = (a->data16 & 0xff00) | (0x00ff & (a->data16>>8));
@@ -246,18 +247,18 @@ ee_u16 core_bench_list(core_results *res, ee_s16 finder_idx)
 			info.idx++;
         }
         #if CORE_DEBUG
-            ee_printf("List find %d: [%d,%d,%d]\n",i,retval,missed,found);
+            ee_printf("List find %d: [%d,%d,%d]\n", i, retval, missed, found);
         #endif
 	}
 	retval += found*4-missed;
 	/* sort the list by data content and remove one item*/
 	if (finder_idx>0)
     {
-		list = core_list_mergesort(list,cmp_complex,res);
+		list = core_list_mergesort(list, cmp_complex, res);
     }
 	remover = core_list_remove(list->next);
 	/* CRC data content of list from location of index N forward, and then undo remove */
-	finder = core_list_find(list,&info);
+	finder = core_list_find(list, &info);
 	if (!finder)
     {
 		finder = list->next;
@@ -272,7 +273,7 @@ ee_u16 core_bench_list(core_results *res, ee_s16 finder_idx)
     #endif
 	remover = core_list_undo_remove(remover, list->next);
 	/* sort the list by index, in effect returning the list to original state */
-	list = core_list_mergesort(list, cmp_idx, NULL);
+	list = core_list_mergesort(list, cmp_idx,  NULL);
 	/* CRC data content of list */
 	finder = list->next;
 	while (finder)

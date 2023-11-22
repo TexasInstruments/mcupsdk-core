@@ -168,8 +168,8 @@ section3.output_section[0].palignment = true;
 section3.output_section[1].$name      = ".rodata";
 section3.output_section[1].palignment = true;
 
-section4.load_memory                  = "OCRAM";
 section4.$name                        = "Data Segment";
+section4.load_memory                  = "R5F_TCMA";
 section4.output_section.create(1);
 section4.output_section[0].$name      = ".data";
 section4.output_section[0].palignment = true;

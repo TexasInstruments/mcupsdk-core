@@ -107,16 +107,16 @@ ee_u16 core_bench_state(ee_u32 blksize, ee_u8 *memblock,
 
 
 #if CORE_DEBUG
-	ee_printf("State Bench: %d,%d,%d,%04x\n",seed1,seed2,step,crc);
+	ee_printf("State Bench: %d,%d,%d,%04x\n", seed1, seed2, step, crc);
 #endif
 	for (i=0; i<NUM_CORE_STATES; i++)
     {
-		final_counts[i]=track_counts[i]=0;
+		final_counts[i] = track_counts[i]=0;
 	}
 	/* run the state machine over the input */
 	while (*p!=0)
     {
-		enum CORE_STATE fstate=core_state_transition(&p,track_counts);
+		enum CORE_STATE fstate = core_state_transition(&p, track_counts);
 		final_counts[fstate]++;
 #if CORE_DEBUG
 	ee_printf("%d,",fstate);
@@ -129,7 +129,7 @@ ee_u16 core_bench_state(ee_u32 blksize, ee_u8 *memblock,
 	while (p < (memblock+blksize))
     { /* insert some corruption */
 		if (*p!=',')
-			*p^=(ee_u8)seed1;
+			*p ^= (ee_u8)seed1;
 		p+=step;
 	}
 	p=memblock;
@@ -149,7 +149,7 @@ ee_u16 core_bench_state(ee_u32 blksize, ee_u8 *memblock,
 	while (p < (memblock+blksize))
     { /* undo corruption is seed1 and seed2 are equal */
 		if (*p!=',')
-			*p^=(ee_u8)seed2;
+			*p ^= (ee_u8)seed2;
 		p+=step;
 	}
 	/* end timing */
@@ -178,11 +178,11 @@ static ee_u8 *errpat[4]  = {(ee_u8 *)"T0.3e-1F", (ee_u8 *)"-T.T++Tq", (ee_u8 *)"
 */
 void core_init_state(ee_u32 size, ee_s16 seed, ee_u8 *p)
 {
-	ee_u32 total=0,next=0,i;
-	ee_u8 *buf=0;
+	ee_u32 total = 0,next = 0,i;
+	ee_u8 *buf = 0;
 #if CORE_DEBUG
-	ee_u8 *start=p;
-	ee_printf("State: %d,%d\n",size,seed);
+	ee_u8 *start = p;
+	ee_printf("State: %d,%d\n", size, seed);
 #endif
 	size--;
 	next=0;
@@ -192,7 +192,7 @@ void core_init_state(ee_u32 size, ee_s16 seed, ee_u8 *p)
         {
 			for(i=0;i<next;i++)
             {
-				*(p+total+i)=buf[i];
+				*(p+total+i) = buf[i];
             }
 			*(p+total+i)=',';
 			total+=next+1;

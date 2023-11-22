@@ -42,9 +42,11 @@ This page lists all the examples and demos supported in this SDK.
 -# \subpage EXAMPLES_NETWORKING
 -# \subpage EXAMPLES_SDL
 \endcond
+
 \cond SOC_AM273X
 -# \subpage EXAMPLES_SECURITY
 -# \subpage EXAMPLES_MATHLIB_BENCHMARK
+-# \subpage EXAMPLES_BENCHMARKS
 \endcond
 
 \cond SOC_AWR294X
