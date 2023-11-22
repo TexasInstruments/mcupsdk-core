@@ -8,8 +8,6 @@
 /**
  * Import the modules used in this configuration.
  */
-const flash       = scripting.addModule("/board/flash/flash", {}, false);
-const flash1      = flash.addInstance();
 const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
 const bootloader1 = bootloader.addInstance();
 const edma        = scripting.addModule("/drivers/edma/edma", {}, false);
@@ -54,9 +52,6 @@ const section15   = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-flash1.$name                  = "CONFIG_FLASH0";
-flash1.peripheralDriver.$name = "CONFIG_QSPI0";
-
 bootloader1.appImageOffset = "0x000A0000";
 bootloader1.$name          = "CONFIG_BOOTLOADER_0";
 bootloader1.bootMedia      = "MEM";
@@ -71,7 +66,6 @@ uart1.MSS_UART.TX.$assign = "PAD_DB";
 uart1.edmaConfig                   = edma1;
 edma1.$name                        = "CONFIG_EDMA0";
 edma1.instance                     = "EDMA_MSS_A";
-flash1.peripheralDriver.edmaConfig = edma1;
 edma1.edmaRmDmaCh[0].resourceType  = scripting.forceWrite("ownDmaCh");
 edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
 edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
@@ -335,12 +329,5 @@ section15.output_section[0].$name     = ".bss.ipc_vring_mem";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-flash1.peripheralDriver.MSS_QSPI["0"].$suggestSolution = "PAD_AL";
-flash1.peripheralDriver.MSS_QSPI["1"].$suggestSolution = "PAD_AM";
-flash1.peripheralDriver.MSS_QSPI["2"].$suggestSolution = "PAD_AN";
-flash1.peripheralDriver.MSS_QSPI["3"].$suggestSolution = "PAD_AO";
-flash1.peripheralDriver.MSS_QSPI.$suggestSolution      = "MSS_QSPI0";
-flash1.peripheralDriver.MSS_QSPI.CLK.$suggestSolution  = "PAD_AP";
-flash1.peripheralDriver.MSS_QSPI.CS.$suggestSolution   = "PAD_AQ";
-uart1.MSS_UART.$suggestSolution                        = "MSS_UARTA";
-timer1.MSS_RTI.$suggestSolution                        = "MSS_RTIB";
+uart1.MSS_UART.$suggestSolution = "MSS_UARTA";
+timer1.MSS_RTI.$suggestSolution = "MSS_RTIB";
