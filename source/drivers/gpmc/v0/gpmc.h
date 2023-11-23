@@ -1005,7 +1005,7 @@ uint32_t GPMC_getInputClk(GPMC_Handle handle);
  *
  *  \pre    GPMC controller has been opened using #GPMC_open()
  *
- *  \param  driverInstanceIndex Index of config to use in the #OSPI_Config array
+ *  \param  driverInstanceIndex Index of config to use in the #GPMC_Config array
  *
  *  \return An #GPMC_Handle if it has been opened already or NULL otherwise
  *
