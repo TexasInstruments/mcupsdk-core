@@ -23,8 +23,6 @@ const debug_log                 = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7                 = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71                = mpu_armv7.addInstance();
 const mpu_armv72                = mpu_armv7.addInstance();
-const mpu_armv73                = mpu_armv7.addInstance();
-const mpu_armv74                = mpu_armv7.addInstance();
 const default_linker            = scripting.addModule("/memory_configurator/default_linker", {}, false);
 const default_linker1           = default_linker.addInstance();
 const general                   = scripting.addModule("/memory_configurator/general", {}, false);
@@ -40,6 +38,7 @@ const section5                  = section.addInstance();
 const section6                  = section.addInstance();
 const section7                  = section.addInstance();
 const section8                  = section.addInstance();
+const section9                  = section.addInstance();
 const shared_region_references  = scripting.addModule("/memory_configurator/shared_region_references", {}, false);
 const shared_region_references1 = shared_region_references.addInstance();
 
@@ -95,18 +94,6 @@ mpu_armv71.attributes   = "NonCached";
 
 mpu_armv72.$name = "CONFIG_MPU_REGION1";
 mpu_armv72.size  = 18;
-
-mpu_armv73.$name        = "CONFIG_MPU_REGION2";
-mpu_armv73.attributes   = "NonCached";
-mpu_armv73.allowExecute = false;
-mpu_armv73.baseAddr     = 0xA5000000;
-mpu_armv73.size         = 23;
-
-mpu_armv74.$name        = "CONFIG_MPU_REGION3";
-mpu_armv74.size         = 14;
-mpu_armv74.attributes   = "NonCached";
-mpu_armv74.allowExecute = false;
-mpu_armv74.baseAddr     = 0xA5800000;
 
 default_linker1.$name = "memory_configurator_default_linker0";
 
@@ -202,6 +189,13 @@ section8.$name                       = "IPC Shared Memory";
 section8.output_section.create(1);
 section8.output_section[0].$name     = ".bss.ipc_vring_mem";
 section8.output_section[0].alignment = 0;
+
+section9.$name                        = "Resource Table";
+section9.load_memory                  = "DDR_0";
+section9.output_section.create(1);
+section9.output_section[0].$name      = ".resource_table";
+section9.output_section[0].alignment  = 4096;
+section9.output_section[0].palignment = true;
 
 shared_region_references1.$name                     = "CONFIG_SHARED0";
 shared_region_references1.shared_region             = "RTOS_NORTOS_IPC_SHM_MEM";
