@@ -10,8 +10,6 @@
  */
 const flash           = scripting.addModule("/board/flash/flash", {}, false);
 const flash1          = flash.addInstance();
-const bootloader      = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
-const bootloader1     = bootloader.addInstance();
 const ddr             = scripting.addModule("/drivers/ddr/ddr", {}, false);
 const ddr1            = ddr.addInstance();
 const mmcsd           = scripting.addModule("/drivers/mmcsd/mmcsd", {}, false);
@@ -42,9 +40,6 @@ const section5        = section.addInstance();
 flash1.$name                  = "CONFIG_FLASH0";
 flash1.peripheralDriver.$name = "CONFIG_OSPI0";
 
-bootloader1.bootMedia = "MEM";
-bootloader1.$name     = "CONFIG_BOOTLOADER_MEM";
-
 ddr1.$name = "CONFIG_DDR0";
 
 mmcsd1.$name        = "CONFIG_MMCSD0";
@@ -52,6 +47,7 @@ mmcsd1.moduleSelect = "MMC0";
 mmcsd1.MMC0.$assign = "MMC0";
 
 debug_log.enableLogZoneInfo = true;
+debug_log.enableCssLog      = false;
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -79,8 +75,11 @@ mpu_armv75.baseAddr = 0x80000000;
 
 default_linker1.$name = "memory_configurator_default_linker0";
 
-general1.$name        = "CONFIG_GENERAL0";
-general1.linker.$name = "TIARMCLANG0";
+general1.$name          = "CONFIG_GENERAL0";
+general1.irq_stack_size = 4096;
+general1.svc_stack_size = 256;
+general1.entry_point    = "-e_vectors_sbl";
+general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
 region1.memory_region.create(7);
@@ -94,8 +93,8 @@ region1.memory_region[1].size               = 0x7FC0;
 region1.memory_region[2].type               = "TCMB_R5F";
 region1.memory_region[2].$name              = "R5F_TCMB0";
 region1.memory_region[2].size               = 0x8000;
-region1.memory_region[3].auto               = false;
 region1.memory_region[3].$name              = "MSRAM_VECS";
+region1.memory_region[3].auto               = false;
 region1.memory_region[3].size               = 0x100;
 region1.memory_region[4].$name              = "MSRAM_0";
 region1.memory_region[4].auto               = false;
@@ -103,12 +102,12 @@ region1.memory_region[4].manualStartAddress = 0x70000100;
 region1.memory_region[4].size               = 0x17F00;
 region1.memory_region[5].$name              = "MSRAM_1";
 region1.memory_region[5].auto               = false;
-region1.memory_region[5].manualStartAddress = 0x70018000;
 region1.memory_region[5].size               = 0x20000;
-region1.memory_region[6].$name              = "MSRAM_2";
+region1.memory_region[5].manualStartAddress = 0x70018000;
 region1.memory_region[6].auto               = false;
-region1.memory_region[6].manualStartAddress = 0x70038000;
 region1.memory_region[6].size               = 0x40100;
+region1.memory_region[6].$name              = "MSRAM_2";
+region1.memory_region[6].manualStartAddress = 0x70038000;
 
 section1.$name                        = "Vector Table";
 section1.group                        = false;
@@ -119,21 +118,25 @@ section1.output_section[0].palignment = true;
 
 section2.$name                        = "Text Segments";
 section2.load_memory                  = "MSRAM_0";
-section2.output_section.create(5);
-section2.output_section[0].$name      = ".text.hwi";
+section2.output_section.create(7);
 section2.output_section[0].palignment = true;
-section2.output_section[1].$name      = ".text.cache";
+section2.output_section[0].$name      = ".text";
 section2.output_section[1].palignment = true;
-section2.output_section[2].$name      = ".text.mpu";
+section2.output_section[1].$name      = ".text.hwi";
 section2.output_section[2].palignment = true;
-section2.output_section[3].$name      = ".text.boot";
+section2.output_section[2].$name      = ".text.cache";
 section2.output_section[3].palignment = true;
-section2.output_section[4].$name      = ".text:abort";
+section2.output_section[3].$name      = ".text.mpu";
 section2.output_section[4].palignment = true;
+section2.output_section[4].$name      = ".text.boot";
+section2.output_section[5].$name      = ".data";
+section2.output_section[5].palignment = true;
+section2.output_section[6].$name      = ".rodata";
+section2.output_section[6].palignment = true;
 
 section3.$name                                   = "Memory Segments";
-section3.load_memory                             = "MSRAM_1";
 section3.group                                   = false;
+section3.load_memory                             = "MSRAM_1";
 section3.output_section.create(3);
 section3.output_section[0].$name                 = ".bss";
 section3.output_section[0].palignment            = true;
@@ -173,12 +176,13 @@ section4.output_section[4].output_sections_end    = "__UNDEFINED_STACK_END";
 section4.output_section[4].input_section.create(1);
 section4.output_section[4].input_section[0].$name = ". = . + __UNDEFINED_STACK_SIZE;";
 
-section5.$name                   = "CONFIG_SECTION0";
-section5.group                   = false;
-section5.type                    = "NOLOAD";
-section5.load_memory             = "MSRAM_2";
+section5.group                       = false;
+section5.type                        = "NOLOAD";
+section5.$name                       = "File Buff";
+section5.load_memory                 = "MSRAM_2";
 section5.output_section.create(1);
-section5.output_section[0].$name = ".bss.filebuf";
+section5.output_section[0].$name     = ".bss.filebuf";
+section5.output_section[0].alignment = 0;
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
