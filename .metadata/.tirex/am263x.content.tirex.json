@@ -6801,6 +6801,402 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_polling_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_polling_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_polling_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_polling_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_polling_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_polling_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_polling_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_polling_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Interrupt Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_interrupt_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_interrupt_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Interrupt Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_interrupt_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_interrupt_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Interrupt Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_interrupt_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_interrupt_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Interrupt Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_interrupt_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_interrupt_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Dma Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_dma_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_dma_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Dma Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_dma_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_dma_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Dma Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_dma_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_dma_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Dma Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_dma_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_dma_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mcspi Performance 8bit Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_performance_8bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -8451,138 +8847,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
-        "name": "uart_echo_dma_lld",
-        "location": "../../examples/drivers/uart/uart_echo_dma_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDSCNCD263"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "uart",
-            "uart_echo_dma_lld",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
-        "name": "uart_echo_dma_lld",
-        "location": "../../examples/drivers/uart/uart_echo_dma_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM263"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "uart",
-            "uart_echo_dma_lld",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
-        "name": "uart_echo_interrupt_lld",
-        "location": "../../examples/drivers/uart/uart_echo_interrupt_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDSCNCD263"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "uart",
-            "uart_echo_interrupt_lld",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
-        "name": "uart_echo_interrupt_lld",
-        "location": "../../examples/drivers/uart/uart_echo_interrupt_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM263"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "uart",
-            "uart_echo_interrupt_lld",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "A Uart Echo Callback Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo_callback",
         "location": "../../examples/drivers/uart/uart_echo_callback/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -8715,72 +8979,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
-        "name": "uart_echo_polling_lld",
-        "location": "../../examples/drivers/uart/uart_echo_polling_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDSCNCD263"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "uart",
-            "uart_echo_polling_lld",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
-        "name": "uart_echo_polling_lld",
-        "location": "../../examples/drivers/uart/uart_echo_polling_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM263"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "uart",
-            "uart_echo_polling_lld",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "A UART echo DMA example. This example demonstrates uart echo using UART DMA. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo_dma",
         "location": "../../examples/drivers/uart/uart_echo_dma/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -8831,6 +9029,138 @@
             "uart",
             "uart_echo_dma",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
+        "name": "uart_echo_dma_lld",
+        "location": "../../examples/drivers/uart/uart_echo_dma_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_dma_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
+        "name": "uart_echo_dma_lld",
+        "location": "../../examples/drivers/uart/uart_echo_dma_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_dma_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
+        "name": "uart_echo_interrupt_lld",
+        "location": "../../examples/drivers/uart/uart_echo_interrupt_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_interrupt_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
+        "name": "uart_echo_interrupt_lld",
+        "location": "../../examples/drivers/uart/uart_echo_interrupt_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_interrupt_lld",
+            "r5fss0-0_nortos"
         ],
         "mainCategories": [
             [
@@ -8962,6 +9292,72 @@
             "drivers",
             "uart",
             "uart_echo_low_latency_polling",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
+        "name": "uart_echo_polling_lld",
+        "location": "../../examples/drivers/uart/uart_echo_polling_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_polling_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
+        "name": "uart_echo_polling_lld",
+        "location": "../../examples/drivers/uart/uart_echo_polling_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_polling_lld",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [

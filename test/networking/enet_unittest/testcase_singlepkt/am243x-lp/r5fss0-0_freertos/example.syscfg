@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM243x_ALX_beta" --package "ALX" --part "ALX" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @versions {"tool":"1.18.0+3266"}
  */
 
 /**
@@ -70,6 +70,11 @@ debug_log.enableUartLog        = true;
 debug_log.enableCssLog         = false;
 debug_log.uartLog.$name        = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign = "USART0";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -217,7 +222,7 @@ section7.output_section[0].alignment                        = 0;
 section7.output_section[0].input_section.create(2);
 section7.output_section[0].input_section[0].$name           = "*(*ENET_DMA_DESC_MEMPOOL)";
 section7.output_section[0].input_section[1].$name           = "*(*ENET_DMA_RING_MEMPOOL)";
-section7.output_section[0].input_section[1].additional_data = "#if (ENET_SYSCFG_PKT_POOL_ENABLE == 1)\n*(ENET_DMA_PKT_MEMPOOL)\n#endif";
+section7.output_section[0].input_section[1].additional_data = "#if (ENET_SYSCFG_PKT_POOL_ENABLE == 1)\n        *(*ENET_DMA_PKT_MEMPOOL)\n#endif";
 
 enet_cpsw1.$name                       = "CONFIG_ENET_CPSW0";
 enet_cpsw1.DisableMacPort2             = true;
@@ -269,3 +274,4 @@ enet_cpsw1.pinmux[0].RGMII2.TD2.$suggestSolution    = "PRG1_PRU1_GPO13";
 enet_cpsw1.pinmux[0].RGMII2.TD3.$suggestSolution    = "PRG1_PRU1_GPO14";
 enet_cpsw1.pinmux[0].RGMII2.TX_CTL.$suggestSolution = "PRG1_PRU1_GPO15";
 enet_cpsw1.pinmux[0].RGMII2.TXC.$suggestSolution    = "PRG1_PRU1_GPO16";
+

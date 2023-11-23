@@ -4357,6 +4357,402 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_polling_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_polling_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_polling_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_polling_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_polling_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_SK_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_polling_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_polling_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_SK_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_polling_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Interrupt Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_interrupt_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_interrupt_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Interrupt Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_interrupt_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_interrupt_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Interrupt Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_interrupt_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_SK_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_interrupt_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Interrupt Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_interrupt_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_SK_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_interrupt_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Dma Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_dma_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_dma_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Dma Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_dma_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_dma_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Dma Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_dma_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_SK_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_dma_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Dma Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_dma_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_SK_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_dma_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mcspi Performance 8bit Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_performance_8bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -7106,6 +7502,105 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Uart Echo Dma Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "uart_echo_dma",
+        "location": "../../examples/drivers/uart/uart_echo_dma/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_dma",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Dma Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "uart_echo_dma",
+        "location": "../../examples/drivers/uart/uart_echo_dma/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_SK_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_dma",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Dma Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "uart_echo_dma",
+        "location": "../../examples/drivers/uart/uart_echo_dma/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_SK_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_dma",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Uart Echo Dma Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo_dma_lld",
         "location": "../../examples/drivers/uart/uart_echo_dma_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -7221,105 +7716,6 @@
             "drivers",
             "uart",
             "uart_echo_interrupt_lld",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Uart Echo Dma Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "uart_echo_dma",
-        "location": "../../examples/drivers/uart/uart_echo_dma/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "uart",
-            "uart_echo_dma",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Uart Echo Dma Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "uart_echo_dma",
-        "location": "../../examples/drivers/uart/uart_echo_dma/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM64x_SK_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "uart",
-            "uart_echo_dma",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Uart Echo Dma Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "uart_echo_dma",
-        "location": "../../examples/drivers/uart/uart_echo_dma/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM64x_SK_EVM"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "uart",
-            "uart_echo_dma",
             "r5fss0-0_freertos"
         ],
         "mainCategories": [
@@ -7502,72 +7898,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Uart Echo Polling Lld Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "uart_echo_polling_lld",
-        "location": "../../examples/drivers/uart/uart_echo_polling_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "uart",
-            "uart_echo_polling_lld",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Uart Echo Polling Lld Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "uart_echo_polling_lld",
-        "location": "../../examples/drivers/uart/uart_echo_polling_lld/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "uart",
-            "uart_echo_polling_lld",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "A Uart Echo Low Latency Polling Example. CPU is A53SS0-0 running NORTOS.",
         "name": "uart_echo_low_latency_polling",
         "location": "../../examples/drivers/uart/uart_echo_low_latency_polling/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
@@ -7651,6 +7981,72 @@
             "uart",
             "uart_echo_low_latency_polling",
             "a53ss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Polling Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "uart_echo_polling_lld",
+        "location": "../../examples/drivers/uart/uart_echo_polling_lld/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_polling_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Polling Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "uart_echo_polling_lld",
+        "location": "../../examples/drivers/uart/uart_echo_polling_lld/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_polling_lld",
+            "r5fss0-0_freertos"
         ],
         "mainCategories": [
             [

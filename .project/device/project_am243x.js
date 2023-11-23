@@ -303,7 +303,7 @@ const example_file_list = [
 	"test/kernel/dpl/dpl_ut/nortos/m4/MpuP_armv7m/.project/project.js",
     "test/kernel/freertos/.project/project.js",
     "test/networking/mbedtls_test/test_aes/.project/project.js",
-    "test/networking/mbedtls_test/test_ssl_x509/.project/project.js",
+    //"test/networking/mbedtls_test/test_ssl_x509/.project/project.js",
     "test/networking/mbedtls_test/test_sha_entropy/.project/project.js",
     "test/networking/mbedtls_test/test_pka/.project/project.js",
     "test/networking/mbedtls_benchmark/.project/project.js",

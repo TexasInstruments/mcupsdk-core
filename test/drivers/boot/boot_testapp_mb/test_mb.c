@@ -46,7 +46,7 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-#define APP_BUFFER_SIZE (0x130000) /* Size is slightly greater than 1 MB */
+#define APP_BUFFER_SIZE (0x128000) /* Size is slightly greater than 1 MB */
 
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
