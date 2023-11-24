@@ -42,7 +42,7 @@ const includes_freertos_r5f = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
-        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/r5f",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/r5f",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/utils/include",
