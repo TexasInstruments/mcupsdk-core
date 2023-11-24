@@ -102,9 +102,18 @@ This page lists all the examples related to Ethernet Communication.
 ### Layer 2 Examples on FreeRTOS
 -# \subpage EXAMPLES_ENET_CPSW_LOOPBACK
 -# \subpage EXAMPLES_ENET_LAYER2_CPSW
+-# \subpage EXAMPLES_ENET_LAYER2_CPSW_SWITCH
+-# \subpage EXAMPLES_ENET_CPSW_EST
 ### TCP/IP Examples using LwIP Stack on FreeRTOS
 -# \subpage EXAMPLES_ENET_LWIP_CPSW
 -# \subpage EXAMPLES_CPSW_LWIP_HTTPS
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_SOCKET
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPCLIENT
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPSERVER
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_UDP_IGMP
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_UDPCLIENT
+### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
+-# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
 \endcond
 
 \cond SOC_AM273X
