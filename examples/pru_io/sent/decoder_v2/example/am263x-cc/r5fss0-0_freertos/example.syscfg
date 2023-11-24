@@ -1,0 +1,166 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.18.0+3266"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const gpio                = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1               = gpio.addInstance();
+const gpio2               = gpio.addInstance();
+const gpio3               = gpio.addInstance();
+const gpio4               = gpio.addInstance();
+const gpio5               = gpio.addInstance();
+const gpio6               = gpio.addInstance();
+const i2c                 = scripting.addModule("/drivers/i2c/i2c", {}, false);
+const i2c1                = i2c.addInstance();
+const pruicss             = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
+const pruicss1            = pruicss.addInstance();
+const debug_log           = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7           = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71          = mpu_armv7.addInstance();
+const mpu_armv72          = mpu_armv7.addInstance();
+const mpu_armv73          = mpu_armv7.addInstance();
+const mpu_armv74          = mpu_armv7.addInstance();
+const mpu_armv75          = mpu_armv7.addInstance();
+const mpu_armv76          = mpu_armv7.addInstance();
+const soc_timesync_xbar1  = scripting.addModule("/xbar/soc_timesync_xbar1/soc_timesync_xbar1", {}, false);
+const soc_timesync_xbar11 = soc_timesync_xbar1.addInstance();
+const soc_timesync_xbar12 = soc_timesync_xbar1.addInstance();
+const soc_timesync_xbar13 = soc_timesync_xbar1.addInstance();
+const soc_timesync_xbar14 = soc_timesync_xbar1.addInstance();
+const soc_timesync_xbar15 = soc_timesync_xbar1.addInstance();
+const soc_timesync_xbar16 = soc_timesync_xbar1.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+gpio1.$name                = "CHANNEL0_GPIO93";
+gpio1.enableIntr           = true;
+gpio1.trigType             = "FALL_EDGE";
+gpio1.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO0";
+
+gpio2.$name                = "CHANNEL1_GPIO94";
+gpio2.trigType             = "FALL_EDGE";
+gpio2.enableIntr           = true;
+gpio2.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO1";
+
+gpio3.$name                = "CHANNEL2_GPIO95";
+gpio3.trigType             = "FALL_EDGE";
+gpio3.enableIntr           = true;
+gpio3.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO2";
+
+gpio4.$name                = "CHANNEL3_GPIO96";
+gpio4.enableIntr           = true;
+gpio4.trigType             = "FALL_EDGE";
+gpio4.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO3";
+
+gpio5.$name                = "CHANNEL4_GPIO92";
+gpio5.enableIntr           = true;
+gpio5.trigType             = "FALL_EDGE";
+gpio5.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO4";
+
+gpio6.$name                = "CHANNEL5_GPIO87";
+gpio6.enableIntr           = true;
+gpio6.trigType             = "FALL_EDGE";
+gpio6.GPIO.gpioPin.$assign = "PR0_PRU0_GPIO5";
+
+i2c1.$name           = "CONFIG_I2C2";
+i2c1.I2C.$assign     = "I2C2";
+i2c1.I2C.SCL.$assign = "UART0_RTSn";
+i2c1.I2C.SDA.$assign = "UART0_CTSn";
+
+pruicss1.$name                           = "CONFIG_PRU_ICSS0";
+pruicss1.AdditionalICSSSettings[0].$name = "CONFIG_PRU_ICSS_IO0";
+
+debug_log.enableUartLog            = true;
+debug_log.enableSharedMemLog       = true;
+debug_log.enableSharedMemLogReader = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign     = "UART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x80000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+
+mpu_armv75.$name        = "CONFIG_MPU_REGION4";
+mpu_armv75.size         = 14;
+mpu_armv75.baseAddr     = 0x50D00000;
+mpu_armv75.allowExecute = false;
+mpu_armv75.attributes   = "Device";
+
+mpu_armv76.$name        = "CONFIG_MPU_REGION5";
+mpu_armv76.size         = 14;
+mpu_armv76.allowExecute = false;
+mpu_armv76.attributes   = "NonCached";
+mpu_armv76.baseAddr     = 0x72000000;
+
+soc_timesync_xbar11.xbarOutput          = "GPIO_INT_XBAR_GPIO_MUX_93";
+soc_timesync_xbar11.instance            = "SOC_TIMESYNC_XBAR1_ICSS_MODULE_2";
+soc_timesync_xbar11.$name               = "CONFIG_GPIO93_SYNCEV10_CAP0";
+soc_timesync_xbar11.xbarConfig.$name    = "CONFIG_GPIO_INT_XBAR0";
+soc_timesync_xbar11.xbarConfig.instance = "GPIO_INT_XBAR_SOC_TIMESYNC_XBAR1_0";
+
+soc_timesync_xbar12.xbarOutput          = "GPIO_INT_XBAR_GPIO_MUX_94";
+soc_timesync_xbar12.instance            = "SOC_TIMESYNC_XBAR1_ICSS_MODULE_3";
+soc_timesync_xbar12.$name               = "CONFIG_GPIO94_SYNCEV11_CAP1";
+soc_timesync_xbar12.xbarConfig.$name    = "CONFIG_GPIO_INT_XBAR1";
+soc_timesync_xbar12.xbarConfig.instance = "GPIO_INT_XBAR_SOC_TIMESYNC_XBAR1_1";
+
+soc_timesync_xbar13.xbarOutput          = "GPIO_INT_XBAR_GPIO_MUX_95";
+soc_timesync_xbar13.instance            = "SOC_TIMESYNC_XBAR1_ICSS_MODULE_4";
+soc_timesync_xbar13.$name               = "CONFIG_GPIO95_SYNCEV12_CAP2";
+soc_timesync_xbar13.xbarConfig.$name    = "CONFIG_GPIO_INT_XBAR2";
+soc_timesync_xbar13.xbarConfig.instance = "GPIO_INT_XBAR_SOC_TIMESYNC_XBAR1_2";
+
+soc_timesync_xbar14.xbarOutput          = "GPIO_INT_XBAR_GPIO_MUX_96";
+soc_timesync_xbar14.instance            = "SOC_TIMESYNC_XBAR1_ICSS_MODULE_5";
+soc_timesync_xbar14.$name               = "CONFIG_GPIO96_SYNCEV13_CAP3";
+soc_timesync_xbar14.xbarConfig.$name    = "CONFIG_GPIO_INT_XBAR3";
+soc_timesync_xbar14.xbarConfig.instance = "GPIO_INT_XBAR_SOC_TIMESYNC_XBAR1_3";
+
+soc_timesync_xbar15.xbarOutput          = "GPIO_INT_XBAR_GPIO_MUX_92";
+soc_timesync_xbar15.instance            = "SOC_TIMESYNC_XBAR1_ICSS_MODULE_6";
+soc_timesync_xbar15.$name               = "CONFIG_GPIO92_SYNCEV14_CAP4";
+soc_timesync_xbar15.xbarConfig.$name    = "CONFIG_GPIO_INT_XBAR4";
+soc_timesync_xbar15.xbarConfig.instance = "GPIO_INT_XBAR_SOC_TIMESYNC_XBAR1_4";
+
+soc_timesync_xbar16.xbarOutput          = "GPIO_INT_XBAR_GPIO_MUX_87";
+soc_timesync_xbar16.instance            = "SOC_TIMESYNC_XBAR1_ICSS_MODULE_7";
+soc_timesync_xbar16.$name               = "CONFIG_GPIO87_SYNCEV15_CAP5";
+soc_timesync_xbar16.xbarConfig.$name    = "CONFIG_GPIO_INT_XBAR5";
+soc_timesync_xbar16.xbarConfig.instance = "GPIO_INT_XBAR_SOC_TIMESYNC_XBAR1_5";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+gpio1.GPIO.$suggestSolution = "GPIO0";
+gpio2.GPIO.$suggestSolution = "GPIO0";
+gpio3.GPIO.$suggestSolution = "GPIO0";
+gpio4.GPIO.$suggestSolution = "GPIO0";
+gpio5.GPIO.$suggestSolution = "GPIO0";
+gpio6.GPIO.$suggestSolution = "GPIO0";
