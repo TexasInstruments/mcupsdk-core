@@ -35,8 +35,7 @@ FILES_common := \
     mcan.c \
     mcspi_v0.c \
     mcspi_v0_lld.c \
-    mcspi_dma_udma.c \
-    mcspi_v0_lld.c \
+    mcspi_dma_dummy.c \
     ospi_v0.c \
     pinmux.c \
     spinlock.c \
@@ -53,25 +52,7 @@ FILES_common := \
     soc.c \
     uart_v0.c \
     uart_v0_lld.c \
-    uart_dma_udma.c \
-    udma.c \
-    udma_ch.c \
-    udma_event.c \
-    udma_flow.c \
-    udma_ring_common.c \
-    udma_ring_lcdma.c \
-    udma_rm.c \
-    udma_rmcfg.c \
-    udma_rmcfg_common.c \
-    udma_soc.c \
-    udma_utils.c \
-    csl_bcdma.c \
-    csl_emif.c \
-    csl_intaggr.c \
-    csl_lcdma_ringacc.c \
-    csl_pktdma.c \
-    csl_ringacc.c \
-    csl_sec_proxy.c \
+    uart_dma_dummy.c \
     watchdog_rti.c \
     watchdog_soc.c \
 
@@ -113,6 +94,7 @@ FILES_PATH_common = \
     mcspi/v0/lld \
     mcspi/v0/lld/dma \
     mcspi/v0/lld/dma/udma \
+    mcspi/v0/lld/dma/dummy \
     mdio/v0 \
     mmcsd/v0 \
     ospi \
@@ -134,6 +116,7 @@ FILES_PATH_common = \
     uart/v0/lld \
     uart/v0/lld/dma \
     uart/v0/lld/dma/udma \
+    uart/v0/lld/dma/dummy \
     udma \
     udma/hw_include \
     udma/soc \

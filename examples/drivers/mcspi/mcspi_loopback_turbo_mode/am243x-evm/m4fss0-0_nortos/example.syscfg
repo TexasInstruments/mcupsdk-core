@@ -45,11 +45,6 @@ mcspi1.mcspiChannel[0].$name       = "CONFIG_MCSPI_CH0";
 mcspi1.mcspiChannel[0].turboEnable = "true";
 mcspi1.child.$name                 = "drivers_mcspi_v0_mcspi_v0_template0";
 
-const udma        = scripting.addModule("/drivers/udma/udma", {}, false);
-const udma1       = udma.addInstance({}, false);
-udma1.$name       = "CONFIG_UDMA0";
-mcspi1.udmaDriver = udma1;
-
 addr_translate1.$name     = "CONFIG_ADDR_TRANSLATE_REGION0";
 addr_translate1.localAddr = 0x80000000;
 

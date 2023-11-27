@@ -161,6 +161,7 @@ FILES_PATH_common = \
     mcspi/v0/lld \
     mcspi/v0/lld/dma \
     mcspi/v0/lld/dma/udma \
+    mcspi/v0/lld/dma/dummy \
     mdio/v0 \
     mmcsd/v0 \
     ospi \
@@ -182,6 +183,7 @@ FILES_PATH_common = \
     uart/v0/lld \
     uart/v0/lld/dma \
     uart/v0/lld/dma/udma \
+    uart/v0/lld/dma/dummy \
     udma \
     udma/hw_include \
     udma/soc \

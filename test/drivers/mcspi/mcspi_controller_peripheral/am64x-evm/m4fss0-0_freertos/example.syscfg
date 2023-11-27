@@ -51,11 +51,6 @@ mcspi1.MCU_SPI.$assign       = "MCU_SPI1";
 mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
 mcspi1.child.$name           = "drivers_mcspi_v0_mcspi_v0_template0";
 
-const udma        = scripting.addModule("/drivers/udma/udma", {}, false);
-const udma1       = udma.addInstance({}, false);
-udma1.$name       = "CONFIG_UDMA0";
-mcspi1.udmaDriver = udma1;
-
 addr_translate1.$name     = "CONFIG_ADDR_TRANSLATE_REGION0";
 addr_translate1.localAddr = 0x80000000;
 
@@ -73,6 +68,11 @@ addr_translate4.localAddr  = 0x60000000;
 
 debug_log.enableUartLog = true;
 debug_log.uartLog.$name = "CONFIG_UART0";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
 
 mpu_armv71.$name        = "CONFIG_MPU_REGION0";
 mpu_armv71.attributes   = "Device";

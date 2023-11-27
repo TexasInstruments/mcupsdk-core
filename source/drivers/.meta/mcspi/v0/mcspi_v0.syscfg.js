@@ -138,7 +138,7 @@ let mcspi_module = {
 function addModuleInstances(instance) {
     let modInstances = new Array();
 
-    if(instance.sdkInfra == "HLD") {
+    if((instance.sdkInfra == "HLD") && (!(common.getSelfSysCfgCoreName().includes("m4f")))) {
         modInstances.push({
             name: "udmaDriver",
             displayName: "UDMA Configuration",
@@ -484,7 +484,7 @@ function getConfigurables()
                         ui.errorCallbackFxn.hidden = false;
                     }
                 }
-                else 
+                else
                 {
                     if((inst.intrEnable == "INTERRUPT") || (inst.intrEnable == "DMA"))
                     {
