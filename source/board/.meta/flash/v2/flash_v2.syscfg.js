@@ -1589,6 +1589,10 @@ function moduleInstances(inst) {
 
 function fillConfigs(inst, cfg) {
 
+    inst.fourByteEnableSeq = cfg.fourByteAddrEnSeq;
+    inst.flashDeviceBusyTimeout = cfg.flashDeviceBusyTimeout;
+    inst.flashPageProgTimeout = cfg.flashPageProgTimeout;
+
     if(inst.flashType == "SERIAL_NOR")
     {
         /* Basic Config */

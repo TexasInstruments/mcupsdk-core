@@ -1130,6 +1130,9 @@ function fillConfigs(inst, cfg) {
     inst.idNumBytes = cfg.rdIdSettings.numBytes;
     inst.dummyId4 = cfg.rdIdSettings.dummy4;
     inst.dummyId8 = cfg.rdIdSettings.dummy8;
+    inst.fourByteEnableSeq = cfg.fourByteAddrEnSeq;
+    inst.flashDeviceBusyTimeout = cfg.flashDeviceBusyTimeout;
+    inst.flashPageProgTimeout = cfg.flashPageProgTimeout;
 }
 
 exports = flash_module;

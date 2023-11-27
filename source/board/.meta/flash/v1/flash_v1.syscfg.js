@@ -693,6 +693,11 @@ function fillConfigs(inst, cfg) {
             }
         }
     }
+    if(fourByteAddrEnSeq in cfg) {
+        inst.fourByteEnableSeq = cfg.fourByteAddrEnSeq;
+    }
+    inst.flashDeviceBusyTimeout = cfg.flashDeviceBusyTimeout;
+    inst.flashPageProgTimeout = cfg.flashPageProgTimeout;
 }
 
 exports = flash_module;
