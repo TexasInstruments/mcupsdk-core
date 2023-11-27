@@ -217,6 +217,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_ADC_SOFTWARE_INTERLEAVED_AVERAGING
 -# CMPSS
    -# \subpage EXAMPLES_DRIVERS_CMPSS_ASYNCHRONOUS_TRIP
+   -# \subpage EXAMPLES_DRIVERS_CMPSS_DIGITAL_FILTER_TRIP
 -# DAC
    -# \subpage EXAMPLES_DRIVERS_DAC_CONSTANT_VOLTAGE
    -# \subpage EXAMPLES_DRIVERS_DAC_RAMP_WAVE

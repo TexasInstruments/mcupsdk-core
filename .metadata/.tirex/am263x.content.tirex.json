@@ -1917,6 +1917,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A CMPSS example that enables the CMPSS High comparator and feeds the digital filter output to GPIO and EPWM CPU is R5FSS0-0 running NORTOS.",
+        "name": "cmpss_digital_filter_trip",
+        "location": "../../examples/drivers/cmpss/cmpss_digital_filter_trip/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "cmpss",
+            "cmpss_digital_filter_trip",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A CMPSS example that enables the CMPSS High comparator and feeds the digital filter output to GPIO and EPWM CPU is R5FSS0-0 running NORTOS.",
+        "name": "cmpss_digital_filter_trip",
+        "location": "../../examples/drivers/cmpss/cmpss_digital_filter_trip/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "cmpss",
+            "cmpss_digital_filter_trip",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An DAC example that generates a constant voltage on DAC output. CPU is R5FSS0-0 running NORTOS.",
         "name": "dac_constant_voltage",
         "location": "../../examples/drivers/dac/dac_constant_voltage/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
