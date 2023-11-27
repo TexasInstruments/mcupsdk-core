@@ -484,6 +484,7 @@ int32_t EnetAppUtils_showRxChStats(EnetDma_RxChHandle hRxCh);
  *  \brief Utility function to init resource config structure part of Cpsw_Cfg
  */
 void EnetAppUtils_initResourceConfig(Enet_Type enetType,
+                                     uint32_t instId,
                                      uint32_t selfCoreId,
                                      EnetRm_ResCfg *resCfg);
 

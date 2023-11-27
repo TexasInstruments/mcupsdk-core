@@ -5,6 +5,7 @@ let device = "am64x";
 const files = {
     common: [
             "app_icssgconfighandler.c",
+            "ipc_rpmsg_echo.c",
             "app_extphyconfig.c",
             "app_tcpserver.c",
             "app_main.c",
@@ -111,7 +112,7 @@ const loptflags_r5f = {
 
 const lnkfiles = {
     common: [
-        "linker.cmd",
+        "../linker.cmd",
     ]
 };
 
@@ -131,7 +132,20 @@ const templates_freertos_r5f =
 ];
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "freertos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "freertos", isPartOfSystemProject: true},
+];
+
+const systemProject = [
+    {
+        name: "enet_icssg_tcpserver",
+        tag: "cpsw_icssg",
+        skipProjectSpec: false,
+        readmeDoxygenPageTag: readmeDoxygenPageTag,
+        board: "am64x-evm",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "freertos"},
+            ]
+    },
 ];
 
 function getComponentProperty() {
@@ -184,9 +198,15 @@ function getComponentBuildProperty(buildOption) {
     return build_property;
 }
 
+function getSystemProjects(device)
+{
+    return systemProject;
+}
+
 module.exports = {
     getComponentProperty,
     getComponentBuildProperty,
+    getSystemProjects,
 };
 
 

@@ -42,6 +42,8 @@
 
 #include <stdint.h>
 #include "app_extphyconfig.h"
+#include "enet_apputils.h"
+#include "ti_drivers_config.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -243,16 +245,16 @@ static void Dp83826_enableAutoMdix(EnetPhy_Handle hPhy,
 
 void Dp83826_resetPHYs()
 {
-    GPIO_setDirMode(GpioPins[GPIO_RESET_ICSS1_PHY].gpioBaseAddr, GpioPins[GPIO_RESET_ICSS1_PHY].pinNum, GPIO_DIRECTION_OUTPUT);
-    GPIO_pinWriteHigh(GpioPins[GPIO_RESET_ICSS1_PHY].gpioBaseAddr, GpioPins[GPIO_RESET_ICSS1_PHY].pinNum);
-    GPIO_setDirMode(GpioPins[GPIO_RESET_ICSS1_PHY2].gpioBaseAddr, GpioPins[GPIO_RESET_ICSS1_PHY2].pinNum, GPIO_DIRECTION_OUTPUT);
-    GPIO_pinWriteHigh(GpioPins[GPIO_RESET_ICSS1_PHY2].gpioBaseAddr, GpioPins[GPIO_RESET_ICSS1_PHY2].pinNum);
+    GPIO_setDirMode(CONFIG_GPIO_31_BASE_ADDR, CONFIG_GPIO_31_PIN, GPIO_DIRECTION_OUTPUT);
+    GPIO_pinWriteHigh(CONFIG_GPIO_31_BASE_ADDR, CONFIG_GPIO_31_PIN);
+    GPIO_setDirMode(CONFIG_GPIO_32_BASE_ADDR, CONFIG_GPIO_32_PIN, GPIO_DIRECTION_OUTPUT);
+    GPIO_pinWriteHigh(CONFIG_GPIO_32_BASE_ADDR, CONFIG_GPIO_32_PIN);
     ClockP_usleep(1000);
-    GPIO_pinWriteLow(GpioPins[GPIO_RESET_ICSS1_PHY].gpioBaseAddr, GpioPins[GPIO_RESET_ICSS1_PHY].pinNum);
-    GPIO_pinWriteLow(GpioPins[GPIO_RESET_ICSS1_PHY2].gpioBaseAddr, GpioPins[GPIO_RESET_ICSS1_PHY2].pinNum);
+    GPIO_pinWriteLow(CONFIG_GPIO_31_BASE_ADDR, CONFIG_GPIO_31_PIN);
+    GPIO_pinWriteLow(CONFIG_GPIO_32_BASE_ADDR, CONFIG_GPIO_32_PIN);
     ClockP_usleep(1000);
-    GPIO_pinWriteHigh(GpioPins[GPIO_RESET_ICSS1_PHY].gpioBaseAddr, GpioPins[GPIO_RESET_ICSS1_PHY].pinNum);
-    GPIO_pinWriteHigh(GpioPins[GPIO_RESET_ICSS1_PHY2].gpioBaseAddr, GpioPins[GPIO_RESET_ICSS1_PHY2].pinNum);
+    GPIO_pinWriteHigh(CONFIG_GPIO_31_BASE_ADDR, CONFIG_GPIO_31_PIN);
+    GPIO_pinWriteHigh(CONFIG_GPIO_32_BASE_ADDR, CONFIG_GPIO_32_PIN);
     ClockP_usleep(1000);
 }
 

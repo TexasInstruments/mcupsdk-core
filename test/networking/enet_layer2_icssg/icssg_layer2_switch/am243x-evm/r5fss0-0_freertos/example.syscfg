@@ -1,8 +1,8 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM243x_ALV_beta" --package "ALV" --part "ALV" --context "r5fss0-0" --product "INDUSTRIAL_COMMUNICATIONS_SDK@09.00.00"
- * @versions {"tool":"1.17.0+3128"}
+ * @cliArgs --device "AM243x_ALV_beta" --package "ALV" --part "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.18.0+3266"}
  */
 
 /**
@@ -12,6 +12,8 @@ const eeprom     = scripting.addModule("/board/eeprom/eeprom", {}, false);
 const eeprom1    = eeprom.addInstance();
 const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
 const gpio1      = gpio.addInstance();
+const gpio2      = gpio.addInstance();
+const gpio3      = gpio.addInstance();
 const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1       = i2c.addInstance();
 const i2c2       = i2c.addInstance();
@@ -39,6 +41,18 @@ gpio1.pinDir                   = "OUTPUT";
 gpio1.useMcuDomainPeripherals  = true;
 gpio1.MCU_GPIO.$assign         = "MCU_GPIO0";
 gpio1.MCU_GPIO.gpioPin.$assign = "MCU_SPI1_CS0";
+
+gpio2.$name                = "CONFIG_GPIO_31";
+gpio2.pinDir               = "OUTPUT";
+gpio2.GPIO.$assign         = "GPIO0";
+gpio2.GPIO.gpioPin.pu_pd   = "pu";
+gpio2.GPIO.gpioPin.$assign = "GPMC0_CLK";
+
+gpio3.pinDir               = "OUTPUT";
+gpio3.$name                = "CONFIG_GPIO_32";
+gpio3.GPIO.$assign         = "GPIO0";
+gpio3.GPIO.gpioPin.pu_pd   = "pu";
+gpio3.GPIO.gpioPin.$assign = "GPMC0_ADVn_ALE";
 
 i2c1.$name               = "CONFIG_I2C0";
 eeprom1.peripheralDriver = i2c1;
@@ -97,8 +111,6 @@ enet_icss1.mdioMode                       = "MDIO_MODE_MANUAL";
 enet_icss1.LargePoolPktCount              = 24;
 enet_icss1.txDmaChannel[0].$name          = "ENET_DMA_TX_CH0";
 enet_icss1.txDmaChannel[0].PacketsCount   = 8;
-enet_icss1.PRU_ICSSG1_RGMII1.$assign      = "PRU_ICSSG1_RGMII1";
-enet_icss1.rxDmaChannel.create(2);
 enet_icss1.rxDmaChannel[0].$name          = "ENET_DMA_RX_CH0";
 enet_icss1.rxDmaChannel[0].PacketsCount   = 8;
 enet_icss1.rxDmaChannel[0].useDefaultFlow = true;
@@ -107,6 +119,7 @@ enet_icss1.rxDmaChannel[1].PacketsCount   = 8;
 enet_icss1.rxDmaChannel[1].useDefaultFlow = true;
 enet_icss1.rxDmaChannel[1].macAddrCount   = 0;
 enet_icss1.rxDmaChannel[1].chIdx          = 1;
+enet_icss1.PRU_ICSSG1_RGMII1.$assign      = "PRU_ICSSG1_RGMII1";
 
 enet_icss1.icss                          = pruicss1;
 pruicss1.$name                           = "CONFIG_PRU_ICSS1";

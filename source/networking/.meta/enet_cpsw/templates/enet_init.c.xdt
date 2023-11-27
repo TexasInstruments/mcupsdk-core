@@ -292,7 +292,7 @@ int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
     EnetApp_getCpswInitCfg(enetType, instId, &cpswCfg);
 
     resCfg = &cpswCfg.resCfg;
-    EnetAppUtils_initResourceConfig(enetType, selfCoreId, resCfg);
+    EnetAppUtils_initResourceConfig(enetType, instId, selfCoreId, resCfg);
 
 % if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA") {
     dmaCfg.maxTxChannels = ENET_SYSCFG_TX_CHANNELS_NUM;

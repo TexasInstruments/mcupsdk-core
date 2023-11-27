@@ -123,6 +123,30 @@ const enet_icssg_board_config = {
             isInteger:true,
             range: [0, 31],
         },
+        {
+            name: "useAddMacAddr",
+            description: "Use additional MAC addresses from board Mac addresses",
+            displayName: "Use Additional MAC Addresses",
+            default: false,
+            onChange:function (inst, ui) {
+                if(inst.useAddMacAddr == true) {
+                    ui.addMacAddrCnt.hidden = false;
+                }
+                else {
+                    ui.addMacAddrCnt.hidden = true;
+                }
+            },
+        },
+        {
+            name: "addMacAddrCnt",
+            description: "Phy Address of the port in single/dual EMAC mode or Port 2 in Switch mode. Value MUST be between 0 .. 31",
+            displayName: "Additional MAC-Address count",
+            default: 0,
+            hidden: true,
+            displayFormat: "dec",
+            isInteger:true,
+            range: [0, 3],
+        },
     ],
 };
 
@@ -248,8 +272,6 @@ function pinmuxRequirements(inst) {
         return interfaceNameList;
     }
 }
-
-
 
 function getInterfaceNameList(inst)
 {
@@ -647,6 +669,25 @@ function getMatchInstances(inst)
     return matchedInst;
 }
 
+function getInstMacCnt(){
+
+    let instances = system.modules["/networking/enet_icss/enet_icss"].$instances;
+    let rxMacAddrCnt = 0;
+
+    for (let i in instances)
+    {
+        for (var j = 0; j < getRxChannelCount(instances[i]); j++)
+        {
+            rxMacAddrCnt += (getChannelConfig(instances[i], "RX", j)).macAddrCount;
+        }
+        if((instances[i].useAddMacAddr === true))
+        {
+            rxMacAddrCnt += instances[i].addMacAddrCnt;
+        }
+    }
+    return rxMacAddrCnt;
+}
+
 function validateInstances(instance, report) {
     let instances = system.modules["/networking/enet_icss/enet_icss"].$instances;
     let matchedInst0 = new Array();
@@ -695,11 +736,13 @@ function validateInstances(instance, report) {
             }
         }
 
-    /* if (instances[0].mdioMdcEnable != instances[1].mdioMdcEnable)
+
+/*
+        if (instances[0].mdioMdcEnable != instances[1].mdioMdcEnable)
         {
             report.logError(`ENET ICSSG 'mdioMdcEnable' setting should be same across both the instances`, instance);
         }
-    */
+*/
 
 
     }
@@ -711,6 +754,11 @@ function validate(instance, report) {
     mdioScript.validate(instance, report);
     timesyncScript.validate(instance, report);
     validateInstances(instance, report)
+
+    if ((getInstMacCnt() > 4) && (instance.useAddMacAddr === true))
+    {
+        report.logError(`Allocated MAC addresses are more than maximum available mac addresses`, instance, "addMacAddrCnt");
+    }
     if (instance.mode === "SWITCH")
     {
         if (getNetifCount(instance) > 1)

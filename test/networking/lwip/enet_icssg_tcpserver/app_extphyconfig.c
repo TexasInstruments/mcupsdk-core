@@ -42,6 +42,8 @@
 
 #include <stdint.h>
 #include "app_extphyconfig.h"
+#include "enet_apputils.h"
+#include "ti_drivers_config.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -243,16 +245,18 @@ static void Dp83826_enableAutoMdix(EnetPhy_Handle hPhy,
 
 void Dp83826_resetPHYs()
 {
-    GPIO_setDirMode(GpioPins[GPIO_RESET_ICSS1_PHY].gpioBaseAddr, GpioPins[GPIO_RESET_ICSS1_PHY].pinNum, GPIO_DIRECTION_OUTPUT);
-    GPIO_pinWriteHigh(GpioPins[GPIO_RESET_ICSS1_PHY].gpioBaseAddr, GpioPins[GPIO_RESET_ICSS1_PHY].pinNum);
-    GPIO_setDirMode(GpioPins[GPIO_RESET_ICSS1_PHY2].gpioBaseAddr, GpioPins[GPIO_RESET_ICSS1_PHY2].pinNum, GPIO_DIRECTION_OUTPUT);
-    GPIO_pinWriteHigh(GpioPins[GPIO_RESET_ICSS1_PHY2].gpioBaseAddr, GpioPins[GPIO_RESET_ICSS1_PHY2].pinNum);
+    EnetAppUtils_print("EXT PHY Reset\r\n");
+
+    GPIO_setDirMode(CONFIG_GPIO_31_BASE_ADDR, CONFIG_GPIO_31_PIN, GPIO_DIRECTION_OUTPUT);
+    GPIO_pinWriteHigh(CONFIG_GPIO_31_BASE_ADDR, CONFIG_GPIO_31_PIN);
+    GPIO_setDirMode(CONFIG_GPIO_32_BASE_ADDR, CONFIG_GPIO_32_PIN, GPIO_DIRECTION_OUTPUT);
+    GPIO_pinWriteHigh(CONFIG_GPIO_32_BASE_ADDR, CONFIG_GPIO_32_PIN);
     ClockP_usleep(1000);
-    GPIO_pinWriteLow(GpioPins[GPIO_RESET_ICSS1_PHY].gpioBaseAddr, GpioPins[GPIO_RESET_ICSS1_PHY].pinNum);
-    GPIO_pinWriteLow(GpioPins[GPIO_RESET_ICSS1_PHY2].gpioBaseAddr, GpioPins[GPIO_RESET_ICSS1_PHY2].pinNum);
+    GPIO_pinWriteLow(CONFIG_GPIO_31_BASE_ADDR, CONFIG_GPIO_31_PIN);
+    GPIO_pinWriteLow(CONFIG_GPIO_32_BASE_ADDR, CONFIG_GPIO_32_PIN);
     ClockP_usleep(1000);
-    GPIO_pinWriteHigh(GpioPins[GPIO_RESET_ICSS1_PHY].gpioBaseAddr, GpioPins[GPIO_RESET_ICSS1_PHY].pinNum);
-    GPIO_pinWriteHigh(GpioPins[GPIO_RESET_ICSS1_PHY2].gpioBaseAddr, GpioPins[GPIO_RESET_ICSS1_PHY2].pinNum);
+    GPIO_pinWriteHigh(CONFIG_GPIO_31_BASE_ADDR, CONFIG_GPIO_31_PIN);
+    GPIO_pinWriteHigh(CONFIG_GPIO_32_BASE_ADDR, CONFIG_GPIO_32_PIN);
     ClockP_usleep(1000);
 }
 
@@ -328,84 +332,98 @@ void EnetPhy_configPHYs (void)
     unsigned int PHY1 = 1;
     unsigned int PHY2 = 3;
 
-    //PHY1
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x001F, 0x8000);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0573, 0x0801);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0834, 0xC001);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0405, 0x5800);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08AD, 0x3C51);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0894, 0x5DF7);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08A0, 0x09E7);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08C0, 0x4000);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0814, 0x4800);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x080D, 0x2EBF);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08C1, 0x0B00);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x087D, 0x0001);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x082E, 0x0000);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0837, 0x00F4);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08BE, 0x0200);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08C5, 0x4000);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08C7, 0x2000);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08B3, 0x005A);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08B4, 0x005A);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08B0, 0x0202);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08B5, 0x00EA);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08BA, 0x2828);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08BB, 0x6828);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08BC, 0x0028);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08BF, 0x0000);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08B1, 0x0014);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08B2, 0x0008);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08EC, 0x0000);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08C8, 0x0003);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08BE, 0x0201);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x018C, 0x0001);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x001F, 0x4000);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0573, 0x0001);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x056A, 0x5F41);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0453, 0x0006);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0452, 0x0600);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x430, 0x0980);
+    char option;
 
-    //PHY2
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x001f, 0x8000);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0573, 0x0801);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0834, 0x8001);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0894, 0x5DF7);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x056A, 0x5F40);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0405, 0x5800);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08AD, 0x3C51);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08A0, 0x09E7);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08C0, 0x4000);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0814, 0x4800);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x080D, 0x2EBF);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08C1, 0x0B00);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x087D, 0x0001);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x082E, 0x0000);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0837, 0x00F4);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08BE, 0x0200);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08C5, 0x4000);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08C7, 0x2000);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08B3, 0x005A);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08B4, 0x005A);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08B0, 0x0202);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08B5, 0x00EA);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08BA, 0x2828);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08BB, 0x6828);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08BC, 0x0028);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08BF, 0x0000);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08B1, 0x0014);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08B2, 0x0008);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08EC, 0x0000);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08C8, 0x0003);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x056A, 0x5F40);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x018C, 0x0001);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x001F, 0x4000);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0573, 0x0001);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x056A, 0x5F41);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0453, 0x0006);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0452, 0x0600);
-    PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x430, 0x0980);
+
+    EnetAppUtils_print("Press y to config PHYs\r\n");
+    while(true)
+    {
+        DebugP_scanf("%c", &option);
+        if (option == 'y')
+        {
+            //PHY1
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x001F, 0x8000);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0573, 0x0801);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0834, 0xC001);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0405, 0x5800);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08AD, 0x3C51);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0894, 0x5DF7);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08A0, 0x09E7);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08C0, 0x4000);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0814, 0x4800);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x080D, 0x2EBF);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08C1, 0x0B00);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x087D, 0x0001);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x082E, 0x0000);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0837, 0x00F4);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08BE, 0x0200);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08C5, 0x4000);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08C7, 0x2000);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08B3, 0x005A);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08B4, 0x005A);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08B0, 0x0202);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08B5, 0x00EA);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08BA, 0x2828);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08BB, 0x6828);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08BC, 0x0028);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08BF, 0x0000);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08B1, 0x0014);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08B2, 0x0008);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08EC, 0x0000);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08C8, 0x0003);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x08BE, 0x0201);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x018C, 0x0001);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x001F, 0x4000);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0573, 0x0001);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x056A, 0x5F41);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0453, 0x0006);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x0452, 0x0600);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY1, 0x430, 0x0980);
+            EnetAppUtils_print("PHY1 config done\r\n");
+
+            //PHY2
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x001f, 0x8000);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0573, 0x0801);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0834, 0x8001);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0894, 0x5DF7);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x056A, 0x5F40);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0405, 0x5800);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08AD, 0x3C51);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08A0, 0x09E7);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08C0, 0x4000);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0814, 0x4800);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x080D, 0x2EBF);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08C1, 0x0B00);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x087D, 0x0001);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x082E, 0x0000);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0837, 0x00F4);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08BE, 0x0200);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08C5, 0x4000);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08C7, 0x2000);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08B3, 0x005A);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08B4, 0x005A);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08B0, 0x0202);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08B5, 0x00EA);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08BA, 0x2828);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08BB, 0x6828);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08BC, 0x0028);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08BF, 0x0000);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08B1, 0x0014);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08B2, 0x0008);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08EC, 0x0000);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x08C8, 0x0003);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x056A, 0x5F40);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x018C, 0x0001);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x001F, 0x4000);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0573, 0x0001);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x056A, 0x5F41);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0453, 0x0006);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x0452, 0x0600);
+            PHY_Reg_Write(ICSS_MDIO_USED, PHY2, 0x430, 0x0980);
+            EnetAppUtils_print("PHY2 config done\r\n");
+            break;
+        }
+    }
 
     ENETTRACE_ERR_IF(true, "\n\rSetup PHYs for test purpose\n\r \n\r\r\n");
 

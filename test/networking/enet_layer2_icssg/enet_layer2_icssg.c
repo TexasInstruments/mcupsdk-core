@@ -317,8 +317,10 @@ static uint8_t gEnetMpTaskStackRx[ENET_SYSCFG_MAX_ENET_INSTANCES][ENETMP_TASK_ST
 /* Use this array to select the ports that will be used in the test */
 static EnetMp_contextName testParamsName[] =
 {
-    { "icssg1-p1" },
-    { "icssg1-p2" },
+    { "icssg-per1" },
+    { "icssg-per2" },
+    { "icssg-per3" },
+    { "icssg-per4" },
 };
 
 /* ========================================================================== */
@@ -697,10 +699,6 @@ static int32_t EnetMp_open(EnetMp_PerCtxt *perCtxts,
         EnetApp_acquireHandleInfo(perCtxt->enetType, perCtxt->instId, &(perCtxt->handleInfo));
     }
 
-    if (ENET_SYSCFG_ICSSG0_ENABLED)
-    {
-        EnetPhy_configPHYs();
-    }
 
     for (i = 0U; i < numPerCtxts; i++)
     {
@@ -775,7 +773,6 @@ static void EnetMp_close(EnetMp_PerCtxt *perCtxts,
         EnetApp_closePortLink(perCtxt->enetType, perCtxt->instId);
     }
 
-    ClockP_sleep(2);
     EnetAppUtils_print("\nClose DMA for all peripherals\r\n");
     EnetAppUtils_print("----------------------------------------------\r\n");
     for (i = 0U; i < numPerCtxts; i++)
@@ -812,19 +809,6 @@ static void EnetMp_close(EnetMp_PerCtxt *perCtxts,
     {
         EnetMp_PerCtxt *perCtxt = &perCtxts[i];
         EnetAppUtils_print("%s: Close enet\r\n", perCtxt->name);
-
-        if (Enet_isIcssFamily(perCtxt->enetType))
-        {
-            EnetAppUtils_print("%s: Unregister async IOCTL callback\r\n", perCtxt->name);
-            Enet_unregisterEventCb(perCtxt->handleInfo.hEnet,
-                                   ENET_EVT_ASYNC_CMD_RESP,
-                                   0U);
-
-            EnetAppUtils_print("%s: Unregister TX timestamp callback\r\n", perCtxt->name);
-            Enet_unregisterEventCb(perCtxt->handleInfo.hEnet,
-                                   ENET_EVT_TIMESTAMP_TX,
-                                   0U);
-        }
 
         EnetApp_releaseHandleInfo(perCtxt->enetType, perCtxt->instId);
         perCtxt->handleInfo.hEnet = NULL;

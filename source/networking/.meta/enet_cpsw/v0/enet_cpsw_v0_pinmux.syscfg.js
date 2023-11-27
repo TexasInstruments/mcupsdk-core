@@ -20,6 +20,8 @@ function getPeripheralRequirements(inst, peripheralName, name)
 
     if (name == "RGMII")
     {
+    if (inst.enableRgmii1 == true)
+    {
         pinResource = pinmux.getPinRequirements(interfaceName, "RGMII1_RD0", "RGMII1_RD0");
         pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
@@ -56,7 +58,10 @@ function getPeripheralRequirements(inst, peripheralName, name)
         pinResource = pinmux.getPinRequirements(interfaceName, "RGMII1_TXC", "TX_RXC");
         pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
+    }
 
+    if (inst.enableRgmii2 == true)
+    {
         pinResource = pinmux.getPinRequirements(interfaceName, "RGMII2_RD0", "RGMII2_RD0");
         pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
@@ -93,6 +98,7 @@ function getPeripheralRequirements(inst, peripheralName, name)
         pinResource = pinmux.getPinRequirements(interfaceName, "RGMII2_TXC", "TX_RXC");
         pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
+    }
     }
     else if (name == "RMII")
     {
@@ -346,14 +352,20 @@ function pinmuxRequirements(inst) {
         {
             let rgmii1 = getPeripheralRequirements(inst, "CPSW", "RGMII");
             perRequirements.push(rgmii1);
-       	}
-       	else
+        }
+        else
         {
-            let rgmii1 = getPeripheralRequirements(inst, "RGMII", "RGMII1");
-            let rgmii2 = getPeripheralRequirements(inst, "RGMII", "RGMII2");
-            perRequirements.push(rgmii1);
-            perRequirements.push(rgmii2);
-       	}
+            if (inst.enableRgmii1 == true)
+            {
+                let rgmii1 = getPeripheralRequirements(inst, "RGMII", "RGMII1");
+                perRequirements.push(rgmii1);
+            }
+            if (inst.enableRgmii2 == true)
+            {
+                let rgmii2 = getPeripheralRequirements(inst, "RGMII", "RGMII2");
+                perRequirements.push(rgmii2);
+            }
+        }
     }
     return perRequirements;
 }
@@ -377,8 +389,14 @@ function getInterfaceNameList(inst) {
         }
         else
         {
+            if (inst.enableRgmii1 == true)
+            {
             interfaceNameList.push(getInterfaceName(inst, "RGMII1"));
+            }
+            if (inst.enableRgmii2 == true)
+            {
             interfaceNameList.push(getInterfaceName(inst, "RGMII2"));
+            }
         }
     }
 
@@ -474,6 +492,18 @@ let enet_cpsw_pinmux_module = {
             name: "enableTsOut",
             displayName: "Enable CPTS TS Output",
             default: false,
+            hidden: false,
+        },
+        {
+            name: "enableRgmii1",
+            displayName: "Enable RGMII1 for CPSW",
+            default: true,
+            hidden: false,
+        },
+        {
+            name: "enableRgmii2",
+            displayName: "Enable RGMII2 for CPSW",
+            default: true,
             hidden: false,
         },
     ],

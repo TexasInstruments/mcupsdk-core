@@ -991,6 +991,7 @@ static void EnetAppUtils_updatemacResPart(EnetRm_ResPrms *resPrms,
 #endif
 
 void EnetAppUtils_initResourceConfig(Enet_Type enetType,
+                                     uint32_t instId,
                                      uint32_t selfCoreId,
                                      EnetRm_ResCfg *resCfg)
 {
@@ -1007,8 +1008,8 @@ void EnetAppUtils_initResourceConfig(Enet_Type enetType,
 
     status =
         EnetAppSoc_getMacAddrList(enetType,
+                                  instId,
                                   resCfg->macList.macAddress,
-                                  ENET_ARRAYSIZE(resCfg->macList.macAddress),
                                   &resCfg->macList.numMacAddress);
     EnetAppUtils_assert(status == ENET_SOK);
     if (resCfg->macList.numMacAddress > ENET_ARRAYSIZE(resCfg->macList.macAddress))

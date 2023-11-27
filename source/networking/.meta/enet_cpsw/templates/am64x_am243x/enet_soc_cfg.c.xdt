@@ -535,11 +535,11 @@ uint32_t EnetSoc_getIntrTriggerType(Enet_Type enetType,
 }
 
 /* Stupid hack to workaround FAE board issues */
-//#define ENET_MAC_ADDR_HACK (TRUE)
+#define ENET_MAC_ADDR_HACK (`instance.useExtMACAddr`)
 int32_t EnetSoc_getEFusedMacAddrs(uint8_t macAddr[][ENET_MAC_ADDR_LEN],
                                   uint32_t *num)
 {
-#ifndef ENET_MAC_ADDR_HACK
+#if (!ENET_MAC_ADDR_HACK)
     CSL_main_ctrl_mmr_cfg0Regs *mmrRegs;
     uint32_t val;
 
@@ -560,12 +560,13 @@ int32_t EnetSoc_getEFusedMacAddrs(uint8_t macAddr[][ENET_MAC_ADDR_LEN],
         *num = 1U;
     }
 #else
-    macAddr[0][0] = 0xF4;
-    macAddr[0][1] = 0x84;
-    macAddr[0][2] = 0x4c;
-    macAddr[0][3] = 0xf9;
-    macAddr[0][4] = 0x4d;
-    macAddr[0][5] = 0x29;
+    //70:ff:76:1e:9c:50
+    macAddr[0][0] = 0x70;
+    macAddr[0][1] = 0xFF;
+    macAddr[0][2] = 0x76;
+    macAddr[0][3] = 0x1E;
+    macAddr[0][4] = 0x9C;
+    macAddr[0][5] = 0x51;
     *num = 1U;
 #endif
     return ENET_SOK;

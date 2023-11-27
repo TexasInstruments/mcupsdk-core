@@ -18,9 +18,13 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mbedtls_benchmark_am64x-evm_r5fss0-
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += testcase_singlepkt_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_layer2_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += icssg_layer2_dualmac_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_l2_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_l2_cpsw_am64x-evm_r5fss0-1_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_cpsw_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_cpsw_tcpserver_am64x-evm_r5fss0-1_freertos_ti-arm-clang_build
 # Various System Example Projectspec Build Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += stog_func_test_r5f_am64x-evm_system_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_multicore_lwip_am64x-evm_system_enet_multicore_lwip_build
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
 # Various Private Example Projectspec Build Targets
@@ -63,11 +67,23 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  icssg_layer2_dualmac_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C networking/enet_layer2_icssg/icssg_layer2_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
- enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C networking/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+ enet_l2_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C networking/enet_layer2_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ enet_l2_cpsw_am64x-evm_r5fss0-1_freertos_ti-arm-clang_build:
+	$(MAKE) -C networking/enet_layer2_cpsw/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec all
+
+ enet_cpsw_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C networking/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ enet_cpsw_tcpserver_am64x-evm_r5fss0-1_freertos_ti-arm-clang_build:
+	$(MAKE) -C networking/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec all
 
  stog_func_test_r5f_am64x-evm_system_nortos_build:
 	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/system_nortos -f makefile_projectspec all
+
+ enet_multicore_lwip_am64x-evm_system_enet_multicore_lwip_build:
+	$(MAKE) -C networking/lwip/enet_multicore_lwip/am64x-evm/system_enet_multicore_lwip -f makefile_projectspec all
 
 
 
@@ -84,9 +100,13 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mbedtls_benchmark_am64x-evm_r5fss0-
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += testcase_singlepkt_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_layer2_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += icssg_layer2_dualmac_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_l2_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_l2_cpsw_am64x-evm_r5fss0-1_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_cpsw_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_cpsw_tcpserver_am64x-evm_r5fss0-1_freertos_ti-arm-clang_clean
 # Various System Example Projectspec Clean Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += stog_func_test_r5f_am64x-evm_system_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_multicore_lwip_am64x-evm_system_enet_multicore_lwip_clean
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
 # Various Private Example Projectspec Clean Targets
@@ -129,11 +149,23 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  icssg_layer2_dualmac_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C networking/enet_layer2_icssg/icssg_layer2_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
- enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C networking/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+ enet_l2_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C networking/enet_layer2_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ enet_l2_cpsw_am64x-evm_r5fss0-1_freertos_ti-arm-clang_clean:
+	$(MAKE) -C networking/enet_layer2_cpsw/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ enet_cpsw_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C networking/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ enet_cpsw_tcpserver_am64x-evm_r5fss0-1_freertos_ti-arm-clang_clean:
+	$(MAKE) -C networking/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec clean
 
  stog_func_test_r5f_am64x-evm_system_nortos_clean:
 	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/system_nortos -f makefile_projectspec clean
+
+ enet_multicore_lwip_am64x-evm_system_enet_multicore_lwip_clean:
+	$(MAKE) -C networking/lwip/enet_multicore_lwip/am64x-evm/system_enet_multicore_lwip -f makefile_projectspec clean
 
 
 
@@ -150,9 +182,13 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mbedtls_benchmark_am64x-evm_r5fss0
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += testcase_singlepkt_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_layer2_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += icssg_layer2_dualmac_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_l2_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_l2_cpsw_am64x-evm_r5fss0-1_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_cpsw_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_cpsw_tcpserver_am64x-evm_r5fss0-1_freertos_ti-arm-clang_export
 # Various System Example Projectspec Export Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += stog_func_test_r5f_am64x-evm_system_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_multicore_lwip_am64x-evm_system_enet_multicore_lwip_export
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
 # Various Private Example Projectspec Export Targets
@@ -195,11 +231,23 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  icssg_layer2_dualmac_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C networking/enet_layer2_icssg/icssg_layer2_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
- enet_icssg_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C networking/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+ enet_l2_cpsw_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C networking/enet_layer2_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ enet_l2_cpsw_am64x-evm_r5fss0-1_freertos_ti-arm-clang_export:
+	$(MAKE) -C networking/enet_layer2_cpsw/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec export
+
+ enet_cpsw_tcpserver_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C networking/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ enet_cpsw_tcpserver_am64x-evm_r5fss0-1_freertos_ti-arm-clang_export:
+	$(MAKE) -C networking/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec export
 
  stog_func_test_r5f_am64x-evm_system_nortos_export:
 	$(MAKE) -C sdl/stog/stog_func_test_r5f/am64x-evm/system_nortos -f makefile_projectspec export
+
+ enet_multicore_lwip_am64x-evm_system_enet_multicore_lwip_export:
+	$(MAKE) -C networking/lwip/enet_multicore_lwip/am64x-evm/system_enet_multicore_lwip -f makefile_projectspec export
 
 
 # Import extra components into CCS workspace before creating a project
@@ -241,11 +289,15 @@ help:
 	@echo  $(MAKE) -s -C networking/enet_unittest/testcase_singlepkt/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C networking/enet_layer2_icssg/icssg_layer2_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C networking/enet_layer2_icssg/icssg_layer2_dualmac/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C networking/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C networking/enet_layer2_cpsw/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C networking/enet_layer2_cpsw/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C networking/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C networking/lwip/enet_cpsw_tcpserver/am64x-evm/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  .
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================
 	@echo  $(MAKE) -s -C sdl/stog/stog_func_test_r5f/am64x-evm/system_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C networking/lwip/enet_multicore_lwip/am64x-evm/system_enet_multicore_lwip -f makefile_projectspec [export all clean]
 	@echo  .
 
 .PHONY: all all-private

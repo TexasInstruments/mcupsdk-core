@@ -12,6 +12,8 @@ const eeprom     = scripting.addModule("/board/eeprom/eeprom", {}, false);
 const eeprom1    = eeprom.addInstance();
 const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
 const gpio1      = gpio.addInstance();
+const gpio2      = gpio.addInstance();
+const gpio3      = gpio.addInstance();
 const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1       = i2c.addInstance();
 const i2c2       = i2c.addInstance();
@@ -27,6 +29,7 @@ const mpu_armv74 = mpu_armv7.addInstance();
 const mpu_armv75 = mpu_armv7.addInstance();
 const mpu_armv76 = mpu_armv7.addInstance();
 const mpu_armv77 = mpu_armv7.addInstance();
+const mpu_armv78 = mpu_armv7.addInstance();
 const enet_icss  = scripting.addModule("/networking/enet_icss/enet_icss", {}, false);
 const enet_icss1 = enet_icss.addInstance();
 const enet_icss2 = enet_icss.addInstance();
@@ -44,6 +47,18 @@ gpio1.useMcuDomainPeripherals  = true;
 gpio1.MCU_GPIO.$assign         = "MCU_GPIO0";
 gpio1.MCU_GPIO.gpioPin.$assign = "MCU_SPI1_CS0";
 
+gpio2.$name                = "CONFIG_GPIO_31";
+gpio2.pinDir               = "OUTPUT";
+gpio2.GPIO.$assign         = "GPIO0";
+gpio2.GPIO.gpioPin.pu_pd   = "pu";
+gpio2.GPIO.gpioPin.$assign = "GPMC0_CLK";
+
+gpio3.$name                = "CONFIG_GPIO_32";
+gpio3.pinDir               = "OUTPUT";
+gpio3.GPIO.$assign         = "GPIO0";
+gpio3.GPIO.gpioPin.pu_pd   = "pu";
+gpio3.GPIO.gpioPin.$assign = "GPMC0_ADVn_ALE";
+
 i2c1.$name               = "CONFIG_I2C0";
 eeprom1.peripheralDriver = i2c1;
 i2c1.I2C.$assign         = "I2C0";
@@ -55,8 +70,8 @@ i2c2.I2C.$assign     = "I2C1";
 i2c2.I2C.SCL.$assign = "I2C1_SCL";
 i2c2.I2C.SDA.$assign = "I2C1_SDA";
 
-debug_log.enableUartLog = true;
 debug_log.enableCssLog  = false;
+debug_log.enableUartLog = true;
 debug_log.uartLog.$name = "CONFIG_UART0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
@@ -77,7 +92,8 @@ mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.$name             = "CONFIG_MPU_REGION3";
 mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.baseAddr          = 0x70000000;
-mpu_armv74.size              = 23;
+mpu_armv74.attributes        = "NonCached";
+mpu_armv74.size              = 21;
 
 mpu_armv75.$name             = "CONFIG_MPU_REGION4";
 mpu_armv75.accessPermissions = "Supervisor RD+WR, User RD";
@@ -93,6 +109,11 @@ mpu_armv76.attributes        = "NonCached";
 mpu_armv77.$name    = "CONFIG_MPU_REGION6";
 mpu_armv77.size     = 27;
 mpu_armv77.baseAddr = 0x60000000;
+
+mpu_armv78.$name      = "CONFIG_MPU_REGION7";
+mpu_armv78.attributes = "NonCached";
+mpu_armv78.size       = 16;
+mpu_armv78.baseAddr   = 0x701D0000;
 
 enet_icss1.$name                          = "CONFIG_ENET_ICSS0";
 enet_icss1.LargePoolPktCount              = 16;

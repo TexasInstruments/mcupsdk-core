@@ -65,6 +65,8 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
+#define APP_NUM_NETIF (1U)
+
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -124,13 +126,14 @@ int appMain(void *args)
 {
     int32_t status = ENET_SOK;
 
-    Dp83826_resetPHYs();
     Drivers_open();
     Board_driversOpen();
 
     DebugP_log("==========================\r\n");
     DebugP_log("ICSSG LWIP TCP ECHO SERVER\r\n");
     DebugP_log("==========================\r\n");
+
+    Dp83826_resetPHYs();
 
     /* Read MAC Port details and enable clock for each ENET instance */
     for (uint32_t enetInstIdx = 0; enetInstIdx < ENET_SYSCFG_MAX_ENET_INSTANCES; enetInstIdx++)
@@ -145,8 +148,8 @@ int appMain(void *args)
     }
 
     /* Open ENET driver for each ENET instance */
-
     EnetApp_driverInit();
+
     for(uint32_t enetInstIdx = 0; enetInstIdx < ENET_SYSCFG_MAX_ENET_INSTANCES; enetInstIdx++)
     {
         status = EnetApp_driverOpen(gEnetAppParams[enetInstIdx].enetType, gEnetAppParams[enetInstIdx].instId);
@@ -157,15 +160,14 @@ int appMain(void *args)
         }
     }
 
-
     App_setupNetworkStack();
 
     uint32_t netupCount = 0;
     /* wait for atleast one Network Interface to get IP */
-    if (ENET_SYSCFG_ICSSG0_ENABLED)
-    {
-        EnetPhy_configPHYs();
-    }
+//    if (ENET_SYSCFG_ICSSG0_ENABLED)
+//    {
+//        EnetPhy_configPHYs();
+//    }
     while (netupCount < ENET_SYSCFG_NETIF_COUNT )
     {
         for(uint32_t netifIdx = 0; netifIdx < ENET_SYSCFG_NETIF_COUNT; netifIdx++)

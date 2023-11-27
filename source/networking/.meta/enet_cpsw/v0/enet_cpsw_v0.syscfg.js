@@ -214,6 +214,20 @@ const enet_cpsw_board_config = {
                 }
             },
         },
+        {
+            name: "disableOnboardMAC",
+            description: "Use User defined MAC address for CPSW",
+            displayName: "Disable on-board MAC Addresses",
+            default: false,
+            hidden: true,
+        },
+        {
+            name: "useExtMACAddr",
+            description: "Use User defined MAC address for CPSW",
+            displayName: "Use User MAC Addr",
+            default: false,
+            hidden: true,
+        },
         enet_cpsw_phy1_config,
         enet_cpsw_phy2_config,
     ],

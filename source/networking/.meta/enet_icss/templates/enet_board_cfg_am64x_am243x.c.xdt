@@ -46,6 +46,7 @@ function getPhyAddr2(instance){
 #include <networking/enet/core/src/phy/enetphy_priv.h>
 #include <board/eeprom.h>
 #include "ti_board_open_close.h"
+#include "ti_drivers_open_close.h"
 
 /* PHY drivers */
 extern EnetPhy_Drv gEnetPhyDrvGeneric;
@@ -554,6 +555,7 @@ void EnetBoard_getMacAddrList(uint8_t macAddr[][ENET_MAC_ADDR_LEN],
         EnetAppUtils_print("EnetBoard_getMacAddrList Failed - IDK not present\n");
         EnetAppUtils_assert(false);
     }
+    Drivers_i2cClose();
 }
 
 % }

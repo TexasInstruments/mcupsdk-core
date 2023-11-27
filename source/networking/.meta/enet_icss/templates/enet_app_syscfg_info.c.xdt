@@ -5,6 +5,41 @@
 % let instances = module.$instances;
 % let common = system.getScript("/common");
 % let device = common.getDeviceName();
+%%{
+function getInstanceMacAddrInfo(module, instances, indent) {
+
+    let instMacInfoAry = new Array();
+    let count = 0;
+    for (let i in instances)
+    {
+        let instance = instances[i];
+        let matchInstId = module.getInstId(instance);
+        let instInfoInitStr = "\n\t[" + count + "] = " +
+                             "\n\t{"              + 
+                                "\n\t\t.enetType       = " + matchInstId.enetType + "," +
+                                "\n\t\t.instId         = " + matchInstId.instId + "," +
+                                "\n\t\t.addMacAddrCnt     = " + getInstMacCnt(module, instance) + "," +
+                             "\n\t}";
+        const numSpaces = 4 + indent;
+        let instInfoInitStrFormat = instInfoInitStr.replace(/\t/g, ' '.repeat(numSpaces));
+        instMacInfoAry.push(instInfoInitStrFormat);
+        count++;
+    }
+    return instMacInfoAry;
+}
+
+function getInstMacCnt(module, instance){
+
+    let rxMacAddrCnt = 0;
+
+    for (var i = 0; i < module.getRxChannelCount(instance); i++)
+    {
+        rxMacAddrCnt += instance.addMacAddrCnt;
+    }
+    return rxMacAddrCnt;
+}
+
+%%}
 /*
  * Enet DMA memory allocation utility functions.
  */
@@ -43,7 +78,7 @@
 
 /* Maximum number of MAC address to be set per CPSW peripheral.
 Since CPSW_3G can support upto two MACs, this is set to 2 here */
-#define MAC_ADDR_LIST_LEN_SHARED_PER_PER (3U)
+#define MAC_ADDR_LIST_LEN_SHARED_PER_PER (1U)
 
 #define ENET_MAX_NUM_MAC_ADDR_STORED (5U)
 
@@ -52,6 +87,13 @@ typedef struct EnetApp_MacAddrElem_s
     EnetQ_Node node;
     uint8_t macAddr[ENET_MAC_ADDR_LEN];
 } EnetApp_MacAddrElem;
+
+typedef struct EnetApp_InstMacInfo_s
+{
+    Enet_Type enetType;
+    uint32_t instId;
+    uint32_t addMacAddrCnt;
+} EnetApp_InstMacInfo;
 
 typedef struct EnetApp_MacAddrPool_s
 {
@@ -62,6 +104,11 @@ typedef struct EnetApp_MacAddrPool_s
 } EnetApp_MacAddrPool;
 
 EnetApp_MacAddrPool gEnetMacAddrPool = { .isInitialized = false };
+
+const EnetApp_InstMacInfo gInstMacAddrInfo []= 
+    {
+        `getInstanceMacAddrInfo(module, instances, 4)`
+    };
 
 const Icssg_FwPoolMem* EnetCb_GetFwPoolMem(Enet_Type enetType, uint32_t instId)
 {
@@ -379,12 +426,19 @@ static int32_t EnetApp_releaseMacAddrToPool(uint8_t macAddr[ENET_MAC_ADDR_LEN])
 }
 
 int32_t EnetAppSoc_getMacAddrList(Enet_Type enetType,
+                                  uint32_t instId,
                                   uint8_t macAddr[][ENET_MAC_ADDR_LEN],
-                                  uint32_t maxMacEntries,
                                   uint32_t *pAvailMacEntries)
 {
-    const uint32_t sharedListLen = MAC_ADDR_LIST_LEN_SHARED_PER_PER;
+    uint32_t sharedListLen = MAC_ADDR_LIST_LEN_SHARED_PER_PER;
 
+    for (uint32_t i = 0U; i < ENET_SYSCFG_MAX_ENET_INSTANCES; i++)
+    {
+        if ((enetType == gInstMacAddrInfo[i].enetType) && (instId == gInstMacAddrInfo[i].instId))
+        {
+            sharedListLen += gInstMacAddrInfo[i].addMacAddrCnt;
+        }
+    }
     EnetApp_initializeMacAddrPool();
     *pAvailMacEntries = 0;
     for (uint32_t idx = 0; idx < sharedListLen; idx++)

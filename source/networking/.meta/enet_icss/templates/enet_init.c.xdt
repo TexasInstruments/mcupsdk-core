@@ -378,7 +378,7 @@ int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
     EnetApp_getIcssgInitCfg(enetType, instId, &icssgCfg);
     
     resCfg = &icssgCfg.resCfg;
-    EnetAppUtils_initResourceConfig(enetType, selfCoreId, resCfg);
+    EnetAppUtils_initResourceConfig(enetType, instId, selfCoreId, resCfg);
     EnetApp_updateIcssgInitCfg(enetType, instId, &icssgCfg);
 
 %if(instance.ExternalPhyMgmtEnable == true){
