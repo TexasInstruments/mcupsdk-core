@@ -47,7 +47,7 @@ the application need not take care of the programming intricacies.
 ## Features NOT Supported
 
 \cond !(SOC_AM263PX)
-NA 
+NA
 \endcond
 
 \cond SOC_AM263PX
@@ -57,6 +57,14 @@ NA
 ## Important Usage Guidelines
 
 - Typically before writing to an offset, erase the block which corresponds to the offset
+- Flashes support multiple erase sizes, conditionally. We provide 2 APIs for this cause in case the flash supports 2
+  different erase sizes:
+   - Flash_eraseBlk()
+   - Flash_eraseSector()
+  The larger size can be thought of as a 'block' and the smaller size as a 'sector'. In a flash
+  where both are supported, one can make use of both. In some flashes, the sector configuration has to be fixed before-hand.
+  In such cases the way erase sizes supported will be subject to this configuration. Take care in the flash configuration
+  and the application to make sure the erase APIs are called only with the right configuration.
 - Flash writes can only be done to a page size aligned offset, otherwise the write API returns an error
 \cond SOC_AM64X || SOC_AM243X || SOC_AM263PX
 - The `sbl_ospi` will be typically flashed at location 0x00000000 in the flash memory. So applications using flash should refrain from using this offset. Similarly, the starting of the last block of the flash is used for storing attackVector patterns later used for PHY tuning. So avoid using this offset as well.

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -48,7 +48,7 @@ void ospi_flash_io_main(void *args)
 {
     int32_t status = SystemP_SUCCESS;
     uint32_t offset;
-    uint32_t sector, blk, page;
+    uint32_t blk, page;
     Flash_Attrs *flashAttrs;
 
     /* Open OSPI Driver, among others */
@@ -96,15 +96,15 @@ void ospi_flash_io_main(void *args)
         status |= ospi_flash_io_compare_buffers();
     }
 
-    offset = APP_OSPI_FLASH_OFFSET_BASE + (flashAttrs->pageSize*16);
+    offset = APP_OSPI_FLASH_OFFSET_BASE + (flashAttrs->blockSize*2);
     ospi_flash_io_fill_buffers();
-    Flash_offsetToSectorPage(gFlashHandle[CONFIG_FLASH0], offset, &sector, &page);
-    status = Flash_eraseSector(gFlashHandle[CONFIG_FLASH0], sector);
+    Flash_offsetToBlkPage(gFlashHandle[CONFIG_FLASH0], offset, &blk, &page);
+    status = Flash_eraseBlk(gFlashHandle[CONFIG_FLASH0], blk);
     if(status != SystemP_SUCCESS)
     {
-        DebugP_log("Sector Erase Failed at 0x%X offset !!!", offset);
+        DebugP_log("Block Erase Failed at 0x%X offset !!!", offset);
     }
-     if(SystemP_SUCCESS == status)
+    if(SystemP_SUCCESS == status)
     {
         status = Flash_write(gFlashHandle[CONFIG_FLASH0], offset, gOspiTxBuf, APP_OSPI_DATA_SIZE);
     }
