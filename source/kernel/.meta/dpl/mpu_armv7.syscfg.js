@@ -1,5 +1,8 @@
 
 let common = system.getScript("/common");
+const memoryRegs = system.getScript("/memory_configurator/helper");
+const module = system.modules['/kernel/dpl/mpu_armv7'];
+const physicalLayout = system.getScript("/memory_configurator/physicalLayout.json")[system.deviceData.device];
 
 function memoryRegionMapping(mp_instance) {
     let selfCoreName = common.getSelfSysCfgCoreName();
@@ -11,8 +14,6 @@ function memoryRegionMapping(mp_instance) {
         cores: "",
         access_check: true
     }
-
-    //if ( memory_region_module === undefined ) return mr_list;
 
     let all_core_mr_instances = util_function()
     let mr_instances = []
@@ -135,14 +136,6 @@ function util_function() {
     return all_core_memory_module
 }
 
-function mpu_access_violation(inst, report) {
-
-    let selfCoreName = common.getSelfSysCfgCoreName();
-    if(!inst.memoryRegion_core.includes(selfCoreName) && inst.$ownedBy === undefined) {
-        report.logError(`${selfCoreName} cannot access this region`, inst, "baseAddr")
-    }
-}
-
 function readFromMemoryRegion(inst) {
 
     let baseAddr = 0x0
@@ -177,6 +170,66 @@ function changeDisplay(inst) {
         inst.$uiState.memoryRegion_type.hidden = false;
         inst.$uiState.memoryRegion_shared.hidden = false;
         inst.$uiState.memoryRegion_core.hidden = false;
+    }
+}
+
+function checkConflictingConfig(report, instance){
+
+    let selfCoreName = common.getSelfSysCfgCoreName();
+    const module = system.modules['/kernel/dpl/mpu_armv7'];
+    let module_instances = module.$instances;
+    let shareable_cacheable_conflict = false;
+    let access_permission_conflict = false;
+    let excute_permission_conflict = false;
+    let region_config_violation = false;
+    let mpu_set = ""
+
+    if ( instance.$ownedBy ){
+        mpu_set = "_mpu"
+    }
+    _.each(module_instances, mpu_instance => {
+
+        let mr_list = memoryRegs.memoryRegionInformation(mpu_instance, mpu_set)
+        let mpu_accessPermissions = mpu_instance.accessPermissions
+        let mpu_attributes = mpu_instance.attributes
+
+        for(let i = 0; i < mr_list.name.length; i++ ){
+            if( mpu_attributes == "Cached" || mpu_attributes == "Cached+Sharable"){
+                if(mr_list.shared[i] == true){
+                    shareable_cacheable_conflict = true;
+                }
+            }
+
+            if( mpu_accessPermissions.includes("RD+WR") && !mr_list.permissions[i].includes("W")){
+                access_permission_conflict = true;
+            }
+
+            if( mpu_instance.allowExecute && !mr_list.permissions[i].includes("X")){
+                excute_permission_conflict = true;
+            }
+
+            if( mr_list.cores[i] != selfCoreName && mr_list.shared[i] == false){
+                if(physicalLayout[mr_list.type[i]].access == "all"){ // Had "access" been "individual", it would mean it's specific to this core
+                    region_config_violation = true;
+                }
+            }
+        }
+    })
+
+    if( shareable_cacheable_conflict ) {
+        report.logInfo( `Some memory region(s) within this range is Shared among cores. `, instance, "attributes");
+    }
+
+    if( access_permission_conflict ) {
+        report.logInfo( `Some memory region(s) within this range might not have the correct access permissions. `, instance, "accessPermissions");
+    }
+
+    if( excute_permission_conflict ) {
+        report.logInfo( `Some memory region(s) within this range might not have execute permissions. `, instance, "allowExecute");
+    }
+
+    if( region_config_violation ) {
+        report.logInfo( `This MPU region includes other cores' memory regions as well. Pl. make sure what you configure.`, instance, "$name");
     }
 }
 
@@ -546,11 +599,7 @@ let mpu_armv7_module = {
         }
 
         // mpu_access_violation(instance, report);
-        if (instance.memoryRegion_shared && instance.attributes == "Cached")
-        {
-            report.logInfo( `Region shared among cores is marked as cached. `,
-                    instance, "attributes");
-        }
+        checkConflictingConfig(report, instance)
     },
     getSizeString(size) {
         size = 2**size;

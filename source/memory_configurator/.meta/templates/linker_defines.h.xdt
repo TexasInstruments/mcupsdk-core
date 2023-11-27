@@ -1,0 +1,12 @@
+% let group_module = system.modules['/memory_configurator/section'];
+% if (group_module !== undefined ) {
+% let group_module_instances = group_module.$instances
+% for (let instance of group_module_instances) {
+    % let output_sections = instance.output_section;
+        % for(let i = 0; i < output_sections?.length; i++) {
+           % if (output_sections[i].include_defines) {
+#define `output_sections[i].macro_name` __attribute__((section("`output_sections[i].$name`")))
+           %}
+        %}
+    %}
+%}

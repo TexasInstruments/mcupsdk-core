@@ -3,6 +3,7 @@ let drivers = system.getScript("/drivers/drivers")
 let general_module = system.modules['/memory_configurator/general'];
 const { getMemoryLayout } = system.getScript("/memory_configurator/memoryLayoutSolver");
 const physicalLayout = system.getScript("/memory_configurator/physicalLayout.json")[system.deviceData.device];
+const memoryRegs = system.getScript("/memory_configurator/helper");
 
 let g_memory_region_types = [];
 
@@ -29,43 +30,6 @@ function memoryRegions(){
 
     g_memory_region_types = memory_region_types
     return memory_region_types;
-}
-
-function coreList(inst) {
-    let coreNames = common.getSysCfgCoreNames();
-    let selfCoreName = common.getSelfSysCfgCoreName();
-
-    let tmp_list = coreNames.filter(function (coreName) {
-        return coreName !== selfCoreName;
-    });
-
-    let memoryRegType = inst.type;
-    let applicable_cores = (memoryRegType.slice(memoryRegType.lastIndexOf('_')+1)).toLowerCase();
-    if ( memoryRegType.indexOf('_')== -1 ) memoryRegType = memoryRegType+"_ALL"; // This is for types which do not follow the _ALL type format, it's assumed that this region could be shared among all
-
-    let options = [];
-
-    for (let core of tmp_list)
-    {
-        let ele = {name: core, displayName: core}
-        if( memoryRegType.includes("_ALL") ) // This means that the memory type can be accessed across all cores
-            options.push(ele)
-        else if ( core.includes(applicable_cores) && physicalLayout[memoryRegType].access === "all" ) //Display only those which cores with which the current core can access given the memory time
-            options.push(ele)
-    }
-	return options;
-}
-
-function computeCoreNum()
-{
-    let options = coreList();
-    let default_shared_cores = [];
-
-    for(let i = 0; i <  options.length; i++){
-        default_shared_cores.push(options[i].name);
-    }
-
-    return default_shared_cores;
 }
 
 function enableShared_core(inst, ui) {
@@ -301,7 +265,7 @@ let config = [
     longDescription: "",
     default: [],
     hidden: true,
-    options: (inst) => {return coreList(inst)},
+    options: (inst) => {return memoryRegs.coreList(inst)},
 },
 ]
 
@@ -325,42 +289,11 @@ function valueCheck(inst, report){
 
 }
 
-function util_function() {
-
-    let coreNames =  common.getSysCfgCoreNames();
-    let memory_region_module_name = '/memory_configurator/memory_region_mpu';
-    let all_core_memory_instances = []
-    let regions_shared_with_this_core = []
-    let selfCoreName = common.getSelfSysCfgCoreName();
-
-    for (let core of coreNames) {
-
-        if( core.includes(selfCoreName) ) {
-            continue;
-        }
-
-        let core_module = common.getModuleForCore(memory_region_module_name, core);
-            if(core_module !== undefined) {
-                let core_module_instances = core_module.$instances;
-                all_core_memory_instances.push(core_module_instances)
-            }
-    }
-
-    _.each(all_core_memory_instances, (each_core_memory_module) => {
-        _.each(each_core_memory_module, (each_instance) => {
-            if( each_instance.isShared && each_instance.shared_cores.includes(selfCoreName) ) {
-                regions_shared_with_this_core.push(each_instance)
-            }
-        })
-    })
-
-    return regions_shared_with_this_core
-}
 
 function checkSameFieldName(instance, report)
 {
     let regions_this_core = instance.$module.$instances;
-    let regions_shared_with_this_core = util_function()
+    let regions_shared_with_this_core = memoryRegs.util_function("_mpu")
 
     for (let i = 0; i < regions_this_core.length; i++) {
         if (instance.$name === regions_this_core[i].$name &&

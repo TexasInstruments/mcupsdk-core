@@ -23,12 +23,18 @@ if ( (!selfCoreName.includes ("a53")) && (common.getSocName() != "awr294x") )
                 outputPath: "linker.cmd",
                 alwaysRun: false,
             },
+            {
+                name: "/memory_configurator/templates/linker_defines.h.xdt",
+                outputPath: "linker_defines.h",
+                alwaysRun: true,
+            },
         ],
         views: [{
             name: "memory_configurator/Summary",
             displayName: "Memory Summary",
             viewType: "markdown",
             icon: "table-large",
+            ignoreErrors: true,
         }],
     }
 }

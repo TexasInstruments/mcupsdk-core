@@ -1,73 +1,6 @@
 let common   = system.getScript("/common");
 let book_keeping = []
-
-function checkNameChange( name ){
-
-    let selfCoreName = common.getSelfSysCfgCoreName();
-    let selfCore_shared_module = common.getModuleForCore("/memory_configurator/shared_region_references", selfCoreName);
-    let newName = name;
-
-    if( selfCore_shared_module !== undefined){
-        let selfCore_shared_instances = selfCore_shared_module.$instances
-        _.each(selfCore_shared_instances, (each_instance) => {
-            if ( each_instance.shared_region === name){
-                newName =  each_instance.shared_region_name_change
-            }
-        })
-    }
-    return newName
-
-}
-
-function loadMemoryRegions () {
-
- /*  List should include all the MRs defined in this core as well as shared by other cores with this core*/
-    let memory_regions = []
-
-    let coreNames =  common.getSysCfgCoreNames();
-    let memory_region_module_name = ""
-    let region_module = system.modules['/memory_configurator/region'];
-    if(region_module !== undefined) {
-        if(region_module.$instances[0].mpu_setting)
-            memory_region_module_name = "/memory_configurator/memory_region_mpu";
-        else
-            memory_region_module_name = "/memory_configurator/memory_region";
-
-        let selfCoreName = common.getSelfSysCfgCoreName();
-        book_keeping.splice(0, book_keeping.length)
-        for (let core of coreNames) {
-
-            let core_module = common.getModuleForCore(memory_region_module_name, core);
-            let core_module_instances;
-            if(core_module != undefined) {
-                core_module_instances = core_module.$instances;
-                _.each(core_module_instances, instance => {
-
-                    let obj = { name: " ",
-                    }
-                    let displayName = instance.$name.concat(" Type: ",instance.type)
-                    if (core.includes(selfCoreName)) {
-                        memory_regions.push({name: instance.$name, displayName: displayName})
-                        obj.name = instance.$name
-                    }
-                    else if(instance.isShared && instance.shared_cores.includes(selfCoreName)) {
-
-                        let newName = checkNameChange(instance.$name)
-                        let displayName_changed = newName.concat(" Type: ",instance.type)
-                        memory_regions.push({name: instance.$name, displayName: displayName_changed})
-                        obj.name = instance.$name
-                    }
-                    book_keeping.push(obj)
-                })
-            }
-        }
-    }
-    else {
-        memory_regions.push({name: "", displayName: ""})
-    }
-    return {memory_regions}
-}
-
+const memoryRegs = system.getScript("/memory_configurator/helper");
 
 let config = [
     {
@@ -177,7 +110,7 @@ let config = [
         displayName: "Load Memory",
         default:"",
         description:'Choose a memory region from the ones added in the Memory regions section.',
-        options: () => {return loadMemoryRegions().memory_regions},
+        options: () => {return memoryRegs.loadMemoryRegions(book_keeping).memory_regions},
         onChange: (inst) => { inst.run_memory = inst.load_memory
                 }
     },
@@ -186,7 +119,7 @@ let config = [
         displayName: "Run Memory",
         default: "",
         description:'Choose a memory region from the ones added in the Memory regions section.',
-        options: () => {return loadMemoryRegions().memory_regions},
+        options: () => {return memoryRegs.loadMemoryRegions(book_keeping).memory_regions},
     },
     {
         name: "generic_text",

@@ -3,6 +3,25 @@
  const module = system.modules['/kernel/dpl/mpu_armv7'];
  const physicalLayout = system.getScript("/memory_configurator/physicalLayout.json")[system.deviceData.device];
 
+ function checkNameChange( name ){
+
+    let selfCoreName = common.getSelfSysCfgCoreName();
+    let selfCore_shared_module = common.getModuleForCore("/memory_configurator/shared_region_references", selfCoreName);
+    let newName = name;
+
+    if( selfCore_shared_module !== undefined){
+        let selfCore_shared_instances = selfCore_shared_module.$instances
+        _.each(selfCore_shared_instances, (each_instance) => {
+            if ( each_instance.shared_region === name){
+                newName =  each_instance.shared_region_name_change
+            }
+        })
+    }
+    return newName
+
+}
+
+
 function memoryRegionInformation(mpu_instance, mpu_set) {
 
         let mr_list = {

@@ -5,6 +5,22 @@ let config = [
         isCIdentifier: false
     },
     {
+        name: "include_defines",
+        displayName: "Define Macro?",
+        default: false,
+        onChange: (inst) => {
+            inst.$uiState.macro_name.hidden = !inst.include_defines
+            let suggestedMacroName = inst.$name.replace(/[^\w\s]/gi, '').toUpperCase()+"_SECTION"
+            inst.macro_name = suggestedMacroName
+        }
+    },
+    {
+        name: "macro_name",
+        displayName:"Macro Name",
+        default:"",
+        hidden: true
+    },
+    {
         name: "output_sections_start",
         //multiline: true,
         displayName: "Start Section",
@@ -45,6 +61,10 @@ function validate(inst, report) {
 
     if(inst.$name.length == 0) {
         report.logError("Output section name can't be kept empty", inst, "$name")
+    }
+
+    if(inst.include_defines && inst.macro_name.trim().length == 0){
+        report.logError("Macro name can't be kept empty", inst, "macro_name")
     }
 }
 

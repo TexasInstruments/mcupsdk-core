@@ -29,6 +29,9 @@ Within the tool interface, the user will find a section labeled "MEMORY" on the 
 
 In the forthcoming discussion, each of these components will be explored in detail. This will equip users with the knowledge and guidance required to configure the tool in alignment with their specific requirements.
 
+\note
+The tool doesn't support GCC compilers.
+
 ### General
 
 Within this section, the user will have the option to configure essential parameters such as stack size, heap size, IRQ (Interrupt Request), FIQ (Fast Interrupt Request), SVC (Supervisor Call), Abort Stack and Undefined Stack sizes.
@@ -120,7 +123,8 @@ It's important to note that if a memory region is designated as "Shared," the us
 \endcond
 
 \note
-The same shared region instances will not appear in the GUI for the selected cores but will get reflected in their linker files.
+The same shared region instances will not appear in the GUI for the selected cores but will get reflected in their linker files.\n
+Additionally, system projects should not be built at individual core level if there are any shared memory regions.
 
 #### Impact of Automate MPU Setting
 

@@ -22,5 +22,6 @@ exports = {
 		displayName: "MPU Setting Summary",
 		viewType: "markdown",
 		icon: "table-large",
+        ignoreErrors: true,
 	}],
 };
