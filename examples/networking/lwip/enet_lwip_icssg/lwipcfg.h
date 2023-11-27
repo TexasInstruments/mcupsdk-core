@@ -20,9 +20,6 @@
 /* #define USE_AUTOIP  0 */
 
 /* #define USE_PCAPIF 1 */
-#define LWIP_PORT_INIT_IPADDR(addr)   IP4_ADDR((addr), 192,168,1,200)
-#define LWIP_PORT_INIT_GW(addr)       IP4_ADDR((addr), 192,168,1,1)
-#define LWIP_PORT_INIT_NETMASK(addr)  IP4_ADDR((addr), 255,255,255,0)
 
 /* remember to change this MAC address to suit your needs!
    the last octet will be increased by netif->num for each netif */
@@ -77,8 +74,9 @@
 //Experimental port
 #define LWIP_UDPERF_APP               1
 
-/*#define USE_DHCP    1*/
-/*#define USE_AUTOIP  1*/
+/* uncomment the next two lines for Static IP */
+//#define USE_DHCP    0
+//#define USE_AUTOIP  0
 
 /* define this to your custom application-init function */
 /* #define LWIP_APP_INIT my_app_init() */

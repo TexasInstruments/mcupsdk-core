@@ -151,6 +151,21 @@
 #define USE_AUTOIP  LWIP_AUTOIP
 #endif
 
+
+#if (!(USE_DHCP || USE_AUTOIP)) /* Static IP */
+#define IP_ADDR_POOL_COUNT  (2U)
+
+const ip_addr_t gStaticIP[IP_ADDR_POOL_COUNT]               =  { IPADDR4_INIT_BYTES(192, 168, 1, 200), /* For NetifIdx = 0 */
+                                                                                                       IPADDR4_INIT_BYTES(  10,  64,  1, 200),}; /* For NetifIdx = 1 */
+
+const ip_addr_t gStaticIPGateway[IP_ADDR_POOL_COUNT] =  { IPADDR4_INIT_BYTES(192, 168, 1, 1), /* For NetifIdx = 0 */
+                                                                                                       IPADDR4_INIT_BYTES(  10,   64, 1, 1),}; /* For NetifIdx = 1 */
+
+const ip_addr_t gStaticIPNetmask[IP_ADDR_POOL_COUNT] =  { IPADDR4_INIT_BYTES(255,255,255,0), /* For NetifIdx = 0 */
+                                                                                                       IPADDR4_INIT_BYTES(255,255,252,0),}; /* For NetifIdx = 1 */
+
+#endif // #if (!(USE_DHCP || USE_AUTOIP)) /* Static IP */
+
 /* UDP Iperf task should be highest priority task to ensure processed buffers
  * are freed without delay so that we get maximum throughput for
  * UDP Iperf.
@@ -304,9 +319,9 @@ static void
 link_callback(struct netif *state_netif)
 {
   if (netif_is_link_up(state_netif)) {
-    DebugP_log("link_callback==UP\r\n");
+    DebugP_log("[%d] link_callback==UP\r\n", state_netif->num);
   } else {
-    DebugP_log("link_callback==DOWN\r\n");
+    DebugP_log("[%d] link_callback==DOWN\r\n", state_netif->num);
   }
 }
 #endif /* LWIP_NETIF_LINK_CALLBACK */
@@ -366,31 +381,30 @@ test_netif_init(void)
   ip4_addr_set_zero(&gw);
   ip4_addr_set_zero(&ipaddr);
   ip4_addr_set_zero(&netmask);
-#if USE_ETHERNET_TCPIP
-#if USE_DHCP
-  DebugP_log("Starting lwIP, local interface IP is dhcp-enabled\r\n");
-#elif USE_AUTOIP
-  DebugP_log("Starting lwIP, local interface IP is autoip-enabled\r\n");
-#else /* USE_DHCP */
-  LWIP_PORT_INIT_GW(&gw);
-  LWIP_PORT_INIT_IPADDR(&ipaddr);
-  LWIP_PORT_INIT_NETMASK(&netmask);
-  DebugP_log("Starting lwIP, local interface IP is %s\r\n", ip4addr_ntoa(&ipaddr));
-#endif /* USE_DHCP */
-#endif /* USE_ETHERNET_TCPIP */
-#else /* LWIP_IPV4 */
-  DebugP_log("Starting lwIP, IPv4 disable\r\n");
-#endif /* LWIP_IPV4 */
 
-#if LWIP_IPV4
   hlwipIfApp = LwipifEnetApp_getHandle();
   /* Open the netif and get it populated*/
   for (i = 0U; i < ENET_SYSCFG_NETIF_COUNT; i++)
   {
+#if USE_ETHERNET_TCPIP
+#if USE_DHCP
+      DebugP_log("Starting lwIP, local interface IP is dhcp-enabled\r\n");
+#elif USE_AUTOIP
+      DebugP_log("Starting lwIP, local interface IP is autoip-enabled\r\n");
+#else /* USE_DHCP */
+      /* Fall here for Static IP setting */
+      LWIP_ASSERT("More IP allocated than reserved" , i < IP_ADDR_POOL_COUNT);
+      ip4_addr_set(&ipaddr, & gStaticIP[i]);
+      ip4_addr_set(&gw, & gStaticIPNetmask[i]);
+      ip4_addr_set(&netmask, & gStaticIPGateway[i]);
+      DebugP_log("[%d]: Starting lwIP, local interface IP is %s\r\n", i, ip4addr_ntoa(&ipaddr));
+#endif /* USE_DHCP */
+#endif /* USE_ETHERNET_TCPIP */
       netif[i] = LwipifEnetApp_netifOpen(hlwipIfApp, NETIF_INST_ID0 + i, &ipaddr, &netmask, &gw);
   }
   LwipifEnetApp_startSchedule(hlwipIfApp, netif[NETIF_INST_ID0]);
 #else
+  DebugP_log("Starting lwIP, IPv4 disable\r\n");
   init_default_netif();
 #endif
 #if LWIP_IPV6
