@@ -5,7 +5,7 @@ let device = "am243x";
 const files = {
     common: [
         "main.c",
-        "empty_example.c"
+        "empty_example.c",
     ],
 };
 
@@ -69,6 +69,10 @@ const readmeDoxygenPageTag = "EXAMPLES_PRU_EMPTY";
 const templates_freertos_r5f =
 [
     {
+        input: ".project/templates/am243x/common/linker_r5f.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
         input: ".project/templates/am243x/freertos/main_freertos.c.xdt",
         output: "../main.c",
         options: {
@@ -112,7 +116,7 @@ function getComponentBuildProperty(buildOption) {
         ];
         build_property.includes = includes_freertos_r5f_am243x_evm;
     }else{
-        build_property.importOtherProject="examples/pru_io/empty/firmware/am243x-lp/icssg0-pru0_fw/ti-pru-cgt/example.projectspec";
+        build_property.importOtherProject="examples/pru_io/empty/firmware/am243x-lp/icssg0-pru0_fw/ti-pru-cgt/example.projectspec"; 
         build_property.preBuildSteps = [
             "$(MAKE) -C ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am243x-lp/icssg0-pru0_fw/ti-pru-cgt -f makefile -k clean MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_PROJECT_DEBUG=${CWD};",
             "$(MAKE) -C ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am243x-lp/icssg0-pru0_fw/ti-pru-cgt -f makefile -k all MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_PROJECT_DEBUG=${CWD};",
@@ -125,11 +129,11 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
-
+    
     build_property.libdirs = libdirs_freertos;
     build_property.libs = libs_freertos_r5f;
     build_property.templates = templates_freertos_r5f;
-
+    
     return build_property;
 }
 

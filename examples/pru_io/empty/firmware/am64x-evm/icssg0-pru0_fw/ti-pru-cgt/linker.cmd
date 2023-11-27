@@ -68,7 +68,7 @@ MEMORY
 SECTIONS {
 
     .text           >  PRU_IMEM,    PAGE 0
-    .stack          >  PRU_IMEM,    PAGE 0
+    .stack          >  PRU0_DMEM_0, PAGE 1
     .bss            >  PRU0_DMEM_0, PAGE 1
     /*
     .cio            >  PRU0_DMEM_0, PAGE 1

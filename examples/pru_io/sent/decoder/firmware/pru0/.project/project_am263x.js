@@ -5,7 +5,8 @@ let device = "am263x";
 const files = {
     common: [
         "main.asm",
-        "decoder_pru0_hexpru.cmd"
+        "decoder_pru0_hexpru.cmd",
+        "linker.cmd"
     ],
 };
 
@@ -16,6 +17,7 @@ const filedirs = {
     common: [
         "..",       /* core_os_combo base */
         "../../..", /* Example base */
+        "."
     ],
 };
 

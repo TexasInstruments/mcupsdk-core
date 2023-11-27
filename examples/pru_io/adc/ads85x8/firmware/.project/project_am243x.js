@@ -5,6 +5,7 @@ let device = "am243x";
 const files = {
     common: [
         "main.asm",
+        "linker.cmd"
     ],
 };
 
@@ -15,6 +16,7 @@ const filedirs = {
     common: [
         "..",       /* core_os_combo base */
         "../../..", /* Example base */
+        "."
     ],
 };
 

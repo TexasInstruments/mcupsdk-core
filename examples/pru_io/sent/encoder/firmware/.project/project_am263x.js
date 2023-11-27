@@ -5,6 +5,7 @@ let device = "am263x";
 const files = {
     common: [
         "main.asm",
+        "linker.cmd"
     ],
 };
 
@@ -15,6 +16,7 @@ const filedirs = {
     common: [
         "..",       /* core_os_combo base */
         "../../..", /* Example base */
+        "."
     ],
 };
 
@@ -34,7 +36,10 @@ const readmeDoxygenPageTag = "EXAMPLES_SENT_ENCODER";
 
 const templates_pru =
 [
-
+    {
+        input: ".project/templates/am263x/common/pru/linker_pru0.cmd.xdt",
+        output: "linker.cmd",
+    },
 ];
 
 const buildOptionCombos = [

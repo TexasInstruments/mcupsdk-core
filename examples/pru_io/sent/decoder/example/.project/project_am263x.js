@@ -17,7 +17,7 @@ const filedirs = {
     common: [
         "..",       /* core_os_combo base */
         "../../..", /* Example base */
-        "../../../firmware"
+        "../../../firmware",
     ],
 };
 
@@ -47,7 +47,7 @@ const libs_freertos_r5f = {
 
 const lnkfiles = {
     common: [
-        "linker.cmd",
+        "../linker.cmd",
     ]
 };
 
@@ -57,6 +57,10 @@ const readmeDoxygenPageTag = "EXAMPLES_SENT_DECODER";
 
 const templates_freertos_r5f =
 [
+    {
+        input: ".project/templates/am263x/common/linker_r5f.cmd.xdt",
+        output: "linker.cmd",
+    },
     {
         input: ".project/templates/am263x/freertos/main_freertos.c.xdt",
         output: "../main.c",

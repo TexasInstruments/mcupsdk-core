@@ -5,7 +5,7 @@ let device = "am64x";
 const files = {
     common: [
         "main.c",
-        "empty_example.c"
+        "empty_example.c",
     ],
 };
 
@@ -60,6 +60,10 @@ const readmeDoxygenPageTag = "EXAMPLES_PRU_EMPTY";
 
 const templates_freertos_r5f =
 [
+    {
+        input: ".project/templates/am64x/common/linker_r5f.cmd.xdt",
+        output: "linker.cmd",
+    },
     {
         input: ".project/templates/am64x/freertos/main_freertos.c.xdt",
         output: "../main.c",

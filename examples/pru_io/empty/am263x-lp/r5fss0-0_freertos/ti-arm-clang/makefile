@@ -99,7 +99,7 @@ CFLAGS_release := \
 	-Os \
 
 LNK_FILES_common = \
-	generated/linker.cmd \
+	generated/../linker.cmd \
 
 LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \

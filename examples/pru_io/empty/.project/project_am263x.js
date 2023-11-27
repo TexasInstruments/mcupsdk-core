@@ -5,7 +5,7 @@ let device = "am263x";
 const files = {
     common: [
         "main.c",
-        "empty_example.c"
+        "empty_example.c",
     ],
 };
 
@@ -58,7 +58,7 @@ const libs_freertos_r5f = {
 
 const lnkfiles = {
     common: [
-        "linker.cmd",
+        "../linker.cmd",
     ]
 };
 
@@ -68,6 +68,10 @@ const readmeDoxygenPageTag = "EXAMPLES_PRU_EMPTY";
 
 const templates_freertos_r5f =
 [
+    {
+        input: ".project/templates/am263x/common/linker_r5f.cmd.xdt",
+        output: "linker.cmd",
+    },
     {
         input: ".project/templates/am263x/freertos/main_freertos.c.xdt",
         output: "../main.c",

@@ -68,7 +68,7 @@ MEMORY
 SECTIONS {
 
     .text           >  TX_PRU_IMEM,    PAGE 0
-    .stack          >  TX_PRU_IMEM,    PAGE 0
+    .stack          >  TX_PRU0_DMEM_0, PAGE 1
     .bss            >  TX_PRU0_DMEM_0, PAGE 1
     /*
     .cio            >  TX_PRU0_DMEM_0, PAGE 1

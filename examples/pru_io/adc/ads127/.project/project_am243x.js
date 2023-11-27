@@ -50,7 +50,7 @@ const libs_freertos_r5f = {
 
 const lnkfiles = {
     common: [
-        "linker.cmd",
+        "../linker.cmd",
     ]
 };
 
@@ -60,6 +60,10 @@ const readmeDoxygenPageTag = "EXAMPLES_PRU_ADC_ADS127";
 
 const templates_freertos_r5f =
 [
+    {
+        input: ".project/templates/am243x/common/linker_r5f.cmd.xdt",
+        output: "linker.cmd",
+    },
     {
         input: ".project/templates/am243x/freertos/main_freertos.c.xdt",
         output: "../main.c",
