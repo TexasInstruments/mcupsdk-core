@@ -105,6 +105,8 @@ extern "C"
 /* MCU Base address to be used after Adress translation in MCU Domain. */
 #define MCU_MCSPI0_CFG_BASE_AFTER_ADDR_TRANSLATE   (CSL_MCU_MCSPI0_CFG_BASE + 0x80000000)
 #define MCU_MCSPI1_CFG_BASE_AFTER_ADDR_TRANSLATE   (CSL_MCU_MCSPI1_CFG_BASE + 0x80000000)
+#define MCU_UART0_BASE_AFTER_ADDR_TRANSLATE        (CSL_MCU_UART0_BASE + 0x80000000)
+#define MCU_UART1_BASE_AFTER_ADDR_TRANSLATE        (CSL_MCU_UART1_BASE + 0x80000000)
 
 /** \brief API to validate MCSPI base address. */
 static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
@@ -132,13 +134,18 @@ static inline int32_t UART_IsBaseAddrValid(uint32_t baseAddr)
 {
     int32_t status = (int32_t)-3;
 
-    if(((baseAddr == CSL_UART0_BASE) ||
+    if ((baseAddr == CSL_UART0_BASE) ||
         (baseAddr == CSL_UART1_BASE) ||
         (baseAddr == CSL_UART2_BASE) ||
         (baseAddr == CSL_UART3_BASE) ||
         (baseAddr == CSL_UART4_BASE) ||
         (baseAddr == CSL_UART5_BASE) ||
-        (baseAddr == CSL_UART6_BASE)))
+        (baseAddr == CSL_UART6_BASE) ||
+        (baseAddr == CSL_MCU_UART0_BASE) ||
+        (baseAddr == CSL_MCU_UART1_BASE) ||
+        (baseAddr == MCU_UART0_BASE_AFTER_ADDR_TRANSLATE) ||
+        (baseAddr == MCU_UART1_BASE_AFTER_ADDR_TRANSLATE))
+
     {
         status = 0;
     }
