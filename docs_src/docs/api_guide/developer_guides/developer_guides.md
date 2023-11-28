@@ -8,6 +8,7 @@ SDK features and tools.
 \cond SOC_AM64X || SOC_AM243X
 - \subpage INSTALL_NON_DEFAULT
 - \subpage IPC_GUIDE
+- \subpage LLD_GUIDE
 - \subpage MEMORY_MAP
 - \subpage BOOTFLOW_GUIDE
 - \subpage BOOTFLOW_XIP
@@ -58,6 +59,7 @@ SDK features and tools.
 \cond SOC_AM263X || SOC_AM263PX
 - \subpage INSTALL_NON_DEFAULT
 - \subpage IPC_GUIDE
+- \subpage LLD_GUIDE
 - \subpage BOOTFLOW_GUIDE
 - \subpage CCS_PROJECTS_PAGE
 - \subpage MAKEFILE_BUILD_PAGE
