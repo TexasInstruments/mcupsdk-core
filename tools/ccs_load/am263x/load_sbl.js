@@ -91,11 +91,11 @@ function connectHaltResetCpu() {
 }
 
 function connectTargets() {
-    /* Set timeout of 20 seconds */
+    /* Set timeout of 10 seconds */
     script.setScriptTimeout(10000);
     updateScriptVars();
 
-    //IWrites 15 in MSS_L2_MEM_INIT
+    // Writes 15 in MSS_L2_MEM_INIT
     dsMCU1_0.target.connect();
     dsMCU1_0.memory.writeWord(0, 0x50D00240, 0xF)
 
@@ -121,12 +121,9 @@ function connectTargets() {
 
     print("[Cortex_R5_0] Loading SBL ... ");
     dsMCU1_0.memory.loadProgram(sbl_elf_file);
+
     print("[Cortex_R5_0] Running SBL ... ");
     dsMCU1_0.target.runAsynch();
-    /* Wait 500ms to run the bootloader */
-    wait(500);
-    // Halt the R5F
-    dsMCU1_0.target.halt();
 
     return 0;
 }
@@ -148,7 +145,6 @@ function doEverything() {
         updateScriptVars();
         var connectSuccess = connectTargets();
         if (connectSuccess == 0) {
-            disconnectTargets();
             print("Happy Debugging!!");
         }
     }

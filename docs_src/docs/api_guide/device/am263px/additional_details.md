@@ -91,7 +91,7 @@ Below sections describes the various options available for SOC initialization.
     \imageStyle{ccs_load_dmsc_01.png,width:50%}
     \image html ccs_load_dmsc_01.png "Scripting Console Log"
 
-- For success, there should be no error logs in the scripting console.
+- In case of success, there should be no error logs in the scripting console. The core will continue to run and the user can halt and reset the core.
 
 - If the script is run without providing power to the AM263PX-LP or if the AM263PX-LP BOOTMODE is
   not set to \ref BOOTMODE_NOBOOT then you will see errors in the console and/or unexpected behaviour and error messages.
@@ -141,7 +141,7 @@ Below sections describes the various options available for SOC initialization.
     \imageStyle{ccs_load_dmsc_01.png,width:50%}
     \image html ccs_load_dmsc_01.png "Scripting Console Log"
 
-- For success, there should be no error logs in the scripting console.
+- In case of success, there should be no error logs in the scripting console. The core will continue to run and the user can halt and reset the core.
 
 - If the script is run without providing power to the AM263PX-CC or if the AM263PX-CC BOOTMODE is
   not set to \ref BOOTMODE_NOBOOT then you will see errors in the console and/or unexpected behaviour and error messages.
