@@ -432,7 +432,7 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
         key = HwiP_disable();
 
         /* Check if any transaction is in progress */
-        if(NULL != transaction)
+        if(NULL == obj->transaction)
         {
             /* Start transfer */
             obj->transaction = transaction;
@@ -475,6 +475,7 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
                                          sizeof(mcspiLldHandle->transaction));
 
                             transaction->status = MCSPI_TRANSFER_TIMEOUT;
+                            obj->transaction = NULL;
                         }
                     }
                 }
@@ -510,6 +511,7 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
                     status = SystemP_FAILURE;
                     transaction->status = MCSPI_TRANSFER_TIMEOUT;
                 }
+                obj->transaction = NULL;
             }
         }
         else
@@ -564,6 +566,7 @@ int32_t MCSPI_transferCancel(MCSPI_Handle handle)
         }
 
         obj->transaction->status = MCSPI_TRANSFER_CANCELLED;
+        obj->transaction = NULL;
     }
     if ((status != MCSPI_STATUS_SUCCESS) &&
         (status == MCSPI_INVALID_PARAM)  &&
@@ -612,6 +615,7 @@ void MCSPI_transferCallback (void *args, uint32_t transferStatus)
                          &hMcspi->transaction,
                          sizeof(hMcspi->transaction));
 
+            obj->transaction = NULL;
             if(transferStatus == MCSPI_TRANSFER_CANCELLED)
             {
                 obj->transaction->status = MCSPI_TRANSFER_CANCELLED;
@@ -661,6 +665,7 @@ void MCSPI_errorCallback (void *args)
                          sizeof(hMcspi->transaction));
 
             obj->transaction->status = MCSPI_TRANSFER_FAILED;
+            obj->transaction = NULL;
         }
     }
 }

@@ -41,8 +41,8 @@
  *  MCU SPI1 pins are muxed with GPIO.
  *  MCU_SPI0_CS0(Pin 6)   ------------->   MCU_SPI1_CS0(Pin 7)
  *  MCU_SPI0_CLK(Pin 16)  ------------->   MCU_SPI1_CLK(Pin 9)
- *  MCU_SPI0_D0(Pin 4)    ------------->   MCU_SPI1_D0(Pin 5)
- *  MCU_SPI0_D1(Pin 2)    ------------->   MCU_SPI1_D1(Pin 12)
+ *  MCU_SPI0_D0(Pin 4)    ------------->   MCU_SPI1_D1(Pin 12)
+ *  MCU_SPI0_D1(Pin 2)    ------------->   MCU_SPI1_D0(Pin 5)
  *
  * Please connect pins as described below on AM263x LP.
  *  MCU_SPI0_CS0(Pin 18)   ------------->   MCU_SPI1_CS0(Pin 58)

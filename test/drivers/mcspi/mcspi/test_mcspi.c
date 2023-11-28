@@ -229,7 +229,7 @@ void test_main(void *args)
     test_mcspi_set_params(&testParams, 972);
     RUN_TEST(test_mcspi_loopback,  972, (void*)&testParams);
 #endif
-#if !defined(SOC_AM64X) && !defined(SOC_AM243X) && !defined(SOC_AM263X) || !defined (SOC_AM263PX)
+#if !defined(SOC_AM64X) && !defined(SOC_AM243X) && !defined(SOC_AM263X) && !defined (SOC_AM263PX)
     test_mcspi_set_params(&testParams, 973);
     RUN_TEST(test_mcspi_loopback,  973, (void*)&testParams);
 #endif

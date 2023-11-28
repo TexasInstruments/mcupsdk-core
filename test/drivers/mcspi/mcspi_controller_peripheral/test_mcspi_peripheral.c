@@ -41,8 +41,8 @@
  *  MCU SPI1 pins are muxed with GPIO.
  *  MCU_SPI0_CS0(Pin 6)   ------------->   MCU_SPI1_CS0(Pin 7)
  *  MCU_SPI0_CLK(Pin 16)  ------------->   MCU_SPI1_CLK(Pin 9)
- *  MCU_SPI0_D0(Pin 4)    ------------->   MCU_SPI1_D0(Pin 5)
- *  MCU_SPI0_D1(Pin 2)    ------------->   MCU_SPI1_D1(Pin 12)
+ *  MCU_SPI0_D0(Pin 4)    ------------->   MCU_SPI1_D1(Pin 12)
+ *  MCU_SPI0_D1(Pin 2)    ------------->   MCU_SPI1_D0(Pin 5)
  *
  * Please connect pins as described below on AM263x LP.
  *  MCU_SPI0_CS0(Pin 18)   ------------->   MCU_SPI1_CS0(Pin 58)
@@ -960,7 +960,7 @@ static void test_mcspi_set_peripheral_params(MCSPI_PeripheralTestParams *testPar
     testParams->dataSize               = 8;
     chConfigParams->trMode             = MCSPI_TR_MODE_TX_RX;
     chConfigParams->inputSelect        = MCSPI_IS_D1;
-    chConfigParams->dpe0               = MCSPI_DPE_DISABLE;
+    chConfigParams->dpe0               = MCSPI_DPE_ENABLE;
     chConfigParams->dpe1               = MCSPI_DPE_DISABLE;
     chConfigParams->slvCsSelect        = MCSPI_SLV_CS_SELECT_0;
     chConfigParams->startBitEnable     = FALSE;
