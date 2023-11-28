@@ -510,7 +510,9 @@ function getConfigurables()
             onChange: function (inst, ui) {
                 if(inst.readMode == "BLOCKING") {
                     ui.readCallbackFxn.hidden = true;
-                    ui.writeCallbackFxn.hidden = true;
+                }
+                else {
+                    ui.readCallbackFxn.hidden = false;
                 }
             },
         },
@@ -518,7 +520,7 @@ function getConfigurables()
             name: "readCallbackFxn",
             displayName: "Read Callback",
             default: "NULL",
-            hidden: false,
+            hidden: true,
             description: "Read callback function when callback mode is selected",
         },
         {
@@ -542,8 +544,10 @@ function getConfigurables()
 - **CallBack Mode:** Does not block code execution and instead calls a #UART_CallbackFxn callback function when the transaction has completed`,
             onChange: function (inst, ui) {
                 if(inst.writeMode == "BLOCKING") {
-                    ui.readCallbackFxn.hidden = true;
                     ui.writeCallbackFxn.hidden = true;
+                }
+                else {
+                    ui.writeCallbackFxn.hidden = false;
                 }
             },
         },
@@ -551,7 +555,7 @@ function getConfigurables()
             name: "writeCallbackFxn",
             displayName: "Write Callback",
             default: "NULL",
-            hidden: false,
+            hidden: true,
             description: "Write callback function when callback mode is selected",
         },
         {
