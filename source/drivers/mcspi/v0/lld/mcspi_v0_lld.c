@@ -2216,7 +2216,7 @@ static void MCSPI_setClkConfig(uint32_t baseAddr,
 
     /* Calculate the value of fRatio. */
     fRatio = inputClkFreq / bitRate;
-    if((fRatio*bitRate) != inputClkFreq)
+    if(((inputClkFreq % bitRate) != 0) && (fRatio < MCSPI_MAX_CLK_DIVIDER_SUPPORTED))
     {
         /* use a higher divider value in case the ratio
          * is fractional so that we get a lower SPI clock

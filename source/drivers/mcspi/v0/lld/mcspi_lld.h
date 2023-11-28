@@ -381,6 +381,9 @@ typedef uint32_t (*MCSPI_clockGet) (void);
 #define MCSPI_ERROR_TX_UNDERFLOW    (0x00000001U)
 #define MCSPI_ERROR_RX_OVERFLOW     (0x00000002U)
 
+/** Maximuum Clock Divider supported */
+#define MCSPI_MAX_CLK_DIVIDER_SUPPORTED   (4096U)
+
 /* ========================================================================== */
 /*                       Advanced Macros & Typedefs                           */
 /* ========================================================================== */
