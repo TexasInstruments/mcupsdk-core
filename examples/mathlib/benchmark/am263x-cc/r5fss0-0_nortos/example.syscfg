@@ -40,6 +40,7 @@ const section12       = section.addInstance();
  * Write custom configuration values to the imported modules.
  */
 debug_log.enableUartLog            = true;
+debug_log.enableCssLog             = false;
 debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
@@ -142,8 +143,8 @@ section1.output_section.create(1);
 section1.output_section[0].$name      = ".vectors";
 section1.output_section[0].palignment = true;
 
-section2.load_memory                  = "OCRAM";
 section2.$name                        = "Text Segments";
+section2.load_memory                  = "OCRAM";
 section2.output_section.create(5);
 section2.output_section[0].$name      = ".text.hwi";
 section2.output_section[0].palignment = true;
@@ -156,8 +157,8 @@ section2.output_section[3].palignment = true;
 section2.output_section[4].$name      = ".text:abort";
 section2.output_section[4].palignment = true;
 
-section3.load_memory                  = "OCRAM";
 section3.$name                        = "Code and Read-Only Data";
+section3.load_memory                  = "R5F_TCMA";
 section3.output_section.create(2);
 section3.output_section[0].$name      = ".text";
 section3.output_section[0].palignment = true;
