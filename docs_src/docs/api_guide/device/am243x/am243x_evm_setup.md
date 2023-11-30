@@ -568,7 +568,8 @@ and flash driver is not yet available for that EVM.
         DMSC Firmware revision 0xNN
         DMSC ABI revision x.y
 
-        All tests have passed!!
+        Starting SOC Initialization ...
+        Resetting self cluster ...
 
   - In the @VAR_SOC_NAME console, this is log from the GEL scripts.
     \imageStyle{ccs_load_dmsc_03.png,width:50%}
@@ -649,7 +650,8 @@ and flash driver is not yet available for that EVM.
         DMSC Firmware revision 0xNN
         DMSC ABI revision x.y
 
-        All tests have passed!!
+        Starting SOC Initialization ...
+        Resetting self cluster ...
 
   - In the @VAR_SOC_NAME console, this is log from the GEL scripts.
     \imageStyle{ccs_load_dmsc_03.png,width:50%}
