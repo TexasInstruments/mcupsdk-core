@@ -85,7 +85,7 @@ hardware interrupt routines.
 ## Important Usage Guidelines
 
 - In case of DMA mode, as R5F core is not Cache Coherent, Cache Writeback is required if R5F writes to the buffers.
-  And before reading the buffers, application needs to invalidate those. Please refer \ref EXAMPLES_DRIVERS_UART_ECHO_DMA.
+  And before reading the buffers, application needs to invalidate those. Please refer \ref EXAMPLES_DRIVERS_UART_ECHO_DMA_LLD.
 \endcond
 ## Example Usage
 
