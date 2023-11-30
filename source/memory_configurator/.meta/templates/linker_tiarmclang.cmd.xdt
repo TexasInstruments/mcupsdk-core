@@ -53,8 +53,8 @@ __UNDEFINED_STACK_SIZE = `instance.undefined_stack_size`;  /* This is the size o
     function format(inst, mem) {
 
         let arr=[]
-        let load_memory_new = checkNameChange (inst[mem])
-        let run_memory_new = checkNameChange (inst[mem])
+        let load_memory_new = checkNameChange (inst["load_memory"])
+        let run_memory_new = checkNameChange (inst["run_memory"])
 
         if(inst.load_to_memory == "Memory") {
             let str=""
@@ -77,8 +77,9 @@ __UNDEFINED_STACK_SIZE = `instance.undefined_stack_size`;  /* This is the size o
                 if(mem == "run_memory" && JSON.stringify(load_memory_new) === JSON.stringify(run_memory_new)){
                     return []
                 }
-                else
-                    str = run_memory_new
+                else if ( mem == "load_memory")
+                    str = load_memory_new
+                else    str = run_memory_new
             }
             return str;
         }
