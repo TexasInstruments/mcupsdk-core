@@ -29,7 +29,7 @@
 	%} else {
 	LIN_disableParity(`instance.$name`_BASE_ADDR);
 	%}
-
+    %}
     % if (instance.enableLoopback){
     /*
      * Enable LIN test mode
@@ -51,11 +51,12 @@
     LIN_disableExtLoopback(`instance.$name`_BASE_ADDR);
     %}
 
+    % if (instance.useDefault == false){
     /*
      * Finally exit SW reset and enter LIN ready state
      */
     LIN_exitSoftwareReset(`instance.$name`_BASE_ADDR);
-     %}
+    %}
 
       % if (instance.enableInterrupt){
     /*
