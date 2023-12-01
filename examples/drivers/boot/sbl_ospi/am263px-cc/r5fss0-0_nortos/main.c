@@ -80,9 +80,9 @@ int main(void)
     troublesome because sequences are very different in Octal DDR mode. So for a
     moment switch OSPI controller to 8D mode and do a flash reset. */
     flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
-
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
+
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
     if (SystemP_SUCCESS == status)
@@ -123,11 +123,10 @@ int main(void)
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
                 status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
             }
-            Bootloader_profileAddProfilePoint("CPU load");
-            Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
-            OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
-            Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, OSPI_getInputClk(ospiHandle));
 
+            Bootloader_profileAddProfilePoint("CPU load");
+
+            OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
 
             if (status == SystemP_SUCCESS)
             {
@@ -140,14 +139,6 @@ int main(void)
                     status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
                     DebugP_assert(status == SystemP_SUCCESS);
                 }
-            }
-
-            if (status == SystemP_SUCCESS)
-            {
-                Bootloader_profileAddProfilePoint("SBL End");
-                Bootloader_profilePrintProfileLog();
-                DebugP_log("Image loading done, switching to application ...\r\n");
-                UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
             }
 
             /* Run CPUs */
@@ -169,10 +160,12 @@ int main(void)
                 {
                     status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
                 }
-
                 if (status == SystemP_SUCCESS)
                 {
-                    /* enable Phy and Phy pipeline for XIP execution */
+                    /*
+                        enable Phy and Phy pipeline for XIP execution
+                        again because those would be disabled by Bootloader_rprcImageLoad
+                    */
                     if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
                     {
                         status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
@@ -182,6 +175,13 @@ int main(void)
                         DebugP_assert(status == SystemP_SUCCESS);
                     }
                 }
+                Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
+                Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, OSPI_getInputClk(ospiHandle));
+                Bootloader_profileAddProfilePoint("SBL End");
+                Bootloader_profilePrintProfileLog();
+                DebugP_log("Image loading done, switching to application ...\r\n");
+                UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
+
                 /* If any of the R5 core 0 have valid image reset the R5 core. */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
             }
