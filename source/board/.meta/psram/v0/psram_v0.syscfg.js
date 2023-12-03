@@ -88,6 +88,12 @@ function moduleInstances(inst) {
     };
 
     modInstances.push({
+        name: "psramDriverIoExpander",
+        displayName: "PSRAM Configuration",
+        moduleName: "/drivers/i2c/i2c",
+        useArray: false,
+    })
+    modInstances.push({
             name: "psramDriver",
             displayName: "PSRAM Configuration",
             moduleName: "/drivers/gpmc/gpmc",

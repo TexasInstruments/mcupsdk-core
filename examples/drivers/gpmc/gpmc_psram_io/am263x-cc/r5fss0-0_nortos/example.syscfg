@@ -12,8 +12,6 @@ const psram           = scripting.addModule("/board/psram/psram", {}, false);
 const psram1          = psram.addInstance();
 const gpio            = scripting.addModule("/drivers/gpio/gpio", {}, false);
 const gpio1           = gpio.addInstance();
-const i2c             = scripting.addModule("/drivers/i2c/i2c", {}, false);
-const i2c1            = i2c.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
@@ -48,6 +46,9 @@ const section12       = section.addInstance();
  * Write custom configuration values to the imported modules.
  */
 psram1.$name                                 = "CONFIG_PSRAM0";
+psram1.psramDriverIoExpander.$name           = "CONFIG_I2C0";
+psram1.psramDriverIoExpander.I2C.$assign     = "I2C0";
+psram1.psramDriverIoExpander.I2C.SDA.pu_pd   = "pd";
 psram1.psramDriver.$name                     = "CONFIG_GPMC0";
 psram1.psramDriver.clockRateDiv              = 4;
 psram1.psramDriver.GPMC.$assign              = "GPMC";
@@ -102,15 +103,12 @@ psram1.psramDriver.GPMC.GPMC_AD15.pu_pd      = "pu";
 
 gpio1.$name = "CONFIG_GPIO0";
 
-i2c1.$name         = "CONFIG_I2C0";
-i2c1.I2C.$assign   = "I2C2";
-i2c1.I2C.SDA.pu_pd = "pd";
-
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
 debug_log.uartLog.UART.$assign     = "UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -349,6 +347,8 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
+psram1.psramDriverIoExpander.I2C.SCL.$suggestSolution  = "I2C0_SCL";
+psram1.psramDriverIoExpander.I2C.SDA.$suggestSolution  = "I2C0_SDA";
 psram1.psramDriver.GPMC.GPMC_ADVn_ALE.$suggestSolution = "SDFM0_CLK2";
 psram1.psramDriver.GPMC.GPMC_BE0n_CLE.$suggestSolution = "PR0_PRU1_GPIO9";
 psram1.psramDriver.GPMC.GPMC_A0.$suggestSolution       = "PR0_PRU0_GPIO4";
@@ -391,5 +391,3 @@ psram1.psramDriver.GPMC.GPMC_AD15.$suggestSolution     = "MMC_SDCD";
 psram1.psramDriver.GPMC.GPMC_WAIT0.$suggestSolution    = "PR0_PRU0_GPIO10";
 gpio1.GPIO.$suggestSolution                            = "GPIO0";
 gpio1.GPIO.gpioPin.$suggestSolution                    = "QSPI_CSn0";
-i2c1.I2C.SCL.$suggestSolution                          = "UART0_RTSn";
-i2c1.I2C.SDA.$suggestSolution                          = "UART0_CTSn";
