@@ -234,6 +234,11 @@ typedef struct
     /**< Pointer to driver specific data object */
 } MCSPI_Config;
 
+/** \brief Externally defined driver configuration array */
+extern MCSPI_Config         gMcspiConfig[];
+/** \brief Externally defined driver configuration array size */
+extern uint32_t             gMcspiConfigNum;
+
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */

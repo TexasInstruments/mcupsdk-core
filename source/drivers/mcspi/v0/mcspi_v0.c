@@ -88,8 +88,6 @@ static MCSPI_DrvObj     gMcspiDrvObj =
     .lock           = NULL,
 };
 
-extern MCSPI_Config          gMcspiConfig[];
-extern uint32_t              gMcspiConfigNum;
 extern uint32_t              gMcspiNumCh[];
 extern MCSPI_DmaHandle       gMcspiDmaHandle[];
 extern MCSPI_DmaChConfig    *gMcspiDmaChConfig[];

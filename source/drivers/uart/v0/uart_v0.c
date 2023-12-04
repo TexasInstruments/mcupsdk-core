@@ -52,8 +52,6 @@
 #include <drivers/uart/v0/lld/dma/uart_dma.h>
 
 /* UART Config,DMA structure handles */
-extern UART_Config          gUartConfig[];
-extern uint32_t             gUartConfigNum;
 extern UART_DmaHandle       gUartDmaHandle[];
 extern UART_DmaChConfig     gUartDmaChConfig[];
 
