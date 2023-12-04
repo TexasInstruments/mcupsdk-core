@@ -2278,7 +2278,7 @@ static int32_t ECC_errNegativeTest(void)
     if (retVal == 0U)
 	{
         /* Negative tests with invalid pointer */
-        result = SDL_ECC_init(12U, &ECC_Test_InitConfig);
+        result = SDL_ECC_init(11U, &ECC_Test_InitConfig);
         if (result == SDL_PASS) {
             DebugP_log("\r\n  Negative test failed on line no: %d \r\n", __LINE__);
             retVal = -1;
