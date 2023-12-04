@@ -138,7 +138,14 @@ function pinmuxRequirements(inst) {
     pinmux.setPeripheralPinConfigurableDefault( mdio, "MDC", "rx", false);
     perRequirements.push(mdio);
 
-    if (inst.phyToMacInterfaceMode === "RMII")
+    if( inst.phyToMacInterfaceMode === "MII")
+    {
+        let mii1 = getPeripheralRequirements(inst, "MII", "MII1");
+        let mii2 = getPeripheralRequirements(inst, "MII", "MII2");
+
+        return [mdio, mii1, mii2];
+    }
+    else if( inst.phyToMacInterfaceMode === "RMII")
     {
         let rmii = getPeripheralRequirements(inst, "RMII", "RMII");
 
@@ -170,7 +177,12 @@ function getInterfaceNameList(inst) {
     {
         interfaceNameList.push("CPSW_CPTS")
     }
-    if(inst.phyToMacInterfaceMode === "RMII")
+    if (inst.phyToMacInterfaceMode === "MII")
+    {
+        interfaceNameList.push(getInterfaceName(inst, "MII1"));
+        interfaceNameList.push(getInterfaceName(inst, "MII2"));
+    }
+    else if (inst.phyToMacInterfaceMode === "RMII")
     {
         interfaceNameList.push(getInterfaceName(inst, "RMII"));
     }
@@ -190,7 +202,13 @@ function getPeripheralPinNames(inst)
       pinList = pinList.concat( "CPTS0_TS_SYNC");
     }
 
-    if(inst.phyToMacInterfaceMode === "RMII")
+    if(inst.phyToMacInterfaceMode === "MII")
+    {
+        pinList = pinList.concat( getInterfacePinList(inst, "MDIO"),
+                        getInterfacePinList(inst, "MII" )
+        );
+    }
+    else if(inst.phyToMacInterfaceMode === "RMII")
     {
         pinList = pinList.concat(getInterfacePinList(inst, "MDIO"),
                         getInterfacePinList(inst, "RMII" ));
@@ -212,7 +230,7 @@ let enet_cpsw_pinmux_module = {
     config: [
         {
             name: "phyToMacInterfaceMode",
-            displayName: "RMII/RGMII",
+            displayName: "RMII/RGMII/MII",
             default: "RGMII",
             options: [
                 {
@@ -221,6 +239,9 @@ let enet_cpsw_pinmux_module = {
                 {
                     name: "RGMII",
                 },
+                {
+                    name: "MII",
+                }
             ],
         },
         {

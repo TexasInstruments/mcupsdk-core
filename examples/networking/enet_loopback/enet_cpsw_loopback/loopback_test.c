@@ -821,6 +821,9 @@ static int32_t EnetApp_macMode2PhyMii(emac_mode macMode,
 
     switch (macMode)
     {
+        case MII:
+            *mii = ENETPHY_MAC_MII_MII;
+            break;
         case RMII:
             *mii = ENETPHY_MAC_MII_RMII;
             break;
@@ -843,6 +846,11 @@ static void EnetApp_macMode2MacMii(emac_mode macMode,
 {
     switch (macMode)
     {
+        case MII:
+            mii->layerType    = ENET_MAC_LAYER_MII;
+            mii->sublayerType = ENET_MAC_SUBLAYER_STANDARD;
+            mii->variantType  = ENET_MAC_VARIANT_NONE;
+        break;
         case RMII:
             mii->layerType    = ENET_MAC_LAYER_MII;
             mii->sublayerType = ENET_MAC_SUBLAYER_REDUCED;

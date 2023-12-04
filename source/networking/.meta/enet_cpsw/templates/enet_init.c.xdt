@@ -521,7 +521,7 @@ static int32_t EnetApp_enablePorts(Enet_Handle hEnet,
             }
         }
     }
-
+    *(volatile uint32_t *) ((uintptr_t) 0x52822330) = 0x421;
     return status;
 }
 

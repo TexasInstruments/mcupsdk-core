@@ -76,8 +76,9 @@ const EnetPhy_DrvInfoTbl gEnetPhyDrvTbl =
                                          11 = Not Supported
 */
 
+#define MSS_CPSW_CONTROL_PORT_MODE_MII                                     (0x0U)
 #define MSS_CPSW_CONTROL_PORT_MODE_RMII                                   (0x1U)
-#define MSS_CPSW_CONTROL_PORT_MODE_RGMII                                  (0x2U)
+#define MSS_CPSW_CONTROL_PORT_MODE_RGMII                                 (0x2U)
 
 #define I2C_EEPROM_MAC_DATA_OFFSET                                        (0x3D)
 #define I2C_EEPROM_MAC_CTRL_OFFSET                                        (0x3B)
@@ -169,6 +170,41 @@ static const EnetBoard_PortCfg gEnetCpbBoard_am263xEthPort[] =
         .flags    = 0U,
     },
 };
+% } else if (pinMuxInstance.phyToMacInterfaceMode == "MII") {
+    static const EnetBoard_PortCfg gEnetCpbBoard_am263xEthPort[] =
+    {
+        {    /* "CPSW3G" */
+            .enetType = ENET_CPSW_3G,
+            .instId   = 0U,
+            .macPort  = ENET_MAC_PORT_1,
+            .mii      = { ENET_MAC_LAYER_MII, ENET_MAC_SUBLAYER_STANDARD },
+            .phyCfg   =
+            {
+                .phyAddr         = `instance.phyAddr1`,
+                .isStrapped      = `instance.isStrappedPhy1`,
+                .skipExtendedCfg = false,
+                .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,
+                .extendedCfgSize = sizeof(gEnetCpbBoard_dp83869PhyCfg),
+            },
+            .flags    = 0U,
+        },
+        {    /* "CPSW3G" */
+            .enetType = ENET_CPSW_3G,
+            .instId   = 0U,
+            .macPort  = ENET_MAC_PORT_2,
+            .mii      = { ENET_MAC_LAYER_MII, ENET_MAC_SUBLAYER_STANDARD },
+            .phyCfg   =
+            {
+                .phyAddr         = `instance.phyAddr2`,
+                .isStrapped      = `instance.isStrappedPhy2`,
+                .skipExtendedCfg = false,
+                .extendedCfg     = &gEnetCpbBoard_dp83869PhyCfg,
+                .extendedCfgSize = sizeof(gEnetCpbBoard_dp83869PhyCfg),
+            },
+            .flags    = 0U,
+        },
+    };
+
 % } else {
 /*
  * AM263x board configuration.
@@ -230,6 +266,17 @@ static const EnetBoard_PortCfg gEnetLpbkBoard_am263xEthPort[] =
         .instId   = 0U,
         .macPort  = ENET_MAC_PORT_1,
         .mii      = { ENET_MAC_LAYER_MII, ENET_MAC_SUBLAYER_REDUCED },
+        .phyCfg   =
+        {
+            .phyAddr = ENETPHY_INVALID_PHYADDR,
+        },
+        .flags    = 0U,
+    },
+    {    /* MII MAC loopback */
+        .enetType = ENET_CPSW_3G,
+        .instId   = 0U,
+        .macPort  = ENET_MAC_PORT_1,
+        .mii      = { ENET_MAC_LAYER_MII, ENET_MAC_SUBLAYER_STANDARD },
         .phyCfg   =
         {
             .phyAddr = ENETPHY_INVALID_PHYADDR,
@@ -343,14 +390,16 @@ int32_t EnetBoard_setupPorts(EnetBoard_EthPort *ethPorts,
     CSL_mss_ctrlRegs *mssCtrlRegs = (CSL_mss_ctrlRegs *)CSL_MSS_CTRL_U_BASE;
 
     DebugP_assert(numEthPorts == 1);
-    DebugP_assert(ethPorts->mii.sublayerType == ENET_MAC_SUBLAYER_REDUCED);
+
 
     EnetBoard_enableExternalMux();
 
     switch(ethPorts->macPort)
     {
         case ENET_MAC_PORT_1:
-%if (pinMuxInstance.phyToMacInterfaceMode == "RGMII") {
+ % if (pinMuxInstance.phyToMacInterfaceMode == "MII") {
+     CSL_FINS( mssCtrlRegs->CPSW_CONTROL,MSS_CTRL_CPSW_CONTROL_PORT1_MODE_SEL, MSS_CPSW_CONTROL_PORT_MODE_MII);
+% } else if (pinMuxInstance.phyToMacInterfaceMode == "RGMII") {
             CSL_FINS( mssCtrlRegs->CPSW_CONTROL,MSS_CTRL_CPSW_CONTROL_RGMII1_ID_MODE, `Number(instance.disableRgmiiIntDelay1)`U);
             CSL_FINS( mssCtrlRegs->CPSW_CONTROL,MSS_CTRL_CPSW_CONTROL_PORT1_MODE_SEL, MSS_CPSW_CONTROL_PORT_MODE_RGMII);
 % } else {
@@ -358,7 +407,9 @@ int32_t EnetBoard_setupPorts(EnetBoard_EthPort *ethPorts,
 %}
             break;
         case ENET_MAC_PORT_2:
-%if (pinMuxInstance.phyToMacInterfaceMode == "RGMII") {
+% if (pinMuxInstance.phyToMacInterfaceMode == "MII") {
+                 CSL_FINS( mssCtrlRegs->CPSW_CONTROL,MSS_CTRL_CPSW_CONTROL_PORT2_MODE_SEL, MSS_CPSW_CONTROL_PORT_MODE_MII);
+% } else if (pinMuxInstance.phyToMacInterfaceMode == "RGMII") {
             CSL_FINS( mssCtrlRegs->CPSW_CONTROL,MSS_CTRL_CPSW_CONTROL_RGMII2_ID_MODE, `Number(instance.disableRgmiiIntDelay2)`U);
             CSL_FINS( mssCtrlRegs->CPSW_CONTROL,MSS_CTRL_CPSW_CONTROL_PORT2_MODE_SEL, MSS_CPSW_CONTROL_PORT_MODE_RGMII);
 % } else {
