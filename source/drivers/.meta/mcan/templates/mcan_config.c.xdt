@@ -4,7 +4,7 @@
 /*
  * MCAN
  */
-/* MCASP Default Bit timing Parameters */
+/* MCAN Default Bit timing Parameters */
 MCAN_BitTimingParams gMcanBitTimingDefaultParams =
 {
     .nomRatePrescalar   = 0x`module.$static.nomRatePrescalar.toString(16).toUpperCase()`U,
