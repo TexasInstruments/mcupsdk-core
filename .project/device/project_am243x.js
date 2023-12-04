@@ -179,6 +179,7 @@ const example_file_list = [
     "examples/networking/enet_cpsw_est/.project/project.js",
     "examples/networking/enet_cpsw_fast_startup/.project/project.js",
     "examples/networking/tsn/gptp_cpsw_app/.project/project.js",
+    "examples/networking/tsn/gptp_lwip_cpsw/.project/project.js",
     "examples/networking/tsn/gptp_icssg_app/.project/project.js",
     "examples/networking/tsn/lldp_cpsw_app/.project/project.js",
     "examples/networking/enet_loopback/enet_icssg_loopback/.project/project.js",

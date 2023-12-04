@@ -2,8 +2,8 @@
     let module = system.modules["/networking/enet_icss/enet_icss"];
     const netifScript = system.getScript("../enet_icssg_lwipif_netif");
 %%}
+% let instances = module.$instances;
 % let instance = module.$instances[0];
-
 %if(module.getNetifCount(instance) >= 1)
 %{
 /* ========================================================================== */
@@ -227,7 +227,7 @@ struct netif* LwipifEnetApp_netifOpen(LwipifEnetApp_Handle handle, uint32_t neti
                     netif_input
 %}
                  );
-        LWIPIF_LWIP_start(enetType, instId, &pObj->gNetif[netifIdx]);
+        LWIPIF_LWIP_start(enetType, instId, &pObj->gNetif[netifIdx], netifIdx);
 
         if(netifIdx == ENET_SYSCFG_DEFAULT_NETIF_IDX)
         {
@@ -673,20 +673,18 @@ void LwipifEnetApp_startSchedule(LwipifEnetApp_Handle handle, struct netif *neti
 %}
 }
 
-void LwipifEnetApp_getRxChIDs(const Enet_Type enetType, const uint32_t instId, uint32_t* pRxChIdCount, uint32_t rxChIdList[LWIPIF_MAX_RX_CHANNELS_PER_PHERIPHERAL])
+void LwipifEnetApp_getRxChIDs(const Enet_Type enetType, const uint32_t instId, uint32_t netifIdx, uint32_t* pRxChIdCount, uint32_t rxChIdList[LWIPIF_MAX_RX_CHANNELS_PER_PHERIPHERAL])
 {
-    const uint32_t rxChIdMap[ENET_SYSCFG_MAX_ENET_INSTANCES][4] = `netifScript.getEnet2RxChIdMap()`;
-    uint32_t chCount = 0;
-    uint32_t chIdStrart = 0;
-    for (uint32_t idx = 0; idx < ENET_SYSCFG_MAX_ENET_INSTANCES; idx++)
+    int32_t netif2ChMap[ENET_SYSCFG_NETIF_COUNT][LWIPIF_MAX_RX_CHANNELS_PER_PHERIPHERAL] = `netifScript.getNetifRxCh()`;
+    uint32_t chCount;
+    
+    EnetAppUtils_assert(netifIdx < ENET_SYSCFG_NETIF_COUNT);
+    
+    for (chCount = 0U; (chCount < LWIPIF_MAX_RX_CHANNELS_PER_PHERIPHERAL) && (netif2ChMap[netifIdx][chCount] != -1); chCount++)
     {
-        if ((rxChIdMap[idx][0] == enetType) && (rxChIdMap[idx][1] == instId))
-        {
-            chIdStrart = rxChIdMap[idx][2];
-            chCount    = rxChIdMap[idx][3];
-        }
+        rxChIdList[chCount] = netif2ChMap[netifIdx][chCount];
     }
-
+    
     /* verifiy the user params */
     switch (enetType)
     {
@@ -707,29 +705,20 @@ void LwipifEnetApp_getRxChIDs(const Enet_Type enetType, const uint32_t instId, u
         EnetAppUtils_assert(false);
     }
     }
-
-    /* fill ChId List */
-    EnetAppUtils_assert(chCount <= LWIPIF_MAX_RX_CHANNELS_PER_PHERIPHERAL);
     *pRxChIdCount = chCount;
-    for (uint32_t idx = 0; idx < chCount; idx++)
-    {
-        rxChIdList[idx] = chIdStrart + idx; 
-    }
     return;
 }
 
-void LwipifEnetApp_getTxChIDs(const Enet_Type enetType, const uint32_t instId, uint32_t* pTxChIdCount, uint32_t txChIdList[LWIPIF_MAX_TX_CHANNELS_PER_PHERIPHERAL])
+void LwipifEnetApp_getTxChIDs(const Enet_Type enetType, const uint32_t instId, uint32_t netifIdx, uint32_t* pTxChIdCount, uint32_t txChIdList[LWIPIF_MAX_TX_CHANNELS_PER_PHERIPHERAL])
 {
-    const uint32_t txChIdMap[ENET_SYSCFG_MAX_ENET_INSTANCES][4] = `netifScript.getEnet2TxChIdMap()`;
-    uint32_t chCount = 0;
-    uint32_t chIdStrart = 0;
-    for (uint32_t idx = 0; idx < ENET_SYSCFG_MAX_ENET_INSTANCES; idx++)
+    int32_t netif2ChMap[ENET_SYSCFG_NETIF_COUNT][LWIPIF_MAX_TX_CHANNELS_PER_PHERIPHERAL] = `netifScript.getNetifTxCh()`;
+    uint32_t chCount;
+    
+    EnetAppUtils_assert(netifIdx < ENET_SYSCFG_NETIF_COUNT);
+    
+    for (chCount = 0U; (chCount < LWIPIF_MAX_TX_CHANNELS_PER_PHERIPHERAL) && (netif2ChMap[netifIdx][chCount] != -1); chCount++)
     {
-        if ((txChIdMap[idx][0] == enetType) && (txChIdMap[idx][1] == instId))
-        {
-            chIdStrart  = txChIdMap[idx][2];
-            chCount     = txChIdMap[idx][3];
-        }
+        txChIdList[chCount] = netif2ChMap[netifIdx][chCount];
     }
 
     /* verifiy the user params */
@@ -748,14 +737,8 @@ void LwipifEnetApp_getTxChIDs(const Enet_Type enetType, const uint32_t instId, u
         EnetAppUtils_assert(false);
     }
     }
-
-    /* fill ChId List */
-    EnetAppUtils_assert(chCount <= LWIPIF_MAX_TX_CHANNELS_PER_PHERIPHERAL);
+    
     *pTxChIdCount = chCount;
-    for (uint32_t idx = 0; idx < chCount; idx++)
-    {
-        txChIdList[idx] = chIdStrart + idx; 
-    }
     return;
 }
 

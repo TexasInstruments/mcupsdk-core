@@ -75,7 +75,7 @@ function getEnet2RxChIdMap()
     for(let i = 0; i < module.$instances.length; i++) {
         let instance = module.$instances[i];
         let matchedEntry = module.getCpswInstInfo(instance);
-        ret += '{' + matchedEntry.enetType + ', ' +  matchedEntry.instId + ',' + module.getChannelConfig(instance, "RX", 0).$name.toUpperCase()  + ',' + module.getRxChannelCount(instance) + '},';
+        ret += '{' + matchedEntry.enetType + ', ' +  matchedEntry.instId + ',' + module.getChannelConfig(instance, "RX", 0).$name.toUpperCase()  + ',' + 1 + '},';
     }
     ret += '}'
     return ret;
@@ -88,7 +88,7 @@ function getEnet2TxChIdMap()
     for(let i = 0; i < module.$instances.length; i++) {
         let instance = module.$instances[i];
         let matchedEntry = module.getCpswInstInfo(instance);
-        ret += '{' + matchedEntry.enetType + ', ' +  matchedEntry.instId + ',' + module.getChannelConfig(instance, "TX", 0).$name.toUpperCase()  + ',' + module.getTxChannelCount(instance) + '},';
+        ret += '{' + matchedEntry.enetType + ', ' +  matchedEntry.instId + ',' + module.getChannelConfig(instance, "TX", 0).$name.toUpperCase()  + ',' + 1 + '},';
     }
     ret += '}'
     return ret;
@@ -110,6 +110,72 @@ function validate(instance, report)
             report.logError(`DUAL MAC case should have only one default netif`, instance, "netifInstance");
         }
     }
+     for(let i = 0; i < module.$instances.length; i++)
+     {
+        for (let Idx = 0; Idx < module.getNetifCount(module.$instances[i]); Idx++)
+        {
+            let rxCh = module.getNetifConfig(module.$instances[i],Idx).rxDmaChNum;
+            for (let j = 0; j < rxCh.length; j++)
+            {
+               if( rxCh[j] >= module.getRxChannelCount(module.$instances[i]) )
+               {
+                    report.logError(`Incorrect Rx channel`, instance);
+               }
+            }
+            
+            let txCh = module.getNetifConfig(module.$instances[i],Idx).txDmaChNum;
+            for (let j = 0; j < txCh.length; j++)
+            {
+               if( txCh[j] >= module.getTxChannelCount(module.$instances[i]) )
+               {
+                    report.logError(`Incorrect Tx channel`, instance);
+               }
+            }
+        }
+     }
+}
+
+function getNetifRxCh()
+{
+    var ret = '{';
+    for(let i = 0; i < module.$instances.length; i++)
+     {
+        let instance = module.$instances[i];
+        for (let Idx = 0; Idx < module.getNetifCount(instance); Idx++)
+        {
+            let rxCh = module.getNetifConfig(instance,Idx).rxDmaChNum
+            
+            ret += '{' + module.getChannelConfig(instance, "RX", rxCh[0]).$name.toUpperCase() + ', ';
+            if (rxCh.length == 2)
+            {
+                ret += module.getChannelConfig(instance, "RX", rxCh[1]).$name.toUpperCase() + ',' + '},';
+            }
+            else
+            {
+                ret += -1 + ',' + '},'
+            }
+        }
+     }
+    ret += '}';
+    return ret;
+}
+
+function getNetifTxCh()
+{
+    var ret = '{';
+    for(let i = 0; i < module.$instances.length; i++)
+     {
+        let instance = module.$instances[i];
+        for (let Idx = 0; Idx < module.getNetifCount(instance); Idx++)
+        {
+            let txCh = module.getNetifConfig(instance,Idx).txDmaChNum
+            
+            ret += '{' + module.getChannelConfig(instance, "TX", txCh[0]).$name.toUpperCase() + '},';
+            
+        }
+     }
+    ret += '}';
+    return ret;
 }
 
 let enet_cpsw_lwipif_netif_module = {
@@ -124,6 +190,22 @@ let enet_cpsw_lwipif_netif_module = {
             displayName: "Set As Default Netif",
             default: true,
         },
+        {
+            name: "rxDmaChNum",
+            description: "Rx DMA used by this Netif",
+            displayName: "Rx DMA Used By This Netif",
+            default: Array.from(Array(1).keys()).map(String),
+            minSelections: 0,
+            options: _.keys(Array(16)).map((index)=>({name: index})),
+        },
+        {
+            name: "txDmaChNum",
+            description: "Tx DMA used by this Netif",
+            displayName: "Tx DMA Used By This Netif",
+            default: Array.from(Array(1).keys()).map(String),
+            minSelections: 0,
+            options: _.keys(Array(16)).map((index)=>({name: index})),
+        },
     ],
     getTotalNetIfCount,
     getInstanceConfig,
@@ -132,6 +214,8 @@ let enet_cpsw_lwipif_netif_module = {
     getNetifIdx2EnetMap,
     getEnet2RxChIdMap,
     getEnet2TxChIdMap,
+    getNetifRxCh,
+    getNetifTxCh,
     validate: validate,
 };
 

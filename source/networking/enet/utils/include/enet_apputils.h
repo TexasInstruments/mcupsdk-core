@@ -573,6 +573,8 @@ void EnetApp_getRxDmaHandle(uint32_t enetRxDmaChId,
                             const EnetApp_GetDmaHandleInArgs *inArgs,
                             EnetApp_GetRxDmaHandleOutArgs *outArgs);
 
+void EnetApp_getRxChMacAddr(uint32_t enetRxDmaChId, EnetApp_GetMacAddrOutArgs *outArgs);
+
 void EnetApp_getTxDmaHandle(uint32_t enetTxDmaChId,
                             const EnetApp_GetDmaHandleInArgs *inArgs,
                             EnetApp_GetTxDmaHandleOutArgs *outArgs);

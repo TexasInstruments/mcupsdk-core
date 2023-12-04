@@ -140,7 +140,7 @@ const enet_icssg_board_config = {
         {
             name: "addMacAddrCnt",
             description: "Phy Address of the port in single/dual EMAC mode or Port 2 in Switch mode. Value MUST be between 0 .. 31",
-            displayName: "Additional MAC-Address count",
+            displayName: "Additional MAC-Address Count",
             default: 0,
             hidden: true,
             displayFormat: "dec",

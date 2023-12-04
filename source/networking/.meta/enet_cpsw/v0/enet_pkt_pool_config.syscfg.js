@@ -35,7 +35,7 @@ function enet_pkt_pool_validate(instance, report) {
                 report.logError(`Medium pool size must be greater than Small pool size`, instance, "MediumPoolPktSize");
             }
         }
-        if (totalPktPoolCount != totalDmaChannelPkts)
+        if (totalPktPoolCount < totalDmaChannelPkts)
         {
             report.logError(`Number packets in pool ${totalPktPoolCount} does not match sum of tx and rx channel packet count ${totalDmaChannelPkts}`, instance, ["LargePoolPktCount", "MediumPoolPktCount","SmallPoolPktCount"]);
         }

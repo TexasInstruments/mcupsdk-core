@@ -175,6 +175,7 @@ const example_file_list = [
     "examples/networking/enet_tx_scatter_gather/.project/project.js",
     "examples/networking/tsn/lldp_cpsw_app/.project/project.js",
     "examples/networking/tsn/gptp_cpsw_app/.project/project.js",
+    "examples/networking/tsn/gptp_lwip_cpsw/.project/project.js",
     "examples/pru_io/sent/encoder/firmware/.project/project.js",
     "examples/pru_io/sent/encoder/example/.project/project.js",
     "examples/pru_io/sent/decoder/example/.project/project.js",

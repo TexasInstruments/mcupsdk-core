@@ -467,6 +467,20 @@ void EnetApp_getMacAddress(uint32_t enetRxDmaChId,
 
 }
 
+void EnetApp_getRxChMacAddr(uint32_t enetRxDmaChId, EnetApp_GetMacAddrOutArgs *outArgs)
+{
+
+    EnetAppRxDmaSysCfg_Obj *rx;
+    
+    rx = &gEnetAppSysCfgObj.dma.rx[enetRxDmaChId];
+    outArgs->macAddressCnt = rx->numValidMacAddress;
+    for (uint32_t i = 0U; i < rx->numValidMacAddress; i++)
+    {
+        EnetUtils_copyMacAddr(outArgs->macAddr[i], rx->macAddr[i]);
+    }
+    return;
+}
+
 void EnetApp_getRxDmaHandle(uint32_t enetRxDmaChId,
                             const EnetApp_GetDmaHandleInArgs *inArgs,
                             EnetApp_GetRxDmaHandleOutArgs *outArgs)
