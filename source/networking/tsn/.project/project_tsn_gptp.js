@@ -87,6 +87,8 @@ const defines = {
     common: [
         'TSNPKGVERSION=\\"1.2.3\\"',
         'PRINT_FORMAT_NO_WARNING',
+        'UB_LOGCAT=3',
+        'UB_LOGTSTYPE=UB_CLOCK_REALTIME',
     ],
 };
 

@@ -34,6 +34,8 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TR
 -# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TT
 -# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE
+### LLDP Example on FreeRTOS
+-# \subpage EXAMPLES_ENET_CPSW_LLDP
 \endcond
 
 \cond SOC_AM64X
@@ -67,6 +69,8 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TR
 -# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TT
 -# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE
+### LLDP Example on FreeRTOS
+-# \subpage EXAMPLES_ENET_CPSW_LLDP
 \endcond
 
 \cond  SOC_AM263X
@@ -96,6 +100,8 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TR
 -# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TT
 -# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE
+### LLDP Example on FreeRTOS
+-# \subpage EXAMPLES_ENET_CPSW_LLDP
 \endcond
 
 \cond  SOC_AM263PX
@@ -138,7 +144,10 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TR
 -# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TT
 -# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE
+### LLDP Example on FreeRTOS
+-# \subpage EXAMPLES_ENET_CPSW_LLDP
 \endcond
+
 
 \cond SOC_AWR294X
 ### Layer 2 Examples on FreeRTOS

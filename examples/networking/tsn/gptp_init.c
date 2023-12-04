@@ -55,7 +55,6 @@
 /* ========================================================================== */
 #define GPTP_TASK_PRIORITY      (2)
 #define GPTP_TASK_NAME          "gptp2d_task"
-#define MAX_DOMAINS             (1)
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -65,7 +64,7 @@ typedef struct
     char *devlist;
     const char **confFiles;
     int domainNum;
-    int domains[MAX_DOMAINS];
+    int domains[GPTP_MAX_DOMAINS];
     int instNum;
     int numConf;
 } EnetApp_GptpOpt_t;
@@ -94,10 +93,10 @@ static int EnetApp_gptpDbInit(EnetApp_ModuleCtx_t* modCtx,
 static EnetApp_GptpOpt_t gGptpOpt =
 {
     .confFiles = NULL,
-    .domainNum = MAX_DOMAINS,
-#if MAX_DOMAINS == 1
+    .domainNum = GPTP_MAX_DOMAINS,
+#if GPTP_MAX_DOMAINS == 1
     .domains = {0},
-#elif MAX_DOMAINS == 2
+#elif GPTP_MAX_DOMAINS == 2
     .domains = {0, 1},
 #else
     #error "Only support 2 domains"
@@ -147,8 +146,8 @@ static EnetApp_DbIntVal_t gGptpNonYangDs[] =
     {"FREQ_OFFSET_IIR_ALPHA_STABLE_VALUE", XL4_EXTMOD_XL4GPTP_FREQ_OFFSET_IIR_ALPHA_STABLE_VALUE, 4},
     {"PHASE_OFFSET_IIR_ALPHA_START_VALUE", XL4_EXTMOD_XL4GPTP_PHASE_OFFSET_IIR_ALPHA_START_VALUE, 1},
     {"PHASE_OFFSET_IIR_ALPHA_STABLE_VALUE", XL4_EXTMOD_XL4GPTP_PHASE_OFFSET_IIR_ALPHA_STABLE_VALUE, 4},
-    {"MAX_DOMAIN_NUMBER", XL4_EXTMOD_XL4GPTP_MAX_DOMAIN_NUMBER, MAX_DOMAINS},
-#if MAX_DOMAINS == 2
+    {"MAX_DOMAIN_NUMBER", XL4_EXTMOD_XL4GPTP_MAX_DOMAIN_NUMBER, GPTP_MAX_DOMAINS},
+#if GPTP_MAX_DOMAINS == 2
     {"CMLDS_MODE", XL4_EXTMOD_XL4GPTP_CMLDS_MODE, 1},
     {"SECOND_DOMAIN_THIS_CLOCK", XL4_EXTMOD_XL4GPTP_SECOND_DOMAIN_THIS_CLOCK, 1}
 #endif

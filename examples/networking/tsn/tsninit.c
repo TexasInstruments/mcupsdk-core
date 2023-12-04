@@ -60,7 +60,6 @@
 #define UNICONF_TASK_NAME       "uniconf_task"
 
 #define MAX_KEY_SIZE            (256)
-#define MAX_DOMAINS             (2)
 
 /* ========================================================================== */
 /*                          Function Declarations                             */

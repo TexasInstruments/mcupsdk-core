@@ -49,17 +49,7 @@ int EnetApp_lldCfgUpdateCb(cb_socket_lldcfg_update_t *update_cfg)
         update_cfg->nRxPkts[0] = ENET_DMA_RX_CH0_PTP_NUM_PKTS;
         update_cfg->nRxPkts[1] = ENET_DMA_RX_CH1_PTP_NUM_PKTS;
         update_cfg->pktSize = ENET_MEM_LARGE_POOL_PKT_SIZE;
-        update_cfg->isRxTsInPkt = true;
     }
-    else if (update_cfg->proto == ETH_P_NETLINK)
-    {
-        update_cfg->unusedDmaRx = true;
-        update_cfg->unusedDmaTx = true;
-    }
-    else
-    {
-        EnetAppUtils_print("%s:unsupported other than PTP\r\n", __func__);
-        res = -1;
-    }
+
     return res;
 }

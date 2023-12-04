@@ -94,6 +94,8 @@ DEFINES_common := \
     -DSOC_AM243X \
     -DTSNPKGVERSION=\"1.2.3\" \
     -DPRINT_FORMAT_NO_WARNING \
+    -DUB_LOGCAT=3 \
+    -DUB_LOGTSTYPE=UB_CLOCK_REALTIME \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \

@@ -39,7 +39,6 @@
 
 int EnetApp_lldCfgUpdateCb(cb_socket_lldcfg_update_t *update_cfg)
 {
-    int res = 0;
     if (update_cfg->proto == ETH_P_1588)
     {
         update_cfg->numRxChannels = 1;
@@ -57,12 +56,6 @@ int EnetApp_lldCfgUpdateCb(cb_socket_lldcfg_update_t *update_cfg)
         update_cfg->dmaRxOwner = true;
         update_cfg->rxDefaultDataCb = rxDefaultDataCb;
         update_cfg->rxDefaultCbArg = NULL;
-        update_cfg->isRxTsInPkt = false;
-    }
-    else if (update_cfg->proto == ETH_P_NETLINK)
-    {
-        update_cfg->unusedDmaRx = true;
-        update_cfg->unusedDmaTx = true;
     }
     else if (update_cfg->proto == ETH_P_IPV4)
     {
@@ -72,10 +65,5 @@ int EnetApp_lldCfgUpdateCb(cb_socket_lldcfg_update_t *update_cfg)
         update_cfg->dmaRxOwner = false; /* gptp is RX dma owner */
         update_cfg->unusedDmaTx = true;
     }
-    else
-    {
-        EnetAppUtils_print("%s:unsupported other than PTP\r\n", __func__);
-        res = -1;
-    }
-    return res;
+    return 0;
 }

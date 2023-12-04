@@ -47,17 +47,17 @@ The TSN Stack library is composed of the following source modules:
 
 A reference example of the TSN stack initialization can be found in ``<mcu_plus_sdk>/examples/networking/tsn/tsninit.c``.
 Prior to any module calls, it is necessary to initialize the unibase library once.
-This can be achieved by invoking the ``tsn_app_init()`` function.
+This can be achieved by invoking the ``EnetApp_initTsnByCfg()`` function.
 
 ## Logging
 
 By default, TSN logs are directed to STDOUT using the fwrite function:
 ``fwrite(str, 1, strlen(str), stdout);``
-However, it is possible to customize the log output by setting the ``console_out``
-callback during the initialization of the unibase library in the ``tsn_app_init()``
+However, it is possible to customize the log output by setting the ``Logger_init(cfg->consoleOutCb)``
+callback during the initialization of the unibase library in the ``EnetApp_initTsnByCfg()``
 function.
 
-When a callback function is assigned to ``console_out`` it takes a significant amount
+When a callback function is assigned to ``consoleOutCb`` it takes a significant amount
 of time to log to the output device, it is advisable to log to a buffer and utilize
 another task to log from the buffer to the desired output device.  This approach
 helps to prevent log delays that could adversely affect the gPTP task, such as
@@ -65,7 +65,7 @@ incorrect *Sync* and *FollowUp* intervals.  The option to log to a buffer is
 supported when the ``TSN_USE_LOG_BUFFER`` macro is defined.
 
 To enable specific log levels, you can modify the ub_log_initstr parameter in
-the ``tsn_app_init(``) function. There are eight log levels available::
+the ``EnetApp_initTsnByCfg(``) function. There are eight log levels available::
 \code
     UBL_NONE = 0
     UBL_FATAL = 1
@@ -95,13 +95,45 @@ to all modules.
 ## Starting uniconf and gPTP
 
 The gPTP functionality operates in a separate task, alongside the universal configuration daemon "uniconf".
-To start these tasks, use the ``tsn_app_start()`` in tsninit.c as reference .
+To start these tasks, use the ``EnetApp_startTsn()`` in tsninit.c as reference .
 
 This function will start the uniconf and gPTP tasks.
 
 ## TSN Deinitialization
 
-To deinitialize the TSN modules, you can invoke the ``tsn_app_stop();`` and ``tsn_app_deinit();`` functions.
+To deinitialize the TSN modules, you can invoke the ``EnetApp_stopTsn();`` and ``EnetApp_deInitTsn();`` functions.
+
+## gPTP Multiple Domains
+
+At the moment, our system supports two domains, but this feature is turned off by default. 
+To turn on multiple domains, follow these steps:
+
+- Set ``#define GPTP_MAX_DOMAINS 2`` in the ``<mcu_plus_sdk>/source/networking/tsn/tsn-stack/tsn_buildconf/sitara_buildconf.h`` file
+- In the file ``<mcu_plus_sdk>/examples/networking/tsn/gptp_init.c``, you will see the following settings are set:
+```
+#if GPTP_MAX_DOMAINS == 2
+    {"CMLDS_MODE", XL4_EXTMOD_XL4GPTP_CMLDS_MODE, 1},
+    {"SECOND_DOMAIN_THIS_CLOCK", XL4_EXTMOD_XL4GPTP_SECOND_DOMAIN_THIS_CLOCK, 1}
+#endif
+```
+This will activate the second domain in the gPTP system.
+
+## gPTP Shorter Sync Interval
+
+By default, the gPTP Sync interval is set to 125 milliseconds. 
+If you need a shorter Sync interval, you can adjust it by setting a specific value in the ``sitara_buildconf.h`` file:
+
+```
+/* Interval timeout in nanoseconds used to generate timers in GPTP. 
+ * Supported values are 125, 62.5, 31.25, 15.625 and 7.8125 milliseconds. */
+#define GPTPNET_INTERVAL_TIMEOUT_NSEC 15625000u
+```
+
+``GPTPNET_INTERVAL_TIMEOUT_NSEC`` must be equal to or less than the desired Sync interval time. 
+For instance, if you want a Sync interval time of 31.25 milliseconds, set ``GPTPNET_INTERVAL_TIMEOUT_NSEC`` to 31.25, 15.625, or 7.8125 milliseconds.
+Be aware that decreasing ``GPTPNET_INTERVAL_TIMEOUT_NSEC`` will increase CPU load. 
+Additionally, adjust the ``log-sync-interval`` in the standard yang config by referring to the ``gptp_init.c`` file.
+For example, to set the Sync interval to 31.25 milliseconds, set ``log-sync-interval`` to -5.
 
 # Integration
 ## Source integration
@@ -109,7 +141,7 @@ To deinitialize the TSN modules, you can invoke the ``tsn_app_stop();`` and ``ts
 To integrate the TSN stack into your application, follow these steps:
 
 - Initialize Enet LLD and setup board dependencies.  In the TSN example application,
-  the initialization routines can be found at ``<mcu_plus_sdk>/examples/networking/tsn/tsnapp_main.c``,
+  the initialization routines can be found at ``<mcu_plus_sdk>/examples/networking/tsn/tsnapp_cpsw_main.c.c``,
   which can be used as reference.
 
   The main functions related to EVM board initialization are::
@@ -125,7 +157,7 @@ To integrate the TSN stack into your application, follow these steps:
   board specific.
 
 - Before calling any TSN module APIs, ensure you initialize TSN by calling
-  ``tsn_app_init()``.
+  ``EnetApp_initTsnByCfg()``.
 
 - Initialize the *combase* Ethernet device table as the following code snippet::
 
@@ -160,7 +192,8 @@ In the above code, the Ethernet device name and MAC port are required to create
 - To provide syscfg values to the TSN stack, you can use the ``cb_socket_set_lldcfg_update_cb()```
   The parameter for this function is a callback function that updates the cb_socket_lldcfg_update_t values.
 
-- Start the gPTP task by calling ``tsn_app_start()``. This will start the necessary threads for gPTP and uniconf.
+- Start the gPTP task by calling ``EnetApp_startTsn()``. This will start the necessary threads for gPTP and uniconf.
+  The uniconf, gPTP tasks are stored in ``EnetApp_ModuleCtx_t gModCtxTable`` task's table.
 
 ## Uniconf configuration
 
@@ -295,7 +328,7 @@ gptpgcfg_set_item(gpoptd.instnum, XL4_EXTMOD_XL4GPTP_PHASE_OFFSET_IIR_ALPHA_STAB
 gptpgcfg_set_item(gpoptd.instnum, XL4_EXTMOD_XL4GPTP_FREQ_OFFSET_IIR_ALPHA_STABLE_VALUE, YDBI_CONFIG, &freq_offset_iir_alpha_stable_value, sizeof(freq_offset_iir_alpha_stable_value));
 ```
 # Limitations
-For all parameters related to interval, the minimum interval can be configured for gPTP is 125ms. The reason for that minimum interval is the implementation uses a base timer which has minimum period is 125ms. Thus, increasing the interval parameters like `sync-interval` which is not a multiple of 125ms may produce inaccurate interval of sending sync message.Or reducing interval of sync message below 125ms is not possible. And the same limitation applied for all remaining interval parameters.
+For all parameters related to interval, the minimum interval can be configured for gPTP is 7.8125ms. The reason for that minimum interval is the implementation uses a base timer which has minimum period is 7.8125ms. Thus, increasing the interval parameters like `sync-interval` which is not a multiple of 7.8125ms may produce inaccurate interval of sending sync message.Or reducing interval of sync message below 7.8125ms is not possible. And the same limitation applied for all remaining interval parameters.
 
 # See Also
 

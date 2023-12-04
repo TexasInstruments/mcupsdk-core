@@ -75,6 +75,12 @@ typedef struct
     char* val;
 } EnetApp_LldpMgmtAddrKv_t;
 
+typedef struct 
+{
+    char* dest_mac;
+    EnetApp_DbNameVal_t cfg_kv[11];
+} EnetApp_LldpPortCfg_t;
+
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
@@ -86,6 +92,7 @@ static int EnetApp_lldpDbInit(EnetApp_ModuleCtx_t* modCtx,
 /* ========================================================================== */
 /*                            Local Variables                                */
 /* ========================================================================== */
+
 static EnetApp_LldpOpt_t gLldpopt =
 {
     .confFiles = NULL,
@@ -114,23 +121,59 @@ static EnetApp_DbNameVal_t gLldpLocalSysData[] =
     {"system-capabilities-enabled" , "11110111011"},
 };
 
-static EnetApp_DbNameVal_t gLldpPerPortData[] =
+static EnetApp_LldpPortCfg_t gLldpPortCfgData[] =
 {
-    {"admin-status", "3"},
-    {"tlvs-tx-enable", "1111"},
-    {"port-id-subtype", "3"},         // If PortId subtype = P_MAC_Address (3), MAC addr will be re-correct follow hw info.
-    {"port-id", "3c-e0-64-62-e3-03"}, // <- this value will be correct in runtime
-    {"port-desc", "tilld"},
-};
-
-static EnetApp_LldpMgmtAddrKv_t gLldpPerPortMgmtData[] =
-{
-    {"ipv4", "169.254.72.56", "tx-enable", "true"},
-    {"ipv4", "169.254.72.56", "if-subtype", "2"},
-    {"ipv4", "169.254.72.56", "if-id", "2"},
-    {"ipv6", "fe80::eab9:1c3d:7ca5:5030", "tx-enable", "true"},
-    {"ipv6", "fe80::eab9:1c3d:7ca5:5030", "if-subtype", "2"},
-    {"ipv6", "fe80::eab9:1c3d:7ca5:5030", "if-id", "2"},
+    {
+        .dest_mac = "01-80-c2-00-00-0e",
+        .cfg_kv = 
+        {
+            {"admin-status", "3"},
+            {"tlvs-tx-enable", "1111"},
+            {"port-id-subtype", "3"},         // If PortId subtype = P_MAC_Address (3), MAC addr will be re-correct follow hw info.
+            {"port-id", "3c-e0-64-62-e3-03"}, // <- this value will be correct in runtime
+            {"port-desc", "tilld"},
+            {"message-fast-tx", "2"},          // Diff with global system config
+            {"message-tx-hold-multiplier" , "4"},
+            {"message-tx-interval" , "30"},
+            {"reinit-delay" , "2"},
+            {"tx-credit-max" , "5"},
+            {"tx-fast-init" , "2"},
+        }
+    },
+    {
+        .dest_mac = "01-80-c2-00-00-03",
+        .cfg_kv = 
+        {
+            {"admin-status", "3"},
+            {"tlvs-tx-enable", "1111"},
+            {"port-id-subtype", "3"},         // If PortId subtype = P_MAC_Address (3), MAC addr will be re-correct follow hw info.
+            {"port-id", "3c-e0-64-62-e3-03"}, // <- this value will be correct in runtime
+            {"port-desc", "tilld"},
+            {"message-fast-tx", "2"},          // Diff with global system config
+            {"message-tx-hold-multiplier" , "4"},
+            {"message-tx-interval" , "20"},
+            {"reinit-delay" , "2"},
+            {"tx-credit-max" , "5"},
+            {"tx-fast-init" , "2"},
+        }
+    },
+    {
+        .dest_mac = "01-80-c2-00-00-00",
+        .cfg_kv = 
+        {
+            {"admin-status", "3"},
+            {"tlvs-tx-enable", "1111"},
+            {"port-id-subtype", "3"},         // If PortId subtype = P_MAC_Address (3), MAC addr will be re-correct follow hw info.
+            {"port-id", "3c-e0-64-62-e3-03"}, // <- this value will be correct in runtime
+            {"port-desc", "tilld"},
+            {"message-fast-tx", "2"},          // Diff with global system config
+            {"message-tx-hold-multiplier" , "4"},
+            {"message-tx-interval" , "25"},
+            {"reinit-delay" , "2"},
+            {"tx-credit-max" , "5"},
+            {"tx-fast-init" , "2"},
+        }
+    },
 };
 
 static uint8_t gLldpStackBuf[TSN_TSK_STACK_SIZE] \
@@ -165,7 +208,7 @@ EnetApp_ModuleCtx_t gModCtxTable[ENETAPP_MAX_TASK_IDX] =
 
 static int EnetApp_setLldpRtConfig(yang_db_runtime_dataq_t *ydrd, EnetApp_Ctx_t *appCtx)
 {
-    int i;
+    int i, j;
     int ndev;
     char buffer[MAX_KEY_SIZE];
 
@@ -194,27 +237,18 @@ static int EnetApp_setLldpRtConfig(yang_db_runtime_dataq_t *ydrd, EnetApp_Ctx_t 
 
     for (ndev = 0; ndev < appCtx->netdevSize; ndev++)
     {
-        for (i = 0; i < sizeof(gLldpPerPortData)/sizeof(gLldpPerPortData[0]); i++)
+        for (i = 0; i < sizeof(gLldpPortCfgData)/sizeof(gLldpPortCfgData[0]); i++)
         {
-            snprintf(buffer, sizeof(buffer),
-                    "%sport|name:%s|dest-mac-address:%s|/%s",
-                    LLDP_NODE, appCtx->netdev[ndev], LLDP_DEST_MAC_ADDR, gLldpPerPortData[i].name);
+            for (j = 0; j < sizeof(gLldpPortCfgData[i].cfg_kv)/ sizeof(EnetApp_DbNameVal_t); j++ )
+            {
+                snprintf(buffer, sizeof(buffer),
+                        "%sport|name:%s|dest-mac-address:%s|/%s",
+                        LLDP_NODE, appCtx->netdev[ndev], gLldpPortCfgData[i].dest_mac, gLldpPortCfgData[i].cfg_kv[j].name);
 
-            // DPRINT("[%s] %s:%s", __func__, buffer, gLldpPerPortData[i].val);
-            yang_db_runtime_put_oneline(ydrd, buffer, gLldpPerPortData[i].val,
-                                        YANG_DB_ONHW_NOACTION);
-        }
-
-        for (i = 0; i < sizeof(gLldpPerPortMgmtData)/sizeof(gLldpPerPortMgmtData[0]); i++)
-        {
-            snprintf(buffer, sizeof(buffer),
-                 "%sport|name:%s|dest-mac-address:%s|/management-address-tx-port|address-subtype:%s|man-address:%s|/"
-                 "%s",
-                 LLDP_NODE, appCtx->netdev[ndev], LLDP_DEST_MAC_ADDR, gLldpPerPortMgmtData[i].ipvx, gLldpPerPortMgmtData[i].addr, gLldpPerPortMgmtData[i].key);
-
-            // DPRINT("[%s] %s:%s", __func__, buffer, gLldpPerPortMgmtData[i].val);
-            yang_db_runtime_put_oneline(ydrd, buffer, gLldpPerPortMgmtData[i].val,
-                                    YANG_DB_ONHW_NOACTION);
+                // DPRINT("[%s] %s:%s", __func__, buffer, gLldpPerPortData[i].val);
+                yang_db_runtime_put_oneline(ydrd, buffer, gLldpPortCfgData[i].cfg_kv[j].val,
+                                            YANG_DB_ONHW_NOACTION);
+            }
         }
 
         DPRINT("[%s] Initialized LLDP Port tilld%d", __func__, ndev);
@@ -239,7 +273,7 @@ static void *EnetApp_lldpTask(void* arg)
     EnetApp_ModuleCtx_t *modCtx = (EnetApp_ModuleCtx_t *)arg;
     EnetApp_Ctx_t *appCtx = modCtx->appCtx;
 
-    if (lldpd_init(appCtx->dbName, &gLldpopt.vlanId) == 0)
+    if (lldpd_init(appCtx->dbName, &gLldpopt.vlanId, appCtx->netdev, appCtx->netdevSize) == 0)
     {
         uint8_t *terminated = (uint8_t*)&modCtx->stopFlag;
         lldpd_run(terminated); // Blocking task

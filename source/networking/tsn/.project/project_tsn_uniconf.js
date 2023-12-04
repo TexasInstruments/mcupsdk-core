@@ -9,7 +9,7 @@ const files = {
         "simpledb_ucbind.c",
         "yang_config_init.c",
         "yang_modules.c",
-        "yang_modules_capability.c",
+        "yang_modules_namespaces.c",
         "yang_db_identiyref.c",
         "yang_db_enumeration.c",
         "yang_db_runtime.c",

@@ -133,7 +133,7 @@ const loptflags_r5f = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_ENET_CPSW_TSN_GPTP";
+const readmeDoxygenPageTag = "EXAMPLES_ENET_CPSW_LLDP";
 
 const templates_freertos_r5f =
 [
