@@ -117,4 +117,5 @@ DCache Access Count: 2324
 DCache Miss Count: 9654
 
 [PMU Multievent] Done...
+All tests have passed
 \endcode

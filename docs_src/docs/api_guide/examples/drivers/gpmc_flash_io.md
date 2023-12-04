@@ -52,6 +52,5 @@ An external GPMC NAND flash needs to be connected to the device.
 Shown below is a sample output when the application is run,
 
 \code
-Starting GPMC application
 All tests have passed
 \endcode
