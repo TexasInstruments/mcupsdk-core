@@ -81,7 +81,7 @@ per each channel at a time.
 
 \cond !SOC_AM62X
 - In case of DMA mode, as R5F core is not Cache Coherent, Cache Writeback is required if R5F writes to the buffers.
-  And before reading the buffers, application needs to invalidate those. Please refer \ref EXAMPLES_DRIVERS_MCSPI_LOOPBACK_DMA.
+  And before reading the buffers, application needs to invalidate those. Please refer \ref EXAMPLES_DRIVERS_MCSPI_LOOPBACK_DMA_LLD.
 \endcond
 ## Example Usage
 
