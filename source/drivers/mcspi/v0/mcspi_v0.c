@@ -613,7 +613,6 @@ void MCSPI_transferCallback (void *args, uint32_t transferStatus)
                          &hMcspi->transaction,
                          sizeof(hMcspi->transaction));
 
-            obj->transaction = NULL;
             if(transferStatus == MCSPI_TRANSFER_CANCELLED)
             {
                 obj->transaction->status = MCSPI_TRANSFER_CANCELLED;
@@ -622,6 +621,8 @@ void MCSPI_transferCallback (void *args, uint32_t transferStatus)
             {
                 obj->transaction->status = MCSPI_TRANSFER_COMPLETED;
             }
+
+            obj->transaction = NULL;
 
             if((obj->openPrms.transferMode) == MCSPI_TRANSFER_MODE_CALLBACK)
             {

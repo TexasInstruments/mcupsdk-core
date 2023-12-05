@@ -642,12 +642,6 @@ int32_t MCSPI_lld_writeDma(MCSPILLD_Handle hMcspi, void *txBuf, uint32_t count, 
         }
     }
 
-    /* Check if any transaction is in progress */
-    if(MCSPI_STATE_READY != hMcspi->state)
-    {
-        status = MCSPI_TRANSFER_CANCELLED;
-    }
-
     if (MCSPI_STATUS_SUCCESS == status)
     {
         /* Reset counter and other params */
