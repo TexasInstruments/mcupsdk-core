@@ -127,13 +127,13 @@ ifeq ($(DEBUG_TIFS), yes)
 ifeq ($(ENC_SBL_ENABLED),yes)
 	$(BOOTIMAGE_CERT_GEN_CMD) --sbl-enc --enc-key $(APP_ENCRYPTION_KEY) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --kd-salt $(KD_SALT) --out-image $(BOOTIMAGE_NAME)
 else
-    $(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_NAME)
+	$(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_NAME)
 endif
 else
 ifeq ($(ENC_SBL_ENABLED),yes)
-    $(BOOTIMAGE_CERT_GEN_CMD) --sbl-enc --enc-key $(APP_ENCRYPTION_KEY)  --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --kd-salt $(KD_SALT) --out-image $(BOOTIMAGE_NAME) --debug $(DEBUG_OPTION)
+	$(BOOTIMAGE_CERT_GEN_CMD) --sbl-enc --enc-key $(APP_ENCRYPTION_KEY)  --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --kd-salt $(KD_SALT) --out-image $(BOOTIMAGE_NAME) --debug $(DEBUG_OPTION)
 else
-    $(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_NAME) --debug $(DEBUG_OPTION)
+	$(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_NAME) --debug $(DEBUG_OPTION)
 endif
 endif
 else
@@ -145,13 +145,13 @@ ifeq ($(DEBUG_TIFS), yes)
 ifeq ($(ENC_SBL_ENABLED),yes)
 	$(BOOTIMAGE_CERT_GEN_CMD) --sbl-enc --enc-key $(APP_ENCRYPTION_KEY) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --kd-salt $(KD_SALT) --out-image $(BOOTIMAGE_NAME)
 else
-    $(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_NAME)
+	$(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_NAME)
 endif
 else
 ifeq ($(ENC_SBL_ENABLED),yes)
-    $(BOOTIMAGE_CERT_GEN_CMD) --sbl-enc --enc-key $(APP_ENCRYPTION_KEY)  --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --kd-salt $(KD_SALT) --out-image $(BOOTIMAGE_NAME) --debug $(DEBUG_OPTION)
+	$(BOOTIMAGE_CERT_GEN_CMD) --sbl-enc --enc-key $(APP_ENCRYPTION_KEY)  --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --kd-salt $(KD_SALT) --out-image $(BOOTIMAGE_NAME) --debug $(DEBUG_OPTION)
 else
-    $(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_NAME) --debug $(DEBUG_OPTION)
+	$(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_NAME) --debug $(DEBUG_OPTION)
 endif
 endif
 else
@@ -267,21 +267,23 @@ else
 % if (args.project.device == "awr294x") {
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_QSPI) $(MULTI_CORE_IMAGE_PARAMS_QSPI) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 % }
-% if (((args.project.device == "am243x") || (args.project.device == "am64x"))) {
-# Sign the appimage for HS-FS using appimage signing script
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME).hs_fs
-% }
+
 % if (((args.project.device == "am243x") || (args.project.device == "am64x"))) {
 ifeq ($(DEVICE_TYPE),HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED),no)
 	@echo Boot image signing: Encryption is disabled.
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME).hs
+	$(RM) $(BOOTIMAGE_NAME)
 else
 	@echo Boot image signing: Encryption is enabled.
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --output $(BOOTIMAGE_NAME).hs
 	$(RM) $(BOOTIMAGE_NAME)-enc
 endif
+else
+# Sign the appimage for HS-FS using appimage signing script
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME).hs_fs
+	$(RM) $(BOOTIMAGE_NAME)
 endif
 % }
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)

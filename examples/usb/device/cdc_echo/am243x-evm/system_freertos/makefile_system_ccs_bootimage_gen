@@ -44,12 +44,12 @@ OUTRPRC_CMD = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
 
 MULTI_CORE_APP_PARAMS = \
-    ../cdc_echo_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/cdc_echo_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
-    ../cdc_echo_freertos_am243x-evm_r5fss0-1_freertos_ti-arm-clang/$(PROFILE)/cdc_echo_freertos_am243x-evm_r5fss0-1_freertos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+	../cdc_echo_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/cdc_echo_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+	../cdc_echo_freertos_am243x-evm_r5fss0-1_freertos_ti-arm-clang/$(PROFILE)/cdc_echo_freertos_am243x-evm_r5fss0-1_freertos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
 
 MULTI_CORE_APP_PARAMS_XIP = \
-    ../cdc_echo_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/cdc_echo_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
-    ../cdc_echo_freertos_am243x-evm_r5fss0-1_freertos_ti-arm-clang/$(PROFILE)/cdc_echo_freertos_am243x-evm_r5fss0-1_freertos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+	../cdc_echo_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/cdc_echo_freertos_am243x-evm_r5fss0-0_freertos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+	../cdc_echo_freertos_am243x-evm_r5fss0-1_freertos_ti-arm-clang/$(PROFILE)/cdc_echo_freertos_am243x-evm_r5fss0-1_freertos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
 
 all:
 ifeq ($(CCS_IDE_MODE),cloud)
@@ -58,20 +58,24 @@ else
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME) ...
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME) $(MULTI_CORE_APP_PARAMS) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME_XIP) $(MULTI_CORE_APP_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
-# Sign the appimage for HS-FS using appimage signing script
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME).hs_fs
+
 ifeq ($(DEVICE_TYPE),HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED),no)
 	@echo Boot image signing: Encryption is disabled.
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME).hs
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
 else
 	@echo Boot image signing: Encryption is enabled.
 	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME).hs
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)-enc
 endif
-endif
+else
+# Sign the appimage for HS-FS using appimage signing script
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME).hs_fs
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
+endif
+
 ifeq ($(DEVICE_TYPE),HS)
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME).hs Done !!!
 else
