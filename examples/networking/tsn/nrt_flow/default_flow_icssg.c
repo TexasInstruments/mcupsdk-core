@@ -89,7 +89,7 @@ static int32_t EnetApp_openDma()
     {
         EnetApp_initTxFreePktQ();
     }
-    uint32_t nonPtpRxChId[2] = {ENET_DMA_RX_CH0, ENET_DMA_RX_CH1};
+    uint32_t nonPtpRxChId[] = {ENET_DMA_RX_CH0, ENET_DMA_RX_CH1};
     /* Open the RX flow for Regular frames */
     if (status == ENET_SOK)
     {
@@ -97,29 +97,29 @@ static int32_t EnetApp_openDma()
         EnetApp_GetRxDmaHandleOutArgs  rxChInfo;
         rxInArgs.notifyCb = EnetApp_rxIsrFxn;
         rxInArgs.cbArg   = NULL;
-        for(uint32_t i = 0U; i < 2U; i++)
+        for(uint32_t chIdx = 0U; chIdx < sizeof(nonPtpRxChId)/sizeof(uint32_t); chIdx++)
         {
-            EnetApp_getRxDmaHandle(nonPtpRxChId[i],
+            EnetApp_getRxDmaHandle(nonPtpRxChId[chIdx],
                                    &rxInArgs,
                                    &rxChInfo);
-            gEnetAppCfg.rxStartFlowIdx[i] = rxChInfo.rxFlowStartIdx;
-            gEnetAppCfg.rxFlowIdx[i] = rxChInfo.rxFlowIdx;
-            gEnetAppCfg.hRxCh[i]  = rxChInfo.hRxCh;
-            if(rxChInfo.numValidMacAddress == 1U)
+            gEnetAppCfg.rxStartFlowIdx[chIdx] = rxChInfo.rxFlowStartIdx;
+            gEnetAppCfg.rxFlowIdx[chIdx] = rxChInfo.rxFlowIdx;
+            gEnetAppCfg.hRxCh[chIdx]  = rxChInfo.hRxCh;
+            if(chIdx == 0)
             {
-                /* TODO: It comes here only once right? */
+                EnetAppUtils_assert(rxChInfo.numValidMacAddress == 1U);
                 EnetUtils_copyMacAddr(gEnetAppCfg.macAddr, rxChInfo.macAddr[rxChInfo.numValidMacAddress - 1]);
                 EnetAppUtils_print("MAC port addr: ");
                 EnetAppUtils_printMacAddr(gEnetAppCfg.macAddr);
             }
-            if (gEnetAppCfg.hRxCh[i] == NULL)
+            if (gEnetAppCfg.hRxCh[chIdx] == NULL)
             {
                 EnetAppUtils_print("EnetApp_openRxCh() failed to open RX flow\r\n");
                 status = ENET_EFAIL;
-                EnetAppUtils_assert(gEnetAppCfg.hRxCh[i] != NULL);
+                EnetAppUtils_assert(gEnetAppCfg.hRxCh[chIdx] != NULL);
             }
             /* Submit all ready RX buffers to DMA */
-            EnetApp_initRxReadyPktQ(gEnetAppCfg.hRxCh[i]);
+            EnetApp_initRxReadyPktQ(gEnetAppCfg.hRxCh[chIdx]);
         }
     }
 
@@ -133,9 +133,9 @@ static void EnetApp_closeDma()
 
     EnetQueue_initQ(&fqPktInfoQ);
     EnetQueue_initQ(&cqPktInfoQ);
-    uint32_t nonPtpRxChId[2] = {ENET_DMA_RX_CH0, ENET_DMA_RX_CH1};
+    uint32_t nonPtpRxChId[] = {ENET_DMA_RX_CH0, ENET_DMA_RX_CH1};
 
-    for(uint32_t i = 0U; i < 2U; i++)
+    for(uint32_t i = 0U; i < sizeof(nonPtpRxChId)/sizeof(uint32_t); i++)
     {
     /* Close Regular RX channel */
        EnetApp_closeRxDma(nonPtpRxChId[i],

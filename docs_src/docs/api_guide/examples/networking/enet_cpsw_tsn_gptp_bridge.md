@@ -208,16 +208,12 @@ Out of box configuration for PPS signal output of this example is as follow:
 
 To set/modify configuration of PPS signal , you may follow the below steps:
 
-  1. Open example.syscfg or syscfg tool for the example.
-  2. Select the PPS out frequency  under ENET(CPSW)->'CPTS Configuration'->'TS Output Frequency Divider'. Please refered to field description for more details on the values.
+  1. Configure the bitSelect in EnetApp_enableTsSync() function in tsnapp_cpsw_main.c file. If bit n is selected, 2^(n+1) nano seconds is the time period of the square wave. Please note bitSelect starts from bit 17 which corresponds to 3.814 KHz.
+  2. Configure pinmux for PPS Output signal under ENET(CPSW)->'pinmux Config'->'CPTS0_TS_SYNC(CPTS0_TS_SYNC)' and select the appropriate pin as per your EVM.
     \imageStyle{gptp_pps_out_syscfg_gui1.png,width:50%}
-    \image html gptp_pps_out_syscfg_gui1.png **Figure**: Syscfg tool CPSW  CPTS changes to enable PPS output
+    \image html gptp_pps_out_syscfg_gui1.png  **Figure**: Syscfg tool CPSW pinmux changes to select PPS signal pin
     
-  3. Configure pinmux for PPS Output signal under ENET(CPSW)->'pinmux Config'->'CPTS0_TS_SYNC(CPTS0_TS_SYNC)' and select the appropriate pin as per your EVM.
-    \imageStyle{gptp_pps_out_syscfg_gui2.png,width:50%}
-    \image html gptp_pps_out_syscfg_gui2.png  **Figure**: Syscfg tool CPSW pinmux changes to select PPS signal pin
-    
-  4. Signal is generated on the above configured PIN. You may connect oscilloscope on the pin to visualize and compare.
+  3. Signal is generated on the above configured PIN. You may connect oscilloscope on the pin to visualize and compare.
 One sample signal captured using oscilloscope. Blue from gPTP TT (master) and purple is from gPTP TR (slave)
     \imageStyle{gptp_pps_out_scope_capture.jpg,width:50%}
     \image html gptp_pps_out_scope_capture.jpg **Figure**: Signal captured on oscilloscope

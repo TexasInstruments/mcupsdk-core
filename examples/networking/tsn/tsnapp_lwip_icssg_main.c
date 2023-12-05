@@ -53,10 +53,6 @@
 #include <enet_apputils.h>
 #include <enet_board.h>
 #include "ti_board_config.h"
-#include "ti_board_open_close.h"
-#include "ti_drivers_open_close.h"
-#include "ti_enet_config.h"
-#include "ti_enet_open_close.h"
 #include "nrt_flow/app_tcpserver.h"
 #include "ti_enet_lwipif.h"
 #include <tsn_combase/combase.h>
@@ -67,8 +63,6 @@
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
-
-static const uint8_t BROADCAST_MAC_ADDRESS[ENET_MAC_ADDR_LEN] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -94,40 +88,40 @@ typedef struct EnetApp_AppEnetInfo
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
-static void EnetApp_printCpuLoad();
+static void App_printCpuLoad();
 
-static void EnetApp_tcpipInitCompleteCb(void *pArg);
+static void App_tcpipInitCompleteCb(void *pArg);
 
-static void EnetApp_setupNetif();
+static void App_setupNetif();
 
-static void EnetApp_allocateIPAddress();
+static void App_allocateIPAddress();
 
-static void EnetApp_setupNetworkStack();
+static void App_setupNetworkStack();
 
-static void EnetApp_shutdownNetworkStack();
+static void App_shutdownNetworkStack();
 
-static void EnetApp_netifStatusChangeCb(struct netif *state_netif);
+static void App_netifStatusChangeCb(struct netif *state_netif);
 
-static void EnetApp_netifLinkChangeCb(struct netif *state_netif);
+static void App_netifLinkChangeCb(struct netif *state_netif);
 
-static inline int32_t EnetApp_isNetworkUp(struct netif* netif_);
+static inline int32_t App_isNetworkUp(struct netif* netif_);
 
-static void EnetApp_mdioLinkStatusChange(Cpsw_MdioLinkStateChangeInfo *info,
+
+#if (ENET_SYSCFG_ENABLE_EXTPHY == 0U)
+static void EnetApp_mdioLinkStatusChange(Icssg_MdioLinkStateChangeInfo *info,
                                          void *appArg);
+#endif
 
 static void EnetApp_portLinkStatusChangeCb(Enet_MacPort macPort,
                                            bool isLinkUp,
                                            void *appArg);
 
-static void EnetApp_addMCastEntry(Enet_Type enetType,
-                                  uint32_t instId,
-                                  uint32_t coreId,
-                                  const uint8_t *testMCastAddr,
-                                  uint32_t portMask);
-
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
+
+#define MII_LINK0_EVENT      41
+#define MII_LINK1_EVENT      53
 
 /* dhcp struct for the ethernet netif */
 static struct dhcp g_netifDhcp[ENET_SYSCFG_NETIF_COUNT];
@@ -208,60 +202,6 @@ static int EnetApp_initTsn(void)
     return res;
 }
 
-static bool IsMacAddrSet(uint8_t *mac)
-{
-    return ((mac[0]|mac[1]|mac[2]|mac[3]|mac[4]|mac[5]) != 0);
-}
-
-uint32_t EnetApp_applyClassifier(Enet_Handle hEnet, uint32_t coreId, uint8_t *dstMacAddr, uint32_t vlanId,
-                                    uint32_t ethType, uint32_t rxFlowIdx)
-{
-    Enet_IoctlPrms prms;
-    CpswAle_SetPolicerEntryOutArgs setPolicerEntryOutArgs;
-    CpswAle_SetPolicerEntryInArgs setPolicerEntryInArgs;
-    int32_t status;
-
-    if (IsMacAddrSet(dstMacAddr) == true)
-    {
-        status = EnetAppUtils_addHostPortMcastMembership(hEnet, dstMacAddr);
-        if (status != ENET_SOK) {
-            EnetAppUtils_print("EnetAppUtils_addHostPortMcastMembership failed: %d\r\n", status);
-        }
-    }
-    memset(&setPolicerEntryInArgs, 0, sizeof (setPolicerEntryInArgs));
-
-    if (ethType > 0) {
-        setPolicerEntryInArgs.policerMatch.policerMatchEnMask |=
-            CPSW_ALE_POLICER_MATCH_ETHERTYPE;
-        setPolicerEntryInArgs.policerMatch.etherType = ethType;
-    }
-    setPolicerEntryInArgs.policerMatch.portIsTrunk = false;
-    setPolicerEntryInArgs.threadIdEn = true;
-    setPolicerEntryInArgs.threadId = rxFlowIdx;
-
-    ENET_IOCTL_SET_INOUT_ARGS(&prms, &setPolicerEntryInArgs, &setPolicerEntryOutArgs);
-    ENET_IOCTL(hEnet, coreId,
-            CPSW_ALE_IOCTL_SET_POLICER, &prms, status);
-    return status;
-}
-
-static void EnetApp_enableTsSync()
-{
-    Enet_IoctlPrms prms;
-    CpswCpts_OutputBitSel bitSelect;
-    int32_t status;
-
-    Enet_Handle hEnet = Enet_getHandle(gEnetAppParams.enetType, gEnetAppParams.instId);
-    bitSelect = CPSW_CPTS_TS_OUTPUT_BIT_17;
-    ENET_IOCTL_SET_IN_ARGS(&prms, &bitSelect);
-    ENET_IOCTL(hEnet, EnetSoc_getCoreId(), CPSW_CPTS_IOCTL_SELECT_TS_OUTPUT_BIT, &prms, status);
-    if (status != ENET_SOK)
-    {
-        EnetAppUtils_print("Failed to set TS SYNC OUT BIT : %d\r\n", status);
-    }
-    return;
-}
-
 int EnetApp_mainTask(void *args)
 {
     int32_t status = ENET_SOK;
@@ -271,11 +211,11 @@ int EnetApp_mainTask(void *args)
     Board_driversOpen();
 
     DebugP_log("==========================\r\n");
-    DebugP_log("  CPSW LWIP TCP ECHO SERVER \r\n");
+    DebugP_log("ICSSG LWIP TCP ECHO SERVER\r\n");
     DebugP_log("==========================\r\n");
 
     /* Read MAC Port details and enable clock for ENET instance */
-    EnetApp_getEnetInstInfo(CONFIG_ENET_CPSW0 , &gEnetAppParams.enetType, &gEnetAppParams.instId);
+    EnetApp_getEnetInstInfo(CONFIG_ENET_ICSS0 , &gEnetAppParams.enetType, &gEnetAppParams.instId);
     EnetApp_getEnetInstMacInfo(gEnetAppParams.enetType,
                                gEnetAppParams.instId,
                                &gEnetAppParams.macPortList[0],
@@ -290,21 +230,15 @@ int EnetApp_mainTask(void *args)
         EnetAppUtils_print("Failed to open ENET: %d\r\n", status);
         EnetAppUtils_assert(status == ENET_SOK);
     }
+
     EnetApp_getMacAddress(ENET_DMA_RX_CH0, &outArgs);
     EnetAppUtils_assert(outArgs.macAddressCnt == 1);
     EnetUtils_copyMacAddr(gEnetAppParams.macAddr, outArgs.macAddr[outArgs.macAddressCnt - 1]);
-    EnetApp_addMCastEntry(gEnetAppParams.enetType,
-                          gEnetAppParams.instId,
-                          EnetSoc_getCoreId(),
-                          BROADCAST_MAC_ADDRESS,
-                          CPSW_ALE_ALL_PORTS_MASK);
-
-    EnetApp_enableTsSync();
     if (EnetApp_initTsn())
     {
         DebugP_log("EnetApp_initTsn failed\r\n");
     }
-    EnetApp_setupNetworkStack();
+    App_setupNetworkStack();
 
     uint32_t netupMask = 0;
     /* wait for atleast one Network Interface to get IP */
@@ -312,7 +246,7 @@ int EnetApp_mainTask(void *args)
     {
         for(uint32_t netifIdx = 0; netifIdx < ENET_SYSCFG_NETIF_COUNT; netifIdx++)
         {
-            if (EnetApp_isNetworkUp(g_pNetif[netifIdx]))
+            if (App_isNetworkUp(g_pNetif[netifIdx]))
             {
                 netupMask |= (1 << netifIdx);
             }
@@ -331,23 +265,23 @@ int EnetApp_mainTask(void *args)
     while (1)
     {
         ClockP_usleep(1000);
-        EnetApp_printCpuLoad();
+        App_printCpuLoad();
         TaskP_yield();
     }
+
     EnetApp_stopTsn();
     EnetApp_deInitTsn();
-
-    EnetApp_shutdownNetworkStack();
+    App_shutdownNetworkStack();
     return 0;
 }
 
-static void EnetApp_setupNetworkStack()
+static void App_setupNetworkStack()
 {
     sys_sem_t pInitSem;
     const err_t err = sys_sem_new(&pInitSem, 0);
     EnetAppUtils_assert(err == ERR_OK);
 
-    tcpip_init(EnetApp_tcpipInitCompleteCb, &pInitSem);
+    tcpip_init(App_tcpipInitCompleteCb, &pInitSem);
 
     /* wait for TCP/IP initialization to complete */
     sys_sem_wait(&pInitSem);
@@ -356,7 +290,7 @@ static void EnetApp_setupNetworkStack()
     return;
 }
 
-static void EnetApp_shutdownNetworkStack()
+static void App_shutdownNetworkStack()
 {
     for (uint32_t netifIdx = 0U; netifIdx < ENET_SYSCFG_NETIF_COUNT; netifIdx++)
     {
@@ -365,7 +299,7 @@ static void EnetApp_shutdownNetworkStack()
     return;
 }
 
-static void EnetApp_tcpipInitCompleteCb(void *pArg)
+static void App_tcpipInitCompleteCb(void *pArg)
 {
     sys_sem_t *pSem = (sys_sem_t*)pArg;
     EnetAppUtils_assert(pArg != NULL);
@@ -373,14 +307,14 @@ static void EnetApp_tcpipInitCompleteCb(void *pArg)
     /* init randomizer again (seed per thread) */
     srand((unsigned int)sys_now()/1000);
 
-    EnetApp_setupNetif();
+    App_setupNetif();
 
-    EnetApp_allocateIPAddress();
+    App_allocateIPAddress();
 
     sys_sem_signal(pSem);
 }
 
-static void EnetApp_setupNetif()
+static void App_setupNetif()
 {
     ip4_addr_t ipaddr, netmask, gw;
 
@@ -394,14 +328,14 @@ static void EnetApp_setupNetif()
     {
         /* Open the netif and get it populated*/
         g_pNetif[netifIdx] = LwipifEnetApp_netifOpen(hlwipIfApp, NETIF_INST_ID0 + netifIdx, &ipaddr, &netmask, &gw);
-        netif_set_status_callback(g_pNetif[netifIdx], EnetApp_netifStatusChangeCb);
-        netif_set_link_callback(g_pNetif[netifIdx], EnetApp_netifLinkChangeCb);
+        LwipifEnetApp_startSchedule(hlwipIfApp, g_pNetif[netifIdx]);
+        netif_set_status_callback(g_pNetif[netifIdx], App_netifStatusChangeCb);
+        netif_set_link_callback(g_pNetif[netifIdx], App_netifLinkChangeCb);
         netif_set_up(g_pNetif[NETIF_INST_ID0 + netifIdx]);
     }
-    LwipifEnetApp_startSchedule(hlwipIfApp, g_pNetif[ENET_SYSCFG_DEFAULT_NETIF_IDX]);
 }
 
-static void EnetApp_allocateIPAddress()
+static void App_allocateIPAddress()
 {
     sys_lock_tcpip_core();
     for (uint32_t  netifIdx = 0U; netifIdx < ENET_SYSCFG_NETIF_COUNT; netifIdx++)
@@ -415,7 +349,7 @@ static void EnetApp_allocateIPAddress()
     return;
 }
 
-static void EnetApp_netifStatusChangeCb(struct netif *pNetif)
+static void App_netifStatusChangeCb(struct netif *pNetif)
 {
     if (netif_is_up(pNetif))
     {
@@ -429,7 +363,7 @@ static void EnetApp_netifStatusChangeCb(struct netif *pNetif)
     return;
 }
 
-static void EnetApp_netifLinkChangeCb(struct netif *pNetif)
+static void App_netifLinkChangeCb(struct netif *pNetif)
 {
     if (netif_is_link_up(pNetif))
     {
@@ -442,12 +376,12 @@ static void EnetApp_netifLinkChangeCb(struct netif *pNetif)
     return;
 }
 
-static int32_t EnetApp_isNetworkUp(struct netif* netif_)
+static int32_t App_isNetworkUp(struct netif* netif_)
 {
     return (netif_is_up(netif_) && netif_is_link_up(netif_) && !ip4_addr_isany_val(*netif_ip4_addr(netif_)));
 }
 
-static void EnetApp_printCpuLoad()
+static void App_printCpuLoad()
 {
     static uint32_t startTime_ms = 0;
     const  uint32_t currTime_ms  = ClockP_getTimeUsec()/1000;
@@ -487,26 +421,18 @@ void EnetApp_initLinkArgs(Enet_Type enetType,
     ethPort.enetType = enetType;
     ethPort.instId   = instId;
     ethPort.macPort  = macPort;
-    ethPort.boardId  = EnetBoard_getId();
-
-    /* Get the Mii config for Ethernet port */
-    EnetBoard_getMiiConfig(&ethPort.mii);
+    ethPort.boardId  = ENETBOARD_AM64X_AM243X_EVM;
+    ethPort.mii.layerType      = ENET_MAC_LAYER_GMII;
+    ethPort.mii.sublayerType   = ENET_MAC_SUBLAYER_REDUCED;
+    ethPort.mii.variantType    = ENET_MAC_VARIANT_FORCED;
 
     status = EnetBoard_setupPorts(&ethPort, 1U);
     EnetAppUtils_assert(status == ENET_SOK);
 
-    if (Enet_isCpswFamily(ethPort.enetType))
     {
-        CpswMacPort_Cfg *macCfg = (CpswMacPort_Cfg *)linkArgs->macCfg;
-        CpswMacPort_initCfg(macCfg);
-        if (EnetMacPort_isSgmii(mii) || EnetMacPort_isQsgmii(mii))
-        {
-            macCfg->sgmiiMode = ENET_MAC_SGMIIMODE_SGMII_WITH_PHY;
-        }
-        else
-        {
-            macCfg->sgmiiMode = ENET_MAC_SGMIIMODE_INVALID;
-        }
+        IcssgMacPort_Cfg *macCfg = (IcssgMacPort_Cfg *)linkArgs->macCfg;
+        IcssgMacPort_initCfg(macCfg);
+        macCfg->specialFramePrio = 1U;
     }
 
     boardPhyCfg = EnetBoard_getPhyCfg(&ethPort);
@@ -519,7 +445,6 @@ void EnetApp_initLinkArgs(Enet_Type enetType,
         phyCfg->skipExtendedCfg = boardPhyCfg->skipExtendedCfg;
         phyCfg->extendedCfgSize = boardPhyCfg->extendedCfgSize;
         memcpy(phyCfg->extendedCfg, boardPhyCfg->extendedCfg, phyCfg->extendedCfgSize);
-
     }
     else
     {
@@ -533,101 +458,49 @@ void EnetApp_initLinkArgs(Enet_Type enetType,
     mii->variantType   = ENET_MAC_VARIANT_FORCED;
     linkCfg->speed     = ENET_SPEED_AUTO;
     linkCfg->duplexity = ENET_DUPLEX_AUTO;
-
-    if (Enet_isCpswFamily(ENET_CPSW_3G))
-    {
-        CpswMacPort_Cfg *macCfg = (CpswMacPort_Cfg *)linkArgs->macCfg;
-
-        if (EnetMacPort_isSgmii(mii) || EnetMacPort_isQsgmii(mii))
-        {
-            macCfg->sgmiiMode = ENET_MAC_SGMIIMODE_SGMII_WITH_PHY;
-        }
-        else
-        {
-            macCfg->sgmiiMode = ENET_MAC_SGMIIMODE_INVALID;
-        }
-    }
 }
 
-
-void EnetApp_addMCastEntry(Enet_Type enetType,
-                          uint32_t instId,
-                          uint32_t coreId,
-                          const uint8_t *testMCastAddr,
-                          uint32_t portMask)
+static void EnetApp_updateMdioLinkIntCfg(Enet_Type enetType, uint32_t instId, Icssg_mdioLinkIntCfg *mdioLinkIntCfg)
 {
-    Enet_IoctlPrms prms;
-    int32_t status;
-    CpswAle_SetMcastEntryInArgs setMcastInArgs;
-    uint32_t setMcastOutArgs;
-
-    if (Enet_isCpswFamily(enetType))
-    {
-        Enet_Handle hEnet = Enet_getHandle(enetType, instId);
-
-        EnetAppUtils_assert(hEnet != NULL);
-        memset(&setMcastInArgs, 0, sizeof(setMcastInArgs));
-        memcpy(&setMcastInArgs.addr.addr[0U], testMCastAddr,
-               sizeof(setMcastInArgs.addr.addr));
-        setMcastInArgs.addr.vlanId  = 0;
-        setMcastInArgs.info.super = false;
-        setMcastInArgs.info.numIgnBits = 0;
-        setMcastInArgs.info.fwdState = CPSW_ALE_FWDSTLVL_FWD;
-        setMcastInArgs.info.portMask = portMask;
-        ENET_IOCTL_SET_INOUT_ARGS(&prms, &setMcastInArgs, &setMcastOutArgs);
-        ENET_IOCTL(hEnet, coreId, CPSW_ALE_IOCTL_ADD_MCAST, &prms, status);
-        if (status != ENET_SOK)
-        {
-           EnetAppUtils_print("EnetTestBcastMcastLimit_AddAleEntry() failed CPSW_ALE_IOCTL_ADD_MCAST: %d\n",
-                               status);
-        }
-    }
-}
-
-
-void EnetApp_updateCpswInitCfg(Enet_Type enetType, uint32_t instId, Cpsw_Cfg *cpswCfg)
-{
-#if defined (ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA)
-    EnetCpdma_Cfg * dmaCfg = (EnetCpdma_Cfg *)cpswCfg->dmaCfg;
-
-    EnetAppUtils_assert(dmaCfg != NULL);
-    EnetAppUtils_assert(EnetAppUtils_isDescCached() == false);
-    dmaCfg->rxInterruptPerMSec = 8;
-    dmaCfg->txInterruptPerMSec = 2;
-    dmaCfg->enChOverrideFlag = true;
+    /*! INTC Module mapping data passed by application for configuring PRU to R5F interrupts */
+#if (ENET_SYSCFG_ICSSG0_ENABLED == 1)
+    mdioLinkIntCfg->prussIntcInitData =  &icss0_intc_initdata;
 #endif
+#if (ENET_SYSCFG_ICSSG1_ENABLED == 1)
+    mdioLinkIntCfg->prussIntcInitData =  &icss1_intc_initdata;
+#endif
+    mdioLinkIntCfg->coreIntrNum = 254;
+    mdioLinkIntCfg->pruEvtNum[0] = MII_LINK0_EVENT;
+    mdioLinkIntCfg->pruEvtNum[1] = MII_LINK1_EVENT;
+    mdioLinkIntCfg->isPulseIntr = 0;
+    mdioLinkIntCfg->intrPrio = 15;
+}
 
-
+void EnetApp_updateIcssgInitCfg(Enet_Type enetType, uint32_t instId, Icssg_Cfg *icssgCfg)
+{
 #if (ENET_SYSCFG_ENABLE_MDIO_MANUALMODE == 1U)
-    cpswCfg->mdioLinkStateChangeCb    = NULL;
-    cpswCfg->mdioLinkStateChangeCbArg = NULL;
+    icssgCfg->mdioLinkIntCfg.mdioLinkStateChangeCb = NULL;
+    icssgCfg->mdioLinkIntCfg.mdioLinkStateChangeCbArg  = NULL;
 #else
-    cpswCfg->mdioLinkStateChangeCb    = &EnetApp_mdioLinkStatusChange;
-    cpswCfg->mdioLinkStateChangeCbArg = NULL;
-#endif
-    cpswCfg->portLinkStatusChangeCb = &EnetApp_portLinkStatusChangeCb;
-    cpswCfg->portLinkStatusChangeCbArg = NULL;
-
-#if defined (ENET_CPSW_ENABLE_DUAL_MAC)
-    /* Enabling MAC only mode for CPSW*/
-    uint32_t i;
-    for (i = 0U; i < ENET_ARRAYSIZE(cpswCfg->aleCfg.portCfg); i++)
-    {
-        cpswCfg->aleCfg.portCfg[i].macModeCfg.macOnlyEn = true;
-    }
+    #if (ENET_SYSCFG_ENABLE_EXTPHY == 1U)
+        EnetApp_initMdioLinkIntCfg(enetType, instId, icssgCfg);
+    #else
+        icssgCfg->mdioLinkIntCfg.mdioLinkStateChangeCb = &EnetApp_mdioLinkStatusChange;
+        icssgCfg->mdioLinkIntCfg.mdioLinkStateChangeCbArg  = NULL;
+    #endif
+    EnetApp_updateMdioLinkIntCfg(enetType, instId, &icssgCfg->mdioLinkIntCfg);
 #endif
 }
 
-static void EnetApp_mdioLinkStatusChange(Cpsw_MdioLinkStateChangeInfo *info,
+#if (ENET_SYSCFG_ENABLE_EXTPHY == 0U)
+static void EnetApp_mdioLinkStatusChange(Icssg_MdioLinkStateChangeInfo *info,
                                          void *appArg)
 {
-    if (info->linkChanged)
-    {
-        EnetAppUtils_print("Link Status Changed. PHY: 0x%x, state: %s\r\n",
-                info->phyAddr,
-                info->isLinked? "up" : "down");
-    }
+    EnetAppUtils_print("Link Status Changed. PHY: 0x%x, state: %s\r\n",
+            info->phyAddr,
+            info->isLinked? "up" : "down");
 }
+#endif
 
 static void EnetApp_portLinkStatusChangeCb(Enet_MacPort macPort,
                                            bool isLinkUp,
@@ -636,4 +509,3 @@ static void EnetApp_portLinkStatusChangeCb(Enet_MacPort macPort,
     EnetAppUtils_print("MAC Port %u: link %s\r\n",
                        ENET_MACPORT_ID(macPort), isLinkUp ? "up" : "down");
 }
-
