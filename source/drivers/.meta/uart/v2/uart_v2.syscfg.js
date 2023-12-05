@@ -393,8 +393,14 @@ function getConfigurables()
                     ui.intrPriority.hidden = false;
                     ui.readMode.hidden = false;
                     ui.writeMode.hidden = false;
-                    ui.readCallbackFxn.hidden = false;
-                    ui.writeCallbackFxn.hidden = false;
+                    if(inst.readMode == "CALLBACK")
+                    {
+                        ui.readCallbackFxn.hidden = false;
+                    }
+                    if(inst.writeMode == "CALLBACK")
+                    {
+                        ui.writeCallbackFxn.hidden = false;
+                    }
                     ui.rxTrigLvl.hidden = false;
                     ui.txTrigLvl.hidden = false;
                     ui.readReturnMode.hidden = false;
@@ -403,8 +409,14 @@ function getConfigurables()
                     ui.intrPriority.hidden = true;
                     ui.readMode.hidden = false;
                     ui.writeMode.hidden = false;
-                    ui.readCallbackFxn.hidden = false;
-                    ui.writeCallbackFxn.hidden = false;
+                    if(inst.readMode == "CALLBACK")
+                    {
+                        ui.readCallbackFxn.hidden = false;
+                    }
+                    if(inst.writeMode == "CALLBACK")
+                    {
+                        ui.writeCallbackFxn.hidden = false;
+                    }
                     ui.rxTrigLvl.hidden = true;
                     ui.txTrigLvl.hidden = true;
                     ui.readReturnMode.hidden = true;
