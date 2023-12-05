@@ -262,7 +262,6 @@ function checkSettings(inst,ui)
         if (inst.hrpwm_controlModeA == "HRPWM_MEP_DUTY_PERIOD_CTRL" && inst.hrpwm_controlModeB == "HRPWM_MEP_DUTY_PERIOD_CTRL")
         {
             ui.hrpwm_tbphsHR.hidden = true;
-            ui.hrpwm_syncSource.hidden = true;
             ui.hrpwm_phaseLoadEnable.hidden = true;
         }
         else if (inst.hrpwm_controlModeA == "HRPWM_MEP_PHASE_CTRL")
@@ -272,7 +271,6 @@ function checkSettings(inst,ui)
             ui.hrpwm_HRLoadA.hidden = true;
 
             ui.hrpwm_tbphsHR.hidden = false;
-            ui.hrpwm_syncSource.hidden = false;
             ui.hrpwm_phaseLoadEnable.hidden = false;
         }
         else if (inst.hrpwm_controlModeB == "HRPWM_MEP_PHASE_CTRL")
@@ -282,7 +280,6 @@ function checkSettings(inst,ui)
             ui.hrpwm_HRLoadB.hidden = true;
 
             ui.hrpwm_tbphsHR.hidden = false;
-            ui.hrpwm_syncSource.hidden = false;
             ui.hrpwm_phaseLoadEnable.hidden = false;
         }
     }
@@ -298,7 +295,6 @@ function checkSettings(inst,ui)
         ui.hrpwm_tbprdHR.hidden = true;
 
         ui.hrpwm_tbphsHR.hidden = false;
-        ui.hrpwm_syncSource.hidden = false;
         ui.hrpwm_phaseLoadEnable.hidden = false;
     }
 
@@ -543,14 +539,6 @@ var config = [
                     description : 'Phase High Resolution Value',
                     hidden      : true,
                     default     : 0,
-                },
-                {
-                    name: "hrpwm_syncSource",
-                    displayName : "PWMSYNC Source Select",
-                    description : 'Selects the source of the EPWMSYNCPER signal that goes to the CMPSS and GPDAC',
-                    hidden      : true,
-                    default     : device_peripheral.HRPWM_SyncPulseSource[0].name,
-                    options     : device_peripheral.HRPWM_SyncPulseSource
                 },
                 {
                     name: "hrpwm_phaseLoadEnable",

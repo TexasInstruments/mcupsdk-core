@@ -184,6 +184,15 @@ config.splice.apply(config, [config.length - 2, 0].concat([
         default     : device_driverlib_peripheral.EPWM_OneShotSyncOutTrigger[0].name,
         options     : device_driverlib_peripheral.EPWM_OneShotSyncOutTrigger,
     },
+    {
+        name: "hrpwm_syncSource",
+        displayName : "PWMSYNC Source Select",
+        description : 'Selects the source of the EPWMSYNCPER signal that goes to the CMPSS and GPDAC',
+        hidden      : false,
+        default     : device_driverlib_peripheral.HRPWM_SyncPulseSource[0].name,
+        options     : device_driverlib_peripheral.HRPWM_SyncPulseSource
+    },
+
 ]));
 
 

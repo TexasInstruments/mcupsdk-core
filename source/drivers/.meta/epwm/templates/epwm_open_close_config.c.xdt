@@ -30,6 +30,7 @@ void Drivers_epwmOpen(void)
 	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_syncInPulseSource")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_oneShotSyncOutTrigger")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_forceSyncPulse")`
+    `epwm_json_resolver.getCode(instance, instance,"hrpwm_syncSource")`
 
 	/* Counter Compare */
 	`epwm_json_resolver.getCode(instance, instance,"epwmCounterCompare_cmpA")`
@@ -385,7 +386,6 @@ void Drivers_epwmOpen(void)
     `epwm_json_resolver.getCode(instance, instance,"hrpwm_controlModeA")`
     `epwm_json_resolver.getCode(instance, instance,"hrpwm_controlModeB")`
     `epwm_json_resolver.getCode(instance, instance,"hrpwm_tbphsHR")`
-    `epwm_json_resolver.getCode(instance, instance,"hrpwm_syncSource")`
     `epwm_json_resolver.getCode(instance, instance,"hrpwm_phaseLoadEnable")`
     `epwm_json_resolver.getCode(instance, instance,"hrpwm_edgeModeA")`
     `epwm_json_resolver.getCode(instance, instance,"hrpwm_edgeModeB")`
