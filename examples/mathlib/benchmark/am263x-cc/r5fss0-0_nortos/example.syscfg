@@ -40,10 +40,10 @@ const section12       = section.addInstance();
  * Write custom configuration values to the imported modules.
  */
 debug_log.enableUartLog            = true;
-debug_log.enableCssLog             = false;
 debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -158,7 +158,7 @@ section2.output_section[4].$name      = ".text:abort";
 section2.output_section[4].palignment = true;
 
 section3.$name                        = "Code and Read-Only Data";
-section3.load_memory                  = "R5F_TCMA";
+section3.load_memory                  = "OCRAM";
 section3.output_section.create(2);
 section3.output_section[0].$name      = ".text";
 section3.output_section[0].palignment = true;
