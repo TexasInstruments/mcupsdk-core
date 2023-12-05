@@ -20,6 +20,7 @@ void Drivers_epwmOpen(void)
 	% }
 	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_periodGld")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_periodLoadMode")`
+    `epwm_json_resolver.getCode(instance, instance,"epwmTimebase_periodLoadEvent")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_counterValue")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_counterMode")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmTimebase_counterModeAfterSync")`

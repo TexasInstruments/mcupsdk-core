@@ -90,6 +90,18 @@
                 "am263x", "am263px",
 			]
 		},
+        {
+			"name" :  "epwmTimebase_periodLoadEvent",
+			"driverlibFunction" : "EPWM_selectPeriodLoadEvent",
+			"driverlibFunctionArg" : {
+				"base" : "",
+				"loadMode" : "this"
+			},
+			"register": "TBCTL2.PRDLDSYNC",
+			"devices" : [
+                "am263x", "am263px",
+			]
+		},
 		{
 			"name" :  "epwmTimebase_counterValue",
 			"driverlibFunction" : "EPWM_setTimeBaseCounter",
