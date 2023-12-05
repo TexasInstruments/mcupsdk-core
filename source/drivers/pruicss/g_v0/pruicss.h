@@ -402,11 +402,11 @@ int32_t PRUICSS_deinit(void);
 /**
  * \brief   This function creates the handle for a PRUICSS instance
  *
- * \param   instance PRUICSS instance number
+ * \param   index  Index of config to use in the *gPruIcssConfig* array
  *
  * \return  A #PRUICSS_Handle on success or a NULL on an error
  */
-PRUICSS_Handle PRUICSS_open(uint32_t instance);
+PRUICSS_Handle PRUICSS_open(uint32_t index);
 
 /**
  * \brief   This function deletes the handle for a PRUICSS instance

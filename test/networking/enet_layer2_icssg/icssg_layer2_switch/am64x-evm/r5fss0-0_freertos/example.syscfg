@@ -70,6 +70,11 @@ debug_log.enableUartLog = true;
 debug_log.enableCssLog  = false;
 debug_log.uartLog.$name = "CONFIG_UART0";
 
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
+
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
 mpu_armv71.attributes        = "Device";
@@ -110,7 +115,6 @@ enet_icss1.QoS                            = 3;
 enet_icss1.mdioPollEnMask                 = [];
 enet_icss1.mdioMode                       = "MDIO_MODE_NORMAL";
 enet_icss1.instance                       = "ICSSG0";
-enet_icss1.GigabitSupportEnable           = false;
 enet_icss1.phyAddr1                       = 1;
 enet_icss1.LargePoolPktCount              = 24;
 enet_icss1.txDmaChannel[0].$name          = "ENET_DMA_TX_CH0";
@@ -129,7 +133,6 @@ pruicss1.$name                           = "CONFIG_PRU_ICSS1";
 pruicss1.AdditionalICSSSettings[0].$name = "CONFIG_PRU_ICSS_IO0";
 
 enet_icss2.$name                          = "CONFIG_ENET_ICSS1";
-enet_icss2.GigabitSupportEnable           = false;
 enet_icss2.QoS                            = 3;
 enet_icss2.mdioPollEnMask                 = [];
 enet_icss2.mdioMode                       = "MDIO_MODE_NORMAL";

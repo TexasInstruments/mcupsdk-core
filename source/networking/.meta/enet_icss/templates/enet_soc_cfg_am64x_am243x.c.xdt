@@ -37,6 +37,24 @@ function checkDMacInstEn(value)
     }
     return check;
 }
+
+function getIcssgInstName(instance)
+{
+    let index = new String();
+    let prumodule = system.modules["/drivers/pruicss/pruicss"];
+    
+    console.log()
+    for (let i in prumodule.$instances)
+    {
+        if (prumodule.$instances[i].instance == instance)
+        {
+            index = prumodule.$instances[i].$name;
+            break;
+        }
+        index = "ENET_PRU_INVALID";
+    }
+    return index;
+}
 %%}
 
 /* ========================================================================== */
@@ -81,6 +99,7 @@ function checkDMacInstEn(value)
 #pragma clang section rodata=""
 
 #include "ti_enet_config.h"
+#include "ti_drivers_config.h"
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -184,6 +203,7 @@ function checkDMacInstEn(value)
 %}
 % }
 
+#define ENET_PRU_INVALID CONFIG_PRUICSS_NUM_INSTANCES
 
 /* --------------------------------- ICSS-G --------------------------------- */
 % for(let i in instances){
@@ -496,6 +516,7 @@ static Icssg_FwPoolMem gEnetSoc_Icssg1_Swt_FwPoolMem[] =
 /* PRU_ICSSG 0 */
 Icssg_Pruss gEnetSoc_PruIcssg0 =
 {
+    .name        = `getIcssgInstName("ICSSG0")`,
     .instance    = ICSSG_PRUSS_ID_0,
     .initialized = false,
     .iep0InUse   = false,
@@ -505,6 +526,7 @@ Icssg_Pruss gEnetSoc_PruIcssg0 =
 /* PRU_ICSSG 1 */
 Icssg_Pruss gEnetSoc_PruIcssg1 =
 {
+    .name        = `getIcssgInstName("ICSSG1")`,
     .instance    = ICSSG_PRUSS_ID_1,
     .initialized = false,
     .iep0InUse   = false,

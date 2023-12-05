@@ -108,7 +108,7 @@ static void AppTcp_echoPckt(struct netconn *pClientConn)
                 printf("tcpecho: netconn_write: error \"%s\"\r\n", lwip_strerr(err));
             }
             ipc_sendLwipPkt(data, ipc_len);
-            printf("[IPC_ECHO_BACK] Sent Packet number %d\r\n", count);
+            printf("[IPC_ECHO_BACK] Sent Packet number %d\r\n", ++count);
 
         } while (netbuf_next(buf) >= 0);
         netbuf_delete(buf);

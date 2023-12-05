@@ -124,23 +124,20 @@ int32_t PRUICSS_deinit(void)
     return SystemP_SUCCESS;
 }
 
-PRUICSS_Handle PRUICSS_open(uint32_t instance)
+PRUICSS_Handle PRUICSS_open(uint32_t index)
 {
     PRUICSS_Handle          handle = NULL;
     PRUICSS_Object          *object = NULL;
     PRUICSS_HwAttrs const   *hwAttrs = NULL;
 
-    for (uint32_t i = 0; i < gPruIcssConfigNum; i++)
+    /* Check index */
+    if(index >= gPruIcssConfigNum)
     {
-        handle = (PRUICSS_Handle)(&gPruIcssConfig[i]);
-        if (handle->hwAttrs->instance == instance)
-        {
-            break;
-        }
-        else
-        {
-        	handle = NULL;
-        }
+        return NULL;
+    }
+    else
+    {
+        handle = (PRUICSS_Handle)(&gPruIcssConfig[index]);
     }
     hwAttrs = (PRUICSS_HwAttrs const *)handle->hwAttrs;
     object = (PRUICSS_Object *)handle->object;
