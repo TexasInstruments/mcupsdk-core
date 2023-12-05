@@ -156,9 +156,27 @@ Within this section, the user has the option to set various parameters for a sec
     \imageStyle{load_to_address.png,width:60%}
         \image html load_to_address.png "Sysconfig view of Section: Load to Address"
 
-3. Output Section Requirement: It is mandatory for the user to add at least one output section.
+3. There are other variations to this in terms of directing the sections to memories.
 
-4. Output Section Grouping: The user can opt to either group all output sections together or keep them separate. The configurations for load and run memory, as well as section type, will apply to all output sections under a given instance.
+    - Select Multiple Memory Regions:
+
+    \imageStyle{section_select_multiple.png,width:90%}
+    \image html section_select_multiple.png "Sysconfig view of Section with Select Multiple Memory Regions"
+
+    Once the "Select Multiple Memory Regions" is checked, user will get the option to select the priority of the memory regions. Here the section will be put to the first memory region (in the order) big enough to accommodate the entire section.
+    The Priority 0 contains MSRAM, Priority 1 contains NON_CACHE_MEM and Priority 2 contains USER_SHM_MEM. 
+
+    - Split Across Memories:
+
+    \imageStyle{section_split_memories.png,width:90%}
+    \image html section_split_memories.png "Sysconfig view of Section with Split across Memories"
+
+    Once this option is checked, again in the similar way the user will get options to choose the priority of memory regions. The difference here is the redirection symbol which is ">>" instead of ">".
+    What this means is that the section will spread across multiple regions following the order if the first one is unable to entirely fit it in.
+
+4. Output Section Requirement: It is mandatory for the user to add at least one output section.
+
+5. Output Section Grouping: The user can opt to either group all output sections together or keep them separate. The configurations for load and run memory, as well as section type, will apply to all output sections under a given instance.
     - User can mention the Group's Start and End symbols.
     - User can also mention the output section's start and end symbols.
     - Option for alignment and alignment with padding (palign) can also be added. 
@@ -167,7 +185,7 @@ Within this section, the user has the option to set various parameters for a sec
         - palign: additionally ensures that the size of the section is a multiple of its placement alignment restrictions, padding the section size up to such a boundary, as needed.
     - User can mention the fill value which is used to fill uninitialized holes.
 
-5. Input Section Addition: The user also has the flexibility to add zero or more input sections under a specific output section.
+6. Input Section Addition: The user also has the flexibility to add zero or more input sections under a specific output section.
     - Any additonal data can also be added in a multiline field called "Additional data". This would appear after the input section data.
 
 \imageStyle{section.png,width:90%}

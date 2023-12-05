@@ -157,6 +157,7 @@ let config = [
             inst.$uiState.load_memory.hidden = inst.select_multiple_regions;
             inst.$uiState.run_memory.hidden = inst.select_multiple_regions;
             inst.$uiState.split_across_memories.hidden = inst.select_multiple_regions;
+            inst.split_across_memories = false;
         }
     },
     {
@@ -168,6 +169,7 @@ let config = [
             inst.$uiState.load_memory.hidden = inst.split_across_memories;
             inst.$uiState.run_memory.hidden = inst.split_across_memories;
             inst.$uiState.select_multiple_regions.hidden = inst.split_across_memories;
+            inst.select_multiple_regions = false;
         }
     },
     {

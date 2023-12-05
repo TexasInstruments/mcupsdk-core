@@ -159,15 +159,15 @@ SECTIONS
 %}
 % let redirection = 'load='
 % let place_run_mem = ', run='
-% if (instance.split_across_memories){
-%   redirection = '>>'
-%   place_run_mem= ''}
 % let load_memory = format(instance, "load_memory")
 % let run_memory = format(instance, "run_memory")
 % if (run_memory.length == 0) {
 %   redirection = '>'
 %   place_run_mem = ''
 %}
+% if (instance.split_across_memories){
+%   redirection = '>>'
+%   place_run_mem= ''}
     } `redirection` `load_memory` `place_run_mem` `run_memory`
 %       if(instance.group_start.length > 0) {
     RUN_START(`instance.group_start`)
@@ -210,15 +210,15 @@ SECTIONS
 %}
 % let redirection = 'load='
 % let place_run_mem = ', run='
-% if (instance.split_across_memories){
-%   redirection = '>>'
-%   place_run_mem= ''}
 % let load_memory = format(instance, "load_memory")
 % let run_memory = format(instance, "run_memory")
 % if (run_memory.length == 0) {
 %   redirection = '>'
 %   place_run_mem = ''
 %}
+% if (instance.split_across_memories){
+%   redirection = '>>'
+%   place_run_mem= ''}
     } `redirection` `load_memory` `place_run_mem` `run_memory` `palign` `fill`
 %       if(output_sections[i].output_sections_start.length > 0) {
     RUN_START(`output_sections[i].output_sections_start`)
