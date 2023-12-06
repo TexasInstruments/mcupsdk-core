@@ -47,7 +47,7 @@ const section12       = section.addInstance();
  */
 psram1.$name                                 = "CONFIG_PSRAM0";
 psram1.psramDriverIoExpander.$name           = "CONFIG_I2C0";
-psram1.psramDriverIoExpander.I2C.$assign     = "I2C0";
+psram1.psramDriverIoExpander.I2C.$assign     = "I2C2";
 psram1.psramDriverIoExpander.I2C.SDA.pu_pd   = "pd";
 psram1.psramDriver.$name                     = "CONFIG_GPMC0";
 psram1.psramDriver.clockRateDiv              = 4;
@@ -347,8 +347,8 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-psram1.psramDriverIoExpander.I2C.SCL.$suggestSolution  = "I2C0_SCL";
-psram1.psramDriverIoExpander.I2C.SDA.$suggestSolution  = "I2C0_SDA";
+psram1.psramDriverIoExpander.I2C.SCL.$suggestSolution  = "UART0_RTSn";
+psram1.psramDriverIoExpander.I2C.SDA.$suggestSolution  = "UART0_CTSn";
 psram1.psramDriver.GPMC.GPMC_ADVn_ALE.$suggestSolution = "SDFM0_CLK2";
 psram1.psramDriver.GPMC.GPMC_BE0n_CLE.$suggestSolution = "PR0_PRU1_GPIO9";
 psram1.psramDriver.GPMC.GPMC_A0.$suggestSolution       = "PR0_PRU0_GPIO4";
