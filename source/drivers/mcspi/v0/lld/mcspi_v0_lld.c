@@ -1491,15 +1491,11 @@ static uint32_t MCSPI_continueTxRx(MCSPILLD_Handle hMcspi,
     uint32_t                 baseAddr, chNum, txEmptyMask, rxFullMask;
     uint32_t                 retVal = MCSPI_TRANSFER_STARTED;
     volatile uint32_t        irqStatus, chStat;
-    uint32_t                 startTicks, elapsedTicks = 0;
-    MCSPILLD_InitHandle      hMcspiInit;
 
     baseAddr = hMcspi->baseAddr;
     chNum    = chObj->chCfg->chNum;
     txEmptyMask = Spi_mcspiGetTxMask(chNum);
     rxFullMask  = Spi_mcspiGetRxMask(chNum);
-
-    hMcspiInit  = hMcspi->hMcspiInit;
 
     irqStatus = CSL_REG32_RD(baseAddr + CSL_MCSPI_IRQSTATUS);
 
@@ -1541,12 +1537,11 @@ static uint32_t MCSPI_continueTxRx(MCSPILLD_Handle hMcspi,
             {
                 if (transaction->count == chObj->curTxWords)
                 {
-                    startTicks = hMcspiInit->clockP_get();
-                    do{
+                    do
+                    {
                         /* Wait for end of transfer. */
                         chStat = CSL_REG32_RD(baseAddr + MCSPI_CHSTAT(chNum));
-                        elapsedTicks = hMcspiInit->clockP_get() - startTicks;
-                    }while (((chStat & CSL_MCSPI_CH0STAT_EOT_MASK) == 0U) && (elapsedTicks < transaction->timeout));
+                    }while ((chStat & CSL_MCSPI_CH0STAT_EOT_MASK) == 0U);
 
                     /* read the last data if any from Rx FIFO. */
                     if ((MCSPI_TR_MODE_TX_ONLY != chObj->chCfg->trMode) &&
@@ -1572,12 +1567,10 @@ static uint32_t MCSPI_continueTxRx(MCSPILLD_Handle hMcspi,
             {
                 if (transaction->count == chObj->curRxWords)
                 {
-                    startTicks = hMcspiInit->clockP_get();
                     do{
                         /* Wait for end of transfer. */
                         chStat = CSL_REG32_RD(baseAddr + MCSPI_CHSTAT(chNum));
-                        elapsedTicks = hMcspiInit->clockP_get() - startTicks;
-                    }while (((chStat & CSL_MCSPI_CH0STAT_EOT_MASK) == 0u) && (elapsedTicks < transaction->timeout));
+                    }while ((chStat & CSL_MCSPI_CH0STAT_EOT_MASK) == 0u);
                     /* Clear all interrupts. */
                     MCSPI_intrStatusClear(chObj, baseAddr, chObj->intrMask);
                     retVal = MCSPI_TRANSFER_COMPLETED;
