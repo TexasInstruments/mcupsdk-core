@@ -15,8 +15,6 @@ const gpio1           = gpio.addInstance();
 const i2c             = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1            = i2c.addInstance();
 const i2c2            = i2c.addInstance();
-const pruicss         = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
-const pruicss1        = pruicss.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
@@ -68,10 +66,6 @@ i2c2.$name           = "CONFIG_I2C1";
 i2c2.I2C.$assign     = "I2C1";
 i2c2.I2C.SCL.$assign = "I2C1_SCL";
 i2c2.I2C.SDA.$assign = "I2C1_SDA";
-
-pruicss1.$name                           = "CONFIG_PRU_ICSS1";
-pruicss1.instance                        = "ICSSG1";
-pruicss1.AdditionalICSSSettings[0].$name = "CONFIG_PRU_ICSS_IO0";
 
 debug_log.enableUartLog = true;
 debug_log.enableCssLog  = false;

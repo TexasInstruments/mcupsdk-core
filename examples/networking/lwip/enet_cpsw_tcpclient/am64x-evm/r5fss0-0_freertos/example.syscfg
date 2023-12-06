@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @versions {"tool":"1.18.0+3266"}
  */
 
 /**
@@ -15,8 +15,6 @@ const gpio1           = gpio.addInstance();
 const i2c             = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1            = i2c.addInstance();
 const i2c2            = i2c.addInstance();
-const pruicss         = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
-const pruicss1        = pruicss.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
@@ -69,13 +67,14 @@ i2c2.I2C.$assign     = "I2C1";
 i2c2.I2C.SCL.$assign = "I2C1_SCL";
 i2c2.I2C.SDA.$assign = "I2C1_SDA";
 
-pruicss1.$name                           = "CONFIG_PRU_ICSS1";
-pruicss1.instance                        = "ICSSG1";
-pruicss1.AdditionalICSSSettings[0].$name = "CONFIG_PRU_ICSS_IO0";
-
 debug_log.enableUartLog = true;
 debug_log.enableCssLog  = false;
 debug_log.uartLog.$name = "CONFIG_UART0";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -268,22 +267,10 @@ section10.output_section.create(1);
 section10.output_section[0].$name     = ".bss.ipc_vring_mem";
 section10.output_section[0].alignment = 0;
 
-section11.$name                                              = "CONFIG_SECTION0";
-section11.load_memory                                        = "DDR";
-section11.type                                               = "NOLOAD";
-section11.group                                              = false;
-section11.output_section.create(1);
-section11.output_section[0].$name                            = ".enet_dma_mem";
-section11.output_section[0].alignment                        = 128;
-section11.output_section[0].input_section.create(2);
-section11.output_section[0].input_section[0].$name           = " *(*ENET_DMA_DESC_MEMPOOL)";
-section11.output_section[0].input_section[1].$name           = "*(*ENET_DMA_RING_MEMPOOL)";
-section11.output_section[0].input_section[1].additional_data = "#if (ENET_SYSCFG_PKT_POOL_ENABLE == 1)\n        *(*ENET_DMA_PKT_MEMPOOL)\n#endif";
-
+section11.type                        = "NOLOAD";
+section11.group                       = false;
 section11.$name                       = "CONFIG_SECTION1";
 section11.load_memory                 = "MSRAM";
-section11.group                       = false;
-section11.type                        = "NOLOAD";
 section11.output_section.create(3);
 section11.output_section[0].$name     = ".bss:ENET_DMA_OBJ_MEM";
 section11.output_section[0].alignment = 128;

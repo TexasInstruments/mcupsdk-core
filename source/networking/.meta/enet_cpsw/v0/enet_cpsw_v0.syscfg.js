@@ -264,6 +264,29 @@ function getPeripheralPinNames(inst)
     return pinmux_module.getPeripheralPinNames(pinmux_config);
 }
 
+const enet_clock_config =
+    {
+        clockIds        : [ "TISCI_DEV_CPSW0" ],
+        clockFrequencies: [
+            {
+                moduleId: "TISCI_DEV_CPSW0",
+                clkId   : "TISCI_DEV_CPSW0_CPTS_RFT_CLK",
+                clkRate : 200000000,
+            },
+        ],
+    };
+
+function getClockEnableIds(instance) {
+    let instConfig = enet_clock_config;
+    return instConfig.clockIds;
+}
+
+function getClockFrequencies(inst) {
+
+    let instConfig = enet_clock_config;
+    return instConfig.clockFrequencies;
+}
+
 function getDmaInterface(instance) {
     let cpswInstInfo = getCpswInstInfo(instance);
     return cpswInstInfo.dmaIf;
@@ -689,6 +712,9 @@ let enet_cpsw_module = {
             driver_config: "/networking/enet_cpsw/templates/enet_cpsw_v0.h.xdt",
             moduleName: enet_cpsw_module_name,
         },
+            "/drivers/system/power_clock_config.c.xdt": {
+            moduleName: enet_cpsw_module_name,
+        },
         "/board/board/board_config.h.xdt": {
             board_config: getBoardConfigTemplateInfo().Header,
             moduleName: enet_cpsw_module_name,
@@ -755,6 +781,8 @@ let enet_cpsw_module = {
     sharedModuleInstances: addSharedModuleInstances,
     getInterfaceNameList,
     getPeripheralPinNames,
+    getClockEnableIds,
+    getClockFrequencies,
     getDmaInterface,
     getInstIdTable,
     getCpswInstInfo,

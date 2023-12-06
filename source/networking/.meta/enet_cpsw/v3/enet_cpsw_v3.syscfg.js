@@ -272,29 +272,26 @@ function getPeripheralPinNames(inst)
     return pinmux_module.getPeripheralPinNames(pinmux_config);
 }
 
-let cpsw_input_clk_freq = 200000000;
 
-const enet_config =
+const enet_clock_config =
     {
         clockIds        : [ "SOC_RcmPeripheralId_CPTS" ],
         clockFrequencies: [
             {
                 moduleId: "SOC_RcmPeripheralId_CPTS",
                 clkId   : "SOC_RcmPeripheralClockSource_SYS_CLK",
-                clkRate : cpsw_input_clk_freq,
+                clkRate : 200000000,
             },
         ],
     };
 
 function getClockEnableIds(instance) {
-    let instConfig = enet_config;
+    let instConfig = enet_clock_config;
     return instConfig.clockIds;
 }
 
 function getClockFrequencies(inst) {
-
-    let instConfig = enet_config;
-
+    let instConfig = enet_clock_config;
     return instConfig.clockFrequencies;
 }
 
