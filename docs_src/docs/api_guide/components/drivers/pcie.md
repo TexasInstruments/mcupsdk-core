@@ -12,8 +12,13 @@ The PCIe driver provides API to perform initialization, configuration of End poi
 - EP and RC operation
 - Gen 1 and 2 operation speed
 - x1 lane support
+\if SOC_AM65X
+- x2 lane support
+\else
 - Legacy interrupts
 - MSI (Message Signalled Interrupt)
+- MSIx (Message Signalled Interrupt Extended)
+\endif
 
 ## SysConfig Features
 
@@ -40,7 +45,12 @@ SysConfig can be used to configure below parameters apart from common configurat
 ## Features NOT supported
 
 - Bridge mode of operation
+- Bus enumeration
+\if SOC_AM65X
+- x4 lane support
+\else
 - x2 and x4 lanes
+\endif
 
 ## Usage Overview
 

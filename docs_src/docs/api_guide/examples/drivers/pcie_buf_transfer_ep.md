@@ -10,7 +10,7 @@ The EP device sends back the buffer received from the RC device.
 
 # Supported Combinations
 
-\cond SOC_AM64X || SOC_AM243X
+\cond SOC_AM64X || SOC_AM243X || SOC_AM65X
 
  Parameter      | Value
  ---------------|-----------
@@ -32,8 +32,12 @@ The EP device sends back the buffer received from the RC device.
 
 ## HW Setup
 
+\if SOC_AM65X\note Make sure you have setup the IDK with cable connections as shown here, \ref IDK_SETUP_PAGE.
+      In addition do below steps.
+\else
 \note Make sure you have setup the EVM with cable connections as shown here, \ref EVM_SETUP_PAGE.
       In addition do below steps.
+\endif
 
 \cond SOC_AM64X || SOC_AM243X
 
@@ -68,6 +72,40 @@ The EP device sends back the buffer received from the RC device.
         <tr>
             <td> \image html pcie_cable_b1.png "PCIe cable B side end 1" </td>
             <td> \image html pcie_cable_b2.png "PCIe cable B side end 2" </td>
+        </tr>
+        </table>
+\endcond
+
+\cond SOC_AM65X
+
+\cond SOC_AM65X
+### AM65X-IDK
+\endcond
+
+- For connecting two board in RC and EP mode a specialized cable as below is required
+    \imageStyle{pcie_cable_am65x.png, width:50%}
+    \image html pcie_cable_am65x.png
+- This cable can be obtained from Adex Electronics (https://www.adexelec.com).
+- Modify the cable to remove resistors in CK+ and CK- in order to avoid ground loops (power) and smoking clock drivers (clk+/-).
+- The ends of the modified cable should look like below:
+    - A side
+        \imageStyle{pcie_cable_am65x_a1.png,width:90%}
+        \imageStyle{pcie_cable_am65x_a2.png,width:90%}
+
+        <table style="border: 0 px">
+        <tr>
+            <td> \image html pcie_cable_am65x_a1.png "PCIe cable A side end 1" </td>
+            <td> \image html pcie_cable_am65x_a2.png "PCIe cable A side end 2" </td>
+        </tr>
+        </table>
+    - B side
+        \imageStyle{pcie_cable_am65x_b1.png,width:90%}
+        \imageStyle{pcie_cable_am65x_b2.png,width:90%}
+
+        <table style="border: 0 px">
+        <tr>
+            <td> \image html pcie_cable_am65x_b1.png "PCIe cable B side end 1" </td>
+            <td> \image html pcie_cable_am65x_b2.png "PCIe cable B side end 2" </td>
         </tr>
         </table>
 \endcond
