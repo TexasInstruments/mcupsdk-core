@@ -216,15 +216,6 @@ void EnetApp_updateCpswInitCfg(Enet_Type enetType, uint32_t instId, Cpsw_Cfg *cp
 #endif
     cpswCfg->portLinkStatusChangeCb = &EnetApp_portLinkStatusChangeCb;
     cpswCfg->portLinkStatusChangeCbArg = NULL;
-
-#if defined (ENET_CPSW_ENABLE_DUAL_MAC)
-    /* Enabling MAC only mode for CPSW*/
-    uint32_t i;
-    for (i = 0U; i < ENET_ARRAYSIZE(cpswCfg->aleCfg.portCfg); i++)
-    {
-        cpswCfg->aleCfg.portCfg[i].macModeCfg.macOnlyEn = true;
-    }
-#endif
 }
 
 static void EnetApp_mdioLinkStatusChange(Cpsw_MdioLinkStateChangeInfo *info,

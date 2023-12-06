@@ -746,6 +746,7 @@ static bool IsMacAddrSet(uint8_t *mac)
     return ((mac[0]|mac[1]|mac[2]|mac[3]|mac[4]|mac[5]) != 0);
 }
 
+/* Need this funtion definition to align CPSW and ICSSG for TSN libs */
 int32_t EnetApp_applyClassifier(Enet_Handle hEnet, uint32_t coreId, uint8_t *dstMacAddr, uint32_t vlanId,
                                 uint32_t ethType, uint32_t rxFlowIdx)
 {
@@ -754,6 +755,7 @@ int32_t EnetApp_applyClassifier(Enet_Handle hEnet, uint32_t coreId, uint8_t *dst
     int32_t status = ENET_SOK;
     SemaphoreP_Object asyncIoctlSemObj;
 
+    EnetAppUtils_assert(hEnet->enetPer->enetType == ENET_ICSSG_SWITCH);
     EnetAppUtils_print("For ICSSG, EthType and VlanId are not used to match the packet only dest addr is used \r\n");
     if(IsMacAddrSet(dstMacAddr) == false)
     {

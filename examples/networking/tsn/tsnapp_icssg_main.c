@@ -33,7 +33,7 @@
 /*!
  * \file  tsnapp_icssg_main.c
  *
- * \brief This file contains the implementation of the Enet TSN example.
+ * \brief This file contains the implementation of the Enet ICSSG TSN example.
  */
 
 /* ========================================================================== */

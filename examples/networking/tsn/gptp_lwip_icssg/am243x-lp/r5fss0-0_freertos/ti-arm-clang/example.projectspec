@@ -110,19 +110,19 @@
                 -flto
             "
             linkerBuildOptions="
-                -lfreertos.am243x.r5f.ti-arm-clang.release.lib
-                -ldrivers.am243x.r5f.ti-arm-clang.release.lib
-                -lenet-icssg.am243x.r5f.ti-arm-clang.release.lib
-                -lboard.am243x.r5f.ti-arm-clang.release.lib
+                -lfreertos.am243x.r5f.ti-arm-clang.debug.lib
+                -ldrivers.am243x.r5f.ti-arm-clang.debug.lib
+                -lenet-icssg.am243x.r5f.ti-arm-clang.debug.lib
+                -lboard.am243x.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
-                -ltsn_combase-freertos.am243x.r5f.ti-arm-clang.release.lib
-                -ltsn_unibase-freertos.am243x.r5f.ti-arm-clang.release.lib
-                -ltsn_gptp-freertos.am243x.r5f.ti-arm-clang.release.lib
-                -ltsn_uniconf-freertos.am243x.r5f.ti-arm-clang.release.lib
-                -llwipif-icssg-freertos.am243x.r5f.ti-arm-clang.release.lib
-                -llwip-freertos.am243x.r5f.ti-arm-clang.release.lib
-                -llwip-contrib-freertos.am243x.r5f.ti-arm-clang.release.lib
+                -ltsn_combase-freertos.am243x.r5f.ti-arm-clang.debug.lib
+                -ltsn_unibase-freertos.am243x.r5f.ti-arm-clang.debug.lib
+                -ltsn_gptp-freertos.am243x.r5f.ti-arm-clang.debug.lib
+                -ltsn_uniconf-freertos.am243x.r5f.ti-arm-clang.debug.lib
+                -llwipif-icssg-freertos.am243x.r5f.ti-arm-clang.debug.lib
+                -llwip-freertos.am243x.r5f.ti-arm-clang.debug.lib
+                -llwip-contrib-freertos.am243x.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "

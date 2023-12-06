@@ -74,19 +74,19 @@ const includes_freertos_r5f = {
 
 const libs_freertos_r5f = {
     common: [
-        "freertos.am243x.r5f.ti-arm-clang.release.lib",
-        "drivers.am243x.r5f.ti-arm-clang.release.lib",
-        "enet-icssg.am243x.r5f.ti-arm-clang.release.lib",
-        "board.am243x.r5f.ti-arm-clang.release.lib",
+        "freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "enet-icssg.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "libc.a",
         "libsysbm.a",
-        "tsn_combase-freertos.am243x.r5f.ti-arm-clang.release.lib",
-        "tsn_unibase-freertos.am243x.r5f.ti-arm-clang.release.lib",
-        "tsn_gptp-freertos.am243x.r5f.ti-arm-clang.release.lib",
-        "tsn_uniconf-freertos.am243x.r5f.ti-arm-clang.release.lib",
-        "lwipif-icssg-freertos.am243x.r5f.ti-arm-clang.release.lib",
-        "lwip-freertos.am243x.r5f.ti-arm-clang.release.lib",
-        "lwip-contrib-freertos.am243x.r5f.ti-arm-clang.release.lib",
+        "tsn_combase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "tsn_unibase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "tsn_gptp-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "tsn_uniconf-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "lwipif-icssg-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "lwip-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "lwip-contrib-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -147,7 +147,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_ENET_CPSW_TSN_GPTP";
+const readmeDoxygenPageTag = "EXAMPLES_ENET_ICSSG_TSN_LWIP_GPTP";
 
 const templates_freertos_r5f =
 [

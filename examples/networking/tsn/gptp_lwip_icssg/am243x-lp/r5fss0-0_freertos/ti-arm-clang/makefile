@@ -153,19 +153,19 @@ LIBS_PATH_common = \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
-	-lfreertos.am243x.r5f.ti-arm-clang.release.lib \
-	-ldrivers.am243x.r5f.ti-arm-clang.release.lib \
-	-lenet-icssg.am243x.r5f.ti-arm-clang.release.lib \
-	-lboard.am243x.r5f.ti-arm-clang.release.lib \
+	-lfreertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lenet-icssg.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lboard.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
-	-ltsn_combase-freertos.am243x.r5f.ti-arm-clang.release.lib \
-	-ltsn_unibase-freertos.am243x.r5f.ti-arm-clang.release.lib \
-	-ltsn_gptp-freertos.am243x.r5f.ti-arm-clang.release.lib \
-	-ltsn_uniconf-freertos.am243x.r5f.ti-arm-clang.release.lib \
-	-llwipif-icssg-freertos.am243x.r5f.ti-arm-clang.release.lib \
-	-llwip-freertos.am243x.r5f.ti-arm-clang.release.lib \
-	-llwip-contrib-freertos.am243x.r5f.ti-arm-clang.release.lib \
+	-ltsn_combase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ltsn_unibase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ltsn_gptp-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ltsn_uniconf-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-llwipif-icssg-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-llwip-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-llwip-contrib-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -186,19 +186,19 @@ LNKOPTFLAGS_release = \
 	       -flto \
 
 LIBS_NAME = \
-	freertos.am243x.r5f.ti-arm-clang.release.lib \
-	drivers.am243x.r5f.ti-arm-clang.release.lib \
-	enet-icssg.am243x.r5f.ti-arm-clang.release.lib \
-	board.am243x.r5f.ti-arm-clang.release.lib \
+	freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	enet-icssg.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	board.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
-	tsn_combase-freertos.am243x.r5f.ti-arm-clang.release.lib \
-	tsn_unibase-freertos.am243x.r5f.ti-arm-clang.release.lib \
-	tsn_gptp-freertos.am243x.r5f.ti-arm-clang.release.lib \
-	tsn_uniconf-freertos.am243x.r5f.ti-arm-clang.release.lib \
-	lwipif-icssg-freertos.am243x.r5f.ti-arm-clang.release.lib \
-	lwip-freertos.am243x.r5f.ti-arm-clang.release.lib \
-	lwip-contrib-freertos.am243x.r5f.ti-arm-clang.release.lib \
+	tsn_combase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	tsn_unibase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	tsn_gptp-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	tsn_uniconf-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	lwipif-icssg-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	lwip-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	lwip-contrib-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
