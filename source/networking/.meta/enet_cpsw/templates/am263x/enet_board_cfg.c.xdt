@@ -76,8 +76,8 @@ const EnetPhy_DrvInfoTbl gEnetPhyDrvTbl =
                                          11 = Not Supported
 */
 
-#define MSS_CPSW_CONTROL_PORT_MODE_MII                                     (0x0U)
-#define MSS_CPSW_CONTROL_PORT_MODE_RMII                                   (0x1U)
+#define MSS_CPSW_CONTROL_PORT_MODE_MII                                   (0x0U)
+#define MSS_CPSW_CONTROL_PORT_MODE_RMII                                  (0x1U)
 #define MSS_CPSW_CONTROL_PORT_MODE_RGMII                                 (0x2U)
 
 #define I2C_EEPROM_MAC_DATA_OFFSET                                        (0x3D)
@@ -377,11 +377,17 @@ void EnetBoard_getMiiConfig(EnetMacPort_Interface *mii)
 %if (pinMuxInstance.phyToMacInterfaceMode == "RGMII") {
     mii->layerType      = ENET_MAC_LAYER_GMII;
     mii->variantType    = ENET_MAC_VARIANT_FORCED;
+    mii->sublayerType   = ENET_MAC_SUBLAYER_REDUCED;
+ % } else if (pinMuxInstance.phyToMacInterfaceMode == "MII") {
+     mii->layerType     = ENET_MAC_LAYER_MII;
+     mii->variantType   = ENET_MAC_VARIANT_NONE;
+     mii->sublayerType  = ENET_MAC_SUBLAYER_STANDARD;
 % } else {
     mii->layerType      = ENET_MAC_LAYER_MII;
-    mii->variantType  = ENET_MAC_VARIANT_NONE;
-%}
+    mii->variantType    = ENET_MAC_VARIANT_NONE;
     mii->sublayerType   = ENET_MAC_SUBLAYER_REDUCED;
+%}
+
 }
 
 int32_t EnetBoard_setupPorts(EnetBoard_EthPort *ethPorts,

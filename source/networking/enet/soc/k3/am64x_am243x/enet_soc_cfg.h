@@ -78,6 +78,9 @@ extern "C" {
 /*! \brief ALE VLAN MASK MUX support. */
 #define ENET_CFG_ALE_VLAN_MASK_MUX                  (ENET_OFF)
 
+/*! \brief CPSW MII support. */
+#define ENET_CFG_CPSW_MACPORT_MII                   (ENET_OFF)
+
 /*! \brief CPSW XGMII support. */
 #define ENET_CFG_CPSW_XGMII                         (ENET_ON)
 

@@ -85,16 +85,6 @@ function getRxDmaSizeThreshEn(module, instance) {
     return rxDmaCfgAry;
 }
 
-function getRxDmaIsDefaultFlow(module, instance) {
-    let rxDmaCfgAry = new Array();        
-
-    for (var i = 0; i < module.getRxChannelCount(instance); i++)
-    {
-        rxDmaCfgAry.push((module.getChannelConfig(instance, "RX", i)).useDefaultFlow);
-    }
-    return rxDmaCfgAry;
-}
-
 function getDmaCfgInitArray(module, instances, indent) {
     let rxDmaCfgAry = new Array();
     let count = 0;
@@ -110,7 +100,7 @@ function getDmaCfgInitArray(module, instances, indent) {
                                     "\n\t\t.maxNumRxPkts    = " + rxChCfg.PacketsCount + "," +
                                     "\n\t\t.numValidMacAddress = " + rxChCfg.macAddrCount + "," +
                                     "\n\t\t.useGlobalEvt    = " + rxChCfg.useGlobalEvt + "," +
-                                    "\n\t\t.useDefaultFlow  = " + rxChCfg.useDefaultFlow + "," +
+                                    "\n\t\t.useDefaultFlow  = false," +
                                     "\n\t\t.sizeThreshEn    = " + rxChCfg.sizeThreshEn + "," +
                                     "\n\t\t.enetType        = " + matchInstId.enetType + "," +
                                     "\n\t\t.instId          = " + matchInstId.instId + "," +
@@ -141,7 +131,7 @@ function getDmaCfgOnlyInitArray(module, instances, indent) {
                                     "\n\t\t.maxNumRxPkts    = " + rxChCfg.PacketsCount + "," +
                                     "\n\t\t.numValidMacAddress = " + rxChCfg.macAddrCount + "," +
                                     "\n\t\t.useGlobalEvt    = " + rxChCfg.useGlobalEvt + "," +
-                                    "\n\t\t.useDefaultFlow  = " + rxChCfg.useDefaultFlow + "," +
+                                    "\n\t\t.useDefaultFlow  = false," +
                                     "\n\t\t.sizeThreshEn    = " + rxChCfg.sizeThreshEn + "," +
                                  "\n\t}";
             const numSpaces = 4 + indent;
@@ -458,13 +448,6 @@ static void EnetAppUtils_openRxFlowForChIdx(Enet_Type enetType,
                 }
             }
         }
-
-        status = EnetAppUtils_regDfltRxFlowForChIdx(hEnet,
-                                                    coreKey,
-                                                    coreId,
-                                                    chIdx,
-                                                    *pRxFlowStartIdx,
-                                                    *pRxFlowIdx);
     }
     else
     {
@@ -500,14 +483,6 @@ static void EnetAppUtils_closeRxFlowForChIdx(Enet_Type enetType,
 
     if (useDefaultFlow)
     {
-        status = EnetAppUtils_unregDfltRxFlowForChIdx(hEnet,
-                                                      coreKey,
-                                                      coreId,
-                                                      chIdx,
-                                                      rxFlowStartIdx,
-                                                      rxFlowIdx);
-        EnetAppUtils_assert(status == ENET_SOK);
-
         for(uint32_t i = 0; i < allocMacAddrCnt; i++)
         {
             status = EnetAppUtils_freeMac(hEnet,

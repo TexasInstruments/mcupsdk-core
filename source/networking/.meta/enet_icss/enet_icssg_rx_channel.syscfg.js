@@ -37,12 +37,6 @@ let enet_icssg_rx_ch_module = {
             default: true,
         },
         {
-            name: "useDefaultFlow",
-            description: "The Rx Flow is the default flow",
-            displayName: "Default Flow",
-            default: false,
-        },
-        {
             name: "sizeThreshEn",
             description: "UDMAP receive flow packet size based free buffer queue enable configuration",
             displayName: "Rx Flow Size Threshold",

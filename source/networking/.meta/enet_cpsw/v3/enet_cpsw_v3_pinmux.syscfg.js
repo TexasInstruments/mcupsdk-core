@@ -239,9 +239,6 @@ let enet_cpsw_pinmux_module = {
                 {
                     name: "RGMII",
                 },
-                {
-                    name: "MII",
-                }
             ],
         },
         {

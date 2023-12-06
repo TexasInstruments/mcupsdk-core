@@ -93,13 +93,13 @@ void EnetApp_showMenu(void)
         {
             case 0U:
                 gEnetLpbk.testLoopBackType = LOOPBACK_TYPE_MAC;
-                gEnetLpbk.macMode          = MII;
+                gEnetLpbk.macMode          = RGMII;
                 gEnetLpbk.boardId          = ENETBOARD_LOOPBACK_ID;
                 retry = false;
                 break;
             case 1U:
                 gEnetLpbk.testLoopBackType = LOOPBACK_TYPE_PHY;
-                gEnetLpbk.macMode          = MII;
+                gEnetLpbk.macMode          = RGMII;
                 gEnetLpbk.boardId          = ENETBOARD_CPB_ID;
                 retry = false;
                 break;
