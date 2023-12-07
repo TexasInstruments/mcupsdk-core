@@ -171,7 +171,6 @@ void ipc_safeipc_echo_main(void *args)
     int32_t status = SystemP_SUCCESS;
     HsmClient_t client ;
     FirewallReq_t FirewallReqObj;
-    uint8_t *uid = malloc(HSM_UID_SIZE) ;
 
     Drivers_open();
     Board_driversOpen();
@@ -179,16 +178,13 @@ void ipc_safeipc_echo_main(void *args)
     status = HsmClient_register(&client,APP_CLIENT_ID);
     DebugP_assert(status == SystemP_SUCCESS);
 
-    /* Send Request for UID to HSM Server */
-    status = HsmClient_getUID(&client, (uint8_t *)uid, SystemP_WAIT_FOREVER);
-
     /* Configure firewalls */
     FirewallReqObj.regionCount = FIREWALL_ARRAY0_NUM_REGIONS;
     FirewallReqObj.FirewallRegionArr = gMpuFirewallRegionConfig_0;
 
     status = HsmClient_setFirewall(&client,&FirewallReqObj,SystemP_WAIT_FOREVER);
     DebugP_assert(status==SystemP_SUCCESS);
-    
+
     ipc_safeipc_echo_main_core_start();
 
     Board_driversClose();
