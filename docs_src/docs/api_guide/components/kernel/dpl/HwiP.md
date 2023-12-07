@@ -35,6 +35,7 @@ See also \ref KERNEL_FREERTOS_PAGE, \ref KERNEL_NORTOS_PAGE for list of unsuppor
 - For ARM R5,
   - TI VIM is the interrupt controller that is supported.
   - \ref HwiP_disable, \ref HwiP_restore, \ref HwiP_enable only affect state of IRQ. FIQ state is not changed
+  - To enable save/restore FPU context in FIQ, uncomment macro **EN_SAVE_RESTORE_FPU_CONTEXT** in source/kernel/dpl/HwiP.h (Disabled by default)
   - Refer ARMv7-R Architecture reference manual and SOC TRM for more details.
 \endcond
 - For ARM M4,

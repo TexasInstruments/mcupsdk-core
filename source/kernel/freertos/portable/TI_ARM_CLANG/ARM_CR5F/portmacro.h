@@ -64,6 +64,7 @@
     #endif
 
 #include <kernel/dpl/HwiP.h>
+#include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
 
 /*-----------------------------------------------------------
  * Port specific definitions.
@@ -74,6 +75,15 @@
  * These settings should not be altered.
  *-----------------------------------------------------------
  */
+
+/* Macro to enable priority based interrupt masking using
+   configMAX_SYSCALL_INTERRUPT_PRIORITY in critical section */
+// #define EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION
+
+#ifdef EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION
+#define PRIO_MASK       ((((uint32_t)0x1<<(configMAX_SYSCALL_INTERRUPT_PRIORITY + 1))-1))
+#define MAX_PRIO_MASK   ((((uint32_t)0x1<<(HwiP_MAX_PRIORITY))-1))
+#endif
 
 /* Type definitions. */
     #define portCHAR         char
@@ -111,8 +121,8 @@
     extern void vTaskExitCritical( void );
     #define portENTER_CRITICAL()		vTaskEnterCritical()
     #define portEXIT_CRITICAL()			vTaskExitCritical()
-    #define portDISABLE_INTERRUPTS()                  __asm__ volatile ( "CPSID	i" ::: "memory" )
-    #define portENABLE_INTERRUPTS()                   __asm__ volatile ( "CPSIE	i" ::: "memory" )
+    #define portDISABLE_INTERRUPTS()                  vDisableInterruptPriority()
+    #define portENABLE_INTERRUPTS()                   vEnableInterruptPriority()
     #define portSET_INTERRUPT_MASK_FROM_ISR()         HwiP_disable()
     #define portCLEAR_INTERRUPT_MASK_FROM_ISR( x )    HwiP_restore( x )
 
@@ -152,5 +162,35 @@
 
 /* Inline definition */
     #define portINLINE __inline
+
+#ifndef portFORCE_INLINE
+    #define portFORCE_INLINE    inline __attribute__( ( always_inline ) )
+#endif
+
+/* Disable all IRQ interrupts or upto certain priority  if EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION is enabled */
+portFORCE_INLINE static void vDisableInterruptPriority( void )
+{
+#ifdef EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION
+
+    uint32_t*   ptrVimIrqPrimask    = (uint32_t* )(gHwiConfig.intcBaseAddr + VIM_IRQPRIMASK);
+
+    *(ptrVimIrqPrimask) = (uint32_t)PRIO_MASK;
+#else
+    __asm__ volatile ( "CPSID	i" ::: "cc" );
+#endif
+}
+
+/* Enable all IRQ interrupts  */
+portFORCE_INLINE static void vEnableInterruptPriority( void )
+{
+#ifdef EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION
+
+    uint32_t*   ptrVimIrqPrimask    = (uint32_t* )(gHwiConfig.intcBaseAddr + VIM_IRQPRIMASK);
+
+    *(ptrVimIrqPrimask) = (uint32_t)MAX_PRIO_MASK;
+#else
+    __asm__ volatile ( "CPSIE	i" ::: "cc" );
+#endif
+}
 
 #endif /* PORTMACRO_H */

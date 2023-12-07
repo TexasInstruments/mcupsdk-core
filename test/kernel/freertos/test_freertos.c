@@ -875,9 +875,10 @@ void ping_main(void *args)
     RUN_TEST(test_taskLoad, 1372, NULL);
 
 #if defined(__ARM_ARCH_7R__)
-    #ifdef EN_INTR_CRITICAL_SECTION
+    #ifdef EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION
     /** Interrupts inside critical section supported in R5F only.
-     *  EN_INTR_CRITICAL_SECTION  in source/kernel/dpl/HwiP.h MUST be uncommented for this test to pass.
+     *  EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION  defined in source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F/portmacro.h
+     * MUST be uncommented for this test to pass.
     */
     RUN_TEST(test_isrEnableWithCriticalSection, 12219, NULL);
     #endif

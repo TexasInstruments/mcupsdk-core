@@ -56,6 +56,7 @@ extern "C"
 #define VIM_FIQVEC       (0x1Cu)
 #define VIM_ACTIRQ       (0x20u)
 #define VIM_ACTFIQ       (0x24u)
+#define VIM_IRQPRIMASK   (0x28u)
 #define VIM_RAW(j)       (0x400U + ((((j) >> 5) & 0xFU) * 0x20U))
 #define VIM_STS(j)       (0x404U + ((((j) >> 5) & 0xFU) * 0x20U))
 #define VIM_INT_EN(j)    (0x408U + ((((j) >> 5) & 0xFU) * 0x20U))
