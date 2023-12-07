@@ -42,9 +42,6 @@ extern "C" {
 
 // #define EN_SAVE_RESTORE_FPU_CONTEXT
 
-/* Valid for freeRTOS on R5F core */
-// #define EN_INTR_CRITICAL_SECTION
-
 /**
  * \defgroup KERNEL_DPL_HWI APIs for HW Interrupts
  * \ingroup KERNEL_DPL

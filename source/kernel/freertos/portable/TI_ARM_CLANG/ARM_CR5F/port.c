@@ -282,7 +282,7 @@ void vPortEnterCritical( void )
     /* Mask interrupts up to the max syscall interrupt priority. */
     __asm__ __volatile__ ("dsb  sy"   "\n\t": : : "memory");
     __asm__ __volatile__ ("isb  sy" "\n\t": : : "memory");
-    portDISABLE_INTERRUPTS();
+    __asm__ volatile ( "CPSID	i" ::: "cc" );
     __asm__ __volatile__ ("dsb sy"   "\n\t": : : "memory");
     __asm__ __volatile__ ("isb sy" "\n\t": : : "memory");
 
@@ -328,7 +328,7 @@ void vPortExitCritical( void )
         {
             /* Critical nesting has reached zero so all interrupt priorities
              * should be unmasked. */
-            portENABLE_INTERRUPTS();
+            __asm__ volatile ( "CPSIE	i" ::: "cc" );
             __asm__ __volatile__ (" dsb sy"   "\n\t": : : "memory");
             __asm__ __volatile__ (" isb sy"   "\n\t": : : "memory");
         }
