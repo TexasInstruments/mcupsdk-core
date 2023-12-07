@@ -74,8 +74,6 @@ static uint32_t EnetSBL_retrieveFreeTxPkts(void);
 
 static uint32_t EnetSBL_receivePkts(void);
 
-static void EnetSBL_initCpswCfg(Cpsw_Cfg *cpswCfg);
-
 static int32_t EnetSBL_setupCpswAle(void);
 
 static void EnetSBL_closeEnet(void);
@@ -524,42 +522,6 @@ static uint32_t EnetSBL_receivePkts(void)
     }
 
     return rxReadyCnt;
-}
-
-static void EnetSBL_initCpswCfg(Cpsw_Cfg *cpswCfg)
-{
-    CpswHostPort_Cfg *hostPortCfg = &cpswCfg->hostPortCfg;
-    CpswAle_Cfg *aleCfg = &cpswCfg->aleCfg;
-    CpswCpts_Cfg *cptsCfg = &cpswCfg->cptsCfg;
-
-    /* Set initial config */
-    Enet_initCfg(gEnetSBL_LLDObj.enetType, gEnetSBL_LLDObj.instId, cpswCfg, sizeof(*cpswCfg));
-
-    /* Peripheral config */
-    cpswCfg->vlanCfg.vlanAware = false;
-
-    /* Host port config */
-    hostPortCfg->removeCrc      = true;
-    hostPortCfg->padShortPacket = true;
-    hostPortCfg->passCrcErrors  = true;
-
-    /* ALE config */
-    aleCfg->modeFlags                           = CPSW_ALE_CFG_MODULE_EN;
-    aleCfg->agingCfg.autoAgingEn                = false;
-    aleCfg->agingCfg.agingPeriodInMs            = 1000;
-    aleCfg->nwSecCfg.vid0ModeEn                 = true;
-    aleCfg->vlanCfg.aleVlanAwareMode            = false;
-    aleCfg->vlanCfg.cpswVlanAwareMode           = false;
-    aleCfg->vlanCfg.unknownUnregMcastFloodMask  = CPSW_ALE_ALL_PORTS_MASK;
-    aleCfg->vlanCfg.unknownRegMcastFloodMask    = CPSW_ALE_ALL_PORTS_MASK;
-    aleCfg->vlanCfg.unknownVlanMemberListMask   = CPSW_ALE_ALL_PORTS_MASK;
-
-    /* CPTS config */
-    /* Note: Timestamping and MAC txsg are not supported together because of
-     * IP limitation, so disabling timestamping for this application */
-    cptsCfg->hostRxTsEn = false;
-
-    EnetAppUtils_initResourceConfig(ENET_TYPE, gEnetSBL_LLDObj.coreId, &cpswCfg->resCfg);
 }
 
 static int32_t EnetSBL_setupCpswAle(void)
