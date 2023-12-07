@@ -472,8 +472,6 @@ void EnetBoard_getMacAddrList(uint8_t macAddr[][ENET_MAC_ADDR_LEN],
         EnetAppUtils_assert(false);
     }
 %}
-    
-    Drivers_i2cClose();
 }
 
 %if ((device === "am64x-evm") || (device === "am243x-evm")) {

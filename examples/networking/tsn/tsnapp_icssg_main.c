@@ -281,7 +281,14 @@ void EnetApp_initLinkArgs(Enet_Type enetType, uint32_t instId,
 
 void EnetApp_updateIcssgInitCfg(Enet_Type enetType, uint32_t instId, Icssg_Cfg *icssgCfg)
 {
-/* TODO: Is anything needed here? */
+    #if (ENET_SYSCFG_ENABLE_MDIO_MANUALMODE == 1U)
+    icssgCfg->mdioLinkIntCfg.mdioLinkStateChangeCb = NULL;
+    icssgCfg->mdioLinkIntCfg.mdioLinkStateChangeCbArg = NULL;
+    #else
+    icssgCfg->mdioLinkIntCfg.mdioLinkStateChangeCb = &EnetApp_mdioLinkStatusChange;
+    icssgCfg->mdioLinkIntCfg.mdioLinkStateChangeCbArg = NULL;
+    EnetApp_updateMdioLinkIntCfg(enetType, instId, &icssgCfg->mdioLinkIntCfg);
+    #endif
 }
 
 static void EnetApp_closePort()
