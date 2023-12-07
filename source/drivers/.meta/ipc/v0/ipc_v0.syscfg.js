@@ -241,7 +241,7 @@ function getIpcSharedMemData(instance) {
                 let remoteCoreName = config.name;
                 let sysCfgCoreName = ipc_soc.getSysCfgCoreName(remoteCoreName)
                 let remote_core_instance = common.getStaticModuleForCore(ipc_module_name, sysCfgCoreName);
-                
+
                 if(remote_core_instance)
                 {
                     ipcRpMsgOffsetArr[remoteCoreName] = {};
@@ -254,7 +254,7 @@ function getIpcSharedMemData(instance) {
                 let remoteCoreName = config.name;
                 let sysCfgCoreName = ipc_soc.getSysCfgCoreName(remoteCoreName)
                 let remote_core_instance = common.getStaticModuleForCore(ipc_module_name, sysCfgCoreName);
-                
+
                 if(remote_core_instance)
                 {
                     /* Firewall config info is display in the first core that has IPC enabled */
@@ -269,7 +269,7 @@ function getIpcSharedMemData(instance) {
                             let sysCfgCoreName1 = ipc_soc.getSysCfgCoreName(remoteCoreName1)
                             let remote_core_instance1 = common.getStaticModuleForCore(ipc_module_name, sysCfgCoreName1);
                             let safeIpcConfig = "", safeIpcConfig1 = "";
-                            
+
                             if(remote_core_instance1)
                             {
                                 if((remote_core_instance[remoteCoreName1] == "notify_rpmsg") && (remoteCoreName1 != remoteCoreName) && (configs.indexOf(config1) > configs.indexOf(config)))
@@ -293,7 +293,7 @@ function getIpcSharedMemData(instance) {
                                             sharedMemSize += startAddrOffset;
                                             offset += startAddrOffset;
                                         }
-                                        
+
                                         /* Align IPC data size to firewall granularity */
                                         firewallSize = firewallGranularity * Math.trunc(ipcSize / firewallGranularity);
                                         if((ipcSize < firewallGranularity) || (ipcSize % firewallGranularity != 0)) {
@@ -330,7 +330,7 @@ function getIpcSharedMemData(instance) {
                 let remoteCoreName = config.name;
                 let sysCfgCoreName = ipc_soc.getSysCfgCoreName(remoteCoreName)
                 let remote_core_instance = common.getStaticModuleForCore(ipc_module_name, sysCfgCoreName);
-                
+
                 if(remote_core_instance)
                 {
                     /* Check if SafeIPC is enabled in any core for backward compatibility */
@@ -351,7 +351,7 @@ function getIpcSharedMemData(instance) {
                 let remoteCoreName = config.name;
                 let sysCfgCoreName = ipc_soc.getSysCfgCoreName(remoteCoreName)
                 let remote_core_instance = common.getStaticModuleForCore(ipc_module_name, sysCfgCoreName);
-                
+
                 if(remote_core_instance)
                 {
                     /* Firewall config info is display in the first core that has IPC enabled */
@@ -369,71 +369,76 @@ function getIpcSharedMemData(instance) {
 
                             if(remote_core_instance1)
                             {
-                                if((remoteCoreName1 != remoteCoreName) && (remote_core_instance[remoteCoreName1] != "NONE") && (configs.indexOf(config1) > configs.indexOf(config)))
+                                if((remoteCoreName1 != remoteCoreName) && (remote_core_instance[remoteCoreName1] != "NONE"))
                                 {
                                     if(safeIpcEnabled == true)
                                     {
-                                        ipcSize = 32 * 2;
-                                        ipcNotifyOffsetArr[remoteCoreName][remoteCoreName1] = (32 * notifyCount) + (vringSize * vringCount) + offset;
-                                        ipcNotifyOffsetArr[remoteCoreName1][remoteCoreName] = ipcNotifyOffsetArr[remoteCoreName][remoteCoreName1] + 32;
-                                        notifyCount += 2;
-                                    }
-                                    if(remote_core_instance[remoteCoreName1] == "notify_rpmsg")
-                                    {
-                                        if(safeIpcEnabled == true)
+                                        if(configs.indexOf(config1) > configs.indexOf(config))
                                         {
-                                            ipcSize += vringSize * 2;
-                                            ipcRpMsgOffsetArr[remoteCoreName][remoteCoreName1] = ipcNotifyOffsetArr[remoteCoreName][remoteCoreName1] + (32 * 2);
-                                            ipcRpMsgOffsetArr[remoteCoreName1][remoteCoreName] = ipcRpMsgOffsetArr[remoteCoreName][remoteCoreName1] + vringSize;
-                                        } 
-                                        else
-                                        {
-                                            ipcSize = vringSize * 2;
-                                            ipcRpMsgOffsetArr[remoteCoreName][remoteCoreName1] = (vringSize * vringCount);
-                                            ipcRpMsgOffsetArr[remoteCoreName1][remoteCoreName] = ipcRpMsgOffsetArr[remoteCoreName][remoteCoreName1] + vringSize;
-                                        }
-                                        vringCount += 2;
-                                    }
-                                    safeIpcConfig = remoteCoreName1 + "_safeipc";
-                                    safeIpcConfig1 = remoteCoreName + "_safeipc";
-
-                                    if(remote_core_instance[safeIpcConfig] || remote_core_instance1[safeIpcConfig1])
-                                    {
-                                        /* Align Start address to firewall granularity */
-                                        if(ipcNotifyOffsetArr[remoteCoreName][remoteCoreName1] % firewallGranularity != 0)
-                                        {
-                                            startAddrOffset = firewallGranularity - (ipcNotifyOffsetArr[remoteCoreName][remoteCoreName1] % firewallGranularity);
-                                            ipcNotifyOffsetArr[remoteCoreName][remoteCoreName1] += startAddrOffset;
-                                            ipcNotifyOffsetArr[remoteCoreName1][remoteCoreName] += startAddrOffset;
+                                            ipcSize = 32 * 2;
+                                            ipcNotifyOffsetArr[remoteCoreName][remoteCoreName1] = (32 * notifyCount) + (vringSize * vringCount) + offset;
+                                            ipcNotifyOffsetArr[remoteCoreName1][remoteCoreName] = ipcNotifyOffsetArr[remoteCoreName][remoteCoreName1] + 32;
+                                            notifyCount += 2;
 
                                             if(remote_core_instance[remoteCoreName1] == "notify_rpmsg")
                                             {
-                                                ipcRpMsgOffsetArr[remoteCoreName][remoteCoreName1] += startAddrOffset;
-                                                ipcRpMsgOffsetArr[remoteCoreName1][remoteCoreName] += startAddrOffset;
+                                                ipcSize += vringSize * 2;
+                                                ipcRpMsgOffsetArr[remoteCoreName][remoteCoreName1] = ipcNotifyOffsetArr[remoteCoreName][remoteCoreName1] + (32 * 2);
+                                                ipcRpMsgOffsetArr[remoteCoreName1][remoteCoreName] = ipcRpMsgOffsetArr[remoteCoreName][remoteCoreName1] + vringSize;
+                                                vringCount += 2;
                                             }
-                                            sharedMemSize += startAddrOffset;
-                                            offset += startAddrOffset;
-                                        }
+                                            safeIpcConfig = remoteCoreName1 + "_safeipc";
+                                            safeIpcConfig1 = remoteCoreName + "_safeipc";
 
-                                        /* Align IPC data size to firewall granularity */
-                                        firewallSize = firewallGranularity * Math.trunc(ipcSize / firewallGranularity);
-                                        if((ipcSize < firewallGranularity) || (ipcSize % firewallGranularity != 0)) {
-                                            firewallSize += firewallGranularity;
-                                        }
-                                        offset += firewallSize - ipcSize;
-                                        sharedMemSize += firewallSize;
-
-                                        ipcFirewallAddress.push(
+                                            if(remote_core_instance[safeIpcConfig] || remote_core_instance1[safeIpcConfig1])
                                             {
-                                                startAddress: ipc_soc.getSharedMemAddress() + ipcNotifyOffsetArr[remoteCoreName][remoteCoreName1],
-                                                endAddress: ipc_soc.getSharedMemAddress() + ipcNotifyOffsetArr[remoteCoreName][remoteCoreName1] + firewallSize - 1,
-                                                cores: remoteCoreName + ", " + remoteCoreName1,
+                                                /* Align Start address to firewall granularity */
+                                                if(ipcNotifyOffsetArr[remoteCoreName][remoteCoreName1] % firewallGranularity != 0)
+                                                {
+                                                    startAddrOffset = firewallGranularity - (ipcNotifyOffsetArr[remoteCoreName][remoteCoreName1] % firewallGranularity);
+                                                    ipcNotifyOffsetArr[remoteCoreName][remoteCoreName1] += startAddrOffset;
+                                                    ipcNotifyOffsetArr[remoteCoreName1][remoteCoreName] += startAddrOffset;
+
+                                                    if(remote_core_instance[remoteCoreName1] == "notify_rpmsg")
+                                                    {
+                                                        ipcRpMsgOffsetArr[remoteCoreName][remoteCoreName1] += startAddrOffset;
+                                                        ipcRpMsgOffsetArr[remoteCoreName1][remoteCoreName] += startAddrOffset;
+                                                    }
+                                                    sharedMemSize += startAddrOffset;
+                                                    offset += startAddrOffset;
+                                                }
+
+                                                /* Align IPC data size to firewall granularity */
+                                                firewallSize = firewallGranularity * Math.trunc(ipcSize / firewallGranularity);
+                                                if((ipcSize < firewallGranularity) || (ipcSize % firewallGranularity != 0)) {
+                                                    firewallSize += firewallGranularity;
+                                                }
+                                                offset += firewallSize - ipcSize;
+                                                sharedMemSize += firewallSize;
+
+                                                ipcFirewallAddress.push(
+                                                    {
+                                                        startAddress: ipc_soc.getSharedMemAddress() + ipcNotifyOffsetArr[remoteCoreName][remoteCoreName1],
+                                                        endAddress: ipc_soc.getSharedMemAddress() + ipcNotifyOffsetArr[remoteCoreName][remoteCoreName1] + firewallSize - 1,
+                                                        cores: remoteCoreName + ", " + remoteCoreName1,
+                                                    }
+                                                );
                                             }
-                                        );
+                                            else
+                                            {
+                                                sharedMemSize += ipcSize;
+                                            }
+                                        }
                                     }
                                     else
                                     {
-                                        sharedMemSize += ipcSize;
+                                        if(remote_core_instance[remoteCoreName1] == "notify_rpmsg")
+                                        {
+                                            ipcSize = vringSize;
+                                            ipcRpMsgOffsetArr[remoteCoreName][remoteCoreName1] = (vringSize * vringCount);
+                                            vringCount += 1;
+                                            sharedMemSize += ipcSize;
+                                        }
                                     }
                                 }
                             }
