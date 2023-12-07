@@ -19,13 +19,13 @@
 \cond SOC_AM64X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
--LwIP stack is upgraded to 2.2.0 version | Networking and USB 
+-LwIP stack is upgraded to 2.2.0 version | Networking and USB
 \endcond
 
 \cond SOC_AM243X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
--LwIP stack is upgraded to 2.2.0 version | Networking and USB 
+-LwIP stack is upgraded to 2.2.0 version | Networking and USB
 \endcond
 
 ## Device and Validation Information
@@ -197,6 +197,7 @@ PBIST     | M4F, R5F       | NO
 MTOG      | M4F            | NO
 POK       | M4F, R5F       | NO
 ECC       | M4F, R5F       | NO
+LBIST     | M4F            | NO
 \endcond
 
 ### Board Device Drivers
@@ -621,6 +622,6 @@ earlier SDKs.
     <td> LwIP TCP/IP stack
     <td> None
     <td> Upgraded to 2.2.0 version
-    <td> Please refer to \ref NETWORKING_LWIP 'Upgrade' section 
+    <td> Please refer to \ref NETWORKING_LWIP 'Upgrade' section
 </tr>
 </table>
