@@ -800,6 +800,9 @@ int32_t HsmClient_setFirewall(HsmClient_t* HsmClient,
     uint16_t crcArgs;
     uint16_t crcFirewallRegionArr ;
 
+    /* Cache Aligned Size for FirewallReq_t */
+    uint32_t alignedFirewallReqObjCacheSize = (sizeof(FirewallReq_t) + CacheP_CACHELINE_ALIGNMENT) & ~(CacheP_CACHELINE_ALIGNMENT - 1);
+
     /*populate the send message structure */
     HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
     HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
@@ -817,6 +820,11 @@ int32_t HsmClient_setFirewall(HsmClient_t* HsmClient,
     /* Add arg crc */
     HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *) FirewallReqObj, sizeof(FirewallReq_t));
 
+    /*
+       Write back the FirewallReq_t struct
+    */
+    CacheP_wbInv((void*)FirewallReqObj, alignedFirewallReqObjCacheSize, CacheP_TYPE_ALL);
+
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
     {
@@ -831,6 +839,9 @@ int32_t HsmClient_setFirewall(HsmClient_t* HsmClient,
         {
             /* Change the Arguments Address in Physical Address */
             HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
+
+            /* Invalidate the cache before reading the struct fields from HSM */
+            CacheP_inv((void*) HsmClient->RespMsg.args, alignedFirewallReqObjCacheSize, CacheP_TYPE_ALL);
 
             /* check the integrity of args */
             crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, 0U);
@@ -865,6 +876,10 @@ int32_t HsmClient_FirewallIntr(HsmClient_t* HsmClient,
     /* make the message */
     int32_t status ;
     uint16_t crcArgs;
+
+    /* Cache Aligned Size for FirewallReq_t */
+    uint32_t alignedFirewallIntrReqObjCacheSize = (sizeof(FirewallIntrReq_t) + CacheP_CACHELINE_ALIGNMENT) & ~(CacheP_CACHELINE_ALIGNMENT - 1);
+
     /*populate the send message structure */
     HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
     HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
@@ -876,6 +891,11 @@ int32_t HsmClient_FirewallIntr(HsmClient_t* HsmClient,
 
     /* Add arg crc */
     HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *) FirewallIntrReqObj, sizeof(FirewallIntrReq_t));
+
+    /*
+       Write back the FirewallIntrReq_t struct
+    */
+    CacheP_wbInv((void*)FirewallIntrReqObj, alignedFirewallIntrReqObjCacheSize, CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
@@ -891,6 +911,9 @@ int32_t HsmClient_FirewallIntr(HsmClient_t* HsmClient,
         {
             /* Change the Arguments Address in Physical Address */
             HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
+
+            /* Invalidate the cache before reading the struct fields from HSM */
+            CacheP_inv(HsmClient->RespMsg.args, alignedFirewallIntrReqObjCacheSize, CacheP_TYPE_ALL);
 
             /* check the integrity of args */
             crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, 0U);
