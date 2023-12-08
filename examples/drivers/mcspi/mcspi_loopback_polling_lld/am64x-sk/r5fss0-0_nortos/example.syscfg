@@ -57,6 +57,17 @@ mcspi1.child.$name                 = "drivers_mcspi_v0_mcspi_v0_template_lld0";
 udma1.$name    = "CONFIG_UDMA0";
 udma1.instance = "PKTDMA_0";
 
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign     = "USART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
+
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
 mpu_armv71.attributes        = "Device";

@@ -55,6 +55,13 @@ mcspi1.mcspiChannel[0].$name       = "CONFIG_MCSPI_CH0";
 mcspi1.mcspiChannel[0].CSn.$assign = "SPI0_CS0";
 mcspi1.child.$name                 = "drivers_mcspi_v1_mcspi_v1_template_lld0";
 
+debug_log.enableUartLog            = true;
+debug_log.uartLog.$name            = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign     = "UART0";
+debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
+
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
 mpu_armv71.attributes        = "Device";
