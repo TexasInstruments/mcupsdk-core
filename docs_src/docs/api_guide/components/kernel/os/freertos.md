@@ -37,7 +37,9 @@ MCU+ SDK supports FreeRTOS on below CPUS
 - R5F ISRs,
   - IRQ mode,
     - FPU save/restore is supported.
+    \cond !SOC_AM273X
     - Priority based interrupt masking in critical section is supported using configMAX_SYSCALL_INTERRUPT_PRIORITY, uncomment macro **EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION** in source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F/portmacro.h to enable.(Disabled by default)
+    \endcond
 \cond SOC_AM263X || SOC_AM263PX
     - nested interrupts are supported.
 \endcond
@@ -74,6 +76,9 @@ SysConfig can be used to configure below modules with FreeRTOS
 \cond SOC_AM243X || SOC_AM64X || SOC_AWR294X || SOC_AM273X
   - IRQ mode,
     - nested interrupts is disabled, due to issues in some corner cases.
+    \cond SOC_AM273X
+    - Priority based interrupt masking in critical section is not supported.
+    \endcond
 \endcond
   - FIQ mode,
     - nested interrupts not supported

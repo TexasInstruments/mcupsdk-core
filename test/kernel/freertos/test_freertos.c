@@ -876,7 +876,7 @@ void ping_main(void *args)
 
 #if defined(__ARM_ARCH_7R__)
     #ifdef EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION
-    /** Interrupts inside critical section supported in R5F only.
+    /** Interrupts inside critical section supported in R5F only. Not supported in am273x.
      *  EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION  defined in source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F/portmacro.h
      * MUST be uncommented for this test to pass.
     */

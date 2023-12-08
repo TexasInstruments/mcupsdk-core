@@ -77,11 +77,12 @@
  */
 
 /* Macro to enable priority based interrupt masking using
-   configMAX_SYSCALL_INTERRUPT_PRIORITY in critical section */
+   configMAX_SYSCALL_INTERRUPT_PRIORITY in critical section.
+   This feature is NOT supported on AM273x & must be disabled */
 // #define EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION
 
 #ifdef EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION
-#define PRIO_MASK       ((((uint32_t)0x1<<(configMAX_SYSCALL_INTERRUPT_PRIORITY + 1))-1))
+#define PRIO_MASK       ((((uint32_t)0x1<<(configMAX_SYSCALL_INTERRUPT_PRIORITY))-1))
 #define MAX_PRIO_MASK   ((((uint32_t)0x1<<(HwiP_MAX_PRIORITY))-1))
 #endif
 
