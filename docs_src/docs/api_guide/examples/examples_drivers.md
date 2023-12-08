@@ -70,6 +70,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_MCSPI_LOOPBACK_DMA_LLD
    -# \subpage EXAMPLES_DRIVERS_MCSPI_LOOPBACK_INTERRUPT_LLD
    -# \subpage EXAMPLES_DRIVERS_MCSPI_LOOPBACK_POLLING_LLD
+   -# \subpage EXAMPLES_DRIVERS_MCSPI_LOOPBACK_TURBO_MODE
 -# MMCSD
    -# \subpage EXAMPLES_DRIVERS_MMCSD_RAW_IO
    -# \subpage EXAMPLES_DRIVERS_MMCSD_FILE_IO
@@ -291,6 +292,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_MCSPI_LOOPBACK_DMA_LLD
    -# \subpage EXAMPLES_DRIVERS_MCSPI_LOOPBACK_INTERRUPT_LLD
    -# \subpage EXAMPLES_DRIVERS_MCSPI_LOOPBACK_POLLING_LLD
+   -# \subpage EXAMPLES_DRIVERS_MCSPI_LOOPBACK_TURBO_MODE
 -# MMCSD
     -# \subpage EXAMPLES_DRIVERS_MMCSD_RAW_IO
     -# \subpage EXAMPLES_DRIVERS_MMCSD_FILE_IO
