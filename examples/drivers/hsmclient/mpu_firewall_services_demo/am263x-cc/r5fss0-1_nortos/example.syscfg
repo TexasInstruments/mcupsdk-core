@@ -49,9 +49,8 @@ const section12       = section.addInstance();
 hsmclient1.$name           = "CONFIG_HSMCLIENT0";
 hsmclient1.sec_core_option = "secure_host_id_1";
 
-ipc.r5fss1_0  = "NONE";
-ipc.r5fss1_1  = "NONE";
-ipc.sharedMemUsed = 2624;
+ipc.r5fss1_0 = "NONE";
+ipc.r5fss1_1 = "NONE";
 
 clock.timerInputClkHz = 200000000;
 clock.clkSource       = "SYS_CLK";
@@ -78,7 +77,6 @@ mpu_armv74.$name             = "CONFIG_MPU_REGION3";
 mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 21;
-mpu_armv74.attributes        = "Cached+Sharable";
 
 mpu_armv75.$name        = "CONFIG_MPU_REGION4";
 mpu_armv75.size         = 14;

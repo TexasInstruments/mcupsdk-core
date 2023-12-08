@@ -841,7 +841,7 @@ int32_t HsmClient_setFirewall(HsmClient_t* HsmClient,
             HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
 
             /* Invalidate the cache before reading the struct fields from HSM */
-            CacheP_inv((void*) HsmClient->RespMsg.args, alignedFirewallReqObjCacheSize, CacheP_TYPE_ALL);
+            CacheP_inv((void*)FirewallReqObj, alignedFirewallReqObjCacheSize, CacheP_TYPE_ALL);
 
             /* check the integrity of args */
             crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, 0U);
@@ -913,7 +913,7 @@ int32_t HsmClient_FirewallIntr(HsmClient_t* HsmClient,
             HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
 
             /* Invalidate the cache before reading the struct fields from HSM */
-            CacheP_inv(HsmClient->RespMsg.args, alignedFirewallIntrReqObjCacheSize, CacheP_TYPE_ALL);
+            CacheP_inv((void*) FirewallIntrReqObj, alignedFirewallIntrReqObjCacheSize, CacheP_TYPE_ALL);
 
             /* check the integrity of args */
             crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, 0U);
