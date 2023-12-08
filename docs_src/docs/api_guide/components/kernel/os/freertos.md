@@ -40,9 +40,7 @@ MCU+ SDK supports FreeRTOS on below CPUS
     \cond !SOC_AM273X
     - Priority based interrupt masking in critical section is supported using configMAX_SYSCALL_INTERRUPT_PRIORITY, uncomment macro **EN_MAX_SYSCALL_INTR_PRI_CRIT_SECTION** in source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F/portmacro.h to enable.(Disabled by default)
     \endcond
-\cond SOC_AM263X || SOC_AM263PX
     - nested interrupts are supported.
-\endcond
 \endcond
 - M4F ISRs,
   - nested interrupts supported
@@ -50,6 +48,28 @@ MCU+ SDK supports FreeRTOS on below CPUS
 - A53 ISRs,
   - IRQ mode,
     - nested interrupts supported
+\endcond
+
+## Features Not Supported
+
+- Co-routines, stream buffer are not enabled and are not compiled by default. Users can add these to the FreeRTOS config and makefile if they want to use these features.
+- Tickless IDLE mode
+- Task level memory protection wrapper
+\cond !SOC_AM62X
+- R5F ISRs,
+  - IRQ mode,
+    \cond SOC_AM273X
+    - Priority based interrupt masking in critical section is not supported.
+    \endcond
+  - FIQ mode,
+    - nested interrupts not supported
+    - FPU save/restore not supported.
+\endcond
+- M4F ISRs,
+  - FPU save/restore not supported.
+\cond SOC_AM64X
+- A53 ISRs,
+  - FPU save/restore not supported.
 \endcond
 
 ## SysConfig Features
@@ -65,31 +85,6 @@ SysConfig can be used to configure below modules with FreeRTOS
 \endcond
 - Address Translate module, to setup  address translation regions, needed for M4F
 - HW Timer module, to setup HW timer available on the SOC, including enabling timer interrupt and ISR registration
-
-## Features Not Supported
-
-- Co-routines, stream buffer are not enabled and are not compiled by default. Users can add these to the FreeRTOS config and makefile if they want to use these features.
-- Tickless IDLE mode
-- Task level memory protection wrapper
-\cond !SOC_AM62X
-- R5F ISRs,
-\cond SOC_AM243X || SOC_AM64X || SOC_AWR294X || SOC_AM273X
-  - IRQ mode,
-    - nested interrupts is disabled, due to issues in some corner cases.
-    \cond SOC_AM273X
-    - Priority based interrupt masking in critical section is not supported.
-    \endcond
-\endcond
-  - FIQ mode,
-    - nested interrupts not supported
-    - FPU save/restore not supported.
-\endcond
-- M4F ISRs,
-  - FPU save/restore not supported.
-\cond SOC_AM64X
-- A53 ISRs,
-  - FPU save/restore not supported.
-\endcond
 
 ## Important files and directory structure
 
