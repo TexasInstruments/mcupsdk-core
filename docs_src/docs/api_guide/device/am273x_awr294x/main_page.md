@@ -80,11 +80,13 @@ The main software components in the block diagram are described below
     <td>\ref EXAMPLES
     <td>Examples and demos showing usage of different SW libraries and APIs
 </tr>
+\cond !SOC_AWR294X
 <tr>
     <td> Memory Configurator
     <td>\ref MEMORY_CONFIGURATOR
     <td> Memory Configurator is a tool which provides option to choose critical parameters to generate linker files for a seamless, hassle-free experience.
 </tr>
+\endcond
 <tr><td colspan="3" bgcolor=#F0F0F0>**Tools (used on host machine)**</td></tr>
 <tr>
     <td>Code Composer Studio (CCS)
