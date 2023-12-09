@@ -35,12 +35,12 @@ MULTI_CORE_IMAGE_GEN = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImag
 OUTRPRC_CMD = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
 
 MULTI_CORE_APP_PARAMS = \
-    ../ipc_safeipc_echo_am273x-evm_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/ipc_safeipc_echo_am273x-evm_r5fss0-0_freertos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
-    ../ipc_safeipc_echo_am273x-evm_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/ipc_safeipc_echo_am273x-evm_r5fss0-1_nortos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+	../ipc_safeipc_echo_am273x-evm_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/ipc_safeipc_echo_am273x-evm_r5fss0-0_freertos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+	../ipc_safeipc_echo_am273x-evm_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/ipc_safeipc_echo_am273x-evm_r5fss0-1_nortos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
 
 MULTI_CORE_APP_PARAMS_XIP = \
-    ../ipc_safeipc_echo_am273x-evm_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/ipc_safeipc_echo_am273x-evm_r5fss0-0_freertos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
-    ../ipc_safeipc_echo_am273x-evm_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/ipc_safeipc_echo_am273x-evm_r5fss0-1_nortos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+	../ipc_safeipc_echo_am273x-evm_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/ipc_safeipc_echo_am273x-evm_r5fss0-0_freertos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+	../ipc_safeipc_echo_am273x-evm_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/ipc_safeipc_echo_am273x-evm_r5fss0-1_nortos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
 
 all:
 ifeq ($(CCS_IDE_MODE),cloud)
@@ -49,6 +49,8 @@ else
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME) ...
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME) $(MULTI_CORE_APP_PARAMS) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME_XIP) $(MULTI_CORE_APP_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
+
+
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME) Done !!!
 	@echo  .
 endif

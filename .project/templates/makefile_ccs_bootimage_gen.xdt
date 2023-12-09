@@ -267,7 +267,6 @@ else
 % if (args.project.device == "awr294x") {
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_QSPI) $(MULTI_CORE_IMAGE_PARAMS_QSPI) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 % }
-
 % if (((args.project.device == "am243x") || (args.project.device == "am64x"))) {
 ifeq ($(DEVICE_TYPE),HS)
 # Sign the appimage using appimage signing script
