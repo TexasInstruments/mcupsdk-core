@@ -1,4 +1,4 @@
-# Networking {#NETWORKING}
+# Ethernet And Networking {#NETWORKING}
 
 [TOC]
 
@@ -14,6 +14,14 @@ This document covers driver software architecture, Application Programming Inter
 
 **Networking is supported using following two hardware Peripherals:**
 - Common Port SWitch (**CPSW**) : CPSW subsystem provides IEEE 802.3 standard Ethernet gigabit speed packet communication for the device and can also be configured as an Ethernet switch. CPSW supports RGMII and RMII Interfaces.
+
+\cond SOC_AM64X || SOC_AM243X
+- Programmable Real-Time Unit and Industrial Communication Subsystem - Gigabit (**PRU-ICSSG**) : PRU-ICSSG is firmware programmable and can take on various personalities like Industrial Communication Protocol Switch (for protocols like EtherCAT, Profinet, EtherNet/IP), Ethernet Switch, Ethernet MAC, Industrial Drives, etc. PRU-ICSSG supports RGMII and MII modes.
+\endcond
+
+\cond  SOC_AM263X || SOC_AM263PX
+- Programmable Real-Time Unit and Industrial Communication Subsystem (PRU-ICSS) : PRU-ICSS is firmware programmable and can take on various personalities like Industrial Communication Protocol Switch (for protocols like EtherCAT, Profinet, EtherNet/IP), Ethernet Switch, Ethernet MAC, Industrial Drives, etc. PRU-ICSS supports MII mode.
+\endcond
 
 To know more about the hardware peripherals, please refer to datasheet and Technical Reference Manual (TRM) on the product page:
 - [AM2431](https://www.ti.com/product/AM2431), [AM2432](https://www.ti.com/product/AM2432), [AM2434](https://www.ti.com/product/AM2434)
@@ -108,9 +116,13 @@ Ethernet Low-Level Driver (\ref ENET_LLD) is a driver that aims at providing an 
 - \subpage ENET_LLD
 \endcond
 
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X || SOC_AM273X
+### TCP/IP Stack
+-\subpage NETWORKING_LWIP
+
+\cond SOC_AM64X ||  SOC_AM243X || SOC_AM263X || SOC_AM273X
 ### Time Sensitive Networking (TSN) Stack
 - \subpage ENET_CPSW_TSN_GPTP
 - \subpage EXAMPLES_ENET_CPSW_TSN_GPTP
 - \subpage ENET_CPSW_LLDP
 \endcond
+

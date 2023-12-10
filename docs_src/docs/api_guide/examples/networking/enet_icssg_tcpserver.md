@@ -122,6 +122,9 @@ The example does below
 </tr>
 </table>
 
+## To Configure Static IP
+Please refer to \ref NETWORKING_LWIP_STATIC_IP.
+
 ## Configuring ICSSG Switch and DUAL MAC modes
 
 - ICSSG Switch mode requires Two RX DMA channels whereas MAC mode requires only One RX DMA channels. Out of box, the example is configured to be in Switch mode.

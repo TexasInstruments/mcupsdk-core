@@ -101,6 +101,9 @@ The example does below
 </tr>
 </table>
 
+# To Configure Static IP
+Please refer to \ref NETWORKING_LWIP_STATIC_IP.
+
 # mbedTLS
 
 Mbed TLS is a C library that implements cryptographic primitives, X.509 certificate manipulation and the SSL/TLS and DTLS protocols. It is distributed under the Apache License version 2.0. Its small code footprint makes it suitable for embedded systems. It is known to be easy to understand, use, integrate and expand. The library is designed to integrate with existing (embedded) applications and to provide the building blocks for secure communication, cryptography and key management. It is designed to be as loosely coupled as possible, allowing you to only integrate the parts you need without having overhead from the rest.

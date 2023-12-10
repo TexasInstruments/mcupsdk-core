@@ -223,9 +223,9 @@ static void EnetApp_mdioLinkStatusChange(Cpsw_MdioLinkStateChangeInfo *info,
 {
     if (info->linkChanged)
     {
-        EnetAppUtils_print("Link Status Changed. PHY: 0x%x, state: %s\r\n",
-                info->phyAddr,
-                info->isLinked? "up" : "down");
+//        EnetAppUtils_print("Link Status Changed. PHY: 0x%x, state: %s\r\n",
+//                info->phyAddr,
+//                info->isLinked? "up" : "down");
     }
 }
 

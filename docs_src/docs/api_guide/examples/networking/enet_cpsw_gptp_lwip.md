@@ -105,6 +105,9 @@ delay_mechanism         P2P
 
 Please refer to the \ref EXAMPLES_ENET_LWIP_CPSW_TCPSERVER page to start a TCP client on PC.
 
+## To Configure Static IP
+Please refer to \ref NETWORKING_LWIP_STATIC_IP.
+
 ## Build the example
 
 - When using CCS projects to build, import the CCS project for the required combination

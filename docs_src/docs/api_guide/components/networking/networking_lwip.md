@@ -34,3 +34,5 @@ Following are the changes done in MCU+ SDK during upgrade -
 5. No change to precompiled `lwip-contrib` library status. It is pre-compiled now using new location for `contrib` directory and continue to exists.
 
 If you have a custom makefile used to compile lwip stack, please ensure to do the above changes to use new version of LwIP stack.
+
+\subpage NETWORKING_LWIP_STATIC_IP.

@@ -255,7 +255,7 @@ Enable "Custom Board" syscfg option ![CustomBoardSyscfg](CustomBoardSyscfg.png "
 - Enabling “Custom Board” will prevent auto generation of board specific code.
 - A C file will have to be then written that is specific to the board.
 
-###Board config C file####
+### Board config C file
 The board specific file should contain the following
 - **const EnetPhy_DrvInfoTbl gEnetPhyDrvTbl**: This is a table of ENET PHY drivers supported on the board. 
   Refer Enet custom PHY integration guide for details on how to populate this table @ref enetphy_guide_top
@@ -273,6 +273,63 @@ The board specific file should contain the following
 - Refer mcu_plus_sdk/examples/networking/enet_layer2_multi_channel
     + enet_custom_board_config.c for example illustrating custom board integration
 
+### Ethernet MAC address Management
+Typically, one unique MAC address in burnt into efuse during device fabrication. Furthermore, additional MAC addresses are programmed in EEPROM on evaluation boards (EVM and launchpads) that are supported by TI.
+
+There are two ways by which you can set the custom MAC address.
+
+### 1. Using Syscfg GUI tool
+An option is provided in Syscfg GUI tool to force custom MAC address instead of taking from EEPROM/EFUSE.
+
+To use this option:
++Oopen syscfg GUI tool.
++ Go to "TI"->"ENET(CPSW)" (or "ENET(ICSS)")->"System integration config".
++ Change "MAC Address Assignment Method" to "Manual Entry" and fill the mac address in "MAC Address List" option.
+
+![MACAddressManualEntry](enet_mac_addr_config_manual.png "MAC Address Manual Entry") 
+
++ Keeping  "MAC Address Assignment Method" to "Auto Assign", shall use the MAC address from EEPROM and EFUSE.
+
+![MACAddressAuto Assign](enet_mac_addr_config_auto.png "MAC Address Auto Assign")
+Please note that"Auto Assign" is not supported on AM273x and AWR294x due to EVM limitation.
+
+### 2. Using Custom Board Option
+
+On your custom board EEPROM may not be available or it is not used to keep MAC address, then please follow below steps to set MAC address-  
+ 1. Select custom board as per [previous section](\ref CustomBoardSupport)
+ 2. In your specific custom board specific .c file (eg.: enet_custom_board_config.c), refer to funtion `s()` implementation as below-
+ 
+ \code
+ void EnetBoard_getMacAddrList(uint8_t macAddr[][ENET_MAC_ADDR_LEN],
+                              uint32_t maxMacEntries,
+                              uint32_t *pAvailMacEntries)
+{
+    int32_t status = ENET_SOK;
+    uint32_t macAddrCnt;
+    uint32_t i;
+    uint8_t macAddrBuf[ENET_BOARD_NUM_MACADDR_MAX * ENET_MAC_ADDR_LEN];
+    uint8_t numMacMax  = 0;
+
+    /* Fill the MAC Address */
+    macAddrBuf[ENET_MAC_ADDR_LEN*0] = {0xF4, 0x84, 0x4C, 0xFB, 0xC0, 0x5C};
+    macAddrBuf[ENET_MAC_ADDR_LEN*1] = {0xF4, 0x84, 0x4C, 0xFB, 0xC0, 0x5D};
+    numMacMax = 2;
+    macAddrCnt = EnetUtils_min(numMacMax, maxMacEntries);
+    EnetAppUtils_assert(pAvailMacEntries != NULL);
+    for (i = 0U; i < macAddrCnt; i++)
+    {
+        memcpy(macAddr[i], &macAddrBuf[i * ENET_MAC_ADDR_LEN], ENET_MAC_ADDR_LEN);
+    }
+
+    *pAvailMacEntries = macAddrCnt;
+
+    if (macAddrCnt == 0U)
+    {
+        EnetAppUtils_print("EnetBoard_getMacAddrList Failed - IDK not present\n");
+        EnetAppUtils_assert(false);
+    }
+}
+ \endcode
 
 [Back To Top](@ref enet_migration_guide_top)
 
@@ -317,7 +374,7 @@ Key params that are useful for tuning the rw data memory are
 
 # Tuning memory usage of enet driver for lwip apps  {#MemoryTuningLwip}
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ----------
-This release does not support similar syscfg based configuration of packet pools for lwip based examples. This will be addressed in the next release
+This release does not support similar syscfg based configuration of packet pools for lwip based examples. This will be addressed in the future releases.
 In the current release for lwip based application to tune memory the following option exists
 - Set maximum number of packets for Tx and Rx Dma channel. This is configurable via syscfg 
 - Update mcu_plus_sdk/source/networking/lwip/lwip-config/`<soc>`/lwippools.h as per application requirement

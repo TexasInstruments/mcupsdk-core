@@ -139,6 +139,8 @@ The example does below
 </tr>
 </table>
 
+# To Configure Static IP
+Please refer to \ref NETWORKING_LWIP_STATIC_IP.
 
 # Steps to Run the Example
 

@@ -83,10 +83,32 @@ const enet_cpsw_system_config = {
             ],
         },
         {
-            name: "MAC_address",
-            description: "MAC address to be given from application to driver,It should be in hex format and separated by colon per octet. MAC address should be read from CPFROM on customer boards once  CPFROM is programmed.",
-            displayName: "MAC Address",
-            default: "70:FF:76:1D:EC:F2",
+            name: "macAddrConfig",
+            description: "MAC address to set in the driver. 'Auto Assign shall select the address automatiically from EEPROM and/or EFUSES. 'Manual Entry' will allow to input MAC address",
+            displayName: "MAC Address Assignment Method",
+            onChange:function (inst, ui) {
+                if(inst.macAddrConfig === "Auto Assign") {
+                    ui.macAddrList.hidden = true;
+                } else {
+                    ui.macAddrList.hidden = false;
+                }
+            },
+            options: [
+                {
+                    name: "Auto Assign (Not Supported)",
+                },
+                {
+                    name: "Manual Entry",
+                },
+            ],
+            default: "Manual Entry"
+        },
+        {
+            name: "macAddrList",
+            description: "MAC address to set in the driver. Enter MAC address. Seperate multiple MAC address with comma. Eg.: aa:bb:bb:cc:dd:ee,01:22:33:aa:bb:ee",
+            displayName: "MAC Address List",
+            default: "70:ff:76:1d:ec:f2,70:ff:76:1d:ec:f2",
+            hidden: false,
         },
         {
             name: "AppLinkUpPortMask",
@@ -502,12 +524,6 @@ function getCpuID() {
 }
 
 function validate(instance, report) {
-    let pattern = /[0-9a-fA-F]{2}([:-][0-9a-fA-F]{2}){5}/;
-    let result = pattern.test(instance.MAC_address);
-
-    if(result === false) {
-        report.logError(`Invalid macAddr`, instance, "MAC_address");
-    }
     pktPoolScript.validate(instance, report);
     aleScript.validate(instance, report);
     mdioScript.validate(instance, report);
@@ -518,9 +534,14 @@ function validate(instance, report) {
         if (getDefaultNetifCount(instance) !=1)
         {
             report.logError(`Only one netif can be set as default`, instance, "netifInstance");
-
         }
 
+    }
+
+
+    if (/^([0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}(,([0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2})+/.test(instance.macAddrList) == false)
+    {
+        report.logError(`Invalid macAddrList Entry`, instance, "macAddrList");
     }
 
 }

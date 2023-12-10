@@ -180,6 +180,16 @@ The examples do below
 
 # Steps to Run the Example
 
+## To Configure Static IP
+Modify code in file `lwipcfg.h` file as below to set USE_DHCP and -USE_AUTOIP as '0'
+\code
+/* uncomment the next two lines for Static IP */
+-//#define USE_DHCP     0
+-//#define USE_AUTOIP  0
++#define USE_DHCP     0
++#define USE_AUTOIP  0
+\endcode
+
 ## Build the example
 
 - When using CCS projects to build, import the CCS project for the required combination

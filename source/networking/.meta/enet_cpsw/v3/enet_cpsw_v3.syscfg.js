@@ -83,6 +83,34 @@ const enet_cpsw_system_config = {
             ],
         },
         {
+            name: "macAddrConfig",
+            description: "MAC address to set in the driver. 'Auto Assign shall select the address automatiically from EEPROM and/or EFUSES. 'Manual Entry' will allow to input MAC address",
+            displayName: "MAC Address Assignment Method",
+            onChange:function (inst, ui) {
+                if(inst.macAddrConfig === "Auto Assign") {
+                    ui.macAddrList.hidden = true;
+                } else {
+                    ui.macAddrList.hidden = false;
+                }
+            },
+            options: [
+                {
+                    name: "Auto Assign",
+                },
+                {
+                    name: "Manual Entry",
+                },
+            ],
+            default: "Auto Assign",
+        },
+        {
+            name: "macAddrList",
+            description: "MAC address to set in the driver. Enter MAC address. Seperate multiple MAC address with comma. Eg.: aa:bb:bb:cc:dd:ee,01:22:33:aa:bb:ee",
+            displayName: "MAC Address List",
+            default: "70:ff:76:1d:ec:f2,70:ff:76:1d:ec:e3",
+            hidden: true,
+        },
+        {
             name: "AppLinkUpPortMask",
             description: "Application config to determine which macPorts should be polled for linkup to indicate link is up.Applicable in multi port scenario only",
             displayName: "AppLinkUpPortMask Config",
@@ -614,7 +642,10 @@ function validate(instance, report) {
             }
         }
     }
-
+    if (/^([0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}(,([0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2})+/.test(instance.macAddrList) == false)
+    {
+        report.logError(`Invalid macAddrList Entry`, instance, "macAddrList");
+    }
 }
 
 function moduleInstances(instance) {

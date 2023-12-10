@@ -25,6 +25,7 @@ SDK features and tools.
 - \subpage SMP_FREERTOS_GUIDE
 \endcond
 - \subpage MCU_RESET_ISOLATION
+-\subpage ICSSG0_USAGE_GUIDE
 \endcond
 
 \cond SOC_AM273X

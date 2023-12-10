@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AWR294X" --package "ETS" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.14.0+2667"}
+ * @versions {"tool":"1.18.0+3266"}
  */
 
 /**
@@ -39,14 +39,14 @@ flash1.peripheralDriver.$name = "CONFIG_QSPI0";
 
 gpio1.trigType             = "RISE_EDGE";
 gpio1.$name                = "ENET_TRANSFER_START_BTN";
-gpio1.GPIO.gpioPin.$assign = "ball.R17";
+gpio1.GPIO.gpioPin.$assign = "PAD_BB";
 
 debug_log.enableUartLog           = true;
 debug_log.enableLogZoneInfo       = true;
 debug_log.uartLog.$name           = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign    = "UARTA";
-debug_log.uartLog.UART.RX.$assign = "ball.B16";
-debug_log.uartLog.UART.TX.$assign = "ball.C16";
+debug_log.uartLog.UART.RX.$assign = "PAD_DA";
+debug_log.uartLog.UART.TX.$assign = "PAD_DB";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);
@@ -92,8 +92,9 @@ mpu_armv77.allowExecute = false;
 
 enet_cpsw1.$name                           = "CONFIG_ENET_CPSW0";
 enet_cpsw1.RtosVariant                     = "NoRTOS";
-enet_cpsw1.MAC_address                     = "70:FF:76:1D:EC:F2";
 enet_cpsw1.LargePoolPktCount               = 80;
+enet_cpsw1.macAddrConfig                   = "Manual Entry";
+enet_cpsw1.macAddrList                     = "70:FF:76:1D:EC:F2,70:FF:76:1D:EC:F2";
 enet_cpsw1.txDmaChannel[0].$name           = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel[0].$name           = "ENET_DMA_RX_CH0";
 enet_cpsw1.rxDmaChannel[0].PacketsCount    = 64;
@@ -107,25 +108,25 @@ enet_cpsw1.pinmux[0].RGMII.$assign         = "RGMII0";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-flash1.peripheralDriver.QSPI["0"].$suggestSolution = "ball.U11";
-flash1.peripheralDriver.QSPI["1"].$suggestSolution = "ball.V11";
-flash1.peripheralDriver.QSPI["2"].$suggestSolution = "ball.T11";
-flash1.peripheralDriver.QSPI["3"].$suggestSolution = "ball.R12";
+flash1.peripheralDriver.QSPI["0"].$suggestSolution = "PAD_AL";
+flash1.peripheralDriver.QSPI["1"].$suggestSolution = "PAD_AM";
+flash1.peripheralDriver.QSPI["2"].$suggestSolution = "PAD_AN";
+flash1.peripheralDriver.QSPI["3"].$suggestSolution = "PAD_AO";
 flash1.peripheralDriver.QSPI.$suggestSolution      = "QSPI0";
-flash1.peripheralDriver.QSPI.CLK.$suggestSolution  = "ball.R10";
-flash1.peripheralDriver.QSPI.CS.$suggestSolution   = "ball.U12";
+flash1.peripheralDriver.QSPI.CLK.$suggestSolution  = "PAD_AP";
+flash1.peripheralDriver.QSPI.CS.$suggestSolution   = "PAD_AQ";
 gpio1.GPIO.$suggestSolution                        = "GPIO";
-enet_cpsw1.pinmux[0].MDIO.DATA.$suggestSolution    = "ball.T5";
-enet_cpsw1.pinmux[0].MDIO.CLK.$suggestSolution     = "ball.R4";
-enet_cpsw1.pinmux[0].RGMII.RD0.$suggestSolution    = "ball.V6";
-enet_cpsw1.pinmux[0].RGMII.RD1.$suggestSolution    = "ball.V4";
-enet_cpsw1.pinmux[0].RGMII.RD2.$suggestSolution    = "ball.V5";
-enet_cpsw1.pinmux[0].RGMII.RD3.$suggestSolution    = "ball.U10";
-enet_cpsw1.pinmux[0].RGMII.RCTL.$suggestSolution   = "ball.T7";
-enet_cpsw1.pinmux[0].RGMII.RCLK.$suggestSolution   = "ball.T9";
-enet_cpsw1.pinmux[0].RGMII.TD0.$suggestSolution    = "ball.U7";
-enet_cpsw1.pinmux[0].RGMII.TD1.$suggestSolution    = "ball.U5";
-enet_cpsw1.pinmux[0].RGMII.TD2.$suggestSolution    = "ball.U6";
-enet_cpsw1.pinmux[0].RGMII.TD3.$suggestSolution    = "ball.U4";
-enet_cpsw1.pinmux[0].RGMII.TCTL.$suggestSolution   = "ball.R6";
-enet_cpsw1.pinmux[0].RGMII.TCLK.$suggestSolution   = "ball.V3";
+enet_cpsw1.pinmux[0].MDIO.DATA.$suggestSolution    = "PAD_CM";
+enet_cpsw1.pinmux[0].MDIO.CLK.$suggestSolution     = "PAD_CN";
+enet_cpsw1.pinmux[0].RGMII.RD0.$suggestSolution    = "PAD_CL";
+enet_cpsw1.pinmux[0].RGMII.RD1.$suggestSolution    = "PAD_CK";
+enet_cpsw1.pinmux[0].RGMII.RD2.$suggestSolution    = "PAD_CJ";
+enet_cpsw1.pinmux[0].RGMII.RD3.$suggestSolution    = "PAD_CI";
+enet_cpsw1.pinmux[0].RGMII.RCTL.$suggestSolution   = "PAD_CB";
+enet_cpsw1.pinmux[0].RGMII.RCLK.$suggestSolution   = "PAD_CH";
+enet_cpsw1.pinmux[0].RGMII.TD0.$suggestSolution    = "PAD_CF";
+enet_cpsw1.pinmux[0].RGMII.TD1.$suggestSolution    = "PAD_CE";
+enet_cpsw1.pinmux[0].RGMII.TD2.$suggestSolution    = "PAD_CD";
+enet_cpsw1.pinmux[0].RGMII.TD3.$suggestSolution    = "PAD_CC";
+enet_cpsw1.pinmux[0].RGMII.TCTL.$suggestSolution   = "PAD_CA";
+enet_cpsw1.pinmux[0].RGMII.TCLK.$suggestSolution   = "PAD_CG";

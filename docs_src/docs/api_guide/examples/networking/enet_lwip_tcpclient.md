@@ -156,6 +156,9 @@ Ncat is a general-purpose command-line tool for reading, writing, redirecting, a
 
 # Steps to Run the Example
 
+## To Configure Static IP
+Please refer to \ref NETWORKING_LWIP_STATIC_IP.
+
 ## Build the example
 
 - When using CCS projects to build, import the CCS project for the required combination

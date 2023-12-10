@@ -41,9 +41,11 @@
 /* Maximum number of MAC address to be set per CPSW peripheral.
 Since CPSW_3G can support upto two MACs, this is set to 2 here */
 #define MAC_ADDR_LIST_LEN_SHARED_PER_PER (2U)
-
+% if (instance.macAddrConfig === "Auto Assign") {
 #define ENET_MAX_NUM_MAC_ADDR_STORED (5U)
-
+% } else {
+#define ENET_MAX_NUM_MAC_ADDR_STORED (`instance.macAddrList.split(",").length`U)
+%}
 typedef struct EnetApp_MacAddrElem_s
 {
     EnetQ_Node node;
@@ -261,14 +263,30 @@ static int32_t EnetAppSoc_fillMacAddrList(uint8_t macAddr[][ENET_MAC_ADDR_LEN],
 static void EnetApp_initializeMacAddrPool()
 {
     uint8_t macAddrList[ENET_MAX_NUM_MAC_ADDR_STORED][ENET_MAC_ADDR_LEN];
-    const uint32_t maxMacEntries = ENET_MAX_NUM_MAC_ADDR_STORED;
     uint32_t filledMacEntries = 0;
 
     if (!gEnetMacAddrPool.isInitialized)
     {
         EnetQueue_initQ(&gEnetMacAddrPool.freeMacAddrQ);
-
+% if (instance.macAddrConfig === "Auto Assign" ) {
+        const uint32_t maxMacEntries = ENET_MAX_NUM_MAC_ADDR_STORED;
         EnetAppSoc_fillMacAddrList(macAddrList, maxMacEntries, &filledMacEntries);
+% } else {
+%   console.log(instance.macAddrList)
+%       let macAddrList = instance.macAddrList.split(",");
+%       console.log(macAddrList)
+%       for (let macAddrIdx = 0; macAddrIdx < macAddrList.length; macAddrIdx++) {
+%           let macAddr = macAddrList[macAddrIdx].split(':');
+       macAddrList[filledMacEntries][0] = 0x`macAddr[0]`;
+       macAddrList[filledMacEntries][1] = 0x`macAddr[1]`;
+       macAddrList[filledMacEntries][2] = 0x`macAddr[2]`;
+       macAddrList[filledMacEntries][3] = 0x`macAddr[3]`;
+       macAddrList[filledMacEntries][4] = 0x`macAddr[4]`;
+       macAddrList[filledMacEntries][5] = 0x`macAddr[5]`;
+       filledMacEntries++;
+
+%       }
+% }
         gEnetMacAddrPool.macAddrContainerLen =  filledMacEntries;
 
         for (uint32_t entryIdx = 0; entryIdx < gEnetMacAddrPool.macAddrContainerLen; entryIdx++)

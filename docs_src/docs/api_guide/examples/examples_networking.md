@@ -1,4 +1,4 @@
-#  Networking {#EXAMPLES_NETWORKING}
+#  Ethernet and Networking {#EXAMPLES_NETWORKING}
 
 This page lists all the examples related to Ethernet Communication.
 

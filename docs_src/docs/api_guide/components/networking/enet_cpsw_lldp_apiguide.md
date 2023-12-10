@@ -6,7 +6,7 @@
 Reader are expected to have basic knowledge on below IEEE specifications
 - Standard ethernet (IEEE 802.1)
 - Link Layer Discovery Protocol - LLDP (IEEE 802.1AB-2016)
-- LLDP Amenment 1: YANG Data Model (IEEE 802.1ABcu-2021)
+- LLDP Amendment 1: YANG Data Model (IEEE 802.1ABcu-2021)
 
 # Introduction
 This guide is intended to enhance user's understanding of the LLDP stack and provide guidance on how to seamlessly integrate LLDP modules into their own applications.

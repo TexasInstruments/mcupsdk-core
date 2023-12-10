@@ -284,27 +284,12 @@ int32_t EnetBoard_setupPorts(EnetBoard_EthPort *ethPorts,
     return ENET_SOK;
 }
 
-%%{
-    let macString = JSON.stringify(instance.MAC_address);
-%%}
-
-static const uint8_t gMacAddr[6U] = {
-                             0x`macString.substring(1,3)`,
-                             0x`macString.substring(4,6)`,
-                             0x`macString.substring(7,9)`,
-                             0x`macString.substring(10,12)`,
-                             0x`macString.substring(13,15)`,
-                             0x`macString.substring(16,18)`
-                            };
-
 void EnetBoard_getMacAddrList(uint8_t macAddr[][ENET_MAC_ADDR_LEN],
                               uint32_t maxMacEntries,
                               uint32_t *pAvailMacEntries)
 {
-    EnetAppUtils_assert(pAvailMacEntries != NULL);
+    EnetAppUtils_assert(false);
 
-    memcpy(macAddr, &gMacAddr, ENET_MAC_ADDR_LEN);
-    *pAvailMacEntries = 1U;
 }
 
 /*
