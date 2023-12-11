@@ -1,4 +1,4 @@
-# Ethernet TSN gPTP Bridge Example {#EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE}
+# Ethernet TSN CPSW gPTP Bridge Example {#EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE}
 \cond SOC_AM273X
 \warning AM273x is single ethernet port device and hence gPTP Bridge mode is not possible to execute 
 \endcond

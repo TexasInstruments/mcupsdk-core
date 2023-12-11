@@ -1,16 +1,20 @@
-# Ethernet TSN gPTP stack on ICSSG {#EXAMPLES_ENET_ICSSG_TSN_GPTP}
+# Ethernet TSN ICSSG gPTP TimeReceiver (gPTP Slave) Example{#EXAMPLES_ENET_ICSSG_TSN_GPTP_TR}
 
 [TOC]
 
 # Introduction
-This ethernet TSN example illustrates the usage of gPTP IEEE 802.1AS stack with ICSSG peripheral.
-
-The application used here supports all the below modes:
+This ethernet TSN example illustrates the usage of gPTP IEEE 802.1AS stack with ICSSG peripheral, in gPTP End-Point time_receiver mode (i.e. slave mode).
+However, the application used here supports all the below modes:
     - gPTP End-Point time_transmitter mode (i.e. master mode)
     - gPTP End-Point time_receiver mode (i.e. slave mode)
     - gPTP Bridge mode
 
+In this example, connected Host PC is configured to force gPTP grand master role, so that the DUT becomes time_receiver (i.e. gPTP slave) mode.
+Yang based configuration is also supported. Currently File System is not supported, will be added in future releases.
+
 In this example, We use dedicated Rx and Tx DMA channels for gPTP traffic. Please note that only ICSSG switch mode is supported with gPTP.
+
+Along with PTP traffic, application also handles non-PTP traffic in a separate RTOS task and DMA Channel. Received non-PTP packets are sent back by the application, by interchanging source and destination MAC address.
 
 See also :\ref ENET_CPSW_TSN_GPTP for gPTP stack documentation.
 
@@ -298,7 +302,7 @@ IFV:gptp:domainIndex=0, clock_master_sync_receive:the master clock rate to 1025p
 # See Also
 
 \ref NETWORKING |
-\ref EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE |
-\ref EXAMPLES_ENET_CPSW_TSN_GPTP_TR |
-\ref EXAMPLES_ENET_CPSW_TSN_GPTP_TT |
+\ref EXAMPLES_ENET_ICSSG_TSN_GPTP_BRIDGE |
+\ref EXAMPLES_ENET_ICSSG_TSN_GPTP_TR |
+\ref EXAMPLES_ENET_ICSSG_TSN_GPTP_TT |
 \ref ENET_CPSW_TSN_GPTP

@@ -82,6 +82,26 @@ const enet_icssg_system_config = {
     ],
 };
 
+function enet_icssg_getPhyaddress(platform, port)
+{
+    const icssgPhyAddrInfoMap = new Map(
+                                           [
+                                             ['am64x-evm',{phyAddr1: 15, phyAddr2: 3}],
+                                             ['am243x-evm', {phyAddr1: 15, phyAddr2: 3}],
+                                             ['am243x-lp',{phyAddr1: 3, phyAddr2: 15,}],
+                                           ],
+                                         );
+    let phyInfo =  icssgPhyAddrInfoMap.get(platform);
+    if (port == 1)
+    {
+        return phyInfo.phyAddr1;
+    }
+    else
+    {
+        return phyInfo.phyAddr2;
+    }
+}
+
 const enet_icssg_board_config = {
     name: "icssgBoardConfig",
     displayName: "Board Config",
@@ -109,7 +129,7 @@ const enet_icssg_board_config = {
             name: "phyAddr1",
             description: "Phy Address of the port in single/dual EMAC mode or Port 1 in Switch mode. Value MUST be between 0 .. 31",
             displayName: "Phy Address 1",
-            default: 15,
+            default: enet_icssg_getPhyaddress(device, 1),
             displayFormat: "dec",
             isInteger:true,
             range: [0, 31],
@@ -118,7 +138,7 @@ const enet_icssg_board_config = {
             name: "phyAddr2",
             description: "Phy Address of the port in single/dual EMAC mode or Port 2 in Switch mode. Value MUST be between 0 .. 31",
             displayName: "Phy Address 2",
-            default: 3,
+            default: enet_icssg_getPhyaddress(device, 2),
             displayFormat: "dec",
             isInteger:true,
             range: [0, 31],

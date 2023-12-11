@@ -1,4 +1,4 @@
-# Ethernet TSN gPTP TimeReceiver (gPTP Slave) Example {#EXAMPLES_ENET_CPSW_TSN_GPTP_TR}
+# Ethernet TSN CPSW gPTP TimeReceiver (gPTP Slave) Example {#EXAMPLES_ENET_CPSW_TSN_GPTP_TR}
 
 [TOC]
 

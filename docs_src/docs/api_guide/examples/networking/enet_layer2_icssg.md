@@ -79,6 +79,28 @@ This example do below:
   \imageStyle{icssg_dmac_sysconfig_2.png,width:30%}
   \image html icssg_dmac_sysconfig_2.png ICSSG DUAL MAC PORT-2 configuration.
 
+# Configuring ICSSG Switch Mode:
+
+- Open the ICSSG instance in the sysconfig, and select the ICSSG instance as ICSSG1.
+- Both of the instances have to be setup as shown above in the MAC configuration.
+- Unlike shown in the image, set the QoS level to 3 for layer 2 use cases.
+- Ensure to check the option "Enable MDIO MDC Config".
+- The system configuration of the ICSSG instance have to be configured as shown below.
+  \imageStyle{icssg_switch_sysconfig.png,width:35%}
+  \image html icssg_switch_sysconfig.png ICSSG SWITCH MODE configuration.
+  
+  
+- In the DMA channel config module, allocate required number of packets for Tx Channels and Rx flows.
+- Set both the Rx flows as default flows.
+- Set only one Rx flow with 'Number of MAC Address' field as 1. Set remaining flows to 0.
+- Only the Rx flow with 'Number of MAC Address' and corresponding Rx channel will be allocated MAC address. Set accordingly.
+- Set the field 'Rx Ch Id' as 0 for half of the Rx flows, and 1 for the remaining half.
+- The final configuration should look similar to the following.
+  \imageStyle{icssg_switch_rxdmacfg_1.png, width:35%}
+  \imageStyle{icssg_switch_rxdmacfg_2.png, width:35%}
+  \image html icssg_switch_rxdmacfg_1.png ICSSG SWITCH MODE Rx DMA-1 configuration
+  \image html icssg_switch_rxdmacfg_2.png ICSSG SWITCH MODE Rx DMA-2 configuration
+
 # Steps to Run the Example
 
 ## Build the example

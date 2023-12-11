@@ -1,4 +1,4 @@
-# Ethernet TSN gPTP TimeTransmitter (gPTP Master) Example  {#EXAMPLES_ENET_CPSW_TSN_GPTP_TT}
+# Ethernet TSN CPSW gPTP TimeTransmitter (gPTP Master) Example  {#EXAMPLES_ENET_CPSW_TSN_GPTP_TT}
 
 [TOC]
 
