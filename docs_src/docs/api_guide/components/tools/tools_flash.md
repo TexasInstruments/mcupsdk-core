@@ -263,14 +263,20 @@ UART is used as the transport or interface to send the file to flash to the EVM.
 
         --file={path to your application .appimage_xip file} --operation=flash-xip
 \endcond
-\cond SOC_AM64X
+\cond SOC_AM64X || SOC_AM243X
 
 #### Flash configuration file for flashing to eMMC
 
-- Create a flash configuration file, check the flash configuration file preset at below as reference
+- Create a flash configuration file, using the default flash configuration file present at below as reference
 
-        ${SDK_INSTALL_PATH}/examples/drivers/boot/sbl_emmc_linux/am64x-evm/r5fss0-0_nortos/default_sbl_emmc_linux.cfg
+    - For `sbl_emmc`
 
+            ${SDK_INSTALL_PATH}/examples/drivers/boot/sbl_emmc/@VAR_BOARD_NAME_LOWER/r5fss0-0_nortos/default_sbl_emmc.cfg
+\cond SOC_AM64X
+    - For `sbl_emmc_linux`
+
+            ${SDK_INSTALL_PATH}/examples/drivers/boot/sbl_emmc_linux/am64x-evm/r5fss0-0_nortos/default_sbl_emmc_linux.cfg
+\endcond
 - The flashing application and the eMMC bootloader needs to be specified in this file as
 
         --flash-writer={path to flash application .tiimage}

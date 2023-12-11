@@ -634,6 +634,20 @@ board running \ref EXAMPLES_DRIVERS_SBL_PCIE_HOST.
 
 \endcond
 
+\cond SOC_AM64X || SOC_AM243X
+
+### SBL EMMC
+
+- The `sbl_emmc` is a secondary bootloader which reads and parses the application image from a location in the eMMC and then moves on to core initialization and other steps.
+
+- To boot an application using the `sbl_emmc`, the application image needs to be flashed at a particular location in the eMMC.
+
+- This location or offset is specified in the SysConfig of the `sbl_emmc` application. Currently this is 0x800000.
+
+- To flash an application (or any file in fact) to a location in the eMMC, follow the steps mentioned in \ref BASIC_STEPS_TO_FLASH_FILES
+
+\endcond
+
 \cond SOC_AM64X
 ### SBL OSPI LINUX
 

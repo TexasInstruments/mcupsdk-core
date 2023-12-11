@@ -771,6 +771,17 @@ This mode is used in conjunction with the `load_dmsc_hsfs.js` script described h
     \imageStyle{boot_pins_devboot_mode.png,width:30%}
     \image html boot_pins_devboot_mode.png "DEV BOOT MODE"
 
+#### EMMC BOOT MODE  {#BOOTMODE_EMMC}
+##### AM243X-EVM
+This mode is used to boot applications via eMMC on the EVM.
+    \code
+    BOOTMODE [ 0 :  7 ] (SW2) = 1101 0010
+    BOOTMODE [ 8 : 15 ] (SW3) = 0000 0000
+    \endcode
+
+  \imageStyle{boot_pins_emmc_mode.png,width:30%}
+  \image html boot_pins_emmc_mode.png "EMMC BOOT MODE"
+
 #### PCIE BOOT MODE  {#BOOTMODE_PCIE}
 ##### AM243X-EVM
 This mode is used to boot applications via PCIe on the EVM.

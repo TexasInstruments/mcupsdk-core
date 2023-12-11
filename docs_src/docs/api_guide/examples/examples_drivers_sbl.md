@@ -7,6 +7,7 @@ To know more about SBL and overall boot flow please take a look at \ref BOOTFLOW
    -# \subpage EXAMPLES_DRIVERS_SBL_NULL
    -# \subpage EXAMPLES_DRIVERS_SBL_OSPI
    -# \subpage EXAMPLES_DRIVERS_SBL_OSPI_MULTI_PARTITION
+   -# \subpage EXAMPLES_DRIVERS_SBL_EMMC
    -# \subpage EXAMPLES_DRIVERS_SBL_PCIE_HOME
    -# \subpage EXAMPLES_DRIVERS_SBL_SD
    -# \subpage EXAMPLES_DRIVERS_SBL_UART
