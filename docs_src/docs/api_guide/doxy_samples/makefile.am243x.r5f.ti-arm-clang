@@ -17,7 +17,6 @@ LIBNAME:=doxy_samples.am243x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
     Adc_sample.c \
-    Resolver_sample.c \
     AddrTranslateP_sample.c \
     Bootloader_sample.c \
     CacheP_sample.c \

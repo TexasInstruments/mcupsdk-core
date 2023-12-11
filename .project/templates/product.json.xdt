@@ -30,7 +30,17 @@
         "/pru_io/pru_io",
         "/memory_configurator/components"
 % }
-% if((args.device == "am263x")  || (args.device == "am263px")){
+% if(args.device == "am263x"){
+        "/kernel/dpl",
+        "/drivers/drivers",
+        "/board/board",
+        "/fs/fs",
+        "/networking/networking",
+        "/security/security",
+        "/xbar/xbar",
+        "/memory_configurator/components",
+% }
+% if(args.device == "am263px"){
         "/kernel/dpl",
         "/drivers/drivers",
         "/board/board",

@@ -3,7 +3,6 @@ let path = require('path');
 const files = {
     common: [
         "Adc_sample.c",
-        "Resolver_sample.c",
         "AddrTranslateP_sample.c",
         "Bootloader_sample.c",
         "CacheP_sample.c",
@@ -37,7 +36,7 @@ const files = {
         "Ospi_sample.c",
         "Pinmux_sample.c",
         "Pruicss_sample_g_v0.c",
-		"Pmu_sample.c",
+	    "Pmu_sample.c",
         "Sciclient_sample.c",
         "SemaphoreP_sample.c",
         "Spinlock_sample.c",
@@ -122,6 +121,7 @@ const files_am263x = {
 const files_am263px = {
     common: [
         "AddrTranslateP_sample.c",
+        "Resolver_sample.c",
         "Bootloader_sample_v2.c",
         "CacheP_sample.c",
         "CpuIdP_sample.c",
