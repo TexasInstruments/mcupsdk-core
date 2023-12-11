@@ -2275,7 +2275,7 @@
 		        "base" : "",
 		        "adcSOCType": "EPWM_SOC_B",
 		        "socSource": "this",
-                "mixedSource": "this",
+                "mixedSource": "0",
 			},
 			"register": "ETSEL.SOCBSEL",
 			"devices" : [
