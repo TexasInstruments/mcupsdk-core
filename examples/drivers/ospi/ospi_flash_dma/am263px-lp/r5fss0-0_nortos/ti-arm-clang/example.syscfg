@@ -1,0 +1,88 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"data":"2021040816","timestamp":"2021040816","tool":"1.8.1+1900","templates":null}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const flash      = scripting.addModule("/board/flash/flash", {}, false);
+const flash1     = flash.addInstance();
+const edma       = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1      = edma.addInstance();
+const clock      = scripting.addModule("/kernel/dpl/clock");
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+flash1.$name                         = "CONFIG_FLASH0";
+flash1.peripheralDriver.$name        = "CONFIG_OSPI0";
+flash1.peripheralDriver.phyEnable    = true;
+flash1.peripheralDriver.inputClkFreq = 133333333;
+flash1.peripheralDriver.dmaEnable    = true;
+flash1.peripheralDriver.edmaDriver = edma1;
+edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
+
+
+debug_log.enableUartLog        = true;
+debug_log.uartLog.$name        = "CONFIG_UART_LOG";
+debug_log.uartLog.UART.$assign = "UART0";
+
+mpu_armv71.$name             = "CONFIG_MPU_REGION0";
+mpu_armv71.size              = 31;
+mpu_armv71.attributes        = "Device";
+mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
+
+mpu_armv72.$name             = "CONFIG_MPU_REGION1";
+mpu_armv72.size              = 15;
+mpu_armv72.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv73.$name             = "CONFIG_MPU_REGION2";
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv74.$name             = "CONFIG_MPU_REGION3";
+mpu_armv74.baseAddr          = 0x70000000;
+mpu_armv74.size              = 21;
+mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv75.$name    = "CONFIG_MPU_REGION5";
+mpu_armv75.baseAddr = 0x80000000;
+mpu_armv75.size     = 31;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+
+flash1.peripheralDriver.OSPI.$suggestSolution      = "OSPI0";
+flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "OSPI0_CLK";
+flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "OSPI0_CSn0";
+flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "UART1_TXD";
+flash1.peripheralDriver.OSPI.D7.$suggestSolution   = "EPWM12_B";
+flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "MCAN1_RX";
+flash1.peripheralDriver.OSPI.D5.$suggestSolution   = "EPWM12_A";
+flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "MCAN0_RX";
+flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "OSPI0_D3";
+flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "OSPI0_D2";
+flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "OSPI0_D1";
+flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "OSPI0_D0";
+debug_log.uartLog.UART.$suggestSolution            = "UART0";
+debug_log.uartLog.UART.RXD.$suggestSolution        = "MMC0_CLK";
+debug_log.uartLog.UART.TXD.$suggestSolution        = "MMC0_CMD";

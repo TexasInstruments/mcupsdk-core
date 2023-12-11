@@ -10,6 +10,7 @@
  */
 const uart            = scripting.addModule("/drivers/uart/uart", {}, false);
 const uart1           = uart.addInstance();
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 const addr_translate  = scripting.addModule("/kernel/dpl/addr_translate", {}, false);
 const addr_translate1 = addr_translate.addInstance();
 const addr_translate2 = addr_translate.addInstance();

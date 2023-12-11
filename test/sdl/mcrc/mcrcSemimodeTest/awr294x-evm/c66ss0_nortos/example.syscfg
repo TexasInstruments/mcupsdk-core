@@ -14,6 +14,7 @@ const edma      = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1     = edma.addInstance();
 const cache_c6x = scripting.addModule("/kernel/dpl/cache_c6x");
 const debug_log = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 
 /**
  * Write custom configuration values to the imported modules.

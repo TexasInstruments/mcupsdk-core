@@ -19,6 +19,7 @@ const fsi_tx          = scripting.addModule("/drivers/fsi_tx/fsi_tx", {}, false)
 const fsi_tx1         = fsi_tx.addInstance();
 const fsi_tx2         = fsi_tx.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();

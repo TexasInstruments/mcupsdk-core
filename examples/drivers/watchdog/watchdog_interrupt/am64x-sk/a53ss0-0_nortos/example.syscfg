@@ -11,6 +11,7 @@
 const watchdog   = scripting.addModule("/drivers/watchdog/watchdog", {}, false);
 const watchdog1  = watchdog.addInstance();
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mmu_armv8  = scripting.addModule("/kernel/dpl/mmu_armv8", {}, false);
 const mmu_armv81 = mmu_armv8.addInstance();
 const mmu_armv82 = mmu_armv8.addInstance();

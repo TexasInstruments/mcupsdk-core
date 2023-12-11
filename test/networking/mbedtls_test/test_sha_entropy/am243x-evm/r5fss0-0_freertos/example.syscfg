@@ -13,6 +13,7 @@ const gpio1           = gpio.addInstance();
 const i2c             = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1            = i2c.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();

@@ -13,6 +13,7 @@ const csirx1          = csirx.addInstance();
 const cache_c6x       = scripting.addModule("/kernel/dpl/cache_c6x");
 const clock           = scripting.addModule("/kernel/dpl/clock");
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
 const default_linker1 = default_linker.addInstance();
 const general         = scripting.addModule("/memory_configurator/general", {}, false);

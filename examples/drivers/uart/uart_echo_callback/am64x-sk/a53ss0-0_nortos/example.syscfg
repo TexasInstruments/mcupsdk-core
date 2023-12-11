@@ -9,6 +9,7 @@
  * Import the modules used in this configuration.
  */
  const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 const uart       = scripting.addModule("/drivers/uart/uart", {}, false);
 const uart1      = uart.addInstance();
 const mmu_armv8  = scripting.addModule("/kernel/dpl/mmu_armv8", {}, false);

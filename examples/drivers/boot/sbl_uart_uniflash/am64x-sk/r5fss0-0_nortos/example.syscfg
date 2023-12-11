@@ -19,6 +19,7 @@ const mmcsd1      = mmcsd.addInstance();
 const uart        = scripting.addModule("/drivers/uart/uart", {}, false);
 const uart1       = uart.addInstance();
 const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71  = mpu_armv7.addInstance();
 const mpu_armv72  = mpu_armv7.addInstance();

@@ -17,6 +17,7 @@ const mpu_armv74      = mpu_armv7.addInstance();
 const mpu_armv75      = mpu_armv7.addInstance();
 const mpu_armv76      = mpu_armv7.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
 const default_linker1 = default_linker.addInstance();
 const general         = scripting.addModule("/memory_configurator/general", {}, false);

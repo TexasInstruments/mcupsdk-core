@@ -15,6 +15,7 @@ const ddr             = scripting.addModule("/drivers/ddr/ddr", {}, false);
 const ddr1            = ddr.addInstance();
 const gtc             = scripting.addModule("/drivers/gtc/gtc");
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();

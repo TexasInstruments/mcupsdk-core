@@ -18,6 +18,7 @@ const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1       = i2c.addInstance();
 const clock      = scripting.addModule("/kernel/dpl/clock");
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mmu_armv8  = scripting.addModule("/kernel/dpl/mmu_armv8", {}, false);
 const mmu_armv81 = mmu_armv8.addInstance();
 const mmu_armv82 = mmu_armv8.addInstance();

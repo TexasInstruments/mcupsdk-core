@@ -18,6 +18,7 @@ const mibspi     = scripting.addModule("/drivers/mibspi/mibspi", {}, false);
 const mibspi1    = mibspi.addInstance();
 const clock      = scripting.addModule("/kernel/dpl/clock");
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg = scripting.addModule("/kernel/dpl/dpl_cfg");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71 = mpu_armv7.addInstance();
 const mpu_armv72 = mpu_armv7.addInstance();
