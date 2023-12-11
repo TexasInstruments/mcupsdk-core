@@ -54,7 +54,9 @@ void `config.errorCallbackFxn`(void *args);
 uint32_t gMcspiDmaConfigNum = CONFIG_MCSPI_NUM_DMA_INSTANCES;
 
 /* MCSPI Driver Channel Configurations */
+% let channelEnable;
 % for(let i = 0; i < module.$instances.length; i++) {
+    % channelEnable = ["FALSE","FALSE","FALSE","FALSE"];
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
     % let instNameCamelCase = common.camelSentence(instance.$name);
@@ -67,6 +69,7 @@ MCSPI_ChConfig g`instNameCamelCase`ChCfg[`instance.$name.toUpperCase()`_NUM_CH] 
         % if(config.mode == "PERIPHERAL") {
         %   ch_config.cs = 0;
         % }
+        % channelEnable[ch_config.cs] = "TRUE";
     {
         .chNum              = MCSPI_CHANNEL_`ch_config.cs`,
         .frameFormat        = MCSPI_FF_`ch_config.frameFormat`,
@@ -119,7 +122,7 @@ MCSPILLD_InitObject g`instNameCamelCase`InitObject[`instance.$name.toUpperCase()
         .initDelay                   = MCSPI_INITDLY_`config.initDelay`,
         .multiWordAccess             = FALSE,
         .msMode                      = MCSPI_MS_MODE_`msMode`,
-        .chCnt                       = `instance.$name.toUpperCase()`_NUM_CH,
+        .chEnabled                   = {`channelEnable[0]`, `channelEnable[1]`, `channelEnable[2]`, `channelEnable[3]`},
         .chObj[`ch`].chCfg           = &g`instNameCamelCase`ChCfg[`ch`],
         % if(config.intrEnable == "DMA") {
         .mcspiDmaHandle              = (MCSPI_DmaHandle ) &gUdmaDrvObj[`mcspiUdmaInstances[0].$name`],
