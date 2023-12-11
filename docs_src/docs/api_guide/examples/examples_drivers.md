@@ -166,6 +166,8 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO
 \endcond
 \cond SOC_AM273X
+-# HSMCLIENT
+   -# \subpage EXAMPLES_HSM_SERVICES
 -# MCASP
    -# \subpage EXAMPLES_DRIVERS_MCASP_LOOPBACK
    -# \subpage EXAMPLES_DRIVERS_MCASP_PLAYBACK

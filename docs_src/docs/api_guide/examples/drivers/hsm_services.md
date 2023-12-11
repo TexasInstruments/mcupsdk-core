@@ -13,7 +13,7 @@ Three services are available.
 
 # Supported Combinations {#EXAMPLES_HSM_SERVICES_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X
 
  Parameter             | Value
  ----------------------|-----------
@@ -38,12 +38,17 @@ On successful boot, following message will be seen on terminal.
 
 \cond SOC_AM263X
 
-\snippet hsmclient.c mpu_firewall_services_demo_qspi
+\snippet hsmclient.c hsm_services_example_qspi
 
 \endcond
 
 \cond SOC_AM263PX
 
-\snippet hsmclient.c mpu_firewall_services_demo_ospi
+\snippet hsmclient.c hsm_services_example_ospi
+\endcond
+
+\cond SOC_AM273X
+
+\snippet hsmclient.c hsm_services_example_qspi_am273x
 
 \endcond

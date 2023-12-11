@@ -378,6 +378,78 @@ Firewall request #1 status = 11111111 11111111
 Success
 //![mpu_firewall_services_demo_qspi]
 
+//![hsm_services_example_qspi_am273x]
+ [HSM_CLIENT] New Client Registered with Client Id = 0
+ Starting QSPI Bootloader ...
+[BOOTLOADER_PROFILE] Boot Media       : NOR SPI FLASH
+[BOOTLOADER_PROFILE] Boot Media Clock : 80.000 MHz
+[BOOTLOADER_PROFILE] Boot Image Size  : 0 KB
+[BOOTLOADER_PROFILE] Cores present    :
+r5f0-0
+[BOOTLOADER PROFILE] System_init                      :         72us
+[BOOTLOADER PROFILE] Drivers_open                     :         16us
+[BOOTLOADER PROFILE] LoadHsmRtFw                      :      12977us
+[BOOTLOADER PROFILE] Board_driversOpen                :       2531us
+[BOOTLOADER PROFILE] CPU load                         :         43us
+[BOOTLOADER_PROFILE] SBL Total Time Taken             :      15641us
+
+Image loading done, switching to application ...
+
+ [HSM_CLIENT] New Client Registered with Client Id = 2
+
+ [HSM CLIENT] Sending UID Request to HSM Server..
+ [HSM CLIENT] Device UID Successfully retrived from the HSM Server.
+
+ [HSM CLIENT_PROFILE] Time taken by GetUID Request : 82us
+
+ [HSM CLIENT] Device UID is : AA510E0F5C88A00A8E5918A13C3091D9D102851928513961B6AF3E5BA323FA1DB72EC0FA26B13677DD6211CA04E8FCB12646599773416047C0DE49502E747683[HSM CLIENT] TIFS-MCU 64bit version string = 0
+x001550300090100
+
+ [HSM CLIENT] TIFS-MCU Information
+[Soc Type]          = AM273x
+[Device Type]       = HS-FS
+[HSM Type]          = HSM_V1
+[Bin Type]          = STANDARD
+[TIFS-MCU Version]  = 9.1.0
+
+RNG output word -- 0x6F88FFD6
+RNG output word -- 0x9A7DF418
+RNG output word -- 0x592BE4B6
+RNG output word -- 0x2D3F1E32
+
+
+ [HSM CLIENT_PROFILE] Time taken by get RNG request : 476us
+Firewall request #1 status = 11111111 11111111
+Firewall Id = 4
+Firewall region number = 7
+Start Address = 0x2f7e800
+End Address = 0x2f7ebff
+Aid Config = 0x4
+Supervisor Read = 1
+Supervisor Write = 1
+Supervisor Execute = 1
+User Read = 1
+User Write = 1
+User Execute = 1
+Non Secure Access = 1
+Emulation = 1
+
+Firewall request #2 status = 11111111 11111111
+Firewall Id = 4
+Firewall region number = 6
+Start Address = 0x2f7f800
+End Address = 0x2f7fbff
+Aid Config = 0x4
+Supervisor Read = 0
+Supervisor Write = 0
+Supervisor Execute = 0
+User Read = 0
+User Write = 0
+User Execute = 0
+Non Secure Access = 0
+Emulation = 0
+//![hsm_services_example_qspi_am273x]
+
 //![mpu_firewall_services_demo_ospi]
 
  [HSM_CLIENT] New Client Registered with Client Id = 0

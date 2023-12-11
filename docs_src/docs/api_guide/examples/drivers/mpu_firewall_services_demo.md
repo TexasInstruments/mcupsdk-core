@@ -43,13 +43,13 @@ the R5F application has not been side-loaded yet.
 
 \cond SOC_AM263X
 
-\snippet hsmclient.c hsm_services_example_qspi
+\snippet hsmclient.c mpu_firewall_services_demo_qspi
 
 \endcond
 
 \cond SOC_AM263PX
 
-\snippet hsmclient.c hsm_services_example_ospi
+\snippet hsmclient.c mpu_firewall_services_demo_ospi
 
 \endcond
 

@@ -42,7 +42,7 @@ note that the terms 1.**HSMRt Firmware** and 2.**HSMRt** are synonymous to **TIF
 
 ## HSM Client message format.
 
-- Which R5 cores are going to be **secure hosts** will be decided by sysconfig configurations of **TIFS-MCU** at compile time and user has to make sure that similar configurations is done on the R5F side as well.
+- Which public cores are going to be **secure hosts** will be decided by sysconfig configurations of **TIFS-MCU** at compile time and user has to make sure that similar configurations is done on the R5F side as well.
 
 - Below mentioned is the Message structure defined by @ref DRIVERS_SIPC_NOTIFY_PAGE driver. HSM client populates a SIPC message with relevant parameters and sends this message to HSM Server.
 
@@ -182,40 +182,69 @@ were illegal configuration then HSM will populate the statusFirewallRegionArr wi
 
 - Each Configurable System MPU region details , Configuration address, number of programmable regions are captured in the
 table below
+\cond SOC_AM263X
 | MPU Firewall Id | MPU Region                  | MPU Config Addr | Num of Programmable MPU Regions | Target Start Address | Target Size  | Target name        |
 |-----------------|-----------------------------|-----------------|---------------------------------|----------------------|--------------|--------------------|
-| 0               | CSL_FW_R5SS0_CORE0_AXIS_SLV | 0x400A0000      | 8 (0-7)                         | 0x78000000           | 64KB         | R5SS0_CORE0_TCMA   |
+| 0               | FW R5SS0_CORE0_AXIS_SLV     | 0x400A0000      | 8 (0-7)                         | 0x78000000           | 64KB         | R5SS0_CORE0_TCMA   |
 |                 |                             |                 |                                 | 0x78100000           | 64KB         | R5SS0_CORE0_TCMB   |
 |                 |                             |                 |                                 | 0x74000000           | 8MB          | R5SS0_CORE0_ICACHE |
 |                 |                             |                 |                                 | 0x74800000           | 8MB          | R5SS0_CORE0_DCACHE |
-| 1               | CSL_FW_R5SS0_CORE1_AXIS_SLV | 0x400C0000      | 8 (0-7)                         | 0x78200000           | 32KB         | R5SS0_CORE1_TCMA   |
+| 1               | FW R5SS0_CORE1_AXIS_SLV     | 0x400C0000      | 8 (0-7)                         | 0x78200000           | 32KB         | R5SS0_CORE1_TCMA   |
 |                 |                             |                 |                                 | 0x78300000           | 32KB         | R5SS0_CORE1_TCMB   |
 |                 |                             |                 |                                 | 0x75000000           | 8MB          | R5SS0_CORE1_ICACHE |
 |                 |                             |                 |                                 | 0x75800000           | 8MB          | R5SS0_CORE1_DCACHE |
-| 2               | CSL_FW_R5SS1_CORE0_AXIS_SLV | 0x400E0000      | 8 (0-7)                         | 0x78400000           | 64KB         | R5SS1_CORE0_TCMA   |
+| 2               | FW R5SS1_CORE0_AXIS_SLV     | 0x400E0000      | 8 (0-7)                         | 0x78400000           | 64KB         | R5SS1_CORE0_TCMA   |
 |                 |                             |                 |                                 | 0x78500000           | 64KB         | R5SS1_CORE0_TCMB   |
 |                 |                             |                 |                                 | 0x76000000           | 8MB          | R5SS1_CORE0_ICACHE |
 |                 |                             |                 |                                 | 0x76800000           | 8MB          | R5SS1_CORE0_DCACHE |
-| 3               | CSL_FW_R5SS1_CORE1_AXIS_SLV | 0x40100000      | 8 (0-7)                         | 0x78600000           | 32KB         | R5SS1_CORE1_TCMA   |
+| 3               | FW R5SS1_CORE1_AXIS_SLV     | 0x40100000      | 8 (0-7)                         | 0x78600000           | 32KB         | R5SS1_CORE1_TCMA   |
 |                 |                             |                 |                                 | 0x78700000           | 32KB         | R5SS1_CORE1_TCMB   |
 |                 |                             |                 |                                 | 0x77000000           | 8MB          | R5SS1_CORE1_ICACHE |
 |                 |                             |                 |                                 | 0x77800000           | 8MB          | R5SS1_CORE1_DCACHE |
-| 4               | CSL_FW_L2OCRAM_BANK0_SLV    | 0x40020000      | 8 (0-7)                         | 0x70000000           | 512 KB       | L2OCRAM_BANK0      |
-| 5               | CSL_FW_L2OCRAM_BANK1_SLV    | 0x40040000      | 8 (0-7)                         | 0x70080000           | 512 KB       | L2OCRAM_BANK1      |
-| 6               | CSL_FW_L2OCRAM_BANK2_SLV    | 0x40060000      | 8 (0-7)                         | 0x70100000           | 512 KB       | L2OCRAM_BANK2      |
-| 7               | CSL_FW_L2OCRAM_BANK3_SLV    | 0x40080000      | 8 (0-7)                         | 0x70180000           | 512 KB       | L2OCRAM_BANK3      |
-| 8               | CSL_FW_MBOX_RAM_SLV         | 0x40140000      | 8 (0-7)                         | 0x72000000           | 16 KB        | MBOX_RAM           |
-| 11              | CSL_FW_QSPI0_SLV            | 0x40160000      | 8 (0-7)                         | 0x48200000           | 256 KB       | QSPI0              |
+| 4               | FW L2OCRAM_BANK0_SLV        | 0x40020000      | 8 (0-7)                         | 0x70000000           | 512 KB       | L2OCRAM_BANK0      |
+| 5               | FW L2OCRAM_BANK1_SLV        | 0x40040000      | 8 (0-7)                         | 0x70080000           | 512 KB       | L2OCRAM_BANK1      |
+| 6               | FW L2OCRAM_BANK2_SLV        | 0x40060000      | 8 (0-7)                         | 0x70100000           | 512 KB       | L2OCRAM_BANK2      |
+| 7               | FW L2OCRAM_BANK3_SLV        | 0x40080000      | 8 (0-7)                         | 0x70180000           | 512 KB       | L2OCRAM_BANK3      |
+| 8               | FW MBOX_RAM_SLV             | 0x40140000      | 8 (0-7)                         | 0x72000000           | 16 KB        | MBOX_RAM           |
+| 11              | FW QSPI0_SLV                | 0x40160000      | 8 (0-7)                         | 0x48200000           | 256 KB       | QSPI0              |
 |                 |                             |                 |                                 | 0x60000000           | 32 MB        | EXT_FLASH0         |
 |                 |                             |                 |                                 | 0x62000000           | 32 MB        | EXT_FLASH1         |
-| 12              | CSL_FW_SCRM2SCRP0_SLV       | 0x40180000      | 15 (1-15)                       | 0x50000000           | 256 MB       | SCRM2SCRP0         |
-| 13              | CSL_FW_SCRM2SCRP1_SLV       | 0x401A0000      | 15 (1-15)                       | 0x50000000           | 256 MB       | SCRM2SCRP1         |
-| 14              | CSL_FW_R5SS0_CORE0_AHB_MST  | 0x401C0000      | 15 (1-15)                       | 0x50000000           | 256 MB       | R5SS0_CORE0_AHB    |
-| 15              | CSL_FW_R5SS0_CORE1_AHB_MST  | 0x401E0000      | 15 (1-15)                       | 0x50000000           | 256 MB       | R5SS0_CORE1_AHB    |
-| 16              | CSL_FW_R5SS1_CORE0_AHB_MST  | 0x40200000      | 15 (1-15)                       | 0x50000000           | 256 MB       | R5SS1_CORE0_AHB    |
-| 17              | CSL_FW_R5SS1_CORE1_AHB_MST  | 0x40220000      | 15 (1-15)                       | 0x50000000           | 256 MB       | R5SS1_CORE1_AHB    |
+| 12              | FW SCRM2SCRP0_SLV           | 0x40180000      | 15 (1-15)                       | 0x50000000           | 256 MB       | SCRM2SCRP0         |
+| 13              | FW SCRM2SCRP1_SLV           | 0x401A0000      | 15 (1-15)                       | 0x50000000           | 256 MB       | SCRM2SCRP1         |
+| 14              | FW R5SS0_CORE0_AHB_MST      | 0x401C0000      | 15 (1-15)                       | 0x50000000           | 256 MB       | R5SS0_CORE0_AHB    |
+| 15              | FW R5SS0_CORE1_AHB_MST      | 0x401E0000      | 15 (1-15)                       | 0x50000000           | 256 MB       | R5SS0_CORE1_AHB    |
+| 16              | FW R5SS1_CORE0_AHB_MST      | 0x40200000      | 15 (1-15)                       | 0x50000000           | 256 MB       | R5SS1_CORE0_AHB    |
+| 17              | FW R5SS1_CORE1_AHB_MST      | 0x40220000      | 15 (1-15)                       | 0x50000000           | 256 MB       | R5SS1_CORE1_AHB    |
+\endcond
 
-
+\cond SOC_AM273X
+| MPU Firewall Id | MPU Region                  | MPU Config Addr | Num of Programmable MPU Regions | Target Start Address | Target Size  | Target name        |
+|-----------------|-----------------------------|-----------------|---------------------------------|----------------------|--------------|--------------------|
+| 0               | FW L2_BANKA                 | 0x40020000      | 8 (0-7)                         | 0xC0200000           | 512 KB       | MSS_L2_BANKA       |
+| 1               | FW L2_BANKB                 | 0x40040000      | 8 (0-7)                         | 0xC0280000           | 448 KB       | MSS_L2_BANKB       |
+| 3               | FW MSS_MBOX                 | 0x40080000      | 8 (0-7)                         | 0xC5000000           | 8 KB         | MSS_MBOX           |
+| 4               | FW MSS_PCRA                 | 0x400A0000      | 7 (1-7)                         | 0x02000000           | 16 MB        | MSS_PCRA           |
+| 5               | FW QSPI0_ID                 | 0x400C0000      | 8 (0-7)                         | 0xC8000000           | 256 KB       | QSPI0_CONFIG       |
+|                 |                             |                 |                                 | 0xC6000000           | 32 MB        | EXT0_FLASH         |
+| 6               | FW R5SS_COREA_AXIS          | 0x400E0000      | 8 (0-7)                         | 0xC1000000           | 64 KB        | MSS_TCMA_CR5A      |
+|                 |                             |                 |                                 | 0xC1800000           | 64 KB        | MSS_TCMB_CR5A      |
+|                 |                             |                 |                                 | 0xC2000000           | 16 KB        | MSS_ICACHE_CR5A    |
+|                 |                             |                 |                                 | 0xC2800000           | 16 KB        | MSS_DCACHE_CR5A    |
+| 7               | FW R5SS_COREB_AXIS          | 0x40100000      | 8 (0-7)                         | 0xC3000000           | 64 KB        | MSS_TCMA_CR5B      |
+|                 |                             |                 |                                 | 0xC3800000           | 64 KB        | MSS_TCMB_CR5B      |
+|                 |                             |                 |                                 | 0xC4000000           | 16 KB        | MSS_ICACHE_CR5B    |
+|                 |                             |                 |                                 | 0xC4800000           | 16 KB        | MSS_DCACHE_CR5B    |
+| 8               | FW L3_BANKA                 | 0x40120000      | 8 (0-7)                         | 0x88000000           | 1 MB         | DSS_L3_BANKA       |
+| 9               | FW L3_BANKB                 | 0x40140000      | 8 (0-7)                         | 0x88100000           | 1 MB         | DSS_L3_BANKB       |
+| 10              | FW L3_BANKC                 | 0x40160000      | 8 (0-7)                         | 0x88200000           | 1 MB         | DSS_L3_BANKC       |
+| 11              | FW L3_BANKD                 | 0x40180000      | 8 (0-7)                         | 0x88300000           | 576 KB       | DSS_L3_BANKD       |
+| 12              | FW HWA_DMA0                 | 0x401A0000      | 8 (0-7)                         | 0x82000000           | 128 KB       | DSS_HWA_DMA0       |
+| 13              | FW HWA_DMA1                 | 0x401C0000      | 8 (0-7)                         | 0x82100000           | 128 KB       | DSS_HWA_DMA1       |
+| 14              | FW DSS_HWA_PROC             | 0x401E0000      | 8 (0-7)                         | 0x48000000           | 4 KB         | DSS_CM4_MBOX       |
+|                 |                             |                 |                                 | 0x48020000           | 4 KB         | DSS_CM4_CTRL       |
+| 15              | FW DSS_MBOX                 | 0x40200000      | 8 (0-7)                         | 0x83100000           | 4 KB         | DSS_CM4_MBOX       |
+\endcond
+- TOP_EFUSE_FARM is a non-configurable region and runtime firewall service request will be NACKed if the TOP_EFUSE_FARM falls in any region request.
 \snippet hsmclient.c hsm_set_firewall
 
 - Example UART getVersion output.
