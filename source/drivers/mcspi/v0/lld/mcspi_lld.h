@@ -711,8 +711,8 @@ typedef struct
     /**< Flag to enable/disable multi word access */
     uint32_t                            msMode;
     /**< Controller or Peripheral mode. Refer \ref MCSPI_MsMode */
-    uint32_t                            chCnt;
-    /**< Number of McSPI channels */
+    uint32_t                            chEnabled[MCSPI_MAX_NUM_CHANNELS];
+    /**< Enable/Disable Flag for all McSPI channels */
     MCSPI_ChObject                      chObj[MCSPI_MAX_NUM_CHANNELS];
     /**< Channel object */
     MCSPI_DmaHandle                     mcspiDmaHandle;

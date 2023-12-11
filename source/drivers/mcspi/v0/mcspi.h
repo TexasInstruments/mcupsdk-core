@@ -213,7 +213,6 @@ typedef struct
     MCSPILLD_Object        mcspiLldObject;
     MCSPILLD_Handle        mcspiLldHandle;
     MCSPILLD_InitObject    mcspiLldInitObj;
-    MCSPI_ChConfig         mcspiChCfg[MCSPI_MAX_NUM_CHANNELS];
  /*  MCSPI driver object for LLD */
 } MCSPI_Object;
 

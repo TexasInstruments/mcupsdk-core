@@ -137,6 +137,7 @@ void MCSPI_deinit(void)
 MCSPI_Handle MCSPI_open(uint32_t index, const MCSPI_OpenParams *openPrms)
 {
     int32_t              status = SystemP_SUCCESS;
+    uint8_t              configNum, chNum;
     MCSPI_Handle         handle = NULL;
     MCSPI_Config        *config = NULL;
     MCSPI_Object        *obj    = NULL;
@@ -206,7 +207,6 @@ MCSPI_Handle MCSPI_open(uint32_t index, const MCSPI_OpenParams *openPrms)
             mcspiLldInithandle->initDelay            = attrs->initDelay;
             mcspiLldInithandle->multiWordAccess      = attrs->multiWordAccess;
             mcspiLldInithandle->msMode               = openPrms->msMode;
-            mcspiLldInithandle->chCnt                = gMcspiNumCh[index];
             mcspiLldInithandle->mcspiDmaHandle       = (MCSPI_DmaHandle) gMcspiDmaHandle[0];
             mcspiLldInithandle->clockP_get           = ClockP_getTicks;
             mcspiLldInithandle->transferCallbackFxn  = MCSPI_transferCallback;
@@ -215,29 +215,31 @@ MCSPI_Handle MCSPI_open(uint32_t index, const MCSPI_OpenParams *openPrms)
             chConfig    = gConfigMcspiChCfg[index];
             dmaChConfig = gMcspiDmaChConfig[index];
 
-            for(uint8_t chNum = 0; chNum < mcspiLldInithandle->chCnt; chNum++)
+            for(configNum = 0; configNum < gMcspiNumCh[index]; configNum++)
             {
-                mcspiLldInithandle->chObj[chNum].chCfg = &obj->mcspiChCfg[chNum];
+                chNum = chConfig[configNum].chNum;
+                mcspiLldInithandle->chObj[chNum].chCfg = &chConfig[configNum];
                 lldChCfg = mcspiLldInithandle->chObj[chNum].chCfg;
 
-                lldChCfg->chNum         = chConfig[chNum].chNum;
-                lldChCfg->frameFormat   = chConfig[chNum].frameFormat;
-                lldChCfg->bitRate       = chConfig[chNum].bitRate;
-                lldChCfg->csPolarity    = chConfig[chNum].csPolarity;
-                lldChCfg->trMode        = chConfig[chNum].trMode;
-                lldChCfg->inputSelect   = chConfig[chNum].inputSelect;
-                lldChCfg->dpe0          = chConfig[chNum].dpe0;
-                lldChCfg->dpe1          = chConfig[chNum].dpe1;
-                lldChCfg->slvCsSelect   = chConfig[chNum].slvCsSelect;
-                lldChCfg->startBitEnable   = chConfig[chNum].startBitEnable;
-                lldChCfg->startBitPolarity = chConfig[chNum].startBitPolarity;
-                lldChCfg->turboEnable   = chConfig[chNum].turboEnable;
-                lldChCfg->csIdleTime    = chConfig[chNum].csIdleTime;
-                lldChCfg->defaultTxData = chConfig[chNum].defaultTxData;
-                lldChCfg->txFifoTrigLvl = chConfig[chNum].txFifoTrigLvl;
-                lldChCfg->rxFifoTrigLvl = chConfig[chNum].rxFifoTrigLvl;
+                lldChCfg->chNum         = chNum;
+                lldChCfg->frameFormat   = chConfig[configNum].frameFormat;
+                lldChCfg->bitRate       = chConfig[configNum].bitRate;
+                lldChCfg->csPolarity    = chConfig[configNum].csPolarity;
+                lldChCfg->trMode        = chConfig[configNum].trMode;
+                lldChCfg->inputSelect   = chConfig[configNum].inputSelect;
+                lldChCfg->dpe0          = chConfig[configNum].dpe0;
+                lldChCfg->dpe1          = chConfig[configNum].dpe1;
+                lldChCfg->slvCsSelect   = chConfig[configNum].slvCsSelect;
+                lldChCfg->startBitEnable   = chConfig[configNum].startBitEnable;
+                lldChCfg->startBitPolarity = chConfig[configNum].startBitPolarity;
+                lldChCfg->turboEnable   = chConfig[configNum].turboEnable;
+                lldChCfg->csIdleTime    = chConfig[configNum].csIdleTime;
+                lldChCfg->defaultTxData = chConfig[configNum].defaultTxData;
+                lldChCfg->txFifoTrigLvl = chConfig[configNum].txFifoTrigLvl;
+                lldChCfg->rxFifoTrigLvl = chConfig[configNum].rxFifoTrigLvl;
 
                 mcspiLldInithandle->chObj[chNum].dmaChCfg = dmaChConfig;
+                mcspiLldInithandle->chEnabled[chNum] = TRUE;
             }
         }
 

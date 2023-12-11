@@ -127,7 +127,6 @@ static inline int32_t MCSPI_lld_isChModeValid(uint32_t chMode);
 static inline int32_t MCSPI_lld_isPinModeValid(uint32_t pinMode);
 static inline int32_t MCSPI_lld_isInitDelayValid(uint32_t initDelay);
 static inline int32_t MCSPI_lld_isMsModeValid(uint32_t msMode);
-static inline int32_t MCSPI_lld_isChCountValid(uint32_t chCnt);
 static inline int32_t MCSPI_lld_isDataSizeValid(uint32_t dataSize);
 static inline int32_t MCSPI_lld_isHandleValid(MCSPI_DmaHandle);
 static inline int32_t MCSPI_lld_isParameterValid(uint32_t handleParameters);
@@ -186,6 +185,7 @@ int32_t MCSPI_lld_init(MCSPILLD_Handle hMcspi)
     int32_t                status = MCSPI_STATUS_SUCCESS;
     uint32_t               chCnt;
     MCSPILLD_InitHandle    hMcspiInit;
+    const MCSPI_ChConfig   *chCfg;
 
     if((hMcspi != NULL) && (hMcspi->hMcspiInit != NULL))
     {
@@ -212,7 +212,6 @@ int32_t MCSPI_lld_init(MCSPILLD_Handle hMcspi)
         status += MCSPI_lld_isPinModeValid(hMcspiInit->pinMode);
         status += MCSPI_lld_isInitDelayValid(hMcspiInit->initDelay);
         status += MCSPI_lld_isMsModeValid(hMcspiInit->msMode);
-        status += MCSPI_lld_isChCountValid(hMcspiInit->chCnt);
 
         if(status != MCSPI_STATUS_SUCCESS)
         {
@@ -226,11 +225,22 @@ int32_t MCSPI_lld_init(MCSPILLD_Handle hMcspi)
         MCSPI_configInstance(hMcspi);
 
         /* Channel configuration */
-        for(chCnt = 0U; chCnt < hMcspiInit->chCnt; chCnt++)
+        for(chCnt = 0U; chCnt < MCSPI_MAX_NUM_CHANNELS; chCnt++)
         {
-            status += MCSPI_lld_chConfig(hMcspi,
-                        hMcspiInit->chObj[chCnt].chCfg,
-                        chCnt);
+            if(hMcspiInit->chEnabled[chCnt] == TRUE)
+            {
+                chCfg = hMcspiInit->chObj[chCnt].chCfg;
+
+                status =  MCSPI_lld_isChCfgValid(chCfg);
+                status += MCSPI_lld_isChannelValid(chCfg->chNum);
+
+                if(MCSPI_STATUS_SUCCESS == status)
+                {
+                    status += MCSPI_lld_chConfig(hMcspi,
+                                hMcspiInit->chObj[chCnt].chCfg,
+                                chCnt);
+                }
+            }
         }
         if(status != MCSPI_STATUS_SUCCESS)
         {
@@ -284,7 +294,6 @@ int32_t MCSPI_lld_initDma(MCSPILLD_Handle hMcspi)
         status += MCSPI_lld_isPinModeValid(hMcspiInit->pinMode);
         status += MCSPI_lld_isInitDelayValid(hMcspiInit->initDelay);
         status += MCSPI_lld_isMsModeValid(hMcspiInit->msMode);
-        status += MCSPI_lld_isChCountValid(hMcspiInit->chCnt);
 
         if(status != MCSPI_STATUS_SUCCESS)
         {
@@ -299,17 +308,20 @@ int32_t MCSPI_lld_initDma(MCSPILLD_Handle hMcspi)
         MCSPI_configInstance(hMcspi);
 
         /* Channel configuration */
-        for(chCnt = 0U; chCnt < hMcspiInit->chCnt; chCnt++)
+        for(chCnt = 0U; chCnt < MCSPI_MAX_NUM_CHANNELS; chCnt++)
         {
-            chCfg = hMcspiInit->chObj[chCnt].chCfg;
-
-            status =  MCSPI_lld_isChCfgValid(chCfg);
-            status += MCSPI_lld_isChannelValid(chCfg->chNum);
-
-            if(MCSPI_STATUS_SUCCESS == status)
+            if(hMcspiInit->chEnabled[chCnt] == TRUE)
             {
-                status += MCSPI_lld_chConfig(hMcspi, chCfg, chCnt);
-                status += MCSPI_lld_dmaChInit(hMcspi, chCnt);
+                chCfg = hMcspiInit->chObj[chCnt].chCfg;
+
+                status =  MCSPI_lld_isChCfgValid(chCfg);
+                status += MCSPI_lld_isChannelValid(chCfg->chNum);
+
+                if(MCSPI_STATUS_SUCCESS == status)
+                {
+                    status += MCSPI_lld_chConfig(hMcspi, chCfg, chCnt);
+                    status += MCSPI_lld_dmaChInit(hMcspi, chCnt);
+                }
             }
         }
 
@@ -366,11 +378,14 @@ int32_t MCSPI_lld_deInitDma(MCSPILLD_Handle hMcspi)
         /* Reset MCSPI */
         MCSPI_reset(baseAddr);
 
-        for(chCnt = 0U; chCnt < hMcspiInit->chCnt; chCnt++)
+        for(chCnt = 0U; chCnt < MCSPI_MAX_NUM_CHANNELS; chCnt++)
         {
-            status += MCSPI_lld_dmaDeInit(hMcspi,
-                                          hMcspiInit->chObj[chCnt].chCfg,
-                                          chCnt);
+            if(hMcspiInit->chEnabled[chCnt] == TRUE)
+            {
+                status += MCSPI_lld_dmaDeInit(hMcspi,
+                                            hMcspiInit->chObj[chCnt].chCfg,
+                                            chCnt);
+            }
         }
 
         hMcspi->state = MCSPI_STATE_RESET;
@@ -2787,18 +2802,6 @@ static inline int32_t MCSPI_lld_isMsModeValid(uint32_t msMode)
 
     if((msMode == MCSPI_MS_MODE_CONTROLLER) ||
        (msMode == MCSPI_MS_MODE_PERIPHERAL))
-    {
-        status = MCSPI_STATUS_SUCCESS;
-    }
-
-    return status;
-}
-
-static inline int32_t MCSPI_lld_isChCountValid(uint32_t chCnt)
-{
-    int32_t status = MCSPI_INVALID_PARAM;
-
-    if((chCnt > 0U) && (chCnt <= MCSPI_MAX_NUM_CHANNELS))
     {
         status = MCSPI_STATUS_SUCCESS;
     }
