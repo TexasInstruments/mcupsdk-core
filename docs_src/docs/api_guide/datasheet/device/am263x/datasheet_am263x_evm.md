@@ -29,7 +29,7 @@ Data Placement          | MSRAM
 
 - Software/Application used        : sbl_qspi and ipc_rpmsg_echo
 - Size of sbl_qspi appimage        : 185 KB
-- Size of hello_world              : 74 KB
+- Size of ipc_rpmsg_echo              : 74 KB
 
 Boot time breakdown                     |   Time (us)
 ----------------------------------------|--------------
@@ -295,8 +295,7 @@ sincos cos	|0.0000001900	|			|			|			|			|
 asin 		|0.0000003430	| 73			| 73.082001 		| 578			| 428.697998		|
 acos 		|0.0000004770	| 74			| 74.033997 		| 810			| 383.730011		|
 atan 		|0.0000005360	| 85			| 85.071999 		| 493			| 371.148010		|
-atan2 		|0.0000007150	| 119			| 106.711998 		| 729			| 478.171997		|		|
-
+atan2 		|0.0000007150	| 119			| 106.711998 		| 729			| 478.171997		|
 ### Ethernet Performance
 
 For Ethernet performance refer \ref enetlld_performance

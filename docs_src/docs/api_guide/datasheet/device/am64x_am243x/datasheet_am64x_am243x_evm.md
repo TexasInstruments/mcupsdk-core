@@ -88,9 +88,9 @@ SBL : Total time taken                  |   95.372
 
 ### SBL SD performance
 
-- Software/Application used        : sbl_sd and ipc_notify_echo
+- Software/Application used        : sbl_sd and adc_singleshot
 - Size of sbl_sd appimage          : 300 KB
-- Size of ipc_notify_echo appimage : 34 KB
+- Size of adc_singleshot appimage : 34 KB
 - Cores present in the appimage    : r5f0-0
 - SD card read speed               : 12.5 MBps mode
 
@@ -288,19 +288,18 @@ Local Core  | Remote Core | Average Message Latency (us)
 
 - 10000 messages are sent and average one way message latency is measured
 
-Local Core  | Remote Core | Message Size | Average Message Latency (ns)
+Local Core  | Remote Core | Message Size | Average Message Latency (us)
 ------------|-------------|--------------|------------------------------
- r5f0-0    | r5f0-1    | 4      | 0.636
- r5f0-0    | r5f1-0    | 4      | 0.634
- r5f0-0    | r5f1-1    | 4      | 0.633
- r5f0-0    | m4f0-0    | 4      | 1.174
- r5f0-0    | r5f0-1    | 32     | 0.841
- r5f0-0    | r5f0-1    | 64     | 1.068
- r5f0-0    | r5f0-1    | 112    | 1.454
- r5f0-0    | m4f0-0    | 32     | 1.703
- r5f0-0    | m4f0-0    | 64     | 2.310
- r5f0-0    | m4f0-0    | 112    | 3.212
-
+ r5f0-0	| r5f0-1	| 4	| 0.571
+ r5f0-0	| r5f1-0	| 4	| 0.573
+ r5f0-0	| r5f1-1	| 4	| 0.573
+ r5f0-0	| m4f0-0	| 4	| 1.138
+ r5f0-0	| r5f0-1	| 32	| 0.775
+ r5f0-0	| r5f0-1	| 64	| 1.034
+ r5f0-0	| r5f0-1	| 112	| 1.413
+ r5f0-0	| m4f0-0	| 32	| 1.666
+ r5f0-0	| m4f0-0	| 64	| 2.268
+ r5f0-0	| m4f0-0	| 112	| 3.179
 
 ### MATHLIB
 

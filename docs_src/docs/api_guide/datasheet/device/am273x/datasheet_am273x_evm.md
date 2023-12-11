@@ -28,7 +28,7 @@ Data Placement          | MSS L2 RAM
 
 - Software/Application used        : sbl_qspi and ipc_rpmsg_echo
 - Size of sbl_qspi appimage        : 163 KB
-- Size of hello_world appimage     : 53 KB
+- Size of ipc_rpmsg_echo appimage     : 53 KB
 
 Boot time breakdown                     |   Time (us)
 ----------------------------------------|--------------
