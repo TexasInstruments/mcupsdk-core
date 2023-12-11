@@ -61,6 +61,7 @@ debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -225,12 +226,12 @@ section9.output_section[0].$name     = ".bss:ENET_DMA_PKT_MEMPOOL";
 section9.output_section[0].alignment = 128;
 
 enet_cpsw1.$name                            = "CONFIG_ENET_CPSW0";
-enet_cpsw1.DisableMacPort2                  = true;
 enet_cpsw1.PktInfoOnlyEnable                = true;
 enet_cpsw1.LargePoolPktCount                = 40;
 enet_cpsw1.txDmaChannel[0].$name            = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel[0].$name            = "ENET_DMA_RX_CH0";
 enet_cpsw1.rxDmaChannel[0].PacketsCount     = 40;
+enet_cpsw1.rxDmaChannel[0].macAddrCount     = 2;
 enet_cpsw1.pinmux[0].$name                  = "ENET_CPSW_PINMUX0";
 enet_cpsw1.pinmux[0].MDIO.$assign           = "MDIO";
 enet_cpsw1.pinmux[0].MDIO.MDIO_MDIO.$assign = "MDIO_MDIO";

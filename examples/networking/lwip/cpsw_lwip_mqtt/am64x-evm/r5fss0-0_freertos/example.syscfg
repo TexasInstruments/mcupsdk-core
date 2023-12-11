@@ -286,13 +286,13 @@ section12.output_section[2].$name     = ".bss:ENET_ICSSG_OCMC_MEM";
 section12.output_section[2].alignment = 128;
 
 enet_cpsw1.$name                        = "CONFIG_ENET_CPSW0";
-enet_cpsw1.DisableMacPort2              = true;
 enet_cpsw1.PktInfoOnlyEnable            = true;
 enet_cpsw1.mdioMode                     = "MDIO_MODE_MANUAL";
 enet_cpsw1.LargePoolPktCount            = 40;
 enet_cpsw1.txDmaChannel[0].$name        = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel[0].$name        = "ENET_DMA_RX_CH0";
 enet_cpsw1.rxDmaChannel[0].PacketsCount = 40;
+enet_cpsw1.rxDmaChannel[0].macAddrCount = 2;
 enet_cpsw1.pinmux[0].$name              = "ENET_CPSW_PINMUX0";
 enet_cpsw1.pinmux[0].MDIO.$assign       = "MDIO0";
 enet_cpsw1.pinmux[0].MDIO.MDC.$assign   = "PRG0_PRU1_GPO19";
