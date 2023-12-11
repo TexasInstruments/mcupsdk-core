@@ -29,22 +29,22 @@ Data Placement          | MSRAM
 
 ### AM64X-EVM
 
-- Software/Application used        : sbl_ospi and ipc_rpmsg_echo
+- Software/Application used        : sbl_ospi and ipc_notify_echo
 - Size of sbl_ospi appimage        : 256 KB
-- Size of ipc_rpmsg_echo appimage  : 146 KB
+- Size of ipc_notify_echo appimage  : 77 KB
 - Cores present in the appimage    : m4f0-0, r5f0-0, r5f0-1, r5f1-0, r5f1-1
 - Boot Media Clock                 : 166.667 MHz (Octal DDR mode)
 
 Boot time breakdown                     |   Time (ms)
 ----------------------------------------|--------------
 ROM : init + SBL load from flash        |   12.00
-SBL : SYSFW Load                        |   12.17
-SBL : System Init                       |   0.57
-SBL : Drivers_open                      |   0.27
-SBL : Board_driversOpen                 |   22.15
-SBL : Sciclient Get Version             |   9.01
-SBL : CPU Load                          |   246.53
-SBL : Total time taken                  |   302.7
+SBL : SYSFW Load                        |   12.159
+SBL : System Init                       |   0.553
+SBL : Drivers_open                      |   0.280
+SBL : Board_driversOpen                 |   22.23
+SBL : Sciclient Get Version             |   9.9
+SBL : CPU Load                          |   38.25
+SBL : Total time taken                  |   95.372
 
 - The time taken for Board_driversOpen (around 20 ms) is mostly for the PHY tuning of OSPI. If this needs to be further reduced, one can pre-train the PHY, note down delay values and set it directly instead of the tuning procedure.
 
@@ -59,22 +59,22 @@ SBL : Total time taken                  |   302.7
 
 ### AM243X-EVM
 
-- Software/Application used        : sbl_ospi and ipc_rpmsg_echo
+- Software/Application used        : sbl_ospi and ipc_notify_echo
 - Size of sbl_ospi appimage        : 256 KB
-- Size of ipc_rpmsg_echo appimage  : 146 KB
+- Size of ipc_notify_echo appimage  : 77 KB
 - Cores present in the appimage    : m4f0-0, r5f0-0, r5f0-1, r5f1-0, r5f1-1
 - Boot Media Clock                 : 166.667 MHz (Octal DDR mode)
 
 Boot time breakdown                     |   Time (ms)
 ----------------------------------------|--------------
 ROM : init + SBL load from flash        |   12.00
-SBL : SYSFW Load                        |   12.17
-SBL : System Init                       |   0.57
-SBL : Drivers_open                      |   0.27
-SBL : Board_driversOpen                 |   22.15
-SBL : Sciclient Get Version             |   9.01
-SBL : CPU Load                          |   246.53
-SBL : Total time taken                  |   302.7
+SBL : SYSFW Load                        |   12.159
+SBL : System Init                       |   0.553
+SBL : Drivers_open                      |   0.280
+SBL : Board_driversOpen                 |   22.23
+SBL : Sciclient Get Version             |   9.9
+SBL : CPU Load                          |   38.25
+SBL : Total time taken                  |   95.372
 
 - The time taken for Board_driversOpen (around 20 ms) is mostly for the PHY tuning of OSPI. If this needs to be further reduced, one can pre-train the PHY, note down delay values and set it directly instead of the tuning procedure.
 
@@ -88,24 +88,24 @@ SBL : Total time taken                  |   302.7
 
 ### SBL SD performance
 
-- Software/Application used        : sbl_sd and gpio_input_interrupt
+- Software/Application used        : sbl_sd and ipc_notify_echo
 - Size of sbl_sd appimage          : 300 KB
-- Size of gpio_input_interrupt appimage  : 34 KB
+- Size of ipc_notify_echo appimage : 34 KB
 - Cores present in the appimage    : r5f0-0
 - SD card read speed               : 12.5 MBps mode
 
 Boot time breakdown                     |   Time (ms)
 ----------------------------------------|--------------
 ROM : init + SBL load from flash        |   12.00
-SBL : SYSFW Load                        |   12.26
-SBL : System Init                       |   29.46
-SBL : Drivers_open                      |   78.35
+SBL : SYSFW Load                        |   12.161
+SBL : System Init                       |   0.131
+SBL : Drivers_open                      |   13.958
 SBL : Board_driversOpen                 |   0.00
-SBL : Sciclient Get Version             |   10.02
+SBL : Sciclient Get Version             |   9.892
 SBL : File read from SD Card            |   6.48
 SBL : CPU Load                          |   57.09
 ----------------------------------------|--------------
-SBL : Total time taken                  |   205.66
+SBL : Total time taken                  |   111.712
 
 - The MMCSD driver and SD card initialization is done as part of Drivers_open, so Board_driversOpen happens instantaneously.
 
@@ -125,15 +125,15 @@ appimage is allocated in OCRAM, so it's limited. This is not the case in OSPI.
 Caching status                          | Cycles taken
 ----------------------------------------|-------------
 Code/Data fully cached                  |    26750
-Code/Data not cached                    |    53539
+Code/Data not cached                    |    53540
 Code/Data not cached 1 of 10 iterations |    29552
 
 - MEMCPY operation
 
 Caching status                          | Cycles taken
 ----------------------------------------|-------------
-Code/Data fully cached                  |    1564
-Code/Data not cached                    |    3472
+Code/Data fully cached                  |    1565
+Code/Data not cached                    |    3473
 Code/Data not cached 1 of 10 iterations |    1759
 
 ### MCAN performance
@@ -162,9 +162,9 @@ CAN FD EXTENDED FORMAT  | 1                         | 5                   |  46 
 
 Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time  | Interrupt mode (Mbps) Throughput / Transfer time | Dma mode (Mbps) Throughput / Transfer time
 ----------------|-----------------------|-------------------------------|-------------------------------|-------------------------------
- 400		| 08			| 20.69 Mbps / 154.63 us 	| 23.81 Mbps / 134.37 us 	|  0.91 Mbps / 3499.32 us
- 200		| 16			| 32.77 Mbps / 97.66 us 	| 31.60 Mbps / 101.27 us 	|  0.95 Mbps / 3355.45 us
- 100		| 32			| 39.14 Mbps / 81.76 us 	| 37.72 Mbps / 84.83 us 	|  0.97 Mbps / 3283.49 us
+ 400		| 08			| 15.63 Mbps / 204.78 us 	| 23.75 Mbps / 134.76 us 	|  0.91 Mbps / 3500.59 us
+ 200		| 16			| 32.49 Mbps / 98.48 us 	| 31.46 Mbps / 101.71 us 	|  0.95 Mbps / 3356.64 us
+ 100		| 32			| 38.82 Mbps / 82.43 us 	| 37.58 Mbps / 85.16 us 	|  0.97 Mbps / 3284.78 us
 
 
 - Theoretically for 400 Bytes at 50MHz time required for clocks is 64us.
@@ -277,10 +277,10 @@ Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time
 
 Local Core  | Remote Core | Average Message Latency (us)
 ------------|-------------|------------------------------
- r5f0-0	| m4f0-0	|  1.43
- r5f0-0	| r5f0-1	|  0.75
- r5f0-0	| r5f1-0	|  0.80
- r5f0-0	| r5f1-1	|  0.86
+ r5f0-0	| m4f0-0	|  1.49
+ r5f0-0	| r5f0-1	|  0.78
+ r5f0-0	| r5f1-0	|  0.83
+ r5f0-0	| r5f1-1	|  0.91
  r5f0-0	| a530-0	|  0.00
  r5f0-0	| a530-1	|  0.00
 
@@ -311,54 +311,16 @@ Local Core  | Remote Core | Message Size | Average Message Latency (ns)
 - The max error for each operation between the optimized Mathlib mcusdk functions and the compiler mathlib version is printed
 Function	| Err		| Max Cycles Mathlib (mcusdk) 	| avg cycles Mathlib (mcusdk) 	| max cycles mathlib (clang) 	| avg cycles mathlib (clang) 	|
 ----------------|---------------|-----------------------|-----------------------|-----------------------|-----------------------|
-sin 		|0.0000007150	| 42			| 42.798000 		| 642			| 293.339996		|
-cos  		|0.0000002870	| 53			| 53.736000 		| 1220			| 290.665985		|
-sincos sin  	|0.0000001790	| 68			| 68.675995 		| 531			| 284.369995		|
+sin 		|0.0000007150	| 52			| 52.226002 		| 758			| 277.294006		|
+cos  		|0.0000002870	| 64			| 64.103996 		| 689			| 278.225983		|
+sincos sin  	|0.0000001790	| 79			| 79.223999 		| 467			| 274.265991		|
 sincos cos	|0.0000001900	|			|			|			|			|
-asin 		|0.0000003430	| 63			| 63.538002 		| 1183			| 447.066010		|
-acos 		|0.0000004770	| 64			| 64.534004 		| 1146			| 398.294006		|
-atan 		|0.0000005360	| 72			| 72.758003 		| 740			| 390.471985		|
-atan2 		|0.0000007150	| 112			| 103.040001 		| 1190			| 491.321991		|
+asin 		|0.0000003430	| 73			| 73.098000 		| 1160			| 431.116028		|
+acos 		|0.0000004770	| 74			| 74.096001 		| 1010			| 385.179993		|
+atan 		|0.0000005360	| 85			| 85.089996 		| 900			| 373.325989		|
+atan2 		|0.0000007150	| 119			| 106.730003 		| 1150			| 479.428009		|
 
 ### SA2UL
-
-### AES CBC
-
-- Software/Application used : test_sa2ul_aes
-- Code Placement            : OCMC
-- Data Placement            : OCMC
-- Input Data sizes          : 512B, 1KB, 2KB, 4KB, 8KB, 16KB and 32KB
-- CPU with operating speed  : R5F with 800MHZ
-| Key Length | operation  | Size | Performance (Mbps) |
-|-------------|------------|------|-------------|
-| 128 | Encryption |  32.00 KB | 1501.150297 |
-| 128 | Decryption |  32.00 KB | 1865.179612 |
-| 128 | Encryption |  16.00 KB | 1391.773404 |
-| 128 | Decryption |  16.00 KB | 1665.357982 |
-| 128 | Encryption |  8.00 KB | 1180.376883 |
-| 128 | Decryption |  8.00 KB | 1381.705099 |
-| 128 | Encryption |  4.00 KB | 907.858009 |
-| 128 | Decryption |  4.00 KB | 1011.826463 |
-| 128 | Encryption |  2.00 KB | 654.378432 |
-| 128 | Decryption |  2.00 KB | 711.728931 |
-| 128 | Encryption |  1024.00 B | 407.917341 |
-| 128 | Decryption |  1024.00 B | 430.336857 |
-| 128 | Encryption |  512.00 B | 234.542982 |
-| 128 | Decryption |  512.00 B | 236.865693 |
-| 256 | Encryption |  32.00 KB | 1334.668966 |
-| 256 | Decryption |  32.00 KB | 1521.682219 |
-| 256 | Encryption |  16.00 KB | 1220.423888 |
-| 256 | Decryption |  16.00 KB | 1375.686810 |
-| 256 | Encryption |  8.00 KB | 1044.107221 |
-| 256 | Decryption |  8.00 KB | 1156.475130 |
-| 256 | Encryption |  4.00 KB | 828.782801 |
-| 256 | Decryption |  4.00 KB | 888.894917 |
-| 256 | Encryption |  2.00 KB | 615.708380 |
-| 256 | Decryption |  2.00 KB | 635.500606 |
-| 256 | Encryption |  1024.00 B | 393.019490 |
-| 256 | Decryption |  1024.00 B | 399.853569 |
-| 256 | Encryption |  512.00 B | 231.004582 |
-| 256 | Decryption |  512.00 B | 228.014752 |
 
 ### PKA RSA SIGN VERIFY
 
@@ -369,7 +331,31 @@ atan2 		|0.0000007150	| 112			| 103.040001 		| 1190			| 491.321991		|
 | ECDSA            | Sign/sec  | Verify/sec  | Sign and verify/sec |
 |------------------|-----------|-------------|---------------------|
 | 2048 | 632 | 8849 | 589 |
-| 4096 | 97 | 2793 | 94 |
+| 4096 | 97 | 2801 | 94 |
+
+### SHA
+
+- Software/Application used : test_sa2ul_sha
+- Code Placement            : OCMC
+- Data Placement            : OCMC
+- Input Data sizes          : 512B, 1KB, 2KB, 4KB, 8KB, 16KB and 32KB
+- CPU with operating speed  : R5F with 800MHZ
+| SHA | Size | Performance (Mbps) |
+|-----|------|-------------|
+| 512 |  32.00 KB | 2041.659690 |
+| 512 |  16.00 KB | 1814.239493 |
+| 512 |  8.00 KB | 1422.878389 |
+| 512 |  4.00 KB | 987.025114 |
+| 512 |  2.00 KB | 602.546775 |
+| 512 |  1024.00 B | 333.652378 |
+| 512 |  512.00 B | 174.669510 |
+| 256 |  32.00 KB | 1581.002209 |
+| 256 |  16.00 KB | 1403.678616 |
+| 256 |  8.00 KB | 1143.161154 |
+| 256 |  4.00 KB | 827.030949 |
+| 256 |  2.00 KB | 534.573188 |
+| 256 |  1024.00 B | 312.552461 |
+| 256 |  512.00 B | 171.398682 |
 
 ### PKA ECDSA
 
@@ -382,6 +368,44 @@ atan2 		|0.0000007150	| 112			| 103.040001 		| 1190			| 491.321991		|
 | 256 | 1136 | 693 | 430 |
 | 384 | 586 | 349 | 218 |
 
+### AES
+
+- Software/Application used : test_sa2ul_aes
+- Code Placement            : OCMC
+- Data Placement            : OCMC
+- Input Data sizes          : 512B, 1KB, 2KB, 4KB, 8KB, 16KB and 32KB
+- CPU with operating speed  : R5F with 800MHZ
+| Key Length | operation  | Size | Performance (Mbps) |
+|-------------|------------|------|-------------|
+| 128 | Encryption |  32.00 KB | 1495.924845 |
+| 128 | Decryption |  32.00 KB | 1844.947655 |
+| 128 | Encryption |  16.00 KB | 1392.216897 |
+| 128 | Decryption |  16.00 KB | 1665.728356 |
+| 128 | Encryption |  8.00 KB | 1178.228235 |
+| 128 | Decryption |  8.00 KB | 1339.109113 |
+| 128 | Encryption |  4.00 KB | 918.707507 |
+| 128 | Decryption |  4.00 KB | 1023.600156 |
+| 128 | Encryption |  2.00 KB | 651.192369 |
+| 128 | Decryption |  2.00 KB | 701.895684 |
+| 128 | Encryption |  1024.00 B | 409.933071 |
+| 128 | Decryption |  1024.00 B | 423.140496 |
+| 128 | Encryption |  512.00 B | 232.727273 |
+| 128 | Decryption |  512.00 B | 239.427152 |
+| 256 | Encryption |  32.00 KB | 1333.277387 |
+| 256 | Decryption |  32.00 KB | 1521.251732 |
+| 256 | Encryption |  16.00 KB | 1219.558037 |
+| 256 | Decryption |  16.00 KB | 1377.222638 |
+| 256 | Encryption |  8.00 KB | 1046.608376 |
+| 256 | Decryption |  8.00 KB | 1153.066925 |
+| 256 | Encryption |  4.00 KB | 823.316583 |
+| 256 | Decryption |  4.00 KB | 896.893390 |
+| 256 | Encryption |  2.00 KB | 611.086764 |
+| 256 | Decryption |  2.00 KB | 637.788915 |
+| 256 | Encryption |  1024.00 B | 388.269447 |
+| 256 | Decryption |  1024.00 B | 403.820322 |
+| 256 | Encryption |  512.00 B | 228.014752 |
+| 256 | Decryption |  512.00 B | 230.923185 |
+
 ### RSA ENCRYPT DECRYPT
 
 - Software/Application used : test_sa2ul_rsa
@@ -391,34 +415,10 @@ atan2 		|0.0000007150	| 112			| 103.040001 		| 1190			| 491.321991		|
 - Software/Application used : test_sa2ul_rsa
 | Key Length | operation  | Size | Performance(Mbps) |
 |-------------|------------|------|-------------|
-| 2048 | Encryption |  256.00 B | 0.554973 |
-| 2048 | Decryption |  256.00 B | 1.294659 |
-| 4096 | Encryption |  512.00 B | 0.597194 |
-| 4096 | Decryption |  512.00 B | 0.400659 |
-
-### SHA
-
-- Software/Application used : test_sa2ul_sha
-- Code Placement            : OCMC
-- Data Placement            : OCMC
-- Input Data sizes          : 512B, 1KB, 2KB, 4KB, 8KB, 16KB and 32KB
-- CPU with operating speed  : R5F with 800MHZ
-| SHA | Size | Performance (Mbps) |
-|-----|------|-------------|
-| 512 |  32.00 KB | 2038.900610 |
-| 512 |  16.00 KB | 1824.975199 |
-| 512 |  8.00 KB | 1428.811250 |
-| 512 |  4.00 KB | 981.298196 |
-| 512 |  2.00 KB | 604.380504 |
-| 512 |  1024.00 B | 346.220086 |
-| 512 |  512.00 B | 182.612572 |
-| 256 |  32.00 KB | 1592.443088 |
-| 256 |  16.00 KB | 1415.063225 |
-| 256 |  8.00 KB | 1163.223287 |
-| 256 |  4.00 KB | 846.827756 |
-| 256 |  2.00 KB | 550.029375 |
-| 256 |  1024.00 B | 325.160010 |
-| 256 |  512.00 B | 172.754112 |
+| 2048 | Encryption |  256.00 B | 0.554920 |
+| 2048 | Decryption |  256.00 B | 1.295509 |
+| 4096 | Encryption |  512.00 B | 0.597262 |
+| 4096 | Decryption |  512.00 B | 0.400676 |
 
 ### USB
 
