@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-23 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -154,20 +154,20 @@ void mcasp_codec_config(void)
     /* set Line-Out DAC reset line to high */
     gpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(GPIO_DAC_RST_BASE_ADDR);
     pinNum       = GPIO_DAC_RST_PIN;
-    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_DAC_RST_DIR);
     GPIO_pinWriteHigh(gpioBaseAddr, pinNum);
 
     /* set Line-Out DAC AMUTEIN line to high */
     gpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(GPIO_DAC_AMUTEIN_BASE_ADDR);
     pinNum       = GPIO_DAC_AMUTEIN_PIN;
-    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_DAC_AMUTEIN_DIR);
     GPIO_pinWriteHigh(gpioBaseAddr, pinNum);
 
     /* set Line-In ADC reset line to high */
     gpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(GPIO_LINEIN_RST_BASE_ADDR);
     pinNum       = GPIO_LINEIN_RST_PIN;
-    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_LINEIN_RST_DIR);
     GPIO_pinWriteHigh(gpioBaseAddr, pinNum);
+
+    /* According to PCM6240QRTVRQ1 codec, 25 ms is the reset time required */
+    ClockP_usleep(25*1000);
 
     i2cHandle = gI2cHandle[CONFIG_I2C0];
     deviceAddress = APP_MCASP_CODEC_LINEIN_ADDR;
