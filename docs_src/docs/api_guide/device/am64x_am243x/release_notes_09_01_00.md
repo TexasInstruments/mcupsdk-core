@@ -27,6 +27,7 @@ HW Spinlock example (\ref EXAMPLE_SPINLOCK)                                     
 EMMC RTOS boot example (\ref EXAMPLES_DRIVERS_SBL_EMMC)                                         | SBL
 SafeIPC support (\ref EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO)                                        | IPC
 LwIP stack is upgraded to 2.2.0 version                                                         | Networking
+Serial Interface Multi channel implementation supporting ADS131M08 IC (32 KSPS)                 | PRU-IO
 \endcond
 
 \cond SOC_AM243X
@@ -41,6 +42,7 @@ EMMC RTOS boot example (\ref EXAMPLES_DRIVERS_SBL_EMMC)                         
 SafeIPC support (\ref EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO)                                        | IPC
 Uniflash tool support (\ref TI_UNIFLASH_TOOL)                                                   | Uniflash
 LwIP stack is upgraded to 2.2.0 version                                                         | Networking
+Serial Interface Multi channel implementation supporting ADS131M08 IC (32 KSPS)                 | PRU-IO
 \endcond
 
 ## Device and Validation Information
