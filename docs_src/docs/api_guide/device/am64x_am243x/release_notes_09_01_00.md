@@ -26,6 +26,7 @@ UART LLD driver support (\ref DRIVERS_UART_LLD_PAGE)                            
 HW Spinlock example (\ref EXAMPLE_SPINLOCK)                                                     | Spinlock
 EMMC RTOS boot example (\ref EXAMPLES_DRIVERS_SBL_EMMC)                                         | SBL
 SafeIPC support (\ref EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO)                                        | IPC
+LBIST support added for M4F.                                                                    | SDL
 Serial Interface Multi channel implementation supporting ADS131M08 IC (32 KSPS)                 | PRU-IO
 LwIP stack is upgraded to 2.2.0 version                                                        | Ethernet/Networking and USB
 YANG data model based configuration support for IET/Frame Preemption(IEEE 802.1Qbu), Credit Based Shaper(IEEE 802.1Qav), Enhancements for Scheduled Traffic(IEEE 802.1Qbv) and other TSN features           | Ethernet and Networking
