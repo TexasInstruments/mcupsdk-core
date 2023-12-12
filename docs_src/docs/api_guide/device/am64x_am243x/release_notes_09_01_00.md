@@ -26,8 +26,16 @@ UART LLD driver support (\ref DRIVERS_UART_LLD_PAGE)                            
 HW Spinlock example (\ref EXAMPLE_SPINLOCK)                                                     | Spinlock
 EMMC RTOS boot example (\ref EXAMPLES_DRIVERS_SBL_EMMC)                                         | SBL
 SafeIPC support (\ref EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO)                                        | IPC
-LwIP stack is upgraded to 2.2.0 version                                                         | Networking
 Serial Interface Multi channel implementation supporting ADS131M08 IC (32 KSPS)                 | PRU-IO
+LwIP stack is upgraded to 2.2.0 version                                                        | Ethernet/Networking and USB
+YANG data model based configuration support for IET/Frame Preemption(IEEE 802.1Qbu), Credit Based Shaper(IEEE 802.1Qav), Enhancements for Scheduled Traffic(IEEE 802.1Qbv) and other TSN features           | Ethernet and Networking
+Ethernet Switch management through standard Link Layer Discovery Protocol(IEEE 802.1AB) for CPSW peripheral                           | Ethernet and Networking
+Multi-time domain gPTP(IEEE 802.1AS) support enabled in Time-Sensitive Networking stack                                            | Ethernet and Networking
+Example to showcase the simultaneous execution of Time-Sensitive Networking and LwIP stack                           | Ethernet and Networking
+Documentation updated to show static IP configuration, custom MAC address and other ethernet related configurations | Ethernet and Networking
+Support to enable both ICSSG peripherals \ref ICSSG0_USAGE_GUIDE \n                              | Ethernet and Networking
+Support to enable upto five MAC ports using both CPSW and ICSSG peripherals on different cores | Ethernet and Networking
+Added back ICSSG examples and docs from [Industrial Communications SDK](https://software-dl.ti.com/processor-industrial-sw/esd/ind_comms_sdk/am243x/09_00_00_03/docs/api_guide_am243x/index.html) | Ethernet and Networking
 \endcond
 
 \cond SOC_AM243X
@@ -41,8 +49,16 @@ HW Spinlock example (\ref EXAMPLE_SPINLOCK)                                     
 EMMC RTOS boot example (\ref EXAMPLES_DRIVERS_SBL_EMMC)                                         | SBL
 SafeIPC support (\ref EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO)                                        | IPC
 Uniflash tool support (\ref TI_UNIFLASH_TOOL)                                                   | Uniflash
-LwIP stack is upgraded to 2.2.0 version                                                         | Networking
 Serial Interface Multi channel implementation supporting ADS131M08 IC (32 KSPS)                 | PRU-IO
+LwIP stack is upgraded to 2.2.0 version                                                        | Ethernet/Networking and USB
+YANG data model based configuration support for IET/Frame Preemption(IEEE 802.1Qbu), Credit Based Shaper(IEEE 802.1Qav), Enhancements for Scheduled Traffic(IEEE 802.1Qbv) and other TSN features           | Ethernet and Networking
+Ethernet Switch management through standard Link Layer Discovery Protocol(IEEE 802.1AB) for CPSW peripheral                           | Ethernet and Networking
+Multi-time domain gPTP(IEEE 802.1AS) support enabled in Time-Sensitive Networking stack                                            | Ethernet and Networking
+Example to showcase the simultaneous execution of Time-Sensitive Networking and LwIP stack                           | Ethernet and Networking
+Documentation updated to show static IP configuration, custom MAC address and other ethernet related configurations | Ethernet and Networking
+Support to enable both ICSSG peripherals \ref ICSSG0_USAGE_GUIDE \n                              | Ethernet and Networking
+Support to enable upto five MAC ports using both CPSW and ICSSG peripherals on different cores | Ethernet and Networking
+Added back ICSSG examples and docs from [Industrial Communications SDK](https://software-dl.ti.com/processor-industrial-sw/esd/ind_comms_sdk/am243x/09_00_00_03/docs/api_guide_am243x/index.html) | Ethernet and Networking
 \endcond
 
 ## Device and Validation Information
@@ -351,6 +367,30 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 9.0.0 onwards
     <td> AM64x, AM243x
     <td> Added ICSS cores init in SBL
+</tr>
+<tr>
+    <th> PINDSW-5282
+    <th> Move HOST_PKT_TX PA stat update in RTU after acquiring TX queue or after drop checks
+    <th> Ethernet
+    <th> 09.01.00
+    <th> AM64x, AM243x
+    <th> -
+</tr>
+<tr>
+    <th> PINDSW-5536
+    <th> TMDX654IDKEVM: Clock jump of PTP device for ICSSG #2
+    <th> Ethernet
+    <th> 09.01.00
+    <th> AM64x, AM243x
+    <th> -
+</tr>
+<tr>
+    <th> PINDSW-6919
+    <th> 100M HD transmit issue in case of excess collisions
+    <th> Ethernet
+    <th> 09.01.00
+    <th> AM64x, AM243x
+    <th> -
 </tr>
 \cond SOC_AM64X
 \endcond

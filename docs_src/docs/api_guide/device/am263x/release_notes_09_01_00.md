@@ -24,8 +24,12 @@ SafeIPC support (\ref EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO)                        
 ECAP-ADC & ECAP-EDMA example (\ref EXAMPLES_DRIVERS_ADC_SOC_ECAP) (\ref EXAMPLES_DRIVERS_ECAP_EDMA) | ECAP
 EPWM Synchronization example (\ref EXAMPLES_DRIVERS_EPWM_SYNCHRONIZATION)                       | EPWM
 Uniflash tool support (\ref TI_UNIFLASH_TOOL)                                                   | Uniflash
-LwIP stack is upgraded to 2.2.0 version                                                         | Networking
-
+LwIP stack is upgraded to 2.2.0 version                                                        | Ethernet and Networking
+YANG data model based configuration support for IET/Frame Preemption(IEEE 802.1Qbu), Credit Based Shaper(IEEE 802.1Qav), Enhancements for Scheduled Traffic(IEEE 802.1Qbv) and other TSN features           | Ethernet and Networking
+Ethernet Switch management through standard Link Layer Discovery Protocol(IEEE 802.1AB) for CPSW peripheral                           | Ethernet and Networking
+Multi-time domain gPTP(IEEE 802.1AS) support enabled in TSN stack                                            | Ethernet and Networking
+Example to showcase the simultaneous execution of Time-Sensitive Networking and LwIP stack                           | Ethernet and Networking
+Documentation updated to show static IP configuration, custom MAC address and other ethernet related configurations | Ethernet and Networking
 
 ## Device and Validation Information
 
@@ -104,7 +108,7 @@ Peripheral   | Supported CPUs | SysConfig Support | DMA Supported               
 ADC          | R5F            | YES               | Yes. Example:  adc_soc_continuous_dma | Single software triggered conversion, Multiple ADC trigger using PWM, Result read using DMA, EPWM trip through PPB limit, PPB limits, PPB offsets, burst mode oversampling, differential mode, Offset, EPWM triggered conversion                | -
 Bootloader   | R5F            | YES               | Yes. DMA enabled for SBL QSPI         | Boot modes: QSPI, UART. All R5F's                                                                                                                               | -
 CMPSS        | R5F            | YES               | NA                                    | Asynchronous PWM trip                                                                                                                                           | -
-CPSW         | R5F            | YES               | No                                    | MAC loopback, PHY loopback, LWIP: Getting IP, Ping, Iperf, Layer 2 MAC, Layer 2 PTP Timestamping and Ethernet CPSW Switch support                               | -
+CPSW         | R5F            | YES               | No                                    | MAC loopback, PHY loopback, LWIP: Getting IP, Ping, Iperf, Layer 2 MAC, Layer 2 PTP Timestamping and Ethernet CPSW Switch support, TSN stack                               | RMII, MII mode
 DAC          | R5F            | YES               | Yes. Example: dac_sine_dma            | Constant voltage, Square wave generation, Sine wave generation with and without DMA, Ramp wave generation, Random Voltage generation                            | -
 ECAP         | R5F            | YES               | No                                    | ECAP APWM mode, PWM capture                                                                                                                                     | -
 EDMA         | R5F            | YES               | NA                                    | DMA transfer using interrupt and polling mode, QDMA Transfer, Channel Chaining, PaRAM Linking                                                                   | -
@@ -158,12 +162,13 @@ Module                      | Supported CPUs | SysConfig Support | OS Support   
 ----------------------------|----------------|-------------------|-------------------|-------------------------------------------------|------------------------
 -                           | -              | -                 | -                 | -                                               |  -
 
-### Networking
+### Ethernet and Networking
 
 Module                      | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                    | Key features not tested
 ----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------|------------------------
+Time-Sensitive Networking(gPTP-IEEE 802.1AS)                         | R5F            | NO                | FreeRTOS    | gPTP IEEE 802.1 AS-2020 compliant gPTP stack, End Nodes and Bridge mode support, YANG data model configuration  | Multi-Clock Domain
 LwIP                        | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping                         | Other LwIP features
-Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, CPSW EST, interrupt pacing, Policer and Classifier, MDIO Manual Mode, CBS (IEEE 802.1Qav), Strapped PHY (Early Ethernet) | RMII mode
+Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, CPSW EST, interrupt pacing, Policer and Classifier, MDIO Manual Mode, Credit Based Shaper (IEEE 802.1Qav), Strapped PHY (Early Ethernet)  | RMII, MII mode
 ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Only compiled                                                                          | Not tested
 Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography
 
@@ -497,7 +502,7 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
 </tr>
 </table>
 
-### Networking
+### Ethernet and Networking
 
 <table>
 <tr>
