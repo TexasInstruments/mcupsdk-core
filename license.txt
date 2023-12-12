@@ -158,19 +158,3 @@ c.	Each party shall, at its own expense, secure export and import authorizations
 
 19.	Entire Agreement. This is the entire agreement between You and TI, and this Agreement supersedes any prior agreement between the parties related to the subject matter of this Agreement. Notwithstanding the foregoing, any signed and effective software license agreement relating to the subject matter will take precedence over this Agreement if such agreement states it will control regardless of any prior or subsequent click-wrap, shrink-wrap, or web-wrap software license agreement. No amendment or modification of this Agreement will be effective unless in writing and signed by a duly authorized representative of TI. You warrant and represent that You have obtained all authorizations and other applicable consents required empowering You to enter into this Agreement.
 
- 
-Exhibit A
-Additional Third-Party License Restrictions
-
-For Beckhoff EtherCAT SSC Library, the following terms shall apply:
-
-"The EtherCAT Slave Stack is licensed for evaluation only.  Subject to the terms of this Agreement, TI hereby grants to you a limited, non-transferable, worldwide, non-exclusive, non-sublicensable license to use the Licensed Materials as part of the software development kit containing EtherCAT Slave Stack software licensed by Beckhoff Automation GmBH, in connection with the Demo Board, for the sole purpose of evaluating the Licensee Product.  For purposes of this Agreement, (A) “EtherCAT Slave Stack” shall be construed to refer to ""EtherCAT® software, which is a registered trademark and patented software, licensed by Beckhoff Automation GmbH, Germany; and (B) “Demo Board” means Generic EtherCAT Slave Controller demonstration hardware consisting of (i) a PCB including electronic circuitry, e.g. microprocessors of TI, and a Generic EtherCAT Slave Controller, designed, developed and manufactured by or on behalf of TI, and (ii) the EtherCAT Slave Stack software provided as part of the Licensed Materials.
-The following additional restrictions apply to the use of the EtherCAT Slave Stack:
-i. You shall not distribute Licensee Products that contain the EtherCAT Technology without a separate agreement with Beckhoff Automation GmbH.
-ii. You shall have no right to further sub-license the Licensed Materials.
-iii. You shall obtain a separate production license from Beckhoff Automation GmbH as per paragraph 3(c)(i) above.
-iv. You agree that the Licensed Materials are provided to you “AS IS” and without any warranty and Beckhoff Automation GmbH and TI disclaim any and all liabilities to you with respect to the Licensed Materials;
-v. You may not create, distribute and/or sell derivative works of the Licensed Materials or instruct any third party to do this;
-vi. You may not sublicense, rent, lease, loan, timeshare, sell, distribute, disclose, publish, assign or transfer any rights, grant a security interest in, transfer possession of the Licensed Materials or its components; and
-vii. You may not reengineer, translate, reverse engineer, decompile, disassemble or attempt to derive the source code of the Licensed Materials or components of the Licensed Materials or any algorithms, concepts, techniques, methods or processes embodied herein provided to you in object code, or create derivative works of the Licensed Materials or instruct any third party do any of the foregoing."""
-
