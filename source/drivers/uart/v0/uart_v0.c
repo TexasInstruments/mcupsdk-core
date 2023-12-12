@@ -527,6 +527,7 @@ int32_t UART_write(UART_Handle handle, UART_Transaction *trans)
         attrs   = config->attrs;
         prms    = &config->object->prms;
         uartLld_handle = object->uartLld_handle;
+        object->writeTrans = trans;
 
         DebugP_assert(NULL_PTR != object);
         DebugP_assert(NULL_PTR != attrs);
@@ -634,6 +635,7 @@ int32_t UART_read(UART_Handle handle, UART_Transaction *trans)
         attrs   = config->attrs;
         prms    = &config->object->prms;
         uartLld_handle = object->uartLld_handle;
+        object->readTrans = trans;
 
         DebugP_assert(NULL_PTR != object);
         DebugP_assert(NULL_PTR != attrs);
@@ -887,7 +889,7 @@ static void UART_lld_writeCompleteCallback(void *args)
         {
             config = (UART_Config *) handle;
             obj = config->object;
-
+            obj->writeTrans->count = hUart->writeTrans.count;
             if (obj->prms.writeMode == UART_TRANSFER_MODE_CALLBACK)
             {
                 obj->prms.writeCallbackFxn(hUart, &hUart->writeTrans);
@@ -915,7 +917,7 @@ static void UART_lld_readCompleteCallback(void *args)
         {
             config = (UART_Config *) handle;
             obj = config->object;
-
+            obj->readTrans->count = hUart->readTrans.count;
             if (obj->prms.readMode == UART_TRANSFER_MODE_CALLBACK)
             {
                 obj->prms.readCallbackFxn(hUart, &hUart->readTrans);
