@@ -16,15 +16,15 @@
 \cond SOC_AM273X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|--------------------------
-Memory Configurator (SysConfig based Linker generation) (\ref MEMORY_CONFIGURATOR)              | Common
-Coremark and Dhrystone benchmark (\ref EXAMPLES_COREMARK, \ref EXAMPLES_DHRYSTONE)              | Common
-SafeIPC support (\ref EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO)                                        | IPC
-LwIP stack is upgraded to 2.2.0 version                                                        | Ethernet and Networking
-YANG data model based configuration support for IET/Frame Preemption(IEEE 802.1Qbu), Credit Based Shaper(IEEE 802.1Qav), Enhancements for Scheduled Traffic(IEEE 802.1Qbv) and other TSN features           | Ethernet and Networking
-Ethernet Switch management through standard Link Layer Discovery Protocol(IEEE 802.1AB) for CPSW peripheral                           | Ethernet and Networking
-Multi-time domain gPTP(IEEE 802.1AS) support enabled in TSN stack                                            | Ethernet and Networking
-Example to showcase the simultaneous execution of Time-Sensitive Networking and LwIP stack                           | Ethernet and Networking
-Documentation updated to show static IP configuration, custom MAC address and other ethernet related configurations | Ethernet and Networking
+Memory Configurator (SysConfig based Linker generation) (\ref MEMORY_CONFIGURATOR)                                  | Common
+Coremark and Dhrystone benchmark (\ref EXAMPLES_COREMARK, \ref EXAMPLES_DHRYSTONE)                                  | Common
+SafeIPC support (\ref EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO)                                                            | IPC
+LwIP stack is upgraded to 2.2.0 version                                                                             | Ethernet and Networking
+YANG data model based configuration support for IET/Frame Preemption(IEEE 802.1Qbu), Credit Based Shaper(IEEE 802.1Qav), Enhancements for Scheduled Traffic(IEEE 802.1Qbv) and other TSN features                                                                                        | Ethernet and Networking
+Ethernet Switch management through standard Link Layer Discovery Protocol(IEEE 802.1AB) for CPSW peripheral         | Ethernet and Networking
+Multi-time domain gPTP(IEEE 802.1AS) support enabled in TSN stack                                                   | Ethernet and Networking
+Example to showcase the simultaneous execution of Time-Sensitive Networking and LwIP stack                          | Ethernet and Networking
+Syscfg and doc update for static IP configuration, custom MAC address and other ethernet related configurations     | Ethernet and Networking
 \endcond
 \cond SOC_AWR294X
 Feature                                                                                         | Module
@@ -221,6 +221,13 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F a
     <td> TimerP driver has bug in TimerP_clearOverflowInt function
     <td> DPL
     <td> 9.0.0 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-11426
+    <td> Rx timestamping is not stable
+    <td> Networking
+    <td> 8.6.0 onwards
     <td> -
 </tr>
 </table>

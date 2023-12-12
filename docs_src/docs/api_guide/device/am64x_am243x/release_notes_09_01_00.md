@@ -19,47 +19,47 @@
 \cond SOC_AM64X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
-Memory Configurator (SysConfig based Linker generation) (\ref MEMORY_CONFIGURATOR)              | Common
-Coremark and Dhrystone benchmark (\ref EXAMPLES_COREMARK, \ref EXAMPLES_DHRYSTONE)              | Common
-McSPI LLD driver support (\ref DRIVERS_MCSPI_LLD_PAGE)                                          | McSPI
-UART LLD driver support (\ref DRIVERS_UART_LLD_PAGE)                                            | UART
-HW Spinlock example (\ref EXAMPLE_SPINLOCK)                                                     | Spinlock
-EMMC RTOS boot example (\ref EXAMPLES_DRIVERS_SBL_EMMC)                                         | SBL
-SafeIPC support (\ref EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO)                                        | IPC
-LBIST support added for M4F.                                                                    | SDL
-Serial Interface Multi channel implementation supporting ADS131M08 IC (32 KSPS)                 | PRU-IO
-LwIP stack is upgraded to 2.2.0 version                                                        | Ethernet/Networking and USB
-YANG data model based configuration support for IET/Frame Preemption(IEEE 802.1Qbu), Credit Based Shaper(IEEE 802.1Qav), Enhancements for Scheduled Traffic(IEEE 802.1Qbv) and other TSN features           | Ethernet and Networking
-Ethernet Switch management through standard Link Layer Discovery Protocol(IEEE 802.1AB) for CPSW peripheral                           | Ethernet and Networking
-Multi-time domain gPTP(IEEE 802.1AS) support enabled in Time-Sensitive Networking stack                                            | Ethernet and Networking
-Example to showcase the simultaneous execution of Time-Sensitive Networking and LwIP stack                           | Ethernet and Networking
-Documentation updated to show static IP configuration, custom MAC address and other ethernet related configurations | Ethernet and Networking
-Support to enable both ICSSG peripherals \ref ICSSG0_USAGE_GUIDE \n                              | Ethernet and Networking
-Support to enable upto five MAC ports using both CPSW and ICSSG peripherals on different cores | Ethernet and Networking
-Added back ICSSG examples and docs from [Industrial Communications SDK](https://software-dl.ti.com/processor-industrial-sw/esd/ind_comms_sdk/am243x/09_00_00_03/docs/api_guide_am243x/index.html) | Ethernet and Networking
+Memory Configurator (SysConfig based Linker generation) (\ref MEMORY_CONFIGURATOR)                                  | Common
+Coremark and Dhrystone benchmark (\ref EXAMPLES_COREMARK, \ref EXAMPLES_DHRYSTONE)                                  | Common
+McSPI LLD driver support (\ref DRIVERS_MCSPI_LLD_PAGE)                                                              | McSPI
+UART LLD driver support (\ref DRIVERS_UART_LLD_PAGE)                                                                | UART
+HW Spinlock example (\ref EXAMPLE_SPINLOCK)                                                                         | Spinlock
+EMMC RTOS boot example (\ref EXAMPLES_DRIVERS_SBL_EMMC)                                                             | SBL
+SafeIPC support (\ref EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO)                                                            | IPC
+LBIST support added for M4F                                                                                         | SDL
+Serial Interface Multi channel implementation supporting ADS131M08 IC (32 KSPS)                                     | PRU-IO
+LwIP stack is upgraded to 2.2.0 version                                                                             | Ethernet/Networking and USB
+YANG data model based configuration support for IET/Frame Preemption(IEEE 802.1Qbu), Credit Based Shaper(IEEE 802.1Qav), Enhancements for Scheduled Traffic(IEEE 802.1Qbv) and other TSN features                                                                                        | Ethernet and Networking
+Ethernet Switch management through standard Link Layer Discovery Protocol(IEEE 802.1AB) for CPSW peripheral         | Ethernet and Networking
+Multi-time domain gPTP(IEEE 802.1AS) support enabled in Time-Sensitive Networking stack                             | Ethernet and Networking
+Example to showcase the simultaneous execution of Time-Sensitive Networking and LwIP stack                          | Ethernet and Networking
+Syscfg and doc update for static IP configuration, custom MAC address and other ethernet related configurations     | Ethernet and Networking
+Support to enable both ICSSG peripherals \ref ICSSG0_USAGE_GUIDE \n                                                 | Ethernet and Networking
+Support to enable upto five MAC ports using both CPSW and ICSSG peripherals on different cores                      | Ethernet and Networking
+Added back ICSSG examples and docs from [Industrial Communications SDK](https://software-dl.ti.com/processor-industrial-sw/esd/ind_comms_sdk/am243x/09_00_00_03/docs/api_guide_am243x/index.html)                                                                                        | Ethernet and Networking
 \endcond
 
 \cond SOC_AM243X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
-Memory Configurator (SysConfig based Linker generation) (\ref MEMORY_CONFIGURATOR)              | Common
-Coremark and Dhrystone benchmark (\ref EXAMPLES_COREMARK, \ref EXAMPLES_DHRYSTONE)              | Common
-McSPI LLD driver support (\ref DRIVERS_MCSPI_LLD_PAGE)                                          | McSPI
-UART LLD driver support (\ref DRIVERS_UART_LLD_PAGE)                                            | UART
-HW Spinlock example (\ref EXAMPLE_SPINLOCK)                                                     | Spinlock
-EMMC RTOS boot example (\ref EXAMPLES_DRIVERS_SBL_EMMC)                                         | SBL
-SafeIPC support (\ref EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO)                                        | IPC
-Uniflash tool support (\ref TI_UNIFLASH_TOOL)                                                   | Uniflash
-Serial Interface Multi channel implementation supporting ADS131M08 IC (32 KSPS)                 | PRU-IO
-LwIP stack is upgraded to 2.2.0 version                                                        | Ethernet/Networking and USB
+Memory Configurator (SysConfig based Linker generation) (\ref MEMORY_CONFIGURATOR)                                  | Common
+Coremark and Dhrystone benchmark (\ref EXAMPLES_COREMARK, \ref EXAMPLES_DHRYSTONE)                                  | Common
+McSPI LLD driver support (\ref DRIVERS_MCSPI_LLD_PAGE)                                                              | McSPI
+UART LLD driver support (\ref DRIVERS_UART_LLD_PAGE)                                                                | UART
+HW Spinlock example (\ref EXAMPLE_SPINLOCK)                                                                         | Spinlock
+EMMC RTOS boot example (\ref EXAMPLES_DRIVERS_SBL_EMMC)                                                             | SBL
+SafeIPC support (\ref EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO)                                                            | IPC
+Uniflash tool support (\ref TI_UNIFLASH_TOOL)                                                                       | Uniflash
+Serial Interface Multi channel implementation supporting ADS131M08 IC (32 KSPS)                                     | PRU-IO
+LwIP stack is upgraded to 2.2.0 version                                                                             | Ethernet/Networking and USB
 YANG data model based configuration support for IET/Frame Preemption(IEEE 802.1Qbu), Credit Based Shaper(IEEE 802.1Qav), Enhancements for Scheduled Traffic(IEEE 802.1Qbv) and other TSN features           | Ethernet and Networking
-Ethernet Switch management through standard Link Layer Discovery Protocol(IEEE 802.1AB) for CPSW peripheral                           | Ethernet and Networking
-Multi-time domain gPTP(IEEE 802.1AS) support enabled in Time-Sensitive Networking stack                                            | Ethernet and Networking
-Example to showcase the simultaneous execution of Time-Sensitive Networking and LwIP stack                           | Ethernet and Networking
-Documentation updated to show static IP configuration, custom MAC address and other ethernet related configurations | Ethernet and Networking
-Support to enable both ICSSG peripherals \ref ICSSG0_USAGE_GUIDE \n                              | Ethernet and Networking
-Support to enable upto five MAC ports using both CPSW and ICSSG peripherals on different cores | Ethernet and Networking
-Added back ICSSG examples and docs from [Industrial Communications SDK](https://software-dl.ti.com/processor-industrial-sw/esd/ind_comms_sdk/am243x/09_00_00_03/docs/api_guide_am243x/index.html) | Ethernet and Networking
+Ethernet Switch management through standard Link Layer Discovery Protocol(IEEE 802.1AB) for CPSW peripheral         | Ethernet and Networking
+Multi-time domain gPTP(IEEE 802.1AS) support enabled in Time-Sensitive Networking stack                             | Ethernet and Networking
+Example to showcase the simultaneous execution of Time-Sensitive Networking and LwIP stack                          | Ethernet and Networking
+Syscfg and doc update for static IP configuration, custom MAC address and other ethernet related configurations     | Ethernet and Networking
+Support to enable both ICSSG peripherals \ref ICSSG0_USAGE_GUIDE \n                                                 | Ethernet and Networking
+Support to enable upto five MAC ports using both CPSW and ICSSG peripherals on different cores                      | Ethernet and Networking
+Added back ICSSG examples and docs from [Industrial Communications SDK](https://software-dl.ti.com/processor-industrial-sw/esd/ind_comms_sdk/am243x/09_00_00_03/docs/api_guide_am243x/index.html)                                                                                        | Ethernet and Networking
 \endcond
 
 ## Device and Validation Information
@@ -393,6 +393,22 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> AM64x, AM243x
     <th> -
 </tr>
+<tr>
+    <td> PINDSW-6624
+    <td> ICSSG TAS Example Failure
+    <td> Ethernet
+    <td> 9.0.0 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-11697
+    <td> MDIO Manual mode is not sending preamble
+    <td> Networking
+    <td> 8.4.0 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
 \cond SOC_AM64X
 \endcond
 </table>
@@ -571,6 +587,38 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 8.6.0
     <td> AM64x, AM243x
     <td> For VTM ECC aggregator, use M4F for error injection.
+</tr>
+<tr>
+    <td> PINDSW-6452
+    <td> ICSSG based standard Ethernet drops packets, limits TCP throughput to 600M
+    <td> Ethernet
+    <td> AM64x, AM243x
+    <td> 08.06.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-12526
+    <td> ENET ICSSG: Firmware is not updating the Host Port statistics
+    <td> Networking
+    <td> AM64x, AM243x
+    <td> 09.00.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-8376
+    <td> LWIP web server application crashes in server stress test
+    <td> PLATFORM_SW_CONNECTIVITY
+    <td> AM64x, AM243x
+    <td> 09.00.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-11421
+    <td> enet_layer2_icssg example crashing while exiting
+    <td> Networking
+    <td> AM64x, AM243x
+    <td> 08.06.00 onwards
+    <td> -
 </tr>
 </table>
 
