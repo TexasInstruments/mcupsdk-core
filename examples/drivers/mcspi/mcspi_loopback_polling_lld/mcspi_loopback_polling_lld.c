@@ -75,7 +75,7 @@ void *mcspi_loopback_polling_lld_main(void *args)
     }
 
     /* populate extended parameters */
-    extendedParams.channel    = 0;
+    extendedParams.channel    = gConfigMcspi0ChCfg[0].chNum;
     extendedParams.csDisable  = TRUE;
     extendedParams.dataSize   = 8;
     count = APP_MCSPI_MSGSIZE / (extendedParams.dataSize/8);

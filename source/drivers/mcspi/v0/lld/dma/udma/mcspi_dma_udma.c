@@ -82,7 +82,6 @@ int32_t MCSPI_lld_dmaChInit(MCSPILLD_Handle hMcspi, uint32_t chCnt)
 
     chObj           = &hMcspi->hMcspiInit->chObj[chCnt];
     dmaChConfig     = (MCSPI_UdmaChConfig *)chObj->dmaChCfg;
-    dmaChConfig     = &(dmaChConfig[chCnt]);
     chObj->dmaChCfg = (MCSPI_DmaChConfig)dmaChConfig;
 
     if(MCSPI_TR_MODE_TX_RX == chObj->chCfg->trMode)

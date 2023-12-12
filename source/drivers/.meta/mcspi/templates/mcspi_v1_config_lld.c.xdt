@@ -143,14 +143,14 @@ MCSPILLD_InitObject g`instNameCamelCase`InitObject[`instance.$name.toUpperCase()
         .multiWordAccess             = FALSE,
         .msMode                      = MCSPI_MS_MODE_`msMode`,
         .chEnabled                   = {`channelEnable[0]`, `channelEnable[1]`, `channelEnable[2]`, `channelEnable[3]`},
-        .chObj[`ch`].chCfg           = &g`instNameCamelCase`ChCfg[`ch`],
+        .chObj[`ch_config.cs`].chCfg = &g`instNameCamelCase`ChCfg[`ch`],
         % if(instance.intrEnable == "DMA") {
-        .mcspiDmaHandle              = (MCSPI_DmaHandle ) &gEdmaConfig[0],
-        .chObj[`ch`].dmaChCfg        = (MCSPI_DmaChConfig)(&g`instNameCamelCase`DmaChCfg),
+        .mcspiDmaHandle                  = (MCSPI_DmaHandle ) &gEdmaConfig[0],
+        .chObj[`ch_config.cs`].dmaChCfg  = (MCSPI_DmaChConfig)(&g`instNameCamelCase`DmaChCfg),
         %}
         % else {
-        .mcspiDmaHandle              = NULL,
-        .chObj[`ch`].dmaChCfg        = NULL,
+        .mcspiDmaHandle                    = NULL,
+        .chObj[`ch_config.cs`].dmaChCfg    = NULL,
         %}
         .clockP_get                  = ClockP_getTicks,
     % if(config.intrEnable != "POLLED") {

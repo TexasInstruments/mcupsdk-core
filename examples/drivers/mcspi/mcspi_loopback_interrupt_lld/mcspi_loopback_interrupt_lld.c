@@ -101,7 +101,7 @@ void *mcspi_loopback_interrupt_lld_main(void *args)
     gMcspiObject[CONFIG_MCSPI0].transferMutex = &gMutexLockUnlock;
 
     /* populate extended parameters */
-    extendedParams.channel    = 0;
+    extendedParams.channel    = gConfigMcspi0ChCfg[0].chNum;
     extendedParams.csDisable  = TRUE;
     extendedParams.dataSize   = 32;
     count = APP_MCSPI_MSGSIZE / (extendedParams.dataSize/8);
