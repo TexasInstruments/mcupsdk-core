@@ -8,6 +8,7 @@ In the prior versions of the SDK, linker files presented challenges in terms of 
 
 The Memory Configurator tool seamlessly integrated into sysconfig empowers users to configure critical parameters. By utilizing this tool, corresponding linker files are automatically generated. This feature significantly streamlines the process, eliminating the need for manual adjustments to the linker files and providing users with a hassle-free experience.
 
+Please refer to the section "By-passing Sysconfig generated Linker" to use hand written linker file.
 
 ## Enhanced Significance in Multi-Core Environments
 
@@ -242,3 +243,24 @@ A similar visual representation has been integrated for MPU configurations. This
 
 \imageStyle{mpu_setting_summary.png,width:70%}
     \image html mpu_setting_summary.png "Consolidated view of MPU Settings"
+
+### By-passing Sysconfig generated Linker
+
+In case user wants to write their own linker file instead of the sysconfig generated one (as earlier versions of SDK), they can achieve that by following some simple steps:
+
+1. Makefile build
+
+    - Go inside the "ti-arm-clang" folder of a core project. For eg: examples/${project_name}/${device}/${core}/ti-arm-clang.
+        - Create your custom linker file with name "linker.cmd".
+    - Update the "makefile" inside this current directory.
+        - Search for "generated/linker.cmd" and replace with just "linker.cmd".
+    - Build the example. This time the linker you created will be picked during linking phase.
+
+2. For CCS build
+
+    - Go inside the "ti-arm-clang" folder of a core project. For eg: examples/${project_name}/${device}/${core}/ti-arm-clang.
+        - Open example.projectspec and add the following towards the end of the file : \n
+        \c \<file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="copy"> \n
+        \c \</file>
+    -  Open example.syscfg of this project and remove all the instances added under the Memory Configurator Section.
+    - Build the example.
