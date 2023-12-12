@@ -103,6 +103,7 @@ void IpcNotify_getConfig(IpcNotify_InterruptConfig **interruptConfig, uint32_t *
 /* This function is called within IpcNotify_init, this function allocates SW queue */
 void IpcNotify_allocSwQueue(IpcNotify_MailboxConfig *mailboxConfig)
 {
+% if(enabledCpus.length > 0) {
     IpcNotify_MailboxConfig (*mailboxConfigPtr)[CSL_CORE_ID_MAX] = (void *)mailboxConfig;
 
     % for(let coreName of enabledCpus) {
@@ -123,6 +124,7 @@ void IpcNotify_allocSwQueue(IpcNotify_MailboxConfig *mailboxConfig)
             % }
         % }
     % }
+% }
 }
 
 % }
