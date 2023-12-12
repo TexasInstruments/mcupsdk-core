@@ -12,20 +12,35 @@
       Unless noted otherwise, the SW modules would work on all supported EVMs \n
       M4F drivers support only MCU domain peripheral and peripheral instance while R5/A53 supports MAIN domain peripheral and peripheral instance. \n
 
-\attention Industrial Protocol and Motor control libraries and examples are no longer part of MCU+ SDK and will be available as separate release
+\attention Klockwork Static Analysis report is not updated for this release
 
 ## New in this Release
 
 \cond SOC_AM64X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
--LwIP stack is upgraded to 2.2.0 version | Networking and USB
+Memory Configurator (SysConfig based Linker generation) (\ref MEMORY_CONFIGURATOR)              | Common
+Coremark and Dhrystone benchmark (\ref EXAMPLES_COREMARK, \ref EXAMPLES_DHRYSTONE)              | Common
+McSPI LLD driver support (\ref DRIVERS_MCSPI_LLD_PAGE)                                          | McSPI
+UART LLD driver support (\ref DRIVERS_UART_LLD_PAGE)                                            | UART
+HW Spinlock example (\ref EXAMPLE_SPINLOCK)                                                     | Spinlock
+EMMC RTOS boot example (\ref EXAMPLES_DRIVERS_SBL_EMMC)                                         | SBL
+SafeIPC support (\ref EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO)                                        | IPC
+LwIP stack is upgraded to 2.2.0 version                                                         | Networking
 \endcond
 
 \cond SOC_AM243X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
--LwIP stack is upgraded to 2.2.0 version | Networking and USB
+Memory Configurator (SysConfig based Linker generation) (\ref MEMORY_CONFIGURATOR)              | Common
+Coremark and Dhrystone benchmark (\ref EXAMPLES_COREMARK, \ref EXAMPLES_DHRYSTONE)              | Common
+McSPI LLD driver support (\ref DRIVERS_MCSPI_LLD_PAGE)                                          | McSPI
+UART LLD driver support (\ref DRIVERS_UART_LLD_PAGE)                                            | UART
+HW Spinlock example (\ref EXAMPLE_SPINLOCK)                                                     | Spinlock
+EMMC RTOS boot example (\ref EXAMPLES_DRIVERS_SBL_EMMC)                                         | SBL
+SafeIPC support (\ref EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO)                                        | IPC
+Uniflash tool support (\ref TI_UNIFLASH_TOOL)                                                   | Uniflash
+LwIP stack is upgraded to 2.2.0 version                                                         | Networking
 \endcond
 
 ## Device and Validation Information
@@ -57,8 +72,6 @@ FreeRTOS SMP Kernel     | A53            | @VAR_FREERTOS_SMP_KERNEL_VERSION
 Tiny USB                | R5F            | @VAR_TINYUSB_VERSION
 LwIP                    | R5F            | @VAR_LWIP_VERSION
 Mbed-TLS                | R5F            | @VAR_MBEDTLS_VERSION
-
-\attention TI ARM CLANG @VAR_TI_ARM_CLANG_VERSION is not part of CCS by default, Follow steps at \ref INSTALL_TIARMCLANG to install the compiler
 
 ## Key Features
 
@@ -265,9 +278,79 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> Applicable Devices
     <th> Resolution/Comments
 </tr>
-
+<tr>
+    <td> MCUSDK-1900
+    <td> UART Hardware Flow Control is not working
+    <td> UART
+    <td> 7.3.0 onwards
+    <td> AM243x, AM64x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-8945
+    <td> Boot Time Degradation is observed for HS-FS device
+    <td> SBL
+    <td> 8.5.0
+    <td> AM64x, AM243x
+    <td> Increased authentication buffer size
+</tr>
+<tr>
+    <td> MCUSDK-10739
+    <td> CMSIS library most of the functions are re-defined
+    <td> CMSIS
+    <td> 8.5.0 onwards
+    <td> AM64x, AM243x
+    <td> update the makefile to remove the duplicate files
+</tr>
+<tr>
+    <td> MCUSDK-10781
+    <td> Flash Re-Init is not supported
+    <td> Flash
+    <td> 8.6.0 onwards
+    <td> AM64x, AM243x
+    <td> Decoupled the inits with a config variable
+</tr>
+<tr>
+    <td> MCUSDK-10783
+    <td> Flash Driver is not supported with XIP
+    <td> Flash
+    <td> 8.6.0 onwards
+    <td> AM64x, AM243x
+    <td> Added state preservation for DAC mode
+</tr>
+<tr>
+    <td> MCUSDK-11232
+    <td> Add a check condition in mcu_rom_image_gen.py based on ROM acceptance criterion
+    <td> SBL
+    <td> 8.6.0 onwards
+    <td> AM64x, AM243x
+    <td> added size checking condition in script
+</tr>
+<tr>
+    <td> MCUSDK-11508
+    <td> The JTAG access to ICSSG_PRU cores is not available
+    <td> SBL
+    <td> 8.6.0 onwards
+    <td> AM64x, AM243x
+    <td> Added ICSS cores init in SBL
+</tr>
+<tr>
+    <td> MCUSDK-11667
+    <td> Flash IO example is doing SectorErase as well as BlkErase despite the flash configured in uniform sector mode
+    <td> Flash
+    <td> 9.0.0 onwards
+    <td> AM64x, AM243x
+    <td> witch to block erase and document the API usage in flash userguide
+</tr>
+<tr>
+    <td> MCUSDK-12117
+    <td> Setting the ICSSG1 clock frequency affects the ICSSG0 clock frequency
+    <td> SOC
+    <td> 9.0.0 onwards
+    <td> AM64x, AM243x
+    <td> Added ICSS cores init in SBL
+</tr>
 \cond SOC_AM64X
-
 \endcond
 </table>
 
@@ -290,20 +373,21 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
     <td> Use ADC FIFO 0
 </tr>
-<tr>
-    <td> MCUSDK-1900
-    <td> UART Hardware Flow Control is not working
-    <td> UART
-    <td> 7.3.0 onwards
-    <td> AM243x
-    <td> -
-</tr>
+
 <tr>
     <td> MCUSDK-2113
     <td> [Docs] Sysfw RM/PM documentation doesn't specify AM243x
     <td> Docs
     <td> 8.0.0 onwards
     <td> AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-2715
+    <td> PKA ECDSA sign verify is not working for P-521 and BrainPool P-512R1 curves
+    <td> SECURITY
+    <td> 8.2.0 onwards
+    <td> AM64x, AM243x
     <td> -
 </tr>
 <tr>
@@ -331,27 +415,11 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> Use other boot modes
 </tr>
 <tr>
-    <td> MCUSDK-8945
-    <td> Boot Time Degradation is observed for HS-FS device
-    <td> SBL
-    <td> 8.5.0
-    <td> AM64x, AM243x
-    <td> Skip the authentication of application Image using SysConfig
-</tr>
-<tr>
     <td> <a href="https://mbed-tls.readthedocs.io/en/latest/tech-updates/security-advisories/mbedtls-security-advisory-2021-07-1/">mbedTLS-advisory</a> <br> MCUSDK-9082
     <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
     <td> Mbed-TLS
     <td> 8.6.0
     <td> AM64x, AM243x, AM263X, AM273X
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-2715
-    <td> PKA ECDSA sign verify is not working for P-521 and BrainPool P-512R1 curves
-    <td> SECURITY
-    <td> 8.2.0 onwards
-    <td> AM64x, AM243x
     <td> -
 </tr>
 <tr>
@@ -362,22 +430,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
     <td> -
 </tr>
-<tr>
-    <td> MCUSDK-10781
-    <td> Flash Re-Init is not supported
-    <td> Flash
-    <td> 8.6.0
-    <td> AM64x, AM243x
-    <td> -
-</tr>
-<tr>
-    <td> MCUSDK-10783
-    <td> Flash Driver is not supported with XIP
-    <td> Flash
-    <td> 8.6.0
-    <td> AM64x, AM243x
-    <td> -
-</tr>
+
 <tr>
     <td> MCUSDK-10939
     <td> PCIe MSI error when connected to Linux Root Complex
@@ -393,6 +446,46 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 8.6.0
     <td> AM64x, AM243x
     <td> -
+</tr>
+<tr>
+    <td> MCUSDK-11507
+    <td> ENET: CPSW MAC port is stuck forever and dropping all the Rx/Tx packets with reception of corrupts preamble.
+    <td> CPSW
+    <td> 8.2.0 onwards
+    <td> AM64x, AM243x
+    <td> Disable hostRxTimestampEn flag in CPSW CPST configuration. This does not impact the CPTS Rx or Tx Timestamp Events for PTP packets and is orthogonal feature.
+</tr>
+<tr>
+    <td> MCUSDK-11652
+    <td> PCIE benchmarking is not working for (variable) BUF_SIZE = 0x40
+    <td> PCIe
+    <td> 8.6.0 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-11730
+    <td> A wrong counter is used for Event 2 in PMU configuration
+    <td> PMU
+    <td> 9.0.0 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-11942
+    <td> The McSPI driver does not output CLK when it is set to RX only mode and data size is not 8 bit
+    <td> McSPI
+    <td> 9.0.0 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-12211
+    <td> OSPI: Unsafe (uint32_t*) in OSPI_write() API. Causing abort with Oz optimization in case of unaligned access
+    <td> OSPI
+    <td> 9.0.0 onwards
+    <td> AM64x, AM243x
+    <td> Make sure source and destination buffers are 4 byte aligned
 </tr>
 <tr>
     <td> MCUSDK-3626
@@ -429,22 +522,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-11507
-    <td> ENET: CPSW MAC port is stuck forever and dropping all the Rx/Tx packets with reception of corrupts preamble.
-    <td> CPSW
-    <td> 8.2.0 onwards
-    <td> AM64x, AM243x
-    <td> Disable hostRxTimestampEn flag in CPSW CPST configuration. This does not impact the CPTS Rx or Tx Timestamp Events for PTP packets and is orthogonal feature.
-</tr>
-<tr>
-    <td> MCUSDK-11518
-    <td> IPC: Firewalling error due to Alignment not being per core pair.
-    <td> IPC
-    <td> 09.00.00
-    <td> AM243x
-    <td> Firewalling should not be enabled for SafeIPC.
-</tr>
-<tr>
     <td> PROC_SDL-6445
     <td> ECC error injection test fails for VTM aggregator from R5F domain.
     <td> SDL
@@ -463,16 +540,52 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> SDK Status
 </tr>
 <tr>
+    <td> i2278
+    <td> MCAN: Message Transmit order not guaranteed from dedicated Tx Buffers configured with same Message ID
+    <td> MCAN
+    <td> Open
+</tr>
+<tr>
+    <td> i2279
+    <td> MCAN: Specification Update for dedicated Tx Buffers and Tx Queues configured with same Message ID
+    <td> MCAN
+    <td> Open
+</tr>
+<tr>
+    <td> i2310
+    <td> USART: Erroneous clear/trigger of timeout interrupt
+    <td> UART
+    <td> Implemented
+</tr>
+<tr>
     <td> i2311
     <td> USART: Spurious DMA Interrupts
     <td> UART
     <td> Implemented
 </tr>
 <tr>
+    <td> i2312
+    <td> MMCSD: HS200 and SDR104 Command Timeout Window Too Small
+    <td> MMCSD
+    <td> Open
+</tr>
+<tr>
     <td> i2313
     <td> GPMC: Sub-32-bit read issue with NAND and FPGA/FIFO
     <td> GPMC
     <td> Implemented
+</tr>
+<tr>
+    <td> i2326
+    <td> PCIe: MAIN_PLLx operating in fractional mode, which is required for enabling SSC, is not compliant with PCIe Refclk jitter limits
+    <td> PCIe
+    <td> Open
+</tr>
+<tr>
+    <td> i2329
+    <td> MDIO interface corruption,
+    <td> CPSW, ICSSG
+    <td> Open
 </tr>
 <tr>
     <td> i2331
@@ -487,36 +600,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> Implemented
 </tr>
 <tr>
-    <td> i2326
-    <td> PCIe: MAIN_PLLx operating in fractional mode, which is required for enabling SSC, is not compliant with PCIe Refclk jitter limits
-    <td> PCIe
-    <td> Open
-</tr>
-<tr>
-    <td> i2312
-    <td> MMCSD: HS200 and SDR104 Command Timeout Window Too Small
-    <td> MMCSD
-    <td> Open
-</tr>
-<tr>
-    <td> i2310
-    <td> USART: Erroneous clear/trigger of timeout interrupt
-    <td> UART
-    <td> Open
-</tr>
-<tr>
-    <td> i2279
-    <td> MCAN: Specification Update for dedicated Tx Buffers and Tx Queues configured with same Message ID
-    <td> MCAN
-    <td> Open
-</tr>
-<tr>
-    <td> i2278
-    <td> MCAN: Message Transmit order not guaranteed from dedicated Tx Buffers configured with same Message ID
-    <td> MCAN
-    <td> Open
-</tr>
-<tr>
     <td> i2401
     <td> CPSW: Host Timestamps Cause CPSW Port to Lock up
     <td> CPSW
@@ -526,12 +609,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> i2402
     <td> CPSW: Ethernet to Host Checksum Offload does not work
     <td> CPSW
-    <td> Open
-</tr>
-<tr>
-    <td> i2329
-    <td> MDIO interface corruption,
-    <td> CPSW, ICSSG
     <td> Open
 </tr>
 </table>
@@ -606,6 +683,12 @@ earlier SDKs.
     <th> Affected API
     <th> Change
     <th> Additional Remarks
+</tr>
+<tr>
+    <td> Linker
+    <td> Default linker in SDK
+    <td> SDK is moved to support sysconfig based linker generation
+    <td> Older is removed from core project ti-arm-clang folder and syconfig will generate the new linker under generated folder during sysconfig file generation step of compilation refer \ref MEMORY_CONFIGURATOR. Customer project created earlier can continue to use the existing linker if they don't want to move to syscofnig based linker.
 </tr>
 </table>
 

@@ -16,7 +16,10 @@
 \cond SOC_AM273X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|--------------------------
--LwIP stack is upgraded to 2.2.0 version | Networking 
+Memory Configurator (SysConfig based Linker generation) (\ref MEMORY_CONFIGURATOR)              | Common
+Coremark and Dhrystone benchmark (\ref EXAMPLES_COREMARK, \ref EXAMPLES_DHRYSTONE)              | Common
+SafeIPC support (\ref EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO)                                        | IPC
+LwIP stack is upgraded to 2.2.0 version                                                         | Networking 
 
 \endcond
 \cond SOC_AWR294X
@@ -53,9 +56,6 @@ DSP LIB                 | C66x           | @VAR_DSPLIB_VERSION
 Mbed-TLS                | R5F            | @VAR_MBEDTLS_VERSION
 
 DSP LIB package is modified to fix the build in Linux environment from the base version dsplib_c66x_3_4_0_0
-
-\attention TI ARM CLANG @VAR_TI_ARM_CLANG_VERSION is not part of CCS by default, Follow steps at \ref INSTALL_TIARMCLANG to install the compiler
-
 \endcond
 
 \cond SOC_AWR294X
@@ -190,6 +190,34 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F a
     <th> Applicable Releases
     <th> Resolution/Comments
 </tr>
+<tr>
+    <td> MCUSDK-9309
+    <td> IPC: Issue when Combination of Notify and RPMsg is enabled in SysCfg.
+    <td> IPC
+    <td> 8.01.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-11232
+    <td> Add a check condition in mcu_rom_image_gen.py based on ROM acceptance criterion
+    <td> SBL
+    <td> 8.6.0 onwards
+    <td> Added size checking condition in script
+</tr>
+<tr>
+    <td> MCUSDK-11561
+    <td> PLL config for DSP 550Mhz and 300Mhz is not working in supported AM273x NZN device
+    <td> SBL
+    <td> 8.6.0 onwards
+    <td> Added eFUSE checks for the variant and correspondingly do the config.
+</tr>
+<tr>
+    <td> MCUSDK-11673
+    <td> TimerP driver has bug in TimerP_clearOverflowInt function
+    <td> DPL
+    <td> 9.0.0 onwards
+    <td> -
+</tr>
 </table>
 
 ## Known Issues
@@ -217,28 +245,28 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F a
     <td> None
 </tr>
 <tr>
-    <td> MCUSDK-10978
-    <td> CCS build doesn't support for HS appimages generation
-    <td> CCS
-    <td> 09.00.00
-    <td> Use make/gmake based build for HS-SE
-</tr>
-<tr>
     <td> <a href="https://mbed-tls.readthedocs.io/en/latest/tech-updates/security-advisories/mbedtls-security-advisory-2021-07-1/">mbedTLS-advisory</a> <br> MCUSDK-9082
     <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
     <td> Mbed-TLS
     <td> 8.6.0 onwards
     <td> -
 </tr>
+<tr>
+    <td> MCUSDK-11730
+    <td> A wrong counter is used for Event 2 in PMU configuration
+    <td> PMU
+    <td> 09.00.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-12514
+    <td> Package migration script is not working
+    <td> Common
+    <td> 09.01.00 onwards
+    <td> -
+</tr>
 \endcond
 \cond SOC_AM273X || SOC_AWR294X
-<tr>
-    <td> MCUSDK-3899
-    <td> MIBSPI non-DMA mode transfer doesn't complete when used in mmWaveSDK
-    <td> MIBSPI
-    <td> 8.00.01
-    <td> None. Issue is not seen in driver unit test
-</tr>
 <tr>
     <td> PROC_SDL-4749
     <td> AXI DED Bus Safety fail.
@@ -288,13 +316,6 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F a
     <td> 8.2.0 onwards
     <td> Disable hostRxTimestampEn flag in CPSW CPST configuration. This does not impact the CPTS Rx or Tx Timestamp Events for PTP packets and is orthogonal feature.
 </tr>
-<tr>
-    <td> MCUSDK-9309
-    <td> IPC: Issue when Combination of Notify and RPMsg is enabled in SysCfg.
-    <td> IPC
-    <td> 8.01.00 onwards
-    <td> Use Only Notify or Only Notify+RPMsg on all cores.
-</tr>
 \endcond
 </table>
 
@@ -308,10 +329,70 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F a
     <th> SDK Status
 </tr>
 <tr>
+    <td> i2288
+    <td> EDMA transfer that spans M1+M2 memories of HWA could result in data corruption
+    <td> HWA
+    <td> Open
+</tr>
+<tr>
+    <td> i2289
+    <td> Unaligned access from DSS CM4 could cause data integrity failure and hang
+    <td> HWA
+    <td> Open
+</tr>
+<tr>
+    <td> i2294
+    <td> Subsequent memory initialisation configuration of L3 Bank D will not trigger a memory initialisation
+    <td> Common
+    <td> Open
+</tr>
+<tr>
+    <td> i2297
+    <td> CSI Careabouts
+    <td> CSI
+    <td> Open
+</tr>
+<tr>
+    <td> i2336
+    <td> MibSPI in Peipheral Mode in 3- or 4-Pin Communication Transmits Data Incorrectly for Slow SPICLK Frequencies and for Clock Phase = 1
+    <td> MibSPI
+    <td> Open
+</tr>
+<tr>
+    <td> i2337
+    <td> A Data Length Error is Generated Repeatedly in Peripheral Mode When IO Loopback is Enabled
+    <td> MibSPI
+    <td> Open
+</tr>
+<tr>
     <td> i2338
     <td> Spurious RX DMA REQ From a Peripheral Mode MibSPI
     <td> MibSPI
     <td> Open
+</tr>
+<tr>
+    <td> i2339
+    <td> MibSPI RX RAM RXEMPTY Bit Does Not Get Cleared After Reading
+    <td> MibSPI
+    <td> Open
+</tr>
+<tr>
+    <td> i2341
+    <td> Unallocated space access to DSP L2 - DSP IP is not blocking access to reserved space causing aliasing and L2 parity error
+    <td> DSP-L2
+    <td> Open
+</tr>
+<tr>
+    <td> i2342
+    <td> 2D Stats sample value RAM processor write back issue during FFT execution on HWA
+    <td> HWA
+    <td> Open
+</tr>
+<tr>
+    <td> i2344
+    <td> For Aurora, valid udp size range is AURORA_TX_UDP_SIZE > 4
+    <td> Aurora
+    <td> Not supported in SDK
 </tr>
 <tr>
     <td> i2345
@@ -332,9 +413,9 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F a
     <td> Implemented
 </tr>
 <tr>
-    <td> i2394
-    <td> Race condition in interrupt and error aggregator capture registers resulting in events miss
-    <td> Interrupt
+    <td> i2390
+    <td> Recommended HWA memInit Sequence
+    <td> HWA
     <td> Open
 </tr>
 <tr>
@@ -344,63 +425,9 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F a
     <td> Open
 </tr>
 <tr>
-    <td> i2339
-    <td> MibSPI RX RAM RXEMPTY Bit Does Not Get Cleared After Reading
-    <td> MibSPI
-    <td> Open
-</tr>
-<tr>
-    <td> i2390
-    <td> Recommended HWA memInit Sequence
-    <td> HWA
-    <td> Open
-</tr>
-<tr>
-    <td> i2342
-    <td> 2D Stats sample value RAM processor write back issue during FFT execution on HWA
-    <td> HWA
-    <td> Open
-</tr>
-<tr>
-    <td> i2341
-    <td> Unallocated space access to DSP L2 - DSP IP is not blocking access to reserved space causing aliasing and L2 parity error
-    <td> DSP-L2
-    <td> Open
-</tr>
-<tr>
-    <td> i2337
-    <td> A Data Length Error is Generated Repeatedly in Peripheral Mode When IO Loopback is Enabled
-    <td> MibSPI
-    <td> Open
-</tr>
-<tr>
-    <td> i2336
-    <td> MibSPI in Peipheral Mode in 3- or 4-Pin Communication Transmits Data Incorrectly for Slow SPICLK Frequencies and for Clock Phase = 1
-    <td> MibSPI
-    <td> Open
-</tr>
-<tr>
-    <td> i2297
-    <td> CSI Careabouts
-    <td> CSI
-    <td> Open
-</tr>
-<tr>
-    <td> i2294
-    <td> Subsequent memory initialisation configuration of L3 Bank D will not trigger a memory initialisation
-    <td> Common
-    <td> Open
-</tr>
-<tr>
-    <td> i2289
-    <td> Unaligned access from DSS CM4 could cause data integrity failure and hang
-    <td> HWA
-    <td> Open
-</tr>
-<tr>
-    <td> i2288
-    <td> EDMA transfer that spans M1+M2 memories of HWA could result in data corruption
-    <td> HWA
+    <td> i2394
+    <td> Race condition in interrupt and error aggregator capture registers resulting in events miss
+    <td> Interrupt
     <td> Open
 </tr>
 <tr>
@@ -414,6 +441,12 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F a
     <td> CPSW: Ethernet to Host Checksum Offload does not work
     <td> CPSW
     <td> Open
+</tr>
+<tr>
+    <td> i2404
+    <td> Race condition in mailbox registers resulting in events miss
+    <td> IPC
+    <td> Implemented
 </tr>
 </table>
 \endcond
@@ -465,7 +498,12 @@ earlier SDKs.
     <th> Change
     <th> Additional Remarks
 </tr>
-</table>
+<tr>
+    <td> Linker
+    <td> Default linker in SDK
+    <td> SDK is moved to support sysconfig based linker generation
+    <td> Older is removed from core project ti-arm-clang folder and syconfig will generate the new linker under generated folder during sysconfig file generation step of compilation refer \ref MEMORY_CONFIGURATOR. Customer project created earlier can continue to use the existing linker if they don't want to move to syscofnig based linker.
+</tr>
 </table>
 
 ### Networking

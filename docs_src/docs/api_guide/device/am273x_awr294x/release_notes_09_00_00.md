@@ -9,8 +9,6 @@
       Unless noted otherwise, the SW modules would work on any of the CPU present on the SOC. \n
       Unless noted otherwise, the SW modules would work on all supported EVMs \n
 
-\attention Klockwork Static Analysis report is not updated for this release
-
 ## New in this Release
 
 \cond SOC_AM273X
