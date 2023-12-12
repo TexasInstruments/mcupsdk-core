@@ -598,10 +598,10 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
 </tr>
 <tr>
     <td> MCUSDK-12526
-    <td> ENET ICSSG: Firmware is not updating the Host Port statistics
-    <td> Networking
+    <td> am243x/am64x: ENET ICSSG: Firmware is not updating the Host Port statistics
+    <td> Ethernet
     <td> AM64x, AM243x
-    <td> 09.00.00 onwards
+    <td> 09.01.00 onwards
     <td> -
 </tr>
 <tr>
