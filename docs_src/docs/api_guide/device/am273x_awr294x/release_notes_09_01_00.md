@@ -16,7 +16,9 @@
 \cond SOC_AM273X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|--------------------------
+\cond !SOC_AWR294X
 Memory Configurator (SysConfig based Linker generation) (\ref MEMORY_CONFIGURATOR)                                  | Common
+\endcond
 Coremark and Dhrystone benchmark (\ref EXAMPLES_COREMARK, \ref EXAMPLES_DHRYSTONE)                                  | Common
 SafeIPC support (\ref EXAMPLES_DRIVERS_IPC_SAFEIPC_ECHO)                                                            | IPC
 LwIP stack is upgraded to 2.2.0 version                                                                             | Ethernet and Networking
@@ -510,12 +512,14 @@ earlier SDKs.
     <th> Change
     <th> Additional Remarks
 </tr>
+\cond !SOC_AWR294X
 <tr>
     <td> Linker
     <td> Default linker in SDK
     <td> SDK is moved to support sysconfig based linker generation
     <td> Older is removed from core project ti-arm-clang folder and syconfig will generate the new linker under generated folder during sysconfig file generation step of compilation refer \ref MEMORY_CONFIGURATOR. Customer project created earlier can continue to use the existing linker if they don't want to move to syscofnig based linker.
 </tr>
+\endcond
 </table>
 
 ### Ethernet and Networking
@@ -531,6 +535,6 @@ earlier SDKs.
     <td> LwIP TCP/IP stack
     <td> None
     <td> Upgraded to 2.2.0 version
-    <td> Please refer to \ref NETWORKING_LWIP 'Upgrade' section 
+    <td> Please refer to \ref NETWORKING_LWIP 'Upgrade' section
 </tr>
 </table>
