@@ -598,11 +598,11 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
 </tr>
 <tr>
     <td> MCUSDK-12526
-    <td> am243x/am64x: ENET ICSSG: Firmware is not updating the Host Port statistics
+    <td> am243x/am64x: ENET ICSSG: Host port (PA) statistics is broken for ICSSG MAC mode
     <td> Ethernet
     <td> AM64x, AM243x
     <td> 09.01.00 onwards
-    <td> -
+    <td> No issues with ICSSG switch mode. In ICSSG MAC mode firmware, rx packet stats are broken.
 </tr>
 <tr>
     <td> MCUSDK-8376
