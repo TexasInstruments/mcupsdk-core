@@ -69,7 +69,6 @@ function getComponentProperty() {
     property.type = "executable";
     property.name = "basic_smart_placement";
     property.isInternal = false;
-    property.tirexResourceSubClass = [ "example.basic_smart_placement" ];
     property.description = "A basic smart placement exmaple. This example is intended to be a starting point protraying smart placement."
     property.buildOptionCombos = buildOptionCombos;
 

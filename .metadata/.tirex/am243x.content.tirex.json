@@ -11504,7 +11504,7 @@
             "example"
         ],
         "resourceSubClass": [
-            "example.basic_smart_placement"
+            "example.general"
         ],
         "description": "A basic smart placement exmaple. This example is intended to be a starting point protraying smart placement. CPU is R5FSS0-0 running NORTOS.",
         "name": "basic_smart_placement",
@@ -11537,7 +11537,7 @@
             "example"
         ],
         "resourceSubClass": [
-            "example.basic_smart_placement"
+            "example.general"
         ],
         "description": "A basic smart placement exmaple. This example is intended to be a starting point protraying smart placement. CPU is R5FSS0-0 running NORTOS.",
         "name": "basic_smart_placement",
