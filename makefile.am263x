@@ -88,6 +88,8 @@ help:
 	@echo  $(MAKE) -s -C examples/benchmarks/coremark_benchmark/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/benchmarks/dhrystone_benchmark/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/benchmarks/dhrystone_benchmark/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/benchmarks/ocmc_benchmarking/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/benchmarks/ocmc_benchmarking/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_multiple_soc_epwm/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_multiple_soc_epwm/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_ppb_epwm_trip/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -363,6 +365,8 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/nortos/basic_smart_placement/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/nortos/basic_smart_placement/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/mathlib/benchmark/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/mathlib/benchmark/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/enet_loopback/enet_cpsw_loopback/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -795,6 +799,8 @@ BUILD_COMBO_EXAMPLE_ALL += coremark_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-c
 BUILD_COMBO_EXAMPLE_ALL += coremark_benchmark_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dhrystone_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dhrystone_benchmark_am263x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ocmc_benchmarking_am263x-cc_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ocmc_benchmarking_am263x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_multiple_soc_epwm_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_multiple_soc_epwm_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_ppb_epwm_trip_am263x-cc_r5fss0-0_nortos_ti-arm-clang
@@ -1054,6 +1060,8 @@ BUILD_COMBO_EXAMPLE_ALL += posix_demo_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += posix_demo_am263x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += task_switch_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += task_switch_am263x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += basic_smart_placement_am263x-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += basic_smart_placement_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mathlib_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mathlib_benchmark_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_cpsw_loopback_am263x-cc_r5fss0-0_freertos_ti-arm-clang
@@ -1187,6 +1195,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  dhrystone_benchmark_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/benchmarks/dhrystone_benchmark/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ocmc_benchmarking_am263x-cc_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/benchmarks/ocmc_benchmarking/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ ocmc_benchmarking_am263x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/benchmarks/ocmc_benchmarking/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  adc_multiple_soc_epwm_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/adc/adc_multiple_soc_epwm/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -2013,6 +2027,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  task_switch_am263x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
+ basic_smart_placement_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/kernel/nortos/basic_smart_placement/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ basic_smart_placement_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/kernel/nortos/basic_smart_placement/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  mathlib_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/mathlib/benchmark/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -2344,6 +2364,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += coremark_benchmark_am263x-cc_r5fss0-0_nortos_ti
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += coremark_benchmark_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dhrystone_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dhrystone_benchmark_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ocmc_benchmarking_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ocmc_benchmarking_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_multiple_soc_epwm_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_multiple_soc_epwm_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_ppb_epwm_trip_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2603,6 +2625,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += posix_demo_am263x-cc_r5fss0-0_freertos_ti-arm-c
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += posix_demo_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += task_switch_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += task_switch_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += basic_smart_placement_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += basic_smart_placement_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mathlib_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mathlib_benchmark_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_cpsw_loopback_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
@@ -2733,6 +2757,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  dhrystone_benchmark_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/benchmarks/dhrystone_benchmark/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ocmc_benchmarking_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/benchmarks/ocmc_benchmarking/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ ocmc_benchmarking_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/benchmarks/ocmc_benchmarking/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  adc_multiple_soc_epwm_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/adc/adc_multiple_soc_epwm/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -3559,6 +3589,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  task_switch_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
+ basic_smart_placement_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/nortos/basic_smart_placement/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ basic_smart_placement_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/nortos/basic_smart_placement/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  mathlib_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/mathlib/benchmark/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -3890,6 +3926,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += coremark_benchmark_am263x-cc_r5fss0-0_nortos_ti
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += coremark_benchmark_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dhrystone_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dhrystone_benchmark_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ocmc_benchmarking_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ocmc_benchmarking_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_multiple_soc_epwm_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_multiple_soc_epwm_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_ppb_epwm_trip_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -4149,6 +4187,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += posix_demo_am263x-cc_r5fss0-0_freertos_ti-arm-c
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += posix_demo_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += task_switch_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += task_switch_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += basic_smart_placement_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += basic_smart_placement_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mathlib_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mathlib_benchmark_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_cpsw_loopback_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
@@ -4279,6 +4319,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  dhrystone_benchmark_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/benchmarks/dhrystone_benchmark/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ocmc_benchmarking_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/benchmarks/ocmc_benchmarking/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ ocmc_benchmarking_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/benchmarks/ocmc_benchmarking/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  adc_multiple_soc_epwm_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/adc/adc_multiple_soc_epwm/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -5104,6 +5150,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  task_switch_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ basic_smart_placement_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/kernel/nortos/basic_smart_placement/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ basic_smart_placement_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/kernel/nortos/basic_smart_placement/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  mathlib_benchmark_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/mathlib/benchmark/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

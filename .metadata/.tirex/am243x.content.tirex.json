@@ -391,6 +391,70 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An OCRAM memory benchmark. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ocmc_benchmarking",
+        "location": "../../examples/benchmarks/ocmc_benchmarking/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "ocmc_benchmarking",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An OCRAM memory benchmark. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ocmc_benchmarking",
+        "location": "../../examples/benchmarks/ocmc_benchmarking/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "ocmc_benchmarking",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An ADC singleshot example. This example demonstrates interrupts in ADC. CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_singleshot",
         "location": "../../examples/drivers/adc/adc_singleshot/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -11426,6 +11490,72 @@
             "nortos",
             "wfi_standby_demo",
             "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.basic_smart_placement"
+        ],
+        "description": "A basic smart placement exmaple. This example is intended to be a starting point protraying smart placement. CPU is R5FSS0-0 running NORTOS.",
+        "name": "basic_smart_placement",
+        "location": "../../examples/kernel/nortos/basic_smart_placement/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "nortos",
+            "basic_smart_placement",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.basic_smart_placement"
+        ],
+        "description": "A basic smart placement exmaple. This example is intended to be a starting point protraying smart placement. CPU is R5FSS0-0 running NORTOS.",
+        "name": "basic_smart_placement",
+        "location": "../../examples/kernel/nortos/basic_smart_placement/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "nortos",
+            "basic_smart_placement",
+            "r5fss0-0_nortos"
         ],
         "mainCategories": [
             [

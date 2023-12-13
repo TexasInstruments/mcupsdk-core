@@ -12,6 +12,9 @@ CC=$(CG_TOOL_ROOT)/bin/tiarmclang
 LNK=$(CG_TOOL_ROOT)/bin/tiarmclang
 STRIP=$(CG_TOOL_ROOT)/bin/tiarmstrip
 OBJCOPY=$(CG_TOOL_ROOT)/bin/tiarmobjcopy
+COV=$(CG_TOOL_ROOT)/bin/tiarmcov
+PROFDATA=$(CG_TOOL_ROOT)/bin/tiarmprofdata
+COVERAGE_PATH=$(abspath .)
 ifeq ($(OS), Windows_NT)
 	PYTHON=python
 else
@@ -98,7 +101,7 @@ CFLAGS_release := \
 	-Os \
 
 LNK_FILES_common = \
-	linker.cmd \
+	generated/../linker.cmd \
 
 LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \
@@ -132,6 +135,9 @@ FILES := $(FILES_common) $(FILES_$(PROFILE))
 ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
 FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
 CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ifeq ($(INSTRUMENTATION_MODE), yes)
+CFLAGS += -fprofile-instr-generate -fcoverage-mapping
+endif
 DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
 INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 LIBS := $(LIBS_common) $(LIBS_$(PROFILE))
@@ -168,7 +174,15 @@ SYSCFG_GEN_FILES+=generated/ti_pinmux_config.c generated/ti_power_clock_config.c
 SYSCFG_GEN_FILES+=generated/ti_board_config.c generated/ti_board_config.h
 SYSCFG_GEN_FILES+=generated/ti_board_open_close.c generated/ti_board_open_close.h
 
-$(OUTNAME): syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+SYSTEM_FLAG ?= false
+
+ifeq ($(SYSTEM_FLAG), false)
+	SYSTEM_COMMAND := syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+else
+	SYSTEM_COMMAND := $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+endif
+
+$(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
 	@echo  Linking: am263x:r5fss0-0:freertos:ti-arm-clang $@ ...
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)
@@ -291,4 +305,14 @@ endif
 	@echo  Boot image: am263x:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
 	@echo  .
 endif
+.PHONY: coverage
+coverage:
+	@echo Creating Coverage Report for ocmc_benchmarking.$(PROFILE) ...
+	$(MKDIR) coverage
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o ocmc_benchmarking.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=ocmc_benchmarking.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=ocmc_benchmarking.$(PROFILE).profdata > coverage/ocmc_benchmarking.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/ocmc_benchmarking.$(PROFILE).profdata.json --output-json=coverage/ocmc_benchmarking.$(PROFILE).analysis.json --output=../ocmc_benchmarking.annotations.$(PROFILE).S --top-function-count=500
+	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
+
 -include $(addprefix $(OBJDIR)/, $(DEPS))

@@ -79,6 +79,9 @@ ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
 FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
 CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
 ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ifeq ($(INSTRUMENTATION_MODE), yes)
+CFLAGS += -fprofile-instr-generate -fcoverage-mapping
+endif
 ifeq ($(CPLUSPLUS_BUILD), yes)
 CFLAGS += $(CFLAGS_cpp_common)
 endif
