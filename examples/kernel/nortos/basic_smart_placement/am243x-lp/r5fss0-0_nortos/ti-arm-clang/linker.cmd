@@ -69,7 +69,7 @@ SECTIONS
         .stack:  {} palign(8)   /* This is where the main() stack goes */
     } > MSRAM
 
-    .TI.local   : {} >> R5F_TCMA | R5F_TCMB | MSRAM
+    .TI.local   : {} >> R5F_TCMA | R5F_TCMB0 | MSRAM
     .TI.onchip  : {} >> MSRAM | FLASH
     .TI.offchip : {} > FLASH
 

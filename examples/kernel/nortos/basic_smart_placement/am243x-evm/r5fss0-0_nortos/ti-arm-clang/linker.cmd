@@ -88,7 +88,7 @@ SECTIONS
         RUN_END(__UNDEFINED_STACK_END)
     } > MSRAM
 
-    .TI.local   : {} >> R5F_TCMA | R5F_TCMB | MSRAM
+    .TI.local   : {} >> R5F_TCMA | R5F_TCMB0 | MSRAM
     .TI.onchip  : {} >> MSRAM | FLASH
     .TI.offchip : {} > FLASH
 
