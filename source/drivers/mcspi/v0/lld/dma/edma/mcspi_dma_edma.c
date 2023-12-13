@@ -119,6 +119,7 @@ int32_t MCSPI_lld_dmaChInit(MCSPILLD_Handle hMcspi, uint32_t chCnt)
 
     chObj             = &hMcspiInit->chObj[chCnt];
     dmaChConfig       = (MCSPI_EdmaChConfig *)chObj->dmaChCfg;
+    dmaChConfig       = &(dmaChConfig[chObj->dmaChConfigNum]);
     mcspiEdmaHandle   = (EDMA_Handle) (hMcspiInit->mcspiDmaHandle);
     edmaIntrObjectRx  = &dmaChConfig->edmaIntrObjRx;
     edmaIntrObjectTx  = &dmaChConfig->edmaIntrObjTx;

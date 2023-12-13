@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Mcspi Loopback Polling Lld Main"
-        name = "mcspi_loopback_polling_lld_main_am243x-evm_r5fss0-0_nortos_ti-arm-clang"
+        title="Mcspi Loopback Polling Lld"
+        name = "mcspi_loopback_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
                 Debug,
@@ -47,7 +47,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=mcspi_loopback_polling_lld_main.${ConfigName}.map
+            -m=mcspi_loopback_polling_lld.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs
@@ -60,7 +60,7 @@
             --context r5fss0-0 --part ALV --package ALV
         "
 
-        description="A Mcspi Loopback Polling Lld Main NORTOS project">
+        description="A Mcspi Loopback Polling Lld NORTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="

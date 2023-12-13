@@ -127,6 +127,7 @@ MCSPILLD_InitObject g`instNameCamelCase`InitObject[`instance.$name.toUpperCase()
         % if(config.intrEnable == "DMA") {
         .mcspiDmaHandle                  = (MCSPI_DmaHandle ) &gUdmaDrvObj[`mcspiUdmaInstances[0].$name`],
         .chObj[`ch_config.cs`].dmaChCfg  = (MCSPI_DmaChConfig)(&g`instNameCamelCase`DmaChCfg),
+        .chObj[`ch_config.cs`].dmaChConfigNum = `ch`,
         %}
         % else {
         .mcspiDmaHandle                  = NULL,

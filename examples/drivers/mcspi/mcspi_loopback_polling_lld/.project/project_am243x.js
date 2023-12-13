@@ -122,7 +122,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "mcspi_loopback_polling_lld_main";
+    property.name = "mcspi_loopback_polling_lld";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
 

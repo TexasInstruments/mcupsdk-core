@@ -4417,8 +4417,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Mcspi Loopback Polling Lld Main Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "mcspi_loopback_polling_lld_main",
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_polling_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_GP_EVM"
@@ -4450,8 +4450,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Mcspi Loopback Polling Lld Main Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "mcspi_loopback_polling_lld_main",
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_polling_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_GP_EVM"
@@ -4483,8 +4483,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Mcspi Loopback Polling Lld Main Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "mcspi_loopback_polling_lld_main",
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_polling_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
@@ -4516,8 +4516,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Mcspi Loopback Polling Lld Main Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "mcspi_loopback_polling_lld_main",
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_polling_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"

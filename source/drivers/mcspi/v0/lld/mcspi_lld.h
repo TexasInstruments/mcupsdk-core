@@ -639,8 +639,10 @@ typedef struct
     /*
      * User parameters
      */
-     MCSPI_ChConfig  *chCfg;
+    MCSPI_ChConfig  *chCfg;
     /**< Channel configuration as provided by user */
+    uint32_t        dmaChConfigNum;
+    /**< Index of dmaChConfig in DMA Config Array */
 
     /*
      * State variables

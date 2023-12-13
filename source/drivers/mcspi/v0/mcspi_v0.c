@@ -239,6 +239,7 @@ MCSPI_Handle MCSPI_open(uint32_t index, const MCSPI_OpenParams *openPrms)
                 lldChCfg->rxFifoTrigLvl = chConfig[configNum].rxFifoTrigLvl;
 
                 mcspiLldInithandle->chObj[chNum].dmaChCfg = dmaChConfig;
+                mcspiLldInithandle->chObj[chNum].dmaChConfigNum = configNum;
                 mcspiLldInithandle->chEnabled[chNum] = TRUE;
             }
         }
