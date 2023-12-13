@@ -46,7 +46,7 @@ const sbl_defines = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_EMMC_LINUX";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_EMMC";
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos"},

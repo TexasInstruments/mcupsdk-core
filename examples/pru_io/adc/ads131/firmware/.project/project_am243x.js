@@ -33,7 +33,7 @@ const lnkfiles = {
     ]
 };
 
-const readmeDoxygenPageTag = "EXAMPLES_PRU_ADC_ads131";
+const readmeDoxygenPageTag = "EXAMPLES_PRU_ADC_ADS131";
 
 const templates_pru =
 [

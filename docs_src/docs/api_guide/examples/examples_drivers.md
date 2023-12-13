@@ -26,15 +26,8 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 -# GPIO
    -# \subpage EXAMPLES_DRIVERS_GPIO_INPUT_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_GPIO_LED_BLINK
-\cond SOC_AM64X || SOC_AM243X || SOC_AM263X
 -# GPMC
-    \cond SOC_AM64X || SOC_AM243X
    -# \subpage EXAMPLES_DRIVERS_GPMC_FLASH_NAND_IO
-    \endcond
-    \cond SOC_AM263X
-    -# \subpage EXAMPLES_DRIVERS_GPMC_PSRAM_IO
-    \endcond
-\endcond
 -# WATCHDOG
    -# \subpage EXAMPLES_DRIVERS_WATCHDOG_INTERRUPT_MODE
 \cond SOC_AM243X
@@ -59,9 +52,6 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 \endcond
    -# \subpage EXAMPLES_DRIVERS_MCAN_LOOPBACK_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_MCAN_LOOPBACK_POLLING
-\cond SOC_AM263X || SOC_AM263PX
-   -# \subpage EXAMPLES_DRIVERS_MCAN_EXTERNAL_READ_WRITE
-\endcond
 -# MCSPI
    -# \subpage EXAMPLES_DRIVERS_MCSPI_LOOPBACK
    -# \subpage EXAMPLES_DRIVERS_MCSPI_LOOPBACK_DMA
@@ -78,7 +68,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_IO
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DMA
    -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_DIAG
-\cond SOC_AM64X || SOC_AM243X
+   -# \subpage EXAMPLES_DRIVERS_OSPI_FLASH_XIP
 -# PCIE
    -# \subpage EXAMPLES_DRIVERS_PCIE_BENCHMARK_RC
    -# \subpage EXAMPLES_DRIVERS_PCIE_BENCHMARK_EP
@@ -95,7 +85,6 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 -# RESET ISOLATION
    -# \subpage EXAMPLES_DRIVERS_RESET_ISOLATION
    -# \subpage EXAMPLES_DRIVERS_RESET_ISOLATION_IPC
-\endcond
 -# SCICLIENT
    -# \subpage EXAMPLES_DRIVERS_SCICLIENT_GET_VERSION
    -# \subpage EXAMPLES_DRIVERS_SCICLIENT_CCS_INIT
@@ -116,11 +105,6 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_UDMA_MEMCPY_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_UDMA_MEMCPY_POLLING
    -# \subpage EXAMPLES_DRIVERS_UDMA_SW_TRIGGER
-\endcond
-
-\cond SOC_AWR294X || SOC_AM273X || SOC_AM263X || SOC_AM263PX
--# PMU
-   -# \subpage EXAMPLES_DRIVERS_PMU_MULTIEVENT
 \endcond
 
 \cond SOC_AM273X || SOC_AWR294X
@@ -180,6 +164,8 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_MIBSPI_LOOPBACK
    -# \subpage EXAMPLES_DRIVERS_MIBSPI_LOOPBACK_ICOUNT
    -# \subpage EXAMPLES_DRIVERS_MIBSPI_LOOPBACK_DMA
+-# PMU
+   -# \subpage EXAMPLES_DRIVERS_PMU_MULTIEVENT
 -# QSPI
    -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_DIAG
    -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_TRANSFER
@@ -194,6 +180,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_WATCHDOG_INTERRUPT_MODE
    -# \subpage EXAMPLES_DRIVERS_WATCHDOG_RESET_MODE
 \endcond
+
 
 \cond SOC_AM263X || SOC_AM263PX
 -# ADC
@@ -229,7 +216,6 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_ECAP_APWM_MODE
    -# \subpage EXAMPLES_DRIVERS_ECAP_CAPTURE_PWM
    -# \subpage EXAMPLES_DRIVERS_ECAP_EDMA
-
 -# EDMA
    -# \subpage EXAMPLES_DRIVERS_EDMA_CHAIN_TRANSFER
    -# \subpage EXAMPLES_DRIVERS_EDMA_INTERRUPT_TRANSFER
@@ -261,11 +247,13 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_GPIO_INPUT_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_GPIO_LED_BLINK
    -# \subpage EXAMPLES_DRIVERS_GPIO_MULTI_LED_BLINK
+\cond SOC_AM263X
+-# GPMC
+   -# \subpage EXAMPLES_DRIVERS_GPMC_PSRAM_IO
+\endcond
 -# HSMCLIENT
    -# \subpage EXAMPLES_HSM_SERVICES
-\cond SOC_AM263X || SOC_AM263PX
    -# \subpage EXAMPLES_MPU_FIREWALL_SERVICES_DEMO
-\endcond
 -# I2C
    -# \subpage EXAMPLES_DRIVERS_I2C_LED_BLINK
    -# \subpage EXAMPLES_DRIVERS_I2C_READ
@@ -315,6 +303,8 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_FLC
    -# \subpage EXAMPLES_RAT
 \endcond
+-# PMU
+   -# \subpage EXAMPLES_DRIVERS_PMU_MULTIEVENT
 -# RTI
    -# \subpage EXAMPLES_DRIVERS_RTI_LED_BLINK
 \cond SOC_AM263PX
@@ -325,12 +315,8 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_SDFM_EPWM_SYNC_CPUREAD
    -# \subpage EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD
    -# \subpage EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD_SINGLE_CHANNEL
-
-\cond SOC_AM243X || SOC_AM263X || SOC_AM263PX || SOC_AM64X
 -# SPINLOCK
    -# \subpage EXAMPLE_SPINLOCK
-\endcond
-
 \cond SOC_AM263PX
 -# TMU
    -# \subpage EXAMPLES_DRIVERS_TMU_OPERATIONS
@@ -347,29 +333,4 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 -# WATCHDOG
    -# \subpage EXAMPLES_DRIVERS_WATCHDOG_INTERRUPT_MODE
    -# \subpage EXAMPLES_DRIVERS_WATCHDOG_RESET_MODE
-\endcond
-
-
-\cond SOC_AM62X
--# I2C
-   -# \subpage EXAMPLES_DRIVERS_I2C_READ
--# IPC
-   -# \subpage EXAMPLES_DRIVERS_IPC_RPMESSAGE_LINUX_ECHO
--# SCICLIENT
-   -# \subpage EXAMPLES_DRIVERS_SCICLIENT_GET_VERSION
--# MCAN
-   -# \subpage EXAMPLES_DRIVERS_MCAN_LOOPBACK_INTERRUPT
-   -# \subpage EXAMPLES_DRIVERS_MCAN_LOOPBACK_POLLING
--# MCSPI
-   -# \subpage EXAMPLES_DRIVERS_MCSPI_LOOPBACK
-   -# \subpage EXAMPLES_DRIVERS_MCSPI_PERFORMANCE_8BIT
-   -# \subpage EXAMPLES_DRIVERS_MCSPI_PERFORMANCE_32BIT
--# UART
-   -# \subpage EXAMPLES_DRIVERS_UART_ECHO
-   -# \subpage EXAMPLES_DRIVERS_UART_ECHO_CALLBACK
-   -# \subpage EXAMPLES_DRIVERS_UART_ECHO_LOW_LATENCY_INTERRUPT
-   -# \subpage EXAMPLES_DRIVERS_UART_ECHO_LOW_LATENCY_POLLING
--# GPIO
-   -# \subpage EXAMPLES_DRIVERS_GPIO_INPUT_INTERRUPT
-   -# \subpage EXAMPLES_DRIVERS_GPIO_LED_BLINK
 \endcond

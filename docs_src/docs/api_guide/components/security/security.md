@@ -176,7 +176,17 @@ the SDK:
     - \subpage SECURITY_PKA_MODULE_PAGE (Public key accelerator)
         - Description of PKA engine and APIs available to use it.
 \endcond
+
 \cond SOC_AM263X || SOC_AM263PX
+- Cryptography Modules
+    - \subpage DRIVERS_DTHE_PAGE (Data Transform and Hashing Engine)
+        - Description of DTHE architecture and APIs available to use AES and SHA engine.
+
+\note EDMA support for AES and SHA will be added in future releases. Currently,
+the drivers only operate in CPU mode of data copy.
+\endcond
+
+\cond SOC_AM273X
 - Cryptography Modules
     - \subpage DRIVERS_DTHE_PAGE (Data Transform and Hashing Engine)
         - Description of DTHE architecture and APIs available to use AES and SHA engine.
