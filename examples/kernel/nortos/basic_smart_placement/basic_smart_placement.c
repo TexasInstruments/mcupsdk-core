@@ -137,7 +137,7 @@ void basic_smart_placement_main(void *args)
 
     PMU_profilePrint();
 
-    DebugP_log("All tests have passed!!\r\n");
+    DebugP_log("\r\nAll tests have passed!!\r\n");
 
     Board_driversClose();
     Drivers_close();

@@ -42,7 +42,7 @@ const libs_nortos_m4f = {
 
 const lnkfiles = {
     common: [
-        "linker.cmd",
+        "../linker.cmd",
     ]
 };
 

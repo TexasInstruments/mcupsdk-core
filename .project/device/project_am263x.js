@@ -36,6 +36,7 @@ const device_defines = {
 const example_file_list = [
     "examples/benchmarks/coremark_benchmark/.project/project.js",
     "examples/benchmarks/dhrystone_benchmark/.project/project.js",
+    "examples/benchmarks/ocmc_benchmarking/.project/project_freertos.js",
     "examples/drivers/adc/adc_multiple_soc_epwm/.project/project.js",
     "examples/drivers/adc/adc_ppb_epwm_trip/.project/project.js",
     "examples/drivers/adc/adc_ppb_delay/.project/project.js",
@@ -157,6 +158,7 @@ const example_file_list = [
     "examples/kernel/freertos/posix_demo/.project/project.js",
     "examples/kernel/freertos/task_switch/.project/project.js",
     "examples/kernel/nortos/wfi_standby_demo/.project/project_am263x.js",
+    "examples/kernel/nortos/basic_smart_placement/.project/project_nortos.js",
     "examples/mathlib/benchmark/.project/project.js",
     "examples/networking/enet_loopback/enet_cpsw_loopback/.project/project.js",
     "examples/networking/lwip/cpsw_lwip_https/.project/project.js",

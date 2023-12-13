@@ -87,7 +87,7 @@ SECTIONS
         .task_15: {} palign(8)
         .text:    {} palign(8)
         .rodata:  {} palign(8)
-    } > FLASH
+    } > MSRAM
 
     /* This is rest of initialized data. This can be placed in DDR if DDR is available and needed */
     GROUP {
