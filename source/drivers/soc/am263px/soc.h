@@ -162,6 +162,14 @@ void SOC_controlModuleUnlockMMR(uint32_t domainId, uint32_t partition);
 void SOC_setEpwmTbClk(uint32_t epwmInstance, uint32_t enable);
 
 /**
+ * \brief Enable or disable Multiple ePWM time base clock from Control MMR
+ *
+ * \param epwmMask     [in] ePWM instance Mask [1 - CSL_CONTROLSS_CTRL_EPWM_CLKSYNC_BIT_MAX]
+ * \param enable       [in] TRUE to enable and FALSE to disable
+ */
+void SOC_setMultipleEpwmTbClk(uint32_t epwmMask, uint32_t enable);
+
+/**
  * \brief Enable ADC references by writing to Control MMR
  *
  * \param adcInstance [in] ADC instance number [0 - (CSL_ADC_PER_CNT-1)]

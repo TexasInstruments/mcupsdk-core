@@ -241,6 +241,35 @@ void SOC_setEpwmTbClk(uint32_t epwmInstance, uint32_t enable)
     }
 }
 
+void SOC_setMultipleEpwmTbClk(uint32_t epwmMask, uint32_t enable)
+{
+    if(epwmMask <= CSL_CONTROLSS_CTRL_EPWM_CLKSYNC_BIT_MAX)
+    {
+        /* Time base clock enable register belongs to partition 1 of the CTRL MMR */
+
+        /* Unlock CONTROLSS_CTRL registers */
+        SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+
+        if(TRUE == enable)
+        {
+            /* Enable Time base clock in CTRL MMR */
+            CSL_REG32_WR(CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_EPWM_CLKSYNC,
+                ((CSL_REG32_RD(CSL_CONTROLSS_CTRL_U_BASE +
+                  CSL_CONTROLSS_CTRL_EPWM_CLKSYNC) & CSL_CONTROLSS_CTRL_EPWM_CLKSYNC_BIT_MASK) | (epwmMask)));
+        }
+        else
+        {
+            /* Disable Time base clock in CTRL MMR */
+            CSL_REG32_WR(CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_EPWM_CLKSYNC,
+                ((CSL_REG32_RD(CSL_CONTROLSS_CTRL_U_BASE +
+                  CSL_CONTROLSS_CTRL_EPWM_CLKSYNC) & CSL_CONTROLSS_CTRL_EPWM_CLKSYNC_BIT_MASK) & ~(epwmMask)));
+        }
+
+        /* Lock CONTROLSS_CTRL registers */
+        SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+    }
+}
+
 void SOC_enableAdcReference(uint32_t adcInstance)
 {
     /* Determine the group number of the ADC and the mask to be written to compctl register */
