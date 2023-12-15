@@ -1782,9 +1782,10 @@ typedef struct
      * @param core denotes Resolver Core within RDC
      * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
      * @param cosPhaseBypass
+     * the values range [-2^15, 2^15], mapping to -90 to 90 deg correction for the phase
      */
     static inline void
-    RDC_setCosPhaseBypass(uint32_t base, uint8_t core, uint16_t cosPhaseBypass)
+    RDC_setCosPhaseBypass(uint32_t base, uint8_t core, int16_t cosPhaseBypass)
     {
         uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG2_0 + (core * RDC_CORE_OFFSET);
         DebugP_assert((cosPhaseBypass & (~CSL_RESOLVER_REGS_PG_EST_CFG2_0_PHASECOSBYP0_MAX)) == 0U);
@@ -1917,15 +1918,15 @@ typedef struct
      * @param base RDC Base Address
      * @param core denotes Resolver Core within RDC
      * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
-     * @param sinGainBypass int16_t always positive value
-     * @param cosGainBypass int16_t type
+     * @param sinGainBypass uint16_t always positive value (gain >= 2^14)
+     * @param cosGainBypass uint16_t type
      */
     static inline void
-    RDC_setGainBypassValue(uint32_t base, uint8_t core, int16_t sinGainBypass, int16_t cosGainBypass)
+    RDC_setGainBypassValue(uint32_t base, uint8_t core, uint16_t sinGainBypass, uint16_t cosGainBypass)
     {
         uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG3_0 + (core * RDC_CORE_OFFSET);
-        DebugP_assert(sinGainBypass >= 0);
-        uint32_t value = ((uint32_t)(((uint16_t)cosGainBypass) << 16)) | ((uint32_t)((uint16_t)sinGainBypass));
+        DebugP_assert(sinGainBypass >= 16384U);
+        uint32_t value = ((uint32_t)(((uint32_t)cosGainBypass) << 16)) | ((uint32_t)((uint16_t)sinGainBypass));
 
         HW_WR_REG32(
             base + regOffset, value);
@@ -1938,13 +1939,13 @@ typedef struct
      * @param base RDC Base Address
      * @param core denotes Resolver Core within RDC
      * valid values are \e RDC_RESOLVER_CORE0, \e RDC_RESOLVER_CORE1
-     * @return int16_t
+     * @return int16_t  -2^15 corresponds to -90 deg and 2^15 corresponds to +90 deg
      */
-    static inline int16_t // TODO : CHECK IF UNSINGED
+    static inline int16_t 
     RDC_getPhaseEstimation(uint32_t base, uint8_t core)
     {
         uint32_t regOffset = CSL_RESOLVER_REGS_PG_EST_CFG4_0 + (core * RDC_CORE_OFFSET);
-        return (
+        return ((int16_t)
             (HW_RD_REG32(
                  base + regOffset) &
              CSL_RESOLVER_REGS_PG_EST_CFG4_0_PHASEESTIMATEFINAL_MASK) >>

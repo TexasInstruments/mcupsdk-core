@@ -269,6 +269,7 @@ const staticConfigAdcR = [
 function getStaticConfigArr(instance) {
     return staticConfig;
 }
+
 exports = {
 	ADC_ClkPrescale: ADC_ClkPrescale,
 	ADC_Resolution: ADC_Resolution,

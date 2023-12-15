@@ -170,7 +170,7 @@ void RDC_paramsInit(RDC_configParams* params)
 
         params->ExcFrq_freqSel      = RDC_EXCITATION_FREQUENCY_20K;
         params->ExcFrq_phase        = 0;
-        params->ExcFrq_amplitude    = 0XEFU;
+        params->ExcFrq_amplitude    = 0xEFU;
         params->ExcFrq_enableSyncIn = FALSE;
         params->ExcFrq_socDelay     = 0x190U;
 

@@ -154,7 +154,7 @@ config = config.concat([
                 name            : "adcSocWidth",
                 displayName     : "ADC SoC Width",
                 description :   "Start of Conversion Width for the ADC conversions",
-                default         : 16,
+                default         : 0,
                 hidden          : false,
             },
             {
@@ -295,8 +295,8 @@ config = config.concat([
         ]
     },
     {
-        name        : "Excitation Frequency Configurations",
-        displayName : "ExcitationFrequencyConfigurations",
+        name        : "ExcitationFrequencyConfigurations",
+        displayName : "Excitation Frequency Configurations",
         config      : [
             {
                 name        : "resolverExcitationFrequencySelect",
@@ -307,11 +307,22 @@ config = config.concat([
                 options     : device_peripheral.RESOLVER_ExcFreq,
             },
             {
+                name        : "resolverExcitationFrequencyPhaseInDeg",
+                displayName : "Excitation Frequency Phase (Deg)",
+                description : "Phase value of 0 - 8000 maps to 0 to 360 degrees",
+                hidden      : false,
+                default     : 0.00,
+                onChange    : (inst, ui)=>{
+                    inst["resolverExcitationFrequencyPhase"] = parseInt(inst["resolverExcitationFrequencyPhaseInDeg"]*(8000/360));
+                },
+            },
+            {
                 name        : "resolverExcitationFrequencyPhase",
                 displayName : "Excitation Frequency Phase",
-                description : 'Select the Excitation Signal Phase.',
+                description : 'Select the Excitation Signal Phase to be configured.',
                 hidden      : false,
                 default     : 0,
+                readOnly    : true,
             },
             {
                 name        : "resolverExcitationFrequencyAmplitudeAdv",
@@ -368,18 +379,22 @@ config = config.concat([
                 onChange    : (inst, ui) => {
                     if(inst["manual"] == true)
                     {
-                        ui["externalFlashLocation_enable"].hidden = false
                         ui["manualPhaseOffset"].hidden = false
+                        ui["manualPhaseOffsetValue"].hidden = false
                         ui["manualSinGainOffset"].hidden = false
                         ui["manualCosGainOffset"].hidden = false
+                        ui["manualSinGainOffsetValue"].hidden = false
+                        ui["manualCosGainOffsetValue"].hidden = false
                         ui["idealSampleOverride"].hidden = false
                     }
                     else if ((inst["manual"] == false))
                     {
-                        ui["externalFlashLocation_enable"].hidden = true
                         ui["manualPhaseOffset"].hidden = true
+                        ui["manualPhaseOffsetValue"].hidden = true
                         ui["manualSinGainOffset"].hidden = true
                         ui["manualCosGainOffset"].hidden = true
+                        ui["manualSinGainOffsetValue"].hidden = true
+                        ui["manualCosGainOffsetValue"].hidden = true
                         ui["idealSampleOverride"].hidden = true
                     }
                 }
@@ -394,16 +409,22 @@ config = config.concat([
                     {
                         ui["externalFlashLocation"].hidden = false
                         ui["manualPhaseOffset"].hidden = true
+                        ui["manualPhaseOffsetValue"].hidden = true
                         ui["manualSinGainOffset"].hidden = true
                         ui["manualCosGainOffset"].hidden = true
+                        ui["manualSinGainOffsetValue"].hidden = true
+                        ui["manualCosGainOffsetValue"].hidden = true
                         ui["idealSampleOverride"].hidden = true
                     }
                     else
                     {
                         ui["externalFlashLocation"].hidden = true
                         ui["manualPhaseOffset"].hidden = false
+                        ui["manualPhaseOffsetValue"].hidden = false
                         ui["manualSinGainOffset"].hidden = false
                         ui["manualCosGainOffset"].hidden = false
+                        ui["manualSinGainOffsetValue"].hidden = false
+                        ui["manualCosGainOffsetValue"].hidden = false
                         ui["idealSampleOverride"].hidden = false
                     }
                 },
@@ -422,8 +443,20 @@ config = config.concat([
                 hidden      : false,
                 onChange    : (inst, ui) => {
                     inst["core0PgCosPhaseBypassValueAdv"] =  inst["manualPhaseOffset"]
+                    inst["core0PgCosPhaseBypassValueAdvValue"] =  (inst["manualPhaseOffset"]/32768)*90
+
                     inst["core1PgCosPhaseBypassValueAdv"] =  inst["manualPhaseOffset"]
+                    inst["core1PgCosPhaseBypassValueAdvValue"] =  (inst["manualPhaseOffset"]/32768)*90
+
+                    inst["manualPhaseOffsetValue"] = (inst["manualPhaseOffset"]/32768)*90
                 }
+            },
+            {
+                name        : "manualPhaseOffsetValue",
+                displayName : "Manual Phase Offset Value (Deg)",
+                readOnly    : true,
+                hidden      : false,
+                default     : 0,
             },
             {
                 name        : "manualSinGainOffset",
@@ -431,9 +464,19 @@ config = config.concat([
                 default     :  16384,
                 hidden      : false,
                 onChange    : (inst, ui) => {
+                    inst["manualSinGainOffsetValue"] = inst["manualSinGainOffset"]/16384
                     inst["core0PgSinGainBypassValueAdv"] =  inst["manualSinGainOffset"]
                     inst["core1PgSinGainBypassValueAdv"] =  inst["manualSinGainOffset"]
+                    inst["core0PgSinGainBypassValueAdvValue"] =  inst["manualSinGainOffset"]/16384
+                    inst["core1PgSinGainBypassValueAdvValue"] =  inst["manualSinGainOffset"]/16384
+
                 }
+            },
+            {
+                name        : "manualSinGainOffsetValue",
+                displayName : "Sin Gain Correction Multiplier",
+                default     : 1,
+                readOnly    : true,
             },
             {
                 name        : "manualCosGainOffset",
@@ -441,9 +484,18 @@ config = config.concat([
                 default     :  16384,
                 hidden      : false,
                 onChange    : (inst, ui) => {
+                    inst["manualCosGainOffsetValue"] = inst["manualCosGainOffset"]/16384
                     inst["core0PgCosGainBypassValueAdv"] =  inst["manualCosGainOffset"]
                     inst["core1PgCosGainBypassValueAdv"] =  inst["manualCosGainOffset"]
+                    inst["core0PgCosGainBypassValueAdvValue"] =  inst["manualCosGainOffset"]/16384
+                    inst["core1PgCosGainBypassValueAdvValue"] =  inst["manualCosGainOffset"]/16384
                 }
+            },
+            {
+                name        : "manualCosGainOffsetValue",
+                displayName : "Cos Gain Correction Multiplier",
+                default     : 1,
+                readOnly    : true,
             },
             {
                 name        : "idealSampleOverride",
@@ -487,6 +539,7 @@ for( let core = 0; core <= 1; core++)
                             // ui["core"+core.toString()+"autoDcOffset"].readOnly = true
                             ui["core"+core.toString()+"sinDcOffset"].readOnly = true
                             ui["core"+core.toString()+"cosDcOffset"].readOnly = true
+                            ui["core"+core.toString()+"IdealSampleBpfAdjustAdv"].hidden = false
                         }
                         else
                         {
@@ -494,6 +547,8 @@ for( let core = 0; core <= 1; core++)
                             // ui["core"+core.toString()+"autoDcOffset"].readOnly = false
                             ui["core"+core.toString()+"sinDcOffset"].readOnly = false
                             ui["core"+core.toString()+"cosDcOffset"].readOnly = false
+                            ui["core"+core.toString()+"IdealSampleBpfAdjustAdv"].hidden = true
+                            inst["core"+core.toString()+"IdealSampleBpfAdjustAdv"] = 0
                         }
                     }
                 },
@@ -613,9 +668,10 @@ for( let core = 0; core <= 1; core++)
                 {
                     name            :   "core"+core.toString()+"IdealSampleDetectionThresholdAdv",
                     displayName     :   "Ideal Sample Detection Threshold",
-                    longDescription :   "Minimum threshold for the Sample Detection in the Ideal Sample detection Algorithm",
+                    longDescription :   "An Absolute value of the minimum threshold for the Sample Detection in the Ideal Sample detection Algorithm. When the detection mode is set auto (modes 0,1,2) the algorithm uses samples that are minimum as high as threshold value. "+Math.pow(2,16).toString()+" ensures no sample is picked.",
                     default         :   2500,
                     readOnly        :   true,
+                    hidden          :   false,
                 },
                 {
                     name            :   "core"+core.toString()+"IdealSampleBpfAdjustAdv",
@@ -623,6 +679,7 @@ for( let core = 0; core <= 1; core++)
                     description     :   "Enable Advanced Configurations to edit this feild",
                     longDescription :   "When the Band Pass filter is enabled, this paramter adjusts the Ideal Sample Detection Algorithm to accommodate the delay posed by the filter",
                     readOnly        :   true,
+                    hidden          :   true,
                     default         :   0,
                 },
                 {
@@ -631,11 +688,21 @@ for( let core = 0; core <= 1; core++)
                     longDescription :   `
     RDC_IDEAL_SAMPLE_TIME_MODE_0_AUTO_DETECT           - Computation on sin and cos
     RDC_IDEAL_SAMPLE_TIME_MODE_1_AUTO_DETECT_ON_SIN    - Computation on sin only
-    RDC_IDEAL_SAMPLE_TIME_MODE_1_AUTO_DETECT_ON_COS    - Computation on cos only
+    RDC_IDEAL_SAMPLE_TIME_MODE_2_AUTO_DETECT_ON_COS    - Computation on cos only
     RDC_IDEAL_SAMPLE_TIME_MODE_3_AUTO_DETECT_OFF       - Manual Override of Ideal Sample Time`,
                     default         :   device_peripheral.RESOLVER_idealSampleMode[0].name,
                     options         :   device_peripheral.RESOLVER_idealSampleMode,
                     readOnly        :   true,
+                    onChange        :   (inst, ui)=> {
+                        if(inst["core"+core.toString()+"IdealSampleModeAdv"] == device_peripheral.RESOLVER_idealSampleMode[3].name)
+                        {
+                            ui["core"+core.toString()+"IdealSampleDetectionThresholdAdv"].hidden = true;
+                        }
+                        else
+                        {
+                            ui["core"+core.toString()+"IdealSampleDetectionThresholdAdv"].hidden = false;
+                        }
+                    },
                 },
                 {
                     name            :   "core"+core.toString()+"IdealSampleBottomSamplingAdv",
@@ -702,7 +769,8 @@ for( let core = 0; core <= 1; core++)
                     description     :   "Enable Advanced Configurations to edit this feild. When the Phase Gain Estimation is enabled, the loop trains on these number of samples.",
                     hidden          :   true,
                     readOnly        :   true,
-                    default         :   8,
+                    default         :   device_peripheral.RESOLVER_pgEstimationTrainLimitOptions[8].name,
+                    options         :   device_peripheral.RESOLVER_pgEstimationTrainLimitOptions,
                 },
                 {
                     name            :   "core"+core.toString()+"PgCorrectionEnableAdv",
@@ -724,15 +792,27 @@ for( let core = 0; core <= 1; core++)
                                 ui["core"+core.toString()+"PgAutoPhaseGainCorrectionAdv"].hidden = true
                             }
                             ui["core"+core.toString()+"PgSinGainBypassValueAdv"].hidden = false
+                            ui["core"+core.toString()+"PgSinGainBypassValueAdvValue"].hidden = false
+
                             ui["core"+core.toString()+"PgCosGainBypassValueAdv"].hidden = false
+                            ui["core"+core.toString()+"PgCosGainBypassValueAdvValue"].hidden = false
+
                             ui["core"+core.toString()+"PgCosPhaseBypassValueAdv"].hidden = false
+                            ui["core"+core.toString()+"PgCosPhaseBypassValueAdvValue"].hidden = false
                         }
                         else
                         {
                             ui["core"+core.toString()+"PgAutoPhaseGainCorrectionAdv"].hidden = true
+
                             ui["core"+core.toString()+"PgSinGainBypassValueAdv"].hidden = true
+                            ui["core"+core.toString()+"PgSinGainBypassValueAdvValue"].hidden = true
+
                             ui["core"+core.toString()+"PgCosGainBypassValueAdv"].hidden = true
+                            ui["core"+core.toString()+"PgCosGainBypassValueAdvValue"].hidden = true
+
                             ui["core"+core.toString()+"PgCosPhaseBypassValueAdv"].hidden = true
+                            ui["core"+core.toString()+"PgCosPhaseBypassValueAdvValue"].hidden = true
+
                         }
                     }
                 },
@@ -747,14 +827,24 @@ for( let core = 0; core <= 1; core++)
                         if (inst["core"+core.toString()+"PgAutoPhaseGainCorrectionAdv"] == true)
                         {
                             ui["core"+core.toString()+"PgSinGainBypassValueAdv"].hidden = true
+                            ui["core"+core.toString()+"PgSinGainBypassValueAdvValue"].hidden = true
+
                             ui["core"+core.toString()+"PgCosGainBypassValueAdv"].hidden = true
+                            ui["core"+core.toString()+"PgCosGainBypassValueAdvValue"].hidden = true
+
                             ui["core"+core.toString()+"PgCosPhaseBypassValueAdv"].hidden = true
+                            ui["core"+core.toString()+"PgCosPhaseBypassValueAdvValue"].hidden = true
                         }
                         else
                         {
                             ui["core"+core.toString()+"PgSinGainBypassValueAdv"].hidden = false
+                            ui["core"+core.toString()+"PgSinGainBypassValueAdvValue"].hidden = false
+
                             ui["core"+core.toString()+"PgCosGainBypassValueAdv"].hidden = false
+                            ui["core"+core.toString()+"PgCosGainBypassValueAdvValue"].hidden = false
+
                             ui["core"+core.toString()+"PgCosPhaseBypassValueAdv"].hidden = false
+                            ui["core"+core.toString()+"PgCosPhaseBypassValueAdvValue"].hidden = false
                         }
                     }
                 },
@@ -766,8 +856,16 @@ for( let core = 0; core <= 1; core++)
                     readOnly        :   true,
                     default         :   16384,
                     onChange    : (inst, ui) => {
-                        inst["manualSinGainOffset"] =  inst["core"+core.toString()+"PgSinGainBypassValueAdv"]
+                        inst["core"+core.toString()+"PgSinGainBypassValueAdvValue"] = inst["core"+core.toString()+"PgSinGainBypassValueAdv"]/16384
                     }
+                },
+                {
+                    name            :   "core"+core.toString()+"PgSinGainBypassValueAdvValue",
+                    displayName     :   "Sin Gain Correction Multiplier",
+                    description     :   "",
+                    hidden          :   false,
+                    readOnly        :   true,
+                    default         :   1,
                 },
                 {
                     name            :   "core"+core.toString()+"PgCosGainBypassValueAdv",
@@ -777,8 +875,16 @@ for( let core = 0; core <= 1; core++)
                     readOnly        :   true,
                     default         :   16384,
                     onChange    : (inst, ui) => {
-                        inst["manualCosGainOffset"] =  inst["core"+core.toString()+"PgCosGainBypassValueAdv"]
+                        inst["core"+core.toString()+"PgCosGainBypassValueAdvValue"] = inst["core"+core.toString()+"PgSinGainBypassValueAdv"]/16384
                     }
+                },
+                {
+                    name            :   "core"+core.toString()+"PgCosGainBypassValueAdvValue",
+                    displayName     :   "Cos Gain Correction Multiplier",
+                    description     :   "",
+                    hidden          :   false,
+                    readOnly        :   true,
+                    default         :   1,
                 },
                 {
                     name            :   "core"+core.toString()+"PgCosPhaseBypassValueAdv",
@@ -788,8 +894,16 @@ for( let core = 0; core <= 1; core++)
                     readOnly        :   true,
                     default         :   0,
                     onChange    : (inst, ui) => {
-                        inst["manualPhaseOffset"] =  inst["core"+core.toString()+"PgCosPhaseBypassValueAdv"]
+                        inst["core"+core.toString()+"PgCosPhaseBypassValueAdvValue"] = (inst["core"+core.toString()+"PgCosPhaseBypassValueAdv"]/32768)*90
                     }
+                },
+                {
+                    name            :   "core"+core.toString()+"PgCosPhaseBypassValueAdvValue",
+                    displayName     :   "Manual Cos Phase Correction (Deg)",
+                    description     :   "",
+                    hidden          :   false,
+                    readOnly        :   true,
+                    default         :   0,
                 },
             ]
         }
@@ -814,7 +928,7 @@ for( let core = 0; core <= 1; core++)
                     readOnly        :   true,
                     default         :   6,
                     hidden          :   true,
-                },
+            },
                 {
                     name            :   "core"+core.toString()+"track2kpdivAdv",
                     displayName     :   "Kpdiv Value",
@@ -825,6 +939,8 @@ for( let core = 0; core <= 1; core++)
                 {
                     name            :   "core"+core.toString()+"track2kvelfiltAdv",
                     displayName     :   "Kvelfilt Value",
+                    description     :   "This Coef is used for averaging the current to previous velocity outputs.",
+                    longDescription :   "current velocity (1-1/(2^kvelfilt)) + new velocity * (1/(2^kvelfilt))",
                     default         :   8,
                     readOnly        :   true,
                 },
@@ -909,8 +1025,6 @@ for (let core = 0; core <= 1; core++)
 
 }
 
-
-
 config = config.concat([
 
     {
@@ -932,7 +1046,254 @@ function onValidateStatic(mod, stat)
 
 function onValidate(inst, validation)
 {
+    /* Input Configurations */
+    if((inst["adcSocWidth"] < 0) || (inst["adcSocWidth"] > 256))
+    {
+        validation.logError(
+            "The soc pulse width can be configured for 0 to 256 only.",
+            inst,
+            "adcSocWidth");
+    }
+    if(inst["adcSocWidth"] != parseInt(inst["adcSocWidth"]))
+    {
+        validation.logError(
+            "The soc pulse width should be a positive integer",
+            inst,
+            "adcSocWidth");
+    }
 
+    /* Excitation Frequency Configuraions */
+    if ((inst["resolverExcitationFrequencyPhaseInDeg"] >= 360.00) || (inst["resolverExcitationFrequencyPhaseInDeg"] < 0.00))
+    {
+        validation.logError(
+            "The Value should be greater than or equalt 0 degrees and less than 360 degrees",
+            inst,
+            "resolverExcitationFrequencyPhaseInDeg");
+    }
+
+    if((inst["resolverExcitationFrequencyAmplitudeAdv"] < 0) || (inst["resolverExcitationFrequencyAmplitudeAdv"] > 249))
+    {
+        validation.logError(
+            "The Amplitude values range from 0 to 249, mapping 0 to 1 in gain.",
+            inst,
+            "resolverExcitationFrequencyAmplitudeAdv"
+        );
+    }
+    if(inst["resolverExcitationFrequencyAmplitudeAdv"] != parseInt(inst["resolverExcitationFrequencyAmplitudeAdv"]))
+    {
+        validation.logError(
+            "The Amplitude should be a positive integer",
+            inst,
+            "resolverExcitationFrequencyAmplitudeAdv");
+    }
+
+    if((inst["socDelayAdv"] < 0) || (inst["socDelayAdv"] > 8192))
+    {
+        validation.logError(
+            "The SoC delay is in steps of 800KHz, ranges from 0 to 8192",
+            inst,
+            "socDelayAdv"
+        );
+    }
+    if(inst["socDelayAdv"] != parseInt(inst["socDelayAdv"]))
+    {
+        validation.logError(
+            "The delay should be a positive integer",
+            inst,
+            "socDelayAdv");
+    }
+
+    /* Tuning Parameters */
+    if((inst["manualPhaseOffset"] < -32768) || (inst["manualPhaseOffset"] >= 32768))
+    {
+        validation.logError(
+        "The Phase Value should range from -32768 to 32768, these values map to -90 deg to 90 deg",
+        inst,
+        "manualPhaseOffset");
+    }
+    if(inst["manualPhaseOffset"] != parseInt(inst["manualPhaseOffset"]))
+    {
+        validation.logError(
+            "The Phase should be an integer",
+            inst,
+            "manualPhaseOffset");
+    }
+
+    if((inst["manualSinGainOffset"] < -32768) || (inst["manualSinGainOffset"] >= 32768))
+    {
+        validation.logError(
+        "The Phase Value should range from -32768 to 32768, these values map to -90 deg to 90 deg",
+        inst,
+        "manualSinGainOffset");
+    }
+    if(inst["manualSinGainOffset"] != parseInt(inst["manualSinGainOffset"]))
+    {
+        validation.logError(
+            "The Gain Offset should be an integer",
+            inst,
+            "manualSinGainOffset");
+    }
+
+    if((inst["idealSampleOverride"] < 0) || (inst["idealSampleOverride"] >= 20))
+    {
+        validation.logError(
+        "The Ideal Sample Override Value should range from 0 to 19",
+        inst,
+        "idealSampleOverride");
+    }
+    if(inst["idealSampleOverride"] != parseInt(inst["idealSampleOverride"]))
+    {
+        validation.logError(
+            "The Ideal Sample Override Value should be an integer",
+            inst,
+            "idealSampleOverride");
+    }
+
+    /* Resolver Core Parameters */
+    for(let core = 0; core <=1 ; core++)
+    {
+        /* DC Offset */
+        for(let coef = 1; coef <=2; coef++)
+        {
+
+            if((inst["core"+core.toString()+"dcOffsetCalCoef"+coef.toString()+"Adv"] < 0) || (inst["core"+core.toString()+"dcOffsetCalCoef"+coef.toString()+"Adv"] >= 20))
+            {
+                validation.logError(
+                "The DC Offset Calibration Coef "+coef.toString()+" Value should range from 0 to 15",
+                inst,
+                "core"+core.toString()+"dcOffsetCalCoef"+coef.toString()+"Adv");
+            }
+            if(inst["core"+core.toString()+"dcOffsetCalCoef"+coef.toString()+"Adv"] != parseInt(inst["core"+core.toString()+"dcOffsetCalCoef"+coef.toString()+"Adv"]))
+            {
+                validation.logError(
+                    "The DC Offset Calibration Coef should be an integer",
+                    inst,
+                    "core"+core.toString()+"dcOffsetCalCoef"+coef.toString()+"Adv");
+            }
+        }
+
+        if((inst["core"+core.toString()+"sinDcOffset"] < -(Math.pow(2,15))) || (inst["core"+core.toString()+"sinDcOffset"] >= (Math.pow(2,15))))
+        {
+            validation.logError(
+            "The Sin DC Offset Manual Value should range from "+(-(Math.pow(2,15))).toString()+" to "+ ((Math.pow(2,15))-1).toString(),
+            inst,
+            "core"+core.toString()+"sinDcOffset");
+        }
+        if(inst["core"+core.toString()+"sinDcOffset"] != parseInt(inst["core"+core.toString()+"sinDcOffset"]))
+        {
+            validation.logError(
+                "The Sin DC Offset Manual Value should be an integer",
+                inst,
+                "core"+core.toString()+"sinDcOffset");
+        }
+        if((inst["core"+core.toString()+"cosDcOffset"] < -(Math.pow(2,15))) || (inst["core"+core.toString()+"cosDcOffset"] >= (Math.pow(2,15))))
+        {
+            validation.logError(
+            "The Cos DC Offset Manual Value should range from "+(-(Math.pow(2,15))).toString()+" to "+ ((Math.pow(2,15))-1).toString(),
+            inst,
+            "core"+core.toString()+"cosDcOffset");
+        }
+        if(inst["core"+core.toString()+"cosDcOffset"] != parseInt(inst["core"+core.toString()+"cosDcOffset"]))
+        {
+            validation.logError(
+                "The Cos DC Offset Manual Value should be an integer",
+                inst,
+                "core"+core.toString()+"cosDcOffset");
+        }
+
+        /* Ideal Sample */
+        if((inst["core"+core.toString()+"IdealSampleOverrideValueAdv"] < 0) || (inst["core"+core.toString()+"IdealSampleOverrideValueAdv"] >= 20))
+        {
+            validation.logError(
+            "The Ideal Sample Override Value should range from "+(0).toString()+" to "+ (19).toString(),
+            inst,
+            "core"+core.toString()+"IdealSampleOverrideValueAdv");
+        }
+        if(inst["core"+core.toString()+"IdealSampleOverrideValueAdv"] != parseInt(inst["core"+core.toString()+"IdealSampleOverrideValueAdv"]))
+        {
+            validation.logError(
+                "The Ideal Sample Override Value should be an integer",
+                inst,
+                "core"+core.toString()+"IdealSampleOverrideValueAdv");
+        }
+
+        if((inst["core"+core.toString()+"IdealSampleDetectionThresholdAdv"] < 0) || (inst["core"+core.toString()+"IdealSampleDetectionThresholdAdv"] >= Math.pow(2,16)))
+        {
+            validation.logError(
+            "The Ideal Sample Detection Threshold Value should range from "+(0).toString()+" to "+ (Math.pow(2,16)).toString(),
+            inst,
+            "core"+core.toString()+"IdealSampleDetectionThresholdAdv");
+        }
+        if(inst["core"+core.toString()+"IdealSampleDetectionThresholdAdv"] != parseInt(inst["core"+core.toString()+"IdealSampleDetectionThresholdAdv"]))
+        {
+            validation.logError(
+                "The Ideal Sample Detection Threshold Value should be an integer",
+                inst,
+                "core"+core.toString()+"IdealSampleDetectionThresholdAdv");
+        }
+
+        /* Phase Gain */
+        if((inst["core"+core.toString()+"PgSinGainBypassValueAdv"] < Math.pow(2,14)) || (inst["core"+core.toString()+"PgSinGainBypassValueAdv"] >= Math.pow(2,16)))
+        {
+            validation.logError(
+            "The Manual Sin gain value should range from "+(Math.pow(2,14)).toString()+" to "+ (Math.pow(2,16)).toString(),
+            inst,
+            "core"+core.toString()+"PgSinGainBypassValueAdv");
+        }
+        if(inst["core"+core.toString()+"PgSinGainBypassValueAdv"] != parseInt(inst["core"+core.toString()+"PgSinGainBypassValueAdv"]))
+        {
+            validation.logError(
+                "The Manual Sin gain value should be an integer",
+                inst,
+                "core"+core.toString()+"PgSinGainBypassValueAdv");
+        }
+        if((inst["core"+core.toString()+"PgCosGainBypassValueAdv"] < 0) || (inst["core"+core.toString()+"PgCosGainBypassValueAdv"] >= Math.pow(2,16)))
+        {
+            validation.logError(
+            "The Manual Cos gain value should range from "+(0).toString()+" to "+ (Math.pow(2,16)).toString(),
+            inst,
+            "core"+core.toString()+"PgCosGainBypassValueAdv");
+        }
+        if(inst["core"+core.toString()+"PgCosGainBypassValueAdv"] != parseInt(inst["core"+core.toString()+"PgCosGainBypassValueAdv"]))
+        {
+            validation.logError(
+                "The Manual Cos gain value should be an integer",
+                inst,
+                "core"+core.toString()+"PgCosGainBypassValueAdv");
+        }
+
+        if((inst["core"+core.toString()+"PgCosPhaseBypassValueAdv"] < (-Math.pow(2,15))) || (inst["core"+core.toString()+"PgCosPhaseBypassValueAdv"] >= Math.pow(2,15)))
+        {
+            validation.logError(
+            "The Manual Cos Phase Correction value should range from "+((-Math.pow(2,15))).toString()+" corresponding to -90 deg, to "+ (Math.pow(2,15)).toString()+ " corresponding to +90 deg",
+            inst,
+            "core"+core.toString()+"PgCosPhaseBypassValueAdv");
+        }
+        if(inst["core"+core.toString()+"PgCosPhaseBypassValueAdv"] != parseInt(inst["core"+core.toString()+"PgCosPhaseBypassValueAdv"]))
+        {
+            validation.logError(
+                "The Manual Cos gain value should be an integer",
+                inst,
+                "core"+core.toString()+"PgCosPhaseBypassValueAdv");
+        }
+
+        /* Track2  */
+        if((inst["core"+core.toString()+"track2kvelfiltAdv"] < (0)) || (inst["core"+core.toString()+"track2kvelfiltAdv"] >= Math.pow(2,8)))
+        {
+            validation.logError(
+            "The Kvelfilt value should range from "+(0).toString()+" to "+ (Math.pow(2,8)).toString(),
+            inst,
+            "core"+core.toString()+"track2kvelfiltAdv");
+        }
+        if(inst["core"+core.toString()+"track2kvelfiltAdv"] != parseInt(inst["core"+core.toString()+"track2kvelfiltAdv"]))
+        {
+            validation.logError(
+                "The Manual Cos gain value should be an integer",
+                inst,
+                "core"+core.toString()+"track2kvelfiltAdv");
+        }
+
+    }
 }
 
 /*
@@ -965,7 +1326,6 @@ function pinmuxRequirements(inst)
    let interfaceName = getInterfaceName(inst);
 
     let resources = [];
-    // resources.push( pinmux.getPinRequirements(interfaceName, "ADC_R0_AIN0"));
     resources.push( pinmux.getPinRequirements("ADC_R0", "AIN0"));
     resources.push( pinmux.getPinRequirements("ADC_R0", "AIN1"));
     resources.push( pinmux.getPinRequirements("ADC_R0", "AIN2"));
@@ -979,31 +1339,14 @@ function pinmuxRequirements(inst)
     resources_RES_PWM.push( pinmux.getPinRequirements("RESOLVER", "PWM0"));
     resources_RES_PWM.push( pinmux.getPinRequirements("RESOLVER", "PWM1"));
 
-    // resources_RES_PWM.push( pinmux.getPinRequirements("ADC_R0", "ADC_R0_AIN0"));
-    // resources_RES_PWM.push( pinmux.getPinRequirements("ADC_R0", "ADC_R0_AIN1"));
-    // resources_RES_PWM.push( pinmux.getPinRequirements("ADC_R0", "ADC_R0_AIN2"));
-    // resources_RES_PWM.push( pinmux.getPinRequirements("ADC_R0", "ADC_R0_AIN3"));
-    // resources_RES_PWM.push( pinmux.getPinRequirements("ADC_R1", "ADC_R0_AIN0"));
-    // resources_RES_PWM.push( pinmux.getPinRequirements("ADC_R1", "ADC_R0_AIN1"));
-    // resources_RES_PWM.push( pinmux.getPinRequirements("ADC_R1", "ADC_R0_AIN2"));
-    // resources_RES_PWM.push( pinmux.getPinRequirements("ADC_R1", "ADC_R0_AIN3"));
-
-    // let peripheral =
-    //     {
-    //         name: "ADC_R",
-    //         displayName: "ADC Pin Set",
-    //         interfaceName: "ADC",
-    //         resources: resources,
-    //     };
-    let peripheral2 = {
+    let peripheral = {
             name: interfaceName,
             displayName: "RESOLVER Excitation PWM Out",
             interfaceName: "RESOLVER",
             resources: resources_RES_PWM,
         }
 
-    // return [peripheral2, peripheral];
-    return [peripheral2];
+    return [peripheral];
 }
 
 let resolver_module_name = "/drivers/resolver/resolver";
@@ -1033,7 +1376,6 @@ let resolverModule = {
             moduleName: resolver_module_name,
         },
     },
-
     validate    : onValidate,
     getInstanceConfig,
     getInterfaceName,
