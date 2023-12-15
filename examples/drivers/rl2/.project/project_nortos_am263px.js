@@ -70,7 +70,6 @@ function getComponentProperty() {
     property.type = "executable";
     property.name = "rl2";
     property.isInternal = false;
-    property.tirexResourceSubClass = [ "example.rl2" ];
     property.description = "Basic RL2 example. This shows how to setup Remote Layer 2 cache."
     property.buildOptionCombos = buildOptionCombos;
 

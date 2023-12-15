@@ -8018,7 +8018,7 @@
             "example"
         ],
         "resourceSubClass": [
-            "example.rat"
+            "example.general"
         ],
         "description": "Basic Region Base Address Translation (RAT) example. This shows how to setup Remote Layer 2 cache. CPU is R5FSS0-0 running NORTOS.",
         "name": "rat",
@@ -8083,7 +8083,7 @@
             "example"
         ],
         "resourceSubClass": [
-            "example.rl2"
+            "example.general"
         ],
         "description": "Basic RL2 example. This shows how to setup Remote Layer 2 cache. CPU is R5FSS0-0 running NORTOS.",
         "name": "rl2",
@@ -8115,7 +8115,7 @@
             "example"
         ],
         "resourceSubClass": [
-            "example.rl2"
+            "example.general"
         ],
         "description": "Basic RL2 example. This shows how to setup Remote Layer 2 cache. CPU is R5FSS0-0 running NORTOS.",
         "name": "rl2",

@@ -44,8 +44,8 @@ UART_Config gUartConfig[CONFIG_UART_NUM_INSTANCES] =
 uint32_t gUartConfigNum = CONFIG_UART_NUM_INSTANCES;
 
 #include <drivers/uart/v0/lld/dma/uart_dma.h>
-#include <drivers/edma.h>
 %if(uartEdmaInstances.length > 0) {
+#include <drivers/edma.h>
 #include <drivers/uart/v0/lld/dma/edma/uart_dma_edma.h>
 extern UART_EdmaChConfig gUartEdmaChConfig[];
 UART_DmaConfig gUartDmaConfig[CONFIG_UART_NUM_DMA_INSTANCES] =
@@ -72,11 +72,7 @@ UART_DmaHandle gUartDmaHandle[CONFIG_UART_NUM_INSTANCES] =
 };
 %}
 % else {
-uint32_t gEdmaConfigNum = CONFIG_UART_NUM_DMA_INSTANCES;
 UART_DmaHandle gUartDmaHandle[] =
-{
-};
-EDMA_Config gEdmaConfig[] =
 {
 };
 %}

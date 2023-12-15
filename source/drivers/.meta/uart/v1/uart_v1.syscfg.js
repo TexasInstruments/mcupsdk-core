@@ -61,7 +61,7 @@ let uart_module_name = "/drivers/uart/uart";
 let uart_driver_config_file = "/drivers/uart/templates/uart_config.c.xdt";
 if ((common.getSocName() == "am273x") || (common.getSocName() == "awr294x"))
 {
-    uart_driver_config_file = "/drivers/uart/templates/uart_config_am273x_awr294x.c.xdt";
+    uart_driver_config_file = "/drivers/uart/templates/uart_config_v1.c.xdt";
 }
 
 let uart_module = {

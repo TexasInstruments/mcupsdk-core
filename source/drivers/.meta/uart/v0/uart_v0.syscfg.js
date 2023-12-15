@@ -91,13 +91,6 @@ function getActualBaudrateError(inst) {
 }
 
 let uart_module_name = "/drivers/uart/uart";
-let uart_driver_config_file = "/drivers/uart/templates/uart_config_am64x_am243x.c.xdt";
-let uart_driver_open_close_config = "/drivers/uart/templates/uart_open_close_config_am64x_am243x.c.xdt";
-if (common.getSocName() == "am62x")
-{
-    uart_driver_config_file = "/drivers/uart/templates/uart_config_am62x.c.xdt";
-    uart_driver_open_close_config = "/drivers/uart/templates/uart_open_close_config_am62x.c.xdt";
-}
 
 let uart_module = {
     displayName: "UART",

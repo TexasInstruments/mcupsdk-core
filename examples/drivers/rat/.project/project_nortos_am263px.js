@@ -69,7 +69,6 @@ function getComponentProperty() {
     property.type = "executable";
     property.name = "rat";
     property.isInternal = false;
-    property.tirexResourceSubClass = [ "example.rat" ];
     property.description = "Basic Region Base Address Translation (RAT) example. This shows how to setup Remote Layer 2 cache."
     property.buildOptionCombos = buildOptionCombos;
 

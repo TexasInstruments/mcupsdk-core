@@ -37,10 +37,9 @@ UART_Handle gUartHandle[CONFIG_UART_NUM_INSTANCES];
 
 #include <drivers/uart/v0/lld/dma/uart_dma.h>
 #include <kernel/dpl/ClockP.h>
-
+#include <drivers/edma.h>
 %if(uartEdmaInstances.length > 0) {
 #include <drivers/uart/v0/lld/dma/edma/uart_dma_edma.h>
-#include <drivers/edma.h>
 
 UART_EdmaChConfig gUartEdmaChConfig[CONFIG_UART_NUM_DMA_INSTANCES] =
 {
@@ -59,6 +58,17 @@ UART_EdmaChConfig gUartEdmaChConfig[CONFIG_UART_NUM_DMA_INSTANCES] =
         },
     %}
 };
+%}
+%else {
+% let modules = system.modules['/drivers/edma/edma'] ;
+% if(!modules) {
+/* EDMA driver confiurations */
+EDMA_Config gEdmaConfig[] =
+{
+};
+
+uint32_t gEdmaConfigNum = 0;
+%}
 %}
 
 UART_DmaChConfig gUartDmaChConfig[CONFIG_UART_NUM_INSTANCES] =

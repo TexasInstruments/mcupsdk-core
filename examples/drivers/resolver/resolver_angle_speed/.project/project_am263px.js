@@ -45,7 +45,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg"
 
-const readmeDoxygenPageTag = "resolver_angle_speed";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_RESOLVER_ANGLE_SPEED";
 
 const templates_nortos_r5f =
 [
