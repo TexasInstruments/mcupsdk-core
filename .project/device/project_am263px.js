@@ -59,6 +59,7 @@ const example_file_list = [
 	"examples/drivers/boot/sbl_uart/.project/project.js",
     "examples/drivers/boot/sbl_uart_uniflash/.project/project.js",
 	"examples/drivers/cmpss/cmpss_asynchronous_trip/.project/project.js",
+	"examples/drivers/cmpss/cmpss_digital_filter_trip/.project/project.js",
 	"examples/drivers/dac/dac_constant_voltage/.project/project.js",
 	"examples/drivers/dac/dac_ramp_wave/.project/project.js",
 	"examples/drivers/dac/dac_random_voltage/.project/project.js",

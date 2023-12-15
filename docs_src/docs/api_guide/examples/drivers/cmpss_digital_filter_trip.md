@@ -4,12 +4,10 @@
 
 # Introduction
 
-
 A CMPSS example that enables the CMPSS High comparator and feeds the
 digital filter output to GPIO/OUTPUTXBAR pin
 
-# @VAR_BOARD_NAME
-This example enables the CMPSSA1 COMPH comparator and feeds the digital filter CTRIPH signal to the OUTPUTXBAR1 pin.
+This example enables the CMPSSA1 COMPH comparator and feeds the digital filter CTRIPH signal to the OUTPUTXBAR pin.
 
 \imageStyle{am263_cmpss_digital_filter_trip.png,width:50%}
 \image html am263_cmpss_digital_filter_trip.png "Block diagram"
@@ -20,38 +18,24 @@ signal at VDD/2. A Digital Filter signal is generated and is configured
 to be tripped by CTRIPOUTH.
 
 When a low input(VSS) is provided to CMPIN1P,
-    - Trip signal(OUTPUTXBAR0) output is low
+    - Trip signal(OUTPUTXBAR) output is low
 
 When a high input(higher than VDD/2) is provided to CMPIN1P,
-    - Trip signal(OUTPUTXBAR0) output turns high
-
-External Connections \n
-    - Give input on CMPIN1P (HSEC Pin 15)
-    - Outputs can be observed on OUTPUTXBAR1 (HSEC Pin 81)
-
-
-# @VAR_LP_BOARD_NAME
-This example enables the CMPSSA1 COMPH comparator and feeds the digital filter CTRIPH signal to the OUTPUTXBAR1 pin.
-
-CMPIN1P is used to give positive input and internal DAC is configured
-to provide the negative input. Internal DAC is configured to provide a
-signal at VDD/2. A Digital Filter signal is generated and is configured
-to be tripped by CTRIPOUTH.
-
-When a low input(VSS) is provided to CMPIN1P,
-    - Trip signal(OUTPUTXBAR1) output is low
-
-When a high input(higher than VDD/2) is provided to CMPIN1P,
-    - Trip signal(OUTPUTXBAR1) output turns high
-
-External Connections \n
-    - Give input on CMPIN1P (HSEC Pin 15)
-    - Outputs can be observed on OUTPUTXBAR1
+    - Trip signal(OUTPUTXBAR) output turns high
 
 # External Connections
- - Give input on CMPIN1P (HSEC Pin 15)
- - Outputs can be observed on XBAROUT1
+- OUTPUTXBAR can be connected to an oscilloscope to view the Digital Filter Output.
+- For External Voltage (Input to CMPIN1P), we can use the Dac Output as well (Here we generate a sine wave at DAC_OUT)
 
+## @VAR_BOARD_NAME
+    - Give input on CMPIN1P (ADC0_AIN2 - HSEC Pin 15)
+    - Outputs can be observed on OUTPUTXBAR1 (HSEC Pin 81)
+    - For DAC loop back as input, connect DAC_OUT (HSEC Pin 9) to CMPIN1P
+
+## @VAR_LP_BOARD_NAME
+    - Give input on CMPIN1P (Pin j7.66)
+    - Outputs can be observed on OUTPUTXBAR8 (j5.50)
+    - For DAC loop back as input, connect DAC_OUT (J3.30) to CMPIN1P
 
 # Supported Combinations {#EXAMPLES_DRIVERS_CMPSS_DIGITAL_FILTER_TRIP_COMBOS}
 

@@ -53,7 +53,7 @@
  * signal at VDD/2. A Digital Filter signal is generated and is configured
  * to be tripped by CTRIPOUTH.
  *
- * In this example DAC module is configured to generate a sine wave (HSEC Pin 9),
+ * In this example DAC module is configured to generate a sine wave,
  * that is provided to CMPIN1P as input to CMPSS.
  *
  * When a low input(VSS) is provided to CMPIN1P,
@@ -63,8 +63,9 @@
  *     - Trip signal(OUTPUTXBAR0) output turns high
  *
  * External Connections \n
- *  - Give input on CMPIN1P (HSEC Pin 15)
- *  - Outputs can be observed on OUTPUTXBAR1 (HSEC Pin 81)
+ *
+ *  - Give input on CMPIN1P
+ *  - Outputs can be observed on OUTPUTXBAR
  *
  */
 
