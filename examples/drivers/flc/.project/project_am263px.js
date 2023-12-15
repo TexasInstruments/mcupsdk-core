@@ -43,7 +43,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg"
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_FLC_BASIC";
+const readmeDoxygenPageTag = "EXAMPLES_FLC";
 
 const templates_nortos_r5f =
 [
