@@ -7,7 +7,6 @@ const files = {
     common: [
         "sent_decoder.c",
         "main.c",
-        "linker.cmd"
     ],
 };
 
@@ -49,7 +48,7 @@ const libs_freertos_r5f = {
 
 const lnkfiles = {
     common: [
-        "linker.cmd",
+        "../linker.cmd",
     ]
 };
 
