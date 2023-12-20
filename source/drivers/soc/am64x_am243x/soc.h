@@ -241,6 +241,14 @@ void SOC_controlModuleUnlockMMR(uint32_t domainId, uint32_t partition);
 void SOC_setEpwmTbClk(uint32_t epwmInstance, uint32_t enable);
 
 /**
+ * @brief Enable or disable writes to the EPWM tripZone registers
+ *
+ * \param epwmInstance [in] ePWM instance number [0 - (CSL_EPWM_PER_CNT-1)]
+ * \param enable       [in] TRUE to enable and FALSE to disable
+ */
+void SOC_allowEpwmTzReg(uint32_t epwmInstance, uint32_t enable);
+
+/**
  *  \brief SOC Virtual (CPU) to Physical address translation function.
  *
  *  \param virtAddr [IN] Virtual/CPU address

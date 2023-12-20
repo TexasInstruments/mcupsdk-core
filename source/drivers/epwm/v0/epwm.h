@@ -80,6 +80,8 @@
  *              -# Disable chopper through the API #EPWM_chopperEnable by passing
  *                 FALSE as parameter
  *            -# TripZone
+ *             -# The Trip Zone registser are EALLOW protected. use #SOC_allowEpwmTrReg
+ *                for enabling/ disabling writes to this space.
  *             -# If tripzone is enabled
  *              -# Configure trip action through API #EPWM_tzTriggerTripAction
  *              -# Enable trip zone event through the API #EPWM_tzTripEventEnable

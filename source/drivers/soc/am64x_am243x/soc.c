@@ -547,6 +547,28 @@ void SOC_setEpwmTbClk(uint32_t epwmInstance, uint32_t enable)
     }
 }
 
+void SOC_allowEpwmTzReg(uint32_t epwmInstance, uint32_t enable)
+{
+    /* Time base clock enable register belongs to partition 1 of the CTRL MMR */
+    uint32_t epwmPartition = 1;
+    /* Unlock CTLR_MMR0 registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, epwmPartition);
+
+    uint32_t regOffest = CSL_MAIN_CTRL_MMR_CFG0_EPWM0_CTRL_PROXY + (CSL_MAIN_CTRL_MMR_CFG0_EPWM1_CTRL_PROXY - CSL_MAIN_CTRL_MMR_CFG0_EPWM0_CTRL_PROXY)*epwmInstance;
+    if(TRUE == enable)
+    {
+        CSL_REG32_WR(regOffest,
+                ((CSL_REG32_RD(CSL_CTRL_MMR0_CFG0_BASE + regOffest) & 0x710U) | (0x1U << CSL_MAIN_CTRL_MMR_CFG0_EPWM0_CTRL_PROXY_EPWM0_CTRL_EALLOW_PROXY_SHIFT)));
+    }
+    else
+    {
+        CSL_REG32_WR(regOffest,
+                ((CSL_REG32_RD(CSL_CTRL_MMR0_CFG0_BASE + regOffest) & 0x710U) & ~(0x1U << CSL_MAIN_CTRL_MMR_CFG0_EPWM0_CTRL_PROXY_EPWM0_CTRL_EALLOW_PROXY_SHIFT)));
+    }
+    /* Lock CTRL_MMR0 registers */
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, epwmPartition);
+}
+
 
 uint64_t SOC_virtToPhy(void *virtAddr)
 {
