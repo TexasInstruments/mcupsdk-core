@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *  Copyright (c) 2022-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -277,10 +277,10 @@ int32_t SDL_DCC_getStatus(SDL_DCC_Inst instance, SDL_DCC_Status *pStatus)
 		baseAddr = SDL_DCC_baseAddress[instance];
 
 		/* Checking if DONE Interrupt occured or not */
-		/* TRUE = Interrupt not occured, FALSE = INTERRUPT occured */
-        intrStatus = (int32_t)HW_RD_FIELD32(baseAddr + DCC_DCCGCTRL,DCC_DCCGCTRL_ERRENA );
-        if(intrStatus ==  (int32_t)DCC_DCCGCTRL_ERRENA_DISABLE)
-        {
+		/* TRUE = Interrupt pending, FALSE = INTERRUPT not pending */
+		intrStatus = (int32_t)HW_RD_FIELD32(baseAddr + DCC_DCCSTAT, DCC_DCCSTAT_DONEFLG);
+		if(intrStatus !=  (int32_t)0U)
+		{
 			pStatus->doneIntr = TRUE;
 		}
 		else
@@ -289,9 +289,9 @@ int32_t SDL_DCC_getStatus(SDL_DCC_Inst instance, SDL_DCC_Status *pStatus)
 		}
 
 		/* Checking if ERROR Interrupt occured or not */
-		/* TRUE = Interrupt not occured, FALSE = INTERRUPT occured */
-        intrStatus = (int32_t)HW_RD_FIELD32(baseAddr + DCC_DCCGCTRL, DCC_DCCGCTRL_DONEENA);
-		if(intrStatus == (int32_t)DCC_DCCGCTRL_DONEENA_DISABLE)
+		/* TRUE = Interrupt pending, FALSE = INTERRUPT not pending */
+		intrStatus = (int32_t)HW_RD_FIELD32(baseAddr + DCC_DCCSTAT, DCC_DCCSTAT_ERRFLG);
+		if(intrStatus != (int32_t)0U)
 		{
 			pStatus->errIntr = TRUE;
 		}
@@ -414,18 +414,18 @@ int32_t SDL_DCC_clearIntr(SDL_DCC_Inst instance, SDL_DCC_intrType intr)
 		{
 			case SDL_DCC_INTERRUPT_ERR:
 				/* Disable ERROR interrupt */
-                HW_WR_FIELD32(baseAddr + DCC_DCCSTAT, DCC_DCCSTAT_ERRFLG,
-							DCC_DCCSTAT_ERRFLG_DISABLE);
+				HW_WR_REG32(baseAddr + DCC_DCCSTAT,
+					    DCC_DCCSTAT_ERRFLG_DISABLE << DCC_DCCSTAT_ERRFLG_SHIFT);
 				HW_WR_FIELD32(baseAddr + DCC_DCCGCTRL, DCC_DCCGCTRL_ERRENA,
-							DCC_DCCGCTRL_ERRENA_DISABLE);
+					      DCC_DCCGCTRL_ERRENA_DISABLE);
 				sdlResult = SDL_PASS;
 				break;
 			case SDL_DCC_INTERRUPT_DONE:
 				/* Disable DONE interrupt(only for single shot mode) */
-                HW_WR_FIELD32(baseAddr + DCC_DCCSTAT, DCC_DCCSTAT_DONEFLG,
-							DCC_DCCSTAT_DONEFLG_DISABLE);
+				HW_WR_REG32(baseAddr + DCC_DCCSTAT,
+					    DCC_DCCSTAT_DONEFLG_DISABLE << DCC_DCCSTAT_DONEFLG_SHIFT);
 				HW_WR_FIELD32(baseAddr + DCC_DCCGCTRL, DCC_DCCGCTRL_DONEENA,
-							DCC_DCCGCTRL_DONEENA_DISABLE);
+					      DCC_DCCGCTRL_DONEENA_DISABLE);
 				sdlResult = SDL_PASS;
 				break;
 			default:
