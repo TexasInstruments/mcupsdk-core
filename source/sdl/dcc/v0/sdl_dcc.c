@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *  Copyright (c) 2022-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -326,9 +326,9 @@ int32_t SDL_DCC_getStatus(SDL_DCC_Inst instance, SDL_DCC_Status *pStatus)
         (void)SDL_DCC_getBaseaddr(instance, &baseAddr);
 
         /* Checking if DONE Interrupt occured or not */
-        /* TRUE = Interrupt not occured, FALSE = INTERRUPT occured */
-        intrStatus = (int32_t)HW_RD_FIELD32(baseAddr + SDL_DCC2_DCCGCTRL, SDL_DCC2_DCCGCTRL_ERRENA);
-        if(intrStatus ==  (int32_t)SDL_DCC2_DCCGCTRL_ERRENA_DISABLE)
+        /* TRUE = Interrupt pending, FALSE = INTERRUPT not pending */
+        intrStatus = (int32_t)HW_RD_FIELD32(baseAddr + SDL_DCC2_DCCSTATUS, SDL_DCC2_DCCSTATUS_DONE);
+        if(intrStatus !=  (int32_t)0U)
         {
             pStatus->doneIntr = TRUE;
         }
@@ -338,9 +338,9 @@ int32_t SDL_DCC_getStatus(SDL_DCC_Inst instance, SDL_DCC_Status *pStatus)
         }
 
         /* Checking if ERROR Interrupt occured or not */
-        /* TRUE = Interrupt not occured, FALSE = INTERRUPT occured */
-        intrStatus = (int32_t)HW_RD_FIELD32(baseAddr + SDL_DCC2_DCCGCTRL, SDL_DCC2_DCCGCTRL_DONEENA);
-        if(intrStatus == (int32_t)SDL_DCC2_DCCGCTRL_DONEENA_DISABLE)
+        /* TRUE = Interrupt pending, FALSE = INTERRUPT not pending */
+        intrStatus = (int32_t)HW_RD_FIELD32(baseAddr + SDL_DCC2_DCCSTATUS, SDL_DCC2_DCCSTATUS_ERR);
+        if(intrStatus != (int32_t)0U)
         {
             pStatus->errIntr = TRUE;
         }

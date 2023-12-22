@@ -415,17 +415,17 @@ int32_t SDL_DCC_clearIntr(SDL_DCC_Inst instance, SDL_DCC_intrType intr)
 			case SDL_DCC_INTERRUPT_ERR:
 				/* Disable ERROR interrupt */
 				HW_WR_REG32(baseAddr + DCC_DCCSTAT,
-					    DCC_DCCSTAT_ERRFLG_DISABLE << DCC_DCCSTAT_ERRFLG_SHIFT);
+				            DCC_DCCSTAT_ERRFLG_DISABLE << DCC_DCCSTAT_ERRFLG_SHIFT);
 				HW_WR_FIELD32(baseAddr + DCC_DCCGCTRL, DCC_DCCGCTRL_ERRENA,
-					      DCC_DCCGCTRL_ERRENA_DISABLE);
+							DCC_DCCGCTRL_ERRENA_DISABLE);
 				sdlResult = SDL_PASS;
 				break;
 			case SDL_DCC_INTERRUPT_DONE:
 				/* Disable DONE interrupt(only for single shot mode) */
 				HW_WR_REG32(baseAddr + DCC_DCCSTAT,
-					    DCC_DCCSTAT_DONEFLG_DISABLE << DCC_DCCSTAT_DONEFLG_SHIFT);
+				            DCC_DCCSTAT_DONEFLG_DISABLE << DCC_DCCSTAT_DONEFLG_SHIFT);
 				HW_WR_FIELD32(baseAddr + DCC_DCCGCTRL, DCC_DCCGCTRL_DONEENA,
-					      DCC_DCCGCTRL_DONEENA_DISABLE);
+							DCC_DCCGCTRL_DONEENA_DISABLE);
 				sdlResult = SDL_PASS;
 				break;
 			default:
