@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022-23 Texas Instruments Incorporated
+ *  Copyright (C) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -43,12 +43,12 @@
 
 /* Input length*/
 #define APP_CRYPTO_AES_CMAC_128_INPUT_LENGTH          (64U)
+/* Aes block length*/
+#define APP_CRYPTO_AES_BLOCK_LENGTH                   (16U)
 /* Aes Cmac output length*/
 #define APP_CRYPTO_AES_CMAC_OUTPUT_LENGTH             (16U)
 /* Aes 128 key length*/
 #define APP_CRYPTO_AES_CMAC_128_MAXKEY_LENGTH         (16U)
-/* Aes block length*/
-#define APP_CRYPTO_AES_BLOCK_LENGTH                   (16U)
 /* DTHE Public address */
 #define CSL_DTHE_PUBLIC_U_BASE                        (0xCE000810U)
 /* DTHE Aes Public address */
@@ -117,6 +117,7 @@ uint8_t gCryptoCmacConst_Rb[16] =
 /* Cmac output buf */
 uint8_t gCryptoAesCmac128ResultBuf[APP_CRYPTO_AES_CMAC_OUTPUT_LENGTH] __attribute__ ((aligned (128)));
 int32_t app_aes_ecb_128(uint8_t *input,uint8_t *key, uint8_t inputLen, uint8_t *output);
+int32_t app_aes_cmac_dthe_128(uint8_t *input, uint8_t *key, uint8_t *k1, uint8_t *k2, uint32_t inputLen, uint8_t *tag);
 void app_aes_cmac_128( uint8_t *key, uint8_t *input, int32_t length, uint8_t *mac);
 void app_padding ( uint8_t *lastb, uint8_t *pad, int32_t length );
 void app_xor_128(uint8_t *a, uint8_t *b, uint8_t *out);
@@ -194,13 +195,8 @@ void crypto_aes_cmac_128_main(void *args)
 
 void app_aes_cmac_128( uint8_t *key, uint8_t *input, int32_t length, uint8_t *mac)
 {
-    int32_t             i, numOfRounds, flag;
-    uint8_t             M_last[APP_CRYPTO_AES_BLOCK_LENGTH], padded[APP_CRYPTO_AES_BLOCK_LENGTH];
     Crypto_Params       params;
     int32_t             status;
-    uint32_t            aesBlockLength = APP_CRYPTO_AES_BLOCK_LENGTH;
-    static uint8_t      aesCmacX[APP_CRYPTO_AES_BLOCK_LENGTH];
-    static uint8_t      aesCmacY[APP_CRYPTO_AES_BLOCK_LENGTH];
 
     /* Subkeys Key1 and Key2 are derived from K through the subkey generation algorithm */
     /* AES-128 with key is applied to an all-zero input block. */
@@ -210,54 +206,12 @@ void app_aes_cmac_128( uint8_t *key, uint8_t *input, int32_t length, uint8_t *ma
     status = Crypto_cmacGenSubKeys(&params);
     DebugP_assert(SystemP_SUCCESS == status);
 
-    /* Number of rounds */
-    numOfRounds =  (length+15)/ aesBlockLength;
-
-    if ( numOfRounds == 0 )
-    {
-        numOfRounds = 1;
-        flag = 0;
-    }
-    else
-    {
-        if(( length % aesBlockLength ) == 0 )
-        {/* last block is a complete block */
-            flag = 1;
-        }
-        else
-        { /* last block is not complete block */
-            flag = 0;
-        }
-    }
-
-    if( flag )
-    { /* last block is complete block */
-        app_xor_128(&input[aesBlockLength*(numOfRounds-1)],params.key1,M_last);
-    }
-    else
-    {
-        app_padding(&input[aesBlockLength*(numOfRounds-1)], padded, length % aesBlockLength);
-        app_xor_128(padded,params.key2, M_last);
-    }
-
-    memset(aesCmacX, 0x00, aesBlockLength);
-    for ( i=0; i<numOfRounds-1; i++ )
-    {
-        /* Y := Mi (+) X  */
-        app_xor_128(aesCmacX, &input[aesBlockLength*i], aesCmacY);
-        /* X := AES-128(KEY, Y); */
-        app_aes_ecb_128(aesCmacY, key, APP_CRYPTO_AES_BLOCK_LENGTH, aesCmacX);
-    }
-
-    app_xor_128(aesCmacX, M_last, aesCmacY);
-    app_aes_ecb_128(aesCmacY, key, APP_CRYPTO_AES_BLOCK_LENGTH, aesCmacX);
-
-    memcpy(mac, aesCmacX, aesBlockLength);
+    app_aes_cmac_dthe_128(input, key, &params.key1[0], &params.key2[0], length, mac);
 
     return;
 }
 
-int32_t app_aes_ecb_128(uint8_t *input, uint8_t *key, uint8_t inputLen, uint8_t *output)
+int32_t app_aes_cmac_dthe_128(uint8_t *input, uint8_t *key, uint8_t *k1, uint8_t *k2, uint32_t inputLen, uint8_t *tag)
 {
     DTHE_AES_Return_t   status;
     DTHE_AES_Params     aesParams;
@@ -266,14 +220,16 @@ int32_t app_aes_ecb_128(uint8_t *input, uint8_t *key, uint8_t inputLen, uint8_t 
     (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
 
     /* Initialize the encryption parameters: */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
+    aesParams.algoType          = DTHE_AES_CBC_MAC_MODE;
     aesParams.opType            = DTHE_AES_ENCRYPT;
+    aesParams.useKEKMode        = FALSE;
     aesParams.ptrKey            = (uint32_t*)&key[0];
+    aesParams.ptrKey1           = (uint32_t*)&k1[0];
+    aesParams.ptrKey2           = (uint32_t*)&k2[0];
     aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
     aesParams.ptrPlainTextData  = (uint32_t*)&input[0];
     aesParams.dataLenBytes      = inputLen;
-    aesParams.ptrEncryptedData  = (uint32_t*)&output[0];
-    aesParams.useKEKMode        = FALSE;
+    aesParams.ptrTag            = (uint32_t*)&tag[0];
 
     /* opens aes driver */
     status = DTHE_AES_open(gAesHandle);
@@ -289,6 +245,40 @@ int32_t app_aes_ecb_128(uint8_t *input, uint8_t *key, uint8_t inputLen, uint8_t 
 
     return (status);
 }
+
+int32_t app_aes_ecb_128(uint8_t *input, uint8_t *key, uint8_t inputLen, uint8_t *output)
+{
+    DTHE_AES_Return_t   status;
+    DTHE_AES_Params     aesParams;
+
+    /* Initialize the AES Parameters: */
+    (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
+
+    /* Initialize the encryption parameters: */
+    aesParams.algoType          = DTHE_AES_ECB_MODE;
+    aesParams.opType            = DTHE_AES_ENCRYPT;
+    aesParams.useKEKMode        = FALSE;
+    aesParams.ptrKey            = (uint32_t*)&key[0];
+    aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
+    aesParams.ptrPlainTextData  = (uint32_t*)&input[0];
+    aesParams.dataLenBytes      = inputLen;
+    aesParams.ptrEncryptedData  = (uint32_t*)&output[0];
+
+    /* opens aes driver */
+    status = DTHE_AES_open(gAesHandle);
+    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
+
+    /* Encryption */
+    status = DTHE_AES_execute(gAesHandle, &aesParams);
+    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
+
+    /* Closing aes driver */
+    status = DTHE_AES_close(gAesHandle);
+    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
+
+    return (status);
+}
+
 void app_xor_128(uint8_t *a, uint8_t *b, uint8_t *out)
 {
     int32_t i;
@@ -299,6 +289,7 @@ void app_xor_128(uint8_t *a, uint8_t *b, uint8_t *out)
 
     return;
 }
+
 void app_padding ( uint8_t *lastb, uint8_t *pad, int32_t length )
 {
     int32_t j;

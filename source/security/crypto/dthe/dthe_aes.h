@@ -80,6 +80,8 @@ extern "C" {
 #define DTHE_AES_F9_MODE                                    (0x00000020U)
 /** \brief Flag for AES XTS Mode */
 #define DTHE_AES_XTS_MODE                                   (0x00000040U)
+/** \brief Flag for AES CBC-MAC Mode */
+#define DTHE_AES_CBC_MAC_MODE                               (0x00000080U)
 
 /** \brief Size of AES key is of 128-bit */
 #define DTHE_AES_KEY_128_SIZE                               (0x00000001U)
@@ -148,6 +150,16 @@ typedef struct DTHE_AES_Params_t
     uint32_t*           ptrKey;
 
     /**
+     *< To be used only for CMAC
+     */
+    uint32_t*           ptrKey1;
+
+    /**
+     *< To be used only for CMAC
+     */
+    uint32_t*           ptrKey2;
+
+    /**
         \brief   Length of the Key
      */
     uint8_t             keyLen;
@@ -183,6 +195,12 @@ typedef struct DTHE_AES_Params_t
      * - This is used as an input parameter and is the location where the plain text data is present which will be encrypted.
      */
     uint32_t*           ptrPlainTextData;
+
+    /**
+     *<   Pointer to Tag
+     *
+     */
+    uint32_t*           ptrTag;
 
     /**
      *<   Width of Counter in bits

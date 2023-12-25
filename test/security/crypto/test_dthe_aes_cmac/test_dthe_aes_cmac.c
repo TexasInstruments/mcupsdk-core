@@ -149,6 +149,7 @@ uint8_t gCryptoAesCmacZerosInput[TEST_CRYPTO_AES_CMAC_OUTPUT_LENGTH] =
 };
 
 int32_t test_aes_ecb_256(uint8_t *input,uint8_t *key ,uint8_t inputLen, uint8_t *output);
+int32_t test_aes_cmac_dthe_256(uint8_t *input, uint8_t *key, uint8_t *k1, uint8_t *k2, uint32_t inputLen, uint8_t *tag);
 void test_aes_cmac_256( uint8_t *key, uint8_t *input, int32_t length, uint8_t *mac);
 void crypto_aes_cmac_128_main(void *args);
 void test_padding ( uint8_t *lastb, uint8_t *pad, int32_t length );
@@ -158,6 +159,7 @@ void crypto_aes_cmac_256_main(void *args);
 static void test_get_buf(uint8_t * buf, uint32_t sizeInBytes);
 int32_t test_aes_ecb_128(uint8_t *input, uint8_t *key, uint8_t inputLen, uint8_t *output);
 void test_aes_cmac_128( uint8_t *key, uint8_t *input, int32_t length, uint8_t *mac);
+int32_t test_aes_cmac_dthe_128(uint8_t *input, uint8_t *key, uint8_t *k1, uint8_t *k2, uint32_t inputLen, uint8_t *tag);
 int32_t test_cmacGenSubKeys(Crypto_Params *params);
 
 void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t key);
@@ -245,15 +247,10 @@ void crypto_aes_cmac_256_main(void *args)
 
 void test_aes_cmac_256( uint8_t *key, uint8_t *input, int32_t length, uint8_t *mac)
 {
-    int32_t             i, numOfRounds,flag;
-    uint8_t             M_last[TEST_CRYPTO_AES_BLOCK_LENGTH], padded[TEST_CRYPTO_AES_BLOCK_LENGTH];
     int32_t             status;
-    uint32_t            aesBlockLength = TEST_CRYPTO_AES_BLOCK_LENGTH;
     Crypto_Params       params;
-    static uint8_t      aesCmacX[TEST_CRYPTO_AES_BLOCK_LENGTH];
-    static uint8_t      aesCmacY[TEST_CRYPTO_AES_BLOCK_LENGTH];
 
-    /* Subkeys Key1 and Key2 are derived from K through the subkey generation algorithm */
+    /* Subkeys K1 and K2 are derived from K through the subkey generation algorithm */
     /* AES-256 with key is applied to an all-zero input block. */
     status = test_aes_ecb_256(gCryptoAesCmacZerosInput, key, TEST_CRYPTO_AES_BLOCK_LENGTH, params.aesWithKeyAppliedToZeroInput);
     TEST_ASSERT_EQUAL_UINT32(DTHE_AES_RETURN_SUCCESS, status);
@@ -262,49 +259,7 @@ void test_aes_cmac_256( uint8_t *key, uint8_t *input, int32_t length, uint8_t *m
     status = test_cmacGenSubKeys(&params);
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
-    /* Number of rounds */
-    numOfRounds =  (length+15)/ aesBlockLength;
-
-    if ( numOfRounds == 0 )
-    {
-        numOfRounds = 1;
-        flag = 0;
-    }
-    else
-    {
-        if(( length % aesBlockLength ) == 0 )
-        {/* last block is a complete block */
-            flag = 1;
-        }
-        else
-        { /* last block is not complete block */
-            flag = 0;
-        }
-    }
-
-    if( flag )
-    { /* last block is complete block */
-        test_xor_128(&input[aesBlockLength*(numOfRounds-1)],params.key1,M_last);
-    }
-    else
-    {
-        test_padding(&input[aesBlockLength*(numOfRounds-1)], padded, length%aesBlockLength);
-        test_xor_128(padded, params.key2, M_last);
-    }
-
-    memset(aesCmacX, 0x00, aesBlockLength);
-    for ( i=0; i<numOfRounds-1; i++ )
-    {
-        /* Y := Mi (+) X  */
-        test_xor_128(aesCmacX, &input[aesBlockLength*i], aesCmacY);
-        /* X := AES-256(KEY, Y); */
-        test_aes_ecb_256(aesCmacY, key, TEST_CRYPTO_AES_BLOCK_LENGTH, aesCmacX);
-    }
-
-    test_xor_128(aesCmacX, M_last, aesCmacY);
-    test_aes_ecb_256(aesCmacY, key, TEST_CRYPTO_AES_BLOCK_LENGTH, aesCmacX);
-
-    memcpy(mac, aesCmacX, aesBlockLength);
+    test_aes_cmac_dthe_256(input, key, &params.key1[0], &params.key2[0], length, mac);
 
     return;
 }
@@ -338,6 +293,76 @@ int32_t test_aes_ecb_256(uint8_t *input, uint8_t *key, uint8_t inputLen, uint8_t
     /* Closing aes driver */
     status = DTHE_AES_close(gAesCmacHandle);
     TEST_ASSERT_EQUAL_UINT32(DTHE_AES_RETURN_SUCCESS, status);
+
+    return (status);
+}
+
+int32_t test_aes_cmac_dthe_256(uint8_t *input, uint8_t *key, uint8_t *k1, uint8_t *k2, uint32_t inputLen, uint8_t *tag)
+{
+    DTHE_AES_Return_t   status;
+    DTHE_AES_Params     aesParams;
+
+    /* Initialize the AES Parameters: */
+    (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
+
+    /* Initialize the encryption parameters: */
+    aesParams.algoType          = DTHE_AES_CBC_MAC_MODE;
+    aesParams.opType            = DTHE_AES_ENCRYPT;
+    aesParams.useKEKMode        = FALSE;
+    aesParams.ptrKey            = (uint32_t*)&key[0];
+    aesParams.ptrKey1           = (uint32_t*)&k1[0];
+    aesParams.ptrKey2           = (uint32_t*)&k2[0];
+    aesParams.keyLen            = DTHE_AES_KEY_256_SIZE;
+    aesParams.ptrPlainTextData  = (uint32_t*)&input[0];
+    aesParams.dataLenBytes      = inputLen;
+    aesParams.ptrTag            = (uint32_t*)&tag[0];
+
+    /* opens aes driver */
+    status = DTHE_AES_open(gAesCmacHandle);
+    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
+
+    /* Encryption */
+    status = DTHE_AES_execute(gAesCmacHandle, &aesParams);
+    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
+
+    /* Closing aes driver */
+    status = DTHE_AES_close(gAesCmacHandle);
+    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
+
+    return (status);
+}
+
+int32_t test_aes_cmac_dthe_128(uint8_t *input, uint8_t *key, uint8_t *k1, uint8_t *k2, uint32_t inputLen, uint8_t *tag)
+{
+    DTHE_AES_Return_t   status;
+    DTHE_AES_Params     aesParams;
+
+    /* Initialize the AES Parameters: */
+    (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
+
+    /* Initialize the encryption parameters: */
+    aesParams.algoType          = DTHE_AES_CBC_MAC_MODE;
+    aesParams.opType            = DTHE_AES_ENCRYPT;
+    aesParams.useKEKMode        = FALSE;
+    aesParams.ptrKey            = (uint32_t*)&key[0];
+    aesParams.ptrKey1           = (uint32_t*)&k1[0];
+    aesParams.ptrKey2           = (uint32_t*)&k2[0];
+    aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
+    aesParams.ptrPlainTextData  = (uint32_t*)&input[0];
+    aesParams.dataLenBytes      = inputLen;
+    aesParams.ptrTag            = (uint32_t*)&tag[0];
+
+    /* opens aes driver */
+    status = DTHE_AES_open(gAesCmacHandle);
+    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
+
+    /* Encryption */
+    status = DTHE_AES_execute(gAesCmacHandle, &aesParams);
+    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
+
+    /* Closing aes driver */
+    status = DTHE_AES_close(gAesCmacHandle);
+    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     return (status);
 }
@@ -391,13 +416,8 @@ void crypto_aes_cmac_128_main(void *args)
 
 void test_aes_cmac_128( uint8_t *key, uint8_t *input, int32_t length, uint8_t *mac)
 {
-    int32_t             i, numOfRounds, flag;
-    uint8_t             M_last[TEST_CRYPTO_AES_BLOCK_LENGTH], padded[TEST_CRYPTO_AES_BLOCK_LENGTH];
     Crypto_Params       params;
     int32_t             status;
-    uint32_t            aesBlockLength = TEST_CRYPTO_AES_BLOCK_LENGTH;
-    static uint8_t      aesCmacX[TEST_CRYPTO_AES_BLOCK_LENGTH];
-    static uint8_t      aesCmacY[TEST_CRYPTO_AES_BLOCK_LENGTH];
 
     /* Subkeys Key1 and Key2 are derived from K through the subkey generation algorithm */
     /* AES-128 with key is applied to an all-zero input block. */
@@ -407,49 +427,7 @@ void test_aes_cmac_128( uint8_t *key, uint8_t *input, int32_t length, uint8_t *m
     status = test_cmacGenSubKeys(&params);
     DebugP_assert(SystemP_SUCCESS == status);
 
-    /* Number of rounds */
-    numOfRounds =  (length+15)/ aesBlockLength;
-
-    if ( numOfRounds == 0 )
-    {
-        numOfRounds = 1;
-        flag = 0;
-    }
-    else
-    {
-        if(( length % aesBlockLength ) == 0 )
-        {/* last block is a complete block */
-            flag = 1;
-        }
-        else
-        { /* last block is not complete block */
-            flag = 0;
-        }
-    }
-
-    if( flag )
-    { /* last block is complete block */
-        test_xor_128(&input[aesBlockLength*(numOfRounds-1)],params.key1,M_last);
-    }
-    else
-    {
-        test_padding(&input[aesBlockLength*(numOfRounds-1)], padded, length % aesBlockLength);
-        test_xor_128(padded,params.key2, M_last);
-    }
-
-    memset(aesCmacX, 0x00, aesBlockLength);
-    for ( i=0; i<numOfRounds-1; i++ )
-    {
-        /* Y := Mi (+) X  */
-        test_xor_128(aesCmacX, &input[aesBlockLength*i], aesCmacY);
-        /* X := AES-128(KEY, Y); */
-        test_aes_ecb_128(aesCmacY, key, TEST_CRYPTO_AES_BLOCK_LENGTH, aesCmacX);
-    }
-
-    test_xor_128(aesCmacX, M_last, aesCmacY);
-    test_aes_ecb_128(aesCmacY, key, TEST_CRYPTO_AES_BLOCK_LENGTH, aesCmacX);
-
-    memcpy(mac, aesCmacX, aesBlockLength);
+    test_aes_cmac_dthe_128(input, key, &params.key1[0], &params.key2[0], length, mac);
 
     return;
 }
