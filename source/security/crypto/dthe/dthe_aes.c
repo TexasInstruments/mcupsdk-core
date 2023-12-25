@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -60,7 +60,7 @@ static void DTHE_AES_setDMAOutputRequestStatus(CSL_AesRegs *ptrAesRegs, uint8_t 
 static void DTHE_AES_setDMAInputRequestStatus(CSL_AesRegs *ptrAesRegs, uint8_t dmaStatus);
 static void DTHE_AES_setKeySize(CSL_AesRegs *ptrAesRegs, uint8_t size);
 static void DTHE_AES_set256BitKey1(CSL_AesRegs *ptrAesRegs, const uint32_t* ptrKey);
-static void DTHE_AES_setIV(CSL_AesRegs *ptrAesRegs, const uint32_t* ptrIV);
+static void DTHE_AES_setIV(CSL_AesRegs *ptrAesRegs, uint32_t ivSize,const uint32_t* ptrIV);
 static void DTHE_AES_pollInputReady(CSL_AesRegs *ptrAesRegs);
 static void DTHE_AES_writeDataBlock(CSL_AesRegs *ptrAesRegs, const uint32_t* ptrData);
 static void DTHE_AES_pollOutputReady(CSL_AesRegs *ptrAesRegs);
@@ -89,10 +89,62 @@ static void DTHE_AES_controlMode(CSL_AesRegs *ptrAesRegs, uint32_t algoType)
     {
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_MODE, CSL_AES_S_CTRL_MODE_ECB);
     }
-    else
+    else if(algoType == DTHE_AES_CBC_MODE)
     {
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_MODE, CSL_AES_S_CTRL_MODE_CBC);
     }
+    else if(algoType == DTHE_AES_CTR_MODE)
+    {
+        CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_CTR, CSL_AES_S_CTRL_CTR_CTR);
+    }
+    else if(algoType == DTHE_AES_ICM_MODE)
+    {
+        CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_ICM, CSL_AES_S_CTRL_ICM_ICM);
+    }
+    else if(algoType == DTHE_AES_CFB_MODE)
+    {
+        CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_CFB, CSL_AES_S_CTRL_CFB_CFB);
+    }
+    else if(algoType == DTHE_AES_F8_MODE)
+    {
+        CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_F8, CSL_AES_S_CTRL_F8_F8);
+    }
+    else if(algoType == DTHE_AES_F9_MODE)
+    {
+        CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_F8, CSL_AES_S_CTRL_F9_F9);
+    }
+    else if(algoType == DTHE_AES_XTS_MODE)
+    {
+        CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_XTS, CSL_AES_S_CTRL_XTS_NOOP);
+    }
+}
+
+static void DTHE_AES_CTRWidth(CSL_AesRegs *ptrAesRegs, uint32_t ctrWidth)
+{
+    uint32_t ctrWidthRegValue = 3U;
+
+	if(ctrWidth == DTHE_AES_CTR_WIDTH_32)
+    {
+        ctrWidthRegValue = CSL_AES_S_CTRL_CTR_WIDTH_COUNTER32;
+    }
+    else if(ctrWidth == DTHE_AES_CTR_WIDTH_64)
+    {
+        ctrWidthRegValue = CSL_AES_S_CTRL_CTR_WIDTH_COUNTER64;
+    }
+    else if(ctrWidth == DTHE_AES_CTR_WIDTH_96)
+    {
+        ctrWidthRegValue = CSL_AES_S_CTRL_CTR_WIDTH_COUNTER96;
+    }
+    else if(ctrWidth == DTHE_AES_CTR_WIDTH_128)
+    {
+        ctrWidthRegValue = CSL_AES_S_CTRL_CTR_WIDTH_COUNTER128;
+    }
+    else
+    {
+
+    }
+
+    CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_CTR_WIDTH, ctrWidthRegValue);
 }
 
 static void DTHE_AES_setOpType(CSL_AesRegs *ptrAesRegs, uint32_t opType)
@@ -212,7 +264,10 @@ DTHE_AES_Return_t DTHE_AES_execute(DTHE_Handle handle, const DTHE_AES_Params* pt
         /* Sanity Check: We always need the IV to be specified */
         if (status == DTHE_AES_RETURN_SUCCESS)
         {
-            if(ptrParams->algoType == DTHE_AES_CBC_MODE)
+            if((ptrParams->algoType == DTHE_AES_CBC_MODE)\
+                ||(ptrParams->algoType == DTHE_AES_CTR_MODE)\
+                ||(ptrParams->algoType == DTHE_AES_ICM_MODE)\
+                ||(ptrParams->algoType == DTHE_AES_CFB_MODE))
             {
                 if (ptrParams->ptrIV == NULL)
                 {
@@ -237,13 +292,25 @@ DTHE_AES_Return_t DTHE_AES_execute(DTHE_Handle handle, const DTHE_AES_Params* pt
             DTHE_AES_setOpType(ptrAesRegs, ptrParams->opType);
 
             /* Configure the Initialization Vector: */
-            if (ptrParams->algoType == DTHE_AES_CBC_MODE)
+            if ((ptrParams->algoType == DTHE_AES_CBC_MODE)||(ptrParams->algoType == DTHE_AES_CFB_MODE))
             {
-                DTHE_AES_setIV(ptrAesRegs, ptrParams->ptrIV);
+                DTHE_AES_setIV(ptrAesRegs, 128U, ptrParams->ptrIV);
+            }
+
+            if (ptrParams->algoType == DTHE_AES_CTR_MODE)
+            {
+                DTHE_AES_CTRWidth(ptrAesRegs, ptrParams->counterWidth);
+                DTHE_AES_setIV(ptrAesRegs, 128U, ptrParams->ptrIV);
+                ptrAesRegs->IV_IN_3 = 0x01000000U;
+            }
+
+            if (ptrParams->algoType == DTHE_AES_ICM_MODE)
+            {
+                DTHE_AES_setIV(ptrAesRegs, 16U, ptrParams->ptrIV);
             }
 
             /* Setup the data length: */
-			DTHE_AES_setDataLengthBytes(ptrAesRegs, ptrParams-> dataLenBytes);
+            DTHE_AES_setDataLengthBytes(ptrAesRegs, ptrParams->dataLenBytes);
 
             /* Setup the input & output: */
             if (ptrParams->opType == DTHE_AES_ENCRYPT)
@@ -467,9 +534,13 @@ static void DTHE_AES_setKeySize(CSL_AesRegs *ptrAesRegs, uint8_t size)
     {
         keySize = 2U;
     }
-    else
+    else if (size == CSL_AES_S_CTRL_KEY_SIZE_KEY256)
     {
         keySize = 3U;
+    }
+    else
+    {
+        keySize = 0U;
     }
     CSL_REG32_FINS(&ptrAesRegs->CTRL,AES_S_CTRL_KEY_SIZE, keySize);
 
@@ -506,12 +577,45 @@ static void DTHE_AES_set256BitKey1(CSL_AesRegs *ptrAesRegs, const uint32_t* ptrK
  * \param   ptrIV           Pointer to the IV data to be used.
  *
  */
-static void DTHE_AES_setIV(CSL_AesRegs *ptrAesRegs, const uint32_t* ptrIV)
+static void DTHE_AES_setIV(CSL_AesRegs *ptrAesRegs, uint32_t ivSize, const uint32_t* ptrIV)
 {
-    ptrAesRegs->IV_IN_0 = ptrIV[0U];
-    ptrAesRegs->IV_IN_1 = ptrIV[1U];
-    ptrAesRegs->IV_IN_2 = ptrIV[2U];
-    ptrAesRegs->IV_IN_3 = ptrIV[3U];
+    ptrAesRegs->IV_IN_0 = 0U;
+    ptrAesRegs->IV_IN_1 = 0U;
+    ptrAesRegs->IV_IN_2 = 0U;
+    ptrAesRegs->IV_IN_3 = 0U;
+
+    if(ivSize < 32U)
+    {
+        ptrAesRegs->IV_IN_0 = (ptrIV[0U]&0x0000FFFFU);
+    }
+
+    if(ivSize >= 32U)
+    {
+        ptrAesRegs->IV_IN_0 = ptrIV[0U];
+    }
+
+    if((ivSize > 32U)&&(ivSize >= 64U))
+    {
+        ptrAesRegs->IV_IN_1 = ptrIV[1U];
+    }
+
+    if((ivSize > 64U)&&(ivSize >= 96U))
+    {
+        ptrAesRegs->IV_IN_2 = ptrIV[2U];
+    }
+
+    if((ivSize > 96U)&&(ivSize == 128U))
+    {
+        ptrAesRegs->IV_IN_3 = ptrIV[3U];
+    }
+
+    if(ivSize>128U)
+    {
+        ptrAesRegs->IV_IN_0 = 0U;
+        ptrAesRegs->IV_IN_1 = 0U;
+        ptrAesRegs->IV_IN_2 = 0U;
+        ptrAesRegs->IV_IN_3 = 0U;
+    }
 
     return;
 }

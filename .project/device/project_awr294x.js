@@ -93,6 +93,7 @@ const example_file_list = [
     "examples/security/crypto/dthe_aes/crypto_aes_ecb_256/.project/project.js",
     "examples/security/crypto/dthe_aes/crypto_aes_cmac_128/.project/project.js",
     "examples/security/crypto/dthe_aes/crypto_aes_cmac_256/.project/project.js",
+    "examples/security/crypto/dthe_aes/crypto_aes_ctr/.project/project.js",
     "examples/security/crypto/dthe_sha/crypto_sha_256/.project/project.js",
     "examples/security/crypto/dthe_sha/crypto_sha_512/.project/project.js",
     "examples/security/crypto/dthe_sha/crypto_hmac_sha256/.project/project.js",
@@ -208,6 +209,7 @@ const example_file_list = [
     "test/kernel/freertos/.project/project.js",
     "test/kernel/rov/.project/project.js",
     "test/security/crypto/test_dthe_aes_cbc/.project/project.js",
+    "test/security/crypto/test_dthe_aes_ctr/.project/project.js",
     "test/security/crypto/test_dthe_aes_ecb/.project/project.js",
     "test/security/crypto/test_dthe_sha/.project/project.js",
 ];

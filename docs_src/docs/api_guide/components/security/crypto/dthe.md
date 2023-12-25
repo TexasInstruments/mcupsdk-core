@@ -60,8 +60,9 @@ The IP supports the following features:
         - <b>HMAC SHA-256</b>, <b>HMAC SHA-512</b>
 - \subpage DRIVERS_DTHE_AES_PAGE
 	- <b>A</b>dvanced <b>e</b>ncryption <b>s</b>tandard
-        - <b>AES-CBC</b>(128/256)(<b>C</b>ipher <b>B</b>lock <b>C</b>haining)
-        - <b>AES-ECB</b>(128/256)(<b>E</b>lectronic <b>C</b>ode <b>B</b>ook)
+        - <b>AES-CBC</b>(128/192/256)(<b>C</b>ipher <b>B</b>lock <b>C</b>haining)
+        - <b>AES-ECB</b>(128/192/256)(<b>E</b>lectronic <b>C</b>ode <b>B</b>ook)
+        - <b>AES-CTR</b>(128/192/256)(<b>C</b>oun<b>T</b>e<b>R</b>)
         - <b>AES-CMAC</b>(128/256)(<b>C</b>ipher-based <b>M</b>essage <b>A</b>uthentication <b>C</b>ode)
 \endcond
 ### Block diagram

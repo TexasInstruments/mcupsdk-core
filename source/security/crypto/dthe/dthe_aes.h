@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -64,20 +64,45 @@ extern "C" {
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
-/** \brief Flag for AEC ECB Mode */
+/** \brief Flag for AES ECB Mode */
 #define DTHE_AES_ECB_MODE                                   (0x00000000U)
-/** \brief Flag for AEC CBC Mode */
+/** \brief Flag for AES CBC Mode */
 #define DTHE_AES_CBC_MODE                                   (0x00000001U)
+/** \brief Flag for AES CTR Mode */
+#define DTHE_AES_CTR_MODE                                   (0x00000002U)
+/** \brief Flag for AES ICM Mode */
+#define DTHE_AES_ICM_MODE                                   (0x00000004U)
+/** \brief Flag for AES CFB Mode */
+#define DTHE_AES_CFB_MODE                                   (0x00000008U)
+/** \brief Flag for AES F8 Mode */
+#define DTHE_AES_F8_MODE                                    (0x00000010U)
+/** \brief Flag for AES F9 Mode */
+#define DTHE_AES_F9_MODE                                    (0x00000020U)
+/** \brief Flag for AES XTS Mode */
+#define DTHE_AES_XTS_MODE                                   (0x00000040U)
+
 /** \brief Size of AES key is of 128-bit */
 #define DTHE_AES_KEY_128_SIZE                               (0x00000001U)
 /** \brief Size of AES key is of 192-bit */
 #define DTHE_AES_KEY_192_SIZE                               (0x00000002U)
 /** \brief Size of AES key is of 256-bit */
 #define DTHE_AES_KEY_256_SIZE                               (0x00000003U)
+
 /** \brief AES Encrypt Flag */
 #define DTHE_AES_ENCRYPT                                    (0x016FE45DU)
 /** \brief AES Decrypt Flag */
 #define DTHE_AES_DECRYPT                                    (0xDCBA4213U)
+
+/** \brief AES CTR Counter Width is 16 (ICM) */
+#define DTHE_AES_CTR_WIDTH_16                                    (0x00000001U)
+/** \brief AES CTR Counter Width is 32 */
+#define DTHE_AES_CTR_WIDTH_32                                    (0x00000002U)
+/** \brief AES CTR Counter Width is 64 */
+#define DTHE_AES_CTR_WIDTH_64                                    (0x00000004U)
+/** \brief AES CTR Counter Width is 96 */
+#define DTHE_AES_CTR_WIDTH_96                                    (0x00000008U)
+/** \brief AES CTR Counter Width is 128 */
+#define DTHE_AES_CTR_WIDTH_128                                   (0x00000010U)
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -158,6 +183,11 @@ typedef struct DTHE_AES_Params_t
      * - This is used as an input parameter and is the location where the plain text data is present which will be encrypted.
      */
     uint32_t*           ptrPlainTextData;
+
+    /**
+     *<   Width of Counter in bits
+     */
+    uint32_t            counterWidth;
 }DTHE_AES_Params;
 /* ========================================================================== */
 /*                            Global Variables                                */
