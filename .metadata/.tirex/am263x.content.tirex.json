@@ -135,6 +135,70 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Memory Access Latency Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "memory_access_latency",
+        "location": "../../examples/benchmarks/memory_access_latency/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "memory_access_latency",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Memory Access Latency Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "memory_access_latency",
+        "location": "../../examples/benchmarks/memory_access_latency/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "memory_access_latency",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An OCRAM memory benchmark. CPU is R5FSS0-0 running FREERTOS.",
         "name": "ocmc_benchmarking",
         "location": "../../examples/benchmarks/ocmc_benchmarking/am263x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",

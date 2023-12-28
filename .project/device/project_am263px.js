@@ -31,6 +31,7 @@ const device_defines = {
 const example_file_list = [
     "examples/benchmarks/coremark_benchmark/.project/project.js",
     "examples/benchmarks/dhrystone_benchmark/.project/project.js",
+    "examples/benchmarks/memory_access_latency/.project/project.js",
     "examples/benchmarks/ocmc_benchmarking/.project/project_freertos.js",
 	"examples/drivers/adc/adc_burst_mode_epwm/.project/project.js",
 	"examples/drivers/adc/adc_burst_mode_oversampling/.project/project.js",
