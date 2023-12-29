@@ -69,6 +69,14 @@ static SemaphoreP_Object gUartReadDoneSem;
         } \
     } while(0) \
 
+#define APP_UART_CANCEL_ASSERT_ON_FAILURE(transferOK, transaction) \
+    do { \
+        if((SystemP_SUCCESS != (transferOK)) || (UART_TRANSFER_STATUS_CANCELLED != transaction.status)) \
+        { \
+            DebugP_assert(FALSE); /* UART TX/RX failed!! */ \
+        } \
+    } while(0) \
+
 typedef struct UART_TestParams_s {
 
     UART_Params  uartParams;
@@ -82,6 +90,8 @@ static void uart_echo_read_full_test_dmaMode(void *args);
 static void uart_echo_read_partial_external_loopback_full_test(void *args);
 static void uart_echo_read_external_loopback_full_test(void *args);
 static void uart_echo_read_autobaud_external_loopback_full_test(void *args);
+static void uart_echo_write_cancel_external_loopback_full_test(void *args);
+static void uart_echo_read_cancel_external_loopback_full_test(void *args);
 
 void test_main(void *args)
 {
@@ -172,6 +182,10 @@ void test_main(void *args)
     RUN_TEST(uart_echo_read_external_loopback_full_test, 12308, (void*)&testParams);
     test_uart_set_params(&testParams, 12309);
     RUN_TEST(uart_echo_read_autobaud_external_loopback_full_test, 12309, (void*)&testParams);
+    test_uart_set_params(&testParams, 12602);
+    RUN_TEST(uart_echo_write_cancel_external_loopback_full_test, 12602, (void*)&testParams);
+    test_uart_set_params(&testParams, 12603);
+    RUN_TEST(uart_echo_read_cancel_external_loopback_full_test, 12603, (void*)&testParams);
 #endif
     #if defined(SOC_AM64X) || defined(SOC_AM243X)
     test_uart_set_params(&testParams, 2514);
@@ -638,6 +652,179 @@ static void uart_echo_read_autobaud_external_loopback_full_test(void *args)
 
     return;
 }
+
+static void uart_echo_write_cancel_external_loopback_full_test(void *args)
+{
+    int32_t          transferOK, status;
+    UART_Transaction trans;
+    UART_Handle      uartHandle, uartHandle1;
+    UART_TestParams *testParams = (UART_TestParams*)args;
+    UART_TestParams  *testParams1 = (UART_TestParams*)args;
+    UART_Params     *uartParams = &(testParams->uartParams);
+    UART_Params     *uartParams1 = &(testParams1->uartParams);
+    uint32_t         baseAddr, baseAddr1;
+
+    UART_close(gUartHandle[CONFIG_UART0]);
+    UART_close(gUartHandle[CONFIG_UART1]);
+    uartHandle = UART_open(CONFIG_UART0, uartParams);
+    TEST_ASSERT_NOT_NULL(uartHandle);
+    uartParams1->intrNum = CSLR_R5FSS0_CORE0_INTR_UART4_IRQ;
+    uartHandle1 = UART_open(CONFIG_UART1, uartParams1);
+    TEST_ASSERT_NOT_NULL(uartHandle1);
+
+    if (uartParams->writeMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        status = SemaphoreP_constructBinary(&gUartWriteDoneSem, 0);
+        DebugP_assert(SystemP_SUCCESS == status);
+    }
+
+    if (uartParams->readMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        status = SemaphoreP_constructBinary(&gUartReadDoneSem, 0);
+        DebugP_assert(SystemP_SUCCESS == status);
+    }
+
+    baseAddr = UART_getBaseAddr(gUartHandle[CONFIG_UART0]);
+    DebugP_assert(baseAddr != 0U);
+    baseAddr1 = UART_getBaseAddr(gUartHandle[CONFIG_UART1]);
+    DebugP_assert(baseAddr1 != 0U);
+
+    UART_disableLoopbackMode(baseAddr);
+    UART_disableLoopbackMode(baseAddr1);
+
+    UART_Transaction_init(&trans);
+
+    trans.buf   = &gUartTxBuffer[0U];
+    strncpy(trans.buf,"This is uart write cancel Test"
+                      "This is uart write cancel Test"
+                      "This is uart write cancel Test...\r\n", APP_UART_BUFSIZE);
+    trans.count = strlen(trans.buf);
+    transferOK = UART_write(gUartHandle[CONFIG_UART0], &trans);
+    APP_UART_ASSERT_ON_FAILURE(transferOK, trans);
+    transferOK = UART_writeCancel(gUartHandle[CONFIG_UART0], &trans);
+    APP_UART_CANCEL_ASSERT_ON_FAILURE(transferOK, trans);
+
+    if (uartParams->writeMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        /* Wait for write completion */
+        SemaphoreP_pend(&gUartWriteDoneSem, SystemP_WAIT_FOREVER);
+    }
+
+    trans.buf   = &gUartRxBuffer[0U];
+    trans.count = trans.count;
+    transferOK = UART_read(gUartHandle[CONFIG_UART1], &trans);
+    APP_UART_CANCEL_ASSERT_ON_FAILURE(transferOK, trans);
+
+    if (uartParams->readMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        /* Wait for read completion */
+        SemaphoreP_pend(&gUartReadDoneSem, SystemP_WAIT_FOREVER);
+    }
+
+    transferOK = memcmp(&gUartTxBuffer[0U], &gUartRxBuffer[0U], gNumBytesWritten);
+    DebugP_assert(transferOK == 0U);
+
+    if (uartParams->writeMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        SemaphoreP_destruct(&gUartWriteDoneSem);
+    }
+    if (uartParams->readMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        SemaphoreP_destruct(&gUartReadDoneSem);
+    }
+
+    UART_close(uartHandle);
+    UART_close(uartHandle1);
+
+    return;
+}
+
+static void uart_echo_read_cancel_external_loopback_full_test(void *args)
+{
+    int32_t          transferOK, status;
+    UART_Transaction trans;
+    UART_Handle      uartHandle, uartHandle1;
+    UART_TestParams *testParams = (UART_TestParams*)args;
+    UART_TestParams  *testParams1 = (UART_TestParams*)args;
+    UART_Params     *uartParams = &(testParams->uartParams);
+    UART_Params     *uartParams1 = &(testParams1->uartParams);
+    uint32_t         baseAddr, baseAddr1;
+
+    UART_close(gUartHandle[CONFIG_UART0]);
+    UART_close(gUartHandle[CONFIG_UART1]);
+    uartHandle = UART_open(CONFIG_UART0, uartParams);
+    TEST_ASSERT_NOT_NULL(uartHandle);
+    uartParams1->intrNum = CSLR_R5FSS0_CORE0_INTR_UART4_IRQ;
+    uartHandle1 = UART_open(CONFIG_UART1, uartParams1);
+    TEST_ASSERT_NOT_NULL(uartHandle1);
+
+    if (uartParams->writeMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        status = SemaphoreP_constructBinary(&gUartWriteDoneSem, 0);
+        DebugP_assert(SystemP_SUCCESS == status);
+    }
+
+    if (uartParams->readMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        status = SemaphoreP_constructBinary(&gUartReadDoneSem, 0);
+        DebugP_assert(SystemP_SUCCESS == status);
+    }
+
+    baseAddr = UART_getBaseAddr(gUartHandle[CONFIG_UART0]);
+    DebugP_assert(baseAddr != 0U);
+    baseAddr1 = UART_getBaseAddr(gUartHandle[CONFIG_UART1]);
+    DebugP_assert(baseAddr1 != 0U);
+
+    UART_disableLoopbackMode(baseAddr);
+    UART_disableLoopbackMode(baseAddr1);
+
+    UART_Transaction_init(&trans);
+
+    trans.buf   = &gUartTxBuffer[0U];
+    strncpy(trans.buf,"This is uart read cancel Test"
+                      "This is uart read cancel Test"
+                      "This is uart read cancel Test...\r\n", APP_UART_BUFSIZE);
+    trans.count = strlen(trans.buf);
+    transferOK = UART_write(gUartHandle[CONFIG_UART0], &trans);
+    APP_UART_ASSERT_ON_FAILURE(transferOK, trans);
+
+    if (uartParams->writeMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        /* Wait for write completion */
+        SemaphoreP_pend(&gUartWriteDoneSem, SystemP_WAIT_FOREVER);
+        DebugP_assert(strlen(trans.buf) == gNumBytesWritten);
+    }
+
+    trans.buf   = &gUartRxBuffer[0U];
+    trans.count = trans.count;
+    transferOK = UART_read(gUartHandle[CONFIG_UART1], &trans);
+    APP_UART_ASSERT_ON_FAILURE(transferOK, trans);
+    transferOK = UART_readCancel(gUartHandle[CONFIG_UART1], &trans);
+    APP_UART_CANCEL_ASSERT_ON_FAILURE(transferOK, trans);
+
+    if (uartParams->readMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        /* Wait for read completion */
+        SemaphoreP_pend(&gUartReadDoneSem, SystemP_WAIT_FOREVER);
+    }
+
+    transferOK = memcmp(&gUartTxBuffer[0U], &gUartRxBuffer[0U], gNumBytesRead);
+    DebugP_assert(transferOK == 0U);
+
+    if (uartParams->writeMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        SemaphoreP_destruct(&gUartWriteDoneSem);
+    }
+    if (uartParams->readMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        SemaphoreP_destruct(&gUartReadDoneSem);
+    }
+
+    UART_close(uartHandle);
+    UART_close(uartHandle1);
+
+    return;
+}
 #endif
 
 /*
@@ -688,6 +875,24 @@ void uart_echo_write_callback(UART_Handle handle, UART_Transaction *trans)
 void uart_echo_read_callback(UART_Handle handle, UART_Transaction *trans)
 {
     DebugP_assertNoLog(UART_TRANSFER_STATUS_SUCCESS == trans->status);
+    gNumBytesRead = trans->count;
+    SemaphoreP_post(&gUartReadDoneSem);
+
+    return;
+}
+
+void uart_echo_writeCancel_callback(UART_Handle handle, UART_Transaction *trans)
+{
+    DebugP_assertNoLog(UART_TRANSFER_STATUS_CANCELLED == trans->status);
+    gNumBytesWritten = trans->count;
+    SemaphoreP_post(&gUartWriteDoneSem);
+
+    return;
+}
+
+void uart_echo_readCancel_callback(UART_Handle handle, UART_Transaction *trans)
+{
+    DebugP_assertNoLog(UART_TRANSFER_STATUS_CANCELLED == trans->status);
     gNumBytesRead = trans->count;
     SemaphoreP_post(&gUartReadDoneSem);
 
@@ -859,6 +1064,18 @@ static void test_uart_set_params(UART_TestParams *testParams, uint32_t tcId)
         case 12309:
             params->operMode = UART_OPER_MODE_16X_AUTO_BAUD;
             params->baudRate = 57600;
+            break;
+        case 12602:
+            params->readMode = UART_TRANSFER_MODE_CALLBACK;
+            params->writeMode = UART_TRANSFER_MODE_CALLBACK;
+            params->readCallbackFxn = uart_echo_read_callback;
+            params->writeCallbackFxn = uart_echo_writeCancel_callback;
+            break;
+        case 12603:
+            params->readMode = UART_TRANSFER_MODE_CALLBACK;
+            params->writeMode = UART_TRANSFER_MODE_CALLBACK;
+            params->readCallbackFxn = uart_echo_readCancel_callback;
+            params->writeCallbackFxn = uart_echo_write_callback;
             break;
     }
 
