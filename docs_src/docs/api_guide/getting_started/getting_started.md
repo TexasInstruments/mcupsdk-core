@@ -30,7 +30,7 @@ On successful completion of below steps, you would have achieved the following
 - Output console logs on CCS and UART are working as expected
 - One SDK example has been flashed to the EVM flash and the application booted from the flash without CCS.
 \cond SOC_AM263PX || SOC_AM243X || SOC_AM263X
-- Perform Profiling based system level performance optimization using \ref SMART_PLACEMENT (\ref SMART_PLACEMENT_GETTING_STARTED)
+- Use \htmllink{https://www.ti.com/lit/an/spradf0a/spradf0a.pdf, TI OptiFlah memory technology} along with [Smart Placement](\ref SMART_PLACEMENT_GETTING_STARTED) tool to improve system level performance with external flash.
 \endcond
 
 ### Terms and Abbreviations

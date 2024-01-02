@@ -7,22 +7,6 @@ TI Sitara MCU have many different levels of memories with varying latency from C
 
 Smart placement is a name given to a process, using which functions and other linker-placed objects are distributed across different memories, while accounting for their criticality, directly from the source code.
 
-## When is Smart Placement required?
-
-If code is experiencing the following:
-1. Lower then expectation for XIP code performance (only valid for devices that supports XiP)
-2. Higher jitter numbers.
-3. High Cache miss rate.
-4. High CPU loading of ISR/Task.
-
-Then Smart placement can help in diagnosing the above problem.
-
-However, this is very application specific, it is expected to yield a better performance if the code is well placed between memories. Smart Placement handles this problem with much ease of use.
-
-## What not to expect from Smart Placement?
-
-Underlying concept of smart placement is to move some function to a faster memory which might help in improving performance with improved ease of use. However, quality of runtime data collection is very important and is something that application developer needs to make sure of. If bad quality of runtime performance data is there, then effect of smart placement is minimal.
-
 ## Theory of Smart Placement.
 
 Following table list down memories in ascending order of access latency (not an exhaustive list of memories). Memory with minimum latency is the fastest memory.
