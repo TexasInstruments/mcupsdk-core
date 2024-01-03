@@ -1,12 +1,41 @@
 let path = require('path');
 
-let device = "am263px";
+const device = "am263px";
+
+const TAG_CC_BOARD  = "am263px-cc";
+const TAG_LP_BOARD  = "am263px-lp";
 
 const files = {
-    common: [
-        "ospi_flash_io.c",
-        "main.c",
-    ],
+    "am263px-cc":
+    {
+        common:
+        [
+            "ospi_flash_io.c",
+            "main.c",
+            "board.c"
+        ],
+    },
+    "am263px-lp":
+    {
+        common:
+        [
+            "ospi_flash_io.c",
+            "main.c",
+        ],
+    }
+}
+const projectSpecFiles = {
+    "am263px-cc":
+    {
+        common:
+        [
+            "board.h"
+        ]
+    },
+    "am263px-lp":
+    {
+        common: []
+    }
 };
 
 const defines_board = {
@@ -51,17 +80,6 @@ const syscfgfile = "../example.syscfg"
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_OSPI_FLASH_IO";
 
-const templates_nortos_r5f =
-[
-    {
-        input: ".project/templates/am263px/nortos/main_nortos.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "ospi_flash_io_main",
-        },
-    }
-];
-
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos"},
@@ -81,8 +99,8 @@ function getComponentProperty() {
 
 function getComponentBuildProperty(buildOption) {
     let build_property = {};
-
-    build_property.files = files;
+    build_property.files = files[buildOption.board];
+    build_property.projectspecfiles = projectSpecFiles[buildOption.board];
     build_property.filedirs = filedirs;
     build_property.libdirs = libdirs;
     build_property.lnkfiles = lnkfiles;
@@ -91,10 +109,9 @@ function getComponentBuildProperty(buildOption) {
 
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.libs = libs_r5f;
-        build_property.templates = templates_nortos_r5f;
     }
 
-    if(buildOption.board == "am263px-lp") {
+    if(buildOption.board === "am263px-lp") {
         build_property.defines = defines_board;
     }
 
