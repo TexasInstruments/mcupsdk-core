@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Mcspi Loopback Turbo Mode Main"
-        name = "mcspi_loopback_turbo_mode_main_am263px-lp_r5fss0-0_nortos_ti-arm-clang"
+        title="Mcspi Loopback Turbo Mode"
+        name = "mcspi_loopback_turbo_mode_am263px-lp_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -47,7 +47,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=mcspi_loopback_turbo_mode_main.${ConfigName}.map
+            -m=mcspi_loopback_turbo_mode.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs
@@ -60,7 +60,7 @@
             --context r5fss0-0 --part AM263P4 --package ZCZ_C
         "
 
-        description="A Mcspi Loopback Turbo Mode Main NORTOS project">
+        description="A Mcspi Loopback Turbo Mode NORTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="
@@ -93,7 +93,7 @@
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263px/EXAMPLES_DRIVERS_MCSPI_LOOPBACK.html"
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263px/EXAMPLES_DRIVERS_MCSPI_LOOPBACK_TURBO_MODE.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">

@@ -7360,8 +7360,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Mcspi Loopback Turbo Mode Main Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "mcspi_loopback_turbo_mode_main",
+        "description": "A Mcspi Loopback Turbo Mode Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_turbo_mode",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
@@ -7393,8 +7393,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Mcspi Loopback Turbo Mode Main Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "mcspi_loopback_turbo_mode_main",
+        "description": "A Mcspi Loopback Turbo Mode Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_turbo_mode",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
@@ -7426,8 +7426,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Mcspi Loopback Turbo Mode Main Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "mcspi_loopback_turbo_mode_main",
+        "description": "A Mcspi Loopback Turbo Mode Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_turbo_mode",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263P"
@@ -7459,8 +7459,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Mcspi Loopback Turbo Mode Main Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "mcspi_loopback_turbo_mode_main",
+        "description": "A Mcspi Loopback Turbo Mode Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_turbo_mode",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am263px-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "LP-AM263P"
