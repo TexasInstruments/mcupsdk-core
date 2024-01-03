@@ -59,7 +59,7 @@ const lflags = {
 };
 
 let postBuildSteps = [
-    "$(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_v2/firmware/pru0/decoder_pru0_hexpru.cmd sent_decoder_v2_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out; ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe sent_decoder_v2_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.b00 sent_decoder_pru0_bin.h SentDecoderFirmwarePru0 4; move sent_decoder_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_v2/example/firmware/sent_decoder_pru0_bin.h ;"
+    "$(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/pru0/decoder_pru0_hexpru.cmd sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out; ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.b00 sent_decoder_pru0_bin.h SentDecoderFirmwarePru0 4; move sent_decoder_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/example/firmware/sent_decoder_pru0_bin.h ;"
 ];
 
 function getComponentProperty() {
@@ -68,7 +68,7 @@ function getComponentProperty() {
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
     property.makefile = "pru";
-    property.name = "sent_decoder_v2_pru0_fw";
+    property.name = "sent_decoder_using_pruicss_iep_ecap_pru0_fw";
     property.isInternal = false;
     property.description = "sent decoder pru0 fw"
     property.buildOptionCombos = buildOptionCombos;

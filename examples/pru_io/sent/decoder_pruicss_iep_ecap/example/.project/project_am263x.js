@@ -35,7 +35,7 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f",
         "${MCU_PLUS_SDK_PATH}/source/pru_io/driver",
-        "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_v2/example"
+        "${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/example"
     ],
 };
 
@@ -82,7 +82,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sent_decoder_v2_r5f_example";
+    property.name = "sent_decoder_using_pruicss_iep_ecap_r5f_example";
     property.isInternal = false;
     property.tirexResourceSubClass = [ "example.gettingstarted" ];
     property.description = "SENT decoder Example"

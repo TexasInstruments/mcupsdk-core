@@ -17,7 +17,7 @@ GEN_CMDS__FLAG :=
 
 ORDERED_OBJS += \
 "./main.obj" \
-"$(MCU_PLUS_SDK_PATH)/examples/pru_io/sent/decoder_v2/firmware/pru0/am263x-cc/icssm-pru0_fw/ti-pru-cgt/linker.cmd" \
+"$(MCU_PLUS_SDK_PATH)/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/pru0/am263x-cc/icssm-pru0_fw/ti-pru-cgt/linker.cmd" \
 $(GEN_CMDS__FLAG) \
 
 -include ../makefile.init
@@ -31,10 +31,10 @@ SUBDIRS := \
 
 # Add inputs and outputs from these tool invocations to the build variables
 CMD_SRCS += \
-$(MCU_PLUS_SDK_PATH)/examples/pru_io/sent/decoder_v2/firmware/pru0/am263x-cc/icssm-pru0_fw/ti-pru-cgt/linker.cmd \
+$(MCU_PLUS_SDK_PATH)/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/pru0/am263x-cc/icssm-pru0_fw/ti-pru-cgt/linker.cmd \
 
 ASM_SRCS += \
-$(MCU_PLUS_SDK_PATH)/examples/pru_io/sent/decoder_v2/firmware/pru0/main.asm
+$(MCU_PLUS_SDK_PATH)/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/pru0/main.asm
 
 OBJS += \
 ./main.obj
@@ -49,10 +49,10 @@ ASM_DEPS__QUOTED += \
 "main.d"
 
 ASM_SRCS__QUOTED += \
-"$(MCU_PLUS_SDK_PATH)/examples/pru_io/sent/decoder_v2/firmware/pru0/main.asm"
+"$(MCU_PLUS_SDK_PATH)/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/pru0/main.asm"
 
 # Each subdirectory must supply rules for building sources it contributes
-main.obj: $(MCU_PLUS_SDK_PATH)/examples/pru_io/sent/decoder_v2/firmware/pru0/main.asm $(GEN_OPTS) | $(GEN_FILES) $(GEN_MISC_FILES)
+main.obj: $(MCU_PLUS_SDK_PATH)/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/pru0/main.asm $(GEN_OPTS) | $(GEN_FILES) $(GEN_MISC_FILES)
 	@echo 'Building file: "$<"'
 	@echo 'Invoking: PRU Compiler'
 	"$(CG_TOOL_ROOT)/bin/clpru" -DPRU0 -DSLICE0 -v4 -v4 --define=SOC_AM263X --include_path="$(CCS_PATH)" --include_path="$(SYSCFG_DIR)" --include_path="${CG_TOOL_ROOT}/include" --include_path="${MCU_PLUS_SDK_PATH}/source" --include_path="${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/common"  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little --preproc_with_compile --preproc_dependency="$(basename $(<F)).d_raw" $(GEN_OPTS__FLAG) "$<"
@@ -64,35 +64,35 @@ main.obj: $(MCU_PLUS_SDK_PATH)/examples/pru_io/sent/decoder_v2/firmware/pru0/mai
 
 # Add inputs and outputs from these tool invocations to the build variables
 EXE_OUTPUTS += \
-sent_decoder_v2_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out \
+sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out \
 
 EXE_OUTPUTS__QUOTED += \
-"sent_decoder_v2_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out" \
+"sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out" \
 
 BIN_OUTPUTS += \
-sent_decoder_v2_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.hex \
+sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"sent_decoder_v2_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.hex" \
+"sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.hex" \
 
 
 # All Target
 all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
-	@$(MAKE) --no-print-directory -Onone "sent_decoder_v2_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out"
+	@$(MAKE) --no-print-directory -Onone "sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out"
 
 # Tool invocations
-sent_decoder_v2_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: PRU Linker'
-	"$(CG_TOOL_ROOT)/bin/clpru" -DPRU0 -DSLICE0 -v4 -v4 --define=SOC_AM263X  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"sent_decoder_v2_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.map" --disable_auto_rts   --diag_wrap=off --display_error_number --warn_sections --xml_link_info="sent_decoder_v2_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt_linkInfo.xml" --rom_model -o "sent_decoder_v2_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out" $(ORDERED_OBJS)
+	"$(CG_TOOL_ROOT)/bin/clpru" -DPRU0 -DSLICE0 -v4 -v4 --define=SOC_AM263X  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.map" --disable_auto_rts   --diag_wrap=off --display_error_number --warn_sections --xml_link_info="sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt_linkInfo.xml" --rom_model -o "sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build
 
-sent_decoder_v2_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.hex: $(EXE_OUTPUTS)
+sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.hex: $(EXE_OUTPUTS)
 	@echo 'Building secondary target: "$@"'
 	@echo 'Invoking: PRU Hex Utility'
-	"$(CG_TOOL_ROOT)/bin/hexpru" -o "sent_decoder_v2_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.hex" $(EXE_OUTPUTS__QUOTED)
+	"$(CG_TOOL_ROOT)/bin/hexpru" -o "sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building secondary target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build
@@ -106,7 +106,7 @@ clean:
 	-@echo ' '
 
 post-build:
-	-$(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_v2/firmware/pru0/decoder_pru0_hexpru.cmd sent_decoder_v2_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out; ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe sent_decoder_v2_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.b00 sent_decoder_pru0_bin.h SentDecoderFirmwarePru0 4; move sent_decoder_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_v2/example/firmware/sent_decoder_pru0_bin.h 
+	-$(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/pru0/decoder_pru0_hexpru.cmd sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out; ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.b00 sent_decoder_pru0_bin.h SentDecoderFirmwarePru0 4; move sent_decoder_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/example/firmware/sent_decoder_pru0_bin.h 
 	-@echo ' '
 
 .PHONY: all clean dependents

@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Sent Decoder V2 R5f Example"
-        name = "sent_decoder_v2_r5f_example_am263x-cc_r5fss0-0_freertos_ti-arm-clang"
+        title="Sent Decoder Using Pruicss Iep Ecap R5f Example"
+        name = "sent_decoder_using_pruicss_iep_ecap_r5f_example_am263x-cc_r5fss0-0_freertos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -35,7 +35,7 @@
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f
             -I${MCU_PLUS_SDK_PATH}/source/pru_io/driver
-            -I${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_v2/example
+            -I${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/example
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
@@ -51,7 +51,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=sent_decoder_v2_r5f_example.${ConfigName}.map
+            -m=sent_decoder_using_pruicss_iep_ecap_r5f_example.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs
@@ -64,7 +64,7 @@
             --context r5fss0-0 --part AM263x --package ZCZ
         "
 
-        description="A Sent Decoder V2 R5f Example FREERTOS project">
+        description="A Sent Decoder Using Pruicss Iep Ecap R5f Example FREERTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="
