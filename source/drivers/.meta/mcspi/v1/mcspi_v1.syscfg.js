@@ -328,7 +328,8 @@ function getConfigurables()
             default: 16,
             hidden: false,
             description: "Fifo Trigger Level for TX",
-            longDescription: 'Recommended to set the trigger level to half the availabel FIFO. ' +
+            longDescription: 'FIFO trigger level must be a multiple of SPI Word Length. ' +
+                             'Recommended to set the trigger level to half the availabel FIFO. ' +
                              'For every Tx Empty event, trigger level number of bytes are transmitted. ' +
                              'If the trigger level is small the time spent in every ISR is small but number of interrupts are more. ' +
                              'If the trigger level is large the time spent in every ISR is more but number of interrupts are less.' ,
@@ -339,7 +340,8 @@ function getConfigurables()
             default: 16,
             hidden: false,
             description: "Fifo Trigger Level for RX",
-            longDescription: 'Recommended to set the trigger level to half the availabel FIFO. ' +
+            longDescription: 'FIFO trigger level must be a multiple of SPI Word Length. ' +
+                             'Recommended to set the trigger level to half the availabel FIFO. ' +
                              'For every Rx Full event, trigger level number of bytes are read from Rx Fifo. ' +
                              'If the trigger level is small the time spent in every ISR is small but number of interrupts are more. ' +
                              'If the trigger level is large the time spent in every ISR is more but number of interrupts are less.' ,
@@ -482,7 +484,7 @@ function getConfigurables()
                         ui.errorCallbackFxn.hidden = false;
                     }
                 }
-                else 
+                else
                 {
                     if((inst.intrEnable == "INTERRUPT") || (inst.intrEnable == "DMA"))
                     {
@@ -624,6 +626,7 @@ function moduleInstances(inst) {
             interfaceName: getInterfaceName(inst),
             dmaEnable: inst.intrEnable,
             pinMode: inst.pinMode,
+            mode : inst.mode,
         },
     });
 

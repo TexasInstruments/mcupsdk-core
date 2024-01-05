@@ -137,14 +137,20 @@ PHA1 = Data are latched on even-numbered edges of SPICLK`,
             default: false,
             onChange: function(inst, ui) {
                 if (inst.advanced == true) {
-                    ui.slvCsSelect.hidden = false;
+                    if(inst.mode == "PERIPHERAL")
+                    {
+                        ui.slvCsSelect.hidden = false;
+                    }
                     ui.startBitEnable.hidden = false;
                     ui.startBitPolarity.hidden = false;
                     ui.csIdleTime.hidden = false;
                     ui.defaultTxData.hidden = false;
                 }
                 else {
-                    ui.slvCsSelect.hidden = true;
+                    if(inst.mode != "PERIPHERAL")
+                    {
+                        ui.slvCsSelect.hidden = true;
+                    }
                     ui.startBitEnable.hidden = true;
                     ui.startBitPolarity.hidden = true;
                     ui.csIdleTime.hidden = true;
@@ -236,6 +242,22 @@ PHA1 = Data are latched on even-numbered edges of SPICLK`,
             default: 4,
             hidden: true,
         },
+        {
+            /* A dummy variable is created to update the configurable of slvCsSelect  */
+            name: "mode",
+            default: "SINGLE_CONTROLLER",
+            hidden: true,
+            onChange: function (inst, ui) {
+                /* Peripheral Chip-select applicable only in single peripheral mode */
+                if (inst.mode == "PERIPHERAL") {
+                    ui.slvCsSelect.hidden = false;
+                }
+                else
+                {
+                    ui.slvCsSelect.hidden = true;
+                }
+            }
+        }
     ],
     validate : validate,
     moduleInstances: moduleInstances,
