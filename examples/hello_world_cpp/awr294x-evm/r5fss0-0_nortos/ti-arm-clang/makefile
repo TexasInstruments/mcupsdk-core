@@ -142,6 +142,9 @@ CPPFILES := $(FILES_cpp_common) $(FILES_cpp_$(PROFILE))
 ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
 FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
 CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ifeq ($(INSTRUMENTATION_MODE), yes)
+CFLAGS += -fprofile-instr-generate -fcoverage-mapping
+endif
 CPPFILES_PATH := $(FILES_PATH_cpp_common) $(FILES_PATH_$(PROFILE))
 CPPFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE)) $(CFLAGS_cpp_common)
 DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
