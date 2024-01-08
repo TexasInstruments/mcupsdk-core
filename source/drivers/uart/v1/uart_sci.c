@@ -1015,6 +1015,8 @@ static int32_t UART_writeInterrupt(UART_Object *object,
     {
         status             = SystemP_SUCCESS;
         trans->status      = UART_TRANSFER_STATUS_SUCCESS;
+        trans->count       = 0U;
+        object->prms.writeCallbackFxn(object, object->writeTrans);
         object->writeTrans = NULL;
     }
     else
