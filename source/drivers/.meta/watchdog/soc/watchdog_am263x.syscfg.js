@@ -91,6 +91,11 @@ const SOC_RcmClkSrcInfo = [
         displayName: "SYS_CLK (200 MHz)"
     },
     {
+        name: "SOC_RcmPeripheralClockSource_RCCLK10M",
+        freq: 10000000,
+        displayName: "RCCLK10M (10 MHz)"
+    },
+    {
         name: "SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1",
         freq: 500000000,
         displayName: "DPLL_CORE_HSDIV0_CLKOUT1 (500 MHz)",

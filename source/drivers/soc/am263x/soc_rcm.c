@@ -1722,6 +1722,12 @@ uint32_t SOC_rcmGetPeripheralClockFrequency(SOC_RcmPeripheralClockSource clkSour
             clkFreq = SOC_rcmGetPerHSDivOut(Finp, gXTALInfo[clkFreqId].div2flag, clkSrcInfo->hsDivOut);
             break;
         }
+        case RCM_PLLID_RCCLK10M:
+        {
+            Finp = gXTALInfo[clkFreqId].Finp;
+            clkFreq = (Finp * 1000 * 1000 * 10) / 25;
+            break;
+        }
         case RCM_PLLID_XTALCLK:
         {
             Finp = gXTALInfo[clkFreqId].Finp;
