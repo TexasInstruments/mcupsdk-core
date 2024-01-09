@@ -1,14 +1,8 @@
 import sys
 import os
-import socket
 from datetime import datetime
 
-if (len(sys.argv) < 4):
-    print("USAGE: <path/to/python3>/python bin2c.py <binary file name> <c file name> <array name> <license_type(optional)>")
-    exit(0)
-if (os.path.isfile(sys.argv[1]) is False):
-    print("ERROR: Input file %s not found !!!" % (sys.argv[1]))
-    exit(0)
+# TI License Strings
 
 ti_license = '''
 /*
@@ -95,9 +89,19 @@ tspa_license = '''
 *
 */
 '''
+
+ti_commercial_license = '''
+/*
+ * Copyright (C) 2023 Texas Instruments Incorporated - http://www.ti.com/
+ * ALL RIGHTS RESERVED
+ * Licensed under the TI Software License Agreement found in [as_installed]/license.txt
+ */
+'''
+
 licenses = {
     "ti_tspa": tspa_license,
     "ti_lic": ti_license,
+    "ti_com": ti_commercial_license
 }
 
 header = '''
@@ -130,45 +134,58 @@ footer = '''
 #endif /* {header_name}_H_ */
 '''
 
-infile = open(sys.argv[1], "rb")
-infilesize = os.path.getsize(sys.argv[1])
-outfile = open(sys.argv[2], "w")
-header_name = os.path.splitext(os.path.basename(sys.argv[2]))[0].upper()
 
-lic_type = "ti_lic"
+def binary_to_header(input_filepath: str, output_filename: str, array_name: str, license_type: str = "ti_lic"):
+    input_filesize = os.path.getsize(input_filepath)
+    header_name = os.path.splitext(
+        os.path.basename(output_filename))[0].upper()
 
-if len(sys.argv) > 4:
-    lt = sys.argv[4]
-    if lt == "ti_tspa":
-        lic_type = lt
+    with open(input_filepath, "rb") as infile, open(output_filename, "w") as outfile:
+        # write header
+        outfile.write(header.format(license=licenses[license_type],
+                                    input_file_name=sys.argv[1].rsplit(
+                                        '/')[-1],
+                                    date_time=datetime.now(),
+                                    file_name=header_name,
+                                    array_name=array_name.upper(),
+                                    size=input_filesize))
+        outfile.write("    ")
 
-# write header
-outfile.write(header.format(license=licenses[lic_type],
-                            input_file_name=sys.argv[1].rsplit('/')[-1],
-                            date_time=datetime.now(),
-                            file_name=header_name,
-                            array_name=sys.argv[3].upper(),
-                            size=infilesize))
-outfile.write("    ")
+        count = 0
+        while True:
+            # read upto 4 bytes
+            byte = infile.read(1)
+            if byte:
+                count = count + 1
+                # convert 32b word to hex string, then convert to integer and then convert to little endian
+                # and then write to file as a C hex string
+                outfile.write("0x%sU, " % (byte.hex()))
+                # break to new line after 16 bytes
+                if (count == 16):
+                    outfile.write(" \\\n    ")
+                    count = 0
+            else:
+                break
 
-count = 0
-while True:
-    # read upto 4 bytes
-    byte = infile.read(1)
-    if byte:
-        count = count + 1
-        # convert 32b word to hex string, then convert to integer and then convert to little endian
-        # and then write to file as a C hex string
-        outfile.write("0x%sU, " % (byte.hex()))
-        # break to new line after 16 bytes
-        if (count == 16):
-            outfile.write(" \\\n    ")
-            count = 0
+        outfile.write(" \\")
+        outfile.write(footer.format(
+            infilesize=input_filesize, header_name=header_name))
+
+
+if __name__ == "__main__":
+    if (len(sys.argv) < 4):
+        print("USAGE: <path/to/python3>/python bin2c.py <binary file name> <c file name> <array name> <license_type(optional)>")
+        exit(-1)
+
+    if (os.path.isfile(sys.argv[1]) is False):
+        print("ERROR: Input file %s not found !!!" % (sys.argv[1]))
+        exit(-1)
+
+    # Check if license type is passed as argument
+    if len(sys.argv) == 4:
+        binary_to_header(sys.argv[1], sys.argv[2], sys.argv[3])
+    elif len(sys.argv) > 4 and not (sys.argv[4] in licenses):
+        print("ERROR: License type %s not found !!!" % (sys.argv[4]))
+        exit(-1)
     else:
-        break
-
-outfile.write(" \\")
-outfile.write(footer.format(infilesize=infilesize, header_name=header_name))
-
-outfile.close()
-infile.close()
+        binary_to_header(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
