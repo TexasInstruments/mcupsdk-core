@@ -96,12 +96,414 @@ ch7_syncpulse_max_dur       .set   600*56
     .sect       ".text"
 ;************************************************************************************
 ;
+;   Macro: m_process_ch
+;
+;  Initialises the channel setup parameter and updates channel state ro start decoding pulse
+;
+;   PEAK cycles:
+;       13 cycles
+;
+;   Invokes:
+;       None
+;
+;   Pseudo code:
+;       ch_pru_read_ack = 1;set ch_pru_read_ack register in spad0
+;       BNS_ARG_LUTBASE = ch_lut_base;
+;       load CHx_PULSE_LEN with channel pulse length
+;       BNS_CH_DATA_ERROR = ch_data_error;
+;       jump to ch_state and retun back to here
+;
+;   Parameters:
+;      ch0_pru0_read_ack: Acknowledge signal variable
+;      ch_lut_base: Lookup Table base address
+;      ch_pru0_data_base: Base address for timestamp data(pulse length) captured by PRU0
+;      ch_data_error: data error handler for a given channel
+;      ch_state: State variable of channel
+;
+;   Returns:
+;      None
+;
+;   See Also:
+;
+;************************************************************************************
+m_process_ch .macro ch0_pru0_read_ack, ch_lut_base, ch_pru0_data_base, ch_data_error, ch_state
+;Set ACK to inform PRU0 that data is read
+    ldi     R0, ch0_pru0_read_ack
+    ldi     TEMP_REG, 1
+    xout    PRU_SPAD_B0_XID, &TEMP_REG, 4
+    ldi     BNS_ARG_LUTBASE, ch_lut_base
+;Fetch pulse length from SPAD0 R20 to R3
+    ldi     R0.b0, ch_pru0_data_base
+    xin     PRU_SPAD_B0_XID, &R3, 4
+    mov     BNS_ARG_VAL, CHx_PULSE_LEN
+    ldi     BNS_CH_DATA_ERROR, $CODE(ch_data_error)
+    jal     return_addr1, ch_state
+    .endm
+;************************************************************************************
+;
+;   Macro: m_ch_sync
+;
+;  Initialises the channel setup parameter and updates channel state ro start decoding pulse
+;
+;   PEAK cycles:
+;       55 cycles
+;
+;   Invokes:
+;       None
+;
+;   Pseudo code:
+;       if(CHx_PULSE_LEN<ch0_syncpulse_min_dur || CHx_PULSE_LEN>ch0_syncpulse_max_dur)
+;       {
+;           jump to error_ch;
+;       }
+;       else
+;       { //Divide CHx_PULSE_LEN by 56
+;           CHx_PULSE_LEN = CHx_PULSE_LEN<< 3 ;//Divide by 8
+;           CHx_PULSE_LEN = CHx_PULSE_LEN*(1/7) ;//Divide by 7
+;           m_calculate_tick(TEMP_REG, CHx_PULSE_LEN);
+;           CH0_BUF.w0 = ch_calculated_tick_period// Stored in R27.w0
+;           populate the hashtable
+;        }
+;
+;   Parameters:
+;      error_ch: Error handler for channel
+;      ch_syncpulse_max_dur: Max pulse length for a given tick period (tp+20%)
+;      ch_syncpulse_min_dur: Min pulse length for  a given tick period (tp-20%)
+;      ch_buf: Buffer for channel to store calculated value
+;      ch_lut_base: Lookup Table base address
+;      ch_state: State variable of channel
+;      ch_status_comm: Next channel state to be loaded into ch_state
+;   Returns:
+;      None
+;
+;   See Also:
+;
+;************************************************************************************
+m_ch_sync .macro error_ch, ch_syncpulse_max_dur, ch_syncpulse_min_dur, ch_buf, ch_lut_base, ch_state, ch_status_comm
+;check if it is sync pulse
+	ldi32 	TEMP_REG, ch_syncpulse_max_dur
+    qblt    error_ch, CHx_PULSE_LEN, TEMP_REG
+    ldi32 	TEMP_REG, ch_syncpulse_min_dur
+    qbgt    error_ch, CHx_PULSE_LEN, TEMP_REG
+;Calculate tick period by dividing pulse length with 56, Divide by 8, then by 7
+    lsr     CHx_PULSE_LEN, CHx_PULSE_LEN, 3
+    ldi32 	TEMP_REG, TICK_7_CONST
+    m_calculate_tick TEMP_REG, CHx_PULSE_LEN
+    mov     TEMP_REG0, R27.w0 ; load temp_re0 with update tick period
+    mov     ch_buf.w0, TEMP_REG0.w0
+;Update the Hash table with ch0 temp tickperiod placeholder(R0), store in hash table
+	ldi 	TEMP_REG, 12
+    m_multiply TEMP_REG, TEMP_REG0
+;update the lut using R4 to R20 registers(16 reg)
+    xout	PRU_SPAD_B1_XID, &R4, 64
+    mov     R4, R26
+    m_update_lut TEMP_REG0
+;Store lookup table in dmem at ch_lut_base
+    ldi    TEMP_REG, ch_lut_base
+    sbbo    &R4, TEMP_REG, 0, 64
+    xin 	PRU_SPAD_B1_XID, &R4, 64
+;Update Ch0 state register for status & Comm data calc
+  	ldi    ch_state, $CODE(ch_status_comm)
+  	jmp     return_addr1
+    .endm
+;************************************************************************************
+;
+;   Macro: m_ch_status_comm
+;
+;  Used for status and comms nibble decoding
+;
+;   PEAK cycles:
+;       4 cycles
+;
+;   Invokes:
+;       None
+;
+;   Pseudo code:
+;       None
+;
+;   Parameters:
+;      ch_buf: Buffer for channel to store calculated value
+;      ch_state: State variable of channel
+;      ch_data0: Data0 decoding function
+;
+;   Returns:
+;      None
+;
+;   See Also:
+;
+;************************************************************************************
+m_ch_status_comm .macro ch_buf, ch_state, ch_data0
+    jal   return_addr2, FN_BINARY_SEARCH
+    mvib  ch_buf.b2, *BNS_ARG_RETVAL_ADDR
+    ldi   ch_state, $CODE(ch_data0)
+    jmp   return_addr1
+    .endm
+;************************************************************************************
+;
+;   Macro: m_ch_data0
+;   Used for status and comms nibble decoding
+;
+;   PEAK cycles:
+;       15 cycles
+;
+;   Invokes:
+;       FN_BINARY_SEARCH
+;
+;   Pseudo code:
+;       None
+;
+;   Parameters:
+;      ch_buf: Buffer for channel to store calculated value
+;      ch_state: State variable of channel
+;      ch_data0_spad_base: Channel Scratch pad base address
+;      ch_data1: Data1 decoding function
+;      ch_crc4_res: CRC variable for channel
+;
+;************************************************************************************
+m_ch_data0 .macro ch_buf, ch_state, ch_data0_spad_base, ch_data1, ch_crc4_res
+    jal   return_addr2, FN_BINARY_SEARCH
+    mvib  ch_buf.b3, *BNS_ARG_RETVAL_ADDR
+;Place data in SPAD2 for sending it to r5f
+    ldi   R0.b0, ch_data0_spad_base
+    xout  PRU_SPAD_B2_XID, &ch_buf, 4
+  	ldi   ch_state, $CODE(ch_data1)
+    ldi   ch_crc4_res, CRC4_SEED
+    lsr   ch_crc4_res, ch_crc4_res, 4
+    add   ch_crc4_res, ch_crc4_res, ch_buf.b3
+    lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
+    jmp   return_addr1
+    .endm
+;************************************************************************************
+;
+;   Macro: m_ch_data1
+;   Used for status and comms nibble decoding
+;
+;   PEAK cycles:
+;       10 cycles
+;
+;   Invokes:
+;       FN_BINARY_SEARCH
+;
+;   Pseudo code:
+;       None
+;
+;   Parameters:
+;      ch_buf: Buffer for channel to store calculated value
+;      ch_state: State variable of channel
+;      ch_data2: Data2 decoding function
+;      ch_crc4_res: CRC variable for channel
+;
+;************************************************************************************
+m_ch_data1 .macro ch_buf, ch_state, ch_data2, ch_crc4_res
+    jal   return_addr2, FN_BINARY_SEARCH
+    mvib  ch_buf.b0, *BNS_ARG_RETVAL_ADDR
+    ldi   ch_state, $CODE(ch_data2)
+    lsr   ch_crc4_res, ch_crc4_res, 4
+    add   ch_crc4_res, ch_crc4_res, ch_buf.b0
+    lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
+    jmp   return_addr1
+    .endm
+;************************************************************************************
+;
+;   Macro: m_ch_data2
+;   Used for status and comms nibble decoding
+;
+;   PEAK cycles:
+;       15 cycles
+;
+;   Invokes:
+;       FN_BINARY_SEARCH
+;
+;   Pseudo code:
+;       None
+;
+;   Parameters:
+;      ch_buf: Buffer for channel to store calculated value
+;      ch_state: State variable of channel
+;      ch_data3: Data3 decoding function
+;      ch_crc4_res: CRC variable for channel
+;
+;************************************************************************************
+m_ch_data2 .macro ch_buf, ch_state, ch_data3, ch_crc4_res
+    jal   return_addr2, FN_BINARY_SEARCH
+    mvib  ch_buf.b1, *BNS_ARG_RETVAL_ADDR
+  	ldi   ch_state, $CODE(ch_data3)
+    lsr   ch_crc4_res, ch_crc4_res, 4
+    add   ch_crc4_res, ch_crc4_res, ch_buf.b1
+    lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
+    jmp   return_addr1
+    .endm
+;************************************************************************************
+;
+;   Macro: m_ch_data3
+;   Used for status and comms nibble decoding
+;
+;   PEAK cycles:
+;       15 cycles
+;
+;   Invokes:
+;       FN_BINARY_SEARCH
+;
+;   Pseudo code:
+;       None
+;
+;   Parameters:
+;      ch_buf: Buffer for channel to store calculated value
+;      ch_state: State variable of channel
+;      ch_data4: Data4 decoding function
+;      ch_crc4_res: CRC variable for channel
+;
+;************************************************************************************
+m_ch_data3 .macro ch_buf, ch_state, ch_data4, ch_crc4_res
+    jal   return_addr2, FN_BINARY_SEARCH
+    mvib  ch_buf.b2, *BNS_ARG_RETVAL_ADDR
+    ldi   ch_state, $CODE(ch_data4)
+    lsr   ch_crc4_res, ch_crc4_res, 4
+    add   ch_crc4_res, ch_crc4_res, ch_buf.b2
+    lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
+    jmp   return_addr1
+    .endm
+;************************************************************************************
+;
+;   Macro: m_ch_data4
+;   Used for status and comms nibble decoding
+;
+;   PEAK cycles:
+;       15 cycles
+;
+;   Invokes:
+;       FN_BINARY_SEARCH
+;
+;   Pseudo code:
+;       None
+;
+;   Parameters:
+;      ch_buf: Buffer for channel to store calculated value
+;      ch_state: State variable of channel
+;      ch_data4_spad_base: Channel Scratch pad base address for storing till data4
+;      ch_data5: Data5 decoding function
+;      ch_crc4_res: CRC variable for channel
+;
+;************************************************************************************
+m_ch_data4 .macro ch_buf, ch_state, ch_data4_spad_base, ch_data5, ch_crc4_res
+    jal   return_addr2, FN_BINARY_SEARCH
+    mvib  ch_buf.b3, *BNS_ARG_RETVAL_ADDR
+;Place data in SPAD2 for sending it to r5f
+    ldi   R0.b0, ch_data4_spad_base
+    xout  PRU_SPAD_B2_XID, &ch_buf, 4
+  	ldi   ch_state, $CODE(ch_data5)
+    lsr   ch_crc4_res, ch_crc4_res, 4
+    add   ch_crc4_res, ch_crc4_res, ch_buf.b3
+    lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
+    jmp   return_addr1
+    .endm
+;************************************************************************************
+;
+;   Macro: m_ch_data5
+;   Used for 5th data nibble decoding
+;
+;   PEAK cycles:
+;       15 cycles
+;
+;   Invokes:
+;       FN_BINARY_SEARCH
+;
+;   Pseudo code:
+;       None
+;
+;   Parameters:
+;      ch_buf: Buffer for channel to store calculated value
+;      ch_state: State variable of channel
+;      ch_crc: CRC decoding function
+;      ch_crc4_res: CRC variable for channel
+;
+;************************************************************************************
+m_ch_data5 .macro ch_buf, ch_state, ch_crc, ch_crc4_res
+    jal   return_addr2, FN_BINARY_SEARCH
+    mvib  ch_buf.b0, *BNS_ARG_RETVAL_ADDR
+    ldi   ch_state, $CODE(ch_crc)
+    lsr   ch_crc4_res, ch_crc4_res, 4
+    add   ch_crc4_res, ch_crc4_res, ch_buf.b0
+    lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
+    jmp   return_addr1
+    .endm
+;************************************************************************************
+;
+;   Macro: m_ch_crc
+;   Used for crc nibble decoding
+;
+;   PEAK cycles:
+;       15 cycles
+;
+;   Invokes:
+;       FN_BINARY_SEARCH
+;
+;   Pseudo code:
+;       None
+;
+;   Parameters:
+;      ch_buf: Buffer for channel to store calculated value
+;      ch_state: State variable of channel
+;      ch_crcdata_spad_base: Channel Scratch pad base address for crc data
+;      ch_crc4_res: CRC variable for channel
+;      ch_crc_error: CRC error handler function
+;
+;************************************************************************************
+m_ch_crc .macro ch_buf, ch_state, ch_crcdata_spad_base, ch_crc4_res, ch_crc_error
+    jal   return_addr2, FN_BINARY_SEARCH
+    mvib  ch_buf.b1, *BNS_ARG_RETVAL_ADDR
+    lsr   ch_crc4_res, ch_crc4_res, 4
+    lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
+    mov   ch_buf.b2, ch_crc4_res
+    mov   ch_buf.b3, BNS_ARG_STATUS
+    ldi   R0.b0, ch_crcdata_spad_base
+    xout  PRU_SPAD_B2_XID, &ch_buf, 4
+    qbne  ch_crc_error, ch_crc4_res, 0
+    .endm
+;************************************************************************************
+;
+;   Macro: m_ch_data_out
+;   Used for 5th data nibble decoding
+;
+;   PEAK cycles:
+;       15 cycles
+;
+;   Invokes:
+;       FN_BINARY_SEARCH
+;
+;   Pseudo code:
+;       None
+;
+;   Parameters:
+;      ch_reg: Buffer for channel to store calculated value
+;      ch_data_base: IPC base address for sending data to R5F
+;      ch_intr_byte: Interrupt byte for channel
+;
+;************************************************************************************
+m_ch_data_out .macro ch_reg, ch_data_base, ch_intr_byte
+;Put data in DMEM or Collect data for different mode
+    ldi   R0, 0
+;Store existing data first
+    xout  PRU_SPAD_B1_XID, &ch_reg, 12
+    xin   PRU_SPAD_B2_XID, &ch_reg, 12
+;Write 10 byte of data in SMEM(Sync, Data and CRC)
+    sbco  &ch_reg, C28, ch_data_base, 12
+;Bring back stored data
+    zero	&ch_reg, 12
+    xout  PRU_SPAD_B2_XID, &ch_reg, 12
+    xin   PRU_SPAD_B1_XID, &ch_reg, 12
+;Trigger Interrupt to R5F/*TODO*/
+    ldi   R0, 1
+    sbco  &R0, C28, ch_intr_byte, 1
+    .endm
+;************************************************************************************
+;
 ;   Macro: m_update_lut
 ;
 ;  Used for Updating LUT for decoding Nibbles used by FN_BINARY_SEARCH
 ;
 ;   PEAK cycles:
-;       15 cycle
+;       15 cycles
 ;
 ;   Invokes:
 ;       None
@@ -142,7 +544,7 @@ m_update_lut .macro increment
 ;  Used for multiplication
 ;
 ;   PEAK cycles:
-;       4 cycle
+;       4 cycles
 ;
 ;   Invokes:
 ;       None
@@ -175,7 +577,7 @@ m_multiply .macro op1, op2
 ;  Calculates tick period for given sync pulse length
 ;
 ;   PEAK cycles:
-;       4 cycle
+;       4 cycles
 ;
 ;   Invokes:
 ;       None
@@ -250,196 +652,46 @@ loop_process:
     ldi    TEMP_REG2, (CRC4_LUT_OFFSET+PDMEM00)
 process_ch0:
 ; check if ch have data recieved
-    qbbc    process_ch1, STATE_CHANGE_MASK, 0
-;Set ACK to inform PRU0 that data is read
-    ldi     R0, 16
-    ldi     TEMP_REG, 1
-    xout    PRU_SPAD_B0_XID, &TEMP_REG, 4
-    ldi     BNS_ARG_LUTBASE, CH0_LUT_BASE
-;Fetch pulse length from SPAD0 R20 to R3
-    ldi     R0.b0, 17
-    xin     PRU_SPAD_B0_XID, &R3, 4
-    mov     BNS_ARG_VAL, CHx_PULSE_LEN
-    ldi     BNS_CH_DATA_ERROR, $CODE(ch0_data_error)
-    jal     return_addr1, CH0_STATE
+    qbbc    process_ch1, STATE_CHANGE_MASK, CH0_MASK
+    m_process_ch CH0_PRU0_READ_ACK, CH0_LUT_BASE, CH0_PRU0_DATA_BASE, ch0_data_error, CH0_STATE
 process_ch1:
- 	qbbc    process_ch2, STATE_CHANGE_MASK, 1
-;Set ACK to inform PRU0 that data is read
-    ldi     R0, 17
-    ldi     TEMP_REG, 1
-    xout    PRU_SPAD_B0_XID, &TEMP_REG, 4
-    ldi     BNS_ARG_LUTBASE, CH1_LUT_BASE
-;Fetch pulse length from SPAD0 R21 to R3
-    ldi     R0.b0, 18
-    xin     PRU_SPAD_B0_XID, &R3, 4
-    mov     BNS_ARG_VAL, CHx_PULSE_LEN
-    ldi     BNS_CH_DATA_ERROR, $CODE(ch1_data_error)
-    jal     return_addr1, CH1_STATE
+ 	qbbc    process_ch2, STATE_CHANGE_MASK, CH1_MASK
+    m_process_ch CH1_PRU0_READ_ACK, CH1_LUT_BASE, CH1_PRU0_DATA_BASE, ch1_data_error, CH1_STATE
 process_ch2:
-    qbbc    process_ch3, STATE_CHANGE_MASK, 2
-;Set ACK to inform PRU0 that data is read
-    ldi     R0, 18
-    ldi     TEMP_REG, 1
-    xout    PRU_SPAD_B0_XID, &TEMP_REG, 4
-    ldi     BNS_ARG_LUTBASE, CH2_LUT_BASE
-;Fetch pulse length from SPAD0 R22 to R3
-    ldi     R0.b0, 19
-    xin     PRU_SPAD_B0_XID, &R3, 4
-    mov     BNS_ARG_VAL, CHx_PULSE_LEN
-    ldi     BNS_CH_DATA_ERROR, $CODE(ch2_data_error)
-    jal     return_addr1, CH2_STATE
+    qbbc    process_ch3, STATE_CHANGE_MASK, CH2_MASK
+    m_process_ch CH2_PRU0_READ_ACK, CH2_LUT_BASE, CH2_PRU0_DATA_BASE, ch2_data_error, CH2_STATE
 process_ch3:
-    qbbc    process_ch4, STATE_CHANGE_MASK, 3
-;Set ACK to inform PRU0 that data is read
-    ldi     R0, 19
-    ldi     TEMP_REG, 1
-    xout    PRU_SPAD_B0_XID, &TEMP_REG, 4
-    ldi     BNS_ARG_LUTBASE, CH3_LUT_BASE
-;Fetch pulse length from SPAD0 R23 to R3
-    ldi     R0.b0, 20
-    xin     PRU_SPAD_B0_XID, &R3, 4
-    mov     BNS_ARG_VAL, CHx_PULSE_LEN
-    ldi     BNS_CH_DATA_ERROR, $CODE(ch3_data_error)
-    jal     return_addr1, CH3_STATE
+    qbbc    process_ch4, STATE_CHANGE_MASK, CH3_MASK
+    m_process_ch CH3_PRU0_READ_ACK, CH3_LUT_BASE, CH3_PRU0_DATA_BASE, ch3_data_error, CH3_STATE
 process_ch4:
-    qbbc    process_ch5, STATE_CHANGE_MASK, 4
-;Set ACK to inform PRU0 that data is read
-    ldi     R0, 20
-    ldi     TEMP_REG, 1
-    xout    PRU_SPAD_B0_XID, &TEMP_REG, 4
-    ldi     BNS_ARG_LUTBASE, CH4_LUT_BASE
-;Fetch pulse length from SPAD0 R24 to R3
-    ldi     R0.b0, 21
-    xin     PRU_SPAD_B0_XID, &R3, 4
-    mov     BNS_ARG_VAL, CHx_PULSE_LEN
-    ldi     BNS_CH_DATA_ERROR, $CODE(ch4_data_error)
-    jal     return_addr1, CH4_STATE
+    qbbc    process_ch5, STATE_CHANGE_MASK, CH4_MASK
+    m_process_ch CH4_PRU0_READ_ACK, CH4_LUT_BASE, CH4_PRU0_DATA_BASE, ch4_data_error, CH4_STATE
 process_ch5:
-    qbbc    process_ch6, STATE_CHANGE_MASK, 5
-;Set ACK to inform PRU0 that data is read
-    ldi     R0, 21
-    ldi     TEMP_REG, 1
-    xout    PRU_SPAD_B0_XID, &TEMP_REG, 4
-    ldi     BNS_ARG_LUTBASE, CH5_LUT_BASE
-;Fetch pulse length from SPAD0 R25 to R3
-    ldi     R0.b0, 22
-    xin     PRU_SPAD_B0_XID, &R3, 4
-    mov     BNS_ARG_VAL, CHx_PULSE_LEN
-    ldi     BNS_CH_DATA_ERROR, $CODE(ch5_data_error)
-    jal     return_addr1, CH5_STATE
+    qbbc    process_ch6, STATE_CHANGE_MASK, CH5_MASK
+    m_process_ch CH5_PRU0_READ_ACK, CH5_LUT_BASE, CH5_PRU0_DATA_BASE, ch5_data_error, CH5_STATE
 process_ch6:
-    qbbc    process_ch7, STATE_CHANGE_MASK, 6
-;Set ACK to inform PRU0 that data is read
-    ldi     R0, 22
-    ldi     TEMP_REG, 1
-    xout    PRU_SPAD_B0_XID, &TEMP_REG, 4
-    ldi     BNS_ARG_LUTBASE, CH6_LUT_BASE
-;Fetch pulse length from SPAD0 R26 to R3
-    ldi     R0.b0, 23
-    xin     PRU_SPAD_B0_XID, &R3, 4
-    mov     BNS_ARG_VAL, CHx_PULSE_LEN
-    ldi     BNS_CH_DATA_ERROR, $CODE(ch6_data_error)
-    jal     return_addr1, CH6_STATE
+    qbbc    process_ch7, STATE_CHANGE_MASK, CH6_MASK
+    m_process_ch CH6_PRU0_READ_ACK, CH6_LUT_BASE, CH6_PRU0_DATA_BASE, ch6_data_error, CH6_STATE
 process_ch7:
-    qbbc    restart_loop, STATE_CHANGE_MASK, 8
-;Set ACK to inform PRU0 that data is read
-    ldi     R0, 23
-    ldi     TEMP_REG, 1
-    xout    PRU_SPAD_B0_XID, &TEMP_REG, 4
-    ldi     BNS_ARG_LUTBASE, CH7_LUT_BASE
-;Fetch pulse length from SPAD0 R27 to R3
-    ldi     R0.b0, 24
-    xin     PRU_SPAD_B0_XID, &R3, 4
-    mov     BNS_ARG_VAL, CHx_PULSE_LEN
-    ldi     BNS_CH_DATA_ERROR, $CODE(ch7_data_error)
-    jal     return_addr1, CH7_STATE
+    qbbc    restart_loop, STATE_CHANGE_MASK, CH7_MASK
+    m_process_ch CH7_PRU0_READ_ACK, CH7_LUT_BASE, CH7_PRU0_DATA_BASE, ch7_data_error, CH7_STATE
 restart_loop:
 	jmp     loop_process
 
 
 CH0_SYNC:
-;check if it is sync pulse
-	ldi32 	TEMP_REG, ch0_syncpulse_max_dur
-    qblt    ERROR_CH0, CHx_PULSE_LEN, TEMP_REG
-    ldi32 	TEMP_REG, ch0_syncpulse_min_dur
-    qbgt    ERROR_CH0, CHx_PULSE_LEN, TEMP_REG
-;Calculate tick period by dividing pulse length with 56, Divide by 8, then by 7
-    lsr     CHx_PULSE_LEN, CHx_PULSE_LEN, 3
-    ldi32 	TEMP_REG, TICK_7_CONST
-    m_calculate_tick TEMP_REG, CHx_PULSE_LEN
-    mov     TEMP_REG0, R27.w0 ; load temp_re0 with update tick period
-    mov     CH0_BUF.w0, TEMP_REG0.w0
-;Update the Hash table with ch0 temp tickperiod placeholder(R0), store in hash table
-	ldi 	TEMP_REG, 12
-    m_multiply TEMP_REG, TEMP_REG0
-;update the lut using R4 to R20 registers(16 reg)
-    xout	PRU_SPAD_B1_XID, &R4, 64
-    mov     R4, R26
-    m_update_lut TEMP_REG0
-;Store lookup table in dmem at CH0_LUT_BASE
-    ldi    TEMP_REG, CH0_LUT_BASE
-    sbbo    &R4, TEMP_REG, 0, 64
-    xin 	PRU_SPAD_B1_XID, &R4, 64
-;Update Ch0 state register for status & Comm data calc
-  	ldi    CH0_STATE, $CODE(CH0_STATUS_COMM)
-  	jmp     return_addr1
+    m_ch_sync ERROR_CH0, ch0_syncpulse_max_dur, ch0_syncpulse_min_dur, CH0_BUF, CH0_LUT_BASE, CH0_STATE, CH0_STATUS_COMM
 
 CH0_DATA0:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH0_BUF.b3, *BNS_ARG_RETVAL_ADDR
-;Place data in SPAD2 for sending it to r5f
-    ldi   R0.b0, 15
-    xout  PRU_SPAD_B2_XID, &CH0_BUF, 4
-  	ldi   CH0_STATE, $CODE(CH0_DATA1)
-    ldi   CH0_CRC4_RES, 5
-    lsr   CH0_CRC4_RES, CH0_CRC4_RES, 4
-    add   CH0_CRC4_RES, CH0_CRC4_RES, CH0_BUF.b3
-    lbbo  &CH0_CRC4_RES, TEMP_REG2 , CH0_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data0 CH0_BUF, CH0_STATE, CH0_DATA0_SPAD_BASE, CH0_DATA1, CH0_CRC4_RES
 CH0_DATA2:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH0_BUF.b1, *BNS_ARG_RETVAL_ADDR
-  	ldi   CH0_STATE, $CODE(CH0_DATA3)
-    lsr   CH0_CRC4_RES, CH0_CRC4_RES, 4
-    add   CH0_CRC4_RES, CH0_CRC4_RES, CH0_BUF.b1
-    lbbo  &CH0_CRC4_RES, TEMP_REG2 , CH0_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data2 CH0_BUF, CH0_STATE, CH0_DATA3, CH0_CRC4_RES
 CH0_DATA4:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH0_BUF.b3, *BNS_ARG_RETVAL_ADDR
-;Place data in SPAD2 for sending it to r5f
-    ldi   R0.b0, 16
-    xout  PRU_SPAD_B2_XID, &CH0_BUF, 4
-  	ldi   CH0_STATE, $CODE(CH0_DATA5)
-    lsr   CH0_CRC4_RES, CH0_CRC4_RES, 4
-    add   CH0_CRC4_RES, CH0_CRC4_RES, CH0_BUF.b3
-    lbbo  &CH0_CRC4_RES, TEMP_REG2 , CH0_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data4 CH0_BUF, CH0_STATE, CH0_DATA4_SPAD_BASE, CH0_DATA5, CH0_CRC4_RES
 CH0_CRC:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH0_BUF.b1, *BNS_ARG_RETVAL_ADDR
-    lsr   CH0_CRC4_RES, CH0_CRC4_RES, 4
-    lbbo  &CH0_CRC4_RES, TEMP_REG2 , CH0_CRC4_RES, 1
-    mov   CH0_BUF.b2, CH0_CRC4_RES
-    mov   CH0_BUF.b3, BNS_ARG_STATUS
-    ldi   R0.b0, 17
-    xout  PRU_SPAD_B2_XID, &CH0_BUF, 4
-    qbne  CH0_CRC_ERROR, CH0_CRC4_RES, 0
+    m_ch_crc CH0_BUF, CH0_STATE, CH0_CRCDATA_SPAD_BASE, CH0_CRC4_RES, CH0_CRC_ERROR
 CH0_DATA_OUT:
-;Put data in DMEM or Collect data for different mode
-    ldi   R0, 0
-;Store existing data first
-    xout  PRU_SPAD_B1_XID, &R1, 12
-    xin   PRU_SPAD_B2_XID, &R1, 12
-;Write 10 byte of data in SMEM(Sync, Data and CRC)
-    sbco  &R1, C28, CH0_DATA_BASE, 12
-;Bring back stored data
-    zero	&R1, 12
-    xout  PRU_SPAD_B2_XID, &R1, 12
-    xin   PRU_SPAD_B1_XID, &R1, 12
-;Trigger Interrupt to R5F/*TODO*/
-    ldi   R0, 1
-    sbco  &R0, C28, CH0_INTR_BYTE, 1
+    m_ch_data_out  CH0_REG, CH0_DATA_BASE, CH0_INTR_BYTE
 ;/*TO_DO: Add error handling mechnaism for each label below*/
 CH0_CRC_ERROR:
 ch0_data_error:
@@ -448,120 +700,28 @@ ERROR_CH0:
     jmp   return_addr1
 
 CH0_STATUS_COMM:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH0_BUF.b2, *BNS_ARG_RETVAL_ADDR
-    ldi   CH0_STATE, $CODE(CH0_DATA0)
-    jmp   return_addr1
+    m_ch_status_comm  CH0_BUF, CH0_STATE, CH0_DATA0
 CH0_DATA1:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH0_BUF.b0, *BNS_ARG_RETVAL_ADDR
-    ldi   CH0_STATE, $CODE(CH0_DATA2)
-    lsr   CH0_CRC4_RES, CH0_CRC4_RES, 4
-    add   CH0_CRC4_RES, CH0_CRC4_RES, CH0_BUF.b0
-    lbbo  &CH0_CRC4_RES, TEMP_REG2 , CH0_CRC4_RES, 1
-
-    jmp   return_addr1
+    m_ch_data1 CH0_BUF, CH0_STATE, CH0_DATA2, CH0_CRC4_RES
 CH0_DATA3:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH0_BUF.b2, *BNS_ARG_RETVAL_ADDR
-    ldi   CH0_STATE, $CODE(CH0_DATA4)
-    lsr   CH0_CRC4_RES, CH0_CRC4_RES, 4
-    add   CH0_CRC4_RES, CH0_CRC4_RES, CH0_BUF.b2
-    lbbo  &CH0_CRC4_RES, TEMP_REG2 , CH0_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data3 CH0_BUF, CH0_STATE, CH0_DATA4, CH0_CRC4_RES
 CH0_DATA5:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH0_BUF.b0, *BNS_ARG_RETVAL_ADDR
-    ldi   CH0_STATE, $CODE(CH0_CRC)
-    lsr   CH0_CRC4_RES, CH0_CRC4_RES, 4
-    add   CH0_CRC4_RES, CH0_CRC4_RES, CH0_BUF.b0
-    lbbo  &CH0_CRC4_RES, TEMP_REG2 , CH0_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data5 CH0_BUF, CH0_STATE, CH0_CRC, CH0_CRC4_RES
 
 
 CH1_SYNC:
-;check if it is sync pulse
-	ldi32 	TEMP_REG, ch1_syncpulse_max_dur
-    qblt    ERROR_CH1, CHx_PULSE_LEN, TEMP_REG
-    ldi32 	TEMP_REG, ch1_syncpulse_min_dur
-    qbgt    ERROR_CH1, CHx_PULSE_LEN, TEMP_REG
-;Calculate tick period by dividing pulse length with 56, Divide by 8, then by 7
-    lsr     CHx_PULSE_LEN, CHx_PULSE_LEN, 3
-    ldi32 	TEMP_REG, TICK_7_CONST
-    m_calculate_tick TEMP_REG, CHx_PULSE_LEN
-    mov     TEMP_REG0, R27.w0 ; load temp_re0 with update tick period
-    mov     CH1_BUF.w0, TEMP_REG0.w0
-;Update the Hash table with ch1 temp tickperiod placeholder(R0), store in hash table
-	ldi 	TEMP_REG, 12
-    m_multiply TEMP_REG, TEMP_REG0
-;update the lut using R4 to R20 registers(16 reg)
-    xout	PRU_SPAD_B1_XID, &R4, 64
-    mov     R4, R26
-    m_update_lut TEMP_REG0
-;Store lookup table in dmem at CH1_LUT_BASE
-    ldi     TEMP_REG, CH1_LUT_BASE
-    sbbo    &R4, TEMP_REG, 0, 64
-    xin 	PRU_SPAD_B1_XID, &R4, 64
-;Update ch1 state register for status & Comm data calc
-  	ldi    CH1_STATE, $CODE(CH1_STATUS_COMM)
-  	jmp     return_addr1
+    m_ch_sync ERROR_CH1, ch1_syncpulse_max_dur, ch1_syncpulse_min_dur, CH1_BUF, CH1_LUT_BASE, CH1_STATE, CH1_STATUS_COMM
 
 CH1_DATA0:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH1_BUF.b3, *BNS_ARG_RETVAL_ADDR
-;Place data in SPAD2 for sending it to r5f
-    ldi   R0.b0, 17
-    xout  PRU_SPAD_B2_XID, &CH1_BUF, 4
-  	ldi   CH1_STATE, $CODE(CH1_DATA1)
-    ldi   CH1_CRC4_RES, 5
-    lsr   CH1_CRC4_RES, CH1_CRC4_RES, 4
-    add   CH1_CRC4_RES, CH1_CRC4_RES, CH1_BUF.b3
-    lbbo  &CH1_CRC4_RES, TEMP_REG2 , CH1_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data0 CH1_BUF, CH1_STATE, CH1_DATA0_SPAD_BASE, CH1_DATA1, CH1_CRC4_RES
 CH1_DATA2:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH1_BUF.b1, *BNS_ARG_RETVAL_ADDR
-  	ldi   CH1_STATE, $CODE(CH1_DATA3)
-    lsr   CH1_CRC4_RES, CH1_CRC4_RES, 4
-    add   CH1_CRC4_RES, CH1_CRC4_RES, CH1_BUF.b1
-    lbbo  &CH1_CRC4_RES, TEMP_REG2 , CH1_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data2 CH1_BUF, CH1_STATE, CH1_DATA3, CH1_CRC4_RES
 CH1_DATA4:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH1_BUF.b3, *BNS_ARG_RETVAL_ADDR
-;Place data in SPAD2 for sending it to r5f
-    ldi   R0.b0, 18
-    xout  PRU_SPAD_B2_XID, &CH1_BUF, 4
-  	ldi   CH1_STATE, $CODE(CH1_DATA5)
-    lsr   CH1_CRC4_RES, CH1_CRC4_RES, 4
-    add   CH1_CRC4_RES, CH1_CRC4_RES, CH1_BUF.b3
-    lbbo  &CH1_CRC4_RES, TEMP_REG2 , CH1_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data4 CH1_BUF, CH1_STATE, CH1_DATA4_SPAD_BASE, CH1_DATA5, CH1_CRC4_RES
 CH1_CRC:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH1_BUF.b1, *BNS_ARG_RETVAL_ADDR
-    lsr   CH1_CRC4_RES, CH1_CRC4_RES, 4
-    lbbo  &CH1_CRC4_RES, TEMP_REG2 , CH1_CRC4_RES, 1
-    mov   CH1_BUF.b2, CH1_CRC4_RES
-    mov   CH1_BUF.b3, BNS_ARG_STATUS
-    ldi   R0.b0, 19
-    xout  PRU_SPAD_B2_XID, &CH1_BUF, 4
-    qbne  CH1_CRC_ERROR, CH1_CRC4_RES, 0
+    m_ch_crc CH1_BUF, CH1_STATE, CH1_CRCDATA_SPAD_BASE, CH1_CRC4_RES, CH1_CRC_ERROR
 CH1_DATA_OUT:
-;Put data in DMEM or Collect data for different mode
-    ldi   R0, 0
-;Store existing data first
-    xout  PRU_SPAD_B1_XID, &R4, 12
-    xin   PRU_SPAD_B2_XID, &R4, 12
-;Write 10 byte of data in SMEM(Sync, Data and CRC)
-    sbco  &R4, C28, CH1_DATA_BASE, 12
-;Bring back stored data
-    zero  &R4, 12
-    xout  PRU_SPAD_B2_XID, &R4, 12
-    xin   PRU_SPAD_B1_XID, &R4, 12
-;Trigger Interrupt to R5F/*TODO*/
-    ldi   R0, 1
-    sbco  &R0, C28, CH1_INTR_BYTE, 1
+    m_ch_data_out  CH1_REG, CH1_DATA_BASE, CH1_INTR_BYTE
 ;/*TO_DO: Add error handling mechnaism for each label below*/
 CH1_CRC_ERROR:
 ch1_data_error:
@@ -570,774 +730,195 @@ ERROR_CH1:
     jmp   return_addr1
 
 CH1_STATUS_COMM:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH1_BUF.b2, *BNS_ARG_RETVAL_ADDR
-    ldi   CH1_STATE, $CODE(CH1_DATA0)
-    jmp   return_addr1
+    m_ch_status_comm  CH1_BUF, CH1_STATE, CH1_DATA0
 CH1_DATA1:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH1_BUF.b0, *BNS_ARG_RETVAL_ADDR
-    ldi   CH1_STATE, $CODE(CH1_DATA2)
-    lsr   CH1_CRC4_RES, CH1_CRC4_RES, 4
-    add   CH1_CRC4_RES, CH1_CRC4_RES, CH1_BUF.b0
-    lbbo  &CH1_CRC4_RES, TEMP_REG2 , CH1_CRC4_RES, 1
-
-    jmp   return_addr1
+    m_ch_data1 CH1_BUF, CH1_STATE, CH1_DATA2, CH1_CRC4_RES
 CH1_DATA3:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH1_BUF.b2, *BNS_ARG_RETVAL_ADDR
-    ldi   CH1_STATE, $CODE(CH1_DATA4)
-    lsr   CH1_CRC4_RES, CH1_CRC4_RES, 4
-    add   CH1_CRC4_RES, CH1_CRC4_RES, CH1_BUF.b2
-    lbbo  &CH1_CRC4_RES, TEMP_REG2 , CH1_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data3 CH1_BUF, CH1_STATE, CH1_DATA4, CH1_CRC4_RES
 CH1_DATA5:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH1_BUF.b0, *BNS_ARG_RETVAL_ADDR
-    ldi   CH1_STATE, $CODE(CH1_CRC)
-    lsr   CH1_CRC4_RES, CH1_CRC4_RES, 4
-    add   CH1_CRC4_RES, CH1_CRC4_RES, CH1_BUF.b0
-    lbbo  &CH1_CRC4_RES, TEMP_REG2 , CH1_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data5 CH1_BUF, CH1_STATE, CH1_CRC, CH1_CRC4_RES
+
 
 CH2_SYNC:
-;check if it is sync pulse
-	ldi32 	TEMP_REG, ch2_syncpulse_max_dur
-    qblt    ERROR_CH2, CHx_PULSE_LEN, TEMP_REG
-    ldi32 	TEMP_REG, ch2_syncpulse_min_dur
-    qbgt    ERROR_CH2, CHx_PULSE_LEN, TEMP_REG
-;Calculate tick period by dividing pulse length with 56, Divide by 8, then by 7
-    lsr     CHx_PULSE_LEN, CHx_PULSE_LEN, 3
-    ldi32 	TEMP_REG, TICK_7_CONST
-    m_calculate_tick TEMP_REG, CHx_PULSE_LEN
-    mov     TEMP_REG0, R27.w0 ; load temp_re0 with update tick period
-    mov     CH2_BUF.w0, TEMP_REG0.w0
-;Update the Hash table with ch2 temp tickperiod placeholder(R0), store in hash table
-	ldi 	TEMP_REG, 12
-    m_multiply TEMP_REG, TEMP_REG0
-;update the lut using R4 to R20 registers(16 reg)
-    xout	PRU_SPAD_B1_XID, &R4, 64
-    mov     R4, R26
-    m_update_lut TEMP_REG0
-;Store lookup table in dmem at CH2_LUT_BASE
-    ldi     TEMP_REG, CH2_LUT_BASE
-    sbbo    &R4, TEMP_REG, 0, 64
-    xin 	PRU_SPAD_B1_XID, &R4, 64
-;Update ch2 state register for status & Comm data calc
-  	ldi    CH2_STATE, $CODE(CH2_STATUS_COMM)
-  	jmp     return_addr1
+    m_ch_sync ERROR_CH2, ch2_syncpulse_max_dur, ch2_syncpulse_min_dur, CH2_BUF, CH2_LUT_BASE, CH2_STATE, CH2_STATUS_COMM
 
 CH2_DATA0:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH2_BUF.b3, *BNS_ARG_RETVAL_ADDR
-;Place data in SPAD2 for sending it to r5f
-    ldi   R0.b0, 19
-    xout  PRU_SPAD_B2_XID, &CH2_BUF, 4
-  	ldi   CH2_STATE, $CODE(CH2_DATA1)
-    ldi   CH2_CRC4_RES, 5
-    lsr   CH2_CRC4_RES, CH2_CRC4_RES, 4
-    add   CH2_CRC4_RES, CH2_CRC4_RES, CH2_BUF.b3
-    lbbo  &CH2_CRC4_RES, TEMP_REG2 , CH2_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data0 CH2_BUF, CH2_STATE, CH2_DATA0_SPAD_BASE, CH2_DATA1, CH2_CRC4_RES
 CH2_DATA2:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH2_BUF.b1, *BNS_ARG_RETVAL_ADDR
-  	ldi   CH2_STATE, $CODE(CH2_DATA3)
-    lsr   CH2_CRC4_RES, CH2_CRC4_RES, 4
-    add   CH2_CRC4_RES, CH2_CRC4_RES, CH2_BUF.b1
-    lbbo  &CH2_CRC4_RES, TEMP_REG2 , CH2_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data2 CH2_BUF, CH2_STATE, CH2_DATA3, CH2_CRC4_RES
 CH2_DATA4:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH2_BUF.b3, *BNS_ARG_RETVAL_ADDR
-;Place data in SPAD2 for sending it to r5f
-    ldi   R0.b0, 20
-    xout  PRU_SPAD_B2_XID, &CH2_BUF, 4
-  	ldi   CH2_STATE, $CODE(CH2_DATA5)
-    lsr   CH2_CRC4_RES, CH2_CRC4_RES, 4
-    add   CH2_CRC4_RES, CH2_CRC4_RES, CH2_BUF.b3
-    lbbo  &CH2_CRC4_RES, TEMP_REG2 , CH2_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data4 CH2_BUF, CH2_STATE, CH2_DATA4_SPAD_BASE, CH2_DATA5, CH2_CRC4_RES
 CH2_CRC:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH2_BUF.b1, *BNS_ARG_RETVAL_ADDR
-    lsr   CH2_CRC4_RES, CH2_CRC4_RES, 4
-    lbbo  &CH2_CRC4_RES, TEMP_REG2 , CH2_CRC4_RES, 1
-    mov   CH2_BUF.b2, CH2_CRC4_RES
-    mov   CH2_BUF.b3, BNS_ARG_STATUS
-    ldi   R0.b0, 21
-    xout  PRU_SPAD_B2_XID, &CH2_BUF, 4
-    qbne  CH2_CRC_ERROR, CH2_CRC4_RES, 0
+    m_ch_crc CH2_BUF, CH2_STATE, CH2_CRCDATA_SPAD_BASE, CH2_CRC4_RES, CH2_CRC_ERROR
 CH2_DATA_OUT:
-;Put data in DMEM or Collect data for different mode
-    ldi   R0, 0
-;Store existing data first
-    xout  PRU_SPAD_B1_XID, &R7, 12
-    xin   PRU_SPAD_B2_XID, &R7, 12
-;Write 10 byte of data in SMEM(Sync, Data and CRC)
-    sbco  &R7, C28, CH2_DATA_BASE, 12
-;Bring back stored data
-    zero	&R7, 12
-    xout  PRU_SPAD_B2_XID, &R7, 12
-    xin   PRU_SPAD_B1_XID, &R7, 12
-;Trigger Interrupt to R5F/*TODO*/
-    ldi   R0, 1
-    sbco  &R0, C28, CH2_INTR_BYTE, 1
+    m_ch_data_out  CH2_REG, CH2_DATA_BASE, CH2_INTR_BYTE
 ;/*TO_DO: Add error handling mechnaism for each label below*/
 CH2_CRC_ERROR:
 ch2_data_error:
 ERROR_CH2:
-;Send data to r5f
-    ldi    CH2_STATE, $CODE(CH2_SYNC)
-  	jmp    return_addr1
-
+    ldi   CH2_STATE, $CODE(CH2_SYNC)
+    jmp   return_addr1
 
 CH2_STATUS_COMM:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH2_BUF.b2, *BNS_ARG_RETVAL_ADDR
-    ldi   CH2_STATE, $CODE(CH2_DATA0)
-    jmp   return_addr1
+    m_ch_status_comm  CH2_BUF, CH2_STATE, CH2_DATA0
 CH2_DATA1:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH2_BUF.b0, *BNS_ARG_RETVAL_ADDR
-    ldi   CH2_STATE, $CODE(CH2_DATA2)
-    lsr   CH2_CRC4_RES, CH2_CRC4_RES, 4
-    add   CH2_CRC4_RES, CH2_CRC4_RES, CH2_BUF.b0
-    lbbo  &CH2_CRC4_RES, TEMP_REG2 , CH2_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data1 CH2_BUF, CH2_STATE, CH2_DATA2, CH2_CRC4_RES
 CH2_DATA3:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH2_BUF.b2, *BNS_ARG_RETVAL_ADDR
-    ldi   CH2_STATE, $CODE(CH2_DATA4)
-    lsr   CH2_CRC4_RES, CH2_CRC4_RES, 4
-    add   CH2_CRC4_RES, CH2_CRC4_RES, CH2_BUF.b2
-    lbbo  &CH2_CRC4_RES, TEMP_REG2 , CH2_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data3 CH2_BUF, CH2_STATE, CH2_DATA4, CH2_CRC4_RES
 CH2_DATA5:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH2_BUF.b0, *BNS_ARG_RETVAL_ADDR
-    ldi   CH2_STATE, $CODE(CH2_CRC)
-    lsr   CH2_CRC4_RES, CH2_CRC4_RES, 4
-    add   CH2_CRC4_RES, CH2_CRC4_RES, CH2_BUF.b0
-    lbbo  &CH2_CRC4_RES, TEMP_REG2 , CH2_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data5 CH2_BUF, CH2_STATE, CH2_CRC, CH2_CRC4_RES
+
 
 CH3_SYNC:
-;check if it is sync pulse
-	ldi32 	TEMP_REG, ch3_syncpulse_max_dur
-    qblt    ERROR_CH3, CHx_PULSE_LEN, TEMP_REG
-    ldi32 	TEMP_REG, ch3_syncpulse_min_dur
-    qbgt    ERROR_CH3, CHx_PULSE_LEN, TEMP_REG
-;Calculate tick period by dividing pulse length with 56, Divide by 8, then by 7
-    lsr     CHx_PULSE_LEN, CHx_PULSE_LEN, 3
-    ldi32 	TEMP_REG, TICK_7_CONST
-    m_calculate_tick TEMP_REG, CHx_PULSE_LEN
-    mov     TEMP_REG0, R27.w0 ; load temp_re0 with update tick period
-    mov     CH3_BUF.w0, TEMP_REG0.w0
-;Update the Hash table with ch3 temp tickperiod placeholder(R0), store in hash table
-	ldi 	TEMP_REG, 12
-    m_multiply TEMP_REG, TEMP_REG0
-;update the lut using R4 to R20 registers(16 reg)
-    xout	PRU_SPAD_B1_XID, &R4, 64
-    mov     R4, R26
-    m_update_lut TEMP_REG0
-;Store lookup table in dmem at CH3_LUT_BASE
-    ldi     TEMP_REG, CH3_LUT_BASE
-    sbbo    &R4, TEMP_REG, 0, 64
-    xin 	PRU_SPAD_B1_XID, &R4, 64
-;Update ch3 state register for status & Comm data calc
-  	ldi    CH3_STATE, $CODE(CH3_STATUS_COMM)
-  	jmp     return_addr1
+    m_ch_sync ERROR_CH3, ch3_syncpulse_max_dur, ch3_syncpulse_min_dur, CH3_BUF, CH3_LUT_BASE, CH3_STATE, CH3_STATUS_COMM
 
 CH3_DATA0:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH3_BUF.b3, *BNS_ARG_RETVAL_ADDR
-;Place data in SPAD2 for sending it to r5f
-    ldi   R0.b0, 21
-    xout  PRU_SPAD_B2_XID, &CH3_BUF, 4
-  	ldi   CH3_STATE, $CODE(CH3_DATA1)
-    ldi   CH3_CRC4_RES, 5
-    lsr   CH3_CRC4_RES, CH3_CRC4_RES, 4
-    add   CH3_CRC4_RES, CH3_CRC4_RES, CH3_BUF.b3
-    lbbo  &CH3_CRC4_RES, TEMP_REG2 , CH3_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data0 CH3_BUF, CH3_STATE, CH3_DATA0_SPAD_BASE, CH3_DATA1, CH3_CRC4_RES
 CH3_DATA2:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH3_BUF.b1, *BNS_ARG_RETVAL_ADDR
-  	ldi   CH3_STATE, $CODE(CH3_DATA3)
-    lsr   CH3_CRC4_RES, CH3_CRC4_RES, 4
-    add   CH3_CRC4_RES, CH3_CRC4_RES, CH3_BUF.b1
-    lbbo  &CH3_CRC4_RES, TEMP_REG2 , CH3_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data2 CH3_BUF, CH3_STATE, CH3_DATA3, CH3_CRC4_RES
 CH3_DATA4:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH3_BUF.b3, *BNS_ARG_RETVAL_ADDR
-;Place data in SPAD2 for sending it to r5f
-    ldi   R0.b0, 22
-    xout  PRU_SPAD_B2_XID, &CH3_BUF, 4
-  	ldi   CH3_STATE, $CODE(CH3_DATA5)
-    lsr   CH3_CRC4_RES, CH3_CRC4_RES, 4
-    add   CH3_CRC4_RES, CH3_CRC4_RES, CH3_BUF.b3
-    lbbo  &CH3_CRC4_RES, TEMP_REG2 , CH3_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data4 CH3_BUF, CH3_STATE, CH3_DATA4_SPAD_BASE, CH3_DATA5, CH3_CRC4_RES
 CH3_CRC:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH3_BUF.b1, *BNS_ARG_RETVAL_ADDR
-    lsr   CH3_CRC4_RES, CH3_CRC4_RES, 4
-    lbbo  &CH3_CRC4_RES, TEMP_REG2 , CH3_CRC4_RES, 1
-    mov   CH3_BUF.b2, CH3_CRC4_RES
-    mov   CH3_BUF.b3, BNS_ARG_STATUS
-    ldi   R0.b0, 23
-    xout  PRU_SPAD_B2_XID, &CH3_BUF, 4
-    qbne  CH3_CRC_ERROR, CH3_CRC4_RES, 0
+    m_ch_crc CH3_BUF, CH3_STATE, CH3_CRCDATA_SPAD_BASE, CH3_CRC4_RES, CH3_CRC_ERROR
 CH3_DATA_OUT:
-;Put data in DMEM or Collect data for different mode
-    ldi   R0, 0
-;Store existing data first
-    xout  PRU_SPAD_B1_XID, &R10, 12
-    xin   PRU_SPAD_B2_XID, &R10, 12
-;Write 10 byte of data in SMEM(Sync, Data and CRC)
-    sbco  &R10, C28, CH3_DATA_BASE, 12
-;Bring back stored data
-    zero  &R10, 12
-    xout  PRU_SPAD_B2_XID, &R10, 12
-    xin   PRU_SPAD_B1_XID, &R10, 12
-;Trigger Interrupt to R5F/*TODO*/
-    ldi   R0, 1
-    sbco  &R0, C28, CH3_INTR_BYTE, 1
+    m_ch_data_out  CH3_REG, CH3_DATA_BASE, CH3_INTR_BYTE
 ;/*TO_DO: Add error handling mechnaism for each label below*/
 CH3_CRC_ERROR:
 ch3_data_error:
 ERROR_CH3:
-;Send data to r5f and reset channel state
-    ldi    CH3_STATE, $CODE(CH3_SYNC)
-  	jmp    return_addr1
+    ldi   CH3_STATE, $CODE(CH3_SYNC)
+    jmp   return_addr1
 
 CH3_STATUS_COMM:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH3_BUF.b2, *BNS_ARG_RETVAL_ADDR
-    ldi   CH3_STATE, $CODE(CH3_DATA0)
-    jmp   return_addr1
+    m_ch_status_comm  CH3_BUF, CH3_STATE, CH3_DATA0
 CH3_DATA1:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH3_BUF.b0, *BNS_ARG_RETVAL_ADDR
-    ldi   CH3_STATE, $CODE(CH3_DATA2)
-    lsr   CH3_CRC4_RES, CH3_CRC4_RES, 4
-    add   CH3_CRC4_RES, CH3_CRC4_RES, CH3_BUF.b0
-    lbbo  &CH3_CRC4_RES, TEMP_REG2 , CH3_CRC4_RES, 1
-
-    jmp   return_addr1
+    m_ch_data1 CH3_BUF, CH3_STATE, CH3_DATA2, CH3_CRC4_RES
 CH3_DATA3:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH3_BUF.b2, *BNS_ARG_RETVAL_ADDR
-    ldi   CH3_STATE, $CODE(CH3_DATA4)
-    lsr   CH3_CRC4_RES, CH3_CRC4_RES, 4
-    add   CH3_CRC4_RES, CH3_CRC4_RES, CH3_BUF.b2
-    lbbo  &CH3_CRC4_RES, TEMP_REG2 , CH3_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data3 CH3_BUF, CH3_STATE, CH3_DATA4, CH3_CRC4_RES
 CH3_DATA5:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH3_BUF.b0, *BNS_ARG_RETVAL_ADDR
-    ldi   CH3_STATE, $CODE(CH3_CRC)
-    lsr   CH3_CRC4_RES, CH3_CRC4_RES, 4
-    add   CH3_CRC4_RES, CH3_CRC4_RES, CH3_BUF.b0
-    lbbo  &CH3_CRC4_RES, TEMP_REG2 , CH3_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data5 CH3_BUF, CH3_STATE, CH3_CRC, CH3_CRC4_RES
+
 
 
 CH4_SYNC:
-;check if it is sync pulse
-	ldi32 	TEMP_REG, ch4_syncpulse_max_dur
-    qblt    ERROR_CH4, CHx_PULSE_LEN, TEMP_REG
-    ldi32 	TEMP_REG, ch4_syncpulse_min_dur
-    qbgt    ERROR_CH4, CHx_PULSE_LEN, TEMP_REG
-;Calculate tick period by dividing pulse length with 56, Divide by 8, then by 7
-    lsr     CHx_PULSE_LEN, CHx_PULSE_LEN, 3
-    ldi32 	TEMP_REG, TICK_7_CONST
-    m_calculate_tick TEMP_REG, CHx_PULSE_LEN
-    mov     TEMP_REG0, R27.w0 ; load temp_re0 with update tick period
-    mov     CH4_BUF.w0, TEMP_REG0.w0
-;Update the Hash table with ch4 temp tickperiod placeholder(R0), store in hash table
-	ldi 	TEMP_REG, 12
-    m_multiply TEMP_REG, TEMP_REG0
-;update the lut using R4 to R20 registers(16 reg)
-    xout	PRU_SPAD_B1_XID, &R4, 64
-    mov     R4, R26
-    m_update_lut TEMP_REG0
-;Store lookup table in dmem at CH4_LUT_BASE
-    ldi     TEMP_REG, CH4_LUT_BASE
-    sbbo    &R4, TEMP_REG, 0, 64
-    xin 	PRU_SPAD_B1_XID, &R4, 64
-;Update Ch4 state register for status & Comm data calc
-  	ldi    CH4_STATE, $CODE(CH4_STATUS_COMM)
-  	jmp     return_addr1
+    m_ch_sync ERROR_CH4, ch4_syncpulse_max_dur, ch4_syncpulse_min_dur, CH4_BUF, CH4_LUT_BASE, CH4_STATE, CH4_STATUS_COMM
 
 CH4_DATA0:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH4_BUF.b3, *BNS_ARG_RETVAL_ADDR
-;Place data in SPAD2 for sending it to r5f
-    ldi   R0.b0, 23
-    xout  PRU_SPAD_B2_XID, &CH4_BUF, 4
-  	ldi   CH4_STATE, $CODE(CH4_DATA1)
-    ldi   CH4_CRC4_RES, 5
-    lsr   CH4_CRC4_RES, CH4_CRC4_RES, 4
-    add   CH4_CRC4_RES, CH4_CRC4_RES, CH4_BUF.b3
-    lbbo  &CH4_CRC4_RES, TEMP_REG2 , CH4_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data0 CH4_BUF, CH4_STATE, CH4_DATA0_SPAD_BASE, CH4_DATA1, CH4_CRC4_RES
 CH4_DATA2:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH4_BUF.b1, *BNS_ARG_RETVAL_ADDR
-  	ldi   CH4_STATE, $CODE(CH4_DATA3)
-    lsr   CH4_CRC4_RES, CH4_CRC4_RES, 4
-    add   CH4_CRC4_RES, CH4_CRC4_RES, CH4_BUF.b1
-    lbbo  &CH4_CRC4_RES, TEMP_REG2 , CH4_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data2 CH4_BUF, CH4_STATE, CH4_DATA3, CH4_CRC4_RES
 CH4_DATA4:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH4_BUF.b3, *BNS_ARG_RETVAL_ADDR
-;Place data in SPAD2 for sending it to r5f
-    ldi   R0.b0, 24
-    xout  PRU_SPAD_B2_XID, &CH4_BUF, 4
-  	ldi   CH4_STATE, $CODE(CH4_DATA5)
-    lsr   CH4_CRC4_RES, CH4_CRC4_RES, 4
-    add   CH4_CRC4_RES, CH4_CRC4_RES, CH4_BUF.b3
-    lbbo  &CH4_CRC4_RES, TEMP_REG2 , CH4_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data4 CH4_BUF, CH4_STATE, CH4_DATA4_SPAD_BASE, CH4_DATA5, CH4_CRC4_RES
 CH4_CRC:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH4_BUF.b1, *BNS_ARG_RETVAL_ADDR
-    lsr   CH4_CRC4_RES, CH4_CRC4_RES, 4
-    lbbo  &CH4_CRC4_RES, TEMP_REG2 , CH4_CRC4_RES, 1
-    mov   CH4_BUF.b2, CH4_CRC4_RES
-    mov   CH4_BUF.b3, BNS_ARG_STATUS
-    ldi   R0.b0, 25
-    xout  PRU_SPAD_B2_XID, &CH4_BUF, 4
-    qbne  CH4_CRC_ERROR, CH4_CRC4_RES, 0
+    m_ch_crc CH4_BUF, CH4_STATE, CH4_CRCDATA_SPAD_BASE, CH4_CRC4_RES, CH4_CRC_ERROR
 CH4_DATA_OUT:
-;Put data in DMEM or Collect data for different mode
-    ldi   R0, 0
-;Store existing data first
-    xout  PRU_SPAD_B1_XID, &R13, 12
-    xin   PRU_SPAD_B2_XID, &R13, 12
-;Write 10 byte of data in SMEM(Sync, Data and CRC)
-    sbco  &R13, C28, CH4_DATA_BASE, 12
-;Bring back stored data
-    zero	&R13, 12
-    xout  PRU_SPAD_B2_XID, &R13, 12
-    xin   PRU_SPAD_B1_XID, &R13, 12
-;Trigger Interrupt to R5F/*TODO*/
-    ldi   R0, 1
-    sbco  &R0, C28, CH4_INTR_BYTE, 1
+    m_ch_data_out  CH4_REG, CH4_DATA_BASE, CH4_INTR_BYTE
 ;/*TO_DO: Add error handling mechnaism for each label below*/
 CH4_CRC_ERROR:
 ch4_data_error:
 ERROR_CH4:
-;Send data to r5f and reset channel state
-    ldi    CH4_STATE, $CODE(CH4_SYNC)
-  	jmp    return_addr1
+    ldi   CH4_STATE, $CODE(CH4_SYNC)
+    jmp   return_addr1
 
 CH4_STATUS_COMM:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH4_BUF.b2, *BNS_ARG_RETVAL_ADDR
-    ldi   CH4_STATE, $CODE(CH4_DATA0)
-    jmp   return_addr1
+    m_ch_status_comm  CH4_BUF, CH4_STATE, CH4_DATA0
 CH4_DATA1:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH4_BUF.b0, *BNS_ARG_RETVAL_ADDR
-    ldi   CH4_STATE, $CODE(CH4_DATA2)
-    lsr   CH4_CRC4_RES, CH4_CRC4_RES, 4
-    add   CH4_CRC4_RES, CH4_CRC4_RES, CH4_BUF.b0
-    lbbo  &CH4_CRC4_RES, TEMP_REG2 , CH4_CRC4_RES, 1
-
-    jmp   return_addr1
+    m_ch_data1 CH4_BUF, CH4_STATE, CH4_DATA2, CH4_CRC4_RES
 CH4_DATA3:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH4_BUF.b2, *BNS_ARG_RETVAL_ADDR
-    ldi   CH4_STATE, $CODE(CH4_DATA4)
-    lsr   CH4_CRC4_RES, CH4_CRC4_RES, 4
-    add   CH4_CRC4_RES, CH4_CRC4_RES, CH4_BUF.b2
-    lbbo  &CH4_CRC4_RES, TEMP_REG2 , CH4_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data3 CH4_BUF, CH4_STATE, CH4_DATA4, CH4_CRC4_RES
 CH4_DATA5:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH4_BUF.b0, *BNS_ARG_RETVAL_ADDR
-    ldi   CH4_STATE, $CODE(CH4_CRC)
-    lsr   CH4_CRC4_RES, CH4_CRC4_RES, 4
-    add   CH4_CRC4_RES, CH4_CRC4_RES, CH4_BUF.b0
-    lbbo  &CH4_CRC4_RES, TEMP_REG2 , CH4_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data5 CH4_BUF, CH4_STATE, CH4_CRC, CH4_CRC4_RES
+
 
 
 CH5_SYNC:
-;check if it is sync pulse
-	ldi32 	TEMP_REG, ch5_syncpulse_max_dur
-    qblt    ERROR_CH5, CHx_PULSE_LEN, TEMP_REG
-    ldi32 	TEMP_REG, ch5_syncpulse_min_dur
-    qbgt    ERROR_CH5, CHx_PULSE_LEN, TEMP_REG
-;Calculate tick period by dividing pulse length with 56, Divide by 8, then by 7
-    lsr     CHx_PULSE_LEN, CHx_PULSE_LEN, 3
-    ldi32 	TEMP_REG, TICK_7_CONST
-    m_calculate_tick TEMP_REG, CHx_PULSE_LEN
-    mov     TEMP_REG0, R27.w0 ; load temp_re0 with update tick period
-    mov     CH5_BUF.w0, TEMP_REG0.w0
-;Update the Hash table with ch5 temp tickperiod placeholder(R0), store in hash table
-	ldi 	TEMP_REG, 12
-    m_multiply TEMP_REG, TEMP_REG0
-;update the lut using R4 to R20 registers(16 reg)
-    xout	PRU_SPAD_B1_XID, &R4, 64
-    mov     R4, R26
-    m_update_lut TEMP_REG0
-;Store lookup table in dmem at CH5_LUT_BASE
-    ldi     TEMP_REG, CH5_LUT_BASE
-    sbbo    &R4, TEMP_REG, 0, 64
-    xin 	PRU_SPAD_B1_XID, &R4, 64
-;Update Ch5 state register for status & Comm data calc
-  	ldi    CH5_STATE, $CODE(CH5_STATUS_COMM)
-  	jmp     return_addr1
+    m_ch_sync ERROR_CH5, ch5_syncpulse_max_dur, ch5_syncpulse_min_dur, CH5_BUF, CH5_LUT_BASE, CH5_STATE, CH5_STATUS_COMM
 
 CH5_DATA0:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH5_BUF.b3, *BNS_ARG_RETVAL_ADDR
-;Place data in SPAD2 for sending it to r5f
-    ldi   R0.b0, 25
-    xout  PRU_SPAD_B2_XID, &CH5_BUF, 4
-  	ldi   CH5_STATE, $CODE(CH5_DATA1)
-    ldi   CH5_CRC4_RES, 5
-    lsr   CH5_CRC4_RES, CH5_CRC4_RES, 4
-    add   CH5_CRC4_RES, CH5_CRC4_RES, CH5_BUF.b3
-    lbbo  &CH5_CRC4_RES, TEMP_REG2 , CH5_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data0 CH5_BUF, CH5_STATE, CH5_DATA0_SPAD_BASE, CH5_DATA1, CH5_CRC4_RES
 CH5_DATA2:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH5_BUF.b1, *BNS_ARG_RETVAL_ADDR
-  	ldi   CH5_STATE, $CODE(CH5_DATA3)
-    lsr   CH5_CRC4_RES, CH5_CRC4_RES, 4
-    add   CH5_CRC4_RES, CH5_CRC4_RES, CH5_BUF.b1
-    lbbo  &CH5_CRC4_RES, TEMP_REG2 , CH5_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data2 CH5_BUF, CH5_STATE, CH5_DATA3, CH5_CRC4_RES
 CH5_DATA4:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH5_BUF.b3, *BNS_ARG_RETVAL_ADDR
-;Place data in SPAD2 for sending it to r5f
-    ldi   R0.b0, 26
-    xout  PRU_SPAD_B2_XID, &CH5_BUF, 4
-  	ldi   CH5_STATE, $CODE(CH5_DATA5)
-    lsr   CH5_CRC4_RES, CH5_CRC4_RES, 4
-    add   CH5_CRC4_RES, CH5_CRC4_RES, CH5_BUF.b3
-    lbbo  &CH5_CRC4_RES, TEMP_REG2 , CH5_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data4 CH5_BUF, CH5_STATE, CH5_DATA4_SPAD_BASE, CH5_DATA5, CH5_CRC4_RES
 CH5_CRC:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH5_BUF.b1, *BNS_ARG_RETVAL_ADDR
-    lsr   CH5_CRC4_RES, CH5_CRC4_RES, 4
-    lbbo  &CH5_CRC4_RES, TEMP_REG2 , CH5_CRC4_RES, 1
-    mov   CH5_BUF.b2, CH5_CRC4_RES
-    mov   CH5_BUF.b3, BNS_ARG_STATUS
-    ldi   R0.b0, 27
-    xout  PRU_SPAD_B2_XID, &CH5_BUF, 4
-    qbne  CH5_CRC_ERROR, CH5_CRC4_RES, 0
+    m_ch_crc CH5_BUF, CH5_STATE, CH5_CRCDATA_SPAD_BASE, CH5_CRC4_RES, CH5_CRC_ERROR
 CH5_DATA_OUT:
-;Put data in DMEM or Collect data for different mode
-    ldi   R0, 0
-;Store existing data first
-    xout  PRU_SPAD_B1_XID, &R16, 12
-    xin   PRU_SPAD_B2_XID, &R16, 12
-;Write 10 byte of data in SMEM(Sync, Data and CRC)
-    sbco  &R16, C28, CH5_DATA_BASE, 12
-;Bring back stored data
-    zero  &R16, 12
-    xout  PRU_SPAD_B2_XID, &R16, 12
-    xin   PRU_SPAD_B1_XID, &R16, 12
-;Trigger Interrupt to R5F/*TODO*/
-    ldi   R0, 1
-    sbco  &R0, C28, CH5_INTR_BYTE, 1
+    m_ch_data_out  CH5_REG, CH5_DATA_BASE, CH5_INTR_BYTE
 ;/*TO_DO: Add error handling mechnaism for each label below*/
 CH5_CRC_ERROR:
 ch5_data_error:
 ERROR_CH5:
-;Send data to r5f
-    ldi    CH5_STATE, $CODE(CH5_SYNC)
-  	jmp    return_addr1
+    ldi   CH5_STATE, $CODE(CH5_SYNC)
+    jmp   return_addr1
 
 CH5_STATUS_COMM:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH5_BUF.b2, *BNS_ARG_RETVAL_ADDR
-    ldi   CH5_STATE, $CODE(CH5_DATA0)
-    jmp   return_addr1
+    m_ch_status_comm  CH5_BUF, CH5_STATE, CH5_DATA0
 CH5_DATA1:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH5_BUF.b0, *BNS_ARG_RETVAL_ADDR
-    ldi   CH5_STATE, $CODE(CH5_DATA2)
-    lsr   CH5_CRC4_RES, CH5_CRC4_RES, 4
-    add   CH5_CRC4_RES, CH5_CRC4_RES, CH5_BUF.b0
-    lbbo  &CH5_CRC4_RES, TEMP_REG2 , CH5_CRC4_RES, 1
-
-    jmp   return_addr1
+    m_ch_data1 CH5_BUF, CH5_STATE, CH5_DATA2, CH5_CRC4_RES
 CH5_DATA3:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH5_BUF.b2, *BNS_ARG_RETVAL_ADDR
-    ldi   CH5_STATE, $CODE(CH5_DATA4)
-    lsr   CH5_CRC4_RES, CH5_CRC4_RES, 4
-    add   CH5_CRC4_RES, CH5_CRC4_RES, CH5_BUF.b2
-    lbbo  &CH5_CRC4_RES, TEMP_REG2 , CH5_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data3 CH5_BUF, CH5_STATE, CH5_DATA4, CH5_CRC4_RES
 CH5_DATA5:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH5_BUF.b0, *BNS_ARG_RETVAL_ADDR
-    ldi   CH5_STATE, $CODE(CH5_CRC)
-    lsr   CH5_CRC4_RES, CH5_CRC4_RES, 4
-    add   CH5_CRC4_RES, CH5_CRC4_RES, CH5_BUF.b0
-    lbbo  &CH5_CRC4_RES, TEMP_REG2 , CH5_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data5 CH5_BUF, CH5_STATE, CH5_CRC, CH5_CRC4_RES
+
 
 CH6_SYNC:
-;check if it is sync pulse
-	ldi32 	TEMP_REG, ch6_syncpulse_max_dur
-    qblt    ERROR_CH6, CHx_PULSE_LEN, TEMP_REG
-    ldi32 	TEMP_REG, ch6_syncpulse_min_dur
-    qbgt    ERROR_CH6, CHx_PULSE_LEN, TEMP_REG
-;Calculate tick period by dividing pulse length with 56, Divide by 8, then by 7
-    lsr     CHx_PULSE_LEN, CHx_PULSE_LEN, 3
-    ldi32 	TEMP_REG, TICK_7_CONST
-    m_calculate_tick TEMP_REG, CHx_PULSE_LEN
-    mov     TEMP_REG0, R27.w0 ; load temp_re0 with update tick period
-    mov     CH6_BUF.w0, TEMP_REG0.w0
-;Update the Hash table with ch6 temp tickperiod placeholder(R0), store in hash table
-	ldi 	TEMP_REG, 12
-    m_multiply TEMP_REG, TEMP_REG0
-;update the lut using R4 to R20 registers(16 reg)
-    xout	PRU_SPAD_B1_XID, &R4, 64
-    mov     R4, R26
-    m_update_lut TEMP_REG0
-;Store lookup table in dmem at CH6_LUT_BASE
-    ldi     TEMP_REG, CH6_LUT_BASE
-    sbbo    &R4, TEMP_REG, 0, 64
-    xin 	PRU_SPAD_B1_XID, &R4, 64
-;Update Ch6 state register for status & Comm data calc
-  	ldi    CH6_STATE, $CODE(CH6_STATUS_COMM)
-  	jmp     return_addr1
+    m_ch_sync ERROR_CH6, ch6_syncpulse_max_dur, ch6_syncpulse_min_dur, CH6_BUF, CH6_LUT_BASE, CH6_STATE, CH6_STATUS_COMM
 
 CH6_DATA0:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH6_BUF.b3, *BNS_ARG_RETVAL_ADDR
-;Place data in SPAD2 for sending it to r5f
-    ldi   R0.b0, 27
-    xout  PRU_SPAD_B2_XID, &CH6_BUF, 4
-  	ldi   CH6_STATE, $CODE(CH6_DATA1)
-    ldi   CH6_CRC4_RES, 5
-    lsr   CH6_CRC4_RES, CH6_CRC4_RES, 4
-    add   CH6_CRC4_RES, CH6_CRC4_RES, CH6_BUF.b3
-    lbbo  &CH6_CRC4_RES, TEMP_REG2 , CH6_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data0 CH6_BUF, CH6_STATE, CH6_DATA0_SPAD_BASE, CH6_DATA1, CH6_CRC4_RES
 CH6_DATA2:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH6_BUF.b1, *BNS_ARG_RETVAL_ADDR
-  	ldi   CH6_STATE, $CODE(CH6_DATA3)
-    lsr   CH6_CRC4_RES, CH6_CRC4_RES, 4
-    add   CH6_CRC4_RES, CH6_CRC4_RES, CH6_BUF.b1
-    lbbo  &CH6_CRC4_RES, TEMP_REG2 , CH6_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data2 CH6_BUF, CH6_STATE, CH6_DATA3, CH6_CRC4_RES
 CH6_DATA4:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH6_BUF.b3, *BNS_ARG_RETVAL_ADDR
-;Place data in SPAD2 for sending it to r5f
-    ldi   R0.b0, 28
-    xout  PRU_SPAD_B2_XID, &CH6_BUF, 4
-  	ldi   CH6_STATE, $CODE(CH6_DATA5)
-    lsr   CH6_CRC4_RES, CH6_CRC4_RES, 4
-    add   CH6_CRC4_RES, CH6_CRC4_RES, CH6_BUF.b3
-    lbbo  &CH6_CRC4_RES, TEMP_REG2 , CH6_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data4 CH6_BUF, CH6_STATE, CH6_DATA4_SPAD_BASE, CH6_DATA5, CH6_CRC4_RES
 CH6_CRC:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH6_BUF.b1, *BNS_ARG_RETVAL_ADDR
-    lsr   CH6_CRC4_RES, CH6_CRC4_RES, 4
-    lbbo  &CH6_CRC4_RES, TEMP_REG2 , CH6_CRC4_RES, 1
-    mov   CH6_BUF.b2, CH6_CRC4_RES
-    mov   CH6_BUF.b3, BNS_ARG_STATUS
-    ldi   R0.b0, 29
-    xout  PRU_SPAD_B2_XID, &CH6_BUF, 4
-    qbne  CH6_CRC_ERROR, CH6_CRC4_RES, 0
+    m_ch_crc CH6_BUF, CH6_STATE, CH6_CRCDATA_SPAD_BASE, CH6_CRC4_RES, CH6_CRC_ERROR
 CH6_DATA_OUT:
-;Put data in DMEM or Collect data for different mode
-    ldi   R0, 0
-;Store existing data first
-    xout  PRU_SPAD_B1_XID, &R19, 12
-    xin   PRU_SPAD_B2_XID, &R19, 12
-;Write 10 byte of data in SMEM(Sync, Data and CRC)
-    sbco  &R19, C28, CH6_DATA_BASE, 12
-;Bring back stored data
-    zero  &R19, 12
-    xout  PRU_SPAD_B2_XID, &R19, 12
-    xin   PRU_SPAD_B1_XID, &R19, 12
-;Trigger Interrupt to R5F/*TODO*/
-    ldi   R0, 1
-    sbco  &R0, C28, CH6_INTR_BYTE, 1
+    m_ch_data_out  CH6_REG, CH6_DATA_BASE, CH6_INTR_BYTE
 ;/*TO_DO: Add error handling mechnaism for each label below*/
 CH6_CRC_ERROR:
 ch6_data_error:
 ERROR_CH6:
-;Send data to r5f and reset channel state
-    ldi    CH6_STATE, $CODE(CH6_SYNC)
-  	jmp    return_addr1
-
+    ldi   CH6_STATE, $CODE(CH6_SYNC)
+    jmp   return_addr1
 
 CH6_STATUS_COMM:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH6_BUF.b2, *BNS_ARG_RETVAL_ADDR
-    ldi   CH6_STATE, $CODE(CH6_DATA0)
-    jmp   return_addr1
+    m_ch_status_comm  CH6_BUF, CH6_STATE, CH6_DATA0
 CH6_DATA1:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH6_BUF.b0, *BNS_ARG_RETVAL_ADDR
-    ldi   CH6_STATE, $CODE(CH6_DATA2)
-    lsr   CH6_CRC4_RES, CH6_CRC4_RES, 4
-    add   CH6_CRC4_RES, CH6_CRC4_RES, CH6_BUF.b0
-    lbbo  &CH6_CRC4_RES, TEMP_REG2 , CH6_CRC4_RES, 1
-
-    jmp   return_addr1
+    m_ch_data1 CH6_BUF, CH6_STATE, CH6_DATA2, CH6_CRC4_RES
 CH6_DATA3:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH6_BUF.b2, *BNS_ARG_RETVAL_ADDR
-    ldi   CH6_STATE, $CODE(CH6_DATA4)
-    lsr   CH6_CRC4_RES, CH6_CRC4_RES, 4
-    add   CH6_CRC4_RES, CH6_CRC4_RES, CH6_BUF.b2
-    lbbo  &CH6_CRC4_RES, TEMP_REG2 , CH6_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data3 CH6_BUF, CH6_STATE, CH6_DATA4, CH6_CRC4_RES
 CH6_DATA5:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH6_BUF.b0, *BNS_ARG_RETVAL_ADDR
-    ldi   CH6_STATE, $CODE(CH6_CRC)
-    lsr   CH6_CRC4_RES, CH6_CRC4_RES, 4
-    add   CH6_CRC4_RES, CH6_CRC4_RES, CH6_BUF.b0
-    lbbo  &CH6_CRC4_RES, TEMP_REG2 , CH6_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data5 CH6_BUF, CH6_STATE, CH6_CRC, CH6_CRC4_RES
 
 
 CH7_SYNC:
-;check if it is sync pulse
-	ldi32 	TEMP_REG, ch7_syncpulse_max_dur
-    qblt    ERROR_CH7, CHx_PULSE_LEN, TEMP_REG
-    ldi32 	TEMP_REG, ch7_syncpulse_min_dur
-    qbgt    ERROR_CH7, CHx_PULSE_LEN, TEMP_REG
-;Calculate tick period by dividing pulse length with 56, Divide by 8, then by 7
-    lsr     CHx_PULSE_LEN, CHx_PULSE_LEN, 3
-    ldi32 	TEMP_REG, TICK_7_CONST
-    m_calculate_tick TEMP_REG, CHx_PULSE_LEN
-    mov     TEMP_REG0, R27.w0 ; load temp_re0 with update tick period
-    mov     CH7_BUF.w0, TEMP_REG0.w0
-;Update the Hash table with ch7 temp tickperiod placeholder(R0), store in hash table
-	ldi 	TEMP_REG, 12
-    m_multiply TEMP_REG, TEMP_REG0
-;update the lut using R4 to R20 registers(16 reg)
-    xout	PRU_SPAD_B1_XID, &R4, 64
-    mov     R4, R26
-    m_update_lut TEMP_REG0
-;Store lookup table in dmem at CH7_LUT_BASE
-    ldi     TEMP_REG, CH7_LUT_BASE
-    sbbo    &R4, TEMP_REG, 0, 64
-    xin 	PRU_SPAD_B1_XID, &R4, 64
-;Update Ch7 state register for status & Comm data calc
-  	ldi    CH7_STATE, $CODE(CH7_STATUS_COMM)
-  	jmp     return_addr1
+    m_ch_sync ERROR_CH7, ch7_syncpulse_max_dur, ch7_syncpulse_min_dur, CH7_BUF, CH7_LUT_BASE, CH7_STATE, CH7_STATUS_COMM
 
 CH7_DATA0:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH7_BUF.b3, *BNS_ARG_RETVAL_ADDR
-;Place data in R22 of SPAD2 for sending it to r5f
-    ldi   R0.b0, 29
-    xout  PRU_SPAD_B2_XID, &CH7_BUF, 4
-  	ldi   CH7_STATE, $CODE(CH7_DATA1)
-    ldi   CH7_CRC4_RES, 5
-    lsr   CH7_CRC4_RES, CH7_CRC4_RES, 4
-    add   CH7_CRC4_RES, CH7_CRC4_RES, CH7_BUF.b3
-    lbbo  &CH7_CRC4_RES, TEMP_REG2 , CH7_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data0 CH7_BUF, CH7_STATE, CH7_DATA0_SPAD_BASE, CH7_DATA1, CH7_CRC4_RES
 CH7_DATA2:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH7_BUF.b1, *BNS_ARG_RETVAL_ADDR
-  	ldi   CH7_STATE, $CODE(CH7_DATA3)
-    lsr   CH7_CRC4_RES, CH7_CRC4_RES, 4
-    add   CH7_CRC4_RES, CH7_CRC4_RES, CH7_BUF.b1
-    lbbo  &CH7_CRC4_RES, TEMP_REG2 , CH7_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data2 CH7_BUF, CH7_STATE, CH7_DATA3, CH7_CRC4_RES
 CH7_DATA4:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH7_BUF.b3, *BNS_ARG_RETVAL_ADDR
-;Place data in R23 of SPAD2 for buffering
-    ldi   R0.b0, 0
-    xout  PRU_SPAD_B2_XID, &CH7_BUF, 4
-  	ldi   CH7_STATE, $CODE(CH7_DATA5)
-    lsr   CH7_CRC4_RES, CH7_CRC4_RES, 4
-    add   CH7_CRC4_RES, CH7_CRC4_RES, CH7_BUF.b3
-    lbbo  &CH7_CRC4_RES, TEMP_REG2 , CH7_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data4 CH7_BUF, CH7_STATE, CH7_DATA4_SPAD_BASE, CH7_DATA5, CH7_CRC4_RES
 CH7_CRC:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH7_BUF.b1, *BNS_ARG_RETVAL_ADDR
-    lsr   CH7_CRC4_RES, CH7_CRC4_RES, 4
-    lbbo  &CH7_CRC4_RES, TEMP_REG2 , CH7_CRC4_RES, 1
-    mov   CH7_BUF.b2, CH7_CRC4_RES
-    mov   CH7_BUF.b3, BNS_ARG_STATUS
-;Place data in R24 of SPAD2 for buffering
-    ldi   R0.b0, 1
-    xout  PRU_SPAD_B2_XID, &CH7_BUF, 4
-    qbne  CH7_CRC_ERROR, CH7_CRC4_RES, 0
+    m_ch_crc CH7_BUF, CH7_STATE, CH7_CRCDATA_SPAD_BASE, CH7_CRC4_RES, CH7_CRC_ERROR
 CH7_DATA_OUT:
-;Put data in DMEM or Collect data for different mode
-    ldi   R0, 0
-;Store existing data first
-    xout  PRU_SPAD_B1_XID, &R22, 12
-    xin   PRU_SPAD_B2_XID, &R22, 12
-;Write 10 byte of data in SMEM(Sync, Data and CRC)
-    sbco  &R22, C28, CH7_DATA_BASE, 12
-;Bring back stored data
-    zero  &R22, 12
-    xout  PRU_SPAD_B2_XID, &R22, 12
-    xin   PRU_SPAD_B1_XID, &R22, 12
-;Trigger Interrupt to R5F/*TODO*/
-    ldi   R0, 1
-    sbco  &R0, C28, CH7_INTR_BYTE, 1
+    m_ch_data_out  CH7_REG, CH7_DATA_BASE, CH7_INTR_BYTE
 ;/*TO_DO: Add error handling mechnaism for each label below*/
 CH7_CRC_ERROR:
 ch7_data_error:
 ERROR_CH7:
-;Send data to r5f and reset channel state
-    ldi    CH7_STATE, $CODE(CH7_SYNC)
-    jmp    return_addr1
-
+    ldi   CH7_STATE, $CODE(CH7_SYNC)
+    jmp   return_addr1
 
 CH7_STATUS_COMM:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH7_BUF.b2, *BNS_ARG_RETVAL_ADDR
-    ldi   CH7_STATE, $CODE(CH7_DATA0)
-    jmp   return_addr1
+    m_ch_status_comm  CH7_BUF, CH7_STATE, CH7_DATA0
 CH7_DATA1:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH7_BUF.b0, *BNS_ARG_RETVAL_ADDR
-    ldi   CH7_STATE, $CODE(CH7_DATA2)
-    lsr   CH7_CRC4_RES, CH7_CRC4_RES, 4
-    add   CH7_CRC4_RES, CH7_CRC4_RES, CH7_BUF.b0
-    lbbo  &CH7_CRC4_RES, TEMP_REG2 , CH7_CRC4_RES, 1
-
-    jmp   return_addr1
+    m_ch_data1 CH7_BUF, CH7_STATE, CH7_DATA2, CH7_CRC4_RES
 CH7_DATA3:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH7_BUF.b2, *BNS_ARG_RETVAL_ADDR
-    ldi   CH7_STATE, $CODE(CH7_DATA4)
-    lsr   CH7_CRC4_RES, CH7_CRC4_RES, 4
-    add   CH7_CRC4_RES, CH7_CRC4_RES, CH7_BUF.b2
-    lbbo  &CH7_CRC4_RES, TEMP_REG2 , CH7_CRC4_RES, 1
-    jmp   return_addr1
+    m_ch_data3 CH7_BUF, CH7_STATE, CH7_DATA4, CH7_CRC4_RES
 CH7_DATA5:
-    jal   return_addr2, FN_BINARY_SEARCH
-    mvib  CH7_BUF.b0, *BNS_ARG_RETVAL_ADDR
-    ldi   CH7_STATE, $CODE(CH7_CRC)
-    lsr   CH7_CRC4_RES, CH7_CRC4_RES, 4
-    add   CH7_CRC4_RES, CH7_CRC4_RES, CH7_BUF.b0
-    lbbo  &CH7_CRC4_RES, TEMP_REG2 , CH7_CRC4_RES, 1
-    jmp   return_addr1
-
+    m_ch_data5 CH7_BUF, CH7_STATE, CH7_CRC, CH7_CRC4_RES
 ;************************************************************************************
 ;
 ;   Function: FN_BINARY_SEARCH
