@@ -50,6 +50,7 @@ void loop_forever(void)
 
 int main(void)
 {
+    loop_forever();
     int32_t status;
 
     Bootloader_profileReset();

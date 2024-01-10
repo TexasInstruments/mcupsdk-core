@@ -72,7 +72,6 @@
             linkerBuildOptions="
                 -lfreertos.am243x.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am243x.r5f.ti-arm-clang.debug.lib
-                -lboard.am243x.m4f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -84,7 +83,6 @@
             linkerBuildOptions="
                 -lfreertos.am243x.r5f.ti-arm-clang.release.lib
                 -ldrivers.am243x.r5f.ti-arm-clang.release.lib
-                -lboard.am243x.m4f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a
             "

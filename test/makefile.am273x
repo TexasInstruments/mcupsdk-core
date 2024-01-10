@@ -236,6 +236,9 @@ BUILD_COMBO_ALL = $(BUILD_COMBO_unity) $(BUILD_COMBO_doxy_samples)
 # Combine all Pre-built Components
 BUILD_COMBO_PREBUILT_ALL =
 
+# Combine all Pre-built Components
+BUILD_COMBO_PREBUILT_ALL_GCC =
+
 # Combine all Private Components
 BUILD_COMBO_PRIVATE_ALL =
 
@@ -244,6 +247,8 @@ libs: $(BUILD_COMBO_ALL)
 libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
 
 libs-private: $(BUILD_COMBO_PRIVATE_ALL)
+
+libs_gcc-prebuilt: $(BUILD_COMBO_PREBUILT_ALL_GCC)
 
 $(BUILD_COMBO_unity):
 	$(MAKE) -C unity -f makefile.am273x.$(subst unity_,,$@) all
@@ -265,8 +270,13 @@ BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_unity) $(BUILD_COMBO_CLEAN_doxy_samp
 # Combine all Pre-built Components Clean
 BUILD_COMBO_PREBUILT_CLEAN_ALL =
 
+# Combine all GCC Pre-built Components Clean
+BUILD_COMBO_PREBUILT_CLEAN_ALL_GCC =
+
 libs-clean: $(BUILD_COMBO_CLEAN_ALL)
 libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
+
+libs_gcc-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL_GCC)
 
 $(BUILD_COMBO_CLEAN_unity):
 	$(MAKE) -C unity -f makefile.am273x.$(subst unity_,,$(subst _clean,,$@)) clean
@@ -287,8 +297,13 @@ BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_unity) $(BUILD_COMBO_SCRUB_doxy_samp
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
 
+# Combine all Pre-built Components Scrub Targets
+BUILD_COMBO_PREBUILT_SCRUB_ALL_GCC =
+
 libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
 libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
+
+libs-prebuilt-scrub_gcc: $(BUILD_COMBO_PREBUILT_SCRUB_ALL_GCC)
 
 $(BUILD_COMBO_SCRUB_unity):
 	$(MAKE) -C unity -f makefile.am273x.$(subst unity_,,$(subst _scrub,,$@)) scrub
@@ -465,6 +480,7 @@ BUILD_COMBO_EXAMPLE_ALL += test_mbedtls_pka_am273x-evm_r5fss0-0_freertos_ti-arm-
 BUILD_COMBO_EXAMPLE_ALL += mbedtls_benchmark_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += cpsw_intervlan_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += testcase_singlepkt_am273x-evm_r5fss0-0_freertos_ti-arm-clang
+
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += stc_func_test_am273x-evm_system_nortos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_esm_am273x-evm_system_freertos
@@ -474,6 +490,7 @@ BUILD_COMBO_EXAMPLE_ALL += test_ipc_rpmsg_am273x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += ipc_rpmsg_ut_am273x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += ipc_safeipc_test_am273x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_soc_r5f_am273x-evm_system_freertos
+
 
 
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL =

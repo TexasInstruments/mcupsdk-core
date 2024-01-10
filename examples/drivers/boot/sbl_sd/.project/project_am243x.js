@@ -45,6 +45,15 @@ const libs_nortos_r5f = {
     ],
 };
 
+const libs_nortos_r5f_gcc = {
+    common: [
+        "nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "board.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "freertos_fat.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+    ],
+};
+
 const lnkfiles = {
     common: [
         "linker.cmd",
@@ -57,6 +66,7 @@ const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_UART";
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm", os: "nortos"},
 ];
 
 function getComponentProperty() {
@@ -83,10 +93,17 @@ function getComponentBuildProperty(buildOption) {
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
     if(buildOption.cpu.match(/r5f*/)) {
-        build_property.libs = libs_nortos_r5f;
+        if(buildOption.cgt.match(/gcc*/) )
+        {
+            build_property.libs = libs_nortos_r5f_gcc;
+        }
+        else
+        {
+            build_property.libs = libs_nortos_r5f;
+        }
         build_property.includes = includes_r5f;
     }
-    
+
     return build_property;
 }
 

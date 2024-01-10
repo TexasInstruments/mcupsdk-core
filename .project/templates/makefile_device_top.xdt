@@ -9,6 +9,9 @@
 	let component_target_scrub_list_string_gcc = [];
 	let component_target_prebuilt_clean_list_string = [];
 	let component_target_prebuilt_scrub_list_string = [];
+	let component_target_prebuilt_list_string_gcc = [];
+	let component_target_prebuilt_clean_list_string_gcc = [];
+	let component_target_prebuilt_scrub_list_string_gcc = [];
 	for (component of args.component_list) {
 		if(component.isSkipTopLevelBuild) {
 			component_target_private_list_string +=` \$(BUILD_COMBO_${component.name})`
@@ -19,6 +22,10 @@
 			component_target_prebuilt_list_string +=` \$(BUILD_COMBO_${component.name})`
 			component_target_prebuilt_clean_list_string +=` \$(BUILD_COMBO_CLEAN_${component.name})`
 			component_target_prebuilt_scrub_list_string +=` \$(BUILD_COMBO_SCRUB_${component.name})`
+
+			component_target_prebuilt_list_string_gcc +=` \$(BUILD_COMBO_GCC_${component.name})`
+			component_target_prebuilt_clean_list_string_gcc +=` \$(BUILD_COMBO_CLEAN_GCC_${component.name})`
+			component_target_prebuilt_scrub_list_string_gcc +=` \$(BUILD_COMBO_SCRUB_GCC_${component.name})`
 		}
 		else {
 			component_target_list_string +=` \$(BUILD_COMBO_${component.name})`
@@ -26,7 +33,7 @@
 			component_target_scrub_list_string +=` \$(BUILD_COMBO_SCRUB_${component.name})`
 
 			if((device == "am64x") || (device == "am243x")){
-			if (["board","drivers","freertos","nortos"].includes(component.name)) {
+			if (["board","drivers","freertos","nortos","freertos_fat","mathlib","usbd_cdn_nortos","usbd_cdn_freertos","usbd_tusb_cdc_nortos","usbd_tusb_cdc_freertos","usbd_tusb_dfu_nortos","usbd_tusb_dfu_freertos","usbd_tusb_ncm_nortos","usbd_tusb_ncm_freertos","usbd_tusb_rndis_nortos","usbd_tusb_rndis_freertos"].includes(component.name)) {
 			component_target_list_string_gcc +=` \$(BUILD_COMBO_GCC_${component.name})`
 			component_target_clean_list_string_gcc +=` \$(BUILD_COMBO_CLEAN_GCC_${component.name})`
 			component_target_scrub_list_string_gcc +=` \$(BUILD_COMBO_SCRUB_GCC_${component.name})`
@@ -112,7 +119,7 @@ BUILD_COMBO_`component.name` =`component.buildTarget`
 % if ((device == "am64x") || (device == "am243x")) {
 # Various GCC Component Targets
 % for (component of args.component_list) {
-%     if (["board","drivers","freertos","nortos"].includes(component.name)) {
+%     if (["board","drivers","freertos","nortos","freertos_fat","mathlib","usbd_cdn_nortos","usbd_cdn_freertos","usbd_tusb_cdc_nortos","usbd_tusb_cdc_freertos","usbd_tusb_dfu_nortos","usbd_tusb_dfu_freertos","usbd_tusb_ncm_nortos","usbd_tusb_ncm_freertos","usbd_tusb_rndis_nortos","usbd_tusb_rndis_freertos","cmsis"].includes(component.name)) {
 BUILD_COMBO_GCC_`component.name` =`component.buildTarget_gcc`
 %  }
 % }
@@ -129,6 +136,9 @@ BUILD_COMBO_ALL_GCC = `component_target_list_string_gcc`
 # Combine all Pre-built Components
 BUILD_COMBO_PREBUILT_ALL =`component_target_prebuilt_list_string`
 
+# Combine all Pre-built Components
+BUILD_COMBO_PREBUILT_ALL_GCC =`component_target_prebuilt_list_string_gcc`
+
 # Combine all Private Components
 BUILD_COMBO_PRIVATE_ALL =`component_target_private_list_string`
 
@@ -141,6 +151,8 @@ libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
 
 libs-private: $(BUILD_COMBO_PRIVATE_ALL)
 
+libs_gcc-prebuilt: $(BUILD_COMBO_PREBUILT_ALL_GCC)
+
 % for (component of args.component_list) {
 $(BUILD_COMBO_`component.name`):
 	$(MAKE) -C `component.relpath` -f makefile`component.tag`.`args.device`.$(subst `component.name`_,,$@) all
@@ -149,7 +161,7 @@ $(BUILD_COMBO_`component.name`):
 
 % if ((device == "am64x") || (device == "am243x")) {
 % for (component of args.component_list) {
-%     if (["board","drivers","freertos","nortos"].includes(component.name)) {
+%     if (["board","drivers","freertos","nortos","freertos_fat","mathlib","usbd_cdn_nortos","usbd_cdn_freertos","usbd_tusb_cdc_nortos","usbd_tusb_cdc_freertos","usbd_tusb_dfu_nortos","usbd_tusb_dfu_freertos","usbd_tusb_ncm_nortos","usbd_tusb_ncm_freertos","usbd_tusb_rndis_nortos","usbd_tusb_rndis_freertos","cmsis"].includes(component.name)) {
 $(BUILD_COMBO_GCC_`component.name`):
 	$(MAKE) -C `component.relpath` -f makefile`component.tag`.`args.device`.$(subst `component.name`_,,$@) all
 
@@ -165,7 +177,7 @@ BUILD_COMBO_CLEAN_`component.name` =`component.buildTargetClean`
 % if ((device == "am64x") || (device == "am243x")) {
 # Various GCC Component Clean Targets
 % for (component of args.component_list) {
-%     if (["board","drivers","freertos","nortos"].includes(component.name)) {
+%     if (["board","drivers","freertos","nortos","freertos_fat","mathlib","usbd_cdn_nortos","usbd_cdn_freertos","usbd_tusb_cdc_nortos","usbd_tusb_cdc_freertos","usbd_tusb_dfu_nortos","usbd_tusb_dfu_freertos","usbd_tusb_ncm_nortos","usbd_tusb_ncm_freertos","usbd_tusb_rndis_nortos","usbd_tusb_rndis_freertos","cmsis"].includes(component.name)) {
 BUILD_COMBO_CLEAN_GCC_`component.name` =`component.buildTargetClean_gcc`
 %  }
 % }
@@ -181,11 +193,16 @@ BUILD_COMBO_CLEAN_ALL_GCC=`component_target_clean_list_string_gcc`
 # Combine all Pre-built Components Clean
 BUILD_COMBO_PREBUILT_CLEAN_ALL =`component_target_prebuilt_clean_list_string`
 
+# Combine all GCC Pre-built Components Clean
+BUILD_COMBO_PREBUILT_CLEAN_ALL_GCC =`component_target_prebuilt_clean_list_string_gcc`
+
 libs-clean: $(BUILD_COMBO_CLEAN_ALL)
 % if ((device == "am64x") || (device == "am243x")) {
 libs_gcc-clean: $(BUILD_COMBO_CLEAN_ALL_GCC)
 % }
 libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
+
+libs_gcc-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL_GCC)
 
 % for (component of args.component_list) {
 $(BUILD_COMBO_CLEAN_`component.name`):
@@ -195,7 +212,7 @@ $(BUILD_COMBO_CLEAN_`component.name`):
 
 % if ((device == "am64x") || (device == "am243x")) {
 % for (component of args.component_list) {
-%     if (["board","drivers","freertos","nortos"].includes(component.name)) {
+%     if (["board","drivers","freertos","nortos","freertos_fat","mathlib","usbd_cdn_nortos","usbd_cdn_freertos","usbd_tusb_cdc_nortos","usbd_tusb_cdc_freertos","usbd_tusb_dfu_nortos","usbd_tusb_dfu_freertos","usbd_tusb_ncm_nortos","usbd_tusb_ncm_freertos","usbd_tusb_rndis_nortos","usbd_tusb_rndis_freertos","cmsis"].includes(component.name)) {
 $(BUILD_COMBO_CLEAN_GCC_`component.name`):
 	$(MAKE) -C `component.relpath` -f makefile`component.tag`.`args.device`.$(subst `component.name`_,,$(subst _clean,,$@)) clean
 
@@ -211,9 +228,12 @@ BUILD_COMBO_SCRUB_`component.name` =`component.buildTargetScrub`_scrub
 % if ((device == "am64x") || (device == "am243x")) {
 # Various GCC Component Scrub Targets
 % for (component of args.component_list) {
-%     if (["board","drivers","freertos","nortos"].includes(component.name)) {
+%     if ((device == "am243x") && ["board","drivers","freertos","nortos","freertos_fat","mathlib","usbd_cdn_nortos","usbd_cdn_freertos","usbd_tusb_cdc_nortos","usbd_tusb_cdc_freertos","usbd_tusb_dfu_nortos","usbd_tusb_dfu_freertos","usbd_tusb_ncm_nortos","usbd_tusb_ncm_freertos","usbd_tusb_rndis_nortos","usbd_tusb_rndis_freertos","cmsis"].includes(component.name)) {
 BUILD_COMBO_SCRUB_GCC_`component.name` =`component.buildTargetScrub_gcc`_scrub
 %  }
+%     else if ((device == "am64x") && ["board","drivers","freertos","nortos"].includes(component.name)) {
+BUILD_COMBO_SCRUB_GCC_`component.name` =`component.buildTargetScrub_gcc`_scrub
+%     }
 % }
 % }
 
@@ -226,11 +246,16 @@ BUILD_COMBO_SCRUB_ALL_GCC=`component_target_scrub_list_string_gcc`
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =`component_target_prebuilt_scrub_list_string`
 
+# Combine all Pre-built Components Scrub Targets
+BUILD_COMBO_PREBUILT_SCRUB_ALL_GCC =`component_target_prebuilt_scrub_list_string_gcc`
+
 libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
 % if ((device == "am64x") || (device == "am243x")) {
 libs_gcc-scrub: $(BUILD_COMBO_SCRUB_ALL_GCC)
 % }
 libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
+
+libs-prebuilt-scrub_gcc: $(BUILD_COMBO_PREBUILT_SCRUB_ALL_GCC)
 
 % for (component of args.component_list) {
 $(BUILD_COMBO_SCRUB_`component.name`):
@@ -239,7 +264,7 @@ $(BUILD_COMBO_SCRUB_`component.name`):
 % }
 % if ((device == "am64x") || (device == "am243x")) {
 % for (component of args.component_list) {
-%     if (["board","drivers","freertos","nortos"].includes(component.name)) {
+%     if (["board","drivers","freertos","nortos","freertos_fat","mathlib","usbd_cdn_nortos","usbd_cdn_freertos","usbd_tusb_cdc_nortos","usbd_tusb_cdc_freertos","usbd_tusb_dfu_nortos","usbd_tusb_dfu_freertos","usbd_tusb_ncm_nortos","usbd_tusb_ncm_freertos","usbd_tusb_rndis_nortos","usbd_tusb_rndis_freertos","cmsis"].includes(component.name)) {
 $(BUILD_COMBO_SCRUB_GCC_`component.name`):
 	$(MAKE) -C `component.relpath` -f makefile`component.tag`.`args.device`.$(subst `component.name`_,,$(subst _scrub,,$@)) scrub
 
@@ -258,12 +283,17 @@ BUILD_COMBO_EXAMPLE_ALL +=`example.buildTarget`
 %   }
 %  }
 % }
+
 # Various System Example Targets
 % for (example of args.system_example_list) {
 %   if(!example.isSkipTopLevelBuild) {
+%     const relpathParts = example.relpath.split('/');
+%     const end = relpathParts[relpathParts.length - 1];
+%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end)) {
 BUILD_COMBO_EXAMPLE_ALL +=`example.buildTarget`
+%     }
 %   }
-% }
+%  }
 
 % if ((device == "am64x") || (device == "am243x")) {
 BUILD_COMBO_EXAMPLE_ALL_GCC =
@@ -277,6 +307,19 @@ BUILD_COMBO_EXAMPLE_ALL_GCC +=`example.buildTarget`
 %     }
 %   }
 % }
+% }
+
+% if ((device == "am64x") || (device == "am243x")) {
+# Various System GCC Example Targets
+% for (example of args.system_example_list) {
+%   if(!example.isSkipTopLevelBuild) {
+%     const relpathParts = example.relpath.split('/');
+%     const end = relpathParts[relpathParts.length - 1];
+%     if(["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end)) {
+BUILD_COMBO_EXAMPLE_ALL_GCC +=`example.buildTarget`
+%     }
+%   }
+%  }
 % }
 
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL =

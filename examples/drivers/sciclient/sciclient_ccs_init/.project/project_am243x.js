@@ -36,6 +36,14 @@ const libs = {
     ],
 };
 
+const libs_gcc = {
+    common: [
+        "nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "board.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+    ],
+};
+
 const lnkfiles = {
     common: [
         "linker.cmd",
@@ -49,6 +57,8 @@ const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SCICLIENT_CCS_INIT";
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-lp", os: "nortos"},
 ];
 
 function getComponentProperty() {
@@ -73,6 +83,15 @@ function getComponentBuildProperty(buildOption) {
     build_property.libs = libs;
     build_property.syscfgfile = syscfgfile;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
+
+    if(buildOption.cgt.match(/gcc*/) )
+    {
+        build_property.libs = libs_gcc;
+    }
+    else
+    {
+        build_property.libs = libs;
+    }
 
     return build_property;
 }

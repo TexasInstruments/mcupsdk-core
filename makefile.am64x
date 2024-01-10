@@ -598,18 +598,34 @@ BUILD_COMBO_tsn_lldp-freertos = tsn_lldp-freertos_r5f.ti-arm-clang
 
 # Various GCC Component Targets
 BUILD_COMBO_GCC_board = board_r5f.gcc-armv7
+BUILD_COMBO_GCC_cmsis =
 BUILD_COMBO_GCC_drivers = drivers_r5f.gcc-armv7
+BUILD_COMBO_GCC_freertos_fat =
 BUILD_COMBO_GCC_nortos = nortos_r5f.gcc-armv7
 BUILD_COMBO_GCC_freertos = freertos_r5f.gcc-armv7
+BUILD_COMBO_GCC_mathlib =
+BUILD_COMBO_GCC_usbd_cdn_nortos =
+BUILD_COMBO_GCC_usbd_cdn_freertos =
+BUILD_COMBO_GCC_usbd_tusb_cdc_nortos =
+BUILD_COMBO_GCC_usbd_tusb_cdc_freertos =
+BUILD_COMBO_GCC_usbd_tusb_dfu_nortos =
+BUILD_COMBO_GCC_usbd_tusb_dfu_freertos =
+BUILD_COMBO_GCC_usbd_tusb_ncm_nortos =
+BUILD_COMBO_GCC_usbd_tusb_ncm_freertos =
+BUILD_COMBO_GCC_usbd_tusb_rndis_nortos =
+BUILD_COMBO_GCC_usbd_tusb_rndis_freertos =
 
 # Combine all Components
 BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_dhrystone_benchmark) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos_fat) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_pru_ipc) $(BUILD_COMBO_sdl) $(BUILD_COMBO_security) $(BUILD_COMBO_usbd_cdn_nortos) $(BUILD_COMBO_usbd_cdn_freertos) $(BUILD_COMBO_usbd_tusb_cdc_nortos) $(BUILD_COMBO_usbd_tusb_cdc_freertos) $(BUILD_COMBO_usbd_tusb_dfu_nortos) $(BUILD_COMBO_usbd_tusb_dfu_freertos) $(BUILD_COMBO_usbd_tusb_ncm_nortos) $(BUILD_COMBO_usbd_tusb_ncm_freertos) $(BUILD_COMBO_usbd_tusb_rndis_nortos) $(BUILD_COMBO_usbd_tusb_rndis_freertos) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_enet-icssg) $(BUILD_COMBO_lwipif-icssg-freertos) $(BUILD_COMBO_lwipif-icssg-nortos) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_tsn_gptp-freertos) $(BUILD_COMBO_tsn_combase-freertos) $(BUILD_COMBO_tsn_uniconf-freertos) $(BUILD_COMBO_tsn_unibase-freertos) $(BUILD_COMBO_tsn_lldp-freertos)
 
 # Combine all gcc Components
-BUILD_COMBO_ALL_GCC =  $(BUILD_COMBO_GCC_board) $(BUILD_COMBO_GCC_drivers) $(BUILD_COMBO_GCC_nortos) $(BUILD_COMBO_GCC_freertos)
+BUILD_COMBO_ALL_GCC =  $(BUILD_COMBO_GCC_board) $(BUILD_COMBO_GCC_drivers) $(BUILD_COMBO_GCC_freertos_fat) $(BUILD_COMBO_GCC_nortos) $(BUILD_COMBO_GCC_freertos) $(BUILD_COMBO_GCC_mathlib) $(BUILD_COMBO_GCC_usbd_cdn_nortos) $(BUILD_COMBO_GCC_usbd_cdn_freertos) $(BUILD_COMBO_GCC_usbd_tusb_cdc_nortos) $(BUILD_COMBO_GCC_usbd_tusb_cdc_freertos) $(BUILD_COMBO_GCC_usbd_tusb_dfu_nortos) $(BUILD_COMBO_GCC_usbd_tusb_dfu_freertos) $(BUILD_COMBO_GCC_usbd_tusb_ncm_nortos) $(BUILD_COMBO_GCC_usbd_tusb_ncm_freertos) $(BUILD_COMBO_GCC_usbd_tusb_rndis_nortos) $(BUILD_COMBO_GCC_usbd_tusb_rndis_freertos)
 
 # Combine all Pre-built Components
 BUILD_COMBO_PREBUILT_ALL = $(BUILD_COMBO_cmsis)
+
+# Combine all Pre-built Components
+BUILD_COMBO_PREBUILT_ALL_GCC = $(BUILD_COMBO_GCC_cmsis)
 
 # Combine all Private Components
 BUILD_COMBO_PRIVATE_ALL =
@@ -620,6 +636,8 @@ libs_gcc: $(BUILD_COMBO_ALL_GCC)
 libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
 
 libs-private: $(BUILD_COMBO_PRIVATE_ALL)
+
+libs_gcc-prebuilt: $(BUILD_COMBO_PREBUILT_ALL_GCC)
 
 $(BUILD_COMBO_board):
 	$(MAKE) -C source/board -f makefile.am64x.$(subst board_,,$@) all
@@ -736,14 +754,53 @@ $(BUILD_COMBO_tsn_lldp-freertos):
 $(BUILD_COMBO_GCC_board):
 	$(MAKE) -C source/board -f makefile.am64x.$(subst board_,,$@) all
 
+$(BUILD_COMBO_GCC_cmsis):
+	$(MAKE) -C source/cmsis -f makefile.am64x.$(subst cmsis_,,$@) all
+
 $(BUILD_COMBO_GCC_drivers):
 	$(MAKE) -C source/drivers -f makefile.am64x.$(subst drivers_,,$@) all
+
+$(BUILD_COMBO_GCC_freertos_fat):
+	$(MAKE) -C source/fs/freertos_fat -f makefile.am64x.$(subst freertos_fat_,,$@) all
 
 $(BUILD_COMBO_GCC_nortos):
 	$(MAKE) -C source/kernel/nortos -f makefile.am64x.$(subst nortos_,,$@) all
 
 $(BUILD_COMBO_GCC_freertos):
 	$(MAKE) -C source/kernel/freertos -f makefile.am64x.$(subst freertos_,,$@) all
+
+$(BUILD_COMBO_GCC_mathlib):
+	$(MAKE) -C source/mathlib -f makefile.am64x.$(subst mathlib_,,$@) all
+
+$(BUILD_COMBO_GCC_usbd_cdn_nortos):
+	$(MAKE) -C source/usb/cdn -f makefile.nortos.am64x.$(subst usbd_cdn_nortos_,,$@) all
+
+$(BUILD_COMBO_GCC_usbd_cdn_freertos):
+	$(MAKE) -C source/usb/cdn -f makefile.freertos.am64x.$(subst usbd_cdn_freertos_,,$@) all
+
+$(BUILD_COMBO_GCC_usbd_tusb_cdc_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.cdc_nortos.am64x.$(subst usbd_tusb_cdc_nortos_,,$@) all
+
+$(BUILD_COMBO_GCC_usbd_tusb_cdc_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.cdc_freertos.am64x.$(subst usbd_tusb_cdc_freertos_,,$@) all
+
+$(BUILD_COMBO_GCC_usbd_tusb_dfu_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.dfu_nortos.am64x.$(subst usbd_tusb_dfu_nortos_,,$@) all
+
+$(BUILD_COMBO_GCC_usbd_tusb_dfu_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.dfu_freertos.am64x.$(subst usbd_tusb_dfu_freertos_,,$@) all
+
+$(BUILD_COMBO_GCC_usbd_tusb_ncm_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.ncm_nortos.am64x.$(subst usbd_tusb_ncm_nortos_,,$@) all
+
+$(BUILD_COMBO_GCC_usbd_tusb_ncm_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.ncm_freertos.am64x.$(subst usbd_tusb_ncm_freertos_,,$@) all
+
+$(BUILD_COMBO_GCC_usbd_tusb_rndis_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.rndis_nortos.am64x.$(subst usbd_tusb_rndis_nortos_,,$@) all
+
+$(BUILD_COMBO_GCC_usbd_tusb_rndis_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.rndis_freertos.am64x.$(subst usbd_tusb_rndis_freertos_,,$@) all
 
 
 # Various Component Clean Targets
@@ -787,21 +844,39 @@ BUILD_COMBO_CLEAN_tsn_lldp-freertos = tsn_lldp-freertos_r5f.ti-arm-clang_clean
 
 # Various GCC Component Clean Targets
 BUILD_COMBO_CLEAN_GCC_board = board_r5f.gcc-armv7_clean
+BUILD_COMBO_CLEAN_GCC_cmsis =
 BUILD_COMBO_CLEAN_GCC_drivers = drivers_r5f.gcc-armv7_clean
+BUILD_COMBO_CLEAN_GCC_freertos_fat =
 BUILD_COMBO_CLEAN_GCC_nortos = nortos_r5f.gcc-armv7_clean
 BUILD_COMBO_CLEAN_GCC_freertos = freertos_r5f.gcc-armv7_clean
+BUILD_COMBO_CLEAN_GCC_mathlib =
+BUILD_COMBO_CLEAN_GCC_usbd_cdn_nortos =
+BUILD_COMBO_CLEAN_GCC_usbd_cdn_freertos =
+BUILD_COMBO_CLEAN_GCC_usbd_tusb_cdc_nortos =
+BUILD_COMBO_CLEAN_GCC_usbd_tusb_cdc_freertos =
+BUILD_COMBO_CLEAN_GCC_usbd_tusb_dfu_nortos =
+BUILD_COMBO_CLEAN_GCC_usbd_tusb_dfu_freertos =
+BUILD_COMBO_CLEAN_GCC_usbd_tusb_ncm_nortos =
+BUILD_COMBO_CLEAN_GCC_usbd_tusb_ncm_freertos =
+BUILD_COMBO_CLEAN_GCC_usbd_tusb_rndis_nortos =
+BUILD_COMBO_CLEAN_GCC_usbd_tusb_rndis_freertos =
 
 # Combine all Components Clean
 BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_dhrystone_benchmark) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos_fat) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_pru_ipc) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_security) $(BUILD_COMBO_CLEAN_usbd_cdn_nortos) $(BUILD_COMBO_CLEAN_usbd_cdn_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_rndis_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_rndis_freertos) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_enet-icssg) $(BUILD_COMBO_CLEAN_lwipif-icssg-freertos) $(BUILD_COMBO_CLEAN_lwipif-icssg-nortos) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_tsn_gptp-freertos) $(BUILD_COMBO_CLEAN_tsn_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_uniconf-freertos) $(BUILD_COMBO_CLEAN_tsn_unibase-freertos) $(BUILD_COMBO_CLEAN_tsn_lldp-freertos)
 
-BUILD_COMBO_CLEAN_ALL_GCC= $(BUILD_COMBO_CLEAN_GCC_board) $(BUILD_COMBO_CLEAN_GCC_drivers) $(BUILD_COMBO_CLEAN_GCC_nortos) $(BUILD_COMBO_CLEAN_GCC_freertos)
+BUILD_COMBO_CLEAN_ALL_GCC= $(BUILD_COMBO_CLEAN_GCC_board) $(BUILD_COMBO_CLEAN_GCC_drivers) $(BUILD_COMBO_CLEAN_GCC_freertos_fat) $(BUILD_COMBO_CLEAN_GCC_nortos) $(BUILD_COMBO_CLEAN_GCC_freertos) $(BUILD_COMBO_CLEAN_GCC_mathlib) $(BUILD_COMBO_CLEAN_GCC_usbd_cdn_nortos) $(BUILD_COMBO_CLEAN_GCC_usbd_cdn_freertos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_cdc_nortos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_cdc_freertos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_dfu_nortos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_dfu_freertos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_ncm_nortos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_ncm_freertos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_rndis_nortos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_rndis_freertos)
 
 # Combine all Pre-built Components Clean
 BUILD_COMBO_PREBUILT_CLEAN_ALL = $(BUILD_COMBO_CLEAN_cmsis)
 
+# Combine all GCC Pre-built Components Clean
+BUILD_COMBO_PREBUILT_CLEAN_ALL_GCC = $(BUILD_COMBO_CLEAN_GCC_cmsis)
+
 libs-clean: $(BUILD_COMBO_CLEAN_ALL)
 libs_gcc-clean: $(BUILD_COMBO_CLEAN_ALL_GCC)
 libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
+
+libs_gcc-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL_GCC)
 
 $(BUILD_COMBO_CLEAN_board):
 	$(MAKE) -C source/board -f makefile.am64x.$(subst board_,,$(subst _clean,,$@)) clean
@@ -918,14 +993,53 @@ $(BUILD_COMBO_CLEAN_tsn_lldp-freertos):
 $(BUILD_COMBO_CLEAN_GCC_board):
 	$(MAKE) -C source/board -f makefile.am64x.$(subst board_,,$(subst _clean,,$@)) clean
 
+$(BUILD_COMBO_CLEAN_GCC_cmsis):
+	$(MAKE) -C source/cmsis -f makefile.am64x.$(subst cmsis_,,$(subst _clean,,$@)) clean
+
 $(BUILD_COMBO_CLEAN_GCC_drivers):
 	$(MAKE) -C source/drivers -f makefile.am64x.$(subst drivers_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_GCC_freertos_fat):
+	$(MAKE) -C source/fs/freertos_fat -f makefile.am64x.$(subst freertos_fat_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_GCC_nortos):
 	$(MAKE) -C source/kernel/nortos -f makefile.am64x.$(subst nortos_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_GCC_freertos):
 	$(MAKE) -C source/kernel/freertos -f makefile.am64x.$(subst freertos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_GCC_mathlib):
+	$(MAKE) -C source/mathlib -f makefile.am64x.$(subst mathlib_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_GCC_usbd_cdn_nortos):
+	$(MAKE) -C source/usb/cdn -f makefile.nortos.am64x.$(subst usbd_cdn_nortos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_GCC_usbd_cdn_freertos):
+	$(MAKE) -C source/usb/cdn -f makefile.freertos.am64x.$(subst usbd_cdn_freertos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_GCC_usbd_tusb_cdc_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.cdc_nortos.am64x.$(subst usbd_tusb_cdc_nortos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_GCC_usbd_tusb_cdc_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.cdc_freertos.am64x.$(subst usbd_tusb_cdc_freertos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_GCC_usbd_tusb_dfu_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.dfu_nortos.am64x.$(subst usbd_tusb_dfu_nortos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_GCC_usbd_tusb_dfu_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.dfu_freertos.am64x.$(subst usbd_tusb_dfu_freertos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_GCC_usbd_tusb_ncm_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.ncm_nortos.am64x.$(subst usbd_tusb_ncm_nortos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_GCC_usbd_tusb_ncm_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.ncm_freertos.am64x.$(subst usbd_tusb_ncm_freertos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_GCC_usbd_tusb_rndis_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.rndis_nortos.am64x.$(subst usbd_tusb_rndis_nortos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_GCC_usbd_tusb_rndis_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.rndis_freertos.am64x.$(subst usbd_tusb_rndis_freertos_,,$(subst _clean,,$@)) clean
 
 
 # Various Component Scrub Targets
@@ -975,14 +1089,19 @@ BUILD_COMBO_SCRUB_GCC_freertos = freertos_r5f.gcc-armv7_scrub_scrub
 
 # Combine all Components Scrub Targets
 BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_dhrystone_benchmark) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos_fat) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_pru_ipc) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_security) $(BUILD_COMBO_SCRUB_usbd_cdn_nortos) $(BUILD_COMBO_SCRUB_usbd_cdn_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_rndis_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_rndis_freertos) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_enet-icssg) $(BUILD_COMBO_SCRUB_lwipif-icssg-freertos) $(BUILD_COMBO_SCRUB_lwipif-icssg-nortos) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_tsn_gptp-freertos) $(BUILD_COMBO_SCRUB_tsn_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_uniconf-freertos) $(BUILD_COMBO_SCRUB_tsn_unibase-freertos) $(BUILD_COMBO_SCRUB_tsn_lldp-freertos)
-BUILD_COMBO_SCRUB_ALL_GCC= $(BUILD_COMBO_SCRUB_GCC_board) $(BUILD_COMBO_SCRUB_GCC_drivers) $(BUILD_COMBO_SCRUB_GCC_nortos) $(BUILD_COMBO_SCRUB_GCC_freertos)
+BUILD_COMBO_SCRUB_ALL_GCC= $(BUILD_COMBO_SCRUB_GCC_board) $(BUILD_COMBO_SCRUB_GCC_drivers) $(BUILD_COMBO_SCRUB_GCC_freertos_fat) $(BUILD_COMBO_SCRUB_GCC_nortos) $(BUILD_COMBO_SCRUB_GCC_freertos) $(BUILD_COMBO_SCRUB_GCC_mathlib) $(BUILD_COMBO_SCRUB_GCC_usbd_cdn_nortos) $(BUILD_COMBO_SCRUB_GCC_usbd_cdn_freertos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_cdc_nortos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_cdc_freertos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_dfu_nortos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_dfu_freertos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_ncm_nortos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_ncm_freertos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_rndis_nortos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_rndis_freertos)
 
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL = $(BUILD_COMBO_SCRUB_cmsis)
 
+# Combine all Pre-built Components Scrub Targets
+BUILD_COMBO_PREBUILT_SCRUB_ALL_GCC = $(BUILD_COMBO_SCRUB_GCC_cmsis)
+
 libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
 libs_gcc-scrub: $(BUILD_COMBO_SCRUB_ALL_GCC)
 libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
+
+libs-prebuilt-scrub_gcc: $(BUILD_COMBO_PREBUILT_SCRUB_ALL_GCC)
 
 $(BUILD_COMBO_SCRUB_board):
 	$(MAKE) -C source/board -f makefile.am64x.$(subst board_,,$(subst _scrub,,$@)) scrub
@@ -1098,14 +1217,53 @@ $(BUILD_COMBO_SCRUB_tsn_lldp-freertos):
 $(BUILD_COMBO_SCRUB_GCC_board):
 	$(MAKE) -C source/board -f makefile.am64x.$(subst board_,,$(subst _scrub,,$@)) scrub
 
+$(BUILD_COMBO_SCRUB_GCC_cmsis):
+	$(MAKE) -C source/cmsis -f makefile.am64x.$(subst cmsis_,,$(subst _scrub,,$@)) scrub
+
 $(BUILD_COMBO_SCRUB_GCC_drivers):
 	$(MAKE) -C source/drivers -f makefile.am64x.$(subst drivers_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_GCC_freertos_fat):
+	$(MAKE) -C source/fs/freertos_fat -f makefile.am64x.$(subst freertos_fat_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_GCC_nortos):
 	$(MAKE) -C source/kernel/nortos -f makefile.am64x.$(subst nortos_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_GCC_freertos):
 	$(MAKE) -C source/kernel/freertos -f makefile.am64x.$(subst freertos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_GCC_mathlib):
+	$(MAKE) -C source/mathlib -f makefile.am64x.$(subst mathlib_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_GCC_usbd_cdn_nortos):
+	$(MAKE) -C source/usb/cdn -f makefile.nortos.am64x.$(subst usbd_cdn_nortos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_GCC_usbd_cdn_freertos):
+	$(MAKE) -C source/usb/cdn -f makefile.freertos.am64x.$(subst usbd_cdn_freertos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_GCC_usbd_tusb_cdc_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.cdc_nortos.am64x.$(subst usbd_tusb_cdc_nortos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_GCC_usbd_tusb_cdc_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.cdc_freertos.am64x.$(subst usbd_tusb_cdc_freertos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_GCC_usbd_tusb_dfu_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.dfu_nortos.am64x.$(subst usbd_tusb_dfu_nortos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_GCC_usbd_tusb_dfu_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.dfu_freertos.am64x.$(subst usbd_tusb_dfu_freertos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_GCC_usbd_tusb_ncm_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.ncm_nortos.am64x.$(subst usbd_tusb_ncm_nortos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_GCC_usbd_tusb_ncm_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.ncm_freertos.am64x.$(subst usbd_tusb_ncm_freertos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_GCC_usbd_tusb_rndis_nortos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.rndis_nortos.am64x.$(subst usbd_tusb_rndis_nortos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_GCC_usbd_tusb_rndis_freertos):
+	$(MAKE) -C source/usb/tinyusb -f makefile.rndis_freertos.am64x.$(subst usbd_tusb_rndis_freertos_,,$(subst _scrub,,$@)) scrub
 
 
 BUILD_COMBO_EXAMPLE_ALL =
@@ -1479,6 +1637,7 @@ BUILD_COMBO_EXAMPLE_ALL += ecc_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += ecc_example_am64x-sk_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += vtm_example_am64x-evm_m4fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += vtm_example_am64x-evm_r5fss0-0_nortos_ti-arm-clang
+
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += benchmark_demo_am64x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += ddr_ecc_test_mcu_esm_am64x-evm_system_nortos
@@ -1519,6 +1678,8 @@ BUILD_COMBO_EXAMPLE_ALL_GCC += posix_demo_am64x-evm_r5fss0-0_freertos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += posix_demo_am64x-sk_r5fss0-0_freertos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += task_switch_am64x-evm_r5fss0-0_freertos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += task_switch_am64x-sk_r5fss0-0_freertos_gcc-armv7
+
+# Various System GCC Example Targets
 
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
 # Various Private Example Targets

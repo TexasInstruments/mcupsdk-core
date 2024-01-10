@@ -35,6 +35,7 @@
 #include <kernel/dpl/AddrTranslateP.h>
 #include <drivers/soc.h>
 #include <drivers/ipc_rpmsg.h>
+#include <inttypes.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
@@ -145,14 +146,14 @@ void ipcTask(void *args)
         else
         {
             ClockP_usleep(100);
-            sscanf (msgBuf, "ALIVE %d", &count);
+            sscanf (msgBuf, "ALIVE %" PRIu32, &count);
 
             if ((count % 10000) == 0)
             {
                 DebugP_log ("R5F: R5 <--> M4 is communicating --> %d\r\n", count/10000);
             }
 
-            snprintf(msgBuf, MAX_MSG_SIZE-1, "ALIVE %d", count);
+            snprintf(msgBuf, MAX_MSG_SIZE-1, "ALIVE %" PRIu32, count);
             msgBuf[MAX_MSG_SIZE-1] = 0;
             msgSize = strlen(msgBuf) + 1; /* count the terminating char as well */
             status = RPMessage_send(
@@ -232,7 +233,7 @@ void reset_isolation_main(void *args)
         uint16_t msgSize;
         char msgBuf[MAX_MSG_SIZE];
 
-        snprintf(msgBuf, MAX_MSG_SIZE-1, "ALIVE %d", 0);
+        snprintf(msgBuf, MAX_MSG_SIZE-1, "ALIVE %" PRIu32, (uint32_t)0);
         msgBuf[MAX_MSG_SIZE-1] = 0;
         msgSize = strlen(msgBuf) + 1; /* count the terminating char as well */
 

@@ -76,7 +76,7 @@
                 -lfreertos.am243x.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am243x.r5f.ti-arm-clang.debug.lib
                 -lboard.am243x.r5f.ti-arm-clang.debug.lib
-                -lcmsis.am243x.r5f.ti-arm-clang.release.lib
+                -lcmsis.am243x.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "

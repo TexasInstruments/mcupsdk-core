@@ -44,6 +44,16 @@ const libs_nortos_r5f = {
     ],
 };
 
+const libs_nortos_r5f_gcc = {
+    common: [
+        "nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "board.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "usbd_cdn_nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "usbd_tusb_cdc_nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+    ],
+};
+
 const libdirs_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
@@ -68,11 +78,19 @@ const templates_nortos_r5f =
 [
 ];
 
+const templates_nortos_r5f_gcc =
+[
+];
+
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos",isPartOfSystemProject: true},
     { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos",isPartOfSystemProject: true},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos",isPartOfSystemProject: true},
     { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos",isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm", os: "nortos",isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-1", cgt: "gcc-armv7", board: "am243x-evm", os: "nortos",isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-lp", os: "nortos",isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-1", cgt: "gcc-armv7", board: "am243x-lp", os: "nortos",isPartOfSystemProject: true},
 ];
 
 const systemProject = [
@@ -94,6 +112,26 @@ const systemProject = [
         projects: [
 			{ device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos"},
 			{ device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos"},
+        ],
+    },
+    {
+        name: "cdc_echo_nortos",
+        tag: "nortos_gcc",
+        skipProjectSpec: false,
+        board: "am243x-evm",
+        projects: [
+			{ device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm", os: "nortos"},
+			{ device: device, cpu: "r5fss0-1", cgt: "gcc-armv7", board: "am243x-evm", os: "nortos"},
+        ],
+    },
+    {
+        name: "cdc_echo_nortos",
+        tag: "nortos_gcc",
+        skipProjectSpec: false,
+        board: "am243x-lp",
+        projects: [
+			{ device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-lp", os: "nortos"},
+			{ device: device, cpu: "r5fss0-1", cgt: "gcc-armv7", board: "am243x-lp", os: "nortos"},
         ],
     },
 ]
@@ -123,8 +161,16 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.defines = defines;
         build_property.includes = includes_nortos_r5f;
-        build_property.libs = libs_nortos_r5f;
-        build_property.templates = templates_nortos_r5f;
+        if(buildOption.cgt.match(/gcc*/) )
+        {
+            build_property.libs = libs_nortos_r5f_gcc;
+            build_property.templates = templates_nortos_r5f_gcc;
+        }
+        else
+        {
+            build_property.libs = libs_nortos_r5f;
+            build_property.templates = templates_nortos_r5f;
+        }
     }
 
     return build_property;

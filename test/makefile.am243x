@@ -396,6 +396,9 @@ BUILD_COMBO_ALL_GCC =
 # Combine all Pre-built Components
 BUILD_COMBO_PREBUILT_ALL =
 
+# Combine all Pre-built Components
+BUILD_COMBO_PREBUILT_ALL_GCC =
+
 # Combine all Private Components
 BUILD_COMBO_PRIVATE_ALL =
 
@@ -405,6 +408,8 @@ libs_gcc: $(BUILD_COMBO_ALL_GCC)
 libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
 
 libs-private: $(BUILD_COMBO_PRIVATE_ALL)
+
+libs_gcc-prebuilt: $(BUILD_COMBO_PREBUILT_ALL_GCC)
 
 $(BUILD_COMBO_unity):
 	$(MAKE) -C unity -f makefile.am243x.$(subst unity_,,$@) all
@@ -428,9 +433,14 @@ BUILD_COMBO_CLEAN_ALL_GCC=
 # Combine all Pre-built Components Clean
 BUILD_COMBO_PREBUILT_CLEAN_ALL =
 
+# Combine all GCC Pre-built Components Clean
+BUILD_COMBO_PREBUILT_CLEAN_ALL_GCC =
+
 libs-clean: $(BUILD_COMBO_CLEAN_ALL)
 libs_gcc-clean: $(BUILD_COMBO_CLEAN_ALL_GCC)
 libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
+
+libs_gcc-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL_GCC)
 
 $(BUILD_COMBO_CLEAN_unity):
 	$(MAKE) -C unity -f makefile.am243x.$(subst unity_,,$(subst _clean,,$@)) clean
@@ -453,9 +463,14 @@ BUILD_COMBO_SCRUB_ALL_GCC=
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
 
+# Combine all Pre-built Components Scrub Targets
+BUILD_COMBO_PREBUILT_SCRUB_ALL_GCC =
+
 libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
 libs_gcc-scrub: $(BUILD_COMBO_SCRUB_ALL_GCC)
 libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
+
+libs-prebuilt-scrub_gcc: $(BUILD_COMBO_PREBUILT_SCRUB_ALL_GCC)
 
 $(BUILD_COMBO_SCRUB_unity):
 	$(MAKE) -C unity -f makefile.am243x.$(subst unity_,,$(subst _scrub,,$@)) scrub
@@ -769,6 +784,7 @@ BUILD_COMBO_EXAMPLE_ALL += test_rsa_signing_verification_am243x-evm_r5fss0-0_nor
 BUILD_COMBO_EXAMPLE_ALL += test_rsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang
+
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += stog_func_test_r5f_am243x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_firewall_am243x-evm_system_freertos_nortos
@@ -794,6 +810,8 @@ BUILD_COMBO_EXAMPLE_ALL += test_syscfg_combo_1_am243x-lp_system_freertos_nortos
 
 BUILD_COMBO_EXAMPLE_ALL_GCC =
 # Various Gcc Example Targets
+
+# Various System GCC Example Targets
 
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
 # Various Private Example Targets

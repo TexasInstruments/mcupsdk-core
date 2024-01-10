@@ -50,7 +50,7 @@
  * Data Bit Rate 5Mbps.
  * Buffer mode is used for both TX/RX to send/receive message in message RAM.
  *
- * This example runs for APP_MCAN_MSG_LOOP_COUNT iterations and in each 
+ * This example runs for APP_MCAN_MSG_LOOP_COUNT iterations and in each
  * iteration the received message id and the data is compared with the transmitted
  * one. After APP_MCAN_MSG_LOOP_COUNT iterations the example is completed.
  *
