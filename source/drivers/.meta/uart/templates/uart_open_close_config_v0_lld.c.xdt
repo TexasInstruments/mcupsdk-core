@@ -10,17 +10,19 @@
  * UART
  */
 #include <drivers/uart/v0/lld/uart_lld.h>
-UARTLLD_Object gUartObject[CONFIG_UART_NUM_INSTANCES];
-UARTLLD_Handle gUartHandle[CONFIG_UART_NUM_INSTANCES];
+UARTLLD_Object gUartObject[CONFIG_UART_NUM_LLD_INSTANCES];
+UARTLLD_Handle gUartHandleLld[CONFIG_UART_NUM_LLD_INSTANCES];
 
 /* UART Driver handles */
-extern UARTLLD_InitObject gUartInitObject[CONFIG_UART_NUM_INSTANCES];
+extern UARTLLD_InitObject gUartInitObject[CONFIG_UART_NUM_LLD_INSTANCES];
 
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
-    % if(instance.intrEnable == "DMA") {
-    %    uartUdmaInstances.push(module.getInstanceConfig(instance).udmaDriver);
-    % }
+    % if(instance.sdkInfra == "LLD") {
+        % if(instance.intrEnable == "DMA") {
+        %uartUdmaInstances.push(module.getInstanceConfig(instance).udmaDriver);
+        % }
+    %}
 % }
 
 /* UART Driver handles */
@@ -61,7 +63,7 @@ static uint8_t gUart`i`UdmaTxRingMem[UART_UDMA_TEST_RING_MEM_SIZE] __attribute__
 static uint8_t gUart`i`UdmaTxHpdMem[UART_UDMA_TEST_DESC_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
 static uint8_t gUart`i`UdmaRxHpdMem[UART_UDMA_TEST_DESC_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
 
-UART_UdmaChConfig gUartDmaChCfg[CONFIG_UART_NUM_DMA_INSTANCES] =
+UART_UdmaChConfig gUartDmaChCfg[CONFIG_UART_NUM_DMA_LLD_INSTANCES] =
 {{
     .drvHandle        = &gUdmaDrvObj,
     .txChHandle       = &gUart`i`UdmaTxObj,
@@ -81,7 +83,7 @@ UART_UdmaChConfig gUartDmaChCfg[CONFIG_UART_NUM_DMA_INSTANCES] =
 %}
 %}
 
-void Drivers_uartOpen(void)
+void Drivers_uartOpenLld(void)
 {
     int32_t status = UART_STATUS_SUCCESS;
 
@@ -89,16 +91,18 @@ void Drivers_uartOpen(void)
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
      % let instNameCamelCase = common.camelSentence(instance.$name);
-    gUartHandle[`instance.$name.toUpperCase()`]             = &gUartObject[`instance.$name.toUpperCase()`];
-    gUartHandle[`instance.$name.toUpperCase()`]->state      = UART_STATE_RESET;
-    gUartHandle[`instance.$name.toUpperCase()`]->baseAddr   = `config.baseAddr`;
-    gUartHandle[`instance.$name.toUpperCase()`]->hUartInit = &gUartInitObject[`instance.$name.toUpperCase()`];
+     % if(instance.sdkInfra == "LLD") {
+    gUartHandleLld[`instance.$name.toUpperCase()`]             = &gUartObject[`instance.$name.toUpperCase()`];
+    gUartHandleLld[`instance.$name.toUpperCase()`]->state      = UART_STATE_RESET;
+    gUartHandleLld[`instance.$name.toUpperCase()`]->baseAddr   = `config.baseAddr`;
+    gUartHandleLld[`instance.$name.toUpperCase()`]->hUartInit = &gUartInitObject[`instance.$name.toUpperCase()`];
 
 % if(config.intrEnable == "DMA") {
-    status = UART_lld_initDma(gUartHandle[`instance.$name.toUpperCase()`]);
+    status = UART_lld_initDma(gUartHandleLld[`instance.$name.toUpperCase()`]);
 %}
 %else{
-    status += UART_lld_init(gUartHandle[`instance.$name.toUpperCase()`]);
+    status += UART_lld_init(gUartHandleLld[`instance.$name.toUpperCase()`]);
+%}
 %}
 % }
 
@@ -107,19 +111,21 @@ void Drivers_uartOpen(void)
 
 }
 
-void Drivers_uartClose(void)
+void Drivers_uartCloseLld(void)
 {
     int32_t status = UART_STATUS_SUCCESS;
 
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
+    % if(instance.sdkInfra == "LLD") {
 %if(config.intrEnable == "DMA") {
-    status = UART_lld_deInitDma(gUartHandle[`instance.$name.toUpperCase()`]);
+    status = UART_lld_deInitDma(gUartHandleLld[`instance.$name.toUpperCase()`]);
 %}
 %else{
-    status += UART_lld_deInit(gUartHandle[`instance.$name.toUpperCase()`]);
+    status += UART_lld_deInit(gUartHandleLld[`instance.$name.toUpperCase()`]);
 %}
+% }
 % }
 
     DebugP_assert(status == UART_STATUS_SUCCESS);

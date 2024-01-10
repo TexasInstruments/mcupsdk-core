@@ -73,7 +73,7 @@ let uart_module = {
             driver_deinit: "/drivers/uart/templates/uart_deinit.c.xdt",
         },
         "/drivers/system/system_config.h.xdt": {
-            driver_config: "/drivers/uart/templates/uart.h.xdt",
+            driver_config: "/drivers/uart/templates/uart_v1.h.xdt",
         },
         "/drivers/system/drivers_open_close.c.xdt": {
             driver_open_close_config: "/drivers/uart/templates/uart_sci_open_close_config.c.xdt",
@@ -225,7 +225,7 @@ let uart_module = {
             description: "Transfer Mode",
             longDescription:`
 - **Polled Mode:** Driver blocks on the UART status registers for operation completion
-- **Interrupt Mode:** Driver registers the UART interrupts and Read/Write operations executed in the ISR 
+- **Interrupt Mode:** Driver registers the UART interrupts and Read/Write operations executed in the ISR
 - **User Managed Interrupt:** driver interrupt registration is skipped and user need to manage the interrupt
 - **DMA Mode:** Driver uses the EDMA fot the UART Read/Write operations`,
         },

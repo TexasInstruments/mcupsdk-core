@@ -11,10 +11,10 @@
  */
 #include <drivers/uart.h>
 
-extern UARTLLD_Object gUartObject[CONFIG_UART_NUM_INSTANCES];
-extern UARTLLD_Handle gUartHandle[CONFIG_UART_NUM_INSTANCES];
-extern UARTLLD_InitObject gUartInitObject[CONFIG_UART_NUM_INSTANCES];
-extern UART_EdmaChConfig gUartDmaChCfg[CONFIG_UART_NUM_INSTANCES];
+extern UARTLLD_Object gUartObject[CONFIG_UART_NUM_LLD_INSTANCES];
+extern UARTLLD_Handle gUartHandleLld[CONFIG_UART_NUM_LLD_INSTANCES];
+extern UARTLLD_InitObject gUartInitObject[CONFIG_UART_NUM_LLD_INSTANCES];
+extern UART_EdmaChConfig gUartDmaChCfg[CONFIG_UART_NUM_LLD_INSTANCES];
 
 /*
  * UART Driver Advance Parameters - to be used only when Driver_open() and
@@ -23,5 +23,5 @@ extern UART_EdmaChConfig gUartDmaChCfg[CONFIG_UART_NUM_INSTANCES];
 /* UART Driver open/close - can be used by application when Driver_open() and
  * Driver_close() is not used directly and app wants to control the various driver
  * open/close sequences */
-void Drivers_uartOpen(void);
-void Drivers_uartClose(void);
+void Drivers_uartOpenLld(void);
+void Drivers_uartCloseLld(void);

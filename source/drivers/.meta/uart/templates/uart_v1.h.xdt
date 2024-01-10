@@ -3,10 +3,8 @@
     let uartDmaInstanceCount = 0;
     for(let i=0; i < module.$instances.length; i++) {
         let instance = module.$instances[i];
-        if(instance.sdkInfra == "LLD") {
-            if(instance.intrEnable == "DMA") {
-                uartDmaInstanceCount++;
-            }
+        if(instance.intrEnable == "DMA") {
+            uartDmaInstanceCount++;
         }
     }
 %%}
@@ -15,15 +13,11 @@
  * UART
  */
 #include <drivers/uart.h>
-% let lldInstances = 0;
+
 /* UART Instance Macros */
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
 #define `instance.$name.toUpperCase()` (`i`U)
-% if(instance.sdkInfra == "LLD") {
-    % lldInstances++;
-%}
 % }
-
-#define CONFIG_UART_NUM_LLD_INSTANCES (`lldInstances`U)
-#define CONFIG_UART_NUM_DMA_LLD_INSTANCES (`uartDmaInstanceCount`U)
+#define CONFIG_UART_NUM_INSTANCES (`module.$instances.length`U)
+#define CONFIG_UART_NUM_DMA_INSTANCES (`uartDmaInstanceCount`U)

@@ -84,7 +84,7 @@ void uart_echo_dma_lld(void *args)
     strncpy(trans.buf,"This is uart echo test blocking mode\r\nReceives 8 characters then echo's back. Please input..\r\n", APP_UART_BUFSIZE);
     trans.count = strlen(trans.buf);
     CacheP_wb((void *)trans.buf, trans.count, CacheP_TYPE_ALL);
-    transferOK = UART_lld_writeDma(gUartHandle[CONFIG_UART_CONSOLE], trans.buf, trans.count, NULL);
+    transferOK = UART_lld_writeDma(gUartHandleLld[CONFIG_UART_CONSOLE], trans.buf, trans.count, NULL);
 
     while(try_lock_mutex(gUartObject[CONFIG_UART_CONSOLE].writeTransferMutex) == MUTEX_ARM_LOCKED);
     APP_UART_ASSERT_ON_FAILURE(transferOK, trans);
@@ -94,7 +94,7 @@ void uart_echo_dma_lld(void *args)
     gNumBytesRead = 0U;
     trans.buf   = &gUartReceiveBuffer[0U];
     trans.count = APP_UART_RECEIVE_BUFSIZE;
-    transferOK = UART_lld_readDma(gUartHandle[CONFIG_UART_CONSOLE], trans.buf, trans.count, NULL);
+    transferOK = UART_lld_readDma(gUartHandleLld[CONFIG_UART_CONSOLE], trans.buf, trans.count, NULL);
 
     while(try_lock_mutex(gUartObject[CONFIG_UART_CONSOLE].readTransferMutex) == MUTEX_ARM_LOCKED);
     APP_UART_ASSERT_ON_FAILURE(transferOK, trans);
@@ -103,7 +103,7 @@ void uart_echo_dma_lld(void *args)
     gNumBytesWritten = 0U;
     trans.buf   = &gUartReceiveBuffer[0U];
     trans.count = APP_UART_RECEIVE_BUFSIZE;
-    transferOK = UART_lld_writeDma(gUartHandle[CONFIG_UART_CONSOLE], trans.buf, trans.count, NULL);
+    transferOK = UART_lld_writeDma(gUartHandleLld[CONFIG_UART_CONSOLE], trans.buf, trans.count, NULL);
 
     while(try_lock_mutex(gUartObject[CONFIG_UART_CONSOLE].writeTransferMutex) == MUTEX_ARM_LOCKED);
     APP_UART_ASSERT_ON_FAILURE(transferOK, trans);
@@ -114,7 +114,7 @@ void uart_echo_dma_lld(void *args)
     strncpy(trans.buf, "\r\nAll tests have passed!!\r\n", APP_UART_BUFSIZE);
     trans.count = strlen(trans.buf);
     CacheP_wb((void *)trans.buf, trans.count, CacheP_TYPE_ALL);
-    transferOK = UART_lld_writeDma(gUartHandle[CONFIG_UART_CONSOLE], trans.buf, trans.count, NULL);
+    transferOK = UART_lld_writeDma(gUartHandleLld[CONFIG_UART_CONSOLE], trans.buf, trans.count, NULL);
 
     while(try_lock_mutex(gUartObject[CONFIG_UART_CONSOLE].writeTransferMutex) == MUTEX_ARM_LOCKED);
     APP_UART_ASSERT_ON_FAILURE(transferOK, trans);

@@ -74,21 +74,21 @@ void uart_echo_polling_lld(void *args)
     trans.buf   = &gUartBuffer[0U];
     strncpy(trans.buf,"This is uart echo test polling mode\r\nReceives 8 characters then echo's back. Please input..\r\n", APP_UART_BUFSIZE);
     trans.count = strlen(trans.buf);
-    transferOK = UART_lld_write(gUartHandle[CONFIG_UART_CONSOLE], trans.buf, trans.count, trans.timeout, NULL);
+    transferOK = UART_lld_write(gUartHandleLld[CONFIG_UART_CONSOLE], trans.buf, trans.count, trans.timeout, NULL);
     APP_UART_ASSERT_ON_FAILURE(transferOK, trans);
 
     /* Read 8 chars */
     gNumBytesRead = 0U;
     trans.buf   = &gUartReceiveBuffer[0U];
     trans.count = APP_UART_RECEIVE_BUFSIZE;
-    transferOK = UART_lld_read(gUartHandle[CONFIG_UART_CONSOLE], trans.buf, trans.count, trans.timeout, NULL);
+    transferOK = UART_lld_read(gUartHandleLld[CONFIG_UART_CONSOLE], trans.buf, trans.count, trans.timeout, NULL);
     APP_UART_ASSERT_ON_FAILURE(transferOK, trans);
 
     /* Echo chars entered */
     gNumBytesWritten = 0U;
     trans.buf   = &gUartReceiveBuffer[0U];
     trans.count = APP_UART_RECEIVE_BUFSIZE;
-    transferOK = UART_lld_write(gUartHandle[CONFIG_UART_CONSOLE], trans.buf, trans.count, trans.timeout, NULL);
+    transferOK = UART_lld_write(gUartHandleLld[CONFIG_UART_CONSOLE], trans.buf, trans.count, trans.timeout, NULL);
     APP_UART_ASSERT_ON_FAILURE(transferOK, trans);
 
     /* Send exit string */
@@ -96,7 +96,7 @@ void uart_echo_polling_lld(void *args)
     trans.buf   = &gUartBuffer[0U];
     strncpy(trans.buf, "\r\nAll tests have passed!!\r\n", APP_UART_BUFSIZE);
     trans.count = strlen(trans.buf);
-    transferOK = UART_lld_write(gUartHandle[CONFIG_UART_CONSOLE], trans.buf, trans.count, trans.timeout, NULL);
+    transferOK = UART_lld_write(gUartHandleLld[CONFIG_UART_CONSOLE], trans.buf, trans.count, trans.timeout, NULL);
     APP_UART_ASSERT_ON_FAILURE(transferOK, trans);
 
     DebugP_log("All tests have passed!!\r\n");

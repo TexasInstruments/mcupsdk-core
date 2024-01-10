@@ -6,8 +6,10 @@
     let module = system.modules['/drivers/uart/uart'];
     for(let i=0; i < module.$instances.length; i++) {
         let instance = module.$instances[i];
-        if(instance.intrEnable == "DMA") {
-            uartEdmaInstances.push(module.getInstanceConfig(instance).edmaDriver);
+        if(instance.sdkInfra == "HLD") {
+            if(instance.intrEnable == "DMA") {
+                uartEdmaInstances.push(module.getInstanceConfig(instance).edmaDriver);
+            }
         }
     }
 %%}
@@ -18,18 +20,22 @@
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
-    % if(config.readMode == "CALLBACK" && config.readCallbackFxn != "NULL") {
-/* UART Read Callback */
-void `config.readCallbackFxn`(UART_Handle handle, UART_Transaction *transaction);
-    % }
+    % if(instance.sdkInfra == "HLD") {
+        % if(config.readMode == "CALLBACK" && config.readCallbackFxn != "NULL") {
+    /* UART Read Callback */
+    void `config.readCallbackFxn`(UART_Handle handle, UART_Transaction *transaction);
+        % }
+    %}
 % }
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
-    % if(config.writeMode == "CALLBACK" && config.writeCallbackFxn != "NULL") {
-/* UART Write Callback */
-void `config.writeCallbackFxn`(UART_Handle handle, UART_Transaction *transaction);
-    % }
+    % if(instance.sdkInfra == "HLD") {
+        % if(config.writeMode == "CALLBACK" && config.writeCallbackFxn != "NULL") {
+    /* UART Write Callback */
+    void `config.writeCallbackFxn`(UART_Handle handle, UART_Transaction *transaction);
+        % }
+    %}
 % }
 
 /* UART Driver handles */
@@ -45,17 +51,16 @@ UART_EdmaChConfig gUartEdmaChConfig[CONFIG_UART_NUM_DMA_INSTANCES] =
 {
     % let j = 0;
     %  for(let i=0; i < module.$instances.length; i++) {
-        {
         %let instance = module.$instances[i];
-        %if(instance.intrEnable == "DMA") {
-            .drvHandle        = (void *)&gEdmaConfig[`j++`],
-            .edmaRxChId       = `instance.uartRxConfigXbar.instance`,
-            .edmaTxChId       = `instance.uartTxConfigXbar.instance`,
+        % if(instance.sdkInfra == "HLD") {
+            %if(instance.intrEnable == "DMA") {
+            {
+                .drvHandle        = (void *)&gEdmaConfig[`j++`],
+                .edmaRxChId       = `instance.uartRxConfigXbar.instance`,
+                .edmaTxChId       = `instance.uartTxConfigXbar.instance`,
+            },
+            %}
         %}
-        %else {
-            NULL,
-        %}
-        },
     %}
 };
 %}
@@ -76,12 +81,14 @@ UART_DmaChConfig gUartDmaChConfig[CONFIG_UART_NUM_INSTANCES] =
     % let j = 0;
     % for(let i = 0; i < module.$instances.length; i++) {
         % let instance = module.$instances[i];
+        % if(instance.sdkInfra == "HLD") {
            %if(instance.intrEnable == "DMA") {
                 &gUartEdmaChConfig[`j++`],
             % }
             %else {
                 NULL,
             %}
+        %}
     % }
 };
 
@@ -91,64 +98,66 @@ UART_Params gUartParams[CONFIG_UART_NUM_INSTANCES] =
 % let dmaInstanceIndex = 0;
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
-    % let config = module.getInstanceConfig(instance);
-    {
-        .baudRate           = `config.baudRate`,
-        .dataLength         = UART_LEN_`config.dataLength`,
-        .stopBits           = UART_STOPBITS_`config.stopBits`,
-        .parityType         = UART_PARITY_`config.parityType`,
-        .readMode           = UART_TRANSFER_MODE_`config.readMode`,
-        .readReturnMode     = UART_READ_RETURN_MODE_`config.readReturnMode`,
-        .writeMode          = UART_TRANSFER_MODE_`config.writeMode`,
-        % if(config.readMode == "CALLBACK" && config.readCallbackFxn != "NULL") {
-        .readCallbackFxn    = `config.readCallbackFxn`,
-        % } else {
-        .readCallbackFxn    = NULL,
-        % }
-        % if(config.writeMode == "CALLBACK" && config.writeCallbackFxn != "NULL") {
-        .writeCallbackFxn   = `config.writeCallbackFxn`,
-        % } else {
-        .writeCallbackFxn   = NULL,
-        % }
-        .hwFlowControl      = `config.hwFlowControl.toString(10).toUpperCase()`,
-        .hwFlowControlThr   = UART_RXTRIGLVL_`config.hwFlowControlThr`,
-        % if(config.intrEnable == "DISABLE") {
-        .transferMode       = UART_CONFIG_MODE_POLLED,
-        .skipIntrReg        = FALSE,
-        % }
-        % if(config.intrEnable == "ENABLE") {
-        .transferMode       = UART_CONFIG_MODE_INTERRUPT,
-        .skipIntrReg         = FALSE,
-        % }
-        % if(config.intrEnable == "USER_INTR") {
-        .transferMode       = UART_CONFIG_MODE_USER_INTR,
-        .skipIntrReg         = TRUE,
-        % }
-        % if(config.intrEnable == "DMA") {
-        .transferMode       = UART_CONFIG_MODE_DMA,
-        .skipIntrReg         = FALSE,
-        % }
-        %if(config.intrEnable == "DMA") {
-        .uartDmaIndex = `dmaInstanceIndex`,
-        %dmaInstanceIndex++;
-        %}
-        %else {
-        .uartDmaIndex = -1,
-        %}
-        .intrNum            = `config.intrNum`U,
-        .intrPriority       = `config.intrPriority`U,
-        .operMode           = UART_OPER_MODE_`config.operMode`,
-        %if(config.intrEnable == "DMA") {
-        .rxTrigLvl          = UART_RXTRIGLVL_1,
-        .txTrigLvl          = UART_TXTRIGLVL_1,
-        %}
-        %else {
-        .rxTrigLvl          = UART_RXTRIGLVL_`config.rxTrigLvl`,
-        .txTrigLvl          = UART_TXTRIGLVL_`config.txTrigLvl`,
-        %}
-        .rxEvtNum           = 0U,
-        .txEvtNum           = 0U,
-    },
+    % if(instance.sdkInfra == "HLD") {
+        % let config = module.getInstanceConfig(instance);
+        {
+            .baudRate           = `config.baudRate`,
+            .dataLength         = UART_LEN_`config.dataLength`,
+            .stopBits           = UART_STOPBITS_`config.stopBits`,
+            .parityType         = UART_PARITY_`config.parityType`,
+            .readMode           = UART_TRANSFER_MODE_`config.readMode`,
+            .readReturnMode     = UART_READ_RETURN_MODE_`config.readReturnMode`,
+            .writeMode          = UART_TRANSFER_MODE_`config.writeMode`,
+            % if(config.readMode == "CALLBACK" && config.readCallbackFxn != "NULL") {
+            .readCallbackFxn    = `config.readCallbackFxn`,
+            % } else {
+            .readCallbackFxn    = NULL,
+            % }
+            % if(config.writeMode == "CALLBACK" && config.writeCallbackFxn != "NULL") {
+            .writeCallbackFxn   = `config.writeCallbackFxn`,
+            % } else {
+            .writeCallbackFxn   = NULL,
+            % }
+            .hwFlowControl      = `config.hwFlowControl.toString(10).toUpperCase()`,
+            .hwFlowControlThr   = UART_RXTRIGLVL_`config.hwFlowControlThr`,
+            % if(config.intrEnable == "DISABLE") {
+            .transferMode       = UART_CONFIG_MODE_POLLED,
+            .skipIntrReg        = FALSE,
+            % }
+            % if(config.intrEnable == "ENABLE") {
+            .transferMode       = UART_CONFIG_MODE_INTERRUPT,
+            .skipIntrReg         = FALSE,
+            % }
+            % if(config.intrEnable == "USER_INTR") {
+            .transferMode       = UART_CONFIG_MODE_USER_INTR,
+            .skipIntrReg         = TRUE,
+            % }
+            % if(config.intrEnable == "DMA") {
+            .transferMode       = UART_CONFIG_MODE_DMA,
+            .skipIntrReg         = FALSE,
+            % }
+            %if(config.intrEnable == "DMA") {
+            .uartDmaIndex = `dmaInstanceIndex`,
+            %dmaInstanceIndex++;
+            %}
+            %else {
+            .uartDmaIndex = -1,
+            %}
+            .intrNum            = `config.intrNum`U,
+            .intrPriority       = `config.intrPriority`U,
+            .operMode           = UART_OPER_MODE_`config.operMode`,
+            %if(config.intrEnable == "DMA") {
+            .rxTrigLvl          = UART_RXTRIGLVL_1,
+            .txTrigLvl          = UART_TXTRIGLVL_1,
+            %}
+            %else {
+            .rxTrigLvl          = UART_RXTRIGLVL_`config.rxTrigLvl`,
+            .txTrigLvl          = UART_TXTRIGLVL_`config.txTrigLvl`,
+            %}
+            .rxEvtNum           = 0U,
+            .txEvtNum           = 0U,
+        },
+    %}
 % }
 };
 
