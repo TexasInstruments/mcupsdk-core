@@ -16,11 +16,11 @@ const files = {
         /* TinyUSB NCM class driver (usb/tinyusb/tinyusb-stack/class) */
         "ecm_rndis_device.c",
 	    "rndis_reports.c",
-		/* TinyUSB networking lib */ 
+		/* TinyUSB networking lib */
 		"dhserver.c",
 		"dnserver.c",
 
-		/* LWIP SRC code compiled lwip repo*/ 
+		/* LWIP SRC code compiled lwip repo*/
 		"altcp.c",
 		"altcp_alloc.c",
 		"altcp_tcp.c",
@@ -121,6 +121,7 @@ const cflags = {
 
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: device, cpu: "r5f", cgt: "gcc-armv7"},
 ];
 
 function getComponentProperty() {
@@ -133,7 +134,7 @@ function getComponentProperty() {
     property.isSkipTopLevelBuild = false;
     property.buildOptionCombos = buildOptionCombos;
     property.tag = "rndis_nortos";
-    /* Ignore this library for cpp build */ 
+    /* Ignore this library for cpp build */
     property.ignore_cpp = true ;
 
     return property;
@@ -146,7 +147,9 @@ function getComponentBuildProperty(buildOption) {
     build_property.filedirs = filedirs;
     build_property.includes = includes;
     build_property.defines = defines;
-    build_property.cflags = cflags;
+    if(buildOption.cgt.match(/ti-arm-clang*/)) {
+        build_property.cflags = cflags;
+    }
 
     return build_property;
 }

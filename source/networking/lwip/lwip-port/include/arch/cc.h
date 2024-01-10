@@ -48,6 +48,7 @@ extern "C"
 #include <sys/select.h>
 
 /* Define byte order of the system */
+#undef BYTE_ORDER
 #define BYTE_ORDER LITTLE_ENDIAN
 
 /* Use lwip provided errors as ti compiler is too granular*/

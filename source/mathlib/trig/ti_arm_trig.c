@@ -75,10 +75,7 @@ TRIG_DATA_SECTION float gAtanConsts[8] = { 4.17232513427734375e-7f,
                                            5.117702484130859375e-2f };
 
 
-
-
-
-TRIG_TEXT_SECTION float ti_arm_sin(float angleRad)
+inline TRIG_TEXT_SECTION float ti_arm_sin(float angleRad)
 {
 
     float trigApprox;
@@ -109,8 +106,7 @@ TRIG_TEXT_SECTION float ti_arm_sin(float angleRad)
 
 }
 
-
-TRIG_TEXT_SECTION float ti_arm_cos(float angleRad)
+inline TRIG_TEXT_SECTION float ti_arm_cos(float angleRad)
 {
     uint8_t sign = 0;
     float a;
@@ -149,7 +145,7 @@ TRIG_TEXT_SECTION float ti_arm_cos(float angleRad)
     return trigApprox;
 }
 
-TRIG_TEXT_SECTION void ti_arm_sincos(float angleRad, float *retValues)
+inline TRIG_TEXT_SECTION void ti_arm_sincos(float angleRad, float *retValues)
 {
     float a2;
     float a4;
@@ -196,7 +192,7 @@ TRIG_TEXT_SECTION void ti_arm_sincos(float angleRad, float *retValues)
 }
 
 
-TRIG_TEXT_SECTION float ti_arm_asin(float x)
+inline TRIG_TEXT_SECTION float ti_arm_asin(float x)
 {
     float asinApprox;
     float sqrtx;
@@ -237,7 +233,7 @@ TRIG_TEXT_SECTION float ti_arm_asin(float x)
     return asinApprox;
 }
 
-TRIG_TEXT_SECTION float ti_arm_acos(float x)
+inline TRIG_TEXT_SECTION float ti_arm_acos(float x)
 {
     float acosApprox;
     float sqrtx;
@@ -279,8 +275,7 @@ TRIG_TEXT_SECTION float ti_arm_acos(float x)
     return acosApprox;
 }
 
-
-TRIG_TEXT_SECTION float ti_arm_atan(float x)
+inline TRIG_TEXT_SECTION float ti_arm_atan(float x)
 {
     uint8_t sign = 0;
     uint8_t complement = 0;
@@ -322,7 +317,7 @@ TRIG_TEXT_SECTION float ti_arm_atan(float x)
     return atanApprox;
 }
 
-TRIG_TEXT_SECTION float ti_arm_atan2(float y, float x)
+inline TRIG_TEXT_SECTION float ti_arm_atan2(float y, float x)
 {
     float ratio;
     float k1 = gPiConsts[0];
