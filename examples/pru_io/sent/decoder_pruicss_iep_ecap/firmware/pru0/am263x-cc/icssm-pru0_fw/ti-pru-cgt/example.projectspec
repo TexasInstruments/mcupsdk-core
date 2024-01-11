@@ -53,7 +53,7 @@
             -o=firmware_binary.h
         "
         postBuildStep="
-            $(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/firmware/pru0/decoder_pru0_hexpru.cmd sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out; ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.b00 sent_decoder_pru0_bin.h SentDecoderFirmwarePru0 4; move sent_decoder_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/example/firmware/sent_decoder_pru0_bin.h ;
+            $(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru  -o sent_decoder_pru0_bin.h sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out; move sent_decoder_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/example/firmware/sent_decoder_pru0_bin.h; 
         "
 
         description="A Sent Decoder Using Pruicss Iep Ecap Pru0 Fw FW project">
