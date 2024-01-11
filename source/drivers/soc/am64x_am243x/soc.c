@@ -557,12 +557,12 @@ void SOC_allowEpwmTzReg(uint32_t epwmInstance, uint32_t enable)
     uint32_t regOffest = CSL_MAIN_CTRL_MMR_CFG0_EPWM0_CTRL_PROXY + (CSL_MAIN_CTRL_MMR_CFG0_EPWM1_CTRL_PROXY - CSL_MAIN_CTRL_MMR_CFG0_EPWM0_CTRL_PROXY)*epwmInstance;
     if(TRUE == enable)
     {
-        CSL_REG32_WR(regOffest,
+        CSL_REG32_WR(CSL_CTRL_MMR0_CFG0_BASE + regOffest,
                 ((CSL_REG32_RD(CSL_CTRL_MMR0_CFG0_BASE + regOffest) & 0x710U) | (0x1U << CSL_MAIN_CTRL_MMR_CFG0_EPWM0_CTRL_PROXY_EPWM0_CTRL_EALLOW_PROXY_SHIFT)));
     }
     else
     {
-        CSL_REG32_WR(regOffest,
+        CSL_REG32_WR(CSL_CTRL_MMR0_CFG0_BASE + regOffest,
                 ((CSL_REG32_RD(CSL_CTRL_MMR0_CFG0_BASE + regOffest) & 0x710U) & ~(0x1U << CSL_MAIN_CTRL_MMR_CFG0_EPWM0_CTRL_PROXY_EPWM0_CTRL_EALLOW_PROXY_SHIFT)));
     }
     /* Lock CTRL_MMR0 registers */

@@ -18,6 +18,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 -# EPWM
    -# \subpage EXAMPLES_DRIVERS_EPWM_DUTY_CYCLE
    -# \subpage EXAMPLES_DRIVERS_EPWM_DUTY_CYCLE_SYNC
+   -# \subpage EXAMPLES_DRIVERS_EPWM_TRIP_ZONE
 -# EQEP
    -# \subpage EXAMPLES_DRIVERS_EQEP_CAPTURE
 -# FSI

@@ -71,6 +71,7 @@ const example_file_list = [
     "examples/drivers/ecap/ecap_epwm_loopback/.project/project.js",
     "examples/drivers/epwm/epwm_duty_cycle/.project/project.js",
     "examples/drivers/epwm/epwm_duty_cycle_sync/.project/project.js",
+    "examples/drivers/epwm/epwm_trip_zone/.project/project.js",
     "examples/drivers/eqep/eqep_capture/.project/project.js",
     "examples/drivers/fsi/fsi_loopback_interrupt/.project/project.js",
     "examples/drivers/fsi/fsi_loopback_polling/.project/project.js",
