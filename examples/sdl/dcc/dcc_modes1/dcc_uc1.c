@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021 Texas Instruments Incorporated
+ *  Copyright (c) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -745,8 +745,15 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 
 static void SDL_DCCAppDoneIntrISR(void *arg)
 {
-    SDL_DCC_clearIntr(gCurDccInst, SDL_DCC_INTERRUPT_DONE);
-    doneIsrFlag  = 1U;
+    SDL_DCC_Status dccStatus;
+
+    SDL_DCC_getStatus(gCurDccInst, &dccStatus);
+
+    if (dccStatus.doneIntr == TRUE)
+    {
+        SDL_DCC_clearIntr(gCurDccInst, SDL_DCC_INTERRUPT_DONE);
+        doneIsrFlag  = 1U;
+    }
 }
 
 static int32_t SDL_DCCAppRegisterIsr(uint32_t uc, pSDL_DPL_HwipHandle *handle)
