@@ -38,3 +38,4 @@ SysConfig can be used to configure things mentioned below:
 ## Example
 
 - \ref EXAMPLES_SENT_DECODER
+- \ref EXAMPLES_SENT_DECODER_PRUICSS_IEP_ECAP

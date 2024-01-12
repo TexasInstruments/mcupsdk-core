@@ -1,4 +1,4 @@
-; Copyright (C) 2023 Texas Instruments Incorporated - http://www.ti.com/
+; Copyright (C) 2024 Texas Instruments Incorporated - http://www.ti.com/
 ;
 ; Redistribution and use in source and binary forms, with or without
 ; modification, are permitted provided that the following conditions
@@ -42,39 +42,39 @@
 
 ;************************************************************************************
 ;   /*Tick period of channel(for reference only)*/
-;   chx_ticktime                .set   3000
+;   chx_ticktime                .set   500
 ;
 ;   Below two parameters can be modified to support different tick period(x(0,7))
 ;   /*Minimum duration(taking 20% minimun deviation) of sync pulse for a given tick period sensor[(tp*0.8)*56]*/
-;   chx_syncpulse_min_dur       .set   2400*56
+;   chx_syncpulse_min_dur       .set   400*56
 ;   /*Maximum duration(taking 20% maximum deviation)  of sync pulse for a given tick period sensor[(tp*1.2)*56]*/
-;   chx_syncpulse_max_dur       .set   3600*56
+;   chx_syncpulse_max_dur       .set   600*56
 ;
 ;************************************************************************************
 
-ch0_ticktime                .set   3000
-ch0_syncpulse_min_dur       .set   2400*56
-ch0_syncpulse_max_dur       .set   3600*56
+ch0_ticktime                .set   500
+ch0_syncpulse_min_dur       .set   400*56
+ch0_syncpulse_max_dur       .set   600*56
 
-ch1_ticktime                .set   3000
-ch1_syncpulse_min_dur       .set   2400*56
-ch1_syncpulse_max_dur       .set   3600*56
+ch1_ticktime                .set   500
+ch1_syncpulse_min_dur       .set   400*56
+ch1_syncpulse_max_dur       .set   600*56
 
-ch2_ticktime                .set   3000
-ch2_syncpulse_min_dur       .set   2400*56
-ch2_syncpulse_max_dur       .set   3600*56
+ch2_ticktime                .set   500
+ch2_syncpulse_min_dur       .set   400*56
+ch2_syncpulse_max_dur       .set   600*56
 
-ch3_ticktime                .set   3000
-ch3_syncpulse_min_dur       .set   2400*56
-ch3_syncpulse_max_dur       .set   3600*56
+ch3_ticktime                .set   500
+ch3_syncpulse_min_dur       .set   400*56
+ch3_syncpulse_max_dur       .set   600*56
 
-ch4_ticktime                .set   3000
-ch4_syncpulse_min_dur       .set   2400*56
-ch4_syncpulse_max_dur       .set   3600*56
+ch4_ticktime                .set   500
+ch4_syncpulse_min_dur       .set   400*56
+ch4_syncpulse_max_dur       .set   600*56
 
-ch5_ticktime                .set   3000
-ch5_syncpulse_min_dur       .set   2400*56
-ch5_syncpulse_max_dur       .set   3600*56
+ch5_ticktime                .set   500
+ch5_syncpulse_min_dur       .set   400*56
+ch5_syncpulse_max_dur       .set   600*56
 
 ; Import the Chip Support Library Register Address defines
     .cdecls C,  NOLIST
@@ -514,10 +514,10 @@ m_ch_data_out .macro ch_reg, ch_data_base, ch_intr_byte
 ;
 ;   Macro: m_update_lut
 ;
-;  Used for Updating LUT for decoding Nibbles used by FN_BINARY_SEARCH
+;   Used for updating lut for decoding nibbles used by FN_BINARY_SEARCH
 ;
 ;   PEAK cycles:
-;       15 cycle
+;       15 cycles
 ;
 ;   Invokes:
 ;       None
@@ -559,7 +559,7 @@ m_update_lut .macro increment
 ;  Used for multiplication
 ;
 ;   PEAK cycles:
-;       4 cycle
+;       4 cycles
 ;
 ;   Invokes:
 ;       None
@@ -594,7 +594,7 @@ m_multiply .macro op1, op2
 ;  Calculates tick period for given sync pulse length
 ;
 ;   PEAK cycles:
-;       4 cycle
+;       4 cycles
 ;
 ;   Invokes:
 ;       None
@@ -641,12 +641,12 @@ iep:
     m_set_iep_count_reg1       	0, TEMP_REG1, 0xffffffff
 
 	;Enable the reset of iep counter with compare 0
-	ldi32   TEMP_REG1, 0x00000003
+	ldi     TEMP_REG1,  0x03
 	sbco    &TEMP_REG1, ICSS_IEP_CONST, ICSS_IEP_CMP_CFG_REG, 4
-	ldi32	TEMP_REG1, 0xFFFFFFFF
+	fill	&TEMP_REG1, 0x4
 	sbco    &TEMP_REG1, ICSS_IEP_CONST, ICSS_IEP_CMP0_REG, 4
 	;clear the compare status
-	ldi32   TEMP_REG1, 0x00000001
+	ldi     TEMP_REG1, 0x01
 	sbco    &TEMP_REG1, ICSS_IEP_CONST, ICSS_IEP_CMP_STATUS_REG, 4
 
 	;set cap 0 to 5 in continouous mode with External capture enable
@@ -729,7 +729,7 @@ CH0_CRC:
     m_ch_crc CH0_BUF, CH0_STATE, CH0_CRCDATA_SPAD_BASE, CH0_CRC4_RES, CH0_CRC_ERROR
 CH0_DATA_OUT:
     m_ch_data_out  CH0_REG, CH0_DATA_BASE, CH0_INTR_BYTE
-;/*TO_DO: Add error handling mechnaism for each label below*/
+;/*TODO: Add error handling mechnaism for each label below*/
 CH0_CRC_ERROR:
 ch0_data_error:
 ERROR_CH0:
@@ -758,7 +758,7 @@ CH1_CRC:
     m_ch_crc CH1_BUF, CH1_STATE, CH1_CRCDATA_SPAD_BASE, CH1_CRC4_RES, CH1_CRC_ERROR
 CH1_DATA_OUT:
     m_ch_data_out  CH1_REG, CH1_DATA_BASE, CH1_INTR_BYTE
-;/*TO_DO: Add error handling mechnaism for each label below*/
+;/*TODO: Add error handling mechnaism for each label below*/
 CH1_CRC_ERROR:
 ch1_data_error:
 ERROR_CH1:
@@ -786,7 +786,7 @@ CH2_CRC:
     m_ch_crc CH2_BUF, CH2_STATE, CH2_CRCDATA_SPAD_BASE, CH2_CRC4_RES, CH2_CRC_ERROR
 CH2_DATA_OUT:
     m_ch_data_out  CH2_REG, CH2_DATA_BASE, CH2_INTR_BYTE
-;/*TO_DO: Add error handling mechnaism for each label below*/
+;/*TODO: Add error handling mechnaism for each label below*/
 CH2_CRC_ERROR:
 ch2_data_error:
 ERROR_CH2:
@@ -815,7 +815,7 @@ CH3_CRC:
     m_ch_crc CH3_BUF, CH3_STATE, CH3_CRCDATA_SPAD_BASE, CH3_CRC4_RES, CH3_CRC_ERROR
 CH3_DATA_OUT:
     m_ch_data_out  CH3_REG, CH3_DATA_BASE, CH3_INTR_BYTE
-;/*TO_DO: Add error handling mechnaism for each label below*/
+;/*TODO: Add error handling mechnaism for each label below*/
 CH3_CRC_ERROR:
 ch3_data_error:
 ERROR_CH3:
@@ -844,7 +844,7 @@ CH4_CRC:
     m_ch_crc CH4_BUF, CH4_STATE, CH4_CRCDATA_SPAD_BASE, CH4_CRC4_RES, CH4_CRC_ERROR
 CH4_DATA_OUT:
     m_ch_data_out  CH4_REG, CH4_DATA_BASE, CH4_INTR_BYTE
-;/*TO_DO: Add error handling mechnaism for each label below*/
+;/*TODO: Add error handling mechnaism for each label below*/
 CH4_CRC_ERROR:
 ch4_data_error:
 ERROR_CH4:
@@ -874,7 +874,7 @@ CH5_CRC:
     m_ch_crc CH5_BUF, CH5_STATE, CH5_CRCDATA_SPAD_BASE, CH5_CRC4_RES, CH5_CRC_ERROR
 CH5_DATA_OUT:
     m_ch_data_out  CH5_REG, CH5_DATA_BASE, CH5_INTR_BYTE
-;/*TO_DO: Add error handling mechnaism for each label below*/
+;/*TODO: Add error handling mechnaism for each label below*/
 CH5_CRC_ERROR:
 ch5_data_error:
 ERROR_CH5:

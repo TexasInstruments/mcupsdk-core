@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -130,8 +130,8 @@ void pruicss_load_run_fw(void)
 
     /*Load firmware. Set buffer = write to Pru memory */
     if(PRUICSS_writeMemory(gPruIcss0Handle, PRUICSS_IRAM_PRU(PRUICSS_PRU0), 0,
-                                     (uint32_t *) SentDecoderFirmwarePru0,
-                                        sizeof(SentDecoderFirmwarePru0)))
+                                     (uint32_t *) SentDecoderFirmwarePru_0,
+                                        sizeof(SentDecoderFirmwarePru_0)))
     {
             /*Run firmware */
         PRUICSS_enableCore(gPruIcss0Handle, PRUICSS_PRU0);

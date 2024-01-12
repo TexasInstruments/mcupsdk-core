@@ -52,3 +52,11 @@ Firmware is loaded and PRU1 starts running, it waits for PRU0 to send data using
 \imageStyle{sent10.png,width:80%}
 \image html sent10.png "Send data to R5F"
 
+##  SENT DECODER DESIGN USING PRUICSS ECAP
+
+### R5F Configuration
+Each Sent channel is mapped to GPIO Signals , GPIO Interrupt signals generated on fall edge of sent signal and are given as input to (GPIO XBAR) then OUPUT of (GPIO XBAR) is given as input to (TIME SYNC XBAR) & ICSS IEP ECAP CAP uses output of (TIME SYNC XBAR) to get time stamp , IEP ECAP registers are updated on fall edge of sent signal
+
+### PRU0 Firmware Design (Decoding) 
+Once the firmware is loaded in PRU0, ECAP ,PRU 0 starts reading the time stamps of all the channels from capture registers, Once the time stamps are updated & it follows the state machine which is same as above PRU1 implementation.
+\image html sent_using_pruicss_iep_ecap.png "State Machine for Decoder Using PRUICSS IEP ECAP"
