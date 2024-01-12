@@ -102,7 +102,6 @@ void lin_external_main(void)
     LIN_setMaximumBaudRate(APP_LIN_BASE_ADDR, 100000000U);
 
     /* Set Mask ID so TX/RX match will always happen */
-    LIN_setTxMask(APP_LIN_BASE_ADDR, 0xFFU);
     LIN_setRxMask(APP_LIN_BASE_ADDR, 0xFFU);
 
     /* Enable transfer of data to the shift registers  */
@@ -132,6 +131,9 @@ void lin_external_main(void)
         txID = (LIN_ID + i);
         txID = LIN_generateParityID(txID);
 
+        /* Set the tx Mask value to txID*/
+        LIN_setTxMask(APP_LIN_BASE_ADDR, txID);
+
         /*
          * Set the frame length (number of bytes to be transmitted)
          */
@@ -149,6 +151,9 @@ void lin_external_main(void)
          * data in the transmit buffers.
          */
         LIN_setIDByte(APP_LIN_BASE_ADDR, txID);
+
+        /* Poll for Tx completion interrupt */
+        while(!( (LIN_getInterruptStatus(APP_LIN_BASE_ADDR)) & LIN_FLAG_TXEMPTY));
 
         DebugP_log("[LIN] : New Data Sent = %x\r\n", txData[i-1]);
     }
