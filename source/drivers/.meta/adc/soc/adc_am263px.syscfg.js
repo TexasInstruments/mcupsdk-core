@@ -119,6 +119,21 @@ let ADC_Channel = [
     { name: "ADC_CH_ADCIN5_ADCIN4", displayName: "differential, ADCIN5 and ADCIN4" },
 
 ]
+let ADC_R_Channel = [
+	{ name: "ADC_CH_ADCIN0", displayName: "single-ended, ADC_R_IN0" },
+	{ name: "ADC_CH_ADCIN1", displayName: "single-ended, ADC_R_IN1" },
+	{ name: "ADC_CH_ADCIN2", displayName: "single-ended, ADC_R_IN2" },
+	{ name: "ADC_CH_ADCIN3", displayName: "single-ended, ADC_R_IN3" },
+	{ name: "ADC_CH_ADCIN4", displayName: "single-ended, CAL Channel 2" },
+	{ name: "ADC_CH_ADCIN5", displayName: "single-ended, CAL Channel 3" },
+	{ name: "ADC_CH_ADCIN0_ADCIN1", displayName: "differential, ADC_R_IN0 and ADC_R_IN1" },
+	{ name: "ADC_CH_ADCIN1_ADCIN0", displayName: "differential, ADC_R_IN1 and ADC_R_IN0" },
+	{ name: "ADC_CH_ADCIN2_ADCIN3", displayName: "differential, ADC_R_IN2 and ADC_R_IN3" },
+	{ name: "ADC_CH_ADCIN3_ADCIN2", displayName: "differential, ADC_R_IN3 and ADC_R_IN2" },
+	{ name: "ADC_CH_ADCIN4_ADCIN5", displayName: "differential, CAL Channel 2 and CAL Channel 3" },
+    { name: "ADC_CH_ADCIN5_ADCIN4", displayName: "differential, CAL Channel 3 and CAL Channel 2" },
+
+]
 let ADC_PulseMode = [
 	{ name: "ADC_PULSE_END_OF_ACQ_WIN", displayName: "Occurs at the end of the acquisition window" },
 	{ name: "ADC_PULSE_END_OF_CONV", displayName: "Occurs at the end of the conversion" },
@@ -276,6 +291,7 @@ exports = {
 	ADC_SignalMode: ADC_SignalMode,
 	ADC_Trigger: ADC_Trigger,
 	ADC_Channel: ADC_Channel,
+	ADC_R_Channel: ADC_R_Channel,
 	ADC_PulseMode: ADC_PulseMode,
 	ADC_IntNumber: ADC_IntNumber,
 	ADC_PPBNumber: ADC_PPBNumber,

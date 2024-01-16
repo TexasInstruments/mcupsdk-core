@@ -364,6 +364,33 @@ adcRModule.templates = {
                 driver_open: "/drivers/adc/templates/adc_r_open.c.xdt",
             },
         };
+
 adcRModule.validate = onValidate;
+
+for(let soci = 0; soci < 16 ; soci ++)
+{
+    let configName  = "soc" + soci.toString() + "Channel"
+
+    for (let config1 of adcRModule.config)
+    {
+        if (config1.name == "GROUP_SOC")
+        {
+            for (let config2 of config1.config)
+            {
+                if (config2.name == "GROUP_SOC"+soci.toString())
+                {
+                    for (let config3 of config2.config)
+                    {
+                        if (config3.name == configName)
+                        {
+                            config3.options = device_peripheral.ADC_R_Channel;
+                            config3.default = device_peripheral.ADC_R_Channel[0].name;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 exports = adcRModule;
