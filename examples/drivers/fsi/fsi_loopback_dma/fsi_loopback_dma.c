@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -311,6 +311,9 @@ void *fsi_loopback_dma_main(void *args)
     DebugP_assert(edmaBaseAddr != 0);
 
     /* Free channel */
+    EDMA_freeChannelRegion(edmaBaseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+        dmaCh0, EDMA_TRIG_MODE_EVENT, NULL, EDMA_TEST_EVT_QUEUE_NO);
+
     EDMA_freeChannelRegion(edmaBaseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
         dmaCh1, EDMA_TRIG_MODE_EVENT, tccAlloc0, EDMA_TEST_EVT_QUEUE_NO);
     status = EDMA_freeTcc(gEdmaHandle[0], &tccAlloc0);
