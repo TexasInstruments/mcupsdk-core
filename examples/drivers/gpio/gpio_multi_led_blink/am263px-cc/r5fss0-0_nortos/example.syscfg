@@ -47,9 +47,10 @@ led1.$name = "CONFIG_LED0";
 
 led2.$name = "CONFIG_LED1";
 
-gpio1.$name           = "CONFIG_GPIO0";
-led1.peripheralDriver = gpio1;
-gpio1.pinDir          = "OUTPUT";
+gpio1.$name                = "CONFIG_GPIO0";
+led1.peripheralDriver      = gpio1;
+gpio1.pinDir               = "OUTPUT";
+gpio1.GPIO.gpioPin.$assign = "EPWM11_B";
 
 gpio2.$name                = "CONFIG_GPIO1";
 led2.peripheralDriver      = gpio2;
@@ -60,6 +61,7 @@ debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -276,6 +278,5 @@ section12.output_section[0].alignment = 0;
  * re-solve from scratch.
  */
 gpio1.GPIO.$suggestSolution             = "GPIO";
-gpio1.GPIO.gpioPin.$suggestSolution     = "OSPI0_CSn0";
 gpio2.GPIO.$suggestSolution             = "GPIO";
 debug_log.uartLog.UART.$suggestSolution = "UART0";
