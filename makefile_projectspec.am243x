@@ -324,6 +324,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_am243x-lp_r5fss0-0_no
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_am243x-lp_r5fss0-0_freertos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_interrupt_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_low_latency_interrupt_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
@@ -336,6 +338,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_low_latency_polling_am243
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_low_latency_polling_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += udma_adc_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += udma_adc_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += udma_adc_read_am243x-evm_r5fss0-0_freertos_gcc-armv7_build
@@ -434,34 +438,64 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mathlib_benchmark_am243x-evm_r5fss0
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mathlib_benchmark_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_sha_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_sha_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_sha_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sa2ul_rng_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sa2ul_rng_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sa2ul_rng_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sa2ul_rng_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dfu_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dfu_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dfu_nortos_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
@@ -1575,6 +1609,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec all
+
  uart_echo_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -1610,6 +1650,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_build:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec all
 
  udma_adc_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/udma/udma_adc_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
@@ -1905,11 +1951,23 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
  crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
 
  crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1917,11 +1975,23 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
  crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
 
  crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1929,11 +1999,23 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
  crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
 
  crypto_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1941,11 +2023,23 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  crypto_sha_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ crypto_sha_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ crypto_sha_am243x-lp_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
  crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
 
  crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1953,11 +2047,23 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
  crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
 
  crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1965,11 +2071,23 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
  sa2ul_rng_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  sa2ul_rng_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ sa2ul_rng_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ sa2ul_rng_am243x-lp_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
 
  rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1977,17 +2095,35 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
  rsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  rsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ rsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ rsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
  ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
 
  dfu_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/usb/device/dfu/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -2766,6 +2902,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_am243x-lp_r5fss0-0_no
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_interrupt_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_low_latency_interrupt_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2778,6 +2916,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_low_latency_polling_am243
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_low_latency_polling_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += udma_adc_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += udma_adc_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += udma_adc_read_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
@@ -2876,34 +3016,64 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mathlib_benchmark_am243x-evm_r5fss0
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mathlib_benchmark_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_sha_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_sha_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_sha_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sa2ul_rng_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sa2ul_rng_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sa2ul_rng_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sa2ul_rng_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dfu_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dfu_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dfu_nortos_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
@@ -4017,6 +4187,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec clean
+
  uart_echo_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -4052,6 +4228,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec clean
 
  udma_adc_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/udma/udma_adc_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
@@ -4347,11 +4529,23 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
  crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
 
  crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -4359,11 +4553,23 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
  crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
 
  crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -4371,11 +4577,23 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
  crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
 
  crypto_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -4383,11 +4601,23 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  crypto_sha_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ crypto_sha_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ crypto_sha_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
  crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
 
  crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -4395,11 +4625,23 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
  crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
 
  crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -4407,11 +4649,23 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
  sa2ul_rng_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  sa2ul_rng_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ sa2ul_rng_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ sa2ul_rng_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
 
  rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -4419,17 +4673,35 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
  rsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  rsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ rsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ rsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
  ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
 
  dfu_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/usb/device/dfu/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -5208,6 +5480,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_am243x-lp_r5fss0-0_n
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_am243x-lp_r5fss0-0_freertos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_interrupt_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_low_latency_interrupt_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
@@ -5220,6 +5494,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_low_latency_polling_am24
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_low_latency_polling_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += udma_adc_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += udma_adc_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += udma_adc_read_am243x-evm_r5fss0-0_freertos_gcc-armv7_export
@@ -5318,34 +5594,64 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mathlib_benchmark_am243x-evm_r5fss
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mathlib_benchmark_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_sha_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_sha_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_sha_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sa2ul_rng_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sa2ul_rng_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sa2ul_rng_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sa2ul_rng_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dfu_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dfu_nortos_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dfu_nortos_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
@@ -6459,6 +6765,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec export
+
  uart_echo_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -6494,6 +6806,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_export:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec export
 
  udma_adc_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/udma/udma_adc_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
@@ -6789,11 +7107,23 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
  crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
 
  crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -6801,11 +7131,23 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
  crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
 
  crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -6813,11 +7155,23 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
  crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
 
  crypto_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -6825,11 +7179,23 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  crypto_sha_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ crypto_sha_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ crypto_sha_am243x-lp_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
  crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
 
  crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -6837,11 +7203,23 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
  crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
 
  crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -6849,11 +7227,23 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
  sa2ul_rng_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  sa2ul_rng_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ sa2ul_rng_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ sa2ul_rng_am243x-lp_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
 
  rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -6861,17 +7251,35 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
  rsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  rsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ rsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ rsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
  ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
 
  dfu_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/usb/device/dfu/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -7675,6 +8083,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_low_latency_interrupt/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -7687,6 +8097,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_low_latency_polling/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_adc_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_adc_read/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_adc_read/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec [export all clean]
@@ -7785,34 +8197,64 @@ help:
 	@echo  $(MAKE) -s -C examples/mathlib/benchmark/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/usb/device/dfu/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/usb/device/dfu/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/usb/device/dfu/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]

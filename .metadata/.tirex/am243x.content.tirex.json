@@ -13180,6 +13180,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Uart Echo Dma Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "uart_echo_dma_lld",
+        "location": "../../examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_dma_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Dma Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "uart_echo_dma_lld",
+        "location": "../../examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_dma_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Uart Echo Interrupt Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo_interrupt_lld",
         "location": "../../examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -13554,6 +13620,72 @@
         ],
         "compiler": [
             "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_polling_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Polling Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "uart_echo_polling_lld",
+        "location": "../../examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_polling_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Uart Echo Polling Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "uart_echo_polling_lld",
+        "location": "../../examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
         ],
         "subCategories": [
             "drivers",
@@ -18016,6 +18148,74 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Crypto Aes Cbc 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_cbc_256",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_aes",
+            "crypto_aes_cbc_256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Aes Cbc 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_cbc_256",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_aes",
+            "crypto_aes_cbc_256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Crypto Aes Cbc 128 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_aes_cbc_128",
         "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -18061,6 +18261,74 @@
         ],
         "compiler": [
             "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_aes",
+            "crypto_aes_cbc_128",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Aes Cbc 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_cbc_128",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_aes",
+            "crypto_aes_cbc_128",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Aes Cbc 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_cbc_128",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
         ],
         "subCategories": [
             "security",
@@ -18152,6 +18420,74 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Crypto Aes Ecb 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_ecb_256",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_aes",
+            "crypto_aes_ecb_256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Aes Ecb 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_ecb_256",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_aes",
+            "crypto_aes_ecb_256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Crypto Aes Ecb 128 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_aes_ecb_128",
         "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -18197,6 +18533,74 @@
         ],
         "compiler": [
             "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_aes",
+            "crypto_aes_ecb_128",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Aes Ecb 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_ecb_128",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_aes",
+            "crypto_aes_ecb_128",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Aes Ecb 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_ecb_128",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
         ],
         "subCategories": [
             "security",
@@ -18288,6 +18692,74 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Crypto Aes Cmac 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_cmac_128",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_aes",
+            "crypto_aes_cmac_128",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Aes Cmac 128 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_cmac_128",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_aes",
+            "crypto_aes_cmac_128",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Crypto Aes Cmac 256 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_aes_cmac_256",
         "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -18333,6 +18805,74 @@
         ],
         "compiler": [
             "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_aes",
+            "crypto_aes_cmac_256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Aes Cmac 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_cmac_256",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_aes",
+            "crypto_aes_cmac_256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Aes Cmac 256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_cmac_256",
+        "location": "../../examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
         ],
         "subCategories": [
             "security",
@@ -18422,6 +18962,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Crypto Sha Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_sha",
+        "location": "../../examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_sha",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Sha Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_sha",
+        "location": "../../examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_sha",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Crypto Hmac Sha1 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_hmac_sha1",
         "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -18467,6 +19073,74 @@
         ],
         "compiler": [
             "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_hmac_sha",
+            "crypto_hmac_sha1",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Hmac Sha1 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_hmac_sha1",
+        "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_hmac_sha",
+            "crypto_hmac_sha1",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Hmac Sha1 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_hmac_sha1",
+        "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
         ],
         "subCategories": [
             "security",
@@ -18558,6 +19232,74 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Crypto Hmac Sha256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_hmac_sha256",
+        "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_hmac_sha",
+            "crypto_hmac_sha256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Hmac Sha256 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_hmac_sha256",
+        "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_hmac_sha",
+            "crypto_hmac_sha256",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Crypto Hmac Sha512 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_hmac_sha512",
         "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -18603,6 +19345,74 @@
         ],
         "compiler": [
             "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_hmac_sha",
+            "crypto_hmac_sha512",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Hmac Sha512 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_hmac_sha512",
+        "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_hmac_sha",
+            "crypto_hmac_sha512",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Hmac Sha512 Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_hmac_sha512",
+        "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
         ],
         "subCategories": [
             "security",
@@ -18694,6 +19504,74 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Crypto Hmac Sha256 Multishot Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_hmac_sha256_multishot",
+        "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_hmac_sha",
+            "crypto_hmac_sha256_multishot",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Crypto Hmac Sha256 Multishot Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_hmac_sha256_multishot",
+        "location": "../../examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_hmac_sha",
+            "crypto_hmac_sha256_multishot",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Sa2ul Rng Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sa2ul_rng",
         "location": "../../examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -18738,6 +19616,72 @@
         ],
         "compiler": [
             "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_rng",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sa2ul Rng Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sa2ul_rng",
+        "location": "../../examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_rng",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Sa2ul Rng Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "sa2ul_rng",
+        "location": "../../examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
         ],
         "subCategories": [
             "security",
@@ -18805,6 +19749,74 @@
         ],
         "compiler": [
             "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_pka",
+            "rsa_encryption_decryption",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Rsa Encryption Decryption Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "rsa_encryption_decryption",
+        "location": "../../examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_pka",
+            "rsa_encryption_decryption",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Rsa Encryption Decryption Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "rsa_encryption_decryption",
+        "location": "../../examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
         ],
         "subCategories": [
             "security",
@@ -18896,6 +19908,74 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Rsa Signing Verification Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "rsa_signing_verification",
+        "location": "../../examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_pka",
+            "rsa_signing_verification",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Rsa Signing Verification Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "rsa_signing_verification",
+        "location": "../../examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_pka",
+            "rsa_signing_verification",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Ecdsa Signing Verification Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "ecdsa_signing_verification",
         "location": "../../examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -18941,6 +20021,74 @@
         ],
         "compiler": [
             "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_pka",
+            "ecdsa_signing_verification",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ecdsa Signing Verification Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ecdsa_signing_verification",
+        "location": "../../examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "sa2ul_pka",
+            "ecdsa_signing_verification",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ecdsa Signing Verification Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "ecdsa_signing_verification",
+        "location": "../../examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
         ],
         "subCategories": [
             "security",

@@ -435,6 +435,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma/am243x-lp/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_low_latency_interrupt/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -447,6 +449,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_low_latency_polling/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_adc_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_adc_read/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/udma/udma_adc_read/am243x-evm/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
@@ -545,34 +549,64 @@ help:
 	@echo  $(MAKE) -s -C examples/mathlib/benchmark/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/dfu/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/dfu/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/usb/device/dfu/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
@@ -777,6 +811,7 @@ BUILD_COMBO_GCC_freertos_fat = freertos_fat_r5f.gcc-armv7
 BUILD_COMBO_GCC_nortos = nortos_r5f.gcc-armv7
 BUILD_COMBO_GCC_freertos = freertos_r5f.gcc-armv7
 BUILD_COMBO_GCC_mathlib = mathlib_r5f.gcc-armv7
+BUILD_COMBO_GCC_security = security_r5f.gcc-armv7
 BUILD_COMBO_GCC_usbd_cdn_nortos = usbd_cdn_nortos_r5f.gcc-armv7
 BUILD_COMBO_GCC_usbd_cdn_freertos = usbd_cdn_freertos_r5f.gcc-armv7
 BUILD_COMBO_GCC_usbd_tusb_cdc_nortos = usbd_tusb_cdc_nortos_r5f.gcc-armv7
@@ -792,7 +827,7 @@ BUILD_COMBO_GCC_usbd_tusb_rndis_freertos = usbd_tusb_rndis_freertos_r5f.gcc-armv
 BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos_fat) $(BUILD_COMBO_sdl) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_pru_ipc) $(BUILD_COMBO_security) $(BUILD_COMBO_usbd_cdn_nortos) $(BUILD_COMBO_usbd_cdn_freertos) $(BUILD_COMBO_usbd_tusb_cdc_nortos) $(BUILD_COMBO_usbd_tusb_cdc_freertos) $(BUILD_COMBO_usbd_tusb_dfu_nortos) $(BUILD_COMBO_usbd_tusb_dfu_freertos) $(BUILD_COMBO_usbd_tusb_ncm_nortos) $(BUILD_COMBO_usbd_tusb_ncm_freertos) $(BUILD_COMBO_usbd_tusb_rndis_nortos) $(BUILD_COMBO_usbd_tusb_rndis_freertos) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwipif-icssg-freertos) $(BUILD_COMBO_lwipif-icssg-nortos) $(BUILD_COMBO_enet-icssg) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_tsn_gptp-freertos) $(BUILD_COMBO_tsn_combase-freertos) $(BUILD_COMBO_tsn_uniconf-freertos) $(BUILD_COMBO_tsn_unibase-freertos) $(BUILD_COMBO_tsn_lldp-freertos)
 
 # Combine all gcc Components
-BUILD_COMBO_ALL_GCC =  $(BUILD_COMBO_GCC_board) $(BUILD_COMBO_GCC_drivers) $(BUILD_COMBO_GCC_freertos_fat) $(BUILD_COMBO_GCC_nortos) $(BUILD_COMBO_GCC_freertos) $(BUILD_COMBO_GCC_mathlib) $(BUILD_COMBO_GCC_usbd_cdn_nortos) $(BUILD_COMBO_GCC_usbd_cdn_freertos) $(BUILD_COMBO_GCC_usbd_tusb_cdc_nortos) $(BUILD_COMBO_GCC_usbd_tusb_cdc_freertos) $(BUILD_COMBO_GCC_usbd_tusb_dfu_nortos) $(BUILD_COMBO_GCC_usbd_tusb_dfu_freertos) $(BUILD_COMBO_GCC_usbd_tusb_ncm_nortos) $(BUILD_COMBO_GCC_usbd_tusb_ncm_freertos) $(BUILD_COMBO_GCC_usbd_tusb_rndis_nortos) $(BUILD_COMBO_GCC_usbd_tusb_rndis_freertos)
+BUILD_COMBO_ALL_GCC =  $(BUILD_COMBO_GCC_board) $(BUILD_COMBO_GCC_drivers) $(BUILD_COMBO_GCC_freertos_fat) $(BUILD_COMBO_GCC_nortos) $(BUILD_COMBO_GCC_freertos) $(BUILD_COMBO_GCC_mathlib) $(BUILD_COMBO_GCC_security) $(BUILD_COMBO_GCC_usbd_cdn_nortos) $(BUILD_COMBO_GCC_usbd_cdn_freertos) $(BUILD_COMBO_GCC_usbd_tusb_cdc_nortos) $(BUILD_COMBO_GCC_usbd_tusb_cdc_freertos) $(BUILD_COMBO_GCC_usbd_tusb_dfu_nortos) $(BUILD_COMBO_GCC_usbd_tusb_dfu_freertos) $(BUILD_COMBO_GCC_usbd_tusb_ncm_nortos) $(BUILD_COMBO_GCC_usbd_tusb_ncm_freertos) $(BUILD_COMBO_GCC_usbd_tusb_rndis_nortos) $(BUILD_COMBO_GCC_usbd_tusb_rndis_freertos)
 
 # Combine all Pre-built Components
 BUILD_COMBO_PREBUILT_ALL = $(BUILD_COMBO_cmsis)
@@ -942,6 +977,9 @@ $(BUILD_COMBO_GCC_freertos):
 $(BUILD_COMBO_GCC_mathlib):
 	$(MAKE) -C source/mathlib -f makefile.am243x.$(subst mathlib_,,$@) all
 
+$(BUILD_COMBO_GCC_security):
+	$(MAKE) -C source/security -f makefile.am243x.$(subst security_,,$@) all
+
 $(BUILD_COMBO_GCC_usbd_cdn_nortos):
 	$(MAKE) -C source/usb/cdn -f makefile.nortos.am243x.$(subst usbd_cdn_nortos_,,$@) all
 
@@ -1019,6 +1057,7 @@ BUILD_COMBO_CLEAN_GCC_freertos_fat = freertos_fat_r5f.gcc-armv7_clean
 BUILD_COMBO_CLEAN_GCC_nortos = nortos_r5f.gcc-armv7_clean
 BUILD_COMBO_CLEAN_GCC_freertos = freertos_r5f.gcc-armv7_clean
 BUILD_COMBO_CLEAN_GCC_mathlib = mathlib_r5f.gcc-armv7_clean
+BUILD_COMBO_CLEAN_GCC_security = security_r5f.gcc-armv7_clean
 BUILD_COMBO_CLEAN_GCC_usbd_cdn_nortos = usbd_cdn_nortos_r5f.gcc-armv7_clean
 BUILD_COMBO_CLEAN_GCC_usbd_cdn_freertos = usbd_cdn_freertos_r5f.gcc-armv7_clean
 BUILD_COMBO_CLEAN_GCC_usbd_tusb_cdc_nortos = usbd_tusb_cdc_nortos_r5f.gcc-armv7_clean
@@ -1033,7 +1072,7 @@ BUILD_COMBO_CLEAN_GCC_usbd_tusb_rndis_freertos = usbd_tusb_rndis_freertos_r5f.gc
 # Combine all Components Clean
 BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos_fat) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_pru_ipc) $(BUILD_COMBO_CLEAN_security) $(BUILD_COMBO_CLEAN_usbd_cdn_nortos) $(BUILD_COMBO_CLEAN_usbd_cdn_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_cdc_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_dfu_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_ncm_freertos) $(BUILD_COMBO_CLEAN_usbd_tusb_rndis_nortos) $(BUILD_COMBO_CLEAN_usbd_tusb_rndis_freertos) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwipif-icssg-freertos) $(BUILD_COMBO_CLEAN_lwipif-icssg-nortos) $(BUILD_COMBO_CLEAN_enet-icssg) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_tsn_gptp-freertos) $(BUILD_COMBO_CLEAN_tsn_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_uniconf-freertos) $(BUILD_COMBO_CLEAN_tsn_unibase-freertos) $(BUILD_COMBO_CLEAN_tsn_lldp-freertos)
 
-BUILD_COMBO_CLEAN_ALL_GCC= $(BUILD_COMBO_CLEAN_GCC_board) $(BUILD_COMBO_CLEAN_GCC_drivers) $(BUILD_COMBO_CLEAN_GCC_freertos_fat) $(BUILD_COMBO_CLEAN_GCC_nortos) $(BUILD_COMBO_CLEAN_GCC_freertos) $(BUILD_COMBO_CLEAN_GCC_mathlib) $(BUILD_COMBO_CLEAN_GCC_usbd_cdn_nortos) $(BUILD_COMBO_CLEAN_GCC_usbd_cdn_freertos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_cdc_nortos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_cdc_freertos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_dfu_nortos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_dfu_freertos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_ncm_nortos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_ncm_freertos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_rndis_nortos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_rndis_freertos)
+BUILD_COMBO_CLEAN_ALL_GCC= $(BUILD_COMBO_CLEAN_GCC_board) $(BUILD_COMBO_CLEAN_GCC_drivers) $(BUILD_COMBO_CLEAN_GCC_freertos_fat) $(BUILD_COMBO_CLEAN_GCC_nortos) $(BUILD_COMBO_CLEAN_GCC_freertos) $(BUILD_COMBO_CLEAN_GCC_mathlib) $(BUILD_COMBO_CLEAN_GCC_security) $(BUILD_COMBO_CLEAN_GCC_usbd_cdn_nortos) $(BUILD_COMBO_CLEAN_GCC_usbd_cdn_freertos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_cdc_nortos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_cdc_freertos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_dfu_nortos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_dfu_freertos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_ncm_nortos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_ncm_freertos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_rndis_nortos) $(BUILD_COMBO_CLEAN_GCC_usbd_tusb_rndis_freertos)
 
 # Combine all Pre-built Components Clean
 BUILD_COMBO_PREBUILT_CLEAN_ALL = $(BUILD_COMBO_CLEAN_cmsis)
@@ -1177,6 +1216,9 @@ $(BUILD_COMBO_CLEAN_GCC_freertos):
 $(BUILD_COMBO_CLEAN_GCC_mathlib):
 	$(MAKE) -C source/mathlib -f makefile.am243x.$(subst mathlib_,,$(subst _clean,,$@)) clean
 
+$(BUILD_COMBO_CLEAN_GCC_security):
+	$(MAKE) -C source/security -f makefile.am243x.$(subst security_,,$(subst _clean,,$@)) clean
+
 $(BUILD_COMBO_CLEAN_GCC_usbd_cdn_nortos):
 	$(MAKE) -C source/usb/cdn -f makefile.nortos.am243x.$(subst usbd_cdn_nortos_,,$(subst _clean,,$@)) clean
 
@@ -1254,6 +1296,7 @@ BUILD_COMBO_SCRUB_GCC_freertos_fat = freertos_fat_r5f.gcc-armv7_scrub_scrub
 BUILD_COMBO_SCRUB_GCC_nortos = nortos_r5f.gcc-armv7_scrub_scrub
 BUILD_COMBO_SCRUB_GCC_freertos = freertos_r5f.gcc-armv7_scrub_scrub
 BUILD_COMBO_SCRUB_GCC_mathlib = mathlib_r5f.gcc-armv7_scrub_scrub
+BUILD_COMBO_SCRUB_GCC_security = security_r5f.gcc-armv7_scrub_scrub
 BUILD_COMBO_SCRUB_GCC_usbd_cdn_nortos = usbd_cdn_nortos_r5f.gcc-armv7_scrub_scrub
 BUILD_COMBO_SCRUB_GCC_usbd_cdn_freertos = usbd_cdn_freertos_r5f.gcc-armv7_scrub_scrub
 BUILD_COMBO_SCRUB_GCC_usbd_tusb_cdc_nortos = usbd_tusb_cdc_nortos_r5f.gcc-armv7_scrub_scrub
@@ -1267,7 +1310,7 @@ BUILD_COMBO_SCRUB_GCC_usbd_tusb_rndis_freertos = usbd_tusb_rndis_freertos_r5f.gc
 
 # Combine all Components Scrub Targets
 BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos_fat) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_pru_ipc) $(BUILD_COMBO_SCRUB_security) $(BUILD_COMBO_SCRUB_usbd_cdn_nortos) $(BUILD_COMBO_SCRUB_usbd_cdn_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_cdc_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_dfu_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_ncm_freertos) $(BUILD_COMBO_SCRUB_usbd_tusb_rndis_nortos) $(BUILD_COMBO_SCRUB_usbd_tusb_rndis_freertos) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwipif-icssg-freertos) $(BUILD_COMBO_SCRUB_lwipif-icssg-nortos) $(BUILD_COMBO_SCRUB_enet-icssg) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_tsn_gptp-freertos) $(BUILD_COMBO_SCRUB_tsn_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_uniconf-freertos) $(BUILD_COMBO_SCRUB_tsn_unibase-freertos) $(BUILD_COMBO_SCRUB_tsn_lldp-freertos)
-BUILD_COMBO_SCRUB_ALL_GCC= $(BUILD_COMBO_SCRUB_GCC_board) $(BUILD_COMBO_SCRUB_GCC_drivers) $(BUILD_COMBO_SCRUB_GCC_freertos_fat) $(BUILD_COMBO_SCRUB_GCC_nortos) $(BUILD_COMBO_SCRUB_GCC_freertos) $(BUILD_COMBO_SCRUB_GCC_mathlib) $(BUILD_COMBO_SCRUB_GCC_usbd_cdn_nortos) $(BUILD_COMBO_SCRUB_GCC_usbd_cdn_freertos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_cdc_nortos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_cdc_freertos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_dfu_nortos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_dfu_freertos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_ncm_nortos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_ncm_freertos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_rndis_nortos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_rndis_freertos)
+BUILD_COMBO_SCRUB_ALL_GCC= $(BUILD_COMBO_SCRUB_GCC_board) $(BUILD_COMBO_SCRUB_GCC_drivers) $(BUILD_COMBO_SCRUB_GCC_freertos_fat) $(BUILD_COMBO_SCRUB_GCC_nortos) $(BUILD_COMBO_SCRUB_GCC_freertos) $(BUILD_COMBO_SCRUB_GCC_mathlib) $(BUILD_COMBO_SCRUB_GCC_security) $(BUILD_COMBO_SCRUB_GCC_usbd_cdn_nortos) $(BUILD_COMBO_SCRUB_GCC_usbd_cdn_freertos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_cdc_nortos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_cdc_freertos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_dfu_nortos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_dfu_freertos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_ncm_nortos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_ncm_freertos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_rndis_nortos) $(BUILD_COMBO_SCRUB_GCC_usbd_tusb_rndis_freertos)
 
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL = $(BUILD_COMBO_SCRUB_cmsis)
@@ -1409,6 +1452,9 @@ $(BUILD_COMBO_SCRUB_GCC_freertos):
 
 $(BUILD_COMBO_SCRUB_GCC_mathlib):
 	$(MAKE) -C source/mathlib -f makefile.am243x.$(subst mathlib_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_GCC_security):
+	$(MAKE) -C source/security -f makefile.am243x.$(subst security_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_GCC_usbd_cdn_nortos):
 	$(MAKE) -C source/usb/cdn -f makefile.nortos.am243x.$(subst usbd_cdn_nortos_,,$(subst _scrub,,$@)) scrub
@@ -1933,10 +1979,14 @@ BUILD_COMBO_EXAMPLE_ALL_GCC += uart_echo_dma_am243x-evm_r5fss0-0_nortos_gcc-armv
 BUILD_COMBO_EXAMPLE_ALL_GCC += uart_echo_dma_am243x-evm_r5fss0-0_freertos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += uart_echo_dma_am243x-lp_r5fss0-0_nortos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += uart_echo_dma_am243x-lp_r5fss0-0_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += uart_echo_low_latency_interrupt_am243x-evm_r5fss0-0_nortos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += uart_echo_low_latency_interrupt_am243x-lp_r5fss0-0_nortos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += uart_echo_low_latency_polling_am243x-evm_r5fss0-0_nortos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += uart_echo_low_latency_polling_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += udma_adc_read_am243x-evm_r5fss0-0_freertos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += udma_adc_read_am243x-lp_r5fss0-0_freertos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += udma_chaining_am243x-evm_r5fss0-0_freertos_gcc-armv7
@@ -1974,6 +2024,36 @@ BUILD_COMBO_EXAMPLE_ALL_GCC += task_switch_am243x-evm_r5fss0-0_freertos_gcc-armv
 BUILD_COMBO_EXAMPLE_ALL_GCC += task_switch_am243x-lp_r5fss0-0_freertos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += mathlib_benchmark_am243x-evm_r5fss0-0_nortos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += mathlib_benchmark_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_sha_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_sha_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += sa2ul_rng_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += sa2ul_rng_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += rsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += rsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += dfu_nortos_am243x-evm_r5fss0-0_nortos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += dfu_nortos_am243x-lp_r5fss0-0_nortos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += enet_cpsw_loopback_am243x-lp_r5fss0-0_freertos_gcc-armv7
@@ -2315,6 +2395,10 @@ examples_gcc: $(BUILD_COMBO_EXAMPLE_ALL_GCC)
 	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
  uart_echo_dma_am243x-lp_r5fss0-0_freertos_gcc-armv7:
 	$(MAKE) -C examples/drivers/uart/uart_echo_dma/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile all
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile all
  uart_echo_low_latency_interrupt_am243x-evm_r5fss0-0_nortos_gcc-armv7:
 	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_interrupt/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
  uart_echo_low_latency_interrupt_am243x-lp_r5fss0-0_nortos_gcc-armv7:
@@ -2323,6 +2407,10 @@ examples_gcc: $(BUILD_COMBO_EXAMPLE_ALL_GCC)
 	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_polling/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
  uart_echo_low_latency_polling_am243x-lp_r5fss0-0_nortos_gcc-armv7:
 	$(MAKE) -C examples/drivers/uart/uart_echo_low_latency_polling/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile all
  udma_adc_read_am243x-evm_r5fss0-0_freertos_gcc-armv7:
 	$(MAKE) -C examples/drivers/udma/udma_adc_read/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile all
  udma_adc_read_am243x-lp_r5fss0-0_freertos_gcc-armv7:
@@ -2397,6 +2485,66 @@ examples_gcc: $(BUILD_COMBO_EXAMPLE_ALL_GCC)
 	$(MAKE) -C examples/mathlib/benchmark/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
  mathlib_benchmark_am243x-lp_r5fss0-0_nortos_gcc-armv7:
 	$(MAKE) -C examples/mathlib/benchmark/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_sha_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_sha_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ sa2ul_rng_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ sa2ul_rng_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ rsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ rsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
  dfu_nortos_am243x-evm_r5fss0-0_nortos_gcc-armv7:
 	$(MAKE) -C examples/usb/device/dfu/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
  dfu_nortos_am243x-lp_r5fss0-0_nortos_gcc-armv7:
@@ -4170,10 +4318,14 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += uart_echo_dma_am243x-evm_r5fss0-0_nortos_gc
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += uart_echo_dma_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += uart_echo_dma_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += uart_echo_dma_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += uart_echo_low_latency_interrupt_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += uart_echo_low_latency_interrupt_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += uart_echo_low_latency_polling_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += uart_echo_low_latency_polling_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += udma_adc_read_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += udma_adc_read_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += udma_chaining_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
@@ -4211,6 +4363,36 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += task_switch_am243x-evm_r5fss0-0_freertos_gc
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += task_switch_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += mathlib_benchmark_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += mathlib_benchmark_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_sha_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_sha_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += sa2ul_rng_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += sa2ul_rng_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += rsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += rsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += dfu_nortos_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += dfu_nortos_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += enet_cpsw_loopback_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean
@@ -5197,6 +5379,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile clean
+
  uart_echo_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -5232,6 +5420,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile clean
 
  udma_adc_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/udma/udma_adc_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -5527,11 +5721,23 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
  crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
 
  crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -5539,11 +5745,23 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
  crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
 
  crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -5551,11 +5769,23 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
  crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
 
  crypto_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -5563,11 +5793,23 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  crypto_sha_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ crypto_sha_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ crypto_sha_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
  crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
 
  crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -5575,11 +5817,23 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
  crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
 
  crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -5587,11 +5841,23 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
  sa2ul_rng_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  sa2ul_rng_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ sa2ul_rng_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ sa2ul_rng_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
 
  rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -5599,17 +5865,35 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
  rsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  rsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ rsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ rsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
  ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
 
  dfu_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/usb/device/dfu/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -6582,10 +6866,14 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += uart_echo_dma_am243x-evm_r5fss0-0_nortos_gc
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += uart_echo_dma_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += uart_echo_dma_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += uart_echo_dma_am243x-lp_r5fss0-0_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += uart_echo_low_latency_interrupt_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += uart_echo_low_latency_interrupt_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += uart_echo_low_latency_polling_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += uart_echo_low_latency_polling_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += udma_adc_read_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += udma_adc_read_am243x-lp_r5fss0-0_freertos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += udma_chaining_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub
@@ -6623,6 +6911,36 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += task_switch_am243x-evm_r5fss0-0_freertos_gc
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += task_switch_am243x-lp_r5fss0-0_freertos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += mathlib_benchmark_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += mathlib_benchmark_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_sha_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_sha_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += sa2ul_rng_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += sa2ul_rng_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += rsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += rsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += dfu_nortos_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += dfu_nortos_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += enet_cpsw_loopback_am243x-lp_r5fss0-0_freertos_gcc-armv7_scrub
@@ -7609,6 +7927,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ uart_echo_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/uart/uart_echo_dma_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile scrub
+
  uart_echo_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/uart/uart_echo_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -7644,6 +7968,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ uart_echo_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/uart/uart_echo_polling_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile scrub
 
  udma_adc_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/udma/udma_adc_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
@@ -7939,11 +8269,23 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ crypto_aes_cbc_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ crypto_aes_cbc_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
  crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_aes_cbc_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ crypto_aes_cbc_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cbc_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
 
  crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -7951,11 +8293,23 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ crypto_aes_ecb_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ crypto_aes_ecb_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
  crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_aes_ecb_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ crypto_aes_ecb_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_ecb_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
 
  crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -7963,11 +8317,23 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ crypto_aes_cmac_128_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ crypto_aes_cmac_128_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_128/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
  crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_aes_cmac_256_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ crypto_aes_cmac_256_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_aes/crypto_aes_cmac_256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
 
  crypto_sha_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -7975,11 +8341,23 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  crypto_sha_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ crypto_sha_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ crypto_sha_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_sha/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
  crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_hmac_sha1_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ crypto_hmac_sha1_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha1/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
 
  crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -7987,11 +8365,23 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ crypto_hmac_sha256_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ crypto_hmac_sha256_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
  crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_hmac_sha512_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ crypto_hmac_sha512_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha512/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
 
  crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -7999,11 +8389,23 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ crypto_hmac_sha256_multishot_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ crypto_hmac_sha256_multishot_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_hmac_sha/crypto_hmac_sha256_multishot/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
  sa2ul_rng_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sa2ul_rng_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ sa2ul_rng_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ sa2ul_rng_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_rng/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
 
  rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
@@ -8011,17 +8413,35 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ rsa_encryption_decryption_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ rsa_encryption_decryption_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_encryption_decryption/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
  rsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  rsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ rsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ rsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/rsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
  ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ecdsa_signing_verification_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ ecdsa_signing_verification_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/security/crypto/sa2ul_pka/ecdsa_signing_verification/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
 
  dfu_nortos_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/usb/device/dfu/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
