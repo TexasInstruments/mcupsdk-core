@@ -15,6 +15,7 @@
         "/security/security",
         "/xbar/xbar",
         "/memory_configurator/components",
+        "/optiflash/optiflash"
     ],
     "devices": [
         "AM64x",

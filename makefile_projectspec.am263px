@@ -380,6 +380,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am263px-cc_system_freertos_bu
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am263px-lp_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am263px-cc_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am263px-lp_system_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += wfi_standby_demo_am263px-cc_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_stc_am263px-cc_system_nortos_nortos_build
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
@@ -1515,6 +1516,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  empty_am263px-lp_system_nortos_build:
 	$(MAKE) -C examples/empty/am263px-lp/system_nortos -f makefile_projectspec all
 
+ wfi_standby_demo_am263px-cc_system_nortos_build:
+	$(MAKE) -C examples/kernel/nortos/wfi_standby_demo/am263px-cc/system_nortos -f makefile_projectspec all
+
  sdl_stc_am263px-cc_system_nortos_nortos_build:
 	$(MAKE) -C examples/sdl/stc/stc_mcu/am263px-cc/system_nortos_nortos -f makefile_projectspec all
 
@@ -1898,6 +1902,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am263px-cc_system_freertos_cl
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am263px-lp_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am263px-cc_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am263px-lp_system_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += wfi_standby_demo_am263px-cc_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_stc_am263px-cc_system_nortos_nortos_clean
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
@@ -3033,6 +3038,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  empty_am263px-lp_system_nortos_clean:
 	$(MAKE) -C examples/empty/am263px-lp/system_nortos -f makefile_projectspec clean
 
+ wfi_standby_demo_am263px-cc_system_nortos_clean:
+	$(MAKE) -C examples/kernel/nortos/wfi_standby_demo/am263px-cc/system_nortos -f makefile_projectspec clean
+
  sdl_stc_am263px-cc_system_nortos_nortos_clean:
 	$(MAKE) -C examples/sdl/stc/stc_mcu/am263px-cc/system_nortos_nortos -f makefile_projectspec clean
 
@@ -3416,6 +3424,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am263px-cc_system_freertos_e
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am263px-lp_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am263px-cc_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am263px-lp_system_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += wfi_standby_demo_am263px-cc_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_stc_am263px-cc_system_nortos_nortos_export
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
@@ -4551,6 +4560,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  empty_am263px-lp_system_nortos_export:
 	$(MAKE) -C examples/empty/am263px-lp/system_nortos -f makefile_projectspec export
 
+ wfi_standby_demo_am263px-cc_system_nortos_export:
+	$(MAKE) -C examples/kernel/nortos/wfi_standby_demo/am263px-cc/system_nortos -f makefile_projectspec export
+
  sdl_stc_am263px-cc_system_nortos_nortos_export:
 	$(MAKE) -C examples/sdl/stc/stc_mcu/am263px-cc/system_nortos_nortos -f makefile_projectspec export
 
@@ -4952,6 +4964,7 @@ help:
 	@echo  $(MAKE) -s -C examples/empty/am263px-lp/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/empty/am263px-cc/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/empty/am263px-lp/system_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/kernel/nortos/wfi_standby_demo/am263px-cc/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/stc/stc_mcu/am263px-cc/system_nortos_nortos -f makefile_projectspec [export all clean]
 	@echo  .
 

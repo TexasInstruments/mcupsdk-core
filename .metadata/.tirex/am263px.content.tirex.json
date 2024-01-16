@@ -11215,6 +11215,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "WFI Standy mode example demo CPU is R5FSS0-0 running NORTOS.",
+        "name": "wfi_standby_demo",
+        "location": "../../examples/kernel/nortos/wfi_standby_demo/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "nortos",
+            "wfi_standby_demo",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "WFI Standy mode example demo CPU is R5FSS1-0 running NORTOS.",
+        "name": "wfi_standby_demo",
+        "location": "../../examples/kernel/nortos/wfi_standby_demo/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "kernel",
+            "nortos",
+            "wfi_standby_demo",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A basic smart placement exmaple. This example is intended to be a starting point protraying smart placement. CPU is R5FSS0-0 running NORTOS.",
         "name": "basic_smart_placement",
         "location": "../../examples/kernel/nortos/basic_smart_placement/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -13690,6 +13756,36 @@
         ],
         "subCategories": [
             "empty",
+            "system_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "WFI Standy mode example demo System project.",
+        "name": "wfi_standby_demo",
+        "location": "../../examples/kernel/nortos/wfi_standby_demo/am263px-cc/system_nortos/system.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "kernel",
+            "nortos",
+            "wfi_standby_demo",
             "system_nortos"
         ],
         "mainCategories": [

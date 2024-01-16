@@ -452,6 +452,7 @@ help:
 	@echo  $(MAKE) -s -C examples/empty/am263px-lp/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/empty/am263px-cc/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/empty/am263px-lp/system_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/nortos/wfi_standby_demo/am263px-cc/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/stc/stc_mcu/am263px-cc/system_nortos_nortos [all clean syscfg-gui syscfg]
 	@echo  .
 
@@ -1087,6 +1088,7 @@ BUILD_COMBO_EXAMPLE_ALL += empty_am263px-cc_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += empty_am263px-lp_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += empty_am263px-cc_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += empty_am263px-lp_system_nortos
+BUILD_COMBO_EXAMPLE_ALL += wfi_standby_demo_am263px-cc_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += sdl_stc_am263px-cc_system_nortos_nortos
 
 
@@ -2227,6 +2229,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  empty_am263px-lp_system_nortos:
 	$(MAKE) -C examples/empty/am263px-lp/system_nortos -f makefile all
 
+ wfi_standby_demo_am263px-cc_system_nortos:
+	$(MAKE) -C examples/kernel/nortos/wfi_standby_demo/am263px-cc/system_nortos -f makefile all
+
  sdl_stc_am263px-cc_system_nortos_nortos:
 	$(MAKE) -C examples/sdl/stc/stc_mcu/am263px-cc/system_nortos_nortos -f makefile all
 
@@ -2594,6 +2599,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am263px-cc_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am263px-lp_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am263px-cc_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am263px-lp_system_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += wfi_standby_demo_am263px-cc_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stc_am263px-cc_system_nortos_nortos_clean
 
 
@@ -3730,6 +3736,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  empty_am263px-lp_system_nortos_clean:
 	$(MAKE) -C examples/empty/am263px-lp/system_nortos -f makefile clean
 
+ wfi_standby_demo_am263px-cc_system_nortos_clean:
+	$(MAKE) -C examples/kernel/nortos/wfi_standby_demo/am263px-cc/system_nortos -f makefile clean
+
  sdl_stc_am263px-cc_system_nortos_nortos_clean:
 	$(MAKE) -C examples/sdl/stc/stc_mcu/am263px-cc/system_nortos_nortos -f makefile clean
 
@@ -4097,6 +4106,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am263px-cc_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am263px-lp_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am263px-cc_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am263px-lp_system_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += wfi_standby_demo_am263px-cc_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stc_am263px-cc_system_nortos_nortos_scrub
 
 
@@ -5232,6 +5242,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  empty_am263px-lp_system_nortos_scrub:
 	$(MAKE) -C examples/empty/am263px-lp/system_nortos -f makefile scrub
+
+ wfi_standby_demo_am263px-cc_system_nortos_scrub:
+	$(MAKE) -C examples/kernel/nortos/wfi_standby_demo/am263px-cc/system_nortos -f makefile scrub
 
  sdl_stc_am263px-cc_system_nortos_nortos_scrub:
 	$(MAKE) -C examples/sdl/stc/stc_mcu/am263px-cc/system_nortos_nortos -f makefile scrub
