@@ -8210,6 +8210,138 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_polling_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_polling_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_polling_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_polling_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_polling_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_polling_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_polling_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_freertos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_polling_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mcspi Loopback Interrupt Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_loopback_interrupt_lld",
         "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -8452,6 +8584,138 @@
         ],
         "compiler": [
             "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_dma_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Dma Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_dma_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_dma_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Dma Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_dma_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_dma_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Dma Lld Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mcspi_loopback_dma_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_loopback_dma_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcspi Loopback Dma Lld Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcspi_loopback_dma_lld",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-lp/r5fss0-0_freertos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
         ],
         "subCategories": [
             "drivers",
@@ -12267,6 +12531,138 @@
         ],
         "compiler": [
             "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "spinlock",
+            "spinlock_example",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An example to demonstrate the working of spinlock CPU is R5FSS0-0 running NORTOS.",
+        "name": "spinlock_example",
+        "location": "../../examples/drivers/spinlock/spinlock_example/am243x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "spinlock",
+            "spinlock_example",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An example to demonstrate the working of spinlock CPU is R5FSS0-1 running NORTOS.",
+        "name": "spinlock_example",
+        "location": "../../examples/drivers/spinlock/spinlock_example/am243x-evm/r5fss0-1_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "spinlock",
+            "spinlock_example",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An example to demonstrate the working of spinlock CPU is R5FSS0-0 running NORTOS.",
+        "name": "spinlock_example",
+        "location": "../../examples/drivers/spinlock/spinlock_example/am243x-lp/r5fss0-0_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "spinlock",
+            "spinlock_example",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An example to demonstrate the working of spinlock CPU is R5FSS0-1 running NORTOS.",
+        "name": "spinlock_example",
+        "location": "../../examples/drivers/spinlock/spinlock_example/am243x-lp/r5fss0-1_nortos/gcc-armv7/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
         ],
         "subCategories": [
             "drivers",
@@ -25027,6 +25423,36 @@
         ],
         "description": "An example to demonstrate the working of spinlock System project.",
         "name": "spinlock_example",
+        "location": "../../examples/drivers/spinlock/spinlock_example/am243x-evm/system_nortos_gcc/system.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "drivers",
+            "spinlock",
+            "spinlock_example",
+            "system_nortos_gcc"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An example to demonstrate the working of spinlock System project.",
+        "name": "spinlock_example",
         "location": "../../examples/drivers/spinlock/spinlock_example/am243x-lp/system_nortos/system.projectspec",
         "devtools": [
             "AM243x_LAUNCHPAD"
@@ -25039,6 +25465,36 @@
             "spinlock",
             "spinlock_example",
             "system_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "An example to demonstrate the working of spinlock System project.",
+        "name": "spinlock_example",
+        "location": "../../examples/drivers/spinlock/spinlock_example/am243x-lp/system_nortos_gcc/system.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "drivers",
+            "spinlock",
+            "spinlock_example",
+            "system_nortos_gcc"
         ],
         "mainCategories": [
             [

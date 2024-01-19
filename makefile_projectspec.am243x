@@ -184,6 +184,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_polling_lld_am243x-e
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_polling_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_freertos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_interrupt_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_interrupt_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
@@ -192,6 +196,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_dma_lld_am243x-evm_r
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_dma_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_freertos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_performance_8bit_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_performance_8bit_am243x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_performance_8bit_am243x-evm_m4fss0-0_nortos_ti-arm-clang_build
@@ -623,7 +631,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += reset_isolation_am243x-evm_system_n
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += reset_isolation_ipc_am243x-evm_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += reset_isolation_ipc_am243x-evm_system_freertos_gcc_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += spinlock_example_am243x-evm_system_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += spinlock_example_am243x-evm_system_nortos_gcc_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += spinlock_example_am243x-lp_system_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += spinlock_example_am243x-lp_system_nortos_gcc_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am243x-evm_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am243x-evm_system_freertos_gcc_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am243x-lp_system_freertos_build
@@ -1190,6 +1200,18 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
+ mcspi_loopback_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ mcspi_loopback_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec all
+
+ mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_freertos_gcc-armv7_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec all
+
  mcspi_loopback_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -1213,6 +1235,18 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ mcspi_loopback_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ mcspi_loopback_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec all
+
+ mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
+
+ mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_freertos_gcc-armv7_build:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec all
 
  mcspi_performance_8bit_am243x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -2525,8 +2559,14 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  spinlock_example_am243x-evm_system_nortos_build:
 	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-evm/system_nortos -f makefile_projectspec all
 
+ spinlock_example_am243x-evm_system_nortos_gcc_build:
+	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-evm/system_nortos_gcc -f makefile_projectspec all
+
  spinlock_example_am243x-lp_system_nortos_build:
 	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-lp/system_nortos -f makefile_projectspec all
+
+ spinlock_example_am243x-lp_system_nortos_gcc_build:
+	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-lp/system_nortos_gcc -f makefile_projectspec all
 
  empty_am243x-evm_system_freertos_build:
 	$(MAKE) -C examples/empty/am243x-evm/system_freertos -f makefile_projectspec all
@@ -2766,6 +2806,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_polling_lld_am243x-e
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_polling_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_interrupt_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_interrupt_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2774,6 +2818,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_dma_lld_am243x-evm_r
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_dma_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_performance_8bit_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_performance_8bit_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_performance_8bit_am243x-evm_m4fss0-0_nortos_ti-arm-clang_clean
@@ -3205,7 +3253,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += reset_isolation_am243x-evm_system_n
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += reset_isolation_ipc_am243x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += reset_isolation_ipc_am243x-evm_system_freertos_gcc_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += spinlock_example_am243x-evm_system_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += spinlock_example_am243x-evm_system_nortos_gcc_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += spinlock_example_am243x-lp_system_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += spinlock_example_am243x-lp_system_nortos_gcc_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am243x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am243x-evm_system_freertos_gcc_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am243x-lp_system_freertos_clean
@@ -3772,6 +3822,18 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
+ mcspi_loopback_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ mcspi_loopback_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec clean
+
+ mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec clean
+
  mcspi_loopback_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -3795,6 +3857,18 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ mcspi_loopback_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ mcspi_loopback_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec clean
+
+ mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
+
+ mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec clean
 
  mcspi_performance_8bit_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -5107,8 +5181,14 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  spinlock_example_am243x-evm_system_nortos_clean:
 	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-evm/system_nortos -f makefile_projectspec clean
 
+ spinlock_example_am243x-evm_system_nortos_gcc_clean:
+	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-evm/system_nortos_gcc -f makefile_projectspec clean
+
  spinlock_example_am243x-lp_system_nortos_clean:
 	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-lp/system_nortos -f makefile_projectspec clean
+
+ spinlock_example_am243x-lp_system_nortos_gcc_clean:
+	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-lp/system_nortos_gcc -f makefile_projectspec clean
 
  empty_am243x-evm_system_freertos_clean:
 	$(MAKE) -C examples/empty/am243x-evm/system_freertos -f makefile_projectspec clean
@@ -5348,6 +5428,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_polling_lld_am243x-
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_polling_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_freertos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_interrupt_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_interrupt_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
@@ -5356,6 +5440,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_dma_lld_am243x-evm_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_dma_lld_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_freertos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_performance_8bit_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_performance_8bit_am243x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_performance_8bit_am243x-evm_m4fss0-0_nortos_ti-arm-clang_export
@@ -5787,7 +5875,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += reset_isolation_am243x-evm_system_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += reset_isolation_ipc_am243x-evm_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += reset_isolation_ipc_am243x-evm_system_freertos_gcc_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += spinlock_example_am243x-evm_system_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += spinlock_example_am243x-evm_system_nortos_gcc_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += spinlock_example_am243x-lp_system_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += spinlock_example_am243x-lp_system_nortos_gcc_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am243x-evm_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am243x-evm_system_freertos_gcc_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am243x-lp_system_freertos_export
@@ -6354,6 +6444,18 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
+ mcspi_loopback_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ mcspi_loopback_polling_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec export
+
+ mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ mcspi_loopback_polling_lld_am243x-lp_r5fss0-0_freertos_gcc-armv7_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec export
+
  mcspi_loopback_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -6377,6 +6479,18 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ mcspi_loopback_dma_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ mcspi_loopback_dma_lld_am243x-evm_r5fss0-0_freertos_gcc-armv7_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec export
+
+ mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
+
+ mcspi_loopback_dma_lld_am243x-lp_r5fss0-0_freertos_gcc-armv7_export:
+	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec export
 
  mcspi_performance_8bit_am243x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -7689,8 +7803,14 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  spinlock_example_am243x-evm_system_nortos_export:
 	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-evm/system_nortos -f makefile_projectspec export
 
+ spinlock_example_am243x-evm_system_nortos_gcc_export:
+	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-evm/system_nortos_gcc -f makefile_projectspec export
+
  spinlock_example_am243x-lp_system_nortos_export:
 	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-lp/system_nortos -f makefile_projectspec export
+
+ spinlock_example_am243x-lp_system_nortos_gcc_export:
+	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am243x-lp/system_nortos_gcc -f makefile_projectspec export
 
  empty_am243x-evm_system_freertos_export:
 	$(MAKE) -C examples/empty/am243x-evm/system_freertos -f makefile_projectspec export
@@ -7955,6 +8075,10 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_polling_lld/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -7963,6 +8087,10 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_performance_8bit/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_performance_8bit/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_performance_8bit/am243x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -8403,7 +8531,9 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/safety/reset_isolation_ipc/am243x-evm/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/safety/reset_isolation_ipc/am243x-evm/system_freertos_gcc -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/spinlock/spinlock_example/am243x-evm/system_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/spinlock/spinlock_example/am243x-evm/system_nortos_gcc -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/spinlock/spinlock_example/am243x-lp/system_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/spinlock/spinlock_example/am243x-lp/system_nortos_gcc -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/empty/am243x-evm/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/empty/am243x-evm/system_freertos_gcc -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/empty/am243x-lp/system_freertos -f makefile_projectspec [export all clean]
