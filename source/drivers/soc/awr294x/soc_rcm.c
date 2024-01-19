@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-23 Texas Instruments Incorporated
+ *  Copyright (C) 2021-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -3678,15 +3678,27 @@ void SOC_rcmPopulateBSSControl(void)
     CSL_FINSR(rssProcCtrl->RSS_CR4_BOOT_INFO_REG4, 15, 0, 0x8080U);
 
     /* Configure BSS Logger: current configuration is Disabled. */
-	/* To Enable the BSS logger set 2:0 field of RSS_CR4_BOOT_INFO_REG5 register to 0x1. */
-	/* The debug data is transferred to a programmable MSS L2 memory buffer with a size of 2KB. */
-	/* The BSS splits this 2KB into two halves (ping and pong) to copy the debug logger data. */
+    /* RSS_CR4_BOOT_INFO_REG5 register 2:0 field is used for configuration. */
+    /* RSS logger configuration
+     *      000 - RSS logger disabled.
+     *      001 - RSS logger enabled in UART mode.
+     *            The debug data is transferred out of the device through the RSS UART peripheral.
+     *            The data is copied from the RSS firmware buffers to the peripheral's memory using uDMA.
+     *            This mechanism is the same as legacy 1GEN and 2GEN devices.
+     *      010 - RSS logger enabled in MSS MEM DUMP mode.
+     *            The debug data is transferred to a programmable MSS L2 memory buffer with a size of 2KB.
+     *            The RSS splits this 2KB into two halves (ping and pong) to copy the debug logger data.
+     *            The RSS uses the same uDMA channel as the UART mode in memory copy mode to perform this copy.
+     *            Every time the DMA transaction completes a transfer into one of the ping/pong buffers,
+     *            the RSS writes the raises an interrupt to the MSS to indicate transfer complete.
+     *            The MSS is expected to transfer the data into an external interface and indicate that to the RSS.
+     */
     CSL_FINSR(rssProcCtrl->RSS_CR4_BOOT_INFO_REG5, 2, 0, 0);
 
     /* Configure MSS L2 offset for BSS Logger. */
-	/* 0xC0260000 is the transaled address of MSS L2 memory 0x10260000. */
-	/* 2KB of memory is needed for BSS to transfer the BSS logger data. */
-	/* Applications are required to make sure the 2KB starting from 0x10260000 is reserved for BSS logger. */
+    /* 0xC0260000 is the translated address of MSS L2 memory 0x10260000. */
+    /* 2KB of memory is needed for BSS to transfer the BSS logger data. */
+    /* Applications are required to make sure the 2KB starting from 0x10260000 is reserved for BSS logger. */
 	CSL_REG_WR(&rssProcCtrl->RSS_CR4_BOOT_INFO_REG6, 0xC0260000);
 
     /* BSS dynamic frequency switching feature control - Enable */
