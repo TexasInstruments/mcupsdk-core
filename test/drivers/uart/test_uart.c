@@ -810,15 +810,19 @@ static void test_uart_set_params(UART_TestParams *testParams, uint32_t tcId)
             params->baudRate =  230400;
             break;
         case 12324:
+            params->operMode = UART_OPER_MODE_13X;
             params->baudRate =  460800;
             break;
         case 12325:
+            params->operMode = UART_OPER_MODE_13X;
             params->baudRate =  921600;
             break;
         case 12326:
+            params->operMode = UART_OPER_MODE_13X;
             params->baudRate =  1843000;
             break;
         case 12327:
+            params->operMode = UART_OPER_MODE_13X;
             params->baudRate =  3688400;
             break;
         case 12305:
