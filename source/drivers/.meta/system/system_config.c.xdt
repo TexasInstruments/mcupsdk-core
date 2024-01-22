@@ -63,6 +63,11 @@ void System_init(void)
      * to access SCICLIENT services, hence this needs to happen first
      */
     Dpl_init();
+% for(let subTemplate of args) {
+    % if (subTemplate.driver_init && subTemplate.driver_init.match(/watchdog*/)){
+`system.getTemplate(subTemplate.driver_init)()`
+    %}
+% }
 % if(cpuName.match(/a53/)) {
     if(0 == Armv8_getCoreId())
     {
@@ -79,7 +84,7 @@ void System_init(void)
     Pinmux_init();
     /* finally we initialize all peripheral drivers */
 % for(let subTemplate of args) {
-    % if (subTemplate.driver_init) {
+    % if (subTemplate.driver_init && !subTemplate.driver_init.match(/watchdog*/)) {
 `system.getTemplate(subTemplate.driver_init)()`
     % }
 % }
@@ -96,7 +101,7 @@ void System_deinit(void)
     {
 % }
 % for(let subTemplate of args) {
-    % if (subTemplate.driver_deinit) {
+    % if (subTemplate.driver_deinit && !subTemplate.driver_deinit.match(/watchdog*/)) {
 `system.getTemplate(subTemplate.driver_deinit)()`
     % }
 % }
@@ -107,6 +112,11 @@ void System_deinit(void)
 % if(cpuName.match(/a53/)) {
     }
 
+% }
+% for(let subTemplate of args) {
+    % if (subTemplate.driver_deinit && subTemplate.driver_deinit.match(/watchdog*/)) {
+`system.getTemplate(subTemplate.driver_deinit)()`
+    % }
 % }
     Dpl_deinit();
 }
