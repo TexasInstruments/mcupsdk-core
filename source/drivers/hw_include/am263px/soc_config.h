@@ -39,8 +39,7 @@ extern "C"
 #endif
 
 /* IP versions */
-#define IP_VERSION_ADC_V1
-// #define IP_VERSION_ADC_SAFETY_V0
+#define IP_VERSION_ADC_V2
 #define IP_VERSION_CMPSS_V0
 #define IP_VERSION_DAC_V0
 #define IP_VERSION_ECAP_V1
@@ -64,8 +63,7 @@ extern "C"
 #define IP_VERSION_UART_V0
 
 /* Driver versions */
-#define DRV_VERSION_ADC_V1
-// #define DRV_VERSION_ADC_SAFETY_V0
+#define DRV_VERSION_ADC_V2
 #define DRV_VERSION_CMPSS_V0
 #define DRV_VERSION_DAC_V0
 #define DRV_VERSION_ECAP_V1

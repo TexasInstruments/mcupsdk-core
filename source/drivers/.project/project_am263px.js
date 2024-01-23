@@ -76,7 +76,7 @@ const filedirs = {
 		`pruicss/m_v0`,
 		`pruicss/soc/am263px`,
 		`watchdog/v0/soc/${device}`,
-		"adc/v1",
+		"adc/v2",
 		"bootloader",
 		"bootloader/soc/am263px",
 		"cmpss/v0",

@@ -88,7 +88,7 @@ FILES_PATH_common = \
     pruicss/m_v0 \
     pruicss/soc/am263px \
     watchdog/v0/soc/am263px \
-    adc/v1 \
+    adc/v2 \
     bootloader \
     bootloader/soc/am263px \
     cmpss/v0 \

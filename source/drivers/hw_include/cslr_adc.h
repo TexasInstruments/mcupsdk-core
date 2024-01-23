@@ -49,6 +49,12 @@ extern "C"
 #include <drivers/adc/v1/cslr_adc.h>
 #include <drivers/adc/v1/cslr_adc_result.h>
 #endif
+#if defined (IP_VERSION_ADC_V2)
+#include <drivers/adc/v2/cslr_adc.h>
+#include <drivers/adc/v2/cslr_adc_result.h>
+#include <drivers/adc/v2/cslr_adc_safety.h>
+#include <drivers/adc/v2/cslr_adc_safety_aggr.h>
+#endif
 
 #ifdef __cplusplus
 }
