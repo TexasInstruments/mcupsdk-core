@@ -2970,7 +2970,7 @@ ADC_disableInterrupt(uint32_t base, ADC_IntNumber adcIntNum)
 //!
 //! \param base is the base address of the ADC module.
 //! \param adcIntNum is interrupt number within the ADC wrapper.
-//! \param socNumber is the number of the start-of-conversion.
+//! \param intTrigger is the interrupt source EOCx, OSINTy are used.
 //!
 //! This function sets which conversion is the source of an ADC interrupt.
 //!
@@ -3233,7 +3233,7 @@ ADC_getSafetyCheckerStatus(uint32_t scBase)
 //! Configures the safety checker module.
 //!
 //! \param scBase is the base address of the ADC safety checker module.
-//! \param scInst is the safety checker instance to be configured.
+//! \param checkInst is the safety checker instance to be configured.
 //! \param adcInst is the desired ADC instance.
 //! \param adcResultInst is the desired ADC result instance.
 //!
@@ -3592,7 +3592,6 @@ ADC_getSafetyCheckIntStatus(uint32_t scIntEvtBase)
 //! Clears the ADC safety checker interrupt status.
 //!
 //! \param scIntEvtBase is the base address of ADC Safe Check INTEVT module.
-//! \param checkerNumber is the number of the checker tile.
 //!
 //! This funtion clears the specified ADC Safety Checker interrupt status
 //! so that they no longer assert.
