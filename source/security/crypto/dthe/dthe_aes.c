@@ -60,12 +60,14 @@ static void DTHE_AES_setDMAOutputRequestStatus(CSL_AesRegs *ptrAesRegs, uint8_t 
 static void DTHE_AES_setDMAInputRequestStatus(CSL_AesRegs *ptrAesRegs, uint8_t dmaStatus);
 static void DTHE_AES_setKeySize(CSL_AesRegs *ptrAesRegs, uint8_t size);
 static void DTHE_AES_set256BitKey1(CSL_AesRegs *ptrAesRegs, const uint32_t* ptrKey);
-static void DTHE_AES_setIV(CSL_AesRegs *ptrAesRegs, uint32_t ivSize,const uint32_t* ptrIV);
+static void DTHE_AES_clearIV(CSL_AesRegs *ptrAesRegs);
+static void DTHE_AES_setIV(CSL_AesRegs *ptrAesRegs, const uint32_t* ptrIV);
 static void DTHE_AES_set128BitKey2Part1(CSL_AesRegs *ptrAesRegs, const uint32_t* ptrKey);
 static void DTHE_AES_set128BitKey2Part2(CSL_AesRegs *ptrAesRegs, const uint32_t* ptrKey);
 static void DTHE_AES_pollInputReady(CSL_AesRegs *ptrAesRegs);
 static void DTHE_AES_writeDataBlock(CSL_AesRegs *ptrAesRegs, const uint32_t* ptrData);
 static void DTHE_AES_pollOutputReady(CSL_AesRegs *ptrAesRegs);
+static void DTHE_AES_pollContextReady(CSL_AesRegs *ptrAesRegs);
 static void DTHE_AES_readDataBlock(CSL_AesRegs *ptrAesRegs, uint32_t* ptrData);
 static void DTHE_AES_resetModule(CSL_AesRegs *ptrAesRegs);
 static void DTHE_AES_controlMode(CSL_AesRegs *ptrAesRegs, uint32_t algoType);
@@ -94,7 +96,6 @@ static void DTHE_AES_controlMode(CSL_AesRegs *ptrAesRegs, uint32_t algoType)
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_CTR, CSL_AES_S_CTRL_CTR_RESETVAL);
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_ICM, CSL_AES_S_CTRL_ICM_RESETVAL);
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_CFB, CSL_AES_S_CTRL_CFB_RESETVAL);
-        CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_CTR, CSL_AES_S_CTRL_CTR_RESETVAL);
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_F8, CSL_AES_S_CTRL_F8_RESETVAL);
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_F9, CSL_AES_S_CTRL_F9_RESETVAL);
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_XTS, CSL_AES_S_CTRL_XTS_NOOP);
@@ -106,7 +107,6 @@ static void DTHE_AES_controlMode(CSL_AesRegs *ptrAesRegs, uint32_t algoType)
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_CTR, CSL_AES_S_CTRL_CTR_RESETVAL);
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_ICM, CSL_AES_S_CTRL_ICM_RESETVAL);
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_CFB, CSL_AES_S_CTRL_CFB_RESETVAL);
-        CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_CTR, CSL_AES_S_CTRL_CTR_RESETVAL);
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_F8, CSL_AES_S_CTRL_F8_RESETVAL);
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_F9, CSL_AES_S_CTRL_F9_RESETVAL);
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_XTS, CSL_AES_S_CTRL_XTS_NOOP);
@@ -118,7 +118,6 @@ static void DTHE_AES_controlMode(CSL_AesRegs *ptrAesRegs, uint32_t algoType)
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_MODE, CSL_AES_S_CTRL_MODE_ECB);
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_ICM, CSL_AES_S_CTRL_ICM_RESETVAL);
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_CFB, CSL_AES_S_CTRL_CFB_RESETVAL);
-        CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_CTR, CSL_AES_S_CTRL_CTR_RESETVAL);
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_F8, CSL_AES_S_CTRL_F8_RESETVAL);
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_F9, CSL_AES_S_CTRL_F9_RESETVAL);
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_XTS, CSL_AES_S_CTRL_XTS_NOOP);
@@ -179,7 +178,7 @@ static void DTHE_AES_controlMode(CSL_AesRegs *ptrAesRegs, uint32_t algoType)
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_F9, CSL_AES_S_CTRL_F9_RESETVAL);
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_CBCMAC, CSL_AES_S_CTRL_CBCMAC_RESETVAL);
     }
-    else if(algoType == DTHE_AES_CBC_MAC_MODE)
+    else if((algoType == DTHE_AES_CBC_MAC_MODE)||(algoType == DTHE_AES_CMAC_MODE))
     {
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_CBCMAC, CSL_AES_S_CTRL_CBCMAC_CBCMAC);
         CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_MODE, CSL_AES_S_CTRL_MODE_ECB);
@@ -277,13 +276,13 @@ DTHE_AES_Return_t DTHE_AES_execute(DTHE_Handle handle, const DTHE_AES_Params* pt
     CSL_AesRegs     *ptrAesRegs;
     uint32_t*       ptrWordInputBuffer;
     uint32_t*       ptrWordOutputBuffer;
-    uint8_t*        ptrByteInputBuffer;
     uint32_t        dataLenWords;
     uint32_t        numBlocks;
-    uint32_t        numPartialWords;
-    uint32_t        partialBlock[4];
+    uint32_t        partialDataSize;
     uint32_t        index;
     uint32_t        numBytes = 0U;
+    uint8_t         inPartialBlock[32U];
+    uint8_t         outPartialBlock[32U];
 
     if (NULL != handle)
     {
@@ -357,7 +356,7 @@ DTHE_AES_Return_t DTHE_AES_execute(DTHE_Handle handle, const DTHE_AES_Params* pt
                 /* Configure the key which is to be used: */
                 DTHE_AES_set256BitKey1 (ptrAesRegs, ptrParams->ptrKey);
 
-                if (ptrParams->algoType == DTHE_AES_CBC_MAC_MODE)
+                if (ptrParams->algoType == DTHE_AES_CMAC_MODE)
                 {
                     DTHE_AES_set128BitKey2Part1(ptrAesRegs, ptrParams->ptrKey1);
                     DTHE_AES_set128BitKey2Part2(ptrAesRegs, ptrParams->ptrKey2);
@@ -366,28 +365,24 @@ DTHE_AES_Return_t DTHE_AES_execute(DTHE_Handle handle, const DTHE_AES_Params* pt
 
             DTHE_AES_setOpType(ptrAesRegs, ptrParams->opType);
 
-            if (ptrParams->algoType == DTHE_AES_CBC_MAC_MODE)
-            {
-                /* Giving an invalid IV length will simply clear the IV registers */
-                DTHE_AES_setIV(ptrAesRegs, 0U, ptrParams->ptrIV);
-            }
-
-            /* Configure the Initialization Vector: */
-            if ((ptrParams->algoType == DTHE_AES_CBC_MODE)||(ptrParams->algoType == DTHE_AES_CFB_MODE))
-            {
-                DTHE_AES_setIV(ptrAesRegs, 128U, ptrParams->ptrIV);
-            }
-
-            if (ptrParams->algoType == DTHE_AES_CTR_MODE)
+            if((ptrParams->algoType == DTHE_AES_CTR_MODE)\
+                ||(ptrParams->algoType == DTHE_AES_ICM_MODE))
             {
                 DTHE_AES_CTRWidth(ptrAesRegs, ptrParams->counterWidth);
-                DTHE_AES_setIV(ptrAesRegs, 128U, ptrParams->ptrIV);
-                ptrAesRegs->IV_IN_3 = 0x01000000U;
             }
 
-            if (ptrParams->algoType == DTHE_AES_ICM_MODE)
+            /* Configure the Initialization Vector */
+            if((ptrParams->algoType == DTHE_AES_CBC_MODE)\
+                ||(ptrParams->algoType == DTHE_AES_CTR_MODE)\
+                ||(ptrParams->algoType == DTHE_AES_ICM_MODE)\
+                ||(ptrParams->algoType == DTHE_AES_CFB_MODE))
             {
-                DTHE_AES_setIV(ptrAesRegs, 16U, ptrParams->ptrIV);
+                DTHE_AES_setIV(ptrAesRegs, ptrParams->ptrIV);
+            }
+            else if((ptrParams->algoType == DTHE_AES_CBC_MAC_MODE)||(ptrParams->algoType == DTHE_AES_CMAC_MODE))
+            {
+                /* Clear the IV value */
+                DTHE_AES_clearIV(ptrAesRegs);
             }
 
             /* Setup the data length: */
@@ -399,14 +394,12 @@ DTHE_AES_Return_t DTHE_AES_execute(DTHE_Handle handle, const DTHE_AES_Params* pt
                 /* Encryption: Plain Text is the Input & Encrypted Data is the Output */
                 ptrWordInputBuffer  = &ptrParams->ptrPlainTextData[0];
                 ptrWordOutputBuffer = &ptrParams->ptrEncryptedData[0];
-                ptrByteInputBuffer  = (uint8_t*)&ptrParams->ptrPlainTextData[0];
             }
             else
             {
                 /* Decryption: Encrypted Data is the Input & Plain Text is the Output */
                 ptrWordInputBuffer  = &ptrParams->ptrEncryptedData[0];
                 ptrWordOutputBuffer = &ptrParams->ptrPlainTextData[0];
-                ptrByteInputBuffer  = (uint8_t*)&ptrParams->ptrEncryptedData[0];
             }
 
             /* Determine the data length in words: */
@@ -415,8 +408,8 @@ DTHE_AES_Return_t DTHE_AES_execute(DTHE_Handle handle, const DTHE_AES_Params* pt
             /* Compute the number of full blocks which can be written: Each block is 4words long*/
             numBlocks = (dataLenWords / 4U);
 
-            /* Compute the number of partial words which need to be handled seperately */
-            numPartialWords = dataLenWords % 4U;
+            /* Compute the number of bytes which need to be handled seperately */
+            partialDataSize = ptrParams->dataLenBytes % 16U;
 
             /* Cycle through and write all the full blocks: */
             for (index = 0U; index < numBlocks; index++)
@@ -427,7 +420,7 @@ DTHE_AES_Return_t DTHE_AES_execute(DTHE_Handle handle, const DTHE_AES_Params* pt
                 /* Write the data: */
                 DTHE_AES_writeDataBlock(ptrAesRegs, &ptrWordInputBuffer[index << 2U]);
 
-                if (ptrParams->algoType != DTHE_AES_CBC_MAC_MODE)
+                if((ptrParams->algoType != DTHE_AES_CBC_MAC_MODE)&&(ptrParams->algoType != DTHE_AES_CMAC_MODE))
                 {
                     /* Wait for the AES IP to be ready with the output data */
                     DTHE_AES_pollOutputReady(ptrAesRegs);
@@ -441,76 +434,65 @@ DTHE_AES_Return_t DTHE_AES_execute(DTHE_Handle handle, const DTHE_AES_Params* pt
             }
 
             /* Process any left over data: */
-            if (numPartialWords != 0U)
+            if((partialDataSize != 0U) && (partialDataSize < 16U))
             {
                 /* Initialize the partial block: */
-                (void)memset ((void *)&partialBlock, 0, sizeof(partialBlock));
+                (void)memset ((void *)&inPartialBlock, 0, sizeof(inPartialBlock));
+                (void)memset ((void *)&outPartialBlock, 0, sizeof(outPartialBlock));
 
-                if(numPartialWords < 4)
-                {
-                    /* Copy the data into the partial block: */
-                    (void)memcpy ((void *)&partialBlock,
-                            (void *)&ptrWordInputBuffer[index << 2U],
-                            (numPartialWords * sizeof(uint32_t)));
-                }
-                else
-                {
-					return DTHE_AES_RETURN_FAILURE;
-                }
+                /* Copy the data into the partial block: */
+                (void)memcpy ((void *)&inPartialBlock,
+                        (void *)&ptrWordInputBuffer[index << 2U],
+                        partialDataSize);
 
-                if (ptrParams->algoType == DTHE_AES_CBC_MAC_MODE)
+                if (ptrParams->algoType == DTHE_AES_CMAC_MODE)
                 {
-                    partialBlock[numPartialWords] = 0x00000080;
+                    inPartialBlock[partialDataSize] = 0x80;
                 }
 
                 /* Wait for the AES IP to be ready to receive the data: */
                 DTHE_AES_pollInputReady(ptrAesRegs);
 
                 /* Write the data: */
-                DTHE_AES_writeDataBlock(ptrAesRegs, &partialBlock[0U]);
+                DTHE_AES_writeDataBlock(ptrAesRegs, (uint32_t *)&inPartialBlock[0U]);
 
-                if (ptrParams->algoType != DTHE_AES_CBC_MAC_MODE)
+                if((ptrParams->algoType != DTHE_AES_CBC_MAC_MODE)&&(ptrParams->algoType != DTHE_AES_CMAC_MODE))
                 {
                     /* Wait for the AES IP to be ready with the output data */
                     DTHE_AES_pollOutputReady(ptrAesRegs);
 
                     /* Read the decrypted data into the decrypted block: */
-                    DTHE_AES_readDataBlock(ptrAesRegs, &ptrWordOutputBuffer[index << 2U]);
+                    DTHE_AES_readDataBlock(ptrAesRegs, (uint32_t *)&outPartialBlock[0U]);
+
+                    if((ptrParams->algoType == DTHE_AES_ECB_MODE)||(ptrParams->algoType == DTHE_AES_CBC_MODE))
+                    {
+                        /* Copy the data into the output buffer, always is going to be 16U */
+                        (void)memcpy ((void *)&ptrWordOutputBuffer[index << 2U],
+                                (void *)&outPartialBlock[0U],
+                                16U);
+                    }
+                    else
+                    {
+                        /* Copy the data into the output buffer, always is going to be 16U */
+                        (void)memcpy ((void *)&ptrWordOutputBuffer[index << 2U],
+                                (void *)&outPartialBlock[0U],
+                                partialDataSize);
+                    }
                 }
 
                 /* Compute the number of bytes which have been processed: */
-                numBytes = numBytes + (numPartialWords * sizeof(uint32_t));
+                numBytes = numBytes + partialDataSize;
             }
 
-            /* Do we have any additional bytes which need to be accounted for? */
-            if (numBytes != ptrParams->dataLenBytes)
+            if((ptrParams->algoType == DTHE_AES_CBC_MAC_MODE)||(ptrParams->algoType == DTHE_AES_CMAC_MODE))
             {
-                /* Initialize the partial block: */
-                (void)memset ((void *)&partialBlock, 0, sizeof(partialBlock));
-
-                /* Copy the data into the partial block: */
-                /* Code execution may not arrive here, so no extra care for
-                 * memcpy taken*/
-                (void)memcpy ((void *)&partialBlock,
-                        (void *)&ptrByteInputBuffer[numBytes],
-                        (ptrParams->dataLenBytes - numBytes));
-
-                /* Wait for the AES IP to be ready to receive the data: */
-                DTHE_AES_pollInputReady(ptrAesRegs);
-
-                /* Write the data: */
-                DTHE_AES_writeDataBlock(ptrAesRegs, &ptrWordInputBuffer[index << 2U]);
-
-                /* Wait for the AES IP to be ready with the output data */
-                DTHE_AES_pollOutputReady(ptrAesRegs);
-
-                /* Read the decrypted data into the decrypted block: */
-                DTHE_AES_readDataBlock(ptrAesRegs, &ptrWordOutputBuffer[index << 2U]);
-            }
-
-            if (ptrParams->algoType == DTHE_AES_CBC_MAC_MODE)
-            {
+                DTHE_AES_pollContextReady(ptrAesRegs);
                 DTHE_AES_readTag(ptrAesRegs, &ptrParams->ptrTag[0]);
+            }
+
+            if(numBytes != ptrParams->dataLenBytes)
+            {
+                status = DTHE_AES_RETURN_FAILURE;
             }
         }
     }
@@ -710,45 +692,31 @@ static void DTHE_AES_set128BitKey2Part2(CSL_AesRegs *ptrAesRegs, const uint32_t*
  * \param   ptrIV           Pointer to the IV data to be used.
  *
  */
-static void DTHE_AES_setIV(CSL_AesRegs *ptrAesRegs, uint32_t ivSize, const uint32_t* ptrIV)
+static void DTHE_AES_clearIV(CSL_AesRegs *ptrAesRegs)
 {
     ptrAesRegs->IV_IN_0 = 0U;
     ptrAesRegs->IV_IN_1 = 0U;
     ptrAesRegs->IV_IN_2 = 0U;
     ptrAesRegs->IV_IN_3 = 0U;
 
-    if((ivSize < 32U)&&(ivSize > 0U))
-    {
-        ptrAesRegs->IV_IN_0 = (ptrIV[0U]&0x0000FFFFU);
-    }
+    return;
+}
 
-    if(ivSize >= 32U)
-    {
-        ptrAesRegs->IV_IN_0 = ptrIV[0U];
-    }
+/**
+ * \brief                   The function is used to clear the Initialization Vector (IV) in the AES module.
+ *
+ * \param   ptrAesRegs      Pointer to the EIP38T AES Registers.
+ *
+ */
+static void DTHE_AES_setIV(CSL_AesRegs *ptrAesRegs, const uint32_t* ptrIV)
+{
+    /* Clear the IV value in registers */
+    DTHE_AES_clearIV(ptrAesRegs);
 
-    if((ivSize > 32U)&&(ivSize >= 64U))
-    {
-        ptrAesRegs->IV_IN_1 = ptrIV[1U];
-    }
-
-    if((ivSize > 64U)&&(ivSize >= 96U))
-    {
-        ptrAesRegs->IV_IN_2 = ptrIV[2U];
-    }
-
-    if((ivSize > 96U)&&(ivSize == 128U))
-    {
-        ptrAesRegs->IV_IN_3 = ptrIV[3U];
-    }
-
-    if(ivSize>128U)
-    {
-        ptrAesRegs->IV_IN_0 = 0U;
-        ptrAesRegs->IV_IN_1 = 0U;
-        ptrAesRegs->IV_IN_2 = 0U;
-        ptrAesRegs->IV_IN_3 = 0U;
-    }
+    ptrAesRegs->IV_IN_0 = ptrIV[0U];
+    ptrAesRegs->IV_IN_1 = ptrIV[1U];
+    ptrAesRegs->IV_IN_2 = ptrIV[2U];
+    ptrAesRegs->IV_IN_3 = ptrIV[3U];
 
     return;
 }
@@ -803,6 +771,24 @@ static void DTHE_AES_pollOutputReady(CSL_AesRegs *ptrAesRegs)
     while (done == 0U)
     {
         done = CSL_REG32_FEXT(&ptrAesRegs->CTRL, AES_S_CTRL_OUTPUT_READY);
+    }
+    return;
+}
+
+/**
+ * \brief                   The function is used to poll until the AES IP block has available context out register
+ *
+ * \param   ptrAesRegs      Pointer to the EIP38T AES Registers
+ *
+ */
+static void DTHE_AES_pollContextReady(CSL_AesRegs *ptrAesRegs)
+{
+    uint8_t     done = 0U;
+
+    /* Loop around till the condition is met: */
+    while (done == 0U)
+    {
+        done = CSL_REG32_FEXT(&ptrAesRegs->CTRL, AES_S_CTRL_CONTEXT_READY);
     }
     return;
 }

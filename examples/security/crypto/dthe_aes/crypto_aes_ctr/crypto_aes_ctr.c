@@ -47,6 +47,7 @@
 /* IV length*/
 #define APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES        (4U)
 #define APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES           (8U)
+#define APP_CRYPTO_AES_CTR_COUNTER_LENGTH_IN_BYTES      (4U)
 
 /* AES CTR KEY length in bytes */
 #define APP_CRYPTO_AES_CTR_128_KEY_LENGTH_IN_BYTES      (16U)
@@ -84,6 +85,12 @@ DTHE_Config gDtheConfig[1]=
 uint32_t gDtheConfigNum = 1;
 
 /* Testing https://www.ietf.org/rfc/rfc3686.txt */
+
+/* Counter Init Value */
+static uint8_t gCryptoAesCtrCounterValue[APP_CRYPTO_AES_CTR_COUNTER_LENGTH_IN_BYTES] __attribute__ ((aligned (APP_CRYPTO_AES_CTR_CACHE_ALIGNMENT))) =
+{
+    0x00, 0x00, 0x00, 0x01
+};
 
 /* Input buffer for encryption or decryption */
 static uint8_t gCryptoAesCtrPlainText1[APP_CRYPTO_AES_CTR_INOUT_LENGTH1] __attribute__ ((aligned (APP_CRYPTO_AES_CTR_CACHE_ALIGNMENT))) =
@@ -322,7 +329,8 @@ void crypto_aes_ctr_main(void *args)
     uint8_t ivRegisterValue[16U] = {0};
 
     memcpy(&ivRegisterValue[0U], &gCryptoNonce1[0U], APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES);
-    memcpy(&ivRegisterValue[4U], &gCryptoAesCtrIv1[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES], &gCryptoAesCtrIv1[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES+APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES], &gCryptoAesCtrCounterValue[0U], APP_CRYPTO_AES_CTR_COUNTER_LENGTH_IN_BYTES);
 
     /* Initialize the decryption parameters */
     aesParams.algoType          = DTHE_AES_CTR_MODE;
@@ -361,7 +369,8 @@ void crypto_aes_ctr_main(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     memcpy(&ivRegisterValue[0U], &gCryptoNonce2[0U], APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES);
-    memcpy(&ivRegisterValue[4U], &gCryptoAesCtrIv2[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES], &gCryptoAesCtrIv2[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES+APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES], &gCryptoAesCtrCounterValue[0U], APP_CRYPTO_AES_CTR_COUNTER_LENGTH_IN_BYTES);
 
     /* Initialize the decryption parameters */
     aesParams.algoType          = DTHE_AES_CTR_MODE;
@@ -400,7 +409,8 @@ void crypto_aes_ctr_main(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     memcpy(&ivRegisterValue[0U], &gCryptoNonce3[0U], APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES);
-    memcpy(&ivRegisterValue[4U], &gCryptoAesCtrIv3[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES], &gCryptoAesCtrIv3[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES+APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES], &gCryptoAesCtrCounterValue[0U], APP_CRYPTO_AES_CTR_COUNTER_LENGTH_IN_BYTES);
 
     /* Initialize the decryption parameters */
     aesParams.algoType          = DTHE_AES_CTR_MODE;
@@ -455,7 +465,8 @@ void crypto_aes_ctr_main(void *args)
     DebugP_log("[CRYPTO] DTHE AES CTR-192 example started!!\r\n");
 
     memcpy(&ivRegisterValue[0U], &gCryptoNonce4[0U], APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES);
-    memcpy(&ivRegisterValue[4U], &gCryptoAesCtrIv4[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES], &gCryptoAesCtrIv4[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES+APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES], &gCryptoAesCtrCounterValue[0U], APP_CRYPTO_AES_CTR_COUNTER_LENGTH_IN_BYTES);
 
     /* Initialize the decryption parameters */
     aesParams.algoType          = DTHE_AES_CTR_MODE;
@@ -494,7 +505,8 @@ void crypto_aes_ctr_main(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     memcpy(&ivRegisterValue[0U], &gCryptoNonce5[0U], APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES);
-    memcpy(&ivRegisterValue[4U], &gCryptoAesCtrIv5[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES], &gCryptoAesCtrIv5[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES+APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES], &gCryptoAesCtrCounterValue[0U], APP_CRYPTO_AES_CTR_COUNTER_LENGTH_IN_BYTES);
 
     /* Initialize the decryption parameters */
     aesParams.algoType          = DTHE_AES_CTR_MODE;
@@ -533,7 +545,8 @@ void crypto_aes_ctr_main(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     memcpy(&ivRegisterValue[0U], &gCryptoNonce6[0U], APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES);
-    memcpy(&ivRegisterValue[4U], &gCryptoAesCtrIv6[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES], &gCryptoAesCtrIv6[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES+APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES], &gCryptoAesCtrCounterValue[0U], APP_CRYPTO_AES_CTR_COUNTER_LENGTH_IN_BYTES);
 
     /* Initialize the decryption parameters */
     aesParams.algoType          = DTHE_AES_CTR_MODE;
@@ -576,7 +589,8 @@ void crypto_aes_ctr_main(void *args)
     DebugP_log("[CRYPTO] DTHE AES CTR-256 example started!!\r\n");
 
     memcpy(&ivRegisterValue[0U], &gCryptoNonce7[0U], APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES);
-    memcpy(&ivRegisterValue[4U], &gCryptoAesCtrIv7[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES], &gCryptoAesCtrIv7[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES+APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES], &gCryptoAesCtrCounterValue[0U], APP_CRYPTO_AES_CTR_COUNTER_LENGTH_IN_BYTES);
 
     /* Initialize the decryption parameters */
     aesParams.algoType          = DTHE_AES_CTR_MODE;
@@ -615,7 +629,8 @@ void crypto_aes_ctr_main(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     memcpy(&ivRegisterValue[0U], &gCryptoNonce8[0U], APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES);
-    memcpy(&ivRegisterValue[4U], &gCryptoAesCtrIv8[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES], &gCryptoAesCtrIv8[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES+APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES], &gCryptoAesCtrCounterValue[0U], APP_CRYPTO_AES_CTR_COUNTER_LENGTH_IN_BYTES);
 
     /* Initialize the decryption parameters */
     aesParams.algoType          = DTHE_AES_CTR_MODE;
@@ -654,7 +669,8 @@ void crypto_aes_ctr_main(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     memcpy(&ivRegisterValue[0U], &gCryptoNonce9[0U], APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES);
-    memcpy(&ivRegisterValue[4U], &gCryptoAesCtrIv9[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES], &gCryptoAesCtrIv9[0U], APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES);
+    memcpy(&ivRegisterValue[APP_CRYPTO_AES_CTR_NONCE_LENGTH_IN_BYTES+APP_CRYPTO_AES_CTR_IV_LENGTH_IN_BYTES], &gCryptoAesCtrCounterValue[0U], APP_CRYPTO_AES_CTR_COUNTER_LENGTH_IN_BYTES);
 
     /* Initialize the decryption parameters */
     aesParams.algoType          = DTHE_AES_CTR_MODE;

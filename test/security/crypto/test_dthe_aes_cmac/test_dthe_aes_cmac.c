@@ -306,7 +306,7 @@ int32_t test_aes_cmac_dthe_256(uint8_t *input, uint8_t *key, uint8_t *k1, uint8_
     (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
 
     /* Initialize the encryption parameters: */
-    aesParams.algoType          = DTHE_AES_CBC_MAC_MODE;
+    aesParams.algoType          = DTHE_AES_CMAC_MODE;
     aesParams.opType            = DTHE_AES_ENCRYPT;
     aesParams.useKEKMode        = FALSE;
     aesParams.ptrKey            = (uint32_t*)&key[0];
@@ -341,7 +341,7 @@ int32_t test_aes_cmac_dthe_128(uint8_t *input, uint8_t *key, uint8_t *k1, uint8_
     (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
 
     /* Initialize the encryption parameters: */
-    aesParams.algoType          = DTHE_AES_CBC_MAC_MODE;
+    aesParams.algoType          = DTHE_AES_CMAC_MODE;
     aesParams.opType            = DTHE_AES_ENCRYPT;
     aesParams.useKEKMode        = FALSE;
     aesParams.ptrKey            = (uint32_t*)&key[0];

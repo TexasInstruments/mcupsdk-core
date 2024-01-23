@@ -223,7 +223,7 @@ int32_t app_aes_cmac_dthe_256(uint8_t *input, uint8_t *key, uint8_t *k1, uint8_t
     (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
 
     /* Initialize the encryption parameters: */
-    aesParams.algoType          = DTHE_AES_CBC_MAC_MODE;
+    aesParams.algoType          = DTHE_AES_CMAC_MODE;
     aesParams.opType            = DTHE_AES_ENCRYPT;
     aesParams.useKEKMode        = FALSE;
     aesParams.ptrKey            = (uint32_t*)&key[0];
