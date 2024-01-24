@@ -43,7 +43,7 @@ comparison between the results of TMU mathlib APIs, SDK mathlib APIs and CLANG m
   make command (see \ref MAKEFILE_BUILD_PAGE)
 - Establish connections as mentioned in External Connections section
 - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
-- Use an Oscilloscope to view the square wave on DAC output pin.
+- View the console log for results
 
 
 # Sample Output

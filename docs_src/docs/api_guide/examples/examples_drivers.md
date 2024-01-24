@@ -321,6 +321,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 \cond SOC_AM263PX
 -# TMU
    -# \subpage EXAMPLES_DRIVERS_TMU_OPERATIONS
+   -# \subpage EXAMPLES_DRIVERS_TMU_CORES_SUPPORT
 \endcond
 -# UART
    -# \subpage EXAMPLES_DRIVERS_UART_ECHO
