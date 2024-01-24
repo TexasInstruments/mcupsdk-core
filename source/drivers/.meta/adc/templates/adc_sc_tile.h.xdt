@@ -1,0 +1,15 @@
+%%{
+    let module = system.modules['/drivers/adc/v2/adc_sc_tile_v2'];
+    let common   = system.getScript("/common");
+%%}
+/*
+ * ADC_SC_TILE
+*/
+
+/* ADC Instance Macros */
+% for(let i = 0; i < module.$instances.length; i++) {
+    // Test
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+#define `instance.$name`_BASE_ADDR (`config.baseAddr`)
+% }

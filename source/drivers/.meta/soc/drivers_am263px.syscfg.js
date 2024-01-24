@@ -3,10 +3,13 @@ let common = system.getScript("/common");
 
 const driverVer = {
     "adc": {
-        version: "v1",
+        version: "v2",
     },
     "adc_r": {
-        version: "v1",
+        version: "v2",
+    },
+    "adc_sc": {
+        version: "v2",
     },
     "bootloader": {
         version: "v0",
@@ -85,6 +88,7 @@ const driverVer = {
 const topModules_main = [
     "/drivers/adc/adc",
     "/drivers/adc/adc_r",
+    "/drivers/adc/adc_sc",
     "/drivers/bootloader/bootloader",
     "/drivers/cmpss/cmpss",
     "/drivers/dac/dac",

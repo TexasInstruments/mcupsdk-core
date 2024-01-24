@@ -285,6 +285,12 @@ function typeMatches(type, nameArray)
     return (false);
 }
 
+function getOtherContextNames()
+{
+    var contextNames = Object.keys(system.contexts)
+    return contextNames.filter(e => e !== system.context);
+}
+
 exports = {
     getSelfSysCfgCoreName,
     isSciClientSupported,
@@ -300,6 +306,7 @@ exports = {
     stringOrEmpty,
     typeMatches,
     getNodePath,
+    getOtherContextNames,
 
     validate: {
         checkSameInstanceName : function (instance, report) {

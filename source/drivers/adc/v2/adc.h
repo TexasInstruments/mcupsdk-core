@@ -312,10 +312,12 @@ typedef enum
     ADC_TRIGGER_ECAP13_SOCEVT = 0x55,  //!< eCAP13, SOCEVT
     ADC_TRIGGER_ECAP14_SOCEVT = 0x56,  //!< eCAP14, SOCEVT
     ADC_TRIGGER_ECAP15_SOCEVT = 0x57,  //!< eCAP15, SOCEVT
-    ADC_TRIGGER_RTI4 = 0x58,  //!< RTI Timer 4
-    ADC_TRIGGER_RTI5 = 0x59,  //!< RTI Timer 5
-    ADC_TRIGGER_RTI6 = 0x5A,  //!< RTI Timer 6
-    ADC_TRIGGER_RTI7 = 0x5B,  //!< RTI Timer 7
+    ADC_TRIGGER_RTI4         = 0x58,  //!< RTI Timer 4
+    ADC_TRIGGER_RTI5         = 0x59,  //!< RTI Timer 5
+    ADC_TRIGGER_RTI6         = 0x5A,  //!< RTI Timer 6
+    ADC_TRIGGER_RTI7         = 0x5B,  //!< RTI Timer 7
+    ADC_TRIGGER_REPEATER1    = 0x7E,    //!< Repeater 1
+    ADC_TRIGGER_REPEATER2    = 0x7F,    //!< Repeater 2
 } ADC_Trigger;
 
 //*****************************************************************************
@@ -457,6 +459,32 @@ typedef enum
     ADC_PRI_THRU_SOC14_HIPRI = 15,  //!< SOC 0-14 hi pri, SOC15 in round robin
     ADC_PRI_ALL_HIPRI = 16  //!< All priorities based on SOC number
 } ADC_PriorityMode;
+
+//*****************************************************************************
+//
+//! Values that can be passed to ADC_configOSDetectMode() as the \e modeVal
+//! parameter.
+//
+//*****************************************************************************
+typedef enum
+{
+    ADC_OSDETECT_MODE_DISABLED            = 0x0U,//!< Open/Shorts detection cir-
+                                                 //!< cuit(O/S DC) is disabled
+    ADC_OSDETECT_MODE_VSSA                = 0x1U,//!< O/S DC is enabled at zero
+                                                 //!< scale
+    ADC_OSDETECT_MODE_VDDA                = 0x2U,//!< O/S DC is enabled at full
+                                                 //!< scale
+    ADC_OSDETECT_MODE_5BY12_VDDA          = 0x3U,//!< O/S DC is enabled at 5/12
+                                                 //!< scale
+    ADC_OSDETECT_MODE_7BY12_VDDA          = 0x4U,//!< O/S DC is enabled at 7/12
+                                                 //!< scale
+    ADC_OSDETECT_MODE_5K_PULLDOWN_TO_VSSA = 0x5U,//!< O/S DC is enabled at 5K
+                                                 //!< pulldown to VSSA
+    ADC_OSDETECT_MODE_5K_PULLUP_TO_VDDA   = 0x6U,//!< O/S DC is enabled at 5K
+                                                 //!< pullup to VDDA
+    ADC_OSDETECT_MODE_7K_PULLDOWN_TO_VSSA = 0x7U //!< O/S DC is enabled at 7K
+                                                 //!< pulldown to VSSA
+} ADC_OSDetectMode;
 
 //*****************************************************************************
 //
@@ -1659,6 +1687,29 @@ ADC_setSOCPriority(uint32_t base, ADC_PriorityMode priMode)
     HW_WR_REG16(base + CSL_ADC_ADCSOCPRICTL,
         ((HW_RD_REG16(base + CSL_ADC_ADCSOCPRICTL) &
         ~CSL_ADC_ADCSOCPRICTL_SOCPRIORITY_MASK) | (uint16_t)priMode));
+}
+
+//*****************************************************************************
+//
+//! Configures Open/Shorts Detection Circuit Mode.
+//!
+//! \param base is the base address of the ADC.
+//! \param modeVal is the desired open/shorts detection circuit mode.
+//!
+//! This function configures the open/shorts detection circuit mode of the ADC.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ADC_configOSDetectMode(uint32_t base, ADC_OSDetectMode modeVal)
+{
+    //
+    // Configure open/shorts detection circuit mode.
+    //
+    HW_WR_REG16(base + CSL_ADC_ADCOSDETECT,
+        ((HW_RD_REG16(base + CSL_ADC_ADCOSDETECT) &
+        ~CSL_ADC_ADCOSDETECT_DETECTCFG_MASK) | (uint16_t)modeVal));
 }
 
 //*****************************************************************************

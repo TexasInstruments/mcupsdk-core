@@ -103,6 +103,18 @@ let ADC_Trigger = [
     { name: "ADC_TRIGGER_ECAP7_SOCEVT", displayName: "eCAP7, SOCEVT" },
     { name: "ADC_TRIGGER_ECAP8_SOCEVT", displayName: "eCAP8, SOCEVT" },
     { name: "ADC_TRIGGER_ECAP9_SOCEVT", displayName: "eCAP9, SOCEVT" },
+    { name: "ADC_TRIGGER_ECAP10_SOCEVT", displayName: "eCAP10, SOCEVT" },
+    { name: "ADC_TRIGGER_ECAP11_SOCEVT", displayName: "eCAP11, SOCEVT" },
+    { name: "ADC_TRIGGER_ECAP12_SOCEVT", displayName: "eCAP12, SOCEVT" },
+    { name: "ADC_TRIGGER_ECAP13_SOCEVT", displayName: "eCAP13, SOCEVT" },
+    { name: "ADC_TRIGGER_ECAP14_SOCEVT", displayName: "eCAP14, SOCEVT" },
+    { name: "ADC_TRIGGER_ECAP15_SOCEVT", displayName: "eCAP15, SOCEVT" },
+    { name: "ADC_TRIGGER_RTI4", displayName: "RTI Timer 4" },
+    { name: "ADC_TRIGGER_RTI5", displayName: "RTI Timer 5" },
+    { name: "ADC_TRIGGER_RTI6", displayName: "RTI Timer 6" },
+    { name: "ADC_TRIGGER_RTI7", displayName: "RTI Timer 7" },
+	{ name: "ADC_TRIGGER_REPEATER1", displayName: "Repeater 1" },
+	{ name: "ADC_TRIGGER_REPEATER2", displayName: "Repeater 2" },
 ]
 let ADC_Channel = [
 	{ name: "ADC_CH_ADCIN0", displayName: "single-ended, ADCIN0" },
@@ -111,13 +123,15 @@ let ADC_Channel = [
 	{ name: "ADC_CH_ADCIN3", displayName: "single-ended, ADCIN3" },
 	{ name: "ADC_CH_ADCIN4", displayName: "single-ended, ADCIN4" },
 	{ name: "ADC_CH_ADCIN5", displayName: "single-ended, ADCIN5" },
+    { name: "ADC_CH_CAL0", displayName: "single-ended, CAL0" },
+	{ name: "ADC_CH_CAL1", displayName: "single-ended, CAL1" },
 	{ name: "ADC_CH_ADCIN0_ADCIN1", displayName: "differential, ADCIN0 and ADCIN1" },
 	{ name: "ADC_CH_ADCIN1_ADCIN0", displayName: "differential, ADCIN1 and ADCIN0" },
 	{ name: "ADC_CH_ADCIN2_ADCIN3", displayName: "differential, ADCIN2 and ADCIN3" },
 	{ name: "ADC_CH_ADCIN3_ADCIN2", displayName: "differential, ADCIN3 and ADCIN2" },
 	{ name: "ADC_CH_ADCIN4_ADCIN5", displayName: "differential, ADCIN4 and ADCIN5" },
     { name: "ADC_CH_ADCIN5_ADCIN4", displayName: "differential, ADCIN5 and ADCIN4" },
-
+    { name: "ADC_CH_CAL0_CAL1", displayName: "single-ended, CAL0 and CAL1" },
 ]
 let ADC_R_Channel = [
 	{ name: "ADC_CH_ADCIN0", displayName: "single-ended, ADC_R_IN0" },
@@ -202,6 +216,174 @@ let ADC_OSDetectMode = [
 	{ name: "ADC_OSDETECT_MODE_5K_PULLUP_TO_VDDA", displayName: "O/S DC is enabled at 5K" },
 	{ name: "ADC_OSDETECT_MODE_7K_PULLDOWN_TO_VSSA", displayName: "O/S DC is enabled at 7K" },
 ]
+let ADC_OffsetTrim = [
+	{ name: "ADC_OFFSET_TRIM_COMMON", displayName: "Common Trim register for all" },
+	{ name: "ADC_OFFSET_TRIM_INDIVIDUAL", displayName: "Individual Trim registers for" },
+]
+let ADC_SyncInput = [
+	{ name: "ADC_SYNCIN_DISABLE", displayName: "ADC Syncin is disabled" },
+    { name: "ADC_SYNCIN_EPWM0SYNCOUT", displayName: "ADC Syncin is EPWM0SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM1SYNCOUT", displayName: "ADC Syncin is EPWM1SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM2SYNCOUT", displayName: "ADC Syncin is EPWM2SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM3SYNCOUT", displayName: "ADC Syncin is EPWM3SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM4SYNCOUT", displayName: "ADC Syncin is EPWM4SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM5SYNCOUT", displayName: "ADC Syncin is EPWM5SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM6SYNCOUT", displayName: "ADC Syncin is EPWM6SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM7SYNCOUT", displayName: "ADC Syncin is EPWM7SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM8SYNCOUT", displayName: "ADC Syncin is EPWM8SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM9SYNCOUT", displayName: "ADC Syncin is EPWM9SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM10SYNCOUT", displayName: "ADC Syncin is EPWM10SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM11SYNCOUT", displayName: "ADC Syncin is EPWM11SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM12SYNCOUT", displayName: "ADC Syncin is EPWM12SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM13SYNCOUT", displayName: "ADC Syncin is EPWM13SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM14SYNCOUT", displayName: "ADC Syncin is EPWM14SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM15SYNCOUT", displayName: "ADC Syncin is EPWM15SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM16SYNCOUT", displayName: "ADC Syncin is EPWM16SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM17SYNCOUT", displayName: "ADC Syncin is EPWM17SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM18SYNCOUT", displayName: "ADC Syncin is EPWM18SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM19SYNCOUT", displayName: "ADC Syncin is EPWM19SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM20SYNCOUT", displayName: "ADC Syncin is EPWM20SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM21SYNCOUT", displayName: "ADC Syncin is EPWM21SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM22SYNCOUT", displayName: "ADC Syncin is EPWM22SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM23SYNCOUT", displayName: "ADC Syncin is EPWM23SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM24SYNCOUT", displayName: "ADC Syncin is EPWM24SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM25SYNCOUT", displayName: "ADC Syncin is EPWM25SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM26SYNCOUT", displayName: "ADC Syncin is EPWM26SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM27SYNCOUT", displayName: "ADC Syncin is EPWM27SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM28SYNCOUT", displayName: "ADC Syncin is EPWM28SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM29SYNCOUT", displayName: "ADC Syncin is EPWM29SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM30SYNCOUT", displayName: "ADC Syncin is EPWM30SYNCOUT" },
+	{ name: "ADC_SYNCIN_EPWM31SYNCOUT", displayName: "ADC Syncin is EPWM31SYNCOUT" },
+	{ name: "ADC_SYNCIN_ECAP0YNCOUT", displayName: "ADC Syncin is ECAP0YNCOUT" },
+	{ name: "ADC_SYNCIN_ECAP1YNCOUT", displayName: "ADC Syncin is ECAP1YNCOUT" },
+	{ name: "ADC_SYNCIN_ECAP2SYNCOUT", displayName: "ADC Syncin is ECAP2SYNCOUT" },
+	{ name: "ADC_SYNCIN_ECAP3SYNCOUT", displayName: "ADC Syncin is ECAP3SYNCOUT" },
+	{ name: "ADC_SYNCIN_ECAP4SYNCOUT", displayName: "ADC Syncin is ECAP4SYNCOUT" },
+	{ name: "ADC_SYNCIN_ECAP5SYNCOUT", displayName: "ADC Syncin is ECAP5SYNCOUT" },
+	{ name: "ADC_SYNCIN_ECAP6SYNCOUT", displayName: "ADC Syncin is ECAP6SYNCOUT" },
+	{ name: "ADC_SYNCIN_ECAP7SYNCOUT", displayName: "ADC Syncin is ECAP7SYNCOUT" },
+	{ name: "ADC_SYNCIN_ECAP8SYNCOUT", displayName: "ADC Syncin is ECAP8SYNCOUT" },
+	{ name: "ADC_SYNCIN_ECAP9SYNCOUT", displayName: "ADC Syncin is ECAP9SYNCOUT" },
+	{ name: "ADC_SYNCIN_ECAP10SYNCOUT", displayName: "ADC Syncin is ECAP10SYNCOUT" },
+	{ name: "ADC_SYNCIN_ECAP11SYNCOUT", displayName: "ADC Syncin is ECAP11SYNCOUT" },
+	{ name: "ADC_SYNCIN_ECAP12SYNCOUT", displayName: "ADC Syncin is ECAP12SYNCOUT" },
+	{ name: "ADC_SYNCIN_ECAP13SYNCOUT", displayName: "ADC Syncin is ECAP13SYNCOUT" },
+	{ name: "ADC_SYNCIN_ECAP14SYNCOUT", displayName: "ADC Syncin is ECAP14SYNCOUT" },
+	{ name: "ADC_SYNCIN_ECAP15SYNCOUT", displayName: "ADC Syncin is ECAP15SYNCOUT" },
+	{ name: "ADC_SYNCIN_INPUTXBAROUTPUT6", displayName: "ADC Syncin is INPUTXBAROUTPUT6" },
+	{ name: "ADC_SYNCIN_INPUTXBAROUTPUT7", displayName: "ADC Syncin is INPUTXBAROUTPUT7" },
+	{ name: "ADC_SYNCIN_CPSW_CTPS_SYNC", displayName: "ADC Syncin is CPSW_CTPS_SYNC" },
+]
+let ADC_PPBIntSrcSelect = [
+	{ name: "ADC_PPB_OS_INT_1", displayName: "PCount generates PPB interrupt" },
+	{ name: "ADC_PPB_OS_INT_2", displayName: "PCount/Sync generates PPB interrupt" },
+]
+let ADC_ExtChannel = [
+	{ name: "ADC_CH_ADCINX_0", displayName: "ADCINX.0 is converted" },
+	{ name: "ADC_CH_ADCINX_1", displayName: "ADCINX.1 is converted" },
+	{ name: "ADC_CH_ADCINX_2", displayName: "ADCINX.2 is converted" },
+	{ name: "ADC_CH_ADCINX_3", displayName: "ADCINX.3 is converted" },
+]
+let ADC_IntTrigger = [
+	{ name: "ADC_INT_TRIGGER_EOC0", displayName: "SOC/EOC0" },
+	{ name: "ADC_INT_TRIGGER_EOC1", displayName: "SOC/EOC1" },
+	{ name: "ADC_INT_TRIGGER_EOC2", displayName: "SOC/EOC2" },
+	{ name: "ADC_INT_TRIGGER_EOC3", displayName: "SOC/EOC3" },
+	{ name: "ADC_INT_TRIGGER_EOC4", displayName: "SOC/EOC4" },
+	{ name: "ADC_INT_TRIGGER_EOC5", displayName: "SOC/EOC5" },
+	{ name: "ADC_INT_TRIGGER_EOC6", displayName: "SOC/EOC6" },
+	{ name: "ADC_INT_TRIGGER_EOC7", displayName: "SOC/EOC7" },
+	{ name: "ADC_INT_TRIGGER_EOC8", displayName: "SOC/EOC8" },
+	{ name: "ADC_INT_TRIGGER_EOC9", displayName: "SOC/EOC9" },
+	{ name: "ADC_INT_TRIGGER_EOC10", displayName: "SOC/EOC10" },
+	{ name: "ADC_INT_TRIGGER_EOC11", displayName: "SOC/EOC11" },
+	{ name: "ADC_INT_TRIGGER_EOC12", displayName: "SOC/EOC12" },
+	{ name: "ADC_INT_TRIGGER_EOC13", displayName: "SOC/EOC13" },
+	{ name: "ADC_INT_TRIGGER_EOC14", displayName: "SOC/EOC14" },
+	{ name: "ADC_INT_TRIGGER_EOC15", displayName: "SOC/EOC15" },
+	{ name: "ADC_INT_TRIGGER_OSINT1", displayName: "OSINT1" },
+	{ name: "ADC_INT_TRIGGER_OSINT2", displayName: "OSINT2" },
+	{ name: "ADC_INT_TRIGGER_OSINT3", displayName: "OSINT3" },
+	{ name: "ADC_INT_TRIGGER_OSINT4", displayName: "OSINT4" },
+]
+let ADC_PPBCompSource = [
+	{ name: "ADC_PPB_COMPSOURCE_RESULT", displayName: "PPB compare source is ADCRESULT" },
+	{ name: "ADC_PPB_COMPSOURCE_PSUM", displayName: "PPB compare source is PSUM" },
+	{ name: "ADC_PPB_COMPSOURCE_SUM", displayName: "PPB compare source is SUM" },
+]
+let ADC_Select = [
+	{ name: "ADC_0", displayName: "Select ADC0 instance" },
+	{ name: "ADC_1", displayName: "Select ADC1 instance" },
+	{ name: "ADC_2", displayName: "Select ADC2 instance" },
+    { name: "ADC_3", displayName: "Select ADC3 instance" },
+	{ name: "ADC_4", displayName: "Select ADC4 instance" },
+]
+let ADC_ResultSelect = [
+	{ name: "ADC_RESULT0", displayName: "Select ADC Result 0" },
+	{ name: "ADC_RESULT1", displayName: "Select ADC Result 1" },
+	{ name: "ADC_RESULT2", displayName: "Select ADC Result 2" },
+	{ name: "ADC_RESULT3", displayName: "Select ADC Result 3" },
+	{ name: "ADC_RESULT4", displayName: "Select ADC Result 4" },
+	{ name: "ADC_RESULT5", displayName: "Select ADC Result 5" },
+	{ name: "ADC_RESULT6", displayName: "Select ADC Result 6" },
+	{ name: "ADC_RESULT7", displayName: "Select ADC Result 7" },
+	{ name: "ADC_RESULT8", displayName: "Select ADC Result 8" },
+	{ name: "ADC_RESULT9", displayName: "Select ADC Result 9" },
+	{ name: "ADC_RESULT10", displayName: "Select ADC Result 10" },
+	{ name: "ADC_RESULT11", displayName: "Select ADC Result 11" },
+	{ name: "ADC_RESULT12", displayName: "Select ADC Result 12" },
+	{ name: "ADC_RESULT13", displayName: "Select ADC Result 13" },
+	{ name: "ADC_RESULT14", displayName: "Select ADC Result 14" },
+	{ name: "ADC_RESULT15", displayName: "Select ADC Result 15" },
+]
+let ADC_SafetyCheckerInput = [
+	{ name: "ADC_SAFETY_CHECKER_INPUT_DISABLE", displayName: "Safety checker i/p disabled" },
+	{ name: "ADC_SAFETY_CHECKER_INPUT_SOCx", displayName: "Safety checker i/p is SOCx" },
+	{ name: "ADC_SAFETY_CHECKER_INPUT_PPBx", displayName: "Safety checker i/p is PPBx" },
+	{ name: "ADC_SAFETY_CHECKER_INPUT_PPBSUMx", displayName: "Safety checker i/p is PPBSUMx" },
+]
+let ADC_SafetyCheckInst = [
+	{ name: "ADC_SAFETY_CHECK1", displayName: "Safety Check Result 1" },
+	{ name: "ADC_SAFETY_CHECK2", displayName: "Safety Check Result 2" },
+]
+let ADC_SafetyCheckEvent = [
+	{ name: "ADC_SAFETY_CHECK_EVENT1", displayName: "Safety Check Event 1" },
+	{ name: "ADC_SAFETY_CHECK_EVENT2", displayName: "Safety Check Event 2" },
+	{ name: "ADC_SAFETY_CHECK_EVENT3", displayName: "Safety Check Event 3" },
+	{ name: "ADC_SAFETY_CHECK_EVENT4", displayName: "Safety Check Event 4" },
+]
+let ADC_SafetyCheckResult = [
+	{ name: "ADC_SAFETY_CHECK_RES1OVF", displayName: "Safety Check Result1 Overflow" },
+	{ name: "ADC_SAFETY_CHECK_RES2OVF", displayName: "Safety Check Result2 Overflow" },
+	{ name: "ADC_SAFETY_CHECK_OOT", displayName: "Safety Check OOT" },
+]
+let ADC_Checker = [
+	{ name: "ADC_SAFETY_CHECKER1", displayName: "Safety Checker1" },
+	{ name: "ADC_SAFETY_CHECKER2", displayName: "Safety Checker2" },
+	{ name: "ADC_SAFETY_CHECKER3", displayName: "Safety Checker3" },
+	{ name: "ADC_SAFETY_CHECKER4", displayName: "Safety Checker4" },
+	{ name: "ADC_SAFETY_CHECKER5", displayName: "Safety Checker5" },
+	{ name: "ADC_SAFETY_CHECKER6", displayName: "Safety Checker6" },
+	{ name: "ADC_SAFETY_CHECKER7", displayName: "Safety Checker7" },
+	{ name: "ADC_SAFETY_CHECKER8", displayName: "Safety Checker8" },
+    { name: "ADC_SAFETY_CHECKER9", displayName: "Safety Checker9" },
+	{ name: "ADC_SAFETY_CHECKER10", displayName: "Safety Checker10" },
+	{ name: "ADC_SAFETY_CHECKER11", displayName: "Safety Checker11" },
+	{ name: "ADC_SAFETY_CHECKER12", displayName: "Safety Checker12" },
+]
+let ADC_SafetyCheckFlag = [
+	{ name: "ADC_SAFETY_CHECK_OOT_FLG", displayName: "Safety Check Out-of-Tolerance Flag" },
+	{ name: "ADC_SAFETY_CHECK_RES1OVF_FLG", displayName: "Safety Check Result1 Overflow Flag" },
+	{ name: "ADC_SAFETY_CHECK_RES2OVF_FLG", displayName: "Safety Check Result2 Overflow Flag" },
+]
+let ADC_RepInstance = [
+	{ name: "ADC_REPINST1", displayName: "Select ADC repeater instance 1" },
+	{ name: "ADC_REPINST2", displayName: "Select ADC repeater instance 2" },
+]
+let ADC_RepMode = [
+	{ name: "ADC_REPMODE_OVERSAMPLING", displayName: "ADC repeater mode is oversampling" },
+	{ name: "ADC_REPMODE_UNDERSAMPLING", displayName: "ADC repeater mode is undersampling" },
+]
 let ADC_EVT = [
 	{ name: "ADC_EVT_TRIPHI", displayName: "Trip High Event" },
 	{ name: "ADC_EVT_TRIPLO", displayName: "Trip Low Event" },
@@ -225,6 +407,26 @@ let ADC_FORCE = [
 	{ name: "ADC_FORCE_SOC14", displayName: "SW trigger ADC SOC 14" },
 	{ name: "ADC_FORCE_SOC15", displayName: "SW trigger ADC SOC 15" },
 ]
+// let ADC_REPEATER = [
+// 	{ name: "ADC_REPEATER_MODULE_BUSY", displayName: "REPEATER MODULE BUSY" },
+// 	{ name: "ADC_REPEATER_PHASE_OVERFLOW", displayName: "REPEATER PHASE OVERFLOW" },
+// 	{ name: "ADC_REPEATER_TRIGGER_OVERFLOW", displayName: "REPEATER TRIGGER OVERFLOW" },
+// ]
+// let ADC_REP1CTL = [
+// 	{ name: "ADC_REP1CTL_ACTIVEMODE_S", displayName: "REP1CTL ACTIVEMODE S" },
+// 	{ name: "ADC_REP1CTL_MODULEBUSY_S", displayName: "REP1CTL MODULEBUSY S" },
+// ]
+// let ADC_REPSTATUS_MASK = [
+// 	{ name: "ADC_REPSTATUS_MASK", displayName: "REPSTATUS MASK" },
+// ]
+// let ADC_SAFECHECK = [
+// 	{ name: "ADC_SAFECHECK_RESULT1_READY", displayName: "SAFECHECK RESULT1 READY" },
+// 	{ name: "ADC_SAFECHECK_RESULT2_READY", displayName: "SAFECHECK RESULT2 READY" },
+// 	{ name: "ADC_SAFECHECK_RESULT_OOT", displayName: "SAFECHECK RESULT OOT" },
+// ]
+// let ADC_SAFECHECK_STATUS_MASK = [
+// 	{ name: "ADC_SAFECHECK_STATUS_MASK", displayName: "SAFECHECK STATUS MASK" },
+// ]
 let ADC_Sysclk_Mhz = 200
 function getInterfaceName(inst) {
 
@@ -234,6 +436,15 @@ function getInterfaceName(inst) {
 function getInterfaceNameAdcR(inst) {
     return "ADC_R";
 }
+
+function getInterfaceNameAdcSC(inst) {
+    return "ADC_SC";
+}
+
+function getInterfaceNameAdcSCTILE(inst) {
+    return "ADC_SC_TILE";
+}
+
 const staticConfig = [
     {
         name: "ADC0",
@@ -277,6 +488,71 @@ const staticConfig = [
         resultBaseAddr : "CSL_CONTROLSS_ADCR1_RESULT_U_BASE",
         instanceNumber : "6",
     },
+    {
+        name: "ADC_SAFETY_CHECKER1",
+        baseAddr: "CSL_CONTROLSS_ADCSAFE0_U_BASE",
+        instanceNumber : "0",
+    },
+    {
+        name: "ADC_SAFETY_CHECKER2",
+        baseAddr: "CSL_CONTROLSS_ADCSAFE1_U_BASE",
+        instanceNumber : "1",
+    },
+    {
+        name: "ADC_SAFETY_CHECKER3",
+        baseAddr: "CSL_CONTROLSS_ADCSAFE2_U_BASE",
+        instanceNumber : "2",
+    },
+    {
+        name: "ADC_SAFETY_CHECKER4",
+        baseAddr: "CSL_CONTROLSS_ADCSAFE3_U_BASE",
+        instanceNumber : "3",
+    },
+    {
+        name: "ADC_SAFETY_CHECKER5",
+        baseAddr: "CSL_CONTROLSS_ADCSAFE4_U_BASE",
+        instanceNumber : "4",
+    },
+    {
+        name: "ADC_SAFETY_CHECKER6",
+        baseAddr: "CSL_CONTROLSS_ADCSAFE5_U_BASE",
+        instanceNumber : "5",
+    },
+    {
+        name: "ADC_SAFETY_CHECKER7",
+        baseAddr: "CSL_CONTROLSS_ADCSAFE6_U_BASE",
+        instanceNumber : "6",
+    },
+    {
+        name: "ADC_SAFETY_CHECKER8",
+        baseAddr: "CSL_CONTROLSS_ADCSAFE7_U_BASE",
+        instanceNumber : "7",
+    },
+    {
+        name: "ADC_SAFETY_CHECKER9",
+        baseAddr: "CSL_CONTROLSS_ADCSAFE8_U_BASE",
+        instanceNumber : "8",
+    },
+    {
+        name: "ADC_SAFETY_CHECKER10",
+        baseAddr: "CSL_CONTROLSS_ADCSAFE9_U_BASE",
+        instanceNumber : "9",
+    },
+    {
+        name: "ADC_SAFETY_CHECKER11",
+        baseAddr: "CSL_CONTROLSS_ADCSAFE10_U_BASE",
+        instanceNumber : "10",
+    },
+    {
+        name: "ADC_SAFETY_CHECKER12",
+        baseAddr: "CSL_CONTROLSS_ADCSAFE11_U_BASE",
+        instanceNumber : "11",
+    },
+    {
+        name: "ADC_SC_TILE_1",
+        baseAddr: "CSL_CONTROLSS_ADCSAFE_EVENT_AGG_U_BASE",
+        instanceNumber : "1",
+    },
 ];
 
 const staticConfigAdcR = [
@@ -299,10 +575,28 @@ exports = {
 	ADC_IntSOCTrigger: ADC_IntSOCTrigger,
 	ADC_PriorityMode: ADC_PriorityMode,
 	ADC_OSDetectMode: ADC_OSDetectMode,
+    ADC_OffsetTrim: ADC_OffsetTrim,
+    ADC_SyncInput: ADC_SyncInput,
+    ADC_PPBIntSrcSelect: ADC_PPBIntSrcSelect,
+    ADC_ExtChannel: ADC_ExtChannel,
+    ADC_IntTrigger: ADC_IntTrigger,
+    ADC_PPBCompSource: ADC_PPBCompSource,
+    ADC_Select: ADC_Select,
+    ADC_ResultSelect: ADC_ResultSelect,
+    ADC_SafetyCheckerInput: ADC_SafetyCheckerInput,
+    ADC_SafetyCheckInst: ADC_SafetyCheckInst,
+    ADC_SafetyCheckEvent: ADC_SafetyCheckEvent,
+    ADC_SafetyCheckResult: ADC_SafetyCheckResult,
+    ADC_Checker: ADC_Checker,
+    ADC_SafetyCheckFlag: ADC_SafetyCheckFlag,
+    ADC_RepInstance: ADC_RepInstance,
+    ADC_RepMode: ADC_RepMode,
 	ADC_EVT: ADC_EVT,
 	ADC_FORCE: ADC_FORCE,
     ADC_Sysclk_Mhz: ADC_Sysclk_Mhz,
     getInterfaceName,
     getInterfaceNameAdcR,
     getStaticConfigArr,
+    getInterfaceNameAdcSC,
+    getInterfaceNameAdcSCTILE,
 }
