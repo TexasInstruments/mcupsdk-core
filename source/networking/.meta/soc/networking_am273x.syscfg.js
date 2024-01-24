@@ -7,7 +7,7 @@ const topModules_main = [
 
 const driverVer = {
     "enet_cpsw": {
-        version: "v1",
+        version: "am273x",
     },
 }
 

@@ -7,7 +7,7 @@ const topModules = [
 
 const driverVer = {
     "enet_cpsw": {
-        version: "v2",
+        version: "awr294x",
     },
 }
 

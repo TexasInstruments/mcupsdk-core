@@ -13,7 +13,7 @@ const topModules_mcu = [
 
 const driverVer = {
     "enet_cpsw": {
-        version: "v0",
+        version: "am64x_am243x",
     },
 }
 
