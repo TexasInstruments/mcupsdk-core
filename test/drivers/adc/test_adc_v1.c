@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -271,6 +271,9 @@ int ADC_channels_list[5][6] = {
 #define CONFIG_EDMA0 (0U)
 static EDMA_Object gEdmaObjects[CONFIG_EDMA_NUM_INSTANCES];
 
+/* For AM263Px, these are defined within the syscfg for the PMIC configurations*/
+#ifndef SOC_AM263PX
+
 /* EDMA Driver handles */
 EDMA_Handle gEdmaHandle[CONFIG_EDMA_NUM_INSTANCES];
 
@@ -281,6 +284,8 @@ EDMA_Params gEdmaParams[CONFIG_EDMA_NUM_INSTANCES] =
         .intrEnable = TRUE,
     },
 };
+#endif
+
 static EDMA_Attrs gEdmaAttrs[CONFIG_EDMA_NUM_INSTANCES] =
 {
     {
@@ -714,6 +719,245 @@ static void ADC_setPrescalerApiCheck(void *args)
 
     /* Check if the value was written correctly */
     TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(CSL_CONTROLSS_ADC0_U_BASE + CSL_ADC_ADCCTL2) & CSL_ADC_ADCCTL2_PRESCALE_MASK), ADC_CLK_DIV_7_5);
+
+    /* Adding type 4 API checks for AM263Px */
+#ifdef SOC_AM263PX
+
+    ADC_enableAltDMATiming(CSL_CONTROLSS_ADC0_U_BASE);
+    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(CSL_CONTROLSS_ADC0_U_BASE + CSL_ADC_ADCCTL1) & CSL_ADC_ADCCTL1_TDMAEN_MASK), CSL_ADC_ADCCTL1_TDMAEN_MASK);
+
+    ADC_disableAltDMATiming(CSL_CONTROLSS_ADC0_U_BASE);
+    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(CSL_CONTROLSS_ADC0_U_BASE + CSL_ADC_ADCCTL1) & CSL_ADC_ADCCTL1_TDMAEN_MASK), 0);
+
+    ADC_enableExtMuxPreselect(CSL_CONTROLSS_ADC0_U_BASE);
+    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(CSL_CONTROLSS_ADC0_U_BASE + CSL_ADC_ADCCTL1) & CSL_ADC_ADCCTL1_EXTMUXPRESELECTEN_MASK), CSL_ADC_ADCCTL1_EXTMUXPRESELECTEN_MASK);
+
+    ADC_disableExtMuxPreselect(CSL_CONTROLSS_ADC0_U_BASE);
+    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(CSL_CONTROLSS_ADC0_U_BASE + CSL_ADC_ADCCTL1) & CSL_ADC_ADCCTL1_EXTMUXPRESELECTEN_MASK), 0);
+
+    /* get API. need Funcitonal Check only.
+     ADC_getIntResultStatus(uint32_t base, ADC_IntNumber adcIntNum) */
+
+    for(ADC_PPBNumber ppbNumber = ADC_PPB_NUMBER1; ppbNumber <= ADC_PPB_NUMBER4; ppbNumber++ )
+    {
+        uint32_t ppbOffset = (ADC_ADCPPBxLIMIT_STEP * (uint32_t)ppbNumber) +
+                CSL_ADC_ADCPPB1LIMIT;
+        for(uint16_t limit = 0; limit <= CSL_ADC_ADCPPB1LIMIT_LIMIT_MAX; limit++)
+        {
+            ADC_setPPBCountLimit(CSL_CONTROLSS_ADC0_U_BASE, ppbNumber, limit);
+            TEST_ASSERT_EQUAL_INT32(
+                (HW_RD_REG16(CSL_CONTROLSS_ADC0_U_BASE + ppbOffset) & CSL_ADC_ADCPPB1LIMIT_LIMIT_MASK), limit);
+        }
+
+        /* ADC_readPPBPCount - get API. Need Functional test */
+        /* ADC_readPPBPSum - get API. Need Functional test */
+        /* ADC_readPPBPMax - get API. Need Functional test */
+        /* ADC_readPPBPMin - get API. Need Functional test */
+        /* ADC_readPPBPMaxIndex - get API. Need Functional test */
+        /* ADC_readPPBPMinIndex - get API. Need Functional test */
+        ppbOffset = (ADC_ADCPPBx_STEP * (uint32_t)ppbNumber) +
+                    CSL_ADC_ADCPPB1CONFIG;
+        ADC_enablePPBAbsoluteValue( CSL_CONTROLSS_ADC0_U_BASE, ppbNumber);
+        TEST_ASSERT_EQUAL_INT32(
+                (HW_RD_REG16(CSL_CONTROLSS_ADC0_U_BASE + ppbOffset) & CSL_ADC_ADCPPB1CONFIG_ABSEN_MASK), CSL_ADC_ADCPPB1CONFIG_ABSEN_MASK);
+
+        ADC_disablePPBAbsoluteValue( CSL_CONTROLSS_ADC0_U_BASE, ppbNumber);
+        TEST_ASSERT_EQUAL_INT32(
+                (HW_RD_REG16(CSL_CONTROLSS_ADC0_U_BASE + ppbOffset) & CSL_ADC_ADCPPB1CONFIG_ABSEN_MASK), 0);
+
+        ppbOffset = (ADC_ADCPPBxCONFIG2_STEP * (uint32_t)ppbNumber) +
+                    CSL_ADC_ADCPPB1CONFIG2;
+
+        for(uint16_t shiftVal = 0; shiftVal <= 10u; shiftVal++)
+        {
+
+            ADC_setPPBShiftValue(CSL_CONTROLSS_ADC0_U_BASE, ppbNumber, shiftVal);
+            TEST_ASSERT_EQUAL_INT32(
+                (HW_RD_REG16(CSL_CONTROLSS_ADC0_U_BASE + ppbOffset) & CSL_ADC_ADCPPB1CONFIG2_SHIFT_MASK), shiftVal << CSL_ADC_ADCPPB1CONFIG2_SHIFT_SHIFT);
+
+        }
+
+        for(uint16_t syncInput = ADC_SYNCIN_DISABLE; syncInput <= ADC_SYNCIN_CPSW_CTPS_SYNC; syncInput++ )
+        {
+            ADC_selectPPBSyncInput(CSL_CONTROLSS_ADC0_U_BASE, ppbNumber, syncInput);
+            TEST_ASSERT_EQUAL_INT32(
+                (HW_RD_REG16(CSL_CONTROLSS_ADC0_U_BASE + ppbOffset) & CSL_ADC_ADCPPB1CONFIG2_SYNCINSEL_MASK), syncInput << CSL_ADC_ADCPPB1CONFIG2_SYNCINSEL_SHIFT);
+
+        }
+
+        /* ADC_forcePPBSync A write only API. need functional test */
+
+        for(uint16_t osIntSrc = ADC_PPB_OS_INT_1; osIntSrc <= ADC_PPB_OS_INT_2; osIntSrc++)
+        {
+            ADC_selectPPBOSINTSource(CSL_CONTROLSS_ADC0_U_BASE, ppbNumber, osIntSrc);
+            TEST_ASSERT_EQUAL_INT32(
+                (HW_RD_REG16(CSL_CONTROLSS_ADC0_U_BASE + ppbOffset) & CSL_ADC_ADCPPB1CONFIG2_OSINTSEL_MASK), osIntSrc << CSL_ADC_ADCPPB1CONFIG2_OSINTSEL_SHIFT);
+
+        }
+
+        for(uint16_t compSrc = ADC_PPB_COMPSOURCE_RESULT; compSrc <= ADC_PPB_COMPSOURCE_SUM; compSrc++)
+        {
+            ADC_selectPPBCompareSource(CSL_CONTROLSS_ADC0_U_BASE, ppbNumber, compSrc);
+            TEST_ASSERT_EQUAL_INT32(
+                (HW_RD_REG16(CSL_CONTROLSS_ADC0_U_BASE + ppbOffset) & CSL_ADC_ADCPPB1CONFIG2_COMPSEL_MASK), compSrc << CSL_ADC_ADCPPB1CONFIG2_COMPSEL_SHIFT);
+
+        }
+
+        ppbOffset = (ADC_PPBxTRIPLO_STEP * (uint32_t)ppbNumber) +
+                  CSL_ADC_ADCPPB1TRIPLO;
+
+        ADC_enablePPBExtendedLowLimit(CSL_CONTROLSS_ADC0_U_BASE, ppbNumber);
+        TEST_ASSERT_EQUAL_INT32(
+                (HW_RD_REG32(CSL_CONTROLSS_ADC0_U_BASE + ppbOffset) & CSL_ADC_ADCPPB1TRIPLO_LIMITLO2EN_MASK), CSL_ADC_ADCPPB1TRIPLO_LIMITLO2EN_MASK);
+
+        ADC_disablePPBExtendedLowLimit(CSL_CONTROLSS_ADC0_U_BASE, ppbNumber);
+        TEST_ASSERT_EQUAL_INT32(
+                (HW_RD_REG32(CSL_CONTROLSS_ADC0_U_BASE + ppbOffset) & CSL_ADC_ADCPPB1TRIPLO_LIMITLO2EN_MASK), 0);
+
+        for(ADC_SOCNumber socNumber = ADC_SOC_NUMBER0; socNumber <= ADC_SOC_NUMBER15; socNumber++)
+        {
+            for(ADC_SafetyCheckerInput scInput = ADC_SAFETY_CHECKER_INPUT_DISABLE; scInput <= ADC_SAFETY_CHECKER_INPUT_PPBSUMx; scInput++)
+            {
+                uint32_t socShift = ((uint32_t) socNumber) * 2U;
+                ADC_configSOCSafetyCheckerInput(CSL_CONTROLSS_ADC0_U_BASE, socNumber, scInput);
+                TEST_ASSERT_EQUAL_INT32(
+                (HW_RD_REG32(CSL_CONTROLSS_ADC0_U_BASE + CSL_ADC_ADCSAFECHECKRESEN) & (CSL_ADC_ADCSAFECHECKRESEN_SOC0CHKEN_MASK << socShift)),
+                    ((uint32_t) scInput << socShift));
+            }
+        }
+        /* Safety Checker */
+        ADC_enableSafetyChecker(CSL_CONTROLSS_ADCSAFE0_U_BASE);
+        TEST_ASSERT_EQUAL_INT32(
+                (HW_RD_REG16(CSL_CONTROLSS_ADCSAFE0_U_BASE + CSL_ADC_SAFETY_CHECKCONFIG) & CSL_ADC_SAFETY_CHECKCONFIG_CHKEN_MASK), CSL_ADC_SAFETY_CHECKCONFIG_CHKEN_MASK);
+        ADC_disableSafetyChecker(CSL_CONTROLSS_ADCSAFE0_U_BASE);
+        TEST_ASSERT_EQUAL_INT32(
+                (HW_RD_REG16(CSL_CONTROLSS_ADCSAFE0_U_BASE + CSL_ADC_SAFETY_CHECKCONFIG) & CSL_ADC_SAFETY_CHECKCONFIG_CHKEN_MASK), 0);
+
+        /* ADC_forceSafetyCheckerSync - Write only API. need Functional test */
+        /* ADC_getSafetyCheckerStatus - get API. need Functional test */
+
+        for(ADC_SafetyCheckInst checkInst = ADC_SAFETY_CHECK1; checkInst <= ADC_SAFETY_CHECK2; checkInst++)
+        {
+            for(ADC_Select adcInst = ADC_0; adcInst <= ADC_4; adcInst++)
+            {
+                for( ADC_ResultSelect adcResultInst = ADC_RESULT0; adcResultInst <= ADC_RESULT15; adcResultInst++)
+                {
+
+                    ADC_configureSafetyChecker(CSL_CONTROLSS_ADCSAFE0_U_BASE, checkInst, adcInst, adcResultInst);
+                    TEST_ASSERT_EQUAL_INT32(
+                        (HW_RD_REG16(CSL_CONTROLSS_ADCSAFE0_U_BASE + CSL_ADC_SAFETY_ADCRESSEL1+ ((uint16_t) checkInst)*4U) &
+                        (CSL_ADC_SAFETY_ADCRESSEL1_ADCSEL_MASK| CSL_ADC_SAFETY_ADCRESSEL1_ADCRESULTSEL_MASK) ),
+                        ((uint16_t)adcInst << CSL_ADC_SAFETY_ADCRESSEL1_ADCSEL_SHIFT) |
+                        ((uint16_t)adcResultInst << CSL_ADC_SAFETY_ADCRESSEL1_ADCRESULTSEL_SHIFT));
+
+
+                }
+            }
+        }
+
+
+        for(uint32_t tolerance = 0; tolerance <= CSL_ADC_SAFETY_TOLERANCE_TOLERANCE_MAX; tolerance++)
+        {
+            ADC_setSafetyCheckerTolerance(CSL_CONTROLSS_ADCSAFE0_U_BASE, tolerance);
+
+            TEST_ASSERT_EQUAL_INT32(
+                (HW_RD_REG32(CSL_CONTROLSS_ADCSAFE0_U_BASE + CSL_ADC_SAFETY_TOLERANCE) & CSL_ADC_SAFETY_TOLERANCE_TOLERANCE_MASK), tolerance);
+        }
+
+        /* ADC_getSafetyCheckerResult - get API. need Functional test */
+
+        for(ADC_SafetyCheckResult checkResult = ADC_SAFETY_CHECK_RES1OVF; checkResult <= ADC_SAFETY_CHECK_OOT; checkResult+=4)
+        {
+            for( ADC_Checker checkerNumber = ADC_SAFETY_CHECKER1; checkerNumber <= ADC_SAFETY_CHECKER12; checkerNumber++)
+            {
+                for( ADC_SafetyCheckEvent checkEvent = ADC_SAFETY_CHECK_EVENT1; checkEvent <= ADC_SAFETY_CHECK_EVENT4; checkEvent+=16)
+                {
+                    ADC_enableSafetyCheckEvt(CSL_CONTROLSS_ADCSAFE_EVENT_AGG_U_BASE, checkerNumber, checkEvent, checkResult);
+                    uint32_t regOffset =  CSL_CONTROLSS_ADCSAFE_EVENT_AGG_U_BASE + CSL_ADC_SAFETY_AGGR_CHECKEVT1SEL1 + (uint32_t)checkEvent + (uint32_t)checkResult;
+                    TEST_ASSERT_EQUAL_INT32(
+                        (HW_RD_REG32(regOffset) & (1UL << (uint32_t)checkerNumber)), (1UL << (uint32_t)checkerNumber));
+
+                    ADC_disableSafetyCheckEvt(CSL_CONTROLSS_ADCSAFE_EVENT_AGG_U_BASE, checkerNumber, checkEvent, checkResult);
+                    TEST_ASSERT_EQUAL_INT32(
+                        (HW_RD_REG32(regOffset) & (1UL << (uint32_t)checkerNumber)), 0);
+                }
+
+                ADC_enableSafetyCheckInt(CSL_CONTROLSS_ADCSAFE_EVENT_AGG_U_BASE, checkerNumber, checkResult);
+                uint32_t regOffset_1 = CSL_CONTROLSS_ADCSAFE_EVENT_AGG_U_BASE + CSL_ADC_SAFETY_AGGR_CHECKINTSEL1 + (uint32_t)checkResult;
+                TEST_ASSERT_EQUAL_INT32(
+                        (HW_RD_REG32(regOffset_1) & (1UL << (uint32_t)checkerNumber)), (1UL << (uint32_t)checkerNumber));
+
+                ADC_disableSafetyCheckInt(CSL_CONTROLSS_ADCSAFE_EVENT_AGG_U_BASE, checkerNumber, checkResult);
+                TEST_ASSERT_EQUAL_INT32(
+                        (HW_RD_REG32(regOffset_1) & (1UL << (uint32_t)checkerNumber)), 0);
+            }
+        }
+
+        /* get, write only APIs. need functional tests
+        ADC_getSafetyCheckStatus
+        ADC_clearSafetyCheckStatus
+        ADC_getSafetyCheckIntStatus
+        ADC_clearSafetyCheckIntStatus */
+
+        /* Trigger repeater */
+        for(uint32_t repInstance = ADC_REPINST1; repInstance <= ADC_REPINST2; repInstance++)
+        {
+            for(ADC_RepMode mode = ADC_REPMODE_OVERSAMPLING; mode <= ADC_REPMODE_UNDERSAMPLING; mode++)
+            {
+                ADC_triggerRepeaterMode(CSL_CONTROLSS_ADC0_U_BASE, repInstance, mode);
+                uint32_t regOffset = CSL_CONTROLSS_ADC0_U_BASE +  (repInstance * (ADC_REPxCTL_STEP));
+                TEST_ASSERT_EQUAL_INT32(
+                        (HW_RD_REG32(regOffset + CSL_ADC_REP1CTL) & CSL_ADC_REP1CTL_MODE_MASK), mode);
+            }
+            /*
+            ADC_triggerRepeaterActiveMode - get API. need functional test
+            ADC_triggerRepeaterModuleBusy - get API. need functional test
+             */
+            for(ADC_Trigger trigger = ADC_TRIGGER_SW_ONLY; trigger <= ADC_TRIGGER_RTI7; trigger++)
+            {
+                ADC_triggerRepeaterSelect(CSL_CONTROLSS_ADC0_U_BASE, repInstance, trigger);
+                uint32_t regOffset = CSL_CONTROLSS_ADC0_U_BASE +  (repInstance * (ADC_REPxCTL_STEP));
+                TEST_ASSERT_EQUAL_INT32(
+                        (HW_RD_REG32(regOffset + CSL_ADC_REP1CTL) & CSL_ADC_REP1CTL_TRIGGER_MASK) >> CSL_ADC_REP1CTL_TRIGGER_SHIFT, (uint32_t)trigger);
+            }
+
+            for(ADC_SyncInput syncInput = ADC_SYNCIN_DISABLE; syncInput <= ADC_SYNCIN_CPSW_CTPS_SYNC; syncInput++)
+            {
+                ADC_triggerRepeaterSyncIn(CSL_CONTROLSS_ADC0_U_BASE, repInstance, syncInput);
+                uint32_t regOffset = CSL_CONTROLSS_ADC0_U_BASE +  (repInstance * (ADC_REPxCTL_STEP));
+                TEST_ASSERT_EQUAL_INT32(
+                        (HW_RD_REG32(regOffset + CSL_ADC_REP1CTL) & CSL_ADC_REP1CTL_SYNCINSEL_MASK) >> CSL_ADC_REP1CTL_SYNCINSEL_SHIFT, (uint32_t)syncInput);
+            }
+
+            /*
+            ADC_forceRepeaterTriggerSync - Write only API. needs functional test. */
+            for(uint32_t repCount = 0; repCount <= CSL_ADC_REP1N_NSEL_MAX; repCount++)
+            {
+                ADC_triggerRepeaterCount(CSL_CONTROLSS_ADC0_U_BASE, repInstance, repCount);
+                uint32_t regOffset = CSL_CONTROLSS_ADC0_U_BASE +  (repInstance * (ADC_REPxN_STEP));
+                TEST_ASSERT_EQUAL_INT32(
+                        (HW_RD_REG32(regOffset + CSL_ADC_REP1N) & CSL_ADC_REP1N_NSEL_MASK) >> CSL_ADC_REP1N_NSEL_SHIFT, (uint32_t)repCount);
+            }
+
+            for(uint32_t repPhase = 0; repPhase <= CSL_ADC_REP1PHASE_PHASE_MAX; repPhase++)
+            {
+                ADC_triggerRepeaterPhase(CSL_CONTROLSS_ADC0_U_BASE, repInstance, (uint16_t) repPhase);
+                uint32_t regOffset = CSL_CONTROLSS_ADC0_U_BASE +  (repInstance * (ADC_REPxPHASE_STEP));
+                TEST_ASSERT_EQUAL_INT32(
+                        (HW_RD_REG32(regOffset + CSL_ADC_REP1PHASE) & CSL_ADC_REP1PHASE_PHASE_MASK) >> CSL_ADC_REP1PHASE_PHASE_SHIFT, (uint32_t)repPhase);
+            }
+
+            for(uint32_t repSpread = 0; repSpread <= CSL_ADC_REP1PHASE_PHASE_MAX; repSpread++)
+            {
+                ADC_triggerRepeaterSpread(CSL_CONTROLSS_ADC0_U_BASE, repInstance, (uint16_t) repSpread);
+                uint32_t regOffset = CSL_CONTROLSS_ADC0_U_BASE +  (repInstance * (ADC_REPxSPREAD_STEP));
+                TEST_ASSERT_EQUAL_INT32(
+                        (HW_RD_REG32(regOffset + CSL_ADC_REP1SPREAD) & CSL_ADC_REP1SPREAD_SPREAD_MASK) >> CSL_ADC_REP1SPREAD_SPREAD_SHIFT, (uint32_t)repSpread);
+            }
+
+        }
+    }
+#endif
 }
 
 static void ADC_single_ended_conversion(void *args)
@@ -970,6 +1214,11 @@ void util_ADC_fire_soc_trigger(
         /* Using GPIO15(Input PIN) and GPIO16(Output PIN) as for loopback*/
         GPIO_setDirMode(INPUT_PIN_BASE_ADDR,
                         INPUT_PIN_PIN,
+                        INPUT_PIN_DIR);
+
+        /* while using the tester. */
+        GPIO_setDirMode(OUTPUT_PIN_BASE_ADDR,
+                        OUTPUT_PIN_PIN,
                         INPUT_PIN_DIR);
 
         sprintf(test_command,"%s","trigger on GPIO 24 for InputXbar[5] to trigger ADC");
@@ -1996,7 +2245,7 @@ uint32_t AM263_ADC_BTR_NEW(uint32_t base)
 
     ADC_disableInterrupt(base, int_number);
 
-    if(errors > 0)
+    if((errors > 0) && enableLog)
     {
         DebugP_log("%d errors for base %x\r\n", errors, base);
     }

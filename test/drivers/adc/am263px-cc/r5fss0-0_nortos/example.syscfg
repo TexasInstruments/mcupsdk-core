@@ -1,16 +1,20 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P1" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.18.0+3266"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
+const pmic        = scripting.addModule("/board/pmic/pmic", {}, false);
+const pmic1       = pmic.addInstance();
 const gpio        = scripting.addModule("/drivers/gpio/gpio", {}, false);
 const gpio1       = gpio.addInstance();
 const gpio2       = gpio.addInstance();
+const mcspi       = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
+const mcspi1      = mcspi.addInstance();
 const rti         = scripting.addModule("/drivers/rti/rti", {}, false);
 const rti1        = rti.addInstance();
 const rti2        = rti.addInstance();
@@ -48,12 +52,29 @@ const input_xbar1 = input_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
+pmic1.$name = "CONFIG_PMIC0";
+
 gpio1.$name                = "INPUT_PIN";
 gpio1.GPIO.gpioPin.$assign = "I2C1_SDA";
 
 gpio2.pinDir               = "OUTPUT";
 gpio2.$name                = "OUTPUT_PIN";
 gpio2.GPIO.gpioPin.$assign = "I2C1_SCL";
+
+mcspi1.$name                 = "CONFIG_MCSPI0";
+pmic1.peripheralDriver       = mcspi1;
+mcspi1.SPI.$assign           = "SPI1";
+mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
+mcspi1.child.$name           = "drivers_mcspi_v1_mcspi_v1_template0";
+
+const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1                 = edma.addInstance({}, false);
+edma1.$name                 = "CONFIG_EDMA0";
+mcspi1.edmaDriver           = edma1;
+edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
+edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
+edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
+edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
 
 rti1.counter0Enable = true;
 rti1.compare0Enable = true;
@@ -78,8 +99,11 @@ rti3.RTI.$assign    = "RTI3";
 
 uart1.$name            = "TESTER_UART";
 uart1.UART.$assign     = "UART3";
+uart1.UART.RXD.pu_pd   = "pu";
 uart1.UART.RXD.$assign = "SPI0_CS0";
+uart1.UART.TXD.pu_pd   = "pu";
 uart1.UART.TXD.$assign = "SPI0_CLK";
+uart1.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 debug_log.enableUartLog            = true;
 debug_log.enableCssLog             = false;
@@ -87,6 +111,7 @@ debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template1";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -155,7 +180,6 @@ region1.memory_region[8].type                = "CUSTOM";
 region1.memory_region[8].$name               = "RTOS_NORTOS_IPC_SHM_MEM";
 region1.memory_region[8].auto                = false;
 region1.memory_region[8].manualStartAddress  = 0x72000000;
-
 region1.memory_region[8].isShared            = true;
 region1.memory_region[8].shared_cores        = ["r5fss0-1","r5fss1-0","r5fss1-1"];
 region1.memory_region[8].size                = 0x3E80;
@@ -294,5 +318,9 @@ input_xbar1.xbarOutput = "GPIO24";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-gpio1.GPIO.$suggestSolution = "GPIO";
-gpio2.GPIO.$suggestSolution = "GPIO";
+gpio1.GPIO.$suggestSolution                 = "GPIO";
+gpio2.GPIO.$suggestSolution                 = "GPIO";
+mcspi1.SPI.CLK.$suggestSolution             = "SPI1_CLK";
+mcspi1.SPI.D0.$suggestSolution              = "SPI1_D0";
+mcspi1.SPI.D1.$suggestSolution              = "SPI1_D1";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution = "SPI1_CS0";

@@ -673,9 +673,9 @@ typedef enum
 typedef enum
 {
     ADC_SAFETY_CHECK_EVENT1 = 0,       //!< Safety Check Event 1
-    ADC_SAFETY_CHECK_EVENT2 = 8,       //!< Safety Check Event 2
-    ADC_SAFETY_CHECK_EVENT3 = 16,      //!< Safety Check Event 3
-    ADC_SAFETY_CHECK_EVENT4 = 24       //!< Safety Check Event 4
+    ADC_SAFETY_CHECK_EVENT2 = 16,       //!< Safety Check Event 2
+    ADC_SAFETY_CHECK_EVENT3 = 32,      //!< Safety Check Event 3
+    ADC_SAFETY_CHECK_EVENT4 = 48       //!< Safety Check Event 4
 } ADC_SafetyCheckEvent;
 
 //*****************************************************************************
@@ -688,8 +688,8 @@ typedef enum
 typedef enum
 {
     ADC_SAFETY_CHECK_RES1OVF = 0,      //!< Safety Check Result1 Overflow
-    ADC_SAFETY_CHECK_RES2OVF = 2,      //!< Safety Check Result2 Overflow
-    ADC_SAFETY_CHECK_OOT     = 4       //!< Safety Check OOT
+    ADC_SAFETY_CHECK_RES2OVF = 4,      //!< Safety Check Result2 Overflow
+    ADC_SAFETY_CHECK_OOT     = 8       //!< Safety Check OOT
 } ADC_SafetyCheckResult;
 
 //*****************************************************************************
@@ -3256,9 +3256,9 @@ ADC_configureSafetyChecker(uint32_t scBase, ADC_SafetyCheckInst checkInst,
     //
     // Configure safety checker instance
     //
-    HW_WR_REG16(scBase + CSL_ADC_SAFETY_ADCRESSEL1 + (uint16_t)checkInst,
-    ((HW_RD_REG16(scBase + CSL_ADC_SAFETY_ADCRESSEL1 + (uint16_t)checkInst) &
-    (CSL_ADC_SAFETY_ADCRESSEL1_ADCSEL_MASK |
+    HW_WR_REG16(scBase + CSL_ADC_SAFETY_ADCRESSEL1 + ((uint16_t)checkInst)*4U,
+    ((HW_RD_REG16(scBase + CSL_ADC_SAFETY_ADCRESSEL1 + ((uint16_t)checkInst)*4U) &
+    ~(CSL_ADC_SAFETY_ADCRESSEL1_ADCSEL_MASK |
     CSL_ADC_SAFETY_ADCRESSEL1_ADCRESULTSEL_MASK)) |
     ((uint16_t)adcInst << CSL_ADC_SAFETY_ADCRESSEL1_ADCSEL_SHIFT) |
     ((uint16_t)adcResultInst << CSL_ADC_SAFETY_ADCRESSEL1_ADCRESULTSEL_SHIFT)));
@@ -3289,7 +3289,7 @@ ADC_setSafetyCheckerTolerance(uint32_t scBase, uint32_t tolerance)
     //
     // Set safety checker tolerance
     //
-    HW_WR_REG16(scBase + CSL_ADC_SAFETY_TOLERANCE,
+    HW_WR_REG32(scBase + CSL_ADC_SAFETY_TOLERANCE,
         (tolerance & CSL_ADC_SAFETY_TOLERANCE_TOLERANCE_MASK));
 }
 
