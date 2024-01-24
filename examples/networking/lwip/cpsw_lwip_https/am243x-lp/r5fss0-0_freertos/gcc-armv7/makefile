@@ -118,7 +118,7 @@ CFLAGS_release := \
 	-O2 \
 
 LNK_FILES_common = \
-	../linker.cmd \
+	linker.cmd \
 
 LNK_FILES_PREPROCESSOR_common = \
 	linker_preprocessor.cmd \
