@@ -301,6 +301,147 @@ void SOC_enableAdcReference(uint32_t adcInstance)
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
 }
 
+void SOC_enableAdcOsdChannel(uint32_t adcInstance, uint32_t channel, uint32_t enable)
+{   
+    uint32_t regOffset = CSL_TOP_CTRL_U_BASE;
+    uint32_t mask = CSL_TOP_CTRL_ADC0_OSD_CHEN_ADC0_OSD_CHEN_CH_OSD_EN_MASK;
+    uint32_t channel_shift = channel;
+
+    if(adcInstance < 5)
+    {
+        /* for ADC 0 - 4 */
+        regOffset += CSL_TOP_CTRL_ADC0_OSD_CHEN + adcInstance*(CSL_TOP_CTRL_ADC1_OSD_CHEN - CSL_TOP_CTRL_ADC0_OSD_CHEN);
+    }
+    else if(adcInstance <7)
+    {
+        /* for ADC_R0, ADC_R1 */
+        regOffset += CSL_TOP_CTRL_ADCR01_OSD_CHEN;
+        mask = CSL_TOP_CTRL_ADCR01_OSD_CHEN_ADCR01_OSD_CHEN_CH_OSD_EN_MASK;
+        
+        /* adc_r0 [passed as instance 5] needs no shift, 
+        whereas adc_r1 [passed as adcInstance 6] needs a shift of 4 bits */
+        channel_shift += ((adcInstance - 5U) * 4U); 
+    }
+
+    /* Unlock Top Control Space */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
+
+    if(TRUE == enable)
+    {
+        CSL_REG32_WR(regOffset,
+                ((CSL_REG32_RD(regOffset) & mask) | (1U << channel_shift)));   
+    }
+    else
+    {
+        CSL_REG32_WR(regOffset,
+                ((CSL_REG32_RD(regOffset) & mask) & ~(1U << channel_shift)));
+    }
+    
+    /* Lock Top Control Space */
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
+
+}
+void SOC_setAdcOsdConfig(uint32_t adcInstance, uint32_t config)
+{
+    uint32_t regOffset = CSL_TOP_CTRL_U_BASE;
+    uint32_t mask = CSL_TOP_CTRL_ADC0_OSD_CTRL_ADC0_OSD_CTRL_FUNCTION_MASK;
+    
+    if(adcInstance < 5)
+    {
+        /* for ADC 0 - 4 */
+        regOffset += CSL_TOP_CTRL_ADC0_OSD_CTRL + adcInstance*(CSL_TOP_CTRL_ADC1_OSD_CTRL - CSL_TOP_CTRL_ADC0_OSD_CTRL);
+    }
+    else if(adcInstance < 7)
+    {
+        /* for ADC_R0, ADC_R1 */
+        regOffset += CSL_TOP_CTRL_ADCR01_OSD_CTRL;
+    }
+    /* Unlock Top Control Space */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
+
+    CSL_REG32_WR(regOffset,
+            ((CSL_REG32_RD(regOffset) & ~mask) | config));   
+    
+    /* Lock Top Control Space */
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
+}
+
+void SOC_enableAdcGlobalForce(uint32_t adcInstance, uint32_t enable)
+{
+    uint32_t regOffset = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL;
+    
+    /* Unlock CONTROLSS_CTRL registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+    if(TRUE == enable)
+    {
+        CSL_REG32_WR(regOffset,
+            ((CSL_REG32_RD(regOffset) & CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL_ENABLE_MASK) 
+            | (1U << adcInstance)));
+    }
+    else
+    {
+        CSL_REG32_WR(regOffset,
+            ((CSL_REG32_RD(regOffset) & CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL_ENABLE_MASK) 
+            & ~(1U << adcInstance)));
+    }
+
+    /* Lock CONTROLSS_CTRL registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+
+}
+
+
+void SOC_adcSocGlobalForce(uint32_t socNumber)
+{
+    uint32_t regOffset = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_ADCSOCFRCGB;
+    
+    /* Unlock CONTROLSS_CTRL registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+
+    /* Write to the SOC Number bit */
+    CSL_REG32_WR(regOffset, ((1U << socNumber) & CSL_CONTROLSS_CTRL_ADCSOCFRCGB_TRIG_MASK));
+
+    /* Lock CONTROLSS_CTRL registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+
+}
+
+void SOC_selectAdcExtChXbar(uint32_t extChXbarOut, uint32_t extChXbarIn)
+{
+    uint32_t regOffset = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_ADCEXTCHXBAR0_G0_SEL;
+    regOffset += extChXbarOut * (CSL_CONTROLSS_CTRL_ADCEXTCHXBAR1_G0_SEL - CSL_CONTROLSS_CTRL_ADCEXTCHXBAR0_G0_SEL);
+    
+    /* Unlock CONTROLSS_CTRL registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+
+    /* Write the extChXbarIn Value */
+    CSL_REG32_WR(regOffset,
+            ((CSL_REG32_RD(regOffset) & ~CSL_CONTROLSS_CTRL_ADCEXTCHXBAR0_G0_SEL_SEL_MASK) 
+            | extChXbarIn));
+
+    /* Lock CONTROLSS_CTRL registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+
+}
+
+void SOC_selextAdcExtChDelay(uint32_t delay)
+{
+    uint32_t regOffset = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_ADC_EXTCH_DLY_SEL;
+    
+    /* Unlock CONTROLSS_CTRL registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+
+    /* Write the extChXbarIn Value */
+    CSL_REG32_WR(regOffset,
+            ((CSL_REG32_RD(regOffset) & ~CSL_CONTROLSS_CTRL_ADC_EXTCH_DLY_SEL_SEL_MASK) 
+            | delay));
+
+    /* Lock CONTROLSS_CTRL registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+}
+
+
+
 void SOC_setEpwmGroup(uint32_t epwmInstance, uint32_t group)
 {
     uint32_t baseAddr = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_EPWM_STATICXBAR_SEL0;

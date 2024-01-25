@@ -957,6 +957,82 @@ static void ADC_setPrescalerApiCheck(void *args)
 
         }
     }
+
+    /* SOC API r/w checks */
+    for(uint32_t adcInstance = 0; adcInstance <= 6; adcInstance++)
+    {   
+
+        for(uint32_t channel = 0; channel <= 5; channel++)
+        {
+            uint32_t regOffset = CSL_TOP_CTRL_U_BASE;
+            uint32_t channel_shift = (adcInstance <= 4)? channel : (channel + (adcInstance - 5)*4);
+            // uint32_t mask = CSL_TOP_CTRL_ADC0_OSD_CHEN_ADC0_OSD_CHEN_CH_OSD_EN_MASK;
+            if(adcInstance > 4)
+            {
+                regOffset += CSL_TOP_CTRL_ADCR01_OSD_CHEN;
+                // mask = CSL_TOP_CTRL_ADCR01_OSD_CHEN_ADCR01_OSD_CHEN_CH_OSD_EN_MASK;
+                if(channel > 3)
+                {
+                    continue;
+                }
+            }
+            else
+            {
+                regOffset += CSL_TOP_CTRL_ADC0_OSD_CHEN + adcInstance*(CSL_TOP_CTRL_ADC1_OSD_CHEN - CSL_TOP_CTRL_ADC0_OSD_CHEN);
+            }
+            SOC_enableAdcOsdChannel(adcInstance, channel, TRUE);
+            DebugP_log("%x %x %d %d\r\n", CSL_TOP_CTRL_U_BASE+CSL_TOP_CTRL_ADCR01_OSD_CHEN, regOffset, adcInstance, channel_shift);
+
+            TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & (1U<<channel_shift), (1U<<channel_shift)); 
+
+            SOC_enableAdcOsdChannel(adcInstance, channel, FALSE);
+            TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & (1U<<channel_shift), 0); 
+
+        }
+        for(uint32_t config = 0; config <= 7; config++)
+        {
+            uint32_t regOffset = CSL_TOP_CTRL_U_BASE;
+            uint32_t mask = CSL_TOP_CTRL_ADC0_OSD_CTRL_ADC0_OSD_CTRL_FUNCTION_MASK;
+            if(adcInstance > 4)
+            {
+                regOffset += CSL_TOP_CTRL_ADCR01_OSD_CTRL;
+                // mask = CSL_TOP_CTRL_ADCR01_OSD_CHEN_ADCR01_OSD_CHEN_CH_OSD_EN_MASK;
+            }
+            else
+            {
+                regOffset += CSL_TOP_CTRL_ADC0_OSD_CTRL + adcInstance*(CSL_TOP_CTRL_ADC1_OSD_CTRL - CSL_TOP_CTRL_ADC0_OSD_CTRL);
+            }
+            SOC_setAdcOsdConfig(adcInstance, config);
+            TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & mask, config); 
+        }
+        
+        uint32_t regOffset = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL;
+
+        SOC_enableAdcGlobalForce(adcInstance, TRUE);
+        TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL_ENABLE_MASK, (1U << adcInstance)); 
+        SOC_enableAdcGlobalForce(adcInstance, FALSE);
+        TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & ~(1U << adcInstance), 0); 
+
+    }
+    
+    /* SOC_adcSocGlobalForce(socNumber) write only. need functional test */
+    for(uint32_t extChXbarOut = 0; extChXbarOut <= 9; extChXbarOut++)
+    {
+        for(uint32_t extChXbarIn = ADC0_EXTCHSEL_BIT0; extChXbarIn <= ADC_R2_EXTCHSEL_BIT1; extChXbarIn++)
+        {
+            uint32_t regOffset = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_ADCEXTCHXBAR0_G0_SEL;
+            regOffset += extChXbarOut * (CSL_CONTROLSS_CTRL_ADCEXTCHXBAR1_G0_SEL - CSL_CONTROLSS_CTRL_ADCEXTCHXBAR0_G0_SEL);
+            SOC_selectAdcExtChXbar(extChXbarOut, extChXbarIn);
+            TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & CSL_CONTROLSS_CTRL_ADCEXTCHXBAR0_G0_SEL_SEL_MASK, extChXbarIn);
+        }
+    }
+
+    uint32_t regOffset = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_ADC_EXTCH_DLY_SEL;
+    SOC_selextAdcExtChDelay(ADC_EXTCHSELCT_DELAY_3_CYCLES);
+    TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & CSL_CONTROLSS_CTRL_ADC_EXTCH_DLY_SEL_SEL_MASK, ADC_EXTCHSELCT_DELAY_3_CYCLES);
+    SOC_selextAdcExtChDelay(ADC_EXTCHSELCT_DELAY_6_CYCLES);
+    TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & CSL_CONTROLSS_CTRL_ADC_EXTCH_DLY_SEL_SEL_MASK, ADC_EXTCHSELCT_DELAY_6_CYCLES);
+
 #endif
 }
 

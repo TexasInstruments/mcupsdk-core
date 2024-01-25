@@ -78,6 +78,26 @@ extern "C"
 #define KICK0_UNLOCK_VAL                        (0x01234567U)
 #define KICK1_UNLOCK_VAL                        (0x0FEDCBA8U)
 
+/* defines the Inputs to the SOC_selectAdcExtChXbarAPI for extChXbarIn param */
+#define ADC0_EXTCHSEL_BIT0                       (0U)
+#define ADC0_EXTCHSEL_BIT1                       (1U)
+#define ADC1_EXTCHSEL_BIT0                       (2U)
+#define ADC1_EXTCHSEL_BIT1                       (3U)
+#define ADC2_EXTCHSEL_BIT0                       (4U)
+#define ADC2_EXTCHSEL_BIT1                       (5U)
+#define ADC3_EXTCHSEL_BIT0                       (6U)
+#define ADC3_EXTCHSEL_BIT1                       (7U)
+#define ADC4_EXTCHSEL_BIT0                       (8U)
+#define ADC4_EXTCHSEL_BIT1                       (9U)
+#define ADC_R0_EXTCHSEL_BIT0                     (10U)
+#define ADC_R0_EXTCHSEL_BIT1                     (11U)
+#define ADC_R1_EXTCHSEL_BIT0                     (12U)
+#define ADC_R2_EXTCHSEL_BIT1                     (13U)
+
+
+#define ADC_EXTCHSELCT_DELAY_3_CYCLES            (0U)
+#define ADC_EXTCHSELCT_DELAY_6_CYCLES            (1U)
+
 /** \brief API to validate MCSPI base address. */
 static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
 {
@@ -175,6 +195,90 @@ void SOC_setMultipleEpwmTbClk(uint32_t epwmMask, uint32_t enable);
  * \param adcInstance [in] ADC instance number [0 - (CSL_ADC_PER_CNT-1)]
  */
 void SOC_enableAdcReference(uint32_t adcInstance);
+/**
+ * @brief Enable or disable the OSD circuit over the ADC channels 
+ * 
+ * @param adcInstance [in] ADC instance [0 - 4] ADC_R instance [5,6]
+ * @param channel     [in] Channel number for the ADC. [0 - 5]
+ * @param enable      [in] TRUE to enable and FALSE to disable the OSD circuit.  
+ */
+void SOC_enableAdcOsdChannel(uint32_t adcInstance, uint32_t channel, uint32_t enable);
+
+/**
+ * @brief Sets the ADC OSD Configuration. 
+ * 
+ * @param adcInstance [in] ADC instance [0 - 4] ADC_R instance [5,6]
+ * @param config      [in] configuration to be enabled of the OSD circuit.
+ * 
+ * It is recommended to wait for atleast 1uS after configuration, before sampling 
+ * 
+ * config   | function      | Impedance | Voltage on 5K | Voltage on 7K
+ * ---------|---------------|-----------|---------------|-----------
+ * 0        | Zero Scale    | 5K // 7K  | VSSA          | VSSA
+ * ---------|---------------|-----------|---------------|-----------
+ * 1        | Zero Scale    | 5K        | VSSA          | OPEN
+ * ---------|---------------|-----------|---------------|-----------
+ * 2        | Zero Scale    | 7K        | OPEN          | VSSA
+ * ---------|---------------|-----------|---------------|-----------
+ * 3        | Full Scale    | 5K // 7K  | VDD           | VDD 
+ * ---------|---------------|-----------|---------------|-----------
+ * 4        | Full Scale    | 5K        | VDD           | OPEN
+ * ---------|---------------|-----------|---------------|-----------
+ * 5        | Full Scale    | 7K        | OPEN          | VDD 
+ * ---------|---------------|-----------|---------------|-----------
+ * 6        | 5/12 Scale    | 5K // 7K  | VSSA          | VDD 
+ * ---------|---------------|-----------|---------------|-----------
+ * 7        | 5/12 Scale    | 5K // 7K  | VDD           | VSSA
+ * ---------|---------------|-----------|---------------|----------- 
+ */
+void SOC_setAdcOsdConfig(uint32_t adcInstance, uint32_t config);
+
+/**
+ * @brief Enable or Disable the ADC instnace for Gloabl SW force.
+ * 
+ * @param adcInstance [in] ADC instances [0 - 4] ADC_R instance [ 5 - 6]
+ * @param enable      [in] TRUE to enable and FALSE to disable the GLobal Force Selection  
+ */
+void SOC_enableAdcGlobalForce(uint32_t adcInstance, uint32_t enable);
+
+/**
+ * @brief Triggers a global force for the SOC in enabled ADCs
+ * the ADCs may be enabled by using SOC_enableAdcGlobalForce() API  
+ * 
+ * @param socNumber [in] SOC Number  [0 - 15]
+ */
+void SOC_adcSocGlobalForce(uint32_t socNumber);
+/**
+ * @brief Selects the ADC External Channel Select bit for the output from each xbar out
+ * 
+ * @param extChXbarOut [in] selects the ADC_EXTCHSEL_XBAR_OUTx x in [0 - 9]
+ * @param extChXbarIn [in] Valid Values are the following
+ *                      ADC0_EXTCHSEL_BIT0    
+ *                      ADC0_EXTCHSEL_BIT1    
+ *                      ADC1_EXTCHSEL_BIT0    
+ *                      ADC1_EXTCHSEL_BIT1    
+ *                      ADC2_EXTCHSEL_BIT0    
+ *                      ADC2_EXTCHSEL_BIT1    
+ *                      ADC3_EXTCHSEL_BIT0    
+ *                      ADC3_EXTCHSEL_BIT1    
+ *                      ADC4_EXTCHSEL_BIT0    
+ *                      ADC4_EXTCHSEL_BIT1    
+ *                      ADC_R0_EXTCHSEL_BIT0  
+ *                      ADC_R0_EXTCHSEL_BIT1  
+ *                      ADC_R1_EXTCHSEL_BIT0  
+ *                      ADC_R2_EXTCHSEL_BIT1  
+ */
+void SOC_selectAdcExtChXbar(uint32_t extChXbarOut, uint32_t extChXbarIn);
+
+/**
+ * @brief Mux select to choose delay for ADC Extchsel
+ * 
+ * @param delay [in] 3 Cycle Delay or 6 Cycle Delay
+ * Valid Values are 
+ * ADC_EXTCHSELCT_DELAY_3_CYCLES
+ * ADC_EXTCHSELCT_DELAY_6_CYCLES
+ */
+void SOC_selextAdcExtChDelay(uint32_t delay);
 
 /**
  * \brief Configure the ePWM group
