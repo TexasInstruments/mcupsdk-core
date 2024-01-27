@@ -33,7 +33,7 @@ To build applications using this SDK, one needs below host PC machine
 ### SysConfig
 
 - The SysConfig download home page is, https://www.ti.com/tool/SYSCONFIG
-- Download SysConfig 1.18.0 and Install at below path,
+- Download SysConfig 1.19.0 and Install at below path,
   - Windows, C:/ti
   - Linux, ${HOME}/ti
 
