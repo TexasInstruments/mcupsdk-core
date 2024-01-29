@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -103,8 +103,6 @@ void *mcspi_performance_main(void *args)
 
     /* Disable the receiver FIFO of McSPI peripheral for Tx only mode. */
     MCSPI_enableRxFIFO(baseAddr, chNum, MCSPI_RX_FIFO_ENABLE);
-
-    MCSPI_reConfigFifo(gMcspiHandle[CONFIG_MCSPI0], chNum, APP_MCSPI_MSGSIZE);
 
     /*
      * Channel Control and config registers are updated after Open/Reconfigure.
