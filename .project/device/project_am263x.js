@@ -126,6 +126,7 @@ const example_file_list = [
     "examples/drivers/mcspi/mcspi_loopback_polling_lld/.project/project.js",
     "examples/drivers/mcspi/mcspi_loopback_interrupt_lld/.project/project.js",
     "examples/drivers/mcspi/mcspi_loopback_dma_lld/.project/project.js",
+    "examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/.project/project.js",
     "examples/drivers/mcspi/mcspi_performance_8bit/.project/project.js",
     "examples/drivers/mcspi/mcspi_performance_32bit/.project/project.js",
     "examples/drivers/mmcsd/mmcsd_file_io/.project/project.js",

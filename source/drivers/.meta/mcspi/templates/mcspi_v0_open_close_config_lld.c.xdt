@@ -6,20 +6,21 @@
     let mcspiUdmaInstances = [];
     let module_ch = system.modules[`/drivers/mcspi/${driverVer}/mcspi_${driverVer}_channel`];
 %%}
-#include <drivers/mcspi/v0/lld/mcspi_lld.h>
-
 /*
  * MCSPI
  */
+#include <drivers/mcspi/v0/lld/mcspi_lld.h>
+
+/* MCSPI Driver handles */
 MCSPILLD_Object gMcspiObject[CONFIG_MCSPI_NUM_INSTANCES];
 MCSPILLD_Handle gMcspiHandle[CONFIG_MCSPI_NUM_INSTANCES];
 
-/* MCSPI Driver handles */
+extern MCSPILLD_InitObject gMcspiInitObject[];
+
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
     % let instNameCamelCase = common.camelSentence(instance.$name);
-extern MCSPILLD_InitObject g`instNameCamelCase`InitObject[];
 extern MCSPI_ChConfig g`instNameCamelCase`ChCfg[];
 %}
 
@@ -113,7 +114,7 @@ void Drivers_mcspiOpen(void)
     gMcspiHandle[`instance.$name.toUpperCase()`]             = &gMcspiObject[`instance.$name.toUpperCase()`];
     gMcspiHandle[`instance.$name.toUpperCase()`]->state      = MCSPI_STATE_RESET;
     gMcspiHandle[`instance.$name.toUpperCase()`]->baseAddr   = `config.baseAddr`;
-    gMcspiHandle[`instance.$name.toUpperCase()`]->hMcspiInit = &g`instNameCamelCase`InitObject[`instance.$name.toUpperCase()`];
+    gMcspiHandle[`instance.$name.toUpperCase()`]->hMcspiInit = &gMcspiInitObject[`instance.$name.toUpperCase()`];
 
     % if(config.intrEnable == "DMA") {
     status = MCSPI_lld_initDma(gMcspiHandle[`instance.$name.toUpperCase()`]);
@@ -121,9 +122,9 @@ void Drivers_mcspiOpen(void)
     % else {
     status = MCSPI_lld_init(gMcspiHandle[`instance.$name.toUpperCase()`]);
     %}
-    %}
     DebugP_assert(status == MCSPI_STATUS_SUCCESS);
 
+    %}
     return;
 }
 
@@ -139,8 +140,9 @@ void Drivers_mcspiClose(void)
     %} else {
     status = MCSPI_lld_deInit(gMcspiHandle[`instance.$name.toUpperCase()`]);
     %}
-    %}
     DebugP_assert(status == MCSPI_STATUS_SUCCESS);
+
+    %}
 
     return;
 }

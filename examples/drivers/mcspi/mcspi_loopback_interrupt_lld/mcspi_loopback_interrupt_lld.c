@@ -80,13 +80,13 @@ void *mcspi_loopback_interrupt_lld_main(void *args)
     Board_driversOpen();
 
     /*  Interrupt configuration and registration*/
-    intrNum = gConfigMcspi0InitObject[CONFIG_MCSPI0].intrNum;
+    intrNum = gMcspiInitObject[CONFIG_MCSPI0].intrNum;
     intcBaseAddr = gHwiConfig.intcBaseAddr;
     gMcspiVimStsAddr = intcBaseAddr + (0x404U + (((intrNum)>> 5) & 0xFU) * 0x20U);
     gMcspiVimStsClrMask = 0x1U << ((intrNum) & 0x1FU);
 
     HwiP_setVecAddr(intrNum, (uintptr_t)&App_MCSPI_ISR);
-    HwiP_setPri(intrNum, gConfigMcspi0InitObject[CONFIG_MCSPI0].intrPriority);
+    HwiP_setPri(intrNum, gMcspiInitObject[CONFIG_MCSPI0].intrPriority);
     HwiP_enableInt(intrNum);
 
     DebugP_log("\n[MCSPI] Loopback example started ...\r\n");

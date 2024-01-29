@@ -24,32 +24,31 @@
 extern MCSPILLD_Object gMcspiObject[CONFIG_MCSPI_NUM_INSTANCES];
 extern MCSPILLD_Handle gMcspiHandle[CONFIG_MCSPI_NUM_INSTANCES];
 
-%  for(let i = 0; i < module.$instances.length; i++) {
-%    let instance = module.$instances[i];
-uint32_t gMcspiNumCh[`instance.$name.toUpperCase()`_NUM_CH] =
+uint32_t gMcspiNumCh[`module.$instances.length`] =
 {
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     `instance.$name.toUpperCase()`_NUM_CH,
-%}
+% }
 };
-%}
 
 uint32_t gMcspiDmaConfigNum = CONFIG_MCSPI_NUM_DMA_INSTANCES;
 
-% let instance = module.$instances[0];
+% let channelEnable = [];
+% for(let i = 0; i < module.$instances.length; i++) {
+% let instance = module.$instances[i];
 % let config = module.getInstanceConfig(instance);
 %if(config.intrEnable != "POLLED") {
-/* MCSPI Transfer Callback Function */
+/*   MCSPI Transfer Callback Function    */
 void `config.transferCallbackFxn`(void *args, uint32_t transferStatus);
-/* MCSPI Error Callback Function */
+/*   MCSPI Error Callback Function       */
 void `config.errorCallbackFxn`(void *args);
+%}
 %}
 
 /* MCSPI Driver Channel Configurations */
-% let channelEnable;
 % for(let i = 0; i < module.$instances.length; i++) {
-    % channelEnable = ["FALSE","FALSE","FALSE","FALSE"];
+    % channelEnable.push(["FALSE","FALSE","FALSE","FALSE"]);
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
     % let instNameCamelCase = common.camelSentence(instance.$name);
@@ -62,7 +61,7 @@ MCSPI_ChConfig g`instNameCamelCase`ChCfg[`instance.$name.toUpperCase()`_NUM_CH] 
         % if(config.mode == "PERIPHERAL") {
         %   ch_config.cs = 0;
         % }
-        % channelEnable[ch_config.cs] = "TRUE";
+        % channelEnable[i][ch_config.cs] = "TRUE";
     {
         .chNum              = MCSPI_CHANNEL_`ch_config.cs`,
         .frameFormat        = MCSPI_FF_`ch_config.frameFormat`,
@@ -112,26 +111,23 @@ EDMA_Config gEdmaConfig[1] =
     }
 };
 %}
+
 /* MCSPI init objects */
-% for(let i = 0; i < module.$instances.length; i++) {
+MCSPILLD_InitObject gMcspiInitObject[CONFIG_MCSPI_NUM_INSTANCES] =
+{
+    % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
     % let instNameCamelCase = common.camelSentence(instance.$name);
-
-MCSPILLD_InitObject g`instNameCamelCase`InitObject[`instance.$name.toUpperCase()`_NUM_CH] =
-{
     % let ch_instances = instance.mcspiChannel;
-    % for(let ch = 0; ch < ch_instances.length; ch++) {
-        % let ch_instance = ch_instances[ch];
-        % let ch_config = module_ch.getInstanceConfig(ch_instance);
-        % let chMode = "SINGLE";
-        % let msMode = "CONTROLLER";
-        % if(config.mode == "CONTROLLER") {
-        %   chMode = "CONTROLLER";
-        % }
-        % if(config.mode == "PERIPHERAL") {
-        %   chMode = "PERIPHERAL";
-        % }
+    % let chMode = "SINGLE";
+    % let msMode = "CONTROLLER";
+    % if(config.mode == "CONTROLLER") {
+    %   chMode = "CONTROLLER";
+    % }
+    % if(config.mode == "PERIPHERAL") {
+    %   chMode = "PERIPHERAL";
+    % }
     {
         .inputClkFreq                = `config.inputClkFreq`,
         .intrNum                     = `config.intrNum`,
@@ -142,27 +138,46 @@ MCSPILLD_InitObject g`instNameCamelCase`InitObject[`instance.$name.toUpperCase()
         .initDelay                   = MCSPI_INITDLY_`config.initDelay`,
         .multiWordAccess             = FALSE,
         .msMode                      = MCSPI_MS_MODE_`msMode`,
-        .chEnabled                   = {`channelEnable[0]`, `channelEnable[1]`, `channelEnable[2]`, `channelEnable[3]`},
-        .chObj[`ch_config.cs`].chCfg = &g`instNameCamelCase`ChCfg[`ch`],
+        .chEnabled                   = {`channelEnable[i][0]`, `channelEnable[i][1]`, `channelEnable[i][2]`, `channelEnable[i][3]`},
         % if(instance.intrEnable == "DMA") {
-        .mcspiDmaHandle                  = (MCSPI_DmaHandle ) &gEdmaConfig[0],
-        .chObj[`ch_config.cs`].dmaChCfg  = (MCSPI_DmaChConfig)(&g`instNameCamelCase`DmaChCfg),
-        .chObj[`ch_config.cs`].dmaChConfigNum = `ch`,
+        .mcspiDmaHandle              = (MCSPI_DmaHandle ) &gEdmaConfig[0],
+        % for(let ch = 0; ch < ch_instances.length; ch++) {
+        % let ch_instance = ch_instances[ch];
+        % let ch_config = module_ch.getInstanceConfig(ch_instance);
+        .chObj[`ch_config.cs`].chCfg              = &g`instNameCamelCase`ChCfg[`ch`],
+        .chObj[`ch_config.cs`].dmaChCfg           = (MCSPI_DmaChConfig)(&g`instNameCamelCase`DmaChCfg),
+        .chObj[`ch_config.cs`].dmaChConfigNum     = `ch`,
+        %}
         %}
         % else {
-        .mcspiDmaHandle                    = NULL,
-        .chObj[`ch_config.cs`].dmaChCfg    = NULL,
+        .mcspiDmaHandle              = NULL,
+        % for(let ch = 0; ch < ch_instances.length; ch++) {
+        % let ch_instance = ch_instances[ch];
+        % let ch_config = module_ch.getInstanceConfig(ch_instance);
+        .chObj[`ch_config.cs`].chCfg              = &g`instNameCamelCase`ChCfg[`ch`],
+        .chObj[`ch_config.cs`].dmaChCfg           = NULL,
+        .chObj[`ch_config.cs`].dmaChConfigNum     = `0`,
+        %}
         %}
         .clockP_get                  = ClockP_getTicks,
-    % if(config.intrEnable != "POLLED") {
+        % if(config.intrEnable != "POLLED") {
         .transferCallbackFxn         = `config.transferCallbackFxn`,
         .errorCallbackFxn            = `config.errorCallbackFxn`,
-    % }
-    %else {
+        % }
+        %else {
         .transferCallbackFxn         = NULL,
         .errorCallbackFxn            = NULL,
-    %}
+        %}
     },
     %}
 };
-%}
+
+MCSPI_ChConfig *gConfigMcspiChCfg[`module.$instances.length`] =
+{
+    % for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let instNameCamelCase = common.camelSentence(instance.$name);
+    % let config = module.getInstanceConfig(instance);
+    g`instNameCamelCase`ChCfg,
+    % }
+};
