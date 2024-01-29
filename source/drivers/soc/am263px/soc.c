@@ -399,6 +399,8 @@ void SOC_adcSocGlobalForce(uint32_t socNumber)
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
 
     /* Write to the SOC Number bit */
+    /* Note: 0 to 1 transission triggers. and is a sticky bit */
+    CSL_REG32_WR(regOffset, (~(1U << socNumber) & CSL_CONTROLSS_CTRL_ADCSOCFRCGB_TRIG_MASK));
     CSL_REG32_WR(regOffset, ((1U << socNumber) & CSL_CONTROLSS_CTRL_ADCSOCFRCGB_TRIG_MASK));
 
     /* Lock CONTROLSS_CTRL registers */
