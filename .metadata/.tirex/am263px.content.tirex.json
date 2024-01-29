@@ -1155,6 +1155,138 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "ADC SOC triggered from RTI example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_soc_rti",
+        "location": "../../examples/drivers/adc/adc_soc_rti/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_soc_rti",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC SOC triggered from RTI example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_soc_rti",
+        "location": "../../examples/drivers/adc/adc_soc_rti/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_soc_rti",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "Multiple ADC SOC triggered from Global Software Force CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_global_force",
+        "location": "../../examples/drivers/adc/adc_global_force/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_global_force",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "Multiple ADC SOC triggered from Global Software Force CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_global_force",
+        "location": "../../examples/drivers/adc/adc_global_force/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_global_force",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "ADC SOC Oversampling example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_soc_oversampling",
         "location": "../../examples/drivers/adc/adc_soc_oversampling/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
