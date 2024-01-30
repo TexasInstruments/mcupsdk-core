@@ -49,6 +49,7 @@ const example_file_list = [
 	"examples/drivers/adc/adc_soc_ecap/.project/project.js",
 	"examples/drivers/adc/adc_soc_rti/.project/project.js",
 	"examples/drivers/adc/adc_global_force/.project/project.js",
+	"examples/drivers/adc/adc_dac_loopback/.project/project.js",
 	"examples/drivers/adc/adc_soc_oversampling/.project/project.js",
 	"examples/drivers/adc/adc_soc_software/.project/project.js",
 	"examples/drivers/adc/adc_soc_software_sync/.project/project.js",

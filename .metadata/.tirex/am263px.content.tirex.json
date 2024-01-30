@@ -1287,6 +1287,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "Demonstrates ADC DAC Loopback feature CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_dac_loopback",
+        "location": "../../examples/drivers/adc/adc_dac_loopback/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_dac_loopback",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "Demonstrates ADC DAC Loopback feature CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_dac_loopback",
+        "location": "../../examples/drivers/adc/adc_dac_loopback/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_dac_loopback",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "ADC SOC Oversampling example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_soc_oversampling",
         "location": "../../examples/drivers/adc/adc_soc_oversampling/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

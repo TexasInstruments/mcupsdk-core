@@ -206,6 +206,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_ADC_SOFTWARE_INTERLEAVED_AVERAGING
 \cond SOC_AM263PX
    -# \subpage EXAMPLES_DRIVERS_ADC_GLOBAL_FORCE
+   -# \subpage EXAMPLES_DRIVERS_ADC_DAC_LOOPBACK
 \endcond
 -# CMPSS
    -# \subpage EXAMPLES_DRIVERS_CMPSS_ASYNCHRONOUS_TRIP
