@@ -77,6 +77,7 @@ SDK features and tools.
 \cond SOC_AM263PX
 - \subpage BOOTFLOW_XIP
 - \subpage OPTIFLASH_CONFIGURE
+- \subpage SOC_MIGRATION
 \endcond
 
 \cond SOC_AM263PX || SOC_AM243X || SOC_AM263X
