@@ -442,6 +442,26 @@ void SOC_selextAdcExtChDelay(uint32_t delay)
     SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
 }
 
+void SOC_enableAdcDacLoopback(uint32_t enable)
+{
+    uint32_t regOffset = CSL_TOP_CTRL_U_BASE + CSL_TOP_CTRL_ADC_LOOPBACK_CTRL;
+
+   /* Unlock Top Control Space */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
+
+    if(TRUE == enable)
+    {
+        CSL_REG32_WR(regOffset,
+            (CSL_REG32_RD(regOffset) | CSL_TOP_CTRL_ADC_LOOPBACK_CTRL_ADC_LOOPBACK_CTRL_ADC_LOOPBACK_EN_MASK));   
+    }
+    else
+    {
+        CSL_REG32_WR(regOffset,
+            (CSL_REG32_RD(regOffset) & ~CSL_TOP_CTRL_ADC_LOOPBACK_CTRL_ADC_LOOPBACK_CTRL_ADC_LOOPBACK_EN_MASK));       
+    }
+    /* Lock Top Control Space */
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
+}
 
 
 void SOC_setEpwmGroup(uint32_t epwmInstance, uint32_t group)

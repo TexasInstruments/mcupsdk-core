@@ -281,6 +281,13 @@ void SOC_selectAdcExtChXbar(uint32_t extChXbarOut, uint32_t extChXbarIn);
 void SOC_selextAdcExtChDelay(uint32_t delay);
 
 /**
+ * @brief Enable or Disable the ADC CAL Pin to loopback with DAC
+ * 
+ * @param enable [in] TRUE to enable, FALSE to disable 
+ */
+void SOC_enableAdcDacLoopback(uint32_t enable);
+
+/**
  * \brief Configure the ePWM group
  *
  * \param epwmInstance [in] ePWM instance number [0 - (CSL_EPWM_PER_CNT-1)]
