@@ -114,7 +114,8 @@ function getStaticConfigArr() {
                 {
                     name: `RTI${i}`,
                     timerBaseAddr: 0x52180000 + i*0x1000,
-                    timerHwiIntNum: 84 + 7*i,
+                    /* RTI Interrupts are not continous. RTI 0-3 are grouped together and RTI 4-7 are grouped separately */
+                    timerHwiIntNum: ((i < 4) ? (84 + (7 * i)) : (219 + (7 * (i - 4)))),
                     timerInputPreScaler: 1,
                     clkSelMuxAddr: 0x53208000 + 0x114 + 4*i,
                     disableClkSourceConfig: false,
@@ -135,7 +136,7 @@ function getStaticConfigArr() {
 function getTimerClockSourceConfigArr() {
     let cpu = common.getSelfSysCfgCoreName();
     let timerClockSourceConfig = timerClockSourceConfig_r5f;
-    
+
     if(cpu.match(/r5f*/)) {
         timerClockSourceConfig = timerClockSourceConfig_r5f;
     }
@@ -149,7 +150,7 @@ function getTimerClockSourceConfigArr() {
 function getDefaultTimerClockSourceMhz(clkSource) {
     let clkSourceHz = 0;
     let cpu = common.getSelfSysCfgCoreName();
-    
+
     if(cpu.match(/hsm*/) || cpu.match(/m4f*/)) {
         clkSourceHz = system.getScript(`/imports/kernel/dpl/clock_${common.getSocName()}_hsm.syscfg.js`).defaultTimerClockSourceMhz.clkSourceHz;
         return clkSourceHz;
