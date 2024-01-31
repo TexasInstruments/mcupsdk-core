@@ -52,3 +52,7 @@ ifeq ($(DEVICE_TYPE),HS)
 else
 	APP_SIGNING_KEY=$(ROM_DEGENERATE_KEY)
 endif
+
+# Key id in keyring for application authentication and decryption
+APP_SIGNING_KEY_KEYRING_ID?=0
+APP_ENCRYPTION_KEY_KEYRING_ID?=0

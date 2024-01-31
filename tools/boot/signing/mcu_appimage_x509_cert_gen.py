@@ -62,6 +62,7 @@ basicConstraints = CA:true
 1.3.6.1.4.1.294.1.2=ASN1:SEQUENCE:image_integrity
 1.3.6.1.4.1.294.1.3=ASN1:SEQUENCE:swrv
 {ENCRYPTION_SEQUENCE}
+1.3.6.1.4.1.294.1.12=ASN1:SEQUENCE:keyring_index
 
 [ boot_seq ]
 certType     =  INTEGER:{CERT_TYPE}
@@ -76,6 +77,10 @@ shaValue = FORMAT:HEX,OCT:{TEST_IMAGE_SHA_VAL}
 
 [ swrv ]
 swrv = INTEGER:{SWRV}
+
+[ keyring_index ]
+sign_key_id = INTEGER:{ASYMM_KEY_ID}
+enc_key_id  = INTEGER:{SYMM_KEY_ID}
 
 '''
 g_enc_boot_seq = '''
@@ -149,11 +154,23 @@ def get_cert(args):
     else:
         enc_seq = ''
 
+    if(args.sign_key_id is None):
+        sign_key_id = 0
+    else:
+        sign_key_id = args.sign_key_id
+
+    if(args.enc_key_id is None):
+        enc_key_id = 0
+    else:
+        enc_key_id = args.enc_key_id
+
     ret_cert = g_x509_template.format(TEST_IMAGE_SHA_OID=v_TEST_IMAGE_SHA_OID,
                 TEST_IMAGE_SHA_VAL=v_TEST_IMAGE_SHA_VAL,
                 TEST_IMAGE_LENGTH=v_TEST_IMAGE_LENGTH,
                 CERT_TYPE=device_cert_type,
                 SWRV=swrev,
+                ASYMM_KEY_ID=sign_key_id,
+                SYMM_KEY_ID=enc_key_id,
                 IMAGE_LENGTH = os.path.getsize(bin_file),
                 ENCRYPTION_SEQUENCE=enc_seq)
 
@@ -235,15 +252,17 @@ def get_key_derivation_salt(kd_salt_file_name):
 # arguments definition
 my_parser = argparse.ArgumentParser(description="Generates a x509 certificate for an application binary to boot it in HS device")
 
-my_parser.add_argument('--bin',        type=str, help='Bin file that needs to be signed')
-my_parser.add_argument('--key',        type=str, help='File with signing key inside it')
-my_parser.add_argument('--swrv',        type=str, help='Sw Revision of the application')
-my_parser.add_argument('--enckey',     type=str, help='File with encryption key inside it')
-my_parser.add_argument('--cert',       type=str, help='Certificate file name (optional, will use a default name otherwise)')
-my_parser.add_argument('--output',     type=str, help='Output file name (concatenated cert+bin)')
-my_parser.add_argument('--enc',        type=str, help='If the binary need to be encrypted or not [y/n]')
-my_parser.add_argument('--kd-salt' ,   type=str, help='Path to the salt required to calculate derived key from manufacturers encryption key')
-my_parser.add_argument('--loadaddr',   type=str, help='Target load address of the binary in hex. Default to 0x70000000')
+my_parser.add_argument('--bin',             type=str, help='Bin file that needs to be signed')
+my_parser.add_argument('--key',             type=str, help='File with signing key inside it')
+my_parser.add_argument('--swrv',            type=str, help='Sw Revision of the application')
+my_parser.add_argument('--sign_key_id',     type=str, help='Index of signing key inside keyring')
+my_parser.add_argument('--enc_key_id',      type=str, help='Index of encryption key inside keyring')
+my_parser.add_argument('--enckey',          type=str, help='File with encryption key inside it')
+my_parser.add_argument('--cert',            type=str, help='Certificate file name (optional, will use a default name otherwise)')
+my_parser.add_argument('--output',          type=str, help='Output file name (concatenated cert+bin)')
+my_parser.add_argument('--enc',             type=str, help='If the binary need to be encrypted or not [y/n]')
+my_parser.add_argument('--kd-salt' ,        type=str, help='Path to the salt required to calculate derived key from manufacturers encryption key')
+my_parser.add_argument('--loadaddr',        type=str, help='Target load address of the binary in hex. Default to 0x70000000')
 
 args = my_parser.parse_args()
 cert_str = get_cert(args)
