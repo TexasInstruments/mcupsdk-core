@@ -141,13 +141,13 @@ extern "C" {
  *  @{
  */
 
-#define PIN_OSPI0_CSN0                                           (0x00000000U)
-#define PIN_OSPI0_CSN1                                           (0x00000004U)
-#define PIN_OSPI0_CLK                                            (0x00000008U)
-#define PIN_OSPI0_D0                                             (0x0000000CU)
-#define PIN_OSPI0_D1                                             (0x00000010U)
-#define PIN_OSPI0_D2                                             (0x00000014U)
-#define PIN_OSPI0_D3                                             (0x00000018U)
+#define PIN_OSPI0_CSN0                                          (0x00000000U)
+#define PIN_OSPI0_CSN1                                          (0x00000004U)
+#define PIN_OSPI0_CLK                                           (0x00000008U)
+#define PIN_OSPI0_D0                                            (0x0000000CU)
+#define PIN_OSPI0_D1                                            (0x00000010U)
+#define PIN_OSPI0_D2                                            (0x00000014U)
+#define PIN_OSPI0_D3                                            (0x00000018U)
 #define PIN_MCAN0_RX                                            (0x0000001CU)
 #define PIN_MCAN0_TX                                            (0x00000020U)
 #define PIN_MCAN1_RX                                            (0x00000024U)
@@ -287,6 +287,37 @@ extern "C" {
 #define PIN_TMS                                                 (0x0000023CU)
 #define PIN_TCK                                                 (0x00000240U)
 #define PIN_QSPI_CLKLB                                          (0x00000244U)
+
+/** @} */
+
+/**
+ *  \anchor Pinmux_Offsets_SIP
+ *  \name Pad config register offset in control module for SIP package
+ *  @{
+ */
+
+#define PIN_GPIO0                                               (0x00000000U)
+#define PIN_GPIO1                                               (0x00000004U)
+#define PIN_GPIO2                                               (0x00000008U)
+#define PIN_GPIO3                                               (0x0000000CU)
+#define PIN_GPIO4                                               (0x00000010U)
+#define PIN_GPIO5                                               (0x00000014U)
+#define PIN_GPIO7                                               (0x0000001CU)
+#define PIN_GPIO8                                               (0x00000020U)
+#define PIN_GPIO9                                               (0x00000024U)
+#define PIN_GPIO10                                              (0x00000028U)
+#define PIN_GPIO6                                               (0x00000018U)
+#define PIN_GPIO64                                              (0x00000100U)
+#define PIN_GPIO65                                              (0x00000104U)
+#define PIN_GPIO66                                              (0x00000108U)
+#define PIN_GPIO67                                              (0x0000010CU)
+#define PIN_GPIO68                                              (0x00000110U)
+#define PIN_GPIO69                                              (0x00000114U)
+#define PIN_GPIO70                                              (0x00000118U)
+#define PIN_GPIO75                                              (0x0000012CU)
+#define PIN_GPIO76                                              (0x00000130U)
+#define PIN_GPIO19                                              (0x0000004CU)
+#define PIN_GPIO20                                              (0x00000050U)
 
 /** @} */
 
