@@ -72,17 +72,17 @@ sin function tmu input (-NaN) nan : 0.000000
 
 TMU LIBRARY
 Error: 0.0000004320
-Max Cycles: 72.000000
-Avg cycles: 33.080002
+Max Cycles: 28.000000
+Avg cycles: 26.000000
 
 MCU SDK Trig Math Library
 Error: 0.0000007150
-Max Cycles: 80.000000
-Avg cycles: 54.051998
+Max Cycles: 74.000000
+Avg cycles: 54.040001
 
 CLANG MATHLIB
-Max Cycles: 263.000000
-Avg cycles: 150.410004
+Max Cycles: 293.000000
+Avg cycles: 150.628006
 
 COS FUNCTION
 Clang mathlib cos
@@ -103,17 +103,17 @@ cos function mathlib input (NEG_NaN) nan : 1.000000
 
 TMU LIBRARY
 Error: 0.0000003780
-Max Cycles: 70.000000
-Avg cycles: 33.077999
+Max Cycles: 26.000000
+Avg cycles: 25.998001
 
 MCU SDK Trig Math Library
 Error: 0.0000002870
-Max Cycles: 83.000000
-Avg cycles: 64.075996
+Max Cycles: 64.000000
+Avg cycles: 64.000000
 
 CLANG MATHLIB
-Max Cycles: 290.000000
-Avg cycles: 150.673996
+Max Cycles: 310.000000
+Avg cycles: 150.481995
 
 ATAN FUNCTION
 Clang mathlib atan
@@ -143,17 +143,17 @@ atan function tmu input (NORMAL/INFINITY) 3.402823e+38 inf : 0.000000
 
 TMU LIBRARY
 Error: 0.0000000600
-Max Cycles: 102.000000
-Avg cycles: 42.119999
+Max Cycles: 28.000000
+Avg cycles: 26.995998
 
 MCU SDK Trig Math Library
 Error: 0.0000004770
-Max Cycles: 94.000000
-Avg cycles: 93.951996
+Max Cycles: 104.000000
+Avg cycles: 94.019997
 
 CLANG MATHLIB
-Max Cycles: 185.000000
-Avg cycles: 79.599998
+Max Cycles: 187.000000
+Avg cycles: 79.524002
 
 EXPONENTIAL FUNCTION
 Clang mathlib exp
@@ -173,12 +173,12 @@ exp function mathlib input (-INF/POS_NaN) -inf : 0.000000
 
 TMU LIBRARY
 Error: 0.0000000600
-Max Cycles: 39.000000
-Avg cycles: 29.028002
+Max Cycles: 21.000000
+Avg cycles: 19.002001
 
 CLANG MATHLIB
-Max Cycles: 327.000000
-Avg cycles: 150.514008
+Max Cycles: 309.000000
+Avg cycles: 150.477997
 
 LOG FUNCTION
 Clang mathlib log
@@ -198,28 +198,28 @@ log function tmu input (-inf/nan) -inf nan : -inf
 
 TMU LIBRARY
 Error: 0.0000009540
-Max Cycles: 31.000000
-Avg cycles: 29.004002
+Max Cycles: 20.000000
+Avg cycles: 18.006001
 
 CLANG MATHLIB
-Max Cycles: 178.000000
-Avg cycles: 99.178001
+Max Cycles: 411.000000
+Avg cycles: 99.814003
 
 ATAN2 FUNCTION
 
 TMU LIBRARY
 Error: 0.0000002380
-Max Cycles: 100.000000
-Avg cycles: 61.071999
+Max Cycles: 69.000000
+Avg cycles: 58.020004
 
 MCU SDK Trig Math Library
 Error: 0.0000007150
-Max Cycles: 120.000000
-Avg cycles: 108.584000
+Max Cycles: 129.000000
+Avg cycles: 108.587997
 
 CLANG MATHLIB
-Max Cycles: 285.000000
-Avg cycles: 139.928009
+Max Cycles: 303.000000
+Avg cycles: 143.010010
 All tests have passed!!
 \endcode
 

@@ -40,6 +40,20 @@
 #ifndef TI_TMU_TRIG_H_
 #define TI_TMU_TRIG_H_
 
+#include <stdint.h>
+#include <drivers/hw_include/cslr.h>
+#include <drivers/hw_include/am263px/cslr_tmu.h>
+#include <drivers/hw_include/am263px/cslr_soc_r5_baseaddress.h>
+
+
+#ifndef ReciprocalOf2PI
+#define ReciprocalOf2PI                0.159154943091895335768f
+#endif
+
+#ifndef TwoPI
+#define TwoPI                          6.283185307F
+#endif
+
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
@@ -55,8 +69,15 @@
  *          Valid input is limited to values between -1.0f to +1.0f.
  *          No error checking is performed on input.
  */
-extern float ti_tmu_sin_pu(float anglePU);
+static inline float ti_tmu_sin_pu(float anglePU)
+{
+    __asm__ volatile("str %0, [%1]\n\t"
+                     "DMB ST \n\t"
+                    :
+                    : "r" (anglePU), "r" (CSL_MSS_TMU_BASE  + CSL_TMU_SINPUF32_R0));
 
+    return  *((float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R0));
+}
 
 /**
  * \brief   Computes the trigonometric cosine value of the input angle using TMU.
@@ -69,7 +90,15 @@ extern float ti_tmu_sin_pu(float anglePU);
  *          Valid input is limited to values between -1.0f to +1.0f.
  *          No error checking is performed on input.
  */
-extern float ti_tmu_cos_pu(float anglePU);
+static inline float ti_tmu_cos_pu(float anglePU)
+{
+    __asm__ volatile("str %0, [%1]\n\t"
+                     "DMB ST \n\t"
+                    :
+                    : "r" (anglePU), "r" (CSL_MSS_TMU_BASE + CSL_TMU_COSPUF32_R1));
+
+    return *((float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R1));
+}
 
 
 /**
@@ -83,7 +112,17 @@ extern float ti_tmu_cos_pu(float anglePU);
  *          Valid input is limited to values between -1.0f to 1.0f.
  *          No error checking is performed on input.
  */
-extern float ti_tmu_atan_pu(float x);
+static inline float ti_tmu_atan_pu(float x)
+{
+    __asm__ volatile("str %0, [%1]\n\t"
+                     "DMB ST \n\t"
+                    :
+                    : "r" (x), "r" (CSL_MSS_TMU_BASE + CSL_TMU_ATANPUF32_R2));
+
+    return *((float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R2));
+
+}
+
 
 
 /**
@@ -97,7 +136,16 @@ extern float ti_tmu_atan_pu(float x);
  *          Valid input is limited to values between negative infinity to positive infinity.
  *          No error checking is performed on input.
  */
-extern float ti_tmu_log_pu(float x);
+static inline float ti_tmu_log_pu(float x)
+{
+     __asm__ volatile("str %0, [%1]\n\t"
+                     "DMB ST \n\t"
+                    :
+                    : "r" (x), "r" (CSL_MSS_TMU_BASE + CSL_TMU_LOG2F32_R3));
+
+      return *((float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R3));
+}
+
 
 
 /**
@@ -110,7 +158,16 @@ extern float ti_tmu_log_pu(float x);
  * \note    Usage Considerations:
  *          No error checking is performed on input.
  */
-extern float ti_tmu_iexp_pu(float x);
+static inline float ti_tmu_iexp_pu(float x)
+{
+ __asm__ volatile("str %0, [%1]\n\t"
+                     "DMB ST \n\t"
+                    :
+                    : "r" (x), "r" (CSL_MSS_TMU_BASE + CSL_TMU_IEXP2F32_R3));
+
+    return *((float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R3));
+}
+
 
 
 /**
@@ -124,7 +181,15 @@ extern float ti_tmu_iexp_pu(float x);
  *          Valid input is limited to values between -2PI to 2PI. The input is multiplied with 1/2PI to convert it to per unit value for using TMU.
  *          No error checking is performed on input.
  */
-extern float ti_tmu_sin(float angleRad);
+ static inline float ti_tmu_sin(float angleRad)
+{
+    __asm__ volatile("str %0, [%1]\n\t"
+                     "DMB ST \n\t"
+                    :
+                    : "r" (angleRad * ReciprocalOf2PI), "r" (CSL_MSS_TMU_BASE + CSL_TMU_SINPUF32_R0));
+
+    return *((float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R0));
+}
 
 
 /**
@@ -138,7 +203,15 @@ extern float ti_tmu_sin(float angleRad);
  *          Valid input is limited to values between -2PI to 2PI. The input is multiplied with 1/2PI to convert it to per unit value for using TMU.
  *          No error checking is performed on input.
  */
-extern float ti_tmu_cos(float angleRad);
+static inline float ti_tmu_cos(float angleRad)
+{
+    __asm__ volatile("str %0, [%1]\n\t"
+                     "DMB ST \n\t"
+                    :
+                    : "r" (angleRad * ReciprocalOf2PI), "r" (CSL_MSS_TMU_BASE + CSL_TMU_COSPUF32_R1));
+
+    return *((float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R1));
+}
 
 /**
  * \brief   Computes the trigonometric atan value of the input angle using TMU.
@@ -151,7 +224,15 @@ extern float ti_tmu_cos(float angleRad);
  *          Valid input is limited to values between -1.0f to 1.0f. The computed output value is multiplied with 2PI to change it to radians.
  *          No error checking is performed on input.
  */
-extern float ti_tmu_atan(float x);
+static inline float ti_tmu_atan(float x)
+{
+    __asm__ volatile("str %0, [%1]\n\t"
+                    "DMB ST \n\t"
+                    :
+                    : "r" (x), "r" (CSL_MSS_TMU_BASE + CSL_TMU_ATANPUF32_R2));
+
+    return (*((float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R2))) * TwoPI;
+}
 
 
 /**
@@ -165,7 +246,22 @@ extern float ti_tmu_atan(float x);
  * \note    Usage Considerations:
  *          No error checking is performed on input.
  */
-extern float ti_tmu_atan2(float x, float y);
+static inline float ti_tmu_atan2(float x, float y)
+{
+    __asm__ volatile("str %1, [%2, #0x240] \n\t"
+                    "str %0, [%2, #0x1F0] \n\t"
+                    "DMB ST               \n\t"
+                    "ldr %0, [%2, #0x2B0] \n\t"
+                    "str %0, [%2, #0xC0]  \n\t"
+                    "DMB ST               \n\t"
+                    :
+                    : "r" (x), "r" (y), "r" (CSL_MSS_TMU_BASE), "r" (*(float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R6)));
+
+    return  (TwoPI * ((*(float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R0)) + (*(float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R7))));
+
+}
+
+
 
 #endif /* TI_TMU_TRIG_H */
 
