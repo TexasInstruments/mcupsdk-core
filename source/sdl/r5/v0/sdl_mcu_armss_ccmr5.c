@@ -1,5 +1,5 @@
 /********************************************************************
- * Copyright (C) 2022 Texas Instruments Incorporated.
+ * Copyright (C) 2022-2024 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -68,6 +68,20 @@ static uint32_t SDL_armR5GetRegOffset(SDL_McuArmssCcmR5RegId  regId)
         case SDL_MCU_ARMSS_CCMR5_POLCNTRL_REGID:
             offset  = SDL_MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMPOLCNTRL;
             break;
+#ifdef SOC_AM263PX
+        case SDL_MCU_ARMSS_CCMR5_CCMSR5_REGID:
+            offset = SDL_MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMSR5;
+            break;
+        case SDL_MCU_ARMSS_CCMR5_CCMKEYR5_REGID:
+            offset = SDL_MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMKEYR5;
+            break;
+        case SDL_MCU_ARMSS_CCMR5_CCMSR6_REGID:
+            offset = SDL_MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMSR6;
+            break;
+        case SDL_MCU_ARMSS_CCMR5_CCMKEYR6_REGID:
+            offset = SDL_MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMKEYR6;
+            break;
+#endif
         default:
             break;
     }
@@ -173,7 +187,7 @@ int32_t SDL_armR5ConfigureCCMRegister (
     {
         *pMetaInfo = failReason;
     }
-	
+
     return (retVal);
 }
 
@@ -250,7 +264,23 @@ int32_t SDL_armR5CCMSetOperationModeKey (
                       MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMKEYR3_MKEY3, \
                       mKey);
                  break;
+#ifdef SOC_AM263PX
+            case SDL_MCU_ARMSS_CCMR5_TMU_MODULE_ID:
+                offset = SDL_armR5GetRegOffset(SDL_MCU_ARMSS_CCMR5_CCMKEYR5_REGID);
+                addr           = ((uint32_t) baseAddress + offset);
+                 SDL_REG32_FINS(addr, \
+                      MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMKEYR5_MKEY5, \
+                      mKey);
+                 break;
 
+            case SDL_MCU_ARMSS_CCMR5_RL2_MODULE_ID:
+                offset = SDL_armR5GetRegOffset(SDL_MCU_ARMSS_CCMR5_CCMKEYR6_REGID);
+                addr           = ((uint32_t) baseAddress + offset);
+                 SDL_REG32_FINS(addr, \
+                      MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMKEYR6_MKEY6, \
+                      mKey);
+                 break;
+#endif
             default:
                  retVal         = SDL_EFAIL;
                  failReason     = SDL_EBADARGS;
@@ -317,7 +347,21 @@ int32_t SDL_armR5CCMGetCompareError (
                 *pCmpError = SDL_REG32_FEXT(addr, \
                       MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMSR3_CMPE3);
                   break;
+#ifdef SOC_AM263PX
+            case SDL_MCU_ARMSS_CCMR5_TMU_MODULE_ID:
+                offset = SDL_armR5GetRegOffset(SDL_MCU_ARMSS_CCMR5_CCMSR5_REGID);
+                addr           = ((uint32_t) baseAddress + offset);
+                *pCmpError = SDL_REG32_FEXT(addr, \
+                      MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMSR5_CMPE5);
+                  break;
 
+            case SDL_MCU_ARMSS_CCMR5_RL2_MODULE_ID:
+                offset = SDL_armR5GetRegOffset(SDL_MCU_ARMSS_CCMR5_CCMSR5_REGID);
+                addr           = ((uint32_t) baseAddress + offset);
+                *pCmpError = SDL_REG32_FEXT(addr, \
+                      MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMSR6_CMPE6);
+                  break;
+#endif
             default:
                   retVal         = SDL_EFAIL;
                   failReason     = SDL_EBADARGS;
@@ -385,6 +429,21 @@ int32_t SDL_armR5CCMGetOperationModeKey (
                       MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMKEYR3_MKEY3);
                      break;
 
+#ifdef SOC_AM263PX
+            case SDL_MCU_ARMSS_CCMR5_TMU_MODULE_ID:
+                    offset = SDL_armR5GetRegOffset(SDL_MCU_ARMSS_CCMR5_CCMKEYR3_REGID);
+                    addr           = ((uint32_t) baseAddress + offset);
+                     mKey    = (uint32_t)SDL_REG32_FEXT(addr, \
+                      MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMKEYR3_MKEY3);
+                     break;
+
+            case SDL_MCU_ARMSS_CCMR5_RL2_MODULE_ID:
+                    offset = SDL_armR5GetRegOffset(SDL_MCU_ARMSS_CCMR5_CCMKEYR3_REGID);
+                    addr           = ((uint32_t) baseAddress + offset);
+                     mKey    = (uint32_t)SDL_REG32_FEXT(addr, \
+                      MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMKEYR3_MKEY3);
+                     break;
+#endif
             default:
                      retVal         = SDL_EFAIL;
                      failReason     = SDL_EBADARGS;
@@ -474,6 +533,27 @@ int32_t SDL_armR5CCMClearCompareError (
                       MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMSR3_CMPE3, \
                       cmpE);
                      break;
+
+#ifdef SOC_AM263PX
+            case SDL_MCU_ARMSS_CCMR5_TMU_MODULE_ID:
+                     offset = SDL_armR5GetRegOffset(SDL_MCU_ARMSS_CCMR5_CCMSR3_REGID);
+                     addr           = ((uint32_t) baseAddress + offset);
+
+                     SDL_REG32_FINS(addr, \
+                      MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMSR3_CMPE3, \
+                      cmpE);
+                     break;
+
+            case SDL_MCU_ARMSS_CCMR5_RL2_MODULE_ID:
+                     offset = SDL_armR5GetRegOffset(SDL_MCU_ARMSS_CCMR5_CCMSR3_REGID);
+                     addr           = ((uint32_t) baseAddress + offset);
+
+                     SDL_REG32_FINS(addr, \
+                      MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMSR3_CMPE3, \
+                      cmpE);
+                     break;
+
+#endif
 
             default:
                      retVal         = SDL_EFAIL;

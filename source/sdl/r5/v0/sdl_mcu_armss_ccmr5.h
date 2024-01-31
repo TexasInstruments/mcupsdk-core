@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -49,8 +49,8 @@ extern "C"
  *
  * \defgroup SDL_MCU_MCU_ARMSS_CCMR5_API CCM Low-Level API
  * \ingroup SDL_CCM_MODULE
- * 
- *  
+ *
+ *
  *  CCM for R5F provides APIs to select the operating modes and read the status for
  *
  *     -# CPU compare block
@@ -61,7 +61,7 @@ extern "C"
  *
  *  @{
  */
- 
+
 /* ========================================================================== */
 /*                            Enums & Typedefs                               */
 /* ========================================================================== */
@@ -71,7 +71,7 @@ extern "C"
  *  \name CCM R5 Register IDs
  *  @{
  */
- 
+
 /**
  * \brief This typedef defines the MCU ARMSS CCM R5 register ID type
  *        used under the context of SDL CCMR5 APIs
@@ -93,7 +93,17 @@ typedef enum SDL_McuArmssCcmR5RegId_e
     /**< register id for KEY register 3 */
     SDL_MCU_ARMSS_CCMR5_POLCNTRL_REGID = (6u),
     /**< register id for Polatiry Control Reg */
-    SDL_MCU_ARMSS_CCMR5_INVALID_REGID = (7u)
+#ifdef SOC_AM263PX
+    SDL_MCU_ARMSS_CCMR5_CCMKEYR5_REGID = (7u),
+    /**< register id for KEY register 5 */
+    SDL_MCU_ARMSS_CCMR5_CCMSR5_REGID = (8u),
+    /**< register id for Status Register 5 */
+    SDL_MCU_ARMSS_CCMR5_CCMKEYR6_REGID = (9u),
+    /**< register id for KEY register 6 */
+    SDL_MCU_ARMSS_CCMR5_CCMSR6_REGID = (10u),
+    /**< register id for Status Register 6 */
+#endif
+    SDL_MCU_ARMSS_CCMR5_INVALID_REGID = (11u)
     /**< Invalid RegID */
 } SDL_McuArmssCcmR5RegId;
 /** @} */
@@ -115,6 +125,12 @@ typedef enum SDL_McuArmssCcmR5ModuleId_e
     /**< module id for VIM */
     SDL_MCU_ARMSS_CCMR5_INACTIVITY_MONITOR_MODULE_ID = (2u),
     /**< module id for Inactivity monitor */
+#ifdef SOC_AM263PX
+    SDL_MCU_ARMSS_CCMR5_TMU_MODULE_ID = (3u),
+    /**< module id for TMU */
+    SDL_MCU_ARMSS_CCMR5_RL2_MODULE_ID = (4u),
+    /**< module id for RL2 */
+#endif
     SDL_MCU_ARMSS_CCMR5_INVALID_MODULE_ID = (255u)
     /**< invalid module id for Cpu */
 } SDL_McuArmssCcmR5ModuleId;
@@ -155,10 +171,6 @@ typedef enum SDL_McuArmssCcmR5OpModeKey_e
  *  and returns the status of the operation for API caller to indicate
  *  success or failure on the operation.
  *
- *  Consult the CCM module documentation for a description of the
- *  registers under MCU_ARMSS_CCMR5 registers section of the
- *  techinical reference manual http://www.ti.com/lit/pdf/spruid7
- *
  *  \param baseAddress       [IN]  Base address of MCU_ARMSS_CCMR5 registers
  *  \param regId             [IN]  CCMR5 register ID to be read
  *  \param pValToBeRead      [OUT] pointer to address of Register value read
@@ -184,10 +196,6 @@ int32_t SDL_armR5ReadCCMRegister (
  *  This function configures a given CCM register and returns the status of the
  *  operation for API caller to indicate success or failure on the operation.
  *
- *  Consult the CCM module documentation for a description of the
- *  registers under MCU_ARMSS_CCMR5 registers section of the
- *  techinical reference manual http://www.ti.com/lit/pdf/spruid7
- *
  *  \param baseAddress       [IN]  Base address of MCU_ARMSS_CCMR5 registers
  *  \param regId             [IN]  CCMR5 register ID to be configured
  *  \param valToBeWritten    [OUT] Register value to be written to
@@ -211,10 +219,6 @@ int32_t SDL_armR5ConfigureCCMRegister (
  *
  *  This function configures a Operation mode key and returns the status of the
  *  operation for API caller to indicate success or failure on the operation.
- *
- *  Consult the CCM module documentation for a description of the
- *  registers under MCU_ARMSS_CCMR5 registers section of the
- *  techinical reference manual http://www.ti.com/lit/pdf/spruid7
  *
  *  \param baseAddress       [IN]  Base address of MCU_ARMSS_CCMR5 registers
  *  \param moduleId          [IN]  CCMR5 module ID to be configured
@@ -241,10 +245,6 @@ int32_t SDL_armR5CCMSetOperationModeKey (
  *  This function reads the a Compare Error status and returns the status of the
  *  operation for API caller to indicate success or failure on the operation.
  *
- *  Consult the CCM module documentation for a description of the
- *  registers under MCU_ARMSS_CCMR5 registers section of the
- *  techinical reference manual http://www.ti.com/lit/pdf/spruid7
- *
  *  \param baseAddress       [IN]  Base address of MCU_ARMSS_CCMR5 registers
  *  \param moduleId          [IN]  CCMR5 module ID to be configured
  *  \param pCmpError         [OUT] Pointer to Compare Error for the module
@@ -269,10 +269,6 @@ int32_t SDL_armR5CCMGetCompareError (
  *
  *  This function reads the a Operation mode key and returns the status of the
  *  operation for API caller to indicate success or failure on the operation.
- *
- *  Consult the CCM module documentation for a description of the
- *  registers under MCU_ARMSS_CCMR5 registers section of the
- *  techinical reference manual http://www.ti.com/lit/pdf/spruid7
  *
  *  \param baseAddress       [IN]  Base address of MCU_ARMSS_CCMR5 registers
  *  \param moduleId          [IN]  CCMR5 module ID to be configured
@@ -311,10 +307,6 @@ int32_t SDL_armR5CCMGetOperationModeKey (
  *
  *  This function clears the a Compare Error Statusand returns the status of the
  *  operation for API caller to indicate success or failure on the operation.
- *
- *  Consult the CCM module documentation for a description of the
- *  registers under MCU_ARMSS_CCMR5 registers section of the
- *  techinical reference manual http://www.ti.com/lit/pdf/spruid7
  *
  *  \param baseAddress       [IN]  Base address of MCU_ARMSS_CCMR5 registers
  *  \param moduleId          [IN]  CCMR5 module ID to be configured

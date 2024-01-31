@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2022 Texas Instruments Incorporated 
+ *  Copyright (c) 2022-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -38,15 +38,15 @@
  *
  *  @{
  */
- 
+
 /**
  * \file  sdl_ip_ccm.h
  *
  * \brief Header file contains enumerations, structure definitions and function
  *        declarations for SDL CCM interface.
- *  
+ *
  */
- 
+
 #ifndef SDL_IP_CCM_H_
 #define SDL_IP_CCM_H_
 
@@ -81,12 +81,23 @@ typedef enum {
     /**< CCM output compare block monitor type */
     SDL_CCM_MONITOR_TYPE_VIM = 2,
     /**< CCM VIM block monitor type */
+#ifdef SOC_AM263PX
+    SDL_CCM_MONITOR_TYPE_TMU = 3,
+    /**< CCM TMU block monitor type */
+    SDL_CCM_MONITOR_TYPE_RL2 = 4,
+    /**< CCM RL2 block monitor type */
+    SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR = 5,
+    /**< CCM inacitivty monitor type */
+    SDL_CCM_MONITOR_TYPE_INVALID = 6,
+    /**< CCM invalid type */
+#else
     SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR = 3,
     /**< CCM inacitivty monitor type */
     SDL_CCM_MONITOR_TYPE_INVALID = 4,
     /**< CCM invalid type */
+#endif
 } SDL_CCM_MonitorType;
- 
+
 /**
  * \brief This enumerator defines the type of CCM Self-test type
  *
@@ -114,6 +125,10 @@ typedef struct {
 	volatile uint32_t CCMKEYR2;          /* MKEY2 value */
 	volatile uint32_t CCMKEYR3;          /* MKEY3 value */
 	volatile uint32_t CCMPOLCNTRL;       /* POL_INV value */
+#ifdef SOC_AM263PX
+	volatile uint32_t CCMKEYR5;          /* MKEY5 value */
+	volatile uint32_t CCMKEYR6;          /* MKEY6 value */
+#endif
 } SDL_CCM_staticRegs;
 
 /**
@@ -195,7 +210,7 @@ typedef struct {
 /*                            Function Declarations                               */
 /* ========================================================================== */
 
-/** 
+/**
  *
  * \brief   Initialization API for CCM module
  *
@@ -208,7 +223,7 @@ typedef struct {
  */
 int32_t SDL_CCM_init(SDL_CCM_Inst instance, uint32_t index);
 
-/** 
+/**
  *
  * \brief   Verifies the configuration done as part of SDL_CCM_init is as expected
  *
@@ -220,7 +235,7 @@ int32_t SDL_CCM_init(SDL_CCM_Inst instance, uint32_t index);
  */
  int32_t SDL_CCM_verifyConfig(SDL_CCM_Inst instance);
 
- /** 
+ /**
  *
  * \brief   Executes a self-test of the CCM module. The types of self-tests supported
  *          are described in detail in SDL_CCM_SelfTestType
@@ -247,7 +262,7 @@ int32_t SDL_CCM_init(SDL_CCM_Inst instance, uint32_t index);
  int32_t SDL_CCM_selfTest(SDL_CCM_Inst instance, SDL_CCM_MonitorType monitorType, SDL_CCM_SelfTestType testType, \
 							uint32_t polarityInversionMask, uint32_t timeoutCnt);
 
- /** 
+ /**
  *
  * \brief   Forces an error to be generated for the selected monitor type. After injecting the error,
  *          an ESM error event is generated and the application will receive notification via
@@ -264,7 +279,7 @@ int32_t SDL_CCM_init(SDL_CCM_Inst instance, uint32_t index);
  */
  int32_t SDL_CCM_injectError(SDL_CCM_Inst instance, SDL_CCM_MonitorType monitorType);
 
- /** 
+ /**
  *
  * \brief   Retrieves the static register configuration. The values returned in staticRegs
  *          can be saved by the application and periodically checked for changes.
@@ -283,7 +298,7 @@ int32_t SDL_CCM_init(SDL_CCM_Inst instance, uint32_t index);
  */
  int32_t SDL_CCM_getStaticRegisters(SDL_CCM_Inst instance, SDL_CCM_staticRegs *pStaticRegs);
 
- /** 
+ /**
  *
  * \brief   Gets the monitor type for which the CCM error was generated. Takes the
  *          ESM interrupt source as input
@@ -301,7 +316,7 @@ int32_t SDL_CCM_init(SDL_CCM_Inst instance, uint32_t index);
  */
  int32_t SDL_CCM_getErrorType(SDL_CCM_Inst instance, uint32_t intSrc, SDL_CCM_MonitorType *monitorType);
 
- /** 
+ /**
  *
  * \brief   Clears the compare error for the selected monitor type
  *
@@ -325,14 +340,14 @@ int32_t SDL_CCM_init(SDL_CCM_Inst instance, uint32_t index);
  *  \param pRegs        [IN]    Pointer to the SDL_vimRegs register structure
  *  \param intrNum      [IN]    Interrupt number
  *  \param pri          [IN]    Interrupt priority (0(highest)..15(lowest))
- *  \param intrMap      [IN]    Interrupt mapping 
- *  \param intrType     [IN]    Interrupt type 
+ *  \param intrMap      [IN]    Interrupt mapping
+ *  \param intrType     [IN]    Interrupt type
  *  \param vecAddr      [IN]    32-bit vector address (forced to 32-bit alignment)
  *
  *  \return  0 = success
  *          -1 = intrNum or pri parameters are out of range
  */
-int32_t SDL_VIM_cfgIntr(SDL_vimRegs *pRegs, uint32_t intrNum, uint32_t pri, SDL_VimIntrMap intrMap, 
+int32_t SDL_VIM_cfgIntr(SDL_vimRegs *pRegs, uint32_t intrNum, uint32_t pri, SDL_VimIntrMap intrMap,
 						SDL_VimIntrType intrType, uint32_t vecAddr );
 /**
  *  \brief Read back Verify Configure a source interrupt
@@ -342,10 +357,10 @@ int32_t SDL_VIM_cfgIntr(SDL_vimRegs *pRegs, uint32_t intrNum, uint32_t pri, SDL_
  *  parameters.
  *
  *  \param pRegs        [IN]    Pointer to the SDL_vimRegs register structure
- *  \param intrNum      [IN]    Interrupt number 
+ *  \param intrNum      [IN]    Interrupt number
  *  \param pri          [IN]    Interrupt priority (0(highest)..15(lowest))
- *  \param intrMap      [IN]    Interrupt mapping 
- *  \param intrType     [IN]    Interrupt type 
+ *  \param intrMap      [IN]    Interrupt mapping
+ *  \param intrType     [IN]    Interrupt type
  *  \param vecAddr      [IN]    32-bit vector address (forced to 32-bit alignment)
  *
  *  \return  0 = success (matches to expected values)
@@ -355,7 +370,7 @@ int32_t SDL_VIM_verifyCfgIntr(SDL_vimRegs     *pRegs,
                                 uint32_t         intrNum, uint32_t  pri,
                                 SDL_VimIntrMap   intrMap,
                                 SDL_VimIntrType  intrType,
-                                uint32_t         vecAddr);						
+                                uint32_t         vecAddr);
 /**
  *  \brief Read back of static registers for VIM
  *
@@ -375,6 +390,6 @@ int32_t SDL_VIM_getStaticRegs( SDL_vimRegs *pRegs, SDL_vimStaticRegs *pStaticReg
 #ifdef __cplusplus
 }
 #endif /*extern "C" */
-#endif 
+#endif
 
 /** @} */

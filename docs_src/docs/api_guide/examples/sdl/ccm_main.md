@@ -4,20 +4,34 @@
 
 # Introduction
 
+\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
 This example demonstrates the usage of the SDL R5 CCM module. The example shows how to setup and use the R5 CCM Safety Diagnostic operation.
+\endcond
+
+\cond SOC_AM263PX
+This example demonstrates the usage of the SDL R5 CCM TMU/RL2 module. The example shows how to setup and use the R5 CCM Safety Diagnostic operation for R5F, TMU and RL2.
+\endcond
 
 Use Cases
 ---------
 
+\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
  Use Case | Description
  ---------|------------
  UC-1     | self test on R5 CCM.
  UC-2     | self test with error force on R5 CCM.
+ \endcond
 
+\cond SOC_AM263PX
+ Use Case | Description
+ ---------|------------
+ UC-1     | self test on R5 CCM, TMU, RL2.
+ UC-2     | self test with error force on R5 CCM, TMU, RL2.
+ \endcond
 
 # Supported Combinations {#EXAMPLES_SDL_CCM_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
+\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
 
  Parameter      | Value
  ---------------|-----------
@@ -27,6 +41,20 @@ Use Cases
  Example folder | examples/sdl/ccm/sdl_ccm_example/
 
 \endcond
+
+\cond SOC_AM263PX
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/sdl/ccm/sdl_ccm_example/
+ Example folder | examples/sdl/ccm/sdl_ccm_tmu_example/
+ Example folder | examples/sdl/ccm/sdl_ccm_rl2_example/
+
+\endcond
+
 
 # Steps to Run the Example
 
@@ -69,68 +97,121 @@ Use Cases
 
 # Sample Output
 
-Shown below is a sample output when the application is run,
+Shown below is a sample output when the CCM application is run.
 
-\cond (SOC_AM263X || SOC_AM263PX) || (SOC_AM273X) || (SOC_AWR294X)
+\cond SOC_AM263X || SOC_AM273X || SOC_AWR294X
 \code
-R5F0 CORE:
-
 R5 CPU Application
-
-R5F-CPU example application CCM_Test_init: Init MCU ESM complete
-
-CCM_Test_init: CCM Init complete
-
-R5F-CPU example application CCM_Test_init: CCM Init complete
-
+CCM Example Test Started: R5F0
+MCU ESM Initialization completed
+CCM Test Init completed
+CCM Verify Init completed
 CCM Functional Test
-
-R5F-CPU example application CCM self test: starting
-
-R5F-CPU example application CCM Self Test complete
-
-R5F-CPU example application CCM self test with error forcing: starting
-
-R5F-CPU example application CCM Self Test with error forcing complete
-
-R5F-CPU example application CCM inject  error: test starting
-
-R5F-CPU example application CCM inject Test complete
-
-CPU Functionality Passed.
-
+CCM self test: starting
+CCM Self Test completed
+CCM self test with error forcing: starting
+CCM Self Test with error forcing completed
+CCM inject  error: test starting
+CCM inject Test completed
+CPU Functionality
+ Passed.
 All tests have passed.
 
 \endcode
 \endcond
 
-\cond (SOC_AM263X || SOC_AM263PX)
+\cond SOC_AM263X || SOC_AM263PX
 \code
-R5F1 CORE:
+R5 CPU Application
+CCM Example Test Started: R5F0
+MCU ESM Initialization completed
+CCM Test Init completed
+CCM Verify Init completed
+CCM Functional Test
+CCM self test: starting
+CCM Self Test completed
+CCM self test with error forcing: starting
+CCM Self Test with error forcing completed
+CCM inject  error: test starting
+CCM inject Test completed
+CCM Example Test Started: R5F1
+MCU ESM Initialization completed
+CCM Test Init completed
+CCM Verify Init completed
+CCM Functional Test
+CCM self test: starting
+CCM Self Test completed
+CCM self test with error forcing: starting
+CCM Self Test with error forcing completed
+CCM inject  error: test starting
+CCM inject Test completed
+CPU Functionality
+ Passed.
+All tests have passed.
+
+\endcode
+\endcond
+
+Shown below is a sample output when the TMU application is run.
+
+\cond SOC_AM263PX
+\code
 
 R5 CPU Application
+TMU Example Test Started: R5F0
+MCU ESM Initialization completed
+TMU Test Init completed
+TMU Verify Init completed
+TMU Functional Test
+TMU self test: starting
+TMU Self Test completed
+TMU self test with error forcing: starting
+TMU Self Test with error forcing completed
+TMU inject  error: test starting
+TMU inject Test completed
+TMU Example Test Started: R5F1
+MCU ESM Initialization completed
+TMU Test Init completed
+TMU Verify Init completed
+TMU Functional Test
+TMU self test: starting
+TMU Self Test completed
+TMU self test with error forcing: starting
+TMU Self Test with error forcing completed
+TMU inject  error: test starting
+TMU inject Test completed
 
-R5F-CPU example application CCM_Test_init: Init MCU ESM complete
+All tests have passed.
 
-CCM_Test_init: CCM Init complete
+\endcode
 
-R5F-CPU example application CCM_Test_init: CCM Init complete
+Shown below is a sample output when the RL2 application is run.
 
-CCM Functional Test
+\code
 
-R5F-CPU example application CCM self test: starting
-
-R5F-CPU example application CCM Self Test complete
-
-R5F-CPU example application CCM self test with error forcing: starting
-
-R5F-CPU example application CCM Self Test with error forcing complete
-
-R5F-CPU example application CCM inject  error: test starting
-
-R5F-CPU example application CCM inject Test complete
-
-CPU Functionality Passed.
+R5 CPU Application
+RL2 Example Test Started: R5F0
+MCU ESM Initialization completed
+RL2 Test Init completed
+RL2 Verify Init completed
+RL2 Functional Test
+RL2 self test: starting
+RL2 Self Test completed
+RL2 self test with error forcing: starting
+RL2 Self Test with error forcing completed
+RL2 inject  error: test starting
+RL2 inject Test completed
+RL2 Example Test Started: R5F1
+MCU ESM Initialization completed
+RL2 Test Init completed
+RL2 Verify Init completed
+RL2 Functional Test
+RL2 self test: starting
+RL2 Self Test completed
+RL2 self test with error forcing: starting
+RL2 Self Test with error forcing completed
+RL2 inject  error: test starting
+RL2 inject Test completed
 
 All tests have passed.
 \endcode

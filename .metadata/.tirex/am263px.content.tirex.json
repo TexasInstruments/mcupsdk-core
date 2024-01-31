@@ -13729,6 +13729,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies the operation of CCM TMU module CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_ccm_tmu_example",
+        "location": "../../examples/sdl/ccm/sdl_ccm_tmu_example/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ccm",
+            "sdl_ccm_tmu_example",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example verifies the operation of CCM RL2 module CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_ccm_rl2_example",
+        "location": "../../examples/sdl/ccm/sdl_ccm_rl2_example/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "ccm",
+            "sdl_ccm_rl2_example",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example verifies STC is Done for R5F0 core followed by R5F1. CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_stc",
         "location": "../../examples/sdl/stc/stc_mcu/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

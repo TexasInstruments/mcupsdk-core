@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) Texas Instruments Incorporated 2022-2023
+ *  Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -67,7 +67,15 @@ volatile bool Erroresm = false;
 #define        SDL_ESM_R5F0_VIM_COMPARE_ERR_INT   71U
    /**< R5F0 VIM Interrupt source Self test error */
 #define        SDL_ESM_R5F1_VIM_COMPARE_ERR_INT   75U
-   /**< R5F1 VIM Interrupt lockstep error */
+   /**< R5F1 VIM Interrupt source Self test error */
+#define        SDL_ESM_R5F0_TMU_COMPARE_ERR_INT   87U
+   /**< R5F0 TMU Interrupt lockstep error */
+#define        SDL_ESM_R5F1_TMU_COMPARE_ERR_INT   90U
+   /**< R5F1 TMU Interrupt lockstep error */
+#define        SDL_ESM_R5F0_RL2_COMPARE_ERR_INT   93U
+   /**< R5F0 RL2 Interrupt lockstep error */
+#define        SDL_ESM_R5F1_RL2_COMPARE_ERR_INT   94U
+   /**< R5F1 RL2 Interrupt lockstep error */
 
 #define SDL_INTR_PRIORITY_LVL             1U
 #define SDL_ENABLE_ERR_PIN                1U
@@ -192,6 +200,14 @@ static int32_t SDL_CCM_getMonitorKeyRegister(SDL_CCM_MonitorType monitorType,
                 *pCCMR5RegId = SDL_MCU_ARMSS_CCMR5_CCMKEYR3_REGID;
                 break;
 
+            case SDL_CCM_MONITOR_TYPE_TMU:
+                *pCCMR5RegId = SDL_MCU_ARMSS_CCMR5_CCMKEYR5_REGID;
+                break;
+
+            case SDL_CCM_MONITOR_TYPE_RL2:
+                *pCCMR5RegId = SDL_MCU_ARMSS_CCMR5_CCMKEYR6_REGID;
+                break;
+
             default:
                 /* Invalid argument */
                 result = SDL_EBADARGS;
@@ -217,6 +233,14 @@ static int32_t SDL_CCM_getMonitorStatusRegister(SDL_CCM_MonitorType monitorType,
 
             case SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR:
                 *pCCMR5RegId = SDL_MCU_ARMSS_CCMR5_CCMSR3_REGID;
+                break;
+
+            case SDL_CCM_MONITOR_TYPE_TMU:
+                *pCCMR5RegId = SDL_MCU_ARMSS_CCMR5_CCMSR5_REGID;
+                break;
+
+            case SDL_CCM_MONITOR_TYPE_RL2:
+                *pCCMR5RegId = SDL_MCU_ARMSS_CCMR5_CCMSR6_REGID;
                 break;
 
             default:
@@ -248,6 +272,14 @@ static int32_t SDL_CCM_getMonitorTypeFromIntSrc (uint32_t intSrc,
         case SDL_ESM0_R5FSS0_R5FSS0_CPU_MISCOMPARE_PULSE_0:
             *pMonitorType = SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR;
             break;
+
+        case SDL_ESM0_R5FSS0_TMU_COMPARE_ERR:
+            *pMonitorType = SDL_CCM_MONITOR_TYPE_TMU;
+            break;
+
+        case SDL_ESM0_R5FSS0_RL2_COMPARE_ERR:
+            *pMonitorType = SDL_CCM_MONITOR_TYPE_RL2;
+            break;
         default:
             /* Invalid value return fail */
             result = SDL_EFAIL;
@@ -269,15 +301,21 @@ static int32_t SDL_CCM_ESM_callBackFunction (SDL_ESM_Inst instance, SDL_ESM_IntT
     bool moduleIndependentEvent = (bool)false;
 
     /* Check if it is self test related interrupt */
-    switch (intSrc) {
+    switch (intSrc)
+    {
         case SDL_ESM_CCM_0_SELF_TEST_ERR_INT:
         case SDL_ESM_CCM_0_LOCKSTEP_COMPARE:
-		case SDL_ESM_CCM_1_SELF_TEST_ERR_INT:
-		case SDL_ESM_R5F0_VIM_COMPARE_ERR_INT:
-		case SDL_ESM_R5F1_VIM_COMPARE_ERR_INT:
+        case SDL_ESM_CCM_1_SELF_TEST_ERR_INT:
+        case SDL_ESM_R5F0_VIM_COMPARE_ERR_INT:
+        case SDL_ESM_R5F1_VIM_COMPARE_ERR_INT:
+        case SDL_ESM_R5F0_TMU_COMPARE_ERR_INT:
+        case SDL_ESM_R5F1_TMU_COMPARE_ERR_INT:
+        case SDL_ESM_R5F0_RL2_COMPARE_ERR_INT:
+        case SDL_ESM_R5F1_RL2_COMPARE_ERR_INT:
             /* These events can come for any of the CCM block. Read status register to see which self test */
             retVal = SDL_CCM_CheckSelfTestErrorSource(&monitorType);
-            if ( retVal != SDL_PASS) {
+            if ( retVal != SDL_PASS)
+            {
                 moduleIndependentEvent = (bool)true;
             }
             break;
@@ -296,27 +334,34 @@ static int32_t SDL_CCM_ESM_callBackFunction (SDL_ESM_Inst instance, SDL_ESM_IntT
                                         NULL);
 	if(retVal == SDL_PASS)
 	{
-	    if(polarityRegValue != (uint32_t)0U) {
+	    if(polarityRegValue != (uint32_t)0U)
+        {
 	        /* If polarity reverted; switch back to 0 */
 					(void)SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[0],
 	                                                   SDL_MCU_ARMSS_CCMR5_POLCNTRL_REGID,
 	                                                   0u,
 	                                                       NULL);
-	        if (SDL_CCM_instance.selfTestErrorFlag == SDL_CCM_ERROR_FLAG_INPROGRESS ) {
+	        if (SDL_CCM_instance.selfTestErrorFlag == SDL_CCM_ERROR_FLAG_INPROGRESS )
+            {
 	            SDL_CCM_instance.selfTestErrorFlag = SDL_CCM_ERROR_FLAG_TRIGGERED;
 	        }
 	    }
-	    if (moduleIndependentEvent) {
-	        if (SDL_CCM_instance.selfTestErrorFlag == SDL_CCM_ERROR_FLAG_INPROGRESS ) {
+	    if (moduleIndependentEvent)
+        {
+	        if (SDL_CCM_instance.selfTestErrorFlag == SDL_CCM_ERROR_FLAG_INPROGRESS )
+            {
 	            SDL_CCM_instance.selfTestErrorFlag = SDL_CCM_ERROR_FLAG_TRIGGERED;
 	        }
-	    } else {
+	    }
+        else
+        {
 	        /* Get the status register and monitor type for the interrupt source */
 	        (void)SDL_CCM_getMonitorStatusRegister(monitorType, &monitorTypeStatusRegister);
 	    }
 	}
 
-    if (retVal == SDL_PASS) {
+    if (retVal == SDL_PASS)
+    {
         /* Read status register 1 */
         (void)SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[0],
                                                monitorTypeStatusRegister,
@@ -327,7 +372,8 @@ static int32_t SDL_CCM_ESM_callBackFunction (SDL_ESM_Inst instance, SDL_ESM_IntT
         retVal = SDL_CCM_getMonitorKeyRegister(monitorType, &monitorTypeKeyRegister);
     }
 
-    if (retVal == SDL_PASS) {
+    if (retVal == SDL_PASS)
+    {
         /* Read polarity convert register */
          /* Read status register 1 */
          retVal = SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[0],
@@ -336,8 +382,10 @@ static int32_t SDL_CCM_ESM_callBackFunction (SDL_ESM_Inst instance, SDL_ESM_IntT
                                                 NULL);
     }
 
-    if (retVal == SDL_PASS) {
-        if (keyRegValue == (uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_SELF_TEST_MODE) {
+    if (retVal == SDL_PASS)
+    {
+        if (keyRegValue == (uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_SELF_TEST_MODE)
+        {
             /* Switch it back to active mode */
             (void)SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[0],
                                                        monitorTypeKeyRegister,
@@ -374,7 +422,8 @@ int32_t SDL_CCM_init(SDL_CCM_Inst instance, uint32_t index)
                                                    (uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_CMP_MODE_ACTIVE,
                                                    NULL);
 
-        if (retVal == SDL_PASS) {
+        if (retVal == SDL_PASS)
+        {
 
             /* Enable Vim compare active */
             retVal = SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[instance],
@@ -383,7 +432,8 @@ int32_t SDL_CCM_init(SDL_CCM_Inst instance, uint32_t index)
                                                        NULL);
         }
 
-        if (retVal == SDL_PASS) {
+        if (retVal == SDL_PASS)
+        {
             /* Enable Inactivity monitor compare block active */
             retVal = SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[instance],
                                                        SDL_MCU_ARMSS_CCMR5_CCMKEYR3_REGID,
@@ -391,7 +441,26 @@ int32_t SDL_CCM_init(SDL_CCM_Inst instance, uint32_t index)
                                                        NULL);
         }
 
-        if (retVal == SDL_PASS) {
+        if (retVal == SDL_PASS)
+        {
+            /* Enable TMU compare block active */
+            retVal = SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[instance],
+                                                       SDL_MCU_ARMSS_CCMR5_CCMKEYR5_REGID,
+                                                       (uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_CMP_MODE_ACTIVE,
+                                                       NULL);
+        }
+
+        if (retVal == SDL_PASS)
+        {
+            /* Enable RL2 compare block active */
+            retVal = SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[instance],
+                                                       SDL_MCU_ARMSS_CCMR5_CCMKEYR6_REGID,
+                                                       (uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_CMP_MODE_ACTIVE,
+                                                       NULL);
+        }
+
+        if (retVal == SDL_PASS)
+        {
 
             /* Clear any pending errors */
 
@@ -404,8 +473,17 @@ int32_t SDL_CCM_init(SDL_CCM_Inst instance, uint32_t index)
             {
                 retVal = SDL_CCM_clearError(instance, SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR);
             }
+            if(retVal == SDL_PASS)
+            {
+                retVal = SDL_CCM_clearError(instance, SDL_CCM_MONITOR_TYPE_TMU);
+            }
+            if(retVal == SDL_PASS)
+            {
+                retVal = SDL_CCM_clearError(instance, SDL_CCM_MONITOR_TYPE_RL2);
+            }
 
-            if (retVal == SDL_PASS) {
+            if (retVal == SDL_PASS)
+            {
                 /* Register error interrupt call back function with MCU ESM handler */
                 retVal = SDL_ESM_registerCCMCallback(ESM_INSTANCE, SDL_CCM_eventBitMap_param,
                                               &SDL_CCM_ESM_callBackFunction,
@@ -436,34 +514,63 @@ int32_t SDL_CCM_verifyConfig(SDL_CCM_Inst instance)
         sdlResult = SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[instance],
                                               SDL_MCU_ARMSS_CCMR5_CCMKEYR1_REGID,
                                               (uint32_t *)&keyValue, NULL);
-        if ((sdlResult != SDL_PASS) || (keyValue != (uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_CMP_MODE_ACTIVE)) {
+        if ((sdlResult != SDL_PASS) || (keyValue != (uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_CMP_MODE_ACTIVE))
+        {
                 retVal = SDL_EFAIL;
-            }
+        }
 
-        if (retVal == SDL_PASS) {
-
+        if (retVal == SDL_PASS)
+        {
             /* Read back Key register */
             sdlResult = SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[instance],
                                                   SDL_MCU_ARMSS_CCMR5_CCMKEYR2_REGID,
                                                   (uint32_t *)&keyValue,
                                                   NULL);
-            if ((sdlResult != SDL_PASS) || (keyValue != (uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_CMP_MODE_ACTIVE)) {
+            if ((sdlResult != SDL_PASS) || (keyValue != (uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_CMP_MODE_ACTIVE))
+            {
                     retVal = SDL_EFAIL;
-                }
             }
+        }
 
-        if (retVal == SDL_PASS) {
-
+        if (retVal == SDL_PASS)
+        {
             /* Read back Key register */
             sdlResult = SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[instance],
                                                   SDL_MCU_ARMSS_CCMR5_CCMKEYR3_REGID,
                                                   (uint32_t *)&keyValue,
                                                   NULL);
-            if ((sdlResult != SDL_PASS) || (keyValue != (uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_CMP_MODE_ACTIVE)) {
+            if ((sdlResult != SDL_PASS) || (keyValue != (uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_CMP_MODE_ACTIVE))
+            {
                     retVal = SDL_EFAIL;
-                }
             }
         }
+
+        if (retVal == SDL_PASS)
+        {
+            /* Read back Key register */
+            sdlResult = SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[instance],
+                                                  SDL_MCU_ARMSS_CCMR5_CCMKEYR5_REGID,
+                                                  (uint32_t *)&keyValue,
+                                                  NULL);
+            if ((sdlResult != SDL_PASS) || (keyValue != (uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_CMP_MODE_ACTIVE))
+            {
+                    retVal = SDL_EFAIL;
+            }
+        }
+
+        if (retVal == SDL_PASS)
+        {
+            /* Read back Key register */
+            sdlResult = SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[instance],
+                                                  SDL_MCU_ARMSS_CCMR5_CCMKEYR6_REGID,
+                                                  (uint32_t *)&keyValue,
+                                                  NULL);
+            if ((sdlResult != SDL_PASS) || (keyValue != (uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_CMP_MODE_ACTIVE))
+            {
+                    retVal = SDL_EFAIL;
+            }
+        }
+    }
     return retVal;
 }
 
@@ -506,6 +613,22 @@ int32_t SDL_CCM_getStaticRegisters(SDL_CCM_Inst instance, SDL_CCM_staticRegs *pS
             pStaticRegs->CCMKEYR3 = readVal;
             (void)SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[instance],
                                             SDL_MCU_ARMSS_CCMR5_POLCNTRL_REGID,
+                                            &readVal, &result);
+        }
+
+        if(result == SDL_PASS)
+        {
+            pStaticRegs->CCMKEYR5 = readVal;
+            (void)SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[instance],
+                                            SDL_MCU_ARMSS_CCMR5_CCMKEYR5_REGID,
+                                            &readVal, &result);
+        }
+
+        if(result == SDL_PASS)
+        {
+            pStaticRegs->CCMKEYR6 = readVal;
+            (void)SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[instance],
+                                            SDL_MCU_ARMSS_CCMR5_CCMKEYR6_REGID,
                                             &readVal, &result);
         }
 
@@ -559,6 +682,22 @@ int32_t SDL_CCM_getStaticRegisters(SDL_CCM_Inst instance, SDL_CCM_staticRegs *pS
                                                 &result);
                 break;
             }
+            case SDL_CCM_MONITOR_TYPE_TMU:
+            {
+                (void)SDL_armR5ConfigureCCMRegister (SDL_CCM_baseAddress[instance],
+                                                SDL_MCU_ARMSS_CCMR5_CCMSR5_REGID,
+                                                SDL_CCM_ALL_STATUS_BITS,
+                                                &result);
+                break;
+            }
+            case SDL_CCM_MONITOR_TYPE_RL2:
+            {
+                (void)SDL_armR5ConfigureCCMRegister (SDL_CCM_baseAddress[instance],
+                                                SDL_MCU_ARMSS_CCMR5_CCMSR6_REGID,
+                                                SDL_CCM_ALL_STATUS_BITS,
+                                                &result);
+                break;
+            }
             default:
             {
                 sdlResult = SDL_EBADARGS;
@@ -600,8 +739,8 @@ int32_t SDL_CCM_selfTest (SDL_CCM_Inst instance,
         sdlResult = SDL_CCM_getMonitorKeyRegister(monitorType, &monitorTypeKeyRegister);
     }
 
-    if ( sdlResult == SDL_PASS ) {
-
+    if ( sdlResult == SDL_PASS )
+    {
         switch(testType) {
 
             case SDL_CCM_SELFTEST_TYPE_NORMAL:
@@ -620,12 +759,14 @@ int32_t SDL_CCM_selfTest (SDL_CCM_Inst instance,
     }
 
     /* Check for error in earlier steps */
-    if (sdlResult == SDL_PASS) {
+    if (sdlResult == SDL_PASS)
+    {
         /* Get the status register for the monitor type */
         sdlResult = SDL_CCM_getMonitorStatusRegister(monitorType, &monitorTypeStatusRegister);
     }
 
-    if (sdlResult == SDL_PASS) {
+    if (sdlResult == SDL_PASS)
+    {
         /* Clear Status register */
         sdlResult = SDL_armR5ConfigureCCMRegister (SDL_CCM_baseAddress[instance],
                                                    monitorTypeStatusRegister,
@@ -635,48 +776,55 @@ int32_t SDL_CCM_selfTest (SDL_CCM_Inst instance,
     }
 
     /* Check for error in earlier steps */
-    if (sdlResult == SDL_PASS) {
-
+    if (sdlResult == SDL_PASS)
+    {
         /* Initialise Error flag to be starting */
         SDL_CCM_instance.selfTestErrorFlag = SDL_CCM_ERROR_FLAG_INPROGRESS;
 
-        if(polarityInversionMask != (uint32_t)0U){
+        if(polarityInversionMask != (uint32_t)0U)
+        {
                 /* Configure mode to initiate self test polarity inversion */
                 retVal = SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[instance],
                                                         SDL_MCU_ARMSS_CCMR5_POLCNTRL_REGID,
                                                         (uint32_t)polarityInversionMask,
                                                     NULL);
-            }
-            else{
+        }
+        else
+        {
              /* Configure mode to initiate normal self test */
              retVal = SDL_armR5ConfigureCCMRegister(SDL_CCM_baseAddress[instance],
                                                         monitorTypeKeyRegister,
                                                         (uint32_t)selfTestTypeValue,
                                                         NULL);
         }
-        if ( retVal != SDL_PASS) {
+        if ( retVal != SDL_PASS)
+        {
             sdlResult = SDL_EFAIL;
         }
     }
 
     /* Check for error in earlier steps */
-    if (sdlResult == SDL_PASS) {
+    if (sdlResult == SDL_PASS)
+    {
         /* Wait for error to take effect */
-        while((timeoutCnt == (uint32_t)0U) || (timesCount < timeoutCnt)) {
+        while((timeoutCnt == (uint32_t)0U) || (timesCount < timeoutCnt))
+        {
             /* Check if the self test completed */
             retVal = SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[instance],
                                                    monitorTypeStatusRegister,
                                                    &statusValue,
                                                    NULL);
 
-            if (retVal != SDL_PASS) {
+            if (retVal != SDL_PASS)
+            {
                 sdlResult = SDL_EFAIL;
             }
 
             /* Check if the status bit is set to indicate completion of self test */
             if(((statusValue & SDL_CCM_ALL_STATUS_BITS) != 0u)
                || (SDL_CCM_instance.selfTestErrorFlag == SDL_CCM_ERROR_FLAG_TRIGGERED)
-               || (sdlResult != SDL_PASS)) {
+               || (sdlResult != SDL_PASS))
+            {
                 break;
             }
             /* Increment timeout counter */
@@ -698,15 +846,18 @@ int32_t SDL_CCM_selfTest (SDL_CCM_Inst instance,
                                                   (uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_CMP_MODE_ACTIVE,
                                                   NULL);
 
-         if (retVal != SDL_PASS) {
+         if (retVal != SDL_PASS)
+         {
              sdlResult = SDL_EFAIL;
          }
      }
 
-    if (sdlResult == SDL_PASS) {
+    if (sdlResult == SDL_PASS)
+    {
         /* Check expected error occurred or timeout */
         if (timesCount >= timeoutCnt) {
-            if (statusValue != (uint32_t)0U) {
+            if (statusValue != (uint32_t)0U)
+            {
                 /* Clear status register */
                 (void) SDL_armR5ConfigureCCMRegister (SDL_CCM_baseAddress[instance],
                                                       monitorTypeStatusRegister,
@@ -742,7 +893,6 @@ int32_t SDL_CCM_injectError (SDL_CCM_Inst instance, SDL_CCM_MonitorType monitorT
     }
     else
     {
-
         /* Get the key register address corresponding to the monitor type */
         retVal = SDL_CCM_getMonitorKeyRegister(monitorType, &monitorTypeKeyRegister);
         if (retVal == SDL_PASS) {
@@ -753,7 +903,8 @@ int32_t SDL_CCM_injectError (SDL_CCM_Inst instance, SDL_CCM_MonitorType monitorT
                                                        (uint32_t)SDL_MCU_ARMSS_CCMR5_MKEY_ERR_FORCE_MODE,
                                                        NULL);
 
-            if (retVal == SDL_PASS) {
+            if (retVal == SDL_PASS)
+            {
                 sdlResult = SDL_PASS;
             }
             else{
@@ -790,9 +941,12 @@ int32_t SDL_CCM_getErrorType(SDL_CCM_Inst instance, uint32_t intSrc, SDL_CCM_Mon
                                                    &statusValue,
                                                    NULL);
                 /* If status bit set, return output compare block */
-                if ((sdlResult != SDL_PASS) || ((statusValue & SDL_CCM_ALL_STATUS_BITS) == 0u)) {
+                if ((sdlResult != SDL_PASS) || ((statusValue & SDL_CCM_ALL_STATUS_BITS) == 0u))
+                {
                     retVal = SDL_EFAIL;
-                } else {
+                }
+                else
+                {
                         *monitorType =  SDL_CCM_MONITOR_TYPE_OUTPUT_COMPARE_BLOCK;
                 }
                 break;
@@ -805,9 +959,12 @@ int32_t SDL_CCM_getErrorType(SDL_CCM_Inst instance, uint32_t intSrc, SDL_CCM_Mon
                                                        &statusValue,
                                                        NULL);
                 /* If status bit set, return output compare block */
-                if ((sdlResult != SDL_PASS) || ((statusValue & SDL_CCM_ALL_STATUS_BITS) == 0u)) {
+                if ((sdlResult != SDL_PASS) || ((statusValue & SDL_CCM_ALL_STATUS_BITS) == 0u))
+                {
                     retVal = SDL_EFAIL;
-                } else {
+                }
+                else
+                {
                         *monitorType =  SDL_CCM_MONITOR_TYPE_VIM;
                 }
                 break;
@@ -821,9 +978,50 @@ int32_t SDL_CCM_getErrorType(SDL_CCM_Inst instance, uint32_t intSrc, SDL_CCM_Mon
                                                        NULL);
 
                 /* If status bit set, return output compare block */
-                if ((sdlResult != SDL_PASS) || ((statusValue & SDL_CCM_ALL_STATUS_BITS) == 0u)) {
+                if ((sdlResult != SDL_PASS) || ((statusValue & SDL_CCM_ALL_STATUS_BITS) == 0u))
+                {
                     retVal = SDL_EFAIL;
-                } else {
+                }
+                else
+                {
+                        *monitorType =  SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR;
+                }
+                break;
+            }
+            case SDL_ESM0_R5FSS0_TMU_COMPARE_ERR:
+            {
+                /* Read status register of TMU compare block  */
+                sdlResult = SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[instance],
+                                                       SDL_MCU_ARMSS_CCMR5_CCMSR5_REGID,
+                                                       &statusValue,
+                                                       NULL);
+
+                /* If status bit set, return output compare block */
+                if ((sdlResult != SDL_PASS) || ((statusValue & SDL_CCM_ALL_STATUS_BITS) == 0u))
+                {
+                    retVal = SDL_EFAIL;
+                }
+                else
+                {
+                        *monitorType =  SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR;
+                }
+                break;
+            }
+            case SDL_ESM0_R5FSS0_RL2_COMPARE_ERR:
+            {
+                /* Read status register of RL2 compare block  */
+                sdlResult = SDL_armR5ReadCCMRegister (SDL_CCM_baseAddress[instance],
+                                                       SDL_MCU_ARMSS_CCMR5_CCMSR6_REGID,
+                                                       &statusValue,
+                                                       NULL);
+
+                /* If status bit set, return output compare block */
+                if ((sdlResult != SDL_PASS) || ((statusValue & SDL_CCM_ALL_STATUS_BITS) == 0u))
+                {
+                    retVal = SDL_EFAIL;
+                }
+                else
+                {
                         *monitorType =  SDL_CCM_MONITOR_TYPE_INACTIVITY_MONITOR;
                 }
                 break;

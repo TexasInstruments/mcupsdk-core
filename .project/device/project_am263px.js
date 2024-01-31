@@ -215,6 +215,8 @@ const example_file_list = [
     "examples/sdl/ecc_bus_safety/ecc_bus_safety_main/.project/project.js",
     "examples/sdl/ccm/sdl_ccm_example/.project/project.js",
     "examples/sdl/ccm/sdl_ccm_vim/.project/project.js",
+    "examples/sdl/ccm/sdl_ccm_tmu_example/.project/project.js",
+    "examples/sdl/ccm/sdl_ccm_rl2_example/.project/project.js",
     "examples/sdl/stc/stc_mcu/.project/project.js",
     "examples/sdl/mcrc/mcrc_auto_cpu/.project/project.js",
     "examples/sdl/mcrc/mcrc_full_cpu/.project/project.js",

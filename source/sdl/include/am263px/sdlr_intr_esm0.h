@@ -2,7 +2,7 @@
 *
 * ESM0 INTERRUPT MAP. header file
 *
-* Copyright (C) 2022 Texas Instruments Incorporated.
+* Copyright (C) 2022-2024 Texas Instruments Incorporated.
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
 *  are met:
@@ -100,9 +100,10 @@ extern "C"
 #define SDL_ESM0_R5FSS0_CORE1_R5FSS1_ECC_DE_TO_ESM_1_0              60U
 #define SDL_ESM0_R5FSS0_CORE0_R5FSS1_ECC_SE_TO_ESM_0_0              61U
 #define SDL_ESM0_R5FSS0_CORE1_R5FSS1_ECC_SE_TO_ESM_1_0              62U
+#define SDL_ESM0_EDMA0_TPCC_ERRINTAGG                               63U
 
 /* Pulse Events */
-#define SDL_ESM0_RTI0_WWD_NMI   									64U
+#define SDL_ESM0_RTI0_WWD_NMI                                       64U
 #define SDL_ESM0_WWDT1_RTI1_WWD_NMI                                 65U
 #define SDL_ESM0_WWDT2_RTI2_WWD_NMI                                 66U
 #define SDL_ESM0_WWDT3_RTI3_WWD_NMI                                 67U
@@ -124,6 +125,31 @@ extern "C"
 #define SDL_ESM0_CCM_0_SELFTEST_ERR                                 83U
 #define SDL_ESM0_CCM_0_LOCKSTEP_COMPARE_ERR                         84U
 #define SDL_ESM0_CCM_1_SELFTEST_ERR                                 85U
+#define SDL_ESM0_CCM_1_LOCKSTEP_COMPARE_ERR                         86U
+#define SDL_ESM0_R5FSS0_TMU_COMPARE_ERR                             87U
+#define SDL_ESM0_R5FSS0_CPU0_TMU_PARITY_ERR                         88U
+#define SDL_ESM0_R5FSS0_CPU2_TMU_PARITY_ERR                         89U
+#define SDL_ESM0_R5FSS1_TMU_COMPARE_ERR                             90U
+#define SDL_ESM0_R5FSS1_CPU0_TMU_PARITY_ERR                         91U
+#define SDL_ESM0_R5FSS1_CPU2_TMU_PARITY_ERR                         92U
+#define SDL_ESM0_R5FSS0_RL2_COMPARE_ERR                             93U
+#define SDL_ESM0_R5FSS1_RL2_COMPARE_ERR                             94U
+#define SDL_ESM0_ADC_SAFETY_CHECKEVENT0                             95U
+#define SDL_ESM0_ADC_SAFETY_CHECKEVENT1                             96U
+#define SDL_ESM0_ADC_SAFETY_CHECKEVENT2                             97U
+#define SDL_ESM0_ADC_SAFETY_CHECKEVENT3                             98U
+#define SDL_ESM0_OTFA_ECC_UNCORR                                    99U
+#define SDL_ESM0_OTFA_ECC_CORR                                      100U
+#define SDL_ESM0_SRAM_BANK_4_SRAM4_ECC_UNCORR_PULSE                 101U
+#define SDL_ESM0_SRAM_BANK_5_SRAM5_ECC_UNCORR_PULSE                 102U
+#define SDL_ESM0_MCAN4_MCAN4_ECC_CORR_PLS_INT                       103U
+#define SDL_ESM0_MCAN4_MCAN4_ECC_UNCORR_LVL_INT                     104U
+#define SDL_ESM0_MCAN5_MCAN5_ECC_CORR_LVL_INT                       105U
+#define SDL_ESM0_MCAN5_MCAN5_ECC_UNCORR_LVL_INT                     106U
+#define SDL_ESM0_MCAN6_MCAN6_ECC_CORR_LVL_INT                       107U
+#define SDL_ESM0_MCAN6_MCAN6_ECC_UNCORR_LVL_INT                     108U
+#define SDL_ESM0_MCAN7_MCAN7_ECC_CORR_LVL_INT                       109U
+#define SDL_ESM0_MCAN7_MCAN7_ECC_UNCORR_LVL_INT                     110U
 
 #ifdef __cplusplus
 }
