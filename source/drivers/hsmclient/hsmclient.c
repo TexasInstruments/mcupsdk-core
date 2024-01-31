@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022-23 Texas Instruments Incorporated
+ *  Copyright (C) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -402,6 +402,72 @@ int32_t HsmClient_openDbgFirewall(HsmClient_t* HsmClient,
             else
             {
                 DebugP_log("\r\n [HSM_CLIENT] CRC check for openDbgFirewall response failed \r\n");
+                status = SystemP_FAILURE ;
+            }
+        }
+    }
+    /* If failure occur due to some reason */
+    else if (status == SystemP_FAILURE)
+    {
+        status = SystemP_FAILURE;
+    }
+    /* Indicate timeout error */
+    else
+    {
+        status = SystemP_TIMEOUT;
+    }
+    return status;
+}
+
+int32_t HsmClient_importKeyring(HsmClient_t* HsmClient,
+                                        uint8_t* cert,
+                                        uint32_t cert_size,
+                                        uint32_t timeout)
+{
+    /* make the message */
+    int32_t status ;
+    uint16_t crcArgs;
+
+    /*populate the send message structure */
+    HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
+    HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
+
+    /* Always expect acknowledgement from HSM server */
+    HsmClient->ReqMsg.flags = HSM_FLAG_AOP;
+    HsmClient->ReqMsg.serType = HSM_MSG_KEYRING_IMPORT;
+    HsmClient->ReqMsg.args = (void*)cert;
+
+    /* Add arg crc */
+    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t*)cert, cert_size);
+
+    /* Change the Arguments Address in Physical Address */
+    HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(cert);
+
+    status = HsmClient_SendAndRecv(HsmClient, timeout);
+    if(status == SystemP_SUCCESS)
+    {
+        /* the OpenDbgFirewalls has been populated by HSM server
+         * if this request has been processed correctly */
+        if(HsmClient->RespFlag == HSM_FLAG_NACK)
+        {
+            DebugP_log("\r\n [HSM_CLIENT] Import Keyring request NACKed by HSM server\r\n");
+            status = SystemP_FAILURE;
+        }
+        else
+        {
+            /* Change the Arguments Address in Physical Address */
+            HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
+
+            /* check the integrity of args */
+            crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, 0U);
+
+            if(crcArgs == HsmClient->RespMsg.crcArgs)
+            {
+                status = SystemP_SUCCESS;
+            }
+            else
+            {
+                DebugP_log("\r\n [HSM_CLIENT] CRC check for Import Keyring response failed \r\n");
                 status = SystemP_FAILURE ;
             }
         }

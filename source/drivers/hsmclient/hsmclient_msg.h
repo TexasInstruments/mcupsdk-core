@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022-23 Texas Instruments Incorporated
+ *  Copyright (C) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -83,6 +83,8 @@ extern "C"
 #define HSM_MSG_GET_DKEK                         (0x9029)
 /** @brief Get RNG service type ID*/
 #define HSM_MSG_GET_RAND                         (0x9001)
+/** @brief Get KEYRING import service type ID*/
+#define HSM_MSG_KEYRING_IMPORT                   (0x9039)
 /* message flags */
 /**
  * @brief
@@ -130,6 +132,13 @@ extern "C"
  *
  */
 #define HSM_DBG_CERT_SIZE                         (4096U)
+
+/**
+ * @brief
+ * Maximum Certificate Size allowed for Keyring Import
+ *
+ */
+#define HSM_KEYRING_CERT_SIZE                      (10280U)
 
 /**
  * @brief

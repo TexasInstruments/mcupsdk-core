@@ -143,7 +143,7 @@ def binary_to_header(input_filepath: str, output_filename: str, array_name: str,
     with open(input_filepath, "rb") as infile, open(output_filename, "w") as outfile:
         # write header
         outfile.write(header.format(license=licenses[license_type],
-                                    input_file_name=sys.argv[1].rsplit(
+                                    input_file_name=input_filepath.rsplit(
                                         '/')[-1],
                                     date_time=datetime.now(),
                                     file_name=header_name,
