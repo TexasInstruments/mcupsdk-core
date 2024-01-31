@@ -18,7 +18,9 @@
     %   pinIndex = config.pinIndex - 32;
     % }
 #define `instance.$name.toUpperCase()`_BASE_ADDR (`config.baseAddr`)
+% if (!config.pinIndex.includes("INVALID")){
 #define `instance.$name.toUpperCase()`_PIN (`pinIndex`U)
+%}
 #define `instance.$name.toUpperCase()`_DIR (GPIO_DIRECTION_`config.pinDir`)
 #define `instance.$name.toUpperCase()`_TRIG_TYPE (GPIO_TRIG_TYPE_`config.trigType`)
 #define `instance.$name.toUpperCase()`_OPEN_DRAIN (GPIO_OPEN_DRAIN_`config.openDrain`)

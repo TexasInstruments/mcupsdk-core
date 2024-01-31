@@ -11,11 +11,19 @@
 
 void GPIO_init()
 {
-    uint32_t    baseAddr;
-% for(let i = 0; i < module.$instances.length; i++) {
+     % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
+    % if(!config.pinIndex.includes("INVALID")){
+    uint32_t    baseAddr;
+    % break;
+    % }
+    % }
 
+%   for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if (!config.baseAddr.includes("undefined") && !config.pinIndex.includes("INVALID")){
     /* Instance `i` */
     /* Get address after translation translate */
     baseAddr = (uint32_t) AddrTranslateP_getLocalAddr(`instance.$name.toUpperCase()`_BASE_ADDR);
@@ -29,13 +37,14 @@ void GPIO_init()
     %}
 
     GPIO_setDirMode(baseAddr, `instance.$name.toUpperCase()`_PIN, `instance.$name.toUpperCase()`_DIR);
-    % if(config.trigType != "NONE"){
+        % if(config.trigType != "NONE"){
     GPIO_setTrigType(baseAddr, `instance.$name.toUpperCase()`_PIN, `instance.$name.toUpperCase()`_TRIG_TYPE);
-    % }
-    % if(config.enableIntr){
+        % }
+        % if(config.enableIntr){
     GPIO_bankIntrEnable(baseAddr, GPIO_GET_BANK_INDEX(`instance.$name.toUpperCase()`_PIN));
+        % }
     % }
-% }
+  %}
 }
 
 %for(let i = 0; i < module.$instances.length; i++) {
@@ -100,8 +109,12 @@ static void Sciclient_gpioIrqSet(void)
     rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_ID_VALID;
     rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_HOST_IRQ_VALID;
     rmIrqReq.global_event           = 0U;
+    % if (config.moduleIndex !== undefined){
     rmIrqReq.src_id                 = TISCI_DEV_`config.moduleIndex`;
+    % if ( config.pinIndex !== "INVALID" ){
     rmIrqReq.src_index              = TISCI_BANK_SRC_IDX_BASE_`config.moduleIndex` + GPIO_GET_BANK_INDEX(`config.pinIndex`);
+    %}
+    %}
     rmIrqReq.dst_id                 = TISCI_DEV_`config.coreId`;
     rmIrqReq.dst_host_irq           = CSLR_`config.routerId`_GPIOMUX_INTROUTER0_OUTP_`config.intrOut`;
     rmIrqReq.ia_id                  = 0U;
@@ -132,8 +145,12 @@ static void Sciclient_gpioIrqRelease(void)
     rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_ID_VALID;
     rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_HOST_IRQ_VALID;
     rmIrqReq.global_event           = 0U;
+     % if (config.moduleIndex !== undefined){
     rmIrqReq.src_id                 = TISCI_DEV_`config.moduleIndex`;
+    % if ( config.pinIndex !== "INVALID" ){
     rmIrqReq.src_index              = TISCI_BANK_SRC_IDX_BASE_`config.moduleIndex` + GPIO_GET_BANK_INDEX(`config.pinIndex`);
+    %}
+    %}
     rmIrqReq.dst_id                 = TISCI_DEV_`config.coreId`;
     rmIrqReq.dst_host_irq           = CSLR_`config.routerId`_GPIOMUX_INTROUTER0_OUTP_`config.intrOut`;
     rmIrqReq.ia_id                  = 0U;
@@ -161,7 +178,7 @@ void GPIO_deinit()
     % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
-    % if(config.enableIntr){
+    % if(config.enableIntr && !config.pinIndex.includes("INVALID")){
     uint32_t    baseAddr;
     % break;
     % }
@@ -170,6 +187,7 @@ void GPIO_deinit()
     % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
+    % if (!config.baseAddr.includes("undefined") && !config.pinIndex.includes("INVALID")){
     % if(config.enableIntr){
     /* Unregister interrupt Instance `i`*/
     baseAddr = (uint32_t) AddrTranslateP_getLocalAddr(`instance.$name.toUpperCase()`_BASE_ADDR);
@@ -177,5 +195,6 @@ void GPIO_deinit()
     GPIO_setTrigType(baseAddr, `instance.$name.toUpperCase()`_PIN, GPIO_TRIG_TYPE_NONE);
     GPIO_clearIntrStatus(baseAddr, `instance.$name.toUpperCase()`_PIN);
     % }
+    %}
     % }
 }

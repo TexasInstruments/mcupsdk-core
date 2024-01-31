@@ -11,8 +11,12 @@
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % let config = module.getInstanceConfig(instance);
+% if (!config.baseAddr.includes("undefined")){
 #define `instance.$name.toUpperCase()`_BASE_ADDR (`config.baseAddr`)
+%}
+% if (!config.pinIndex.includes("INVALID")){
 #define `instance.$name.toUpperCase()`_PIN (`config.pinIndex`)
+%}
 #define `instance.$name.toUpperCase()`_DIR (GPIO_DIRECTION_`config.pinDir`)
 #define `instance.$name.toUpperCase()`_TRIG_TYPE (GPIO_TRIG_TYPE_`config.trigType`)
 % if(config.enableIntr){

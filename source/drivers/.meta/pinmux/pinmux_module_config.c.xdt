@@ -18,8 +18,14 @@
                 doGenerateCode = true;
         %%}
         % if(doGenerateCode) {
+            % if (interfaceName == "GPIO" && !(common.getSocName() == "am64x" || common.getSocName() == "am273x")){
+            %    interfaceName = interfaceName + "_n"
+            %}
             % let peripheral = (module.defaultInstanceName === "CONFIG_ENET_CPSW") ? (instance.pinmux[0])[interfaceName] :instance[interfaceName];
-            % let pinNames = module.getPeripheralPinNames(instance);
+            % let pinNames = (module.getPeripheralPinNames) ? module.getPeripheralPinNames(instance) : "";
+            % if (interfaceName == "GPIO_n" && !(common.getSocName() == "am64x" || common.getSocName() == "am273x")){
+        `soc.getPinConfigCStruct(peripheral, interfaceName)`
+            % } else {
             % for (let pinName of pinNames) {
                 % let peripheralPin = peripheral[pinName];
                 % if (peripheralPin && peripheralPin.$solution.peripheralPinName) {
@@ -27,6 +33,7 @@
     `soc.getPinConfigCStruct(peripheralPin, interfaceName)`
                 % }
             % }
+            %}
         % }
     % }
     % if (module.getInterfaceNameList) {

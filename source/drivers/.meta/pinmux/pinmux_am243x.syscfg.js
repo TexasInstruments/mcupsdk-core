@@ -24,8 +24,15 @@ function getPinModeOverRide(peripheralPin, muxSetting)
 
 function getPinConfigurables(interfaceName, pinName)
 {
-    let pinConfig = _.cloneDeep(
-        system.deviceData.interfaces[interfaceName].interfacePins[pinName].configurables
+    let pinConfig
+
+    if (interfaceName == "GPIO")
+        pinConfig = _.cloneDeep(
+            system.deviceData.interfaces[interfaceName].interfacePins[interfaceName].configurables
+    );
+    else
+        pinConfig = _.cloneDeep(
+            system.deviceData.interfaces[interfaceName].interfacePins[pinName].configurables
     );
     return pinConfig;
 }
@@ -33,11 +40,14 @@ function getPinConfigurables(interfaceName, pinName)
 function getPinMode(peripheralPin)
 {
     let devicePin = system.deviceData.devicePins[peripheralPin.$solution.packagePinName];
+
+    if (devicePin === undefined) return null
+
     let muxSetting = _.find(devicePin.mux.muxSetting,
-                                function(muxSetting) {
-                                    return (muxSetting.peripheralPin.name == peripheralPin.$solution.peripheralPinName);
-                                }
-                            );
+                            function(muxSetting) {
+                                return (muxSetting.peripheralPin.name == peripheralPin.$solution.peripheralPinName);
+                            }
+                        );
 
     let muxMode = muxSetting.mode;
 
@@ -60,6 +70,7 @@ function getPinConfigCStruct(pin, interfaceName)
 
     let rx = pin.rx;
     let mode = getPinMode(pin);
+    if (mode === null) return ""
     let settings = "( ";
 
     /* if no values provided for pu_pd and rx, then use defaults as defined in deviceData */

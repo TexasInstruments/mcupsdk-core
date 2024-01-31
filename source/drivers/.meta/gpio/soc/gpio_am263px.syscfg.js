@@ -30,7 +30,7 @@ function getInstanceString(moduleInstance) {
 
 function getPinIndex(moduleInstance) {
     let interfaceName = getInterfaceName(moduleInstance);
-    let peripheralPinName = moduleInstance[interfaceName].gpioPin.$solution.peripheralPinName;
+    let peripheralPinName = moduleInstance["GPIO_n"].$solution.peripheralPinName;
 
     if(! peripheralPinName)
         return "INVALID";

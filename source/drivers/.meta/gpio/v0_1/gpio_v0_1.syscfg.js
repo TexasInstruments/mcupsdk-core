@@ -33,28 +33,17 @@ function getInterfaceName(inst) {
 
 function pinmuxRequirements(inst) {
     let interfaceName = getInterfaceName(inst);
-    let peripheralName = interfaceName;
-    let peripheral;
 
-    if( interfaceName == "GPIO"){
-        peripheralName = peripheralName + "_n"
-        peripheral = {
-            name: peripheralName,
-            displayName: "GPIO Peripheral",
-            interfaceName: interfaceName,
-        };
-    }
-    else{
-        let resources = [];
-        resources.push(pinmux.getGpioPinRequirements(interfaceName, "0"));
-        peripheral = {
-            name: peripheralName,
-            displayName: "GPIO Peripheral",
-            interfaceName: interfaceName,
-            resources: resources,
-            canShareWith: "/drivers/gpio/gpio",
-        };
-    }
+    let resources = [];
+    resources.push(pinmux.getGpioPinRequirements(interfaceName, "0"));
+
+    let peripheral = {
+        name: interfaceName,
+        displayName: "GPIO Peripheral",
+        interfaceName: interfaceName,
+        resources: resources,
+        canShareWith: "/drivers/gpio/gpio",
+    };
 
     return [peripheral];
 }
@@ -125,25 +114,6 @@ function getConfigurables() {
         },
         ],
         description: "GPIO PIN direction",
-        onChange: function(inst, ui) {
-            if(inst.pinDir == "OUTPUT"){
-                ui.defaultValue.hidden = false;
-            }
-            else {
-                ui.defaultValue.hidden = true;
-            }
-        }
-    },
-    {
-        name: "defaultValue",
-        displayName: "Default Value",
-        default: "0",
-        options: [
-            { name: "0" },
-            { name: "1" },
-        ],
-        description: "Default value of GPIO OUT register",
-        hidden: true,
     }, {
         name: "trigType",
         displayName: "Trigger Type",
@@ -245,27 +215,6 @@ function getConfigurables() {
     return config;
 }
 
-
-function addModuleInstances(inst) {
-    let modInstances = new Array();
-
-    modInstances.push({
-        name: "GPIO",
-        displayName: "MAIN GPIO CHILD",
-        moduleName: "/drivers/gpio/v0/main_gpio_child",
-        requiredArgs: {$name: inst.$name + "_main_child"}
-    })
-
-    // modInstances.push({
-    //     name: "MCU_GPIO",
-    //     displayName: "MCU GPIO CHILD",
-    //     moduleName: "/drivers/gpio/v0/mcu_gpio_child",
-    //     requiredArgs: {$name: inst.$name + "_mcu_child"}
-    // })
-
-    return modInstances;
-}
-
 let gpio_module_name = "/drivers/gpio/gpio";
 
 let gpio_module = {
@@ -294,18 +243,10 @@ let gpio_module = {
             moduleName: "/system_common",
         }]
     },
-    moduleInstances: addModuleInstances,
     getInstanceConfig,
     pinmuxRequirements,
     getInterfaceName,
     getPeripheralPinNames,
-    onMigrate,
 };
-
-function onMigrate(newInst, oldInst, oldSystem) {
-    let pins = getPeripheralPinNames(oldInst)
-    let interfaceName = getInterfaceName(oldInst)
-    common.onMigrate(newInst, oldInst, oldSystem, pins, interfaceName)
-}
 
 exports = gpio_module;

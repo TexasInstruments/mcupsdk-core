@@ -19,14 +19,35 @@ function getMaxInterruptRouters(inst) {
 
 function getInstanceString(moduleInstance) {
     let interfaceName = getInterfaceName(moduleInstance);
-    let solution = moduleInstance[interfaceName].$solution
+    let peripheralName = interfaceName;
 
-    return solution.peripheralName;
+    if( interfaceName == "GPIO")
+        peripheralName = "GPIO_n"
+
+    let solution = moduleInstance[peripheralName].$solution
+
+    if ( peripheralName == "GPIO_n" ){
+        let splitStrings = (solution.peripheralPinName === null ) ? "": solution.peripheralPinName.split("_");
+        let gpioBank = splitStrings[0];
+        return gpioBank
+    }
+    else {
+        return solution.peripheralName;
+    }
+
+    // return gpioBank
+
+    //return solution.peripheralName;
 }
 
 function getPinIndex(moduleInstance) {
     let interfaceName = getInterfaceName(moduleInstance);
-    let peripheralPinName = moduleInstance[interfaceName].gpioPin.$solution.peripheralPinName;
+    let peripheralPinName;
+
+    if( interfaceName == "GPIO")
+        peripheralPinName = moduleInstance["GPIO_n"].$solution.peripheralPinName;
+    else
+        peripheralPinName = moduleInstance[interfaceName].gpioPin.$solution.peripheralPinName;
 
     if(! peripheralPinName)
         return "INVALID";

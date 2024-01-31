@@ -114,6 +114,7 @@ function getPinConfigurables(interfaceName, pinName)
 function getPinMode(peripheralPin)
 {
     let devicePin = system.deviceData.devicePins[peripheralPin.$solution.packagePinName];
+    if (devicePin === undefined) return null
     let muxSetting = _.find(devicePin.mux.muxSetting,
                                 function(muxSetting) {
                                     return (muxSetting.peripheralPin.name == peripheralPin.$solution.peripheralPinName);
@@ -134,6 +135,7 @@ function getPinMode(peripheralPin)
 function getPinConfigCStruct(pin, interfaceName)
 {
     let mode = getPinMode(pin);
+    if (mode === null) return ""
     let settings = "( ";
 
     settings += `PIN_MODE(${mode}) `
