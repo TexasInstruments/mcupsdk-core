@@ -98,7 +98,7 @@ function getComponentBuildProperty(buildOption) {
 
     build_property.files = files;
     build_property.filedirs = filedirs;
-    build_property.importOtherProject="examples/pru_io/empty/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt/example.projectspec";
+    build_property.importOtherProject="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}/examples/pru_io/empty/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt/example.projectspec";
     build_property.preBuildSteps = [
         "$(MAKE) -C ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile -k clean MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_PROJECT_DEBUG=${CWD};",
         "$(MAKE) -C ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile -k all MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_PROJECT_DEBUG=${CWD};",

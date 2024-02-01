@@ -77,7 +77,7 @@ const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos", isPartOfSystemProject: true},
 ];
 
-const importOtherProject = "examples/pru_io/adc/ads131/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt/example.projectspec";
+const importOtherProject = "${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}/examples/pru_io/adc/ads131/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt/example.projectspec";
 
 function getComponentProperty() {
     let property = {};

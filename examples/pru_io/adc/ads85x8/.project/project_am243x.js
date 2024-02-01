@@ -73,7 +73,7 @@ const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos"},
 ];
 
-const importOtherProject = "examples/pru_io/adc/ads85x8/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt/example.projectspec";
+const importOtherProject = "${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}/examples/pru_io/adc/ads85x8/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt/example.projectspec";
 
 function getComponentProperty() {
     let property = {};
@@ -85,7 +85,6 @@ function getComponentProperty() {
     property.description = "R5F ADC Project"
     property.buildOptionCombos = buildOptionCombos;
     property.isSkipTopLevelBuild = true;
-    property.skipProjectSpec = true;
 
     return property;
 }

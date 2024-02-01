@@ -14305,6 +14305,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "R5F ADC Project CPU is R5FSS0-0 running FREERTOS.",
+        "name": "adc",
+        "location": "../../examples/pru_io/adc/ads85x8/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "pru_io",
+            "adc",
+            "ads85x8",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Ext Otp Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "ext_otp",
         "location": "../../examples/otp/ext_otp/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
