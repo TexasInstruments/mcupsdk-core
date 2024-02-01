@@ -45,6 +45,7 @@ const example_file_list = [
 	"examples/drivers/adc/adc_ppb_offset/.project/project.js",
 	"examples/drivers/adc/adc_soc_continuous/.project/project.js",
 	"examples/drivers/adc/adc_soc_continuous_dma/.project/project.js",
+	"examples/drivers/adc/adc_alternate_dma_trigger/.project/project.js",
 	"examples/drivers/adc/adc_soc_epwm/.project/project.js",
 	"examples/drivers/adc/adc_soc_ecap/.project/project.js",
 	"examples/drivers/adc/adc_soc_rti/.project/project.js",

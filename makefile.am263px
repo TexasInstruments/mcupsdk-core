@@ -105,6 +105,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_soc_continuous/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_soc_continuous_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_soc_continuous_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/adc/adc_alternate_dma_trigger/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/adc/adc_alternate_dma_trigger/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_soc_epwm/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_soc_epwm/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/adc/adc_soc_ecap/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -743,6 +745,8 @@ BUILD_COMBO_EXAMPLE_ALL += adc_soc_continuous_am263px-cc_r5fss0-0_nortos_ti-arm-
 BUILD_COMBO_EXAMPLE_ALL += adc_soc_continuous_am263px-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_soc_continuous_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_soc_continuous_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += adc_alternate_dma_trigger_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += adc_alternate_dma_trigger_am263px-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_soc_epwm_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_soc_epwm_am263px-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += adc_soc_ecap_am263px-cc_r5fss0-0_nortos_ti-arm-clang
@@ -1168,6 +1172,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  adc_soc_continuous_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/adc/adc_soc_continuous_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ adc_alternate_dma_trigger_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/adc/adc_alternate_dma_trigger/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ adc_alternate_dma_trigger_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/adc/adc_alternate_dma_trigger/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  adc_soc_epwm_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/adc/adc_soc_epwm/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -2199,6 +2209,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_soc_continuous_am263px-cc_r5fss0-0_nortos_t
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_soc_continuous_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_soc_continuous_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_soc_continuous_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_alternate_dma_trigger_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_alternate_dma_trigger_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_soc_epwm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_soc_epwm_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += adc_soc_ecap_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2619,6 +2631,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  adc_soc_continuous_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/adc/adc_soc_continuous_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ adc_alternate_dma_trigger_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/adc/adc_alternate_dma_trigger/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ adc_alternate_dma_trigger_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/adc/adc_alternate_dma_trigger/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  adc_soc_epwm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/adc/adc_soc_epwm/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -3650,6 +3668,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_soc_continuous_am263px-cc_r5fss0-0_nortos_t
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_soc_continuous_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_soc_continuous_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_soc_continuous_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_alternate_dma_trigger_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_alternate_dma_trigger_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_soc_epwm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_soc_epwm_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += adc_soc_ecap_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -4070,6 +4090,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  adc_soc_continuous_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/adc/adc_soc_continuous_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ adc_alternate_dma_trigger_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/adc/adc_alternate_dma_trigger/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ adc_alternate_dma_trigger_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/adc/adc_alternate_dma_trigger/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  adc_soc_epwm_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/adc/adc_soc_epwm/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

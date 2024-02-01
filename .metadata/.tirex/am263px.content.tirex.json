@@ -1023,6 +1023,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "ADC triggering DMA via tDMA showcasing example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_alternate_dma_trigger",
+        "location": "../../examples/drivers/adc/adc_alternate_dma_trigger/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_alternate_dma_trigger",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "ADC triggering DMA via tDMA showcasing example CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_alternate_dma_trigger",
+        "location": "../../examples/drivers/adc/adc_alternate_dma_trigger/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_alternate_dma_trigger",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "ADC SOC Epwm example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_soc_epwm",
         "location": "../../examples/drivers/adc/adc_soc_epwm/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
