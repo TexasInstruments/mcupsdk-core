@@ -27,6 +27,104 @@ function getInstanceConfig(moduleInstance) {
     };
 };
 
+let gConfig = [
+    {
+        name: "pu_pd",
+        displayName: "Pull Up/Down",
+        default: "nopull",
+        "readOnly": false,
+        "hidden": false,
+        // "type": "DropDown",
+        "options": [
+            {
+                "name": "pu",
+                "displayName": "Pull Up",
+                // "value": "N/A"
+            },
+            {
+                "name": "pd",
+                "displayName": "Pull Down",
+                // "value": "N/A"
+            },
+            {
+                "name": "nopull",
+                "displayName": "No Pull",
+                // "value": "N/A"
+            },
+        ],
+        // "legacy": true
+    },
+    {
+        // "type": "DropDown",
+        "name": "slewRate",
+        "readOnly": false,
+        "hidden": common.getSocName().includes("am243x"),
+        "displayName": "Slew Rate",
+        "options": [
+            {
+                "name": "high",
+                "displayName": "High",
+                // "value": "N/A"
+            },
+            {
+                "name": "low",
+                "displayName": "Low",
+                // "value": "N/A"
+            },
+        ],
+        "default": "low",
+        // "legacy": true
+    },
+    {
+        // "type": "CheckBox",
+        "name": "inv",
+        "readOnly": false,
+        "hidden": common.getSocName().includes("am243x"),
+        "displayName": "Invert",
+        "default": false,
+        // "legacy": true
+    },
+    {
+        // "type": "DropDown",
+        "name": "qualSel",
+        "readOnly": false,
+        "hidden": common.getSocName().includes("am243x"),
+        "displayName": "Qual Sel",
+        "options": [
+            {
+                "name": "sync",
+                "displayName": "Sync",
+                // "value": "N/A"
+            },
+            {
+                "name": "3sample",
+                "displayName": "3 Sample",
+                // "value": "N/A"
+            },
+            {
+                "name": "6sample",
+                "displayName": "6 Sample",
+                // "value": "N/A"
+            },
+            {
+                "name": "async",
+                "displayName": "Async",
+                // "value": "N/A"
+            }
+        ],
+        "default": "sync",
+        // "legacy": true
+    },
+    {
+        // "type": "CheckBox",
+        "name": "rx",
+        "readOnly": false,
+        "hidden": common.getSocName().includes("am26"),
+        "displayName": "rx",
+        "default": false,
+        // "legacy": true
+    }
+]
 function getInterfaceName(inst) {
     return soc.getInterfaceName(inst);
 }
@@ -183,6 +281,7 @@ function getConfigurables() {
             }
         },
     },
+    ...gConfig
     )
     if (common.isSciClientSupported()) {
         config.push(

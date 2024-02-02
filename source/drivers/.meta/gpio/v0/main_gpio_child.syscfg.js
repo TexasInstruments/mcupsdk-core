@@ -1,12 +1,6 @@
 let common = system.getScript("/common");
 let soc = system.getScript(`/drivers/gpio/soc/gpio_${common.getSocName()}`);
-
-function migrate(inst){
-
-    if( inst.$assign.length > 0 ){
-
-    }
-}
+let pinmux = system.getScript(`/drivers/pinmux/pinmux_${common.getSocName()}`);
 
 function addModuleInstances(inst) {
     let modInstances = new Array();
@@ -41,7 +35,5 @@ exports = {
             default: "",
         },
     ],
-    migrateLegacyConfiguration: migrate,
     moduleInstances: addModuleInstances,
-
 }

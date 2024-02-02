@@ -59,16 +59,20 @@ function getPinMode(peripheralPin)
     return muxMode;
 }
 
-function getPinConfigCStruct(pin, interfaceName)
+function getPinConfigCStruct(pin, interfaceName, inst)
 {
     let pu_pd = undefined;
 
-    if(pin.pu_pd != undefined)
-       pu_pd = pin.pu_pd;
-    if(pin.pull != undefined)
-       pu_pd = pin.pull;
+    let obj;
+    if( interfaceName == "GPIO_n") obj = inst;
+    else obj = pin;
 
-    let rx = pin.rx;
+    if(obj.pu_pd != undefined)
+       pu_pd = obj.pu_pd;
+    if(obj.pull != undefined)
+       pu_pd = obj.pull;
+
+    let rx = obj.rx;
     let mode = getPinMode(pin);
     if (mode === null) return ""
     let settings = "( ";

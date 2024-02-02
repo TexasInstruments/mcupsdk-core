@@ -143,14 +143,18 @@ function getPinMode(peripheralPin)
     return muxMode;
 }
 
-function getPinConfigCStruct(pin, interfaceName)
+function getPinConfigCStruct(pin, interfaceName, inst)
 {
     let mode = getPinMode(pin);
     if (mode === null) return ""
     let settings = "( ";
 
+    let obj;
+    if( interfaceName == "GPIO_n") obj = inst;
+    else obj = pin;
+
     settings += `PIN_MODE(${mode}) `
-    switch(pin.pu_pd) {
+    switch(obj.pu_pd) {
         case "pu":
             settings += "| PIN_PULL_UP ";
             break;
@@ -161,7 +165,7 @@ function getPinConfigCStruct(pin, interfaceName)
             settings += "| PIN_PULL_DISABLE ";
             break;
     }
-    switch(pin.slewRate) {
+    switch(obj.slewRate) {
         case "low":
             settings += "| PIN_SLEW_RATE_LOW ";
             break;
@@ -169,16 +173,16 @@ function getPinConfigCStruct(pin, interfaceName)
             settings += "| PIN_SLEW_RATE_HIGH ";
             break;
     }
-    if(pin.inv != undefined)
+    if(obj.inv != undefined)
     {
-        if(pin.inv == true)
+        if(obj.inv == true)
         {
             settings += "| PIN_INVERT ";
         }
     }
-    if(pin.qualSel != undefined)
+    if(obj.qualSel != undefined)
     {
-        switch(pin.qualSel) {
+        switch(obj.qualSel) {
             case "sync":
                 settings += "| PIN_QUAL_SYNC ";
                 break;
@@ -193,7 +197,7 @@ function getPinConfigCStruct(pin, interfaceName)
                 break;
         }
     }
-    if(interfaceName == "GPIO")
+    if(interfaceName == "GPIO_n")
     {
         let cpu = common.getSelfSysCfgCoreName();
         switch(cpu) {
