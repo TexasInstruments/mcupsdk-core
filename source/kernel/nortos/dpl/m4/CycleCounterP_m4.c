@@ -37,9 +37,36 @@
 #define DWT_CTRL    (volatile uint32_t *)(0xE0001000U)
 #define DWT_CYCCNT  (volatile uint32_t *)(0xE0001004U)
 
+#define PmuP_SEC_TO_MICROSEC                    (1000000U)
+
+static uint64_t gCounterFreqHz = 0;
+
+void CycleCounterP_init(const uint64_t cpuFreqHz)
+{
+    gCounterFreqHz = cpuFreqHz;
+    CycleCounterP_reset();
+}
+
 uint32_t CycleCounterP_getCount32(void)
 {
     return *DWT_CYCCNT;
+}
+
+uint32_t CycleCounterP_getOverflowCount32( const uint32_t startTick)
+{
+    uint32_t endTick = CycleCounterP_getCount32();
+
+    if(startTick > endTick)
+    {
+        endTick = (0xFFFFFFFF - startTick) + endTick;
+    }
+
+    return endTick;
+}
+
+uint64_t CycleCounterP_usToTicks(const uint64_t microsecs)
+{
+    return (((uint64_t)microsecs*gCounterFreqHz)/PmuP_SEC_TO_MICROSEC);
 }
 
 void CycleCounterP_reset(void)

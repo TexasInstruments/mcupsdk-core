@@ -469,8 +469,9 @@ typedef struct
     /**< [IN] Argument to be passed to the callback function */
 } UART_Transaction;
 
-typedef uint32_t (*UART_clockGet) (void);
-typedef uint32_t (*UART_clockUsecToTick) (uint64_t usecs);
+typedef uint32_t (*UART_clockGetStartTick) (void);
+typedef uint32_t (*UART_clockGetEndTick) (uint32_t startTick);
+typedef uint64_t (*UART_clockUsecToTick) (uint64_t usecs);
 
 /**
  *  \brief  The definition of a read complete callback function used by
@@ -557,8 +558,10 @@ typedef struct
     /**< DMA Configuration for this instance. */
     uint32_t               timeGuardVal;
     /* timeguard feature by UART*/
-    UART_clockGet          clockP_get;
-    /* ClockP_get  API */
+    UART_clockGetStartTick   clockP_getStartTick;
+    /* ClockP_getStartTick  API */
+    UART_clockGetEndTick     clockP_getEndTick;
+    /* ClockP_getEndTick  API */
     UART_clockUsecToTick           clockP_usecToTick;
     /* clock usec to tick */
     UART_readCompCallbackFxn        readCompleteCallbackFxn;
@@ -624,6 +627,8 @@ typedef struct
 
     void*                   args;
     /**< Pointer to be used by application to store miscellaneous data.*/
+    uint64_t                lineStatusTimeout;
+    /**< Variable to hold the line status timeout in ticks */
 } UARTLLD_Object, *UARTLLD_Handle;
 
 /* ========================================================================== */

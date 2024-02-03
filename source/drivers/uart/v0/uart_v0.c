@@ -50,6 +50,7 @@
 #include <kernel/dpl/TaskP.h>
 #include <drivers/uart/v0/lld/uart_lld.h>
 #include <drivers/uart/v0/lld/dma/uart_dma.h>
+#include <kernel/dpl/CycleCounterP.h>
 
 /* UART Config,DMA structure handles */
 extern UART_DmaHandle       gUartDmaHandle[];
@@ -326,8 +327,9 @@ UART_Handle UART_open(uint32_t index, const UART_Params *prms)
         uartLldInit_handle->writeMode         = object->prms.writeMode;
         uartLldInit_handle->readMode          = object->prms.readMode;
         uartLldInit_handle->timeGuardVal      = object->prms.timeGuardVal;
-        uartLldInit_handle->clockP_get        = ClockP_getTicks;
-        uartLldInit_handle->clockP_usecToTick = ClockP_usecToTicks;
+        uartLldInit_handle->clockP_getStartTick  = CycleCounterP_getCount32;
+        uartLldInit_handle->clockP_getEndTick    = CycleCounterP_getOverflowCount32;
+        uartLldInit_handle->clockP_usecToTick    = CycleCounterP_usToTicks;
         /* Read, Write & Error callback Functions */
         uartLldInit_handle->readCompleteCallbackFxn =  UART_lld_readCompleteCallback;
         uartLldInit_handle->writeCompleteCallbackFxn = UART_lld_writeCompleteCallback;

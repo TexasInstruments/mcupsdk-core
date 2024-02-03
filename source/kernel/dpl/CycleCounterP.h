@@ -65,6 +65,13 @@ void CycleCounterP_init(const uint64_t cpuFreqHz);
 uint32_t CycleCounterP_getCount32(void);
 
 /**
+ * \brief Get 32b CPU cycle counter value after handling overflow
+ *
+ * \return 32b cycle counter value after handling overflow
+ */
+uint32_t CycleCounterP_getOverflowCount32( const uint32_t startTick);
+
+/**
  * \brief Enable, reset, clear overflow for CPU cycle counter
  *
  * - Call this API atleast once before using CycleCounterP_getCount32() to reset and enable the counter
@@ -90,6 +97,15 @@ uint64_t CycleCounterP_getCount64(void);
  *\return PMU counter ticks
  */
 uint64_t CycleCounterP_nsToTicks(const uint64_t nanosecs);
+
+/**
+ * \brief API function to convert microsecs to PMU counter ticks
+ *
+ * \param microsecs    time unit in micro sec
+ *
+ *\return PMU counter ticks
+ */
+uint64_t CycleCounterP_usToTicks(const uint64_t microsecs);
 
 /** @} */
 

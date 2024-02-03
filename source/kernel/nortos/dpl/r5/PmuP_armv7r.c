@@ -57,6 +57,7 @@
 #define PmuP_COUNTER_MASK_CYCLE_COUNTER         ((uint32_t)1<<(uint32_t)31)
 #define PmuP_COUNTER_MASK_ALL_COUNTERS          (0xFFFFFFFFu)
 #define PmuP_SEC_TO_NANOSEC                     (1000000000ULL)
+#define PmuP_SEC_TO_MICROSEC                    (1000000U)
 
 PMU_DATA_SECTION
 static uint64_t gCounterFreqHz = 0;
@@ -81,6 +82,23 @@ void PMU_TEXT_SECTION CycleCounterP_init(const uint64_t cpuFreqHz)
 uint64_t PMU_TEXT_SECTION CycleCounterP_nsToTicks(const uint64_t nanosecs)
 {
     return (((uint64_t)nanosecs*gCounterFreqHz)/PmuP_SEC_TO_NANOSEC);
+}
+
+uint64_t PMU_TEXT_SECTION CycleCounterP_usToTicks(const uint64_t microsecs)
+{
+    return (((uint64_t)microsecs*gCounterFreqHz)/PmuP_SEC_TO_MICROSEC);
+}
+
+uint32_t PMU_TEXT_SECTION CycleCounterP_getOverflowCount32( const uint32_t startTick)
+{
+    uint32_t endTick = CycleCounterP_getCount32();
+
+    if(startTick > endTick)
+    {
+        endTick = (0xFFFFFFFF - startTick) + endTick;
+    }
+
+    return endTick;
 }
 
 void PMU_TEXT_SECTION CycleCounterP_reset(void)
