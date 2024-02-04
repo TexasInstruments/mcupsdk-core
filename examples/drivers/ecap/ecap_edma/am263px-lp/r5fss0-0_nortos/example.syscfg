@@ -2,53 +2,53 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const pmic         = scripting.addModule("/board/pmic/pmic", {}, false);
-const pmic1        = pmic.addInstance();
-const ecap         = scripting.addModule("/drivers/ecap/ecap", {}, false);
-const ecap1        = ecap.addInstance();
-const ecap2        = ecap.addInstance();
-const ecap3        = ecap.addInstance();
-const edma         = scripting.addModule("/drivers/edma/edma", {}, false);
-const edma1        = edma.addInstance();
-const epwm         = scripting.addModule("/drivers/epwm/epwm", {}, false);
-const epwm1        = epwm.addInstance();
-const mcspi        = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
-const mcspi1       = mcspi.addInstance();
-const debug_log    = scripting.addModule("/kernel/dpl/debug_log");
-const mpu_armv7    = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
-const mpu_armv71   = mpu_armv7.addInstance();
-const mpu_armv72   = mpu_armv7.addInstance();
-const mpu_armv73   = mpu_armv7.addInstance();
-const mpu_armv74   = mpu_armv7.addInstance();
+const pmic            = scripting.addModule("/board/pmic/pmic", {}, false);
+const pmic1           = pmic.addInstance();
+const ecap            = scripting.addModule("/drivers/ecap/ecap", {}, false);
+const ecap1           = ecap.addInstance();
+const ecap2           = ecap.addInstance();
+const ecap3           = ecap.addInstance();
+const edma            = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1           = edma.addInstance();
+const epwm            = scripting.addModule("/drivers/epwm/epwm", {}, false);
+const epwm1           = epwm.addInstance();
+const mcspi           = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
+const mcspi1          = mcspi.addInstance();
+const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
+const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71      = mpu_armv7.addInstance();
+const mpu_armv72      = mpu_armv7.addInstance();
+const mpu_armv73      = mpu_armv7.addInstance();
+const mpu_armv74      = mpu_armv7.addInstance();
 const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
 const default_linker1 = default_linker.addInstance();
-const general      = scripting.addModule("/memory_configurator/general", {}, false);
-const general1     = general.addInstance();
-const region       = scripting.addModule("/memory_configurator/region", {}, false);
-const region1      = region.addInstance();
-const section      = scripting.addModule("/memory_configurator/section", {}, false);
-const section1     = section.addInstance();
-const section2     = section.addInstance();
-const section3     = section.addInstance();
-const section4     = section.addInstance();
-const section5     = section.addInstance();
-const section6     = section.addInstance();
-const section7     = section.addInstance();
-const section8     = section.addInstance();
-const section9     = section.addInstance();
-const section10    = section.addInstance();
-const section11    = section.addInstance();
-const section12    = section.addInstance();
-const input_xbar   = scripting.addModule("/xbar/input_xbar/input_xbar", {}, false);
-const input_xbar1  = input_xbar.addInstance();
-const output_xbar  = scripting.addModule("/xbar/output_xbar/output_xbar", {}, false);
-const output_xbar1 = output_xbar.addInstance();
+const general         = scripting.addModule("/memory_configurator/general", {}, false);
+const general1        = general.addInstance();
+const region          = scripting.addModule("/memory_configurator/region", {}, false);
+const region1         = region.addInstance();
+const section         = scripting.addModule("/memory_configurator/section", {}, false);
+const section1        = section.addInstance();
+const section2        = section.addInstance();
+const section3        = section.addInstance();
+const section4        = section.addInstance();
+const section5        = section.addInstance();
+const section6        = section.addInstance();
+const section7        = section.addInstance();
+const section8        = section.addInstance();
+const section9        = section.addInstance();
+const section10       = section.addInstance();
+const section11       = section.addInstance();
+const section12       = section.addInstance();
+const input_xbar      = scripting.addModule("/xbar/input_xbar/input_xbar", {}, false);
+const input_xbar1     = input_xbar.addInstance();
+const output_xbar     = scripting.addModule("/xbar/output_xbar/output_xbar", {}, false);
+const output_xbar1    = output_xbar.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -96,6 +96,7 @@ mcspi1.$name                 = "CONFIG_MCSPI0";
 pmic1.peripheralDriver       = mcspi1;
 mcspi1.SPI.$assign           = "SPI1";
 mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
+mcspi1.child.$name           = "drivers_mcspi_v1_mcspi_v1_template1";
 
 edma1.$name                                         = "CONFIG_EDMA0";
 mcspi1.edmaDriver                                   = edma1;
@@ -119,6 +120,7 @@ debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -332,20 +334,20 @@ section12.output_section[0].alignment = 0;
 input_xbar1.$name      = "CONFIG_INPUT_XBAR0";
 input_xbar1.xbarOutput = "GPIO119";
 
-output_xbar1.$name                      = "CONFIG_OUTPUT_XBAR0";
-output_xbar1.xbarOutput                 = ["ECAP0_OUT"];
-output_xbar1.OUTPUTXBAR.XBAROUT.$assign = "PR0_PRU1_GPIO19";
+output_xbar1.$name              = "CONFIG_OUTPUT_XBAR0";
+output_xbar1.xbarOutput         = ["ECAP0_OUT"];
+output_xbar1.OUTPUTXBAR.$assign = "OUTPUTXBAR13";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution               = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution               = "EPWM0_B";
-mcspi1.SPI.CLK.$suggestSolution             = "SPI1_CLK";
-mcspi1.SPI.D0.$suggestSolution              = "SPI1_D0";
-mcspi1.SPI.D1.$suggestSolution              = "SPI1_D1";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "SPI1_CS0";
-debug_log.uartLog.UART.$suggestSolution     = "UART0";
-output_xbar1.OUTPUTXBAR.$suggestSolution    = "OUTPUTXBAR0";
+epwm1.EPWM.A.$suggestSolution                    = "EPWM0_A";
+epwm1.EPWM.B.$suggestSolution                    = "EPWM0_B";
+mcspi1.SPI.CLK.$suggestSolution                  = "SPI1_CLK";
+mcspi1.SPI.D0.$suggestSolution                   = "SPI1_D0";
+mcspi1.SPI.D1.$suggestSolution                   = "SPI1_D1";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution      = "SPI1_CS0";
+debug_log.uartLog.UART.$suggestSolution          = "UART0";
+output_xbar1.OUTPUTXBAR.XBAROUT.$suggestSolution = "PR0_PRU1_GPIO19";
