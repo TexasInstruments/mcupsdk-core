@@ -13,6 +13,7 @@ The Sitara Devices contain PRU Cores which are capable of executing instructions
 \endcond
 
 
+
 \cond SOC_AM64X || SOC_AM243X
 This section consists of modules providing support for PRU cores:
 - \subpage COMPONENT_PRU_GUIDE
@@ -20,7 +21,7 @@ This section consists of modules providing support for PRU cores:
 - \subpage DRIVERS_PRU_IPC
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 This section consists of description of interfaces/modules developed using PRU:
 - \subpage SENT
 \endcond

@@ -43,7 +43,18 @@ This example acts as a getting started point for PRU firmware development in ass
 
 - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
 
+\cond SOC_AM64X || SOC_AM243X
+
 # Writing PRU code
 
 * You can modify this example to write your own firmware. `<sdk-install-dir/examples/pru_io/adc/>` contains some PRU projects which can act as reference. PRU sources are usually separated out in a `firmware/` subfolder in all these example project folders.
 * You can change the core in project properties to develop firmware for other PRU cores.
+
+\endcond
+
+\cond SOC_AM263X
+
+* You can modify this example to write your own firmware. `<sdk-install-dir/examples/pru_io/sent/>` contains some PRU projects which can act as reference. PRU sources are usually separated out in a `firmware/` subfolder in all these example project folders.
+* You can change the core in project properties to develop firmware for other PRU cores.
+
+\endcond
