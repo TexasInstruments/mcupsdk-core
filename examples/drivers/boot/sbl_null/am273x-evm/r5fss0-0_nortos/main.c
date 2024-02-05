@@ -87,6 +87,9 @@ int main(void)
     Bootloader_BootImageInfo_init(&bootImageInfo);
 
     bootHandle = Bootloader_open(CONFIG_BOOTLOADER0, &bootParams);
+    Bootloader_Config *config = (Bootloader_Config *)bootHandle;
+    void *CoreOpMode = config->socCoreOpMode;
+    Bootloader_socCoreOpModeConfig *coreconfig = (Bootloader_socCoreOpModeConfig *)CoreOpMode;
 
     if(bootHandle != NULL)
     {
@@ -94,7 +97,7 @@ int main(void)
         {
             status = Bootloader_bootCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_C66SS0]);
         }
-        if((status == SystemP_SUCCESS) && (BOOTLOADER_SOC_VARIANT_DUAL_R5F == Bootloader_socGetCoreVariant()))
+        if((status == SystemP_SUCCESS) && (BOOTLOADER_SOC_VARIANT_DUAL_R5F == Bootloader_socGetCoreVariant()) && (coreconfig->r5fss0_opMode == BOOTLOADER_OPMODE_STANDALONE))
         {
             status = Bootloader_bootCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
         }

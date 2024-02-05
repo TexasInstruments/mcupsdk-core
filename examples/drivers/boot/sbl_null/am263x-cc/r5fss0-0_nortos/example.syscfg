@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
@@ -40,8 +40,10 @@ const section7        = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-bootloader1.$name     = "CONFIG_BOOTLOADER0";
-bootloader1.bootMedia = "MEM";
+bootloader1.$name               = "CONFIG_BOOTLOADER0";
+bootloader1.bootMedia           = "MEM";
+bootloader1.R5FSS0operatingMode = "Standalone";
+bootloader1.R5FSS1operatingMode = "Standalone";
 
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
 
@@ -55,6 +57,7 @@ debug_log.uartLog.intrEnable       = "DISABLE";
 debug_log.uartLog.UART.$assign     = "UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
