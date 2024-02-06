@@ -627,6 +627,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "Example to showcase Open Shorts Detection in the ADC Channels. CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_open_shorts_detection",
+        "location": "../../examples/drivers/adc/adc_open_shorts_detection/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_open_shorts_detection",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "Example to showcase Open Shorts Detection in the ADC Channels. CPU is R5FSS0-0 running NORTOS.",
+        "name": "adc_open_shorts_detection",
+        "location": "../../examples/drivers/adc/adc_open_shorts_detection/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "adc",
+            "adc_open_shorts_detection",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "ADC PPB Delay example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_ppb_delay",
         "location": "../../examples/drivers/adc/adc_ppb_delay/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

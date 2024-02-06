@@ -39,6 +39,7 @@ const example_file_list = [
 	"examples/drivers/adc/adc_early_interrupt_offset/.project/project.js",
 	"examples/drivers/adc/adc_high_priority_soc/.project/project.js",
 	"examples/drivers/adc/adc_multiple_soc_epwm/.project/project.js",
+	"examples/drivers/adc/adc_open_shorts_detection/.project/project.js",
 	"examples/drivers/adc/adc_ppb_delay/.project/project.js",
 	"examples/drivers/adc/adc_ppb_epwm_trip/.project/project.js",
 	"examples/drivers/adc/adc_ppb_limits/.project/project.js",

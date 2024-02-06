@@ -208,6 +208,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_ADC_GLOBAL_FORCE
    -# \subpage EXAMPLES_DRIVERS_ADC_DAC_LOOPBACK
    -# \subpage EXAMPLES_DRIVERS_ADC_ALTERNATE_DMA_TRIGGER
+   -# \subpage EXAMPLES_DRIVERS_ADC_OPEN_SHORTS_DETECTION
 \endcond
 -# CMPSS
    -# \subpage EXAMPLES_DRIVERS_CMPSS_ASYNCHRONOUS_TRIP
