@@ -19,8 +19,8 @@
 /* UART Instance Macros */
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
-#define `instance.$name.toUpperCase()` (`i`U)
 % if(instance.sdkInfra == "LLD") {
+#define `instance.$name.toUpperCase()` (`lldInstances`U)
     % lldInstances++;
 %}
 % }

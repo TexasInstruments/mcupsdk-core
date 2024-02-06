@@ -20,9 +20,9 @@
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     % if(instance.sdkInfra == "HLD") {
+#define `instance.$name.toUpperCase()` (`hldInstances`U)
     % hldInstances++;
 %}
-#define `instance.$name.toUpperCase()` (`i`U)
 % }
 #define CONFIG_UART_NUM_INSTANCES (`hldInstances`U)
 #define CONFIG_UART_NUM_DMA_INSTANCES (`uartDmaInstanceCount`U)
