@@ -215,6 +215,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_CMPSS_DIGITAL_FILTER_TRIP
 -# DAC
    -# \subpage EXAMPLES_DRIVERS_DAC_CONSTANT_VOLTAGE
+   -# \subpage EXAMPLES_DRIVERS_DAC_EPWM_SYNC
    -# \subpage EXAMPLES_DRIVERS_DAC_RAMP_WAVE
    -# \subpage EXAMPLES_DRIVERS_DAC_RANDOM_VOLTAGE
    -# \subpage EXAMPLES_DRIVERS_DAC_SINE_DMA

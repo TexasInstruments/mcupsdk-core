@@ -152,6 +152,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/cmpss/cmpss_digital_filter_trip/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/dac/dac_constant_voltage/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/dac/dac_constant_voltage/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/dac/dac_epwm_sync/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/dac/dac_epwm_sync/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/dac/dac_ramp_wave/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/dac/dac_ramp_wave/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/dac/dac_random_voltage/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -869,6 +871,8 @@ BUILD_COMBO_EXAMPLE_ALL += cmpss_digital_filter_trip_am263x-cc_r5fss0-0_nortos_t
 BUILD_COMBO_EXAMPLE_ALL += cmpss_digital_filter_trip_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dac_constant_voltage_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dac_constant_voltage_am263x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dac_epwm_sync_am263x-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += dac_epwm_sync_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dac_ramp_wave_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dac_ramp_wave_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dac_random_voltage_am263x-cc_r5fss0-0_nortos_ti-arm-clang
@@ -1418,6 +1422,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  dac_constant_voltage_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/dac/dac_constant_voltage/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ dac_epwm_sync_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/dac/dac_epwm_sync/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ dac_epwm_sync_am263x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/dac/dac_epwm_sync/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  dac_ramp_wave_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/dac/dac_ramp_wave/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -2464,6 +2474,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += cmpss_digital_filter_trip_am263x-cc_r5fss0-0_no
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cmpss_digital_filter_trip_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dac_constant_voltage_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dac_constant_voltage_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dac_epwm_sync_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += dac_epwm_sync_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dac_ramp_wave_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dac_ramp_wave_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dac_random_voltage_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -3008,6 +3020,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  dac_constant_voltage_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/dac/dac_constant_voltage/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ dac_epwm_sync_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/dac/dac_epwm_sync/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ dac_epwm_sync_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/dac/dac_epwm_sync/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  dac_ramp_wave_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/dac/dac_ramp_wave/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -4054,6 +4072,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += cmpss_digital_filter_trip_am263x-cc_r5fss0-0_no
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cmpss_digital_filter_trip_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dac_constant_voltage_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dac_constant_voltage_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dac_epwm_sync_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += dac_epwm_sync_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dac_ramp_wave_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dac_ramp_wave_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dac_random_voltage_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -4598,6 +4618,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  dac_constant_voltage_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/dac/dac_constant_voltage/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ dac_epwm_sync_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/dac/dac_epwm_sync/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ dac_epwm_sync_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/dac/dac_epwm_sync/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  dac_ramp_wave_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/dac/dac_ramp_wave/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
