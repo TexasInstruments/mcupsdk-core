@@ -1183,6 +1183,32 @@
 			]
 		},
 		{
+			"name" :  "epwmTripZone2_oneShotSource",
+			"driverlibFunction" : "EPWM_enableTripZone2Signals",
+			"driverlibFunctionAlt": "EPWM_disableTripZone2Signals",
+			"driverlibFunctionArg" : {
+		        "base" : "",
+		        "tzSignal" : "this",
+			},
+			"register": "TZSEL2",
+			"devices" : [
+                "am263x", "am263px",
+			]
+		},
+		{
+			"name" :  "epwmTripZone2_cbcSource",
+			"driverlibFunction" : "EPWM_enableTripZone2Signals",
+			"driverlibFunctionAlt": "EPWM_disableTripZone2Signals",
+			"driverlibFunctionArg" : {
+		        "base" : "",
+		        "tzSignal" : "this",
+			},
+			"register": "TZSEL2",
+			"devices" : [
+                "am263x", "am263px",
+			]
+		},
+		{
 			"name" :  "epwmTripZone_cbcPulse",
 			"driverlibFunction" : "EPWM_selectCycleByCycleTripZoneClearEvent",
 			"driverlibFunctionArg" : {

@@ -899,6 +899,17 @@ typedef enum
 
 //*****************************************************************************
 //
+// Values that can be passed to EPWM_enableTripZone2Signals() and
+// EPWM_disableTripZone2Signals() as the tzSignal parameter.
+//
+//*****************************************************************************
+//! Cycle by cycle capture event
+#define EPWM_TZ2_SIGNAL_CAPEVT_CBC    (0x1U)
+//! One-shot Capture event
+#define EPWM_TZ2_SIGNAL_CAPEVT_OST    (0x100U)
+
+//*****************************************************************************
+//
 //! Values that can be passed to EPWM_setTripZoneDigitalCompareEventCondition()
 //! as the \e dcType parameter.
 //
@@ -5072,6 +5083,64 @@ EPWM_disableTripZoneSignals(uint32_t base, uint32_t tzSignal)
 
 //*****************************************************************************
 //
+//! Enables Trip Zone 2 signal (TZSEL2).
+//!
+//! \param base is the base address of the EPWM module.
+//! \param tzSignal is the Trip Zone signal.
+//!
+//! This function enables the Trip Zone signals specified by tzSignal as a
+//! source for the Trip Zone module.
+//! Valid values for tzSignal are:
+//!   - EPWM_TZ2_SIGNAL_CAPEVT_OST    - One-shot CAPEVT
+//!   - EPWM_TZ2_SIGNAL_CAPEVT_CBC    - Cycle By Cycle CAPEVT
+//!
+//! \b note:  A logical OR of the valid values can be passed as the tzSignal
+//!           parameter.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_enableTripZone2Signals(uint32_t base, uint16_t tzSignal)
+{
+    //
+    // Set the trip zone bits
+    //
+    HW_WR_REG16(base + CSL_EPWM_TZSEL2,
+        (HW_RD_REG16(base + CSL_EPWM_TZSEL2) | tzSignal));
+}
+
+//*****************************************************************************
+//
+//! Disables Trip Zone 2 signal (TZSEL2).
+//!
+//! \param base is the base address of the EPWM module.
+//! \param tzSignal is the Trip Zone signal.
+//!
+//! This function disables the Trip Zone signals specified by tzSignal as a
+//! source for the Trip Zone module.
+//! Valid values for tzSignal are:
+//!   - EPWM_TZ2_SIGNAL_CAPEVT_OST    - One-shot CAPEVT
+//!   - EPWM_TZ2_SIGNAL_CAPEVT_CBC    - Cycle By Cycle CAPEVT
+//!
+//! \b note:  A logical OR of the valid values can be passed as the tzSignal
+//!           parameter.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_disableTripZone2Signals(uint32_t base, uint16_t tzSignal)
+{
+    //
+    // Clear the trip zone bits
+    //
+    HW_WR_REG16(base + CSL_EPWM_TZSEL2,
+        (HW_RD_REG16(base + CSL_EPWM_TZSEL2) & ~tzSignal));
+}
+
+//*****************************************************************************
+//
 //! Set Digital compare conditions that cause Trip Zone event.
 //!
 //! \param base is the base address of the EPWM module.
@@ -5671,7 +5740,7 @@ EPWM_clearOneShotTripZoneFlag(uint32_t base, uint16_t tzOSTFlags)
     DebugP_assert(tzOSTFlags < 0x200U);
 
     //
-    // Clear the Cycle By Cycle Trip zone flag
+    // Clear the One Shot Trip zone flag
     //
     HW_WR_REG16(base + CSL_EPWM_TZOSTCLR,
         (HW_RD_REG16(base + CSL_EPWM_TZOSTCLR) | tzOSTFlags));
