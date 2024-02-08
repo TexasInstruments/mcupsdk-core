@@ -4025,39 +4025,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "This example demonstrates the dccap functionalities of epwm. CPU is R5FSS0-0 running NORTOS.",
-        "name": "epwm_dccap",
-        "location": "../../examples/drivers/epwm/epwm_dccap/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDSCNCD263"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "epwm",
-            "epwm_dccap",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "The purpose of the example is to configure and display synhronization among EPWM's that are phase-shifted CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_synchronization",
         "location": "../../examples/drivers/epwm/epwm_synchronization/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -4107,6 +4074,39 @@
             "drivers",
             "epwm",
             "epwm_synchronization",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates the dccap functionalities of epwm. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_dccap",
+        "location": "../../examples/drivers/epwm/epwm_dccap/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_dccap",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [
