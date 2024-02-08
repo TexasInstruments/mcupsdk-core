@@ -167,6 +167,7 @@ const example_file_list = [
     "examples/security/crypto/dthe_aes/crypto_aes_cmac_128/.project/project.js",
     "examples/security/crypto/dthe_aes/crypto_aes_cmac_256/.project/project.js",
     "examples/security/crypto/dthe_aes/crypto_aes_ctr/.project/project.js",
+    "examples/security/crypto/dthe_aes/crypto_aes_stream/.project/project.js",
     "examples/security/crypto/dthe_sha/crypto_sha_256/.project/project.js",
     "examples/security/crypto/dthe_sha/crypto_sha_512/.project/project.js",
     "examples/security/crypto/dthe_sha/crypto_hmac_sha256/.project/project.js",

@@ -170,6 +170,7 @@ help:
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_cmac_128/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_cmac_256/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_ctr/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/security/crypto/dthe_aes/crypto_aes_stream/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_sha_256/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_sha_512/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/security/crypto/dthe_sha/crypto_hmac_sha256/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -553,6 +554,7 @@ BUILD_COMBO_EXAMPLE_ALL += crypto_dthe_aes_ecb_256_awr294x-evm_r5fss0-0_nortos_t
 BUILD_COMBO_EXAMPLE_ALL += crypto_dthe_aes_cmac_128_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_dthe_aes_cmac_256_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += crypto_aes_ctr_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += crypto_aes_stream_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dthe_sha_256_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dthe_sha_512_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dthe_hmac_sha256_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -924,6 +926,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  crypto_aes_ctr_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_ctr/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ crypto_aes_stream_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_stream/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  dthe_sha_256_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_256/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -1167,6 +1172,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_dthe_aes_ecb_256_awr294x-evm_r5fss0-0_no
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_dthe_aes_cmac_128_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_dthe_aes_cmac_256_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_ctr_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += crypto_aes_stream_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_sha_256_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_sha_512_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dthe_hmac_sha256_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1533,6 +1539,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  crypto_aes_ctr_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_ctr/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ crypto_aes_stream_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_stream/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  dthe_sha_256_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_256/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -1776,6 +1785,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_dthe_aes_ecb_256_awr294x-evm_r5fss0-0_no
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_dthe_aes_cmac_128_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_dthe_aes_cmac_256_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_ctr_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += crypto_aes_stream_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_sha_256_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_sha_512_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dthe_hmac_sha256_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -2141,6 +2151,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  crypto_aes_ctr_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_ctr/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ crypto_aes_stream_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/security/crypto/dthe_aes/crypto_aes_stream/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  dthe_sha_256_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/security/crypto/dthe_sha/crypto_sha_256/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

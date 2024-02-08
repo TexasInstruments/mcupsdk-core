@@ -108,6 +108,17 @@ extern "C" {
 /** \brief AES CTR Counter Width is 128 */
 #define DTHE_AES_CTR_WIDTH_128                                   (0x00000010U)
 
+/** \brief AES STREAM SUPPORT */
+#define DTHE_AES_ONE_SHOT_SUPPORT                           (0x00000000U)
+/** \brief AES STREAM SUPPORT : INIT */
+#define DTHE_AES_STREAM_INIT                               (0xAA11BB22U)
+/** \brief AES STREAM SUPPORT : UPDATE */
+#define DTHE_AES_STREAM_UPDATE                              (0x33CC44DDU)
+/** \brief AES STREAM SUPPORT : FINISH */
+#define DTHE_AES_STREAM_FINISH                              (0xEE55FF66U)
+
+
+
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -130,6 +141,25 @@ typedef enum DTHE_AES_Return_e
  * \brief AES Driver Parameters
  *  This structure has all the parameters which are need by the AES Driver
  *  to perform the specified operation.
+ *
+ *|Parameter          | DTHE_AES_ONE_SHOT_SUPPORT | DTHE_AES_STREAM_INIT | DTHE_AES_STREAM_UPDATE | DTHE_AES_STREAM_FINISH |
+* |------------------:|:-------------------------:|:--------------------:|:----------------------:|:----------------------:|
+* | algoType          |              *            |           *          |            *           |             *          |
+* | opType            |              *            |           *          |            *           |             *          |
+* | useKEKMode        |              *            |           *          |                        |                        |
+* | ptrKey            |              *            |           *          |                        |                        |
+* | ptrKey1           |              *            |           *          |                        |                        |
+* | ptrKey2           |              *            |           *          |                        |                        |
+* | keyLen            |              *            |           *          |                        |                        |
+* | ptrIV             |              *            |           *          |                        |                        |
+* | dataLenBytes      |              *            |                      |                        |                        |
+* | ptrEncryptedData  |              *            |                      |            *           |             *          |
+* | ptrPlainTextData  |              *            |                      |            *           |             *          |
+* | counterWidth      |              *            |           *          |                        |                        |
+* | streamState       |                           |           *          |            *           |             *          |
+* | streamSize        |                           |                      |            *           |             *          |
+* | ptrTag            |                           |                      |                        |             *          |
+ *
  */
 typedef struct DTHE_AES_Params_t
 {
@@ -173,6 +203,7 @@ typedef struct DTHE_AES_Params_t
 
     /**
      *<   Size of the data in bytes
+     *
      */
     uint32_t            dataLenBytes;
 
@@ -184,6 +215,8 @@ typedef struct DTHE_AES_Params_t
      *
      * Encryption Operation Mode:
      * - This is used as an output parameter and is the location where the encrypted data will be present.
+     *
+     * Note : Not valid for AES-CMAC mode.
      */
     uint32_t*           ptrEncryptedData;
 
@@ -200,7 +233,6 @@ typedef struct DTHE_AES_Params_t
 
     /**
      *<   Pointer to Tag
-     *
      */
     uint32_t*           ptrTag;
 
@@ -208,6 +240,23 @@ typedef struct DTHE_AES_Params_t
      *<   Width of Counter in bits
      */
     uint32_t            counterWidth;
+
+
+    /**
+     *<   Only valid for Streaming Support; Valid values are - DTHE_AES_STREAM_INIT, DTHE_AES_STREAM_UPDATE, DTHE_AES_STREAM_FINISH
+     */
+    uint32_t            streamState;
+
+    /**
+     *<   Only valid for Streaming Support
+     *
+     * - This field is not populated in case of streamState==DTHE_AES_ONE_SHOT_SUPPORT and streamState==DTHE_AES_STREAM_INIT and can be set as 0
+     *
+     * - In case of streamState == DTHE_AES_STREAM_UPDATE, the streamSize must be aligned to 16 Bytes.
+     *
+     * - In case of streamState == DTHE_AES_STREAM_FINISH, the streamSize does not have to be aligned to 16 Bytes.
+     */
+    uint32_t            streamSize;
 }DTHE_AES_Params;
 /* ========================================================================== */
 /*                            Global Variables                                */

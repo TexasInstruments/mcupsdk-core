@@ -46,10 +46,16 @@
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
+#define     MAX_VALUE                   (0xFFFFFFFFU)
+
+#define     AES_STATE_NEW               (0x00U)
+#define     AES_STATE_IN_PROGRESS       (0xA5U)
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
+
+static uint8_t gStreamState = AES_STATE_NEW;
 
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
@@ -294,205 +300,268 @@ DTHE_AES_Return_t DTHE_AES_execute(DTHE_Handle handle, const DTHE_AES_Params* pt
         attrs           = config->attrs;
         ptrAesRegs      = (CSL_AesRegs *)attrs->aesBaseAddr;
 
-		DTHE_AES_controlMode(ptrAesRegs, ptrParams->algoType);
-
-        /* Key Size setting */
-        DTHE_AES_setKeySize(ptrAesRegs, ptrParams->keyLen);
-
-        /* Sanity Check: For Decryption data length always needs to be aligned */
-        if (ptrParams->opType == DTHE_AES_DECRYPT)
+        /* This flow is for One-Shot mode and Stream Mode as INIT only */
+        if(((ptrParams->streamState == DTHE_AES_ONE_SHOT_SUPPORT)||(ptrParams->streamState == DTHE_AES_STREAM_INIT))&&\
+            (gStreamState == AES_STATE_NEW))
         {
-            if ((ptrParams->dataLenBytes % 4U) != 0U)
+            DTHE_AES_controlMode(ptrAesRegs, ptrParams->algoType);
+
+            /* Key Size setting */
+            DTHE_AES_setKeySize(ptrAesRegs, ptrParams->keyLen);
+
+            if((ptrParams->streamState == DTHE_AES_ONE_SHOT_SUPPORT)&&(ptrParams->dataLenBytes == 0))
             {
                 status = DTHE_AES_RETURN_FAILURE;
             }
-        }
 
-        /* Sanity Check: Key Validation */
-        if (status == DTHE_AES_RETURN_SUCCESS)
-        {
-            /* KEK Mode or Normal Key Mode: */
-            if (ptrParams->useKEKMode == TRUE)
+            /* Sanity Check: For Decryption data length always needs to be aligned */
+            if (ptrParams->opType == DTHE_AES_DECRYPT)
             {
-                /* If KEKMode is set, configure Muxes for KEK
-                 * to be passed to AES Engine */
-                /* KEK Mode: Enable Direct Bus */
-                CSL_REG32_FINS(&ptrAesRegs->SYSCONFIG,AES_S_SYSCONFIG_DIRECTBUSEN,1U);
-            }
-            else
-            {
-                /* Normal Mode: Key should always be specified */
-                if (ptrParams->ptrKey == NULL)
+                if ((ptrParams->dataLenBytes % 4U) != 0U)
                 {
                     status = DTHE_AES_RETURN_FAILURE;
                 }
             }
-        }
 
-        /* Sanity Check: We always need the IV to be specified */
-        if (status == DTHE_AES_RETURN_SUCCESS)
-        {
-            if((ptrParams->algoType == DTHE_AES_CBC_MODE)\
-                ||(ptrParams->algoType == DTHE_AES_CTR_MODE)\
-                ||(ptrParams->algoType == DTHE_AES_ICM_MODE)\
-                ||(ptrParams->algoType == DTHE_AES_CFB_MODE))
+            /* Sanity Check: Key Validation */
+            if (status == DTHE_AES_RETURN_SUCCESS)
             {
-                if (ptrParams->ptrIV == NULL)
+                /* KEK Mode or Normal Key Mode: */
+                if (ptrParams->useKEKMode == TRUE)
                 {
-                    status = DTHE_AES_RETURN_FAILURE;
+                    /* If KEKMode is set, configure Muxes for KEK
+                    * to be passed to AES Engine */
+                    /* KEK Mode: Enable Direct Bus */
+                    CSL_REG32_FINS(&ptrAesRegs->SYSCONFIG,AES_S_SYSCONFIG_DIRECTBUSEN,1U);
                 }
+                else
+                {
+                    /* Normal Mode: Key should always be specified */
+                    if (ptrParams->ptrKey == NULL)
+                    {
+                        status = DTHE_AES_RETURN_FAILURE;
+                    }
+                }
+
+                if((ptrParams->algoType == DTHE_AES_CBC_MODE)\
+                    ||(ptrParams->algoType == DTHE_AES_CTR_MODE)\
+                    ||(ptrParams->algoType == DTHE_AES_ICM_MODE)\
+                    ||(ptrParams->algoType == DTHE_AES_CFB_MODE))
+                {
+                    if (ptrParams->ptrIV == NULL)
+                    {
+                        status = DTHE_AES_RETURN_FAILURE;
+                    }
+                }
+
+                /* Select the key input: */
+                if (ptrParams->useKEKMode == FALSE)
+                {
+                    /* Normal Key Mode: */
+                    CSL_REG32_FINS(&ptrAesRegs->SYSCONFIG,AES_S_SYSCONFIG_DIRECTBUSEN,0U);
+
+                    /* Configure the key which is to be used: */
+                    DTHE_AES_set256BitKey1 (ptrAesRegs, ptrParams->ptrKey);
+
+                    if (ptrParams->algoType == DTHE_AES_CMAC_MODE)
+                    {
+                        DTHE_AES_set128BitKey2Part1(ptrAesRegs, ptrParams->ptrKey1);
+                        DTHE_AES_set128BitKey2Part2(ptrAesRegs, ptrParams->ptrKey2);
+                    }
+                }
+
+                DTHE_AES_setOpType(ptrAesRegs, ptrParams->opType);
+
+                if((ptrParams->algoType == DTHE_AES_CTR_MODE)\
+                    ||(ptrParams->algoType == DTHE_AES_ICM_MODE))
+                {
+                    DTHE_AES_CTRWidth(ptrAesRegs, ptrParams->counterWidth);
+                }
+
+                /* Configure the Initialization Vector */
+                if((ptrParams->algoType == DTHE_AES_CBC_MODE)\
+                    ||(ptrParams->algoType == DTHE_AES_CTR_MODE)\
+                    ||(ptrParams->algoType == DTHE_AES_ICM_MODE)\
+                    ||(ptrParams->algoType == DTHE_AES_CFB_MODE))
+                {
+                    DTHE_AES_setIV(ptrAesRegs, ptrParams->ptrIV);
+                }
+                else if((ptrParams->algoType == DTHE_AES_CBC_MAC_MODE)||(ptrParams->algoType == DTHE_AES_CMAC_MODE))
+                {
+                    /* Clear the IV value */
+                    DTHE_AES_clearIV(ptrAesRegs);
+                }
+
+                /*
+                - DataLength is sent by user, then set the same here.
+                - DataLength is not sent by user, then set the length as maximum. */
+                if((ptrParams->streamState != DTHE_AES_ONE_SHOT_SUPPORT)&&(ptrParams->dataLenBytes == 0))
+                {
+                    /* Setup the data length as 0xFFFFFFFF */
+                    DTHE_AES_setDataLengthBytes(ptrAesRegs, MAX_VALUE);
+                }
+                else
+                {
+                    /* Setup the data length: */
+                    DTHE_AES_setDataLengthBytes(ptrAesRegs, ptrParams->dataLenBytes);
+                }
+
+                gStreamState = AES_STATE_IN_PROGRESS;
+            }
+        }
+        /* Stream Mode Update should support streamSize aligned to 16B only */
+        else if(ptrParams->streamState == DTHE_AES_STREAM_UPDATE)
+        {
+            if ((ptrParams->streamSize % 16U) != 0U)
+            {
+                status = DTHE_AES_RETURN_FAILURE;
             }
         }
 
         /* Execute the AES Driver: */
-        if (status == DTHE_AES_RETURN_SUCCESS)
+        if ((status == DTHE_AES_RETURN_SUCCESS)&&(gStreamState == AES_STATE_IN_PROGRESS))
         {
-            /* Select the key input: */
-            if (ptrParams->useKEKMode == FALSE)
+            /* This flow is for one-shot in continuation to the above flow
+               In case of Update and Finish start execution from here */
+            if((ptrParams->streamState == DTHE_AES_ONE_SHOT_SUPPORT)||(ptrParams->streamState == DTHE_AES_STREAM_UPDATE)||(ptrParams->streamState == DTHE_AES_STREAM_FINISH))
             {
-                /* Normal Key Mode: */
-                CSL_REG32_FINS(&ptrAesRegs->SYSCONFIG,AES_S_SYSCONFIG_DIRECTBUSEN,0U);
-
-                /* Configure the key which is to be used: */
-                DTHE_AES_set256BitKey1 (ptrAesRegs, ptrParams->ptrKey);
-
-                if (ptrParams->algoType == DTHE_AES_CMAC_MODE)
+                if((ptrParams->streamState == DTHE_AES_STREAM_FINISH)&&(ptrParams->dataLenBytes == 0U))
                 {
-                    DTHE_AES_set128BitKey2Part1(ptrAesRegs, ptrParams->ptrKey1);
-                    DTHE_AES_set128BitKey2Part2(ptrAesRegs, ptrParams->ptrKey2);
-                }
-            }
-
-            DTHE_AES_setOpType(ptrAesRegs, ptrParams->opType);
-
-            if((ptrParams->algoType == DTHE_AES_CTR_MODE)\
-                ||(ptrParams->algoType == DTHE_AES_ICM_MODE))
-            {
-                DTHE_AES_CTRWidth(ptrAesRegs, ptrParams->counterWidth);
-            }
-
-            /* Configure the Initialization Vector */
-            if((ptrParams->algoType == DTHE_AES_CBC_MODE)\
-                ||(ptrParams->algoType == DTHE_AES_CTR_MODE)\
-                ||(ptrParams->algoType == DTHE_AES_ICM_MODE)\
-                ||(ptrParams->algoType == DTHE_AES_CFB_MODE))
-            {
-                DTHE_AES_setIV(ptrAesRegs, ptrParams->ptrIV);
-            }
-            else if((ptrParams->algoType == DTHE_AES_CBC_MAC_MODE)||(ptrParams->algoType == DTHE_AES_CMAC_MODE))
-            {
-                /* Clear the IV value */
-                DTHE_AES_clearIV(ptrAesRegs);
-            }
-
-            /* Setup the data length: */
-            DTHE_AES_setDataLengthBytes(ptrAesRegs, ptrParams->dataLenBytes);
-
-            /* Setup the input & output: */
-            if (ptrParams->opType == DTHE_AES_ENCRYPT)
-            {
-                /* Encryption: Plain Text is the Input & Encrypted Data is the Output */
-                ptrWordInputBuffer  = &ptrParams->ptrPlainTextData[0];
-                ptrWordOutputBuffer = &ptrParams->ptrEncryptedData[0];
-            }
-            else
-            {
-                /* Decryption: Encrypted Data is the Input & Plain Text is the Output */
-                ptrWordInputBuffer  = &ptrParams->ptrEncryptedData[0];
-                ptrWordOutputBuffer = &ptrParams->ptrPlainTextData[0];
-            }
-
-            /* Determine the data length in words: */
-            dataLenWords = ptrParams->dataLenBytes / 4U;
-
-            /* Compute the number of full blocks which can be written: Each block is 4words long*/
-            numBlocks = (dataLenWords / 4U);
-
-            /* Compute the number of bytes which need to be handled seperately */
-            partialDataSize = ptrParams->dataLenBytes % 16U;
-
-            /* Cycle through and write all the full blocks: */
-            for (index = 0U; index < numBlocks; index++)
-            {
-                /* Wait for the AES IP to be ready to receive the data: */
-                DTHE_AES_pollInputReady(ptrAesRegs);
-
-                /* Write the data: */
-                DTHE_AES_writeDataBlock(ptrAesRegs, &ptrWordInputBuffer[index << 2U]);
-
-                if((ptrParams->algoType != DTHE_AES_CBC_MAC_MODE)&&(ptrParams->algoType != DTHE_AES_CMAC_MODE))
-                {
-                    /* Wait for the AES IP to be ready with the output data */
-                    DTHE_AES_pollOutputReady(ptrAesRegs);
-
-                    /* Read the decrypted data into the decrypted block: */
-                    DTHE_AES_readDataBlock(ptrAesRegs, &ptrWordOutputBuffer[index << 2U]);
+                    /* Setup the data length: */
+                    DTHE_AES_setDataLengthBytes(ptrAesRegs,  ptrParams->streamSize);
                 }
 
-                /* Compute the number of bytes which have been processed: */
-                numBytes = numBytes + (4U * sizeof(uint32_t));
-            }
-
-            /* Process any left over data: */
-            if((partialDataSize != 0U) && (partialDataSize < 16U))
-            {
-                /* Initialize the partial block: */
-                (void)memset ((void *)&inPartialBlock, 0, sizeof(inPartialBlock));
-                (void)memset ((void *)&outPartialBlock, 0, sizeof(outPartialBlock));
-
-                /* Copy the data into the partial block: */
-                (void)memcpy ((void *)&inPartialBlock,
-                        (void *)&ptrWordInputBuffer[index << 2U],
-                        partialDataSize);
-
-                if (ptrParams->algoType == DTHE_AES_CMAC_MODE)
+                /* Setup the input & output: */
+                if (ptrParams->opType == DTHE_AES_ENCRYPT)
                 {
-                    inPartialBlock[partialDataSize] = 0x80;
+                    /* Encryption: Plain Text is the Input & Encrypted Data is the Output */
+                    ptrWordInputBuffer  = &ptrParams->ptrPlainTextData[0];
+                    ptrWordOutputBuffer = &ptrParams->ptrEncryptedData[0];
+                }
+                else
+                {
+                    /* Decryption: Encrypted Data is the Input & Plain Text is the Output */
+                    ptrWordInputBuffer  = &ptrParams->ptrEncryptedData[0];
+                    ptrWordOutputBuffer = &ptrParams->ptrPlainTextData[0];
                 }
 
-                /* Wait for the AES IP to be ready to receive the data: */
-                DTHE_AES_pollInputReady(ptrAesRegs);
-
-                /* Write the data: */
-                DTHE_AES_writeDataBlock(ptrAesRegs, (uint32_t *)&inPartialBlock[0U]);
-
-                if((ptrParams->algoType != DTHE_AES_CBC_MAC_MODE)&&(ptrParams->algoType != DTHE_AES_CMAC_MODE))
+                if(ptrParams->streamState == DTHE_AES_ONE_SHOT_SUPPORT)
                 {
-                    /* Wait for the AES IP to be ready with the output data */
-                    DTHE_AES_pollOutputReady(ptrAesRegs);
+                    /* Determine the data length in words: */
+                    dataLenWords = ptrParams->dataLenBytes / 4U;
+                    /* Compute the number of bytes which need to be handled seperately */
+                    partialDataSize = ptrParams->dataLenBytes % 16U;
+                }
+                else
+                {
+                    /* Determine the data length in words: */
+                    dataLenWords = ptrParams->streamSize / 4U;
+                    /* Compute the number of bytes which need to be handled seperately */
+                    partialDataSize = ptrParams->streamSize % 16U;
+                }
 
-                    /* Read the decrypted data into the decrypted block: */
-                    DTHE_AES_readDataBlock(ptrAesRegs, (uint32_t *)&outPartialBlock[0U]);
+                /* Compute the number of full blocks which can be written: Each block is 4words long*/
+                numBlocks = (dataLenWords / 4U);
 
-                    if((ptrParams->algoType == DTHE_AES_ECB_MODE)||(ptrParams->algoType == DTHE_AES_CBC_MODE))
+                /* Cycle through and write all the full blocks: */
+                for (index = 0U; index < numBlocks; index++)
+                {
+                    /* Wait for the AES IP to be ready to receive the data: */
+                    DTHE_AES_pollInputReady(ptrAesRegs);
+
+                    /* Write the data: */
+                    DTHE_AES_writeDataBlock(ptrAesRegs, &ptrWordInputBuffer[index << 2U]);
+
+                    if((ptrParams->algoType != DTHE_AES_CBC_MAC_MODE)&&(ptrParams->algoType != DTHE_AES_CMAC_MODE))
                     {
-                        /* Copy the data into the output buffer, always is going to be 16U */
-                        (void)memcpy ((void *)&ptrWordOutputBuffer[index << 2U],
-                                (void *)&outPartialBlock[0U],
-                                16U);
+                        /* Wait for the AES IP to be ready with the output data */
+                        DTHE_AES_pollOutputReady(ptrAesRegs);
+
+                        /* Read the decrypted data into the decrypted block: */
+                        DTHE_AES_readDataBlock(ptrAesRegs, &ptrWordOutputBuffer[index << 2U]);
                     }
-                    else
+
+                    /* Compute the number of bytes which have been processed: */
+                    numBytes = numBytes + (4U * sizeof(uint32_t));
+                }
+
+                /* - This flow is for one-shot in continuation to the above flow
+                   - In case of Finish continue execution from here
+                   - Update should not execute this because this is for partial block
+                   handling which is not supported by Update CALL */
+                if((ptrParams->streamState == DTHE_AES_ONE_SHOT_SUPPORT)||(ptrParams->streamState == DTHE_AES_STREAM_FINISH))
+                {
+                    /* Process any left over data: */
+                    if((partialDataSize != 0U) && (partialDataSize < 16U))
                     {
-                        /* Copy the data into the output buffer, always is going to be 16U */
-                        (void)memcpy ((void *)&ptrWordOutputBuffer[index << 2U],
-                                (void *)&outPartialBlock[0U],
+                        /* Initialize the partial block: */
+                        (void)memset ((void *)&inPartialBlock, 0, sizeof(inPartialBlock));
+                        (void)memset ((void *)&outPartialBlock, 0, sizeof(outPartialBlock));
+
+                        /* Copy the data into the partial block: */
+                        (void)memcpy ((void *)&inPartialBlock,
+                                (void *)&ptrWordInputBuffer[index << 2U],
                                 partialDataSize);
+
+                        if (ptrParams->algoType == DTHE_AES_CMAC_MODE)
+                        {
+                            inPartialBlock[partialDataSize] = 0x80;
+                        }
+
+                        /* Wait for the AES IP to be ready to receive the data: */
+                        DTHE_AES_pollInputReady(ptrAesRegs);
+
+                        /* Write the data: */
+                        DTHE_AES_writeDataBlock(ptrAesRegs, (uint32_t *)&inPartialBlock[0U]);
+
+                        if((ptrParams->algoType != DTHE_AES_CBC_MAC_MODE)&&(ptrParams->algoType != DTHE_AES_CMAC_MODE))
+                        {
+                            /* Wait for the AES IP to be ready with the output data */
+                            DTHE_AES_pollOutputReady(ptrAesRegs);
+
+                            /* Read the decrypted data into the decrypted block: */
+                            DTHE_AES_readDataBlock(ptrAesRegs, (uint32_t *)&outPartialBlock[0U]);
+
+                            if((ptrParams->algoType == DTHE_AES_ECB_MODE)||(ptrParams->algoType == DTHE_AES_CBC_MODE))
+                            {
+                                /* Copy the data into the output buffer, always is going to be 16U */
+                                (void)memcpy ((void *)&ptrWordOutputBuffer[index << 2U],
+                                        (void *)&outPartialBlock[0U],
+                                        16U);
+                            }
+                            else
+                            {
+                                /* Copy the data into the output buffer, always is going to be 16U */
+                                (void)memcpy ((void *)&ptrWordOutputBuffer[index << 2U],
+                                        (void *)&outPartialBlock[0U],
+                                        partialDataSize);
+                            }
+                        }
+
+                        /* Compute the number of bytes which have been processed: */
+                        numBytes = numBytes + partialDataSize;
+                    }
+
+                    if((ptrParams->algoType == DTHE_AES_CBC_MAC_MODE)||(ptrParams->algoType == DTHE_AES_CMAC_MODE))
+                    {
+                        DTHE_AES_pollContextReady(ptrAesRegs);
+                        DTHE_AES_readTag(ptrAesRegs, &ptrParams->ptrTag[0]);
                     }
                 }
 
-                /* Compute the number of bytes which have been processed: */
-                numBytes = numBytes + partialDataSize;
-            }
+                if(ptrParams->streamState == DTHE_AES_ONE_SHOT_SUPPORT)
+                {
+                    if(numBytes != ptrParams->dataLenBytes)
+                    {
+                        status = DTHE_AES_RETURN_FAILURE;
+                    }
 
-            if((ptrParams->algoType == DTHE_AES_CBC_MAC_MODE)||(ptrParams->algoType == DTHE_AES_CMAC_MODE))
-            {
-                DTHE_AES_pollContextReady(ptrAesRegs);
-                DTHE_AES_readTag(ptrAesRegs, &ptrParams->ptrTag[0]);
-            }
-
-            if(numBytes != ptrParams->dataLenBytes)
-            {
-                status = DTHE_AES_RETURN_FAILURE;
+                    gStreamState = AES_STATE_NEW;
+                }
+                else if(ptrParams->streamState == DTHE_AES_STREAM_FINISH)
+                {
+                    gStreamState = AES_STATE_NEW;
+                }
             }
         }
     }
