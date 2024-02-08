@@ -463,6 +463,28 @@ let ECAP_MunitloadMode = [
     { name: "ECAP_ACTIVE_LOAD_SYNC_EVT", displayName: "Load On Next Sync Event" },
     { name: "ECAP_ACTIVE_LOAD_GLDLCSTRB_EVT", displayName: "Load On EPWM GLDLCSTRB Event" }
 ]
+
+let ECAP_INSTANCE = [
+    { name: "CSL_CONTROLSS_ECAP0_U_BASE", displayName: "ECAP0"},
+    { name: "CSL_CONTROLSS_ECAP1_U_BASE", displayName: "ECAP1"},
+    { name: "CSL_CONTROLSS_ECAP2_U_BASE", displayName: "ECAP2"},
+    { name: "CSL_CONTROLSS_ECAP3_U_BASE", displayName: "ECAP3"},
+    { name: "CSL_CONTROLSS_ECAP4_U_BASE", displayName: "ECAP4"},
+    { name: "CSL_CONTROLSS_ECAP5_U_BASE", displayName: "ECAP5"},
+    { name: "CSL_CONTROLSS_ECAP6_U_BASE", displayName: "ECAP6"},
+    { name: "CSL_CONTROLSS_ECAP7_U_BASE", displayName: "ECAP7"},
+    { name: "CSL_CONTROLSS_ECAP8_U_BASE", displayName: "ECAP8"},
+    { name: "CSL_CONTROLSS_ECAP9_U_BASE", displayName: "ECAP9"},
+    { name: "CSL_CONTROLSS_ECAP10_U_BASE", displayName: "ECAP10"},
+    { name: "CSL_CONTROLSS_ECAP11_U_BASE", displayName: "ECAP11"},
+    { name: "CSL_CONTROLSS_ECAP12_U_BASE", displayName: "ECAP12"},
+    { name: "CSL_CONTROLSS_ECAP13_U_BASE", displayName: "ECAP13"},
+    { name: "CSL_CONTROLSS_ECAP14_U_BASE", displayName: "ECAP14"},
+    { name: "CSL_CONTROLSS_ECAP15_U_BASE", displayName: "ECAP15"},
+]
+
+let numberOfECAPs = ECAP_INSTANCE.length;
+
 exports = {
 	ECAP_EmulationMode: ECAP_EmulationMode,
 	ECAP_CaptureMode: ECAP_CaptureMode,
@@ -482,4 +504,6 @@ exports = {
     ECAP_MunitGlobalStrobeSelect: ECAP_MunitGlobalStrobeSelect,
     ECAP_MonitoringTypeSelect: ECAP_MonitoringTypeSelect,
     ECAP_MunitloadMode: ECAP_MunitloadMode,
+    ECAP_INSTANCE: ECAP_INSTANCE,
+    numberOfECAPs : numberOfECAPs,
 }
