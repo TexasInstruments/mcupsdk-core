@@ -1108,7 +1108,7 @@ int32_t UART_writeInterrupt(UARTLLD_Handle hUart)
 
 int32_t UART_writePolling(UARTLLD_Handle hUart, UART_Transaction *trans)
 {
-    uint32_t            timeout, startTicks, elapsedTicks;
+    uint32_t            startTicks, elapsedTicks;
     int32_t             retVal          = UART_TRANSFER_STATUS_SUCCESS;
     uint32_t            timeoutElapsed  = FALSE;
     uint32_t            baseAddr        = hUart->baseAddr;
@@ -1117,7 +1117,6 @@ int32_t UART_writePolling(UARTLLD_Handle hUart, UART_Transaction *trans)
     UARTLLD_InitHandle        hUartInit;
     hUartInit = hUart->hUartInit;
 
-    timeout = trans->timeout;
     hUart->writeSizeRemaining = trans->count;
     /* Update current tick value to perform timeout operation */
     startTicks = hUartInit->clockP_get();
@@ -1128,7 +1127,7 @@ int32_t UART_writePolling(UARTLLD_Handle hUart, UART_Transaction *trans)
         UART_writeDataPolling(hUart);
         /* Check whether timeout happened or not */
         elapsedTicks = hUartInit->clockP_get() - startTicks;
-        if (elapsedTicks >= timeout)
+        if (elapsedTicks >= trans->timeout)
         {
             /* timeout occured */
             timeoutElapsed = TRUE;
@@ -1146,9 +1145,9 @@ int32_t UART_writePolling(UARTLLD_Handle hUart, UART_Transaction *trans)
                          UART_LSR_TX_SR_E_MASK) !=
                (lineStatus & (uint32_t) (UART_LSR_TX_FIFO_E_MASK |
                                        UART_LSR_TX_SR_E_MASK)))
-                && (elapsedTicks < hUartInit->clockP_usecToTick(UART_READ_LINE_STATUS_TIMEOUT_IN_US)));
+                && (elapsedTicks < hUart->lineStatusTimeout));
 
-        if(elapsedTicks >= hUartInit->clockP_usecToTick(UART_READ_LINE_STATUS_TIMEOUT_IN_US))
+        if(elapsedTicks >= hUart->lineStatusTimeout)
         {
             retVal             = UART_TRANSFER_TIMEOUT;
             trans->status      = UART_TRANSFER_STATUS_TIMEOUT;
@@ -1309,6 +1308,7 @@ int32_t UART_lld_init(UARTLLD_Handle hUart)
     {
         hUart->state = UART_STATE_BUSY;
         hUartInit = hUart->hUartInit;
+        hUart->lineStatusTimeout = hUartInit->clockP_usecToTick(UART_READ_LINE_STATUS_TIMEOUT_IN_US);
 
         /* Check the UART input parameters */
         status += UART_IsBaseAddrValid(hUart->baseAddr);
@@ -1359,6 +1359,7 @@ int32_t UART_lld_initDma(UARTLLD_Handle hUart)
     {
         hUart->state = UART_STATE_BUSY;
         hUartInit = hUart->hUartInit;
+        hUart->lineStatusTimeout = hUartInit->clockP_usecToTick(UART_READ_LINE_STATUS_TIMEOUT_IN_US);
 
         /* Check the UART input parameters */
         status += UART_IsBaseAddrValid(hUart->baseAddr);

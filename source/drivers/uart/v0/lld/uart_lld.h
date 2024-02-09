@@ -624,6 +624,8 @@ typedef struct
 
     void*                   args;
     /**< Pointer to be used by application to store miscellaneous data.*/
+    uint64_t                lineStatusTimeout;
+    /**< Variable to hold the line status timeout in ticks */
 } UARTLLD_Object, *UARTLLD_Handle;
 
 /* ========================================================================== */
