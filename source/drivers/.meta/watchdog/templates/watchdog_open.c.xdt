@@ -1,1 +1,1 @@
-    Drivers_watchdogOpen();
+    Drivers_watchdogOpen(INIT_CONFIG);

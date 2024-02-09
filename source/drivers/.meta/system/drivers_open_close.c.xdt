@@ -39,7 +39,6 @@
 
 void Drivers_open(void)
 {
-
 % let cpuName = system.getScript('/common').getSelfSysCfgCoreName();
 % if(cpuName.match(/a53/)) {
 
@@ -65,6 +64,11 @@ void Drivers_open(void)
 % for(let subTemplate of args) {
     % if (!subTemplate.driver_open.match(/edma*/) && !subTemplate.driver_open.match(/mmcsd*/) && !subTemplate.driver_open.match(/pmic*/) && !subTemplate.driver_open.match(/watchdog*/)) {
 `system.getTemplate(subTemplate.driver_open)()`
+    %}
+% }
+% for(let subTemplate of args) {
+    % if (subTemplate.driver_runtime_open && subTemplate.driver_runtime_open.match(/watchdog*/)){
+`system.getTemplate(subTemplate.driver_runtime_open)()`
     %}
 % }
 % if(cpuName.match(/a53/)) {
