@@ -54,6 +54,14 @@
 #define TwoPI                          6.283185307F
 #endif
 
+#ifndef Log2ofe
+#define Log2ofe                       1.44269F
+#endif
+
+#ifndef OnebyLog2ofe
+#define OnebyLog2ofe                  0.693147F
+#endif
+
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
@@ -112,7 +120,7 @@ static inline float ti_tmu_cos_pu(float anglePU)
  *          Valid input is limited to values between -1.0f to 1.0f.
  *          No error checking is performed on input.
  */
-static inline float ti_tmu_atan_pu(float x)
+ static inline float ti_tmu_atan_pu(float x)
 {
     __asm__ volatile("str %0, [%1]\n\t"
                      "DMB ST \n\t"
@@ -136,7 +144,7 @@ static inline float ti_tmu_atan_pu(float x)
  *          Valid input is limited to values between negative infinity to positive infinity.
  *          No error checking is performed on input.
  */
-static inline float ti_tmu_log_pu(float x)
+ static inline float ti_tmu_log2f_pu(float x)
 {
      __asm__ volatile("str %0, [%1]\n\t"
                      "DMB ST \n\t"
@@ -144,6 +152,27 @@ static inline float ti_tmu_log_pu(float x)
                     : "r" (x), "r" (CSL_MSS_TMU_BASE + CSL_TMU_LOG2F32_R3));
 
       return *((float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R3));
+}
+
+/**
+ * \brief   Computes the logarithmic value to the base e of the input using TMU.
+ *
+ * \param   [in] x - input value in float
+ *
+ * \return  Computed log value (base of e)
+ *
+ * \note    Usage Considerations:
+ *          Valid input is limited to values between negative infinity to positive infinity.
+ *          No error checking is performed on input.
+ */
+ static inline float ti_tmu_log_pu(float x)
+{
+     __asm__ volatile("str %0, [%1]\n\t"
+                     "DMB ST \n\t"
+                    :
+                    : "r" (x), "r" (CSL_MSS_TMU_BASE + CSL_TMU_LOG2F32_R3));
+
+      return (*((float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R3))) * OnebyLog2ofe;
 }
 
 
@@ -158,12 +187,32 @@ static inline float ti_tmu_log_pu(float x)
  * \note    Usage Considerations:
  *          No error checking is performed on input.
  */
-static inline float ti_tmu_iexp_pu(float x)
+ static inline float ti_tmu_iexp2f_pu(float x)
 {
  __asm__ volatile("str %0, [%1]\n\t"
                      "DMB ST \n\t"
                     :
                     : "r" (x), "r" (CSL_MSS_TMU_BASE + CSL_TMU_IEXP2F32_R3));
+
+    return *((float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R3));
+}
+
+/**
+ * \brief   Computes the inverse exponential value to the base e of the input using TMU.
+ *
+ * \param   [in] x - input value in float
+ *
+ * \return  Computed exponential value (base of e)
+ *
+ * \note    Usage Considerations:
+ *          No error checking is performed on input.
+ */
+ static inline float ti_tmu_iexp_pu(float x)
+{
+ __asm__ volatile("str %0, [%1]\n\t"
+                     "DMB ST \n\t"
+                    :
+                    : "r" (x * Log2ofe), "r" (CSL_MSS_TMU_BASE + CSL_TMU_IEXP2F32_R3));
 
     return *((float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R3));
 }
@@ -181,7 +230,7 @@ static inline float ti_tmu_iexp_pu(float x)
  *          Valid input is limited to values between -2PI to 2PI. The input is multiplied with 1/2PI to convert it to per unit value for using TMU.
  *          No error checking is performed on input.
  */
- static inline float ti_tmu_sin(float angleRad)
+static inline float ti_tmu_sin(float angleRad)
 {
     __asm__ volatile("str %0, [%1]\n\t"
                      "DMB ST \n\t"
@@ -255,9 +304,89 @@ static inline float ti_tmu_atan2(float x, float y)
                     "str %0, [%2, #0xC0]  \n\t"
                     "DMB ST               \n\t"
                     :
-                    : "r" (x), "r" (y), "r" (CSL_MSS_TMU_BASE), "r" (*(float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R6)));
+                    : "r" (x), "r" (y), "r" (CSL_MSS_TMU_BASE));
 
     return  (TwoPI * ((*(float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R0)) + (*(float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R7))));
+
+}
+
+/**
+ * \brief   Computes the trigonometric sine and cosine value of the input using TMU.
+ *
+ * \param   [in] anglePU - input angle in per unit within [-1.0f, +1.0f]
+ * \param   [in] sin_val - input value storing the value of sin after sincos operations
+ * \param   [in] cos_val - input value storing the value of cos after sincos operations
+ *
+ * \note    Usage Considerations:
+ *          No error checking is performed on input.
+ */
+
+static inline void ti_tmu_sincos_pu(float anglePU, float *sin_val, float *cos_val)
+{
+     __asm__ volatile("str %0, [%1]\n\t"
+                     "str %0, [%2]\n\t"
+                     "DMB ST \n\t"
+                     ".rept 4 ; nop ; .endr\n\t"
+                    :
+                    : "r" (anglePU), "r" (CSL_MSS_TMU_BASE  + CSL_TMU_SINPUF32_R0), "r" (CSL_MSS_TMU_BASE  + CSL_TMU_COSPUF32_R1));
+
+    *sin_val = *(float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R0);
+    *cos_val = *(float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R1);
+    return;
+}
+
+/**
+ * \brief   Computes the trigonometric sine and cosine value of the input using TMU.
+ *
+ * \param   [in] angleRad - input angle in radians  within [-2PI, +2PI]
+ * \param   [in] sin_val - input value storing the value of sin after sincos operations
+ * \param   [in] cos_val - input value storing the value of cos after sincos operations
+ *
+ * \note    Usage Considerations:
+ *          No error checking is performed on input.
+ */
+
+static inline void ti_tmu_sincos(float angleRad, float *sin_val, float *cos_val)
+{
+     __asm__ volatile("str %0, [%1]\n\t"
+                     "str %0, [%2]\n\t"
+                     "DMB ST \n\t"
+                     ".rept 4 ; nop ; .endr\n\t"
+                    :
+                    : "r" (angleRad * ReciprocalOf2PI), "r" (CSL_MSS_TMU_BASE  + CSL_TMU_SINPUF32_R0), "r" (CSL_MSS_TMU_BASE  + CSL_TMU_COSPUF32_R1));
+
+    *sin_val = *(float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R0);
+    *cos_val = *(float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R1);
+    return;
+}
+
+/**
+ * \brief   Computes the power of the input value
+ *
+ * \param   [in] x - input value which is base of power function
+ * \param   [in] y - input value that needs to be raised
+ *
+ * \return  Computed power value
+ *
+ * \note    Usage Considerations:
+ *          No error checking is performed on input.
+ */
+
+static inline float ti_tmu_powf(float x, float y)
+{
+    __asm__ volatile("str %0, [%1, #0x180] \n\t"
+                    "DMB ST               \n\t"
+                    :
+                    : "r" (x), "r" (CSL_MSS_TMU_BASE));
+
+    float res = (*(float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R0)) * y;
+
+    __asm__ volatile("str %0, [%1, #0x148] \n\t"
+                     "DMB ST                \n\t"
+                     :
+                     : "r" (res), "r" (CSL_MSS_TMU_BASE));
+
+    return res > 0 ? *(float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R1) : (1.0f / (*(float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R1)));
 
 }
 

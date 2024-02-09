@@ -48,6 +48,7 @@
 #define EXP                 3
 #define LOG                 4
 #define ATAN2               5
+#define SINCOS              6
 
 
 
@@ -106,6 +107,7 @@ void runTMUBench(uint32_t n);
 int32_t printOutput(uint32_t n);
 
 
+
 // float ti_arm_atan2(float e);
 
 
@@ -129,7 +131,7 @@ void tmu_operations_main(void *args)
 
     DebugP_log("TMU operations example Started ...\r\n");
 
-    for (i = 0; i < 6; i++)
+    for (i = 0; i < 7; i++)
     {
         /* Reset and enable the core cycle counter */
         CycleCounterP_reset();
@@ -165,7 +167,7 @@ void createInputs(uint32_t n)
     uint32_t i;
     uint32_t t1, t2, t3;
     float test_tan;
-    volatile float trigVal;
+    volatile float trigVal, trigVal2;
     float testStep, testStep_tan, testStep_quad, input, input2, input_tan1, input_tan2, tan_input;
     float x_quad, y_quad;
     // Positive infinity
@@ -180,6 +182,7 @@ void createInputs(uint32_t n)
     POS_ZERO = 0x00000000;
     // Positive normal
     POS_NORM = 0x7f7fffff;
+
 
 
     uint32_t cnt=0;
@@ -203,7 +206,7 @@ void createInputs(uint32_t n)
                         xvals_arm[cnt] = xvals[cnt];
                         xvals_tmu[cnt] = xvals[cnt];
                         t1 = CycleCounterP_getCount32();
-                        trigVal = sinf(xvals[cnt] );
+                        trigVal = sinf(xvals[cnt]);
                         t2 = CycleCounterP_getCount32();
                         t3 = CycleCounterP_getCount32();
                         gTrigRef[cnt] = trigVal;
@@ -657,9 +660,30 @@ void createInputs(uint32_t n)
         }
         break;
 
-    default:
-        DebugP_log("Error: invalid fxn num\r\n");
-        while (1)
+        case SINCOS:
+        cnt = 0;
+        DebugP_log("\nSINCOS FUNCTION \n");
+        testStep = 2 * PI / (float) TESTSIZE;
+        for(cnt = 0; cnt < TESTSIZE; cnt++)
+        {
+            xvals[cnt] = (float) cnt * testStep;
+            xvals_arm[cnt] = xvals[cnt];
+            xvals_tmu[cnt] = xvals[cnt];
+            t1 = CycleCounterP_getCount32();
+            trigVal = sinf(xvals[cnt]);
+            trigVal2 = cosf(xvals[cnt]);
+            t2 = CycleCounterP_getCount32();
+            t3 = CycleCounterP_getCount32();
+            gTrigRef[cnt] = trigVal;
+            gTrigRef2[cnt] = trigVal2;
+            fxnTimesMathlib[cnt] = t2 - t1;
+            cycleOverheadMathlib[cnt] = t3 - t2;
+        }
+        break;
+
+        default:
+            DebugP_log("Error: invalid fxn num\r\n");
+            while (1)
             ;
     }
 }
@@ -670,7 +694,7 @@ void runTrigBench(uint32_t n)
 
     uint32_t i, j;
     uint32_t t1, t2, t3;
-    volatile float trigVal;
+    volatile float trigVal, trigVal2;
     float  input, input_tan1, input_tan2, tan_input;
 
 
@@ -927,6 +951,21 @@ void runTrigBench(uint32_t n)
         }
         break;
 
+    case SINCOS:
+        for(j = 0; j < TESTSIZE; j++)
+        {
+            t1 = CycleCounterP_getCount32();
+            trigVal = ti_arm_sin(xvals_arm[j]);
+            trigVal2 = ti_arm_cos(xvals_arm[j]);
+            t2 = CycleCounterP_getCount32();
+            t3 = CycleCounterP_getCount32();
+            trigApprox[j] = trigVal;
+            trigApprox2[j] = trigVal2;
+            fxnTimesMathlib[j] = t2 - t1;
+            cycleOverheadMathlib[j] = t3 - t2;
+        }
+        break;
+
     default:
         DebugP_log("Invalid fxn\r\n");
     }
@@ -938,6 +977,7 @@ void runTMUBench(uint32_t n)
     uint32_t t1, t2, t3;
     volatile float tmuVal;
     float  input, input2, tan_input, input_tan1, input_tan2;
+    float sin_val, cos_val;
 
 
 
@@ -1182,19 +1222,20 @@ void runTMUBench(uint32_t n)
                     for(j = 0; j < (float) TESTSIZE; j++)
                     {
                         t1 = CycleCounterP_getCount32();
-                        tmuVal = ti_tmu_iexp_pu(xvals_tmu[j]);
+                        tmuVal = ti_tmu_iexp2f_pu(xvals_tmu[j]);
                         t2 = CycleCounterP_getCount32();
                         t3 = CycleCounterP_getCount32();
                         tmuApprox[j] = tmuVal;
                         fxnTimesTMU[j] = t2 - t1;
                         cycleOverheadTMU[j] = t3 - t2;
+
                     }
                     break;
 
                 case 1: //input: positive infinity
                     input = *((float *)(&POS_INFINITY));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_iexp_pu(input);
+                    tmuVal = ti_tmu_iexp2f_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("exp function tmu input (POS_INFINITY) %f : %f \r\n", input , tmuVal);
@@ -1203,7 +1244,7 @@ void runTMUBench(uint32_t n)
                 case 2: //input: negative infinity
                     input = *((float *)(&NEG_INFINITY));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_iexp_pu(input);
+                    tmuVal = ti_tmu_iexp2f_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("exp function tmu input (NEG_INFINITY) %f : %f \r\n", input , tmuVal);
@@ -1212,7 +1253,7 @@ void runTMUBench(uint32_t n)
                 case 3: //input: +NaN
                     input = *((float *)(&POS_NAN));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_iexp_pu(input);
+                    tmuVal = ti_tmu_iexp2f_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("exp function tmu input (POS_NaN) %f : %f \r\n", input , tmuVal);
@@ -1221,7 +1262,7 @@ void runTMUBench(uint32_t n)
                 case 4: //input: -NaN
                     input = *((float *)(&NEG_NAN));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_iexp_pu(input);
+                    tmuVal = ti_tmu_iexp2f_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("exp function tmu input (NEG_NaN) %f : %f \r\n", input , tmuVal);
@@ -1231,7 +1272,7 @@ void runTMUBench(uint32_t n)
                     input = *((float *)(&POS_INFINITY));
                     input2 = *((float *)(&POS_NAN));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_iexp_pu(input);
+                    tmuVal = ti_tmu_iexp2f_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("exp function tmu input (INF/POS_NaN) %f : %f \r\n", input , tmuVal);
@@ -1241,7 +1282,7 @@ void runTMUBench(uint32_t n)
                     input = *((float *)(&NEG_INFINITY));
                     input2 = *((float *)(&POS_NAN));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_iexp_pu(input);
+                    tmuVal = ti_tmu_iexp2f_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("exp function mathlib input (-INF/POS_NaN) %f : %f \r\n", input , tmuVal);
@@ -1264,19 +1305,20 @@ void runTMUBench(uint32_t n)
                     for(j = 0; j < (float) TESTSIZE; j++)
                     {
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_log_pu(xvals_tmu[j]);
+                    tmuVal = ti_tmu_log2f_pu(xvals_tmu[j]);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     tmuApprox[j] = tmuVal;
                     fxnTimesTMU[j] = t2 - t1;
                     cycleOverheadTMU[j] = t3 - t2;
+
                     }
                     break;
 
                 case 1: //input: positive infinity
                     input = *((float *)(&POS_INFINITY));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_log_pu(input);
+                    tmuVal = ti_tmu_log2f_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("log function tmu input (POS_INFINITY) %f : %f \r\n", input , tmuVal);
@@ -1285,7 +1327,7 @@ void runTMUBench(uint32_t n)
                 case 2: //input: negative infinity
                     input = *((float *)(&NEG_INFINITY));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_log_pu(input);
+                    tmuVal = ti_tmu_log2f_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("log function tmu input (NEG_INFINITY) %f : %f \r\n", input , tmuVal);
@@ -1294,7 +1336,7 @@ void runTMUBench(uint32_t n)
                 case 3: //input: +NaN
                     input = *((float *)(&POS_NAN));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_log_pu(input);
+                    tmuVal = ti_tmu_log2f_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("log function tmu input (POS_NaN) %f : %f \r\n", input , tmuVal);
@@ -1303,7 +1345,7 @@ void runTMUBench(uint32_t n)
                 case 4: //input: -NaN
                     input = *((float *)(&NEG_NAN));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_log_pu(input);
+                    tmuVal = ti_tmu_log2f_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("log function tmu input (NEG_NaN) %f : %f \r\n", input , tmuVal);
@@ -1313,7 +1355,7 @@ void runTMUBench(uint32_t n)
                     input = *((float *)(&POS_INFINITY));
                     input2 = *((float *)(&POS_NAN));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_log_pu(input);
+                    tmuVal = ti_tmu_log2f_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("log function tmu input (inf/nan) %f %f : %f \r\n", input , input2 , tmuVal);
@@ -1323,7 +1365,7 @@ void runTMUBench(uint32_t n)
                     input = *((float *)(&NEG_INFINITY));
                     input2 = *((float *)(&POS_NAN));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_log_pu(input);
+                    tmuVal = ti_tmu_log2f_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("log function tmu input (-inf/nan) %f %f : %f \r\n", input , input2 , tmuVal);
@@ -1350,6 +1392,21 @@ void runTMUBench(uint32_t n)
             tmuApprox[i] = tmuVal;
         }
         break;
+
+    case SINCOS:
+        for (j = 0; j < TESTSIZE; j++)
+        {
+            t1 = CycleCounterP_getCount32();
+            ti_tmu_sincos(xvals_tmu[j], &sin_val, &cos_val);
+            t2 = CycleCounterP_getCount32();
+            t3 = CycleCounterP_getCount32();
+            tmuApprox[j] = sin_val;
+            tmuApprox2[j] = cos_val;
+            fxnTimesTMU[j] = t2 - t1;
+            cycleOverheadTMU[j] = t3 - t2;
+        }
+        break;
+
 
     default:
         DebugP_log("Invalid fxn\r\n");
@@ -1469,6 +1526,5 @@ int32_t printOutput(uint32_t n)
     }
     return status;
 }
-
 
 

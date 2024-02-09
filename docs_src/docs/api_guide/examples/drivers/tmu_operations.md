@@ -221,5 +221,22 @@ CLANG MATHLIB
 Max Cycles: 303.000000
 Avg cycles: 143.010010
 All tests have passed!!
+
+SINCOS FUNCTION
+
+TMU LIBRARY
+Error: 0.0000002980
+Max Cycles: 58.000000
+Avg cycles: 34.054001
+
+MCU SDK Trig Math Library
+Error: 0.0000007150
+Max Cycles: 133.000000
+Avg cycles: 108.595993
+
+CLANG MATHLIB
+Max Cycles: 545.000000
+Avg cycles: 116.989998
+All tests have passed!!
 \endcode
 
