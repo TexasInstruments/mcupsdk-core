@@ -144,7 +144,7 @@ static inline float ti_tmu_cos_pu(float anglePU)
  *          Valid input is limited to values between negative infinity to positive infinity.
  *          No error checking is performed on input.
  */
- static inline float ti_tmu_log2f_pu(float x)
+ static inline float ti_tmu_log_pu(float x)
 {
      __asm__ volatile("str %0, [%1]\n\t"
                      "DMB ST \n\t"
@@ -165,7 +165,7 @@ static inline float ti_tmu_cos_pu(float anglePU)
  *          Valid input is limited to values between negative infinity to positive infinity.
  *          No error checking is performed on input.
  */
- static inline float ti_tmu_log_pu(float x)
+ static inline float ti_tmu_log_e_pu(float x)
 {
      __asm__ volatile("str %0, [%1]\n\t"
                      "DMB ST \n\t"
@@ -187,7 +187,7 @@ static inline float ti_tmu_cos_pu(float anglePU)
  * \note    Usage Considerations:
  *          No error checking is performed on input.
  */
- static inline float ti_tmu_iexp2f_pu(float x)
+ static inline float ti_tmu_iexp_pu(float x)
 {
  __asm__ volatile("str %0, [%1]\n\t"
                      "DMB ST \n\t"
@@ -207,7 +207,7 @@ static inline float ti_tmu_cos_pu(float anglePU)
  * \note    Usage Considerations:
  *          No error checking is performed on input.
  */
- static inline float ti_tmu_iexp_pu(float x)
+ static inline float ti_tmu_iexp_e_pu(float x)
 {
  __asm__ volatile("str %0, [%1]\n\t"
                      "DMB ST \n\t"

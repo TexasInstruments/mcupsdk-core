@@ -43,10 +43,10 @@ TMU library supports below trignometric and math functions
 - sin, sin_pu
 - cos, cos_pu
 - atan, atan_pu
-- log2f_pu (base of 2)
-- log_pu (base of e)
-- iexp2f_pu (base of 2)
-- iexp_pu (base of e)
+- log_pu (base of 2)
+- log_e_pu (base of e)
+- iexp_pu (base of 2)
+- iexp_e_pu (base of e)
 - atan2
 - sincos
 - powf using log and exp

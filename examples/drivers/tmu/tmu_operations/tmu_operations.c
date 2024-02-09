@@ -1222,7 +1222,7 @@ void runTMUBench(uint32_t n)
                     for(j = 0; j < (float) TESTSIZE; j++)
                     {
                         t1 = CycleCounterP_getCount32();
-                        tmuVal = ti_tmu_iexp2f_pu(xvals_tmu[j]);
+                        tmuVal = ti_tmu_iexp_pu(xvals_tmu[j]);
                         t2 = CycleCounterP_getCount32();
                         t3 = CycleCounterP_getCount32();
                         tmuApprox[j] = tmuVal;
@@ -1235,7 +1235,7 @@ void runTMUBench(uint32_t n)
                 case 1: //input: positive infinity
                     input = *((float *)(&POS_INFINITY));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_iexp2f_pu(input);
+                    tmuVal = ti_tmu_iexp_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("exp function tmu input (POS_INFINITY) %f : %f \r\n", input , tmuVal);
@@ -1244,7 +1244,7 @@ void runTMUBench(uint32_t n)
                 case 2: //input: negative infinity
                     input = *((float *)(&NEG_INFINITY));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_iexp2f_pu(input);
+                    tmuVal = ti_tmu_iexp_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("exp function tmu input (NEG_INFINITY) %f : %f \r\n", input , tmuVal);
@@ -1253,7 +1253,7 @@ void runTMUBench(uint32_t n)
                 case 3: //input: +NaN
                     input = *((float *)(&POS_NAN));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_iexp2f_pu(input);
+                    tmuVal = ti_tmu_iexp_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("exp function tmu input (POS_NaN) %f : %f \r\n", input , tmuVal);
@@ -1262,7 +1262,7 @@ void runTMUBench(uint32_t n)
                 case 4: //input: -NaN
                     input = *((float *)(&NEG_NAN));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_iexp2f_pu(input);
+                    tmuVal = ti_tmu_iexp_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("exp function tmu input (NEG_NaN) %f : %f \r\n", input , tmuVal);
@@ -1272,7 +1272,7 @@ void runTMUBench(uint32_t n)
                     input = *((float *)(&POS_INFINITY));
                     input2 = *((float *)(&POS_NAN));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_iexp2f_pu(input);
+                    tmuVal = ti_tmu_iexp_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("exp function tmu input (INF/POS_NaN) %f : %f \r\n", input , tmuVal);
@@ -1282,7 +1282,7 @@ void runTMUBench(uint32_t n)
                     input = *((float *)(&NEG_INFINITY));
                     input2 = *((float *)(&POS_NAN));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_iexp2f_pu(input);
+                    tmuVal = ti_tmu_iexp_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("exp function mathlib input (-INF/POS_NaN) %f : %f \r\n", input , tmuVal);
@@ -1305,7 +1305,7 @@ void runTMUBench(uint32_t n)
                     for(j = 0; j < (float) TESTSIZE; j++)
                     {
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_log2f_pu(xvals_tmu[j]);
+                    tmuVal = ti_tmu_log_pu(xvals_tmu[j]);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     tmuApprox[j] = tmuVal;
@@ -1318,7 +1318,7 @@ void runTMUBench(uint32_t n)
                 case 1: //input: positive infinity
                     input = *((float *)(&POS_INFINITY));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_log2f_pu(input);
+                    tmuVal = ti_tmu_log_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("log function tmu input (POS_INFINITY) %f : %f \r\n", input , tmuVal);
@@ -1327,7 +1327,7 @@ void runTMUBench(uint32_t n)
                 case 2: //input: negative infinity
                     input = *((float *)(&NEG_INFINITY));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_log2f_pu(input);
+                    tmuVal = ti_tmu_log_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("log function tmu input (NEG_INFINITY) %f : %f \r\n", input , tmuVal);
@@ -1336,7 +1336,7 @@ void runTMUBench(uint32_t n)
                 case 3: //input: +NaN
                     input = *((float *)(&POS_NAN));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_log2f_pu(input);
+                    tmuVal = ti_tmu_log_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("log function tmu input (POS_NaN) %f : %f \r\n", input , tmuVal);
@@ -1345,7 +1345,7 @@ void runTMUBench(uint32_t n)
                 case 4: //input: -NaN
                     input = *((float *)(&NEG_NAN));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_log2f_pu(input);
+                    tmuVal = ti_tmu_log_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("log function tmu input (NEG_NaN) %f : %f \r\n", input , tmuVal);
@@ -1355,7 +1355,7 @@ void runTMUBench(uint32_t n)
                     input = *((float *)(&POS_INFINITY));
                     input2 = *((float *)(&POS_NAN));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_log2f_pu(input);
+                    tmuVal = ti_tmu_log_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("log function tmu input (inf/nan) %f %f : %f \r\n", input , input2 , tmuVal);
@@ -1365,7 +1365,7 @@ void runTMUBench(uint32_t n)
                     input = *((float *)(&NEG_INFINITY));
                     input2 = *((float *)(&POS_NAN));
                     t1 = CycleCounterP_getCount32();
-                    tmuVal = ti_tmu_log2f_pu(input);
+                    tmuVal = ti_tmu_log_pu(input);
                     t2 = CycleCounterP_getCount32();
                     t3 = CycleCounterP_getCount32();
                     DebugP_log("log function tmu input (-inf/nan) %f %f : %f \r\n", input , input2 , tmuVal);
