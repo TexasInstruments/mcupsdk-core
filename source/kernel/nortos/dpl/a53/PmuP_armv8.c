@@ -33,21 +33,11 @@
 
 #include <kernel/dpl/CycleCounterP.h>
 
-#define PmuP_SEC_TO_MICROSEC                    (1000000U)
-
 void PmuP_disableCycleCounterIntr();
 void PmuP_clearCycleCounterOverflowStatus();
 void PmuP_resetAndEnableAllCounters();
 uint32_t PmuP_getCycleCount64();
 void PmuP_startCycleCounter();
-
-static uint64_t gCounterFreqHz = 0;
-
-void CycleCounterP_init(const uint64_t cpuFreqHz)
-{
-    gCounterFreqHz = cpuFreqHz;
-    CycleCounterP_reset();
-}
 
 void CycleCounterP_reset()
 {
@@ -61,21 +51,4 @@ uint32_t CycleCounterP_getCount32()
 {
 	uint32_t count = CycleCounterP_getCount64();
 	return count;
-}
-
-uint32_t CycleCounterP_getOverflowCount32( const uint32_t startTick)
-{
-    uint32_t endTick = CycleCounterP_getCount32();
-
-    if(startTick > endTick)
-    {
-        endTick = (0xFFFFFFFF - startTick) + endTick;
-    }
-
-    return endTick;
-}
-
-uint64_t CycleCounterP_usToTicks(const uint64_t microsecs)
-{
-    return (((uint64_t)microsecs*gCounterFreqHz)/PmuP_SEC_TO_MICROSEC);
 }

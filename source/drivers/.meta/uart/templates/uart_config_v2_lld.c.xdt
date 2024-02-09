@@ -120,9 +120,8 @@ UARTLLD_InitObject gUartInitObject[CONFIG_UART_NUM_LLD_INSTANCES] =
         .rxTrigLvl          = UART_RXTRIGLVL_`config.rxTrigLvl`,
         .txTrigLvl          = UART_TXTRIGLVL_`config.txTrigLvl`,
         %}
-        .clockP_getStartTick = CycleCounterP_getCount32,
-        .clockP_getEndTick   = CycleCounterP_getOverflowCount32,
-        .clockP_usecToTick   = CycleCounterP_usToTicks,
+        .clockP_get         = ClockP_getTicks,
+        .clockP_usecToTick  = ClockP_usecToTicks,
         % if(config.intrEnable != "DISABLE") {
         .writeCompleteCallbackFxn = `config.writeCallbackFxn`,
         .readCompleteCallbackFxn  = `config.readCallbackFxn`,

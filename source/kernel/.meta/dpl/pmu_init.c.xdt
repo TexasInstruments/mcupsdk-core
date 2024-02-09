@@ -2,7 +2,7 @@
     let cpuName = system.getScript('/common').getSelfSysCfgCoreName();
 %%}
 
-% if (cpuName.match(/r5f*/) || cpuName.match(/m4f*/) || cpuName.match(/a53*/)) {
+% if (cpuName.match(/r5f*/)) {
     /* initialize PMU */
     CycleCounterP_init(SOC_getSelfCpuClk());
 % }

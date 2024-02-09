@@ -229,10 +229,10 @@ uint64_t ClockP_ticksToUsec(uint32_t ticks);
 
 /**
  * \brief Get current time in units of usecs
- *
- * \note This API shouldn't be called from an ISR with priority higher than
- *       that of Tick Interrupt. This is because Tick interrupt won't be able
- *       to preempt the current ISR and \ref ClockP_getTimeUsec may return
+ * 
+ * \note This API shouldn't be called from an ISR with priority higher than 
+ *       that of Tick Interrupt. This is because Tick interrupt won't be able  
+ *       to preempt the current ISR and \ref ClockP_getTimeUsec may return 
  *       incorrect value.
  */
 uint64_t ClockP_getTimeUsec(void);

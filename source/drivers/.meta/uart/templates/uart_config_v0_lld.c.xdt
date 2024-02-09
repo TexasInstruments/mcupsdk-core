@@ -96,9 +96,8 @@ UARTLLD_InitObject gUartInitObject[CONFIG_UART_NUM_LLD_INSTANCES] =
         .rxEvtNum           = 0U,
         .txEvtNum           = 0U,
         %}
-        .clockP_getStartTick = CycleCounterP_getCount32,
-        .clockP_getEndTick   = CycleCounterP_getOverflowCount32,
-        .clockP_usecToTick   = CycleCounterP_usToTicks,
+        .clockP_get         = ClockP_getTicks,
+        .clockP_usecToTick  = ClockP_usecToTicks,
         % if(config.intrEnable != "DISABLE") {
         .writeCompleteCallbackFxn = `config.writeCallbackFxn`,
         .readCompleteCallbackFxn  = `config.readCallbackFxn`,
