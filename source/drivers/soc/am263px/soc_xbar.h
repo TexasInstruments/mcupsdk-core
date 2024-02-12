@@ -53,7 +53,7 @@ extern "C"
  *
  *  @{
  */
- 
+
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -86,7 +86,28 @@ SOC_xbarSelectInputXBarInputSource(uint32_t base, uint8_t out, uint8_t group_sel
     HW_WR_REG32(base + CSL_CONTROLSS_INPUTXBAR_INPUTXBAR0_GSEL + (out * CSL_CONTROLSS_INPUTXBAR_STEP), group_select & CSL_CONTROLSS_INPUTXBAR_INPUTXBAR0_GSEL_GSEL_MASK);
     HW_WR_REG32(base + CSL_CONTROLSS_INPUTXBAR_INPUTXBAR0_G0   + (out * CSL_CONTROLSS_INPUTXBAR_STEP), group0_muxctl & CSL_CONTROLSS_INPUTXBAR_INPUTXBAR0_G0_SEL_MASK);
     HW_WR_REG32(base + CSL_CONTROLSS_INPUTXBAR_INPUTXBAR0_G1   + (out * CSL_CONTROLSS_INPUTXBAR_STEP), group1_muxctl & CSL_CONTROLSS_INPUTXBAR_INPUTXBAR0_G1_SEL_MASK);
-    
+
+}
+
+/**
+ * \brief Trip & Sync xbar: API to select input source of Input XBar
+ *
+ * \param base [in] Input XBar base address
+ * \param out [in] Instance of Input XBar
+ * \param group0_muxctl [in] Mux control to select input from group 0 mux
+ * \param group1_muxctl [in] Mux control to select input from group 1 mux
+ * \param group2_muxctl [in] Mux control to select input from group 2 mux
+ * \param group_select [in] Mux control to select group 0,1 or 2
+ *
+ */
+static inline void
+SOC_xbarSelectInputXBarInputSource_ext(uint32_t base, uint8_t out, uint8_t group_select, uint8_t group0_muxctl, uint8_t group1_muxctl, uint8_t group2_muxctl)
+{
+    HW_WR_REG32(base + CSL_CONTROLSS_INPUTXBAR_INPUTXBAR0_GSEL + (out * CSL_CONTROLSS_INPUTXBAR_STEP), group_select & CSL_CONTROLSS_INPUTXBAR_INPUTXBAR0_GSEL_GSEL_MASK);
+    HW_WR_REG32(base + CSL_CONTROLSS_INPUTXBAR_INPUTXBAR0_G0   + (out * CSL_CONTROLSS_INPUTXBAR_STEP), group0_muxctl & CSL_CONTROLSS_INPUTXBAR_INPUTXBAR0_G0_SEL_MASK);
+    HW_WR_REG32(base + CSL_CONTROLSS_INPUTXBAR_INPUTXBAR0_G1   + (out * CSL_CONTROLSS_INPUTXBAR_STEP), group1_muxctl & CSL_CONTROLSS_INPUTXBAR_INPUTXBAR0_G1_SEL_MASK);
+    HW_WR_REG32(base + CSL_CONTROLSS_INPUTXBAR_INPUTXBAR0_G2   + (out * CSL_CONTROLSS_INPUTXBAR_STEP), group1_muxctl & CSL_CONTROLSS_INPUTXBAR_INPUTXBAR0_G2_SEL_MASK);
+
 }
 
 /**
@@ -171,6 +192,39 @@ SOC_xbarSelectPWMXBarInputSource(uint32_t base, uint8_t out, uint32_t group0_mas
     HW_WR_REG32(base + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G8, group8_mask & CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G8_SEL_MASK);
 }
 
+
+/**
+ * \brief Trip & Sync xbar: API to select input sources of PWM XBar
+ *
+ * \param base [in] PWM XBar base address
+ * \param out [in] Instance of PWM XBar
+ * \param group0_mask [in] Mask to OR inputs from group 0
+ * \param group1_mask [in] Mask to OR inputs from group 1
+ * \param group2_mask [in] Mask to OR inputs from group 2
+ * \param group3_mask [in] Mask to OR inputs from group 3
+ * \param group4_mask [in] Mask to OR inputs from group 4
+ * \param group5_mask [in] Mask to OR inputs from group 5
+ * \param group6_mask [in] Mask to OR inputs from group 6
+ * \param group7_mask [in] Mask to OR inputs from group 7
+ * \param group8_mask [in] Mask to OR inputs from group 8
+ * \param group9_mask [in] Mask to OR inputs from group 9
+ *
+ */
+static inline void
+SOC_xbarSelectPWMXBarInputSource_ext(uint32_t base, uint8_t out, uint32_t group0_mask, uint32_t group1_mask, uint32_t group2_mask, uint32_t group3_mask, uint32_t group4_mask, uint32_t group5_mask, uint32_t group6_mask, uint32_t group7_mask, uint32_t group8_mask, uint32_t group9_mask)
+{
+    HW_WR_REG32(base + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G0, group0_mask & CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G0_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G1, group1_mask & CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G1_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G2, group2_mask & CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G2_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G3, group3_mask & CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G3_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G4, group4_mask & CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G4_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G5, group5_mask & CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G5_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G6, group6_mask & CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G6_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G7, group7_mask & CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G7_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G8, group8_mask & CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G8_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_PWMXBAR_STEP + CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G9, group9_mask & CSL_CONTROLSS_PWMXBAR_PWMXBAR0_G9_SEL_MASK);
+}
+
 /**
  * \brief Trip & Sync xbar: API to select input sources of MDL XBar
  *
@@ -236,6 +290,40 @@ SOC_xbarSelectInterruptXBarInputSource(uint32_t base, uint8_t out, uint32_t grou
     HW_WR_REG32(base + out*CSL_CONTROLSS_INTXBAR_STEP + CSL_CONTROLSS_INTXBAR_INTXBAR0_G6, group6_mask & CSL_CONTROLSS_INTXBAR_INTXBAR0_G6_SEL_MASK);
 }
 
+
+/**
+ * \brief Trip & Sync xbar: API to select input sources of Interrupt XBar
+ *
+ * \param base [in] Interrupt XBar base address
+ * \param out [in] Instance of Interrupt XBar
+ * \param group0_mask [in] Mask to OR inputs from group 0
+ * \param group1_mask [in] Mask to OR inputs from group 1
+ * \param group2_mask [in] Mask to OR inputs from group 2
+ * \param group3_mask [in] Mask to OR inputs from group 3
+ * \param group4_mask [in] Mask to OR inputs from group 4
+ * \param group5_mask [in] Mask to OR inputs from group 5
+ * \param group6_mask [in] Mask to OR inputs from group 6
+ * \param group7_mask [in] Mask to OR inputs from group 7
+ * \param group8_mask [in] Mask to OR inputs from group 8
+ * \param group9_mask [in] Mask to OR inputs from group 9
+ *
+ */
+static inline void
+SOC_xbarSelectInterruptXBarInputSource_ext(uint32_t base, uint8_t out, uint32_t group0_mask, uint32_t group1_mask, uint32_t group2_mask, uint32_t group3_mask, uint32_t group4_mask, uint32_t group5_mask, uint32_t group6_mask, uint32_t group7_mask, uint32_t group8_mask, uint32_t group9_mask)
+{
+    //TBD: 32 bit field required?
+    HW_WR_REG32(base + out*CSL_CONTROLSS_INTXBAR_STEP + CSL_CONTROLSS_INTXBAR_INTXBAR0_G0, group0_mask & CSL_CONTROLSS_INTXBAR_INTXBAR0_G0_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_INTXBAR_STEP + CSL_CONTROLSS_INTXBAR_INTXBAR0_G1, group1_mask & CSL_CONTROLSS_INTXBAR_INTXBAR0_G1_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_INTXBAR_STEP + CSL_CONTROLSS_INTXBAR_INTXBAR0_G2, group2_mask & CSL_CONTROLSS_INTXBAR_INTXBAR0_G2_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_INTXBAR_STEP + CSL_CONTROLSS_INTXBAR_INTXBAR0_G3, group3_mask & CSL_CONTROLSS_INTXBAR_INTXBAR0_G3_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_INTXBAR_STEP + CSL_CONTROLSS_INTXBAR_INTXBAR0_G4, group4_mask & CSL_CONTROLSS_INTXBAR_INTXBAR0_G4_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_INTXBAR_STEP + CSL_CONTROLSS_INTXBAR_INTXBAR0_G5, group5_mask & CSL_CONTROLSS_INTXBAR_INTXBAR0_G5_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_INTXBAR_STEP + CSL_CONTROLSS_INTXBAR_INTXBAR0_G6, group6_mask & CSL_CONTROLSS_INTXBAR_INTXBAR0_G6_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_INTXBAR_STEP + CSL_CONTROLSS_INTXBAR_INTXBAR0_G7, group7_mask & CSL_CONTROLSS_INTXBAR_INTXBAR0_G7_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_INTXBAR_STEP + CSL_CONTROLSS_INTXBAR_INTXBAR0_G8, group8_mask & CSL_CONTROLSS_INTXBAR_INTXBAR0_G8_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_INTXBAR_STEP + CSL_CONTROLSS_INTXBAR_INTXBAR0_G9, group9_mask & CSL_CONTROLSS_INTXBAR_INTXBAR0_G9_SEL_MASK);
+}
+
 /**
  * \brief Trip & Sync xbar: API to select input source of DMA XBar
  *
@@ -260,6 +348,36 @@ SOC_xbarSelectDMAXBarInputSource(uint32_t base, uint8_t out, uint8_t group_selec
     HW_WR_REG32(base + out*CSL_CONTROLSS_DMAXBAR_STEP + CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G3   , group3_muxctl & CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G3_SEL_MASK);
     HW_WR_REG32(base + out*CSL_CONTROLSS_DMAXBAR_STEP + CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G4   , group4_muxctl & CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G4_SEL_MASK);
     HW_WR_REG32(base + out*CSL_CONTROLSS_DMAXBAR_STEP + CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G5   , group5_muxctl & CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G5_SEL_MASK);
+
+}
+
+
+/**
+ * \brief Trip & Sync xbar: API to select input source of DMA XBar
+ *
+ * \param base [in] DMA XBar base address
+ * \param out [in] Instance of DMA XBar
+ * \param group0_muxctl [in] Mux control to select input from group 0 mux
+ * \param group1_muxctl [in] Mux control to select input from group 1 mux
+ * \param group2_muxctl [in] Mux control to select input from group 2 mux
+ * \param group3_muxctl [in] Mux control to select input from group 3 mux
+ * \param group4_muxctl [in] Mux control to select input from group 4 mux
+ * \param group5_muxctl [in] Mux control to select input from group 5 mux
+ * \param group6_muxctl [in] Mux control to select input from group 5 mux
+ * \param group_select [in] Mux control to select group 0/1/2/3/4/5/6
+ *
+ */
+static inline void
+SOC_xbarSelectDMAXBarInputSource_ext(uint32_t base, uint8_t out, uint8_t group_select, uint8_t group0_muxctl, uint8_t group1_muxctl, uint8_t group2_muxctl, uint8_t group3_muxctl, uint8_t group4_muxctl, uint8_t group5_muxctl, uint8_t group6_muxctl)
+{
+    HW_WR_REG32(base + out*CSL_CONTROLSS_DMAXBAR_STEP + CSL_CONTROLSS_DMAXBAR_DMAXBAR0_GSEL , group_select &  CSL_CONTROLSS_DMAXBAR_DMAXBAR0_GSEL_GSEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_DMAXBAR_STEP + CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G0   , group0_muxctl & CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G0_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_DMAXBAR_STEP + CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G1   , group1_muxctl & CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G1_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_DMAXBAR_STEP + CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G2   , group2_muxctl & CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G2_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_DMAXBAR_STEP + CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G3   , group3_muxctl & CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G3_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_DMAXBAR_STEP + CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G4   , group4_muxctl & CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G4_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_DMAXBAR_STEP + CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G5   , group5_muxctl & CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G5_SEL_MASK);
+    HW_WR_REG32(base + out*CSL_CONTROLSS_DMAXBAR_STEP + CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G6   , group6_muxctl & CSL_CONTROLSS_DMAXBAR_DMAXBAR0_G6_SEL_MASK);
 
 }
 
@@ -414,6 +532,7 @@ SOC_xbarSelectOutputXBarInputSource(uint32_t base, uint8_t out, uint32_t group0_
     HW_WR_REG32(base + CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G10 + out * CSL_CONTROLSS_OUTPUTXBAR_STEP, group10_mask & CSL_CONTROLSS_OUTPUTXBAR_OUTPUTXBAR0_G10_SEL_MASK);
 }
 
+
 /**
  * \brief Trip & Sync xbar: API to select input sources of PWM Syncout XBar
  *
@@ -429,6 +548,23 @@ SOC_xbarSelectPWMSyncOutXBarInput(uint32_t base, uint8_t out, uint32_t input)
     HW_WR_REG32(base + CSL_CONTROLSS_PWMSYNCOUTXBAR_PWMSYNCOUTXBAR0_G0 + out * CSL_CONTROLSS_PWMSYNCOUTXBAR_STEP, input & CSL_CONTROLSS_PWMSYNCOUTXBAR_PWMSYNCOUTXBAR0_G0_SEL_MASK);
 }
 
+
+/**
+ * \brief Trip & Sync xbar: API to select input sources of PWM Syncout XBar
+ *
+ * \param base [in] PWM Syncout XBar base address
+ * \param out [in] Instance of PWM Syncout XBar
+ * \param group0_mask [in] Mask to OR inputs from group 0
+ * \param group1_mask [in] Mask to OR inputs from group 1
+ *
+ */
+static inline void
+SOC_xbarSelectPWMSyncOutXBarInput_ext(uint32_t base, uint8_t out, uint32_t group0_mask, uint32_t group1_mask)
+{
+    //TBD: 32 bit field for selecting 32 inputs
+    HW_WR_REG32(base + CSL_CONTROLSS_PWMSYNCOUTXBAR_PWMSYNCOUTXBAR0_G0 + out * CSL_CONTROLSS_PWMSYNCOUTXBAR_STEP, group0_mask & CSL_CONTROLSS_PWMSYNCOUTXBAR_PWMSYNCOUTXBAR0_G0_SEL_MASK);
+    HW_WR_REG32(base + CSL_CONTROLSS_PWMSYNCOUTXBAR_PWMSYNCOUTXBAR0_G1 + out * CSL_CONTROLSS_PWMSYNCOUTXBAR_STEP, group1_mask & CSL_CONTROLSS_PWMSYNCOUTXBAR_PWMSYNCOUTXBAR0_G1_SEL_MASK);
+}
 
 
 /**
