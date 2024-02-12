@@ -3,6 +3,7 @@ void Drivers_dmaXbarOpen()
     %%{
         let common = system.getScript("/common");
         let soc = system.getScript(`/xbar/dma_xbar/soc/dma_xbar_${common.getSocName()}`);
+        let socName = common.getSocName();
         let module = system.modules['/xbar/dma_xbar/dma_xbar'];
     %%}
     % let base = "CSL_CONTROLSS_DMAXBAR_U_BASE";
@@ -17,6 +18,7 @@ void Drivers_dmaXbarOpen()
         % let grp3_muxctl = 0;
         % let grp4_muxctl = 0;
         % let grp5_muxctl = 0;
+        % let grp6_muxctl = 0;
         % let group = soc.getOptionList("INTERNAL").find(o => o.name == config.xbarOutput).group;
         % if(group == 0) {
             % grp0_muxctl = xbarOutput;
@@ -36,6 +38,13 @@ void Drivers_dmaXbarOpen()
         % else if(group == 5) {
             % grp5_muxctl = xbarOutput;
         % }
+        % else if(group == 6) {
+            % grp6_muxctl = xbarOutput;
+        % }
+        % if (socName === "am263px") {
+    SOC_xbarSelectDMAXBarInputSource_ext(`base`, `config.name.substr(23)`, `group`, `grp0_muxctl`, `grp1_muxctl`, `grp2_muxctl`, `grp3_muxctl`, `grp4_muxctl`, `grp5_muxctl`, `grp6_muxctl`);
+        % }else {
     SOC_xbarSelectDMAXBarInputSource(`base`, `config.name.substr(23)`, `group`, `grp0_muxctl`, `grp1_muxctl`, `grp2_muxctl`, `grp3_muxctl`, `grp4_muxctl`, `grp5_muxctl`);
+        % }
     % }
 }

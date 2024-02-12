@@ -3,6 +3,7 @@ void Drivers_epwmXbarOpen()
     %%{
         let common = system.getScript("/common");
         let soc = system.getScript(`/xbar/epwm_xbar/soc/epwm_xbar_${common.getSocName()}`);
+        let socName = common.getSocName();
         let module = system.modules['/xbar/epwm_xbar/epwm_xbar'];
     %%}
     % let base = "CSL_CONTROLSS_PWMXBAR_U_BASE";
@@ -23,6 +24,7 @@ void Drivers_epwmXbarOpen()
         % let grp6mask = "(";
         % let grp7mask = "(";
         % let grp8mask = "(";
+        % let grp9mask = "(";
         % for(let i=0; i<config.xbarOutput.length; i++) {
             % let group = soc.getOptionList("INTERNAL").find(o => o.name == config.xbarOutput[i]).group;
             % let path = soc.getOptionList("INTERNAL").find(o => o.name == config.xbarOutput[i]).path;
@@ -52,6 +54,9 @@ void Drivers_epwmXbarOpen()
             % }
             % else if(group == 8) {
                 % grp8mask += (" EPWM_XBAR_" + config.xbarOutput[i] + " |");
+            % }
+            % else if(group == 9) {
+                % grp9mask += (" EPWM_XBAR_" + config.xbarOutput[i] + " |");
             % }
         % }
         % if(grp0mask.length > 1) {
@@ -116,7 +121,19 @@ void Drivers_epwmXbarOpen()
         % else {
             % grp8mask = 0;
         % }
+        % if (grp9mask.length > 1) {
+            % grp9mask = grp9mask.slice(0, -1);
+            % grp9mask += ")";
+        % }
+        % else {
+            % grp9mask = 0;
+        % }
+        % if ( socName === "am263px") {
+    SOC_xbarSelectPWMXBarInputSource_ext(`base`, `config.name.substr(10)`, `grp0mask`, `grp1mask`, `grp2mask`, `grp3mask`, `grp4mask`, `grp5mask`, `grp6mask`, `grp7mask`, `grp8mask`, `grp9mask`);
+        % }
+        % else {
     SOC_xbarSelectPWMXBarInputSource(`base`, `config.name.substr(10)`, `grp0mask`, `grp1mask`, `grp2mask`, `grp3mask`, `grp4mask`, `grp5mask`, `grp6mask`, `grp7mask`, `grp8mask`);
+        % }
     % }
     SOC_xbarInvertPWMXBarOutputSignalBeforeLatch(`base`, `mask`);
 }

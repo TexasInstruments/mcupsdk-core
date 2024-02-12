@@ -3,6 +3,7 @@ void Drivers_inputXbarOpen()
     %%{
         let common = system.getScript("/common");
         let soc = system.getScript(`/xbar/input_xbar/soc/input_xbar_${common.getSocName()}`);
+        let socName = common.getSocName();
         let module = system.modules['/xbar/input_xbar/input_xbar'];
     %%}
     % let base = "CSL_CONTROLSS_INPUTXBAR_U_BASE";
@@ -20,6 +21,17 @@ void Drivers_inputXbarOpen()
         % else {
             % grp1_muxctl = xbarOutput;
         % }
+        % if (socName === "am263px")
+        % {
+            % let grp2_muxctl = 0;
+            % if (group == 2)
+            % {
+                % grp1_muxctl = 0;
+                % grp2_muxctl = xbarOutput;
+            % }
+    SOC_xbarSelectInputXBarInputSource_ext(`base`, `config.name.substr(11)`, `group`, `grp0_muxctl`, `grp1_muxctl`, `grp2_muxctl`);
+        % } else {
     SOC_xbarSelectInputXBarInputSource(`base`, `config.name.substr(11)`, `group`, `grp0_muxctl`, `grp1_muxctl`);
+        % }
     % }
 }

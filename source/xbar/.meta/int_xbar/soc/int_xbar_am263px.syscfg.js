@@ -147,7 +147,6 @@ const internal_list = [
     {  name: "ADC_R1_INT3", displayName: "ADC_R1_INT3", path: "int_xbar", group: 7 },
     {  name: "ADC_R1_INT4", displayName: "ADC_R1_INT4", path: "int_xbar", group: 7 },
     {  name: "ADC_R1_EVTINT", displayName: "ADC_R1_EVTINT", path: "int_xbar", group: 7 },
-
     {  name: "CMPSSA0_CTRIPL", displayName: "CMPSSA0_CTRIPL", path: "int_xbar", group: 8 },
     {  name: "CMPSSA0_CTRIPH", displayName: "CMPSSA0_CTRIPH", path: "int_xbar", group: 8 },
     {  name: "CMPSSA1_CTRIPL", displayName: "CMPSSA1_CTRIPL", path: "int_xbar", group: 8 },
