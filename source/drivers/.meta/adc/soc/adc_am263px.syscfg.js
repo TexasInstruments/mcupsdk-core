@@ -267,14 +267,14 @@ const staticConfig = [
     },
     {
         name: "ADC_R0",
-        baseAddr: "CSL_CONTROLSS_ADC_R0_U_BASE",
-        resultBaseAddr : "CSL_CONTROLSS_ADC_R0_RESULT_U_BASE",
+        baseAddr: "CSL_CONTROLSS_ADCR0_U_BASE",
+        resultBaseAddr : "CSL_CONTROLSS_ADCR0_RESULT_U_BASE",
         instanceNumber : "5",
     },
     {
         name: "ADC_R1",
-        baseAddr: "CSL_CONTROLSS_ADC_R1_U_BASE",
-        resultBaseAddr : "CSL_CONTROLSS_ADC_R1_RESULT_U_BASE",
+        baseAddr: "CSL_CONTROLSS_ADCR1_U_BASE",
+        resultBaseAddr : "CSL_CONTROLSS_ADCR1_RESULT_U_BASE",
         instanceNumber : "6",
     },
 ];

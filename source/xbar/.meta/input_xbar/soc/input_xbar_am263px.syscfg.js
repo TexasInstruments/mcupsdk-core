@@ -178,6 +178,22 @@ const internal_list = [
     {  name: "ICSSGPO13_PORT1", displayName: "ICSSGPO13_PORT1", path: "input_xbar", group: 1 },
     {  name: "ICSSGPO14_PORT1", displayName: "ICSSGPO14_PORT1", path: "input_xbar", group: 1 },
     {  name: "ICSSGPO15_PORT1", displayName: "ICSSGPO15_PORT1", path: "input_xbar", group: 1 },
+    {  name: "OUTPUTXBAR_OUT0", displayName: "OUTPUTXBAR_OUT0", path: "input_xbar", group: 2 },
+    {  name: "OUTPUTXBAR_OUT1", displayName: "OUTPUTXBAR_OUT1", path: "input_xbar", group: 2 },
+    {  name: "OUTPUTXBAR_OUT2", displayName: "OUTPUTXBAR_OUT2", path: "input_xbar", group: 2 },
+    {  name: "OUTPUTXBAR_OUT3", displayName: "OUTPUTXBAR_OUT3", path: "input_xbar", group: 2 },
+    {  name: "OUTPUTXBAR_OUT4", displayName: "OUTPUTXBAR_OUT4", path: "input_xbar", group: 2 },
+    {  name: "OUTPUTXBAR_OUT5", displayName: "OUTPUTXBAR_OUT5", path: "input_xbar", group: 2 },
+    {  name: "OUTPUTXBAR_OUT6", displayName: "OUTPUTXBAR_OUT6", path: "input_xbar", group: 2 },
+    {  name: "OUTPUTXBAR_OUT7", displayName: "OUTPUTXBAR_OUT7", path: "input_xbar", group: 2 },
+    {  name: "OUTPUTXBAR_OUT8", displayName: "OUTPUTXBAR_OUT8", path: "input_xbar", group: 2 },
+    {  name: "OUTPUTXBAR_OUT9", displayName: "OUTPUTXBAR_OUT9", path: "input_xbar", group: 2 },
+    {  name: "OUTPUTXBAR_OUT10", displayName: "OUTPUTXBAR_OUT10", path: "input_xbar", group: 2 },
+    {  name: "OUTPUTXBAR_OUT11", displayName: "OUTPUTXBAR_OUT11", path: "input_xbar", group: 2 },
+    {  name: "OUTPUTXBAR_OUT12", displayName: "OUTPUTXBAR_OUT12", path: "input_xbar", group: 2 },
+    {  name: "OUTPUTXBAR_OUT13", displayName: "OUTPUTXBAR_OUT13", path: "input_xbar", group: 2 },
+    {  name: "OUTPUTXBAR_OUT14", displayName: "OUTPUTXBAR_OUT14", path: "input_xbar", group: 2 },
+    {  name: "OUTPUTXBAR_OUT15", displayName: "OUTPUTXBAR_OUT15", path: "input_xbar", group: 2 },
 ];
 
 let xbarProperties = {

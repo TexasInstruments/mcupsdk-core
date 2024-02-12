@@ -34,6 +34,22 @@ const internal_list = [
     {  name: "EPWM29_SYNCOUT", displayName: "EPWM29_SYNCOUT", path: "epwm_syncout_xbar", group: 0 },
     {  name: "EPWM30_SYNCOUT", displayName: "EPWM30_SYNCOUT", path: "epwm_syncout_xbar", group: 0 },
     {  name: "EPWM31_SYNCOUT", displayName: "EPWM31_SYNCOUT", path: "epwm_syncout_xbar", group: 0 },
+    {  name: "ECAP0_SYNCOUT", displayName: "ECAP0_SYNCOUT", path: "epwm_syncout_xbar", group: 1 },
+    {  name: "ECAP1_SYNCOUT", displayName: "ECAP1_SYNCOUT", path: "epwm_syncout_xbar", group: 1 },
+    {  name: "ECAP2_SYNCOUT", displayName: "ECAP2_SYNCOUT", path: "epwm_syncout_xbar", group: 1 },
+    {  name: "ECAP3_SYNCOUT", displayName: "ECAP3_SYNCOUT", path: "epwm_syncout_xbar", group: 1 },
+    {  name: "ECAP4_SYNCOUT", displayName: "ECAP4_SYNCOUT", path: "epwm_syncout_xbar", group: 1 },
+    {  name: "ECAP5_SYNCOUT", displayName: "ECAP5_SYNCOUT", path: "epwm_syncout_xbar", group: 1 },
+    {  name: "ECAP6_SYNCOUT", displayName: "ECAP6_SYNCOUT", path: "epwm_syncout_xbar", group: 1 },
+    {  name: "ECAP7_SYNCOUT", displayName: "ECAP7_SYNCOUT", path: "epwm_syncout_xbar", group: 1 },
+    {  name: "ECAP8_SYNCOUT", displayName: "ECAP8_SYNCOUT", path: "epwm_syncout_xbar", group: 1 },
+    {  name: "ECAP9_SYNCOUT", displayName: "ECAP9_SYNCOUT", path: "epwm_syncout_xbar", group: 1 },
+    {  name: "ECAP10_SYNCOUT", displayName: "ECAP10_SYNCOUT", path: "epwm_syncout_xbar", group: 1 },
+    {  name: "ECAP11_SYNCOUT", displayName: "ECAP11_SYNCOUT", path: "epwm_syncout_xbar", group: 1 },
+    {  name: "ECAP12_SYNCOUT", displayName: "ECAP12_SYNCOUT", path: "epwm_syncout_xbar", group: 1 },
+    {  name: "ECAP13_SYNCOUT", displayName: "ECAP13_SYNCOUT", path: "epwm_syncout_xbar", group: 1 },
+    {  name: "ECAP14_SYNCOUT", displayName: "ECAP14_SYNCOUT", path: "epwm_syncout_xbar", group: 1 },
+    {  name: "ECAP15_SYNCOUT", displayName: "ECAP15_SYNCOUT", path: "epwm_syncout_xbar", group: 1 },
 ];
 
 let xbarProperties = {

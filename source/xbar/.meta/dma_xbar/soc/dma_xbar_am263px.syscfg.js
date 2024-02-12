@@ -125,6 +125,22 @@ const internal_list = [
     {  name: "ECAP7_DMA_INT", displayName: "ECAP7_DMA_INT", path: "dma_xbar", group: 5 },
     {  name: "ECAP8_DMA_INT", displayName: "ECAP8_DMA_INT", path: "dma_xbar", group: 5 },
     {  name: "ECAP9_DMA_INT", displayName: "ECAP9_DMA_INT", path: "dma_xbar", group: 5 },
+    {  name: "ECAP10_DMA_INT", displayName: "ECAP10_DMA_INT", path: "dma_xbar", group: 5 },
+    {  name: "ECAP11_DMA_INT", displayName: "ECAP11_DMA_INT", path: "dma_xbar", group: 5 },
+    {  name: "ECAP12_DMA_INT", displayName: "ECAP12_DMA_INT", path: "dma_xbar", group: 5 },
+    {  name: "ECAP13_DMA_INT", displayName: "ECAP13_DMA_INT", path: "dma_xbar", group: 5 },
+    {  name: "ECAP14_DMA_INT", displayName: "ECAP14_DMA_INT", path: "dma_xbar", group: 5 },
+    {  name: "ECAP15_DMA_INT", displayName: "ECAP15_DMA_INT", path: "dma_xbar", group: 5 },
+    {  name: "ADC_R0_INT1", displayName: "ADC_R0_INT1", path: "dma_xbar", group: 6 },
+    {  name: "ADC_R0_INT2", displayName: "ADC_R0_INT2", path: "dma_xbar", group: 6 },
+    {  name: "ADC_R0_INT3", displayName: "ADC_R0_INT3", path: "dma_xbar", group: 6 },
+    {  name: "ADC_R0_INT4", displayName: "ADC_R0_INT4", path: "dma_xbar", group: 6 },
+    {  name: "ADC_R0_EVTINT", displayName: "ADC_R0_EVTINT", path: "dma_xbar", group: 6 },
+    {  name: "ADC_R1_INT1", displayName: "ADC_R1_INT1", path: "dma_xbar", group: 6 },
+    {  name: "ADC_R1_INT2", displayName: "ADC_R1_INT2", path: "dma_xbar", group: 6 },
+    {  name: "ADC_R1_INT3", displayName: "ADC_R1_INT3", path: "dma_xbar", group: 6 },
+    {  name: "ADC_R1_INT4", displayName: "ADC_R1_INT4", path: "dma_xbar", group: 6 },
+    {  name: "ADC_R1_EVTINT", displayName: "ADC_R1_EVTINT", path: "dma_xbar", group: 6 },
 ];
 
 let xbarProperties = {
