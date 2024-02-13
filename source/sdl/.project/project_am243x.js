@@ -81,7 +81,10 @@ const files_r5f = {
         "sdl_ecc_r5.c",
         "sdl_r5f_utils.c",
         "sdl_ip_rom_checksum.c",
-        "sdl_rom_checksum.c"
+        "sdl_rom_checksum.c",
+        "sdl_ip_lbist.c",
+        "sdl_soc_lbist.c",
+        "sdl_lbist.c",
     ],
 };
 
@@ -126,6 +129,10 @@ const filedirs_r5f = {
         "r5",
         "r5/v0",
         "rom_checksum",
+        "lbist",
+        "lbist/V0",
+        "lbist/soc",
+        "lbist/soc/am243x",
     ],
 };
 

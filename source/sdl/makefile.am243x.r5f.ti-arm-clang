@@ -56,6 +56,9 @@ FILES_common := \
     sdl_r5f_utils.c \
     sdl_ip_rom_checksum.c \
     sdl_rom_checksum.c \
+    sdl_ip_lbist.c \
+    sdl_soc_lbist.c \
+    sdl_lbist.c \
 
 ASMFILES_common := \
     sdl_ecc_utils.S \
@@ -101,6 +104,10 @@ FILES_PATH_common = \
     r5 \
     r5/v0 \
     rom_checksum \
+    lbist \
+    lbist/V0 \
+    lbist/soc \
+    lbist/soc/am243x \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

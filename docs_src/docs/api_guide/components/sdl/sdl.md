@@ -47,9 +47,6 @@ SDL consists of below sub-modules
 - \subpage SDL_ECC_PAGE
 - \subpage SDL_RTI_PAGE
 - \subpage SDL_ROM_CHECKSUM_PAGE
-\endcond
-
-\cond SOC_AM64X
 - \subpage SDL_LBIST_PAGE
 \endcond
 

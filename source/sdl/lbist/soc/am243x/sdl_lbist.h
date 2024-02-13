@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023-2024 Texas Instruments Incorporated
+ * Copyright (C) 2024 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -30,22 +30,46 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef INCLUDE_SDL_SOC_LBIST_H_
-#define INCLUDE_SDL_SOC_LBIST_H_
+/**
+ *  \defgroup SDL_LBIST_API APIs for SDL LBIST
+ *  @{
+*/
+
+#ifndef SDL_LBIST_SOC_H_
+#define SDL_LBIST_SOC_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#if defined (SOC_AM64X)
-#include <sdl/lbist/soc/am64x/sdl_lbist.h>
-#endif /* SOC_AM64X */
-#if defined (SOC_AM243X)
-#include <sdl/lbist/soc/am243x/sdl_lbist.h>
-#endif /* SOC_AM243X */
+#include <sdl/include/am64x_am243x/sdlr_soc_baseaddress.h>
+/**
+ *  @defgroup SDL_LBIST_ENUM LBIST Enumerated Data Types
+ *  @addtogroup SDL_LBIST_ENUM
+    @{
+ *
+ */
+
+/**
+ *  \brief LBIST instance
+ *
+ *  This enum defines the LBIST instances supported by the SDL_LBIST_selfTest API.
+ */
+typedef enum {
+    /*!
+     * MCU Instance
+     */
+    LBIST_MCU_M4F,
+} SDL_LBIST_inst;
+
+
+#define SDL_LBIST_NUM_INSTANCES 1U
+/** @} */
 
 #ifdef __cplusplus
 }
-#endif  /* extern "C" */
+#endif
 
-#endif /* INCLUDE_SDL_SOC_LBIST_H_ */
+#endif /* SDL_LBIST_SOC_H_ */
+ /** @} */
+
