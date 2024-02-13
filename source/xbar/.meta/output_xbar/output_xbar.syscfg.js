@@ -48,13 +48,12 @@ function pinmuxRequirements(inst)
    let interfaceName = getInterfaceName(inst);
 
     let resources = [];
+    let pinName = "OUTPUTXBAR";
     if(common.getSocName() == "am263px")
     {
-        resources.push( pinmux.getXbarPinRequirements(interfaceName, 0));
-    } else
-    {
-        resources.push( pinmux.getPinRequirements(interfaceName, "OUTPUTXBAR", "Outputxbar Pin"));
+        pinName = "XBAROUT"
     }
+    resources.push( pinmux.getPinRequirements(interfaceName, pinName, "Outputxbar Pin"));
 
     let peripheral = {
         name: interfaceName,
