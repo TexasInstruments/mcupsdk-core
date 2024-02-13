@@ -34,6 +34,10 @@ function getDefaultFlashName()
 function getDefaultFlashConfig()
 {
     if(system.deviceData.device == "AM263Px") {
+        if(system.deviceData.package == "ZCZ_F")
+        {
+            defaultFlashConfig = system.getScript("/board/flash/IS25LX064.json");
+        }
         return defaultFlashConfig;
     } else {
         return defaultFlashConfigLP;
