@@ -367,7 +367,7 @@ static void I2CControllerControl(uint32_t baseAddr, uint32_t ctrlMask, uint32_t 
     CSL_I2cRegsOvly i2cRegs = (CSL_I2cRegsOvly)baseAddr;
     uint32_t i2cMdr = i2cRegs->ICMDR;
 
-i2cMdr &= ~ctrlMask;
+    i2cMdr &= ~ctrlMask;
     i2cMdr |= (ctrlCmds | CSL_I2C_ICMDR_MST_MASK);
     i2cRegs->ICMDR = i2cMdr;
 }
@@ -616,21 +616,35 @@ static void I2C_hwiFxnController(I2C_Handle handle)
             case I2C_ERROR:
             case I2C_IDLE_STATE:
                 if(object->state == I2C_ERROR) {
-                  xferStatus=I2C_STS_ERR;
-                } else {
-                  xferStatus=I2C_STS_SUCCESS;
-                }
 
-                /* callback to application or post Semaphore to unblock transfer fxn */
-                I2C_completeCurrTransfer(handle,xferStatus);
+                    if (object->intStatusErr & I2C_INT_NO_ACK)
+                    {
+                        xferStatus = I2C_STS_ERR_NO_ACK;
+                    }
+                    else if (object->intStatusErr & I2C_INT_ARBITRATION_LOST)
+                    {
+                        xferStatus = I2C_STS_ERR_ARBITRATION_LOST;
+                    }
+                    /* Mask I2C interrupts */
+                    I2CControllerIntDisableEx(object->baseAddr, I2C_ALL_INTS_MASK);
+                    /* Disable the I2C Controller */
+                    I2CControllerDisable(object->baseAddr);
+                    /* Enable the I2C Controller for operation */
+                    I2CControllerEnable(object->baseAddr);
+                }
+                else
+                {
+                    xferStatus = I2C_STS_SUCCESS;
+                }
 
                 /* Clear STOP condition interrupt */
                 I2CControllerIntClearEx(object->baseAddr,
                                     I2C_INT_STOP_CONDITION);
-
                 /* Disable STOP condition interrupt */
                 I2CControllerIntDisableEx(object->baseAddr,
                                       I2C_INT_MASK_STOP_CONDITION);
+                /* callback to application or post Semaphore to unblock transfer fxn */
+                I2C_completeCurrTransfer(handle,xferStatus);
 
   	        break;
 
@@ -723,6 +737,7 @@ static void I2C_hwiFxnController(I2C_Handle handle)
         /* Some sort of error happened! */
         object->state = I2C_ERROR;
         object->intStatusErr = errStatus;
+
 	    if (errStatus & I2C_INT_NO_ACK)
         {
            xferStatus = I2C_STS_ERR_NO_ACK;
@@ -735,12 +750,14 @@ static void I2C_hwiFxnController(I2C_Handle handle)
            xferStatus = I2C_STS_ERR;
 		}
 
-		I2C_completeCurrTransfer(handle,xferStatus);
-
-        /* Try to send a STOP bit to end all I2C communications immediately */
-        I2CControllerStop(object->baseAddr);
-		I2CControllerIntDisableEx(object->baseAddr, I2C_ALL_INTS);
+        /* Disable all interrupts */
+        I2CControllerIntDisableEx(object->baseAddr, I2C_ALL_INTS);
+        /* Do not clear the status register */
         I2CControllerIntClearEx(object->baseAddr, I2C_ALL_INTS);
+        /* Only enable stop condition interrupt */
+        I2CControllerIntEnableEx(object->baseAddr, I2C_INT_MASK_STOP_CONDITION);
+        /* Generate stop */
+        I2CControllerStop(object->baseAddr);
     }
 }
 
@@ -1178,6 +1195,8 @@ static int32_t I2C_primeTransfer(I2C_Handle handle,
 
     object->readBufIdx = (uint8_t*)transaction->readBuf;
     object->readCountIdx = (uint32_t)transaction->readCount;
+
+    object->intStatusErr = 0U;
 
     if (object->currentTransaction->expandSA == true)
     {
