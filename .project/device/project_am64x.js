@@ -211,6 +211,7 @@ const example_file_list = [
     "examples/sdl/pbist/pbist_mpu/.project/project.js",
     "examples/sdl/esm/mcu_esm0/.project/project.js",
     "examples/sdl/pok/pok_mcu/.project/project.js",
+    "examples/sdl/rom_checksum/.project/project.js",
     "examples/sdl/rti/UC1/.project/project.js",
     "examples/sdl/rti/UC2/.project/project.js",
     "examples/sdl/rti/UC3/.project/project.js",

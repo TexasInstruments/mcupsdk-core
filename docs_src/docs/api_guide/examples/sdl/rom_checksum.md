@@ -19,7 +19,7 @@ Use Cases
 # Supported Combinations {#EXAMPLES_SDL_ROM_CHECKSUM_COMBOS}
 
 
-\cond SOC_AM243X
+\cond SOC_AM243X || SOC_AM64X
 
  Parameter      | Value
  ---------------|-----------
