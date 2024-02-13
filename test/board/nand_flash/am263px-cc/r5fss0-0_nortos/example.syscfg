@@ -50,8 +50,8 @@ flash1.flashType                        = "SERIAL_NAND";
 flash1.peripheralDriver.$name           = "CONFIG_OSPI0";
 flash1.peripheralDriver.chipSelect      = "CS1";
 flash1.peripheralDriver.inputClkFreq    = 80000000;
-flash1.peripheralDriver.OSPI.D7.$assign = "MCAN1_TX";
-flash1.peripheralDriver.OSPI.D5.$assign = "MCAN0_TX";
+flash1.peripheralDriver.OSPI.D7.$suggestSolution = "MCAN1_TX";
+flash1.peripheralDriver.OSPI.D5.$suggestSolution = "MCAN0_TX";
 
 gpio1.$name                = "CHIP_SEL";
 gpio1.pinDir               = "OUTPUT";

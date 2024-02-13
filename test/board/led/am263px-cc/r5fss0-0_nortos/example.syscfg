@@ -57,7 +57,7 @@ led3.$name = "CONFIG_LED0";
 led1.peripheralDriver      = gpio1;
 gpio1.$name                = "GPIO_LED";
 gpio1.pinDir               = "OUTPUT";
-gpio1.GPIO.gpioPin.$assign = "OSPI0_CSn1";
+gpio1.GPIO.gpioPin.$suggestSolution = "OSPI0_CSn1";
 
 gpio2.$name                = "CONFIG_GPIO0";
 led3.peripheralDriver      = gpio2;

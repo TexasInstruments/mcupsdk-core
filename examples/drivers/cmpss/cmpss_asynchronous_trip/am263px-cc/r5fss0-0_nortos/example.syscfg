@@ -310,7 +310,7 @@ epwm_xbar1.xbarOutput = ["CMPSSA1_CTRIPH"];
 output_xbar1.$name                      = "CONFIG_OUTPUT_XBAR0";
 output_xbar1.xbarOutput                 = ["CMPSSA1_CTRIPH"];
 output_xbar1.OUTPUTXBAR.$assign         = "OUTPUTXBAR0";
-output_xbar1.OUTPUTXBAR.XBAROUT.$assign = "OSPI0_CSn1";
+output_xbar1.OUTPUTXBAR.XBAROUT.$suggestSolution = "OSPI0_CSn1";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

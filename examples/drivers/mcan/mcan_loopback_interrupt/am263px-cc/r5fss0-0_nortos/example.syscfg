@@ -41,8 +41,8 @@ const section12       = section.addInstance();
  */
 mcan1.$name           = "CONFIG_MCAN0";
 mcan1.MCAN.$assign    = "MCAN1";
-mcan1.MCAN.RX.$assign = "MCAN1_RX";
-mcan1.MCAN.TX.$assign = "MCAN1_TX";
+mcan1.MCAN.RX.$suggestSolution = "MCAN1_RX";
+mcan1.MCAN.TX.$suggestSolution = "MCAN1_TX";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";

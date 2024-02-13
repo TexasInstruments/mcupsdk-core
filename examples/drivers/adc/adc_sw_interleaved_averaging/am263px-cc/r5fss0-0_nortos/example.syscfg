@@ -183,11 +183,11 @@ adc2.adcClockPrescaler     = "ADC_CLK_DIV_4_0";
 adc2.ADC.$assign           = "ADC2";
 
 gpio1.$name                = "CONFIG_GPIO_INPUT";
-gpio1.GPIO.gpioPin.$assign = "EPWM13_A";
+gpio1.GPIO.gpioPin.$suggestSolution = "EPWM13_A";
 
 gpio2.pinDir               = "OUTPUT";
 gpio2.$name                = "CONFIG_GPIO_OUTPUT";
-gpio2.GPIO.gpioPin.$assign = "EPWM13_B";
+gpio2.GPIO.gpioPin.$suggestSolution = "EPWM13_B";
 
 mcspi1.$name                 = "CONFIG_MCSPI0";
 pmic1.peripheralDriver       = mcspi1;

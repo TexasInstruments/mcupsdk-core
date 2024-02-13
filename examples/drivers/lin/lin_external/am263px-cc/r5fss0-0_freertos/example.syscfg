@@ -51,8 +51,8 @@ lin1.$name           = "CONFIG_LIN1";
 lin1.useDefault      = false;
 lin1.linChecksum     = "LIN_CHECKSUM_ENHANCED";
 lin1.LIN.$assign     = "LIN1";
-lin1.LIN.RXD.$assign = "LIN1_RXD";
-lin1.LIN.TXD.$assign = "LIN1_TXD";
+lin1.LIN.RXD.$suggestSolution = "LIN1_RXD";
+lin1.LIN.TXD.$suggestSolution = "LIN1_TXD";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";

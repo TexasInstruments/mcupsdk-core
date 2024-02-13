@@ -56,8 +56,8 @@ flash1.fourByteEnableSeq                = "0";
 flash1.peripheralDriver.$name           = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable       = true;
 flash1.peripheralDriver.inputClkFreq    = 100000000;
-flash1.peripheralDriver.OSPI.D7.$assign = "MCAN1_TX";
-flash1.peripheralDriver.OSPI.D5.$assign = "MCAN0_TX";
+flash1.peripheralDriver.OSPI.D7.$suggestSolution = "MCAN1_TX";
+flash1.peripheralDriver.OSPI.D5.$suggestSolution = "MCAN0_TX";
 
 bootloader1.bootMedia = "MEM";
 bootloader1.$name     = "CONFIG_BOOTLOADER_MEM";
