@@ -1183,7 +1183,7 @@
 			]
 		},
 		{
-			"name" :  "epwmTripZone2_oneShotSource",
+			"name" :  "epwmTripZone_oneShotSourceAdditional",
 			"driverlibFunction" : "EPWM_enableTripZone2Signals",
 			"driverlibFunctionAlt": "EPWM_disableTripZone2Signals",
 			"driverlibFunctionArg" : {
@@ -1196,7 +1196,7 @@
 			]
 		},
 		{
-			"name" :  "epwmTripZone2_cbcSource",
+			"name" :  "epwmTripZone_cbcSourceAdditional",
 			"driverlibFunction" : "EPWM_enableTripZone2Signals",
 			"driverlibFunctionAlt": "EPWM_disableTripZone2Signals",
 			"driverlibFunctionArg" : {
@@ -3980,6 +3980,140 @@
 			"register": "DEMONSTEP.INCSTEP",
 			"devices" : [
                 "am263x", "am263px",
+			]
+		},
+		// DCCAP Edge Detection 
+		{
+			"name": "epwmDigitalCompare_enableEventDetection",
+			"driverlibFunction": "EPWM_enableCaptureInEvent",
+			"driverlibFunctionAlt": "EPWM_disableCaptureInEvent",
+			"driverlibFunctionArg": {
+			"base": ""
+			},
+			"register": "CAPCTL.SRCSEL",
+			"devices": [
+			"am263x", "am263px"
+			]
+		},
+		{
+			"name": "epwmDigitalCompare_CAPGATETripInput",
+			"driverlibFunction": "EPWM_selectCaptureTripInput",
+			"driverlibFunctionArg": {
+			"base": "",
+			"tripInput":"this",
+			"dcType":"EPWM_CAPTURE_GATE"
+			},
+			"register": "CAPTRIPSEL.CAPGATECOMPSEL",
+			"devices": [
+			"am263x", "am263px"
+			]
+		},
+		{
+			"name": "epwmDigitalCompare_CAPGATE_combinationInputConfig",
+			"driverlibFunction": "EPWM_enableCaptureTripCombinationInput",
+			"driverlibFunctionAlt": "EPWM_disableCaptureTripCombinationInput",
+			"driverlibFunctionArg": {
+			"base": "",
+			"tripInput":"this",
+			"dcType":"EPWM_CAPTURE_GATE"
+			},
+			"register": [
+				"CAPGATETRIPSEL.TRIPINPUT1",
+				"CAPGATETRIPSEL.TRIPINPUT2",
+				"CAPGATETRIPSEL.TRIPINPUT3",
+				"CAPGATETRIPSEL.TRIPINPUT4",
+				"CAPGATETRIPSEL.TRIPINPUT5",
+				"CAPGATETRIPSEL.TRIPINPUT6",
+				"CAPGATETRIPSEL.TRIPINPUT7",
+				"CAPGATETRIPSEL.TRIPINPUT8",
+				"CAPGATETRIPSEL.TRIPINPUT9",
+				"CAPGATETRIPSEL.TRIPINPUT10",
+				"CAPGATETRIPSEL.TRIPINPUT11",
+				"CAPGATETRIPSEL.TRIPINPUT12",
+				"CAPGATETRIPSEL.TRIPINPUT13",
+				"CAPGATETRIPSEL.TRIPINPUT14",
+				"CAPGATETRIPSEL.TRIPINPUT15"
+			],
+			"devices": [
+			"am263x", "am263px"
+			]
+		},
+		{
+			"name": "epwmDigitalCompare_configCAPGATE",
+			"driverlibFunction": "EPWM_configCaptureGateInputPolarity",
+			"driverlibFunctionArg": {
+			"base": "",
+			"polSel":"this"
+			},
+			"register": "CAPCTL.CAPGATEPOL",
+			"devices": [
+			"am263x", "am263px"
+			]
+		},
+		{
+			"name": "epwmDigitalCompare_CAPINTripInput",
+			"driverlibFunction": "EPWM_selectCaptureTripInput",
+			"driverlibFunctionArg": {
+			"base": "",
+			"tripInput":"this",
+			"dcType":"EPWM_CAPTURE_INPUT"
+			},
+			"register": "CAPTRIPSEL.CAPINCOMPSEL",
+			"devices": [
+			"am263x", "am263px"
+			]
+		},
+		{
+			"name": "epwmDigitalCompare_CAPIN_combinationInputConfig",
+			"driverlibFunction": "EPWM_enableCaptureTripCombinationInput",
+			"driverlibFunctionArg": {
+			"base": "",
+			"tripInput":"this",
+			"dcType":"EPWM_CAPTURE_INPUT"
+			},
+			"register": [
+				"CAPINTRIPSEL.TRIPINPUT1",
+				"CAPINTRIPSEL.TRIPINPUT2",
+				"CAPINTRIPSEL.TRIPINPUT3",
+				"CAPINTRIPSEL.TRIPINPUT4",
+				"CAPINTRIPSEL.TRIPINPUT5",
+				"CAPINTRIPSEL.TRIPINPUT6",
+				"CAPINTRIPSEL.TRIPINPUT7",
+				"CAPINTRIPSEL.TRIPINPUT8",
+				"CAPINTRIPSEL.TRIPINPUT9",
+				"CAPINTRIPSEL.TRIPINPUT10",
+				"CAPINTRIPSEL.TRIPINPUT11",
+				"CAPINTRIPSEL.TRIPINPUT12",
+				"CAPINTRIPSEL.TRIPINPUT13",
+				"CAPINTRIPSEL.TRIPINPUT14",
+				"CAPINTRIPSEL.TRIPINPUT15"
+			],
+			"devices": [
+			"am263x", "am263px"
+			]
+		},
+		{
+			"name": "epwmDigitalCompare_invertCAPIN",
+			"driverlibFunction": "EPWM_invertCaptureInputPolarity",
+			"driverlibFunctionArg": {
+			"base": "",
+			"polSel":"this"
+			},
+			"register": "CAPCTL.CAPINPOL",
+			"devices": [
+			"am263x", "am263px"
+			]
+		},
+		{
+			"name": "epwmDigitalCompare_dCCounterCapturePulseLogic",
+			"driverlibFunction": "EPWM_enableIndependentPulseLogic",
+			"driverlibFunctionAlt": "EPWM_disableIndependentPulseLogic",
+			"driverlibFunctionArg": {
+			"base": ""
+			},
+			"register": "CAPCTL.PULSECTL",
+			"devices": [
+			"am263x", "am263px"
 			]
 		},
 

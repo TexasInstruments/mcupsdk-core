@@ -447,6 +447,20 @@ let EPWM_DigitalCompareCBCLatchClearEvent = [
 	{ name: "EPWM_DC_CBC_LATCH_CLR_ON_CNTR_PERIOD", displayName: "Clear CBC latch when counter equals period" },
 	{ name: "EPWM_DC_CBC_LATCH_CLR_ON_CNTR_ZERO_PERIOD", displayName: "Clear CBC latch when counter equals zero or period" },
 ]
+let EPWM_selectCaptureGateInputPolarity = [
+	{ name: "EPWM_CAPGATE_INPUT_ALWAYS_ON", displayName: "Capture gate is always on" },
+	{ name: "EPWM_CAPGATE_INPUT_ALWAYS_OFF", displayName: "Capture gate is always off" },
+	{ name: "EPWM_CAPGATE_INPUT_SYNC", displayName: "Capture gate input is CAPGATE.sync" },
+	{ name: "EPWM_CAPGATE_INPUT_SYNC_INVERT", displayName: "Capture gate input is CAPGATE.sync inverted" },
+]
+let EPWM_selectCaptureInputPolarity = [
+	{ name: "EPWM_CAPTURE_INPUT_CAPIN_SYNC", displayName: "Capture input is not inverted" },
+	{ name: "EPWM_CAPTURE_INPUT_CAPIN_SYNC_INVERT", displayName: "Capture input is inverted" },
+]
+let EPWM_CaptureInputType = [
+	{ name: "EPWM_CAPTURE_GATE", displayName: "Capture Gate" },
+	{ name: "EPWM_CAPTURE_INPUT", displayName: "Capture Input" },
+]
 let EPWM_GlobalLoadTrigger = [
 	{ name: "EPWM_GL_LOAD_PULSE_CNTR_ZERO", displayName: "Load when counter is equal to zero" },
 	{ name: "EPWM_GL_LOAD_PULSE_CNTR_PERIOD", displayName: "Load when counter is equal to period" },
@@ -543,8 +557,8 @@ let EPWM_TZ_SIGNAL = [
 	{ name: "EPWM_TZ_SIGNAL_OSHT6", displayName: "One-shot TZ6" },
 	{ name: "EPWM_TZ_SIGNAL_DCAEVT1", displayName: "One-shot DCAEVT1" },
 	{ name: "EPWM_TZ_SIGNAL_DCBEVT1", displayName: "One-shot DCBEVT1" },
-    { name: "EPWM_TZ_SIGNAL_CAPEVT_OST", displayName: "One-shot Capture event" },
 	{ name: "EPWM_TZ_SIGNAL_CAPEVT_CBC", displayName: "Cycle-by-cycle Capture event" },
+    { name: "EPWM_TZ_SIGNAL_CAPEVT_OST", displayName: "One-shot Capture event" },
 ]
 let EPWM_TZ_INTERRUPT = [
 	{ name: "EPWM_TZ_INTERRUPT_CBC", displayName: "Trip Zones Cycle By Cycle interrupt" },
@@ -553,6 +567,7 @@ let EPWM_TZ_INTERRUPT = [
 	{ name: "EPWM_TZ_INTERRUPT_DCAEVT2", displayName: "Digital Compare A Event 2 interrupt" },
 	{ name: "EPWM_TZ_INTERRUPT_DCBEVT1", displayName: "Digital Compare B Event 1 interrupt" },
 	{ name: "EPWM_TZ_INTERRUPT_DCBEVT2", displayName: "Digital Compare B Event 2 interrupt" },
+	{ name: "EPWM_TZ_INTERRUPT_CAPEVT", displayName: "Digital Capture Event interrupt" },
 ]
 let EPWM_TZ_FLAG = [
 	{ name: "EPWM_TZ_FLAG_CBC", displayName: "Trip Zones Cycle By Cycle flag" },
@@ -1018,6 +1033,8 @@ exports = {
 	EPWM_DigitalCompareSyncMode: EPWM_DigitalCompareSyncMode,
 	EPWM_DigitalCompareCBCLatchMode: EPWM_DigitalCompareCBCLatchMode,
 	EPWM_DigitalCompareCBCLatchClearEvent: EPWM_DigitalCompareCBCLatchClearEvent,
+	EPWM_selectCaptureInputPolarity: EPWM_selectCaptureInputPolarity,
+	EPWM_selectCaptureGateInputPolarity: EPWM_selectCaptureGateInputPolarity,
 	EPWM_GlobalLoadTrigger: EPWM_GlobalLoadTrigger,
 	EPWM_ValleyTriggerSource: EPWM_ValleyTriggerSource,
 	EPWM_ValleyCounterEdge: EPWM_ValleyCounterEdge,

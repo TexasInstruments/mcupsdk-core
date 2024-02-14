@@ -892,10 +892,10 @@ typedef enum
 #define EPWM_TZ_SIGNAL_DCAEVT1       (0x4000U)
 //! One-shot DCBEVT1
 #define EPWM_TZ_SIGNAL_DCBEVT1       (0x8000U)
-//! One-shot Capture event
-#define EPWM_TZ_SIGNAL_CAPEVT_OST    (0x10000U)
-//! Cycle by cycle capture event
-#define EPWM_TZ_SIGNAL_CAPEVT_CBC    (0x1000000U)
+// //! One-shot Capture event
+// #define EPWM_TZ_SIGNAL_CAPEVT_OST    (0x10000U)
+// //! Cycle by cycle capture event
+// #define EPWM_TZ_SIGNAL_CAPEVT_CBC    (0x1000000U)
 
 //*****************************************************************************
 //
@@ -904,9 +904,9 @@ typedef enum
 //
 //*****************************************************************************
 //! Cycle by cycle capture event
-#define EPWM_TZ2_SIGNAL_CAPEVT_CBC    (0x1U)
+#define EPWM_TZ_SIGNAL_CAPEVT_CBC    (0x1U)
 //! One-shot Capture event
-#define EPWM_TZ2_SIGNAL_CAPEVT_OST    (0x100U)
+#define EPWM_TZ_SIGNAL_CAPEVT_OST    (0x100U)
 
 //*****************************************************************************
 //
@@ -8080,7 +8080,10 @@ EPWM_enableCaptureTripCombinationInput(uint32_t base,
     // Enable the combination input
     //
     EPWM_DigitalCompareTripInput combinational_input = EPWM_DC_TRIP_COMBINATION;
-    EPWM_selectCaptureTripInput(base, combinational_input, dcType);
+    if(tripInput != 0U)
+    {
+        EPWM_selectCaptureTripInput(base, combinational_input, dcType);
+    }
 }
 
 //*****************************************************************************

@@ -111,6 +111,15 @@ let oneShotConfig = [
         default     : [],
         options     : device_driverlib_peripheral.EPWM_TZ_SIGNAL.slice(8,16)
     },
+    {
+        name: "epwmTripZone_oneShotSourceAdditional",
+        displayName : "Additional One-Shot Source",
+        description : 'Check to enable the source to the One-Shot OR gate',
+        hidden      : false,
+        minSelections : 0,
+        default     : [],
+        options     : device_driverlib_peripheral.EPWM_TZ_SIGNAL.slice(17,18)
+    },
 
 ];
 
@@ -123,6 +132,15 @@ let cbcConfig = [
         minSelections : 0,
         default     : [],
         options     : device_driverlib_peripheral.EPWM_TZ_SIGNAL.slice(0,8)
+    },
+    {
+        name: "epwmTripZone_cbcSourceAdditional",
+        displayName : "Additional CBC Source",
+        description : 'Check to enable the source to the CBC OR gate',
+        hidden      : false,
+        minSelections : 0,
+        default     : [],
+        options     : device_driverlib_peripheral.EPWM_TZ_SIGNAL.slice(16,17)
     },
     {
         name: "epwmTripZone_cbcPulse",

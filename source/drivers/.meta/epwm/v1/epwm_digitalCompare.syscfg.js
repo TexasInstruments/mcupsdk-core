@@ -5,6 +5,54 @@ let DCCompareTypeConfigNames_CombinationNames = []
 let DCAConfigs = [];
 let DCBConfigs = [];
 
+function onChangeEventDetection(inst, ui)
+{
+    if(inst.epwmDigitalCompare_enableEventDetection)
+    {
+        ui.epwmDigitalCompare_CAPGATETripInput.hidden = false;
+        // ui.epwmDigitalCompare_CAPGATE_combinationInputConfig.hidden = false;
+        ui.epwmDigitalCompare_configCAPGATE.hidden = false;
+        ui.epwmDigitalCompare_CAPINTripInput.hidden = false;
+        // ui.epwmDigitalCompare_CAPIN_combinationInputConfig.hidden = false;
+        ui.epwmDigitalCompare_invertCAPIN.hidden = false;
+        ui.epwmXCMP_setRegisters_XMIN_read.hidden = false;
+        ui.epwmXCMP_setShadowRegisters1_XMIN_read.hidden = false;
+        ui.epwmXCMP_setShadowRegisters2_XMIN_read.hidden = false;
+        ui.epwmXCMP_setShadowRegisters3_XMIN_read.hidden = false;
+        ui.epwmXCMP_setRegisters_XMAX_read.hidden = false;
+        ui.epwmXCMP_setShadowRegisters1_XMAX_read.hidden = false;
+        ui.epwmXCMP_setShadowRegisters2_XMAX_read.hidden = false;
+        ui.epwmXCMP_setShadowRegisters3_XMAX_read.hidden = false;
+
+
+    }else
+    {
+        ui.epwmDigitalCompare_CAPGATETripInput.hidden = true;
+        ui.epwmDigitalCompare_CAPGATE_combinationInputConfig.hidden = true;
+        ui.epwmDigitalCompare_configCAPGATE.hidden = true;
+        ui.epwmDigitalCompare_CAPINTripInput.hidden = true;
+        ui.epwmDigitalCompare_CAPIN_combinationInputConfig.hidden = true;
+        ui.epwmDigitalCompare_invertCAPIN.hidden = true;
+        ui.epwmXCMP_setRegisters_XMIN_read.hidden = true;
+        ui.epwmXCMP_setRegisters_XMIN_read.hidden = true;
+        ui.epwmXCMP_setShadowRegisters1_XMIN_read.hidden = true;
+        ui.epwmXCMP_setShadowRegisters2_XMIN_read.hidden = true;
+        ui.epwmXCMP_setShadowRegisters3_XMIN_read.hidden = true;
+        ui.epwmXCMP_setRegisters_XMAX_read.hidden = true;
+        ui.epwmXCMP_setShadowRegisters1_XMAX_read.hidden = true;
+        ui.epwmXCMP_setShadowRegisters2_XMAX_read.hidden = true;
+        ui.epwmXCMP_setShadowRegisters3_XMAX_read.hidden = true;
+
+        inst.epwmDigitalCompare_CAPGATETripInput = device_peripheral.EPWM_DigitalCompareTripInput[0].name;
+        inst.epwmDigitalCompare_CAPGATE_combinationInputConfig = [];
+        inst.epwmDigitalCompare_configCAPGATE = device_peripheral.EPWM_selectCaptureGateInputPolarity[0].name;
+        inst.epwmDigitalCompare_CAPINTripInput = device_peripheral.EPWM_DigitalCompareTripInput[0].name;
+        inst.epwmDigitalCompare_CAPIN_combinationInputConfig = [];
+        inst.epwmDigitalCompare_invertCAPIN = "EPWM_CAPTURE_INPUT_CAPIN_SYNC";
+        
+    }
+}
+
 function pulseSelChanged(inst, ui)
 {
     inst.epwmDigitalCompare_dCCounterCapturePulse = inst.epwmDigitalCompare_blankingWindowEvent;
@@ -571,6 +619,142 @@ let config = [
     },
 ];
 
+
+// if(["am263px"].includes(common.getSocName()))
+{
+    config = config.concat(    
+        {
+            name: "epwmDigitalCompare_enableEventDetection",
+            displayName : "Use Event Detection",
+            description : "Use the DC Event Detection to determine occurrence of a trip event in a configured time window",
+            hidden      : false,
+            default     : false,
+            onChange    : onChangeEventDetection
+        },
+        {
+            name: "epwmDigitalCompare_CAPINTripInput",
+            displayName : "Capture Input",
+            description : "Trip input on which edge detection logic is performed",
+            hidden      : true,
+            default     : device_peripheral.EPWM_DigitalCompareTripInput[0].name,
+            options     : device_peripheral.EPWM_DigitalCompareTripInput,
+            onChange    : (inst, ui)=>{
+                if(inst["epwmDigitalCompare_CAPINTripInput"] === "EPWM_DC_TRIP_COMBINATION")
+                {
+                    ui["epwmDigitalCompare_CAPIN_combinationInputConfig"].hidden = false;
+                }else{
+                    ui["epwmDigitalCompare_CAPIN_combinationInputConfig"].hidden = true;
+                }
+            },
+        },
+        {
+            name: "epwmDigitalCompare_CAPIN_combinationInputConfig",
+            displayName : "Combination Capture Input Sources",
+            description : "Select the sources to include in the Combination input sources",
+            hidden      : true,
+            minSelections: 0,
+            default     : [],
+            options     : device_peripheral.EPWM_DC_COMBINATIONAL
+        },
+        {
+            name: "epwmDigitalCompare_invertCAPIN", 
+            displayName : "Invert Capture Input polarity",
+            description : 'Selects the input polarity for capture',
+            hidden      : true,
+            default     : device_peripheral.EPWM_selectCaptureInputPolarity[0].name,
+            options     : device_peripheral.EPWM_selectCaptureInputPolarity,
+        },
+        {
+            name: "epwmDigitalCompare_CAPGATETripInput",
+            displayName : "Capture Gate",
+            description : "Trip input gating the min/max logic",
+            hidden      : true,
+            default     : device_peripheral.EPWM_DigitalCompareTripInput[0].name,
+            options     : device_peripheral.EPWM_DigitalCompareTripInput,
+            onChange    : (inst, ui)=>{
+                if(inst["epwmDigitalCompare_CAPGATETripInput"] === "EPWM_DC_TRIP_COMBINATION")
+                {
+                    ui["epwmDigitalCompare_CAPGATE_combinationInputConfig"].hidden = false;
+                }else{
+                    ui["epwmDigitalCompare_CAPGATE_combinationInputConfig"].hidden = true;
+                }
+            },
+        },
+        {
+            name: "epwmDigitalCompare_CAPGATE_combinationInputConfig",
+            displayName : "Combination Capture Gate Input Sources",
+            description : "Select the sources to include in the Combination input sources",
+            hidden      : true,
+            minSelections: 0,
+            default     : [],
+            options     : device_peripheral.EPWM_DC_COMBINATIONAL
+        },
+        {
+            name: "epwmDigitalCompare_configCAPGATE", 
+            displayName : "Capture Gate Polarity Select",
+            description : 'Capture Gate selection of the input polarity',
+            hidden      : true,
+            default     : device_peripheral.EPWM_selectCaptureGateInputPolarity[0].name,
+            options     : device_peripheral.EPWM_selectCaptureGateInputPolarity
+        },
+        {
+            name: "epwmXCMP_setRegisters_XMIN_read",
+            displayName: "XMIN",
+            hidden: true,
+            getValue: (inst) => inst.epwmXMin_Active,
+            default: 0,
+        },
+        {
+            name: "epwmXCMP_setShadowRegisters1_XMIN_read",
+            displayName: "XMIN Shadow 1",
+            hidden: true,
+            getValue: (inst) => inst.epwmXMin_Shdw1,
+            default: 0,
+        },
+        {
+            name: "epwmXCMP_setShadowRegisters2_XMIN_read",
+            displayName: "XMIN Shadow 2",
+            hidden: true,
+            getValue: (inst) => inst.epwmXMin_Shdw2,
+            default: 0,
+        },
+        {
+            name: "epwmXCMP_setShadowRegisters3_XMIN_read",
+            displayName: "XMIN Shadow 3",
+            hidden: true,
+            getValue: (inst) => inst.epwmXMin_Shdw3,
+            default: 0,
+        },
+        {
+            name: "epwmXCMP_setRegisters_XMAX_read",
+            displayName: "XMAX",
+            hidden: true,
+            getValue: (inst) => inst.epwmXMax_Active,
+            default: 0,
+        },  
+        {
+            name: "epwmXCMP_setShadowRegisters1_XMAX_read",
+            displayName: "XMAX Shadow 1",
+            hidden: true,
+            getValue: (inst) => inst.epwmXMax_Shdw1,
+            default: 0,
+        },     
+        {
+            name: "epwmXCMP_setShadowRegisters2_XMAX_read",
+            displayName: "XMAX Shadow 2",
+            hidden: true,
+            getValue: (inst) => inst.epwmXMax_Shdw2,
+            default: 0,
+        },
+        {
+            name: "epwmXCMP_setShadowRegisters3_XMAX_read",
+            displayName: "XMAX Shadow 3",
+            hidden: true,
+            getValue: (inst) => inst.epwmXMax_Shdw3,
+            default: 0,
+        }
+    )
+}
 
 let epwmDigitalCompareSubmodule = {
     displayName: "EPWM Digital Compare",

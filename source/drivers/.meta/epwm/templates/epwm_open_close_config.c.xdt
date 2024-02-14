@@ -127,6 +127,8 @@ void Drivers_epwmOpen(void)
 	`epwm_json_resolver.getCode(instance, instance,"epwmTripZone_oneShotSource")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmTripZone_cbcSource")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmTripZone_cbcPulse")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTripZone_oneShotSourceAdditional")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmTripZone_cbcSourceAdditional")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmTripZone_tzInterruptSource")`
 
 	/* Digital Compare */
@@ -187,6 +189,22 @@ void Drivers_epwmOpen(void)
 	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_B_EPWM_DC_EVENT_1_latchClearEvent")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_B_EPWM_DC_EVENT_2_latchMode")`
 	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_EPWM_DC_MODULE_B_EPWM_DC_EVENT_2_latchClearEvent")`
+
+    /* DCCAP Edge Detection */
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_enableEventDetection")`
+    % if(instance["epwmDigitalCompare_CAPGATE_combinationInputConfig"] != 0){    
+    `epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_CAPGATE_combinationInputConfig")`
+    %} else {
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_CAPGATETripInput")`
+    %}
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_configCAPGATE")`
+    % if(instance["epwmDigitalCompare_CAPIN_combinationInputConfig"] != 0){    
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_CAPIN_combinationInputConfig")`
+    %} else {
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_CAPINTripInput")`
+    %}
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_invertCAPIN")`
+	`epwm_json_resolver.getCode(instance, instance,"epwmDigitalCompare_dCCounterCapturePulseLogic")`
 
 	/* Deadband */
     `epwm_json_resolver.getCode(instance, instance,"epwmDeadband_controlShadowMode")`
