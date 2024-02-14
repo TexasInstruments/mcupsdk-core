@@ -418,7 +418,7 @@ static void uart_echo_read_external_loopback_full_test(void *args)
     UART_close(gUartHandle[CONFIG_UART1]);
     uartHandle = UART_open(CONFIG_UART0, uartParams);
     TEST_ASSERT_NOT_NULL(uartHandle);
-    uartParams1->intrNum = CSLR_R5FSS0_CORE0_INTR_UART4_IRQ;
+    uartParams1->intrNum = CSLR_R5FSS0_CORE0_INTR_UART1_IRQ;
     uartHandle1 = UART_open(CONFIG_UART1, uartParams1);
     TEST_ASSERT_NOT_NULL(uartHandle1);
 
@@ -502,7 +502,7 @@ static void uart_echo_read_partial_external_loopback_full_test(void *args)
     UART_close(gUartHandle[CONFIG_UART1]);
     uartHandle = UART_open(CONFIG_UART0, uartParams);
     TEST_ASSERT_NOT_NULL(uartHandle);
-    uartParams1->intrNum = CSLR_R5FSS0_CORE0_INTR_UART4_IRQ;
+    uartParams1->intrNum = CSLR_R5FSS0_CORE0_INTR_UART1_IRQ;
     uartHandle1 = UART_open(CONFIG_UART1, uartParams1);
     TEST_ASSERT_NOT_NULL(uartHandle1);
 
@@ -579,12 +579,12 @@ static void uart_echo_read_autobaud_external_loopback_full_test(void *args)
     UART_close(gUartHandle[CONFIG_UART0]);
     UART_close(gUartHandle[CONFIG_UART1]);
 
-    uartParams1->intrNum = CSLR_R5FSS0_CORE0_INTR_UART4_IRQ;
+    uartParams1->intrNum = CSLR_R5FSS0_CORE0_INTR_UART1_IRQ;
     uartHandle1 = UART_open(CONFIG_UART1, uartParams1);
     TEST_ASSERT_NOT_NULL(uartHandle1);
 
     uartParams->operMode = UART_OPER_MODE_16X;
-    uartParams->intrNum = CSLR_R5FSS0_CORE0_INTR_UART1_IRQ;
+    uartParams->intrNum = CSLR_R5FSS0_CORE0_INTR_UART4_IRQ;
     uartHandle = UART_open(CONFIG_UART0, uartParams);
     TEST_ASSERT_NOT_NULL(uartHandle);
 
@@ -911,7 +911,7 @@ static void test_uart_set_params(UART_TestParams *testParams, uint32_t tcId)
     params->intrNum = CSLR_R5FSS0_CORE0_INTR_UART0_USART_IRQ_0;
     #endif
     #if defined(SOC_AM263X)
-    params->intrNum = CSLR_R5FSS0_CORE0_INTR_UART1_IRQ;
+    params->intrNum = CSLR_R5FSS0_CORE0_INTR_UART4_IRQ;
     #endif
     #if defined(SOC_AM263PX)
     params->intrNum = CSLR_R5FSS0_CORE0_INTR_UART0_IRQ;

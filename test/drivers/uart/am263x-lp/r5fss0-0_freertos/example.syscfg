@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
@@ -40,13 +40,28 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-uart1.$name            = "CONFIG_UART0";
-uart1.rxTrigLvl        = "56";
-uart1.UART.$assign     = "UART0";
-uart1.UART.RXD.$assign = "UART0_RXD";
-uart1.UART.TXD.$assign = "UART0_TXD";
+uart1.$name             = "CONFIG_UART0";
+uart1.hwFlowControl     = true;
+uart1.hwFlowControlThr  = "8";
+uart1.UART.$assign      = "UART4";
+uart1.UART.RXD.$assign  = "SPI1_CLK";
+uart1.UART.RXD.$used    = false;
+uart1.UART.TXD.$assign  = "SPI1_CS0";
+uart1.UART.RTSn.$assign = "EQEP0_A";
+uart1.UART.RTSn.$used   = false;
+uart1.UART.CTSn.$assign = "EQEP0_B";
+uart1.child.$name       = "drivers_uart_v2_uart_v2_template0";
 
-uart2.$name = "CONFIG_UART1";
+uart2.$name             = "CONFIG_UART1";
+uart2.hwFlowControl     = true;
+uart2.UART.$assign      = "UART1";
+uart2.UART.RXD.$assign  = "UART1_RXD";
+uart2.UART.TXD.$assign  = "UART1_TXD";
+uart2.UART.TXD.$used    = false;
+uart2.UART.RTSn.$assign = "EPWM9_B";
+uart2.UART.CTSn.$assign = "EPWM10_A";
+uart2.UART.CTSn.$used   = false;
+uart2.child.$name       = "drivers_uart_v2_uart_v2_template1";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -255,12 +270,3 @@ section12.type                        = "NOLOAD";
 section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_r5f_queue_mem";
 section12.output_section[0].alignment = 0;
-
-/**
- * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
- * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
- * re-solve from scratch.
- */
-uart2.UART.$suggestSolution     = "UART1";
-uart2.UART.RXD.$suggestSolution = "LIN1_RXD";
-uart2.UART.TXD.$suggestSolution = "LIN1_TXD";
