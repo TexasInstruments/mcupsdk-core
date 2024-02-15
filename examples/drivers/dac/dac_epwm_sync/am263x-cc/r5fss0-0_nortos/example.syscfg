@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
@@ -120,7 +120,6 @@ region1.memory_region[4].manualStartAddress  = 0x70040000;
 region1.memory_region[4].size                = 0x40000;
 region1.memory_region[5].type                = "FLASH";
 region1.memory_region[5].auto                = false;
-region1.memory_region[5].manualStartAddress  = 0x60100000;
 region1.memory_region[5].size                = 0x80000;
 region1.memory_region[5].$name               = "FLASH";
 region1.memory_region[6].$name               = "USER_SHM_MEM";
@@ -292,4 +291,4 @@ int_xbar1.xbarOutput = ["EPWM0_INT"];
  * re-solve from scratch.
  */
 epwm1.EPWM.A.$suggestSolution = "EPWM0_A";
-gpio1.GPIO.$suggestSolution   = "GPIO";
+gpio1.GPIO.$suggestSolution   = "GPIO0";
