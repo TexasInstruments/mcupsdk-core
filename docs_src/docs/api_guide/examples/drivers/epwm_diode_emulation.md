@@ -161,8 +161,8 @@ Similarly for channel B, the flag gets cleared at the point marked by the green 
 - EPWM6_A(B), pin can be connected to an oscilloscope to view the waveform.
 - Output Xbar 13 and 14 can be connected to an oscilloscope to view the waveform.
 
-## AM263X-CC
-When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263PX-CC
+When using AM263PX-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Connect HSEC pin 49, 51 to scope for EPWM0A(B)
 - Connect HSEC pin 53 to scope for EPWM1A
 - Connect HSEC pin 50, 52 to scope for EPWM2A(B)
@@ -173,7 +173,7 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 - Connect HSEC pin 68 to scope for OutputXbar 13
 - Connect HSEC pin 70 to scope for OutputXbar 14
 
-## AM263X-LP
+## AM263PX-LP
 - Connect J2/J4 pin 11, J6/J8 pin 59 to scope for EPWM0A(B)
 - Connect J2/J4 pin 37 to scope for EPWM1A
 - Connect J2/J4 pin 39, 40 to scope for EPWM2A(B)

@@ -3766,7 +3766,7 @@
         "name": "epwm_xcmp_dma",
         "location": "../../examples/drivers/epwm/epwm_xcmp_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "TMDSCNCD263"
+            "TMDSCNCD263P"
         ],
         "kernel": [
             "nortos"
@@ -3799,7 +3799,7 @@
         "name": "epwm_xcmp_dma",
         "location": "../../examples/drivers/epwm/epwm_xcmp_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
-            "LP-AM263"
+            "LP-AM263P"
         ],
         "kernel": [
             "nortos"
@@ -4405,6 +4405,138 @@
             "drivers",
             "epwm",
             "epwm_valley_switching",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EPWM xcmp example. This example is used to generate multiple edges in pwm cycle CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_xcmp_multiple_edges",
+        "location": "../../examples/drivers/epwm/epwm_xcmp_multiple_edges/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_xcmp_multiple_edges",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EPWM xcmp example. This example is used to generate multiple edges in pwm cycle CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_xcmp_multiple_edges",
+        "location": "../../examples/drivers/epwm/epwm_xcmp_multiple_edges/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_xcmp_multiple_edges",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates the functionalities of epwm working in DE mode, the trip inputs are sourced from other epwm instances only and not from cmpss. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_diode_emulation",
+        "location": "../../examples/drivers/epwm/epwm_diode_emulation/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_diode_emulation",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example demonstrates the functionalities of epwm working in DE mode, the trip inputs are sourced from other epwm instances only and not from cmpss. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_diode_emulation",
+        "location": "../../examples/drivers/epwm/epwm_diode_emulation/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_diode_emulation",
             "r5fss0-0_nortos"
         ],
         "mainCategories": [

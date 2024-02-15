@@ -24,24 +24,24 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=epwm_xcmp_dma.$(PROFILE).out
+OUTNAME:=epwm_diode_emulation.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=epwm_xcmp_dma.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=epwm_xcmp_dma.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=epwm_xcmp_dma.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=epwm_xcmp_dma.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=epwm_xcmp_dma.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=epwm_xcmp_dma.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=epwm_xcmp_dma.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=epwm_xcmp_dma.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=epwm_diode_emulation.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=epwm_diode_emulation.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=epwm_diode_emulation.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=epwm_diode_emulation.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=epwm_diode_emulation.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=epwm_diode_emulation.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=epwm_diode_emulation.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=epwm_diode_emulation.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
 endif
 
 FILES_common := \
-	epwm_xcmp_dma.c \
+	epwm_diode_emulation.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -198,7 +198,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263px:r5fss0-0:nortos:ti-arm-clang epwm_xcmp_dma ...
+	@echo  Scrubing: am263px:r5fss0-0:nortos:ti-arm-clang epwm_diode_emulation ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -230,10 +230,10 @@ $(SYSCFG_GEN_FILES): syscfg
 
 syscfg: ../example.syscfg
 	@echo Generating SysConfig files ...
-	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM263P4 --package ZCZ_C --output generated/ ../example.syscfg
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM263P4 --package ZCZ_S --output generated/ ../example.syscfg
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM263Px --context r5fss0-0 --part AM263P4 --package ZCZ_C --output generated/  ../example.syscfg
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM263Px --context r5fss0-0 --part AM263P4 --package ZCZ_S --output generated/  ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)
@@ -304,12 +304,12 @@ endif
 endif
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for epwm_xcmp_dma.$(PROFILE) ...
+	@echo Creating Coverage Report for epwm_diode_emulation.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o epwm_xcmp_dma.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=epwm_xcmp_dma.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=epwm_xcmp_dma.$(PROFILE).profdata > coverage/epwm_xcmp_dma.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/epwm_xcmp_dma.$(PROFILE).profdata.json --output-json=coverage/epwm_xcmp_dma.$(PROFILE).analysis.json --output=../epwm_xcmp_dma.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o epwm_diode_emulation.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=epwm_diode_emulation.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=epwm_diode_emulation.$(PROFILE).profdata > coverage/epwm_diode_emulation.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/epwm_diode_emulation.$(PROFILE).profdata.json --output-json=coverage/epwm_diode_emulation.$(PROFILE).analysis.json --output=../epwm_diode_emulation.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

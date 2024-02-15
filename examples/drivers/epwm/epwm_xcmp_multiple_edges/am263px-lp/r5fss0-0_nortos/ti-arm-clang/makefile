@@ -24,24 +24,24 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=epwm_xcmp_dma.$(PROFILE).out
+OUTNAME:=epwm_xcmp_multiple_edges.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=epwm_xcmp_dma.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=epwm_xcmp_dma.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=epwm_xcmp_dma.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=epwm_xcmp_dma.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=epwm_xcmp_dma.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=epwm_xcmp_dma.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=epwm_xcmp_dma.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=epwm_xcmp_dma.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=epwm_xcmp_multiple_edges.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=epwm_xcmp_multiple_edges.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=epwm_xcmp_multiple_edges.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=epwm_xcmp_multiple_edges.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=epwm_xcmp_multiple_edges.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=epwm_xcmp_multiple_edges.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=epwm_xcmp_multiple_edges.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=epwm_xcmp_multiple_edges.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
 endif
 
 FILES_common := \
-	epwm_xcmp_dma.c \
+	epwm_xcmp_multiple_edges.c \
 	main.c \
 	ti_drivers_config.c \
 	ti_drivers_open_close.c \
@@ -62,7 +62,7 @@ INCLUDES_common := \
 	-Igenerated \
 
 DEFINES_common := \
-	-DSOC_AM263X \
+	-DSOC_AM263PX \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -94,7 +94,7 @@ CFLAGS_release := \
 	-Os \
 
 LNK_FILES_common = \
-	linker.cmd \
+	generated/linker.cmd \
 
 LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
@@ -103,9 +103,9 @@ LIBS_PATH_common = \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
-	-lnortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lnortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lboard.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -116,9 +116,9 @@ LFLAGS_common = \
 
 
 LIBS_NAME = \
-	nortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	board.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
@@ -132,6 +132,9 @@ FILES := $(FILES_common) $(FILES_$(PROFILE))
 ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
 FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
 CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ifeq ($(INSTRUMENTATION_MODE), yes)
+CFLAGS += -fprofile-instr-generate -fcoverage-mapping
+endif
 DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
 INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 LIBS := $(LIBS_common) $(LIBS_$(PROFILE))
@@ -152,11 +155,11 @@ vpath %.lib $(LIBS_PATH_NAME)
 vpath %.a $(LIBS_PATH_NAME)
 
 $(OBJDIR)/%.obj %.obj: %.c
-	@echo  Compiling: am263x:r5fss0-0:nortos:ti-arm-clang $(OUTNAME): $<
+	@echo  Compiling: am263px:r5fss0-0:nortos:ti-arm-clang $(OUTNAME): $<
 	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
 
 $(OBJDIR)/%.obj %.obj: %.S
-	@echo  Compiling: am263x:r5fss0-0:nortos:ti-arm-clang $(LIBNAME): $<
+	@echo  Compiling: am263px:r5fss0-0:nortos:ti-arm-clang $(LIBNAME): $<
 	$(CC) -c $(CFLAGS) -o $(OBJDIR)/$@ $<
 
 all: $(TARGETS)
@@ -168,15 +171,23 @@ SYSCFG_GEN_FILES+=generated/ti_pinmux_config.c generated/ti_power_clock_config.c
 SYSCFG_GEN_FILES+=generated/ti_board_config.c generated/ti_board_config.h
 SYSCFG_GEN_FILES+=generated/ti_board_open_close.c generated/ti_board_open_close.h
 
-$(OUTNAME): syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+SYSTEM_FLAG ?= false
+
+ifeq ($(SYSTEM_FLAG), false)
+	SYSTEM_COMMAND := syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+else
+	SYSTEM_COMMAND := $(OBJS) $(LNK_FILES) $(LIBS_NAME)
+endif
+
+$(OUTNAME):  $(SYSTEM_COMMAND)
 	@echo  .
-	@echo  Linking: am263x:r5fss0-0:nortos:ti-arm-clang $@ ...
+	@echo  Linking: am263px:r5fss0-0:nortos:ti-arm-clang $@ ...
 	$(LNK) $(LNKOPTFLAGS) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)
-	@echo  Linking: am263x:r5fss0-0:nortos:ti-arm-clang $@ Done !!!
+	@echo  Linking: am263px:r5fss0-0:nortos:ti-arm-clang $@ Done !!!
 	@echo  .
 
 clean:
-	@echo  Cleaning: am263x:r5fss0-0:nortos:ti-arm-clang $(OUTNAME) ...
+	@echo  Cleaning: am263px:r5fss0-0:nortos:ti-arm-clang $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
 	$(RM) $(OUTNAME)
 	$(RM) $(BOOTIMAGE_NAME)
@@ -187,7 +198,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263x:r5fss0-0:nortos:ti-arm-clang epwm_xcmp_dma ...
+	@echo  Scrubing: am263px:r5fss0-0:nortos:ti-arm-clang epwm_xcmp_multiple_edges ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -219,10 +230,10 @@ $(SYSCFG_GEN_FILES): syscfg
 
 syscfg: ../example.syscfg
 	@echo Generating SysConfig files ...
-	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM263x --package ZCZ --output generated/ ../example.syscfg
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM263P4 --package ZCZ_C --output generated/ ../example.syscfg
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM263x_beta --context r5fss0-0 --part AM263x --package ZCZ --output generated/  ../example.syscfg
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM263Px --context r5fss0-0 --part AM263P4 --package ZCZ_C --output generated/  ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)
@@ -262,7 +273,7 @@ MULTI_CORE_IMAGE_PARAMS_XIP = \
 	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
 
 $(BOOTIMAGE_NAME): $(OUTNAME)
-	@echo  Boot image: am263x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
+	@echo  Boot image: am263px:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
 ifneq ($(OS),Windows_NT)
 	$(CHMOD) a+x $(XIPGEN_CMD)
 endif
@@ -274,7 +285,7 @@ endif
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
-	@echo  Boot image: am263x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  Boot image: am263px:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
 
 $(BOOTIMAGE_NAME_HS): $(BOOTIMAGE_NAME)
@@ -282,23 +293,23 @@ ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED),no)
 	@echo Boot image signing: Encryption is disabled.
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS)
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --output $(BOOTIMAGE_NAME_HS)
 else
 	@echo Boot image signing: Encryption is enabled.
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --output $(BOOTIMAGE_NAME_HS)
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --enc_key_id $(APP_ENCRYPTION_KEY_KEYRING_ID) --output $(BOOTIMAGE_NAME_HS)
 	$(RM) $(BOOTIMAGE_NAME)-enc
 endif
-	@echo  Boot image: am263x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
+	@echo  Boot image: am263px:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
 	@echo  .
 endif
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for epwm_xcmp_dma.$(PROFILE) ...
+	@echo Creating Coverage Report for epwm_xcmp_multiple_edges.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o epwm_xcmp_dma.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=epwm_xcmp_dma.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=epwm_xcmp_dma.$(PROFILE).profdata > coverage/epwm_xcmp_dma.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/epwm_xcmp_dma.$(PROFILE).profdata.json --output-json=coverage/epwm_xcmp_dma.$(PROFILE).analysis.json --output=../epwm_xcmp_dma.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o epwm_xcmp_multiple_edges.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=epwm_xcmp_multiple_edges.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=epwm_xcmp_multiple_edges.$(PROFILE).profdata > coverage/epwm_xcmp_multiple_edges.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/epwm_xcmp_multiple_edges.$(PROFILE).profdata.json --output-json=coverage/epwm_xcmp_multiple_edges.$(PROFILE).analysis.json --output=../epwm_xcmp_multiple_edges.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

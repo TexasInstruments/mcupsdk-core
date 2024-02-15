@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Epwm Xcmp Dma"
-        name = "epwm_xcmp_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang"
+        title="Epwm Diode Emulation"
+        name = "epwm_diode_emulation_am263px-cc_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -47,7 +47,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=epwm_xcmp_dma.${ConfigName}.map
+            -m=epwm_diode_emulation.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs
@@ -60,7 +60,7 @@
             --context r5fss0-0 --part AM263P4 --package ZCZ_S
         "
 
-        description="A Epwm Xcmp Dma NORTOS project">
+        description="A Epwm Diode Emulation NORTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="
@@ -87,13 +87,13 @@
             "
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
-        <file path="../../../epwm_xcmp_dma.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../../epwm_diode_emulation.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263px/EXAMPLES_DRIVERS_EPWM_XCMP_DMA.html"
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263px/EXAMPLES_DRIVERS_EPWM_DIODE_EMULATION.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">

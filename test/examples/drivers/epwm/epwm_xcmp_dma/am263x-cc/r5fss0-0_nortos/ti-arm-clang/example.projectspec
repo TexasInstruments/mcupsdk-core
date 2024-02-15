@@ -11,7 +11,7 @@
 
     <project
         title="Epwm Xcmp Dma"
-        name = "epwm_xcmp_dma_am263x-lp_r5fss0-0_nortos_ti-arm-clang"
+        name = "epwm_xcmp_dma_am263x-cc_r5fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -19,7 +19,7 @@
         "
         connection="TIXDS110_Connection.xml"
         toolChain="TICLANG"
-        cgtVersion="3.2.0"
+        cgtVersion="3.2.1"
         device="Cortex R.AM263x"
         deviceCore="Cortex_R5_0"
         ignoreDefaultDeviceSettings="true"
@@ -90,8 +90,6 @@
         <file path="../../../epwm_xcmp_dma.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
-        </file>
-        <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>

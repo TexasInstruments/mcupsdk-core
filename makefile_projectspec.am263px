@@ -110,6 +110,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_deadband_am263px-cc_r5fss0-0_n
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_xcmp_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_xcmp_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_hr_duty_cycle_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_hr_duty_cycle_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_hr_updown_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
@@ -128,6 +130,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_trip_zone_am263px-cc_r5fss0-0_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_trip_zone_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_valley_switching_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_valley_switching_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_xcmp_multiple_edges_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_xcmp_multiple_edges_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_diode_emulation_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_diode_emulation_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += eqep_frequency_measurement_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += eqep_frequency_measurement_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += eqep_position_speed_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
@@ -702,6 +708,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  epwm_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/epwm/epwm_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ epwm_xcmp_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_xcmp_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_xcmp_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_xcmp_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
  epwm_hr_duty_cycle_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/epwm/epwm_hr_duty_cycle/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -755,6 +767,18 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  epwm_valley_switching_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/epwm/epwm_valley_switching/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_xcmp_multiple_edges_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_xcmp_multiple_edges/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_xcmp_multiple_edges_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_xcmp_multiple_edges/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_diode_emulation_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_diode_emulation/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_diode_emulation_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_diode_emulation/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  eqep_frequency_measurement_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/eqep/eqep_frequency_measurement/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1604,6 +1628,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_deadband_am263px-cc_r5fss0-0_n
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_xcmp_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_xcmp_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_hr_duty_cycle_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_hr_duty_cycle_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_hr_updown_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1622,6 +1648,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_trip_zone_am263px-cc_r5fss0-0_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_trip_zone_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_valley_switching_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_valley_switching_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_xcmp_multiple_edges_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_xcmp_multiple_edges_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_diode_emulation_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_diode_emulation_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += eqep_frequency_measurement_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += eqep_frequency_measurement_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += eqep_position_speed_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2196,6 +2226,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  epwm_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/epwm/epwm_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ epwm_xcmp_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_xcmp_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_xcmp_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_xcmp_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
  epwm_hr_duty_cycle_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/epwm/epwm_hr_duty_cycle/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -2249,6 +2285,18 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  epwm_valley_switching_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/epwm/epwm_valley_switching/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_xcmp_multiple_edges_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_xcmp_multiple_edges/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_xcmp_multiple_edges_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_xcmp_multiple_edges/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_diode_emulation_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_diode_emulation/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_diode_emulation_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_diode_emulation/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  eqep_frequency_measurement_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/eqep/eqep_frequency_measurement/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -3098,6 +3146,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_deadband_am263px-cc_r5fss0-0_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_xcmp_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_xcmp_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_hr_duty_cycle_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_hr_duty_cycle_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_hr_updown_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
@@ -3116,6 +3166,10 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_trip_zone_am263px-cc_r5fss0-0
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_trip_zone_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_valley_switching_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_valley_switching_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_xcmp_multiple_edges_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_xcmp_multiple_edges_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_diode_emulation_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_diode_emulation_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += eqep_frequency_measurement_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += eqep_frequency_measurement_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += eqep_position_speed_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
@@ -3690,6 +3744,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  epwm_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/epwm/epwm_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ epwm_xcmp_dma_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_xcmp_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_xcmp_dma_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_xcmp_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
  epwm_hr_duty_cycle_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/epwm/epwm_hr_duty_cycle/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -3743,6 +3803,18 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  epwm_valley_switching_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/epwm/epwm_valley_switching/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_xcmp_multiple_edges_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_xcmp_multiple_edges/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_xcmp_multiple_edges_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_xcmp_multiple_edges/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_diode_emulation_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_diode_emulation/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_diode_emulation_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_diode_emulation/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  eqep_frequency_measurement_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/eqep/eqep_frequency_measurement/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -4608,6 +4680,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_deadband/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_xcmp_dma/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_xcmp_dma/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_hr_duty_cycle/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_hr_duty_cycle/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_hr_updown/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -4626,6 +4700,10 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_trip_zone/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_valley_switching/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_valley_switching/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_xcmp_multiple_edges/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_xcmp_multiple_edges/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_diode_emulation/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_diode_emulation/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/eqep/eqep_frequency_measurement/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/eqep/eqep_frequency_measurement/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/eqep/eqep_position_speed/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]

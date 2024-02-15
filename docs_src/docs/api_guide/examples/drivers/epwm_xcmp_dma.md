@@ -17,8 +17,8 @@ EDMA Configurations :
 Shadow sets 2,3 are set to repeat 5 times each.
 
 
-\imageStyle{am263_epwm_xcmp_dma_block_diagram.PNG,width:80%}
- \image html am263_epwm_xcmp_dma_block_diagram.PNG "EPWM XCMP multiple edges waveform"
+\imageStyle{am263_epwm_xcmp_dma_block_diagram.png,width:80%}
+ \image html am263_epwm_xcmp_dma_block_diagram.png "EPWM XCMP DMA Block Diagram"
 
 
 
@@ -26,14 +26,14 @@ Shadow sets 2,3 are set to repeat 5 times each.
 
 connect the following EPWM outputs to an oscilloscope to view the waveform.
 
-## AM263x-CC E1/E2 or AM263Px-CC E1
+## AM263Px-CC E1
     - EPWM0_A and EPWM0_B pin ie, HSEC 49, HSEC 51.
     - EPWM1_A and EPWM1_B pin ie, HSEC 53, HSEC 55.
     - EPWM2_A and EPWM2_B pin ie, HSEC 50, HSEC 52.
     - EPWM3_A and EPWM3_B pin ie, HSEC 54, HSEC 56.
     - EPWM4_A and EPWM4_B pin ie, HSEC 57, HSEC 59.
 
-## AM263x-LP
+## AM263Px-LP
     - EPWM0_A and EPWM0_B pin ie, HSEC 49, HSEC 51.
     - EPWM1_A and EPWM1_B pin ie, HSEC 53, HSEC 55.
     - EPWM2_A and EPWM2_B pin ie, HSEC 50, HSEC 52.
@@ -49,7 +49,7 @@ connect the following EPWM outputs to an oscilloscope to view the waveform.
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/drivers/epwm/epwm_xcmp_dma_
+ Example folder | examples/drivers/epwm/epwm_xcmp_dma
 
 \endcond
 
@@ -78,6 +78,6 @@ EPWM XCMP EDMA Test Passed!!
 All tests have passed!!
 \endcode
 
-\imageStyle{am263_epwm_xcmp_dma_output.PNG,width:80%}
- \image html am263_epwm_xcmp_dma_output.PNG "EPWM XCMP multiple edges waveform"
+\imageStyle{am263_epwm_xcmp_dma_output.png,width:80%}
+ \image html am263_epwm_xcmp_dma_output.png "EPWM XCMP DMA waveform"
 
