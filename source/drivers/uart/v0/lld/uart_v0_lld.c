@@ -1516,8 +1516,6 @@ int32_t UART_readCancelNoCB(UARTLLD_Handle hUart)
 {
     uintptr_t           key;
     int32_t status = UART_TRANSFER_STATUS_SUCCESS;
-    uint8_t             rdData;
-    uint32_t            flag;
     UARTLLD_InitHandle         hUartInit;
     hUartInit = hUart->hUartInit;
 
@@ -1557,12 +1555,6 @@ int32_t UART_readCancelNoCB(UARTLLD_Handle hUart)
             /* Set size = 0 to prevent reading and restore interrupts. */
             hUart->readSizeRemaining = 0;
 
-            /* Flush the RX FIFO */
-            do
-            {
-                flag = UART_getChar(hUart->baseAddr, &rdData);
-            }
-            while (flag != FALSE);
         }
     }
 
