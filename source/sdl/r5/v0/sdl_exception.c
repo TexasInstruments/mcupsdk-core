@@ -3,7 +3,7 @@
  *
  * Software Diagnostics Library module for handling exceptions
  *
- *  Copyright (c) Texas Instruments Incorporated 2022
+ *  Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -38,8 +38,11 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-#if defined(SOC_AM263X) || defined(SOC_AM64X) || defined(SOC_AM243X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM64X) || defined(SOC_AM243X)
 #include <sdl/esm/v0/sdl_esm.h>
+#endif
+#if defined(SOC_AM263PX)
+#include <sdl/esm/v2/sdl_esm.h>
 #endif
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
 #include <sdl/esm/v1/sdl_esm.h>

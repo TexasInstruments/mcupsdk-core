@@ -52,8 +52,11 @@
 
 #include "sdl_common.h"
 #include <sdl/ecc/sdl_ip_ecc.h>
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X)
 #include <sdl/esm/v0/sdl_esm.h>
+#endif
+#if defined(SOC_AM263PX)
+#include <sdl/esm/v2/sdl_esm.h>
 #endif
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
 #include <sdl/esm/v1/sdl_esm.h>

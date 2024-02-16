@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2024 Texas Instruments Incorporated
+ * Copyright (C) 2024 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -30,21 +30,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef SDLR_ESM_TOP_H_
-#define SDLR_ESM_TOP_H_
+#ifndef SDL_IP_ESM_H_
+#define SDL_IP_ESM_H_
 
-#include <sdl/include/soc_config.h>
+#include "sdlr_esm.h"
 
-#if defined (IP_VERSION_ESM_V0_0)
-#include <sdl/esm/v0/v0_0/sdlr_esm.h>
-#endif
-
-#if defined (IP_VERSION_ESM_V1_0)
-#include <sdl/esm/v1/v1_0/sdlr_esm.h>
-#endif
 
 #if defined (IP_VERSION_ESM_V2_0)
-#include <sdl/esm/v2/v2_0/sdlr_esm.h>
+#include <sdl/esm/v2/esm.h>
 #endif
 
 #endif

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -114,24 +114,29 @@ static SDL_ECC_InitConfig_t ECC_Test_MCANA_ECCInitConfig =
 
 #if defined(SOC_AM263X) || defined(SOC_AM263PX)
 
-static uint32_t arg;
+static uint32_t ESMarg;
 
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
     .enableBitmap = {0x0000000cu, 0x00000000u, 0x00000000u, 0x00000000u,
-                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+                     0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events enable: except clkstop events for unused clocks
      *   and PCIE events */
     /* CCM_1_SELFTEST_ERR and _R5FSS0COMPARE_ERR_PULSE_0 */
     .priorityBitmap = {0x00000008u, 0x000000000u, 0x00000000u, 0x00000000u,
-                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u },
+                       0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events high priority: except clkstop events for unused clocks
      *   and PCIE events */
     .errorpinBitmap = {0x0000000cu, 0x00000000u, 0x00000000u, 0x00000000u,
-                    0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+                       0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */
+#if  defined(SOC_AM263PX)
+    .enableCriticalBitmap = {0x0000000cu, 0x00000000u, 0x00000000u, 0x00000000u,
+                             0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
+     .criticalInterruptDelayCounter = 0u,
+#endif
 };
 
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
@@ -139,7 +144,7 @@ extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                    uint32_t grpChannel,
                                                    uint32_t index,
                                                    uint32_t intSrc,
-                                                   void *arg);
+                                                   void *ESMarg);
 
 #endif
 
@@ -147,7 +152,7 @@ extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                     int32_t grpChannel,
                                                     int32_t intSrc,
-                                                    void *arg);
+                                                    void *ESMarg);
 
 /* Event BitMap for ECC ESM callback for MCANA*/
 SDL_ESM_NotifyParams ECC_TestparamsMCANA[SDL_ESM_MAX_MCANA_EXAMPLE_AGGR] =
@@ -192,7 +197,7 @@ int32_t ECC_Example_init (void)
 {
     int32_t retValue=0;
 #if defined(SOC_AM263X) || defined(SOC_AM263PX)
-    void *ptr = (void *)&arg;
+    void *ptr = (void *)&ESMarg;
 #endif
     SDL_ErrType_t result;
 

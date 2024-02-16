@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021 Texas Instruments Incorporated
+ *  Copyright (c) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -53,8 +53,11 @@
 #include <sdl/include/awr294x/sdlr_intr_esm_dss.h>
 #include <sdl/include/awr294x/sdlr_intr_esm_mss.h>
 #endif
-#if defined (SOC_AM263X)  || defined (SOC_AM263PX)
+#if defined (SOC_AM263X)
 #include <sdl/esm/v0/sdl_esm.h>
+#endif
+#if defined (SOC_AM263PX)
+#include <sdl/esm/v2/sdl_esm.h>
 #endif
 
 #if !defined(SDL_DCC_TEST_H)

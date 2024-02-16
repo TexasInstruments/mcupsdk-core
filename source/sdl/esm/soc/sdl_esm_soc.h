@@ -3,7 +3,7 @@
  *
  * Software Diagnostics Reference module for Error Signaling Module
  *
- *  Copyright (c) Texas Instruments Incorporated 2022
+ *  Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -60,6 +60,7 @@ extern "C" {
 
 #if defined (SOC_AM263PX)
 #include <sdl/esm/soc/am263px/sdl_esm_soc.h>
+#include <sdl/esm/soc/am263px/sdl_esm_core.h>
 #endif /* SOC_AM263PX */
 
 #if defined (SOC_AM273X)

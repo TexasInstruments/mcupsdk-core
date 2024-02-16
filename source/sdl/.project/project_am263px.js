@@ -54,9 +54,9 @@ const asmfiles_r5f = {
 const filedirs = {
     common: [
         "dpl",
-		"esm",
-        "esm/v0",
-        "esm/v0/v0_0",
+        "esm",
+        "esm/v2",
+        "esm/v2/v2_0",
         "esm/soc",
         "esm/soc/am263px",
         "dcc/v1",

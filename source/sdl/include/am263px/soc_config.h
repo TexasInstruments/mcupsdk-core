@@ -46,8 +46,7 @@ extern "C"
 
 /* IP versions */
 #define IP_VERSION_MCRC_V0
-#define IP_VERSION_ESM_V0
-#define IP_VERSION_ESM_V0_0
+#define IP_VERSION_ESM_V2_0
 #define IP_VERSION_DCC_V1
 #define IP_VERSION_RTI_V0
 #define IP_VERSION_PBIST_V0

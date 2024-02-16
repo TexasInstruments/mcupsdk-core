@@ -2,7 +2,7 @@
 *
 * SOC CCM PROPERTIES. header file
 *
-*  Copyright (c) Texas Instruments Incorporated 2022-2023
+*  Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -46,7 +46,7 @@
 /* ========================================================================== */
 #include <sdl/sdlr.h>
 #include <sdl/include/am263px/sdlr_soc_baseaddress.h>
-#include <sdl/esm/v0/sdl_esm.h>
+#include <sdl/esm/v2/sdl_esm.h>
 #include <sdl/esm/soc/am263px/sdl_esm_core.h>
 #include <sdl/include/am263px/sdlr_intr_esm0.h>
 #ifdef __cplusplus

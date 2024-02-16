@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021 Texas Instruments Incorporated
+ *  Copyright (c) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -61,9 +61,12 @@
 #include <drivers/sciclient.h>
 #include <sdl/sdl_esm.h>
 #endif
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X)
 #include <sdl/esm/v0/sdl_esm.h>
 #include <sdl/esm/v0/v0_0/sdl_ip_esm.h>
+#elif defined (SOC_AM263PX)
+#include <sdl/esm/v2/sdl_esm.h>
+#include <sdl/esm/v2/v2_0/sdl_ip_esm.h>
 #elif defined (SOC_AM273X) || defined (SOC_AWR294X)
 #include <sdl/esm/v1/sdl_esm.h>
 #endif
