@@ -52,48 +52,6 @@ config = config.concat([
 
 let soc_configs = []
 
-// for (let soci = 0; soci < 16; soci++)
-// {
-//     var SOCTrigger_configs =[]
-//     if (common.getSocName() === "am263px")
-//     {
-//         SOCTrigger_configs = SOCTrigger_configs.concat([
-//             // Trigger mode
-//             {
-//                 name: "soc" + soci.toString() + "Triggermode",
-//                 displayName: "Trigger Mode",
-//                 description : 'Single trigger or repeater mode can be selected as trigger source for this SOC',
-//                 hidden: true,
-//                 default: "singlemode",
-//                 options: [
-//                     {name:"singlemode", displayName:"Single Trigger"},
-//                     {name:"repeatermode", displayName:"Use Repeater Trigger"},
-//                 ],
-//             },
-//         ])
-//     }
-//     SOCTrigger_configs = SOCTrigger_configs.concat([
-//     // ADC_setupSOC(), trigger
-//     {
-//         name: "soc" + soci.toString() + "Trigger",
-//         displayName : "SOC" + soci.toString() + " Trigger",
-//         description : 'Select the trigger source for this SOC',
-//         hidden      : false,
-//         default     : device_peripheral.ADC_Trigger[0].name,
-//         options     : device_peripheral.ADC_Trigger,
-//     },
-//     // ADC_setInterruptSOCTrigger(), trigger
-//     {
-//         name: "soc" + soci.toString() + "InterruptTrigger",
-//         displayName : "SOC" + soci.toString() + " Interrupt Trigger",
-//         description : 'Select the interrupt trigger source for this SOC. This signal is ORed with the SOC Trigger',
-//         hidden      : false,
-//         default     : device_peripheral.ADC_IntSOCTrigger[0].name,
-//         options     : device_peripheral.ADC_IntSOCTrigger,
-//     },
-//     ])
-// }
-
 for (let soci = 0; soci < 16; soci++)
 {
     soc_configs = soc_configs.concat([{
@@ -145,41 +103,6 @@ for (let soci = 0; soci < 16; soci++)
                         options     : device_peripheral.ADC_IntSOCTrigger,
                     },
                 ]
-                //config : SOCTrigger_configs
-                //     // if (common.getSocName() === "am263px")
-                //     // {
-                //     //     // Trigger mode
-                //     //     {
-                //     //         name: "soc" + soci.toString() + "Triggermode",
-                //     //         displayName: "Trigger Mode",
-                //     //         description : 'Single trigger or repeater mode can be selected as trigger source for this SOC',
-                //     //         hidden: true,
-                //     //         default: "singlemode",
-                //     //         options: [
-                //     //             {name:"singlemode", displayName:"Single Trigger"},
-                //     //             {name:"repeatermode", displayName:"Use Repeater Trigger"},
-                //     //         ],
-                //     //     },
-                //     // }
-                //     // ADC_setupSOC(), trigger
-                //     {
-                //         name: "soc" + soci.toString() + "Trigger",
-                //         displayName : "SOC" + soci.toString() + " Trigger",
-                //         description : 'Select the trigger source for this SOC',
-                //         hidden      : false,
-                //         default     : device_peripheral.ADC_Trigger[0].name,
-                //         options     : device_peripheral.ADC_Trigger,
-                //     },
-                //     // ADC_setInterruptSOCTrigger(), trigger
-                //     {
-                //         name: "soc" + soci.toString() + "InterruptTrigger",
-                //         displayName : "SOC" + soci.toString() + " Interrupt Trigger",
-                //         description : 'Select the interrupt trigger source for this SOC. This signal is ORed with the SOC Trigger',
-                //         hidden      : false,
-                //         default     : device_peripheral.ADC_IntSOCTrigger[0].name,
-                //         options     : device_peripheral.ADC_IntSOCTrigger,
-                //     },
-                // ]
             },
             // ADC_setupSOC(), sampleWindow
             {
@@ -214,22 +137,6 @@ function extChanOnChange (inst, ui){
             else {
                 ui["extTiming"].hidden=true;
             }
-            // if (inst.enableEXTMUX){
-            //     ui["adcNumExtPins"].hidden=false;
-            // }
-            // else{
-            //     ui["adcNumExtPins"].hidden=true;
-            // }
-        // for (var xbari=0; xbari< 4; xbari++)
-        // {
-        //     // ui["extchannel"+ xbari+" pin"].hidden=true;
-        //     if (inst.enableEXTMUX && xbari<inst["adcNumExtPins"]){
-        //         ui["extchannel"+ xbari+" pin"].hidden=false;
-        //     }
-        //     else{
-        //         ui["extchannel"+ xbari+" pin"].hidden=true;
-        //     }
-        // }
     }
 }
 
@@ -244,7 +151,7 @@ config = config.concat([
     {
         name        : "enableEXTMUX",
         displayName : "Use External MUX",
-        description : 'This option enables using the external mux by configuring the external channel pin via OUTPUTXBAR for an SOC.',
+        description : 'This option enables using the external mux by configuring the external channel pin via dedicated pins for an SOC. check the SOC APIs for configuring these',
         hidden      : false,
         default     : false,
         onChange: extChanOnChange,
@@ -619,8 +526,6 @@ for (let inti = 1; inti <= 4; inti++)
                     name: "interrupt" + inti.toString() + "SOCSource",
                     displayName : "Interrupt" + inti.toString() + " SOC Source",
                     description : 'Select the source for interrupt' + inti.toString() + ' of this ADC',
-                    default     : device_peripheral.ADC_SOCNumber[0].name,
-                    options     : device_peripheral.ADC_SOCNumber,
                     default     : interruptSourceOption[0].name,
                     options     : interruptSourceOption,
                 },
@@ -1004,10 +909,10 @@ function onValidate(inst, validation) {
     for(var rptrIndex in device_peripheral.ADC_RepInstance){
         var currentRPTR = device_peripheral.ADC_RepInstance[rptrIndex].name
         let rptri = (currentRPTR).replace(/[^0-9]/g,'')
-        if (inst["repeater" + rptri.toString()+ " Count"] <= 0)
+        if ((inst["repeater" + rptri.toString()+ " Count"] <= 0) || (inst["repeater" + rptri.toString()+ " Count"] > 127))
         {
             validation.logError(
-                "Number of repeater trigger counts must be larger than 0",
+                "Number of repeater trigger counts must be larger than 0 and lesser than 128",
                 inst, "repeater" + rptri.toString()+ " Count");
         }
         if (!Number.isInteger(inst["repeater" + rptri.toString()+ " Count"]))
@@ -1016,16 +921,16 @@ function onValidate(inst, validation) {
                 "Trigger count must be an integer value.",
                 inst, "repeater" + rptri.toString()+ " Count");
         }
-        if (inst["repeater"  + rptri.toString()+ " Phase"] < 0)
+        if ((inst["repeater"  + rptri.toString()+ " Phase"] < 0) || (inst["repeater"  + rptri.toString()+ " Phase"] > (Math.pow(2,16) -1)))
         {
             validation.logError(
-                "Phase delay  must be larger than 0",
+                "Phase delay  must be larger than 0 and lesser than "+(Math.pow(2,16) -1).toString(),
                 inst, "repeater"  + rptri.toString()+ " Phase");
         }
-        if (inst["repeater" + rptri.toString()+ " Spread"] < 0)
+        if ((inst["repeater"  + rptri.toString()+ " Spread"] < 0) || (inst["repeater"  + rptri.toString()+ " Spread"] > (Math.pow(2,16) -1)))
         {
             validation.logError(
-                "Spread value must be larger than 0",
+                "Spread value must be larger than 0 and lesser than "+(Math.pow(2,16) -1).toString(),
                 inst,"repeater" + rptri.toString()+ " Spread");
         }
     }

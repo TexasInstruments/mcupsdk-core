@@ -336,6 +336,91 @@ function onValidate(inst, validation) {
                 inst,"ppb" + ppbi.toString() +  "LowTripLimit");
         }
     }
+
+    //
+    // repeater module
+    //
+    for(var rptrIndex in device_peripheral.ADC_RepInstance){
+        var currentRPTR = device_peripheral.ADC_RepInstance[rptrIndex].name
+        let rptri = (currentRPTR).replace(/[^0-9]/g,'')
+        if ((inst["repeater" + rptri.toString()+ " Count"] <= 0) || (inst["repeater" + rptri.toString()+ " Count"] > 127))
+        {
+            validation.logError(
+                "Number of repeater trigger counts must be larger than 0 and lesser than 128",
+                inst, "repeater" + rptri.toString()+ " Count");
+        }
+        if (!Number.isInteger(inst["repeater" + rptri.toString()+ " Count"]))
+        {
+            validation.logError(
+                "Trigger count must be an integer value.",
+                inst, "repeater" + rptri.toString()+ " Count");
+        }
+        if ((inst["repeater"  + rptri.toString()+ " Phase"] < 0) || (inst["repeater"  + rptri.toString()+ " Phase"] > (Math.pow(2,16) -1)))
+        {
+            validation.logError(
+                "Phase delay  must be larger than 0 and lesser than "+(Math.pow(2,16) -1).toString(),
+                inst, "repeater"  + rptri.toString()+ " Phase");
+        }
+        if ((inst["repeater"  + rptri.toString()+ " Spread"] < 0) || (inst["repeater"  + rptri.toString()+ " Spread"] > (Math.pow(2,16) -1)))
+        {
+            validation.logError(
+                "Spread value must be larger than 0 and lesser than "+(Math.pow(2,16) -1).toString(),
+                inst,"repeater" + rptri.toString()+ " Spread");
+        }
+    }
+    //
+    //Loginfo for Oversampling Interrupt OSINT
+    //
+    for( let inti = 1; inti <= 4; inti++){
+        for(let ppbi = 1; ppbi <= 4; ppbi++){
+            if (inst["interrupt" + inti.toString() + "SOCSource"] =="ADC_INT_TRIGGER_OSINT" + ppbi.toString()) {
+                {
+                    validation.logInfo(
+                    "To generate an oversampling interrupt (OSINT), you need to configure OSINT source via" +
+                    ": " + system.getReference(inst,"ppb" + ppbi.toString() + "SelectOSINTSource"),
+                    inst,"interrupt" + inti.toString() + "SOCSource");
+                }
+            }
+        }
+    }
+
+    for(let soci = 0; soci < 16; soci++){
+            //
+            //Information for setting up the repeater modules if repeater mode is selected for trigger
+            //
+                if(((inst["soc" + soci.toString() + "Triggermode"]) == "repeatermode")&&
+                ((inst["soc" + soci.toString() + "Trigger"]) == ("ADC_TRIGGER_REPEATER1")))
+                {
+                    validation.logInfo(
+                        "Repeater Module 1 should be configured for SOC" + soci.toString()+ ": " + system.getReference(inst,"repeater1 Mode"),
+                        inst, "soc" + soci.toString() + "Triggermode");
+                }
+                if(((inst["soc" + soci.toString() + "Triggermode"]) == "repeatermode")&&
+                ((inst["soc" + soci.toString() + "Trigger"]) == ("ADC_TRIGGER_REPEATER2")))
+                {
+                    validation.logInfo(
+                        "Repeater Module 2 should be configured for SOC" + soci.toString()+ ": " + system.getReference(inst,"repeater2 Mode"),
+                        inst, "soc" + soci.toString() + "Triggermode");
+                }
+                // validation.logInfo(
+                //     "To use the external channel, you must first enable external MUX for this SOC via" + soci.toString()+ ": " + system.getReference(inst,"enableEXTMUX"),
+                //     inst, "soc" + soci.toString() + "ExtChannel");
+                // Error for trigger of Repeater modules
+                if((inst["soc" + soci.toString() + "Triggermode"]) == "singlemode")
+                {
+                    if ((((inst["soc" + soci.toString() + "Trigger"])== "ADC_TRIGGER_REPEATER1") || ((inst["soc" + soci.toString() + "Trigger"])== "ADC_TRIGGER_REPEATER2")))
+                    validation.logError(
+                        "Repeater Module 1 and Repeater Module 2 can not be selected as Tigger source for SOC" + soci.toString()+ ". If you want to use repeater modules, you need to select Use Repeater Trigger in Trigger mode",
+                        inst, "soc" + soci.toString() + "Trigger");
+                }
+                if((inst["soc" + soci.toString() + "Triggermode"]) == "repeatermode")
+                {
+                    if ((((inst["soc" + soci.toString() + "Trigger"])!= "ADC_TRIGGER_REPEATER1") && ((inst["soc" + soci.toString() + "Trigger"])!= "ADC_TRIGGER_REPEATER2")))
+                    validation.logError(
+                        "Repeater Module 1 or Repeater Module 2 should be selected as Tigger source for SOC"+ soci.toString(),
+                        inst, "soc" + soci.toString() + "Trigger");
+                }
+    }
 }
 
 /* ------------------------------------------------------------------------- */
