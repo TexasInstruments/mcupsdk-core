@@ -71,7 +71,7 @@ function getComponentProperty(device) {
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
     property.name = "epwm_xcmp_dma";
-    property.isInternal = false;
+    property.isInternal = true;
     property.description = "This example demonstrates the xcmp features of the epwm, and registers populated by edma."
     property.buildOptionCombos = buildOptionCombos;
 
