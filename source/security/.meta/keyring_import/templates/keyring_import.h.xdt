@@ -1,0 +1,24 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/security/soc/security_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("keyring_import");
+    let module = system.modules['/security/keyring_import/keyring_import'];
+%%}
+/*
+ * Keyring Import
+ */
+
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+`config.KeyringCertSize`
+
+`config.KeyringCertArr`
+
+int32_t Keyring_init(HsmClient_t *gHSMClient);
+% }
+
+
+
+
+

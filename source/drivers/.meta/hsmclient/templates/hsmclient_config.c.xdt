@@ -53,4 +53,14 @@ void HsmClient_config(void)
     /* initialize the HsmClient module */
     status = HsmClient_init(&sipcParams);
     DebugP_assert(status==SystemP_SUCCESS);
+
+    /* register a hsm client to detect bootnotify message and keyring import from HSM */
+    status = HsmClient_register(&gHSMClient, HSM_BOOT_NOTIFY_CLIENT_ID);
+    DebugP_assert(status==SystemP_SUCCESS);
+}
+
+void HsmClient_unRegister(void)
+{
+     /* Unregister bootnotify client */
+    HsmClient_unregister(&gHSMClient, HSM_BOOT_NOTIFY_CLIENT_ID);
 }
