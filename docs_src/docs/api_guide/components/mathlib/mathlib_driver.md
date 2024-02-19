@@ -51,12 +51,21 @@ TMU library supports below trignometric and math functions
 - sincos
 - powf using log and exp
 
+Additionally, the TMU assmebly code integrated with the SDK makes use of one operation specific register and it's corresponding result register. To make use of a different
+register then the one used by SDK, users can add API calls in the TMU source file pointing to another register. Or they can make a direct write to the Operation specific register
+in their application code as follows:
+
+HWREG(x) = input value
+/add delay for computation to complete/
+result = HWREG(y)
+Here, x is the address of the TMU specific operation registers and y is the address of the result register
+
+
+
 
 ### Features Not Supported:
 
 - div, sqrt and quad operations
-- Pipelined operation. 8 result registers for taking advantage of the pipelined architecture of TMU
-- Re-entrancy. Context save and restore operation
 - Underflow and Overflow interrupts to show mathematical operation errors
 
 ### API

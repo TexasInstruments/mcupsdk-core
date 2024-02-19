@@ -44,6 +44,9 @@
 #include <drivers/hw_include/cslr.h>
 #include <drivers/hw_include/am263px/cslr_tmu.h>
 #include <drivers/hw_include/am263px/cslr_soc_r5_baseaddress.h>
+#include <kernel/dpl/DebugP.h>
+#include <kernel/dpl/ClockP.h>
+#include <kernel/dpl/HwiP.h>
 
 
 #ifndef ReciprocalOf2PI
@@ -61,6 +64,10 @@
 #ifndef OnebyLog2ofe
 #define OnebyLog2ofe                  0.693147F
 #endif
+
+#define ISR_TMU_CONTEXT_SAVE HW_WR_REG32((CSL_MSS_TMU_BASE + CSL_TMU_CONTEXT_SAVE), HW_RD_REG32(CSL_MSS_TMU_BASE + CSL_TMU_CONTEXT_SAVE)| (1));
+#define ISR_TMU_CONTEXT_RESTORE HW_WR_REG32((CSL_MSS_TMU_BASE + CSL_TMU_CONTEXT_RESTORE), HW_RD_REG32(CSL_MSS_TMU_BASE + CSL_TMU_CONTEXT_RESTORE)| (1));
+
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
@@ -103,9 +110,9 @@ static inline float ti_tmu_cos_pu(float anglePU)
     __asm__ volatile("str %0, [%1]\n\t"
                      "DMB ST \n\t"
                     :
-                    : "r" (anglePU), "r" (CSL_MSS_TMU_BASE + CSL_TMU_COSPUF32_R1));
+                    : "r" (anglePU), "r" (CSL_MSS_TMU_BASE + CSL_TMU_COSPUF32_R0));
 
-    return *((float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R1));
+    return *((float *)(CSL_MSS_TMU_BASE + CSL_TMU_RESULT_R0));
 }
 
 

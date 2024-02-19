@@ -336,6 +336,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 -# TMU
    -# \subpage EXAMPLES_DRIVERS_TMU_OPERATIONS
    -# \subpage EXAMPLES_DRIVERS_TMU_CORES_SUPPORT
+   -# \subpage EXAMPLES_DRIVERS_TMU_CONTEXTSAVE
 \endcond
 -# UART
    -# \subpage EXAMPLES_DRIVERS_UART_ECHO

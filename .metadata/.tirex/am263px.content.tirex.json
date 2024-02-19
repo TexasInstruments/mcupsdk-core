@@ -9368,6 +9368,336 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example shows the context save feature of TMU. CPU is R5FSS0-0 running NORTOS.",
+        "name": "tmu_context_save",
+        "location": "../../examples/drivers/tmu/tmu_context_save/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "tmu",
+            "tmu_context_save",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example shows the context save feature of TMU. CPU is R5FSS0-0 running NORTOS.",
+        "name": "tmu_context_save",
+        "location": "../../examples/drivers/tmu/tmu_context_save/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "tmu",
+            "tmu_context_save",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example shows 4 core support of TMU. CPU is R5FSS0-0 running NORTOS.",
+        "name": "tmu_cores_support",
+        "location": "../../examples/drivers/tmu/tmu_cores_support/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "tmu",
+            "tmu_cores_support",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example shows 4 core support of TMU. CPU is R5FSS0-1 running NORTOS.",
+        "name": "tmu_cores_support",
+        "location": "../../examples/drivers/tmu/tmu_cores_support/am263px-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "tmu",
+            "tmu_cores_support",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example shows 4 core support of TMU. CPU is R5FSS1-0 running NORTOS.",
+        "name": "tmu_cores_support",
+        "location": "../../examples/drivers/tmu/tmu_cores_support/am263px-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "tmu",
+            "tmu_cores_support",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example shows 4 core support of TMU. CPU is R5FSS1-1 running NORTOS.",
+        "name": "tmu_cores_support",
+        "location": "../../examples/drivers/tmu/tmu_cores_support/am263px-cc/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "tmu",
+            "tmu_cores_support",
+            "r5fss1-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example shows 4 core support of TMU. CPU is R5FSS0-0 running NORTOS.",
+        "name": "tmu_cores_support",
+        "location": "../../examples/drivers/tmu/tmu_cores_support/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "tmu",
+            "tmu_cores_support",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example shows 4 core support of TMU. CPU is R5FSS0-1 running NORTOS.",
+        "name": "tmu_cores_support",
+        "location": "../../examples/drivers/tmu/tmu_cores_support/am263px-lp/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "tmu",
+            "tmu_cores_support",
+            "r5fss0-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example shows 4 core support of TMU. CPU is R5FSS1-0 running NORTOS.",
+        "name": "tmu_cores_support",
+        "location": "../../examples/drivers/tmu/tmu_cores_support/am263px-lp/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "tmu",
+            "tmu_cores_support",
+            "r5fss1-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example shows 4 core support of TMU. CPU is R5FSS1-1 running NORTOS.",
+        "name": "tmu_cores_support",
+        "location": "../../examples/drivers/tmu/tmu_cores_support/am263px-lp/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "tmu",
+            "tmu_cores_support",
+            "r5fss1-1_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This example shows hardware acceleration of trigonometric operations using TMU. CPU is R5FSS0-0 running NORTOS.",
         "name": "tmu_operations",
         "location": "../../examples/drivers/tmu/tmu_operations/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -13710,6 +14040,66 @@
             "drivers",
             "spinlock",
             "spinlock_example",
+            "system_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example shows 4 core support of TMU. System project.",
+        "name": "tmu_cores_support",
+        "location": "../../examples/drivers/tmu/tmu_cores_support/am263px-cc/system_nortos/system.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "drivers",
+            "tmu",
+            "tmu_cores_support",
+            "system_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example shows 4 core support of TMU. System project.",
+        "name": "tmu_cores_support",
+        "location": "../../examples/drivers/tmu/tmu_cores_support/am263px-lp/system_nortos/system.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "subCategories": [
+            "drivers",
+            "tmu",
+            "tmu_cores_support",
             "system_nortos"
         ],
         "mainCategories": [

@@ -43,7 +43,7 @@ const lnkfiles = {
     ]
 };
 
-const syscfgfile = "../example.syscfg"
+const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_TMU_CORES_SUPPORT";
 
@@ -59,14 +59,14 @@ const templates_nortos_r5f =
 ];
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos"},
-    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos"},
-    { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos"},
-    { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos"},
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos"},
-    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos"},
-    { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos"},
-    { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos", isPartOfSystemProject: true},
 
 ];
 
@@ -99,7 +99,7 @@ const systemProjects = [
     },
 ];
 
-function getComponentProperty(device) {
+function getComponentProperty() {
     let property = {};
 
     property.dirPath = path.resolve(__dirname, "..");
@@ -125,6 +125,10 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/r5f*/)) {
             build_property.libs = libs_nortos_r5f;
             build_property.templates = templates_nortos_r5f;
+    }
+    if(buildOption.cpu.match(/c66*/)) {
+        build_property.libs = libs_nortos_c66;
+        build_property.templates = templates_nortos_c66;
     }
 
     return build_property;

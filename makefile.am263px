@@ -324,6 +324,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_filter_sync_cpuread/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/tmu/tmu_context_save/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/tmu/tmu_context_save/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/tmu/tmu_operations/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/tmu/tmu_operations/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -450,6 +452,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_spinlock_sharedmem/am263px-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/spinlock/spinlock_example/am263px-cc/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/spinlock/spinlock_example/am263px-lp/system_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/tmu/tmu_cores_support/am263px-cc/system_nortos [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/tmu/tmu_cores_support/am263px-lp/system_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/empty/am263px-cc/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/empty/am263px-lp/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/empty/am263px-cc/system_nortos [all clean syscfg-gui syscfg]
@@ -963,6 +967,8 @@ BUILD_COMBO_EXAMPLE_ALL += sdfm_epwm_sync_cpuread_am263px-cc_r5fss0-0_nortos_ti-
 BUILD_COMBO_EXAMPLE_ALL += sdfm_filter_sync_cpuread_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdfm_filter_sync_cpuread_single_channel_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdfm_filter_sync_cpuread_single_channel_am263px-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += tmu_context_save_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += tmu_context_save_am263px-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += tmu_operations_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += tmu_operations_am263px-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += uart_echo_am263px-cc_r5fss0-0_nortos_ti-arm-clang
@@ -1088,6 +1094,8 @@ BUILD_COMBO_EXAMPLE_ALL += ipc_spinlock_sharedmem_am263px-cc_system_freertos_nor
 BUILD_COMBO_EXAMPLE_ALL += ipc_spinlock_sharedmem_am263px-lp_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += spinlock_example_am263px-cc_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += spinlock_example_am263px-lp_system_nortos
+BUILD_COMBO_EXAMPLE_ALL += tmu_cores_support_am263px-cc_system_nortos
+BUILD_COMBO_EXAMPLE_ALL += tmu_cores_support_am263px-lp_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += empty_am263px-cc_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += empty_am263px-lp_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += empty_am263px-cc_system_nortos
@@ -1858,6 +1866,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sdfm_filter_sync_cpuread_single_channel_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ tmu_context_save_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/tmu/tmu_context_save/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ tmu_context_save_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/tmu/tmu_context_save/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
  tmu_operations_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/tmu/tmu_operations/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
@@ -2227,6 +2241,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  spinlock_example_am263px-lp_system_nortos:
 	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am263px-lp/system_nortos -f makefile all
 
+ tmu_cores_support_am263px-cc_system_nortos:
+	$(MAKE) -C examples/drivers/tmu/tmu_cores_support/am263px-cc/system_nortos -f makefile all
+
+ tmu_cores_support_am263px-lp_system_nortos:
+	$(MAKE) -C examples/drivers/tmu/tmu_cores_support/am263px-lp/system_nortos -f makefile all
+
  empty_am263px-cc_system_freertos:
 	$(MAKE) -C examples/empty/am263px-cc/system_freertos -f makefile all
 
@@ -2483,6 +2503,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdfm_epwm_sync_cpuread_am263px-cc_r5fss0-0_nort
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdfm_filter_sync_cpuread_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdfm_filter_sync_cpuread_single_channel_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdfm_filter_sync_cpuread_single_channel_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += tmu_context_save_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += tmu_context_save_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += tmu_operations_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += tmu_operations_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += uart_echo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2607,6 +2629,8 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_spinlock_sharedmem_am263px-cc_system_freert
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_spinlock_sharedmem_am263px-lp_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += spinlock_example_am263px-cc_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += spinlock_example_am263px-lp_system_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += tmu_cores_support_am263px-cc_system_nortos_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += tmu_cores_support_am263px-lp_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am263px-cc_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am263px-lp_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am263px-cc_system_nortos_clean
@@ -3373,6 +3397,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sdfm_filter_sync_cpuread_single_channel_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ tmu_context_save_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/tmu/tmu_context_save/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ tmu_context_save_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/tmu/tmu_context_save/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
  tmu_operations_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/tmu/tmu_operations/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
@@ -3742,6 +3772,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  spinlock_example_am263px-lp_system_nortos_clean:
 	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am263px-lp/system_nortos -f makefile clean
 
+ tmu_cores_support_am263px-cc_system_nortos_clean:
+	$(MAKE) -C examples/drivers/tmu/tmu_cores_support/am263px-cc/system_nortos -f makefile clean
+
+ tmu_cores_support_am263px-lp_system_nortos_clean:
+	$(MAKE) -C examples/drivers/tmu/tmu_cores_support/am263px-lp/system_nortos -f makefile clean
+
  empty_am263px-cc_system_freertos_clean:
 	$(MAKE) -C examples/empty/am263px-cc/system_freertos -f makefile clean
 
@@ -3998,6 +4034,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdfm_epwm_sync_cpuread_am263px-cc_r5fss0-0_nort
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdfm_filter_sync_cpuread_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdfm_filter_sync_cpuread_single_channel_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdfm_filter_sync_cpuread_single_channel_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += tmu_context_save_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += tmu_context_save_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += tmu_operations_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += tmu_operations_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += uart_echo_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -4122,6 +4160,8 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_spinlock_sharedmem_am263px-cc_system_freert
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_spinlock_sharedmem_am263px-lp_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += spinlock_example_am263px-cc_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += spinlock_example_am263px-lp_system_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += tmu_cores_support_am263px-cc_system_nortos_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += tmu_cores_support_am263px-lp_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am263px-cc_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am263px-lp_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am263px-cc_system_nortos_scrub
@@ -4888,6 +4928,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  sdfm_filter_sync_cpuread_single_channel_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ tmu_context_save_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/tmu/tmu_context_save/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ tmu_context_save_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/tmu/tmu_context_save/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
  tmu_operations_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/tmu/tmu_operations/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
@@ -5256,6 +5302,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  spinlock_example_am263px-lp_system_nortos_scrub:
 	$(MAKE) -C examples/drivers/spinlock/spinlock_example/am263px-lp/system_nortos -f makefile scrub
+
+ tmu_cores_support_am263px-cc_system_nortos_scrub:
+	$(MAKE) -C examples/drivers/tmu/tmu_cores_support/am263px-cc/system_nortos -f makefile scrub
+
+ tmu_cores_support_am263px-lp_system_nortos_scrub:
+	$(MAKE) -C examples/drivers/tmu/tmu_cores_support/am263px-lp/system_nortos -f makefile scrub
 
  empty_am263px-cc_system_freertos_scrub:
 	$(MAKE) -C examples/empty/am263px-cc/system_freertos -f makefile scrub
