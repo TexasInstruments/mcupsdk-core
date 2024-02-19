@@ -83,11 +83,13 @@
 #define CSL_DTHE_PUBLIC_SHA_U_BASE                              (0xCE005000U)
 
 /* Total number of Test case*/
-#define TEST_CRYPTO_AES_TEST_CASES_COUNT                        (14U)
+#define TEST_CRYPTO_AES_TEST_CASES_COUNT                        (12U)
 /* number of test vectors*/
 #define TEST_NUM_VECTORS                                        (7U)
 /* aligned buffer size */
 #define TEST_ALIGNED_BUFF_SIZE                                  (512U)
+/* Total number of Test case*/
+#define TEST_CRYPTO_AES_INTERNAL_TEST_CASES_COUNT               (42U)
 
 /** cmac unprocessed data length */
 uint32_t gCmac_unprocessed_len = 0;
@@ -103,6 +105,7 @@ typedef struct
 {
     uint16_t key;
     uint16_t dataSize;
+    uint16_t streamSize;
     double performance;
 }App_benchmark;
 
@@ -170,22 +173,29 @@ int32_t app_aes_cmac_dthe_stream_start(uint8_t *key, uint8_t *k1, uint8_t *k2, u
 int32_t app_aes_cmac_dthe_stream_update(uint8_t **input, uint32_t ilen, uint32_t keySize);
 int32_t app_aes_cmac_dthe_stream_finish(uint8_t *tag, uint32_t keySize);
 int32_t test_aes_ecb(uint8_t *input,uint8_t *key ,uint8_t inputLen, uint8_t *output, uint32_t keySize);
-void test_aes_cmac_stream( uint8_t *key, uint8_t *input, int32_t length, uint32_t keySize, uint8_t *mac);
+void test_aes_cmac_stream( uint8_t *key, uint8_t *input, int32_t length, uint32_t keySize, uint32_t streamSize, uint8_t *mac);
 void test_xor_128(uint8_t *a, uint8_t *b, uint8_t *out);
 static void test_leftShift(uint8_t *input, uint8_t *output);
 void crypto_aes_cmac_stream(void *args);
-int32_t test_aes_cmac_dthe(uint8_t *input, uint8_t *key, uint8_t *k1, uint8_t *k2, uint32_t inputLen, uint32_t keySize, uint8_t *tag);
+int32_t test_aes_cmac_dthe(uint8_t *input, uint8_t *key, uint8_t *k1, uint8_t *k2, uint32_t inputLen, uint32_t keySize, uint32_t streamSize, uint8_t *tag);
 int32_t test_cmacGenSubKeys(Crypto_Params *params);
 
-void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t key);
+void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t key, uint32_t streamSize);
 static const char *bytesToString(uint64_t bytes);
 void App_printPerformanceLogs(void);
 
 DTHE_Handle         gAesCmacHandle;
 
 uint16_t gCount = 0;
-App_benchmark results[TEST_CRYPTO_AES_TEST_CASES_COUNT];
-
+App_benchmark results[TEST_CRYPTO_AES_INTERNAL_TEST_CASES_COUNT];
+uint32_t gInputStreamSizes[] = {
+                            TEST_CRYPTO_AES_CMAC_TEST_512B_BUF_LEN,
+                            TEST_CRYPTO_AES_CMAC_TEST_1K_BUF_LEN,
+                            TEST_CRYPTO_AES_CMAC_TEST_2K_BUF_LEN,
+                            TEST_CRYPTO_AES_CMAC_TEST_4K_BUF_LEN,
+                            TEST_CRYPTO_AES_CMAC_TEST_8K_BUF_LEN,
+                            TEST_CRYPTO_AES_CMAC_TEST_16K_BUF_LEN,
+                        };
 void test_main(void *args)
 {
     /* Open drivers to open the UART driver for console */
@@ -202,14 +212,12 @@ void test_main(void *args)
         {TEST_CRYPTO_AES_CMAC_TEST_4K_BUF_LEN,  12798, CRYPTO_KEY_LEN_256, DTHE_AES_KEY_256_SIZE, gCryptoAesCmac256Key, gCryptoAesCmac256_32KbTestSum[3]},
         {TEST_CRYPTO_AES_CMAC_TEST_2K_BUF_LEN,  12799, CRYPTO_KEY_LEN_256, DTHE_AES_KEY_256_SIZE, gCryptoAesCmac256Key, gCryptoAesCmac256_32KbTestSum[4]},
         {TEST_CRYPTO_AES_CMAC_TEST_1K_BUF_LEN,  12800, CRYPTO_KEY_LEN_256, DTHE_AES_KEY_256_SIZE, gCryptoAesCmac256Key, gCryptoAesCmac256_32KbTestSum[5]},
-        {TEST_CRYPTO_AES_CMAC_TEST_512B_BUF_LEN,12801, CRYPTO_KEY_LEN_256, DTHE_AES_KEY_256_SIZE, gCryptoAesCmac256Key, gCryptoAesCmac256_32KbTestSum[6]},
         {TEST_CRYPTO_AES_CMAC_TEST_32K_BUF_LEN, 12802, CRYPTO_KEY_LEN_128, DTHE_AES_KEY_128_SIZE, gCryptoAesCmac128Key, gCryptoAesCmac128_32KbTestSum[0]},
         {TEST_CRYPTO_AES_CMAC_TEST_16K_BUF_LEN, 12803, CRYPTO_KEY_LEN_128, DTHE_AES_KEY_128_SIZE, gCryptoAesCmac128Key, gCryptoAesCmac128_32KbTestSum[1]},
         {TEST_CRYPTO_AES_CMAC_TEST_8K_BUF_LEN,  12804, CRYPTO_KEY_LEN_128, DTHE_AES_KEY_128_SIZE, gCryptoAesCmac128Key, gCryptoAesCmac128_32KbTestSum[2]},
         {TEST_CRYPTO_AES_CMAC_TEST_4K_BUF_LEN,  12805, CRYPTO_KEY_LEN_128, DTHE_AES_KEY_128_SIZE, gCryptoAesCmac128Key, gCryptoAesCmac128_32KbTestSum[3]},
         {TEST_CRYPTO_AES_CMAC_TEST_2K_BUF_LEN,  12806, CRYPTO_KEY_LEN_128, DTHE_AES_KEY_128_SIZE, gCryptoAesCmac128Key, gCryptoAesCmac128_32KbTestSum[4]},
         {TEST_CRYPTO_AES_CMAC_TEST_1K_BUF_LEN,  12807, CRYPTO_KEY_LEN_128, DTHE_AES_KEY_128_SIZE, gCryptoAesCmac128Key, gCryptoAesCmac128_32KbTestSum[5]},
-        {TEST_CRYPTO_AES_CMAC_TEST_512B_BUF_LEN,12808, CRYPTO_KEY_LEN_128, DTHE_AES_KEY_128_SIZE, gCryptoAesCmac128Key, gCryptoAesCmac128_32KbTestSum[6]}
     };
 
     /** cmac 256 and 128 with different input buffers*/
@@ -238,6 +246,7 @@ void crypto_aes_cmac_stream(void *args)
     DTHE_AES_Return_t   status;
     uint32_t            t1, t2;
     testParams *ptrTestPrms =  args;
+    uint32_t loopForMultipleStreamCases = 0;
 
     DebugP_log("AES CMAC-%d with %db buffer example started ...\r\n", ptrTestPrms->keyLen, ptrTestPrms->testInputLength);
     
@@ -247,24 +256,29 @@ void crypto_aes_cmac_stream(void *args)
     gAesCmacHandle = DTHE_open(0);
     DebugP_assert(gAesCmacHandle != NULL);
 
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
 
-    /* Aes Cmac with 32K to 512 bytes input */
-    test_aes_cmac_stream(ptrTestPrms->key, gCryptoCmacTestInputBuf, ptrTestPrms->testInputLength, ptrTestPrms->keySize, gCryptoCmacTestOutputBuf);
-
-
-    t2 = CycleCounterP_getCount32();
-
-    App_fillPerformanceResults(t1, t2, ptrTestPrms->testInputLength, ptrTestPrms->keyLen);
-
-    if(memcmp(gCryptoCmacTestOutputBuf, ptrTestPrms->ptrExpectedOutput, TEST_CRYPTO_AES_CMAC_OUTPUT_LENGTH) != 0)
+    for (loopForMultipleStreamCases = 0; (loopForMultipleStreamCases < sizeof(gInputStreamSizes)/4); loopForMultipleStreamCases++ )
     {
-        status = DTHE_AES_RETURN_FAILURE;
-    }
-    else
-    {
-        status = DTHE_AES_RETURN_SUCCESS;
+        if( gInputStreamSizes[loopForMultipleStreamCases] <= ptrTestPrms->testInputLength/2)
+        {
+            CycleCounterP_reset();
+            t1 = CycleCounterP_getCount32();
+            
+            /* Aes Cmac with 32K to 512 bytes input */
+            test_aes_cmac_stream(ptrTestPrms->key, gCryptoCmacTestInputBuf, ptrTestPrms->testInputLength, ptrTestPrms->keySize, gInputStreamSizes[loopForMultipleStreamCases], gCryptoCmacTestOutputBuf);            
+
+            t2 = CycleCounterP_getCount32();
+            App_fillPerformanceResults(t1, t2, ptrTestPrms->testInputLength, ptrTestPrms->keyLen, gInputStreamSizes[loopForMultipleStreamCases]);
+
+            if(memcmp(gCryptoCmacTestOutputBuf, ptrTestPrms->ptrExpectedOutput, TEST_CRYPTO_AES_CMAC_OUTPUT_LENGTH) != 0)
+            {
+                status = DTHE_AES_RETURN_FAILURE;
+            }
+            else
+            {
+                status = DTHE_AES_RETURN_SUCCESS;
+            }
+        }
     }
     
     if (status == DTHE_AES_RETURN_SUCCESS)
@@ -284,7 +298,7 @@ void crypto_aes_cmac_stream(void *args)
     return;
 }
 
-void test_aes_cmac_stream( uint8_t *key, uint8_t *input, int32_t length, uint32_t keySize, uint8_t *mac)
+void test_aes_cmac_stream( uint8_t *key, uint8_t *input, int32_t length, uint32_t keySize, uint32_t streamSize, uint8_t *mac)
 {
     int32_t             status;
     Crypto_Params       params;
@@ -298,7 +312,7 @@ void test_aes_cmac_stream( uint8_t *key, uint8_t *input, int32_t length, uint32_
     status = test_cmacGenSubKeys(&params);
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 
-    test_aes_cmac_dthe(input, key, &params.key1[0], &params.key2[0], length, keySize, mac);
+    test_aes_cmac_dthe(input, key, &params.key1[0], &params.key2[0], length, keySize, streamSize, mac);
 
     return;
 }
@@ -396,7 +410,7 @@ static void test_leftShift(uint8_t *input, uint8_t *output)
     return;
 }
 
-int32_t test_aes_cmac_dthe(uint8_t *input, uint8_t *key, uint8_t *k1, uint8_t *k2, uint32_t inputLen, uint32_t keySize, uint8_t *tag)
+int32_t test_aes_cmac_dthe(uint8_t *input, uint8_t *key, uint8_t *k1, uint8_t *k2, uint32_t inputLen, uint32_t keySize, uint32_t streamSize, uint8_t *tag)
 {
     DTHE_AES_Return_t   status;
     uint32_t loopCount = 0;
@@ -408,10 +422,10 @@ int32_t test_aes_cmac_dthe(uint8_t *input, uint8_t *key, uint8_t *k1, uint8_t *k
     app_aes_cmac_dthe_stream_start(key, &k1[0], &k2[0], keySize);
 
 
-    for (loopCount = 0; loopCount <= (inputLen/TEST_ALIGNED_BUFF_SIZE)-1; loopCount++)
+    for (loopCount = 0; loopCount < (inputLen/streamSize); loopCount++)
     {
         /* Update CALL*/
-        app_aes_cmac_dthe_stream_update(&input, TEST_ALIGNED_BUFF_SIZE, keySize);
+        app_aes_cmac_dthe_stream_update(&input, streamSize, keySize);
     }
 
     /* Finish CALL */
@@ -585,7 +599,7 @@ static const char *bytesToString(uint64_t bytes)
 	return output;
 }
 
-void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t key)
+void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t key, uint32_t streamSize)
 {
     uint32_t diffCnt = 0;
     double cpuClkMHz = 0;
@@ -597,6 +611,7 @@ void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uin
     App_benchmark *table = &results[gCount++];
     table-> key = key;
     table->dataSize = numBytes;
+    table->streamSize = streamSize;
     table->performance = (double)(8 * throughputInMBps);
 }
 
@@ -609,12 +624,12 @@ void App_printPerformanceLogs()
     DebugP_log("- Data Placement            : OCRAM \r\n");
     DebugP_log("- Input Data sizes          : 512B, 1KB, 2KB, 4KB, 8KB, 16KB and 32KB\r\n");
     DebugP_log("- CPU with operating speed  : R5F with %dMHZ \r\n", (uint32_t)cpuClkMHz);
-    DebugP_log("| Key Length | Size | Performance (Mbps) | \r\n");
-    DebugP_log("|------------|------|--------------------| \r\n");
-    for( uint32_t i = 0; i < TEST_CRYPTO_AES_TEST_CASES_COUNT; i++)
+    DebugP_log("| Key Length | Input Data Size   | Stream Size        | Performance (Mbps) | \r\n");
+    DebugP_log("|------------|-------------------|--------------------|--------------------| \r\n");
+    for( uint32_t i = 0; i < TEST_CRYPTO_AES_INTERNAL_TEST_CASES_COUNT; i++)
     {
-        DebugP_log("| %d | %s | %lf |\r\n", results[i].key,  \
-                    bytesToString(results[i].dataSize), results[i].performance);
+        DebugP_log("| %d        |     %s     |        %d        |      %lf      |\r\n", results[i].key,  \
+                    bytesToString(results[i].dataSize), results[i].streamSize, results[i].performance);
     }
     DebugP_log("BENCHMARK END\r\n");
 }
