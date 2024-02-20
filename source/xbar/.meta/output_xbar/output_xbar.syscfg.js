@@ -40,7 +40,12 @@ function getInterfaceName(inst)
 
 function getPeripheralPinNames(inst)
 {
-    return [ "OUTPUTXBAR" ];
+    if(common.getSocName() == "am263px"){
+        return [ "XBAROUT" ];
+    }
+    else{
+        return [ "OUTPUTXBAR" ];
+    }
 }
 
 function pinmuxRequirements(inst)
@@ -48,11 +53,7 @@ function pinmuxRequirements(inst)
    let interfaceName = getInterfaceName(inst);
 
     let resources = [];
-    let pinName = "OUTPUTXBAR";
-    if(common.getSocName() == "am263px")
-    {
-        pinName = "XBAROUT"
-    }
+    let pinName = getPeripheralPinNames(inst)[0];
     resources.push( pinmux.getPinRequirements(interfaceName, pinName, "Outputxbar Pin"));
 
     let peripheral = {
@@ -64,6 +65,7 @@ function pinmuxRequirements(inst)
 
     return [peripheral];
 }
+
 
 let outputxbar_module_name = "/xbar/output_xbar/output_xbar";
 
