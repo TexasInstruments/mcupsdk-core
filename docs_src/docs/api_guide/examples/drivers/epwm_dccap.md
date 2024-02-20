@@ -2,35 +2,49 @@
 
 [TOC]
 
-# Introduction
+# Introduction:
+The EPWM Edge Detection in DCCAP is a feature to monitor the trip input to be present in a given window. A typical usecase would when the EPWMs are used for controlling a motor, then the expected high current pushes in the initial switching time is expected and if they are not present, then, there is some issue with system and the EPWMs need to to be tripped. 
 
-An EPWM example to detect occurrence of a trip event in a configured time window.
-The window is configured by MIN and MAX values configured in MINMAX register set.
-
-Purpose of this window is to detect the occurrence of such edge. If no such edge occurs, this module will generate a trip event as well as
-interrupt configurable by user.
-
-In this example EPWM1_A is used for Digital compare input on which logic is performed.
-EPWM0_A is used as the gating signal to Min/max logic. (Routed to PWM XBar from GPIO)
-
-If an edge is not detected on EPWM0 in the MINMAX window,
-    - EPWM1 is tripped
 
 \imageStyle{am263_epwm_dccap_flow.png, width:60%}
-    \image html am263_epwm_dccap_example_flow.png "Flow Chart"
+\image html am263_epwm_dccap_example_flow.png "Flow Chart"
+
+
+# Example Description
+This example showcases the configurations needed to use the Edge Detection feature in the DCCAP to detect occurrence of a trip event in a configured time window. The window is configured by MIN and MAX values configured in MINMAX register set. Purpose of this window is to detect the occurrence of such edge. If no such edge occurs, this module will generate a trip event as well as interrupt configurable by user.
+ 
+EPMW0_A to detect the trip within a MINMAX window and trip its EPWMxA output
+EPMW1_A waveform is used as a trip input. 
+
+# Configurations 
+1. EPWM0
+  - DCCAP is enabled, trip inputs are configured for Trip1. 
+  - waveform A/B are configured (in the example) to match the min-max window for observing.
+  - IN Trip zone, CAPEVT is configured for CBC source and Trip action on output A to low Action when trip occured.
+  - XCMP is enbaled for this feature usage.
+
+2. EPWM1
+  - XCMP is enabled (not a necessary requirement)
+  - generates a waveform, that goes high on counter = 100, goes low on counter = 1000, for a period of 2000 
+
+3. PWMXbar 0 to take GPIO45 via Inputxbar (a common pin that has EPWM 1A output) 
+ 
+\note
+The EPWM1A is routed internally via GPIO. if wish to use a different/external trip input, then, 
+     1. remove EPWM 1A configuration (either pinmux or all configurations from syscfg)
+     2. Add GPIO45 as a input pin. 
+     3. connect external trip input to GPIO45   
 
 # External Connections
-
-## AM263X-CC
-When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
-- Connect EPWM0_A(HSEC pin 49) to GPIO15(HSEC pin 81)
-- Output can be observed from EPWM1_A(HSEC pin 51)
-- CAPEVT TripOut can be observed from XBAROUT3(HSEC pin 75)
+1. AM263Px-cc with HSEC dock connected
+     - EPWM0A can be observed on HSEC PIN 49
+     - EPWM0B can be observed on HSEC PIN 51
+     - EPWM1A (Trip Input) can be observed on HSEC PIN 53.
 
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_DCCAP_COMBOS}
 
-\cond SOC_AM263X
+\cond SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------
@@ -60,109 +74,57 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 Shown below is a sample output when the application is run,
 
 \code
-EPWM Capture logic test
 
-Iteration: 1
-PWMXBAR_STATUS = 0x00000001
-DCCAP = 209
+EPWM Capture Logic Test Started ...
+minValue : 10	maxValue : 60
+INPUT_WAVEFORM_RISING_EDGE_COUNTER_VALUE : 100
+CAPEVT Status = 1
 DCCAP Status = 1
-DCCAPCTL = 0x2003
 
-Iteration: 2
-PWMXBAR_STATUS = 0x00000000
-DCCAP = 209
+minValue : 10	maxValue : 160
+INPUT_WAVEFORM_RISING_EDGE_COUNTER_VALUE : 100
+CAPEVT Status = 0
 DCCAP Status = 1
-DCCAPCTL = 0x2003
 
-Iteration: 3
-PWMXBAR_STATUS = 0x00000001
-DCCAP = 209
+minValue : 60	maxValue : 110
+INPUT_WAVEFORM_RISING_EDGE_COUNTER_VALUE : 100
+CAPEVT Status = 0
 DCCAP Status = 1
-DCCAPCTL = 0x2003
 
-Iteration: 4
-PWMXBAR_STATUS = 0x00000000
-DCCAP = 209
+minValue : 60	maxValue : 210
+INPUT_WAVEFORM_RISING_EDGE_COUNTER_VALUE : 100
+CAPEVT Status = 0
 DCCAP Status = 1
-DCCAPCTL = 0x2003
 
-Iteration: 5
-PWMXBAR_STATUS = 0x00000000
-DCCAP = 209
+minValue : 110	maxValue : 160
+INPUT_WAVEFORM_RISING_EDGE_COUNTER_VALUE : 100
+CAPEVT Status = 1
 DCCAP Status = 1
-DCCAPCTL = 0x2003
 
-Iteration: 6
-PWMXBAR_STATUS = 0x00000001
-DCCAP = 209
+minValue : 160	maxValue : 210
+INPUT_WAVEFORM_RISING_EDGE_COUNTER_VALUE : 100
+CAPEVT Status = 1
 DCCAP Status = 1
-DCCAPCTL = 0x2003
 
-Iteration: 7
-PWMXBAR_STATUS = 0x00000000
-DCCAP = 209
-DCCAP Status = 1
-DCCAPCTL = 0x2003
-
-Iteration: 8
-PWMXBAR_STATUS = 0x00000002
-DCCAP = 209
-DCCAP Status = 1
-DCCAPCTL = 0x2003
-
-Iteration: 9
-PWMXBAR_STATUS = 0x00000002
-DCCAP = 209
-DCCAP Status = 1
-DCCAPCTL = 0x2003
-
-Iteration: 10
-PWMXBAR_STATUS = 0x00000003
-DCCAP = 209
-DCCAP Status = 1
-DCCAPCTL = 0x2003
-
-Iteration: 11
-PWMXBAR_STATUS = 0x00000002
-DCCAP = 209
-DCCAP Status = 1
-DCCAPCTL = 0x2003
-
-Iteration: 12
-PWMXBAR_STATUS = 0x00000000
-DCCAP = 709
-DCCAP Status = 1
-DCCAPCTL = 0x2003
-
-Iteration: 13
-PWMXBAR_STATUS = 0x00000000
-DCCAP = 709
-DCCAP Status = 1
-DCCAPCTL = 0x2003
-
-Iteration: 14
-PWMXBAR_STATUS = 0x00000000
-DCCAP = 709
-DCCAP Status = 1
-DCCAPCTL = 0x2003
-
-Iteration: 15
-PWMXBAR_STATUS = 0x00000000
-DCCAP = 709
-DCCAP Status = 1
-DCCAPCTL = 0x2003
-
+EPWM Capture Logic Test Passed!!
 All tests have passed!!
+
 \endcode
 
 
-\cond SOC_AM263X
-\imageStyle{am263_epwm_dccap_example_test1.PNG, width:60%}
-    \image html am263_epwm_dccap_example_test1.PNG "EPWM DCCAP Test 1"
-\imageStyle{am263_epwm_dccap_example_test2.PNG, width:60%}
-    \image html am263_epwm_dccap_example_test2.PNG "EPWM DCCAP Test 2"
-\imageStyle{am263_epwm_dccap_example_test3.PNG, width:60%}
-    \image html am263_epwm_dccap_example_test3.PNG "EPWM DCCAP Test 3"
-\imageStyle{am263_epwm_dccap_example.PNG, width:60%}
-    \image html am263_epwm_dccap_example.PNG "EPWM DCCAP"
+\cond SOC_AM263PX
+
+\imageStyle{am263p_epwm_dccap_output.png, width:60%}
+    \image html am263p_epwm_dccap_output.png "EPWM DCCAP Edge Monitoring Sample output"
+
+\imageStyle{am263p_epwm_dccap_minWindow_greater_than_edge.png, width:60%}
+    \image html am263p_epwm_dccap_minWindow_greater_than_edge.png "when edge is before minimum value of the window"
+
+\imageStyle{am263p_epwm_dccap_maxWindow_lesser_than_edge.png, width:60%}
+    \image html am263p_epwm_dccap_maxWindow_lesser_than_edge.png "when edge is after the maximum value of the window"
+
+\imageStyle{am263p_epwm_dccap_edge_in_range.png, width:60%}
+    \image html am263p_epwm_dccap_edge_in_range.png "when edge is in the minimum and maximum value range of the window"
+
+
 \endcond

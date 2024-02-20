@@ -232,9 +232,6 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_EDMA_MULTIMEM_TRANSFER
    -# \subpage EXAMPLES_DRIVERS_EDMA_POLLED_TRANSFER
 -# EPWM
-\cond SOC_AM263X
-   -# \subpage EXAMPLES_DRIVERS_EPWM_DCCAP
-\endcond
    -# \subpage EXAMPLES_DRIVERS_EPWM_HR_DUTY_CYCLE
    -# \subpage EXAMPLES_DRIVERS_EPWM_TRIP_ZONE
    -# \subpage EXAMPLES_DRIVERS_EPWM_DMA
@@ -249,6 +246,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_HRPWM_PHASE_SHIFT_SFO
    -# \subpage EXAMPLES_DRIVERS_HRPWM_DUTY_CYCLE_SFO
 \cond SOC_AM263PX
+   -# \subpage EXAMPLES_DRIVERS_EPWM_DCCAP
    -# \subpage EXAMPLES_DRIVERS_EPWM_DIODE_EMULATION
    -# \subpage EXAMPLES_DRIVERS_EPWM_XCMP_MULTIPLE_EDGES
    -# \subpage EXAMPLES_DRIVERS_EPWM_XCMP_DMA

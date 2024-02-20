@@ -1,6 +1,6 @@
 let path = require('path');
 
-let device = "am263x";
+let device = "am263px";
 
 const files = {
     common: [
@@ -29,9 +29,9 @@ const libdirs_nortos = {
 
 const libs_nortos_r5f = {
     common: [
-        "nortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "board.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "nortos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -48,7 +48,7 @@ const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_EPWM_DCCAP";
 const templates_nortos_r5f =
 [
     {
-        input: ".project/templates/am263x/nortos/main_nortos.c.xdt",
+        input: ".project/templates/am263px/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
             entryFunction: "epwm_dccap_main",
@@ -57,7 +57,8 @@ const templates_nortos_r5f =
 ];
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-cc", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos"},
 ];
 
 function getComponentProperty(device) {
