@@ -147,7 +147,7 @@ const enet_cpsw_phy1_config =
                 const cpswPhyAddrInfoMap = new Map(
                                            [
                                              ['am263x-cc',{phyAddr1: 0, phyAddr2: 3}],
-                                             ['am263px-cc',{phyAddr1: 3, phyAddr2: 0}],
+                                             ['am263px-cc',{phyAddr1: 3, phyAddr2: 12}],
                                              ['am263x-lp', {phyAddr1: 3, phyAddr2: 12}],
                                              ['am263px-lp', {phyAddr1: 3, phyAddr2: 12}],
                                            ],
@@ -198,7 +198,7 @@ const enet_cpsw_phy2_config =
                 const cpswPhyAddrInfoMap = new Map(
                                            [
                                              ['am263x-cc',{phyAddr1: 0, phyAddr2: 3}],
-                                             ['am263px-cc',{phyAddr1: 3, phyAddr2: 0}],
+                                             ['am263px-cc',{phyAddr1: 3, phyAddr2: 12}],
                                              ['am263x-lp', {phyAddr1: 3, phyAddr2: 12}],
                                              ['am263px-lp', {phyAddr1: 3, phyAddr2: 12}],
                                            ],

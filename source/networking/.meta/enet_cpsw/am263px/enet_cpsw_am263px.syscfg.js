@@ -146,9 +146,9 @@ const enet_cpsw_phy1_config =
             getValue:function (inst) {
                 const cpswPhyAddrInfoMap = new Map(
                                            [
-                                             ['am263x-cc',{phyAddr1: 0, phyAddr2: 3}],
                                              ['am263px-cc',{phyAddr1: 3, phyAddr2: 0}],
-                                             ['am263x-lp', {phyAddr1: 3, phyAddr2: 12}],
+                                             ['am263px-cc-addon-ind',{phyAddr1: 3, phyAddr2: 1}],
+                                             ['am263px-cc-addon-auto',{phyAddr1: 3, phyAddr2: 12}],
                                              ['am263px-lp', {phyAddr1: 3, phyAddr2: 12}],
                                            ],
                                          );
@@ -197,9 +197,9 @@ const enet_cpsw_phy2_config =
             getValue:function (inst) {
                 const cpswPhyAddrInfoMap = new Map(
                                            [
-                                             ['am263x-cc',{phyAddr1: 0, phyAddr2: 3}],
                                              ['am263px-cc',{phyAddr1: 3, phyAddr2: 0}],
-                                             ['am263x-lp', {phyAddr1: 3, phyAddr2: 12}],
+                                             ['am263px-cc-addon-ind',{phyAddr1: 3, phyAddr2: 0}],
+                                             ['am263px-cc-addon-auto',{phyAddr1: 3, phyAddr2: 12}],
                                              ['am263px-lp', {phyAddr1: 3, phyAddr2: 12}],
                                            ],
                                          );
@@ -344,12 +344,7 @@ function getInstIdTable(instances) {
 function getCpswInstInfo(instance) {
     const cpswInstInfoMap = new Map(
                                [
-                                 ['awr294x',{enetType: 'ENET_CPSW_2G', numMacPorts: '1', instId: '0', dmaIf:'ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA', macPortList:['ENET_MAC_PORT_1']}],
-                                 ['am273x', {enetType: 'ENET_CPSW_2G', numMacPorts: '1', instId: '0', dmaIf:'ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA', macPortList:['ENET_MAC_PORT_1']}],
-                                 ['am263x',{enetType: 'ENET_CPSW_3G', numMacPorts: '2', instId: '0', dmaIf:'ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA', macPortList:['ENET_MAC_PORT_1', 'ENET_MAC_PORT_2']}],
                                  ['am263px',{enetType: 'ENET_CPSW_3G', numMacPorts: '2', instId: '0', dmaIf:'ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA', macPortList:['ENET_MAC_PORT_1', 'ENET_MAC_PORT_2']}],
-                                 ['am243x',{enetType: 'ENET_CPSW_3G', numMacPorts: '2', instId: '0', dmaIf:'ENET_SOC_HOSTPORT_DMA_TYPE_UDMA', macPortList:['ENET_MAC_PORT_1', 'ENET_MAC_PORT_2']}],
-                                 ['am64x',{enetType: 'ENET_CPSW_3G', numMacPorts: '2', instId: '0', dmaIf:'ENET_SOC_HOSTPORT_DMA_TYPE_UDMA', macPortList:['ENET_MAC_PORT_1', 'ENET_MAC_PORT_2']}],
                                ],
                              );
     let instInfo =  cpswInstInfoMap.get(common.getSocName());
@@ -372,16 +367,6 @@ function getCpswInstInfo(instance) {
 function getBoardConfigTemplateInfo() {
     const boardConfigTemplate = new Map(
                                [
-                                 ['am64x',{Cfile: "/networking/enet_cpsw/templates/am64x_am243x/enet_board_cfg.c.xdt",
-                                  Header: "/networking/enet_cpsw/templates/am64x_am243x/enet_board_cfg.h.xdt"}],
-                                 ['am243x',{Cfile: "/networking/enet_cpsw/templates/am64x_am243x/enet_board_cfg.c.xdt",
-                                  Header: "/networking/enet_cpsw/templates/am64x_am243x/enet_board_cfg.h.xdt"}],
-                                 ['awr294x',{Cfile: "/networking/enet_cpsw/templates/awr294x/enet_board_cfg.c.xdt",
-                                  Header: "/networking/enet_cpsw/templates/awr294x/enet_board_cfg.h.xdt"}],
-                                 ['am273x', {Cfile: "/networking/enet_cpsw/templates/am273x/enet_board_cfg.c.xdt",
-                                 Header: "/networking/enet_cpsw/templates/am273x/enet_board_cfg.h.xdt"}],
-                                 ['am263x',{Cfile: "/networking/enet_cpsw/templates/am263x/enet_board_cfg.c.xdt",
-                                 Header: "/networking/enet_cpsw/templates/am263x/enet_board_cfg.h.xdt"}],
                                  ['am263px',{Cfile: "/networking/enet_cpsw/templates/am263px/enet_board_cfg.c.xdt",
                                  Header: "/networking/enet_cpsw/templates/am263px/enet_board_cfg.h.xdt"}],
                                ],
@@ -393,11 +378,6 @@ function getBoardConfigTemplateInfo() {
 function getSocConfigTemplateInfo() {
     const socConfigTemplate = new Map(
                                [
-                                 ['am64x',{Cfile: "/networking/enet_cpsw/templates/am64x_am243x/enet_soc_cfg.c.xdt"}],
-                                 ['am243x',{Cfile: "/networking/enet_cpsw/templates/am64x_am243x/enet_soc_cfg.c.xdt"}],
-                                 ['awr294x',{Cfile: "/networking/enet_cpsw/templates/awr294x/enet_soc_cfg.c.xdt"}],
-                                 ['am273x', {Cfile: "/networking/enet_cpsw/templates/am273x/enet_soc_cfg.c.xdt"}],
-                                 ['am263x',{Cfile: "/networking/enet_cpsw/templates/am263x/enet_soc_cfg.c.xdt"}],
                                  ['am263px',{Cfile: "/networking/enet_cpsw/templates/am263px/enet_soc_cfg.c.xdt"}],
                                ],
                              );
@@ -614,7 +594,7 @@ function validate(instance, report) {
     macportScript.validate(instance, report);
     hostportScript.validate(instance, report);
 
-    if (instance.BoardType === "am263px-cc")
+    if ((instance.BoardType === "am263px-cc") || (instance.BoardType === "am263px-cc-addon-ind") || (instance.BoardType === "am263px-cc-addon-auto"))
     {
         if (instance.DisableMacPort1 === false)
         {
@@ -782,18 +762,15 @@ let enet_cpsw_module = {
     config: [
         {
             name: "BoardType",
-            description: "Board selection for AM263x",
+            description: "Board selection for AM263Px",
             displayName: "BoardType",
-            default: "am263x-cc",
+            default: "am263px-cc",
             options: [
                 {
-                    name: "am263x-cc",
-                },
-                {
-                    name: "am263x-lp",
-                },
-                {
                     name: "am263px-cc",
+                },
+                {
+                    name: "am263px-cc-addon-auto",
                 },
                 {
                     name: "am263px-lp",

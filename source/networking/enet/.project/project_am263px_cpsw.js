@@ -69,6 +69,7 @@ const files = {
         "generic_phy.c",
         "dp83867.c",
         "dp83869.c",
+        "dp83tg720.c", 
         "dp83822.c",
         "vsc8514.c",
 

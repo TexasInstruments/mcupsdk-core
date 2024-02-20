@@ -380,6 +380,10 @@ function getSysCfgDevice(board) {
         default:
         case "am263px-cc":
             return "AM263Px";
+        case "am263px-cc-addon-ind":
+            return "AM263Px";
+        case "am263px-cc-addon-auto":
+            return "AM263Px";
     }
 }
 
@@ -391,6 +395,10 @@ function getProjectSpecDevice(board) {
             return "AM263Px";
         default:
         case "am263px-cc":
+            return "AM263Px";
+        case "am263px-cc-addon-ind":
+            return "AM263Px";
+        case "am263px-cc-addon-auto":
             return "AM263Px";
     }
 }
@@ -406,6 +414,10 @@ function getSysCfgPkg(board) {
         default:
         case "am263px-cc":
             return "ZCZ_S";
+        case "am263px-cc-addon-ind":
+            return "ZCZ_S";
+        case "am263px-cc-addon-auto":
+            return "ZCZ_S";
     }
 }
 
@@ -416,6 +428,10 @@ function getSysCfgPart(board) {
         default:
         case "am263px-cc":
             return "AM263P4";
+        case "am263px-cc-addon-ind":
+            return "AM263P4";
+        case "am263px-cc-addon-auto":
+            return "AM263P4";
     }
 }
 
@@ -425,6 +441,10 @@ function getDevToolTirex(board) {
             return "LP-AM263P";
         default:
         case "am263px-cc":
+            return "TMDSCNCD263P";
+        case "am263px-cc-addon-ind":
+            return "TMDSCNCD263P";
+        case "am263px-cc-addon-auto":
             return "TMDSCNCD263P";
     }
 }
