@@ -1,7 +1,7 @@
 /*
 * R5FSS0_CORE1 INTERRUPT MAP. header file
 *
-* Copyright (C) 2015-2019 Texas Instruments Incorporated.
+* Copyright (C) 2015-2024 Texas Instruments Incorporated.
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
 *  are met:
@@ -98,7 +98,7 @@ extern "C"
 #define  SDL_R5FSS0_CORE1_INTR_DTHE_PKAE_INT                        51U
 #define  SDL_R5FSS0_CORE1_INTR_DTHE_AES_S_INT                       52U
 #define  SDL_R5FSS0_CORE1_INTR_DTHE_AES_P_INT                       53U
-#define  SDL_R5FSS0_CORE1_INTR_QSPI0_INT                            54U
+#define  SDL_R5FSS0_CORE1_INTR_OSPI0_INT                            54U
 #define  SDL_R5FSS0_CORE1_INTR_TPCC0_INTG                           55U
 #define  SDL_R5FSS0_CORE1_INTR_TPCC0_INT_0                          56U
 #define  SDL_R5FSS0_CORE1_INTR_TPCC0_INT_1                          57U
@@ -239,8 +239,56 @@ extern "C"
 #define  SDL_R5FSS0_CORE1_INTR_PRU_ICSSM0_PR1_IEP0_CMP_INTR_REQ_14  192U
 #define  SDL_R5FSS0_CORE1_INTR_PRU_ICSSM0_PR1_IEP0_CMP_INTR_REQ_15  193U
 #define  SDL_R5FSS0_CORE1_CPSW0_CPTS_COMP                           194U
-#define  SDL_R5FSS0_CORE1_GPMC_SINTR                                195U
-#define  SDL_R5FSS0_CORE1_ELM_SINTR                                 196U
+#define  SDL_R5FSS0_CORE1_INTR_RESERVED195                          195U
+#define  SDL_R5FSS0_CORE1_INTR_RESERVED196                          196U
+#define  SDL_R5FSS0_CORE1_INTR_MCAN4_EXT_TS_ROLLOVER_LVL_INT_0      197U
+#define  SDL_R5FSS0_CORE1_INTR_MCAN4_MCAN_LVL_INT_0                 198U
+#define  SDL_R5FSS0_CORE1_INTR_MCAN4_MCAN_LVL_INT_1                 199U
+#define  SDL_R5FSS0_CORE1_INTR_MCAN5_EXT_TS_ROLLOVER_LVL_INT_0      200U
+#define  SDL_R5FSS0_CORE1_INTR_MCAN5_MCAN_LVL_INT_0                 201U
+#define  SDL_R5FSS0_CORE1_INTR_MCAN5_MCAN_LVL_INT_1                 202U
+#define  SDL_R5FSS0_CORE1_INTR_MCAN6_EXT_TS_ROLLOVER_LVL_INT_0      203U
+#define  SDL_R5FSS0_CORE1_INTR_MCAN6_MCAN_LVL_INT_0                 204U
+#define  SDL_R5FSS0_CORE1_INTR_MCAN6_MCAN_LVL_INT_1                 205U
+#define  SDL_R5FSS0_CORE1_INTR_MCAN7_EXT_TS_ROLLOVER_LVL_INT_0      206U
+#define  SDL_R5FSS0_CORE1_INTR_MCAN7_MCAN_LVL_INT_0                 207U
+#define  SDL_R5FSS0_CORE1_INTR_MCAN7_MCAN_LVL_INT_1                 208U
+#define  SDL_R5FSS0_CORE1_INTR_R5SS0_CPU1_TMU_LVF                   209U
+#define  SDL_R5FSS0_CORE1_INTR_R5SS0_CPU1_TMU_LUF                   210U
+#define  SDL_R5FSS0_CORE1_INTR_HW_RESOLVER_INTR                     211U
+#define  SDL_R5FSS0_CORE1_INTR_FSS_VBUSM_TIMEOUT                    212U
+#define  SDL_R5FSS0_CORE1_INTR_OTFA_ERROR                           213U
+#define  SDL_R5FSS0_CORE1_INTR_FOTA_STAT_INTR                  	    214U
+#define  SDL_R5FSS0_CORE1_INTR_FOTA_STAT_ERR_INTR	                215U
+#define  SDL_R5FSS0_CORE1_INTR_MCSPI5_INTR                          216U
+#define  SDL_R5FSS0_CORE1_INTR_MCSPI6_INTR                          217U
+#define  SDL_R5FSS0_CORE1_INTR_MCSPI7_INTR                          218U
+#define  SDL_R5FSS0_CORE1_INTR_RTI4_INTR_0                          219U
+#define  SDL_R5FSS0_CORE1_INTR_RTI4_INTR_1                          220U
+#define  SDL_R5FSS0_CORE1_INTR_RTI4_INTR_2                          221U
+#define  SDL_R5FSS0_CORE1_INTR_RTI4_INTR_3                          222U
+#define  SDL_R5FSS0_CORE1_INTR_RTI4_OVERFLOW_INT0                   223U
+#define  SDL_R5FSS0_CORE1_INTR_RTI4_OVERFLOW_INT1                   224U
+#define  SDL_R5FSS0_CORE1_INTR_RTI5_INTR_0                          225U
+#define  SDL_R5FSS0_CORE1_INTR_RTI5_INTR_1                          226U
+#define  SDL_R5FSS0_CORE1_INTR_RTI5_INTR_2                          227U
+#define  SDL_R5FSS0_CORE1_INTR_RTI5_INTR_3                          228U
+#define  SDL_R5FSS0_CORE1_INTR_RTI5_OVERFLOW_INT0                   229U
+#define  SDL_R5FSS0_CORE1_INTR_RTI5_OVERFLOW_INT1                   230U
+#define  SDL_R5FSS0_CORE1_INTR_RTI6_INTR_0                          231U
+#define  SDL_R5FSS0_CORE1_INTR_RTI6_INTR_1                          232U
+#define  SDL_R5FSS0_CORE1_INTR_RTI6_INTR_2                          233U
+#define  SDL_R5FSS0_CORE1_INTR_RTI6_INTR_3                          234U
+#define  SDL_R5FSS0_CORE1_INTR_RTI6_OVERFLOW_INT0                   235U
+#define  SDL_R5FSS0_CORE1_INTR_RTI6_OVERFLOW_INT1                   236U
+#define  SDL_R5FSS0_CORE1_INTR_RTI7_INTR_0                          237U
+#define  SDL_R5FSS0_CORE1_INTR_RTI7_INTR_1                          238U
+#define  SDL_R5FSS0_CORE1_INTR_RTI7_INTR_2                          239U
+#define  SDL_R5FSS0_CORE1_INTR_RTI7_INTR_3                          240U
+#define  SDL_R5FSS0_CORE1_INTR_RTI7_OVERFLOW_INT0                   241U
+#define  SDL_R5FSS0_CORE1_INTR_RTI7_OVERFLOW_INT1                   242U
+#define  SDL_R5FSS0_CORE1_INTR_R5SS0_CPU0_RL2_ERR_INTR              243U
+#define  SDL_R5FSS0_CORE1_INTR_R5SS0_CPU1_RL2_ERR_INTR              244U
 
 
 #ifdef __cplusplus

@@ -3,7 +3,7 @@
  *
  * Software Diagnostics Library module for ECC
  *
- *  Copyright (c) Texas Instruments Incorporated 2022-2023
+ *  Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -1718,4 +1718,199 @@ static int32_t SDL_ECC_enableParityerr(uint32_t setmask, uint32_t paramregs, uin
 
 	return ((int32_t)result);
 
+}
+
+/** ============================================================================
+ *
+ * \brief   Enables TMU Parity error
+ *
+ */
+
+ /**
+ * Design: PROC_SDL-7374
+ */
+
+void SDL_ECC_enableTMUROMParity(void)
+{
+    uint32_t tmuParityCtrl;
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL);
+    tmuParityCtrl |= SDL_TMU0_ROM_PARITY_EN;
+    /* Write to TMU0_ROM_PARITY_EN  in
+       TMU_R5SS0_CORE0_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL, tmuParityCtrl);
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL);
+    tmuParityCtrl |= SDL_TMU0_ROM_PARITY_EN;
+    /* Write 0 to TMU0_ROM_PARITY_EN in
+       SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL, tmuParityCtrl);
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL);
+    tmuParityCtrl |= SDL_TMU0_ROM_PARITY_EN;
+    /* Write 0 to TMU0_ROM_PARITY_EN in
+       SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL, tmuParityCtrl);
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL);
+    tmuParityCtrl |= SDL_TMU0_ROM_PARITY_EN;
+    /* Write 0 to TMU0_ROM_PARITY_EN in
+       SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL, tmuParityCtrl);
+}
+
+/** ============================================================================
+ *
+ * \brief   Enables TMU Parity error Force Error
+ *
+ */
+
+ /**
+ * Design: PROC_SDL-7451
+ */
+
+void SDL_ECC_enableTMUROMParityForceError(void)
+{
+    uint32_t tmuParityCtrl;
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL);
+    tmuParityCtrl |= SDL_TMU0_ROM_PARITY_FORCE_ERR;
+    /* Write 0 to SDL_TMU0_ROM_PARITY_FORCE_ERR in
+       SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL, tmuParityCtrl);
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL);
+    tmuParityCtrl |= SDL_TMU0_ROM_PARITY_FORCE_ERR;
+    /* Write 0 to SDL_TMU0_ROM_PARITY_FORCE_ERR in
+       SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL, tmuParityCtrl);
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL);
+    tmuParityCtrl |= SDL_TMU0_ROM_PARITY_FORCE_ERR;
+    /* Write 0 to SDL_TMU0_ROM_PARITY_FORCE_ERR in
+       SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL, tmuParityCtrl);
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL);
+    tmuParityCtrl |= SDL_TMU0_ROM_PARITY_FORCE_ERR;
+    /* Write 0 to SDL_TMU0_ROM_PARITY_FORCE_ERR in
+       SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL, tmuParityCtrl);
+}
+
+/** ============================================================================
+ *
+ * \brief   Disables TMU Parity error
+ *
+ */
+
+ /**
+ * Design: PROC_SDL-7375
+ */
+
+void SDL_ECC_disableTMUROMParity(void)
+{
+    uint32_t tmuParityCtrl;
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL);
+    tmuParityCtrl &= 0xFFFFFFFE;
+    /* Write 0 to TMU0_ROM_PARITY_EN in
+       SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL, tmuParityCtrl);
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL);
+    tmuParityCtrl &= 0xFFFFFFFE;
+    /* Write 0 to TMU0_ROM_PARITY_EN in
+       SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL, tmuParityCtrl);
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL);
+    tmuParityCtrl &= 0xFFFFFFFE;
+    /* Write 0 to TMU0_ROM_PARITY_EN in
+       SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL, tmuParityCtrl);
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL);
+    tmuParityCtrl &= 0xFFFFFFFE;
+    /* Write 0 to TMU0_ROM_PARITY_EN in
+       SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL, tmuParityCtrl);
+}
+
+/** ============================================================================
+ *
+ * \brief   Disables TMU Parity Force Error
+ *
+ */
+
+ /**
+ * Design: PROC_SDL-7452
+ */
+
+void SDL_ECC_disableTMUROMParityErrorForce(void)
+{
+    uint32_t tmuParityCtrl;
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL);
+    tmuParityCtrl &= 0xFFFFFFFD;
+    /* Write 0 to SDL_TMU0_ROM_PARITY_FORCE_ERR in
+       SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL, tmuParityCtrl);
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL);
+    tmuParityCtrl &= 0xFFFFFFFD;
+    /* Write 0 to SDL_TMU0_ROM_PARITY_FORCE_ERR in
+       SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL, tmuParityCtrl);
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL);
+    tmuParityCtrl &= 0xFFFFFFFD;
+    /* Write 0 to SDL_TMU0_ROM_PARITY_FORCE_ERR in
+       SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL, tmuParityCtrl);
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL);
+    tmuParityCtrl &= 0xFFFFFFFD;
+    /* Write 0 to SDL_TMU0_ROM_PARITY_FORCE_ERR in
+       SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL, tmuParityCtrl);
+}
+
+/** ============================================================================
+ *
+ * \brief   Clear TMU Parity error
+ *
+ */
+
+ /**
+ * Design: PROC_SDL-7453
+ */
+
+void SDL_ECC_clearTMUROMParityError(void)
+{
+    uint32_t tmuParityCtrl;
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL);
+    tmuParityCtrl &= SDL_TMU0_ROM_PARITY_ERR_CLR;
+    /* Write 0 to SDL_TMU0_ROM_PARITY_ERR_CLR in
+       SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL, tmuParityCtrl);
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL);
+    tmuParityCtrl &= SDL_TMU0_ROM_PARITY_ERR_CLR;
+    /* Write 0 to SDL_TMU0_ROM_PARITY_ERR_CLR in
+       SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL, tmuParityCtrl);
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL);
+    tmuParityCtrl &= SDL_TMU0_ROM_PARITY_ERR_CLR;
+    /* Write 0 to SDL_TMU0_ROM_PARITY_ERR_CLR in
+       SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL, tmuParityCtrl);
+
+    tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL);
+    tmuParityCtrl &= SDL_TMU0_ROM_PARITY_ERR_CLR;
+    /* Write 0 to SDL_TMU0_ROM_PARITY_ERR_CLR in
+       SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL register */
+    SDL_REG32_WR(SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL, tmuParityCtrl);
 }

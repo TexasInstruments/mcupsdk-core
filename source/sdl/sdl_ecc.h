@@ -671,6 +671,48 @@ int32_t SDL_ECC_tpccParity(SDL_ECC_MemType eccMemType,
 							  uint32_t paramregvalue,
 							  uint32_t regval);
 
+#if defined(SOC_AM263PX)
+/** ============================================================================
+ *
+ * \brief   Enable TMU ROM Parity
+ *
+ */
+void SDL_ECC_enableTMUROMParity(void);
+
+/** ============================================================================
+ *
+ * \brief   Enables TMU Parity error Force Error
+ *
+ *
+ */
+void SDL_ECC_enableTMUROMParityForceError(void);
+
+/** ============================================================================
+ *
+ * \brief   Disables TMU Parity error
+ *
+ *
+ */
+void SDL_ECC_disableTMUROMParity(void);
+
+/** ============================================================================
+ *
+ * \brief   Disables TMU Parity Force Error
+ *
+ *
+ */
+void SDL_ECC_disableTMUROMParityErrorForce(void);
+
+/** ============================================================================
+ *
+ * \brief    Clear TMU Parity error
+ *
+ *
+ */
+void SDL_ECC_clearTMUROMParityError(void);
+
+#endif
+
 /** @} */
 
 #ifdef __cplusplus

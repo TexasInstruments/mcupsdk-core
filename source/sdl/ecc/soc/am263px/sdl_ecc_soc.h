@@ -103,6 +103,16 @@
 
 #define SDL_TPCC0_ERRAGG_STATUS						(0x50D18004U)
 #define SDL_TPCC0_ERRAGG_MASK						(0x50D18000U)
+
+/* TMU */
+#define SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL        (0x50D18188U)
+#define SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL        (0x50D18190U)
+#define SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL        (0x50D18198U)
+#define SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL        (0x50D181A0U)
+#define SDL_TMU0_ROM_PARITY_EN                      (0x1U)
+#define SDL_TMU0_ROM_PARITY_FORCE_ERR               (0x2U)
+#define SDL_TMU0_ROM_PARITY_ERR_CLR                 (0x10000U)
+
 /*param registers */
 #define SDL_PARAM_REG_1							(SDL_PARAM_REG_SET0 + 0x20U)
 #define SDL_PARAM_REG_2							(SDL_PARAM_REG_SET0 + 0x30U)

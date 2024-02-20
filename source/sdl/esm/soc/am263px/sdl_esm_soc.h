@@ -59,7 +59,7 @@ typedef enum {
 /* Defines for ESM base addresses */
 #define SOC_MAIN_ESM_BASE (SDL_TOP_ESM_U_BASE)
 
-#define SOC_MAIN_ESM_MAX_NUM_EVENTS (SDL_ESM0_CCM_1_SELFTEST_ERR+1U)
+#define SOC_MAIN_ESM_MAX_NUM_EVENTS (SDL_ESM0_MCAN7_MCAN7_ECC_UNCORR_LVL_INT+1U)
 
 #ifdef __cplusplus
 }

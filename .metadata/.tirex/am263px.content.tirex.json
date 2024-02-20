@@ -14189,6 +14189,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example verifies error inject operations for tmu Parity CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdl_tmu_parity",
+        "location": "../../examples/sdl/parity/sdl_tmu_parity/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "sdl",
+            "parity",
+            "sdl_tmu_parity",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet Txsg Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_txsg",
         "location": "../../examples/networking/enet_tx_scatter_gather/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
