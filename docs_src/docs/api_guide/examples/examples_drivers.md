@@ -84,6 +84,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_PCIE_BENCHMARK_EP
    -# \subpage EXAMPLES_DRIVERS_PCIE_BUF_TRANSFER_RC
    -# \subpage EXAMPLES_DRIVERS_PCIE_BUF_TRANSFER_EP
+   -# \subpage EXAMPLES_DRIVERS_PCIE_ENUMERATE_EP
    -# \subpage EXAMPLES_DRIVERS_PCIE_LEGACY_IRQ_RC
    -# \subpage EXAMPLES_DRIVERS_PCIE_LEGACY_IRQ_EP
    -# \subpage EXAMPLES_DRIVERS_PCIE_MSI_IRQ_RC
