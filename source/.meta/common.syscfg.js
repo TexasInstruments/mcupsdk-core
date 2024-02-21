@@ -406,6 +406,14 @@ exports = {
                 }
             }
         },
+        checkValidIdName: function(instance, report, property, IdName, displayName){
+            const pattern = /^0x[0-9a-fA-F]{1,4}$/;
+
+            if (pattern.test(IdName) == false)
+            {
+                report.logError("Invalid " + displayName + ". The required string format is: '0xABCD' ", instance, property);
+            }
+        }
     },
 
     ui:

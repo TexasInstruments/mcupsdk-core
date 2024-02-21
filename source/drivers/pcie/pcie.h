@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -77,6 +77,12 @@ extern "C" {
  */
 #define PCIE_MAX_MSIX_IRQ   (2048U)
 
+/**
+ * \brief Maximum number of configurable Inbound ATUs
+ *
+ */
+#define PCIE_MAX_NUM_IBATU   (6U)
+
 /* ========================================================================== */
 /*                         Structures and Enums                               */
 /* ========================================================================== */
@@ -100,6 +106,52 @@ typedef enum
     PCIE_GEN2 = 2,      /**< PCIe Gen2 for 5.0 GT/s speed */
     PCIE_GEN3 = 3,      /**< PCIe Gen3 for 8.0 GT/s speed */
 } Pcie_Gen;
+
+/**
+ * \brief Enumeration for PCIe Reference Clock mode
+ */
+
+typedef enum
+{
+    PCIE_REFCLK_MODE_INT_NOSSC_OUTDIS   = 1,   /** Internal Reference Clock with no SSC and Output disabled */
+    PCIE_REFCLK_MODE_INT_SSC_OUTDIS     = 2,   /** Internal Reference Clock with SSC and Output disabled */
+    PCIE_REFCLK_MODE_INT_NOSSC_OUTEN    = 3,   /** Internal Reference Clock with no SSC and Output enabled */
+    PCIE_REFCLK_MODE_INT_SSC_OUTEN      = 4,   /** Internal Reference Clock with SSC and Output enabled */
+    PCIE_REFCLK_MODE_EXT_NOSSC          = 5,   /** External Reference Clock with no SSC */
+    PCIE_REFCLK_MODE_EXT_SSC            = 6,   /** External Reference Clock with SSC*/
+} Pcie_RefClk_Mode;
+
+/**
+ * \brief Enumeration for PCIe SRIS mode
+ */
+
+typedef enum
+{
+    PCIE_REFCLK_SRIS_DISABLED   = 0,   /** SRIS disabled */
+    PCIE_REFCLK_SRIS_ENABLED    = 1,   /** SRIS enabled  */
+} Pcie_SRIS_Mode;
+
+/**
+ * \brief Enumeration for PCIE Power State
+ */
+typedef enum
+{
+    PCIE_PWR_STATE_D0    = 0,      /**< PCIe Power State D0 */
+    PCIE_PWR_STATE_D1    = 1,      /**< PCIe Power State D1 */
+    PCIE_PWR_STATE_D3hot = 2,      /**< PCIe Power State D3hot */
+} Pcie_PwrState;
+
+/**
+ * \brief Enumeration for PCIE Legacy Interrupt Pin
+ */
+typedef enum
+{
+    PCIE_INT_PINNONE = 0,          /**< Pcie Legacy Interrupt Pin None */
+    PCIE_INT_PINA    = 1,          /**< Pcie Legacy Interrupt Pin A */
+    PCIE_INT_PINB    = 2,          /**< Pcie Legacy Interrupt Pin B */
+    PCIE_INT_PINC    = 3,          /**< Pcie Legacy Interrupt Pin C */
+    PCIE_INT_PIND    = 4,          /**< Pcie Legacy Interrupt Pin D */
+} Pcie_IntPin;
 
 /**
  * \brief Driver handle returned by #Pcie_open() call
@@ -325,10 +377,30 @@ typedef struct
     uint32_t deviceNum;
     /** PCIe operation mode (RC or EP) */
     Pcie_Mode operationMode;
+    /** Vendor ID */
+    uint16_t vendorId;
+    /** Device ID */
+    uint16_t deviceId;
+    /** Subsystem Vendor ID */
+    uint16_t subSysVendorId;
+    /** Subsystem ID*/
+    uint16_t subSystemId;
+    /**  Class Code */
+    uint8_t classCode;
+    /**  Sub-Class Code */
+    uint8_t subClassCode;
+    /**  Programming Interface */
+    uint8_t progIntrface;
+    /**  Revision ID */
+    uint8_t revId;
     /** PCIe operation speed (GEN1, GEN2 or GEN3) */
     Pcie_Gen gen;
     /** Number of lanes for the instance */
     uint32_t numLanes;
+    /** PCIe Reference Clock mode */
+    Pcie_RefClk_Mode refclk_mode;
+    /** PCIe SRIS mode */
+    Pcie_SRIS_Mode sris_mode;
     /** PCIe Outbound ATU config params */
     Pcie_ObAtuCfg *obAtu;
     /** Number of PCIe Outbound configurations */
@@ -337,6 +409,8 @@ typedef struct
     Pcie_IbAtuCfg *ibAtu;
     /** Number of PCIe Inbound configurations */
     uint32_t ibAtuNum;
+    /** Legacy Interrupt Pin Register Number */
+    Pcie_IntPin intPin;
     /** Global Event number for MSI */
     uint32_t msiGlobalEventNum;
     /** Ring number used for MSI */
@@ -345,6 +419,10 @@ typedef struct
     uint32_t msiIntNum;
     /** Flag to indicate MSI enable */
     uint32_t msiIrqEnableFlag;
+    /** Number of distinct MSI vectors requested */
+    uint32_t msiMmc;
+    /** Number of distinct MSI vectors enabled */
+    uint32_t msiMme;
     /** ISR list for MSI */
     Pcie_MsiIsrCtrl *msiIsrCtrl;
     /** Ring memory for Ring accelerator used for MSI */
@@ -539,16 +617,16 @@ typedef struct Pcie_AtuRegionParams_s
     uint32_t                 enableRegion;
     /**< Region enable or disable */
     Pcie_AtuRegionMatchMode matchMode;
-    /**< Region match mode Address match or BAR match
+    /**< Region match mode Address match or BAR match (not supported)
      * Values given by enum #Pcie_AtuRegionMatchMode
      */
     uint32_t                 barNumber;
     /**< BAR number with which the region is associated
-     *   Possible values for EP : 0 to 5 for 32bit and 0 to 2 for 64bit
+     *   Possible values for EP : 0 to 5
      *   Possible values for RC : 0 to 1 for 32bit and 0 for 64bit
      */
     uint32_t                 lowerBaseAddr;
-    /**< Lower base address : should be 4K aligned
+    /**< Lower base address: must be aligned to regionWindowSize
      *   For outbound configuration this contains outbound region offset
      *   For inbound  configuration this contains inbound PCIe start address
      */
@@ -557,13 +635,13 @@ typedef struct Pcie_AtuRegionParams_s
      *   Higher 32 bits in case of 64 bit addressing
      *   Configured to 0 for 32 bit addressing
      */
-    uint32_t                 regionWindowSize;
-    /**< Region window size
+    uint64_t                 regionWindowSize;
+    /**< Region window size: must be a power of two
      *   For outbound configuration this contains outbound window size
      *   For inbound  configuration this contains PCIe inbound window size
      */
     uint32_t                 lowerTargetAddr;
-    /**< Lower Target address: should be 4K aligned
+    /**< Lower Target address: must be aligned to regionWindowSize
      *   For outbound configuration this contains outbound PCIe start offset
      *   For inbound  configuration this contains destination address
      */
@@ -623,10 +701,11 @@ Pcie_DeviceCfgBaseAddr *Pcie_handleGetBases (Pcie_Handle handle);
  *
  * \param handle Pcie_Handle for the instance
  * \param mode Interface mode (EP/EC)
+ * \param gen PCIe operation speed
  *
  * \return #SystemP_SUCCESS on successful; else error on failure
  */
-int32_t Pcie_setInterfaceMode (Pcie_Handle handle, Pcie_Mode mode);
+int32_t Pcie_setInterfaceMode (Pcie_Handle handle, Pcie_Mode mode, Pcie_Gen gen);
 
 /**
  *  \brief  Pcie_getMemSpaceReserved returns amount of reserved space
@@ -689,6 +768,36 @@ int32_t Pcie_getVendorId(Pcie_Handle handle, Pcie_Location location,
                                         uint32_t *vendorId, uint32_t *deviceId);
 
 /**
+ * \brief Get current PCIe Power State
+ *
+ * \param handle Pcie_Handle returned by #Pcie_open()
+ * \param pwrState Pointer to return PCIe Power State
+ *
+ * \return #SystemP_SUCCESS if successful; else error on failure
+ */
+int32_t Pcie_getPwrState(Pcie_Handle handle, Pcie_PwrState *pwrState);
+
+/**
+ * \brief Get current PCIe Link Parameter
+ *
+ * \param handle Pcie_Handle returned by #Pcie_open()
+ * \param gen Pointer to return PCIe operation speed
+ * \param numLanes Pointer to return Number of lanes for the instance
+ *
+ * \return #SystemP_SUCCESS if successful; else error on failure
+ */
+int32_t Pcie_getLinkParams(Pcie_Handle handle, Pcie_Gen *gen, uint32_t *numLanes);
+
+/**
+ * \brief Check if PCIe link training completed
+ *
+ * \param handle Pcie_Handle returned by #Pcie_open()
+ *
+ * \return #SystemP_SUCCESS if successful; else error on failure
+ */
+int32_t Pcie_isLinkUp(Pcie_Handle handle);
+
+/**
  * \brief Wait for PCIe link training to complete
  *
  * \param handle Pcie_Handle returned by #Pcie_open()
@@ -746,6 +855,102 @@ int32_t Pcie_cfgEP (Pcie_Handle handle);
  * \return #SystemP_SUCCESS if successful; else error on failure
  */
 int32_t Pcie_cfgRC (Pcie_Handle handle);
+
+/**
+ * \brief Set CONFIG_ENABLE to signal RC that the local EP configuration is completed
+ *
+ * setting CONFIG_ENABLE to '0' will generate a Configuration Request Retry Status (CRS)
+ * on Configuration Requests
+ *
+ * setting CONFIG_ENABLE to '1' will generate a Succesful Completion/Unsupported Request (SC/UR)
+ * on Configuration Requests
+ *
+ * \param handle #Pcie_Handle returned from #Pcie_open()
+ * \param enable Set (1) / Reset (0) CONFIG_ENABLE bit
+ *
+ * \return #SystemP_SUCCESS if successful; else error on failure
+ */
+int32_t Pcie_setCfgEn(Pcie_Handle handle, int enable);
+
+/**
+ * \brief Set slot clock configuration bit in Link Status Register
+ *
+ * If set indicates the EP uses the reference clock provided on the connector,
+ * else the EP uses a independent clock
+ *
+ * \param handle Pcie_Handle returned by #Pcie_open()
+ * \param enable Enable(1) / disable (0) slot clock configuration
+ *
+ * \return #SystemP_SUCCESS if successful; else error on failure
+ */
+int32_t Pcie_setSlotClockCnfg(Pcie_Handle handle, int enable);
+
+/**
+ * \brief Enable downstream interrupt in PCIE Controller
+ *
+ * \param handle Pcie_Handle returned by #Pcie_open()
+ * \param enable Enable(1) / disable (0) downstream IRQ
+ *
+ * \return #SystemP_SUCCESS if successful; else error on failure
+ */
+int32_t Pcie_setDwnStrIrq(Pcie_Handle handle, int enable);
+
+/**
+ * \brief Enable link down status interrupt in PCIE Controller
+ *
+ * \param handle Pcie_Handle returned by #Pcie_open()
+ * \param enable Enable(1) / disable (0) Linkdown State IRQ
+ *
+ * \return #SystemP_SUCCESS if successful; else error on failure
+ */
+int32_t Pcie_setLnkDwnStateIrq(Pcie_Handle handle, int enable);
+
+/**
+ * \brief Enable power management state interrupt in PCIE Controller
+ *
+ * \param handle Pcie_Handle returned by #Pcie_open()
+ * \param enable Enable(1) / disable (0) Power State IRQ
+ *
+ * \return #SystemP_SUCCESS if successful; else error on failure
+ */
+int32_t Pcie_setPwrStateIrq(Pcie_Handle handle, int enable);
+
+/**
+ * \brief Enable hot reset interrupt in PCIE Controller
+ *
+ * \param handle Pcie_Handle returned by #Pcie_open()
+ * \param enable Enable(1) / disable (0) Power State IRQ
+ *
+ * \return #SystemP_SUCCESS if successful; else error on failure
+ */
+int32_t Pcie_setHotResetIrq(Pcie_Handle handle, int enable);
+
+/**
+ * \brief Acknowledge downstream interrupt
+ *
+ * \param handle Pcie_Handle returned by #Pcie_open()
+ *
+ * \return #SystemP_SUCCESS if successful; else error on failure
+ */
+int32_t Pcie_ackDwnStrIrq(Pcie_Handle handle);
+
+/**
+ * \brief Acknowledge link down status interrupt
+ *
+ * \param handle Pcie_Handle returned by #Pcie_open()
+ *
+ * \return #SystemP_SUCCESS if successful; else error on failure
+ */
+int32_t Pcie_ackLnkDwnStateIrq(Pcie_Handle handle);
+
+/**
+ * \brief Acknowledge power management state interrupt
+ *
+ * \param handle Pcie_Handle returned by #Pcie_open()
+ *
+ * \return #SystemP_SUCCESS if successful; else error on failure
+ */
+int32_t Pcie_ackPwrStateIrq(Pcie_Handle handle);
 
 #ifdef __cplusplus
 }

@@ -1,7 +1,7 @@
 
 let common = system.getScript("/common");
 
-let maxIbRegionEP = 5;
+let maxIbRegionEP = 6;
 let maxIbRegionRC = 1;
 
 function getInstanceConfig(moduleInstance) {
@@ -11,7 +11,7 @@ function getInstanceConfig(moduleInstance) {
 };
 
 let pcieIbAtuCfg = {
-    displayName: "PCIe Outbound Address Translation",
+    displayName: "PCIe Inbound Address Translation",
     defaultInstanceName: "IB_ATU_CFG",
     maxInstances: maxIbRegionEP,
     config: [
@@ -245,7 +245,7 @@ let pcieIbAtuCfg = {
                 },
                 {
                     name: "PCIE_BARC_32B_MEM_BAR_PREFETCH",
-                    displayName: "32bit IO BAR Prefetchable"
+                    displayName: "32bit Mem BAR Prefetchable"
                 },
                 {
                     name: "PCIE_BARC_64B_MEM_BAR_NON_PREFETCH",
@@ -253,7 +253,7 @@ let pcieIbAtuCfg = {
                 },
                 {
                     name: "PCIE_BARC_64B_MEM_BAR_PREFETCH",
-                    displayName: "64bit IO BAR Prefetchable"
+                    displayName: "64bit Mem BAR Prefetchable"
                 },
             ]
         }
@@ -261,11 +261,14 @@ let pcieIbAtuCfg = {
     validate: (inst, report) => {
         validate(inst, report);
         checkDuplicateIndex(inst, report);
+        check64bitMemBarIndex(inst, report);
         checkValidAperture(inst, report);
         checkValidBarCfg(inst, report);
     },
     getInstanceConfig,
 }
+
+let Mem64BitBarAtIndx0 = new Array(3).fill(0);
 
 function validate(inst, report) {
 
@@ -288,6 +291,29 @@ function checkDuplicateIndex(inst,report) {
         }
     }
 }
+function check64bitMemBarIndex(inst,report) {
+    if(inst.regIndex%2 == 1)
+    {
+        let ind
+
+        switch (inst.regIndex) {
+            case 1:
+                ind = 0;
+                break;
+            case 3:
+                ind = 1;
+                break;
+            case 5:
+                ind = 2;
+                break;
+        }
+
+        if (Mem64BitBarAtIndx0[ind] == 1)
+        {
+            report.logError("Invalid BAR config for EP mode. A BAR cannot be configured on this Region Index since a 64bit memory BAR is already configured at the previous region index. If the BAR configuration on the previous Index shall remain then the current entry must be empty and deleted", inst, "regIndex");
+        }
+    }
+}
 
 function checkValidAperture(inst, report) {
     if(inst.$ownedBy.operMode == "PCIE_RC_MODE")
@@ -304,12 +330,15 @@ function checkValidAperture(inst, report) {
     }
     else if(inst.$ownedBy.operMode == "PCIE_EP_MODE")
     {
-        if(inst.barAperture == "4G" || inst.barAperture == "8G" || inst.barAperture == "16G"
-                || inst.barAperture == "32G" || inst.barAperture == "64G" || inst.barAperture == "128G"
-                || inst.barAperture == "256G" || inst.barAperture == "4B" || inst.barAperture == "8B"
-                || inst.barAperture == "16B" || inst.barAperture == "32B" || inst.barAperture == "64B")
+        if( inst.barConfig == "PCIE_BARC_32B_MEM_BAR_NON_PREFETCH" || inst.barConfig == "PCIE_BARC_32B_MEM_BAR_PREFETCH" || inst.barConfig == "PCIE_BARC_32B_IO_BAR")
         {
-            report.logError("Invalid aperture for EP Inbound region", inst, "barAperture");
+
+            if (inst.barAperture == "4G"   || inst.barAperture == "8G"  || inst.barAperture == "16G"
+                 || inst.barAperture == "32G"  || inst.barAperture == "64G" || inst.barAperture == "128G"
+                 || inst.barAperture == "256G")
+            {
+                report.logError("Invalid aperture for 32bit BAR. Aperture should be smaller.", inst, "barAperture");
+            }
         }
     }
 }
@@ -322,10 +351,39 @@ function checkValidBarCfg(inst, report) {
         }
     }
     else if (inst.$ownedBy.operMode == "PCIE_EP_MODE") {
-        if(inst.barConfig == "PCIE_BARC_64B_MEM_BAR_NON_PREFETCH" || inst.barConfig == "PCIE_BARC_64B_MEM_BAR_PREFETCH")
+
+        if(inst.regIndex%2 == 0)
         {
-            report.logError("Invalid BAR config for EP mode", inst, "barConfig");
+            let ind
+
+            switch (inst.regIndex) {
+                case 0:
+                    ind = 0;
+                    break;
+                case 2:
+                    ind = 1;
+                    break;
+                case 4:
+                    ind = 2;
+                    break;
+            }
+
+            if (inst.barConfig == "PCIE_BARC_64B_MEM_BAR_NON_PREFETCH" || inst.barConfig == "PCIE_BARC_64B_MEM_BAR_PREFETCH")
+            {
+                Mem64BitBarAtIndx0[ind] = 1;
+            }
+            else
+            {
+                Mem64BitBarAtIndx0[ind] = 0;
+            }
         }
+
+        /* 64bit cannot be on index 1,3,5 */
+        if(inst.regIndex%2 == 1 && (inst.barConfig == "PCIE_BARC_64B_MEM_BAR_NON_PREFETCH" || inst.barConfig == "PCIE_BARC_64B_MEM_BAR_PREFETCH"))
+        {
+            report.logError("Invalid BAR config for EP mode. A 64bit memory BAR can only be configured on Region Index 0, 2 or 4", inst, "barConfig");
+        }
+
     }
 }
 

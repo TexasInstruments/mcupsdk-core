@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -86,6 +86,7 @@ typedef struct
     uint32_t loAddr;
     uint32_t upAddr;
     uint32_t data;
+    uint32_t multMsgEn;
 }Pcie_MsiParams;
 
 typedef struct
@@ -145,7 +146,14 @@ typedef enum
     PCIE_EPBARA_256M,
     PCIE_EPBARA_512M,
     PCIE_EPBARA_1G,
-    PCIE_EPBARA_2G
+    PCIE_EPBARA_2G,
+    PCIE_EPBARA_4G,
+    PCIE_EPBARA_8G,
+    PCIE_EPBARA_16G,
+    PCIE_EPBARA_32G,
+    PCIE_EPBARA_64G,
+    PCIE_EPBARA_128G,
+    PCIE_EPBARA_256G,
 } Pcie_EPBarAperture;
 
 typedef enum
@@ -415,12 +423,38 @@ int32_t Pcie_epSendMsixIrq(Pcie_Handle handle, uint32_t intNum, uint64_t addr);
  * \brief Send MSI Irq from EP to RC
  *
  * \param handle #Pcie_Handle returned by #Pcie_open()
- * \param intNum MSI interrupt number
  * \param params #Pcie_MsiParams for sending MSI
  *
  * \return #SystemP_SUCCESS on successful; else error on failure
  */
-int32_t Pcie_epSendMsiIrq(Pcie_Handle handle, uint32_t intNum, Pcie_sendMsiParams params);
+int32_t Pcie_epSendMsiIrq(Pcie_Handle handle, Pcie_sendMsiParams params);
+
+/**
+ * \brief Disable MSIX capability for EP (End Point) operation
+ *
+ * \param handle #Pcie_Handle returned by #Pcie_open()
+ *
+ * \return #SystemP_SUCCESS on successful; else error on failure
+ */
+int32_t Pcie_epDisableMsixCap(Pcie_Handle handle);
+
+/**
+ * \brief Set MSI multi message capability for EP (End Point) operation
+ *
+ * \param handle #Pcie_Handle returned by #Pcie_open()
+ *
+ * \return #SystemP_SUCCESS on successful; else error on failure
+ */
+int32_t Pcie_epSetMsiMultiMessCap(Pcie_Handle handle);
+
+/**
+ * \brief Disable MSI per-vector masking capability for EP (End Point) operation
+ *
+ * \param handle #Pcie_Handle returned by #Pcie_open()
+ *
+ * \return #SystemP_SUCCESS on successful; else error on failure
+ */
+int32_t Pcie_epDisableMsiPerVecMaskCap(Pcie_Handle handle);
 
 #ifdef __cplusplus
 }

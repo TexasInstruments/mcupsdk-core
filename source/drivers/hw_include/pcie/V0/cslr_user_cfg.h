@@ -1,5 +1,5 @@
 /********************************************************************
- * Copyright (C) 2022 Texas Instruments Incorporated.
+ * Copyright (C) 2022-2024 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -211,6 +211,10 @@ typedef struct {
 #define CSL_USER_CFG_PMCMD_CLIENT_REQ_EXIT_L1_SUBSTATE_MASK                    (0x00000002U)
 #define CSL_USER_CFG_PMCMD_CLIENT_REQ_EXIT_L1_SUBSTATE_SHIFT                   (0x00000001U)
 #define CSL_USER_CFG_PMCMD_CLIENT_REQ_EXIT_L1_SUBSTATE_MAX                     (0x00000001U)
+
+#define CSL_USER_CFG_PMCMD_PWR_STATE_CHANGE_ACK_MASK                           (0x00000004U)
+#define CSL_USER_CFG_PMCMD_PWR_STATE_CHANGE_ACK_SHIFT                          (0x00000002U)
+#define CSL_USER_CFG_PMCMD_PWR_STATE_CHANGE_ACK_MAX                            (0x00000001U)
 
 /* LINKSTATUS */
 
@@ -501,6 +505,12 @@ typedef struct {
 #define CSL_USER_CFG_PTM_PTM_CLK_SEL_MASK                                      (0x0000003FU)
 #define CSL_USER_CFG_PTM_PTM_CLK_SEL_SHIFT                                     (0x00000000U)
 #define CSL_USER_CFG_PTM_PTM_CLK_SEL_MAX                                       (0x0000003FU)
+
+/* EOI_REG */
+
+#define CSL_USER_CFG_EOI_REG_EOI_VECTOR_MASK                                   (0x000000FFU)
+#define CSL_USER_CFG_EOI_REG_EOI_VECTOR_SHIFT                                  (0x00000000U)
+#define CSL_USER_CFG_EOI_REG_EOI_VECTOR_MAX                                    (0x000000FFU)
 
 #ifdef __cplusplus
 }

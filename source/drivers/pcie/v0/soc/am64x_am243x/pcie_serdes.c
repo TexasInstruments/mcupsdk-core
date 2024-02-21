@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -50,6 +50,7 @@ int32_t Pcie_serdesInit(Pcie_Handle handle, uint32_t deviceNum)
     CSL_SerdesLaneEnableParams serdesLaneEnableParams;
 
     Pcie_Config *pcieCfg;
+    Pcie_RefClk_Mode refclk_mode;
     uint32_t pcieGen;
     uint32_t linkRate;
 
@@ -83,17 +84,62 @@ int32_t Pcie_serdesInit(Pcie_Handle handle, uint32_t deviceNum)
             break;
     }
 
-    serdesLaneEnableParams.refClock         = CSL_SERDES_REF_CLOCK_100M;
-    serdesLaneEnableParams.refClkSrc        = CSL_SERDES_REF_CLOCK_INT;
+    serdesLaneEnableParams.refClock = CSL_SERDES_REF_CLOCK_100M;
+
+    refclk_mode = pcieCfg->attrs->refclk_mode;
+
+    switch (refclk_mode)
+    {
+        case (PCIE_REFCLK_MODE_INT_NOSSC_OUTDIS):
+                serdesLaneEnableParams.refClkSrc = CSL_SERDES_REF_CLOCK_INT;
+                serdesLaneEnableParams.refClkOut = CSL_SERDES_REFCLK_OUT_DIS;
+                serdesLaneEnableParams.SSC_mode  = CSL_SERDES_NO_SSC;
+                break;
+
+        case (PCIE_REFCLK_MODE_INT_SSC_OUTDIS):
+                serdesLaneEnableParams.refClkSrc = CSL_SERDES_REF_CLOCK_INT;
+                serdesLaneEnableParams.refClkOut = CSL_SERDES_REFCLK_OUT_DIS;
+                serdesLaneEnableParams.SSC_mode  = CSL_SERDES_INTERNAL_SSC;
+                break;
+
+        case (PCIE_REFCLK_MODE_INT_NOSSC_OUTEN):
+                serdesLaneEnableParams.refClkSrc = CSL_SERDES_REF_CLOCK_INT;
+                serdesLaneEnableParams.refClkOut = CSL_SERDES_REFCLK_OUT_EN;
+                serdesLaneEnableParams.SSC_mode  = CSL_SERDES_NO_SSC;
+                break;
+
+        case (PCIE_REFCLK_MODE_INT_SSC_OUTEN):
+                serdesLaneEnableParams.refClkSrc = CSL_SERDES_REF_CLOCK_INT;
+                serdesLaneEnableParams.refClkOut = CSL_SERDES_REFCLK_OUT_EN;
+                serdesLaneEnableParams.SSC_mode  = CSL_SERDES_INTERNAL_SSC;
+                break;
+
+        case (PCIE_REFCLK_MODE_EXT_NOSSC):
+                serdesLaneEnableParams.refClkSrc = CSL_SERDES_REF_CLOCK_EXT_NO_SSC;
+                serdesLaneEnableParams.refClkOut = CSL_SERDES_REFCLK_OUT_DIS;
+                serdesLaneEnableParams.SSC_mode  = CSL_SERDES_NO_SSC;
+                break;
+
+        case (PCIE_REFCLK_MODE_EXT_SSC):
+                serdesLaneEnableParams.refClkSrc = CSL_SERDES_REF_CLOCK_EXT_SSC;
+                serdesLaneEnableParams.refClkOut = CSL_SERDES_REFCLK_OUT_DIS;
+                serdesLaneEnableParams.SSC_mode  = CSL_SERDES_EXTERNAL_SSC;
+                break;
+
+        default:
+                serdesLaneEnableParams.refClkSrc = CSL_SERDES_REF_CLOCK_EXT_NO_SSC;
+                serdesLaneEnableParams.refClkOut = CSL_SERDES_REFCLK_OUT_DIS;
+                serdesLaneEnableParams.SSC_mode  = CSL_SERDES_NO_SSC;
+                break;
+    }
+
     serdesLaneEnableParams.linkRate         = linkRate;
     serdesLaneEnableParams.numLanes         = pcieCfg->attrs->numLanes;
     serdesLaneEnableParams.laneMask         = SERDES_LANE_MASK;
-    serdesLaneEnableParams.SSC_mode         = CSL_SERDES_NO_SSC;
     serdesLaneEnableParams.phyType          = CSL_SERDES_PHY_TYPE_PCIe;
     serdesLaneEnableParams.pcieGenType      = pcieGen;
     serdesLaneEnableParams.operatingMode    = CSL_SERDES_FUNCTIONAL_MODE;
     serdesLaneEnableParams.phyInstanceNum   = 0;
-    serdesLaneEnableParams.refClkOut        = CSL_SERDES_REFCLK_OUT_EN;
 
     for(i = 0; i< serdesLaneEnableParams.numLanes; i++)
     {

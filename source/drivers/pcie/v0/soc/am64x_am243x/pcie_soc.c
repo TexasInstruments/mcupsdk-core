@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -103,12 +103,6 @@
 
 /* AM64x Number of legacy interrupts */
 #define PCIE_NUM_LEGACY_INT                                         (4u)
-
-/* Offset to write MSI */
-#define PCIE_MSI_IRQ_ADDR_OFFSET                                    (0xFCu)
-
-/* Offset to write MSIx */
-#define PCIE_MSIX_IRQ_ADDR_OFFSET                                   (0xFCu)
 
 /* Index of ring (from the range allocated) used for MSI */
 #define MSI_RING_ACC_INDEX         (0U)
@@ -932,17 +926,22 @@ int32_t Pcie_rcRegisterMsiIsr (Pcie_Handle handle, Pcie_RegisterMsiIsrParams par
     return status;
 }
 
-int32_t Pcie_epSendMsiIrq(Pcie_Handle handle, uint32_t intNum, Pcie_sendMsiParams params)
+int32_t Pcie_epSendMsiIrq(Pcie_Handle handle, Pcie_sendMsiParams params)
 {
     int32_t status = SystemP_SUCCESS;
     uint64_t msiAddr;
+    Pcie_Config *pcieCfg = NULL;
 
-    if (handle == NULL)
+    if (handle != NULL)
+    {
+        pcieCfg = (Pcie_Config *)handle;
+    }
+    else
     {
         status = SystemP_FAILURE;
     }
 
-    if (intNum > (PCIE_MAX_MSI_IRQ-1))
+    if (params.intNum > (PCIE_MAX_MSI_IRQ-1))
     {
         status = SystemP_FAILURE;
     }
@@ -954,12 +953,11 @@ int32_t Pcie_epSendMsiIrq(Pcie_Handle handle, uint32_t intNum, Pcie_sendMsiParam
     else
     {
         msiAddr = params.addr;
-        msiAddr += PCIE_MSI_IRQ_ADDR_OFFSET;
     }
 
     if (status == SystemP_SUCCESS)
     {
-        uint32_t data = (intNum & PCIE_MSI_IRQNUM_MASK) | (params.data & ~PCIE_MSI_IRQNUM_MASK);
+        uint32_t data = (params.intNum & (pcieCfg->attrs->msiMme - 1)) | (params.data & ~(pcieCfg->attrs->msiMme - 1));
         *((uintptr_t *)msiAddr) = data;
     }
 
@@ -1335,7 +1333,6 @@ int32_t Pcie_epSendMsixIrq(Pcie_Handle handle, uint32_t intNum, uint64_t addr)
         else
         {
             msiAddr = addr + config->attrs->epMsixTbl->tbl[intNum].addr;
-            msiAddr += PCIE_MSIX_IRQ_ADDR_OFFSET;
         }
 
         tblData = config->attrs->epMsixTbl->tbl[intNum].data;

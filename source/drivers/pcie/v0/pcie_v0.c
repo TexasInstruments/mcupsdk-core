@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -91,6 +91,9 @@ static int32_t Pcie_readPidReg(const CSL_pcie_ep_coreRegs *baseAddr, Pcie_PidReg
 static int32_t Pcie_readCmdStatusReg (const CSL_pcie_ep_coreRegs *baseAddr, Pcie_CmdStatusReg *swReg);
 static int32_t Pcie_readLinkStatusReg (const CSL_pcie_ep_coreRegs *baseAddr, Pcie_TiConfDeviceCmdReg *swReg);
 static int32_t Pcie_readVendorDevId(volatile const uint32_t *hwReg_VENDOR_ID_DEV_ID, Pcie_VndDevIdReg *swReg);
+static int32_t Pcie_readSubIdReg(volatile const uint32_t *hwReg_SUBSYSTEM_VENDOR_ID_SUBSYSTEM_ID, Pcie_SubIdReg *swReg);
+static int32_t Pcie_readIntPinReg(volatile const uint32_t *hwReg_INTRPT_LINE_INTRPT_PIN, Pcie_IntPinReg *swReg);
+static int32_t Pcie_readDevCapReg(volatile const uint32_t *hwReg_DEV_CAS, Pcie_DeviceCapReg *swReg);
 static int32_t Pcie_readDevStatCtrlReg (volatile const uint32_t *hwReg_DEV_CAS, Pcie_DevStatCtrlReg *swReg);
 static int32_t Pcie_readLinkCapReg (volatile const uint32_t *hwReg_LNK_CAP, Pcie_LinkCapReg *swReg);
 static int32_t Pcie_readLinkStatCtrlReg (volatile const uint32_t *hwReg_LNK_CAS, Pcie_LinkStatCtrlReg *swReg);
@@ -128,11 +131,29 @@ static int32_t Pcie_readMsiUp32Reg (const CSL_pcie_ep_coreRegs *baseAddr, Pcie_M
 static int32_t Pcie_readMsiDataReg (const CSL_pcie_ep_coreRegs *baseAddr, Pcie_MsiDataReg *swReg);
 static int32_t Pcie_readMsixCapReg (const CSL_pcie_ep_coreRegs *baseAddr, Pcie_MsixCapReg *swReg);
 static int32_t Pcie_readMsixTblOffset (const CSL_pcie_ep_coreRegs *baseAddr, Pcie_MsixTblOffset *swReg);
+static int32_t Pcie_readPmMgmtCtrlStatReg(const CSL_pcie_ep_coreRegs *baseAddr, Pcie_PMCapCtlStatReg *swReg);
+
+static int32_t Pcie_readUsrInitCfgReg(const CSL_user_cfgRegs *baseAddr, Pcie_UserCfgInitCfgReg *swReg);
+static int32_t Pcie_readUsrPmCmdReg(const CSL_user_cfgRegs *baseAddr, Pcie_UserCfgPmCmdReg *swReg);
+static int32_t Pcie_readIntdCfgEnSys0Reg(const CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgEnSys0Reg *swReg);
+static int32_t Pcie_readIntdCfgEnSys1Reg(const CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgEnSys1Reg *swReg);
+static int32_t Pcie_readIntdCfgEnSys2Reg(const CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgEnSys2Reg *swReg);
+static int32_t Pcie_readIntdCfgStatusSys0Reg(const CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgStatusSys0Reg *swReg);
+static int32_t Pcie_readIntdCfgStatusSys1Reg(const CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgStatusSys1Reg *swReg);
+static int32_t Pcie_readIntdCfgStatusSys2Reg(const CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgStatusSys2Reg *swReg);
+static int32_t Pcie_readIntdCfgStatusClrSys2Reg(const CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgStatusClrSys2Reg *swReg);
+static int32_t Pcie_readVndrSpecCntrlReg(volatile const uint32_t *hwReg_VENDOR_SPECIFIC_CONTROL_REG, Pcie_VndrSpecCntrlReg *swReg);
+static int32_t Pcie_readLmVendorIdReg(volatile const uint32_t *hwReg_I_VENDOR_ID_REG, Pcie_LmVendorIdReg *swReg);
 
 /* Register write functions */
+static int32_t Pcie_writeVendorDevId(volatile uint32_t *hwReg_VENDOR_ID_DEV_ID, Pcie_VndDevIdReg *swReg);
+static int32_t Pcie_writeSubIdReg(volatile uint32_t *hwReg_SUBSYSTEM_VENDOR_ID_SUBSYSTEM_ID, Pcie_SubIdReg *swReg);
+static int32_t Pcie_writeIntPinReg(volatile uint32_t *hwReg_INTRPT_LINE_INTRPT_PIN, Pcie_IntPinReg *swReg);
 static int32_t Pcie_writeCmdStatusReg (CSL_pcie_ep_coreRegs *baseAddr, Pcie_CmdStatusReg *swReg);
+static int32_t Pcie_writeDevCapReg(volatile uint32_t *hwReg_DEV_CAS, Pcie_DeviceCapReg *swReg);
 static int32_t Pcie_writeDevStatCtrlReg (volatile uint32_t *hwReg_DEV_CAS, Pcie_DevStatCtrlReg *swReg);
 static int32_t Pcie_writeLinkCapReg (volatile uint32_t *hwReg_LNK_CAP, Pcie_LinkCapReg *swReg);
+static int32_t Pcie_writeLinkStatCtrlReg(volatile uint32_t *hwReg_LNK_CAS, Pcie_LinkStatCtrlReg *swReg);
 static int32_t Pcie_writeAccrReg (CSL_pcie_ep_coreRegs *baseAddr, Pcie_AccrReg *swReg);
 static int32_t Pcie_writeLinkStatusReg (CSL_pcie_ep_coreRegs *baseAddr, Pcie_TiConfDeviceCmdReg *swReg);
 static int32_t Pcie_writeEpIrqSetReg (CSL_user_cfgRegs *baseAddr, Pcie_EpIrqSetReg *swReg,
@@ -166,10 +187,33 @@ static int32_t Pcie_writeMsiUp32Reg (CSL_pcie_ep_coreRegs *baseAddr, Pcie_MsiUp3
 static int32_t Pcie_writeMsiDataReg (CSL_pcie_ep_coreRegs *baseAddr, Pcie_MsiDataReg *swReg);
 static int32_t Pcie_writeMsixCapReg (CSL_pcie_ep_coreRegs *baseAddr, Pcie_MsixCapReg *swReg);
 static int32_t Pcie_writeMsixTblOffset (CSL_pcie_ep_coreRegs *baseAddr, Pcie_MsixTblOffset *swReg);
+static int32_t Pcie_writePmMgmtCtrlStatReg(CSL_pcie_ep_coreRegs *baseAddr, Pcie_PMCapCtlStatReg *swReg);
+
+static int32_t Pcie_writeUsrInitCfgReg(CSL_user_cfgRegs *baseAddr, Pcie_UserCfgInitCfgReg *swReg);
+static int32_t Pcie_writeUsrPmCmdReg(CSL_user_cfgRegs *baseAddr, Pcie_UserCfgPmCmdReg *swReg);
+static int32_t Pcie_writeIntdCfgEnSys0Reg(CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgEnSys0Reg *swReg);
+static int32_t Pcie_writeIntdCfgEnSys1Reg(CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgEnSys1Reg *swReg);
+static int32_t Pcie_writeIntdCfgEnSys2Reg(CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgEnSys2Reg *swReg);
+static int32_t Pcie_writeIntdCfgStatusSys0Reg(CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgStatusSys0Reg *swReg);
+static int32_t Pcie_writeIntdCfgStatusSys1Reg(CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgStatusSys1Reg *swReg);
+static int32_t Pcie_writeIntdCfgStatusSys2Reg(CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgStatusSys2Reg *swReg);
+static int32_t Pcie_writeIntdCfgStatusClrSys2Reg(CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgStatusClrSys2Reg *swReg);
+static int32_t Pcie_writeVndrSpecCntrlReg(volatile uint32_t *hwReg_VENDOR_SPECIFIC_CONTROL_REG, Pcie_VndrSpecCntrlReg *swReg);
+static int32_t Pcie_writeLmVendorIdReg(volatile uint32_t *hwReg_I_VENDOR_ID_REG, Pcie_LmVendorIdReg *swReg);
 
 static int32_t Pcie_obTransCfg(Pcie_Handle handle);
-static void Pcie_setMode (Pcie_DevParams *devParams, Pcie_Mode mode);
+static void Pcie_setMode (Pcie_DevParams *devParams, Pcie_Mode mode, Pcie_Gen gen);
 static uint32_t Pcie_getNumPassBitFromWinSize(uint32_t winSize);
+static int32_t Pcie_checkAtuAlign(uint64_t size, uint32_t lowerAddr, uint32_t upperAddr);
+static uint64_t Pcie_aperture2size(uint32_t barAperture);
+
+static int32_t Pcie_setVendorId(Pcie_Handle handle);
+static int32_t Pcie_setDeviceId(Pcie_Handle handle);
+static int32_t Pcie_setSubSysVendorId(Pcie_Handle handle);
+static int32_t Pcie_setSubSystemId(Pcie_Handle handle);
+static int32_t Pcie_setRevIdClassCode(Pcie_Handle handle);
+static int32_t Pcie_setFlr(Pcie_Handle handle, int enable);
+static int32_t Pcie_setIntPin(Pcie_Handle handle);
 
 /* Read number of lanes configured */
 extern int32_t Pcie_readLnkCtrlReg (const CSL_pcie_ep_coreRegs *baseAddr, Pcie_LnkCtrlReg *swReg);
@@ -275,7 +319,7 @@ static int32_t Pcie_readCmdStatusReg (const CSL_pcie_ep_coreRegs *baseAddr, Pcie
 /*****************************************************************************
  * Set mode of interface as RC or EP
  ****************************************************************************/
-static void Pcie_setMode (Pcie_DevParams *devParams, Pcie_Mode mode)
+static void Pcie_setMode (Pcie_DevParams *devParams, Pcie_Mode mode, Pcie_Gen gen)
 {
     uint32_t val;
     uint32_t curMode, linkSpd;
@@ -291,16 +335,31 @@ static void Pcie_setMode (Pcie_DevParams *devParams, Pcie_Mode mode)
             break;
     }
 
+    switch (gen)
+    {
+        case PCIE_GEN1:
+            linkSpd = 0U;
+            break;
+        case PCIE_GEN2:
+            linkSpd = 1U;
+            break;
+        case PCIE_GEN3:
+            linkSpd = 2U;
+            break;
+        default:
+            linkSpd = 1U;
+            break;
+    }
+
     if (devParams != NULL)
     {
-        linkSpd = devParams->linkSpeed;
         if (devParams->pcieCtrlAddr)
         {
             Pcie_unlockMMRCtrlReg();
 
             val = *(devParams->pcieCtrlAddr);
             PCIE_SETBITS(val, CSL_MAIN_CTRL_MMR_CFG0_PCIE0_CTRL_MODE_SEL, curMode);
-            PCIE_SETBITS(val, CSL_MAIN_CTRL_MMR_CFG0_PCIE0_CTRL_GENERATION_SEL, linkSpd-1);
+            PCIE_SETBITS(val, CSL_MAIN_CTRL_MMR_CFG0_PCIE0_CTRL_GENERATION_SEL, linkSpd);
             *(devParams->pcieCtrlAddr) = val;
 
             Pcie_lockMMRCtrlReg();
@@ -308,7 +367,7 @@ static void Pcie_setMode (Pcie_DevParams *devParams, Pcie_Mode mode)
     }
 } /* Pcie_setMode */
 
-int32_t Pcie_setInterfaceMode(Pcie_Handle handle, Pcie_Mode mode)
+int32_t Pcie_setInterfaceMode(Pcie_Handle handle, Pcie_Mode mode, Pcie_Gen gen)
 {
     Pcie_DeviceCfgBaseAddr *baseAddr;
     Pcie_DevParams *devParams;
@@ -329,7 +388,7 @@ int32_t Pcie_setInterfaceMode(Pcie_Handle handle, Pcie_Mode mode)
         {
             devParams = (Pcie_DevParams*)baseAddr->devParams;
 
-            Pcie_setMode(devParams, mode);
+            Pcie_setMode(devParams, mode, gen);
         }
         else
         {
@@ -341,12 +400,12 @@ int32_t Pcie_setInterfaceMode(Pcie_Handle handle, Pcie_Mode mode)
 }
 
 /*****************************************************************************
- * Check LTSSM status and wait for the link to be up
+ * Determine if link is up by examining LTSSM state
  ****************************************************************************/
-int32_t Pcie_waitLinkUp(Pcie_Handle handle)
+int32_t Pcie_isLinkUp(Pcie_Handle handle)
 {
-    Pcie_Registers getRegs;
     int32_t status = SystemP_SUCCESS;
+    Pcie_Registers getRegs;
 
     memset (&getRegs, 0, sizeof(getRegs));
 
@@ -357,13 +416,37 @@ int32_t Pcie_waitLinkUp(Pcie_Handle handle)
 
     uint8_t ltssmState = 0xFFu;
 
-    while((ltssmState != (PCIE_LTSSM_L0-1)) && (SystemP_SUCCESS == status))
+    status = Pcie_readRegs (handle, PCIE_LOCATION_LOCAL, &getRegs);
+
+    if (status != SystemP_SUCCESS)
+        return status;
+
+    ltssmState = ltssmStateReg.ltssmState;
+
+    if (ltssmState == PCIE_LTSSM_L0-1)
+        return SystemP_SUCCESS;
+    else
+        return SystemP_TIMEOUT;
+
+    return status;
+}
+
+/*****************************************************************************
+ * Wait for the PCIe link to be up
+ ****************************************************************************/
+int32_t Pcie_waitLinkUp(Pcie_Handle handle)
+{
+    int32_t status = SystemP_SUCCESS;
+
+    while (1)
     {
-        ClockP_usleep(10);
+        status = Pcie_isLinkUp(handle);
 
-        status = Pcie_readRegs (handle, PCIE_LOCATION_LOCAL, &getRegs);
+        if (status == SystemP_SUCCESS)
+                return SystemP_SUCCESS;
 
-        ltssmState = ltssmStateReg.ltssmState;
+        else if (status == SystemP_TIMEOUT)
+                ClockP_usleep(10);
     }
 
     return status;
@@ -390,6 +473,105 @@ int32_t Pcie_checkLinkParams(Pcie_Handle handle)
         status = Pcie_readRegs (handle, PCIE_LOCATION_LOCAL, &regs);
     }while (((expLanes != linkStatCtrl.negotiatedLinkWd)||(expSpeed != linkStatCtrl.linkSpeed)) &&
                     (status == SystemP_SUCCESS));
+
+    return status;
+}
+
+/*****************************************************************************
+ * Return current link parameter
+ ****************************************************************************/
+int32_t Pcie_getLinkParams(Pcie_Handle handle, Pcie_Gen *gen, uint32_t *numLanes)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_LinkStatCtrlReg linkStatCtrl;
+    Pcie_Registers regs;
+
+    if (handle == NULL)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+        memset (&linkStatCtrl, 0, sizeof(linkStatCtrl));
+
+        regs.linkStatCtrl = &linkStatCtrl;
+
+        status = Pcie_readRegs (handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        switch (linkStatCtrl.linkSpeed)
+        {
+            case 1U:
+                *gen = PCIE_GEN1;  /**< PCIe Gen1 for 2.5 GT/s speed */
+                break;
+            case 2U:
+                *gen = PCIE_GEN2;  /**< PCIe Gen2 for 5.0 GT/s speed */
+                break;
+            case 3U:
+                *gen = PCIE_GEN3;  /**< PCIe Gen3 for 8.0 GT/s speed */
+                break;
+        }
+
+        *numLanes = (uint32_t) linkStatCtrl.negotiatedLinkWd;
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Return current power state
+ ****************************************************************************/
+int32_t Pcie_getPwrState(Pcie_Handle handle, Pcie_PwrState *pwrState)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_PMCapCtlStatReg pmCapCtlStat;
+    Pcie_Registers regs;
+
+    if (handle == NULL)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    /*
+     * Reading pmCapCtlStat Register only valid
+     * if SERDES RefClk on resp. PCIe Link established
+     */
+    status = Pcie_isLinkUp(handle);
+
+    if (status == SystemP_TIMEOUT)
+    {
+        return SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+        memset (&pmCapCtlStat, 0, sizeof(pmCapCtlStat));
+
+        regs.pmCapCtlStat = &pmCapCtlStat;
+
+        status = Pcie_readRegs (handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        switch (pmCapCtlStat.pwrState)
+        {
+            case 0U:
+                *pwrState = PCIE_PWR_STATE_D0;
+                break;
+            case 1U:
+                *pwrState = PCIE_PWR_STATE_D1;
+                break;
+            case 3U:
+                *pwrState = PCIE_PWR_STATE_D3hot;
+                break;
+        }
+    }
 
     return status;
 }
@@ -438,14 +620,28 @@ int32_t Pcie_LtssmCtrl (Pcie_Handle handle, uint8_t enable)
 int32_t Pcie_cfgRC (Pcie_Handle handle)
 {
     int32_t status = SystemP_SUCCESS;
-
+    Pcie_Config *pcieCfg = NULL;
     Pcie_Registers setRegs;
     Pcie_Registers getRegs;
     Pcie_StatusCmdReg statusCmd;
     Pcie_DevStatCtrlReg devStatCtrl;
     Pcie_AccrReg accr;
+    Pcie_AtuRegionParams regionParams;
+    Pcie_BarCfg barCfg;
 
-    status = Pcie_LtssmCtrl(handle, FALSE);
+    if (handle != NULL)
+    {
+        pcieCfg = (Pcie_Config *)handle;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (SystemP_SUCCESS == status)
+    {
+        status = Pcie_LtssmCtrl(handle, FALSE);
+    }
 
     /* Enable memory access and control of the bus */
     memset (&setRegs, 0, sizeof(setRegs));
@@ -502,6 +698,392 @@ int32_t Pcie_cfgRC (Pcie_Handle handle)
         status = Pcie_writeRegs (handle, PCIE_LOCATION_LOCAL, &setRegs);
     }
 
+    /* configure BARs */
+    for (int i = 0; i < pcieCfg->attrs->ibAtuNum; i++)
+    {
+        if (status == SystemP_SUCCESS)
+        {
+            memset (&barCfg, 0, sizeof(Pcie_BarCfg));
+
+            barCfg.location = PCIE_LOCATION_LOCAL;
+            barCfg.mode     = PCIE_RC_MODE;
+            barCfg.barxc    = pcieCfg->attrs->ibAtu[i].barCfg;
+            barCfg.barxa    = pcieCfg->attrs->ibAtu[i].barAperture;
+            barCfg.idx      = pcieCfg->attrs->ibAtu[i].regionIndex;
+
+            status = Pcie_cfgBar (handle, &barCfg);
+
+            DebugP_assert(SystemP_SUCCESS == status);
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    /* configure inbound ATU */
+    for (int i = 0; i < pcieCfg->attrs->ibAtuNum; i++)
+    {
+        if (status == SystemP_SUCCESS)
+        {
+            memset(&regionParams, 0, sizeof(regionParams));
+
+            regionParams.enableRegion     = 1;
+            regionParams.regionDir        = PCIE_ATU_REGION_DIR_INBOUND;
+            regionParams.tlpType          = pcieCfg->attrs->ibAtu[i].tlpType;
+            regionParams.lowerBaseAddr    = pcieCfg->attrs->ibAtu[i].lowerBaseAddr;
+            regionParams.upperBaseAddr    = pcieCfg->attrs->ibAtu[i].upperBaseAddr;
+            regionParams.regionWindowSize = pcieCfg->attrs->ibAtu[i].regionWindowSize;
+            regionParams.lowerTargetAddr  = pcieCfg->attrs->ibAtu[i].lowerTargetAddr;
+            regionParams.upperTargetAddr  = pcieCfg->attrs->ibAtu[i].upperTargetAddr;
+
+            status = Pcie_atuRegionConfig (handle, PCIE_LOCATION_LOCAL, (uint32_t) pcieCfg->attrs->ibAtu[i].regionIndex, &regionParams);
+
+            DebugP_assert(SystemP_SUCCESS == status);
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    /* configure outbound ATU */
+    for (int i = 0; i < pcieCfg->attrs->obAtuNum; i++)
+    {
+        if (status == SystemP_SUCCESS)
+        {
+            memset(&regionParams, 0, sizeof(regionParams));
+
+            regionParams.enableRegion     = 1;
+            regionParams.regionDir        = PCIE_ATU_REGION_DIR_OUTBOUND;
+            regionParams.tlpType          = pcieCfg->attrs->obAtu[i].tlpType;
+            regionParams.lowerBaseAddr    = pcieCfg->attrs->obAtu[i].lowerBaseAddr;
+            regionParams.upperBaseAddr    = pcieCfg->attrs->obAtu[i].upperBaseAddr;
+            regionParams.regionWindowSize = pcieCfg->attrs->obAtu[i].regionWindowSize;
+            regionParams.lowerTargetAddr  = pcieCfg->attrs->obAtu[i].lowerTargetAddr;
+            regionParams.upperTargetAddr  = pcieCfg->attrs->obAtu[i].upperTargetAddr;
+
+            status = Pcie_atuRegionConfig (handle, PCIE_LOCATION_LOCAL, (uint32_t) pcieCfg->attrs->obAtu[i].regionIndex, &regionParams);
+
+            DebugP_assert(SystemP_SUCCESS == status);
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Function: Configure one BAR in EP mode
+ ****************************************************************************/
+static int32_t Pcie_cfgEP1Bar(Pcie_Handle handle, Pcie_IbAtuCfg ibAtu)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_BarCfg barCfg;
+
+    if (handle == NULL)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&barCfg, 0, sizeof(barCfg));
+
+        barCfg.mode     = PCIE_EP_MODE;
+        barCfg.location = PCIE_LOCATION_LOCAL;
+        barCfg.idx      = ibAtu.regionIndex;
+        barCfg.barxc    = ibAtu.barCfg;
+        barCfg.barxa    = ibAtu.barAperture;
+
+        status = Pcie_cfgBar (handle, &barCfg);
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Determine ATU region windows size from BAR aperture
+ ****************************************************************************/
+static uint64_t Pcie_aperture2size(uint32_t barAperture)
+{
+    uint64_t size;
+
+    switch (barAperture)
+    {
+        case PCIE_EPBARA_128B:
+                size = 0x80;
+                break;
+        case PCIE_EPBARA_256B:
+                size = 0x100;
+                break;
+        case PCIE_EPBARA_512B:
+                size = 0x200;
+                break;
+        case PCIE_EPBARA_1K:
+                size = 0x400;
+                break;
+        case PCIE_EPBARA_2K:
+                size = 0x800;
+                break;
+        case PCIE_EPBARA_4K:
+                size = 0x1000;
+                break;
+        case PCIE_EPBARA_8K:
+                size = 0x2000;
+                break;
+        case PCIE_EPBARA_16K:
+                size = 0x4000;
+                break;
+        case PCIE_EPBARA_32K:
+                size = 0x8000;
+                break;
+        case PCIE_EPBARA_64K:
+                size = 0x10000;
+                break;
+        case PCIE_EPBARA_128K:
+                size = 0x20000;
+                break;
+        case PCIE_EPBARA_256K:
+                size = 0x40000;
+                break;
+        case PCIE_EPBARA_512K:
+                size = 0x8000;
+                break;
+        case PCIE_EPBARA_1M:
+                size = 0x100000;
+                break;
+        case PCIE_EPBARA_2M:
+                size = 0x200000;
+                break;
+        case PCIE_EPBARA_4M:
+                size = 0x400000;
+                break;
+        case PCIE_EPBARA_8M:
+                size = 0x800000;
+                break;
+        case PCIE_EPBARA_16M:
+                size = 0x1000000;
+                break;
+        case PCIE_EPBARA_32M:
+                size = 0x2000000;
+                break;
+        case PCIE_EPBARA_64M:
+                size = 0x4000000;
+                break;
+        case PCIE_EPBARA_128M:
+                size = 0x8000000;
+                break;
+        case PCIE_EPBARA_256M:
+                size = 0x10000000;
+                break;
+        case PCIE_EPBARA_512M:
+                size = 0x20000000;
+                break;
+        case PCIE_EPBARA_1G:
+                size = 0x40000000;
+                break;
+        case PCIE_EPBARA_2G:
+                size = 0x80000000;
+                break;
+        case PCIE_EPBARA_4G:
+                size = 0x100000000;
+                break;
+        case PCIE_EPBARA_8G:
+                size = 0x200000000;
+                break;
+        case PCIE_EPBARA_16G:
+                size = 0x400000000;
+                break;
+        case PCIE_EPBARA_32G:
+                size = 0x800000000;
+                break;
+        case PCIE_EPBARA_64G:
+                size = 0x1000000000;
+                break;
+        case PCIE_EPBARA_128G:
+                size = 0x2000000000;
+                break;
+        case PCIE_EPBARA_256G:
+                size = 0x4000000000;
+                break;
+    }
+
+    return size;
+}
+
+/*****************************************************************************
+ * Function: Configure BARs and inbound ATUs in End Point Mode
+ ****************************************************************************/
+static int32_t Pcie_cfgEPBars(Pcie_Handle handle)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_Config *pcieCfg = NULL;
+    Pcie_AtuRegionParams regionParams;
+
+    if (handle != NULL)
+    {
+        pcieCfg = (Pcie_Config *)handle;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        /* check if maximum number of configurable inbound ATUs not exceeded */
+        if (pcieCfg->attrs->ibAtuNum > PCIE_MAX_NUM_IBATU)
+        {
+            status = SystemP_FAILURE;
+        }
+    }
+
+    /* check if region index of a configurable inbound ATU not duplicated */
+    for (int i = 0; i < pcieCfg->attrs->ibAtuNum; i++)
+    {
+        if (status == SystemP_SUCCESS)
+        {
+            for (int j = 0; j < pcieCfg->attrs->ibAtuNum; j++)
+            {
+                if ((j != i) &&
+                    (pcieCfg->attrs->ibAtu[j].regionIndex == pcieCfg->attrs->ibAtu[i].regionIndex))
+                {
+                    status = SystemP_FAILURE;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    /* Configure BARs */
+    for (int i = 0; i < pcieCfg->attrs->ibAtuNum; i++)
+    {
+        if (status == SystemP_SUCCESS)
+        {
+            /* Configuration of 32bit or Disabled BARs */
+            if (pcieCfg->attrs->ibAtu[i].barCfg == PCIE_BARC_DISABLED ||
+                pcieCfg->attrs->ibAtu[i].barCfg == PCIE_BARC_32B_IO_BAR ||
+                pcieCfg->attrs->ibAtu[i].barCfg == PCIE_BARC_32B_MEM_BAR_NON_PREFETCH ||
+                pcieCfg->attrs->ibAtu[i].barCfg == PCIE_BARC_32B_MEM_BAR_PREFETCH)
+            {
+
+                /* check aperture for 32bit BARs */
+                if (pcieCfg->attrs->ibAtu[i].barCfg != PCIE_BARC_DISABLED &&
+                    pcieCfg->attrs->ibAtu[i].barAperture > PCIE_EPBARA_2G)
+                {
+                    status = SystemP_FAILURE;
+                    break;
+                }
+
+                status = Pcie_cfgEP1Bar(handle, pcieCfg->attrs->ibAtu[i]);
+            }
+
+            /*
+             * Configuration of 64bit memory BARs
+             * Only BARs on index 0,2,4 can be configured as 64bit memory BARs
+             */
+            else if ((pcieCfg->attrs->ibAtu[i].regionIndex % 2 == 0) &&
+                     (pcieCfg->attrs->ibAtu[i].barCfg == PCIE_BARC_64B_MEM_BAR_NON_PREFETCH ||
+                      pcieCfg->attrs->ibAtu[i].barCfg == PCIE_BARC_64B_MEM_BAR_PREFETCH))
+            {
+                /*
+                 * If the BAR configuration on index 0,2,4 is defined as a 64bit
+                 * memory BAR, then the BAR configuration on the next index 1,3,5
+                 * must be unused or disabled, otherwise the complete BAR
+                 * configuration is invalid
+                 */
+                for (int j=0; j < pcieCfg->attrs->ibAtuNum; j++)
+                {
+                    if ((pcieCfg->attrs->ibAtu[j].regionIndex == pcieCfg->attrs->ibAtu[i].regionIndex + 1) &&
+                        (pcieCfg->attrs->ibAtu[j].barCfg != PCIE_BARC_DISABLED))
+                    {
+                        status = SystemP_FAILURE;
+                        break;
+                    }
+                }
+
+                if (status == SystemP_SUCCESS)
+                {
+                    /* check aperture for 64bit memory BARs */
+                    if (pcieCfg->attrs->ibAtu[i].barAperture > PCIE_EPBARA_256G)
+                    {
+                        status = SystemP_FAILURE;
+                        break;
+                    }
+                }
+
+                if (status == SystemP_SUCCESS)
+                {
+                    status = Pcie_cfgEP1Bar(handle, pcieCfg->attrs->ibAtu[i]);
+                }
+
+                /*
+                 * On valid 64bit BAR configuration the BARs on index 1,3,5
+                 * needs to be disabled
+                 */
+                if (status == SystemP_SUCCESS)
+                {
+                    Pcie_IbAtuCfg ibAtuDisabled;
+                    memset (&ibAtuDisabled, 0, sizeof(ibAtuDisabled));
+
+                    ibAtuDisabled.regionIndex = pcieCfg->attrs->ibAtu[i].regionIndex + 1;
+                    ibAtuDisabled.barCfg      = PCIE_BARC_DISABLED;
+                    /* BAR aperture irrelevant since BAR disabled, set to default */
+                    ibAtuDisabled.barAperture = PCIE_EPBARA_4K;
+
+                    status = Pcie_cfgEP1Bar(handle, ibAtuDisabled);
+                }
+            }
+
+            /* BARs on index 1,3,5 cannot be configured as 64bit memory BARs */
+            else if ((pcieCfg->attrs->ibAtu[i].regionIndex % 2 == 1) &&
+                     (pcieCfg->attrs->ibAtu[i].barCfg == PCIE_BARC_64B_MEM_BAR_NON_PREFETCH ||
+                      pcieCfg->attrs->ibAtu[i].barCfg == PCIE_BARC_64B_MEM_BAR_PREFETCH))
+            {
+                status = SystemP_FAILURE;
+                break;
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    /* Configure Inbound ATU for each BAR */
+    for (int i = 0; i < pcieCfg->attrs->ibAtuNum; i++)
+    {
+        if (status == SystemP_SUCCESS)
+        {
+            memset(&regionParams, 0, sizeof(regionParams));
+
+            regionParams.enableRegion       = 1;
+            regionParams.regionDir          = PCIE_ATU_REGION_DIR_INBOUND;
+            regionParams.tlpType            = pcieCfg->attrs->ibAtu[i].tlpType;
+            regionParams.lowerBaseAddr      = pcieCfg->attrs->ibAtu[i].lowerBaseAddr;
+            regionParams.upperBaseAddr      = pcieCfg->attrs->ibAtu[i].upperBaseAddr;
+            regionParams.regionWindowSize   = Pcie_aperture2size(pcieCfg->attrs->ibAtu[i].barAperture) - 1;
+            regionParams.lowerTargetAddr    = pcieCfg->attrs->ibAtu[i].lowerTargetAddr;
+            regionParams.upperTargetAddr    = pcieCfg->attrs->ibAtu[i].upperTargetAddr;
+
+            status = Pcie_atuRegionConfig(handle, PCIE_LOCATION_LOCAL, (uint32_t) pcieCfg->attrs->ibAtu[i].regionIndex, &regionParams);
+
+            DebugP_assert(SystemP_SUCCESS == status);
+        }
+        else
+        {
+            break;
+        }
+    }
+
     return status;
 }
 
@@ -510,98 +1092,133 @@ int32_t Pcie_cfgRC (Pcie_Handle handle)
  ****************************************************************************/
 int32_t Pcie_cfgEP (Pcie_Handle handle)
 {
-    int32_t status;
+    int32_t status  = SystemP_SUCCESS;
+    Pcie_Config *pcieCfg = NULL;
 
-    Pcie_ObSizeReg        obSize;
-    Pcie_Type0Bar32bitIdx type0Bar32bitIdx;
-    Pcie_StatusCmdReg     statusCmd;
-    Pcie_DevStatCtrlReg   devStatCtrl;
-    Pcie_AccrReg          accr;
-
-    Pcie_Registers        setRegs;
-    Pcie_Registers        getRegs;
-
-    memset (&obSize,           0, sizeof(obSize));
-    memset (&type0Bar32bitIdx, 0, sizeof(type0Bar32bitIdx));
-    memset (&statusCmd,        0, sizeof(statusCmd));
-    memset (&devStatCtrl,      0, sizeof(devStatCtrl));
-    memset (&accr,             0, sizeof(accr));
-
-    status = Pcie_LtssmCtrl(handle, FALSE);
-
-    /* Configure the size of the translation regions */
-    memset (&setRegs, 0, sizeof(setRegs));
-    memset (&getRegs, 0, sizeof(getRegs));
-
-    if (SystemP_SUCCESS == status)
+    if (handle != NULL)
     {
-        /* Configure Masks*/
-        memset (&setRegs, 0, sizeof(setRegs));
-        memset (&getRegs, 0, sizeof(getRegs));
-        type0Bar32bitIdx.reg.reg32 = PCIE_BAR_MASK;
-        setRegs.type0BarMask32bitIdx = &type0Bar32bitIdx;
-
-        status = Pcie_writeRegs (handle, PCIE_LOCATION_LOCAL, &setRegs);
+        pcieCfg = (Pcie_Config *)handle;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
     }
 
-    if (SystemP_SUCCESS == status)
+    /* Check if PCIe device really in EP mode */
+    if (pcieCfg->attrs->operationMode == PCIE_EP_MODE)
     {
-        /* Enable memory access and control of the bus */
-        memset (&setRegs, 0, sizeof(setRegs));
-        memset (&getRegs, 0, sizeof(getRegs));
+        status = SystemP_SUCCESS;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
 
-        getRegs.statusCmd = &statusCmd;
+    if (status == SystemP_SUCCESS)
+    {
+        status = Pcie_setVendorId(handle);
+    }
 
-        status = Pcie_readRegs (handle, PCIE_LOCATION_LOCAL, &getRegs);
+    if (status == SystemP_SUCCESS)
+    {
+        status = Pcie_setDeviceId(handle);
+    }
 
-        if (SystemP_SUCCESS == status)
+    if (status == SystemP_SUCCESS)
+    {
+        status = Pcie_setSubSysVendorId(handle);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        status = Pcie_setSubSystemId(handle);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        status = Pcie_setRevIdClassCode(handle);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        /* configure EP inbound ATUs */
+        status = Pcie_cfgEPBars(handle);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        /* configure MSI multi message capability */
+        status = Pcie_epSetMsiMultiMessCap(handle);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        /* disable MSI Per-Vector Masking capability */
+        status = Pcie_epDisableMsiPerVecMaskCap(handle);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        /* set legacy interrupt pin */
+        status = Pcie_setIntPin(handle);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        /* disable FLR mechanism */
+        status = Pcie_setFlr(handle, 0);
+    }
+
+    /* Configure Outbound ATU */
+    for (int i = 0; i < pcieCfg->attrs->obAtuNum; i++)
+    {
+        if (status == SystemP_SUCCESS)
         {
-            statusCmd.memSp  = 1;
-            statusCmd.busMs  = 1;
-            statusCmd.resp   = 1;
-            statusCmd.serrEn = 1;
-            setRegs.statusCmd = &statusCmd;
+            Pcie_AtuRegionParams regionParams;
+            memset(&regionParams, 0, sizeof(regionParams));
 
-            status = Pcie_writeRegs (handle, PCIE_LOCATION_LOCAL, &setRegs);
+            regionParams.enableRegion     = 1;
+            regionParams.regionDir        = PCIE_ATU_REGION_DIR_OUTBOUND;
+            regionParams.tlpType          = pcieCfg->attrs->obAtu[i].tlpType;
+            regionParams.lowerBaseAddr    = pcieCfg->attrs->obAtu[i].lowerBaseAddr;
+            regionParams.upperBaseAddr    = pcieCfg->attrs->obAtu[i].upperBaseAddr;
+            regionParams.regionWindowSize = pcieCfg->attrs->obAtu[i].regionWindowSize;
+            regionParams.lowerTargetAddr  = pcieCfg->attrs->obAtu[i].lowerTargetAddr;
+            regionParams.upperTargetAddr  = pcieCfg->attrs->obAtu[i].upperTargetAddr;
+
+            status = Pcie_atuRegionConfig (handle, PCIE_LOCATION_LOCAL, (uint32_t) pcieCfg->attrs->obAtu[i].regionIndex, &regionParams);
+
+            DebugP_assert(SystemP_SUCCESS == status);
         }
-
-    }
-
-    if (SystemP_SUCCESS == status)
-    {
-        /* Enable Error Reporting */
-        memset (&setRegs, 0, sizeof(setRegs));
-        memset (&getRegs, 0, sizeof(getRegs));
-
-        getRegs.devStatCtrl = &devStatCtrl;
-
-        status = Pcie_readRegs (handle, PCIE_LOCATION_LOCAL, &getRegs);
-
-        if (SystemP_SUCCESS == status)
+        else
         {
-            devStatCtrl.reqRp = 1;
-            devStatCtrl.fatalErRp = 1;
-            devStatCtrl.nFatalErRp = 1;
-            devStatCtrl.corErRp = 1;
-            setRegs.devStatCtrl = &devStatCtrl;
-
-            status = Pcie_writeRegs (handle, PCIE_LOCATION_LOCAL, &setRegs);
+            break;
         }
-
     }
 
-    if (SystemP_SUCCESS == status)
+    if (status == SystemP_SUCCESS)
     {
-        /* Enable ECRC */
-        memset (&setRegs, 0, sizeof(setRegs));
+        /* disable MSI Per-Vector Masking capability */
+        status = Pcie_epDisableMsiPerVecMaskCap(handle);
+    }
 
-        accr.chkEn=1;
-        accr.chkCap=1;
-        accr.genEn=1;
-        accr.genCap=1;
-        setRegs.accr = &accr;
+    if (status == SystemP_SUCCESS)
+    {
+        /* disable MSIX capability */
+        status = Pcie_epDisableMsixCap(handle);
+    }
 
-        status = Pcie_writeRegs (handle, PCIE_LOCATION_LOCAL, &setRegs);
+    if (status == SystemP_SUCCESS)
+    {
+        /*
+         * Set CONFIG_ENABLE bit to '1', this will generate a Successful
+         * Completion (SC) or Unsupported Request (UR) in response to
+         * configuration request from RC.
+         *
+         * This effectively signals the RC that it can configure the EP now.
+         *
+         */
+        status = Pcie_setCfgEn(handle, 1);
     }
 
     return status;
@@ -610,7 +1227,7 @@ int32_t Pcie_cfgEP (Pcie_Handle handle)
 /*********************************************************************
  * FUNCTION PURPOSE: Configures a BAR Register (32bits)
  ********************************************************************/
-int32_t Pcie_cfgBar (Pcie_Handle handle, const Pcie_BarCfg *barCfg)
+int32_t Pcie_cfgBar(Pcie_Handle handle, const Pcie_BarCfg *barCfg)
 {
     int32_t status = SystemP_SUCCESS;
     Pcie_Type0BarIdx  type0BarIdx;
@@ -624,13 +1241,13 @@ int32_t Pcie_cfgBar (Pcie_Handle handle, const Pcie_BarCfg *barCfg)
     memset (&type0BarIdx, 0, sizeof(type0BarIdx));
     memset (&type1BarIdx, 0, sizeof(type1BarIdx));
 
-    if (barCfg != NULL)
+    if(barCfg != NULL)
     {
         if(barCfg->mode == PCIE_RC_MODE)
         {
             getRegs.type1BarIdx = &type1BarIdx;
             type1BarIdx.idx = barCfg->idx;
-            status = Pcie_readRegs (handle, barCfg->location, &getRegs);
+            status = Pcie_readRegs(handle, barCfg->location, &getRegs);
 
             if(SystemP_SUCCESS == status)
             {
@@ -640,7 +1257,7 @@ int32_t Pcie_cfgBar (Pcie_Handle handle, const Pcie_BarCfg *barCfg)
                 type1BarIdx.idx = barCfg->idx;
 
                 setRegs.type1BarIdx = &type1BarIdx;
-                status = Pcie_writeRegs (handle, barCfg->location, &setRegs);
+                status = Pcie_writeRegs(handle, barCfg->location, &setRegs);
             }
 
         }
@@ -658,7 +1275,7 @@ int32_t Pcie_cfgBar (Pcie_Handle handle, const Pcie_BarCfg *barCfg)
                 type0BarIdx.idx = barCfg->idx;
 
                 setRegs.type0BarIdx = &type0BarIdx;
-                status = Pcie_writeRegs (handle, barCfg->location, &setRegs);
+                status = Pcie_writeRegs(handle, barCfg->location, &setRegs);
             }
         }
     }
@@ -751,6 +1368,23 @@ int32_t Pcie_getMemSpaceRange (Pcie_Handle  handle, void **base, uint32_t *size)
 } /* Pcie_getMemSpaceRange */
 
 /*********************************************************************
+ * Check if ATU address is aligned to region size
+ ********************************************************************/
+static int32_t Pcie_checkAtuAlign(uint64_t size, uint32_t lowerAddr, uint32_t upperAddr)
+{
+    int32_t status = SystemP_SUCCESS;
+
+    uint64_t addr = ((uint64_t) upperAddr << 32) | (uint64_t) lowerAddr;
+
+    if (addr & (size))
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}
+
+/*********************************************************************
  * FUNCTION PURPOSE: Configures an ATU (address translation) region
  ********************************************************************/
 int32_t Pcie_atuRegionConfig (Pcie_Handle handle, Pcie_Location location,
@@ -811,6 +1445,23 @@ int32_t Pcie_atuRegionConfig (Pcie_Handle handle, Pcie_Location location,
         /* Read current values for index */
         status = Pcie_readRegs (handle, location, &regs);
 
+        /* Check ATU alignment */
+        if (status == SystemP_SUCCESS)
+        {
+            /* target address is always used */
+            status = Pcie_checkAtuAlign(atuRegionParams->regionWindowSize, atuRegionParams->lowerTargetAddr, atuRegionParams->upperTargetAddr);
+
+            /* for EP mode, the base address is ignored for inbound mappings,
+             * so don't need to check
+             */
+            if (status == SystemP_SUCCESS &&
+                (pcieCfg->attrs->operationMode != PCIE_EP_MODE ||
+                 atuRegionParams->regionDir != PCIE_ATU_REGION_DIR_INBOUND))
+            {
+                status = Pcie_checkAtuAlign(atuRegionParams->regionWindowSize, atuRegionParams->lowerBaseAddr, atuRegionParams->upperBaseAddr);
+            }
+        }
+
         if (status == SystemP_SUCCESS)
         {
             /* Update ATU index register with new region direction and region index.
@@ -847,38 +1498,51 @@ int32_t Pcie_atuRegionConfig (Pcie_Handle handle, Pcie_Location location,
                 status = Pcie_readRegs (handle, location, &regs);
                 if (status == SystemP_SUCCESS)
                 {
-                    /* Set TLP(Transaction Layer packet) type. */
-                    switch (atuRegionParams->tlpType)
+                    if (atuRegionParams->enableRegion != 0)
                     {
-                        case PCIE_TLP_TYPE_MEM:
-                            ctrl1.type = 2U;
-                            break;
-                        case PCIE_TLP_TYPE_CFG:
-                            ctrl1.type = 10U;
-                            break;
-                        default:
-                            ctrl1.type = 2U;
-                            break;
+                        /* Set TLP(Transaction Layer packet) type. */
+                        switch (atuRegionParams->tlpType)
+                        {
+                            case PCIE_TLP_TYPE_MEM:
+                                ctrl1.type = 2U;
+                                break;
+                            case PCIE_TLP_TYPE_CFG:
+                                ctrl1.type = 10U;
+                                break;
+                            default:
+                                ctrl1.type = 2U;
+                                break;
+                        }
+
+                        /* Configure lower base. */
+                        lowerBase.iatuRegLowerBase = atuRegionParams->lowerTargetAddr >> 8;
+                        lowerBase.num_bits = Pcie_getNumPassBitFromWinSize(atuRegionParams->regionWindowSize);
+
+                        /* Configure upper base. */
+                        upperBase.iatuRegUpperBase = atuRegionParams->upperTargetAddr;
+
+                        /* Configure window size. */
+                        /*
+                        limit.iatuRegLimit = (atuRegionParams->lowerBaseAddr +
+                                atuRegionParams->regionWindowSize) >> 8;
+                        */
+                        /* Configure lower target. */
+                        lowerTarget.iatuRegLowerTarget = atuRegionParams->lowerBaseAddr >> 8;
+                        lowerTarget.num_bits = Pcie_getNumPassBitFromWinSize(atuRegionParams->regionWindowSize);
+
+                        /* Configure Upper target. */
+                        upperTarget.iatuRegUpperTarget = atuRegionParams->upperBaseAddr;
                     }
-
-                    /* Configure lower base. */
-                    lowerBase.iatuRegLowerBase = atuRegionParams->lowerTargetAddr >> 8;
-                    lowerBase.zero = Pcie_getNumPassBitFromWinSize(atuRegionParams->regionWindowSize);
-
-                    /* Configure upper base. */
-                    upperBase.iatuRegUpperBase = atuRegionParams->upperTargetAddr;
-
-                    /* Configure window size. */
-                    /*
-                    limit.iatuRegLimit = (atuRegionParams->lowerBaseAddr +
-                            atuRegionParams->regionWindowSize) >> 8;
-                    */
-                    /* Configure lower target. */
-                    lowerTarget.iatuRegLowerTarget = atuRegionParams->lowerBaseAddr >> 8;
-                    lowerTarget.zero = Pcie_getNumPassBitFromWinSize(atuRegionParams->regionWindowSize);
-
-                    /* Configure Upper target. */
-                    upperTarget.iatuRegUpperTarget = atuRegionParams->upperBaseAddr;
+                    else
+                    {
+                        ctrl1.type                     = 2U;
+                        lowerBase.iatuRegLowerBase     = 0;
+                        lowerBase.num_bits             = 0;
+                        upperBase.iatuRegUpperBase     = 0;
+                        lowerTarget.iatuRegLowerTarget = 0;
+                        lowerTarget.num_bits           = 0;
+                        upperTarget.iatuRegUpperTarget = 0;
+                    }
 
                     /* Writeback the new values */
                     status = Pcie_writeRegs (handle, location, &regs);
@@ -1022,8 +1686,6 @@ Pcie_Handle Pcie_open (uint32_t index)
     Pcie_Handle          handle  = NULL;
     Pcie_Config          *config = NULL;
     Pcie_Object          *object = NULL;
-    Pcie_AtuRegionParams regionParams;
-    Pcie_BarCfg          barCfg;
 
     if(index >= gPcieConfigNum)
     {
@@ -1051,6 +1713,21 @@ Pcie_Handle Pcie_open (uint32_t index)
         object->handle = (Pcie_Handle)config;
     }
 
+    /*
+     * Set CONFIG_ENABLE bit to '0', this will generate a Configuration Request
+     * Retry Status (CRS) in response to configuration request from RC.
+     *
+     * This effectively signals the RC that it cannot currently configure the EP.
+     *
+     */
+    if (status == SystemP_SUCCESS)
+    {
+        if (config->attrs->operationMode == PCIE_EP_MODE)
+        {
+            Pcie_setCfgEn(object->handle, 0);
+        }
+    }
+
     /* Initialize SERDES */
     if(status == SystemP_SUCCESS)
     {
@@ -1063,12 +1740,8 @@ Pcie_Handle Pcie_open (uint32_t index)
 
     if (SystemP_SUCCESS == status)
     {
-        /* SRIS disable */
-        Pcie_srisControl(object->handle, 0);
-
         /* Set interface mode RC or EP */
-        status = Pcie_setInterfaceMode(object->handle, config->attrs->operationMode);
-
+        status = Pcie_setInterfaceMode(object->handle, config->attrs->operationMode, config->attrs->gen);
         DebugP_assert(SystemP_SUCCESS == status);
     }
 
@@ -1083,90 +1756,6 @@ Pcie_Handle Pcie_open (uint32_t index)
 
             status = Pcie_obTransCfg(object->handle);
         }
-        else
-        {
-            /* Configure for EP mode of operation */
-            status = Pcie_cfgEP(object->handle);
-
-            DebugP_assert(SystemP_SUCCESS == status);
-        }
-
-        if (SystemP_SUCCESS == status)
-        {
-            /* Configure Outbound ATU */
-            for (int i = 0; i < config->attrs->obAtuNum; i++)
-            {
-                memset(&regionParams, 0, sizeof(regionParams));
-
-                regionParams.regionDir = PCIE_ATU_REGION_DIR_OUTBOUND;
-                regionParams.tlpType   = config->attrs->obAtu[i].tlpType;
-
-                regionParams.lowerBaseAddr    = config->attrs->obAtu[i].lowerBaseAddr;
-                regionParams.upperBaseAddr    = config->attrs->obAtu[i].upperBaseAddr;
-
-                regionParams.regionWindowSize = config->attrs->obAtu[i].regionWindowSize;
-
-                regionParams.lowerTargetAddr    = config->attrs->obAtu[i].lowerTargetAddr;
-                regionParams.upperTargetAddr    = config->attrs->obAtu[i].upperTargetAddr;
-
-                status = Pcie_atuRegionConfig (object->handle, PCIE_LOCATION_LOCAL,
-                            (uint32_t) config->attrs->obAtu[i].regionIndex, &regionParams);
-
-                DebugP_assert(SystemP_SUCCESS == status);
-
-            }
-
-            /* Configure Inbound ATU */
-            for (int i = 0; i < config->attrs->ibAtuNum; i++)
-            {
-                if (config->attrs->operationMode == PCIE_EP_MODE)
-                {
-                    memset (&barCfg, 0, sizeof(Pcie_BarCfg));
-
-                    barCfg.location = PCIE_LOCATION_LOCAL;
-                    barCfg.mode     = PCIE_EP_MODE;
-                    barCfg.barxc    = config->attrs->ibAtu[i].barCfg;
-                    barCfg.barxa    = config->attrs->ibAtu[i].barAperture;
-                    barCfg.idx      = config->attrs->ibAtu[i].regionIndex;
-
-                    status = Pcie_cfgBar (object->handle, &barCfg);
-
-                    DebugP_assert(SystemP_SUCCESS == status);
-                }
-                else if (config->attrs->operationMode == PCIE_RC_MODE)
-                {
-                    memset (&barCfg, 0, sizeof(Pcie_BarCfg));
-
-                    barCfg.location = PCIE_LOCATION_LOCAL;
-                    barCfg.mode     = PCIE_RC_MODE;
-                    barCfg.barxc    = config->attrs->ibAtu[i].barCfg;
-                    barCfg.barxa    = config->attrs->ibAtu[i].barAperture;
-                    barCfg.idx      = config->attrs->ibAtu[i].regionIndex;
-
-                    status = Pcie_cfgBar (object->handle, &barCfg);
-
-                    DebugP_assert(SystemP_SUCCESS == status);
-                }
-
-                memset(&regionParams, 0, sizeof(regionParams));
-
-                regionParams.regionDir = PCIE_ATU_REGION_DIR_INBOUND;
-                regionParams.tlpType   = config->attrs->ibAtu[i].tlpType;
-
-                regionParams.lowerBaseAddr    = config->attrs->ibAtu[i].lowerBaseAddr;
-                regionParams.upperBaseAddr    = config->attrs->ibAtu[i].upperBaseAddr;
-
-                regionParams.regionWindowSize = config->attrs->ibAtu[i].regionWindowSize;
-
-                regionParams.lowerTargetAddr    = config->attrs->ibAtu[i].lowerTargetAddr;
-                regionParams.upperTargetAddr    = config->attrs->ibAtu[i].upperTargetAddr;
-
-                status = Pcie_atuRegionConfig (object->handle, PCIE_LOCATION_LOCAL,
-                            (uint32_t) config->attrs->ibAtu[i].regionIndex, &regionParams);
-
-                DebugP_assert(SystemP_SUCCESS == status);
-            }
-        }
     }
 
     if (SystemP_SUCCESS == status)
@@ -1175,18 +1764,31 @@ Pcie_Handle Pcie_open (uint32_t index)
         status = Pcie_setLanes(object->handle);
     }
 
+    /* Set SRIS */
+    if (status == SystemP_SUCCESS)
+    {
+        if (config->attrs->sris_mode == PCIE_REFCLK_SRIS_DISABLED)
+        {
+            Pcie_srisControl(object->handle, 0);
+        }
+        else if (config->attrs->sris_mode == PCIE_REFCLK_SRIS_ENABLED)
+        {
+            Pcie_srisControl(object->handle, 1);
+        }
+    }
+
     if (SystemP_SUCCESS == status)
     {
         /* Enable link training */
         status = Pcie_LtssmCtrl(object->handle, TRUE);
 
-        if (SystemP_SUCCESS == status)
+        if (SystemP_SUCCESS == status && config->attrs->operationMode == PCIE_RC_MODE)
         {
             /* Wait for link to be up */
             status = Pcie_waitLinkUp(object->handle);
         }
 
-        if (SystemP_SUCCESS == status)
+        if (SystemP_SUCCESS == status && config->attrs->operationMode == PCIE_RC_MODE)
         {
             /* Verify Link width & speed */
             status = Pcie_checkLinkParams(object->handle);
@@ -1214,6 +1816,459 @@ void Pcie_close(Pcie_Handle handle)
     }
 
     return;
+}
+
+/*****************************************************************************
+ * Enable or disable support for FLR in our config space
+ ****************************************************************************/
+static int32_t Pcie_setFlr(Pcie_Handle handle, int enable)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_DeviceCapReg deviceCap;
+    Pcie_Registers regs;
+
+    if (handle == NULL)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset(&regs, 0, sizeof(regs));
+        regs.deviceCap = &deviceCap;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        if (enable)
+            deviceCap.flrEn = 1;
+        else
+            deviceCap.flrEn = 0;
+
+        status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Enable or disable response to configuration requests (CRS)
+ ****************************************************************************/
+int32_t Pcie_setCfgEn(Pcie_Handle handle, int enable)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_UserCfgInitCfgReg usrCfgInitCfg;
+    Pcie_Registers regs;
+
+    if (handle == NULL)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+        regs.usrCfgInitCfg = &usrCfgInitCfg;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        if (enable)
+            usrCfgInitCfg.cfgEn = 1;
+        else
+            usrCfgInitCfg.cfgEn = 0;
+
+        status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Set or clear Slot Clock Configuration in PCIe Link Status Register
+ * If set indicates the EP uses the reference clock provided on the connector,
+ * else the EP uses a independent clock
+ ****************************************************************************/
+int32_t Pcie_setSlotClockCnfg(Pcie_Handle handle, int enable)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_LinkStatCtrlReg linkStatCtrl;
+    Pcie_Registers regs;
+
+    if (handle == NULL)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+        memset (&linkStatCtrl, 0, sizeof(linkStatCtrl));
+
+        regs.linkStatCtrl = &linkStatCtrl;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        if (enable)
+            linkStatCtrl.slotClkCfg = 1;
+        else
+            linkStatCtrl.slotClkCfg = 0;
+
+        status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Enables downstream interrupt
+ ****************************************************************************/
+int32_t Pcie_setDwnStrIrq(Pcie_Handle handle, int enable)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_IntdCfgEnSys0Reg intCfgEnSys0Reg;
+    Pcie_Registers regs;
+
+    if (handle == NULL)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+        regs.intCfgEnSys0Reg = &intCfgEnSys0Reg;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        if (enable)
+            intCfgEnSys0Reg.dwnStrEn = 1;
+        else
+            intCfgEnSys0Reg.dwnStrEn = 0;
+
+        status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Enables link down status interrupt
+ ****************************************************************************/
+int32_t Pcie_setLnkDwnStateIrq(Pcie_Handle handle, int enable)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_IntdCfgEnSys2Reg intCfgEnSys2Reg;
+    Pcie_Registers regs;
+
+    if (handle == NULL)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+        regs.intCfgEnSys2Reg = &intCfgEnSys2Reg;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        if (enable)
+        {
+            intCfgEnSys2Reg.lnkStateEn = 1;
+        }
+        else
+        {
+            intCfgEnSys2Reg.lnkStateEn = 0;
+        }
+
+        status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Enables power management state interrupts
+ ****************************************************************************/
+int32_t Pcie_setPwrStateIrq(Pcie_Handle handle, int enable)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_IntdCfgEnSys1Reg intCfgEnSys1Reg;
+    Pcie_Registers regs;
+
+    if (handle == NULL)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+        regs.intCfgEnSys1Reg = &intCfgEnSys1Reg;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        if (enable)
+        {
+            intCfgEnSys1Reg.pwrStateEn = 1;
+        }
+        else
+        {
+            intCfgEnSys1Reg.pwrStateEn = 0;
+        }
+
+        status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Enables PCIe hot reset interrupts
+ ****************************************************************************/
+int32_t Pcie_setHotResetIrq (Pcie_Handle handle, int enable)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_IntdCfgEnSys2Reg intCfgEnSys2Reg;
+    Pcie_Registers regs;
+
+    if (handle == NULL)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+        regs.intCfgEnSys2Reg = &intCfgEnSys2Reg;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        if (enable)
+        {
+            intCfgEnSys2Reg.hotRstEn = 1;
+        }
+        else
+        {
+            intCfgEnSys2Reg.hotRstEn = 0;
+        }
+
+        status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Sets legacy interrupt (INTx) according to configuration
+ ****************************************************************************/
+static int32_t Pcie_setIntPin(Pcie_Handle handle)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_Config *pcieCfg = NULL;
+    Pcie_IntPinReg intPin;
+    Pcie_Registers regs;
+
+    if (handle != NULL)
+    {
+        pcieCfg = (Pcie_Config *)handle;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    memset (&regs, 0, sizeof(regs));
+    regs.intPin = &intPin;
+
+    status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+
+    if (status == SystemP_SUCCESS)
+    {
+        switch (pcieCfg->attrs->intPin)
+        {
+            case PCIE_INT_PINNONE:
+                    intPin.intPin = 0;
+                    break;
+            case PCIE_INT_PINA:
+                    intPin.intPin = 1;
+                    break;
+            case PCIE_INT_PINB:
+                    intPin.intPin = 2;
+                    break;
+            case PCIE_INT_PINC:
+                    intPin.intPin = 3;
+                    break;
+            case PCIE_INT_PIND:
+                    intPin.intPin = 4;
+                    break;
+        }
+
+        status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Acknowledge downstream interrupt
+ ****************************************************************************/
+int32_t Pcie_ackDwnStrIrq(Pcie_Handle handle)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_IntdCfgStatusSys0Reg intCfgStatusSys0Reg;
+    Pcie_VndrSpecCntrlReg vndrSpecCntrl;
+    Pcie_IrqEOIReg irqEOI;
+    Pcie_Registers regs;
+
+    if (handle == NULL)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+
+        regs.intCfgStatusSys0Reg = &intCfgStatusSys0Reg;
+        regs.vndrSpecCntrl = &vndrSpecCntrl;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        if (intCfgStatusSys0Reg.statusDwnStr)
+        {
+            regs.intCfgStatusSys0Reg = NULL;
+
+            /* clear HTI bit first so that downstream IRQ isn't signaled anymore */
+            vndrSpecCntrl.hti = 0;
+
+            status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+
+            if (status == SystemP_SUCCESS)
+            {
+                regs.vndrSpecCntrl = NULL;
+
+                /* after HTI bit is cleared signal EOI to PCIe INTD */
+                irqEOI.EOI  = 0x00;
+                regs.irqEOI = &irqEOI;
+
+                status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+            }
+        }
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Acknowledge link down status interrupt
+ ****************************************************************************/
+int32_t Pcie_ackLnkDwnStateIrq(Pcie_Handle handle)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_IntdCfgStatusSys2Reg intCfgStatusSys2Reg;
+    Pcie_IntdCfgStatusClrSys2Reg intCfgStatusClrSys2Reg;
+    Pcie_Registers regs;
+
+    if (handle == NULL)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+
+        regs.intCfgStatusSys2Reg    = &intCfgStatusSys2Reg;
+        regs.intCfgStatusClrSys2Reg = &intCfgStatusClrSys2Reg;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        if (intCfgStatusSys2Reg.statusLnkState)
+        {
+            regs.intCfgStatusSys2Reg = NULL;
+            intCfgStatusClrSys2Reg.clrStatusLnkState = 1;
+
+            status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+        }
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Acknowledge power management state interrupt
+ ****************************************************************************/
+int32_t Pcie_ackPwrStateIrq(Pcie_Handle handle)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_IntdCfgStatusSys1Reg intCfgStatusSys1Reg;
+    Pcie_UserCfgPmCmdReg usrCfgPmCmd;
+    Pcie_IrqEOIReg irqEOI;
+    Pcie_Registers regs;
+
+    if (handle == NULL)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+
+        regs.intCfgStatusSys1Reg = &intCfgStatusSys1Reg;
+        regs.usrCfgPmCmd = &usrCfgPmCmd;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        if (intCfgStatusSys1Reg.statusPwrState)
+        {
+            regs.intCfgStatusSys1Reg = NULL;
+
+            usrCfgPmCmd.pwrStateChgAck = 0x01;
+            status = Pcie_writeRegs (handle, PCIE_LOCATION_LOCAL, &regs);
+
+            usrCfgPmCmd.pwrStateChgAck = 0x00;
+            status = Pcie_writeRegs (handle, PCIE_LOCATION_LOCAL, &regs);
+
+            regs.usrCfgPmCmd = NULL;
+
+            irqEOI.EOI  = 0x03;
+            regs.irqEOI = &irqEOI;
+            status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+        }
+    }
+
+    return status;
 }
 
 /*****************************************************************************
@@ -1302,7 +2357,7 @@ static int32_t Pcie_readRcIrqEoi (CSL_user_cfgRegs *baseAddr, Pcie_IrqEOIReg *sw
     {
         val = swReg->raw = baseAddr->EOI_VECTOR;
 
-        PCIE_GETBITS(val, CSL_INTD_CFG_EOI_REG_EOI_VECTOR, swReg->EOI);
+        PCIE_GETBITS(val, CSL_USER_CFG_EOI_REG_EOI_VECTOR, swReg->EOI);
     }
     else
     {
@@ -1399,8 +2454,10 @@ static int32_t Pcie_readRevIdReg(volatile const uint32_t *hwReg_CLASSCODE_REVISI
     {
         val = swReg->raw = *hwReg_CLASSCODE_REVISIONID;
 
-        PCIE_GETBITS(val, PCIE_REV0_CLASSCODE, swReg->classCode);
+        PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_BASE_I_REVISION_ID_CLASS_CODE_CC, swReg->classCode);
         PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_BASE_I_REVISION_ID_CLASS_CODE_RID, swReg->revId);
+        PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_BASE_I_REVISION_ID_CLASS_CODE_PIB, swReg->progIntrface);
+        PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_BASE_I_REVISION_ID_CLASS_CODE_SCC, swReg->subClassCode);
     }
     else
     {
@@ -1518,6 +2575,36 @@ static int32_t Pcie_readType0Bar32bitReg(const CSL_pcie_ep_coreRegs *baseAddr, P
 } /* Pcie_readType0Bar32bitReg */
 
 /*****************************************************************************
+ * Read and split up the Device Capability register
+ ****************************************************************************/
+static int32_t Pcie_readDevCapReg (volatile const uint32_t *hwReg_DEV_CAS, Pcie_DeviceCapReg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t val;
+
+    if ((hwReg_DEV_CAS != NULL) && (swReg != NULL))
+    {
+        val = swReg->raw = *hwReg_DEV_CAS;
+
+        PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_FLRC, swReg->flrEn);
+        PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_CPLS, swReg->pwrLimitScale);
+        PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_CSP,  swReg->pwrLimitValue);
+        PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_RER,  swReg->errRpt);
+        PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_AL1L, swReg->l1Latency);
+        PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_AL0L, swReg->l0Latency);
+        PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_ETFS, swReg->extTagFld);
+        PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_PFS,  swReg->phantomFld);
+        PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_MP,   swReg->maxPayldSz);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_readDevCapReg */
+
+/*****************************************************************************
  * Read and split up the Device Status and Control register
  ****************************************************************************/
 static int32_t Pcie_readDevStatCtrlReg (volatile const uint32_t *hwReg_DEV_CAS, Pcie_DevStatCtrlReg *swReg)
@@ -1530,9 +2617,9 @@ static int32_t Pcie_readDevStatCtrlReg (volatile const uint32_t *hwReg_DEV_CAS, 
         val = swReg->raw = *hwReg_DEV_CAS;
 
         PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_ECER, swReg->corErRp);
-        PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_ECER, swReg->nFatalErRp);
-        PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_ECER, swReg->fatalErRp);
-        PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_ECER, swReg->reqRp);
+        PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_ENFER, swReg->nFatalErRp);
+        PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_EFER, swReg->fatalErRp);
+        PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_EURR, swReg->reqRp);
         PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_ERO, swReg->relaxed);
         PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_MP, swReg->maxPayld);
         PCIE_GETBITS(val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_ETE, swReg->xtagEn);
@@ -1601,6 +2688,7 @@ static int32_t Pcie_readLinkStatCtrlReg (volatile const uint32_t *hwReg_LNK_CAS,
 
         PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_CAP_STRUCT_I_LINK_CTRL_STATUS_NLS, swReg->linkSpeed);
         PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_CAP_STRUCT_I_LINK_CTRL_STATUS_NLW, swReg->negotiatedLinkWd);
+        PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_CAP_STRUCT_I_LINK_CTRL_STATUS_SCC, swReg->slotClkCfg);
     }
     else
     {
@@ -1611,7 +2699,7 @@ static int32_t Pcie_readLinkStatCtrlReg (volatile const uint32_t *hwReg_LNK_CAS,
 } /* Pcie_readLinkStatCtrlReg */
 
 /*****************************************************************************
- * Read and split up the Advanced Capabilities and Control register
+ * Read and split up the Advanced Error Capabilities and Control register
  ****************************************************************************/
 static int32_t Pcie_readAccrReg (const CSL_pcie_ep_coreRegs *baseAddr, Pcie_AccrReg *swReg)
 {
@@ -1717,7 +2805,7 @@ static int32_t Pcie_readPlconfIatuRegLowerBaseReg (const CSL_pcie_ep_coreRegs *b
                 val = swReg->raw = baseAddr->ATU_WRAPPER_OB[regionIndex].ADDR0;
 
                 PCIE_GETBITS(val, CSL_PCIE_EP_CORE_ATU_WRAPPER_OB_0_ADDR0_DATA, swReg->iatuRegLowerBase);
-                PCIE_GETBITS(val, CSL_PCIE_EP_CORE_ATU_WRAPPER_OB_0_ADDR0_NUM_BITS, swReg->zero);
+                PCIE_GETBITS(val, CSL_PCIE_EP_CORE_ATU_WRAPPER_OB_0_ADDR0_NUM_BITS, swReg->num_bits);
             }
             else if (simIatuWindow->regionDirection == 1U)
             {
@@ -1822,7 +2910,7 @@ static int32_t Pcie_readPlconfIatuRegLowerTargetReg (const CSL_pcie_ep_coreRegs 
                 val = swReg->raw = baseAddr->ATU_WRAPPER_OB[regionIndex].AXI_ADDR0;
 
                 PCIE_GETBITS(val, CSL_PCIE_RP_CORE_ATU_WRAPPER_OB_0_AXI_ADDR0_DATA, swReg->iatuRegLowerTarget);
-                PCIE_GETBITS(val, CSL_PCIE_RP_CORE_ATU_WRAPPER_OB_0_AXI_ADDR0_REGION_SIZE, swReg->zero);
+                PCIE_GETBITS(val, CSL_PCIE_RP_CORE_ATU_WRAPPER_OB_0_AXI_ADDR0_REGION_SIZE, swReg->num_bits);
             }
             else
             {
@@ -1922,8 +3010,7 @@ static int32_t Pcie_readMsiCapReg(const CSL_pcie_ep_coreRegs *baseAddr, Pcie_Msi
     PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_MSI_CAP_STRUCT_I_MSI_CTRL_REG_MMC, swReg->multMsgCap);
     PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_MSI_CAP_STRUCT_I_MSI_CTRL_REG_MME, swReg->multMsgEn);
     PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_MSI_CAP_STRUCT_I_MSI_CTRL_REG_BAC64, swReg->en64bit);
-    PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_MSI_CAP_STRUCT_I_MSI_CTRL_REG_MC, swReg->extDataCap);
-    PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_MSI_CAP_STRUCT_I_MSI_CTRL_REG_R0, swReg->extDataEn);
+    PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_MSI_CAP_STRUCT_I_MSI_CTRL_REG_MC, swReg->pvmEn);
 
     return SystemP_SUCCESS;
 } /* Pcie_readMsiCapReg */
@@ -1999,6 +3086,23 @@ static int32_t Pcie_readMsixTblOffset (const CSL_pcie_ep_coreRegs *baseAddr, Pci
     return SystemP_SUCCESS;
 }
 
+/*****************************************************************************
+ * Read and split up the power management control status register
+ ****************************************************************************/
+static int32_t Pcie_readPmMgmtCtrlStatReg(const CSL_pcie_ep_coreRegs *baseAddr, Pcie_PMCapCtlStatReg *swReg)
+{
+    uint32_t *regVal = (uint32_t *)baseAddr;
+    uint32_t val = swReg->raw = *regVal;
+
+    PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_POWER_MGMT_CAP_STRUCT_I_PWR_MGMT_CTRL_STAT_REP_DR,   swReg->dataReg);
+    PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_POWER_MGMT_CAP_STRUCT_I_PWR_MGMT_CTRL_STAT_REP_PMES, swReg->pmeStatus);
+    PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_POWER_MGMT_CAP_STRUCT_I_PWR_MGMT_CTRL_STAT_REP_PE,   swReg->pmeEn);
+    PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_POWER_MGMT_CAP_STRUCT_I_PWR_MGMT_CTRL_STAT_REP_NSR,  swReg->noSoftRst);
+    PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_POWER_MGMT_CAP_STRUCT_I_PWR_MGMT_CTRL_STAT_REP_PS,   swReg->pwrState);
+
+    return SystemP_SUCCESS;
+}
+
 int32_t Pcie_getVendorId(Pcie_Handle handle, Pcie_Location location,
                             uint32_t *vendorId, uint32_t *deviceId)
 {
@@ -2028,7 +3132,190 @@ int32_t Pcie_getVendorId(Pcie_Handle handle, Pcie_Location location,
     return status;
 }
 
-static int32_t Pcie_readVendorDevId(volatile const uint32_t *hwReg_VENDOR_ID_DEV_ID,
+static int32_t Pcie_setVendorId(Pcie_Handle handle)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_Config *pcieCfg = NULL;
+    Pcie_LmVendorIdReg lmVendorIdReg;
+    Pcie_Registers regs;
+
+    if (handle != NULL)
+    {
+        pcieCfg = (Pcie_Config *)handle;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+        memset (&lmVendorIdReg, 0, sizeof(lmVendorIdReg));
+
+        regs.lmVendorIdReg = &lmVendorIdReg;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        lmVendorIdReg.vid = pcieCfg->attrs->vendorId;
+
+        status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    return status;
+}
+
+static int32_t Pcie_setDeviceId(Pcie_Handle handle)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_Config *pcieCfg = NULL;
+    Pcie_VndDevIdReg vndDevId;
+    Pcie_Registers regs;
+
+    if (handle != NULL)
+    {
+        pcieCfg = (Pcie_Config *)handle;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+        memset (&vndDevId, 0, sizeof(vndDevId));
+
+        regs.vndDevId = &vndDevId;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        vndDevId.devId = pcieCfg->attrs->deviceId;
+
+        status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    return status;
+}
+
+static int32_t Pcie_setSubSysVendorId(Pcie_Handle handle)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_Config *pcieCfg = NULL;
+    Pcie_LmVendorIdReg lmVendorIdReg;
+    Pcie_Registers regs;
+
+    if (handle != NULL)
+    {
+        pcieCfg = (Pcie_Config *)handle;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+        memset (&lmVendorIdReg, 0, sizeof(lmVendorIdReg));
+
+        regs.lmVendorIdReg = &lmVendorIdReg;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        lmVendorIdReg.svid = pcieCfg->attrs->subSysVendorId;
+
+        status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    return status;
+}
+
+static int32_t Pcie_setSubSystemId(Pcie_Handle handle)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_Config *pcieCfg = NULL;
+    Pcie_SubIdReg subId;
+    Pcie_Registers regs;
+
+    if (handle != NULL)
+    {
+        pcieCfg = (Pcie_Config *)handle;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+        memset (&subId, 0, sizeof(subId));
+
+        regs.subId = &subId;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        subId.subId = pcieCfg->attrs->subSystemId;
+
+        status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    return status;
+}
+
+static int32_t Pcie_setRevIdClassCode(Pcie_Handle handle)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_Config *pcieCfg = NULL;
+    Pcie_RevIdReg revId;
+    Pcie_Registers regs;
+
+    if (handle != NULL)
+    {
+        pcieCfg = (Pcie_Config *)handle;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+        memset (&revId, 0, sizeof(revId));
+
+        regs.revId = &revId;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        revId.classCode    = pcieCfg->attrs->classCode;
+        revId.subClassCode = pcieCfg->attrs->subClassCode;
+        revId.progIntrface = pcieCfg->attrs->progIntrface;
+        revId.revId        = pcieCfg->attrs->revId;
+
+        status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    return status;
+}
+
+static int32_t Pcie_readVendorDevIdReg(volatile const uint32_t *hwReg_VENDOR_ID_DEV_ID,
                                     Pcie_VndDevIdReg *swReg)
 {
     int32_t status = SystemP_SUCCESS;
@@ -2048,6 +3335,329 @@ static int32_t Pcie_readVendorDevId(volatile const uint32_t *hwReg_VENDOR_ID_DEV
 
     return status;
 }
+
+static int32_t Pcie_readSubIdReg(volatile const uint32_t *hwReg_SUBSYSTEM_VENDOR_ID_SUBSYSTEM_ID, Pcie_SubIdReg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t val;
+
+    if ((hwReg_SUBSYSTEM_VENDOR_ID_SUBSYSTEM_ID != NULL) && (swReg != NULL))
+    {
+        val = swReg->raw = *hwReg_SUBSYSTEM_VENDOR_ID_SUBSYSTEM_ID;
+
+        PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_BASE_I_SUBSYSTEM_VENDOR_ID_SUBSYSTEM_I_SVID, swReg->subVndId);
+        PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_BASE_I_SUBSYSTEM_VENDOR_ID_SUBSYSTEM_I_SID, swReg->subId);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}
+
+static int32_t Pcie_readIntPinReg(volatile const uint32_t *hwReg_INTRPT_LINE_INTRPT_PIN,
+                                  Pcie_IntPinReg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t val;
+
+    if ((hwReg_INTRPT_LINE_INTRPT_PIN != NULL) && (swReg != NULL))
+    {
+        val = swReg->raw = *hwReg_INTRPT_LINE_INTRPT_PIN;
+
+        PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_BASE_I_INTRPT_LINE_INTRPT_PIN_ILR, swReg->intLine);
+        PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_BASE_I_INTRPT_LINE_INTRPT_PIN_IPR, swReg->intPin);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Read and split up the User Config Init Cfg register
+ ****************************************************************************/
+static int32_t Pcie_readUsrInitCfgReg (const CSL_user_cfgRegs *baseAddr, Pcie_UserCfgInitCfgReg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        val = swReg->raw = baseAddr->INITCFG;
+
+        PCIE_GETBITS(val, CSL_USER_CFG_INITCFG_CONFIG_ENABLE, swReg->cfgEn);
+        PCIE_GETBITS(val, CSL_USER_CFG_INITCFG_VC_COUNT, swReg->vcCnt);
+        PCIE_GETBITS(val, CSL_USER_CFG_INITCFG_MAX_EVAL_ITERATION, swReg->maxEvalItr);
+        PCIE_GETBITS(val, CSL_USER_CFG_INITCFG_BYPASS_PHASE23, swReg->bypassPh23);
+        PCIE_GETBITS(val, CSL_USER_CFG_INITCFG_BYPASS_REMOTE_TX_EQUALIZATION, swReg->bypassRmTxEQ);
+        PCIE_GETBITS(val, CSL_USER_CFG_INITCFG_SUPPORTED_PRESET, swReg->suppPrst);
+        PCIE_GETBITS(val, CSL_USER_CFG_INITCFG_DISABLE_GEN3_DC_BALANCE, swReg->disableGen3DcBlnc);
+        PCIE_GETBITS(val, CSL_USER_CFG_INITCFG_SRIS_ENABLE, swReg->srisEn);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_readUsrInitCfgReg */
+
+/*****************************************************************************
+ * Read and split up the User Config Pm Cmd register
+ ****************************************************************************/
+static int32_t Pcie_readUsrPmCmdReg (const CSL_user_cfgRegs *baseAddr, Pcie_UserCfgPmCmdReg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        val = swReg->raw = baseAddr->PMCMD;
+
+        PCIE_GETBITS(val, CSL_USER_CFG_PMCMD_PWR_STATE_CHANGE_ACK, swReg->pwrStateChgAck);
+        PCIE_GETBITS(val, CSL_USER_CFG_PMCMD_CLIENT_REQ_EXIT_L1_SUBSTATE, swReg->clientReqExtL1Substate);
+        PCIE_GETBITS(val, CSL_USER_CFG_PMCMD_CLIENT_REQ_EXIT_L1, swReg->clientReqExtL1);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_readUsrPmCmdReg */
+
+/*****************************************************************************
+ * Read and split up the Intd Config Enable Sys0 register
+ ****************************************************************************/
+static int32_t Pcie_readIntdCfgEnSys0Reg (const CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgEnSys0Reg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        val = swReg->raw = baseAddr->ENABLE_REG_SYS_0;
+
+        PCIE_GETBITS(val, CSL_INTD_CFG_ENABLE_REG_SYS_0_ENABLE_SYS_EN_PCIE_DOWNSTREAM, swReg->dwnStrEn);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_readIntdCfgEnSys0Reg */
+
+/*****************************************************************************
+ * Read and split up the Intd Config Enable Sys1 register
+ ****************************************************************************/
+static int32_t Pcie_readIntdCfgEnSys1Reg (const CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgEnSys1Reg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        val = swReg->raw = baseAddr->ENABLE_REG_SYS_1;
+
+        PCIE_GETBITS(val, CSL_INTD_CFG_ENABLE_REG_SYS_1_ENABLE_SYS_EN_PCIE_PWR_STATE, swReg->pwrStateEn);
+        PCIE_GETBITS(val, CSL_INTD_CFG_ENABLE_REG_SYS_1_ENABLE_SYS_EN_PCIE_LEGACY_3,  swReg->legacy3En);
+        PCIE_GETBITS(val, CSL_INTD_CFG_ENABLE_REG_SYS_1_ENABLE_SYS_EN_PCIE_LEGACY_2,  swReg->legacy2En);
+        PCIE_GETBITS(val, CSL_INTD_CFG_ENABLE_REG_SYS_1_ENABLE_SYS_EN_PCIE_LEGACY_1,  swReg->legacy1En);
+        PCIE_GETBITS(val, CSL_INTD_CFG_ENABLE_REG_SYS_1_ENABLE_SYS_EN_PCIE_LEGACY_0,  swReg->legacy0En);
+        PCIE_GETBITS(val, CSL_INTD_CFG_ENABLE_REG_SYS_1_ENABLE_SYS_EN_PCIE_FLR,       swReg->flrEn);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_readIntdCfgEnSys1Reg */
+
+/*****************************************************************************
+ * Read and split up the Intd Config Enable Sys2 register
+ ****************************************************************************/
+static int32_t Pcie_readIntdCfgEnSys2Reg (const CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgEnSys2Reg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        val = swReg->raw = baseAddr->ENABLE_REG_SYS_2;
+
+        PCIE_GETBITS(val,CSL_INTD_CFG_ENABLE_REG_SYS_2_ENABLE_SYS_EN_PCIE_DPA,        swReg->dpaEn);
+        PCIE_GETBITS(val,CSL_INTD_CFG_ENABLE_REG_SYS_2_ENABLE_SYS_EN_PCIE_ERROR_0,    swReg->err0En);
+        PCIE_GETBITS(val,CSL_INTD_CFG_ENABLE_REG_SYS_2_ENABLE_SYS_EN_PCIE_ERROR_1,    swReg->err1En);
+        PCIE_GETBITS(val,CSL_INTD_CFG_ENABLE_REG_SYS_2_ENABLE_SYS_EN_PCIE_ERROR_2,    swReg->err2En);
+        PCIE_GETBITS(val,CSL_INTD_CFG_ENABLE_REG_SYS_2_ENABLE_SYS_EN_PCIE_HOT_RESET,  swReg->hotRstEn);
+        PCIE_GETBITS(val,CSL_INTD_CFG_ENABLE_REG_SYS_2_ENABLE_SYS_EN_PCIE_Link_STATE, swReg->lnkStateEn);
+        PCIE_GETBITS(val,CSL_INTD_CFG_ENABLE_REG_SYS_2_ENABLE_SYS_EN_PCIE_PTM,        swReg->ptmEn);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_readIntdCfgEnSys2Reg */
+
+/*****************************************************************************
+ * Read and split up the Intd Config Status Sys0 register
+ ****************************************************************************/
+static int32_t Pcie_readIntdCfgStatusSys0Reg (const CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgStatusSys0Reg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        val = swReg->raw = baseAddr->STATUS_REG_SYS_0;
+
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_REG_SYS_0_STATUS_SYS_PCIE_DOWNSTREAM, swReg->statusDwnStr);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_readIntdCfgStatusSys0Reg */
+
+/*****************************************************************************
+ * Read and split up the Intd Config Status Sys1 register
+ ****************************************************************************/
+static int32_t Pcie_readIntdCfgStatusSys1Reg (const CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgStatusSys1Reg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        val = swReg->raw = baseAddr->STATUS_REG_SYS_1;
+
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_REG_SYS_1_STATUS_SYS_PCIE_PWR_STATE, swReg->statusPwrState);
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_REG_SYS_1_STATUS_SYS_PCIE_LEGACY_3,  swReg->statusLegacy3);
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_REG_SYS_1_STATUS_SYS_PCIE_LEGACY_2,  swReg->statusLegacy2);
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_REG_SYS_1_STATUS_SYS_PCIE_LEGACY_1,  swReg->statusLegacy1);
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_REG_SYS_1_STATUS_SYS_PCIE_LEGACY_0,  swReg->statusLegacy0);
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_REG_SYS_1_STATUS_SYS_PCIE_FLR,       swReg->statusFlr);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_readIntdCfgStatusSys1Reg */
+
+/*****************************************************************************
+ * Read and split up the Intd Config Status Sys2 register
+ ****************************************************************************/
+static int32_t Pcie_readIntdCfgStatusSys2Reg (const CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgStatusSys2Reg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        val = swReg->raw = baseAddr->STATUS_REG_SYS_2;
+
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_REG_SYS_2_STATUS_SYS_PCIE_PTM,        swReg->statusPtm);
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_REG_SYS_2_STATUS_SYS_PCIE_LINK_STATE, swReg->statusLnkState);
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_REG_SYS_2_STATUS_SYS_PCIE_HOT_RESET,  swReg->statusHotRst);
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_REG_SYS_2_STATUS_SYS_PCIE_ERROR_2,    swReg->statusErr2);
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_REG_SYS_2_STATUS_SYS_PCIE_ERROR_1,    swReg->statusErr1);
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_REG_SYS_2_STATUS_SYS_PCIE_ERROR_0,    swReg->statusErr0);
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_REG_SYS_2_STATUS_SYS_PCIE_DPA,        swReg->statusDpa);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_readIntdCfgStatusSys2Reg */
+
+/*****************************************************************************
+ * Read and split up the Intd Config Status Clear Sys2 register
+ ****************************************************************************/
+static int32_t Pcie_readIntdCfgStatusClrSys2Reg (const CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgStatusClrSys2Reg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        val = swReg->raw = baseAddr->STATUS_CLR_REG_SYS_2;
+
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_CLR_REG_SYS_2_STATUS_SYS_PCIE_PTM,        swReg->clrStatusPtm);
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_CLR_REG_SYS_2_STATUS_SYS_PCIE_LINK_STATE, swReg->clrStatusLnkState);
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_CLR_REG_SYS_2_STATUS_SYS_PCIE_HOT_RESET,  swReg->clrStatusHotRst);
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_CLR_REG_SYS_2_STATUS_SYS_PCIE_ERROR_2,    swReg->clrStatusErr2);
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_CLR_REG_SYS_2_STATUS_SYS_PCIE_ERROR_1,    swReg->clrStatusErr1);
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_CLR_REG_SYS_2_STATUS_SYS_PCIE_ERROR_0,    swReg->clrStatusErr0);
+        PCIE_GETBITS(val, CSL_INTD_CFG_STATUS_CLR_REG_SYS_2_STATUS_SYS_PCIE_DPA,        swReg->clrStatusDpa);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_readIntdCfgStatusClrSys2Reg */
+
+/*****************************************************************************
+ * Read and split up the Vendor Specific Control register
+ ****************************************************************************/
+static int32_t Pcie_readVndrSpecCntrlReg (volatile const uint32_t *hwReg_VENDOR_SPECIFIC_CONTROL_REG, Pcie_VndrSpecCntrlReg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t val;
+
+    if ((hwReg_VENDOR_SPECIFIC_CONTROL_REG != NULL) && (swReg != NULL))
+    {
+        val = swReg->raw = *hwReg_VENDOR_SPECIFIC_CONTROL_REG;
+
+        PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_REGF_VSEC_STRUCT_I_VENDOR_SPECIFIC_CONTROL_REG_VSEC_COUT, swReg->vsecCout);
+        PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_REGF_VSEC_STRUCT_I_VENDOR_SPECIFIC_CONTROL_REG_HTI,       swReg->hti);
+        PCIE_GETBITS(val, CSL_PCIE_EP_CORE_EP_PF0_I_REGF_VSEC_STRUCT_I_VENDOR_SPECIFIC_CONTROL_REG_VSEC_CIN,  swReg->vsecCin);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_readVndrSpecCntrlReg */
+
+/*****************************************************************************
+ * Read and split up the LM Vendor ID and Subsystem Vendor ID register
+ ****************************************************************************/
+static int32_t Pcie_readLmVendorIdReg (volatile const uint32_t *hwReg_I_VENDOR_ID_REG, Pcie_LmVendorIdReg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t val;
+
+    if ((hwReg_I_VENDOR_ID_REG != NULL) && (swReg != NULL))
+    {
+        val = swReg->raw = *hwReg_I_VENDOR_ID_REG;
+
+        PCIE_GETBITS(val, CSL_PCIE_RP_CORE_LM_I_REGF_LM_PCIE_BASE_I_VENDOR_ID_REG_SVID, swReg->svid);
+        PCIE_GETBITS(val, CSL_PCIE_RP_CORE_LM_I_REGF_LM_PCIE_BASE_I_VENDOR_ID_REG_VID,  swReg->vid);
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_readLmVendorIdReg */
 
 /*********************************************************************
  * Reads any register
@@ -2392,7 +4002,7 @@ int32_t Pcie_readRegs (Pcie_Handle handle, Pcie_Location location, Pcie_Register
 
     if ((status == SystemP_SUCCESS) && (readRegs->vndDevId != NULL))
     {
-        status = Pcie_readVendorDevId(&(baseCfgEp->EP_PF_I_PCIE[params->pfNum].EP_PF_I_PCIE_BASE.I_VENDOR_ID_DEVICE_ID), readRegs->vndDevId);
+        status = Pcie_readVendorDevIdReg(&(baseCfgEp->EP_PF_I_PCIE[params->pfNum].EP_PF_I_PCIE_BASE.I_VENDOR_ID_DEVICE_ID), readRegs->vndDevId);
     }
     if ((status == SystemP_SUCCESS) && (readRegs->statusCmd != NULL))
     {
@@ -2433,8 +4043,7 @@ int32_t Pcie_readRegs (Pcie_Handle handle, Pcie_Location location, Pcie_Register
     }
     if ((status == SystemP_SUCCESS) && (readRegs->subId != NULL))
     {
-        /* Not supported in this version */
-        status = SystemP_FAILURE;
+        status = Pcie_readSubIdReg(&(baseCfgEp->EP_PF_I_PCIE[params->pfNum].EP_PF_I_PCIE_BASE.I_SUBSYSTEM_VENDOR_ID_SUBSYSTEM_I), readRegs->subId);
     }
     if ((status == SystemP_SUCCESS) && (readRegs->cardbusCisPointer != NULL))
     {
@@ -2453,8 +4062,7 @@ int32_t Pcie_readRegs (Pcie_Handle handle, Pcie_Location location, Pcie_Register
     }
     if ((status == SystemP_SUCCESS) && (readRegs->intPin != NULL))
     {
-        /* Not supported in this version */
-        status = SystemP_FAILURE;
+        status = Pcie_readIntPinReg(&(baseCfgEp->EP_PF_I_PCIE[params->pfNum].EP_PF_I_PCIE_BASE.I_INTRPT_LINE_INTRPT_PIN), readRegs->intPin);
     }
 
     /* Type 1 Registers*/
@@ -2537,8 +4145,8 @@ int32_t Pcie_readRegs (Pcie_Handle handle, Pcie_Location location, Pcie_Register
     }
     if ((status == SystemP_SUCCESS) && (readRegs->pmCapCtlStat != NULL))
     {
-        /* Not supported in this version */
-        status = SystemP_FAILURE;
+        status = Pcie_readPmMgmtCtrlStatReg((CSL_pcie_ep_coreRegs *)&baseCfgEp->EP_PF_I_PCIE[params->pfNum].EP_PF_I_POWER_MGMT_CAP_STRUCT.I_PWR_MGMT_CTRL_STAT_REP,
+                                            readRegs->pmCapCtlStat);
     }
 
     /* MSI Registers */
@@ -2590,8 +4198,7 @@ int32_t Pcie_readRegs (Pcie_Handle handle, Pcie_Location location, Pcie_Register
     }
     if ((status == SystemP_SUCCESS) && (readRegs->deviceCap != NULL))
     {
-        /* Not supported in this version */
-        status = SystemP_FAILURE;
+        status = Pcie_readDevCapReg (&(baseCfgEp->EP_PF_I_PCIE[params->pfNum].EP_PF_I_PCIE_CAP_STRUCT.I_PCIE_DEV_CAP), readRegs->deviceCap);
     }
     if ((status == SystemP_SUCCESS) && (readRegs->devStatCtrl != NULL))
     {
@@ -3038,6 +4645,132 @@ int32_t Pcie_readRegs (Pcie_Handle handle, Pcie_Location location, Pcie_Register
         status = SystemP_FAILURE;
     }
 
+    /* User Config Registers */
+    if ((status == SystemP_SUCCESS) && (readRegs->usrCfgInitCfg != NULL))
+    {
+        status = Pcie_readUsrInitCfgReg((CSL_user_cfgRegs *)params->userCfgBase, readRegs->usrCfgInitCfg);
+    }
+    if ((status == SystemP_SUCCESS) && (readRegs->usrCfgPmCmd != NULL))
+    {
+        status = Pcie_readUsrPmCmdReg((CSL_user_cfgRegs *)params->userCfgBase, readRegs->usrCfgPmCmd);
+    }
+
+    /* Intd Config Registers */
+    if ((status == SystemP_SUCCESS) && (readRegs->intCfgEnSys0Reg != NULL))
+    {
+        status = Pcie_readIntdCfgEnSys0Reg((CSL_intd_cfgRegs *)params->intCfgBase, readRegs->intCfgEnSys0Reg);
+    }
+    if ((status == SystemP_SUCCESS) && (readRegs->intCfgEnSys1Reg != NULL))
+    {
+        status = Pcie_readIntdCfgEnSys1Reg((CSL_intd_cfgRegs *)params->intCfgBase, readRegs->intCfgEnSys1Reg);
+    }
+    if ((status == SystemP_SUCCESS) && (readRegs->intCfgEnSys2Reg != NULL))
+    {
+        status = Pcie_readIntdCfgEnSys2Reg((CSL_intd_cfgRegs *)params->intCfgBase, readRegs->intCfgEnSys2Reg);
+    }
+    if ((status == SystemP_SUCCESS) && (readRegs->intCfgStatusSys0Reg != NULL))
+    {
+        status = Pcie_readIntdCfgStatusSys0Reg((CSL_intd_cfgRegs *)params->intCfgBase, readRegs->intCfgStatusSys0Reg);
+    }
+    if ((status == SystemP_SUCCESS) && (readRegs->intCfgStatusSys1Reg != NULL))
+    {
+        status = Pcie_readIntdCfgStatusSys1Reg((CSL_intd_cfgRegs *)params->intCfgBase, readRegs->intCfgStatusSys1Reg);
+    }
+    if ((status == SystemP_SUCCESS) && (readRegs->intCfgStatusSys2Reg != NULL))
+    {
+        status = Pcie_readIntdCfgStatusSys2Reg((CSL_intd_cfgRegs *)params->intCfgBase, readRegs->intCfgStatusSys2Reg);
+    }
+    if ((status == SystemP_SUCCESS) && (readRegs->intCfgStatusClrSys2Reg != NULL))
+    {
+        status = Pcie_readIntdCfgStatusClrSys2Reg((CSL_intd_cfgRegs *)params->intCfgBase, readRegs->intCfgStatusClrSys2Reg);
+    }
+
+    /* Read Vendor Specific Control register */
+    if ((status == SystemP_SUCCESS) && (readRegs->vndrSpecCntrl != NULL))
+    {
+        status = Pcie_readVndrSpecCntrlReg(&baseCfgEp->EP_PF_I_PCIE[params->pfNum].EP_PF_I_REGF_VSEC_STRUCT.I_VENDOR_SPECIFIC_CONTROL_REG, readRegs->vndrSpecCntrl);
+    }
+
+    /* Configuration registers accessed via LM */
+    if ((status == SystemP_SUCCESS) && (readRegs->lmVendorIdReg != NULL))
+    {
+        status =  Pcie_readLmVendorIdReg(&baseCfgEp->LM_I_REGF_LM_PCIE_BASE.I_VENDOR_ID_REG, readRegs->lmVendorIdReg);
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Combine and write the Vendor ID Device ID register
+ ****************************************************************************/
+static int32_t Pcie_writeVendorDevIdReg(volatile uint32_t *hwReg_VENDOR_ID_DEV_ID, Pcie_VndDevIdReg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t new_val;
+
+    if ((hwReg_VENDOR_ID_DEV_ID != NULL) && (swReg != NULL))
+    {
+        new_val = swReg->raw;
+
+        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_VENDOR_ID_DEVICE_ID_VID, swReg->vndId);
+        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_VENDOR_ID_DEVICE_ID_DID, swReg->devId);
+
+        *hwReg_VENDOR_ID_DEV_ID = swReg->raw = new_val;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Combine and write the Subsystem Vendor ID register
+ ****************************************************************************/
+static int32_t Pcie_writeSubIdReg(volatile uint32_t *hwReg_SUBSYSTEM_VENDOR_ID_SUBSYSTEM_ID, Pcie_SubIdReg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t new_val;
+
+    if ((hwReg_SUBSYSTEM_VENDOR_ID_SUBSYSTEM_ID != NULL) && (swReg != NULL))
+    {
+        new_val = swReg->raw;
+
+        PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_BASE_I_SUBSYSTEM_VENDOR_ID_SUBSYSTEM_I_SID, swReg->subId);
+
+        *hwReg_SUBSYSTEM_VENDOR_ID_SUBSYSTEM_ID = swReg->raw = new_val;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Combine and write the Interrupt Line & Pin register
+ ****************************************************************************/
+static int32_t Pcie_writeIntPinReg(volatile uint32_t *hwReg_INTRPT_LINE_INTRPT_PIN, Pcie_IntPinReg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t new_val;
+
+    if ((hwReg_INTRPT_LINE_INTRPT_PIN != NULL) && (swReg != NULL))
+    {
+        new_val = swReg->raw;
+
+        PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_BASE_I_INTRPT_LINE_INTRPT_PIN_ILR, swReg->intLine);
+        PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_BASE_I_INTRPT_LINE_INTRPT_PIN_IPR, swReg->intPin);
+
+        *hwReg_INTRPT_LINE_INTRPT_PIN = swReg->raw = new_val;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
     return status;
 }
 
@@ -3156,7 +4889,7 @@ static int32_t Pcie_writeRcIrqEoi (CSL_user_cfgRegs *baseAddr, Pcie_IrqEOIReg *s
     {
         new_val = swReg->raw;
 
-        PCIE_SETBITS(new_val, CSL_INTD_CFG_EOI_REG_EOI_VECTOR, swReg->EOI);
+        PCIE_SETBITS(new_val, CSL_USER_CFG_EOI_REG_EOI_VECTOR, swReg->EOI);
 
         baseAddr->EOI_VECTOR = swReg->raw = new_val;
     }
@@ -3259,8 +4992,10 @@ static int32_t Pcie_writeRevIdReg (volatile uint32_t *hwReg_CLASSCODE_REVISIONID
     {
         new_val = swReg->raw;
 
-        PCIE_SETBITS(new_val, PCIE_REV0_CLASSCODE, swReg->classCode);
+        PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_BASE_I_REVISION_ID_CLASS_CODE_CC,  swReg->classCode);
         PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_BASE_I_REVISION_ID_CLASS_CODE_RID, swReg->revId);
+        PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_BASE_I_REVISION_ID_CLASS_CODE_PIB, swReg->progIntrface);
+        PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_BASE_I_REVISION_ID_CLASS_CODE_SCC, swReg->subClassCode);
 
         *hwReg_CLASSCODE_REVISIONID = swReg->raw = new_val;
     }
@@ -3393,6 +5128,39 @@ static int32_t Pcie_writeType0Bar32bitReg (CSL_pcie_ep_coreRegs *baseAddr, Pcie_
 } /* Pcie_writeType0Bar32bitReg */
 
 /*****************************************************************************
+ * Combine and write the Device Capability register
+ ****************************************************************************/
+static int32_t Pcie_writeDevCapReg (volatile uint32_t *hwReg_DEV_CAS, Pcie_DeviceCapReg *swReg)
+{
+
+    int32_t status = SystemP_SUCCESS;
+    uint32_t new_val;
+
+    if ((hwReg_DEV_CAS != NULL) && (swReg != NULL))
+    {
+        new_val = swReg->raw;
+
+        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_FLRC, swReg->flrEn);
+        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_CPLS, swReg->pwrLimitScale);
+        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_CSP,  swReg->pwrLimitValue);
+        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_RER,  swReg->errRpt);
+        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_AL1L, swReg->l1Latency);
+        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_AL0L, swReg->l0Latency);
+        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_ETFS, swReg->extTagFld);
+        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_PFS,  swReg->phantomFld);
+        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_CAP_MP,   swReg->maxPayldSz);
+
+        *hwReg_DEV_CAS = swReg->raw = new_val;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_writeDevCapReg */
+
+/*****************************************************************************
  * Combine and write the Device Status and Control register
  ****************************************************************************/
 static int32_t Pcie_writeDevStatCtrlReg (volatile uint32_t *hwReg_DEV_CAS, Pcie_DevStatCtrlReg *swReg)
@@ -3405,9 +5173,9 @@ static int32_t Pcie_writeDevStatCtrlReg (volatile uint32_t *hwReg_DEV_CAS, Pcie_
         new_val = swReg->raw;
 
         PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_ECER, swReg->corErRp);
-        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_ECER, swReg->nFatalErRp);
-        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_ECER, swReg->fatalErRp);
-        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_ECER, swReg->reqRp);
+        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_ENFER, swReg->nFatalErRp);
+        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_EFER, swReg->fatalErRp);
+        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_EURR, swReg->reqRp);
         PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_ERO, swReg->relaxed);
         PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_MP, swReg->maxPayld);
         PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_RC_I_RC_PCIE_BASE_I_PCIE_DEV_CTRL_STATUS_ETE, swReg->xtagEn);
@@ -3435,7 +5203,7 @@ static int32_t Pcie_writeDevStatCtrlReg (volatile uint32_t *hwReg_DEV_CAS, Pcie_
 /*****************************************************************************
  * Combine and write the Link Capabilities register
  ****************************************************************************/
-static int32_t Pcie_writeLinkCapReg (volatile uint32_t *hwReg_LNK_CAP, Pcie_LinkCapReg *swReg)
+static int32_t Pcie_writeLinkCapReg(volatile uint32_t *hwReg_LNK_CAP, Pcie_LinkCapReg *swReg)
 {
     int32_t status = SystemP_SUCCESS;
     uint32_t new_val;
@@ -3457,7 +5225,31 @@ static int32_t Pcie_writeLinkCapReg (volatile uint32_t *hwReg_LNK_CAP, Pcie_Link
 } /* Pcie_writeLinkCapReg */
 
 /*****************************************************************************
- * Combine and write the Advanced Capabilities and Control register
+ * Combine and write the Link Status and Control register
+ ****************************************************************************/
+static int32_t Pcie_writeLinkStatCtrlReg(volatile uint32_t *hwReg_LNK_CAS, Pcie_LinkStatCtrlReg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t new_val;
+
+    if ((hwReg_LNK_CAS != NULL) && (swReg != NULL))
+    {
+        new_val = swReg->raw;
+
+        PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_PCIE_CAP_STRUCT_I_LINK_CTRL_STATUS_SCC, swReg->slotClkCfg);
+
+        *hwReg_LNK_CAS = swReg->raw = new_val;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_writeLinkStatCtrlReg */
+
+/*****************************************************************************
+ * Combine and write the Advanced Error Capabilities and Control register
  ****************************************************************************/
 static int32_t Pcie_writeAccrReg (CSL_pcie_ep_coreRegs *baseAddr, Pcie_AccrReg *swReg)
 {
@@ -3510,7 +5302,7 @@ static int32_t Pcie_writePlconfIatuRegLowerBaseReg (CSL_pcie_ep_coreRegs *baseAd
             {
                 /* 0U == OUTBOUND */
                 PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_ATU_WRAPPER_OB_0_ADDR0_DATA, swReg->iatuRegLowerBase);
-                PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_ATU_WRAPPER_OB_0_ADDR0_NUM_BITS, swReg->zero);
+                PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_ATU_WRAPPER_OB_0_ADDR0_NUM_BITS, swReg->num_bits);
 
                 swReg->raw = baseAddr->ATU_WRAPPER_OB[regionIndex].ADDR0 = new_val;
             }
@@ -3564,7 +5356,7 @@ static int32_t Pcie_writePlconfIatuRegLowerBaseRcReg (CSL_pcie_ep_coreRegs *base
             {
                 /* 0U == OUTBOUND */
                 PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_ATU_WRAPPER_OB_0_ADDR0_DATA, swReg->iatuRegLowerBase);
-                PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_ATU_WRAPPER_OB_0_ADDR0_NUM_BITS, swReg->zero);
+                PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_ATU_WRAPPER_OB_0_ADDR0_NUM_BITS, swReg->num_bits);
 
                 swReg->raw = baseAddr->ATU_WRAPPER_OB[regionIndex].ADDR0 = new_val;
             }
@@ -3572,7 +5364,7 @@ static int32_t Pcie_writePlconfIatuRegLowerBaseRcReg (CSL_pcie_ep_coreRegs *base
             {
                 /* INBOUND */
                 PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_ATU_WRAPPER_OB_0_ADDR0_DATA, swReg->iatuRegLowerBase);
-                PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_ATU_WRAPPER_OB_0_ADDR0_NUM_BITS, swReg->zero);
+                PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_ATU_WRAPPER_OB_0_ADDR0_NUM_BITS, swReg->num_bits);
 
                 swReg->raw = baseAddr->ATU_WRAPPER_IB[regionIndex].ADDR0 = new_val;
             }
@@ -3667,7 +5459,7 @@ static int32_t Pcie_writePlconfIatuRegLowerTargetReg (CSL_pcie_ep_coreRegs *base
             {
                 /* 0U == OUTBOUND */
                 PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_ATU_WRAPPER_OB_0_AXI_ADDR0_DATA, swReg->iatuRegLowerTarget);
-                PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_ATU_WRAPPER_OB_0_AXI_ADDR0_REGION_SIZE, swReg->zero);
+                PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_ATU_WRAPPER_OB_0_AXI_ADDR0_REGION_SIZE, swReg->num_bits);
                 swReg->raw = baseAddr->ATU_WRAPPER_OB[regionIndex].AXI_ADDR0 = new_val;
             }
             else
@@ -3814,8 +5606,7 @@ static int32_t Pcie_writeMsiCapReg (CSL_pcie_ep_coreRegs *baseAddr, Pcie_MsiCapR
     PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_MSI_CAP_STRUCT_I_MSI_CTRL_REG_MMC, swReg->multMsgCap);
     PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_MSI_CAP_STRUCT_I_MSI_CTRL_REG_MME, swReg->multMsgEn);
     PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_MSI_CAP_STRUCT_I_MSI_CTRL_REG_BAC64, swReg->en64bit);
-    PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_MSI_CAP_STRUCT_I_MSI_CTRL_REG_MC, swReg->extDataCap);
-    PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_MSI_CAP_STRUCT_I_MSI_CTRL_REG_R0, swReg->extDataEn);
+    PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_MSI_CAP_STRUCT_I_MSI_CTRL_REG_MC, swReg->pvmEn);
 
     *regVal = swReg->raw = new_val;
 
@@ -3884,7 +5675,7 @@ static int32_t Pcie_writeMsixCapReg (CSL_pcie_ep_coreRegs *baseAddr, Pcie_MsixCa
 }
 
 /*****************************************************************************
- * Read and split up the MSI table offset register
+ * Combine and write data of the MSI table offset register
  ****************************************************************************/
 static int32_t Pcie_writeMsixTblOffset (CSL_pcie_ep_coreRegs *baseAddr, Pcie_MsixTblOffset *swReg)
 {
@@ -3898,6 +5689,328 @@ static int32_t Pcie_writeMsixTblOffset (CSL_pcie_ep_coreRegs *baseAddr, Pcie_Msi
 
     return SystemP_SUCCESS;
 }
+
+/*****************************************************************************
+ * Combine and write the data of the power management control status register
+ ****************************************************************************/
+static int32_t Pcie_writePmMgmtCtrlStatReg(CSL_pcie_ep_coreRegs *baseAddr, Pcie_PMCapCtlStatReg *swReg)
+{
+    uint32_t new_val = swReg->raw;
+    uint32_t *regVal = (uint32_t *)baseAddr;
+
+    PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_POWER_MGMT_CAP_STRUCT_I_PWR_MGMT_CTRL_STAT_REP_PMES, swReg->pmeStatus);
+    PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_POWER_MGMT_CAP_STRUCT_I_PWR_MGMT_CTRL_STAT_REP_PE,   swReg->pmeEn);
+    PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_POWER_MGMT_CAP_STRUCT_I_PWR_MGMT_CTRL_STAT_REP_NSR,  swReg->noSoftRst);
+    PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_POWER_MGMT_CAP_STRUCT_I_PWR_MGMT_CTRL_STAT_REP_PS,   swReg->pwrState);
+
+    *regVal = swReg->raw = new_val;
+
+    return SystemP_SUCCESS;
+}
+
+/*****************************************************************************
+ * Combine and write the data of the User Config Init Cfg register
+ ****************************************************************************/
+static int32_t Pcie_writeUsrInitCfgReg(CSL_user_cfgRegs *baseAddr, Pcie_UserCfgInitCfgReg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t new_val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        new_val = swReg->raw;
+
+        PCIE_SETBITS(new_val, CSL_USER_CFG_INITCFG_CONFIG_ENABLE, swReg->cfgEn);
+        PCIE_SETBITS(new_val, CSL_USER_CFG_INITCFG_VC_COUNT, swReg->vcCnt);
+        PCIE_SETBITS(new_val, CSL_USER_CFG_INITCFG_MAX_EVAL_ITERATION, swReg->maxEvalItr);
+        PCIE_SETBITS(new_val, CSL_USER_CFG_INITCFG_BYPASS_PHASE23, swReg->bypassPh23);
+        PCIE_SETBITS(new_val, CSL_USER_CFG_INITCFG_BYPASS_REMOTE_TX_EQUALIZATION, swReg->bypassRmTxEQ);
+        PCIE_SETBITS(new_val, CSL_USER_CFG_INITCFG_SUPPORTED_PRESET, swReg->suppPrst);
+        PCIE_SETBITS(new_val, CSL_USER_CFG_INITCFG_DISABLE_GEN3_DC_BALANCE, swReg->disableGen3DcBlnc);
+        PCIE_SETBITS(new_val, CSL_USER_CFG_INITCFG_SRIS_ENABLE, swReg->srisEn);
+
+        baseAddr->INITCFG = swReg->raw = new_val;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_writeUsrInitCfgReg */
+
+/*****************************************************************************
+ * Combine and write the Data of the User Config Pm Cmd register
+ ****************************************************************************/
+static int32_t Pcie_writeUsrPmCmdReg(CSL_user_cfgRegs *baseAddr, Pcie_UserCfgPmCmdReg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t new_val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        new_val = swReg->raw;
+
+        PCIE_SETBITS(new_val, CSL_USER_CFG_PMCMD_PWR_STATE_CHANGE_ACK, swReg->pwrStateChgAck);
+        PCIE_SETBITS(new_val, CSL_USER_CFG_PMCMD_CLIENT_REQ_EXIT_L1_SUBSTATE, swReg->clientReqExtL1Substate);
+        PCIE_SETBITS(new_val, CSL_USER_CFG_PMCMD_CLIENT_REQ_EXIT_L1, swReg->clientReqExtL1);
+
+        baseAddr->PMCMD = swReg->raw = new_val;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_writeUsrPmCmdReg */
+
+/*****************************************************************************
+ * Combine and write the Data of the Intd Config Enable Sys0 register
+ ****************************************************************************/
+static int32_t Pcie_writeIntdCfgEnSys0Reg(CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgEnSys0Reg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t new_val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        new_val = swReg->raw;
+
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_ENABLE_REG_SYS_0_ENABLE_SYS_EN_PCIE_DOWNSTREAM, swReg->dwnStrEn);
+
+        baseAddr->ENABLE_REG_SYS_0 = swReg->raw = new_val;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_writeIntdCfgEnSys0Reg */
+
+/*****************************************************************************
+ * Combine and write the Data of the Intd Config Enable Sys1 register
+ ****************************************************************************/
+static int32_t Pcie_writeIntdCfgEnSys1Reg(CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgEnSys1Reg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t new_val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        new_val = swReg->raw;
+
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_ENABLE_REG_SYS_1_ENABLE_SYS_EN_PCIE_PWR_STATE, swReg->pwrStateEn);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_ENABLE_REG_SYS_1_ENABLE_SYS_EN_PCIE_LEGACY_3,  swReg->legacy3En);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_ENABLE_REG_SYS_1_ENABLE_SYS_EN_PCIE_LEGACY_2,  swReg->legacy2En);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_ENABLE_REG_SYS_1_ENABLE_SYS_EN_PCIE_LEGACY_1,  swReg->legacy1En);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_ENABLE_REG_SYS_1_ENABLE_SYS_EN_PCIE_LEGACY_0,  swReg->legacy0En);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_ENABLE_REG_SYS_1_ENABLE_SYS_EN_PCIE_FLR,       swReg->flrEn);
+
+        baseAddr->ENABLE_REG_SYS_1 = swReg->raw = new_val;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_writeIntdCfgEnSys1Reg */
+
+/*****************************************************************************
+ * Combine and write the Data of the Intd Config Enable Sys2 register
+ ****************************************************************************/
+static int32_t Pcie_writeIntdCfgEnSys2Reg(CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgEnSys2Reg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t new_val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        new_val = swReg->raw;
+
+        PCIE_SETBITS(new_val,CSL_INTD_CFG_ENABLE_REG_SYS_2_ENABLE_SYS_EN_PCIE_DPA,        swReg->dpaEn);
+        PCIE_SETBITS(new_val,CSL_INTD_CFG_ENABLE_REG_SYS_2_ENABLE_SYS_EN_PCIE_ERROR_0,    swReg->err0En);
+        PCIE_SETBITS(new_val,CSL_INTD_CFG_ENABLE_REG_SYS_2_ENABLE_SYS_EN_PCIE_ERROR_1,    swReg->err1En);
+        PCIE_SETBITS(new_val,CSL_INTD_CFG_ENABLE_REG_SYS_2_ENABLE_SYS_EN_PCIE_ERROR_2,    swReg->err2En);
+        PCIE_SETBITS(new_val,CSL_INTD_CFG_ENABLE_REG_SYS_2_ENABLE_SYS_EN_PCIE_HOT_RESET,  swReg->hotRstEn);
+        PCIE_SETBITS(new_val,CSL_INTD_CFG_ENABLE_REG_SYS_2_ENABLE_SYS_EN_PCIE_Link_STATE, swReg->lnkStateEn);
+        PCIE_SETBITS(new_val,CSL_INTD_CFG_ENABLE_REG_SYS_2_ENABLE_SYS_EN_PCIE_PTM,        swReg->ptmEn);
+
+        baseAddr->ENABLE_REG_SYS_2 = swReg->raw = new_val;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_writeIntdCfgEnSys2Reg */
+
+/*****************************************************************************
+ * Combine and write the Data of the Intd Config Status Sys0 register
+ ****************************************************************************/
+static int32_t Pcie_writeIntdCfgStatusSys0Reg(CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgStatusSys0Reg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t new_val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        new_val = swReg->raw;
+
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_REG_SYS_0_STATUS_SYS_PCIE_DOWNSTREAM, swReg->statusDwnStr);
+
+        baseAddr->STATUS_REG_SYS_0 = swReg->raw = new_val;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_writeIntdCfgStatusSys0Reg */
+
+/*****************************************************************************
+ * Combine and write the Data of the Intd Config Status Sys1 register
+ ****************************************************************************/
+static int32_t Pcie_writeIntdCfgStatusSys1Reg(CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgStatusSys1Reg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t new_val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        new_val = swReg->raw;
+
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_REG_SYS_1_STATUS_SYS_PCIE_PWR_STATE, swReg->statusPwrState);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_REG_SYS_1_STATUS_SYS_PCIE_LEGACY_3,  swReg->statusLegacy3);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_REG_SYS_1_STATUS_SYS_PCIE_LEGACY_2,  swReg->statusLegacy2);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_REG_SYS_1_STATUS_SYS_PCIE_LEGACY_1,  swReg->statusLegacy1);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_REG_SYS_1_STATUS_SYS_PCIE_LEGACY_0,  swReg->statusLegacy0);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_REG_SYS_1_STATUS_SYS_PCIE_FLR,       swReg->statusFlr);
+
+        baseAddr->STATUS_REG_SYS_1 = swReg->raw = new_val;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_writeIntdCfgStatusSys1Reg */
+
+/*****************************************************************************
+ * Combine and write the Data of the Intd Config Status Sys2 register
+ ****************************************************************************/
+static int32_t Pcie_writeIntdCfgStatusSys2Reg(CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgStatusSys2Reg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t new_val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        new_val = swReg->raw;
+
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_REG_SYS_2_STATUS_SYS_PCIE_PTM,        swReg->statusPtm);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_REG_SYS_2_STATUS_SYS_PCIE_LINK_STATE, swReg->statusLnkState);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_REG_SYS_2_STATUS_SYS_PCIE_HOT_RESET,  swReg->statusHotRst);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_REG_SYS_2_STATUS_SYS_PCIE_ERROR_2,    swReg->statusErr2);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_REG_SYS_2_STATUS_SYS_PCIE_ERROR_1,    swReg->statusErr1);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_REG_SYS_2_STATUS_SYS_PCIE_ERROR_0,    swReg->statusErr0);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_REG_SYS_2_STATUS_SYS_PCIE_DPA,        swReg->statusDpa);
+
+        baseAddr->STATUS_REG_SYS_2 = swReg->raw = new_val;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_writeIntdCfgStatusSys2Reg */
+
+/*****************************************************************************
+ * Combine and write the Data of the Intd Config Status Clear Sys2 register
+ ****************************************************************************/
+static int32_t Pcie_writeIntdCfgStatusClrSys2Reg(CSL_intd_cfgRegs *baseAddr, Pcie_IntdCfgStatusClrSys2Reg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t new_val;
+
+    if ((baseAddr != NULL) && (swReg != NULL))
+    {
+        new_val = swReg->raw;
+
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_CLR_REG_SYS_2_STATUS_SYS_PCIE_PTM,        swReg->clrStatusPtm);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_CLR_REG_SYS_2_STATUS_SYS_PCIE_LINK_STATE, swReg->clrStatusLnkState);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_CLR_REG_SYS_2_STATUS_SYS_PCIE_HOT_RESET,  swReg->clrStatusHotRst);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_CLR_REG_SYS_2_STATUS_SYS_PCIE_ERROR_2,    swReg->clrStatusErr2);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_CLR_REG_SYS_2_STATUS_SYS_PCIE_ERROR_1,    swReg->clrStatusErr1);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_CLR_REG_SYS_2_STATUS_SYS_PCIE_ERROR_0,    swReg->clrStatusErr0);
+        PCIE_SETBITS(new_val, CSL_INTD_CFG_STATUS_CLR_REG_SYS_2_STATUS_SYS_PCIE_DPA,        swReg->clrStatusDpa);
+
+        baseAddr->STATUS_CLR_REG_SYS_2 = swReg->raw = new_val;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_writeIntdCfgStatusClrSys2Reg */
+
+/*****************************************************************************
+ * Combine and write the Data of the Vendor Specific Control register
+ ****************************************************************************/
+static int32_t Pcie_writeVndrSpecCntrlReg(volatile uint32_t *hwReg_VENDOR_SPECIFIC_CONTROL_REG, Pcie_VndrSpecCntrlReg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t new_val;
+
+    if ((hwReg_VENDOR_SPECIFIC_CONTROL_REG != NULL) && (swReg != NULL))
+    {
+
+        new_val = swReg->raw;
+
+        PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_REGF_VSEC_STRUCT_I_VENDOR_SPECIFIC_CONTROL_REG_VSEC_COUT, swReg->vsecCout);
+        PCIE_SETBITS(new_val, CSL_PCIE_EP_CORE_EP_PF0_I_REGF_VSEC_STRUCT_I_VENDOR_SPECIFIC_CONTROL_REG_HTI,       swReg->hti);
+
+        *hwReg_VENDOR_SPECIFIC_CONTROL_REG = swReg->raw = new_val;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_writeVndrSpecCntrlReg */
+
+/*****************************************************************************
+ * Combine and write the Data of the LM Vendor ID and Subsystem Vendor ID register
+ ****************************************************************************/
+static int32_t Pcie_writeLmVendorIdReg(volatile uint32_t *hwReg_I_VENDOR_ID_REG, Pcie_LmVendorIdReg *swReg)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t new_val;
+
+    if ((hwReg_I_VENDOR_ID_REG != NULL) && (swReg != NULL))
+    {
+        new_val = swReg->raw;
+
+        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_LM_I_REGF_LM_PCIE_BASE_I_VENDOR_ID_REG_SVID, swReg->svid);
+        PCIE_SETBITS(new_val, CSL_PCIE_RP_CORE_LM_I_REGF_LM_PCIE_BASE_I_VENDOR_ID_REG_VID,  swReg->vid);
+
+        *hwReg_I_VENDOR_ID_REG = swReg->raw = new_val;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+} /* Pcie_writeLmVendorIdReg */
 
 /*********************************************************************
  * Writes any register
@@ -4225,8 +6338,7 @@ int32_t Pcie_writeRegs (Pcie_Handle handle, Pcie_Location location, Pcie_Registe
 
     if ((status == SystemP_SUCCESS) && (writeRegs->vndDevId != NULL))
     {
-        /* Not supported in this version */
-        status = SystemP_FAILURE;
+        status = Pcie_writeVendorDevIdReg(&(baseCfgEp->EP_PF_I_PCIE[params->pfNum].EP_PF_I_PCIE_BASE.I_VENDOR_ID_DEVICE_ID), writeRegs->vndDevId);
     }
     if ((status == SystemP_SUCCESS) && (writeRegs->statusCmd != NULL))
     {
@@ -4267,8 +6379,7 @@ int32_t Pcie_writeRegs (Pcie_Handle handle, Pcie_Location location, Pcie_Registe
     }
     if ((status == SystemP_SUCCESS) && (writeRegs->subId != NULL))
     {
-        /* Not supported in this version */
-        status = SystemP_FAILURE;
+        status = Pcie_writeSubIdReg(&(baseCfgEp->EP_PF_I_PCIE[params->pfNum].EP_PF_I_PCIE_BASE.I_SUBSYSTEM_VENDOR_ID_SUBSYSTEM_I), writeRegs->subId);
     }
     if ((status == SystemP_SUCCESS) && (writeRegs->cardbusCisPointer != NULL))
     {
@@ -4287,8 +6398,7 @@ int32_t Pcie_writeRegs (Pcie_Handle handle, Pcie_Location location, Pcie_Registe
     }
     if ((status == SystemP_SUCCESS) && (writeRegs->intPin != NULL))
     {
-        /* Not supported in this version */
-        status = SystemP_FAILURE;
+        status = Pcie_writeIntPinReg(&(baseCfgEp->EP_PF_I_PCIE[params->pfNum].EP_PF_I_PCIE_BASE.I_INTRPT_LINE_INTRPT_PIN), writeRegs->intPin);
     }
 
     /*Type 1 Registers*/
@@ -4424,8 +6534,7 @@ int32_t Pcie_writeRegs (Pcie_Handle handle, Pcie_Location location, Pcie_Registe
     }
     if ((status == SystemP_SUCCESS) && (writeRegs->deviceCap != NULL))
     {
-        /* Not supported in this version */
-        status = SystemP_FAILURE;
+        status = Pcie_writeDevCapReg(&(baseCfgEp->EP_PF_I_PCIE[params->pfNum].EP_PF_I_PCIE_CAP_STRUCT.I_PCIE_DEV_CAP), writeRegs->deviceCap);
     }
 
     if ((status == SystemP_SUCCESS) && (writeRegs->devStatCtrl != NULL))
@@ -4435,12 +6544,11 @@ int32_t Pcie_writeRegs (Pcie_Handle handle, Pcie_Location location, Pcie_Registe
     }
     if ((status == SystemP_SUCCESS) && (writeRegs->linkCap != NULL))
     {
-        status = Pcie_writeLinkCapReg (&(baseCfgEp->EP_PF_I_PCIE[params->pfNum].EP_PF_I_PCIE_CAP_STRUCT.I_LINK_CAP), writeRegs->linkCap);
+        status = Pcie_writeLinkCapReg(&(baseCfgEp->EP_PF_I_PCIE[params->pfNum].EP_PF_I_PCIE_CAP_STRUCT.I_LINK_CAP), writeRegs->linkCap);
     }
     if ((status == SystemP_SUCCESS) && (writeRegs->linkStatCtrl != NULL))
     {
-        /* Not supported in this version */
-        status = SystemP_FAILURE;
+        status = Pcie_writeLinkStatCtrlReg(&(baseCfgEp->EP_PF_I_PCIE[params->pfNum].EP_PF_I_PCIE_CAP_STRUCT.I_LINK_CTRL_STATUS), writeRegs->linkStatCtrl);
     }
     if ((status == SystemP_SUCCESS) && (writeRegs->slotCap != NULL))
     {
@@ -4596,6 +6704,12 @@ int32_t Pcie_writeRegs (Pcie_Handle handle, Pcie_Location location, Pcie_Registe
     {
         /* Not supported in this version */
         status = SystemP_FAILURE;
+    }
+
+    /* Write Vendor Specific Control register */
+    if ((status == SystemP_SUCCESS) && (writeRegs->vndrSpecCntrl != NULL))
+    {
+        status = Pcie_writeVndrSpecCntrlReg(&baseCfgEp->EP_PF_I_PCIE[params->pfNum].EP_PF_I_REGF_VSEC_STRUCT.I_VENDOR_SPECIFIC_CONTROL_REG, writeRegs->vndrSpecCntrl);
     }
 
     /* PLCONF registers */
@@ -4880,6 +6994,50 @@ int32_t Pcie_writeRegs (Pcie_Handle handle, Pcie_Location location, Pcie_Registe
         status = SystemP_FAILURE;
     }
 
+    /* User Config Registers */
+    if ((status == SystemP_SUCCESS) && (writeRegs->usrCfgInitCfg != NULL))
+    {
+        status = Pcie_writeUsrInitCfgReg((CSL_user_cfgRegs *)params->userCfgBase, writeRegs->usrCfgInitCfg);
+    }
+    if ((status == SystemP_SUCCESS) && (writeRegs->usrCfgPmCmd != NULL))
+    {
+        status = Pcie_writeUsrPmCmdReg((CSL_user_cfgRegs *)params->userCfgBase, writeRegs->usrCfgPmCmd);
+    }
+
+    /* Intd Config Registers */
+    if ((status == SystemP_SUCCESS) && (writeRegs->intCfgEnSys0Reg != NULL))
+    {
+        status = Pcie_writeIntdCfgEnSys0Reg((CSL_intd_cfgRegs *)params->intCfgBase, writeRegs->intCfgEnSys0Reg);
+    }
+    if ((status == SystemP_SUCCESS) && (writeRegs->intCfgEnSys1Reg != NULL))
+    {
+        status = Pcie_writeIntdCfgEnSys1Reg((CSL_intd_cfgRegs *)params->intCfgBase, writeRegs->intCfgEnSys1Reg);
+    }
+    if ((status == SystemP_SUCCESS) && (writeRegs->intCfgEnSys2Reg != NULL))
+    {
+        status = Pcie_writeIntdCfgEnSys2Reg((CSL_intd_cfgRegs *)params->intCfgBase, writeRegs->intCfgEnSys2Reg);
+    }
+    if ((status == SystemP_SUCCESS) && (writeRegs->intCfgStatusSys0Reg != NULL))
+    {
+        status = Pcie_writeIntdCfgStatusSys0Reg((CSL_intd_cfgRegs *)params->intCfgBase, writeRegs->intCfgStatusSys0Reg);
+    }
+    if ((status == SystemP_SUCCESS) && (writeRegs->intCfgStatusSys0Reg != NULL))
+    {
+        status = Pcie_writeIntdCfgStatusSys1Reg((CSL_intd_cfgRegs *)params->intCfgBase, writeRegs->intCfgStatusSys1Reg);
+    }
+    if ((status == SystemP_SUCCESS) && (writeRegs->intCfgStatusSys2Reg != NULL))
+    {
+        status = Pcie_writeIntdCfgStatusSys2Reg((CSL_intd_cfgRegs *)params->intCfgBase, writeRegs->intCfgStatusSys2Reg);
+    }
+    if ((status == SystemP_SUCCESS) && (writeRegs->intCfgStatusClrSys2Reg != NULL))
+    {
+        status = Pcie_writeIntdCfgStatusClrSys2Reg((CSL_intd_cfgRegs *)params->intCfgBase, writeRegs->intCfgStatusClrSys2Reg);
+    }
+    if ((status == SystemP_SUCCESS) && (writeRegs->lmVendorIdReg != NULL))
+    {
+        status =  Pcie_writeLmVendorIdReg(&(baseCfgEp->LM_I_REGF_LM_PCIE_BASE.I_VENDOR_ID_REG), writeRegs->lmVendorIdReg);
+    }
+
     return status;
 } /* Pcie_writeRegs */
 
@@ -4887,13 +7045,18 @@ int32_t Pcie_writeRegs (Pcie_Handle handle, Pcie_Location location, Pcie_Registe
 int32_t Pcie_getMsiRegs (Pcie_Handle handle, Pcie_Location location, Pcie_MsiParams *params)
 {
     int32_t status = SystemP_SUCCESS;
+    Pcie_Config *pcieCfg = NULL;
     Pcie_Registers regs;
     Pcie_MsiCapReg msiCapReg;
     Pcie_MsiLo32Reg msiLo32;
     Pcie_MsiUp32Reg msiUp32;
     Pcie_MsiDataReg msiData;
 
-    if ((handle == NULL) || (params == NULL))
+    if ((handle != NULL) || (params == NULL))
+    {
+        pcieCfg = (Pcie_Config *)handle;
+    }
+    else
     {
         status = SystemP_FAILURE;
     }
@@ -4915,7 +7078,9 @@ int32_t Pcie_getMsiRegs (Pcie_Handle handle, Pcie_Location location, Pcie_MsiPar
         params->enable = msiCapReg.msiEn;
         params->loAddr = msiLo32.addr;
         params->upAddr = msiUp32.addr;
-        params->data = msiData.data;
+        params->data   = msiData.data;
+        params->multMsgEn = msiCapReg.multMsgEn;
+        pcieCfg->attrs->msiMme = 1 << msiCapReg.multMsgEn;
     }
 
     return status;
@@ -5077,6 +7242,116 @@ int32_t Pcie_setMsixCtrlRegister (Pcie_Handle handle, Pcie_Location location,
         msixCap.msixTblSize = params.tblSize;
 
         status = Pcie_writeRegs(handle, location, &regs);
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Disable support for MSI-X
+ ****************************************************************************/
+int32_t Pcie_epDisableMsixCap(Pcie_Handle handle)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_Registers  regs;
+    Pcie_MsixCapReg msixCap;
+
+    if (handle == NULL)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+
+        regs.msixCap = &msixCap;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        msixCap.capId = 0x00;
+
+        status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Set number of MSI messages we request (multiple message capable)
+ * according to configuration
+ ****************************************************************************/
+int32_t Pcie_epSetMsiMultiMessCap(Pcie_Handle handle)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_Config *pcieCfg = NULL;
+    Pcie_Registers  regs;
+    Pcie_MsiCapReg msiCap;
+
+    if (handle != NULL)
+    {
+        pcieCfg = (Pcie_Config *)handle;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+
+        regs.msiCap = &msiCap;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+
+        /*
+         * determine the multMsgCap bit field by counting trailing zeros,
+         * since the number of requested MSI vectors is encoded as power of two
+         */
+        msiCap.multMsgCap = __builtin_ctz(pcieCfg->attrs->msiMmc);
+
+        status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    return status;
+}
+
+/*****************************************************************************
+ * Disable support for MSI per vector masking
+ ****************************************************************************/
+int32_t Pcie_epDisableMsiPerVecMaskCap(Pcie_Handle handle)
+{
+    int32_t status = SystemP_SUCCESS;
+    Pcie_Registers  regs;
+    Pcie_MsiCapReg msiCap;
+
+    if (handle == NULL)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        memset (&regs, 0, sizeof(regs));
+
+        regs.msiCap = &msiCap;
+
+        status = Pcie_readRegs(handle, PCIE_LOCATION_LOCAL, &regs);
+    }
+
+    if (status == SystemP_SUCCESS)
+    {
+        msiCap.pvmEn = 0;
+
+        status = Pcie_writeRegs(handle, PCIE_LOCATION_LOCAL, &regs);
     }
 
     return status;

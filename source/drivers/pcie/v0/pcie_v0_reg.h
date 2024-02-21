@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -1682,13 +1682,25 @@ typedef struct pcieRevIdReg_s {
     /** [ro] Raw image of register on read; actual value on write */
     uint32_t raw;
     /**
-     * [ro] Class Code
+     * [rw] Class Code
      *
-     * Field size: 24 bits
+     * Field size: 8 bits
      */
-    uint32_t classCode;
+    uint8_t classCode;
     /**
-     * [ro] Revision ID
+     * [rw] Sub-Class Code
+     *
+     * Field size: 8 bits
+     */
+    uint8_t subClassCode;
+    /**
+     * [rw] Programming Interface
+     *
+     * Field size: 8 bits
+     */
+    uint8_t progIntrface;
+    /**
+     * [rw] Revision ID
      *
      * Field size: 8 bits
      */
@@ -1902,7 +1914,7 @@ typedef struct pcieSubIdReg_s {
     /** [ro] Raw image of register on read; actual value on write */
     uint32_t raw;
     /**
-     * [ro] Subsystem ID
+     * [rw] Subsystem ID
      *
      * Field size: 16 bits
      */
@@ -2687,20 +2699,6 @@ typedef struct pciePMCapCtlStatReg_s {
 typedef struct pcieMsiCapReg_s {
     /** [ro] Raw image of register on read; actual value on write */
     uint32_t raw;
-    /**
-     * [rw] MSI Per Vector Masking supported
-     *
-     * Field size: 1 bit
-     *
-     */
-    uint8_t extDataEn;
-    /**
-     * [ro] Extended message data capable
-     *
-     * Field size: 1 bit
-     *
-     */
-    uint8_t extDataCap;
     /**
      * [ro] MSI Per Vector Masking supported
      *
@@ -4598,7 +4596,7 @@ typedef struct pcieCorErrMaskReg_s {
 } Pcie_CorErrMaskReg;
 
 /**
- * \brief Specification of the Advanced capabilities and control Register
+ * \brief Specification of the Advanced Error Capabilities and Control Register
  *
  * This register may be used for both endpoint and root complex modes.
  */
@@ -6745,11 +6743,9 @@ typedef struct  pciePlconfIatuRegLowerBaseReg_s {
      */
     uint32_t iatuRegLowerBase;
     /**
-     * [ro] Lower Base Address (read-only part)
-     *
-     * Field size: 12 bits (rev 1) or 16 bits (rev 2)
-     */
-    uint16_t zero;
+     * Number of bits passed from AXI address to PCIe address
+    */
+    uint16_t num_bits;
 } Pcie_PlconfIatuRegLowerBaseReg;
 
 /**
@@ -6811,13 +6807,9 @@ typedef struct  pciePlconfIatuRegLowerTargetReg_s {
      */
     uint32_t iatuRegLowerTarget;
     /**
-     * [ro] Lower Target Address (read-only part)
-     *
-     * This portion is always 0 to enforce 4K alignment or 64K
-     *
-     * Field size: 12 bits or 16 bits
-     */
-    uint16_t zero;
+     * Number of bits passed from PCIe address to AXI address
+    */
+    uint16_t num_bits;
 } Pcie_PlconfIatuRegLowerTargetReg;
 
 /**
@@ -7643,6 +7635,436 @@ typedef struct pcieTiConfDiagCtrlReg_s {
 } Pcie_TiConfDiagCtrlReg;
 
 /**
+ * \brief Specification of the User Initialization Configuration Register
+ *
+ * This register may be used for both endpoint and root complex modes.
+ *
+ */
+typedef struct pcieUserCfgInitCfgReg_s {
+    /** [ro] Raw image of register on read; actual value on write */
+    uint32_t raw;
+    /**
+     * [rw] When this bit is set to 0 in the EP mode, the Controller will generate
+     *      a CRS Completion in response to Configuration Requests.
+     *
+     * Field size: 1 bit
+     */
+    uint8_t cfgEn;
+    /**
+     * [rw] Number of VCs configured
+     *
+     * Field size: 2 bit
+     */
+    uint8_t vcCnt;
+    /**
+     * [rw] Maximum number of iterations during Direction Change Feedback Link Equalization
+     *
+     * Field size: 7 bit
+     */
+    uint8_t maxEvalItr;
+    /**
+     * [rw] When this bit is set to 1 in RC mode, Phase 2 AND Phase 3 of Link
+     *      Equalization are bypassed during link equalization.
+     *
+     * Field size: 1 bit
+     */
+    uint8_t bypassPh23;
+    /**
+     * [rw] When this bit is set to 1 in RC mode, phase 3 of link equalization is bypassed.
+     *      When this bit is set to 1 in EP mode, phase 2 of link equalization is bypassed.
+     *
+     * Field size: 1 bit
+     */
+    uint8_t bypassRmTxEQ;
+    /**
+     * [rw] Bitfield of supported presets.
+     *
+     * Field size: 11 bit
+     */
+    uint16_t suppPrst;
+    /**
+     * [rw] Disable the transmission of special DC Balance symbols in TS1 training sequences
+     *
+     * Field size: 1 bit
+     */
+    uint8_t disableGen3DcBlnc;
+    /**
+     * [rw] Enables Separate Tx and Rx Reference Clocks with Spread Spectum Clocking - SRIS Mode
+     *
+     * Field size: 1 bit
+     */
+    uint8_t srisEn;
+} Pcie_UserCfgInitCfgReg;
+
+/**
+ * \brief Specification of the User Power Management Command Register
+ *
+ * This register may be used for both endpoint and root complex modes.
+ *
+ */
+typedef struct pcieUserCfgPmCmdReg_s {
+    /** [ro] Raw image of register on read; actual value on write */
+    uint32_t raw;
+    /**
+     * [rw] Power State Change Acknolwdge
+     *
+     * Field size: 11 bit
+     */
+    uint16_t pwrStateChgAck;
+    /**
+     * [rw] Client Request L1 Substate Exit
+     *
+     * Field size: 1 bit
+     */
+    uint8_t clientReqExtL1Substate;
+    /**
+     * [rw] Client Request L1 Exit
+     *
+     * Field size: 1 bit
+     */
+    uint8_t clientReqExtL1;
+} Pcie_UserCfgPmCmdReg;
+
+/**
+ * \brief Specification of the Interrupt Config Enable Sys0 Register
+ *
+ * This register may only be used for endpoint mode.
+ *
+ */
+typedef struct pcie_IntdCfgEnSys0Reg_s{
+    /** [ro] Raw image of register on read; actual value on write */
+    uint32_t raw;
+    /**
+     * [rw] Enable downstream interrupts
+     *
+     * Field size: 1 bit
+     */
+    uint8_t dwnStrEn;
+} Pcie_IntdCfgEnSys0Reg;
+
+/**
+ * \brief Specification of the Interrupt Config Enable Sys1 Register
+ *
+ * This register may be used for both endpoint and root complex modes.
+ *
+ */
+typedef struct pcie_IntdCfgEnSys1Reg_s{
+    /** [ro] Raw image of register on read; actual value on write */
+    uint32_t raw;
+    /**
+     * [rw] Enable power management event interrupts
+     *
+     * Field size: 1 bit
+     */
+    uint8_t pwrStateEn;
+    /**
+     * [rw] Enable legacy interrupt 3 (INTD)
+     *
+     * Field size: 1 bit
+     */
+    uint8_t legacy3En;
+    /**
+     * [rw] Enable legacy interrupt 2 (INTC)
+     *
+     * Field size: 1 bit
+     */
+    uint8_t legacy2En;
+    /**
+     * [rw] Enable legacy interrupt 1 (INTB)
+     *
+     * Field size: 1 bit
+     */
+    uint8_t legacy1En;
+    /**
+     * [rw] Enable legacy interrupt 0 (INTA)
+     *
+     * Field size: 1 bit
+     */
+    uint8_t legacy0En;
+    /**
+     * [rw] Enable function level reset interrupts
+     *
+     * Field size: 1 bit
+     */
+    uint8_t flrEn;
+} Pcie_IntdCfgEnSys1Reg;
+
+/**
+ * \brief Specification of the Interrupt Config Enable Sys2 Register
+ *
+ * This register may be used for both endpoint and root complex modes.
+ *
+ */
+typedef struct pcie_IntdCfgEnSys2Reg_s{
+    /** [ro] Raw image of register on read; actual value on write */
+    uint32_t raw;
+    /**
+     * [rw] Enable PTM interrupts
+     *
+     * Field size: 1 bit
+     */
+    uint8_t ptmEn;
+    /**
+     * [rw] Enable link down interrupts
+     *
+     * Field size: 1 bit
+     */
+    uint8_t lnkStateEn;
+    /**
+     * [rw] Enable PCIe hot reset interrupts
+     *
+     * Field size: 1 bit
+     */
+    uint8_t hotRstEn;
+    /**
+     * [rw] Enable fatal error interrupts
+     *
+     * Field size: 1 bit
+     */
+    uint8_t err2En;
+    /**
+     * [rw] Enable non-fatal error interrupts
+     *
+     * Field size: 1 bit
+     */
+    uint8_t err1En;
+    /**
+     * [rw] Enable correctable error interrupts
+     *
+     * Field size: 1 bit
+     */
+    uint8_t err0En;
+    /**
+     * [rw] Enable DPA power state change interrupts
+     *
+     * Field size: 1 bit
+     */
+    uint8_t dpaEn;
+} Pcie_IntdCfgEnSys2Reg;
+
+/**
+ * \brief Specification of the Interrupt Config Status Sys0 Register
+ *
+ * This register may only be used for endpoint mode.
+ *
+ */
+typedef struct pcie_IntdCfgStatusSys0Reg_s{
+    /** [ro] Raw image of register on read; actual value on write */
+    uint32_t raw;
+    /**
+     * [rw] Downstream interrupt status
+     *
+     * Field size: 1 bit
+     */
+    uint8_t statusDwnStr;
+} Pcie_IntdCfgStatusSys0Reg;
+
+/**
+ * \brief Specification of the Interrupt Config Status Sys1 Register
+ *
+ * This register may be used for both endpoint and root complex modes.
+ *
+ */
+typedef struct pcie_IntdCfgStatusSys1Reg_s{
+    /** [ro] Raw image of register on read; actual value on write */
+    uint32_t raw;
+    /**
+     * [rw] Power management event interrupt status
+     *
+     * Field size: 1 bit
+     */
+    uint8_t statusPwrState;
+    /**
+     * [rw] Legacy interrupt 3 status (INTD)
+     *
+     * Field size: 1 bit
+     */
+    uint8_t statusLegacy3;
+    /**
+     * [rw] Legacy interrupt 2 status (INTC)
+     *
+     * Field size: 1 bit
+     */
+    uint8_t statusLegacy2;
+    /**
+     * [rw] Legacy interrupt 1 status (INTB)
+     *
+     * Field size: 1 bit
+     */
+    uint8_t statusLegacy1;
+    /**
+     * [rw] Legacy interrupt 0 status (INTA)
+     *
+     * Field size: 1 bit
+     */
+    uint8_t statusLegacy0;
+    /**
+     * [rw] Function level reset interrupt status
+     *
+     * Field size: 1 bit
+     */
+    uint8_t statusFlr;
+} Pcie_IntdCfgStatusSys1Reg;
+
+/**
+ * \brief Specification of the Interrupt Config Status Sys2 Register
+ *
+ * This register may be used for both endpoint and root complex modes.
+ *
+ */
+typedef struct pcie_IntdCfgStatusSys2Reg_s{
+    /** [ro] Raw image of register on read; actual value on write */
+    uint32_t raw;
+    /**
+     * [rw] PTM interrupt status
+     *
+     * Field size: 1 bit
+     */
+    uint8_t statusPtm;
+    /**
+     * [rw] Link down interrupt status
+     *
+     * Field size: 1 bit
+     */
+    uint8_t statusLnkState;
+    /**
+     * [rw] PCIe hot reset interrupt status
+     *
+     * Field size: 1 bit
+     */
+    uint8_t statusHotRst;
+    /**
+     * [rw] Fatal error interrupt status
+     *
+     * Field size: 1 bit
+     */
+    uint8_t statusErr2;
+    /**
+     * [rw] Non-fatal error interrupt status
+     *
+     * Field size: 1 bit
+     */
+    uint8_t statusErr1;
+    /**
+     * [rw] Correctable error interrupt status
+     *
+     * Field size: 1 bit
+     */
+    uint8_t statusErr0;
+    /**
+     * [rw] DPA power state change interrupt status
+     *
+     * Field size: 1 bit
+     */
+    uint8_t statusDpa;
+} Pcie_IntdCfgStatusSys2Reg;
+
+/**
+ * \brief Specification of the Interrupt Config Status Clear Sys2 Register
+ *
+ * This register may be used for both endpoint and root complex modes.
+ *
+ */
+typedef struct pcie_IntdCfgStatusClrSys2Reg_s{
+    /** [ro] Raw image of register on read; actual value on write */
+    uint32_t raw;
+    /**
+     * [w1c] Clear PTM interrupt
+     *
+     * Field size: 1 bit
+     */
+    uint8_t clrStatusPtm;
+    /**
+     * [w1c] Clear link down interrupt
+     *
+     * Field size: 1 bit
+     */
+    uint8_t clrStatusLnkState;
+    /**
+     * [w1c] Clear PCIe hot reset interrupt
+     *
+     * Field size: 1 bit
+     */
+    uint8_t clrStatusHotRst;
+    /**
+     * [w1c] Clear fatal error interrupt
+     *
+     * Field size: 1 bit
+     */
+    uint8_t clrStatusErr2;
+    /**
+     * [w1c] Clear non-fatal error interrupt
+     *
+     * Field size: 1 bit
+     */
+    uint8_t clrStatusErr1;
+    /**
+     * [w1c] Clear correctable error interrupt
+     *
+     * Field size: 1 bit
+     */
+    uint8_t clrStatusErr0;
+    /**
+     * [w1c] Clear DPA power state change interrupt
+     *
+     * Field size: 1 bit
+     */
+    uint8_t clrStatusDpa;
+} Pcie_IntdCfgStatusClrSys2Reg;
+
+/**
+ * \brief Specification of the Vendor Specific Control Register
+ *
+ * This register may only be used for endpoint mode.
+ *
+ */
+typedef struct pcie_VndrSpecCntrlReg_s{
+    /** [ro] Raw image of register on read; actual value on write */
+    uint32_t raw;
+    /**
+     * [rw] F0_VSEC_CONTROL_OUT
+     *
+     * Field size: 22 bit
+     */
+    uint32_t vsecCout;
+    /**
+     * [rw] Triggers downstream interrupt
+     *
+     * Field size: 1 bit
+     */
+    uint8_t hti;
+    /**
+     * [r] F0_VSEC_CONTROL_IN
+     *
+     * Field size: 8 bit
+     */
+    uint8_t vsecCin;
+} Pcie_VndrSpecCntrlReg;
+
+/**
+ * \brief Specification of the Local Management Vendor ID & Subsystem Vendor ID Register
+ *
+ * This register may be used for both endpoint and root complex modes.
+ *
+ */
+typedef struct pcie_LmVendorIdReg_s{
+    /** [ro] Raw image of register on read; actual value on write */
+    uint32_t raw;
+    /**
+     * [rw] Subsystem vendor ID
+     *
+     * Field size: 16 bit
+     */
+    uint32_t svid;
+    /**
+     * [rw] Vendor ID
+     *
+     * Field size: 16 bit
+     */
+    uint16_t vid;
+} Pcie_LmVendorIdReg;
+
+/**
  * \brief Specification all registers
  *
  * This structure allows one or more registers to be read or written
@@ -7786,11 +8208,14 @@ typedef struct pcieRegisters_s {
     Pcie_UncErrSvrtyReg              *uncErrSvrty;             /**< Uncorrectable Error Severity */
     Pcie_CorErrReg                   *corErr;                  /**< Correctable Error Status */
     Pcie_CorErrMaskReg               *corErrMask;              /**< Correctable Error Mask */
-    Pcie_AccrReg                     *accr;                    /**< Advanced Capabilities and Control*/
+    Pcie_AccrReg                     *accr;                    /**< Advanced Error Capabilities and Control */
     Pcie_HdrLogReg                   *hdrLog[4];               /**< Header Log Registers */
     Pcie_RootErrCmdReg               *rootErrCmd;              /**< Root Error Command */
     Pcie_RootErrStReg                *rootErrSt;               /**< Root Error Status */
     Pcie_ErrSrcIDReg                 *errSrcID;                /**< Error Source Identification */
+
+    /* Vendor Specific Registers */
+    Pcie_VndrSpecCntrlReg            *vndrSpecCntrl;           /**< Vendor Specific Control Register */
 
     /* Port Logic Registers */
     Pcie_PlAckTimerReg               *plAckTimer;              /**< Ack Latency Time and Replay Timer */
@@ -7868,6 +8293,29 @@ typedef struct pcieRegisters_s {
     Pcie_TiConfDebugCfgReg           *tiConfDebugCfg;          /**< PCIECTRL_TI_CONF_DEBUG_CFG*/
     Pcie_TiConfDebugDataReg          *tiConfDebugData;         /**< PCIECTRL_TI_CONF_DEBUG_DATA*/
     Pcie_TiConfDiagCtrlReg           *tiConfDiagCtrl;          /**< PCIECTRL_TI_CONF_DIAG_CTRL*/
+
+    /*****************************************************************************************
+    * User Config Registers
+    *****************************************************************************************/
+    Pcie_UserCfgInitCfgReg           *usrCfgInitCfg;           /**< PCIE_USER_CFG_INITCFG */
+    Pcie_UserCfgPmCmdReg             *usrCfgPmCmd;             /**< PCIE_USER_CFG_PMCMD */
+
+    /*****************************************************************************************
+    * PCIE_INTD CFG Registers
+    *****************************************************************************************/
+    Pcie_IntdCfgEnSys0Reg            *intCfgEnSys0Reg;         /**< PCIE_INTD_CFG_ENABLE_REG_SYS_0 */
+    Pcie_IntdCfgEnSys1Reg            *intCfgEnSys1Reg;         /**< PCIE_INTD_CFG_ENABLE_REG_SYS_1 */
+    Pcie_IntdCfgEnSys2Reg            *intCfgEnSys2Reg;         /**< PCIE_INTD_CFG_ENABLE_REG_SYS_2 */
+    Pcie_IntdCfgStatusSys0Reg        *intCfgStatusSys0Reg;     /**< PCIE_INTD_CFG_STATUS_REG_SYS_0 */
+    Pcie_IntdCfgStatusSys1Reg        *intCfgStatusSys1Reg;     /**< PCIE_INTD_CFG_STATUS_REG_SYS_1 */
+    Pcie_IntdCfgStatusSys2Reg        *intCfgStatusSys2Reg;     /**< PCIE_INTD_CFG_STATUS_REG_SYS_2 */
+    Pcie_IntdCfgStatusClrSys2Reg     *intCfgStatusClrSys2Reg;  /**< PCIE_INTD_CFG_STATUS_CLR_REG_SYS_2 */
+
+    /*****************************************************************************************
+    * PCIE_LM Registers
+    *****************************************************************************************/
+    Pcie_LmVendorIdReg           *lmVendorIdReg;        /** PCIE_CORE_LM_VENDOR_ID_REG */
+
 } Pcie_Registers;
 
 
