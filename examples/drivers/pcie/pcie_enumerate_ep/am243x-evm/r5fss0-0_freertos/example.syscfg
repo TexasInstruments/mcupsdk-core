@@ -50,6 +50,8 @@ pcie1.gen                  = "PCIE_GEN2";
 pcie1.vendorId             = "0x17cd";
 pcie1.subSysVendorId       = "0x17cd";
 pcie1.deviceId             = "0x0100";
+pcie1.classCode            = "0xff";
+pcie1.subClassCode         = "0xff";
 pcie1.msiMmc               = "16";
 pcie1.operMode             = "PCIE_EP_MODE";
 pcie1.ibAtu.create(3);

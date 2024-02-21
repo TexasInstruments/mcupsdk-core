@@ -454,6 +454,7 @@ int32_t Pcie_onLinkDetect(Pcie_Handle handle)
     int32_t status  = SystemP_SUCCESS;
     Pcie_Gen gen;
     uint32_t numLanes;
+    static int requireConfigure = 1;
 
     /* Get negotiated PCIe Link Parameter */
     status = Pcie_getLinkParams(handle, &gen, &numLanes);
@@ -467,13 +468,22 @@ int32_t Pcie_onLinkDetect(Pcie_Handle handle)
     /* set slot clock configuration bit - we're using the connector's reference clock */
     if (status == SystemP_SUCCESS)
     {
-        status = Pcie_setSlotClockCnfg(handle, 1);
-    }
+        if (requireConfigure)
+        {
+            status = Pcie_setSlotClockCnfg(handle, 1);
 
-    if (status == SystemP_SUCCESS)
-    {
-        /* Configure Endpoint */
-        status = Pcie_cfgEP(handle);
+            if (status == SystemP_SUCCESS)
+            {
+                /* Configure Endpoint */
+                status = Pcie_cfgEP(handle);
+            }
+
+            if (status == SystemP_SUCCESS)
+            {
+                /* This configuration is only necessary once after power-up */
+                requireConfigure = 0;
+            }
+        }
     }
 
     return status;
