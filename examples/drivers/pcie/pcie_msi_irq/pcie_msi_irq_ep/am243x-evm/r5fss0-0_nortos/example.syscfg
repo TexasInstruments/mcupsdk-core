@@ -54,10 +54,11 @@ pcie1.obAtu[0].$name       = "OB_ATU_CFG0";
 pcie1.obAtu[0].lowerBase   = "0x68000000UL + 0x01000000U";
 pcie1.obAtu[0].lowerTarget = "0x90000000";
 pcie1.obAtu[0].regIndex    = 0;
+pcie1.obAtu[0].windowSize  = 0xfff;
 pcie1.obAtu[1].$name       = "OB_ATU_CFG1";
 pcie1.obAtu[1].lowerBase   = "0x68000000UL + 0x02000000U";
 pcie1.obAtu[1].lowerTarget = "0x2000000";
-pcie1.obAtu[1].windowSize  = 0xFFFF;
+pcie1.obAtu[1].windowSize  = 0xff;
 
 debug_log.enableUartLog        = true;
 debug_log.uartLog.$name        = "CONFIG_UART_CONSOLE";

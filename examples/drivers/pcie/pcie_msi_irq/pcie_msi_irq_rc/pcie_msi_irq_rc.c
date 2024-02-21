@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -48,7 +48,7 @@ uint32_t dst_buf[BUF_SIZE]  __attribute__((aligned(4096)));
 
 /* MSI interrupt number */
 /* This is the interrupt number identified by the 5bit LSB of MSI data send from EP to RC */
-#define MSI_IRQ_NUM         (5u)
+#define MSI_IRQ_NUM         (0u)
 
 static SemaphoreP_Object gBufTransDoneSem;
 
@@ -106,7 +106,6 @@ void pcie_msi_irq_rc_main (void *args)
         {
             DebugP_logError ("Unable to read Endpoint Device & Vendor ID\r\n");
         }
-
     }
 
     /* Register ISR and Enable MSI */
@@ -126,8 +125,8 @@ void pcie_msi_irq_rc_main (void *args)
         Pcie_MsiParams msiParams;
 
         msiParams.enable = 1;
-        msiParams.data = 0xC0DE0000;
-        msiParams.loAddr = 0x2000000U;
+        msiParams.data = 0x00005a00;
+        msiParams.loAddr = 0x20000fcU;
         msiParams.upAddr = 0x0U;
 
         status = Pcie_rcEnableMSI (gPcieHandle[CONFIG_PCIE0], CONFIG_PCIE0, msiParams);

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -45,7 +45,7 @@
 
 /* MSI interrupt number */
 /* This is the interrupt number identified by the 5bit LSB of MSI data send from EP to RC */
-#define MSI_IRQ_NUM         (5u)
+#define MSI_IRQ_NUM         (0u)
 
 uint32_t dst_buf[BUF_SIZE]  __attribute__((aligned(4096)));
 
@@ -66,12 +66,31 @@ void pcie_msi_irq_ep_main (void *args)
     int32_t status;
     Pcie_MsiParams msiParams;
     Pcie_sendMsiParams params;
+    Pcie_Registers regs;
+    Pcie_StatusCmdReg statusCmd;
+
     uint32_t i;
 
     Drivers_open();
     Board_driversOpen();
 
     DebugP_log("Device in EP mode\r\n");
+
+    /* Configure End Point */
+    status = Pcie_cfgEP(gPcieHandle[CONFIG_PCIE0]);
+
+    DebugP_assert(SystemP_SUCCESS == status);
+
+    /* enable memory space and bus master in EP */
+    memset (&regs,      0, sizeof(regs));
+    memset (&statusCmd, 0, sizeof(statusCmd));
+    regs.statusCmd = &statusCmd;
+    statusCmd.memSp = 1;
+    statusCmd.busMs = 1;
+
+    status = Pcie_writeRegs (gPcieHandle[CONFIG_PCIE0], PCIE_LOCATION_LOCAL, &regs);
+
+    DebugP_assert (status == SystemP_SUCCESS);
 
     Pcie_bufInit();
 
@@ -99,11 +118,11 @@ void pcie_msi_irq_ep_main (void *args)
         /* Send MSI to RC */
         if (status == SystemP_SUCCESS && msiParams.enable == 1)
         {
-            params.addr = CONFIG_PCIE0_OB_REGION1_LOWER;
+            params.addr = CONFIG_PCIE0_OB_REGION1_LOWER + 0xfc;
             params.data = msiParams.data;
             params.intNum = MSI_IRQ_NUM;
 
-            status = Pcie_epSendMsiIrq(gPcieHandle[CONFIG_PCIE0], MSI_IRQ_NUM, params);
+            status = Pcie_epSendMsiIrq(gPcieHandle[CONFIG_PCIE0], params);
 
             if(status != SystemP_SUCCESS)
             {
