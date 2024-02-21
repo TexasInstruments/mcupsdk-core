@@ -1015,8 +1015,6 @@ static int32_t UART_writeInterrupt(UART_Object *object,
     {
         status             = SystemP_SUCCESS;
         trans->status      = UART_TRANSFER_STATUS_SUCCESS;
-        trans->count       = 0U;
-        object->prms.writeCallbackFxn(object, object->writeTrans);
         object->writeTrans = NULL;
     }
     else
@@ -1045,7 +1043,7 @@ static int32_t UART_writeInterrupt(UART_Object *object,
                  trans->status = UART_TRANSFER_STATUS_TIMEOUT;
                  UART_writeCancelNoCB(object, attrs);
                  /*
-                  * Reset the current transaction pointer so that 
+                  * Reset the current transaction pointer so that
                   * application can start another transfer.
                   */
                  object->writeTrans = NULL;
@@ -1154,7 +1152,7 @@ static int32_t UART_readInterrupt(UART_Config    *config,
             trans->status = UART_TRANSFER_STATUS_TIMEOUT;
             UART_readCancelNoCB(object, attrs);
             /*
-             * Reset the current transaction pointer so that 
+             * Reset the current transaction pointer so that
              * application can start another transfer.
              */
             object->readTrans = NULL;
