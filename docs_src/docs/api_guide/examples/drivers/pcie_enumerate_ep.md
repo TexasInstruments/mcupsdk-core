@@ -85,15 +85,19 @@ driver has been tested on the following hardware:
 On the Windows target system, the following software needs to be installed:
 - Windows 10 22H2
 - WDK for windows 10, version 2004
+  https://learn.microsoft.com/en-us/windows-hardware/drivers/other-wdk-downloads
+- Windows SDK 10.0.19041.685
+  https://developer.microsoft.com/en-us/windows/downloads/sdk-archive/
 - Microsoft Visual C++ Redistributable from
   https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170#visual-studio-2015-2017-2019-and-2022
-
 
 In order to build the Windows driver that runs on the RC to talk to the
 EP, the following software needs to be installed:
 
 - WDK for windows 10, version 2004
+  https://learn.microsoft.com/en-us/windows-hardware/drivers/other-wdk-downloads
 - Windows SDK 10.0.19041.685
+  https://developer.microsoft.com/en-us/windows/downloads/sdk-archive/
 - Visual Studio 2019 (Professional or Community edition)
   - spectre mitigation libraries need to be added as an individual
     component using Visual Studio's installer
@@ -104,7 +108,7 @@ EP, the following software needs to be installed:
 
 On the Linux target system, the following distributions and versions have
 been tested:
-- Ubuntu 22.04 with Kernel 5.15 TODO
+- Ubuntu 20.04 with Kernel 5.15.0-91-generic
 - Debian 12 with Kernel 6.1.0-10-amd64
 
 The Linux kernel needs to include the following configuration options:
@@ -173,6 +177,13 @@ At this point, different instructions apply to Windows and Linux based RC system
 
 #### Building for Windows
 
+Before trying to build the ti-sample-kmdf driver, make sure that your
+Visual Studio installation and Microsoft's SDK are all correctly installed
+by trying to build a template KMDF driver according to Microsoft's
+instructions:
+
+https://learn.microsoft.com/en-us/windows-hardware/drivers/gettingstarted/writing-a-kmdf-driver-based-on-a-template
+
 The ti-sample-kmdf solution contains two projects, the kernel mode driver
 ti-sample-kmdf and a console application ti-sample-console.
 Both projects can be built by opening the ti-sample-kmdf solution in
@@ -188,6 +199,15 @@ The build output will be located in a new folder "x64\\Release" below the
 solution directory (ti-sample-kmdf\\x64\\Release).
 
 #### Deploying on Windows
+
+The following files from the build output folder need to be copied to
+the target machine:
+
+- ti-sample-kmdf.inf
+- ti-sample-kmdf.sys
+- ti-sample-kmdf.cat
+- ti-sample-kmdf.cer
+- ti-sample-console.exe
 
 Windows by default only accepts signed drivers. An installation can be
 modified to accept socalled test signed drivers. The Windows KMDF sample
@@ -374,7 +394,7 @@ to the IOCTL with the data sent back via DMA.
 
   Running the sample application puts the device from D3hot into D0 state.
   The application outputs further state changes while the sample executes
-  until finally the EP is put back into D3hot state:
+  until finally the EP is put back into D3hot state.
 
   See below for what the output should look like when executing the Linux
   example.
@@ -513,7 +533,7 @@ clock is available and configure the rest of the PCIe EP. In order to
 avoid a race condition with the RC which might be trying to enumerate the
 EP as soon as a link is established, the EP driver configures the device to respond
 with CRS completions (configuration request retry status) to config
-requests until the EP finished initialization, at which point #PcieTODO
+requests until the EP finished initialization, at which point #Pcie_cfgEP()
 is called to enable the EP to properly respond to configuration requests.
 
 The PCIe specification calls for system software (x86 BIOS) to wait at
