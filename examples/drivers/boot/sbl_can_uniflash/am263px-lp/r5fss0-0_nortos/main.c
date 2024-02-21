@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -33,12 +33,15 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <drivers/bootloader.h>
+#include <drivers/hsmclient.h>
 #include <drivers/bootloader/bootloader_can.h>
 #include <drivers/bootloader/bootloader_uniflash.h>
 #include <drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
     = HSMRT_IMG;
+
+extern HsmClient_t gHSMClient ;
 
 #define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x1C0000) /* This has to match the size of MSRAM1 section in linker.cmd */
 uint8_t gUniflashFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
@@ -57,6 +60,15 @@ void loop_forever()
     volatile uint32_t loop = 1;
     while(loop)
         ;
+}
+
+/*  this API is a weak function definition for keyring_init function
+    which is defined in generated files if keyring module is enabled
+    in syscfg
+*/
+__attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
+{
+    return SystemP_SUCCESS;
 }
 
 void mcanEnableTransceiver(void)
@@ -90,8 +102,11 @@ int main()
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     DebugP_log("\r\n");
-    Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+
+    status = Keyring_init(&gHSMClient);
+    DebugP_assert(status == SystemP_SUCCESS);
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);

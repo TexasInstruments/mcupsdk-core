@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -37,6 +37,7 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <drivers/bootloader.h>
+#include <drivers/hsmclient.h>
 #include <drivers/bootloader/bootloader_xmodem.h>
 #include <drivers/hsmclient/soc/am273x/hsmRtImg.h> /* hsmRt bin   header file */
 
@@ -63,6 +64,15 @@ void loop_forever(void)
         ;
 }
 
+/*  this API is a weak function definition for keyring_init function
+    which is defined in generated files if keyring module is enabled
+    in syscfg
+*/
+__attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
+{
+    return SystemP_SUCCESS;
+}
+
 int main(void)
 {
     int32_t status;
@@ -75,7 +85,10 @@ int main(void)
 
     System_init();
     Drivers_open();
-    Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+
+    status = Keyring_init();
+    DebugP_assert(status == SystemP_SUCCESS);
 
     /* Initialize the DSP Core and DSS L3 Memory. */
     Bootloader_BootImageInfo_init(&bootImageInfo);

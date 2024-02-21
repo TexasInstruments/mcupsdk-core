@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -35,9 +35,12 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <drivers/bootloader.h>
+#include <drivers/hsmclient.h>
 #include <drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
+
+extern HsmClient_t gHSMClient ;
 
 extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
 
@@ -55,6 +58,15 @@ void loop_forever(void)
         ;
 }
 
+/*  this API is a weak function definition for keyring_init function
+    which is defined in generated files if keyring module is enabled
+    in syscfg
+*/
+__attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
+{
+    return SystemP_SUCCESS;
+}
+
 int main(void)
 {
     int32_t status;
@@ -70,9 +82,12 @@ int main(void)
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     DebugP_log("\r\n");
-    Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_socInitL2MailBoxMemory();
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+
+    status = Keyring_init(&gHSMClient);
+    DebugP_assert(status == SystemP_SUCCESS);
 
     DebugP_log("Starting OSPI Bootloader ... \r\n");
 

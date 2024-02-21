@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -35,10 +35,13 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <drivers/bootloader.h>
+#include <drivers/hsmclient.h>
 #include <drivers/hsmclient/soc/am273x/hsmRtImg.h> /* hsmRt bin   header file */
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
     = HSMRT_IMG;
+
+extern HsmClient_t gHSMClient ;
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -49,6 +52,24 @@ void loop_forever(void)
     volatile uint32_t loop = 1;
     while(loop)
         ;
+}
+
+/*  this API is a weak function definition for keyring_init function
+    which is defined in generated files if keyring module is enabled
+    in syscfg
+*/
+__attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
+{
+    return SystemP_SUCCESS;
+}
+
+/*  this API is a weak function definition for keyring_init function
+    which is defined in generated files if keyring module is enabled
+    in syscfg
+*/
+__attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
+{
+    return SystemP_SUCCESS;
 }
 
 int main(void)
@@ -65,8 +86,11 @@ int main(void)
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     DebugP_log("\r\n");
-    Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+
+    status = Keyring_init(&gHSMClient);
+    DebugP_assert(status == SystemP_SUCCESS);
 
     DebugP_log("Starting QSPI Bootloader ... \r\n");
 

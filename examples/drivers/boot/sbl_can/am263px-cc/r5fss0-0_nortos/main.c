@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -33,6 +33,7 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <drivers/bootloader.h>
+#include <drivers/hsmclient.h>
 #include <drivers/bootloader/bootloader_can.h>
 #include <drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
 
@@ -45,6 +46,8 @@ uint8_t gAppImageBuf[BOOTLOADER_APPIMAGE_MAX_FILE_SIZE] __attribute__((aligned(1
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
     = HSMRT_IMG;
+
+extern HsmClient_t gHSMClient ;
 
 uint32_t gRunApp;
 
@@ -59,6 +62,15 @@ void loop_forever()
         ;
 }
 
+/*  this API is a weak function definition for keyring_init function
+    which is defined in generated files if keyring module is enabled
+    in syscfg
+*/
+__attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
+{
+    return SystemP_SUCCESS;
+}
+
 int main()
 {
     int32_t status;
@@ -71,9 +83,12 @@ int main()
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");
 
-    Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_socInitL2MailBoxMemory();
     DebugP_log("\r\n");
+
+    status = Keyring_init(&gHSMClient);
+    DebugP_assert(status == SystemP_SUCCESS);
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);

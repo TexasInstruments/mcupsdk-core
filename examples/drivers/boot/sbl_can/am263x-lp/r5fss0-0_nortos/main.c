@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -37,6 +37,7 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <drivers/bootloader.h>
+#include <drivers/hsmclient.h>
 #include <drivers/bootloader/bootloader_can.h>
 #include <drivers/hsmclient/soc/am263x/hsmRtImg.h> /* hsmRt bin   header file */
 #include <drivers/gpio.h>
@@ -51,6 +52,8 @@ uint8_t gAppImageBuf[BOOTLOADER_APPIMAGE_MAX_FILE_SIZE] __attribute__((aligned(1
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
     = HSMRT_IMG;
 
+extern HsmClient_t gHSMClient ;
+
 uint32_t gRunApp;
 
 /* call this API to stop the booting process and spin, do that you can connect
@@ -62,6 +65,15 @@ void loop_forever()
     volatile uint32_t loop = 1;
     while(loop)
         ;
+}
+
+/*  this API is a weak function definition for keyring_init function
+    which is defined in generated files if keyring module is enabled
+    in syscfg
+*/
+__attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
+{
+    return SystemP_SUCCESS;
 }
 
 void mcanEnableTransceiver(void)
@@ -89,8 +101,12 @@ int main()
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");
 
-    Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_socInitL2MailBoxMemory();
+
+    status = Keyring_init(&gHSMClient);
+    DebugP_assert(status == SystemP_SUCCESS);
+
     DebugP_log("\r\n");
     DebugP_log("Starting CAN Bootloader...");
 
