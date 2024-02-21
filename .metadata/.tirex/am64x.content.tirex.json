@@ -6605,6 +6605,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Pcie Enumerate Ep Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "pcie_enumerate_ep",
+        "location": "../../examples/drivers/pcie/pcie_enumerate_ep/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "pcie",
+            "pcie_enumerate_ep",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Pcie Legacy Irq Ep Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "pcie_legacy_irq_ep",
         "location": "../../examples/drivers/pcie/pcie_legacy_irq/pcie_legacy_irq_ep/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

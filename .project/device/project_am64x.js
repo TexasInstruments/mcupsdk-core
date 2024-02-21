@@ -121,6 +121,7 @@ const example_file_list = [
     "examples/drivers/pcie/pcie_benchmark/pcie_benchmark_rc/.project/project.js",
     "examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_ep/.project/project.js",
     "examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_rc/.project/project.js",
+    "examples/drivers/pcie/pcie_enumerate_ep/.project/project.js",
     "examples/drivers/pcie/pcie_legacy_irq/pcie_legacy_irq_ep/.project/project.js",
     "examples/drivers/pcie/pcie_legacy_irq/pcie_legacy_irq_rc/.project/project.js",
     "examples/drivers/pcie/pcie_msi_irq/pcie_msi_irq_ep/.project/project.js",
