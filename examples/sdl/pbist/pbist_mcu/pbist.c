@@ -500,8 +500,22 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
             DebugP_log(" PBIST complete for MSS_L2_5\r\n");
             DebugP_log(" PBIST complete for TPCC\r\n");
             DebugP_log(" PBIST complete for OSPI\r\n");
+            DebugP_log(" PBIST complete for R5SS0 CPU0 RL2 \r\n");
+            DebugP_log(" PBIST complete for R5SS0 CPU1 RL2 \r\n");
+            DebugP_log(" PBIST complete for R5SS1 CPU0 RL2 \r\n");
+            DebugP_log(" PBIST complete for R5SS1 CPU1 RL2 \r\n");
+            DebugP_log(" PBIST complete for MSS R5SS0 C0\r\n");
+            DebugP_log(" PBIST complete for MSS R5SS0 C1\r\n");
             DebugP_log(" PBIST complete for MSS R5SS1 C0\r\n");
             DebugP_log(" PBIST complete for MSS R5SS1 C1\r\n");
+            DebugP_log(" PBIST complete for MSS MMCH0\r\n");
+            DebugP_log(" PBIST complete for MSS MMCH1\r\n");
+            DebugP_log(" PBIST complete for MSS CR5B R5FSS0 ATCM0\r\n");
+            DebugP_log(" PBIST complete for MSS CR5B R5FSS1 ATCM0\r\n");
+            DebugP_log(" PBIST complete for MSS CR5B R5FSS0 BTCM0\r\n");
+            DebugP_log(" PBIST complete for MSS CR5B R5FSS1 BTCM0\r\n");
+            DebugP_log(" PBIST complete for MSS R5FSS1 VIM0\r\n");
+            DebugP_log(" PBIST complete for MSS R5FSS1 VIM1\r\n");
         }
         if (testResult == SDL_PASS)
         {
@@ -519,8 +533,16 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
     {
         if (instanceId == SDL_PBIST_INST_TOP)
         {
-            DebugP_log(" PBIST failure Insertion test complete for TOP BIST\r\n");
+            DebugP_log("PBIST failure Insertion test complete for TOP BIST\r\n");
             DebugP_log("PBIST Failure Insertion Test completed in %d micro secs \r\n", (uint32_t)diffTime );
+        }
+    }
+    if((status == SDL_PASS) && (testType == SDL_PBIST_TEST))
+    {
+        if (instanceId == SDL_PBIST_INST_TOP)
+        {
+            DebugP_log("PBIST test complete for TOP BIST\r\n");
+            DebugP_log("PBIST test completed in %d micro secs \r\n", (uint32_t)diffTime );
         }
     }
 #endif
@@ -536,6 +558,19 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
         {
             DebugP_log(" PBIST failure Insertion test complete for DSP BIST\r\n");
             DebugP_log("PBIST Failure Insertion Test completed in %d micro secs \r\n", (uint32_t)diffTime );
+        }
+    }
+    if((status == SDL_PASS) && (testType == SDL_PBIST_TEST))
+    {
+        if (instanceId == SDL_PBIST_INST_TOP)
+        {
+            DebugP_log("PBIST test complete for TOP BIST\r\n");
+            DebugP_log("PBIST test completed in %d micro secs \r\n", (uint32_t)diffTime );
+        }
+        else if (instanceId == SDL_PBIST_INST_DSS)
+        {
+            DebugP_log("PBIST test complete for DSP BIST\r\n");
+            DebugP_log("PBIST test completed in %d micro secs \r\n", (uint32_t)diffTime );
         }
     }
 #endif

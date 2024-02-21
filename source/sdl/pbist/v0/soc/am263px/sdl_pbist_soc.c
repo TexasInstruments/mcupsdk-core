@@ -197,8 +197,8 @@ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[1] =
                 .override           = 0x0u,
                 /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
                 /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
-                .algorithmsBitMap   = 1u,
-                .memoryGroupsBitMap = 2u,  /* Choose PBISTROM */
+                .algorithmsBitMap   = 4u,
+                .memoryGroupsBitMap = 14u,  /* Choose PBISTROM */
                 .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
             },
             {
@@ -258,20 +258,20 @@ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[1] =
                 .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
             },
             {
-            .override           = 0x0u,
-            /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
-            /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
-            .algorithmsBitMap   = 7u,
-            .memoryGroupsBitMap = 23u,  /* Choose MSS_L2_1 */
-                            .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 23u,  /* Choose MSS_L2_1 */
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
             },
             {
-            .override           = 0x0u,
-            /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
-            /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
-            .algorithmsBitMap   = 7u,
-            .memoryGroupsBitMap = 24u,  /* Choose MSS_L2_2 */
-            .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 24u,  /* Choose MSS_L2_2 */
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
             },
             {
                 .override           = 0x0u,
@@ -318,7 +318,7 @@ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[1] =
                 /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
                 /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
                 .algorithmsBitMap   = 7u,
-                .memoryGroupsBitMap = 17u,  /* Choose MSS R5SS1 C0*/
+                .memoryGroupsBitMap = 32u,  /* Choose MSS R5SS0 CPU0 RL2 */
                 .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
             },
             {
@@ -326,7 +326,119 @@ static SDL_pbistInstInfo SDL_PBIST_InstInfoArray[1] =
                 /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
                 /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
                 .algorithmsBitMap   = 7u,
-                .memoryGroupsBitMap = 18u,  /* Choose MSS R5SS1 C1*/
+                .memoryGroupsBitMap = 33u,  /* Choose MSS R5SS0 CPU1 RL2 */
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+            },
+            {
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 36u,  /* Choose MSS R5SS1 CPU0 RL2 */
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+            },
+            {
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 37u,  /* Choose MSS R5SS1 CPU1 RL2 */
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+            },
+            {
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 47u,  /* Choose MSS R5SS0 C0*/
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+            },
+            {
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 48u,  /* Choose MSS R5SS0 C1*/
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+            },
+            {
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 49u,  /* Choose MSS R5SS1 C0*/
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+            },
+            {
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 50u,  /* Choose MSS R5SS1 C1*/
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+            },
+                        {
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 51u,  /* Choose MSS MMCH0*/
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+            },
+            {
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 52u,  /* Choose MSS MMCH1*/
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+            },
+            {
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 43u,  /* Choose MSS CR5B ATCM0 R5SS0 */
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+            },
+            {
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 44u,  /* Choose MSS CR5B ATCM0 R5SS1*/
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+            },
+            {
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 45u,  /* MSS CR5B BTCM0 R5SS0*/
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+            },
+            {
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 46u,  /* Choose MSS CR5B BTCM0 R5SS1*/
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+            },
+            {
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 34u,  /* Choose MSS R5SS1 VIM0*/
+                .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
+            },
+            {
+                .override           = 0x0u,
+                /* Override bit set to 0 to use memoryGroupsBitMap & algorithmsBitMap */
+                /* NOTE: As the MCU R5f is running this code override bit cannot be set to enable all memory test */
+                .algorithmsBitMap   = 7u,
+                .memoryGroupsBitMap = 35u,  /* Choose MSS R5SS1 VIM1*/
                 .scrambleValue      = 0xFEDCBA9876543210U,  /* Scramble Value */
             },
         },

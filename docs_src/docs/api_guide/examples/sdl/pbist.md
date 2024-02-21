@@ -121,7 +121,7 @@ PBIST Application
 PBIST Failure Insertion Test completed in 47 micro secs
 
  Starting PBIST test on TOP PBIST
- PBIST complete for R5 STC
+PBIST complete for R5 STC
  PBIST complete for R51 STC
  PBIST complete for R50 TMU1
  PBIST complete for R50 TMU2
@@ -150,10 +150,27 @@ PBIST Failure Insertion Test completed in 47 micro secs
  PBIST complete for MSS_L2_5
  PBIST complete for TPCC
  PBIST complete for OSPI
+ PBIST complete for R5SS0 CPU0 RL2
+ PBIST complete for R5SS0 CPU1 RL2
+ PBIST complete for R5SS1 CPU0 RL2
+ PBIST complete for R5SS1 CPU1 RL2
+ PBIST complete for MSS R5SS0 C0
+ PBIST complete for MSS R5SS0 C1
  PBIST complete for MSS R5SS1 C0
  PBIST complete for MSS R5SS1 C1
+ PBIST complete for MSS MMCH0
+ PBIST complete for MSS MMCH1
+ PBIST complete for MSS CR5B R5FSS0 ATCM0
+ PBIST complete for MSS CR5B R5FSS1 ATCM0
+ PBIST complete for MSS CR5B R5FSS0 BTCM0
+ PBIST complete for MSS CR5B R5FSS1 BTCM0
+ PBIST complete for MSS R5FSS1 VIM0
+ PBIST complete for MSS R5FSS1 VIM1
+
 
  All tests have passed.
+ PBIST test complete for TOP BIST
+ PBIST test completed in 8715 micro secs
 
 \endcode
 \endcond
