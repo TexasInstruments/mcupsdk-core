@@ -11,6 +11,9 @@ const driverVer = {
     "adc_sc": {
         version: "v2",
     },
+    "adc_extCh": {
+        version: "v2",
+    },
     "bootloader": {
         version: "v0",
     },
@@ -89,6 +92,7 @@ const topModules_main = [
     "/drivers/adc/adc",
     "/drivers/adc/adc_r",
     "/drivers/adc/adc_sc",
+    "/drivers/adc/adc_extCh",
     "/drivers/bootloader/bootloader",
     "/drivers/cmpss/cmpss",
     "/drivers/dac/dac",
