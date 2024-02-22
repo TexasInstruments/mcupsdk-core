@@ -51,7 +51,6 @@ pcie1.ibAtu[0].lowerBase   = "0x70000000";
 pcie1.ibAtu[0].externs     = "extern uint8_t dst_buf[];";
 pcie1.ibAtu[0].lowerTarget = "(uint32_t)dst_buf";
 pcie1.ibAtu[0].barAperture = "64M";
-pcie1.ibAtu[0].windowSize  = 0x3FFFFFF;
 
 debug_log.enableUartLog        = true;
 debug_log.uartLog.$name        = "CONFIG_UART_CONSOLE";
