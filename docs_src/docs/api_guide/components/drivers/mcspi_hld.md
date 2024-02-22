@@ -118,6 +118,11 @@ value specified in the hardware attributes.
 If rxBuf is NULL, the driver discards all MCSPI frames received. #MCSPI_transfer()
 of a MCSPI transaction is performed atomically.
 
+NOTE: The size of txBuf and RxBuf must be greater than the data size bits, if data size
+is not a multiple of 8 bits. Mask the data size bits in txBuf and rxBuf as the
+remaining bits will be discarded. For example, consider datasize = 18 bits then
+txBuf and rxBuf size should be uint32_t and the mask bits should be 0x3FFFF.
+
 @warning The use of NULL as a sentinel txBuf or rxBuf value to determine
 whether the MCSPI transaction includes a tx or rx component implies
 that it is not possible to perform a transmit or receive transfer

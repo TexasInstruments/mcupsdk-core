@@ -65,6 +65,11 @@ In multichannel mode connected to multiple external devices,
 the MCSPI exchanges data with one MCSPI device at a time and FIFO is enabled
 per each channel at a time.
 
+NOTE: The size of txBuf and RxBuf must be greater than the data size bits, if data size
+is not a multiple of 8 bits. Mask the data size bits in txBuf and rxBuf as the
+remaining bits will be discarded. For example, consider datasize = 18 bits then
+txBuf and rxBuf size should be uint32_t and the mask bits should be 0x3FFFF.
+
 ## Important Usage Guidelines
 
 - The MCSPI protocol does not account for a built-in handshaking mechanism
