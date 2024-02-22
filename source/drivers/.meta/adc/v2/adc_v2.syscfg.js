@@ -143,7 +143,7 @@ function extChanOnChange (inst, ui){
 config = config.concat([
     {
         name        : "enableTDMA",
-        displayName : "Enable alternate timings (tDMA)",
+        displayName : "Enable Alternate Timings (tDMA)",
         longDescription : 'This option enables the alternate timings (tDMA) for DMA trigger. When enabled the DMA is always triggered at tDMA regardless of whether the ADC is in early interrupt mode or late interrupt mode.',
         hidden      : false,
         default     : true,
@@ -198,7 +198,7 @@ config = config.concat([
     },
 ])
 
-var repeatermoduledescription ='The ADC contains two trigger repeater modules. These modules can select any of the regular ADC triggers that are selectable by Trigger, and generate a number of repeat pulses as configured in Count field. Each repeater module can apply four types of trigger modifications: oversampling, undersampling, phase delay and re-trigger spread.The ADC trigger repeater module is shown here: ![an offline image](../../driverlib/.meta/adc/docs/adcrepeater.png)'
+var repeatermoduledescription ='The ADC contains two trigger repeater modules. These modules can select any of the regular ADC triggers that are selectable by Trigger, and generate a number of repeat pulses as configured in Count field. Each repeater module can apply four types of trigger modifications: oversampling, undersampling, phase delay and re-trigger spread.The ADC trigger repeater module is shown here: ![an offline image](../source/drivers/.meta/adc/images/adcrepeater.png)'
 var repeatermodedescription ='In oversampling mode, the repeater module passes the initial trigger through to the output. As soon as all SOCs configured to receive the trigger are in progress or completed, it issues the trigger again. The process repeats until the configured number of trigger pulses (NSEL + 1) have been issued.In undersampling mode, the repeater module passes the initial trigger through to the output, and then blocks subsequent triggers until it has received the configured number of trigger pulses (NSEL + 1). The result is that only 1 in every (NSEL + 1) pulses passes through to the output.'
 var repeaterphasedescription = 'The repeater module can delay the initial trigger by a specified number of SYSCLK cycles. The phase delay does not affect the timing between subsequent repeated oversampled triggers—it only delays the initial trigger.'
 var repeaterspreaddescription = 'If additional time between samples is desired, the application may configure SPREAD equal to the number of SYSCLK cycles desired between samples.'
@@ -228,18 +228,7 @@ for(var rptrIndex in device_peripheral.ADC_RepInstance)
                     displayName :  "Trigger",
                     description : 'Select the trigger source for this Repeater',
                     default     : "ADC_TRIGGER_SW_ONLY",
-                    options     : /*device_driverlib_peripheral.ADC_Trigger,*/ (inst)=>
-                    {
-                        var triggeroptions=[]
-                        for (var option of device_peripheral.ADC_Trigger)
-                        {
-                            if (!["ADC_TRIGGER_REPEATER1","ADC_TRIGGER_REPEATER2",].includes(option.name))
-                            {
-                                triggeroptions.push({name:option.name, displayName: option.displayName})
-                            }
-                        }
-                        return triggeroptions;
-                    },
+                    options     : device_peripheral.ADC_Trigger,
 
                 },
                 {
@@ -439,14 +428,14 @@ for (let ppbi = 1; ppbi <= 4; ppbi++)
         // ADC_setPPBShiftValue, shiftVal
         {
             name: "ppb" + ppbi.toString() + "Rightshift",
-            displayName: "PPB" + ppbi.toString() + "Number of Bits to Right Shift PSUM",
+            displayName: "PPB" + ppbi.toString() + "Bits To Right Shift PSUM",
             description: "Select number of bits to right shift PSUM before loading to final PPB SUM",
             default: 0,
         },
         // ADC_enablePPBAbsoluteValue, AbsVal
         {
             name: "ppb" + ppbi.toString() + "AbsValue",
-            displayName: "PPB" + ppbi.toString() + "Calculate absolute value",
+            displayName: "PPB" + ppbi.toString() + "Calculate Absolute Value",
             description: "This function enables absolute value capability in the PPB",
             default: false,
         },

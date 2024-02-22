@@ -109,7 +109,7 @@ sftyINT_configs = sftyINT_configs.concat([
     },
     {
         name            : "eventInterruptSource",
-        displayName     : "Select source for interrupt",
+        displayName     : "Select Source For Interrupt",
         description     : 'Each ADC result safety checker tile can generate an interrupt signal from out-of-tolerance (OOT) flag and result overflow flags OVF1 and OVF2',
         hidden          : true,
         minSelections   : 0,
@@ -120,7 +120,7 @@ sftyINT_configs = sftyINT_configs.concat([
     {
         name            : "enableEvent",
         displayName     : "Enable Event",
-        description     : 'safety checker tiles can generate events that can be sent to the X-BAR, so that automatic hardware actions such as an ePWM trip can be generated',
+        description     : 'Safety checker tiles can generate events that can be sent to the X-BAR, so that automatic hardware actions such as an ePWM trip can be generated',
         longDescription : '',
         hidden          : false,
         minSelections   : 0,
