@@ -178,6 +178,7 @@ typedef enum
 //
 //! Values that can be passed to EPWM_setSyncInPulseSource() as the \e mode
 //! parameter.
+//! Note : ECAPx_SYNCOUT for x in [10,15] are not applicable for AM263x.
 //
 //*****************************************************************************
 typedef enum
@@ -268,6 +269,18 @@ typedef enum
     EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_ECAP8 = 0x48,
     //! Sync-in source is ECAP9 sync-out signal
     EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_ECAP9 = 0x49,
+    //! Sync-in source is ECAP10 sync-out signal. Note : these are not applicable for AM263x.
+    EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_ECAP10 = 0x4A,
+    //! Sync-in source is ECAP11 sync-out signal. Note : these are not applicable for AM263x.
+    EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_ECAP11 = 0x4B,
+    //! Sync-in source is ECAP12 sync-out signal. Note : these are not applicable for AM263x.
+    EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_ECAP12 = 0x4C,
+    //! Sync-in source is ECAP13 sync-out signal. Note : these are not applicable for AM263x.
+    EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_ECAP13 = 0x4D,
+    //! Sync-in source is ECAP14 sync-out signal. Note : these are not applicable for AM263x.
+    EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_ECAP14 = 0x4E,
+    //! Sync-in source is ECAP15 sync-out signal. Note : these are not applicable for AM263x.
+    EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_ECAP15 = 0x4F,
     //! Sync-in source is Input XBAR out4 signal
     EPWM_SYNC_IN_PULSE_SRC_INPUTXBAR_OUT4 = 0x50,
     //! Sync-in source is Input XBAR out20 signal
