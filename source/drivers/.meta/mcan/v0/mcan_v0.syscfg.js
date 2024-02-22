@@ -219,6 +219,13 @@ let mcan_module = {
     getPeripheralPinNames,
     getClockEnableIds,
     getClockFrequencies,
+    onMigrate,
 };
+
+function onMigrate(newInst, oldInst, oldSystem) {
+    let pins = getPeripheralPinNames(oldInst);
+    let interfaceName = getInterfaceName(oldInst);
+    common.onMigrate(newInst, oldInst, oldSystem, pins, interfaceName)
+}
 
 exports = mcan_module;

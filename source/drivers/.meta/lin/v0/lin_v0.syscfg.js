@@ -361,6 +361,13 @@ let lin_module = {
     getClockEnableIds,
     getClockFrequencies,
     config: config,
+    onMigrate,
 };
+
+function onMigrate(newInst, oldInst, oldSystem) {
+    let pins = getPeripheralPinNames(oldInst)
+    let interfaceName = getInterfaceName(oldInst)
+    common.onMigrate(newInst, oldInst, oldSystem, pins, interfaceName)
+}
 
 exports = lin_module;

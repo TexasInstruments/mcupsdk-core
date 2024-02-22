@@ -266,6 +266,13 @@ let gpio_module = {
     pinmuxRequirements,
     getInterfaceName,
     getPeripheralPinNames,
+    onMigrate,
 };
+
+function onMigrate(newInst, oldInst, oldSystem) {
+    let pins = getPeripheralPinNames(oldInst)
+    let interfaceName = getInterfaceName(oldInst)
+    common.onMigrate(newInst, oldInst, oldSystem, pins, interfaceName)
+}
 
 exports = gpio_module;

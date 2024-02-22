@@ -146,7 +146,14 @@ let output_xbar_module = {
     getPeripheralPinNames,
     pinmuxRequirements,
     getSelectedInstance,
+    onMigrate,
 };
+
+function onMigrate(newInst, oldInst, oldSystem) {
+    let pins = getPeripheralPinNames(oldInst)
+    let interfaceName = getInterfaceName(oldInst)
+    common.onMigrate(newInst, oldInst, oldSystem, pins, interfaceName)
+}
 
 function moduleInstances(instance) {
     let modInstances = new Array();

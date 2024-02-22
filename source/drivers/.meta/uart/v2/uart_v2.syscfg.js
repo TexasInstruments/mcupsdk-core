@@ -125,7 +125,14 @@ let uart_module = {
     getPeripheralPinNames,
     getClockEnableIds,
     getClockFrequencies,
+    onMigrate,
 };
+
+function onMigrate(newInst, oldInst, oldSystem) {
+    let pins = getPeripheralPinNames(oldInst)
+    let interfaceName = getInterfaceName(oldInst)
+    common.onMigrate(newInst, oldInst, oldSystem, pins, interfaceName)
+}
 
 function addModuleInstances(instance) {
     let modInstances = new Array();

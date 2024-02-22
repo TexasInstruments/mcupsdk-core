@@ -90,7 +90,14 @@ let fsi_rx_module = {
     getInstanceConfig,
     getInterfaceName,
     getPeripheralPinNames,
+    onMigrate,
 };
+
+function onMigrate(newInst, oldInst, oldSystem) {
+    let pins = getPeripheralPinNames(oldInst)
+    let interfaceName = getInterfaceName(oldInst)
+    common.onMigrate(newInst, oldInst, oldSystem, pins, interfaceName)
+}
 
 function moduleInstances(inst) {
     let modInstances = new Array();

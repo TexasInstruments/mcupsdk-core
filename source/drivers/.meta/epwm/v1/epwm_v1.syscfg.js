@@ -306,6 +306,13 @@ let epwmModule = {
     getInterfaceName,
     getPeripheralPinNames,
     pinmuxRequirements,
+    onMigrate,
 };
+
+function onMigrate(newInst, oldInst, oldSystem) {
+    let pins = getPeripheralPinNames(oldInst)
+    let interfaceName = getInterfaceName(oldInst)
+    common.onMigrate(newInst, oldInst, oldSystem, pins, interfaceName)
+}
 
 exports = epwmModule;

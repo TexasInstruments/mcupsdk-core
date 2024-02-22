@@ -291,6 +291,52 @@ function getOtherContextNames()
     return contextNames.filter(e => e !== system.context);
 }
 
+/*
+ * If ZCZ_S to ZCZ_F (SIP) migration is being done for am263px, resolve pinmux conflicts based on if the selected function exists
+ * for the particular pad or not.
+ */
+function onMigrate(newInst, oldInst, oldSystem, pins, interfaceName) {
+    const pads = {
+        A9: ["OSPI0_RESET_OUT1", "OSPI0_ECC_FAIL"], B9: ["OSPI0_RESET0_OUT0"], K1: ["OSPI0_D7"], L3: ["OSPI0_LBCLKO"], M3: ["OSPI0_DQS"], N1: ["OSPI0_D0"], N2: ["OSPI0_CLK"], N4: ["OSPI0_D1"], R3: ["OSPI0_CSN1"]
+    };
+
+    if(oldSystem.deviceData.device == "AM263Px" && system.deviceData.device == "AM263Px") {
+        if((oldSystem.deviceData.package == "ZCZ_S" && system.deviceData.package == "ZCZ_F") || (oldSystem.deviceData.package == "ZCZ_F" && system.deviceData.package == "ZCZ_S")) {
+
+            pins.forEach(pinName => {
+
+                let oldInst_config, newInst_config;
+
+                if(interfaceName === "GPIO") {
+                    interfaceName = "GPIO_n";
+                    oldInst_config = oldInst[interfaceName];
+                    newInst_config = newInst[interfaceName];
+                }
+                else {
+                    oldInst_config = oldInst[interfaceName][pinName];
+                    newInst_config = newInst[interfaceName][pinName];
+                }
+
+                if(oldInst_config) {
+                    let ball, signalName;
+
+                    ball = oldInst_config.$solution.packagePinName;
+                    signalName = oldInst_config.$solution.peripheralPinName;
+
+                    if(Object.keys(pads).includes(ball) && !pads[ball].includes(signalName)) {
+                        if(oldInst_config.$assign == ball) {
+                            newInst_config.$assign = ball;
+                        }
+                        if(oldInst_config.$assignAllow == ball) {
+                            newInst_config.$assignAllow = ball;
+                        }
+                    }
+                }
+            });
+        }
+    }
+}
+
 exports = {
     getSelfSysCfgCoreName,
     isSciClientSupported,
@@ -307,6 +353,7 @@ exports = {
     typeMatches,
     getNodePath,
     getOtherContextNames,
+    onMigrate,
 
     validate: {
         checkSameInstanceName : function (instance, report) {
