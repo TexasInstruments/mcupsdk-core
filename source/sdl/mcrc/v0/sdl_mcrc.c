@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -1203,4 +1203,44 @@ int32_t SDL_MCRC_configCRCType(SDL_MCRC_InstType instance,
 	}
     return (status);
 }
+
+#if defined(SOC_AM263X) || defined (SOC_AM263PX)
+int32_t SDL_MCRC_configDataWidth(SDL_MCRC_InstType instance,
+					SDL_MCRC_Channel_t channel, uint32_t datawidth)
+{
+	int32_t status = SDL_PASS;
+	uint32_t baseAddr;
+
+	if (((SDL_MCRC_getBaseaddr(instance, &baseAddr) != SDL_PASS)))
+	{
+		status = SDL_EBADARGS;
+	}
+	else
+	{
+		switch (channel)
+        {
+            case SDL_MCRC_CHANNEL_1:
+				SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0,
+                            (datawidth << SDL_MCRC_CTRL0_CH1_DW_SEL_SHIFT));
+				break;
+			case SDL_MCRC_CHANNEL_2:
+				SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0,
+                            (datawidth << SDL_MCRC_CTRL0_CH2_DW_SEL_SHIFT));
+				break;
+			case SDL_MCRC_CHANNEL_3:
+				SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0,
+                            (datawidth << SDL_MCRC_CTRL0_CH3_DW_SEL_SHIFT));
+				break;
+			case SDL_MCRC_CHANNEL_4:
+				SDL_REG32_WR(baseAddr + SDL_MCRC_CTRL0,
+                            (datawidth << SDL_MCRC_CTRL0_CH4_DW_SEL_SHIFT));
+				break;
+			default:
+                status = SDL_EBADARGS;
+                break;
+		}
+	}
+    return (status);
+}
+#endif
 

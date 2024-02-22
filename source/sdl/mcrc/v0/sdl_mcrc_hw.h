@@ -1,5 +1,5 @@
 /* =============================================================================
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -109,25 +109,135 @@ extern "C"
 * Field Definition Macros
 ****************************************************************************************************/
 
-#define SDL_MCRC_CTRL0_CH1_PSA_SWRE_SHIFT                                                    (0U)
 #define SDL_MCRC_CTRL0_CH1_PSA_SWRE_MASK                                                     (0x00000001U)
+#define SDL_MCRC_CTRL0_CH1_PSA_SWRE_SHIFT                                                    (0x00000000U)
+#define SDL_MCRC_CTRL0_CH1_PSA_SWRE_RESETVAL                                                 (0x00000000U)
+#define SDL_MCRC_CTRL0_CH1_PSA_SWRE_MAX                                                      (0x00000001U)
 #define SDL_MCRC_CTRL0_CH1_PSA_SWRE_ON                                                       (0x00000001U)
 #define SDL_MCRC_CTRL0_CH1_PSA_SWRE_OFF                                                      (0x00000000U)
 
-#define SDL_MCRC_CTRL0_CH2_PSA_SWRE_SHIFT                                                    (8U)
+#define SDL_MCRC_CTRL0_CH1_DW_SEL_MASK                                                       (0x00000006U)
+#define SDL_MCRC_CTRL0_CH1_DW_SEL_SHIFT                                                      (0x00000001U)
+#define SDL_MCRC_CTRL0_CH1_DW_SEL_RESETVAL                                                   (0x00000000U)
+#define SDL_MCRC_CTRL0_CH1_DW_SEL_MAX                                                        (0x00000003U)
+
+#define SDL_MCRC_CTRL0_CH1_CRC_SEL_MASK                                                      (0x00000018U)
+#define SDL_MCRC_CTRL0_CH1_CRC_SEL_SHIFT                                                     (0x00000003U)
+#define SDL_MCRC_CTRL0_CH1_CRC_SEL_RESETVAL                                                  (0x00000000U)
+#define SDL_MCRC_CTRL0_CH1_CRC_SEL_MAX                                                       (0x00000003U)
+
+#define SDL_MCRC_CTRL0_CH1_BIT_SWAP_MASK                                                     (0x00000020U)
+#define SDL_MCRC_CTRL0_CH1_BIT_SWAP_SHIFT                                                    (0x00000005U)
+#define SDL_MCRC_CTRL0_CH1_BIT_SWAP_RESETVAL                                                 (0x00000000U)
+#define SDL_MCRC_CTRL0_CH1_BIT_SWAP_MAX                                                      (0x00000001U)
+
+#define SDL_MCRC_CTRL0_CH1_BYTE_SWAP_MASK                                                    (0x00000040U)
+#define SDL_MCRC_CTRL0_CH1_BYTE_SWAP_SHIFT                                                   (0x00000006U)
+#define SDL_MCRC_CTRL0_CH1_BYTE_SWAP_RESETVAL                                                (0x00000000U)
+#define SDL_MCRC_CTRL0_CH1_BYTE_SWAP_MAX                                                     (0x00000001U)
+
+#define SDL_MCRC_CTRL0_CH1_CRC_SEL2_MASK                                                     (0x00000080U)
+#define SDL_MCRC_CTRL0_CH1_CRC_SEL2_SHIFT                                                    (0x00000007U)
+#define SDL_MCRC_CTRL0_CH1_CRC_SEL2_RESETVAL                                                 (0x00000000U)
+#define SDL_MCRC_CTRL0_CH1_CRC_SEL2_MAX                                                      (0x00000001U)
+
 #define SDL_MCRC_CTRL0_CH2_PSA_SWRE_MASK                                                     (0x00000100U)
+#define SDL_MCRC_CTRL0_CH2_PSA_SWRE_SHIFT                                                    (0x00000008U)
+#define SDL_MCRC_CTRL0_CH2_PSA_SWRE_RESETVAL                                                 (0x00000000U)
+#define SDL_MCRC_CTRL0_CH2_PSA_SWRE_MAX                                                      (0x00000001U)
 #define SDL_MCRC_CTRL0_CH2_PSA_SWRE_ON                                                       (0x00000001U)
 #define SDL_MCRC_CTRL0_CH2_PSA_SWRE_OFF                                                      (0x00000000U)
 
-#define SDL_MCRC_CTRL0_CH3_PSA_SWRE_SHIFT                                                    (16U)
+#define SDL_MCRC_CTRL0_CH2_DW_SEL_MASK                                                       (0x00000600U)
+#define SDL_MCRC_CTRL0_CH2_DW_SEL_SHIFT                                                      (0x00000009U)
+#define SDL_MCRC_CTRL0_CH2_DW_SEL_RESETVAL                                                   (0x00000000U)
+#define SDL_MCRC_CTRL0_CH2_DW_SEL_MAX                                                        (0x00000003U)
+
+#define SDL_MCRC_CTRL0_CH2_CRC_SEL_MASK                                                      (0x00001800U)
+#define SDL_MCRC_CTRL0_CH2_CRC_SEL_SHIFT                                                     (0x0000000BU)
+#define SDL_MCRC_CTRL0_CH2_CRC_SEL_RESETVAL                                                  (0x00000000U)
+#define SDL_MCRC_CTRL0_CH2_CRC_SEL_MAX                                                       (0x00000003U)
+
+#define SDL_MCRC_CTRL0_CH2_BIT_SWAP_MASK                                                     (0x00002000U)
+#define SDL_MCRC_CTRL0_CH2_BIT_SWAP_SHIFT                                                    (0x0000000DU)
+#define SDL_MCRC_CTRL0_CH2_BIT_SWAP_RESETVAL                                                 (0x00000000U)
+#define SDL_MCRC_CTRL0_CH2_BIT_SWAP_MAX                                                      (0x00000001U)
+
+#define SDL_MCRC_CTRL0_CH2_BYTE_SWAP_MASK                                                    (0x00004000U)
+#define SDL_MCRC_CTRL0_CH2_BYTE_SWAP_SHIFT                                                   (0x0000000EU)
+#define SDL_MCRC_CTRL0_CH2_BYTE_SWAP_RESETVAL                                                (0x00000000U)
+#define SDL_MCRC_CTRL0_CH2_BYTE_SWAP_MAX                                                     (0x00000001U)
+
+#define SDL_MCRC_CTRL0_CH2_CRC_SEL2_MASK                                                     (0x00008000U)
+#define SDL_MCRC_CTRL0_CH2_CRC_SEL2_SHIFT                                                    (0x0000000FU)
+#define SDL_MCRC_CTRL0_CH2_CRC_SEL2_RESETVAL                                                 (0x00000000U)
+#define SDL_MCRC_CTRL0_CH2_CRC_SEL2_MAX                                                      (0x00000001U)
+
 #define SDL_MCRC_CTRL0_CH3_PSA_SWRE_MASK                                                     (0x00010000U)
+#define SDL_MCRC_CTRL0_CH3_PSA_SWRE_SHIFT                                                    (0x00000010U)
+#define SDL_MCRC_CTRL0_CH3_PSA_SWRE_RESETVAL                                                 (0x00000000U)
+#define SDL_MCRC_CTRL0_CH3_PSA_SWRE_MAX                                                      (0x00000001U)
 #define SDL_MCRC_CTRL0_CH3_PSA_SWRE_ON                                                       (0x00000001U)
 #define SDL_MCRC_CTRL0_CH3_PSA_SWRE_OFF                                                      (0x00000000U)
 
-#define SDL_MCRC_CTRL0_CH4_PSA_SWRE_SHIFT                                                    (24U)
+#define SDL_MCRC_CTRL0_CH3_DW_SEL_MASK                                                       (0x00060000U)
+#define SDL_MCRC_CTRL0_CH3_DW_SEL_SHIFT                                                      (0x00000011U)
+#define SDL_MCRC_CTRL0_CH3_DW_SEL_RESETVAL                                                   (0x00000000U)
+#define SDL_MCRC_CTRL0_CH3_DW_SEL_MAX                                                        (0x00000003U)
+
+#define SDL_MCRC_CTRL0_CH3_CRC_SEL_MASK                                                      (0x00180000U)
+#define SDL_MCRC_CTRL0_CH3_CRC_SEL_SHIFT                                                     (0x00000013U)
+#define SDL_MCRC_CTRL0_CH3_CRC_SEL_RESETVAL                                                  (0x00000000U)
+#define SDL_MCRC_CTRL0_CH3_CRC_SEL_MAX                                                       (0x00000003U)
+
+#define SDL_MCRC_CTRL0_CH3_BIT_SWAP_MASK                                                     (0x00200000U)
+#define SDL_MCRC_CTRL0_CH3_BIT_SWAP_SHIFT                                                    (0x00000015U)
+#define SDL_MCRC_CTRL0_CH3_BIT_SWAP_RESETVAL                                                 (0x00000000U)
+#define SDL_MCRC_CTRL0_CH3_BIT_SWAP_MAX                                                      (0x00000001U)
+
+#define SDL_MCRC_CTRL0_CH3_BYTE_SWAP_MASK                                                    (0x00400000U)
+#define SDL_MCRC_CTRL0_CH3_BYTE_SWAP_SHIFT                                                   (0x00000016U)
+#define SDL_MCRC_CTRL0_CH3_BYTE_SWAP_RESETVAL                                                (0x00000000U)
+#define SDL_MCRC_CTRL0_CH3_BYTE_SWAP_MAX                                                     (0x00000001U)
+
+#define SDL_MCRC_CTRL0_CH3_CRC_SEL2_MASK                                                     (0x00800000U)
+#define SDL_MCRC_CTRL0_CH3_CRC_SEL2_SHIFT                                                    (0x00000017U)
+#define SDL_MCRC_CTRL0_CH3_CRC_SEL2_RESETVAL                                                 (0x00000000U)
+#define SDL_MCRC_CTRL0_CH3_CRC_SEL2_MAX                                                      (0x00000001U)
+
 #define SDL_MCRC_CTRL0_CH4_PSA_SWRE_MASK                                                     (0x01000000U)
+#define SDL_MCRC_CTRL0_CH4_PSA_SWRE_SHIFT                                                    (0x00000018U)
+#define SDL_MCRC_CTRL0_CH4_PSA_SWRE_RESETVAL                                                 (0x00000000U)
+#define SDL_MCRC_CTRL0_CH4_PSA_SWRE_MAX                                                      (0x00000001U)
 #define SDL_MCRC_CTRL0_CH4_PSA_SWRE_ON                                                       (0x00000001U)
 #define SDL_MCRC_CTRL0_CH4_PSA_SWRE_OFF                                                      (0x00000000U)
+
+#define SDL_MCRC_CTRL0_CH4_DW_SEL_MASK                                                       (0x06000000U)
+#define SDL_MCRC_CTRL0_CH4_DW_SEL_SHIFT                                                      (0x00000019U)
+#define SDL_MCRC_CTRL0_CH4_DW_SEL_RESETVAL                                                   (0x00000000U)
+#define SDL_MCRC_CTRL0_CH4_DW_SEL_MAX                                                        (0x00000003U)
+
+#define SDL_MCRC_CTRL0_CH4_CRC_SEL_MASK                                                      (0x18000000U)
+#define SDL_MCRC_CTRL0_CH4_CRC_SEL_SHIFT                                                     (0x0000001BU)
+#define SDL_MCRC_CTRL0_CH4_CRC_SEL_RESETVAL                                                  (0x00000000U)
+#define SDL_MCRC_CTRL0_CH4_CRC_SEL_MAX                                                       (0x00000003U)
+
+#define SDL_MCRC_CTRL0_CH4_BIT_SWAP_MASK                                                     (0x20000000U)
+#define SDL_MCRC_CTRL0_CH4_BIT_SWAP_SHIFT                                                    (0x0000001DU)
+#define SDL_MCRC_CTRL0_CH4_BIT_SWAP_RESETVAL                                                 (0x00000000U)
+#define SDL_MCRC_CTRL0_CH4_BIT_SWAP_MAX                                                      (0x00000001U)
+
+#define SDL_MCRC_CTRL0_CH4_BYTE_SWAP_MASK                                                    (0x40000000U)
+#define SDL_MCRC_CTRL0_CH4_BYTE_SWAP_SHIFT                                                   (0x0000001EU)
+#define SDL_MCRC_CTRL0_CH4_BYTE_SWAP_RESETVAL                                                (0x00000000U)
+#define SDL_MCRC_CTRL0_CH4_BYTE_SWAP_MAX                                                     (0x00000001U)
+
+#define SDL_MCRC_CTRL0_CH4_CRC_SEL2_MASK                                                     (0x80000000U)
+#define SDL_MCRC_CTRL0_CH4_CRC_SEL2_SHIFT                                                    (0x0000001FU)
+#define SDL_MCRC_CTRL0_CH4_CRC_SEL2_RESETVAL                                                 (0x00000000U)
+#define SDL_MCRC_CTRL0_CH4_CRC_SEL2_MAX                                                      (0x00000001U)
+
+#define SDL_MCRC_CTRL0_RESETVAL                                                              (0x00000000U)
 
 #define SDL_MCRC_CTRL1_PWDN_SHIFT                                                            (0U)
 #define SDL_MCRC_CTRL1_PWDN_MASK                                                             (0x00000001U)

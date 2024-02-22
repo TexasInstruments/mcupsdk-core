@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -112,12 +112,19 @@ extern "C" {
 /**
  * \brief  Macro defines value of MCRC Control Register.
  */
- 
+
 #define SDL_MCRC_TYPE_16BIT                 (0x4CU)
 
 #define SDL_MCRC_TYPE_32BIT                 (0x54U)
 
 #define SDL_MCRC_TYPE_64BIT                 (0x44U)
+
+#define SDL_MCRC_DATAWIDTH_SEL_64BIT        (0x00U)
+
+#define SDL_MCRC_DATAWIDTH_SEL_16BIT        (0x01U)
+
+#define SDL_MCRC_DATAWIDTH_SEL_32BIT        (0x02U)
+
 /**
  * \brief  Max number of channels supported in MCRC.
  */
@@ -624,7 +631,7 @@ int32_t SDL_MCRC_getCRCRegAddr(SDL_MCRC_InstType instance,
  * \brief   This API is used to configure the MCRC type for given Channel.
  *
  * \param   instance        MCRC instance either MCU or Main.
- * \param   channel         Channel number 
+ * \param   channel         Channel number
  *
  * \return  status          SDL_PASS:     success
  *                          SDL_EBADARGS: failure, indicate the bad input arguments
@@ -632,7 +639,25 @@ int32_t SDL_MCRC_getCRCRegAddr(SDL_MCRC_InstType instance,
  */
 int32_t SDL_MCRC_configCRCType(SDL_MCRC_InstType instance,
 					 SDL_MCRC_Channel_t       channel);
-					 
+
+/**
+ * \brief   This API is used to configure the MCRC data width for given Channel.
+ *
+ * \param   instance        MCRC instance either MCU or Main.
+ * \param   channel         Channel number for which MCRC register address is
+ *                          to get.
+ *                          Values given by #SDL_MCRC_Channel_t.
+ * \param   datawidth       DataWidth
+ *                          Values given by macro SDL_MCRC_DATAWIDTH_SEL_xxBIT.
+ *
+ * \return  status          SDL_PASS:     success
+ *                          SDL_EBADARGS: failure, indicate the bad input
+ *                                        arguments
+ *
+ */
+int32_t SDL_MCRC_configDataWidth(SDL_MCRC_InstType instance,
+					           SDL_MCRC_Channel_t channel, uint32_t datawidth);
+
 #ifdef _cplusplus
 }
 

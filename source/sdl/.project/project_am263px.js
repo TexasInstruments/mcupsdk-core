@@ -30,6 +30,7 @@ const files_r5f = {
         "sdl_ccm.c",
         "sdl_mcu_armss_ccmr5.c",
         "sdl_stc_soc.c",
+        "sdl_tmu_rom_checksum.c",
 
     ],
 };
@@ -81,6 +82,7 @@ const filedirs = {
         "ecc_bus_safety/v0/soc/am263px",
         "stc/v0",
         "stc/v0/soc/am263px",
+        "tmu_rom_checksum",
     ],
 };
 

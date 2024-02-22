@@ -42,6 +42,7 @@ FILES_common := \
     sdl_ccm.c \
     sdl_mcu_armss_ccmr5.c \
     sdl_stc_soc.c \
+    sdl_tmu_rom_checksum.c \
 
 ASMFILES_common := \
     sdl_ecc_utils.S \
@@ -77,6 +78,7 @@ FILES_PATH_common = \
     ecc_bus_safety/v0/soc/am263px \
     stc/v0 \
     stc/v0/soc/am263px \
+    tmu_rom_checksum \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
