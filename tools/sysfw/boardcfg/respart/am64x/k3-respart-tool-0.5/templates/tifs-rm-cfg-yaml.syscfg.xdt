@@ -1,0 +1,159 @@
+%%{
+	const utils = system.getScript("/scripts/utils.js");
+	const {allocateAndSort} = system.getScript("/scripts/allocation.js");
+
+	const deviceSelected = utils.deviceSelected;
+	const devData = utils.devData;
+	const socName = utils.socName;
+	const resources = utils.resources;
+    const remRes = utils.tifsResRem;
+	const hosts = utils.hosts;
+
+    var allocation = allocateAndSort(true,true);
+	var rmConfigEntries = 0; //BOARDCFG_RM_RESASG_ENTRIES
+	var tifsConfigEntries = 0; //BOARDCFG_TIFS_RM_RESASG_ENTRIES
+
+	_.each(allocation, a => {
+		rmConfigEntries += a.length;
+        var utype = a[0].utype;
+        if(!(resources[utype].subtypeName in remRes))
+        {
+            tifsConfigEntries += a.length;
+        }
+	})
+
+    var BOARDCFG_RM_HOST_CFG_MAGIC_NUM = 0x4C41
+    var BOARDCFG_RM_HOST_CFG_SIZE = 356
+
+    var BOARDCFG_RM_RESASG_MAGIC_NUM = 0x7B25
+    var BOARDCFG_RM_RESASG_SIZE = 8
+
+    var BOARDCFG_RM_RESASG_ENTRY_SIZE = 8
+
+    var RESASG_TYPE_SHIFT = 0x6
+    var RESASG_TYPE_MASK = 0xFFC0
+    var RESASG_SUBTYPE_SHIFT = 0x0
+    var RESASG_SUBTYPE_MASK = 0x3F
+
+    function resasg_utype(type, subtype) {
+        return (((type << RESASG_TYPE_SHIFT) & RESASG_TYPE_MASK) | ((subtype << RESASG_SUBTYPE_SHIFT) & RESASG_SUBTYPE_MASK))
+    }
+%%}
+/*
+ * K3 System Firmware Resource Management Configuration Data
+ * Auto generated from K3 Resource Partitioning tool
+ *
+ * Copyright (C) 2019-2021 Texas Instruments Incorporated - https://www.ti.com/
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *    Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ *    Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the
+ *    distribution.
+ *
+ *    Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+tifs-rm-cfg:
+	rm_boardcfg:
+		/* boardcfg_abi_rev */
+		rev:
+			boardcfg_abi_maj : 0x0
+			boardcfg_abi_min : 0x1
+
+		/* boardcfg_rm_host_cfg */
+		host_cfg:
+			subhdr:
+				magic: `utils.decimalToHexadecimal(BOARDCFG_RM_HOST_CFG_MAGIC_NUM)`
+				size : `BOARDCFG_RM_HOST_CFG_SIZE`
+
+			host_cfg_entries:
+%           var count = 1
+%		_.each(hosts, (host) => {
+%			var moduleName = "/modules/" + socName + "/" + host.hostName;
+%			if (system.modules[moduleName]) {
+            - #`count`
+%           count += 1
+%				var inst = system.modules[moduleName].$static;
+					host_id : `host.hostId`
+					allowed_atype : `utils.decimalToBinary(utils.setBit(inst.allowedAtype,3))`
+					allowed_qos : `utils.decimalToHexadecimal(utils.setBit(inst.allowedqos,8))`
+					allowed_orderid : `utils.toHexa(utils.unsignedToBinary(inst.allowedorderid))`
+					allowed_priority : `utils.decimalToHexadecimal(utils.setBit(inst.allowedpriority,8))`
+					allowed_sched_priority : `utils.decimalToHexadecimal(utils.setBit(inst.allowedschedpriority,4))`
+%			}
+%		})
+
+%       while (count <= 32) {
+                - #`count`
+%               count += 1
+                    host_id: 0
+                    allowed_atype: 0
+                    allowed_qos: 0
+                    allowed_orderid: 0
+                    allowed_priority: 0
+                    allowed_sched_priority: 0
+%       }
+
+		/* boardcfg_rm_resasg */
+		resasg:
+			subhdr:
+				magic: `utils.decimalToHexadecimal(BOARDCFG_RM_RESASG_MAGIC_NUM)`
+				size : `BOARDCFG_RM_RESASG_SIZE`
+%       var RESASG_ENTRIES_SIZE = tifsConfigEntries * BOARDCFG_RM_RESASG_ENTRY_SIZE
+			resasg_entries_size : `RESASG_ENTRIES_SIZE`
+			reserved:0,
+			/* .resasg_entries is set via boardcfg_rm_local */
+
+	/* This is actually part of .resasg */
+	resasg_entries:
+%	var allocation = allocateAndSort(true,true);
+%	_.each(allocation,(all) => {
+%	var utype = all[0].utype;
+		/* `utype` */
+%	var validTifsEntry = false;
+%	_.each(all,(entry) => {
+%   	if(!(resources[utype].subtypeName in remRes))
+%   	{
+%		validTifsEntry = true;
+		-
+			start_resource: `entry.start`
+			num_resource: `entry.count`
+%           var dev = resources[utype].deviceId
+%           var subtype = resources[utype].subtypeId
+%           var type =  resasg_utype(resources[utype].deviceId, resources[utype].subtypeId)
+			type: `type`
+%           var host_id = 128
+%           _.each(hosts, (host) => {
+%               if (host.hostName == entry.hostName) {
+%                   host_id = host.hostId
+%               }
+%           })
+			host_id: `host_id`
+            reserved: 0
+%   	}
+%		})
+%		if(!validTifsEntry) {
+		/* Not Applicable for TIFS */
+%		}
+%	})

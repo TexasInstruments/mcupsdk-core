@@ -9,8 +9,8 @@ exports = {
 	displayName: "Resource Partitioning",
 	templates: [
 		{
-			name: "/templates/rm-cfg.syscfg.xdt",
-			outputPath: "rm-cfg.c",
+			name: "/templates/rm-cfg-yaml.syscfg.xdt",
+			outputPath: "rm-cfg.yaml",
 			alwaysRun: true,
 		},
 		{
@@ -28,9 +28,9 @@ exports = {
 			outputPath: "sciclient_tifsBoardcfg_rm.c",
 			alwaysRun: false,
 		},
-		{
-			name: "/templates/tifs-rm-cfg.syscfg.xdt",
-			outputPath: "tifs-rm-cfg.c",
+        {
+			name: "/templates/tifs-rm-cfg-yaml.syscfg.xdt",
+			outputPath: "tifs-rm-cfg.yaml",
 			alwaysRun: true,
 		},
 		{
