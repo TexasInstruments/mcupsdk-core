@@ -246,6 +246,7 @@ const example_file_list = [
     "test/security/crypto/test_dthe_aes_ecb/.project/project.js",
     "test/security/crypto/test_dthe_aes_cmac_stream/.project/project.js",
     "test/security/crypto/test_dthe_aes_cmac_stream_unaligned/.project/project.js",
+    "test/security/crypto/test_dthe_aes_stream_state_test/.project/project.js",
     "test/security/crypto/test_dthe_sha/.project/project.js",
     "test/networking/mbedtls_test/test_aes/.project/project.js",
     "test/networking/mbedtls_test/test_ssl_x509/.project/project.js",
