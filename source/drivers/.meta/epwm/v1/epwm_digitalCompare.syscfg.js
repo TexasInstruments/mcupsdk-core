@@ -658,7 +658,7 @@ let config = [
         },
         {
             name: "epwmDigitalCompare_invertCAPIN", 
-            displayName : "Invert Capture Input polarity",
+            displayName : "Invert Capture Input Polarity",
             description : 'Selects the input polarity for capture',
             hidden      : true,
             default     : device_peripheral.EPWM_selectCaptureInputPolarity[0].name,
@@ -682,7 +682,7 @@ let config = [
         },
         {
             name: "epwmDigitalCompare_CAPGATE_combinationInputConfig",
-            displayName : "Combination Capture Gate Input Sources",
+            displayName : "Combination Capture Gate Sources",
             description : "Select the sources to include in the Combination input sources",
             hidden      : true,
             minSelections: 0,
