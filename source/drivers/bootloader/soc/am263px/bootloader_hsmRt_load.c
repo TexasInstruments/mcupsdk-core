@@ -66,7 +66,7 @@ extern CSL_top_ctrlRegs * ptrTopCtrlRegs;
 /*                             Function Definitions                           */
 /* ========================================================================== */
 
-void Bootloader_socLoadHsmRtFw(const uint8_t *HsmRtFw, uint32_t hsmRTSize)
+void Bootloader_socLoadHsmRtFw(HsmClient_t *gHSMClient, const uint8_t *HsmRtFw, uint32_t hsmRTSize)
 {
     int32_t retVal = SystemP_SUCCESS;
 
@@ -74,13 +74,13 @@ void Bootloader_socLoadHsmRtFw(const uint8_t *HsmRtFw, uint32_t hsmRTSize)
     if(ptrTopCtrlRegs->EFUSE_DEVICE_TYPE == BOOTLOADER_DEVTYPE_HSSE)
     {
         DebugP_logInfo("DevType : HSSE  \r\n");
-        retVal = Hsmclient_loadHSMRtFirmware((uint8_t*)HsmRtFw);
+        retVal = Hsmclient_loadHSMRtFirmware(gHSMClient, (uint8_t*)HsmRtFw);
         DebugP_logInfo("HSMRT Size in Bytes : %ld \r\n", (uint32_t)hsmRTSize);
     }
     else if(ptrTopCtrlRegs->EFUSE_DEVICE_TYPE == BOOTLOADER_DEVTYPE_HSFS)
     {
         DebugP_logInfo("Device Type : HSFS  \r\n");
-        retVal = Hsmclient_loadHSMRtFirmware((uint8_t*)HsmRtFw);
+        retVal = Hsmclient_loadHSMRtFirmware(gHSMClient, (uint8_t*)HsmRtFw);
         DebugP_logInfo("HSMRT Size in Bytes : %ld \r\n", (uint32_t)hsmRTSize);
     }
     else

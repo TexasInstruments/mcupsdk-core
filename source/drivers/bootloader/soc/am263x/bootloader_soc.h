@@ -285,7 +285,7 @@ void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid);
 /**
  * \brief API to load hsm runtime firmware
  */
-void Bootloader_socLoadHsmRtFw(const uint8_t *HsmRtFw, uint32_t hsmRTSize);
+void Bootloader_socLoadHsmRtFw(HsmClient_t *gHSMClient, const uint8_t *HsmRtFw, uint32_t hsmRTSize);
 
 /**
  * \brief API to set CPU clock to 200 MHz or 400 MHz on the basis of eFUSE bits configuration

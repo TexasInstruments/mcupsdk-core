@@ -289,7 +289,7 @@ uint32_t Bootloader_socIsAuthRequired(void);
 /**
  * \brief API to load hsm runtime firmware
  */
-void Bootloader_socLoadHsmRtFw(const uint8_t *HsmRtFw, uint32_t hsmRTSize);
+void Bootloader_socLoadHsmRtFw(HsmClient_t *gHSMClient, const uint8_t *HsmRtFw, uint32_t hsmRTSize);
 
 /**
  * \brief API to get boot sequence oid

@@ -25,6 +25,7 @@ let hsmclient_module = {
         "/drivers/system/system_config.c.xdt": {
             driver_config: "/drivers/hsmclient/templates/hsmclient_config.c.xdt",
             driver_init: "/drivers/hsmclient/templates/hsmclient_init.c.xdt",
+            driver_deinit: "/drivers/hsmclient/templates/hsmclient_deinit.c.xdt",
         },
         "/drivers/system/system_config.h.xdt": {
             driver_config: "/drivers/hsmclient/templates/hsmclient.h.xdt",

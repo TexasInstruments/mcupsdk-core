@@ -251,7 +251,7 @@ static void Hsmclient_mboxRxISR(void *args)
  *                          public Function defination.
  *==============================================================================*/
 
-int32_t Hsmclient_loadHSMRtFirmware(const uint8_t *pHSMRt_firmware)
+int32_t Hsmclient_loadHSMRtFirmware(HsmClient_t *NotifyClient, const uint8_t *pHSMRt_firmware)
 {
     int32_t  status   = SystemP_SUCCESS;
     Hsmclient_ipcLoadHSM         loadHSMImage;
@@ -259,11 +259,7 @@ int32_t Hsmclient_loadHSMRtFirmware(const uint8_t *pHSMRt_firmware)
     uint16_t            orgChecksum;
     HwiP_Params hwiParams;
     HwiP_Object hwiObjReadReq;
-    HsmClient_t NotifyClient ;
     uint8_t *ptrMessage = (uint8_t *) CSL_HSM_MBOX_SRAM_U_BASE;
-
-    /* register a hsm client to detect boonotify message from HSM */
-    HsmClient_register(&NotifyClient,HSM_BOOT_NOTIFY_CLIENT_ID);
 
     if (pHSMRt_firmware != NULL)
     {
@@ -316,7 +312,7 @@ int32_t Hsmclient_loadHSMRtFirmware(const uint8_t *pHSMRt_firmware)
         if(status == SystemP_SUCCESS)
         {
             /* once loaded hsmrt firmware wait for bootnotify message  */
-            status = HsmClient_waitForBootNotify(&NotifyClient,SystemP_WAIT_FOREVER);
+            status = HsmClient_waitForBootNotify(NotifyClient, SystemP_WAIT_FOREVER);
         }
     }
     else
@@ -324,7 +320,5 @@ int32_t Hsmclient_loadHSMRtFirmware(const uint8_t *pHSMRt_firmware)
         /* Error: Invalid load address */
         status = SystemP_FAILURE;
     }
-    /* Unregister bootnotify client */
-    HsmClient_unregister(&NotifyClient,HSM_BOOT_NOTIFY_CLIENT_ID);
     return status;
 }
