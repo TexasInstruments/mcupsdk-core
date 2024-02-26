@@ -4,7 +4,7 @@ let device = "am263px";
 
 const files = {
     common: [
-        "sdfm_filter_sync_cpuread_single_channel.c",
+        "sdfm_filter_sync_dmaread.c",
         "main.c",
     ],
 };
@@ -43,7 +43,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg"
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD_SINGLE_CHANNEL";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_DMAREAD";
 
 const templates_nortos_r5f =
 [
@@ -51,14 +51,13 @@ const templates_nortos_r5f =
         input: ".project/templates/am263px/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "sdfm_filter_sync_cpuread_single_channel",
+            entryFunction: "sdfm_filter_sync_dmaread",
         },
     }
 ];
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "nortos"},
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-lp", os: "nortos"},
 ];
 
 function getComponentProperty(device) {
@@ -66,9 +65,9 @@ function getComponentProperty(device) {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sdfm_filter_sync_cpuread_single_channel";
+    property.name = "sdfm_filter_sync_dmaread";
     property.isInternal = false;
-    property.description = "A SDFM example that reads filter data from CPU"
+    property.description = "A SDFM example that reads filter data from DMA"
     property.buildOptionCombos = buildOptionCombos;
 
     return property;

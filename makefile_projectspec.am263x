@@ -238,6 +238,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdfm_epwm_sync_cpuread_am263x-cc_r5
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdfm_filter_sync_cpuread_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdfm_filter_sync_cpuread_single_channel_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdfm_filter_sync_cpuread_single_channel_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdfm_filter_sync_dmaread_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += uart_echo_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
@@ -1117,6 +1118,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  sdfm_filter_sync_cpuread_single_channel_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ sdfm_filter_sync_dmaread_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_dmaread/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
  uart_echo_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/uart/uart_echo/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -1856,6 +1860,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdfm_epwm_sync_cpuread_am263x-cc_r5
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdfm_filter_sync_cpuread_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdfm_filter_sync_cpuread_single_channel_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdfm_filter_sync_cpuread_single_channel_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdfm_filter_sync_dmaread_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += uart_echo_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2735,6 +2740,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  sdfm_filter_sync_cpuread_single_channel_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ sdfm_filter_sync_dmaread_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_dmaread/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
  uart_echo_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/uart/uart_echo/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -3474,6 +3482,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdfm_epwm_sync_cpuread_am263x-cc_r
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdfm_filter_sync_cpuread_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdfm_filter_sync_cpuread_single_channel_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdfm_filter_sync_cpuread_single_channel_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdfm_filter_sync_dmaread_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += uart_echo_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
@@ -4353,6 +4362,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  sdfm_filter_sync_cpuread_single_channel_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ sdfm_filter_sync_dmaread_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/sdfm/sdfm_filter_sync_dmaread/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
  uart_echo_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/uart/uart_echo/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -5108,6 +5120,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_filter_sync_cpuread/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_filter_sync_dmaread/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/uart/uart_echo/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]

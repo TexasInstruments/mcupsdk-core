@@ -328,6 +328,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
 \endcond
 -# SDFM
    -# \subpage EXAMPLES_DRIVERS_SDFM_EPWM_SYNC_CPUREAD
+   -# \subpage EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_DMAREAD
    -# \subpage EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD
    -# \subpage EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD_SINGLE_CHANNEL
 -# SPINLOCK

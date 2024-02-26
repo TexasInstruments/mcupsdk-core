@@ -9234,6 +9234,39 @@
             "example"
         ],
         "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A SDFM example that reads filter data from DMA CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdfm_filter_sync_dmaread",
+        "location": "../../examples/drivers/sdfm/sdfm_filter_sync_dmaread/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "sdfm",
+            "sdfm_filter_sync_dmaread",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
             "example.gettingstarted"
         ],
         "description": "An example to demonstrate the working of spinlock CPU is R5FSS0-0 running NORTOS.",

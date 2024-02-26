@@ -61,7 +61,7 @@ This example is not supported on AM263X-LP
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/drivers/sdfm/sdfm_filter_sync_cpuread.c/
+ Example folder | examples/drivers/sdfm/sdfm_filter_sync_cpuread/
 
 \endcond
 

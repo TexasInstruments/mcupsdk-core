@@ -43,7 +43,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg"
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_CMPSS_ASYNCHRONOUS_TRIP";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD";
 
 const templates_nortos_r5f =
 [
