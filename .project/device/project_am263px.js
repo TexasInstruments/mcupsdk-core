@@ -150,6 +150,7 @@ const example_file_list = [
     "examples/drivers/tmu/tmu_context_save/.project/project.js",
     "examples/drivers/tmu/tmu_cores_support/.project/project.js",
     "examples/drivers/tmu/tmu_operations/.project/project.js",
+    "examples/drivers/tmu/tmu_park_transform/.project/project.js",
 	"examples/drivers/uart/uart_echo/.project/project.js",
 	"examples/drivers/uart/uart_echo_callback/.project/project.js",
 	"examples/drivers/uart/uart_echo_dma/.project/project.js",

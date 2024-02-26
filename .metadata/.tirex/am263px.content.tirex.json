@@ -9764,6 +9764,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This example shows the gains of using TMU and how it enhances the performance in application use case CPU is R5FSS0-0 running NORTOS.",
+        "name": "tmu_park_transform",
+        "location": "../../examples/drivers/tmu/tmu_park_transform/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "tmu",
+            "tmu_park_transform",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This example shows the gains of using TMU and how it enhances the performance in application use case CPU is R5FSS0-0 running NORTOS.",
+        "name": "tmu_park_transform",
+        "location": "../../examples/drivers/tmu/tmu_park_transform/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "tmu",
+            "tmu_park_transform",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo",
         "location": "../../examples/drivers/uart/uart_echo/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
