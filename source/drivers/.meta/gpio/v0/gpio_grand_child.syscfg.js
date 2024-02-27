@@ -4,18 +4,20 @@ let soc = system.getScript(`/drivers/gpio/soc/gpio_${common.getSocName()}`);
 function migrate(inst){
 
     let props = [
-        "$assign", "$suggestSolution", "$assignAllowConflicts", "pu_pd", "slewRate", "inv", "qualSel"
+        "$assign", "$suggestSolution", "$assignAllowConflicts", "pu_pd", "slewRate", "inv", "qualSel", "rx"
     ]
 
     _.each(props, ele => {
-            if( inst[ele] !== undefined && inst[ele] !== ""){
+            if( inst[ele] !== undefined){
             if (inst.$ownedBy.$module.name === "GPIO"){
 
-                if([ "$assign", "$suggestSolution", "$assignAllowConflicts"].includes(ele)){
+                if([ "$assign", "$suggestSolution", "$assignAllowConflicts"].includes(ele) && inst[ele] !== ""){
                     inst.$ownedBy.$ownedBy.GPIO_n[ele] = inst[ele]
                 }
                 else {
-                    if(inst[ele] !== "")
+                    if (ele == "rx" || ele == "inv")
+                        inst.$ownedBy.$ownedBy[ele] = (inst[ele] == true)
+                    else if(inst[ele] !== "")
                         inst.$ownedBy.$ownedBy[ele] = inst[ele]
                 }
             }
@@ -55,12 +57,17 @@ exports = {
         {
             name: "inv",
             deprecated: true,
-            default: "",
+            default: false,
         },
         {
             name: "qualSel",
             deprecated: true,
             default: "",
+        },
+        {
+            name: "rx",
+            deprecated: true,
+            default: true,
         },
     ],
     migrateLegacyConfiguration: migrate,

@@ -120,7 +120,7 @@ let gConfig = [
         "name": "rx",
         "readOnly": false,
         "hidden": common.getSocName().includes("am26"),
-        "displayName": "rx",
+        "displayName": "RX",
         "default": false,
         // "legacy": true
     }
