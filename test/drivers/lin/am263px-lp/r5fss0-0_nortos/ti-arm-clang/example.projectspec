@@ -56,7 +56,7 @@
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --context r5fss0-0 --part AM263P2 --package ZCZ_S
+            --context r5fss0-0 --part AM263P2 --package ZCZ_C
         "
 
         description="A Lin Loopback Interrupt NORTOS project">
