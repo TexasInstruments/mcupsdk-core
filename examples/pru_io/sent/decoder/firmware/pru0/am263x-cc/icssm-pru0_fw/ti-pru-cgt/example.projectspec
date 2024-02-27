@@ -35,14 +35,12 @@
             -DPRU0
             -DSLICE0
             -v4
-            -v4
             -DSOC_AM263X
         "
         linkerBuildOptions="
             -m=sent_decoder_pru0_fw.${ConfigName}.map
             --disable_auto_rts
             --entry_point=main
-            --disable_auto_rts
         "
 
         enableHexTool="true"

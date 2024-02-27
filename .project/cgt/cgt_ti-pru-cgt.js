@@ -113,23 +113,23 @@ function getCgtOptions(cpu, device)
     }
     if(cpu.match(/pru1/))
     {
-        cgtOptions = common.mergeCgtOptions(cgtOptions, cgt_pru1);
+        cgtOptions = common.mergeCgtOptions(cgt_common, cgt_pru1);
     }
     if(cpu.match(/rtpru0/))
     {
-        cgtOptions = common.mergeCgtOptions(cgtOptions, cgt_rtpru0);
+        cgtOptions = common.mergeCgtOptions(cgt_common, cgt_rtpru0);
     }
     if(cpu.match(/rtpru1/))
     {
-        cgtOptions = common.mergeCgtOptions(cgtOptions, cgt_rtpru1);
+        cgtOptions = common.mergeCgtOptions(cgt_common, cgt_rtpru1);
     }
     if(cpu.match(/txpru0/))
     {
-        cgtOptions = common.mergeCgtOptions(cgtOptions, cgt_txpru0);
+        cgtOptions = common.mergeCgtOptions(cgt_common, cgt_txpru0);
     }
     if(cpu.match(/txpru1/))
     {
-        cgtOptions = common.mergeCgtOptions(cgtOptions, cgt_txpru1);
+        cgtOptions = common.mergeCgtOptions(cgt_common, cgt_txpru1);
     }
     if(cpu.match(/icssg0/))
     {

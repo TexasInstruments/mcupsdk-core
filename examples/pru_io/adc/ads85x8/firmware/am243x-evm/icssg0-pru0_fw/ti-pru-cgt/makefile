@@ -54,7 +54,7 @@ all: $(OBJS) $(CMD_SRCS)
 	@$(MAKE) --no-print-directory -Onone "adc_am243x-evm_icssg0-pru0_fw_ti-pru-cgt.out"
 
 # Each subdirectory must supply rules for building sources it contributes
-$(OBJDIR)/$(OBJS) %.obj: $(ASM_SRCS) 
+$(OBJDIR)/%.obj %.obj: $(ASM_SRCS) 
 	@echo 'Building file: "$^"'
 	@echo 'Invoking: PRU Compiler'
 	"$(CGT_TI_PRU_PATH)/bin/clpru" -DICSSG0 -DPRU0 -DSLICE0 -v4 --define=SOC_AM243X --include_path="$(SYSCFG_DIR)" --include_path="${CG_TOOL_ROOT}/include" --include_path="${MCU_PLUS_SDK_PATH}/source" --include_path="${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/common" --include_path="${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/adc/include"  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little --preproc_with_compile --preproc_dependency="$(basename $(<F)).d_raw" $^

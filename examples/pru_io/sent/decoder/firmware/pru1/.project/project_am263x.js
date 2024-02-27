@@ -23,8 +23,8 @@ const filedirs = {
 
 const includes = {
     common: [
-        "${CG_TOOL_ROOT}/include",
-        "${MCU_PLUS_SDK_PATH}/source",
+        // "${CG_TOOL_ROOT}/include",
+        // "${MCU_PLUS_SDK_PATH}/source",
         "${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/common",
     ],
 };
@@ -57,7 +57,7 @@ const cflags = {
 const lflags = {
     common: [
         "--entry_point=main",
-        "--disable_auto_rts",
+        // "--disable_auto_rts",
     ],
 };
 const libdirs = {
@@ -97,7 +97,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.filedirs = filedirs;
     build_property.lnkfiles = lnkfiles;
     build_property.includes = includes;
-    build_property.cflags = cflags;
+    // build_property.cflags = cflags;
     build_property.lflags = lflags;
     build_property.libdirs = libdirs;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;

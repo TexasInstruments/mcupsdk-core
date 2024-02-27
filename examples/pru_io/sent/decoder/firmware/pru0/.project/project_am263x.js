@@ -54,7 +54,7 @@ const cflags = {
 const lflags = {
     common: [
         "--entry_point=main",
-        "--disable_auto_rts",
+        // "--disable_auto_rts",
     ],
 };
 
@@ -90,7 +90,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.filedirs = filedirs;
     build_property.lnkfiles = lnkfiles;
     build_property.includes = includes;
-    build_property.cflags = cflags;
+    // build_property.cflags = cflags;
     build_property.lflags = lflags;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
     build_property.projecspecFileAction = "link";

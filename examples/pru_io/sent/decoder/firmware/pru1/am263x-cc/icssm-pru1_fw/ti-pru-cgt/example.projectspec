@@ -40,8 +40,8 @@
         linkerBuildOptions="
             -i${CG_TOOL_ROOT}/lib
             -m=sent_decoder_pru1_fw.${ConfigName}.map
-            --entry_point=main
             --disable_auto_rts
+            --entry_point=main
         "
 
         enableHexTool="true"
@@ -59,12 +59,14 @@
 
         <configuration name="Debug"
             compilerBuildOptions="
+                -D_DEBUG_=1
             "
             linkerBuildOptions="
             "
         ></configuration>
         <configuration name="Release"
             compilerBuildOptions="
+                -O3
             "
             linkerBuildOptions="
             "

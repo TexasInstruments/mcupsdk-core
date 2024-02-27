@@ -55,10 +55,10 @@ all: $(OBJS) $(CMD_SRCS)
 	@$(MAKE) --no-print-directory -Onone "sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out"
 
 # Each subdirectory must supply rules for building sources it contributes
-$(OBJDIR)/$(OBJS) %.obj: $(ASM_SRCS) 
+$(OBJDIR)/%.obj %.obj: $(ASM_SRCS) 
 	@echo 'Building file: "$^"'
 	@echo 'Invoking: PRU Compiler'
-	"$(CGT_TI_PRU_PATH)/bin/clpru" -DPRU0 -DSLICE0 -v4 -v4 --define=SOC_AM263X --include_path="$(SYSCFG_DIR)" --include_path="${CG_TOOL_ROOT}/include" --include_path="${MCU_PLUS_SDK_PATH}/source" --include_path="${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/common"  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little --preproc_with_compile --preproc_dependency="$(basename $(<F)).d_raw" $^
+	"$(CGT_TI_PRU_PATH)/bin/clpru" -DPRU0 -DSLICE0 -v4 --define=SOC_AM263X --include_path="$(SYSCFG_DIR)" --include_path="${CG_TOOL_ROOT}/include" --include_path="${MCU_PLUS_SDK_PATH}/source" --include_path="${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/common"  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little --preproc_with_compile --preproc_dependency="$(basename $(<F)).d_raw" $^
 	@echo 'Finished building: "$^"'
 	@echo ' '
 
@@ -66,7 +66,7 @@ $(OBJDIR)/$(OBJS) %.obj: $(ASM_SRCS)
 sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out: $(OBJS) $(CMD_SRCS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: PRU Linker'
-	"$(CGT_TI_PRU_PATH)/bin/clpru" -DPRU0 -DSLICE0 -v4 -v4 --define=SOC_AM263X  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.map" --disable_auto_rts   --diag_wrap=off --display_error_number --warn_sections --xml_link_info="sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt_linkInfo.xml" --disable_auto_rts --entry_point=main --disable_auto_rts  --rom_model -o "sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out" $^	
+	"$(CGT_TI_PRU_PATH)/bin/clpru" -DPRU0 -DSLICE0 -v4 --define=SOC_AM263X  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.map" --disable_auto_rts   --diag_wrap=off --display_error_number --warn_sections --xml_link_info="sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt_linkInfo.xml" --disable_auto_rts --entry_point=main  --rom_model -o "sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out" $^	
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build
