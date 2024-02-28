@@ -4421,10 +4421,10 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
    EPWM_getDigitalCompareEdgeFilterEdgeCount(base));
 
 
-   /*EPWM_setDigitalCompareWindowOffset(base, 0xFFFF);
+   /* EPWM_setDigitalCompareWindowOffset(base, 0xFFFF);
    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_DCFOFFSET)
-   & CSL_EPWM_DCFOFFSET_DCFOFFSET_MASK) >> CSL_EPWM_DCFOFFSET_DCFOFFSET_SHIFT, 0xFFFF);
-    */
+   & CSL_EPWM_DCFOFFSET_DCFOFFSET_MASK) >> CSL_EPWM_DCFOFFSET_DCFOFFSET_SHIFT, 0xFFFF); */
+   
 
    EPWM_setDigitalCompareWindowLength(base, 0xABCD);
    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_DCFWINDOW)
@@ -4728,17 +4728,298 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
              - EPWM_AQ_A_SW_OUTPUT_LOW_B_SW_OUTPUT_HIGH
              - EPWM_AQ_A_SW_OUTPUT_HIGH_B_SW_OUTPUT_HIGH    - 0xAU
     */
-    volatile uint8_t (*regValue8) = (uint8_t*)(base + CSL_EPWM_AQCSFRC);
+    volatile uint16_t (*regValue16) = (uint16_t*)(base + CSL_EPWM_AQCSFRC);
     for(uint8_t outputAB = EPWM_AQ_A_SW_DISABLED_B_SW_DISABLED;
                 outputAB <= EPWM_AQ_A_SW_OUTPUT_HIGH_B_SW_OUTPUT_HIGH;
                 outputAB++)
     {
         EPWM_setActionQualifierContSWForceAction_opt_outputs(base, outputAB);
-        TEST_ASSERT_EQUAL_UINT8(*regValue8, outputAB);
+        TEST_ASSERT_EQUAL_UINT16(*regValue16, outputAB);
     }
 
+    /* EPWM_enableADCTriggerEventCountInit */
+    EPWM_enableADCTriggerEventCountInit(base, EPWM_SOC_A);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL)&CSL_EPWM_ETCNTINITCTL_SOCAINITEN_MASK, 
+        CSL_EPWM_ETCNTINITCTL_SOCAINITEN_MASK);
+        
+    EPWM_enableADCTriggerEventCountInit(base, EPWM_SOC_B);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL)&CSL_EPWM_ETCNTINITCTL_SOCBINITEN_MASK, 
+        CSL_EPWM_ETCNTINITCTL_SOCBINITEN_MASK);
 
-   return error;
+    /* EPWM_disableADCTriggerEventCountInit */
+    EPWM_disableADCTriggerEventCountInit(base, EPWM_SOC_A);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL)&CSL_EPWM_ETCNTINITCTL_SOCAINITEN_MASK, 0u);
+        
+    EPWM_disableADCTriggerEventCountInit(base, EPWM_SOC_B);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL)&CSL_EPWM_ETCNTINITCTL_SOCBINITEN_MASK, 0u);
+
+    for (uint8_t delayMode = EPWM_VALLEY_DELAY_MODE_SW_DELAY; delayMode <=EPWM_VALLEY_DELAY_MODE_VCNT_DELAY_SHIFT_4_SW_DELAY; delayMode++)
+    {
+        EPWM_setValleyDelayDivider(base, delayMode);
+        TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(base + CSL_EPWM_VCAPCTL)&CSL_EPWM_VCAPCTL_VDELAYDIV_MASK)>>CSL_EPWM_VCAPCTL_VDELAYDIV_SHIFT, delayMode);
+    }
+
+    
+    for(uint8_t output = EPWM_AQ_OUTPUT_A;;output = EPWM_AQ_OUTPUT_B)
+    {
+        for(uint32_t action = EPWM_AQ_OUTPUT_NO_CHANGE_UP_T1; action <= EPWM_AQ_OUTPUT_TOGGLE_DOWN_T2; action = (action==EPWM_AQ_OUTPUT_NO_CHANGE_UP_T1)? EPWM_AQ_OUTPUT_LOW_UP_T1:(action << 1))
+        {   
+            EPWM_setAdditionalActionQualifierActionComplete(base, output, action);
+            uint32_t registerTOffset = (uint32_t)CSL_EPWM_AQCTLA2 + (uint16_t)output;
+
+            TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + registerTOffset), action);
+        }
+        if(output == EPWM_AQ_OUTPUT_B)
+        {
+            break;
+        }
+    }
+
+    /* EPWM_getMinDeadBandDelay get API. needs functional */
+
+    for(uint8_t trigger = EPWM_VALLEY_TRIGGER_EVENT_SOFTWARE; trigger<= EPWM_VALLEY_TRIGGER_EVENT_DCBEVT2; trigger++)
+    {
+        EPWM_setValleyTriggerSource(base, trigger);
+        TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(base + CSL_EPWM_VCAPCTL) & (uint16_t)CSL_EPWM_VCAPCTL_TRIGSEL_MASK), (uint16_t)trigger << CSL_EPWM_VCAPCTL_TRIGSEL_SHIFT);
+    }
+
+    for(uint8_t action = EPWM_AQ_SW_SH_LOAD_ON_CNTR_ZERO; action <= EPWM_AQ_SW_IMMEDIATE_LOAD; action++)
+    {
+        EPWM_setActionQualifierContSWForceShadowMode(base, action);
+        TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(base + CSL_EPWM_AQSFRC) & (uint16_t)CSL_EPWM_AQSFRC_RLDCSF_MASK), (uint16_t)((uint16_t)action << CSL_EPWM_AQSFRC_RLDCSF_SHIFT));
+    }
+
+    EPWM_enableValleyHWDelay(base);
+    TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(base + CSL_EPWM_VCAPCTL) & (uint16_t)CSL_EPWM_VCAPCTL_EDGEFILTDLYSEL_MASK), CSL_EPWM_VCAPCTL_EDGEFILTDLYSEL_MASK);
+
+    EPWM_disableValleyHWDelay(base);
+    TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(base + CSL_EPWM_VCAPCTL) & (uint16_t)CSL_EPWM_VCAPCTL_EDGEFILTDLYSEL_MASK), 0);
+
+    /* EPWM_setValleyTriggerEdgeCounts only testing the edges */
+    EPWM_setValleyTriggerEdgeCounts(base, 15, 15);
+    TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(base + CSL_EPWM_VCNTCFG) & (CSL_EPWM_VCNTCFG_STARTEDGE_MASK | CSL_EPWM_VCNTCFG_STOPEDGE_MASK)), 15|(15<<CSL_EPWM_VCNTCFG_STOPEDGE_SHIFT));
+
+    EPWM_setValleyTriggerEdgeCounts(base, 0, 0);
+    TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(base + CSL_EPWM_VCNTCFG) & (CSL_EPWM_VCNTCFG_STARTEDGE_MASK | CSL_EPWM_VCNTCFG_STOPEDGE_MASK)), 0);
+
+    /* EPWM_getGlobalLoadEventCount get API. needs a functional test*/
+    /* EPWM_getCounterCompareShadowStatus get API. needs a functional test*/
+    /* EPWM_getADCTriggerEventCount get API. needs a functional test*/
+    /* EPWM_getValleyCount get API. needs a functional test*/
+    /* EPWM_getTimeBaseCounterDirection get API. needs a functional test*/
+    /* EPWM_clearOneShotTripZoneFlag write only API. needs a functional test*/
+    /* EPWM_forceInterruptEventCountInit write only API. needs a functional test*/
+    /* EPWM_forceSyncPulse write only API. needs a functional test*/
+    /* EPWM_lockRegisters write only API. needs a functional test*/
+    /* EPWM_clearDiodeEmulationActive write only API. needs a functional test*/
+    /* EPWM_getDigitalCompareBlankingWindowLengthCount get only API. needs a functional test*/
+    /* EPWM_getInterruptEventCount get only API. needs a functional test*/
+    /* EPWM_getDigitalCompareCaptureStatus get only API. needs a functional test*/
+    /* EPWM_getDigitalCompareEdgeFilterEdgeStatus get only API. needs a functional test*/
+    /* EPWM_getDigitalCompareCaptureCount get only API. needs a functional test*/
+    /* EPWM_forceGlobalLoadOneShotEvent write only API. needs a functional test*/
+    /* EPWM_getOneShotTripZoneFlagStatus write only API. needs a functional test*/
+    /* EPWM_getValleyHWDelay write only API. needs a functional test*/
+    /* EPWM_startOneShotSync write only API. needs a functional test*/
+    /* EPWM_getCycleByCycleTripZoneFlagStatus get only API. needs a functional test*/
+    /* EPWM_forceActionQualifierSWAction write only API. needs a functional test*/
+    /* EPWM_clearCycleByCycleTripZoneFlag write only API. needs a functional test*/
+    /* EPWM_getSyncStatus get only API. needs a functional test*/
+    /* EPWM_getTimeBaseCounterValue get only API. needs a functional test*/
+    /* EPWM_getValleyEdgeStatus get only API. needs a functional test*/
+    /* EPWM_getTimeBaseCounterValue get only API. needs a functional test*/
+    /* EPWM_clearSyncEvent write only API. needs a functional test*/
+    /* EPWM_getDigitalCompareBlankingWindowOffsetCount get only API. needs a functional test*/
+    /* EPWM_forceADCTriggerEventCountInit write only API. needs a functional test*/
+
+    EPWM_disableRisingEdgeDelayCountShadowLoadMode(base);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_DBCTL) & CSL_EPWM_DBCTL_SHDWDBREDMODE_MASK, 0);
+
+    EPWM_disableFallingEdgeDelayCountShadowLoadMode(base);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_DBCTL) & CSL_EPWM_DBCTL_SHDWDBFEDMODE_MASK, 0);
+
+    EPWM_enableGlobalLoadOneShotMode(base);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_GLDCTL) & CSL_EPWM_GLDCTL_OSHTMODE_MASK, CSL_EPWM_GLDCTL_OSHTMODE_MASK);
+
+    EPWM_disableGlobalLoadOneShotMode(base);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_GLDCTL) & CSL_EPWM_GLDCTL_OSHTMODE_MASK, 0);
+
+    /* 
+    Read Only EPWM_startValleyCapture(base);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_VCAPCTL) & CSL_EPWM_VCAPCTL_VCAPSTART_MASK, CSL_EPWM_VCAPCTL_VCAPSTART_MASK);
+    HW_WR_REG16(base + CSL_EPWM_VCAPCTL, (HW_RD_REG16(base + CSL_EPWM_VCAPCTL) & ~CSL_EPWM_VCAPCTL_VCAPSTART_MASK)); */
+
+    EPWM_enableValleyCapture(base);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_VCAPCTL) & CSL_EPWM_VCAPCTL_VCAPE_MASK, CSL_EPWM_VCAPCTL_VCAPE_MASK);
+    
+    EPWM_disableValleyCapture(base);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_VCAPCTL) & CSL_EPWM_VCAPCTL_VCAPE_MASK, 0);
+
+    uint16_t shadowModeOffset;
+    shadowModeOffset = CSL_EPWM_AQCTL_SHDWAQAMODE_SHIFT + (uint16_t)EPWM_ACTION_QUALIFIER_A;
+    EPWM_disableActionQualifierShadowLoadMode(base, EPWM_ACTION_QUALIFIER_A);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_AQCTL) & (CSL_EPWM_AQCTL_SHDWAQAMODE_MAX << shadowModeOffset), 0);
+    shadowModeOffset = CSL_EPWM_AQCTL_SHDWAQAMODE_SHIFT + (uint16_t)EPWM_ACTION_QUALIFIER_B;
+    EPWM_disableActionQualifierShadowLoadMode(base, EPWM_ACTION_QUALIFIER_B);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_AQCTL) & (CSL_EPWM_AQCTL_SHDWAQAMODE_MAX << shadowModeOffset), 0);
+    
+    EPWM_CounterCompareModule array[4] = {
+        EPWM_COUNTER_COMPARE_A,
+        EPWM_COUNTER_COMPARE_B,
+        EPWM_COUNTER_COMPARE_C,
+        EPWM_COUNTER_COMPARE_D,
+    };
+
+    for(uint8_t index = 0; index <4; index++)
+    {
+        EPWM_CounterCompareModule compModule = array[index];
+
+        uint16_t shadowModeOffset;
+        uint32_t registerOffset;
+
+        if((compModule == EPWM_COUNTER_COMPARE_A) ||
+        (compModule == EPWM_COUNTER_COMPARE_C))
+        {
+            shadowModeOffset = CSL_EPWM_CMPCTL_SHDWAMODE_SHIFT;
+        }
+        else
+        {
+            shadowModeOffset = CSL_EPWM_CMPCTL_SHDWBMODE_SHIFT;
+        }
+
+        //
+        // Get the register offset.  CSL_EPWM_CMPCTL for A&B or
+        // CSL_EPWM_CMPCTL2 for C&D
+        //
+        if((compModule == EPWM_COUNTER_COMPARE_A) ||
+        (compModule == EPWM_COUNTER_COMPARE_B))
+        {
+            registerOffset = base + CSL_EPWM_CMPCTL;
+        }
+        else
+        {
+            registerOffset = base + CSL_EPWM_CMPCTL2;
+        }
+
+        EPWM_disableCounterCompareShadowLoadMode(base, compModule);
+        TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(registerOffset) & (CSL_EPWM_CMPCTL_SHDWAMODE_MAX)) >> shadowModeOffset, 0);
+
+        for(uint8_t loadMode = EPWM_COMP_LOAD_ON_CNTR_ZERO; loadMode <= EPWM_COMP_LOAD_ON_SYNC_CNTR_ZERO_PERIOD; loadMode++)
+        {   
+            uint16_t syncModeOffset;
+            uint16_t loadModeOffset;
+            uint16_t shadowModeOffset;
+            uint32_t registerOffset;
+
+            if((compModule == EPWM_COUNTER_COMPARE_A) ||
+                (compModule == EPWM_COUNTER_COMPARE_C))
+            {
+                syncModeOffset = CSL_EPWM_CMPCTL_LOADASYNC_SHIFT;
+                loadModeOffset = CSL_EPWM_CMPCTL_LOADAMODE_SHIFT;
+                shadowModeOffset = CSL_EPWM_CMPCTL_SHDWAMODE_SHIFT;
+            }
+            else
+            {
+                syncModeOffset = CSL_EPWM_CMPCTL_LOADBSYNC_SHIFT;
+                loadModeOffset = CSL_EPWM_CMPCTL_LOADBMODE_SHIFT;
+                shadowModeOffset = CSL_EPWM_CMPCTL_SHDWBMODE_SHIFT;
+            }
+
+            if((compModule == EPWM_COUNTER_COMPARE_A) ||
+                (compModule == EPWM_COUNTER_COMPARE_B))
+            {
+                registerOffset = base + CSL_EPWM_CMPCTL;
+            }
+            else
+            {
+                registerOffset = base + CSL_EPWM_CMPCTL2;
+            }
+
+            EPWM_setCounterCompareShadowLoadMode(base, compModule, loadMode);
+            uint16_t value = HW_RD_REG16(registerOffset);
+            uint16_t mask  = (CSL_EPWM_CMPCTL_LOADASYNC_MAX << syncModeOffset) | (CSL_EPWM_CMPCTL_LOADAMODE_MAX << loadModeOffset) | (CSL_EPWM_CMPCTL_SHDWAMODE_MAX << shadowModeOffset);
+            uint16_t field = (((uint16_t)loadMode >> 2U) << syncModeOffset) | (((uint16_t)loadMode & CSL_EPWM_CMPCTL_LOADASYNC_MAX) << loadModeOffset);
+            
+            TEST_ASSERT_EQUAL_UINT16(value & mask, field);   
+        }
+    }
+
+    for(uint16_t loadTrigger= EPWM_GL_LOAD_PULSE_CNTR_ZERO; loadTrigger <= EPWM_GL_LOAD_PULSE_CNTR_CMPD_D; loadTrigger++)
+    {
+        EPWM_setGlobalLoadTrigger(base, loadTrigger);
+        TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(base + CSL_EPWM_GLDCTL) & (uint16_t)CSL_EPWM_GLDCTL_GLDMODE_MASK), (uint16_t)loadTrigger << CSL_EPWM_GLDCTL_GLDMODE_SHIFT);
+
+        EPWM_setGlobalLoadTrigger(base, EPWM_GL_LOAD_PULSE_GLOBAL_FORCE);
+        TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(base + CSL_EPWM_GLDCTL) & (uint16_t)CSL_EPWM_GLDCTL_GLDMODE_MASK), (uint16_t)EPWM_GL_LOAD_PULSE_GLOBAL_FORCE << CSL_EPWM_GLDCTL_GLDMODE_SHIFT);
+    }
+
+    EPWM_disableGlobalLoad(base);
+    TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(base + CSL_EPWM_GLDCTL) & (uint16_t)CSL_EPWM_GLDCTL_GLD_MASK), 0);
+
+    EPWM_disableInterruptEventCountInit(base);
+    TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL) & (uint16_t)CSL_EPWM_ETCNTINITCTL_INTINITEN_MASK), 0);
+
+    EPWM_enableTripZone2Signals(base, EPWM_TZ_SIGNAL_CAPEVT_OST);
+    TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(base + CSL_EPWM_TZSEL2) & (uint16_t)EPWM_TZ_SIGNAL_CAPEVT_OST), EPWM_TZ_SIGNAL_CAPEVT_OST);
+    EPWM_enableTripZone2Signals(base, EPWM_TZ_SIGNAL_CAPEVT_CBC);
+    TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(base + CSL_EPWM_TZSEL2) & (uint16_t)EPWM_TZ_SIGNAL_CAPEVT_CBC), EPWM_TZ_SIGNAL_CAPEVT_CBC);
+
+    EPWM_disableTripZone2Signals(base, EPWM_TZ_SIGNAL_CAPEVT_OST);
+    TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(base + CSL_EPWM_TZSEL2) & (uint16_t)EPWM_TZ_SIGNAL_CAPEVT_OST), 0);
+    EPWM_disableTripZone2Signals(base, EPWM_TZ_SIGNAL_CAPEVT_CBC);
+    TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(base + CSL_EPWM_TZSEL2) & (uint16_t)EPWM_TZ_SIGNAL_CAPEVT_CBC), 0);
+
+    for(uint8_t aqModule = EPWM_ACTION_QUALIFIER_A;;aqModule = EPWM_ACTION_QUALIFIER_B)
+    {
+        for(uint16_t loadMode = EPWM_AQ_LOAD_ON_CNTR_ZERO; loadMode <= EPWM_AQ_LOAD_ON_SYNC_CNTR_ZERO_PERIOD; loadMode++)
+        {
+            uint16_t syncModeOffset;
+            uint16_t shadowModeOffset;
+
+            syncModeOffset = CSL_EPWM_AQCTL_LDAQASYNC_SHIFT + (uint16_t)aqModule;
+            shadowModeOffset = CSL_EPWM_AQCTL_SHDWAQAMODE_SHIFT + (uint16_t)aqModule;
+
+            EPWM_setActionQualifierShadowLoadMode(base, aqModule, loadMode);
+
+            uint16_t mask = (((CSL_EPWM_AQCTL_LDAQAMODE_MASK << (uint16_t)aqModule) | (CSL_EPWM_AQCTL_LDAQASYNC_MAX << (uint16_t)syncModeOffset))) | (CSL_EPWM_AQCTL_SHDWAQAMODE_MAX << shadowModeOffset);
+            uint16_t value = ((((uint16_t)loadMode >> 2U) << syncModeOffset) | (((uint16_t)loadMode & CSL_EPWM_AQCTL_LDAQAMODE_MASK) <<(uint16_t)aqModule));
+
+            TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_AQCTL) &mask, value);
+        }
+        if(aqModule == EPWM_ACTION_QUALIFIER_A)
+        {
+            break;
+        }
+    }
+
+    EPWM_enableInterruptEventCountInit(base);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL) &CSL_EPWM_ETCNTINITCTL_INTINITEN_MASK, CSL_EPWM_ETCNTINITCTL_INTINITEN_MASK);
+    EPWM_disableInterruptEventCountInit(base);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL) &CSL_EPWM_ETCNTINITCTL_INTINITEN_MASK, 0);
+    
+    EPWM_enableGlobalLoadOneShotMode(base);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_GLDCTL) &CSL_EPWM_GLDCTL_OSHTMODE_MASK, CSL_EPWM_GLDCTL_OSHTMODE_MASK);
+    EPWM_disableGlobalLoadOneShotMode(base);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_GLDCTL) &CSL_EPWM_GLDCTL_OSHTMODE_MASK, 0);
+
+    /* testing extreme values */
+    EPWM_setInterruptEventCountInitValue(base,0);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINIT) &CSL_EPWM_ETCNTINIT_INTINIT_MASK, 0);
+    EPWM_setInterruptEventCountInitValue(base,15);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINIT) &CSL_EPWM_ETCNTINIT_INTINIT_MASK, 15);
+    
+    EPWM_enableGlobalLoad(base);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_GLDCTL) &CSL_EPWM_GLDCTL_GLD_MASK, CSL_EPWM_GLDCTL_GLD_MASK);
+    EPWM_disableGlobalLoad(base);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_GLDCTL) &CSL_EPWM_GLDCTL_GLD_MASK, 0);
+
+    /* testing extreme values */
+    EPWM_setValleySWDelayValue(base,0);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_SWVDELVAL) & CSL_EPWM_SWVDELVAL_SWVDELVAL_MASK, 0);
+    EPWM_setValleySWDelayValue(base,0xffff);
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_SWVDELVAL) & CSL_EPWM_SWVDELVAL_SWVDELVAL_MASK, 0xffff);
+    
+    return error;
 }
 
 int32_t test_epwm_cases(uint8_t in)

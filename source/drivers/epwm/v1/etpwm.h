@@ -4296,7 +4296,7 @@ EPWM_setActionQualifierContSWForceAction(uint32_t base,
 static inline void
 EPWM_setActionQualifierContSWForceAction_opt_outputs(uint32_t base, uint8_t outputAB)
 {
-    HW_WR_REG8(base + CSL_EPWM_AQCSFRC, outputAB);
+    HW_WR_REG16(base + CSL_EPWM_AQCSFRC, outputAB);
 }
 
 //*****************************************************************************
@@ -5104,8 +5104,8 @@ EPWM_disableTripZoneSignals(uint32_t base, uint32_t tzSignal)
 //! This function enables the Trip Zone signals specified by tzSignal as a
 //! source for the Trip Zone module.
 //! Valid values for tzSignal are:
-//!   - EPWM_TZ2_SIGNAL_CAPEVT_OST    - One-shot CAPEVT
-//!   - EPWM_TZ2_SIGNAL_CAPEVT_CBC    - Cycle By Cycle CAPEVT
+//!   - EPWM_TZ_SIGNAL_CAPEVT_OST    - One-shot CAPEVT
+//!   - EPWM_TZ_SIGNAL_CAPEVT_CBC    - Cycle By Cycle CAPEVT
 //!
 //! \b note:  A logical OR of the valid values can be passed as the tzSignal
 //!           parameter.
@@ -5133,8 +5133,8 @@ EPWM_enableTripZone2Signals(uint32_t base, uint16_t tzSignal)
 //! This function disables the Trip Zone signals specified by tzSignal as a
 //! source for the Trip Zone module.
 //! Valid values for tzSignal are:
-//!   - EPWM_TZ2_SIGNAL_CAPEVT_OST    - One-shot CAPEVT
-//!   - EPWM_TZ2_SIGNAL_CAPEVT_CBC    - Cycle By Cycle CAPEVT
+//!   - EPWM_TZ_SIGNAL_CAPEVT_OST    - One-shot CAPEVT
+//!   - EPWM_TZ_SIGNAL_CAPEVT_CBC    - Cycle By Cycle CAPEVT
 //!
 //! \b note:  A logical OR of the valid values can be passed as the tzSignal
 //!           parameter.
