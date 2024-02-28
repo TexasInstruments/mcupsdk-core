@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-23 Texas Instruments Incorporated
+ * Copyright (C) 2022-24 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* This test demonstrates the HW implementation of SHA */
+/* This test demonstrates the HW implementation of AES ECB encryption and decryption */
 
 #include <stdio.h>
 #include <string.h>
@@ -83,6 +83,14 @@
 /* Total number of Test case*/
 #define TEST_CRYPTO_AES_TEST_CASES_COUNT              (28U)
 
+/* Aes 16 byte key length in bits*/
+#define CRYPTO_KEY_LEN_128                            (128U)
+/* Aes 32 byte key length in bits*/
+#define CRYPTO_KEY_LEN_256                            (256U)
+
+/* number of tests*/
+#define TEST_COUNT                                    (14U)
+
 /* The AES encryption algorithm encrypts and decrypts data in blocks of 128 bits. It can do this using 128-bit, 192-bit, or 256-bit keys */
 static uint8_t gCryptoAesEcb128Key[APP_CRYPTO_AES_ECB_128_MAXKEY_LENGTH] =
 {
@@ -115,21 +123,7 @@ typedef struct
 }App_benchmark;
 
 /* Local test functions */
-static void test_aes_ecb128_32kBuf(void *args);
-static void test_aes_ecb128_16kBuf(void *args);
-static void test_aes_ecb128_8kBuf(void *args);
-static void test_aes_ecb128_4kBuf(void *args);
-static void test_aes_ecb128_2kBuf(void *args);
-static void test_aes_ecb128_1kBuf(void *args);
-static void test_aes_ecb128_512bBuf(void *args);
-
-static void test_aes_ecb256_32kBuf(void *args);
-static void test_aes_ecb256_16kBuf(void *args);
-static void test_aes_ecb256_8kBuf(void *args);
-static void test_aes_ecb256_4kBuf(void *args);
-static void test_aes_ecb256_2kBuf(void *args);
-static void test_aes_ecb256_1kBuf(void *args);
-static void test_aes_ecb256_512bBuf(void *args);
+static void test_aes_ecb(void *args);
 void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t key, uint32_t operation);
 static const char *bytesToString(uint64_t bytes);
 void App_printPerformanceLogs(void);
@@ -146,35 +140,54 @@ void loop_forever()
         ;
 }
 
+typedef struct testParams_t
+{
+    uint32_t testInputLength;
+    uint32_t testId;
+    uint32_t keyLen;
+    uint32_t keyLenForBenchMark;
+    uint8_t *key;
+}testParams;
+
 void test_main(void *args)
 {
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
     UNITY_BEGIN();
-    DTHE_AES_Return_t             status;
+    DTHE_AES_Return_t    status;
+    uint32_t loopForTestCount = 0;
+
+    testParams testRunParams[] = {
+        {TEST_CRYPTO_AES_TEST_32K_BUF_LEN, 8473, DTHE_AES_KEY_256_SIZE, CRYPTO_KEY_LEN_256, gCryptoAesEcb256Key},
+        {TEST_CRYPTO_AES_TEST_16K_BUF_LEN, 8473, DTHE_AES_KEY_256_SIZE, CRYPTO_KEY_LEN_256, gCryptoAesEcb256Key},
+        {TEST_CRYPTO_AES_TEST_8K_BUF_LEN,  8473, DTHE_AES_KEY_256_SIZE, CRYPTO_KEY_LEN_256, gCryptoAesEcb256Key},
+        {TEST_CRYPTO_AES_TEST_4K_BUF_LEN,  8473, DTHE_AES_KEY_256_SIZE, CRYPTO_KEY_LEN_256, gCryptoAesEcb256Key},
+        {TEST_CRYPTO_AES_TEST_2K_BUF_LEN,  8473, DTHE_AES_KEY_256_SIZE, CRYPTO_KEY_LEN_256, gCryptoAesEcb256Key},
+        {TEST_CRYPTO_AES_TEST_1K_BUF_LEN,  8473, DTHE_AES_KEY_256_SIZE, CRYPTO_KEY_LEN_256, gCryptoAesEcb256Key},
+        {TEST_CRYPTO_AES_TEST_512B_BUF_LEN,8473, DTHE_AES_KEY_256_SIZE, CRYPTO_KEY_LEN_256, gCryptoAesEcb256Key},
+        {TEST_CRYPTO_AES_TEST_32K_BUF_LEN, 8472, DTHE_AES_KEY_128_SIZE, CRYPTO_KEY_LEN_128, gCryptoAesEcb128Key},
+        {TEST_CRYPTO_AES_TEST_16K_BUF_LEN, 8472, DTHE_AES_KEY_128_SIZE, CRYPTO_KEY_LEN_128, gCryptoAesEcb128Key},
+        {TEST_CRYPTO_AES_TEST_8K_BUF_LEN,  8472, DTHE_AES_KEY_128_SIZE, CRYPTO_KEY_LEN_128, gCryptoAesEcb128Key},
+        {TEST_CRYPTO_AES_TEST_4K_BUF_LEN,  8472, DTHE_AES_KEY_128_SIZE, CRYPTO_KEY_LEN_128, gCryptoAesEcb128Key},
+        {TEST_CRYPTO_AES_TEST_2K_BUF_LEN,  8472, DTHE_AES_KEY_128_SIZE, CRYPTO_KEY_LEN_128, gCryptoAesEcb128Key},
+        {TEST_CRYPTO_AES_TEST_1K_BUF_LEN,  8472, DTHE_AES_KEY_128_SIZE, CRYPTO_KEY_LEN_128, gCryptoAesEcb128Key},
+        {TEST_CRYPTO_AES_TEST_512B_BUF_LEN,8472, DTHE_AES_KEY_128_SIZE, CRYPTO_KEY_LEN_128, gCryptoAesEcb128Key},
+    };
 
     /* opens DTHe driver */
     aesHandle = DTHE_open(0);
     DebugP_assert(aesHandle != NULL);
 
-    DebugP_log("[CRYPTO] AES ECB-128 Hw tests started ...\r\n");
-    RUN_TEST(test_aes_ecb128_32kBuf,  8472, NULL);
-    RUN_TEST(test_aes_ecb128_16kBuf,  8472, NULL);
-    RUN_TEST(test_aes_ecb128_8kBuf,   8472, NULL);
-    RUN_TEST(test_aes_ecb128_4kBuf,   8472, NULL);
-    RUN_TEST(test_aes_ecb128_2kBuf,   8472, NULL);
-    RUN_TEST(test_aes_ecb128_1kBuf,   8472, NULL);
-    RUN_TEST(test_aes_ecb128_512bBuf, 8472, NULL);
-
-    DebugP_log("[CRYPTO] AES ECB-256 Hw tests started ...\r\n");
-    RUN_TEST(test_aes_ecb256_32kBuf,  8473, NULL);
-    RUN_TEST(test_aes_ecb256_16kBuf,  8473, NULL);
-    RUN_TEST(test_aes_ecb256_8kBuf,   8473, NULL);
-    RUN_TEST(test_aes_ecb256_4kBuf,   8473, NULL);
-    RUN_TEST(test_aes_ecb256_2kBuf,   8473, NULL);
-    RUN_TEST(test_aes_ecb256_1kBuf,   8473, NULL);
-    RUN_TEST(test_aes_ecb256_512bBuf, 8473, NULL);
+    /** ecb 128 and 256 with different input buffers*/
+    for (loopForTestCount = 0; loopForTestCount < TEST_COUNT; loopForTestCount++)
+    {
+        if(( loopForTestCount == 0 ) || ( loopForTestCount == 7))
+        {
+            DebugP_log("[CRYPTO] AES ECB-%d Hw tests started ...\r\n", testRunParams[loopForTestCount].keyLenForBenchMark);
+        }
+        RUN_TEST(test_aes_ecb, (uint32_t)testRunParams[loopForTestCount].testId, (void *)&testRunParams[loopForTestCount]);        
+    }
 
     App_printPerformanceLogs();
     /* Closing DTHE driver */
@@ -202,15 +215,17 @@ void tearDown(void)
 {
 }
 
-void test_aes_ecb128_32kBuf(void *args)
+void test_aes_ecb(void *args)
 {
     DTHE_AES_Return_t   status;
     DTHE_AES_Params     aesParams;
     uint32_t            t1, t2;
 
-    memset(gCryptoAesEcbInputBuf,0x00,TEST_CRYPTO_AES_TEST_32K_BUF_LEN);
-    memset(gCryptoAesEcbEncResultBuf,0xFF,TEST_CRYPTO_AES_TEST_32K_BUF_LEN);
-    memset(gCryptoAesEcbDecResultBuf,0xFF,TEST_CRYPTO_AES_TEST_32K_BUF_LEN);
+    testParams *ptrTestPrms =  args;
+
+    memset(gCryptoAesEcbInputBuf,0x00,ptrTestPrms->testInputLength);
+    memset(gCryptoAesEcbEncResultBuf,0xFF,ptrTestPrms->testInputLength);
+    memset(gCryptoAesEcbDecResultBuf,0xFF,ptrTestPrms->testInputLength);
 
     /* Initialize the AES Parameters */
     (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
@@ -219,10 +234,10 @@ void test_aes_ecb128_32kBuf(void *args)
     aesParams.algoType          = DTHE_AES_ECB_MODE;
     aesParams.opType            = DTHE_AES_ENCRYPT;
     aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb128Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
+    aesParams.ptrKey            = (uint32_t*)ptrTestPrms->key;
+    aesParams.keyLen            = ptrTestPrms->keyLen;
     aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbInputBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_32K_BUF_LEN;
+    aesParams.dataLenBytes      = ptrTestPrms->testInputLength;
     aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
 
     CycleCounterP_reset();
@@ -240,16 +255,16 @@ void test_aes_ecb128_32kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_32K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_ENCRYPT);
+    App_fillPerformanceResults(t1, t2, ptrTestPrms->testInputLength, ptrTestPrms->keyLenForBenchMark, APP_OPERATION_ENCRYPT);
 
     /* Initialize the encryption parameters */
     aesParams.algoType          = DTHE_AES_ECB_MODE;
     aesParams.opType            = DTHE_AES_DECRYPT;
     aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb128Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
+    aesParams.ptrKey            = (uint32_t*)ptrTestPrms->key;
+    aesParams.keyLen            = ptrTestPrms->keyLen;
     aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbDecResultBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_32K_BUF_LEN;
+    aesParams.dataLenBytes      = ptrTestPrms->testInputLength;
     aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
 
     CycleCounterP_reset();
@@ -267,974 +282,12 @@ void test_aes_ecb128_32kBuf(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_32K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_DECRYPT);
+    App_fillPerformanceResults(t1, t2, ptrTestPrms->testInputLength, ptrTestPrms->keyLenForBenchMark, APP_OPERATION_DECRYPT);
 
     /* comparing result with expected test results */
-    status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_32K_BUF_LEN);
+    status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, ptrTestPrms->testInputLength);
     TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
 }
-
-void test_aes_ecb128_16kBuf(void *args)
-{
-    DTHE_AES_Return_t   status;
-    DTHE_AES_Params     aesParams;
-    uint32_t            t1, t2;
-
-    memset(gCryptoAesEcbInputBuf,0x00,TEST_CRYPTO_AES_TEST_16K_BUF_LEN);
-    memset(gCryptoAesEcbEncResultBuf,0xFF,TEST_CRYPTO_AES_TEST_16K_BUF_LEN);
-    memset(gCryptoAesEcbDecResultBuf,0xFF,TEST_CRYPTO_AES_TEST_16K_BUF_LEN);
-
-    /* Initialize the AES Parameters */
-    (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_ENCRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb128Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbInputBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_16K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Encryption */
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_16K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_ENCRYPT);
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_DECRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb128Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbDecResultBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_16K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_16K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_DECRYPT);
-
-    /* comparing result with expected test results */
-    status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_16K_BUF_LEN);
-    TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
-}
-
-void test_aes_ecb128_8kBuf(void *args)
-{
-    DTHE_AES_Return_t   status;
-    DTHE_AES_Params     aesParams;
-    uint32_t            t1, t2;
-
-    memset(gCryptoAesEcbInputBuf,0x00,TEST_CRYPTO_AES_TEST_8K_BUF_LEN);
-    memset(gCryptoAesEcbEncResultBuf,0xFF,TEST_CRYPTO_AES_TEST_8K_BUF_LEN);
-    memset(gCryptoAesEcbDecResultBuf,0xFF,TEST_CRYPTO_AES_TEST_8K_BUF_LEN);
-
-    /* Initialize the AES Parameters */
-    (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_ENCRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb128Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbInputBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_8K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Encryption */
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_8K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_ENCRYPT);
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_DECRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb128Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbDecResultBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_8K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_8K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_DECRYPT);
-
-    /* comparing result with expected test results */
-    status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_8K_BUF_LEN);
-    TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
-
-}
-
-void test_aes_ecb128_4kBuf(void *args)
-{
-    DTHE_AES_Return_t   status;
-    DTHE_AES_Params     aesParams;
-    uint32_t            t1, t2;
-
-    memset(gCryptoAesEcbInputBuf,0x00,TEST_CRYPTO_AES_TEST_4K_BUF_LEN);
-    memset(gCryptoAesEcbEncResultBuf,0xFF,TEST_CRYPTO_AES_TEST_4K_BUF_LEN);
-    memset(gCryptoAesEcbDecResultBuf,0xFF,TEST_CRYPTO_AES_TEST_4K_BUF_LEN);
-
-    /* Initialize the AES Parameters */
-    (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_ENCRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb128Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbInputBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_4K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Encryption */
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_4K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_ENCRYPT);
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_DECRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb128Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbDecResultBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_4K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_4K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_DECRYPT);
-
-    /* comparing result with expected test results */
-    status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_4K_BUF_LEN);
-    TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
-
-}
-
-void test_aes_ecb128_2kBuf(void *args)
-{
-    DTHE_AES_Return_t   status;
-    DTHE_AES_Params     aesParams;
-    uint32_t            t1, t2;
-
-    memset(gCryptoAesEcbInputBuf,0x00,TEST_CRYPTO_AES_TEST_2K_BUF_LEN);
-    memset(gCryptoAesEcbEncResultBuf,0xFF,TEST_CRYPTO_AES_TEST_2K_BUF_LEN);
-    memset(gCryptoAesEcbDecResultBuf,0xFF,TEST_CRYPTO_AES_TEST_2K_BUF_LEN);
-
-    /* Initialize the AES Parameters */
-    (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_ENCRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb128Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbInputBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_2K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Encryption */
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_2K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_ENCRYPT);
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_DECRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb128Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbDecResultBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_2K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_2K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_DECRYPT);
-
-    /* comparing result with expected test results */
-    status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_2K_BUF_LEN);
-    TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
-
-}
-
-void test_aes_ecb128_1kBuf(void *args)
-{
-    DTHE_AES_Return_t   status;
-    DTHE_AES_Params     aesParams;
-    uint32_t            t1, t2;
-
-    memset(gCryptoAesEcbInputBuf,0x00,TEST_CRYPTO_AES_TEST_1K_BUF_LEN);
-    memset(gCryptoAesEcbEncResultBuf,0xFF,TEST_CRYPTO_AES_TEST_1K_BUF_LEN);
-    memset(gCryptoAesEcbDecResultBuf,0xFF,TEST_CRYPTO_AES_TEST_1K_BUF_LEN);
-
-    /* Initialize the AES Parameters */
-    (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_ENCRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb128Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbInputBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_1K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Encryption */
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_1K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_ENCRYPT);
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_DECRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb128Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbDecResultBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_1K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_1K_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_DECRYPT);
-
-    /* comparing result with expected test results */
-    status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_1K_BUF_LEN);
-    TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
-
-}
-
-void test_aes_ecb128_512bBuf(void *args)
-{
-    DTHE_AES_Return_t   status;
-    DTHE_AES_Params     aesParams;
-    uint32_t            t1, t2;
-
-    memset(gCryptoAesEcbInputBuf,0x00,TEST_CRYPTO_AES_TEST_512B_BUF_LEN);
-    memset(gCryptoAesEcbEncResultBuf,0xFF,TEST_CRYPTO_AES_TEST_512B_BUF_LEN);
-    memset(gCryptoAesEcbDecResultBuf,0xFF,TEST_CRYPTO_AES_TEST_512B_BUF_LEN);
-
-    /* Initialize the AES Parameters */
-    (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_ENCRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb128Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbInputBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_512B_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Encryption */
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_512B_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_ENCRYPT);
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_DECRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb128Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_128_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbDecResultBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_512B_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_512B_BUF_LEN, APP_CRYPTO_AES_ECB_128, APP_OPERATION_DECRYPT);
-
-
-    /* comparing result with expected test results */
-    status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_512B_BUF_LEN);
-    TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
-}
-
-void test_aes_ecb256_32kBuf(void *args)
-{
-    DTHE_AES_Return_t   status;
-    DTHE_AES_Params     aesParams;
-    uint32_t            t1, t2;
-
-    memset(gCryptoAesEcbInputBuf,0x00,TEST_CRYPTO_AES_TEST_32K_BUF_LEN);
-    memset(gCryptoAesEcbEncResultBuf,0xFF,TEST_CRYPTO_AES_TEST_32K_BUF_LEN);
-    memset(gCryptoAesEcbDecResultBuf,0xFF,TEST_CRYPTO_AES_TEST_32K_BUF_LEN);
-
-    /* Initialize the AES Parameters */
-    (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_ENCRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb256Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_256_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbInputBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_32K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Encryption */
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_32K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_ENCRYPT);
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_DECRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb256Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_256_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbDecResultBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_32K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_32K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_DECRYPT);
-
-    /* comparing result with expected test results */
-    status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_32K_BUF_LEN);
-    TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
-
-}
-
-void test_aes_ecb256_16kBuf(void *args)
-{
-    DTHE_AES_Return_t   status;
-    DTHE_AES_Params     aesParams;
-    uint32_t            t1, t2;
-
-    memset(gCryptoAesEcbInputBuf,0x00,TEST_CRYPTO_AES_TEST_16K_BUF_LEN);
-    memset(gCryptoAesEcbEncResultBuf,0xFF,TEST_CRYPTO_AES_TEST_16K_BUF_LEN);
-    memset(gCryptoAesEcbDecResultBuf,0xFF,TEST_CRYPTO_AES_TEST_16K_BUF_LEN);
-
-    /* Initialize the AES Parameters */
-    (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_ENCRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb256Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_256_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbInputBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_16K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Encryption */
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_16K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_ENCRYPT);
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_DECRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb256Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_256_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbDecResultBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_16K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_16K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_DECRYPT);
-
-    /* comparing result with expected test results */
-    status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_16K_BUF_LEN);
-    TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
-
-}
-
-void test_aes_ecb256_8kBuf(void *args)
-{
-    DTHE_AES_Return_t   status;
-    DTHE_AES_Params     aesParams;
-    uint32_t            t1, t2;
-
-    memset(gCryptoAesEcbInputBuf,0x00,TEST_CRYPTO_AES_TEST_8K_BUF_LEN);
-    memset(gCryptoAesEcbEncResultBuf,0xFF,TEST_CRYPTO_AES_TEST_8K_BUF_LEN);
-    memset(gCryptoAesEcbDecResultBuf,0xFF,TEST_CRYPTO_AES_TEST_8K_BUF_LEN);
-
-    /* Initialize the AES Parameters */
-    (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_ENCRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb256Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_256_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbInputBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_8K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Encryption */
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_8K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_ENCRYPT);
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_DECRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb256Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_256_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbDecResultBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_8K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_8K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_DECRYPT);
-
-    /* comparing result with expected test results */
-    status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_8K_BUF_LEN);
-    TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
-}
-
-void test_aes_ecb256_4kBuf(void *args)
-{
-    DTHE_AES_Return_t   status;
-    DTHE_AES_Params     aesParams;
-    uint32_t            t1, t2;
-
-    memset(gCryptoAesEcbInputBuf,0x00,TEST_CRYPTO_AES_TEST_4K_BUF_LEN);
-    memset(gCryptoAesEcbEncResultBuf,0xFF,TEST_CRYPTO_AES_TEST_4K_BUF_LEN);
-    memset(gCryptoAesEcbDecResultBuf,0xFF,TEST_CRYPTO_AES_TEST_4K_BUF_LEN);
-
-    /* Initialize the AES Parameters */
-    (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_ENCRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb256Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_256_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbInputBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_4K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Encryption */
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_4K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_ENCRYPT);
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_DECRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb256Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_256_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbDecResultBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_4K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_4K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_DECRYPT);
-
-    /* comparing result with expected test results */
-    status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_4K_BUF_LEN);
-    TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
-}
-
-void test_aes_ecb256_2kBuf(void *args)
-{
-    DTHE_AES_Return_t   status;
-    DTHE_AES_Params     aesParams;
-    uint32_t            t1, t2;
-
-    memset(gCryptoAesEcbInputBuf,0x00,TEST_CRYPTO_AES_TEST_2K_BUF_LEN);
-    memset(gCryptoAesEcbEncResultBuf,0xFF,TEST_CRYPTO_AES_TEST_2K_BUF_LEN);
-    memset(gCryptoAesEcbDecResultBuf,0xFF,TEST_CRYPTO_AES_TEST_2K_BUF_LEN);
-
-    /* Initialize the AES Parameters */
-    (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_ENCRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb256Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_256_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbInputBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_2K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Encryption */
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_2K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_ENCRYPT);
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_DECRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb256Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_256_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbDecResultBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_2K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_2K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_DECRYPT);
-
-    /* comparing result with expected test results */
-    status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_2K_BUF_LEN);
-    TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
-}
-
-void test_aes_ecb256_1kBuf(void *args)
-{
-    DTHE_AES_Return_t   status;
-    DTHE_AES_Params     aesParams;
-    uint32_t            t1, t2;
-
-    memset(gCryptoAesEcbInputBuf,0x00,TEST_CRYPTO_AES_TEST_1K_BUF_LEN);
-    memset(gCryptoAesEcbEncResultBuf,0xFF,TEST_CRYPTO_AES_TEST_1K_BUF_LEN);
-    memset(gCryptoAesEcbDecResultBuf,0xFF,TEST_CRYPTO_AES_TEST_1K_BUF_LEN);
-
-    /* Initialize the AES Parameters */
-    (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_ENCRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb256Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_256_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbInputBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_1K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Encryption */
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_1K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_ENCRYPT);
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_DECRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb256Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_256_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbDecResultBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_1K_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_1K_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_DECRYPT);
-
-    /* comparing result with expected test results */
-    status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_1K_BUF_LEN);
-    TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
-}
-
-void test_aes_ecb256_512bBuf(void *args)
-{
-    DTHE_AES_Return_t   status;
-    DTHE_AES_Params     aesParams;
-    uint32_t            t1, t2;
-
-    memset(gCryptoAesEcbInputBuf,0x00,TEST_CRYPTO_AES_TEST_512B_BUF_LEN);
-    memset(gCryptoAesEcbEncResultBuf,0xFF,TEST_CRYPTO_AES_TEST_512B_BUF_LEN);
-    memset(gCryptoAesEcbDecResultBuf,0xFF,TEST_CRYPTO_AES_TEST_512B_BUF_LEN);
-
-    /* Initialize the AES Parameters */
-    (void)memset ((void *)&aesParams, 0, sizeof(DTHE_AES_Params));
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_ENCRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb256Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_256_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbInputBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_512B_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Encryption */
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_512B_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_ENCRYPT);
-
-    /* Initialize the encryption parameters */
-    aesParams.algoType          = DTHE_AES_ECB_MODE;
-    aesParams.opType            = DTHE_AES_DECRYPT;
-    aesParams.useKEKMode        = FALSE;
-    aesParams.ptrKey            = (uint32_t*)&gCryptoAesEcb256Key[0];
-    aesParams.keyLen            = DTHE_AES_KEY_256_SIZE;
-    aesParams.ptrPlainTextData  = (uint32_t*)&gCryptoAesEcbDecResultBuf[0];
-    aesParams.dataLenBytes      = TEST_CRYPTO_AES_TEST_512B_BUF_LEN;
-    aesParams.ptrEncryptedData  = (uint32_t*)&gCryptoAesEcbEncResultBuf[0];
-
-    CycleCounterP_reset();
-    t1 = CycleCounterP_getCount32();
-
-    /* opens aes driver */
-    status = DTHE_AES_open(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    status = DTHE_AES_execute(aesHandle, &aesParams);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    /* Closing aes driver */
-    status = DTHE_AES_close(aesHandle);
-    DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
-
-    t2 = CycleCounterP_getCount32();
-    App_fillPerformanceResults(t1, t2, TEST_CRYPTO_AES_TEST_512B_BUF_LEN, APP_CRYPTO_AES_ECB_256, APP_OPERATION_DECRYPT);
-
-    /* comparing result with expected test results */
-    status = memcmp(gCryptoAesEcbDecResultBuf, gCryptoAesEcbInputBuf, TEST_CRYPTO_AES_TEST_512B_BUF_LEN);
-    TEST_ASSERT_EQUAL_UINT32(SystemP_SUCCESS, status);
-
-}
-
 
 static const char *bytesToString(uint64_t bytes)
 {
