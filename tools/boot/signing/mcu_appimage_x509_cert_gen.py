@@ -95,6 +95,14 @@ def get_cert(args):
     '''Generate the x509 certificate config'''
     print("Generating certificate for {} ...".format(args.bin))
 
+    hash_algo = args.hash_algo
+
+    if(hash_algo is None):
+        hash_algo = 'sha512'
+    else:
+        if(hash_algo in g_sha_oids):
+            g_sha_to_use = hash_algo
+
     # Default values of template replacements
     v_TEST_IMAGE_SHA_OID          = g_sha_oids[g_sha_to_use]
     v_TEST_IMAGE_SHA_VAL          = None
@@ -263,6 +271,7 @@ my_parser.add_argument('--output',          type=str, help='Output file name (co
 my_parser.add_argument('--enc',             type=str, help='If the binary need to be encrypted or not [y/n]')
 my_parser.add_argument('--kd-salt' ,        type=str, help='Path to the salt required to calculate derived key from manufacturers encryption key')
 my_parser.add_argument('--loadaddr',        type=str, help='Target load address of the binary in hex. Default to 0x70000000')
+my_parser.add_argument('--hash_algo',       type=str, help='Hash algorithm for digest calculation')
 
 args = my_parser.parse_args()
 cert_str = get_cert(args)
