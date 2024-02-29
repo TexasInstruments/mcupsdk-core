@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -43,7 +43,9 @@
 #include "ti_drivers_open_close.h"
 
 /* number of iterations of message exchange to do, this is only used by some tests */
-uint32_t gMsgEchoCount = 10000;
+uint32_t gMsgEchoCount = 1000;
+/* number of iterations of message exchange to do, used by Any to Any test case */
+uint32_t gMsgEchoCountAnyToAny = 10000;
 
 #if defined(SOC_AM64X)
 /* main core that checks the test pass/fail */
@@ -326,7 +328,7 @@ void test_rpmsgAnyToAny(void *args)
     int32_t status;
     uint16_t remoteCoreId, remoteCoreEndPt, msgSize, ackMsgSize;
 
-    for(msg=0; msg<gMsgEchoCount; msg++)
+    for(msg=0; msg<gMsgEchoCountAnyToAny; msg++)
     {
         snprintf(msgBuf, MAX_MSG_SIZE-1, "%d", msg);
         msgBuf[MAX_MSG_SIZE-1] = 0;
