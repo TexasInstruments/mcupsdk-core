@@ -3,7 +3,7 @@
  *
  * Software Diagnostics Library module for ECC
  *
- *  Copyright (c) Texas Instruments Incorporated 2022-2023
+ *  Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -57,21 +57,29 @@
 #define SDL_ECC_WIDTH_UNDEFINED 0x1
 
 /* define Max memEntries for each aggregator (i.e. the number of RAM ID's with * Wrapper type) */
-#define SDL_SOC_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                                  (7U)
-#define SDL_R5FSS0_CORE0_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                         (28U)
-#define SDL_R5FSS0_CORE1_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                         (28U)
-#define SDL_R5FSS1_CORE0_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                         (28U)
-#define SDL_R5FSS1_CORE1_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                         (28U)
+#define SDL_SOC_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                                  (9U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                         (29U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                         (29U)
+#define SDL_R5FSS1_CORE0_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                         (29U)
+#define SDL_R5FSS1_CORE1_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                         (29U)
 #define SDL_HSM_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                                  (10U)
 #define SDL_PRU_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES           (5U)
 #define SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES             (1U)
 #define SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES             (1U)
 #define SDL_MCAN2_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES             (1U)
 #define SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES             (1U)
+#define SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES             (1U)
+#define SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES             (1U)
+#define SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES             (1U)
+#define SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES             (1U)
+#define SDL_FSS_OSPI_RAM_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                         (1U)
+#define SDL_FSS_FOTA_8051_RAM_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                    (1U)
 #define SDL_CPSW3GCSS_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES                            (8U)
-#define SDL_ECC_Base_Address_TOTAL_ENTRIES                                      (12U)
+#define SDL_ECC_Base_Address_TOTAL_ENTRIES                                      (18U)
 
-#define SDL_CPSW0_ECC_U_BASE													(SDL_CPSW0_U_BASE + 0x3f000u)
+#define SDL_CPSW0_ECC_U_BASE                                                    (SDL_CPSW0_U_BASE + 0x3f000u)
+#define SDL_OSPI_ECC_U_BASE                                                     (0x53807000u)
+#define SDL_FOTA_ECC_U_BASE                                                     (0x5380F000u)
 
 /* define parity control register addresses */
 /* R5FSS0 */
@@ -125,6 +133,12 @@ static const SDL_MemConfig_t SDL_SOC_ECC_AGGR_MemEntries[SDL_SOC_ECC_AGGR_RAM_ID
     { SDL_SOC_ECC_AGGR_TPTC_A1_ECC_RAM_ID, 0u,
       SDL_SOC_ECC_AGGR_TPTC_A1_ECC_RAM_SIZE, 8u,
       SDL_ECC_WIDTH_UNDEFINED, ((bool)false) },
+    { SDL_SOC_ECC_AGGR_MSS_L2_SLV4_ECC_RAM_ID, 0x70200000u,
+      SDL_SOC_ECC_AGGR_MSS_L2_SLV4_ECC_RAM_SIZE, 8u,
+      SDL_ECC_WIDTH_UNDEFINED, ((bool)true) },
+    { SDL_SOC_ECC_AGGR_MSS_L2_SLV5_ECC_RAM_ID, 0x70280000u,
+      SDL_SOC_ECC_AGGR_MSS_L2_SLV5_ECC_RAM_SIZE, 8u,
+      SDL_ECC_WIDTH_UNDEFINED, ((bool)true) },
 };
 
 /** ----------------------------------------------------------------------------------
@@ -217,6 +231,9 @@ static const SDL_MemConfig_t SDL_R5FSS0_CORE0_ECC_AGGR_MemEntries[SDL_R5FSS0_COR
     { SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_RAM_ID, 0x50f02000u,
       SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_RAM_SIZE, 4u,
       SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_ROW_WIDTH, ((bool)true) },
+    { SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_RAM_ID, 0,
+      SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_RAM_SIZE, 4u,
+      SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_ROW_WIDTH, ((bool)false) },
 };
 
 /** ----------------------------------------------------------------------------------
@@ -309,6 +326,9 @@ static const SDL_MemConfig_t SDL_R5FSS0_CORE1_ECC_AGGR_MemEntries[SDL_R5FSS0_COR
     { SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_VIM_RAMECC_RAM_ID, 0x50f02000u,
       SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_VIM_RAMECC_RAM_SIZE, 4u,
       SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_VIM_RAMECC_ROW_WIDTH, ((bool)true) },
+    { SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_RAM_ID, 0,
+      SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_RAM_SIZE, 4u,
+      SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_ROW_WIDTH, ((bool)false) },
 };
 
 /** ----------------------------------------------------------------------------------
@@ -401,6 +421,9 @@ static const SDL_MemConfig_t SDL_R5FSS1_CORE0_ECC_AGGR_MemEntries[SDL_R5FSS1_COR
     { SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_RAM_ID, 0x50f02000u,
       SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_RAM_SIZE, 4u,
       SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_ROW_WIDTH, ((bool)true) },
+    { SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_RAM_ID, 0,
+      SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_RAM_SIZE, 4u,
+      SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_ROW_WIDTH, ((bool)false) },
 };
 
 /** ----------------------------------------------------------------------------------
@@ -493,6 +516,9 @@ static const SDL_MemConfig_t SDL_R5FSS1_CORE1_ECC_AGGR_MemEntries[SDL_R5FSS1_COR
     { SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_VIM_RAMECC_RAM_ID, 0x50f02000u,
       SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_VIM_RAMECC_RAM_SIZE, 4u,
       SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_VIM_RAMECC_ROW_WIDTH, ((bool)true) },
+    { SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_RAM_ID, 0,
+      SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_RAM_SIZE, 4u,
+      SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_ROW_WIDTH, ((bool)false) },
 };
 
 /** ----------------------------------------------------------------------------------
@@ -601,6 +627,72 @@ static const SDL_MemConfig_t SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR_MemEntries[SD
 };
 
 /** ----------------------------------------------------------------------------------
+ * This structure holds the memory config for each memory subtype SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR
+ * -----------------------------------------------------------------------------------
+ */
+static const SDL_MemConfig_t SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_MemEntries[SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES] =
+{
+    { SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID, 0x52640000u,
+      SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_SIZE, 4u,
+      SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ROW_WIDTH, ((bool)true) },
+};
+
+/** ----------------------------------------------------------------------------------
+ * This structure holds the memory config for each memory subtype SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR
+ * -----------------------------------------------------------------------------------
+ */
+static const SDL_MemConfig_t SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_MemEntries[SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES] =
+{
+    { SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID, 0x52650000u,
+      SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_SIZE, 4u,
+      SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ROW_WIDTH, ((bool)true) },
+};
+
+/** ----------------------------------------------------------------------------------
+ * This structure holds the memory config for each memory subtype SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR
+ * -----------------------------------------------------------------------------------
+ */
+static const SDL_MemConfig_t SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_MemEntries[SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES] =
+{
+    { SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID, 0x52660000u,
+      SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_SIZE, 4u,
+      SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ROW_WIDTH, ((bool)true) },
+};
+
+/** ----------------------------------------------------------------------------------
+ * This structure holds the memory config for each memory subtype SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR
+ * -----------------------------------------------------------------------------------
+ */
+static const SDL_MemConfig_t SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_MemEntries[SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES] =
+{
+    { SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID, 0x52670000u,
+      SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_SIZE, 4u,
+      SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ROW_WIDTH, ((bool)true) },
+};
+
+/** ----------------------------------------------------------------------------------
+ * This structure holds the memory config for each memory subtype SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR
+ * -----------------------------------------------------------------------------------
+ */
+static const SDL_MemConfig_t SDL_FSS_OSPI_RAM_ECC_AGGR_MemEntries[SDL_FSS_OSPI_RAM_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES] =
+{
+    { SDL_FSS_OSPI_RAM_ECC_AGGR_RAM_ID, 0x53807000u,
+      SDL_FSS_OSPI_RAM_ECC_AGGR_RAM_SIZE, 4u,
+      SDL_FSS_OSPI_RAM_ECC_AGGR_ROW_WIDTH, ((bool)true) },
+};
+
+/** ----------------------------------------------------------------------------------
+ * This structure holds the memory config for each memory subtype SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR
+ * -----------------------------------------------------------------------------------
+ */
+static const SDL_MemConfig_t SDL_FSS_FOTA_8051_RAM_ECC_AGGR_MemEntries[SDL_FSS_FOTA_8051_RAM_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES] =
+{
+    { SDL_FSS_FOTA_8051_RAM_ECC_AGGR_RAM_ID, 0x5380f000u,
+      SDL_FSS_FOTA_8051_RAM_ECC_AGGR_RAM_SIZE, 4u,
+      SDL_FSS_FOTA_8051_RAM_ECC_AGGR_ROW_WIDTH, ((bool)true) },
+};
+
+/** ----------------------------------------------------------------------------------
  * This structure holds the memory config for each memory subtype SDL_CPSW3GCSS_ECC_AGGR
  * -----------------------------------------------------------------------------------
  */
@@ -670,6 +762,16 @@ static const SDL_RAMIdEntry_t SDL_SOC_ECC_AGGR_RamIdTable[SDL_SOC_ECC_AGGR_NUM_R
     { SDL_SOC_ECC_AGGR_TPTC_A1_ECC_RAM_ID,
       SDL_SOC_ECC_AGGR_TPTC_A1_ECC_INJECT_TYPE,
       SDL_SOC_ECC_AGGR_TPTC_A1_ECC_ECC_TYPE,
+      0u,
+      NULL },
+    { SDL_SOC_ECC_AGGR_MSS_L2_SLV4_ECC_RAM_ID,
+      SDL_SOC_ECC_AGGR_MSS_L2_SLV4_ECC_INJECT_TYPE,
+      SDL_SOC_ECC_AGGR_MSS_L2_SLV4_ECC_ECC_TYPE,
+      0u,
+      NULL },
+    { SDL_SOC_ECC_AGGR_MSS_L2_SLV5_ECC_RAM_ID,
+      SDL_SOC_ECC_AGGR_MSS_L2_SLV5_ECC_INJECT_TYPE,
+      SDL_SOC_ECC_AGGR_MSS_L2_SLV5_ECC_ECC_TYPE,
       0u,
       NULL },
 };
@@ -820,6 +922,11 @@ static const SDL_RAMIdEntry_t SDL_R5FSS0_CORE0_ECC_AGGR_RamIdTable[SDL_R5FSS0_CO
       SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_ECC_TYPE,
       0u,
       NULL },
+    { SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_RAM_ID,
+      SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_INJECT_TYPE,
+      SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_ECC_TYPE,
+      0u,
+      NULL },
 };
 
 /** ------------------------------------------------------------------------------------
@@ -968,6 +1075,11 @@ static const SDL_RAMIdEntry_t SDL_R5FSS0_CORE1_ECC_AGGR_RamIdTable[SDL_R5FSS0_CO
       SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_VIM_RAMECC_ECC_TYPE,
       0u,
       NULL },
+    { SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_RAM_ID,
+      SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_INJECT_TYPE,
+      SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_ECC_TYPE,
+      0u,
+      NULL },
 };
 /** ------------------------------------------------------------------------------------
  * This structure holds the list of Ram Ids for each memory subtype in SDL_R5FSS1_CORE0_ECC_AGGR
@@ -1113,6 +1225,11 @@ static const SDL_RAMIdEntry_t SDL_R5FSS1_CORE0_ECC_AGGR_RamIdTable[SDL_R5FSS1_CO
     { SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_RAM_ID,
       SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_INJECT_TYPE,
       SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_ECC_TYPE,
+      0u,
+      NULL },
+    { SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_RAM_ID,
+      SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_INJECT_TYPE,
+      SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_ECC_TYPE,
       0u,
       NULL },
 };
@@ -1263,6 +1380,11 @@ static const SDL_RAMIdEntry_t SDL_R5FSS1_CORE1_ECC_AGGR_RamIdTable[SDL_R5FSS1_CO
       SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_VIM_RAMECC_ECC_TYPE,
       0u,
       NULL },
+    { SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_RAM_ID,
+      SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_INJECT_TYPE,
+      SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_ECC_TYPE,
+      0u,
+      NULL },
 };
 
 /** ------------------------------------------------------------------------------------
@@ -1409,6 +1531,85 @@ static const SDL_RAMIdEntry_t SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR_RamIdTable[S
 };
 
 /** ------------------------------------------------------------------------------------
+ * This structure holds the list of Ram Ids for each memory subtype in SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR
+ * -------------------------------------------------------------------------------------
+ */
+static const SDL_RAMIdEntry_t SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_RamIdTable[SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_NUM_RAMS] =
+{
+    { SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID,
+      SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_INJECT_TYPE,
+      SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ECC_TYPE,
+      0u,
+      NULL }
+};
+
+/** ------------------------------------------------------------------------------------
+ * This structure holds the list of Ram Ids for each memory subtype in SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR
+ * -------------------------------------------------------------------------------------
+ */
+static const SDL_RAMIdEntry_t SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_RamIdTable[SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_NUM_RAMS] =
+{
+    { SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID,
+      SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_INJECT_TYPE,
+      SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ECC_TYPE,
+      0u,
+      NULL }
+};
+
+/** ------------------------------------------------------------------------------------
+ * This structure holds the list of Ram Ids for each memory subtype in SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR
+ * -------------------------------------------------------------------------------------
+ */
+static const SDL_RAMIdEntry_t SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_RamIdTable[SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_NUM_RAMS] =
+{
+    { SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID,
+      SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_INJECT_TYPE,
+      SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ECC_TYPE,
+      0u,
+      NULL }
+};
+
+/** ------------------------------------------------------------------------------------
+ * This structure holds the list of Ram Ids for each memory subtype in SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR
+ * -------------------------------------------------------------------------------------
+ */
+static const SDL_RAMIdEntry_t SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_RamIdTable[SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_NUM_RAMS] =
+{
+    { SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID,
+      SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_INJECT_TYPE,
+      SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ECC_TYPE,
+      0u,
+      NULL }
+};
+
+/** ------------------------------------------------------------------------------------
+ * This structure holds the list of Ram Ids for each memory subtype in  SDL_FSS_FOTA_8051_RAM_ECC_AGGR
+ * -------------------------------------------------------------------------------------
+ */
+static const SDL_RAMIdEntry_t SDL_FSS_OSPI_RAM_ECC_AGGR_RamIdTable[SDL_FSS_OSPI_RAM_ECC_AGGR_NUM_RAMS] =
+{
+    { SDL_FSS_OSPI_RAM_ECC_AGGR_RAM_ID,
+      SDL_FSS_OSPI_RAM_ECC_AGGR_INJECT_TYPE,
+      SDL_FSS_OSPI_RAM_ECC_AGGR_ECC_TYPE,
+      0u,
+      NULL }
+};
+
+/** ------------------------------------------------------------------------------------
+ * This structure holds the list of Ram Ids for each memory subtype in  SDL_FSS_FOTA_8051_RAM_ECC_AGGR
+ * -------------------------------------------------------------------------------------
+ */
+static const SDL_RAMIdEntry_t SDL_FSS_FOTA_8051_RAM_ECC_AGGR_RamIdTable[SDL_FSS_FOTA_8051_RAM_ECC_AGGR_NUM_RAMS] =
+{
+    { SDL_FSS_FOTA_8051_RAM_ECC_AGGR_RAM_ID,
+      SDL_FSS_FOTA_8051_RAM_ECC_AGGR_INJECT_TYPE,
+      SDL_FSS_FOTA_8051_RAM_ECC_AGGR_ECC_TYPE,
+      0u,
+      NULL }
+};
+
+
+/** ------------------------------------------------------------------------------------
  * This structure holds the list of Ram Ids for each memory subtype in SDL_CPSW3GCSS_ECC_AGGR
  * -------------------------------------------------------------------------------------
  */
@@ -1469,8 +1670,13 @@ static SDL_ecc_aggrRegs * const SDL_ECC_aggrBaseAddressTable[SDL_ECC_Base_Addres
     ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MCAN1_ECC_U_BASE)),
     ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MCAN2_ECC_U_BASE)),
     ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MCAN3_ECC_U_BASE)),
+    ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MCAN4_ECC_U_BASE)),
+    ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MCAN5_ECC_U_BASE)),
+    ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MCAN6_ECC_U_BASE)),
+    ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_MCAN7_ECC_U_BASE)),
+    ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_OSPI_ECC_U_BASE)),
+    ((SDL_ecc_aggrRegs *)((uintptr_t)SDL_FOTA_ECC_U_BASE)),
 	((SDL_ecc_aggrRegs *)((uintptr_t)SDL_CPSW0_ECC_U_BASE)),
-
 };
 
 SDL_ecc_aggrRegs * SDL_ECC_aggrTransBaseAddressTable[SDL_ECC_MEMTYPE_MAX];
@@ -1589,7 +1795,67 @@ static const SDL_EccAggrEntry_t SDL_ECC_aggrTable[SDL_ECC_MEMTYPE_MAX] =
        SDL_ESM0_MCAN3_MCAN3_ECC_CORR_LVL_INT,
        SDL_ESM0_MCAN3_MCAN3_ECC_UNCORR_LVL_INT
     },
-    /* Index: SDL_CPSW3GCSS_ECC_AGGR (11) */
+    /* Index: SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR (11) */
+    {
+       SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_NUM_RAMS,
+       SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_RamIdTable,
+       SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES,
+       SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_MemEntries,
+       SDL_ESM_INST_MAIN_ESM0,
+       SDL_ESM0_MCAN4_MCAN4_ECC_CORR_PLS_INT,
+       SDL_ESM0_MCAN4_MCAN4_ECC_UNCORR_LVL_INT
+    },
+    /* Index: SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR (12) */
+    {
+       SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_NUM_RAMS,
+       SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_RamIdTable,
+       SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES,
+       SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_MemEntries,
+       SDL_ESM_INST_MAIN_ESM0,
+       SDL_ESM0_MCAN5_MCAN5_ECC_CORR_LVL_INT,
+       SDL_ESM0_MCAN5_MCAN5_ECC_UNCORR_LVL_INT
+    },
+    /* Index: SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR (13) */
+    {
+       SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_NUM_RAMS,
+       SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_RamIdTable,
+       SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES,
+       SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_MemEntries,
+       SDL_ESM_INST_MAIN_ESM0,
+       SDL_ESM0_MCAN6_MCAN6_ECC_CORR_LVL_INT,
+       SDL_ESM0_MCAN6_MCAN6_ECC_UNCORR_LVL_INT
+    },
+    /* Index: SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR (14) */
+    {
+       SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_NUM_RAMS,
+       SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_RamIdTable,
+       SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES,
+       SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_MemEntries,
+       SDL_ESM_INST_MAIN_ESM0,
+       SDL_ESM0_MCAN7_MCAN7_ECC_CORR_LVL_INT,
+       SDL_ESM0_MCAN7_MCAN7_ECC_UNCORR_LVL_INT
+    },
+    /* Index: SDL_FSS_OSPI_RAM_ECC_AGGR (15) */
+    {
+       SDL_FSS_OSPI_RAM_ECC_AGGR_NUM_RAMS,
+       SDL_FSS_OSPI_RAM_ECC_AGGR_RamIdTable,
+       SDL_FSS_OSPI_RAM_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES,
+       SDL_FSS_OSPI_RAM_ECC_AGGR_MemEntries,
+       SDL_ESM_INST_MAIN_ESM0,
+       SDL_ESM0_OSPI_ECC_CORR,
+       SDL_ESM0_OSPI_ECC_UNCORR
+    },
+    /* Index: SDL_FSS_FOTA_8051_RAM_ECC_AGGR (16) */
+    {
+       SDL_FSS_FOTA_8051_RAM_ECC_AGGR_NUM_RAMS,
+       SDL_FSS_FOTA_8051_RAM_ECC_AGGR_RamIdTable,
+       SDL_FSS_FOTA_8051_RAM_ECC_AGGR_RAM_IDS_TOTAL_ENTRIES,
+       SDL_FSS_FOTA_8051_RAM_ECC_AGGR_MemEntries,
+       SDL_ESM_INST_MAIN_ESM0,
+       SDL_ESM0_OTFA_ECC_CORR,
+       SDL_ESM0_OTFA_ECC_UNCORR
+    },
+    /* Index: SDL_CPSW3GCSS_ECC_AGGR (17) */
     {
        SDL_CPSW3GCSS_ECC_AGGR_NUM_RAMS,
        SDL_CPSW3GCSS_ECC_AGGR_RamIdTable,

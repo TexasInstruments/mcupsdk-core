@@ -2,7 +2,7 @@
 *
 * SOC ECC AGGREGATOR PROPERTIES. header file
 *
-* Copyright (C) 2022-2023 Texas Instruments Incorporated.
+* Copyright (C) 2022-2024 Texas Instruments Incorporated.
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
 *  are met:
@@ -57,7 +57,7 @@ extern "C"
 
 
 /* Properties of ECC Aggregator instance : SOC_ECC_AGGR */
-#define SDL_SOC_ECC_AGGR_NUM_RAMS                                                                  (7U)
+#define SDL_SOC_ECC_AGGR_NUM_RAMS                                                                  (9U)
 
 
 #define SDL_SOC_ECC_AGGR_MSS_L2_SLV0_ECC_RAM_ID                                                    (0U)
@@ -115,9 +115,22 @@ extern "C"
 #define SDL_SOC_ECC_AGGR_TPTC_A1_ECC_ROW_WIDTH                                                     (64U)
 #define SDL_SOC_ECC_AGGR_TPTC_A1_ECC_RAM_SIZE                                                      (524288U)
 
+#define SDL_SOC_ECC_AGGR_MSS_L2_SLV4_ECC_RAM_ID                                                    (7U)
+#define SDL_SOC_ECC_AGGR_MSS_L2_SLV4_ECC_ECC_TYPE                                                  (0U)
+#define SDL_SOC_ECC_AGGR_MSS_L2_SLV4_ECC_INJECT_TYPE                                               (0U)
+#define SDL_SOC_ECC_AGGR_MSS_L2_SLV4_ECC_ACCESSIBLE                                                (1U)
+#define SDL_SOC_ECC_AGGR_MSS_L2_SLV4_ECC_ROW_WIDTH                                                 (64U)
+#define SDL_SOC_ECC_AGGR_MSS_L2_SLV4_ECC_RAM_SIZE                                                  (524288U)
+
+#define SDL_SOC_ECC_AGGR_MSS_L2_SLV5_ECC_RAM_ID                                                    (8U)
+#define SDL_SOC_ECC_AGGR_MSS_L2_SLV5_ECC_ECC_TYPE                                                  (0U)
+#define SDL_SOC_ECC_AGGR_MSS_L2_SLV5_ECC_INJECT_TYPE                                               (0U)
+#define SDL_SOC_ECC_AGGR_MSS_L2_SLV5_ECC_ACCESSIBLE                                                (1U)
+#define SDL_SOC_ECC_AGGR_MSS_L2_SLV5_ECC_ROW_WIDTH                                                 (64U)
+#define SDL_SOC_ECC_AGGR_MSS_L2_SLV5_ECC_RAM_SIZE                                                  (524288U)
 
 /* Properties of ECC Aggregator instance : R5FSS0_CORE0_ECC_AGGR */
-#define SDL_R5FSS0_CORE0_ECC_AGGR_NUM_RAMS                                                         (28U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_NUM_RAMS                                                         (29U)
 
 
 #define SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM0_RAM_ID                                            (0U)
@@ -309,7 +322,7 @@ extern "C"
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_INJECT_TYPE                               (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_ACCESSIBLE                                (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_RAM_SIZE                                  (8192U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_RAM_SIZE                                  (24576U)
 
 
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_ID                                    (24U)
@@ -317,7 +330,7 @@ extern "C"
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_INJECT_TYPE                               (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_ACCESSIBLE                                (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_SIZE                                  (8192U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_SIZE                                  (24576U)
 
 
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_RAM_ID                                    (25U)
@@ -325,7 +338,7 @@ extern "C"
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_INJECT_TYPE                               (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_ACCESSIBLE                                (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_RAM_SIZE                                  (8192U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_RAM_SIZE                                  (24576U)
 
 
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_ID                                    (26U)
@@ -333,7 +346,7 @@ extern "C"
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_INJECT_TYPE                               (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_ACCESSIBLE                                (1U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_SIZE                                  (8192U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_SIZE                                  (24576U)
 
 
 #define SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_RAM_ID                                        (27U)
@@ -343,9 +356,16 @@ extern "C"
 #define SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_ROW_WIDTH                                     (30U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_RAM_SIZE                                      (1920U)
 
+#define SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_RAM_ID                                        (28U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_ECC_TYPE                                      (0U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_INJECT_TYPE                                   (0U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_ACCESSIBLE                                    (0U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_ROW_WIDTH                                     (512U)
+#define SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_RAM_SIZE                                      (136U)
+
 
 /* Properties of ECC Aggregator instance : R5FSS0_CORE1_ECC_AGGR */
-#define SDL_R5FSS0_CORE1_ECC_AGGR_NUM_RAMS                                                         (28U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR_NUM_RAMS                                                         (29U)
 
 
 #define SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_ITAG_RAM0_RAM_ID                                            (0U)
@@ -537,7 +557,7 @@ extern "C"
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_INJECT_TYPE                               (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_ACCESSIBLE                                (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_RAM_SIZE                                  (8192U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_RAM_SIZE                                  (24576U)
 
 
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_RAM_ID                                    (24U)
@@ -545,7 +565,7 @@ extern "C"
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_INJECT_TYPE                               (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_ACCESSIBLE                                (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_RAM_SIZE                                  (8192U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_RAM_SIZE                                  (24576U)
 
 
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_RAM_ID                                    (25U)
@@ -553,7 +573,7 @@ extern "C"
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_INJECT_TYPE                               (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_ACCESSIBLE                                (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_RAM_SIZE                                  (8192U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_RAM_SIZE                                  (24576U)
 
 
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_RAM_ID                                    (26U)
@@ -561,7 +581,7 @@ extern "C"
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_INJECT_TYPE                               (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_ACCESSIBLE                                (1U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_RAM_SIZE                                  (8192U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_RAM_SIZE                                  (24576U)
 
 
 #define SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_VIM_RAMECC_RAM_ID                                        (27U)
@@ -571,9 +591,15 @@ extern "C"
 #define SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_VIM_RAMECC_ROW_WIDTH                                     (30U)
 #define SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_VIM_RAMECC_RAM_SIZE                                      (1920U)
 
+#define SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_RAM_ID                                        (28U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_ECC_TYPE                                      (0U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_INJECT_TYPE                                   (0U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_ACCESSIBLE                                    (0U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_ROW_WIDTH                                     (512U)
+#define SDL_R5FSS0_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_RAM_SIZE                                      (136U)
 
 /* Properties of ECC Aggregator instance : R5FSS1_CORE0_ECC_AGGR */
-#define SDL_R5FSS1_CORE0_ECC_AGGR_NUM_RAMS                                                         (28U)
+#define SDL_R5FSS1_CORE0_ECC_AGGR_NUM_RAMS                                                         (29U)
 
 
 #define SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_ITAG_RAM0_RAM_ID                                            (0U)
@@ -765,7 +791,7 @@ extern "C"
 #define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_INJECT_TYPE                               (1U)
 #define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_ACCESSIBLE                                (1U)
 #define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_RAM_SIZE                                  (8192U)
+#define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK0_RAM_SIZE                                  (24576U)
 
 
 #define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_ID                                    (24U)
@@ -773,7 +799,7 @@ extern "C"
 #define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_INJECT_TYPE                               (1U)
 #define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_ACCESSIBLE                                (1U)
 #define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_SIZE                                  (8192U)
+#define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B0TCM0_BANK1_RAM_SIZE                                  (24576U)
 
 
 #define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_RAM_ID                                    (25U)
@@ -781,7 +807,7 @@ extern "C"
 #define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_INJECT_TYPE                               (1U)
 #define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_ACCESSIBLE                                (1U)
 #define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_RAM_SIZE                                  (8192U)
+#define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK0_RAM_SIZE                                  (24576U)
 
 
 #define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_ID                                    (26U)
@@ -789,7 +815,7 @@ extern "C"
 #define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_INJECT_TYPE                               (1U)
 #define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_ACCESSIBLE                                (1U)
 #define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_SIZE                                  (8192U)
+#define SDL_R5FSS1_CORE0_ECC_AGGR_PULSAR_SL_B1TCM0_BANK1_RAM_SIZE                                  (24576U)
 
 
 #define SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_RAM_ID                                        (27U)
@@ -799,9 +825,16 @@ extern "C"
 #define SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_ROW_WIDTH                                     (30U)
 #define SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_VIM_RAMECC_RAM_SIZE                                      (1920U)
 
+#define SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_RAM_ID                                        (28U)
+#define SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_ECC_TYPE                                      (0U)
+#define SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_INJECT_TYPE                                   (0U)
+#define SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_ACCESSIBLE                                    (0U)
+#define SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_ROW_WIDTH                                     (512U)
+#define SDL_R5FSS1_CORE0_ECC_AGGR_CPU0_KS_RL2_RAMECC_RAM_SIZE                                      (136U)
+
 
 /* Properties of ECC Aggregator instance : R5FSS1_CORE1_ECC_AGGR */
-#define SDL_R5FSS1_CORE1_ECC_AGGR_NUM_RAMS                                                         (28U)
+#define SDL_R5FSS1_CORE1_ECC_AGGR_NUM_RAMS                                                         (29U)
 
 
 #define SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_ITAG_RAM0_RAM_ID                                            (0U)
@@ -993,7 +1026,7 @@ extern "C"
 #define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_INJECT_TYPE                               (1U)
 #define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_ACCESSIBLE                                (1U)
 #define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_RAM_SIZE                                  (8192U)
+#define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK0_RAM_SIZE                                  (24576U)
 
 
 #define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_RAM_ID                                    (24U)
@@ -1001,7 +1034,7 @@ extern "C"
 #define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_INJECT_TYPE                               (1U)
 #define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_ACCESSIBLE                                (1U)
 #define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_RAM_SIZE                                  (8192U)
+#define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B0TCM1_BANK1_RAM_SIZE                                  (24576U)
 
 
 #define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_RAM_ID                                    (25U)
@@ -1009,7 +1042,7 @@ extern "C"
 #define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_INJECT_TYPE                               (1U)
 #define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_ACCESSIBLE                                (1U)
 #define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_RAM_SIZE                                  (8192U)
+#define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK0_RAM_SIZE                                  (24576U)
 
 
 #define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_RAM_ID                                    (26U)
@@ -1017,7 +1050,7 @@ extern "C"
 #define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_INJECT_TYPE                               (1U)
 #define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_ACCESSIBLE                                (1U)
 #define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_ROW_WIDTH                                 (32U)
-#define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_RAM_SIZE                                  (8192U)
+#define SDL_R5FSS1_CORE1_ECC_AGGR_PULSAR_SL_B1TCM1_BANK1_RAM_SIZE                                  (24576U)
 
 
 #define SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_VIM_RAMECC_RAM_ID                                        (27U)
@@ -1027,6 +1060,12 @@ extern "C"
 #define SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_VIM_RAMECC_ROW_WIDTH                                     (30U)
 #define SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_VIM_RAMECC_RAM_SIZE                                      (1920U)
 
+#define SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_RAM_ID                                        (28U)
+#define SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_ECC_TYPE                                      (0U)
+#define SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_INJECT_TYPE                                   (0U)
+#define SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_ACCESSIBLE                                    (0U)
+#define SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_ROW_WIDTH                                     (512U)
+#define SDL_R5FSS1_CORE1_ECC_AGGR_CPU1_KS_RL2_RAMECC_RAM_SIZE                                      (136U)
 
 /* Properties of ECC Aggregator instance : HSM_ECC_AGGR */
 #define SDL_HSM_ECC_AGGR_NUM_RAMS                                                                  (10U)
@@ -1037,7 +1076,7 @@ extern "C"
 #define SDL_HSM_ECC_AGGR_RAMB0_INJECT_TYPE                                                         (0U)
 #define SDL_HSM_ECC_AGGR_RAMB0_ACCESSIBLE                                                          (0U)
 #define SDL_HSM_ECC_AGGR_RAMB0_ROW_WIDTH                                                           (32U)
-#define SDL_HSM_ECC_AGGR_RAMB0_RAM_SIZE                                                            (32768U)
+#define SDL_HSM_ECC_AGGR_RAMB0_RAM_SIZE                                                            (65536U)
 
 
 #define SDL_HSM_ECC_AGGR_RAMB1_RAM_ID                                                              (1U)
@@ -1045,7 +1084,7 @@ extern "C"
 #define SDL_HSM_ECC_AGGR_RAMB1_INJECT_TYPE                                                         (0U)
 #define SDL_HSM_ECC_AGGR_RAMB1_ACCESSIBLE                                                          (0U)
 #define SDL_HSM_ECC_AGGR_RAMB1_ROW_WIDTH                                                           (32U)
-#define SDL_HSM_ECC_AGGR_RAMB1_RAM_SIZE                                                            (32768U)
+#define SDL_HSM_ECC_AGGR_RAMB1_RAM_SIZE                                                            (65536U)
 
 
 #define SDL_HSM_ECC_AGGR_RAMB2_RAM_ID                                                              (2U)
@@ -1202,6 +1241,71 @@ extern "C"
 #define SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ROW_WIDTH              (32U)
 #define SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_SIZE               (17408U)
 
+/* Properties of ECC Aggregator instance : MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR */
+#define SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_NUM_RAMS                                             (1U)
+
+
+#define SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID                 (0U)
+#define SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ECC_TYPE               (0U)
+#define SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_INJECT_TYPE            (0U)
+#define SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ACCESSIBLE             (1U)
+#define SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ROW_WIDTH              (32U)
+#define SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_SIZE               (17408U)
+
+/* Properties of ECC Aggregator instance : MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR */
+#define SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_NUM_RAMS                                             (1U)
+
+
+#define SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID                 (0U)
+#define SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ECC_TYPE               (0U)
+#define SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_INJECT_TYPE            (0U)
+#define SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ACCESSIBLE             (1U)
+#define SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ROW_WIDTH              (32U)
+#define SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_SIZE               (17408U)
+
+/* Properties of ECC Aggregator instance : MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR */
+#define SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_NUM_RAMS                                             (1U)
+
+
+#define SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID                 (0U)
+#define SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ECC_TYPE               (0U)
+#define SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_INJECT_TYPE            (0U)
+#define SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ACCESSIBLE             (1U)
+#define SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ROW_WIDTH              (32U)
+#define SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_SIZE               (17408U)
+
+/* Properties of ECC Aggregator instance : MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR */
+#define SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_NUM_RAMS                                             (1U)
+
+
+#define SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_ID                 (0U)
+#define SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ECC_TYPE               (0U)
+#define SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_INJECT_TYPE            (0U)
+#define SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ACCESSIBLE             (1U)
+#define SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_ROW_WIDTH              (32U)
+#define SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR_MCANSS_MSGMEM_WRAP_MSGMEM_ECC_RAM_SIZE               (17408U)
+
+/* Properties of ECC Aggregator instance : FSS_OSPI_RAM_ECC_AGGR */
+#define SDL_FSS_OSPI_RAM_ECC_AGGR_NUM_RAMS                                                         (1U)
+
+
+#define SDL_FSS_OSPI_RAM_ECC_AGGR_RAM_ID                                                           (0U)
+#define SDL_FSS_OSPI_RAM_ECC_AGGR_ECC_TYPE                                                         (0U)
+#define SDL_FSS_OSPI_RAM_ECC_AGGR_INJECT_TYPE                                                      (0U)
+#define SDL_FSS_OSPI_RAM_ECC_AGGR_ACCESSIBLE                                                       (1U)
+#define SDL_FSS_OSPI_RAM_ECC_AGGR_ROW_WIDTH                                                        (32U)
+#define SDL_FSS_OSPI_RAM_ECC_AGGR_RAM_SIZE                                                         (256U)
+
+/* Properties of ECC Aggregator instance : FSS_FOTA_8051_RAM_ECC_AGGR */
+#define SDL_FSS_FOTA_8051_RAM_ECC_AGGR_NUM_RAMS                                                    (1U)
+
+
+#define SDL_FSS_FOTA_8051_RAM_ECC_AGGR_RAM_ID                                                      (0U)
+#define SDL_FSS_FOTA_8051_RAM_ECC_AGGR_ECC_TYPE                                                    (0U)
+#define SDL_FSS_FOTA_8051_RAM_ECC_AGGR_INJECT_TYPE                                                 (0U)
+#define SDL_FSS_FOTA_8051_RAM_ECC_AGGR_ACCESSIBLE                                                  (1U)
+#define SDL_FSS_FOTA_8051_RAM_ECC_AGGR_ROW_WIDTH                                                   (32U)
+#define SDL_FSS_FOTA_8051_RAM_ECC_AGGR_RAM_SIZE                                                    (512U)
 
 /* Properties of ECC Aggregator instance : CPSW3GCSS_ECC_AGGR */
 #define SDL_CPSW3GCSS_ECC_AGGR_NUM_RAMS                                                            (8U)
@@ -1272,7 +1376,7 @@ extern "C"
 
 
 /* Summary of ECC aggregators */
-#define SDL_ECC_AGGR_NUM_ECC_AGGREGATORS                                                           (12U)
+#define SDL_ECC_AGGR_NUM_ECC_AGGREGATORS                                                           (18U)
 
 #ifdef __cplusplus
 }

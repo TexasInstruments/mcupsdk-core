@@ -3,7 +3,7 @@
  *
  * Software Diagnostics Library module for ECC
  *
- *  Copyright (c) Texas Instruments Incorporated 2022-2023
+ *  Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -84,7 +84,17 @@ extern "C" {
 #define SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (8U)
 #define SDL_MCAN2_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (9U)
 #define SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (10U)
+#if defined(SOC_AM263PX)
+#define SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (11U)
+#define SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (12U)
+#define SDL_MCAN6_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (13U)
+#define SDL_MCAN7_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (14U)
+#define SDL_FSS_OSPI_RAM_ECC_AGGR                                   (15U)
+#define SDL_FSS_FOTA_8051_RAM_ECC_AGGR                              (16U)
+#define SDL_CPSW3GCSS_ECC_AGGR                                      (17U)
+#else
 #define SDL_CPSW3GCSS_ECC_AGGR                                      (11U)
+#endif
 #define SDL_ECC_MEMTYPE_MAX                                         (SDL_CPSW3GCSS_ECC_AGGR + 1U)
 
 /* Parity */

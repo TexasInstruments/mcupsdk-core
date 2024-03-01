@@ -2,7 +2,7 @@
 *
 * SOC BASEADDRESS. header file
 *
-* Copyright (C) 2022-23 Texas Instruments Incorporated.
+* Copyright (C) 2022-24 Texas Instruments Incorporated.
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
 *  are met:
@@ -335,6 +335,10 @@ extern "C"
 #define SDL_MCAN1_ECC_U_BASE                            (0x52701000U)
 #define SDL_MCAN2_ECC_U_BASE                            (0x52702000U)
 #define SDL_MCAN3_ECC_U_BASE                            (0x52703000U)
+#define SDL_MCAN4_ECC_U_BASE                            (0x52704000U)
+#define SDL_MCAN5_ECC_U_BASE                            (0x52705000U)
+#define SDL_MCAN6_ECC_U_BASE                            (0x52706000U)
+#define SDL_MCAN7_ECC_U_BASE                            (0x52707000U)
 #define SDL_CPSW0_U_BASE                                (0x52800000U)
 #define SDL_TPCC0_U_BASE                                (0x52A00000U)
 #define SDL_TPTC00_U_BASE                               (0x52A40000U)

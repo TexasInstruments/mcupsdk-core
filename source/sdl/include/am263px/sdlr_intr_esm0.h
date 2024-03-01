@@ -64,6 +64,7 @@ extern "C"
 #define SDL_ESM0_R5FSS0_CORE1_R5FSS0_CORE1_TCMADDR_ERR              15U
 #define SDL_ESM0_R5FSS1_CORE0_R5FSS1_CORE0_TCMADDR_ERR              16U
 #define SDL_ESM0_R5FSS1_CORE1_R5FSS1_CORE1_TCMADDR_ERR              17U
+#define SDL_ESM0_RESERVED18                                         18U
 #define SDL_ESM0_ECC_AGGREGATOR_SOC_ECCAGG_CORR_LEVEL               19U
 #define SDL_ESM0_ECC_AGGREGATOR_SOC_ECCAGG_UNCORR_LEVEL             20U
 #define SDL_ESM0_DCC0_DCC0_ERR                                      21U
@@ -77,10 +78,18 @@ extern "C"
 #define SDL_ESM0_HSM_ESM_LOW_INTR                                   29U
 #define SDL_ESM0_XTAL_CRYSTAL_CLOCKLOSS                             30U
 #define SDL_ESM0_AGGREGATED_VBUSP_ERROR_AGGREGATED_VBUSP_ERROR_H    31U
+#define SDL_ESM0_RESERVED32                                         32U
 #define SDL_ESM0_AGGREGATED_VBUSM_RRROR_AGGREGATED_VBUSM_ERROR_H    33U
 #define SDL_ESM0_AGGREGATED_VBUSM_RRROR_AGGREGATED_VBUSM_ERROR_L    34U
+#define SDL_ESM0_RESERVED35                                         35U
+#define SDL_ESM0_RESERVED36                                         36U
+#define SDL_ESM0_RESERVED37                                         37U
+#define SDL_ESM0_RESERVED38                                         38U
+#define SDL_ESM0_OSPI_ECC_UNCORR                                    39U
+#define SDL_ESM0_OSPI_ECC_CORR                                      40U
 #define SDL_ESM0_VOLTAGE_MONITOR_ERR_H                              41U
 #define SDL_ESM0_VMON_VOLTAGE_MONITOR_ERR_L                         42U
+#define SDL_ESM0_RESERVED43                                         43U
 #define SDL_ESM0_THERMAL_MONITOR_CRITICAL                           44U
 #define SDL_ESM0_CPSW3G_CPSW_ECC_SEC_PEND_INTR                      45U
 #define SDL_ESM0_CPSW3G_CPSW_ECC_DED_PEND_INTR                      46U
