@@ -1,0 +1,96 @@
+;
+; ti-sample-kmdf.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=SampleTI
+ClassGuid={06da5882-2ff6-4de7-a5b4-708284b1fc4e}
+Provider=%ManufacturerName%
+CatalogFile=ti-sample-kmdf.cat
+DriverVer= ; TODO: set DriverVer in stampinf property pages
+PnpLockdown=1
+
+[DestinationDirs]
+DefaultDestDir = 12
+ti-sample-kmdf_Device_CoInstaller_CopyFiles = 11
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=SampleClassReg
+
+[SampleClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-5
+HKR,,DeviceCharacteristics,0x10001,0x100     ;Use same security checks on relative opens
+HKR,,Security,,"D:P(A;;GA;;;SY)(A;;GA;;;BA)" ;Allow generic all access to system and built-in Admin.
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+ti-sample-kmdf.sys  = 1,,
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll=1 ; make sure the number matches with SourceDisksNames
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NT$ARCH$
+
+[Standard.NT$ARCH$]
+%ti-sample-kmdf.DeviceDesc%=ti-sample-kmdf_Device, PCI\VEN_17cd&DEV_0100
+
+[ti-sample-kmdf_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+ti-sample-kmdf.sys
+
+;-------------- Service installation
+[ti-sample-kmdf_Device.NT.Services]
+AddService = ti-sample-kmdf,%SPSVCINST_ASSOCSERVICE%, ti-sample-kmdf_Service_Inst
+
+; -------------- ti-sample-kmdf driver install sections
+[ti-sample-kmdf_Service_Inst]
+DisplayName    = %ti-sample-kmdf.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\ti-sample-kmdf.sys
+
+;
+;--- ti-sample-kmdf_Device Coinstaller installation ------
+;
+
+[ti-sample-kmdf_Device.NT.CoInstallers]
+AddReg=ti-sample-kmdf_Device_CoInstaller_AddReg
+CopyFiles=ti-sample-kmdf_Device_CoInstaller_CopyFiles
+
+[ti-sample-kmdf_Device_CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+
+[ti-sample-kmdf_Device_CoInstaller_CopyFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+
+[ti-sample-kmdf_Device.NT.Wdf]
+KmdfService =  ti-sample-kmdf, ti-sample-kmdf_wdfsect
+[ti-sample-kmdf_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[ti-sample-kmdf_Device.NT.HW]
+AddReg=ti_sample_kmdf_Device_HW_AddReg
+
+[ti_sample_kmdf_Device_HW_AddReg]
+HKR,Interrupt Management\MessageSignaledInterruptProperties,MSISupported,0x00010001,1
+HKR,Interrupt Management\MessageSignaledInterruptProperties,MessageNumberLimit,0x00010001,32
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="Texas Instruments" ; TODO: Replace with your manufacturer name
+ClassName="TI Samples" ; TODO: edit ClassName
+DiskName = "ti-sample-kmdf Installation Disk"
+ti-sample-kmdf.DeviceDesc = "ti-sample-kmdf Device"
+ti-sample-kmdf.SVCDESC = "ti-sample-kmdf Service"
