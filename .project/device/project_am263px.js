@@ -144,6 +144,7 @@ const example_file_list = [
     "examples/drivers/rl2/.project/project_nortos.js",
 	"examples/drivers/rti/rti_led_blink/.project/project.js",
 	"examples/drivers/sdfm/sdfm_epwm_sync_cpuread/.project/project.js",
+	"examples/drivers/sdfm/sdfm_ecap_loop_back/.project/project.js",
 	"examples/drivers/sdfm/sdfm_filter_sync_cpuread/.project/project.js",
 	"examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/.project/project.js",
 	"examples/drivers/sdfm/sdfm_filter_sync_dmaread/.project/project.js",

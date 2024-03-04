@@ -9138,6 +9138,39 @@
             "example.general"
         ],
         "description": "A SDFM example that reads filter data from CPU CPU is R5FSS0-0 running NORTOS.",
+        "name": "sdfm_ecap_loop_back",
+        "location": "../../examples/drivers/sdfm/sdfm_ecap_loop_back/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "sdfm",
+            "sdfm_ecap_loop_back",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A SDFM example that reads filter data from CPU CPU is R5FSS0-0 running NORTOS.",
         "name": "sdfm_filter_sync_cpuread",
         "location": "../../examples/drivers/sdfm/sdfm_filter_sync_cpuread/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [

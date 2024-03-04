@@ -331,6 +331,10 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_DMAREAD
    -# \subpage EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD
    -# \subpage EXAMPLES_DRIVERS_SDFM_FILTER_SYNC_CPUREAD_SINGLE_CHANNEL
+\cond SOC_AM263PX
+   -# \subpage EXAMPLES_DRIVERS_SDFM_ECAP_LOOP_BACK
+\endcond
+
 -# SPINLOCK
    -# \subpage EXAMPLE_SPINLOCK
 \cond SOC_AM263PX
