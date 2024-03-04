@@ -106,34 +106,34 @@ void test_main(void *args)
     tester_init();
     UNITY_BEGIN();
     char test_title[] = "----------------------SDFM-TEST-CASES----------------------";
-    
+
 
 
     menu_input test_list[TOTAL_TEST_CASES] =
     {
-        {0, 3210,  SDFM_configure_sdfm_input_control_unit_for_an_sdfm_channel ,                    "SDFM_configure_sdfm_input_control_unit_for_an_sdfm_channel" },                   
-        {0, 3211,  SDFM_configure_manchester_decoding_mode ,                                       "SDFM_configure_manchester_decoding_mode" },                                      
-        {0, 3212,  SDFM_configure_data_filter_for_each_channel_with_pwm_sync_disabled ,            "SDFM_configure_data_filter_for_each_channel_with_pwm_sync_disabled" },           
-        {0, 3213,  SDFM_configure_data_filter_with_fifo_enabled_and_pwm_sync_disabled ,            "SDFM_configure_data_filter_with_fifo_enabled_and_pwm_sync_disabled" },           
-        {0, 3214,  SDFM_configure_data_filter_with_fifo_enabled_and_pwm_sync_enabled ,             "SDFM_configure_data_filter_with_fifo_enabled_and_pwm_sync_enabled" },            
-        {0, 3215,  SDFM_configure_comparator_filter ,                                              "SDFM_configure_comparator_filter" },                                             
-        {0, 3216,  SDFM_configure_event_filters_for_high_low_threshold_events ,                    "SDFM_configure_event_filters_for_high_low_threshold_events" },                   
+        {0, 3210,  SDFM_configure_sdfm_input_control_unit_for_an_sdfm_channel ,                    "SDFM_configure_sdfm_input_control_unit_for_an_sdfm_channel" },
+        {0, 3211,  SDFM_configure_manchester_decoding_mode ,                                       "SDFM_configure_manchester_decoding_mode" },
+        {0, 3212,  SDFM_configure_data_filter_for_each_channel_with_pwm_sync_disabled ,            "SDFM_configure_data_filter_for_each_channel_with_pwm_sync_disabled" },
+        {0, 3213,  SDFM_configure_data_filter_with_fifo_enabled_and_pwm_sync_disabled ,            "SDFM_configure_data_filter_with_fifo_enabled_and_pwm_sync_disabled" },
+        {0, 3214,  SDFM_configure_data_filter_with_fifo_enabled_and_pwm_sync_enabled ,             "SDFM_configure_data_filter_with_fifo_enabled_and_pwm_sync_enabled" },
+        {0, 3215,  SDFM_configure_comparator_filter ,                                              "SDFM_configure_comparator_filter" },
+        {0, 3216,  SDFM_configure_event_filters_for_high_low_threshold_events ,                    "SDFM_configure_event_filters_for_high_low_threshold_events" },
         {0, 3217,  SDFM_lock_access_to_event_filters_configuration_registers_for_an_sdfm_channel , "SDFM_lock_access_to_event_filters_configuration_registers_for_an_sdfm_channel" },
-        {0, 3218,  SDFM_configure_data_ack_event_as_trigger_for_data_ready_interrupt ,             "SDFM_configure_data_ack_event_as_trigger_for_data_ready_interrupt" },            
-        {0, 3219,  SDFM_configure_data_ack_event_as_trigger_for_sdint_interrupt ,                  "SDFM_configure_data_ack_event_as_trigger_for_sdint_interrupt" },                 
-        {0, 3220,  SDFM_pwm_sync_sources ,                                                         "SDFM_pwm_sync_sources" },                                                        
-        {0, 3221,  SDFM_sdfm1_clock_source_from_sdfm0 ,                                            "SDFM_sdfm1_clock_source_from_sdfm0" },                                           
-        {0, 3222,  SDFM_sdfm_connectivity_to_dma_xbar ,                                            "SDFM_sdfm_connectivity_to_dma_xbar" },                                           
-        {0, 3223,  SDFM_sdfm_connectivity_to_int_xbar ,                                            "SDFM_sdfm_connectivity_to_int_xbar" },                                           
-        {0, 3224,  SDFM_sdfm_connectivity_to_ecap_xbar ,                                           "SDFM_sdfm_connectivity_to_ecap_xbar" },                                          
-        {0, 3225,  SDFM_sdfm_connectivity_to_pwm_xbar ,                                            "SDFM_sdfm_connectivity_to_pwm_xbar" },                                           
-        {0, 3226,  SDFM_sdfm_connectivity_to_output_xbar ,                                         "SDFM_sdfm_connectivity_to_output_xbar" },                                        
-        {0, 3227,  SDFM_r5_to_sdfm_access_latency ,                                                "SDFM_r5_to_sdfm_access_latency" },                                               
-        {1, 1   ,  SDFM_setCompFilterHighThresholdApiCheck,                                        "SDFM_setCompFilterHighThresholdApiCheck" },                                       
+        {0, 3218,  SDFM_configure_data_ack_event_as_trigger_for_data_ready_interrupt ,             "SDFM_configure_data_ack_event_as_trigger_for_data_ready_interrupt" },
+        {0, 3219,  SDFM_configure_data_ack_event_as_trigger_for_sdint_interrupt ,                  "SDFM_configure_data_ack_event_as_trigger_for_sdint_interrupt" },
+        {0, 3220,  SDFM_pwm_sync_sources ,                                                         "SDFM_pwm_sync_sources" },
+        {0, 3221,  SDFM_sdfm1_clock_source_from_sdfm0 ,                                            "SDFM_sdfm1_clock_source_from_sdfm0" },
+        {0, 3222,  SDFM_sdfm_connectivity_to_dma_xbar ,                                            "SDFM_sdfm_connectivity_to_dma_xbar" },
+        {0, 3223,  SDFM_sdfm_connectivity_to_int_xbar ,                                            "SDFM_sdfm_connectivity_to_int_xbar" },
+        {0, 3224,  SDFM_sdfm_connectivity_to_ecap_xbar ,                                           "SDFM_sdfm_connectivity_to_ecap_xbar" },
+        {0, 3225,  SDFM_sdfm_connectivity_to_pwm_xbar ,                                            "SDFM_sdfm_connectivity_to_pwm_xbar" },
+        {0, 3226,  SDFM_sdfm_connectivity_to_output_xbar ,                                         "SDFM_sdfm_connectivity_to_output_xbar" },
+        {0, 3227,  SDFM_r5_to_sdfm_access_latency ,                                                "SDFM_r5_to_sdfm_access_latency" },
+        {1, 1   ,  SDFM_setCompFilterHighThresholdApiCheck,                                        "SDFM_setCompFilterHighThresholdApiCheck" },
     };
 
 
-    
+
     menu(TOTAL_TEST_CASES, test_list, test_title);
 
     if(enableLog)
@@ -148,7 +148,7 @@ void test_main(void *args)
     Drivers_close();
 
     return;
-    
+
 }
 
 
@@ -174,6 +174,35 @@ static void SDFM_setCompFilterHighThresholdApiCheck(void *args)
     /* Check if the value was written correctly */
     TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(CSL_CONTROLSS_SDFM0_U_BASE + CSL_SDFM_SDFLT1CMPH1 +
               (filterNum*SDFM_SDFIL_OFFSET)) & CSL_SDFM_SDFLT1CMPH1_HLT_MASK) >> CSL_SDFM_SDFLT1CMPH1_HLT_SHIFT, val);
+
+#ifdef SOC_AM263PX
+    uint32_t defaultValue = FALSE;
+    while(1)
+    {
+        for (uint32_t sdfmInst = 0; sdfmInst <=1; sdfmInst++)
+        {
+            for (uint32_t clkInst = 0; clkInst <4; clkInst++)
+            {
+                uint32_t expectedValue = (defaultValue == TRUE)?0:CSL_CONTROLSS_CTRL_SDFM0_CLK0_OUT_SEL_SEL_MASK;
+                uint32_t regOffset = CSL_CONTROLSS_CTRL_U_BASE;
+                regOffset += (sdfmInst == 0)?CSL_CONTROLSS_CTRL_SDFM0_CLK0_OUT_SEL:CSL_CONTROLSS_CTRL_SDFM1_CLK0_OUT_SEL;
+                regOffset += (clkInst)*4;
+
+                SOC_sdfmClkLoopBackConfig(sdfmInst, clkInst, defaultValue);
+                TEST_ASSERT_EQUAL_UINT32(HW_RD_REG32(regOffset) & CSL_CONTROLSS_CTRL_SDFM0_CLK0_OUT_SEL_SEL_MASK, expectedValue);
+            }
+        }
+        if(defaultValue == FALSE)
+        {
+            defaultValue = TRUE;
+        }
+        else
+        {
+            break;
+        }
+    }
+#endif
+
 }
 
 static void SDFM_configure_sdfm_input_control_unit_for_an_sdfm_channel(void *args)

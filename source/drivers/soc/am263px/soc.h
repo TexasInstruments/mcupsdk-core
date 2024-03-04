@@ -302,6 +302,19 @@ void SOC_setEpwmGroup(uint32_t epwmInstance, uint32_t group);
  */
 void SOC_selectSdfm1Clk0Source(uint8_t source);
 
+
+/**
+ * @brief Sets the configuraion for the loopback control. 
+ * 
+ * @param sdfmInstance [in] SDFM instance number [0,1]
+ * @param clkInstance  [in] SDFM Clock number [0 - 3]
+ * @param defaultValue [in] TRUE to set the default Loopback control loopback FALSE to set alternate Loopback control
+ * 
+ * \note this API doesn't configure the PinMux if the loopback clock is required to be routed to the pin, 
+ * the pinMux should be configured with the Output override enabled. 
+ */
+void SOC_sdfmClkLoopBackConfig(uint32_t sdfmInstance, uint32_t clkInstance, uint32_t defaultValue);
+
 /**
  * \brief Gate the ePWM clock
  *

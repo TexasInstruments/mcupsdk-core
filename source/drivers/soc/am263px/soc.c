@@ -505,6 +505,29 @@ void SOC_selectSdfm1Clk0Source(uint8_t source)
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
 }
 
+void SOC_sdfmClkLoopBackConfig(uint32_t sdfmInstance, uint32_t clkInstance, uint32_t defaultValue)
+{
+    uint32_t regOffset = CSL_CONTROLSS_CTRL_U_BASE;
+    regOffset += (sdfmInstance == 0)?CSL_CONTROLSS_CTRL_SDFM0_CLK0_OUT_SEL:CSL_CONTROLSS_CTRL_SDFM1_CLK0_OUT_SEL;
+    regOffset += (clkInstance)*4;
+    /* Unlock CONTROLSS_CTRL registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+    if(TRUE == defaultValue)
+    {
+        CSL_REG32_WR(regOffset,
+            (CSL_REG32_RD(regOffset) & ~CSL_CONTROLSS_CTRL_SDFM0_CLK0_OUT_SEL_SEL_MASK));
+    }
+    else
+    {
+        CSL_REG32_WR(regOffset,
+            (CSL_REG32_RD(regOffset) | CSL_CONTROLSS_CTRL_SDFM0_CLK0_OUT_SEL_SEL_MASK));
+
+    }
+
+    /* Lock CONTROLSS_CTRL registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+}
+
 void SOC_gateEpwmClock(uint32_t epwmInstance)
 {
     uint32_t baseAddr = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_ETPWM0_CLK_GATE + (0x4*epwmInstance);
