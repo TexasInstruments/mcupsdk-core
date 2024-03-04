@@ -38,6 +38,7 @@ extern "C"
 {
 #endif
 
+#include <drivers/bootloader/bootloader_elf.h>
 
 /* Magic number and tokens for RPRC format */
 #define BOOTLOADER_RPRC_MAGIC_NUMBER   0x43525052
@@ -55,7 +56,7 @@ extern "C"
 
 #define BOOTLOADER_DEVICE_ID 55U
 
-typedef struct Bootloader_RprcFileHeader_s 
+typedef struct Bootloader_RprcFileHeader_s
 {
     uint32_t magic;
     uint32_t entry;
@@ -65,7 +66,7 @@ typedef struct Bootloader_RprcFileHeader_s
 
 } Bootloader_RprcFileHeader;
 
-typedef struct Bootloader_RprcSectionHeader_s 
+typedef struct Bootloader_RprcSectionHeader_s
 {
     uint32_t addr;
     uint32_t rsvdAddr;
@@ -98,7 +99,7 @@ typedef struct Bootloader_MetaHeaderEnd_s
 
 } Bootloader_MetaHeaderEnd;
 
-typedef struct 
+typedef struct
 {
 	uint32_t cpuLocalAddr;
 	uint32_t socAddr;
@@ -106,7 +107,7 @@ typedef struct
 
 } Bootloader_addrRegionInfo;
 
-typedef struct 
+typedef struct
 {
 	uint32_t numRegions;
 	Bootloader_addrRegionInfo addrRegionInfo[BOOTLOADER_MAX_ADDR_REGIONS];

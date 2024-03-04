@@ -49,6 +49,7 @@
 #endif
 #include <drivers/bootloader/soc/bootloader_soc.h>
 #include <drivers/bootloader/bootloader_priv.h>
+#include <drivers/bootloader/sha512.h>
 #include <string.h>
 
 /* ========================================================================== */
@@ -57,7 +58,7 @@
 
 /*RPRC image ID for linux load only images */
 #define RPRC_LINUX_LOAD_ONLY_IMAGE_ID (21U)
-
+#define SEGMENT_MAP_NOTE_TYPE (0xBBBB7777)
 
 /* ========================================================================== */
 /*                             Global Variables                               */
@@ -65,6 +66,16 @@
 
 extern Bootloader_Config gBootloaderConfig[];
 extern uint32_t gBootloaderConfigNum;
+
+uint8_t gElfHBuffer[ELF_HEADER_MAX_SIZE];
+uint8_t gNoteSegBuffer[ELF_NOTE_SEGMENT_MAX_SIZE];
+uint8_t gPHTBuffer[ELF_MAX_SEGMENTS * ELF_P_HEADER_MAX_SIZE];
+
+SHA512_CTX gShaCtx;
+uint8_t gHash[SHA512_DIGEST_LENGTH];
+uint8_t gOriginalHash[SHA512_DIGEST_LENGTH] = {
+    0x38, 0xAD, 0x87, 0x63, 0x81, 0xA6, 0x86, 0x8B, 0x98, 0xD4, 0x01, 0x0E, 0x1C, 0x6E, 0x65, 0x59, 0x29, 0x29, 0x84, 0x4E, 0xD0, 0x0A, 0xE7, 0xC7, 0x26, 0x2B, 0x64, 0x1D, 0x10, 0x9C, 0x6B, 0xA7, 0x0B, 0x22, 0x71, 0x53, 0x27, 0x99, 0x20, 0xD2, 0x11, 0x4A, 0x10, 0xB7, 0x67, 0x14, 0x9F, 0xE4, 0xA9, 0x87, 0xE9, 0xC8, 0xC0, 0xE7, 0x9E, 0xE5, 0x51, 0xA9, 0x2D, 0x12, 0x79, 0xB1, 0x78, 0xE8
+};
 
 /* ========================================================================== */
 /*                             Function Definitions                           */
@@ -120,7 +131,7 @@ int32_t Bootloader_loadCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo
     {
         if( cpuInfo->rprcOffset != BOOTLOADER_INVALID_ID)
         {
-            status = Bootloader_rprcImageLoad(handle, cpuInfo);
+            // status = Bootloader_rprcImageLoad(handle, cpuInfo);
         }
     }
 
@@ -194,7 +205,7 @@ int32_t Bootloader_loadSelfCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpu
     {
         if( cpuInfo->rprcOffset != BOOTLOADER_INVALID_ID)
         {
-            status = Bootloader_rprcImageLoad(handle, cpuInfo);
+            // status = Bootloader_rprcImageLoad(handle, cpuInfo);
         }
     }
     if(status == SystemP_SUCCESS)
@@ -656,6 +667,270 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
             status = SystemP_FAILURE;
         }
 
+    }
+
+    return status;
+}
+
+int32_t auth_start(uintptr_t certOffset)
+{
+    (void)certOffset;
+    /* Initialize SHA context */
+    sha512_init(&gShaCtx);
+    return 0;
+}
+
+int32_t auth_update(uintptr_t startAddr, uint32_t size)
+{
+    sha512_update(&gShaCtx, (void *)(startAddr), size);
+    return 0;
+}
+
+int32_t auth_finish(uint8_t *digest)
+{
+    int32_t status = SystemP_FAILURE;
+
+    sha512_final(&gShaCtx, digest);
+
+    if(memcmp(digest, gOriginalHash, SHA512_DIGEST_LENGTH) == 0)
+    {
+        status = SystemP_SUCCESS;
+    }
+    else
+    {
+        status = SystemP_FAILURE;
+    }
+
+    return status;
+}
+
+int32_t Bootloader_parseNoteSegment(Bootloader_Handle handle,
+                                    uint32_t noteSegmentSz,
+                                    uint32_t *segmentMapIdx)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t idx = 0;
+    Bootloader_ELFNote *notePtr = (Bootloader_ELFNote *)gNoteSegBuffer;
+    uint32_t sgMpIdx = 0;
+    uint32_t alignSize = 4U;
+
+    while(idx < noteSegmentSz)
+    {
+        /* Read the type */
+        idx += (ELF_NOTE_NAMESZ_SIZE + ELF_NOTE_DESCSZ_SIZE + ELF_NOTE_TYPE_SIZE);
+        if(notePtr->type == SEGMENT_MAP_NOTE_TYPE)
+        {
+            sgMpIdx = idx + notePtr->namesz;
+            if(notePtr->namesz % alignSize != 0)
+            {
+                sgMpIdx += (alignSize - (notePtr->namesz % alignSize));
+            }
+            break;
+        }
+        else
+        {
+            idx += notePtr->namesz + notePtr->descsz;
+            if(notePtr->namesz % alignSize != 0)
+            {
+                idx += (alignSize - (notePtr->namesz % alignSize));
+            }
+            if(notePtr->descsz % alignSize != 0)
+            {
+                idx += (alignSize - (notePtr->descsz % alignSize));
+            }
+            notePtr = (Bootloader_ELFNote *)((uintptr_t)gNoteSegBuffer + idx);
+        }
+    }
+
+    if(sgMpIdx == 0)
+    {
+        status = SystemP_FAILURE;
+    }
+    else
+    {
+        *segmentMapIdx = sgMpIdx;
+    }
+
+    return status;
+}
+
+int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader_BootImageInfo *bootImageInfo)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint32_t certOffset = 0U;
+    uint32_t elfClass = ELFCLASS_32;
+    uint32_t elfSize = ELF_HEADER_32_SIZE;
+    uint32_t segmentMapIdx = 0;
+
+    Bootloader_Config *config = (Bootloader_Config *)handle;
+
+    if(config->fxns->imgReadFxn == NULL || config->fxns->imgSeekFxn == NULL)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    uint32_t doAuth = ((Bootloader_socIsAuthRequired() == TRUE) && (config->isAppimageSigned == TRUE));
+
+    /* Security will come later, here it should start the streaming AUTH by sending x.509 first */
+    if((status == SystemP_SUCCESS) && (doAuth == TRUE))
+    {
+        status = auth_start(certOffset);
+    }
+
+    if(status == SystemP_SUCCESS)
+    {
+        uint8_t x509Header[4];
+        config->fxns->imgReadFxn(x509Header, 4, config->args);
+        uint32_t imgOffset = Bootloader_getX509CertLen(x509Header);
+        uint32_t rdSz = ELFCLASS_IDX + 1;
+
+        /* parse ELF and verify ELF signature */
+        config->fxns->imgSeekFxn(imgOffset, config->args);
+        status = config->fxns->imgReadFxn(gElfHBuffer, rdSz, config->args);
+        char ELFSTR[] = { 0x7F, 'E', 'L', 'F' };
+        if(memcmp(ELFSTR, gElfHBuffer, 4) != 0)
+        {
+            status = SystemP_FAILURE;
+        }
+        elfClass = gElfHBuffer[ELFCLASS_IDX];
+        config->fxns->imgSeekFxn((imgOffset + rdSz), config->args);
+        if(elfClass == ELFCLASS_64)
+        {
+            elfSize = ELF_HEADER_64_SIZE;
+        }
+        status = config->fxns->imgReadFxn((gElfHBuffer + rdSz), (elfSize - rdSz), config->args);
+    }
+
+    if((status == SystemP_SUCCESS) && (doAuth == TRUE))
+    {
+        auth_update((uintptr_t)gElfHBuffer, elfSize);
+    }
+
+    Bootloader_ELFH32 *elfPtr32 = (Bootloader_ELFH32 *)gElfHBuffer;
+    Bootloader_ELFH64 *elfPtr64 = (Bootloader_ELFH64 *)gElfHBuffer;
+
+    uint32_t phtSize = ((elfPtr32->e_phnum) * (elfPtr32->e_phentsize));
+
+    if(elfClass == ELFCLASS_64)
+    {
+        phtSize = ((elfPtr64->e_phnum) * (elfPtr64->e_phentsize));
+    }
+
+    uint32_t numSegments = elfPtr32->e_phnum;
+    if(elfClass == ELFCLASS_64)
+    {
+        numSegments = elfPtr64->e_phnum;
+    }
+
+    /* Check if number of PHT entries are <= MAX */
+    if(numSegments > ELF_MAX_SEGMENTS)
+    {
+        status = SystemP_FAILURE;
+    }
+
+    if(status == SystemP_SUCCESS)
+    {
+        uint32_t phoff = elfPtr32->e_phoff;
+        if(elfClass == ELFCLASS_64)
+        {
+            phoff = elfPtr64->e_phoff;
+        }
+        config->fxns->imgSeekFxn(phoff, config->args);
+    }
+    status = config->fxns->imgReadFxn((void *)(gPHTBuffer), phtSize, config->args);
+
+    if(status == SystemP_SUCCESS && (doAuth == TRUE))
+    {
+        auth_update((uintptr_t)(gPHTBuffer), phtSize);
+    }
+
+    Bootloader_ELFPH32 *elfPhdrPtr32 = (Bootloader_ELFPH32 *)gPHTBuffer;
+    Bootloader_ELFPH64 *elfPhdrPtr64 = (Bootloader_ELFPH64 *)gPHTBuffer;
+
+    /* Note segment is always first */
+
+    uint32_t noteSegmentSz = elfPhdrPtr32[0].filesz;
+    uint32_t noteSegmentOffset = elfPhdrPtr32[0].offset;
+
+    if(elfClass == ELFCLASS_64)
+    {
+        noteSegmentSz = elfPhdrPtr64[0].filesz;
+        noteSegmentOffset = elfPhdrPtr64[0].offset;
+    }
+
+    config->fxns->imgSeekFxn(noteSegmentOffset, config->args);
+    status = config->fxns->imgReadFxn((void *)(gNoteSegBuffer), noteSegmentSz, config->args);
+
+    if(status == SystemP_SUCCESS)
+    {
+        status = Bootloader_parseNoteSegment(handle, noteSegmentSz, &segmentMapIdx);
+    }
+
+    if(status == SystemP_SUCCESS && (doAuth == TRUE))
+    {
+        status = auth_update((uintptr_t)gNoteSegBuffer, noteSegmentSz);
+    }
+
+    int32_t i;
+
+    if(elfClass == ELFCLASS_32)
+    {
+        for(i = 1; i < elfPtr32->e_phnum; i++)
+        {
+            if(elfPhdrPtr32[i].filesz != 0)
+            {
+                if(elfPhdrPtr32[i].type == PT_LOAD)
+                {
+                    config->fxns->imgSeekFxn(elfPhdrPtr32[i].offset, config->args);
+                    uint32_t addr = Bootloader_socTranslateSectionAddr(gNoteSegBuffer[segmentMapIdx + i - 1], elfPhdrPtr32[i].vaddr);
+                    config->fxns->imgReadFxn((void *)addr, elfPhdrPtr32[i].filesz, config->args);
+                    if(doAuth == TRUE)
+                    {
+                        status = auth_update((uintptr_t)addr, elfPhdrPtr32[i].filesz);
+                    }
+                }
+                else
+                {
+                    /* Ignore this segment */
+                }
+            }
+            else
+            {
+                /* NO LOAD segment, do nothing */
+            }
+        }
+    }
+    else
+    {
+        for(i = 1; i < elfPtr64->e_phnum; i++)
+        {
+            if(elfPhdrPtr64[i].filesz != 0)
+            {
+                if(elfPhdrPtr64[i].type == PT_LOAD)
+                {
+                    config->fxns->imgSeekFxn(elfPhdrPtr64[i].offset, config->args);
+                    uint32_t addr = Bootloader_socTranslateSectionAddr(gNoteSegBuffer[segmentMapIdx + i - 1], elfPhdrPtr64[i].vaddr);
+                    config->fxns->imgReadFxn((void *)addr, elfPhdrPtr64[i].filesz, config->args);
+                    if(doAuth == TRUE)
+                    {
+                        status = auth_update((uintptr_t)addr, elfPhdrPtr64[i].filesz);
+                    }
+                }
+                else
+                {
+                    /* Ignore this segment */
+                }
+            }
+            else
+            {
+                /* NO LOAD segment, do nothing */
+            }
+        }
+    }
+
+    if(status == SystemP_SUCCESS && (doAuth == TRUE))
+    {
+        status = auth_finish(gHash);
     }
 
     return status;

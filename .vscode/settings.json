@@ -1,7 +1,7 @@
 // Place your settings in this file to overwrite the default settings
 {
     "files.eol": "\n",
-    "editor.fontSize": 12,
+    "editor.fontSize": 14,
     "C_Cpp.dimInactiveRegions": false,
     "editor.insertSpaces": true,
     "editor.detectIndentation": false,
@@ -17,7 +17,7 @@
         "cstdlib": "c",
         "ipc_rpmsg.h": "c",
         "ipc_rpmsg_priv.h": "c",
-        "timerp.h": "c"
+        "timerp.h": "c",
         "freertos.h": "c",
         "task.h": "c",
         "semphr.h": "c",
@@ -101,4 +101,5 @@
         "tirex",
         "unsat"
     ],
+    "editor.fontFamily": "ProggyVector",
 }

@@ -473,6 +473,8 @@ uint32_t Bootloader_isCorePresent(Bootloader_Handle handle, uint32_t cslCoreId);
  * \return Boot media ID of the selected media
  */
 uint32_t Bootloader_getBootMedia(Bootloader_Handle handle);
+
+int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader_BootImageInfo *bootImageInfo);
 /** @} */
 
 #ifdef __cplusplus
