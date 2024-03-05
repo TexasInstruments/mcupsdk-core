@@ -46,9 +46,13 @@
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
+/** This is the max value of datasize taken in case of streaming mode */
 #define     MAX_VALUE                   (0xFFFFFFFFU)
 
+/** This is the state of on ongoing stream state */
 #define     AES_STATE_NEW               (0x00U)
+
+/** This is the state of a stream in progress */
 #define     AES_STATE_IN_PROGRESS       (0xA5U)
 
 /* ========================================================================== */
@@ -261,8 +265,6 @@ DTHE_AES_Return_t DTHE_AES_open(DTHE_Handle handle)
         config          = (DTHE_Config *) handle;
         attrs           = config->attrs;
         ptrAesRegs      = (CSL_AesRegs *)attrs->aesBaseAddr;
-
-        gStreamState = AES_STATE_NEW;
 
         /* Soft-Reset AES Module */
 		DTHE_AES_resetModule(ptrAesRegs);
