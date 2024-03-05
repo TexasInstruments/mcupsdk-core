@@ -202,7 +202,8 @@ typedef struct DTHE_AES_Params_t
     uint32_t*           ptrIV;
 
     /**
-     *<   Size of the data in bytes
+     *<   Size of the data in bytes. This value cannot be equal to zero.
+     *    For MAC algorithms, which support dataLength as zero bytes, the handling is done outside the driver scope.
      *
      */
     uint32_t            dataLenBytes;

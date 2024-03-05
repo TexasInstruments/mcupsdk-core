@@ -77,19 +77,24 @@ uint8_t gCryptoAesCmacInputBuffer[APP_CRYPTO_AES_CMAC_256_INPUT_LENGTH] =
 };
 
 /*Expected Cmac results*/
-static const uint8_t gAesCmac256ExpectedResult[3][16] = {
+static const uint8_t gAesCmac256ExpectedResult[4][16] = {
     {
         /* Example #1 */
+        0x02, 0x89, 0x62, 0xf6, 0x1b, 0x7b, 0xf8, 0x9e,
+        0xfc, 0x6b, 0x55, 0x1f, 0x46, 0x67, 0xd9, 0x83
+    },
+    {
+        /* Example #2 */
         0x28, 0xa7, 0x02, 0x3f, 0x45, 0x2e, 0x8f, 0x82,
         0xbd, 0x4b, 0xf2, 0x8d, 0x8c, 0x37, 0xc3, 0x5c
     },
     {
-        /* Example #2 */
+        /* Example #3 */
         0xaa, 0xf3, 0xd8, 0xf1, 0xde, 0x56, 0x40, 0xc2,
         0x32, 0xf5, 0xb1, 0x69, 0xb9, 0xc9, 0x11, 0xe6
     },
     {
-        /* Example #3 */
+        /* Example #4 */
         0xe1, 0x99, 0x21, 0x90, 0x54, 0x9f, 0x6e, 0xd5,
         0x69, 0x6a, 0x2c, 0x05, 0x6c, 0x31, 0x54, 0x10
     }
@@ -105,9 +110,9 @@ uint8_t gCryptoAesCmac256Key[APP_CRYPTO_AES_CMAC_256_MAXKEY_LENGTH] =
 };
 
 /* Different input sizes */
-int32_t gCryptoCmac256DiffInputSizes[3] =
+int32_t gCryptoCmac256DiffInputSizes[4] =
 {
-    16, 40, 64
+    0, 16, 40, 64
 };
 
 uint8_t gCryptoCmacConst_Rb[16] =
@@ -142,17 +147,19 @@ void crypto_aes_cmac_256_main(void *args)
     gAesHandle = DTHE_open(0);
     DebugP_assert(gAesHandle != NULL);
 
-    /* Aes Cmac with 16 bytes input */
-    app_aes_cmac_256(gCryptoAesCmac256Key, gCryptoAesCmacInputBuffer, gCryptoCmac256DiffInputSizes[0], gCryptoAesCmac256ResultBuf);
+    /* Aes Cmac with 0 bytes input */
+    app_aes_cmac_256(gCryptoAesCmac256Key, gCryptoAesCmacZerosInput, gCryptoCmac256DiffInputSizes[0], gCryptoAesCmac256ResultBuf);
 
     /* Comparing final AES CMAC result with expected test results*/
     if(memcmp(gCryptoAesCmac256ResultBuf, gAesCmac256ExpectedResult[0], APP_CRYPTO_AES_CMAC_OUTPUT_LENGTH) != 0)
     {
-        DebugP_log("[CRYPTO] AES CMAC-256 example1 failed!!\r\n");
+        DebugP_log("[CRYPTO] DTHE AES CMAC-256 example1 failed!!\r\n");
         testErrCont ++;
     }
 
-    /* Aes Cmac with 20 bytes input */
+    memset(gCryptoAesCmacZerosInput, 0, APP_CRYPTO_AES_BLOCK_LENGTH);
+
+    /* Aes Cmac with 16 bytes input */
     app_aes_cmac_256(gCryptoAesCmac256Key, gCryptoAesCmacInputBuffer, gCryptoCmac256DiffInputSizes[1], gCryptoAesCmac256ResultBuf);
 
     /* Comparing final AES CMAC result with expected test results*/
@@ -162,8 +169,18 @@ void crypto_aes_cmac_256_main(void *args)
         testErrCont ++;
     }
 
-    /* Aes Cmac with 64 bytes input */
+    /* Aes Cmac with 20 bytes input */
     app_aes_cmac_256(gCryptoAesCmac256Key, gCryptoAesCmacInputBuffer, gCryptoCmac256DiffInputSizes[2], gCryptoAesCmac256ResultBuf);
+
+    /* Comparing final AES CMAC result with expected test results*/
+    if(memcmp(gCryptoAesCmac256ResultBuf, gAesCmac256ExpectedResult[2], APP_CRYPTO_AES_CMAC_OUTPUT_LENGTH) != 0)
+    {
+        DebugP_log("[CRYPTO] AES CMAC-256 example3 failed!!\r\n");
+        testErrCont ++;
+    }
+
+    /* Aes Cmac with 64 bytes input */
+    app_aes_cmac_256(gCryptoAesCmac256Key, gCryptoAesCmacInputBuffer, gCryptoCmac256DiffInputSizes[3], gCryptoAesCmac256ResultBuf);
 
     /* Closing DTHE driver */
     if (DTHE_RETURN_SUCCESS == DTHE_close(gAesHandle))
@@ -177,9 +194,9 @@ void crypto_aes_cmac_256_main(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     /* Comparing final AES CMAC result with expected test results*/
-    if(memcmp(gCryptoAesCmac256ResultBuf, gAesCmac256ExpectedResult[2], APP_CRYPTO_AES_CMAC_OUTPUT_LENGTH) != 0)
+    if(memcmp(gCryptoAesCmac256ResultBuf, gAesCmac256ExpectedResult[3], APP_CRYPTO_AES_CMAC_OUTPUT_LENGTH) != 0)
     {
-        DebugP_log("[CRYPTO] AES CMAC-256 example3 failed!!\r\n");
+        DebugP_log("[CRYPTO] AES CMAC-256 example4 failed!!\r\n");
         testErrCont ++;
     }
 
@@ -209,7 +226,16 @@ void app_aes_cmac_256( uint8_t *key, uint8_t *input, int32_t length, uint8_t *ma
     status = app_cmacGenSubKeys(&params);
     DebugP_assert(SystemP_SUCCESS == status);
 
-    app_aes_cmac_dthe_256(input, key, &params.key1[0], &params.key2[0], length, mac);
+    if(length>0)
+    {
+        app_aes_cmac_dthe_256(input, key, &params.key1[0], &params.key2[0], length, mac);
+    }
+    else
+    {
+        input[0] |= 0x80;
+        app_xor_128(input, &params.key2[0], input);
+        status = app_aes_ecb_256(input, key, APP_CRYPTO_AES_BLOCK_LENGTH, mac);
+    }
 
     return;
 }
