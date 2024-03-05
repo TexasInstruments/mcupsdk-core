@@ -148,6 +148,9 @@ extern "C" {
 /*! \brief MDIO Clause-45 frame support. */
 #define ENET_CFG_MDIO_CLAUSE45                      (ENET_ON)
 
+/*! \brief Number of CPSW ESTFn modules */
+#define ENET_CFG_CPSW_ESTF_NUM                      (CPSW_STATS_MACPORT_MAX)
+
 /* ========================================================================== */
 /*                         Structures and Enums                               */
 /* ========================================================================== */

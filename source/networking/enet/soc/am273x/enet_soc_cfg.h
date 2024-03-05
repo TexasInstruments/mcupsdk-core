@@ -148,6 +148,9 @@ extern "C" {
 /*! \brief Number of switch ports in the subsystem. Number of Mac ports + 1 host port  */
 #define CPSW_ALE_NUM_PORTS                          ((CPSW_STATS_MACPORT_MAX) + 1U)
 
+/*! \brief Number of CPSW ESTFn modules */
+#define ENET_CFG_CPSW_ESTF_NUM                      (CPSW_STATS_MACPORT_MAX)
+
 /* ========================================================================== */
 /*                         Structures and Enums                               */
 /* ========================================================================== */

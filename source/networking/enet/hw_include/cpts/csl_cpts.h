@@ -1454,11 +1454,11 @@ extern int32_t CSL_CPTS_setGENFnNudge (
         genfIndex           Index of the GENFn to configure
         ppmValLo            Lower 32 bits of the PPM value
         ppmValHi            Higher 10 bits of the PPM value
-        ppmDir              CSL_CPTS_TS_PPM_DIR_INCREASE(0) = A single RCLK is added to
+        ppmDir              CSL_CPTS_GENF_PPM_DIR_INCREASE(1) = A single RCLK is added to
                             the generate function counter at the PPM rate which has the
                             effect of decreasing the generate function frequency by the
                             PPM amount.
-                            CSL_CPTS_TS_PPM_DIR_DECREASE(1) = A single RCLK is subtracted
+                            CSL_CPTS_GENF_PPM_DIR_DECREASE(0) = A single RCLK is subtracted
                             from the generate function counter at the PPM rate which
                             has the effect of increasing the generate function
                             frequency by the PPM amount.
@@ -1484,23 +1484,23 @@ extern int32_t CSL_CPTS_setGENFnNudge (
         uint32_t                      genfIndex;
         uint32_t                      tsPpmValLo,
         uint32_t                      tsPpmValHi,
-        CSL_CPTS_TS_PPM_DIR         tsPpmDir;
+        CSL_CPTS_GENF_PPM_DIR         tsPpmDir;
 
         genfIndex    =   0;
         tsPpmValLo   =   10000UL;
         tsPpmValHi   =   0;
-        tsPpmDir = CSL_CPTS_TS_PPM_DIR_INCREASE;
+        tsPpmDir = CSL_CPTS_GENF_PPM_DIR_INCREASE;
 
         CSL_CPTS_setTSPpm (pCptsRegs, genfIndex, tsPpmValLo, tsPpmValHi, tsPpmDir);
      @endverbatim
  * =============================================================================
  */
 extern void CSL_CPTS_setGENFnPpm (
-    CSL_cptsRegs        *pCptsRegs,
-    uint32_t            genfIndex,
-    uint32_t            ppmValLo,
-    uint32_t            ppmValHi,
-    CSL_CPTS_TS_PPM_DIR ppmDir
+    CSL_cptsRegs           *pCptsRegs,
+    uint32_t               genfIndex,
+    uint32_t               ppmValLo,
+    uint32_t               ppmValHi,
+    CSL_CPTS_GENF_PPM_DIR  ppmDir
 );
 
 /** ============================================================================
@@ -1674,11 +1674,11 @@ extern int32_t CSL_CPTS_setESTFnNudge (
         genfIndex           Index of the ESTFn to configure
         ppmValLo            Lower 32 bits of the PPM value
         ppmValHi            Higher 10 bits of the PPM value
-        ppmDir              CSL_CPTS_TS_PPM_DIR_INCREASE(0) = A single RCLK is added to
+        ppmDir              CSL_CPTS_ESTF_PPM_DIR_INCREASE(1) = A single RCLK is added to
                             the generate function counter at the PPM rate which has the
                             effect of decreasing the generate function frequency by the
                             PPM amount.
-                            CSL_CPTS_TS_PPM_DIR_DECREASE(1) = A single RCLK is subtracted
+                            CSL_CPTS_ESTF_PPM_DIR_DECREASE(0) = A single RCLK is subtracted
                             from the generate function counter at the PPM rate which
                             has the effect of increasing the generate function
                             frequency by the PPM amount.
@@ -1704,23 +1704,23 @@ extern int32_t CSL_CPTS_setESTFnNudge (
         uint32_t                      estfIndex;
         uint32_t                      tsPpmValLo,
         uint32_t                      tsPpmValHi,
-        CSL_CPTS_TS_PPM_DIR         tsPpmDir;
+        CSL_CPTS_ESTF_PPM_DIR         tsPpmDir;
 
         genfIndex    =   0;
         tsPpmValLo   =   10000UL;
         tsPpmValHi   =   0;
-        tsPpmDir = CSL_CPTS_TS_PPM_DIR_INCREASE;
+        tsPpmDir = CSL_CPTS_ESTF_PPM_DIR_INCREASE;
 
         CSL_CPTS_setTSPpm (pCptsRegs, estfIndex, tsPpmValLo, tsPpmValHi, tsPpmDir);
      @endverbatim
  * =============================================================================
  */
 extern void CSL_CPTS_setESTFnPpm (
-    CSL_cptsRegs        *pCptsRegs,
-    uint32_t            estfIndex,
-    uint32_t            ppmValLo,
-    uint32_t            ppmValHi,
-    CSL_CPTS_TS_PPM_DIR ppmDir
+    CSL_cptsRegs           *pCptsRegs,
+    uint32_t               estfIndex,
+    uint32_t               ppmValLo,
+    uint32_t               ppmValHi,
+    CSL_CPTS_ESTF_PPM_DIR  ppmDir
 );
 
 /**
