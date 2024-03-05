@@ -262,6 +262,8 @@ DTHE_AES_Return_t DTHE_AES_open(DTHE_Handle handle)
         attrs           = config->attrs;
         ptrAesRegs      = (CSL_AesRegs *)attrs->aesBaseAddr;
 
+        gStreamState = AES_STATE_NEW;
+
         /* Soft-Reset AES Module */
 		DTHE_AES_resetModule(ptrAesRegs);
 
@@ -410,12 +412,17 @@ DTHE_AES_Return_t DTHE_AES_execute(DTHE_Handle handle, const DTHE_AES_Params* pt
             }
         }
         /* Stream Mode Update should support streamSize aligned to 16B only */
-        else if(ptrParams->streamState == DTHE_AES_STREAM_UPDATE)
+        else if((gStreamState == AES_STATE_IN_PROGRESS)&&\
+                ((ptrParams->streamState == DTHE_AES_STREAM_UPDATE)||(ptrParams->streamState == DTHE_AES_STREAM_FINISH)))
         {
-            if ((ptrParams->streamSize % 16U) != 0U)
+            if ((ptrParams->streamState == DTHE_AES_STREAM_UPDATE)&&((ptrParams->streamSize % 16U) != 0U))
             {
                 status = DTHE_AES_RETURN_FAILURE;
             }
+        }
+        else
+        {
+            status = DTHE_AES_RETURN_FAILURE;
         }
 
         /* Execute the AES Driver: */
