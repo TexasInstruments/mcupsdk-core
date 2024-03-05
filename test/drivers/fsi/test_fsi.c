@@ -287,8 +287,8 @@ static void test_fsi_set_params(FSI_MainTestParams *testParams, uint32_t testCas
     testParams->txTestParams = &gFsiTxTestParams;
 
     /* memset both TX/RX buffers to 0 for each testcase */
-    memset(gTxBufData, 0U, sizeof(gTxBufData)/sizeof(gTxBufData[0U]));
-    memset(gRxBufData, 0U, sizeof(gRxBufData)/sizeof(gRxBufData[0U]));
+    memset(gTxBufData, 0U, sizeof(gTxBufData));
+    memset(gRxBufData, 0U, sizeof(gRxBufData));
     switch (testCaseNo)
     {
         case 1514:

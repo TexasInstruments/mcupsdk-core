@@ -208,7 +208,7 @@ void test_aes_cbc128_32kBuf(void *args)
     ctxParams.encMode      = SA2UL_ENC_MODE_CBC;
     ctxParams.encKeySize   = SA2UL_ENC_KEYSIZE_128;
     ctxParams.encDirection = SA2UL_ENC_DIR_ENCRYPT;
-    memcpy( &ctxParams.key[0], &gCryptoAesCbc128Key[0], SA2UL_MAX_KEY_SIZE_BYTES);
+    memcpy( &ctxParams.key[0], &gCryptoAesCbc128Key[0], SA2UL_MAX_KEY_SIZE_BYTES/2);
     memcpy( &ctxParams.iv[0], &gCryptoAesCbcIv[0], SA2UL_MAX_IV_SIZE_BYTES);
     ctxParams.inputLen = TEST_CRYPTO_AES_HW_TEST_32K_BUF_LEN;
     gSa2ulCtxObj.totalLengthInBytes = TEST_CRYPTO_AES_HW_TEST_32K_BUF_LEN;
@@ -274,7 +274,7 @@ void test_aes_cbc128_16kBuf(void *args)
     ctxParams.encMode      = SA2UL_ENC_MODE_CBC;
     ctxParams.encKeySize   = SA2UL_ENC_KEYSIZE_128;
     ctxParams.encDirection = SA2UL_ENC_DIR_ENCRYPT;
-    memcpy( &ctxParams.key[0], &gCryptoAesCbc128Key[0], SA2UL_MAX_KEY_SIZE_BYTES);
+    memcpy( &ctxParams.key[0], &gCryptoAesCbc128Key[0], SA2UL_MAX_KEY_SIZE_BYTES/2);
     memcpy( &ctxParams.iv[0], &gCryptoAesCbcIv[0], SA2UL_MAX_IV_SIZE_BYTES);
     ctxParams.inputLen = TEST_CRYPTO_AES_HW_TEST_16K_BUF_LEN;
     gSa2ulCtxObj.totalLengthInBytes = TEST_CRYPTO_AES_HW_TEST_16K_BUF_LEN;
@@ -340,7 +340,7 @@ void test_aes_cbc128_8kBuf(void *args)
     ctxParams.encMode      = SA2UL_ENC_MODE_CBC;
     ctxParams.encKeySize   = SA2UL_ENC_KEYSIZE_128;
     ctxParams.encDirection = SA2UL_ENC_DIR_ENCRYPT;
-    memcpy( &ctxParams.key[0], &gCryptoAesCbc128Key[0], SA2UL_MAX_KEY_SIZE_BYTES);
+    memcpy( &ctxParams.key[0], &gCryptoAesCbc128Key[0], SA2UL_MAX_KEY_SIZE_BYTES/2);
     memcpy( &ctxParams.iv[0], &gCryptoAesCbcIv[0], SA2UL_MAX_IV_SIZE_BYTES);
     ctxParams.inputLen = TEST_CRYPTO_AES_HW_TEST_8K_BUF_LEN;
     gSa2ulCtxObj.totalLengthInBytes = TEST_CRYPTO_AES_HW_TEST_8K_BUF_LEN;
@@ -406,7 +406,7 @@ void test_aes_cbc128_4kBuf(void *args)
     ctxParams.encMode      = SA2UL_ENC_MODE_CBC;
     ctxParams.encKeySize   = SA2UL_ENC_KEYSIZE_128;
     ctxParams.encDirection = SA2UL_ENC_DIR_ENCRYPT;
-    memcpy( &ctxParams.key[0], &gCryptoAesCbc128Key[0], SA2UL_MAX_KEY_SIZE_BYTES);
+    memcpy( &ctxParams.key[0], &gCryptoAesCbc128Key[0], SA2UL_MAX_KEY_SIZE_BYTES/2);
     memcpy( &ctxParams.iv[0], &gCryptoAesCbcIv[0], SA2UL_MAX_IV_SIZE_BYTES);
     ctxParams.inputLen = TEST_CRYPTO_AES_HW_TEST_4K_BUF_LEN;
     gSa2ulCtxObj.totalLengthInBytes = TEST_CRYPTO_AES_HW_TEST_4K_BUF_LEN;
@@ -472,7 +472,7 @@ void test_aes_cbc128_2kBuf(void *args)
     ctxParams.encMode      = SA2UL_ENC_MODE_CBC;
     ctxParams.encKeySize   = SA2UL_ENC_KEYSIZE_128;
     ctxParams.encDirection = SA2UL_ENC_DIR_ENCRYPT;
-    memcpy( &ctxParams.key[0], &gCryptoAesCbc128Key[0], SA2UL_MAX_KEY_SIZE_BYTES);
+    memcpy( &ctxParams.key[0], &gCryptoAesCbc128Key[0], SA2UL_MAX_KEY_SIZE_BYTES/2);
     memcpy( &ctxParams.iv[0], &gCryptoAesCbcIv[0], SA2UL_MAX_IV_SIZE_BYTES);
     ctxParams.inputLen = TEST_CRYPTO_AES_HW_TEST_2K_BUF_LEN;
     gSa2ulCtxObj.totalLengthInBytes = TEST_CRYPTO_AES_HW_TEST_2K_BUF_LEN;
@@ -538,7 +538,7 @@ void test_aes_cbc128_1kBuf(void *args)
     ctxParams.encMode      = SA2UL_ENC_MODE_CBC;
     ctxParams.encKeySize   = SA2UL_ENC_KEYSIZE_128;
     ctxParams.encDirection = SA2UL_ENC_DIR_ENCRYPT;
-    memcpy( &ctxParams.key[0], &gCryptoAesCbc128Key[0], SA2UL_MAX_KEY_SIZE_BYTES);
+    memcpy( &ctxParams.key[0], &gCryptoAesCbc128Key[0], SA2UL_MAX_KEY_SIZE_BYTES/2);
     memcpy( &ctxParams.iv[0], &gCryptoAesCbcIv[0], SA2UL_MAX_IV_SIZE_BYTES);
     ctxParams.inputLen = TEST_CRYPTO_AES_HW_TEST_1K_BUF_LEN;
     gSa2ulCtxObj.totalLengthInBytes = TEST_CRYPTO_AES_HW_TEST_1K_BUF_LEN;
@@ -604,7 +604,7 @@ void test_aes_cbc128_512bBuf(void *args)
     ctxParams.encMode      = SA2UL_ENC_MODE_CBC;
     ctxParams.encKeySize   = SA2UL_ENC_KEYSIZE_128;
     ctxParams.encDirection = SA2UL_ENC_DIR_ENCRYPT;
-    memcpy( &ctxParams.key[0], &gCryptoAesCbc128Key[0], SA2UL_MAX_KEY_SIZE_BYTES);
+    memcpy( &ctxParams.key[0], &gCryptoAesCbc128Key[0], SA2UL_MAX_KEY_SIZE_BYTES/2);
     memcpy( &ctxParams.iv[0], &gCryptoAesCbcIv[0], SA2UL_MAX_IV_SIZE_BYTES);
     ctxParams.inputLen = TEST_CRYPTO_AES_HW_TEST_512B_BUF_LEN;
     gSa2ulCtxObj.totalLengthInBytes = TEST_CRYPTO_AES_HW_TEST_512B_BUF_LEN;
@@ -1121,7 +1121,7 @@ static const char *bytesToString(uint64_t bytes)
 	}
 
 	static char output[200];
-	sprintf(output, "%  .02lf %s", dblBytes, suffix[i]);
+	sprintf(output, "%.02lf %s", dblBytes, suffix[i]);
 	return output;
 }
 

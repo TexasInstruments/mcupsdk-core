@@ -44,6 +44,14 @@ const libs_r5f = {
     ],
 };
 
+const libs_r5f_gcc = {
+    common: [
+        "nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+        "unity.am243x.r5f.gcc-armv7.${ConfigName}.lib",
+    ],
+};
+
 const libs_m4f = {
     common: [
         "nortos.am243x.m4f.ti-arm-clang.${ConfigName}.lib",
@@ -72,6 +80,21 @@ const templates_nortos_r5f =
     }
 ];
 
+const templates_nortos_r5f_gcc =
+[
+    {
+        input: ".project/templates/am243x/common/linker_r5f_gcc.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/am243x/nortos/main_nortos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "test_main",
+        },
+    }
+];
+
 const templates_nortos_m4f =
 [
     {
@@ -88,6 +111,10 @@ const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "freertos"},
+    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm", os: "freertos"},
+    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-lp", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-lp", os: "freertos"},
 ];
 
 function getComponentProperty() {
@@ -114,8 +141,16 @@ function getComponentBuildProperty(buildOption) {
     build_property.syscfgfile = syscfgfile;
 
     if(buildOption.cpu.match(/r5f*/)) {
-        build_property.libs = libs_r5f;
-        build_property.templates = templates_nortos_r5f;
+        if(buildOption.cgt.match(/gcc*/) )
+        {
+            build_property.libs = libs_r5f_gcc;
+            build_property.templates = templates_nortos_r5f_gcc;
+        }
+        else
+        {
+            build_property.libs = libs_r5f;
+            build_property.templates = templates_nortos_r5f;
+        }
     }
     if(buildOption.cpu.match(/m4f*/)) {
         build_property.libs = libs_m4f;

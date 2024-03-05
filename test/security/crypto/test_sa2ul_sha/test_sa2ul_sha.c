@@ -813,7 +813,7 @@ static const char *bytesToString(uint64_t bytes)
 	}
 
 	static char output[200];
-	sprintf(output, "%  .02lf %s", dblBytes, suffix[i]);
+	sprintf(output, "%.02lf %s", dblBytes, suffix[i]);
 	return output;
 }
 
