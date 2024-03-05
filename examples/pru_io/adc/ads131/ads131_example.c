@@ -125,7 +125,8 @@ void ads_example_main(void *args)
 
     /*
     * command length or word length default value set to 24bits
-    * So Each command sent to adc is of size 24bit, MSb 24bits[32:9] are sent by PRU
+    * Refer Section 8.5.1.8 - 8.5.1.10 to understand on programming to configure adc
+    * So Each command sent to adc is of size 24bit, LSb 24bits[23:0] are sent by PRU
     * Write Reg: 0000 0000 011a aaaa annn nnnn, Writes nnn nnnn plus 1 registers beginning at address aa aaaa
     * With  0000 0000 dddd dddd dddd dddd (nnn nnnn plus 1 registers values) 
     * To configure ADC sampling rate to 32KSPS write to CLOCK_REG With value 0x00FF02 (WRITE_CLOCK_REG_COMMAND & CLOCK_REG_VALUE)
