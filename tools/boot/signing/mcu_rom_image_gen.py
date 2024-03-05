@@ -56,6 +56,7 @@ emailAddress           = Albert@gt.ti.com
 
 [ v3_ca ]
 basicConstraints = CA:true
+subjectKeyIdentifier = none
 1.3.6.1.4.1.294.1.1=ASN1:SEQUENCE:boot_seq
 1.3.6.1.4.1.294.1.2=ASN1:SEQUENCE:image_integrity
 1.3.6.1.4.1.294.1.3=ASN1:SEQUENCE:swrv
