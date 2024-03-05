@@ -95,6 +95,7 @@ def get_cert(args):
     '''Generate the x509 certificate config'''
     print("Generating certificate for {} ...".format(args.bin))
 
+    global g_sha_to_use
     hash_algo = args.hash_algo
 
     if(hash_algo is None):
