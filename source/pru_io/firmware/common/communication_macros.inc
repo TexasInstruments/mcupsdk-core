@@ -107,11 +107,11 @@ m_comm_read_frame       .macro  INTERFACE, NO_OF_PACKETS, WAIT_CSRD, dataRegBase
     ; .endif  ; CS_ACTIVE_LEVEL
 
     ldi     packetId, 0
-READ_FRAME_LOOP:            ; cannot use loop instr as it is used in invoked macros
+READ_FRAME_LOOP?:            ; cannot use loop instr as it is used in invoked macros
     m_comm_read_packet      INTERFACE, tempDataReg, CONFIG
     mvid    *dataRegBaseAddr++, tempDataReg
     add     packetId, packetId, 1
-    qbne    READ_FRAME_LOOP, packetId, NO_OF_PACKETS
+    qbne    READ_FRAME_LOOP?, packetId, NO_OF_PACKETS
 
     ; .if     $symcmp(CS_ACTIVE_LEVEL,"CS_ACTIVE_LOW") = 0
     m_set_pru_pin       CS_PIN      ; set CS high

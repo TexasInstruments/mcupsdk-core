@@ -499,7 +499,7 @@ m_parallel_read_frame   .macro  NO_OF_PACKETS, dataRegBaseAddr, tempReg, ENDIAN,
     ; Can we use this loop instruction? noninterruptible loop meaning?
     ; loop EndLoop, NO_OF_PACKETS
     ldi     packetId, 0
-READ_FRAME_LOOP:
+READ_FRAME_LOOP?:
     m_parallel_read_packet  ENDIAN, INTERFACE, DATAWIDTH, RD_HIGH_LOW_TIME, data_reg
     ; .if         DATAWIDTH <= 8
     ; mvib    *dataRegBaseAddr++, data_reg
@@ -509,7 +509,7 @@ READ_FRAME_LOOP:
     mvid    *dataRegBaseAddr++, data_reg
     ; .endif  ; DATAWIDTH <= 8
     add     packetId, packetId, 1
-    qbne    READ_FRAME_LOOP, packetId, NO_OF_PACKETS
+    qbne    READ_FRAME_LOOP?, packetId, NO_OF_PACKETS
     .endif
 
     ;-----------------------------------------------

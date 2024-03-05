@@ -296,13 +296,13 @@ m_send_packet_spi_mode1_msb_gpo_sclk   .macro  dataReg, PACKETSIZE, bitId, SCLK_
     ; loop  SEND_BIT_LOOP_END, PACKETSIZE
 SEND_BIT_LOOP?:
     m_pru_set_pin   SCLK_PIN
-    qbbc            skip_data_high, dataReg, bitId
+    qbbc            skip_data_high?, dataReg, bitId
     m_pru_set_pin   SDO_PIN
-    qba             skip_data_low
-skip_data_high:
+    qba             skip_data_low?
+skip_data_high?:
     m_pru_clr_pin   SDO_PIN
     NOP
-skip_data_low:
+skip_data_low?:
     .loop   DELAY_COMPEN_1 ; 0
     NOP
     .endloop
@@ -348,13 +348,13 @@ m_send_packet_spi_mode1_lsb_gpo_sclk   .macro  dataReg, PACKETSIZE, bitId, SCLK_
     ; loop  SEND_BIT_LOOP_END, PACKETSIZE
 SEND_BIT_LOOP?:
     m_pru_set_pin   SCLK_PIN
-    qbbc            skip_data_high, dataReg, bitId
+    qbbc            skip_data_high?, dataReg, bitId
     m_pru_set_pin   SDO_PIN
-    qba             skip_data_low
-skip_data_high:
+    qba             skip_data_low?
+skip_data_high?:
     m_pru_clr_pin   SDO_PIN
     NOP
-skip_data_low:
+skip_data_low?:
     .loop   DELAY_COMPEN_1 ; 0
     NOP
     .endloop
@@ -410,13 +410,13 @@ m_send_packet_spi_mode1_msb_iep_sclk   .macro  dataReg, PACKETSIZE, bitId, temp_
     NOP
     .endloop
 SEND_PACKET_LOOP?:      ; time taken should be same as sync out cycle period
-    qbbc            skip_data_high, dataReg, bitId
+    qbbc            skip_data_high?, dataReg, bitId
     m_pru_set_pin   SDO_PIN
-    qba             skip_data_low
-skip_data_high:
+    qba             skip_data_low?
+skip_data_high?:
     m_pru_clr_pin   SDO_PIN
     NOP
-skip_data_low:
+skip_data_low?:
     .loop   DELAY_COMPEN_2 ; 3
     NOP
     .endloop
@@ -468,13 +468,13 @@ m_send_packet_spi_mode1_lsb_iep_sclk   .macro  dataReg, PACKETSIZE, bitId, temp_
     NOP
     .endloop
 SEND_PACKET_LOOP?:      ; time taken should be same as sync out cycle period
-    qbbc            skip_data_high, dataReg, bitId
+    qbbc            skip_data_high?, dataReg, bitId
     m_pru_set_pin   SDO_PIN
-    qba             skip_data_low
-skip_data_high:
+    qba             skip_data_low?
+skip_data_high?:
     m_pru_clr_pin   SDO_PIN
     NOP
-skip_data_low:
+skip_data_low?:
     .loop   DELAY_COMPEN_2 ; 3
     NOP
     .endloop
