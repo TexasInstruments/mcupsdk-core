@@ -74,6 +74,21 @@ This sequence performs Encryption and decryption operations for AES-ECB/CBC/CTR 
 - #DTHE_AES_close(): Function to close DTHE AES driver.
 - #DTHE_close(): Function to De-initialize the DTHE instance.
 
+
+In order to cancel an existing stream, <i>DTHE_AES_close</i> should be called followed by <i>DTHE_AES_open</i> like this. This will discard the
+current stream data -
+- #DTHE_open(): Function to open DTHE instance, enable DTHE engine.
+- #DTHE_AES_open(): Function to open DTHE AES instance using the handle returned from DTHE_open().
+- #DTHE_AES_execute(): Function to execute the AES driver with specified parameters and streamstate as <b>init</b>.
+- #DTHE_AES_execute(): Function to execute the AES driver with specified parameters and streamstate as <b>update</b>.
+- #DTHE_AES_close(): Function to close DTHE AES driver.
+- #DTHE_AES_open(): Function to open DTHE AES instance using the handle returned from DTHE_open().
+- #DTHE_AES_execute(): Function to execute the AES driver with specified parameters and streamstate as <b>init</b>.
+- #DTHE_AES_execute(): Function to execute the AES driver with specified parameters and streamstate as <b>update</b>.
+- #DTHE_AES_execute(): Function to execute the AES driver with specified parameters and streamstate as <b>finish</b>.
+- #DTHE_AES_close(): Function to close DTHE AES driver.
+- #DTHE_close(): Function to De-initialize the DTHE instance.
+
 ## API
 - \ref SECURITY_DTHE_AES_MODULE
 

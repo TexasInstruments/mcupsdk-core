@@ -266,6 +266,8 @@ DTHE_AES_Return_t DTHE_AES_open(DTHE_Handle handle)
         attrs           = config->attrs;
         ptrAesRegs      = (CSL_AesRegs *)attrs->aesBaseAddr;
 
+        gStreamState = AES_STATE_NEW;
+
         /* Soft-Reset AES Module */
 		DTHE_AES_resetModule(ptrAesRegs);
 
