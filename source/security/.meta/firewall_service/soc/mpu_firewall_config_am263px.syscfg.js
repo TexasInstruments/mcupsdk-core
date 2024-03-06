@@ -168,7 +168,6 @@ const mpu_firewall_config = [
 
 
 const id_list = [
-	{ name: "M4FSS0_0", displayName:"M4FSS0_0" },
 	{ name: "R5FSS0_0", displayName:"R5FSS0_0" },
 	{ name: "R5FSS0_1", displayName:"R5FSS0_1" },
     { name: "R5FSS1_0", displayName:"R5FSS1_0" },
