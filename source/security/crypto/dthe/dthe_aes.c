@@ -275,6 +275,9 @@ DTHE_AES_Return_t DTHE_AES_open(DTHE_Handle handle)
         DTHE_AES_setDMAContextStatus(ptrAesRegs, 0);
         DTHE_AES_setDMAOutputRequestStatus(ptrAesRegs, 0);
         DTHE_AES_setDMAInputRequestStatus(ptrAesRegs, 0);
+
+        /* Disable Save Context */
+        CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_SAVE_CONTEXT, 0U);
     }
 
     return (status);
@@ -396,6 +399,8 @@ DTHE_AES_Return_t DTHE_AES_execute(DTHE_Handle handle, const DTHE_AES_Params* pt
                 {
                     /* Clear the IV value */
                     DTHE_AES_clearIV(ptrAesRegs);
+                    /* Enable Save Context in CTRL register*/
+                    CSL_REG32_FINS(&ptrAesRegs->CTRL, AES_S_CTRL_SAVE_CONTEXT, 1U);
                 }
 
                 /*
@@ -868,7 +873,7 @@ static void DTHE_AES_pollContextReady(CSL_AesRegs *ptrAesRegs)
     /* Loop around till the condition is met: */
     while (done == 0U)
     {
-        done = CSL_REG32_FEXT(&ptrAesRegs->CTRL, AES_S_CTRL_CONTEXT_READY);
+        done = CSL_REG32_FEXT(&ptrAesRegs->CTRL, AES_S_CTRL_SAVE_CONTEXT_READY);
     }
     return;
 }

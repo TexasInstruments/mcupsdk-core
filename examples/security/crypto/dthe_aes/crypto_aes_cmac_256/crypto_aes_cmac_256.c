@@ -77,7 +77,7 @@ uint8_t gCryptoAesCmacInputBuffer[APP_CRYPTO_AES_CMAC_256_INPUT_LENGTH] =
 };
 
 /*Expected Cmac results*/
-static const uint8_t gAesCmac256ExpectedResult[4][16] = {
+static const uint8_t gAesCmac256ExpectedResult[5][16] = {
     {
         /* Example #1 */
         0x02, 0x89, 0x62, 0xf6, 0x1b, 0x7b, 0xf8, 0x9e,
@@ -90,11 +90,16 @@ static const uint8_t gAesCmac256ExpectedResult[4][16] = {
     },
     {
         /* Example #3 */
+        0x15, 0x67, 0x27, 0xdc, 0x08, 0x78, 0x94, 0x4a,
+        0x02, 0x3c, 0x1f, 0xe0, 0x3b, 0xad, 0x6d, 0x93
+    },
+    {
+        /* Example #4 */
         0xaa, 0xf3, 0xd8, 0xf1, 0xde, 0x56, 0x40, 0xc2,
         0x32, 0xf5, 0xb1, 0x69, 0xb9, 0xc9, 0x11, 0xe6
     },
     {
-        /* Example #4 */
+        /* Example #5 */
         0xe1, 0x99, 0x21, 0x90, 0x54, 0x9f, 0x6e, 0xd5,
         0x69, 0x6a, 0x2c, 0x05, 0x6c, 0x31, 0x54, 0x10
     }
@@ -110,9 +115,9 @@ uint8_t gCryptoAesCmac256Key[APP_CRYPTO_AES_CMAC_256_MAXKEY_LENGTH] =
 };
 
 /* Different input sizes */
-int32_t gCryptoCmac256DiffInputSizes[4] =
+int32_t gCryptoCmac256DiffInputSizes[5] =
 {
-    0, 16, 40, 64
+    0, 16, 20, 40, 64
 };
 
 uint8_t gCryptoCmacConst_Rb[16] =
@@ -153,7 +158,7 @@ void crypto_aes_cmac_256_main(void *args)
     /* Comparing final AES CMAC result with expected test results*/
     if(memcmp(gCryptoAesCmac256ResultBuf, gAesCmac256ExpectedResult[0], APP_CRYPTO_AES_CMAC_OUTPUT_LENGTH) != 0)
     {
-        DebugP_log("[CRYPTO] DTHE AES CMAC-256 example1 failed!!\r\n");
+        DebugP_log("[CRYPTO] AES CMAC-256 example1 failed!!\r\n");
         testErrCont ++;
     }
 
@@ -179,8 +184,18 @@ void crypto_aes_cmac_256_main(void *args)
         testErrCont ++;
     }
 
-    /* Aes Cmac with 64 bytes input */
+    /* Aes Cmac with 40 bytes input */
     app_aes_cmac_256(gCryptoAesCmac256Key, gCryptoAesCmacInputBuffer, gCryptoCmac256DiffInputSizes[3], gCryptoAesCmac256ResultBuf);
+
+    /* Comparing final AES CMAC result with expected test results*/
+    if(memcmp(gCryptoAesCmac256ResultBuf, gAesCmac256ExpectedResult[3], APP_CRYPTO_AES_CMAC_OUTPUT_LENGTH) != 0)
+    {
+        DebugP_log("[CRYPTO] AES CMAC-256 example4 failed!!\r\n");
+        testErrCont ++;
+    }
+
+    /* Aes Cmac with 64 bytes input */
+    app_aes_cmac_256(gCryptoAesCmac256Key, gCryptoAesCmacInputBuffer, gCryptoCmac256DiffInputSizes[4], gCryptoAesCmac256ResultBuf);
 
     /* Closing DTHE driver */
     if (DTHE_RETURN_SUCCESS == DTHE_close(gAesHandle))
@@ -194,9 +209,9 @@ void crypto_aes_cmac_256_main(void *args)
     DebugP_assert(DTHE_AES_RETURN_SUCCESS == status);
 
     /* Comparing final AES CMAC result with expected test results*/
-    if(memcmp(gCryptoAesCmac256ResultBuf, gAesCmac256ExpectedResult[3], APP_CRYPTO_AES_CMAC_OUTPUT_LENGTH) != 0)
+    if(memcmp(gCryptoAesCmac256ResultBuf, gAesCmac256ExpectedResult[4], APP_CRYPTO_AES_CMAC_OUTPUT_LENGTH) != 0)
     {
-        DebugP_log("[CRYPTO] AES CMAC-256 example4 failed!!\r\n");
+        DebugP_log("[CRYPTO] AES CMAC-256 example5 failed!!\r\n");
         testErrCont ++;
     }
 
