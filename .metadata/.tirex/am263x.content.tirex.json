@@ -13964,8 +13964,8 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
-        "description": "SENT decoder Example Using PRUICSS IEP ECAP CPU is R5FSS0-0 running FREERTOS.",
-        "name": "sent_decoder_using_pruicss_iep_ecap_r5f_example",
+        "description": "SENT Decoder Example Using PRUICSS IEP ECAP CPU is R5FSS0-0 running FREERTOS.",
+        "name": "sent_decoder_using_ecap",
         "location": "../../examples/pru_io/sent/decoder_pruicss_iep_ecap/example/am263x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263"

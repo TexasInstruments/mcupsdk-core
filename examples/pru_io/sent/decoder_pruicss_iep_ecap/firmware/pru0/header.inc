@@ -79,8 +79,6 @@
     .asg		R27,    TEMP_REG2
     .asg		R28,	BNS_LUT_VAL
 
-
-
 IEP_COUNT_REG0_OFFSET       .set    0x10
 IEP_COUNT_REG1_OFFSET       .set    0x14
 TICK_7_CONST                .set   613566757
@@ -88,6 +86,7 @@ TICK_7_CONST                .set   613566757
 PDMEM00 				    .set     0x0000
 PDMME01                     .set     0x2000
 ICSS_CFGx 				    .set     C5
+SMEM                        .set     C28
 
 ;DMEM
 
@@ -137,6 +136,28 @@ CH3_LUT_BASE                .set    (0x1C0)
 CH4_LUT_BASE                .set	(0x200)
 CH5_LUT_BASE                .set	(0x240)
 
+CH0_SERIAL_MSG_BASE         .set    (0x800)
+; Byte 0 : Lower 8 bits of Bit 2 from Status and Communication Data
+SERIAL_MSG_SCBIT2_LOW       .set    (0x0)
+; Byte 1 : Upper 8 bits of Bit 2 from Status and Communication Data
+SERIAL_MSG_SCBIT2_HIGH      .set    (0x1)
+; Byte 2 : Lower 8 bits of Bit 3 from Status and Communication Data
+SERIAL_MSG_SCBIT3_LOW       .set    (0x2)
+; Byte 3 : Upper 8 bits of Bit 3 from Status and Communication Data
+SERIAL_MSG_SCBIT3_HIGH      .set    (0x3)
+; Byte 4 : Count of remaining bits
+SERIAL_MSG_REMAINING_BITS   .set    (0x4)
+; Byte 5 : Serial message ongoing status
+SERIAL_MSG_ONGOING          .set    (0x5)
+; Byte 6 : Calculated CRC
+SERIAL_MSG_CRC              .set    (0x6)
+; Byte 7 : Data Ready
+SERIAL_MSG_DATA_READY       .set    (0x7)
+CH1_SERIAL_MSG_BASE         .set    (0x808)
+CH2_SERIAL_MSG_BASE         .set    (0x810)
+CH3_SERIAL_MSG_BASE         .set    (0x818)
+CH4_SERIAL_MSG_BASE         .set    (0x820)
+CH5_SERIAL_MSG_BASE         .set    (0x828)
 
 ;SMEM
 
@@ -155,6 +176,15 @@ CH2_INTR_BYTE               .set	(0x02)
 CH3_INTR_BYTE               .set	(0x03)
 CH4_INTR_BYTE               .set	(0x04)
 CH5_INTR_BYTE               .set	(0x05)
+
+
+;(serial message data+crc is stored)
+CH0_SERIAL_MSG_DATA_BASE               .set	(0x80)
+CH1_SERIAL_MSG_DATA_BASE               .set	(0x82)
+CH2_SERIAL_MSG_DATA_BASE               .set	(0x84)
+CH3_SERIAL_MSG_DATA_BASE               .set	(0x86)
+CH4_SERIAL_MSG_DATA_BASE               .set (0x88)
+CH5_SERIAL_MSG_DATA_BASE               .set	(0x8A)
 
 ;SCRATCH PAD 2
 ;--------------------------------------------

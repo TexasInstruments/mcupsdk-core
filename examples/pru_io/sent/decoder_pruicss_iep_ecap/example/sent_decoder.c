@@ -70,14 +70,16 @@ uint8_t crc_lut_arr[] = {0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xa, 
  0xd, 0xc, 0xf, 0xe, 0x9, 0x8, 0xb, 0xa};
 
 
-Sent_Obj gSentDataHandle[6];
-uint32_t ch_flag_offset[] = {CH0_DATA_READY_FLAG_OFFSET, CH1_DATA_READY_FLAG_OFFSET, CH2_DATA_READY_FLAG_OFFSET, CH3_DATA_READY_FLAG_OFFSET,
-                             CH4_DATA_READY_FLAG_OFFSET, CH5_DATA_READY_FLAG_OFFSET};
+Sent_Obj gSentDataHandle[NUM_SENT_CHANNELS];
+Sent_SerialMessage gSentSerialMessageDataHandle[NUM_SENT_CHANNELS];
 
+uint32_t ch_flag_offset[] = {CH0_DATA_READY_FLAG_OFFSET, CH1_DATA_READY_FLAG_OFFSET, CH2_DATA_READY_FLAG_OFFSET, CH3_DATA_READY_FLAG_OFFSET, CH4_DATA_READY_FLAG_OFFSET, CH5_DATA_READY_FLAG_OFFSET};
 uint32_t ch_data_offset[] = {CH0_DATA_OFFSET, CH1_DATA_OFFSET, CH2_DATA_OFFSET, CH3_DATA_OFFSET, CH4_DATA_OFFSET, CH5_DATA_OFFSET};
+uint32_t ch_serial_message_data_offset[] = {CH0_SERIAL_MSG_DATA_BASE, CH1_SERIAL_MSG_DATA_BASE, CH2_SERIAL_MSG_DATA_BASE, CH3_SERIAL_MSG_DATA_BASE, CH4_SERIAL_MSG_DATA_BASE, CH5_SERIAL_MSG_DATA_BASE};
 
-uint32_t ch_flag_mask[] = {CH0_FLAG_MASK, CH1_FLAG_MASK, CH2_FLAG_MASK, CH3_FLAG_MASK, CH4_FLAG_MASK, CH5_FLAG_MASK};
-uint32_t num_frames_recvd[6];
+uint32_t num_frames_recvd[NUM_SENT_CHANNELS] = {0, 0, 0, 0, 0, 0};
+uint32_t num_serial_messages_recvd[NUM_SENT_CHANNELS] = {0, 0, 0, 0, 0, 0};
+
 /* ========================================================================== */
 /*                       Function Declarations                                */
 /* ========================================================================== */
@@ -177,7 +179,6 @@ void sent_main(void *args)
      int status;
      uint32_t flag = 0;
      uint32_t i = 0;
-     uint32_t data_ready_offset = 0;
 
      Drivers_open(); // check return status
      status = Board_driversOpen();
@@ -202,12 +203,11 @@ void sent_main(void *args)
      while(1)
      {
         /*Loop for all channels*/
-        for (i = 0; i < 6; i++)
+        for (i = 0; i < NUM_SENT_CHANNELS; i++)
         {
             /*Extract SENT frame*/
-            data_ready_offset = (i/4)*4;
-            flag = HW_RD_REG32((uint32_t)data_ready_status + data_ready_offset);
-            if((flag & ch_flag_mask[i]))
+            flag = HW_RD_REG8((uint32_t)data_ready_status + ch_flag_offset[i]);
+            if(flag)
             {
                 num_frames_recvd[i]++;
                 HW_WR_REG8((uint32_t)data_ready_status + ch_flag_offset[i], 0x0);
@@ -222,17 +222,32 @@ void sent_main(void *args)
                 gSentDataHandle[i].Data5 = HW_RD_REG8((uint32_t)data_ready_status + (ch_data_offset[i] + DATA5_OFFSET));
                 gSentDataHandle[i].CRC = HW_RD_REG8((uint32_t)data_ready_status + (ch_data_offset[i] + CRC_OFFSET));
                 gSentDataHandle[i].error_status = HW_RD_REG16((uint32_t)data_ready_status + (ch_data_offset[i] + ERROR_STATUS_OFFSET));
-                DebugP_log("\n\r******************CHANNEL%d SENT DATA**********************\n\r",i);
-                DebugP_log("\n\rNumber of Frames received: \t %d", num_frames_recvd[i]);
-                DebugP_log("\n\rChannel0 calculated tick period: \t %d ns", gSentDataHandle[i].ConfigTickTime);
-                DebugP_log("\n\rchannel0 StatusComm Data: \t %02x", gSentDataHandle[i].StatusComBit);
-                DebugP_log("\n\rChannel0:  Data0 Data1 Data2 Data3 Data4 Data5 CRC");
-                DebugP_log("\n\rValue: \t  %02x \t %02x \t %02x \t %02x \t %02x \t %02x \t %02x \t", gSentDataHandle[i].Data0, gSentDataHandle[i].Data1,
+                DebugP_log("\n\r********************** CHANNEL%d SENT DATA **************************\n\r", i);
+                DebugP_log("\n\rNumber of Frames received:        %d", num_frames_recvd[i]);
+                DebugP_log("\n\rChannel %d calculated tick period: %d ns", i, gSentDataHandle[i].ConfigTickTime);
+                DebugP_log("\n\rChannel %d StatusComm Data:        %02x", i, gSentDataHandle[i].StatusComBit);
+                DebugP_log("\n\rChannel %d:\t  Data0\t Data1\t Data2\t Data3\t Data4\t Data5\t CRC\t", i);
+                DebugP_log("\n\rValue:   \t  %02x\t %02x\t %02x\t %02x\t %02x\t %02x\t %02x\t", gSentDataHandle[i].Data0, gSentDataHandle[i].Data1,
                                     gSentDataHandle[i].Data2, gSentDataHandle[i].Data3, gSentDataHandle[i].Data4, gSentDataHandle[i].Data5, gSentDataHandle[i].CRC);
-                DebugP_log("\n\r**********************************************************\n\r");
+                DebugP_log("\n\r********************************************************************\n\r");
+
+                if(flag & SERIAL_MESSAGE_DATA_READY)
+                {
+                    num_serial_messages_recvd[i]++;
+                    
+                    gSentSerialMessageDataHandle[i].MessageId = ((HW_RD_REG8((uint32_t)data_ready_status + (ch_serial_message_data_offset[i] + SERIAL_MESSAGE_BYTE1))) & SERIAL_MESSAGE_BYTE1_ID_MASK) >> SERIAL_MESSAGE_BYTE1_ID_SHIFT ;
+                    gSentSerialMessageDataHandle[i].Data0 = ((HW_RD_REG8((uint32_t)data_ready_status + (ch_serial_message_data_offset[i] + SERIAL_MESSAGE_BYTE1))) & SERIAL_MESSAGE_BYTE1_DATA0_MASK) >> SERIAL_MESSAGE_BYTE1_DATA0_SHIFT ;
+                    gSentSerialMessageDataHandle[i].Data1 = ((HW_RD_REG8((uint32_t)data_ready_status + (ch_serial_message_data_offset[i] + SERIAL_MESSAGE_BYTE0))) & SERIAL_MESSAGE_BYTE0_DATA1_MASK) >> SERIAL_MESSAGE_BYTE0_DATA1_SHIFT ;
+                    gSentSerialMessageDataHandle[i].CRC = ((HW_RD_REG8((uint32_t)data_ready_status + (ch_serial_message_data_offset[i] + SERIAL_MESSAGE_BYTE0))) & SERIAL_MESSAGE_BYTE0_CRC_MASK) >> SERIAL_MESSAGE_BYTE0_CRC_SHIFT ;
+                
+                    DebugP_log("\n\r************** CHANNEL%d SENT SERIAL MESSAGE DATA *******************\n\r", i);
+                    DebugP_log("\n\rNumber of Serial Messages received: \t %d", num_serial_messages_recvd[i]);
+                    DebugP_log("\n\rChannel %d:\t MessageID\t Data0\t Data1\t CRC", i);
+                    DebugP_log("\n\rValue:   \t %02x\t\t %02x\t %02x\t %02x\t", gSentSerialMessageDataHandle[i].MessageId, gSentSerialMessageDataHandle[i].Data0, gSentSerialMessageDataHandle[i].Data1, gSentSerialMessageDataHandle[i].CRC);
+                    DebugP_log("\n\r********************************************************************\n\r");
+                }
             }
         }
-
      }
 
     Board_driversClose();

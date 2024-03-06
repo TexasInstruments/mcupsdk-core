@@ -206,7 +206,7 @@ m_ch_sync .macro error_ch, ch_syncpulse_max_dur, ch_syncpulse_min_dur, ch_buf, c
     ldi    TEMP_REG1, ch_lut_base ;1
     sbbo    &R4, TEMP_REG1, 0, 64 ;7
     xin 	PRU_SPAD_B1_XID, &R4, 64 ;1
-;Update Ch0 state register for status & Comm data calc
+;Update channel state register for status & Comm data calculation
   	ldi    ch_state, $CODE(ch_status_comm) ;1
   	jmp     return_addr1 ;1
     .endm
@@ -230,20 +230,186 @@ m_ch_sync .macro error_ch, ch_syncpulse_max_dur, ch_syncpulse_min_dur, ch_buf, c
 ;      ch_buf: Buffer for channel to store calculated value
 ;      ch_state: State variable of channel
 ;      ch_data0: Data0 decoding function
-;
+;      ch_msg_offset: DMEM offset for storing data related to serial message
+;      ch_msg_data_base: IPC base address for sending message data to R5F
 ;   Returns:
 ;      None
 ;
 ;   See Also:
 ;
 ;************************************************************************************
-m_ch_status_comm .macro ch_buf, ch_state, ch_data0
+m_ch_status_comm .macro ch_buf, ch_state, ch_data0, ch_msg_offset
     jal   return_addr2, FN_BINARY_SEARCH
     mvib  ch_buf.b2, *BNS_ARG_RETVAL_ADDR
+
+    .if $defined("ENABLE_SHORT_SERIAL_MESSAGE")
+; Do the processing for short serial message
+    m_process_short_serial_message ch_buf.b2, ch_msg_offset
+    .endif
+
+;Update channel state register for Data 0 decoding
     ldi   ch_state, $CODE(ch_data0)
     jmp   return_addr1
     .endm
 
+;************************************************************************************
+;
+;   Macro: m_process_short_serial_message
+;
+;
+;   PEAK cycles:
+;
+;   Invokes:
+;       None
+;
+;   Pseudo code:
+;       None
+;
+;   Parameters:
+;      ch_buf: Buffer for channel to store calculated value
+;      ch_msg_offset: DMEM offset for storing data related to serial message
+;   Returns:
+;      None
+;
+;************************************************************************************
+
+m_process_short_serial_message .macro ch_buf, ch_msg_offset
+; Calculate the DMEM offset for serial message related data for this channel
+    ldi TEMP_REG1.w0, ch_msg_offset
+; Check if serial message is ongoing
+    add TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_ONGOING
+    lbco &TEMP_REG2.b2, C24, TEMP_REG2.w0, 1
+    qbeq serial_msg_ongoing?, TEMP_REG2.b2, 1
+no_serial_msg_ongoing?:
+; Check bit 3 of Status and Communication Data
+    qbbc process_short_serial_message_done?, ch_buf, 3
+new_serial_message?:
+; Set Serial message ongoing byte
+; Assumption : TEMP_REG2.w0 contains address of SERIAL_MSG_ONGOING byte for this channel
+    ldi TEMP_REG2.b2, 1
+    sbco &TEMP_REG2.b2, C24, TEMP_REG2.w0, 1
+; Initialize remaining bits
+    add TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_REMAINING_BITS
+    ldi TEMP_REG2.b2, 16
+    sbco &TEMP_REG2.b2, C24, TEMP_REG2.w0, 1
+serial_msg_ongoing?:
+; Decrement remaining bits
+    add TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_REMAINING_BITS
+    lbco &TEMP_REG2.b2, C24, TEMP_REG2.w0, 1
+    sub  TEMP_REG2.b2, TEMP_REG2.b2, 1
+    sbco &TEMP_REG2.b2, C24, TEMP_REG2.w0, 1
+; Update SERIAL_MSG_SCBIT2
+    add TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_SCBIT2_LOW
+    lbco &TEMP_REG1.w2, C24, TEMP_REG2.w0, 2
+    qbbc scbit2_store_done?, ch_buf, 2
+    set  TEMP_REG1.w2, TEMP_REG1.w2, TEMP_REG2.b2
+    sbco &TEMP_REG1.w2, C24, TEMP_REG2.w0, 2
+scbit2_store_done?:
+; Update SERIAL_MSG_SCBIT3
+    add TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_SCBIT3_LOW
+    lbco &TEMP_REG1.w2, C24, TEMP_REG2.w0, 2
+    qbbc scbit3_store_done?, ch_buf, 3
+    set  TEMP_REG1.w2, TEMP_REG1.w2, TEMP_REG2.b2
+    sbco &TEMP_REG1.w2, C24, TEMP_REG2.w0, 2
+scbit3_store_done?:
+
+short_serial_message_crc_calculation?:
+; Calculate CRC on 4 bit blocks
+    qbeq short_serial_message_crc_first_nibble?, TEMP_REG2.b2, 12
+    qbeq short_serial_message_crc_second_nibble?, TEMP_REG2.b2, 8
+    qbeq short_serial_message_crc_third_nibble?, TEMP_REG2.b2, 4
+    qbeq short_serial_message_crc_compare?, TEMP_REG2.b2, 0
+    qba  short_serial_message_crc_calculation_done?
+short_serial_message_crc_first_nibble?:
+    ldi  TEMP_REG2.b2, CRC4_SEED
+    lsl  TEMP_REG2.b2, TEMP_REG2.b2, 4
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_SCBIT2_HIGH
+    lbco &TEMP_REG1.b2, C24, TEMP_REG2.w0, 1
+    lsr  TEMP_REG1.b2, TEMP_REG1.b2, 4
+    add  TEMP_REG2.b2, TEMP_REG2.b2, TEMP_REG1.b2
+    lbbo  &TEMP_REG2.b2, CRC_LUT_ADDR , TEMP_REG2.b2, 1
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_CRC
+    sbco &TEMP_REG2.b2, C24, TEMP_REG2.w0, 1
+    qba  short_serial_message_crc_calculation_done?
+short_serial_message_crc_second_nibble?:
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_CRC
+    lbco &TEMP_REG2.b2, C24, TEMP_REG2.w0, 1
+    lsl  TEMP_REG2.b2, TEMP_REG2.b2, 4
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_SCBIT2_HIGH
+    lbco &TEMP_REG1.b2, C24, TEMP_REG2.w0, 1
+    and  TEMP_REG1.b2, TEMP_REG1.b2, 0x0F
+    add  TEMP_REG2.b2, TEMP_REG2.b2, TEMP_REG1.b2
+    lbbo  &TEMP_REG2.b2, CRC_LUT_ADDR , TEMP_REG2.b2, 1
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_CRC
+    sbco &TEMP_REG2.b2, C24, TEMP_REG2.w0, 1
+    qba  short_serial_message_crc_calculation_done?
+short_serial_message_crc_third_nibble?:
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_CRC
+    lbco &TEMP_REG2.b2, C24, TEMP_REG2.w0, 1
+    lsl  TEMP_REG2.b2, TEMP_REG2.b2, 4
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_SCBIT2_LOW
+    lbco &TEMP_REG1.b2, C24, TEMP_REG2.w0, 1
+    lsr  TEMP_REG1.b2, TEMP_REG1.b2, 4
+    add  TEMP_REG2.b2, TEMP_REG2.b2, TEMP_REG1.b2
+    lbbo  &TEMP_REG2.b2, CRC_LUT_ADDR , TEMP_REG2.b2, 1
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_CRC
+    sbco &TEMP_REG2.b2, C24, TEMP_REG2.w0, 1
+    qba  short_serial_message_crc_calculation_done?
+short_serial_message_crc_compare?:
+; Compare the calculated CRC and received CRC
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_CRC
+    lbco &TEMP_REG2.b2, C24, TEMP_REG2.w0, 1
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_SCBIT2_LOW
+    lbco &TEMP_REG1.b2, C24, TEMP_REG2.w0, 1
+    and  TEMP_REG1.b2, TEMP_REG1.b2, 0x0F
+    qbne short_serial_message_crc_not_matched?, TEMP_REG2.b2, TEMP_REG1.b2
+; Check the pattern in bit 3 data
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_SCBIT3_LOW
+    lbco &TEMP_REG1.w2, C24, TEMP_REG2.w0, 2
+    qbne short_serial_message_bit3_pattern_not_matched?, TEMP_REG1.b3, 0x80
+    qbne short_serial_message_bit3_pattern_not_matched?, TEMP_REG1.b2, 0x0
+; Short serial message received successfully
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_DATA_READY
+    ldi  TEMP_REG1.b2, 1
+    sbco &TEMP_REG1.b2, C24, TEMP_REG2.w0, 1
+    qba  process_short_serial_message_done?
+short_serial_message_crc_not_matched?:
+; CRC check failed
+short_serial_message_bit3_pattern_not_matched?:
+; Bit 3 Pattern did not match
+    m_reset_short_serial_message ch_msg_offset
+short_serial_message_crc_calculation_done?:
+process_short_serial_message_done?:
+    .endm
+
+;************************************************************************************
+;
+;   Macro: m_reset_short_serial_message
+;
+;
+;   PEAK cycles:
+;
+;   Invokes:
+;       None
+;
+;   Pseudo code:
+;       None
+;
+;   Parameters:
+;      ch_msg_offset: DMEM offset for storing data related to serial message
+;   Returns:
+;      None
+;
+;************************************************************************************
+
+m_reset_short_serial_message .macro ch_msg_offset
+    LDI TEMP_REG1.w0, ch_msg_offset
+; Zero out the 8 bytes for serial message related data for this channel
+    ZERO &TEMP_REG2, 4
+    sbco &TEMP_REG2, C24, TEMP_REG1.w0, 4
+    add TEMP_REG1.w0, TEMP_REG1.w0, 4
+    sbco &TEMP_REG2, C24, TEMP_REG1.w0, 4
+    .endm
 ;************************************************************************************
 ;
 ;   Macro: m_ch_data0
@@ -274,7 +440,7 @@ m_ch_data0 .macro ch_buf, ch_state, ch_data0_spad_base, ch_data1, ch_crc4_res
     xout  PRU_SPAD_B2_XID, &ch_buf, 4
   	ldi   ch_state, $CODE(ch_data1)
     ldi   ch_crc4_res, CRC4_SEED
-    lsr   ch_crc4_res, ch_crc4_res, 4
+    lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b3
     lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
     jmp   return_addr1
@@ -305,7 +471,7 @@ m_ch_data1 .macro ch_buf, ch_state, ch_data2, ch_crc4_res
     jal   return_addr2, FN_BINARY_SEARCH
     mvib  ch_buf.b0, *BNS_ARG_RETVAL_ADDR
     ldi   ch_state, $CODE(ch_data2)
-    lsr   ch_crc4_res, ch_crc4_res, 4
+    lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b0
     lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
     jmp   return_addr1
@@ -336,7 +502,7 @@ m_ch_data2 .macro ch_buf, ch_state, ch_data3, ch_crc4_res
     jal   return_addr2, FN_BINARY_SEARCH
     mvib  ch_buf.b1, *BNS_ARG_RETVAL_ADDR
   	ldi   ch_state, $CODE(ch_data3)
-    lsr   ch_crc4_res, ch_crc4_res, 4
+    lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b1
     lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
     jmp   return_addr1
@@ -367,7 +533,7 @@ m_ch_data3 .macro ch_buf, ch_state, ch_data4, ch_crc4_res
     jal   return_addr2, FN_BINARY_SEARCH
     mvib  ch_buf.b2, *BNS_ARG_RETVAL_ADDR
     ldi   ch_state, $CODE(ch_data4)
-    lsr   ch_crc4_res, ch_crc4_res, 4
+    lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b2
     lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
     jmp   return_addr1
@@ -402,7 +568,7 @@ m_ch_data4 .macro ch_buf, ch_state, ch_data4_spad_base, ch_data5, ch_crc4_res
     ldi   R0.b0, ch_data4_spad_base
     xout  PRU_SPAD_B2_XID, &ch_buf, 4
   	ldi   ch_state, $CODE(ch_data5)
-    lsr   ch_crc4_res, ch_crc4_res, 4
+    lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b3
     lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
     jmp   return_addr1
@@ -433,7 +599,7 @@ m_ch_data5 .macro ch_buf, ch_state, ch_crc, ch_crc4_res
     jal   return_addr2, FN_BINARY_SEARCH
     mvib  ch_buf.b0, *BNS_ARG_RETVAL_ADDR
     ldi   ch_state, $CODE(ch_crc)
-    lsr   ch_crc4_res, ch_crc4_res, 4
+    lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b0
     lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
     jmp   return_addr1
@@ -464,7 +630,7 @@ m_ch_data5 .macro ch_buf, ch_state, ch_crc, ch_crc4_res
 m_ch_crc .macro ch_buf, ch_state, ch_crcdata_spad_base, ch_crc4_res, ch_crc_error
     jal   return_addr2, FN_BINARY_SEARCH
     mvib  ch_buf.b1, *BNS_ARG_RETVAL_ADDR
-    lsr   ch_crc4_res, ch_crc4_res, 4
+    lsl   ch_crc4_res, ch_crc4_res, 4
     lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
     mov   ch_buf.b2, ch_crc4_res
     mov   ch_buf.b3, BNS_ARG_STATUS
@@ -491,9 +657,13 @@ m_ch_crc .macro ch_buf, ch_state, ch_crcdata_spad_base, ch_crc4_res, ch_crc_erro
 ;      ch_reg: Buffer for channel to store calculated value
 ;      ch_data_base: IPC base address for sending data to R5F
 ;      ch_intr_byte: Interrupt byte for channel
+;      ch_state: State variable of channel
+;      ch_sync: Sync handling function
+;      ch_msg_offset: DMEM offset for storing data related to serial message
+;      ch_msg_data_base: IPC base address for sending message data to R5F
 ;
 ;************************************************************************************
-m_ch_data_out .macro ch_reg, ch_data_base, ch_intr_byte
+m_ch_data_out .macro ch_reg, ch_data_base, ch_intr_byte, ch_state, ch_sync, ch_msg_offset, ch_msg_data_base
 ;Put data in DMEM or Collect data for different mode
     ldi   R0, 0
 ;Store existing data first
@@ -505,9 +675,23 @@ m_ch_data_out .macro ch_reg, ch_data_base, ch_intr_byte
     zero	&ch_reg, 12
     xout  PRU_SPAD_B2_XID, &ch_reg, 12
     xin   PRU_SPAD_B1_XID, &ch_reg, 12
+; check if serial message was received
+    ldi  TEMP_REG1.w0, ch_msg_offset
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_DATA_READY
+    lbco &TEMP_REG1.b2, C24, TEMP_REG2.w0, 1
+    qbne data_out_no_serial_message?, TEMP_REG1.b2, 1
+; Store the data in SMEM
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_SCBIT2_LOW
+    lbco &TEMP_REG1.w2, C24, TEMP_REG2.w0, 2
+    sbco &TEMP_REG1.w2, SMEM, ch_msg_data_base, 2
+    m_reset_short_serial_message ch_msg_offset    
+    set   R0, R0, 1
+data_out_no_serial_message?:
+    set   R0, R0, 0
 ;Trigger Interrupt to R5F/*TODO*/
-    ldi   R0, 1
     sbco  &R0, C28, ch_intr_byte, 1
+    ldi   ch_state, $CODE(ch_sync)
+    jmp   return_addr1
     .endm
 
 ;************************************************************************************
@@ -680,6 +864,13 @@ spad_shift_enable:
 ;Intialize  CRC_LUT_ADDR
     ldi    CRC_LUT_ADDR, (CRC4_LUT_OFFSET+PDMEM00)
 
+    m_reset_short_serial_message CH0_SERIAL_MSG_BASE
+    m_reset_short_serial_message CH1_SERIAL_MSG_BASE
+    m_reset_short_serial_message CH2_SERIAL_MSG_BASE
+    m_reset_short_serial_message CH3_SERIAL_MSG_BASE
+    m_reset_short_serial_message CH4_SERIAL_MSG_BASE
+    m_reset_short_serial_message CH5_SERIAL_MSG_BASE
+
 	ldi32   APPROX_VAL_MAX, 0xFFFFFF00
 	ldi   APPROX_VAL_MIN, 256
     ldi    CH0_STATE, $CODE(CH0_SYNC)
@@ -728,15 +919,16 @@ CH0_DATA4:
 CH0_CRC:
     m_ch_crc CH0_BUF, CH0_STATE, CH0_CRCDATA_SPAD_BASE, CH0_CRC4_RES, CH0_CRC_ERROR
 CH0_DATA_OUT:
-    m_ch_data_out  CH0_REG, CH0_DATA_BASE, CH0_INTR_BYTE
-;/*TODO: Add error handling mechnaism for each label below*/
+    m_ch_data_out  CH0_REG, CH0_DATA_BASE, CH0_INTR_BYTE, CH0_STATE, CH0_SYNC, CH0_SERIAL_MSG_BASE, CH0_SERIAL_MSG_DATA_BASE
+;/*TODO: Add error handling mechanism for each label below*/
 CH0_CRC_ERROR:
 ch0_data_error:
+    m_reset_short_serial_message CH0_SERIAL_MSG_BASE
 ERROR_CH0:
     ldi   CH0_STATE, $CODE(CH0_SYNC)
     jmp   return_addr1
 CH0_STATUS_COMM:
-    m_ch_status_comm  CH0_BUF, CH0_STATE, CH0_DATA0
+    m_ch_status_comm  CH0_BUF, CH0_STATE, CH0_DATA0, CH0_SERIAL_MSG_BASE
 CH0_DATA1:
     m_ch_data1 CH0_BUF, CH0_STATE, CH0_DATA2, CH0_CRC4_RES
 CH0_DATA3:
@@ -757,15 +949,16 @@ CH1_DATA4:
 CH1_CRC:
     m_ch_crc CH1_BUF, CH1_STATE, CH1_CRCDATA_SPAD_BASE, CH1_CRC4_RES, CH1_CRC_ERROR
 CH1_DATA_OUT:
-    m_ch_data_out  CH1_REG, CH1_DATA_BASE, CH1_INTR_BYTE
-;/*TODO: Add error handling mechnaism for each label below*/
+    m_ch_data_out  CH1_REG, CH1_DATA_BASE, CH1_INTR_BYTE, CH1_STATE, CH1_SYNC, CH1_SERIAL_MSG_BASE, CH1_SERIAL_MSG_DATA_BASE
+;/*TODO: Add error handling mechanism for each label below*/
 CH1_CRC_ERROR:
 ch1_data_error:
+    m_reset_short_serial_message CH1_SERIAL_MSG_BASE
 ERROR_CH1:
     ldi   CH1_STATE, $CODE(CH1_SYNC)
     jmp   return_addr1
 CH1_STATUS_COMM:
-    m_ch_status_comm  CH1_BUF, CH1_STATE, CH1_DATA0
+    m_ch_status_comm  CH1_BUF, CH1_STATE, CH1_DATA0, CH1_SERIAL_MSG_BASE
 CH1_DATA1:
     m_ch_data1 CH1_BUF, CH1_STATE, CH1_DATA2, CH1_CRC4_RES
 CH1_DATA3:
@@ -785,15 +978,16 @@ CH2_DATA4:
 CH2_CRC:
     m_ch_crc CH2_BUF, CH2_STATE, CH2_CRCDATA_SPAD_BASE, CH2_CRC4_RES, CH2_CRC_ERROR
 CH2_DATA_OUT:
-    m_ch_data_out  CH2_REG, CH2_DATA_BASE, CH2_INTR_BYTE
-;/*TODO: Add error handling mechnaism for each label below*/
+    m_ch_data_out  CH2_REG, CH2_DATA_BASE, CH2_INTR_BYTE, CH2_STATE, CH2_SYNC, CH2_SERIAL_MSG_BASE, CH2_SERIAL_MSG_DATA_BASE
+;/*TODO: Add error handling mechanism for each label below*/
 CH2_CRC_ERROR:
 ch2_data_error:
+    m_reset_short_serial_message CH2_SERIAL_MSG_BASE
 ERROR_CH2:
     ldi   CH2_STATE, $CODE(CH2_SYNC)
     jmp   return_addr1
 CH2_STATUS_COMM:
-    m_ch_status_comm  CH2_BUF, CH2_STATE, CH2_DATA0
+    m_ch_status_comm  CH2_BUF, CH2_STATE, CH2_DATA0, CH2_SERIAL_MSG_BASE
 CH2_DATA1:
     m_ch_data1 CH2_BUF, CH2_STATE, CH2_DATA2, CH2_CRC4_RES
 CH2_DATA3:
@@ -814,15 +1008,16 @@ CH3_DATA4:
 CH3_CRC:
     m_ch_crc CH3_BUF, CH3_STATE, CH3_CRCDATA_SPAD_BASE, CH3_CRC4_RES, CH3_CRC_ERROR
 CH3_DATA_OUT:
-    m_ch_data_out  CH3_REG, CH3_DATA_BASE, CH3_INTR_BYTE
-;/*TODO: Add error handling mechnaism for each label below*/
+    m_ch_data_out  CH3_REG, CH3_DATA_BASE, CH3_INTR_BYTE, CH3_STATE, CH3_SYNC, CH3_SERIAL_MSG_BASE, CH3_SERIAL_MSG_DATA_BASE
+;/*TODO: Add error handling mechanism for each label below*/
 CH3_CRC_ERROR:
 ch3_data_error:
+    m_reset_short_serial_message CH3_SERIAL_MSG_BASE
 ERROR_CH3:
     ldi   CH3_STATE, $CODE(CH3_SYNC)
     jmp   return_addr1
 CH3_STATUS_COMM:
-    m_ch_status_comm  CH3_BUF, CH3_STATE, CH3_DATA0
+    m_ch_status_comm  CH3_BUF, CH3_STATE, CH3_DATA0, CH3_SERIAL_MSG_BASE
 CH3_DATA1:
     m_ch_data1 CH3_BUF, CH3_STATE, CH3_DATA2, CH3_CRC4_RES
 CH3_DATA3:
@@ -843,16 +1038,16 @@ CH4_DATA4:
 CH4_CRC:
     m_ch_crc CH4_BUF, CH4_STATE, CH4_CRCDATA_SPAD_BASE, CH4_CRC4_RES, CH4_CRC_ERROR
 CH4_DATA_OUT:
-    m_ch_data_out  CH4_REG, CH4_DATA_BASE, CH4_INTR_BYTE
-;/*TODO: Add error handling mechnaism for each label below*/
+    m_ch_data_out  CH4_REG, CH4_DATA_BASE, CH4_INTR_BYTE, CH4_STATE, CH4_SYNC, CH4_SERIAL_MSG_BASE, CH4_SERIAL_MSG_DATA_BASE
+;/*TODO: Add error handling mechanism for each label below*/
 CH4_CRC_ERROR:
 ch4_data_error:
+    m_reset_short_serial_message CH4_SERIAL_MSG_BASE
 ERROR_CH4:
     ldi   CH4_STATE, $CODE(CH4_SYNC)
     jmp   return_addr1
-
 CH4_STATUS_COMM:
-    m_ch_status_comm  CH4_BUF, CH4_STATE, CH4_DATA0
+    m_ch_status_comm  CH4_BUF, CH4_STATE, CH4_DATA0, CH4_SERIAL_MSG_BASE
 CH4_DATA1:
     m_ch_data1 CH4_BUF, CH4_STATE, CH4_DATA2, CH4_CRC4_RES
 CH4_DATA3:
@@ -873,16 +1068,16 @@ CH5_DATA4:
 CH5_CRC:
     m_ch_crc CH5_BUF, CH5_STATE, CH5_CRCDATA_SPAD_BASE, CH5_CRC4_RES, CH5_CRC_ERROR
 CH5_DATA_OUT:
-    m_ch_data_out  CH5_REG, CH5_DATA_BASE, CH5_INTR_BYTE
-;/*TODO: Add error handling mechnaism for each label below*/
+    m_ch_data_out  CH5_REG, CH5_DATA_BASE, CH5_INTR_BYTE, CH5_STATE, CH5_SYNC, CH5_SERIAL_MSG_BASE, CH5_SERIAL_MSG_DATA_BASE
+;/*TODO: Add error handling mechanism for each label below*/
 CH5_CRC_ERROR:
 ch5_data_error:
+    m_reset_short_serial_message CH5_SERIAL_MSG_BASE
 ERROR_CH5:
     ldi   CH5_STATE, $CODE(CH5_SYNC)
     jmp   return_addr1
-
 CH5_STATUS_COMM:
-    m_ch_status_comm  CH5_BUF, CH5_STATE, CH5_DATA0
+    m_ch_status_comm  CH5_BUF, CH5_STATE, CH5_DATA0, CH5_SERIAL_MSG_BASE
 CH5_DATA1:
     m_ch_data1 CH5_BUF, CH5_STATE, CH5_DATA2, CH5_CRC4_RES
 CH5_DATA3:

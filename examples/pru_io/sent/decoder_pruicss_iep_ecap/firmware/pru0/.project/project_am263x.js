@@ -58,8 +58,14 @@ const lflags = {
     ],
 };
 
+const defines = {
+    common: [
+        "ENABLE_SHORT_SERIAL_MESSAGE",
+    ],
+};
+
 let postBuildSteps = [
-    "$(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru  -o sent_decoder_pru0_bin.h sent_decoder_using_pruicss_iep_ecap_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out; move sent_decoder_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/example/firmware/sent_decoder_pru0_bin.h; "
+    "$(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru  -o sent_decoder_pru0_bin.h sent_decoder_using_ecap_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out; $(CCS_INSTALL_DIR)/utils/cygwin/mv sent_decoder_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/example/firmware/sent_decoder_pru0_bin.h;"
 ];
 
 function getComponentProperty() {
@@ -68,9 +74,9 @@ function getComponentProperty() {
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
     property.makefile = "pru";
-    property.name = "sent_decoder_using_pruicss_iep_ecap_pru0_fw";
+    property.name = "sent_decoder_using_ecap";
     property.isInternal = false;
-    property.description = "sent decoder pru0 fw"
+    property.description = "PRU0 Firmware for Sent Decoder Using ECAP"
     property.buildOptionCombos = buildOptionCombos;
     property.pru_main_file = "main";
     property.pru_linker_file = "linker";
@@ -92,6 +98,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.includes = includes;
     // build_property.cflags = cflags;
     build_property.lflags = lflags;
+    build_property.defines = defines;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
     build_property.projecspecFileAction = "link";
     build_property.skipMakefileCcsBootimageGen = true;

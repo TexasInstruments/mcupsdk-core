@@ -50,6 +50,11 @@
  **/
 #define MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE  (0x17F)
 
+#define NUM_SENT_CHANNELS           (6U)
+
+#define DATA_READY                  (1<<0)
+#define SERIAL_MESSAGE_DATA_READY   (1<<1)
+
 /*CRC4 LUT offset*/
 #define CRC4_LUT_OFFSET             (0x00U)
 
@@ -70,17 +75,14 @@
 #define CH4_DATA_OFFSET             (0x70U)
 #define CH5_DATA_OFFSET             (0x7CU)
 
+#define CH0_SERIAL_MSG_DATA_BASE    (0x80)
+#define CH1_SERIAL_MSG_DATA_BASE    (0x82)
+#define CH2_SERIAL_MSG_DATA_BASE    (0x84)
+#define CH3_SERIAL_MSG_DATA_BASE    (0x86)
+#define CH4_SERIAL_MSG_DATA_BASE    (0x88)
+#define CH5_SERIAL_MSG_DATA_BASE    (0x8A)
 
-/*Flag Mask for individual channels*/
-#define CH0_FLAG_MASK               (0xFFU)
-#define CH1_FLAG_MASK               (0xFF00U)
-#define CH2_FLAG_MASK               (0xFF0000U)
-#define CH3_FLAG_MASK               (0xFF000000U)
-#define CH4_FLAG_MASK               (0xFFU)
-#define CH5_FLAG_MASK               (0xFF00U)
-
-
-/*Mask for data nibbles*/
+/*Offset for data nibbles*/
 #define CONFIG_TICK_TIME_OFFSET     (0x0U)
 #define STATUS_COM_BIT_OFFSET       (0x2U)
 #define DATA0_OFFSET                (0x3U)
@@ -91,6 +93,18 @@
 #define DATA5_OFFSET                (0x8U)
 #define CRC_OFFSET                  (0x9U)
 #define ERROR_STATUS_OFFSET         (0xAU)
+
+/*Offset for serial message data nibbles*/
+#define SERIAL_MESSAGE_BYTE0                (0x0U)
+#define SERIAL_MESSAGE_BYTE1                (0x1U)
+#define SERIAL_MESSAGE_BYTE0_DATA1_MASK     (0xF0)
+#define SERIAL_MESSAGE_BYTE0_DATA1_SHIFT    (0x4)
+#define SERIAL_MESSAGE_BYTE0_CRC_MASK       (0x0F)
+#define SERIAL_MESSAGE_BYTE0_CRC_SHIFT      (0x0)
+#define SERIAL_MESSAGE_BYTE1_ID_MASK        (0xF0)
+#define SERIAL_MESSAGE_BYTE1_ID_SHIFT       (0x4)
+#define SERIAL_MESSAGE_BYTE1_DATA0_MASK     (0x0F)
+#define SERIAL_MESSAGE_BYTE1_DATA0_SHIFT    (0x0)
 
 /** \brief Global Structure pointer holding PRUSS1 memory Map. */
 PRUICSS_Handle gPruIcss0Handle;
@@ -131,6 +145,18 @@ typedef struct Sent_Obj_s
     /*Channel Status Code*/
     uint16_t error_status;
 } Sent_Obj;
+
+typedef struct Sent_SerialMessage_s
+{
+    /*Message ID */
+    uint8_t MessageId;
+    /*Data 0*/
+    uint8_t Data0;
+    /*Data 1*/
+    uint8_t Data1;
+    /*CRC*/
+    uint8_t CRC;
+} Sent_SerialMessage;
 
 /*!
  * \brief SENT FRame handle.

@@ -36,10 +36,23 @@
     .asg    R2,         TEMP_REG_LOOP
     .asg    R3,			TEMP_REG_SYNC
     .asg    R4,         TEMP_REG
-    ;.asg    R5,         used
+    .asg    R5,         COUNTER
     .asg    R6,         NUM_FRAMES
     .asg    R7,         TOTAL_FRAMES
     .asg    R8,         TEMP_REG1
+    .asg    R9,         TEMP_REG2
+    .asg    R10,        NIBBLE_VALUE
 PDMEM00 .set                                0x00
 PULSE_LOW_TICKS .set 5 ; Predefined 5 ticks low period after every pulse
 SYNC_PULSE_PERIOD .set  51; Predefined Sync pulse is always 56 period
+
+
+TX_DONE_OFFSET      .set    (0x4)
+SC_NIBBLE_OFFSET    .set    (0x8)
+DATA0_OFFSET        .set    (0x9)
+DATA1_OFFSET        .set    (0xA)
+DATA2_OFFSET        .set    (0xB)
+DATA3_OFFSET        .set    (0xC)
+DATA4_OFFSET        .set    (0xD)
+DATA5_OFFSET        .set    (0xE)
+CRC_OFFSET          .set    (0xF)

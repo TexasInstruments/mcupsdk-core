@@ -74,17 +74,18 @@ EndNopDelayLoop?:
     .endm
 
 n_clock_tick .macro n
-	ldi R5, n
+	and COUNTER, n, n
 create_clock_ticks?:
 	main_delay_100ns TICK_PRD_100ns
-	sub R5, R5, 1
-	qbne create_clock_ticks?, R5, 0
+	sub COUNTER, COUNTER, 1
+	qbne create_clock_ticks?, COUNTER, 0
 	.endm
 
 five_tick_pull_down .macro
     ;Set R30 pin low
     ldi r30, 0x000
-    n_clock_tick  5
+    ldi TEMP_REG2, 5
+    n_clock_tick  TEMP_REG2
 	.endm ;five_tick_pull_down
 
 create_high_pulse .macro TICKS
@@ -134,22 +135,40 @@ loop_process:
 ;Maintain total frame tx count
     add   TOTAL_FRAMES, TOTAL_FRAMES, NUM_FRAMES
 Create_sent_pulse:
-    create_pulse    SYNC_PULSE_PERIOD ;51+5 =56 Sync
-    create_pulse    15 ; 15+5 =20 => 8 Status Comm
-    create_pulse    14; 14+5 =19 => 7
-    create_pulse    11; 11+5 =16 => 4
-    create_pulse    15; 15+5 =20 => 8
-    create_pulse    14; 14+5 =19 => 7
-    create_pulse    11; 11+5 =16 => 4
-    create_pulse    15; 15+5 =20 => 8
-    create_pulse    10; 10+5 =15 =>3 CRC
-    create_pulse    100; Pause Pulse
+    ldi NIBBLE_VALUE, SYNC_PULSE_PERIOD
+    create_pulse     NIBBLE_VALUE ;51+5 =56 Sync
+    lbbo    &NIBBLE_VALUE, TEMP_REG1 , SC_NIBBLE_OFFSET, 1
+    add     NIBBLE_VALUE, NIBBLE_VALUE, 7
+    create_pulse    NIBBLE_VALUE ; Status Comm
+	lbbo    &NIBBLE_VALUE, TEMP_REG1 , DATA0_OFFSET, 1
+    add     NIBBLE_VALUE, NIBBLE_VALUE, 7
+    create_pulse    NIBBLE_VALUE; 14+5 =19 => 7
+	lbbo    &NIBBLE_VALUE, TEMP_REG1 , DATA1_OFFSET, 1
+    add     NIBBLE_VALUE, NIBBLE_VALUE, 7
+    create_pulse    NIBBLE_VALUE; 11+5 =16 => 4
+	lbbo    &NIBBLE_VALUE, TEMP_REG1 , DATA2_OFFSET, 1
+    add     NIBBLE_VALUE, NIBBLE_VALUE, 7
+    create_pulse    NIBBLE_VALUE; 15+5 =20 => 8
+	lbbo    &NIBBLE_VALUE, TEMP_REG1 , DATA3_OFFSET, 1
+    add     NIBBLE_VALUE, NIBBLE_VALUE, 7
+    create_pulse    NIBBLE_VALUE; 14+5 =19 => 7
+	lbbo    &NIBBLE_VALUE, TEMP_REG1 , DATA4_OFFSET, 1
+    add     NIBBLE_VALUE, NIBBLE_VALUE, 7
+    create_pulse    NIBBLE_VALUE; 11+5 =16 => 4
+	lbbo    &NIBBLE_VALUE, TEMP_REG1 , DATA5_OFFSET, 1
+    add     NIBBLE_VALUE, NIBBLE_VALUE, 7
+    create_pulse    NIBBLE_VALUE; 15+5 =20 => 8
+	lbbo    &NIBBLE_VALUE, TEMP_REG1 , CRC_OFFSET, 1
+    add     NIBBLE_VALUE, NIBBLE_VALUE, 7
+    create_pulse    NIBBLE_VALUE; 10+5 =15 =>3 CRC
+    ldi NIBBLE_VALUE, 100
+    create_pulse    NIBBLE_VALUE; Pause Pulse
 next_pulse:
 	sub NUM_FRAMES, NUM_FRAMES, 1
 	qbne Create_sent_pulse, NUM_FRAMES, 0
 ;Clear the value after reading
-    ldi R10, 0
-    sbbo  &R10, TEMP_REG1 , 0, 4
+    ldi TEMP_REG2, 0
+    sbbo  &TEMP_REG2, TEMP_REG1 , 0, 4
 ;signal R5F once Tx is done
     sbbo  &NUM_FRAMES, TEMP_REG1 , 4, 4
     qba loop_process
