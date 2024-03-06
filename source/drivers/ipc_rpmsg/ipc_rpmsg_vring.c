@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -135,11 +135,6 @@ int32_t RPMessage_vringPutFullTxBuf(uint16_t remoteCoreId, uint16_t vringBufId, 
         status = IpcNotify_sendMsg(remoteCoreId, IPC_NOTIFY_CLIENT_ID_RPMSG, txMsgValue, 0);
         elapsedTicks = ClockP_getTicks() - startTicks;
     } while((elapsedTicks < timeout) && (status == SystemP_TIMEOUT));
-
-    if(elapsedTicks >= timeout)
-    {
-        status = SystemP_TIMEOUT;
-    }
 
     return status;
 }
