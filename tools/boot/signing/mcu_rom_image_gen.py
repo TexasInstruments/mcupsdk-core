@@ -5,6 +5,7 @@
 
 import argparse
 import os
+import sys
 import subprocess
 import binascii
 from re import sub
@@ -37,7 +38,69 @@ g_core_types = {
     "HSM"         : '1',
 }
 
-g_x509_template = '''
+g_openssl111_x509_template = '''
+[ req ]
+distinguished_name     = req_distinguished_name
+x509_extensions        = v3_ca
+prompt                 = no
+
+dirstring_type = nobmp
+
+[ req_distinguished_name ]
+C                      = US
+ST                     = SC
+L                      = New York
+O                      = Texas Instruments., Inc.
+OU                     = SITARA MCU
+CN                     = Albert
+emailAddress           = Albert@gt.ti.com
+
+[ v3_ca ]
+basicConstraints = CA:true
+1.3.6.1.4.1.294.1.1=ASN1:SEQUENCE:boot_seq
+1.3.6.1.4.1.294.1.2=ASN1:SEQUENCE:image_integrity
+1.3.6.1.4.1.294.1.3=ASN1:SEQUENCE:swrv
+{EXT_ENC_SEQ}
+{DBG_EXT}
+{KD_EXT}
+
+[ boot_seq ]
+certType     =  INTEGER:{CERT_TYPE}
+bootCore     =  INTEGER:{BOOT_CORE_ID}
+bootCoreOpts =  INTEGER:{BOOT_CORE_OPTS}
+destAddr     =  FORMAT:HEX,OCT:{BOOT_ADDR}
+imageSize    =  INTEGER:{IMAGE_LENGTH}
+
+[ image_integrity ]
+shaType = OID:{SHA_OID}
+shaValue = FORMAT:HEX,OCT:{SHA_VAL}
+
+[ swrv ]
+swrv = INTEGER:{SWRV}
+'''
+
+g_ext_enc_seq = '''
+[ encryption ]
+Iv =FORMAT:HEX,OCT:{ENC_IV}
+Rstring = FORMAT:HEX,OCT:{ENC_RS}
+Icount = INTEGER:{ENC_ITER_CNT}
+Salt = FORMAT:HEX,OCT:{ENC_SALT}
+'''
+
+g_dbg_seq = '''
+[ debug ]
+debugUID     =  FORMAT:HEX,OCT:{DBG_DEVICE}
+debugType    =  INTEGER:{DBG_TYPE}
+coreDbgEn    =  INTEGER:0
+coreDbgSecEn =  INTEGER:0
+'''
+
+g_kd_seq = '''
+[ key_derivation ]
+kd_salt = FORMAT:HEX,OCT:{KDSALT_VAL}
+'''
+
+g_openssl3_x509_template = '''
 [ req ]
 distinguished_name     = req_distinguished_name
 x509_extensions        = v3_ca
@@ -184,19 +247,45 @@ def get_cert(args):
         kd_seq = g_kd_seq.format(
                     KDSALT_VAL = kd_salt
                     )
-    ret_cert = g_x509_template.format(
-                DBG_EXT = dbg_seq,
-                SHA_OID = g_sha_oids[g_sha_to_use],
-                SWRV = swrev,
-                EXT_ENC_SEQ = ext_enc_seq,
-                KD_EXT = ext_kd_seq,
-                BOOT_CORE_ID = bootCore_id,
-                CERT_TYPE = certType,
-                BOOT_CORE_OPTS = bootCoreOptions,
-                BOOT_ADDR = '{:08X}'.format(int(args.loadaddr, 16)),
-                IMAGE_LENGTH = os.path.getsize(image_bin_name),
-                SHA_VAL = get_sha_val(image_bin_name, g_sha_to_use),
-                )
+    ret_cert = ""
+
+    openssl_version: str = str(subprocess.check_output(f"openssl version", shell=True))
+
+    if "1.1.1" in openssl_version:
+        print(f"WARNING: OpenSSL version {openssl_version.split()[1]} found is not recommended due to EOL. Please install version 3.x .")
+        ret_cert = g_openssl111_x509_template.format(
+                    DBG_EXT = dbg_seq,
+                    SHA_OID = g_sha_oids[g_sha_to_use],
+                    SWRV = swrev,
+                    EXT_ENC_SEQ = ext_enc_seq,
+                    KD_EXT = ext_kd_seq,
+                    BOOT_CORE_ID = bootCore_id,
+                    CERT_TYPE = certType,
+                    BOOT_CORE_OPTS = bootCoreOptions,
+                    BOOT_ADDR = '{:08X}'.format(int(args.loadaddr, 16)),
+                    IMAGE_LENGTH = os.path.getsize(image_bin_name),
+                    SHA_VAL = get_sha_val(image_bin_name, g_sha_to_use),
+                    )
+
+    elif "3." in openssl_version:
+        print(f"INFO: OpenSSL version {openssl_version.split()[1]} found.")
+        ret_cert = g_openssl3_x509_template.format(
+                    DBG_EXT = dbg_seq,
+                    SHA_OID = g_sha_oids[g_sha_to_use],
+                    SWRV = swrev,
+                    EXT_ENC_SEQ = ext_enc_seq,
+                    KD_EXT = ext_kd_seq,
+                    BOOT_CORE_ID = bootCore_id,
+                    CERT_TYPE = certType,
+                    BOOT_CORE_OPTS = bootCoreOptions,
+                    BOOT_ADDR = '{:08X}'.format(int(args.loadaddr, 16)),
+                    IMAGE_LENGTH = os.path.getsize(image_bin_name),
+                    SHA_VAL = get_sha_val(image_bin_name, g_sha_to_use),
+                    )
+    else:
+        print(f"ERROR: OpenSSL version {openssl_version.split()[1]} found is not compatible. Please install version 1.1.1 or 3.x to continue.")
+        sys.exit()
+
     if args.sbl_enc:
         ret_cert += sbl_enc_seq
     elif args.tifs_enc:
