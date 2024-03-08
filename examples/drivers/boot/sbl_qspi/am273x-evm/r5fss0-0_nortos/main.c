@@ -63,15 +63,6 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
     return SystemP_SUCCESS;
 }
 
-/*  this API is a weak function definition for keyring_init function
-    which is defined in generated files if keyring module is enabled
-    in syscfg
-*/
-__attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
-{
-    return SystemP_SUCCESS;
-}
-
 int main(void)
 {
     int32_t status;

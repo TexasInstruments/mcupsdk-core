@@ -53,6 +53,8 @@ uint8_t gAppImageBuf[BOOTLOADER_APPIMAGE_MAX_FILE_SIZE] __attribute__((aligned(1
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
     = HSMRT_IMG;
 
+extern HsmClient_t gHSMClient ;
+
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
  * with debugger connected.
@@ -87,7 +89,7 @@ int main(void)
     Drivers_open();
     Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
 
-    status = Keyring_init();
+    status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
 
     /* Initialize the DSP Core and DSS L3 Memory. */
