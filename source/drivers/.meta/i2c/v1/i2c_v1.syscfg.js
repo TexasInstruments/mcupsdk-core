@@ -77,24 +77,20 @@ function getConfigurables()
                     name: "400KHZ",
                     displayName: "400 KHZ"
                 },
-                {
-                    name: "1P0MHZ",
-                    displayName: "1 MHZ"
-                },
-                {
-                    name: "3P4MHZ",
-                    displayName: "3.4 MHZ"
-                },
             ],
         },
         {
             name: "enableIntr",
             displayName: "Enable Interrupt",
             default: true,
+            hidden: false,
             onChange: function (inst, ui) {
                 let hideConfigs = false;
                 if(inst.enableIntr == false) {
                     hideConfigs = true;
+                    inst.transferCallbackFxn = "NULL";
+                    inst.transferMode = "BLOCKING";
+                    ui.transferCallbackFxn.hidden = true;
                 }
                 ui.transferMode.hidden = hideConfigs;
             },
@@ -116,11 +112,13 @@ function getConfigurables()
                 },
             ],
             onChange: function (inst, ui) {
-                let hideConfigs = true;
                 if(inst.transferMode == "CALLBACK") {
-                    hideConfigs = false;
+                    ui.transferCallbackFxn.hidden = false;
                 }
-                ui.transferCallbackFxn.hidden = hideConfigs;
+                else{
+                    inst.transferCallbackFxn = "NULL";
+                    ui.transferCallbackFxn.hidden = true;
+                }
             },
             description: "This determines whether the driver operates synchronously or asynchronously",
         },
@@ -150,6 +148,40 @@ function getConfigurables()
             hidden: true,
             displayFormat: "hex"
         },
+        {
+            name: "sdkInfra",
+            displayName: "SDK Infra",
+            default: "HLD",
+            options: [
+                {
+                    name: "HLD",
+                    displayName: "HLD"
+                },
+                {
+                    name: "LLD",
+                    displayName: "LLD"
+                },
+            ],
+            onChange: function (inst, ui) {
+                if(inst.sdkInfra == "LLD") {
+                    inst.transferMode = "BLOCKING";
+                    inst.transferCallbackFxn = "NULL";
+                    ui.transferCallbackFxn.hidden = true;
+                    ui.transferMode.hidden = true;
+                    inst.enableIntr = false;
+                    ui.enableIntr.hidden = true;
+                    if(inst.enableIntr == "NULL") {
+                        /* Clear NULL entry as user need to provide a fxn */
+                        inst.enableIntr = false;
+                    }
+                }
+                else {
+                    ui.enableIntr.hidden = false;
+                    inst.enableIntr = false;
+                }
+            },
+            description: "SDK Infra",
+        },
     )
 
     if(soc.isMakeInstanceRequired())
@@ -166,22 +198,6 @@ let i2c_module_name = "/drivers/i2c/i2c";
 let i2c_module = {
     displayName: "I2C",
     templates: {
-        "/drivers/system/system_config.c.xdt": {
-            driver_config: "/drivers/i2c/templates/i2c_v1_config.c.xdt",
-            driver_init: "/drivers/i2c/templates/i2c_v0_init.c.xdt",
-            driver_deinit: "/drivers/i2c/templates/i2c_v0_deinit.c.xdt",
-        },
-        "/drivers/system/system_config.h.xdt": {
-            driver_config: "/drivers/i2c/templates/i2c_v0.h.xdt",
-        },
-        "/drivers/system/drivers_open_close.c.xdt": {
-            driver_open_close_config: "/drivers/i2c/templates/i2c_v0_open_close_config.c.xdt",
-            driver_open: "/drivers/i2c/templates/i2c_v0_open.c.xdt",
-            driver_close: "/drivers/i2c/templates/i2c_v0_close.c.xdt",
-        },
-        "/drivers/system/drivers_open_close.h.xdt": {
-            driver_open_close_config: "/drivers/i2c/templates/i2c_v0_open_close.h.xdt",
-        },
         "/drivers/pinmux/pinmux_config.c.xdt": {
             moduleName: i2c_module_name,
         },
@@ -189,7 +205,7 @@ let i2c_module = {
             moduleName: i2c_module_name,
         },
     },
-
+    moduleInstances: moduleInstances,
     defaultInstanceName: "CONFIG_I2C",
     config:  getConfigurables(),
     validate : validate,
@@ -229,6 +245,32 @@ function validatePinmux(instance, report) {
             (common.getSelfSysCfgCoreName().includes("c66"))){
         report.logError("Interrupt mode is not supported for this instance", instance, "enableIntr");
     }
+}
+
+/*
+ *  ======== moduleInstances ========
+ */
+function moduleInstances(inst) {
+    let modInstances = new Array();
+
+    if( inst.sdkInfra == "HLD")
+    {
+        modInstances.push({
+            name: "I2C_child",
+            moduleName: '/drivers/i2c/v1/i2c_v1_template',
+            },
+        );
+    }
+    else
+    {
+        modInstances.push({
+            name: "I2C_child",
+            moduleName: '/drivers/i2c/v1/i2c_v1_template_lld',
+            },
+        );
+    }
+
+    return (modInstances);
 }
 
 function getClockFrequencies(inst) {

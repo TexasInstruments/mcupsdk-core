@@ -1,0 +1,27 @@
+%%{
+    let module = system.modules['/drivers/i2c/i2c'];
+%%}
+/*
+ * I2C
+ */
+
+/* I2C LLD objects */
+I2CLLD_Object gI2cLldObjects[CONFIG_I2C_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    {
+        .baseAddr       = `config.baseAddr`,
+        .intrNum        = `config.intNum`,
+        .bitRate        = I2C_`config.bitRate`,
+        .funcClk        = `config.funcClk`U,
+        .ownTargetAddr  = 0x`config.ownTargetAddr.toString(16).toUpperCase()`,
+        .Clock_getTicks = ClockP_getTicks,
+        .Clock_usecToTicks = ClockP_usecToTicks,
+        .Clock_uSleep = ClockP_usleep,
+    },
+% }
+};
+
+uint32_t gI2cLldConfigNum = CONFIG_I2C_NUM_INSTANCES;
