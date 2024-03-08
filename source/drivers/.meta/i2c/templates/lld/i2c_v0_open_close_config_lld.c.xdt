@@ -1,0 +1,41 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("i2c");
+    let module = system.modules['/drivers/i2c/i2c'];
+%%}
+/*
+ * I2C
+ */
+
+/* I2C Driver handles */
+extern I2CLLD_Object gI2cLldObjects[CONFIG_I2C_NUM_INSTANCES];
+I2CLLD_Handle gI2cLldHandle[CONFIG_I2C_NUM_INSTANCES];
+
+
+void Drivers_i2cOpen(void)
+{
+    int32_t  status = SystemP_SUCCESS;
+
+    /* Init all instances */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    gI2cLldHandle[`i`] = &gI2cLldObjects[`i`];
+    status += I2C_lld_init(gI2cLldHandle[`i`]);
+% }
+    if(SystemP_FAILURE == status)
+    {
+        Drivers_i2cClose();   /* Exit gracefully */
+    }
+    return;
+}
+
+void Drivers_i2cClose(void)
+{
+    /* Deinit all instances that are open */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    I2C_lld_deInit(gI2cLldHandle[`i`]);
+% }
+    return;
+}
