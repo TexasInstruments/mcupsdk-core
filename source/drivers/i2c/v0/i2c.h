@@ -1,5 +1,5 @@
 /*
- *  Copyright (C)2018-2021 Texas Instruments Incorporated
+ *  Copyright (C)2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -31,7 +31,7 @@
  */
 
 /**
- *  \defgroup DRV_I2C_MODULE APIs for I2C
+ *  \defgroup DRV_I2C_HLD_MODULE APIs for I2C
  *  \ingroup DRV_MODULE
  *
  *  This file containing the I2C API.
@@ -115,12 +115,13 @@ extern "C" {
 #include <stddef.h>
 #include <kernel/dpl/SemaphoreP.h>
 #include <kernel/dpl/HwiP.h>
-
+#include <kernel/dpl/ClockP.h>
+#include <drivers/i2c/v0/lld/i2c_lld.h>
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-#define I2C_MAX_NUM_OWN_TARGET_ADDR      (4U)
+#define I2C_MAX_NUM_OWN_TARGET_ADDR     (4U)
 
 /**
  *  \anchor I2C_TransferMode
@@ -134,35 +135,24 @@ extern "C" {
  */
 #define I2C_MODE_BLOCKING               ((uint8_t) 0U)
 #define I2C_MODE_CALLBACK               ((uint8_t) 1U)
+
 /** @} */
 
 /**
- *  \anchor I2C_BitRate
- *  \name MACROS used to select one of the standardized bus bit rates for
- * I2C communication. Deafults to I2C_100KHZ
- *  @{
- */
-#define I2C_100KHZ                      ((uint8_t) 0U)
-#define I2C_400KHZ                      ((uint8_t) 1U)
-#define I2C_1P0MHZ                      ((uint8_t) 2U)
-#define I2C_3P4MHZ                      ((uint8_t) 3U)
-/** @} */
-
-/**
- * \anchor   I2C_StatusCode
- * \name MACROS for the return values of I2C_transfer()
+ * \anchor   I2C_memTransactionDir
+ * \name MACROS for the possible values of I2C_Mem_Transaction member
+ * memDataDir.
+ * Deafults to I2C_TXN_DIR_INVALID
  * @{
  */
-#define I2C_STS_SUCCESS                 ( 0)
-#define I2C_STS_ERR                     (-1)
-#define I2C_STS_ERR_TIMEOUT             (-2)
-#define I2C_STS_ERR_BUS_BUSY            (-3)
-#define I2C_STS_ERR_NO_ACK              (-4)
-#define I2C_STS_ERR_ARBITRATION_LOST    (-5)
-#define I2C_STS_ERR_ACCESS_ERROR        (-6)
-#define I2C_STS_ERR_COMMAND_FAILURE     (-7)
-#define I2C_STS_ERR_INVALID_COMMAND     (-8)
-#define I2C_STS_RESTART                 (-9)
+
+/** \brief I2C LLD invalid dataDir */
+#define I2C_MEM_TXN_DIR_INVALID             ((uint8_t) 0U)
+/** \brief I2C LLD Write */
+#define I2C_MEM_TXN_DIR_TX                  ((uint8_t) 1U)
+/** \brief I2C LLD Read */
+#define I2C_MEM_TXN_DIR_RX                  ((uint8_t) 2U)
+
 /** @} */
 
 /* ========================================================================== */
@@ -196,6 +186,27 @@ typedef struct I2C_HwAttrs_s {
 } I2C_HwAttrs;
 
 /**
+ *  \brief  I2C Memory Transaction
+ *
+ *  This structure stores parameters related to
+ *  I2C memory transaction.
+ *
+ */
+typedef struct {
+
+    uint32_t            memAddr;
+    /**< [IN] Memory address to write to or read from */
+    uint8_t             memAddrSize;
+    /**< [IN] Memory address size \ref I2CLLD_MemoryAddrSize */
+    uint8_t             *buffer;
+    /**< [IN] Pointer to Read or Write buffer */
+    uint32_t            size;
+    /**< [IN] Size of Read or Write buffer */
+    uint8_t             memDataDir;
+    /**< [IN] Target internal memory data direction \ref I2C_memTransactionDir*/
+} I2C_Mem_Transaction;
+
+/**
  *  \brief  I2C transaction
  *
  *  This structure defines the nature of the I2C transaction.
@@ -220,46 +231,41 @@ typedef struct I2C_HwAttrs_s {
 typedef struct I2C_Transaction_s {
 
 /** controller mode: buffer containing data to be written to target
- *  target mode: buffer containing data to be written to controller
- */
-    const void          *writeBuf;
-
+ *  target mode: buffer containing data to be written to controller */
+    void                *writeBuf;
 /** controller mode: number of bytes to be written to the target
- *  target mode: number of bytes to be written to the controller
- */
+ *  target mode: number of bytes to be written to the controller */
     size_t              writeCount;
-
 /** controller mode: buffer to which data from target is to be read into
- *  target mode: buffer to which data from controller is to be read into
- */
+ *  target mode: buffer to which data from controller is to be read into */
     void                *readBuf;
-
 /** controller mode: number of bytes to be read from the target
- *  target mode: number of bytes to be read to the controller
- */
+ *  target mode: number of bytes to be read to the controller */
     size_t              readCount;
-
 /** controller mode: input field from user to set the address of I2C target
  *  target mode: output field from driver to report the address of a
  *  target channel when multi-target channels are supported, if only one
- *  channel is supported, this field is ignored
- */
+ *  channel is supported, this field is ignored */
     uint32_t            targetAddress;
-
 /** used for queuing in I2C_MODE_CALLBACK mode */
     void                *nextPtr;
-
 /** used for passing argument to callback function */
     void                *arg;
-
 /** Timeout value for i2c transaction */
     uint32_t            timeout;
-
 /** I2C controller or target mode */
     bool                controllerMode;
-
-/** Expand target address: true: 10-bit address mode, false: 7-bit address mode */
+/** Expand target address: true: 10-bit address mode,
+ *  false: 7-bit address mode */
     bool                expandSA;
+    /** Transaction type: true: Memory read/write Operation,
+ *  false: Simple read and write operation */
+    bool                memTxnEnable;
+/** Memory Transfer related Parameters */
+    I2C_Mem_Transaction *memTransaction;
+/** Transaction Status */
+    int32_t             status;
+
 } I2C_Transaction;
 
 /**
@@ -278,14 +284,15 @@ typedef struct I2C_Transaction_s {
  *  automatically starts queued transactions after the previous transaction has
  *  completed. (regardless of error state).
  *
- *  \ref I2C_BitRate specifies the I2C bus rate used for I2C communications.
+ *  \ref I2cBitRates specifies the I2C bus rate used for I2C communications.
  *
  */
 typedef struct I2C_Params_s {
 /** Blocking or Callback mode */
     uint8_t     transferMode;
 /** I2C_CallbackFxn     transferCallbackFxn; Callback function pointer */
-    void        (*transferCallbackFxn)(I2C_Handle i2cHnd, I2C_Transaction * msg, int32_t transferStatus);
+    void (*transferCallbackFxn)(I2C_Handle i2cHnd, I2C_Transaction * msg,
+                                int32_t transferStatus);
 /** I2C bus bit rate */
     uint8_t     bitRate;
 } I2C_Params;
@@ -310,15 +317,6 @@ typedef struct I2C_Object_s {
 /** I2C transaction variables */
 /** Pointer to current I2C transaction */
     I2C_Transaction    *currentTransaction;
-/** Internal inc. writeBuf index */
-    uint8_t            *writeBufIdx;
-/** Internal dec. writeCounter */
-    uint32_t            writeCountIdx;
-/** Internal inc. readBuf index */
-    uint8_t            *readBufIdx;
-/** Internal dec. readCounter */
-    uint32_t            readCountIdx;
-
 /* I2C transaction pointers for I2C_MODE_CALLBACK */
 /* Head ptr for queued transactions */
     I2C_Transaction    *headPtr;
@@ -328,9 +326,10 @@ typedef struct I2C_Object_s {
     bool                isOpen;
 /* interrupt status error */
     uint32_t            intStatusErr;
+/* I2C driver object for lld */
+    I2CLLD_Object       i2cLldObject;
+    I2CLLD_Handle       i2cLldHandle;
 
-    uint32_t            baseAddr;
-    /**< Peripheral base address - CPU view */
 } I2C_Object;
 
 
@@ -367,7 +366,8 @@ typedef struct I2C_Config_s {
  *  \param  msg             Address of the I2C_Transaction performed
  *  \param  transferStatus  Results of the I2C transaction
  */
-typedef void (*I2C_CallbackFxn)(I2C_Handle handle, I2C_Transaction * msg, int32_t transferStatus);
+typedef void (*I2C_CallbackFxn)(I2C_Handle handle, I2C_Transaction * msg,
+                                int32_t transferStatus);
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
@@ -376,93 +376,104 @@ typedef void (*I2C_CallbackFxn)(I2C_Handle handle, I2C_Transaction * msg, int32_
 /**
  *  \brief Initialize the I2C module
  */
-void        I2C_init(void);
+void I2C_init(void);
 
 /**
  *  \brief De-nitialize the I2C module
  */
-void        I2C_deinit(void);
+void I2C_deinit(void);
 
 /**
  *  \brief Function to set default values of I2C_Params in params
  *
- *  \param params   [IN] pointer to the structure to be initialized
+ *  \param params           [IN] pointer to the structure to be initialized
  */
-void        I2C_Params_init(I2C_Params *params);
+void I2C_Params_init(I2C_Params *params);
 
 /**
  *  \brief Open the I2C at index idx with parameters params
  *
- *  \param idx      [IN] Index of I2C to open in global config
- *  \param params   [IN] I2C_Params values to use for opening
+ *  \param idx              [IN] Index of I2C to open in global config
+ *  \param params           [IN] I2C_Params values to use for opening
  *
  *  \return I2C_Handle
  */
 I2C_Handle  I2C_open(uint32_t idx, const I2C_Params *params);
 
 /**
+ *  \brief Function to close the I2C Peripheral specified by the handle
+ *
+ *  \pre #I2C_open() has to be called first
+ *
+ *  \param handle           [IN] #I2C_Handle returned from I2C_open()
+ *
+ *  \sa #I2C_open()
+ */
+void I2C_close(I2C_Handle handle);
+
+/**
+ *  \brief Function to set default values of I2C_Mem_Transaction in
+ *  memTransaction
+ *
+ *  \param memTransaction   [IN] pointer to the structure to be initialized
+ */
+void I2C_Memory_Transaction_init(I2C_Mem_Transaction *memTransaction);
+
+/**
  *  \brief Function to set default values of I2C_Transaction in transaction
  *
- *  \param transaction  [IN] pointer to the structure to be initialized
+ *  \param transaction      [IN] pointer to the structure to be initialized
  */
-void        I2C_Transaction_init(I2C_Transaction *transaction);
+void I2C_Transaction_init(I2C_Transaction *transaction);
 
 /**
  *  \brief Function to initiate a transfer from I2C
  *
- *  \param handle      [IN] handle to the I2C
- *  \param transaction [IN] I2C_Transaction structure that contains
- *                          values for this specific transfer
+ *  \param handle           [IN] handle to the I2C
+ *  \param transaction      [IN] I2C_Transaction structure that contains
+ *                               values for this specific transfer
  *
  *  \return \ref I2C_StatusCode
  */
-int32_t     I2C_transfer(I2C_Handle handle,
-                         I2C_Transaction *transaction);
+int32_t I2C_transfer(I2C_Handle handle, I2C_Transaction *transaction);
 
 /**
  *  \brief Function to probe I2C
  *
- *  \param handle      [IN] handle to the I2C
- *  \param targetAddr   [IN] address of the target to probe
+ *  \param handle           [IN] handle to the I2C
+ *  \param targetAddr       [IN] address of the target to probe
  *
  *  \return \ref I2C_StatusCode
  */
-int32_t     I2C_probe(I2C_Handle handle, uint32_t targetAddr);
+int32_t I2C_probe(I2C_Handle handle, uint32_t targetAddr);
 
 /**
  *  \brief Function to set the bus frequency
  *
- *  \param handle         [IN] handle to the I2C
- *  \param busFrequency   [IN] frequency value to be set
+ *  \param handle           [IN] handle to the I2C
+ *  \param busFrequency     [IN] frequency value to be set
  *
  *  \return \ref I2C_StatusCode
  */
-int32_t     I2C_setBusFrequency(I2C_Handle handle, uint32_t busFrequency);
+int32_t I2C_setBusFrequency(I2C_Handle handle, uint32_t busFrequency);
 
 /**
  *  \brief Function to recover the bus in case of error
  *
- *  \param handle         [IN] handle to the I2C
- *  \param i2cDelay       [IN] the length of delay for sending
+ *  \param handle           [IN] handle to the I2C
+ *  \param i2cDelay         [IN] the length of delay for sending
  *                             clock pulses to target
  *
  *  \return \ref I2C_StatusCode
  */
-int32_t     I2C_recoverBus(I2C_Handle handle, uint32_t i2cDelay);
-
-/**
- *  \brief Function to close the I2C
- *
- *  \param handle   [IN] handle to the I2C
- */
-void        I2C_close(I2C_Handle handle);
+int32_t I2C_recoverBus(I2C_Handle handle, uint32_t i2cDelay);
 
 /**
  *  \brief  This function returns the handle of an open I2C instance from the instance index
  *
  *  \pre    I2C controller has been opened using #I2C_open()
  *
- *  \param  index   [IN] Index of config to use in the *I2C_Config* array
+ *  \param  index           [IN] Index of config to use in the *I2C_Config* array
  *
  *  \return An #I2C_Handle if it has been opened already or NULL otherwise
  */

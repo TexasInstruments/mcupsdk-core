@@ -6,6 +6,7 @@ const files_m4f = {
     common: [
         "csl_sec_proxy.c",
         "i2c_v0.c",
+        "i2c_v0_lld.c",
         "gpio.c",
         "pinmux.c",
         "mcspi_v0.c",
@@ -35,6 +36,7 @@ const files_m4f = {
 const filedirs = {
     common: [
         "i2c/v0",
+        "i2c/v0/lld",
         `pinmux/${device}`,
         "mcan/v0",
         "ipc_notify/v0",

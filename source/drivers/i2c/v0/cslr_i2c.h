@@ -1,5 +1,5 @@
 /*
- *  Copyright (C)2018-2021 Texas Instruments Incorporated
+ *  Copyright (C)2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -41,6 +41,7 @@
 #define CSLR_I2C_H_
 
 #include <drivers/hw_include/cslr.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -50,75 +51,50 @@ extern "C"
 /**************************************************************************
 *                        Register Overlay Structure
 **************************************************************************/
+
 typedef struct {
-    volatile Uint16 REVNB_LO;
-    volatile Uint8  RSVD0[2];
-    volatile Uint16 REVNB_HI;
-    volatile Uint8  RSVD1[10];
-    volatile Uint16 SYSC;
-    volatile Uint8  RSVD2[14];
-    volatile Uint16 EOI;
-    volatile Uint8  RSVD3[2];
-    volatile Uint16 IRQSTATUS_RAW;
-    volatile Uint8  RSVD4[2];
-    volatile Uint16 IRQSTATUS;
-    volatile Uint8  RSVD5[2];
-    volatile Uint16 IRQENABLE_SET;
-    volatile Uint8  RSVD6[2];
-    volatile Uint16 IRQENABLE_CLR;
-    volatile Uint8  RSVD7[2];
-    volatile Uint16 WE;
-    volatile Uint8  RSVD8[2];
-    volatile Uint16 DMARXENABLE_SET;
-    volatile Uint8  RSVD9[2];
-    volatile Uint16 DMATXENABLE_SET;
-    volatile Uint8  RSVD10[2];
-    volatile Uint16 DMARXENABLE_CLR;
-    volatile Uint8  RSVD11[2];
-    volatile Uint16 DMATXENABLE_CLR;
-    volatile Uint8  RSVD12[2];
-    volatile Uint16 DMARXWAKE_EN;
-    volatile Uint8  RSVD13[2];
-    volatile Uint16 DMATXWAKE_EN;
-    volatile Uint8  RSVD14[54];
-    volatile Uint16 IE;
-    volatile Uint8  RSVD15[2];
-    volatile Uint16 STAT;
-    volatile Uint8  RSVD16[6];
-    volatile Uint16 SYSS;
-    volatile Uint8  RSVD17[2];
-    volatile Uint16 BUF;
-    volatile Uint8  RSVD18[2];
-    volatile Uint16 CNT;
-    volatile Uint8  RSVD19[2];
-    volatile Uint16 DATA;
-    volatile Uint8  RSVD20[6];
-    volatile Uint16 CON;
-    volatile Uint8  RSVD21[2];
-    volatile Uint16 OA;
-    volatile Uint8  RSVD22[2];
-    volatile Uint16 SA;
-    volatile Uint8  RSVD23[2];
-    volatile Uint16 PSC;
-    volatile Uint8  RSVD24[2];
-    volatile Uint16 SCLL;
-    volatile Uint8  RSVD25[2];
-    volatile Uint16 SCLH;
-    volatile Uint8  RSVD26[2];
-    volatile Uint16 SYSTEST;
-    volatile Uint8  RSVD27[2];
-    volatile Uint16 BUFSTAT;
-    volatile Uint8  RSVD28[2];
-    volatile Uint16 OA1;
-    volatile Uint8  RSVD29[2];
-    volatile Uint16 OA2;
-    volatile Uint8  RSVD30[2];
-    volatile Uint16 OA3;
-    volatile Uint8  RSVD31[2];
-    volatile Uint16 ACTOA;
-    volatile Uint8  RSVD32[2];
-    volatile Uint16 SBLOCK;
+    volatile uint32_t REVNB_LO;
+    volatile uint32_t REVNB_HI;
+    volatile uint32_t RSVD1[2];
+    volatile uint32_t SYSC;
+    volatile uint32_t RSVD2[3];
+    volatile uint32_t EOI;
+    volatile uint32_t IRQSTATUS_RAW;
+    volatile uint32_t IRQSTATUS;
+    volatile uint32_t IRQENABLE_SET;
+    volatile uint32_t IRQENABLE_CLR;
+    volatile uint32_t WE;
+    volatile uint32_t DMARXENABLE_SET;
+    volatile uint32_t DMATXENABLE_SET;
+    volatile uint32_t DMARXENABLE_CLR;
+    volatile uint32_t DMATXENABLE_CLR;
+    volatile uint32_t DMARXWAKE_EN;
+    volatile uint32_t DMATXWAKE_EN;
+    volatile uint32_t RSVD3[13];
+    volatile uint32_t IE;
+    volatile uint32_t STAT;
+    volatile uint32_t RSVD4[1];
+    volatile uint32_t SYSS;
+    volatile uint32_t BUF;
+    volatile uint32_t CNT;
+    volatile uint32_t DATA;
+    volatile uint32_t RSVD5[1];
+    volatile uint32_t CON;
+    volatile uint32_t OA;
+    volatile uint32_t SA;
+    volatile uint32_t PSC;
+    volatile uint32_t SCLL;
+    volatile uint32_t SCLH;
+    volatile uint32_t SYSTEST;
+    volatile uint32_t BUFSTAT;
+    volatile uint32_t OA1;
+    volatile uint32_t OA2;
+    volatile uint32_t OA3;
+    volatile uint32_t ACTOA;
+    volatile uint32_t SBLOCK;
 } CSL_I2cRegs;
+
+typedef volatile CSL_I2cRegs             *CSL_I2cRegsOvly;
 
 /**************************************************************************
 *                        Register Definitions
