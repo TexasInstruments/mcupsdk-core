@@ -1,5 +1,5 @@
-/*
- *   Copyright (c) Texas Instruments Incorporated 2022
+/********************************************************************
+ * Copyright (C) 2022-2024 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -49,6 +49,7 @@
 #include <sdl/include/sdl_types.h>
 #include <sdl/include/hw_types.h>
 #include <sdl/esm/sdlr_esm.h>
+#include <sdl/esm/v0/v0_0/sdlr_esm.h>
 #include "esm.h"
 
 /* ========================================================================== */
@@ -123,6 +124,26 @@ int32_t SDL_ESM_getPinMode(uint32_t baseAddr, esmOperationMode_t *pMode)
         if (pMode != NULL)
         {
             regVal = HW_RD_FIELD32(baseAddr + SDL_ESM_PIN_CTRL, SDL_ESM_PIN_CTRL_KEY);
+            *pMode = regVal;
+            retVal = SDL_PASS;
+        }
+    }
+
+    return (retVal);
+}
+
+/**
+ *  Design: PROC_SDL-7406,PROC_SDL-7407
+ */
+int32_t SDL_ESM_getErrorOutMode(uint32_t baseAddr, esmOperationMode_t *pMode)
+{
+    int32_t    retVal = SDL_EBADARGS;
+    uint32_t   regVal;
+    if (baseAddr != ((uint32_t) (0u)))
+    {
+        if (pMode != NULL)
+        {
+            regVal = HW_RD_FIELD32(baseAddr + SDL_ESM_PIN_CTRL, SDL_ESM_PIN_CTRL_PWM_EN);
             *pMode = regVal;
             retVal = SDL_PASS;
         }
@@ -221,6 +242,46 @@ int32_t SDL_ESM_setErrPinLowTimePreload(uint32_t baseAddr, uint32_t lowTime)
 }
 
 /**
+ *  Design: PROC_SDL-7396, PROC_SDL-7395
+ */
+int32_t SDL_ESM_PWML_setErrPinLowTimePreload(uint32_t baseAddr, uint32_t lowTime)
+{
+    int32_t retVal = SDL_EBADARGS;
+
+    if (baseAddr != ((uint32_t) (0u)))
+    {
+        if (SDL_ESM_PIN_CNTR_PRE_COUNT_MAX >= lowTime)
+        {
+            HW_WR_FIELD32(baseAddr + SDL_ESM_PWML_PIN_CNTR_PRE,
+                          SDL_ESM_PIN_CNTR_PRE_COUNT,
+                          lowTime);
+            retVal = SDL_PASS;
+        }
+    }
+    return retVal;
+}
+
+/**
+ *  Design: PROC_SDL-7398, PROC_SDL-7399
+ */
+int32_t SDL_ESM_PWMH_setErrPinHighTimePreload(uint32_t baseAddr, uint32_t highTime)
+{
+    int32_t retVal = SDL_EBADARGS;
+
+    if (baseAddr != ((uint32_t) (0u)))
+    {
+        if (SDL_ESM_PIN_CNTR_PRE_COUNT_MAX >= highTime)
+        {
+            HW_WR_FIELD32(baseAddr + SDL_ESM_PWMH_PIN_CNTR_PRE,
+                          SDL_ESM_PIN_CNTR_PRE_COUNT,
+                          highTime);
+            retVal = SDL_PASS;
+        }
+    }
+    return retVal;
+}
+
+/**
  *  Design: PROC_SDL-1079,PROC_SDL-1080
  */
 int32_t SDL_ESM_getErrPinLowTimePreload(uint32_t baseAddr, uint32_t *pLowTime)
@@ -251,6 +312,80 @@ int32_t SDL_ESM_getCurrErrPinLowTimeCnt(uint32_t baseAddr, uint32_t *pPinCntrPre
         if (pPinCntrPre != ((void *) 0))
         {
             *pPinCntrPre = HW_RD_FIELD32(baseAddr + SDL_ESM_PIN_CNTR, SDL_ESM_PIN_CNTR_COUNT);
+            retVal =SDL_PASS;
+        }
+     }
+    return retVal;
+}
+
+/**
+ *  Design: PROC_SDL-7394,PROC_SDL-7392
+ */
+int32_t SDL_ESM_PWMH_getErrPinHighTimePreload(uint32_t baseAddr, uint32_t *pPinPWMHCntrPre)
+{
+    int32_t retVal = SDL_EBADARGS;
+
+    if (baseAddr != ((uint32_t) (0u)))
+    {
+        if (pPinPWMHCntrPre != ((void *) 0))
+        {
+            *pPinPWMHCntrPre = HW_RD_FIELD32(baseAddr + SDL_ESM_PWMH_PIN_CNTR_PRE,
+                          SDL_ESM_PIN_CNTR_PRE_COUNT);
+            retVal = SDL_PASS;
+        }
+    }
+    return retVal;
+}
+
+/**
+ * Design: PROC_SDL-7390,PROC_SDL-7388
+ */
+int32_t SDL_ESM_PWMH_getCurrErrPinHighTimeCnt(uint32_t baseAddr, uint32_t *pHighPWMHTime)
+{
+    int32_t    retVal = SDL_EBADARGS;
+
+    if (baseAddr != ((uint32_t) (0u)))
+    {
+        if (pHighPWMHTime != ((void *) 0))
+        {
+            *pHighPWMHTime = HW_RD_FIELD32(baseAddr + SDL_ESM_PWMH_PIN_CNTR, SDL_ESM_PIN_CNTR_COUNT);
+            retVal =SDL_PASS;
+        }
+     }
+    return retVal;
+}
+
+/**
+ *  Design: PROC_SDL-7393,PROC_SDL-7391
+ */
+int32_t SDL_ESM_PWML_getErrPinLowTimePreload(uint32_t baseAddr, uint32_t *pPinPWMLCntrPre)
+{
+    int32_t retVal = SDL_EBADARGS;
+
+    if (baseAddr != ((uint32_t) (0u)))
+    {
+        if (pPinPWMLCntrPre!= ((void *) 0))
+        {
+            *pPinPWMLCntrPre = HW_RD_FIELD32(baseAddr + SDL_ESM_PWML_PIN_CNTR_PRE,
+                          SDL_ESM_PIN_CNTR_PRE_COUNT);
+            retVal = SDL_PASS;
+        }
+    }
+    return retVal;
+}
+
+/**
+ * Design: PROC_SDL-7387,PROC_SDL-7386
+ */
+int32_t SDL_ESM_PWML_getCurrErrPinLowTimeCnt(uint32_t baseAddr, uint32_t *pLowPWMLTime)
+{
+    int32_t    retVal = SDL_EBADARGS;
+
+    if (baseAddr != ((uint32_t) (0u)))
+    {
+        if (pLowPWMLTime != ((void *) 0))
+        {
+            *pLowPWMLTime = HW_RD_FIELD32(baseAddr + SDL_ESM_PWML_PIN_CNTR, SDL_ESM_PIN_CNTR_COUNT);
             retVal =SDL_PASS;
         }
      }

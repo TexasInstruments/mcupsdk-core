@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022
+ *  Copyright (C) 2023-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -28,9 +28,8 @@
  *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
-/** 
+/**
  *
  * @ingroup  SDL_ESM_MODULE
  * @defgroup SDL_IP_ESM_API ESM Low-Level API
@@ -98,6 +97,24 @@ typedef uint32_t esmOperationMode_t;
 #define ESM_OPERATION_MODE_ERROR_FORCE 0xAu
     /**< Configure ESM operation mode to error force mode */
 /** @} */
+
+/**
+ *  \anchor esmErrOutMode_t
+ *  \name ESM Error Output Mode type
+ *  @{
+ */
+
+/**
+ * \brief  ESM Error Output Mode type.
+ */
+typedef uint32_t esmErrOutMode_t;
+
+#define SDL_ESM_LVL_PINOUT 0x0u
+    /**< Configure ESM error output mode to LEVEL output */
+#define SDL_ESM_PWM_PINOUT 0xFu
+    /**< Configure ESM error output mode to PWM output */
+/** @} */
+
 
 /**
  *  \anchor esmIntrType_t
@@ -218,8 +235,10 @@ typedef struct {
     volatile uint32_t LOW;                       /* Low Priority Interrupt Status Register */
     volatile uint32_t HI;                        /* High Priority Interrupt Status Register */
     volatile uint32_t PIN_CTRL;                  /* Error Pin Control Register */
-    volatile uint32_t PIN_CNTR;                  /* Error Counter Value Register */
     volatile uint32_t PIN_CNTR_PRE;              /* Error Counter Value Pre-Load Register */
+    volatile uint32_t PWMH_PIN_CNTR_PRE;         /* Error PWM High Counter Value Pre-Load Register */
+    volatile uint32_t PWML_PIN_CNTR_PRE;         /* Error PWM Low Counter Value Pre-Load Register */
+
 }SDL_ESM_staticRegs;
 
 
@@ -233,7 +252,7 @@ typedef struct {
 /* ========================================================================== */
 /**
  * \brief   This API is used to configure operation mode of ESM module.
- * 
+ *
  * \param   baseAddr        Base Address of the ESM Registers.
  *
  * \param   mode            Channel number for which reset is to be done.
@@ -254,7 +273,7 @@ typedef struct {
        uint32_t            baseAddr = SDL_MCU_ESM0_CFG_BASE;
        esmOperationMode_t  mode     = ESM_OPERATION_MODE_ERROR_FORCE;
        int32_t             sdlRet;
- 
+
        sdlRet = SDL_ESM_setMode (baseAddr, mode);
 
    @endverbatim
@@ -293,6 +312,38 @@ int32_t SDL_ESM_setMode(uint32_t baseAddr, esmOperationMode_t mode);
  */
 int32_t SDL_ESM_getPinMode(uint32_t baseAddr, esmOperationMode_t *pMode);
 
+
+/**
+ * \brief   This API is used to read Error Out mode (LVL or PWM) of ESM module.
+ *
+ * \param   baseAddr        Base Address of the ESM Registers.
+ *
+ * \param   pMode           pointer to variable to hold ESM ErrorOut Mode.
+ *                          Refer enum #esmErrOutMode_t.
+ *
+ * \return                  SDL_PASS - API success
+ * @n                       SDL_EBADARGS - API fails due to bad input arguments
+ *
+ * \pre
+ *   @n  ESM module is reset and initialized for desired operation
+ *
+ * \post
+ *   @n  None
+ *
+ * @b Example
+   @verbatim
+
+       uint32_t            baseAddr = SDL_MCU_ESM0_CFG_BASE;
+       esmOperationMode_t  mode;
+       uint32_t            sdlRet;
+
+       sdlRet = SDL_ESM_getErrorOutMode (baseAddr, &mode);
+
+   @endverbatim
+ *
+ */
+int32_t SDL_ESM_getErrorOutMode(uint32_t baseAddr, esmOperationMode_t *pMode);
+
 /**
  * \brief   This API is used to set the influence of interrupt on nERROR pin.
  *
@@ -306,7 +357,7 @@ int32_t SDL_ESM_getPinMode(uint32_t baseAddr, esmOperationMode_t *pMode);
  * \return                  SDL_PASS - success
  * @n                       SDL_EBADARGS - API fails due to bad input arguments
  *
- * Note: the intrSrc check is only at the IP level max and not done at instance 
+ * Note: the intrSrc check is only at the IP level max and not done at instance
  *       level, so it is expected to be done at higher layer.
  *
  * \pre
@@ -331,7 +382,7 @@ int32_t SDL_ESM_setInfluenceOnErrPin(uint32_t baseAddr, uint32_t intrSrc,
 
 /**
  * \brief   This API is used to get the influence of interrupt on nERROR pin.
- * 
+ *
  * \param   baseAddr        Base Address of the ESM Registers.
  *
  * \param   intrSrc         Interrupt source which will influence nERROR pin.
@@ -344,7 +395,7 @@ int32_t SDL_ESM_setInfluenceOnErrPin(uint32_t baseAddr, uint32_t intrSrc,
  * @n                       SDL_EBADARGS - API fails due to bad input arguments
  *
  *
- * Note: the intrSrc check is only at the IP level max and not done at instance 
+ * Note: the intrSrc check is only at the IP level max and not done at instance
  *       level, so it is expected to be done at higher layer.
  *
  * \pre
@@ -369,7 +420,7 @@ int32_t SDL_ESM_getInfluenceOnErrPin(uint32_t baseAddr, uint32_t intrSrc,
                                      uint32_t *pInfluence);
 /**
  * \brief   This API is used to configure the low time counter pre-load value.
- * 
+ *
  * \param   baseAddr        Base Address of the ESM Registers.
  *
  * \param   lowTime         Time to be configured as LTCP.
@@ -405,8 +456,74 @@ int32_t SDL_ESM_getInfluenceOnErrPin(uint32_t baseAddr, uint32_t intrSrc,
 int32_t SDL_ESM_setErrPinLowTimePreload(uint32_t baseAddr, uint32_t lowTime);
 
 /**
+ * \brief   This API is used to configure the low time counter pre-load value for PWM error.
+ *
+ * \param   baseAddr        Base Address of the ESM Registers.
+ *
+ * \param   lowTime         Time to be configured as LTCP.
+ *
+ * \return                  SDL_PASS - success
+ * @n                       SDL_EBADARGS - API fails due to bad input arguments
+ *
+ * \pre
+ *   @n  ESM module is reset and initialized for desired operation
+ *
+ * This is the value that will be loaded in to the counter field of
+ * the Error Pin PWM low Counter Value Register whenever the error
+ * output pin toggles low.
+ *
+ * \post
+ *   @n  None
+ *
+ * @b Example
+   @verbatim
+
+       uint32_t            baseAddr = SDL_MCU_ESM0_CFG_BASE;
+       uint32_t            pinCntrPre  = 100;
+       int32_t             sdlRet;
+       sdlRet = SDL_ESM_PWML_setErrPinLowTimePreload(baseAddr, pinCntrPre);
+
+   @endverbatim
+ *
+ */
+int32_t SDL_ESM_PWML_setErrPinLowTimePreload(uint32_t baseAddr, uint32_t lowTime);
+
+/**
+ * \brief   This API is used to configure the high time counter pre-load value for PWM error.
+ *
+ * \param   baseAddr        Base Address of the ESM Registers.
+ *
+ * \param   highTime         Time to be configured as HTCP.
+ *
+ * \return                  SDL_PASS - success
+ * @n                       SDL_EBADARGS - API fails due to bad input arguments
+ *
+ * \pre
+ *   @n  ESM module is reset and initialized for desired operation
+ *
+ * This is the value that will be loaded in to the counter field of
+ * the Error Pin PWM High Counter Value Register whenever the error
+ * output pin toggles high.
+ *
+ * \post
+ *   @n  None
+ *
+ * @b Example
+   @verbatim
+
+       uint32_t            baseAddr = SDL_MCU_ESM0_CFG_BASE;
+       uint32_t            pinCntrPre  = 100;
+       int32_t             sdlRet;
+       sdlRet = SDL_ESM_PWMH_setErrPinHighTimePreload(baseAddr, pinCntrPre);
+
+   @endverbatim
+ *
+ */
+int32_t SDL_ESM_PWMH_setErrPinHighTimePreload(uint32_t baseAddr, uint32_t highTime);
+
+/**
  * \brief   This API is used to read the low time counter pre-load value.
- * 
+ *
  * \param   baseAddr        Base Address of the ESM Registers.
  *
  * \param   pLowTime        pointer to Time to be read as LTCP.
@@ -441,6 +558,72 @@ int32_t SDL_ESM_setErrPinLowTimePreload(uint32_t baseAddr, uint32_t lowTime);
  */
 int32_t SDL_ESM_getErrPinLowTimePreload(uint32_t baseAddr, uint32_t *pLowTime);
 
+/**
+ * \brief   This API is used to read the low time counter pre-load value for PWM error.
+ *
+ * \param   baseAddr               Base Address of the ESM Registers.
+ *
+ * \param   pPinPWMLCntrPre        pointer to Time to be read as LTCP.
+ *
+ * \return                         SDL_PASS - success
+ * @n                              SDL_EBADARGS - API fails due to bad input arguments
+ *
+ * \pre
+ *   @n  ESM module is reset and initialized for desired operation
+ *
+ * This is the value that will be loaded in to the counter field of
+ * the Error Pin PWM Low Counter Value Register whenever the error
+ * output pin toggles low.
+ *
+ * \post
+ *   @n  None
+ *
+ * @b Example
+   @verbatim
+
+       uint32_t            baseAddr = SDL_MCU_ESM0_CFG_BASE;
+       uint32_t            inCntrPre;
+       int32_t             sdlRet;
+       sdlRet = SDL_ESM_PWML_getErrPinLowTimePreload(baseAddr, &inCntrPre);
+
+   @endverbatim
+ *
+ */
+int32_t SDL_ESM_PWML_getErrPinLowTimePreload(uint32_t baseAddr, uint32_t *pPinPWMLCntrPre);
+
+/**
+ * \brief   This API is used to read the High time counter pre-load value for PWM error.
+ *
+ * \param   baseAddr               Base Address of the ESM Registers.
+ *
+ * \param   pPinPWMHCntrPre        pointer to Time to be read as HTCP.
+ *
+ * \return                         SDL_PASS - success
+ * @n                              SDL_EBADARGS - API fails due to bad input arguments
+ *
+ * \pre
+ *   @n  ESM module is reset and initialized for desired operation
+ *
+ * This is the value that will be loaded in to the counter field of
+ * the Error Pin PWM High Counter Value Register whenever the error
+ * output pin toggles high.
+ *
+ * \post
+ *   @n  None
+ *
+ * @b Example
+   @verbatim
+
+       uint32_t            baseAddr = SDL_MCU_ESM0_CFG_BASE;
+       uint32_t            inCntrPre;
+       int32_t             sdlRet;
+       sdlRet = SDL_ESM_PWMH_getErrPinHighTimePreload(baseAddr, inCntrPre);
+
+   @endverbatim
+ *
+ */
+int32_t SDL_ESM_PWMH_getErrPinHighTimePreload(uint32_t baseAddr, uint32_t *pPinPWMHCntrPre);
+
 
 /**
  * \brief   This API is used to get the current value of low time counter.
@@ -470,6 +653,64 @@ int32_t SDL_ESM_getErrPinLowTimePreload(uint32_t baseAddr, uint32_t *pLowTime);
  *
  */
 int32_t SDL_ESM_getCurrErrPinLowTimeCnt(uint32_t baseAddr, uint32_t *pPinCntrPre);
+
+/**
+ * \brief   This API is used to get the current value of low time counter for PWM error.
+ *
+ * \param   baseAddr        Base Address of the ESM Registers.
+ *
+ * \param   pLowPWMLTime     pointer to Counter value Current low time count for PWM error.
+ *
+ * \return                  SDL_PASS - success
+ * @n                       SDL_EBADARGS - API fails due to bad input arguments
+ *
+ * \pre
+ *   @n  ESM module is reset and initialized for desired operation
+ *
+ * \post
+ *   @n  None
+ *
+ * @b Example
+   @verbatim
+
+       uint32_t            baseAddr = SDL_MCU_ESM0_CFG_BASE;
+       uint32_t            pinCntrPre;
+       int32_t             sdlRet;
+       sdlRet  = SDL_ESM_PWML_getCurrErrPinLowTimeCnt(baseAddr, &pinCntrPre);
+
+   @endverbatim
+ *
+ */
+int32_t SDL_ESM_PWML_getCurrErrPinLowTimeCnt(uint32_t baseAddr, uint32_t *pLowPWMLTime);
+
+/**
+ * \brief   This API is used to get the current value of high time counter for PWM error.
+ *
+ * \param   baseAddr        Base Address of the ESM Registers.
+ *
+ * \param   pHighPWMHTime    pointer to Counter value Current high time count for PWM error.
+ *
+ * \return                  SDL_PASS - success
+ * @n                       SDL_EBADARGS - API fails due to bad input arguments
+ *
+ * \pre
+ *   @n  ESM module is reset and initialized for desired operation
+ *
+ * \post
+ *   @n  None
+ *
+ * @b Example
+   @verbatim
+
+       uint32_t            baseAddr = SDL_MCU_ESM0_CFG_BASE;
+       uint32_t            pinCntrPre;
+       int32_t             sdlRet;
+       sdlRet  = SDL_ESM_PWMH_getCurrErrPinHighTimeCnt(baseAddr, &pinCntrPre);
+
+   @endverbatim
+ *
+ */
+int32_t SDL_ESM_PWMH_getCurrErrPinHighTimeCnt(uint32_t baseAddr, uint32_t *pHighPWMHTime);
 
 /**
  * \brief   This API is used to get the current status of nERROR pin.
@@ -502,7 +743,7 @@ int32_t SDL_ESM_getErrPinStatus(uint32_t baseAddr, uint32_t *pStatus);
 
 /**
  * \brief   This API is used to reset the nERROR pin.
- * 
+ *
  * \param   baseAddr        Base Address of the ESM Registers.
  *
  * \return                  SDL_PASS - success
@@ -581,7 +822,7 @@ int32_t SDL_ESM_isEnableCfgIntr(uint32_t baseAddr, uint32_t group, uint32_t *pEn
  *   @n  ESM module is reset and initialized for desired operation
  *
  *
- * Note: the intrSrc check is only at the IP level max and not done at instance 
+ * Note: the intrSrc check is only at the IP level max and not done at instance
  *       level, so it is expected to be done at higher layer.
  *
  * \post
@@ -738,7 +979,7 @@ int32_t SDL_ESM_disableIntr(uint32_t baseAddr, uint32_t intrNum);
  *   @n  ESM module is reset and initialized for desired operation
  *
  *
- * Note: the intrSrc check is only at the IP level max and not done at instance 
+ * Note: the intrSrc check is only at the IP level max and not done at instance
  *       level, so it is expected to be done at higher layer.
  *
  * \post
@@ -774,7 +1015,7 @@ int32_t SDL_ESM_setIntrPriorityLvl(uint32_t baseAddr, uint32_t intrSrc,
  *
  *
  *
- * Note: the intrSrc check is only at the IP level max and not done at instance 
+ * Note: the intrSrc check is only at the IP level max and not done at instance
  *       level, so it is expected to be done at higher layer.
  *
  * \pre
@@ -854,7 +1095,7 @@ int32_t SDL_ESM_getCfgIntrStatus(uint32_t baseAddr, uint32_t group, uint32_t *pS
  *   @n  None
  *
  *
- * Note: the intrSrc check is only at the IP level max and not done at instance 
+ * Note: the intrSrc check is only at the IP level max and not done at instance
  *       level, so it is expected to be done at higher layer.
  *
  * @b Example
@@ -922,7 +1163,7 @@ int32_t SDL_ESM_setCfgIntrStatusRAW(uint32_t baseAddr, uint32_t group);
  *   @n  None
  *
  *
- * Note: the intrSrc check is only at the IP level max and not done at instance 
+ * Note: the intrSrc check is only at the IP level max and not done at instance
  *       level, so it is expected to be done at higher layer.
  *
  * @b Example
@@ -940,7 +1181,7 @@ int32_t SDL_ESM_setIntrStatusRAW(uint32_t baseAddr, uint32_t intrSrc);
 
 /**
  * \brief   This API is used to get the interrupt RAW status.
- * 
+ *
  * \param   baseAddr        Base Address of the ESM Registers.
  *
  * \param   intrSrc         Interrupt for which status to return.
@@ -957,7 +1198,7 @@ int32_t SDL_ESM_setIntrStatusRAW(uint32_t baseAddr, uint32_t intrSrc);
  *   @n  None
  *
  *
- * Note: the intrSrc check is only at the IP level max and not done at instance 
+ * Note: the intrSrc check is only at the IP level max and not done at instance
  *       level, so it is expected to be done at higher layer.
  *
  * @b Example
@@ -1062,7 +1303,7 @@ int32_t SDL_ESM_clearCfgIntrStatus(uint32_t baseAddr, uint32_t group);
  *   @n  None
  *
  *
- * Note: the intrSrc check is only at the IP level max and not done at instance 
+ * Note: the intrSrc check is only at the IP level max and not done at instance
  *       level, so it is expected to be done at higher layer.
  *
  * @b Example

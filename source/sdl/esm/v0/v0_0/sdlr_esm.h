@@ -1,5 +1,5 @@
 /********************************************************************
- * Copyright (C) 2022 Texas Instruments Incorporated.
+ * Copyright (C) 2022-2024 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -29,8 +29,7 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- *  Name        : sdlr_esm.h
-*/
+ */
 #ifndef SDLR_ESM_H_
 #define SDLR_ESM_H_
 
@@ -88,6 +87,10 @@ typedef struct {
     volatile uint32_t PIN_STS;                   /* Error Pin Status Register */
     volatile uint32_t PIN_CNTR;                  /* Error Counter Value Register */
     volatile uint32_t PIN_CNTR_PRE;              /* Error Counter Value Pre-Load Register */
+    volatile uint32_t PWMH_PIN_CNTR;             /* Error PWM High Counter Value Register */
+    volatile uint32_t PWMH_PIN_CNTR_PRE;         /* Error PWM High Counter Value Pre-Load Register */
+    volatile uint32_t PWML_PIN_CNTR;             /* Error PWM Low Counter Value Register */
+    volatile uint32_t PWML_PIN_CNTR_PRE;         /* Error PWM Low Counter Value Pre-Load Register */
     volatile uint8_t  Resv_1024[944];
     SDL_esmRegs_ERR_GRP ERR_GRP[32];
 } SDL_esmRegs;
@@ -114,6 +117,10 @@ typedef struct {
 #define SDL_ESM_PIN_STS                                                        (0x00000044U)
 #define SDL_ESM_PIN_CNTR                                                       (0x00000048U)
 #define SDL_ESM_PIN_CNTR_PRE                                                   (0x0000004CU)
+#define SDL_ESM_PWMH_PIN_CNTR                                                  (0x00000050U)
+#define SDL_ESM_PWMH_PIN_CNTR_PRE                                              (0x00000054U)
+#define SDL_ESM_PWML_PIN_CNTR                                                  (0x00000058U)
+#define SDL_ESM_PWML_PIN_CNTR_PRE                                              (0x0000005CU)
 #define SDL_ESM_ERR_GRP_RAW(ERR_GRP)                                           (0x00000400U+((ERR_GRP)*0x20U))
 #define SDL_ESM_ERR_GRP_STS(ERR_GRP)                                           (0x00000404U+((ERR_GRP)*0x20U))
 #define SDL_ESM_ERR_GRP_INTR_EN_SET(ERR_GRP)                                   (0x00000408U+((ERR_GRP)*0x20U))
@@ -292,6 +299,10 @@ typedef struct {
 #define SDL_ESM_PIN_CTRL_KEY_MASK                                              (0x0000000FU)
 #define SDL_ESM_PIN_CTRL_KEY_SHIFT                                             (0x00000000U)
 #define SDL_ESM_PIN_CTRL_KEY_MAX                                               (0x0000000FU)
+
+#define SDL_ESM_PIN_CTRL_PWM_EN_MASK                                           (0x000000F0U)
+#define SDL_ESM_PIN_CTRL_PWM_EN_SHIFT                                          (0x00000004U)
+#define SDL_ESM_PIN_CTRL_PWM_EN_MAX                                            (0x0000000FU)
 
 /* PIN_STS */
 

@@ -1,9 +1,5 @@
 /*
- * SDL ESM
- *
- * Software Diagnostics Reference module for Error Signaling Module
- *
- *  Copyright (c) Texas Instruments Incorporated 2022
+ *  Copyright (C) 2023-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,7 +28,6 @@
  *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
 /**
  *  @addtogroup SDL_ESM_MODULE APIs for SDL ESM
@@ -264,6 +259,25 @@ int32_t SDL_ESM_clrNError(SDL_ESM_Inst instance);
  *          SDL_EBADARGS if instance is invalid.
  */
 int32_t SDL_ESM_setNError(SDL_ESM_Inst instance);
+
+/** ============================================================================
+ * \brief   This API is use to set error pin out mode(LEVEL or PWM).
+ *          This API must be called after the below API- #SDL_ESM_init
+ *
+ *
+ *
+ * \param   instance        ESM Instance.
+ *
+ * \param   pinOutMode      enum value to select error pin out mode.
+ *                          Refer enum #esmErrOutMode_t.
+ *
+ * \return                  SDL_PASS - API success
+ *                          SDL_EBADARGS  - Instance is not valid.
+ *                          SDL_EFAIL     - Output (LVL or PWM) is not changed.
+ *
+ *
+ */
+int32_t SDL_ESM_setPinOutMode(SDL_ESM_Inst instance, esmErrOutMode_t pinOutMode);
 
 /** ============================================================================
  *

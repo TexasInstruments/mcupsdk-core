@@ -1,9 +1,5 @@
-/*
- * sdl_esm.c
- *
- * Software Diagnostics Reference module for Error Signaling Module
- *
- *  Copyright (c) Texas Instruments Incorporated 2022
+/********************************************************************
+ * Copyright (C) 2022-2024 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -102,18 +98,19 @@ int32_t SDL_ESM_getNErrorStatus(SDL_ESM_Inst instance, uint32_t *pStatus)
 
             if(pStaticRegs != ((void *) 0))
             {
-                pStaticRegs->PID           = esmRegs->PID;
-                pStaticRegs->INFO          = esmRegs->INFO;
-                pStaticRegs->EN            = esmRegs->EN;
-                pStaticRegs->ERR_EN_SET    = esmRegs->ERR_EN_SET;
-                pStaticRegs->ERR_EN_CLR    = esmRegs->ERR_EN_CLR;
-                pStaticRegs->LOW_PRI       = esmRegs->LOW_PRI;
-                pStaticRegs->HI_PRI        = esmRegs->HI_PRI;
-                pStaticRegs->LOW           = esmRegs->LOW;
-                pStaticRegs->HI            = esmRegs->HI;
-                pStaticRegs->PIN_CTRL      = esmRegs->PIN_CTRL;
-                pStaticRegs->PIN_CNTR      = esmRegs->PIN_CNTR;
-                pStaticRegs->PIN_CNTR_PRE  = esmRegs->PIN_CNTR_PRE;
+                pStaticRegs->PID                        = esmRegs->PID;
+                pStaticRegs->INFO                       = esmRegs->INFO;
+                pStaticRegs->EN                         = esmRegs->EN;
+                pStaticRegs->ERR_EN_SET                 = esmRegs->ERR_EN_SET;
+                pStaticRegs->ERR_EN_CLR                 = esmRegs->ERR_EN_CLR;
+                pStaticRegs->LOW_PRI                    = esmRegs->LOW_PRI;
+                pStaticRegs->HI_PRI                     = esmRegs->HI_PRI;
+                pStaticRegs->LOW                        = esmRegs->LOW;
+                pStaticRegs->HI                         = esmRegs->HI;
+                pStaticRegs->PIN_CTRL                   = esmRegs->PIN_CTRL;
+                pStaticRegs->PIN_CNTR_PRE               = esmRegs->PIN_CNTR_PRE;
+                pStaticRegs->PWMH_PIN_CNTR_PRE          = esmRegs->PWMH_PIN_CNTR_PRE;
+                pStaticRegs->PWML_PIN_CNTR_PRE          = esmRegs->PWML_PIN_CNTR_PRE;
 
                 /*It reads Error group Register of ESM instances*/
 
@@ -652,4 +649,77 @@ int32_t SDL_ESM_registerCCMCallback(SDL_ESM_Inst esmInstType,uint32_t eventBitma
     }
 #endif
      return retval;
+}
+
+/**
+ * Design: PROC_SDL-7376
+ */
+int32_t SDL_ESM_setPinOutMode(SDL_ESM_Inst instance, esmErrOutMode_t pinOutMode)
+{
+    int32_t    retVal = SDL_EBADARGS;
+    int32_t    sdlRet;
+    uint32_t   intStatus;
+    uint32_t   baseAddr;
+    uint32_t   pinOutVal;
+
+    if (((instance != SDL_ESM_INSTANCE_MAX) && (SDL_ESM_getBaseAddr(instance, &baseAddr) == ((bool)true))))
+    {
+        /* In SDL_ESM_init API, global interrupt are enabled so here
+           it should get disabled before change outPut mode.
+        */
+        /* Disable global interrupt */
+        sdlRet = SDL_ESM_disableGlobalIntr(baseAddr);
+
+        if (sdlRet == SDL_PASS)
+        {
+            if (pinOutMode == SDL_ESM_PWM_PINOUT)
+            {
+                /* Enable PWM error Ouptput */
+                HW_WR_FIELD32(baseAddr + SDL_ESM_PIN_CTRL, SDL_ESM_PIN_CTRL_PWM_EN, SDL_ESM_PWM_PINOUT);
+                /* Verify PWM error Ouptput */
+                pinOutVal = HW_RD_FIELD32(baseAddr + SDL_ESM_PIN_CTRL, SDL_ESM_PIN_CTRL_PWM_EN);
+
+                if (pinOutVal == SDL_ESM_PWM_PINOUT)
+                {
+                    retVal = SDL_PASS;
+                }
+            }
+            else if(pinOutMode == SDL_ESM_LVL_PINOUT)
+            {
+                /* Enable LVL error Ouptput */
+                HW_WR_FIELD32(baseAddr + SDL_ESM_PIN_CTRL, SDL_ESM_PIN_CTRL_PWM_EN, SDL_ESM_LVL_PINOUT);
+                /* Verify PWM error Ouptput */
+                pinOutVal = HW_RD_FIELD32(baseAddr + SDL_ESM_PIN_CTRL, SDL_ESM_PIN_CTRL_PWM_EN);
+
+                if (pinOutVal == SDL_ESM_LVL_PINOUT)
+                {
+                    retVal = SDL_PASS;
+                }
+            }
+            /* global interrupt are disabled, enable again global interrupt */
+            sdlRet = SDL_ESM_enableGlobalIntr(baseAddr);
+
+            if (sdlRet == SDL_PASS)
+            {
+                sdlRet = SDL_ESM_getGlobalIntrEnabledStatus(baseAddr, &intStatus);
+            }
+            if (sdlRet == SDL_PASS)
+            {
+                if (intStatus != SDL_ESM_EN_KEY_ENBALE_VAL)
+                {
+                    sdlRet = SDL_EFAIL;
+                }
+            }
+            if (sdlRet != SDL_PASS)
+            {
+                retVal = SDL_EFAIL;
+            }
+        }
+        else
+        {
+            retVal = SDL_EFAIL;
+        }
+    }
+
+    return (retVal);
 }
