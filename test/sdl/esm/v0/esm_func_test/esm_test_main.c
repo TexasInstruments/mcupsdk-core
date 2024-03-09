@@ -1,4 +1,4 @@
-/* Copyright (c) 2021 Texas Instruments Incorporated
+/* Copyright (c) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -71,6 +71,7 @@ void test_sdl_esm_baremetal_test_app_runner(void);
 void test_sdl_esm_baremetal_test_app (void *args);
 extern int32_t sdl_config_test(void);
 extern int32_t sdl_ecc_cb_test(void);
+extern int32_t sdl_config_pwm_test(void);
 
 void sdlApp_print(char * str)
 {
@@ -83,6 +84,7 @@ void sdlApp_print(char * str)
 extern volatile uint8_t cfg_triggered;
 
 sdlEsmTest_t  sdlEsmTestList[] = {
+    {sdl_config_pwm_test,   "sdl config pwm test" , SDL_APP_TEST_NOT_RUN},
     {sdl_ecc_cb_test,   "ecc cb test" , SDL_APP_TEST_NOT_RUN},
     {test_sdr_test,   "callback test" , SDL_APP_TEST_NOT_RUN},
     {sdl_config_test,   "sdl config test" , SDL_APP_TEST_NOT_RUN},

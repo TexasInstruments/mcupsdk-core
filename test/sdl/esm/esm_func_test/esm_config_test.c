@@ -3,7 +3,9 @@
 #include "esm_test_main.h"
 #include <kernel/dpl/DebugP.h>
 
-#define SDTF_NUM_RUNALL_TEST_COMMANDS 4
+#define SDTF_NUM_RUNALL_TEST_COMMANDS 4U
+#define SDL_ESM_PWM_TEST_MAX_NUM     10U
+
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
 
 SDL_ESM_config SDTF_esmInitConfig_MCU_config =
@@ -262,6 +264,64 @@ int32_t sdl_config_test(void)
             }
         }
     }
+
+    if (retVal == 0)
+    {
+        DebugP_log("\n All tests have passed. \n");
+    }
+    else
+    {
+        DebugP_log("\n Few/all tests Failed \n");
+    }
+
+return retVal;
+}
+
+int32_t sdl_config_pwm_test(void)
+{
+    /* Declarations of variables */
+    int32_t retVal = 0;
+    uint32_t errorStatus;
+    uint32_t baseAddr;
+    esmErrOutMode_t  mode;
+    bool prevStatusValue, currStatusValue;
+    uint32_t i = 0;
+
+    DebugP_log("\n sdl_config_pwm_test is started. \n");
+    SDL_ESM_getBaseAddr(SDL_ESM_INST_MCU_ESM0, &baseAddr);
+    esm_init(SDL_ESM_INST_MCU_ESM0);
+
+    retVal = SDL_ESM_setPinOutMode(SDL_ESM_INST_MCU_ESM0, SDL_ESM_PWM_PINOUT);
+    if (retVal == SDL_PASS)
+    {
+        retVal = SDL_ESM_getErrorOutMode(baseAddr, &mode);
+
+        if (retVal == SDL_PASS)
+        {
+            (mode == SDL_ESM_PWM_PINOUT) ? printf("\n Error out mode is in PWM mode. \n")
+                                         : printf("\n Error out mode is in LVL mode. \n");
+        }
+    }
+
+    do
+    {
+        retVal = SDL_ESM_getErrPinStatus(baseAddr, &errorStatus);
+        currStatusValue = (bool) errorStatus;
+        if(i == 0)
+        {
+            prevStatusValue = !(currStatusValue);
+        }
+
+        if (prevStatusValue != currStatusValue)
+        {
+            DebugP_log("\n Error status Value in PWM mode is = %d. \n", currStatusValue);
+            i++;
+        }
+
+        prevStatusValue = currStatusValue;
+        ClockP_usleep (10);
+
+    } while(i <= SDL_ESM_PWM_TEST_MAX_NUM);
 
     if (retVal == 0)
     {

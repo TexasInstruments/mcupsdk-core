@@ -1,4 +1,4 @@
-/* Copyright (c) 2021 Texas Instruments Incorporated
+/* Copyright (c) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -46,6 +46,7 @@
 #include <stdio.h>
 #include <sdl/include/sdl_types.h>
 #include <sdl/sdl_esm.h>
+#include <kernel/dpl/ClockP.h>
 #include <sdl/esm/v0/v0_0/sdl_ip_esm.h>
 #include <sdl/esm/v0/v0_0/sdl_esm_priv.h>
 #include <sdl/esm/v0/esm.h>
