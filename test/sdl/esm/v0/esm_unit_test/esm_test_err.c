@@ -88,6 +88,7 @@ int32_t sdl_Esm_negTest(void)
     uint32_t influence;
     esmOperationMode_t esmOpMode;
     uint32_t lowTime;
+    uint32_t highTime;
     uint32_t pinCntrPre;
     uint32_t status;
     esmGroupIntrStatus_t intrstatus;
@@ -545,6 +546,36 @@ int32_t sdl_Esm_negTest(void)
         return (testStatus);
     }
 
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        /* Test case: PROC_SDL-7441 */
+        instance = SDL_ESM_INSTANCE_MAX;
+        if (SDL_ESM_setPinOutMode((SDL_ESM_Inst)SDL_ESM_INSTANCE_INVLD,  SDL_ESM_PWM_PINOUT) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        /* Test case: PROC_SDL-7440 */
+        instance = SDL_ESM_INST_MAIN_ESM0;
+        if (SDL_ESM_setPinOutMode((SDL_ESM_Inst)instance, 1U) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+    if (testStatus != SDL_APP_TEST_PASS)
+    {
+        DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        return (testStatus);
+    }
+
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -667,6 +698,24 @@ int32_t sdl_Esm_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
+        if (SDL_ESM_getErrorOutMode(0U, &esmOpMode) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_getErrorOutMode(ESM_TEST_BASE, NULL) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
         if (SDL_ESM_setInfluenceOnErrPin(0U, 5U, true) != SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
@@ -730,6 +779,42 @@ int32_t sdl_Esm_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
+        if (SDL_ESM_PWML_setErrPinLowTimePreload(0U, 0x0000FFFFU) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_PWML_setErrPinLowTimePreload(ESM_TEST_BASE, 0xFFFFFFFFU) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_PWMH_setErrPinHighTimePreload(0U, 0x0000FFFFU) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_PWMH_setErrPinHighTimePreload(ESM_TEST_BASE, 0xFFFFFFFFU) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
         if (SDL_ESM_getErrPinLowTimePreload(0U, &lowTime) != SDL_EBADARGS)
         {
             testStatus = SDL_APP_TEST_FAILED;
@@ -743,6 +828,43 @@ int32_t sdl_Esm_negTest(void)
         {
             testStatus = SDL_APP_TEST_FAILED;
             DebugP_log("SDLEsm_negTest: failure on line no. %d \r\n", __LINE__);
+        }
+    }
+
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_PWMH_getErrPinHighTimePreload(0U, &highTime) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_PWMH_getErrPinHighTimePreload(ESM_TEST_BASE, NULL) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_PWML_getErrPinLowTimePreload(0U, &lowTime) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_PWML_getErrPinLowTimePreload(ESM_TEST_BASE, NULL) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
         }
     }
 
@@ -761,6 +883,43 @@ int32_t sdl_Esm_negTest(void)
         {
             testStatus = SDL_APP_TEST_FAILED;
             DebugP_log("SDLEsm_negTest: failure on line no. %d \r\n", __LINE__);
+        }
+    }
+
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_PWMH_getCurrErrPinHighTimeCnt(0U, &pinCntrPre) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_PWMH_getCurrErrPinHighTimeCnt(ESM_TEST_BASE, NULL) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_PWML_getCurrErrPinLowTimeCnt(0U, &pinCntrPre) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        if (SDL_ESM_PWML_getCurrErrPinLowTimeCnt(ESM_TEST_BASE, NULL) != SDL_EBADARGS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
         }
     }
 

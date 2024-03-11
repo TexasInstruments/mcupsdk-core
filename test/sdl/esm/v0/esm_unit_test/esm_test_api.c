@@ -244,6 +244,16 @@ int32_t sdl_Esm_posTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
 
+        if (SDL_ESM_getErrorOutMode(ESM_TEST_BASE, &esmOpMode) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+
         if (SDL_ESM_setInfluenceOnErrPin(ESM_TEST_BASE, 5U, true) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
@@ -294,6 +304,26 @@ int32_t sdl_Esm_posTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
 
+        if (SDL_ESM_PWML_setErrPinLowTimePreload(ESM_TEST_BASE, 0x0000FFFFU) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+
+        if (SDL_ESM_PWMH_setErrPinHighTimePreload(ESM_TEST_BASE, 0x0000FFFFU) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+
         if (SDL_ESM_getErrPinLowTimePreload(ESM_TEST_BASE, &lowTime) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
@@ -304,10 +334,50 @@ int32_t sdl_Esm_posTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
 
+        if (SDL_ESM_PWMH_getErrPinHighTimePreload(ESM_TEST_BASE, &lowTime) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+
+        if (SDL_ESM_PWML_getErrPinLowTimePreload(ESM_TEST_BASE, &lowTime) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+
         if (SDL_ESM_getCurrErrPinLowTimeCnt(ESM_TEST_BASE, &pinCntrPre) != SDL_PASS)
         {
             testStatus = SDL_APP_TEST_FAILED;
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+
+        if (SDL_ESM_PWMH_getCurrErrPinHighTimeCnt(ESM_TEST_BASE, &pinCntrPre) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+
+        if (SDL_ESM_PWML_getCurrErrPinLowTimeCnt(ESM_TEST_BASE, &pinCntrPre) != SDL_PASS)
+        {
+            testStatus = SDL_APP_TEST_FAILED;
+            DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
         }
     }
 
@@ -774,6 +844,27 @@ int32_t sdl_Esm_posTest(void)
         {
             testStatus = SDL_APP_TEST_FAILED;
             DebugP_log("sdlEsm_pos_apiTest: failure on line no. %d \r\n", __LINE__);
+        }
+    }
+
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        /* Test case: PROC_SDL-7438 */
+        if (SDL_ESM_setPinOutMode(i, SDL_ESM_PWM_PINOUT) != SDL_PASS)
+        {
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+            testStatus = SDL_APP_TEST_FAILED;
+        }
+    }
+
+    if (testStatus == SDL_APP_TEST_PASS)
+    {
+        /* Test case: PROC_SDL-7439 */
+        if (SDL_ESM_setPinOutMode(i, SDL_ESM_LVL_PINOUT) != SDL_PASS)
+        {
+            DebugP_log("SDLEsm_negTest: failure on line no. %d \n", __LINE__);
+            testStatus = SDL_APP_TEST_FAILED;
         }
     }
 
