@@ -32,6 +32,10 @@ const files_r5f = {
         "sdl_stc_soc.c",
         "sdl_tmu_rom_checksum.c",
         "sdl_r5f_utils.c",
+        "sdl_ip_tog.c",
+        "sdl_tog.c",
+        "sdl_soc_tog.c",
+
     ],
 };
 
@@ -83,6 +87,9 @@ const filedirs = {
         "stc/v0",
         "stc/v0/soc/am263px",
         "tmu_rom_checksum",
+        "stog/v0",
+        "stog/v0/soc",
+        "stog/v0/soc/am263px",
     ],
 };
 

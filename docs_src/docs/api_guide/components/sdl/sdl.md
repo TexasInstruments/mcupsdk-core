@@ -80,7 +80,9 @@ SDL consists of below sub-modules
 \endcond
 \cond SOC_AM263PX
 - \subpage SDL_TMU_ROM_CHECKSUM_PAGE
+- \subpage SDL_STOG_PAGE
 \endcond
+
 \cond SOC_AM243X
 - \subpage SDL_R5FCPU_PAGE
 \endcond

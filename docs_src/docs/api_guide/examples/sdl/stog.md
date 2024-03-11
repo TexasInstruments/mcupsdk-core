@@ -17,7 +17,7 @@ Use Cases
 * The TOG is programmed with a timeout that is small enough to trigger a timeout event on any access. Error event is triggered and application is notified of the event.
 
 
-# Supported Combinations {#EXAMPLES_SDL_STC_COMBOS}
+# Supported Combinations {#EXAMPLES_SDL_STOG_COMBOS}
 
 \cond SOC_AM64X || SOC_AM243X
 
@@ -28,6 +28,17 @@ Use Cases
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/sdl/stog_r5f/
+
+\endcond
+
+\cond SOC_AM263PX
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/sdl/stog/
 
 \endcond
 
@@ -89,6 +100,27 @@ SDL_TOG_init.timeout complete
 SDL_TOG_start complete
 
 Waiting for reading END_POINT_ACCESS by M4F core...
+
+SDL_TOG_stop complete
+
+All tests have passed.
+
+\endcode
+\endcond
+
+\cond SOC_AM263PX
+
+\code{.c}
+
+TOG Sample Example
+
+SDL_TOG_setIntrEnable complete
+
+SDL_TOG_init.timeout complete
+
+SDL_TOG_start complete
+
+Waiting for reading END_POINT_ACCESS by R5F core...
 
 SDL_TOG_stop complete
 

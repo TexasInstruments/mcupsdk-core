@@ -56,6 +56,9 @@ FILES_PATH_common = \
     stc/v0 \
     stc/v0/soc/am263px \
     tmu_rom_checksum \
+    stog/v0 \
+    stog/v0/soc \
+    stog/v0/soc/am263px \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

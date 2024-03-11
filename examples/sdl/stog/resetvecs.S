@@ -1,9 +1,5 @@
 /*
- * SDL TOG
- *
- * SDL SoC Header file for TOG
- *
- *  Copyright (c) Texas Instruments Incorporated 2023
+ *  Copyright (C) 2018-2021 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,29 +28,42 @@
  *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
+	
+/****************************************************************************
+* Setup reserved Handler
+****************************************************************************/
+    .global	_sdlRsvdHandler
+_sdlRsvdHandler:
+    
+     b   _sdlRsvdHandler
 
-#ifndef INCLUDE_SDL_TOG_SOC_H_
-#define INCLUDE_SDL_TOG_SOC_H_
+/****************************************************************************
+* Setup Reset Vectors always in ARM mode
+****************************************************************************/
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+        .text
+        .global _vectors
+        .type   _vectors,%function
+        .section ".vectors","ax",%progbits
+        .arm
+        .align 2
+_vectors:
+        LDR pc, reset_addr          /* Reset */
+        LDR pc, undefined_addr      /* Undefined Instruction */
+        LDR pc, svc_addr            /* Software interrupt */
+        LDR pc, prefetch_abort_addr /* Abort (prefetch) */
+        LDR pc, data_abort_addr     /* Abort (data) */
+        LDR pc, reserved_addr       /* rsvd */
+        LDR pc, irq_addr            /* IRQ */
+        LDR pc, fiq_addr            /* FIQ */
 
-#if defined (SOC_AM64X)
-#include <sdl/stog/v0/soc/am64x/sdl_soc_tog.h>
-#endif /* SOC_AM64X */
-#if defined (SOC_AM243X)
-#include <sdl/stog/v0/soc/am243x/sdl_soc_tog.h>
-#endif /* SOC_AM243x */
-
-#if defined (SOC_AM263PX)
-#include <sdl/stog/v0/soc/am263px/sdl_soc_tog.h>
-#endif /* SOC_AM263PX */
-
-#ifdef __cplusplus
-}
-#endif  /* extern "C" */
-
-#endif /* INCLUDE_SDL_STC_SOC_H_ */
+reset_addr: .long _c_int00
+undefined_addr: .long undefInstructionExptnHandler
+svc_addr: .long swIntrExptnHandler
+prefetch_abort_addr: .long prefetchAbortExptnHandler
+data_abort_addr: .long dataAbortExptnHandler
+reserved_addr: .long _sdlRsvdHandler
+irq_addr: .long irqExptnHandler
+fiq_addr: .long fiqExptnHandler
+	.end

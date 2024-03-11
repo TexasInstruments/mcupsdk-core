@@ -369,6 +369,8 @@ extern "C"
 #define SDL_R5SS0_STC_U_BASE                            (0x53500000U)
 #define SDL_R5SS1_STC_U_BASE                            (0x53510000U)
 #define SDL_TOP_EFUSE_FARM_U_BASE                       (0x53600000U)
+#define SDL_MCU_TIMEOUT0_CFG_BASE                       (0x53400000U)
+#define SDL_MCU_TIMEOUT0_CFG_SIZE                       (0x400U)
 #define SDL_EXT_FLASH0_U_BASE                           (0x60000000U)
 #define SDL_EXT_FLASH1_U_BASE                           (0x62000000U)
 #define SDL_GPMC0_MEM_U_BASE                            (0x68000000U)

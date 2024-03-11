@@ -1,9 +1,5 @@
 /*
- * SDL TOG
- *
- * SDL SoC Header file for TOG
- *
- *  Copyright (c) Texas Instruments Incorporated 2023
+ *  Copyright (C) 2018-2021 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,29 +28,23 @@
  *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
 
-#ifndef INCLUDE_SDL_TOG_SOC_H_
-#define INCLUDE_SDL_TOG_SOC_H_
+#include <stdlib.h>
+#include "ti_drivers_config.h"
+#include "ti_board_config.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+void tog_test_main(void *args);
 
-#if defined (SOC_AM64X)
-#include <sdl/stog/v0/soc/am64x/sdl_soc_tog.h>
-#endif /* SOC_AM64X */
-#if defined (SOC_AM243X)
-#include <sdl/stog/v0/soc/am243x/sdl_soc_tog.h>
-#endif /* SOC_AM243x */
+int main(void)
+{
+    System_init();
+    Board_init();
 
-#if defined (SOC_AM263PX)
-#include <sdl/stog/v0/soc/am263px/sdl_soc_tog.h>
-#endif /* SOC_AM263PX */
+    tog_test_main(NULL);
 
-#ifdef __cplusplus
+    Board_deinit();
+    System_deinit();
+
+    return 0;
 }
-#endif  /* extern "C" */
-
-#endif /* INCLUDE_SDL_STC_SOC_H_ */

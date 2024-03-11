@@ -236,6 +236,7 @@ const example_file_list = [
     "examples/sdl/tmu_rom_checksum/.project/project.js",
     "examples/sdl/r5f_cpu_utils/.project/project.js",
     "examples/sdl/parity/sdl_tmu_parity/.project/project.js",
+    "examples/sdl/stog/.project/project.js",
     "examples/networking/enet_tx_scatter_gather/.project/project.js",
     "test/sdl/pbist/sdl_pbist_test/.project/project.js",
     "test/sdl/pbist/ip_pbist_test/.project/project.js",
