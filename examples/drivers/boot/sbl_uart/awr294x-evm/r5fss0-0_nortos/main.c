@@ -38,6 +38,7 @@
 #include "ti_board_open_close.h"
 #include <drivers/bootloader.h>
 #include <drivers/bootloader/bootloader_xmodem.h>
+#include <drivers/hsmclient.h>
 #include <drivers/hsmclient/soc/awr294x/hsmRtImg.h> /* hsmRt bin   header file */
 
 #define BOOTLOADER_UART_STATUS_LOAD_SUCCESS           (0x53554343) /* SUCC */
@@ -52,6 +53,17 @@ uint8_t gAppImageBuf[BOOTLOADER_APPIMAGE_MAX_FILE_SIZE] __attribute__((aligned(1
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
     = HSMRT_IMG;
+
+extern HsmClient_t gHSMClient ;
+
+/*  this API is a weak function definition for keyring_init function
+    which is defined in generated files if keyring module is enabled
+    in syscfg
+*/
+__attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
+{
+    return SystemP_SUCCESS;
+}
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -76,7 +88,7 @@ int main(void)
 
     System_init();
     Drivers_open();
-    Bootloader_socLoadHsmRtFw(gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
 
     /* Initialize the DSP Core and DSS L3 Memory. */
     Bootloader_BootImageInfo_init(&bootImageInfo);
