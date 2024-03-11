@@ -148,10 +148,20 @@ INCLUDES_`prop` := \
 		% if ( prop == "common" && args.project.syscfgfile) {
 	-Igenerated \
 		% }
-
  % }
 	% }
+%if (args.project.tifsSbl == "true") {
+% if (prop == "sbl_hfilepaths") {
+	% if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
+		% for(let val of obj[prop]) {
+	-I`val` \
+		% }
+
+ % }
+  % }
+	% }
 % }
+
 % obj = args.project.defines;
 % for (prop in obj) {
 	% if ( obj.hasOwnProperty(prop) && Array.isArray(obj[prop]) ) {
