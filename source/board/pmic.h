@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022-23 Texas Instruments Incorporated
+ *  Copyright (C) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -42,8 +42,8 @@
  *  @{
  */
 
-#ifndef PMIC_H_
-#define PMIC_H_
+#ifndef PMIC_LLD_H_
+#define PMIC_LLD_H_
 
 /* ========================================================================== */
 /*                             Include Files                                  */
@@ -53,6 +53,7 @@
 #include <kernel/dpl/SystemP.h>
 #include <drivers/mcspi.h>
 #include <drivers/edma.h>
+#include <board/pmic/pmic_lld/include/pmic.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -122,9 +123,18 @@ typedef void (*PMIC_CloseFxn)(PMIC_Config *config);
  */
 struct PMIC_Params_s
 {
-    uint32_t        mcspiInstance;
-    /**< Underlying peripheral driver instance that is used by the
-     *   PMIC driver incase of MCSPI controlled PMIC */
+    uint32_t        deviceType;
+    /**< PMIC device type
+     *  For Valid Values: \ref Pmic_DeviceType */
+    uint32_t        commMode;
+    /**<  PMIC Interface mode - Single I2C, Dual I2C or SPI.
+     *  For Valid Values: \ref Pmic_CommMode */
+    uint32_t        instType;
+    /**< PMIC Instance type.
+     *  For Valid Values: \ref Pmic_InstType */
+    uint32_t        instance;
+    /**< Underlying I2C/MCSPI peripheral driver instance that is
+     *  used by the PMIC driver */
 };
 
 /**
@@ -154,18 +164,15 @@ struct PMIC_Config_s
 };
 
 /* ========================================================================== */
-/*                          Function Declarations                             */
+/*                            Global Variables                                */
 /* ========================================================================== */
 
-/**
- *  \brief Set default parameters in the \ref PMIC_Params_s structure
- *
- *  Call this API to set defaults and then override the fields as needed
- *  before calling  \ref PMIC_open.
- *
- *  \param params   [OUT] Initialized parameters
- */
-void PMIC_Params_init(PMIC_Params *params);
+extern PMIC_Config gPmicConfig[];
+extern uint32_t gPmicConfigNum;
+
+/* ========================================================================== */
+/*                          Function Declarations                             */
+/* ========================================================================== */
 
 /**
  *  \brief Open PMIC driver
@@ -195,6 +202,16 @@ PMIC_Handle PMIC_open(uint32_t instanceId, const PMIC_Params *params);
 int32_t PMIC_configure(PMIC_Handle handle);
 
 /**
+ * \brief Get handle to PMIC driver
+ *
+ * \param index    [in] Index within `PMIC_Config gPmicConfig[]`
+ *
+ * \return Handle to pmic driver
+ * \return NULL in case of failure
+ */
+PMIC_Handle PMIC_getHandle(uint32_t index);
+
+/**
  *  \brief Close PMIC driver
  *
  *  \param handle    [IN] PMIC driver handle from \ref PMIC_open
@@ -217,17 +234,19 @@ void PMIC_close(PMIC_Handle handle);
  */
 typedef struct
 {
-    MCSPI_Handle      mcspiHandle;
-    /**< MCSPI driver handle */
-    uint32_t        mcspiInstance;
-    /**< Underlying MCSPI driver instance that is used by the
-     *   PMIC driver incase of MCSPI controlled PMIC */
+    /**< PMIC Driver Handle */
+    PMIC_Handle handle;
+    /**< PMIC Core LLD Driver Handle */
+    Pmic_CoreHandle_t *pmicCoreHandle;
+    /**< State Variable */
+    uint32_t isOpen;
+
 } PMIC_Object;
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* #ifndef PMIC_H_ */
+#endif /* #ifndef PMIC_LLD_H_ */
 
 /** @} */

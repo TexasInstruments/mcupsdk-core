@@ -32,6 +32,13 @@ FILES_common := \
     ioexp_tca6416.c \
     pmic_tps653860xx.c \
     pmic.c \
+    pmic_core.c \
+    pmic_esm.c \
+    pmic_fsm.c \
+    pmic_gpio.c \
+    pmic_io.c \
+    pmic_power.c \
+    pmic_wdg.c \
 
 FILES_PATH_common = \
     eeprom \
@@ -42,10 +49,16 @@ FILES_PATH_common = \
     led \
     ioexp \
     pmic \
+    pmic/pmic_lld/src \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
     -I${MCU_PLUS_SDK_PATH}/source \
+    -Ipmic \
+    -Ipmic/pmic_lld/src \
+    -Ipmic/pmic_lld/include \
+    -Ipmic/pmic_lld/include/cfg/tps65386x \
+    -Ipmic/pmic_lld/src/cfg/tps65386x \
 
 DEFINES_common := \
     -DSOC_AM263PX \

@@ -39,7 +39,10 @@ PMIC_Params gPmicParams[CONFIG_PMIC_NUM_INSTANCES] =
     % let config = module.getInstanceConfig(instance);
     % let peripheralDriver = instance.peripheralDriver;
     {
-        .mcspiInstance    = `peripheralDriver.$name.toUpperCase()`,
+        .deviceType  = `config.deviceType`,
+        .commMode    = `config.commMode`,
+        .instType    = `config.instType`,
+        .instance    = `peripheralDriver.$name.toUpperCase()`,
     },
 % }
 };

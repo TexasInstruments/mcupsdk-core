@@ -1,5 +1,5 @@
-/*
- *  Copyright (C) 2023-24 Texas Instruments Incorporated
+/******************************************************************************
+ * Copyright (c) 2024 Texas Instruments Incorporated - http://www.ti.com
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -28,58 +28,48 @@
  *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ *****************************************************************************/
+
+/**
+ * @file   pmic_power_tps65386x_priv.h
+ *
+ * @brief  PMIC TPS65386x BB PMIC Power Resources Driver API/interface file.
+ *
  */
 
-#ifndef PMIC_TPS653860xx_H_
-#define PMIC_TPS653860xx_H_
+#ifndef PMIC_POWER_TPS65386x_PRIV_H_
+#define PMIC_POWER_TPS65386x_PRIV_H_
 
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include <board/pmic.h>
-#include <board/pmic/pmic_lld/include/cfg/tps65386x/pmic_core_tps65386x.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "pmic_core_priv.h"
+#include "pmic_io_priv.h"
+#include "pmic_power_priv.h"
+#include "pmic_types.h"
 
 /* ========================================================================== */
-/*                           Macros & Typedefs                                */
+/*                             Macros & Typedefs                              */
 /* ========================================================================== */
 
-/* None */
+#define PMIC_BB_CFG_STATUS_NOT_INCLUDED 	(0x0U)
+#define PMIC_BB_CFG_STATUS_INCLUDED 		(0x1U)
+
+#define PMIC_BB_CFG_DRSS_DISABLED 			(0x0U)
+#define PMIC_BB_CFG_DRSS_ENABLED 			(0x1U)
+
+#define PMIC_BB_CFG_4V 						(0x0U)
+#define PMIC_BB_CFG_SAME_BBCFG 				(0x1U)
+
+#define PMIC_BB_CFG_BB_LVL_CFG_4_3V 		(0x0U)
+#define PMIC_BB_CFG_BB_LVL_CFG_5V 			(0x1U)
+#define PMIC_BB_CFG_BB_LVL_CFG_6V 			(0x2U)
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
 
-/* None */
 
-/* ========================================================================== */
-/*                            Global Variables                                */
-/* ========================================================================== */
-
-extern PMIC_Fxns gPmicFxns_TPS653860xx;
-
-/* ========================================================================== */
-/*                          Function Declarations                             */
-/* ========================================================================== */
-
-int32_t PMIC_tps653860xxOpen(PMIC_Config *config, const PMIC_Params *params);
-int32_t PMIC_tps653860xxConfigure(PMIC_Config *config);
-void PMIC_tps653860xxClose(PMIC_Config *config);
-
-/* ========================================================================== */
-/*                       Static Function Definitions                          */
-/* ========================================================================== */
-
-/* None */
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* #ifndef TPS653860xx_H_ */
-
-/** @} */
+#endif /* PMIC_POWER_TPS65386x_PRIV_H_ */

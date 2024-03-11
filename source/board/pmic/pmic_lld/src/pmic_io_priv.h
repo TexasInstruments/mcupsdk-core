@@ -1,5 +1,5 @@
-/*
- *  Copyright (C) 2023-24 Texas Instruments Incorporated
+/******************************************************************************
+ * Copyright (c) 2024 Texas Instruments Incorporated - http://www.ti.com
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -28,58 +28,82 @@
  *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ *****************************************************************************/
+
+/**
+ *  @file  pmic_io_priv.h
+ *
+ *  @brief  This file contains LLD-Communication wrappers with CRC8 support for
+ *          I2C/SPI
  */
 
-#ifndef PMIC_TPS653860xx_H_
-#define PMIC_TPS653860xx_H_
+#ifndef PMIC_IO_PRIV_H_
+#define PMIC_IO_PRIV_H_
 
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
-
-#include <board/pmic.h>
-#include <board/pmic/pmic_lld/include/cfg/tps65386x/pmic_core_tps65386x.h>
+#include "pmic.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /* ========================================================================== */
-/*                           Macros & Typedefs                                */
+/*                             Macros & Typedefs                              */
 /* ========================================================================== */
 
-/* None */
+/**
+ * @brief: WatchDog register I2C access
+ */
+#define PMIC_WDG_PAGEADDR (0x400U)
+#define PMIC_WDG_PAGEADDR_MASK (0x3FFU)
 
-/* ========================================================================== */
-/*                         Structure Declarations                             */
-/* ========================================================================== */
+/**
+ * @brief: PMIC SERIAL_IF_CONFIG register address (Bank/Page 1 Register address)
+ *         Application can only read this register to check I2C1SPI/I2C2 CRC
+ *         is enabled or not
+ */
+#define PMIC_SERIAL_IF_CONFIG_PAGEADDR (0x100U)
+#define PMIC_SERIAL_IF_CONFIG_PAGEADDR_MASK (0xFFU)
 
-/* None */
+/**
+ * @brief: SPI R/W bit Position
+ */
+#define PMIC_IO_REQ_RW (((uint32_t)1U) << 4U)
 
-/* ========================================================================== */
-/*                            Global Variables                                */
-/* ========================================================================== */
+/**
+ * @brief: IO Buffer Size
+ */
+#define PMIC_IO_BUF_SIZE (4U)
 
-extern PMIC_Fxns gPmicFxns_TPS653860xx;
+/**
+ * @brief: Initial value for CRC
+ */
+#define PMIC_COMM_CRC_INITIAL_VALUE (0xFF)
 
-/* ========================================================================== */
-/*                          Function Declarations                             */
-/* ========================================================================== */
+/**
+ * @brief: IO READ bits
+ */
+#define PMIC_IO_READ (0x01U)
 
-int32_t PMIC_tps653860xxOpen(PMIC_Config *config, const PMIC_Params *params);
-int32_t PMIC_tps653860xxConfigure(PMIC_Config *config);
-void PMIC_tps653860xxClose(PMIC_Config *config);
+/*==========================================================================*/
+/*                         Structures and Enums                             */
+/*==========================================================================*/
 
-/* ========================================================================== */
-/*                       Static Function Definitions                          */
-/* ========================================================================== */
+/*==========================================================================*/
+/*                         Function Declarations                            */
+/*==========================================================================*/
 
-/* None */
+int32_t Pmic_commIntf_sendByte(Pmic_CoreHandle_t *pPmicCoreHandle,
+                               uint16_t regAddr, uint8_t txData);
+
+int32_t Pmic_commIntf_recvByte(Pmic_CoreHandle_t *pPmicCoreHandle,
+                               uint16_t regAddr, uint8_t *pRxBuffer);
 
 #ifdef __cplusplus
 }
-#endif
+#endif /* __cplusplus */
 
-#endif /* #ifndef TPS653860xx_H_ */
-
-/** @} */
+#endif /*PMIC_IO_PRIV_H_*/

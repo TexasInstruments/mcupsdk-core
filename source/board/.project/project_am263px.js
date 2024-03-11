@@ -20,6 +20,13 @@ const files_r5f = {
         "ioexp_tca6416.c",
         "pmic_tps653860xx.c",
         "pmic.c",
+        "pmic_core.c",
+        "pmic_esm.c",
+        "pmic_fsm.c",
+        "pmic_gpio.c",
+        "pmic_io.c",
+        "pmic_power.c",
+        "pmic_wdg.c",
     ],
 };
 
@@ -39,6 +46,17 @@ const filedirs = {
         "led",
         "ioexp",
         "pmic",
+        "pmic/pmic_lld/src",
+    ],
+};
+
+const includes = {
+    common: [
+        "pmic",
+        "pmic/pmic_lld/src",
+        "pmic/pmic_lld/include",
+        "pmic/pmic_lld/include/cfg/tps65386x",
+        "pmic/pmic_lld/src/cfg/tps65386x",
     ],
 };
 
@@ -62,6 +80,7 @@ function getComponentBuildProperty(buildOption) {
     let build_property = {};
 
     build_property.filedirs = filedirs;
+    build_property.includes = includes;
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.files = files_r5f;
     }
