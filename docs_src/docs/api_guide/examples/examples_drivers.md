@@ -241,6 +241,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_EPWM_PROTECTION_PRU
    -# \subpage EXAMPLES_DRIVERS_EPWM_MINIMUM_DEADBAND
    -# \subpage EXAMPLES_DRIVERS_EPWM_DEADBAND
+   -# \subpage EXAMPLES_DRIVERS_EPWM_CHOPPER
    -# \subpage EXAMPLES_DRIVERS_EPWM_ILLEGAL_COMBO_LOGIC
    -# \subpage EXAMPLES_DRIVERS_HRPWM_DEADBAND_SFO
    -# \subpage EXAMPLES_DRIVERS_HRPWM_PHASE_SHIFT_SFO

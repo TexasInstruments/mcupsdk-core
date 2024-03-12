@@ -106,6 +106,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_polled_transfer_am263px-cc_r5f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_polled_transfer_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_polled_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_polled_transfer_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_chopper_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_chopper_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_dccap_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
@@ -714,6 +716,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  edma_polled_transfer_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_chopper_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_chopper/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ epwm_chopper_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/epwm/epwm_chopper/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  epwm_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/epwm/epwm_deadband/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1700,6 +1708,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_polled_transfer_am263px-cc_r5f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_polled_transfer_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_polled_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_polled_transfer_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_chopper_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_chopper_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_dccap_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2308,6 +2318,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  edma_polled_transfer_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_chopper_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_chopper/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ epwm_chopper_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/epwm/epwm_chopper/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  epwm_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/epwm/epwm_deadband/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -3294,6 +3310,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_polled_transfer_am263px-cc_r5
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_polled_transfer_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_polled_transfer_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_polled_transfer_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_chopper_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_chopper_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_deadband_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_dccap_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
@@ -3902,6 +3920,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  edma_polled_transfer_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_chopper_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_chopper/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ epwm_chopper_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/epwm/epwm_chopper/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  epwm_deadband_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/epwm/epwm_deadband/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -4904,6 +4928,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_polled_transfer/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_polled_transfer/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_polled_transfer/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_chopper/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_chopper/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_deadband/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_deadband/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_dccap/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
