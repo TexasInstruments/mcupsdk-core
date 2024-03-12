@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
@@ -48,8 +48,8 @@ pmic1.$name = "CONFIG_PMIC0";
 bootloader1.$name          = "CONFIG_BOOTLOADER0";
 bootloader1.appImageOffset = "0x00080000";
 
-flash1.$name                            = "CONFIG_FLASH0";
 bootloader1.flashDriver                 = flash1;
+flash1.$name                            = "CONFIG_FLASH0";
 flash1.proto_isAddrReg                  = true;
 flash1.proto_cmdRegRd                   = "0x85";
 flash1.proto_cmdRegWr                   = "0x81";
@@ -67,11 +67,7 @@ flash1.strDtr_shift                     = 255;
 flash1.proto_cfgReg                     = "0";
 flash1.dummy_mask                       = "0xFF";
 flash1.protocol                         = "8d_8d_8d";
-flash1.proto_bitP                       = 231;
 flash1.fourByteEnableSeq                = "0";
-flash1.dummyClksCmd                     = 16;
-flash1.dummyClksRd                      = 16;
-flash1.dummy_bitP                       = 16;
 flash1.peripheralDriver.$name           = "CONFIG_OSPI0";
 flash1.peripheralDriver.dmaEnable       = true;
 flash1.peripheralDriver.phyEnable       = true;
@@ -90,6 +86,7 @@ mcspi1.$name                 = "CONFIG_MCSPI0";
 pmic1.peripheralDriver       = mcspi1;
 mcspi1.SPI.$assign           = "SPI1";
 mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
+mcspi1.child.$name           = "drivers_mcspi_v1_mcspi_v1_template1";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);
@@ -106,6 +103,7 @@ debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.intrEnable       = "DISABLE";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -162,11 +160,11 @@ region1.memory_region[4].size               = 0x100;
 region1.memory_region[5].$name              = "MSRAM_0";
 region1.memory_region[5].auto               = false;
 region1.memory_region[5].manualStartAddress = 0x70002100;
-region1.memory_region[5].size               = 0x3DF00;
+region1.memory_region[5].size               = 0x4DF00;
 region1.memory_region[6].$name              = "MSRAM_1";
 region1.memory_region[6].auto               = false;
-region1.memory_region[6].manualStartAddress = 0x70040000;
 region1.memory_region[6].size               = 0x1C0000;
+region1.memory_region[6].manualStartAddress = 0x70050000;
 
 section1.group                                    = false;
 section1.$name                                    = "Vector Table";
@@ -261,14 +259,14 @@ section7.output_section[0].palignment = true;
  * re-solve from scratch.
  */
 flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "OSPI0_CLK";
-flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "OSPI0_CSn0";
+flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "EPWM11_A";
 flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "UART1_TXD";
 flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "MCAN1_RX";
 flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "MCAN0_RX";
-flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "OSPI0_D3";
+flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "EPWM13_A";
 flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "OSPI0_D2";
-flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "OSPI0_D1";
-flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "OSPI0_D0";
+flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "EPWM11_B";
+flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "OSPI0_CSn0";
 mcspi1.SPI.CLK.$suggestSolution                    = "SPI1_CLK";
 mcspi1.SPI.D0.$suggestSolution                     = "SPI1_D0";
 mcspi1.SPI.D1.$suggestSolution                     = "SPI1_D1";
