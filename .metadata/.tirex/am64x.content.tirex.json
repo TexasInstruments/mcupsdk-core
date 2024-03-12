@@ -14844,6 +14844,70 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Enet Remote Connect Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_remote_connect",
+        "location": "../../examples/networking/enet_remote_connect/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_remote_connect",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Remote Connect Example. CPU is R5FSS0-1 running FREERTOS.",
+        "name": "enet_remote_connect",
+        "location": "../../examples/networking/enet_remote_connect/am64x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_remote_connect",
+            "r5fss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Enet Vlan Icssg Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_vlan_icssg",
         "location": "../../examples/networking/enet_vlan_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -16621,6 +16685,35 @@
             "device",
             "cdc_echo",
             "system_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Remote Connect System Example.",
+        "name": "enet_remote_connect",
+        "location": "../../examples/networking/enet_remote_connect/am64x-evm/system_enet_remote_connect/system.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "networking",
+            "enet_remote_connect",
+            "system_enet_remote_connect"
         ],
         "mainCategories": [
             [

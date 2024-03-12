@@ -5,6 +5,8 @@
 
 %if(module.getNetifCount(instance) >= 1)
 %{
+#ifndef TI_ENET_LWIPIF_H_
+#define TI_ENET_LWIPIF_H_
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
@@ -85,3 +87,6 @@ void LwipifEnetApp_startSchedule(LwipifEnetApp_Handle handle, struct netif *neti
 );
 
 struct netif * LwipifEnetApp_getNetifFromName(NetifName_e name);
+
+
+#endif /* TI_ENET_LWIPIF_H_ */ 
