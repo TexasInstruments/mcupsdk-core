@@ -20,9 +20,7 @@ CORES = \
 
 SYSTEM_FLAG := true
 
-all:
-	$(MAKE) clean
-	$(MAKE) syscfg
+all: syscfg
 	$(MAKE) -C ../m4fss0-0_nortos/ti-arm-clang/ all SYSTEM_FLAG=${SYSTEM_FLAG}
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME)
 

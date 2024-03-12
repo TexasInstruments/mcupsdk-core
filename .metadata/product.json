@@ -10,12 +10,9 @@
         "/kernel/dpl",
         "/drivers/drivers",
         "/board/board",
-        "/fs/fs",
         "/networking/networking",
-        "/security/security",
-        "/xbar/xbar",
         "/memory_configurator/components",
-        "/optiflash/optiflash"
+        "/security/security",
     ],
     "devices": [
         "AM64x",
