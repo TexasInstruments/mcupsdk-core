@@ -8,8 +8,13 @@ This example generates a signal for a specified time and duty cycle using
 ePWM module. The time and duty cycle can be configured by the user.
 
 The example does the below
+\if SOC_AM273X
+- Configures ePWMA to generate a 1KHz signal with 25% duty cycle for 60 seconds.
+- Output channel 0 is used in the example.
+\else
 - Configures ePWM0 to generate a 1KHz signal with 25% duty cycle for 60 seconds.
 - Output channel A is used in the example.
+\endif
 - The parameters frequency, duty cycle and application run time are configurable by the user.
 - Deadband submodule and chopper submodule are entirely bypassed in this example.
 - ISR is used to keep track of keep track of elapsed time.

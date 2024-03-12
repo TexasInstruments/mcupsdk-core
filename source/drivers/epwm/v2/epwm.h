@@ -119,9 +119,9 @@ typedef uint32_t EPWM_OutputCh_t;
 #define EPWM_OUTPUT_CH_MIN (0U)
 /**< Minimum value of enumeration. Used for input validation. */
 #define EPWM_OUTPUT_CH_A  (EPWM_OUTPUT_CH_MIN)
-/**< Output channel A. */
+/**< Output channel A. Note that channel A is an alias of channel 0. */
 #define EPWM_OUTPUT_CH_B  (1U)
-/**< Output channel B. */
+/**< Output channel B. Note that channel B is an alias of channel 1. */
 #define EPWM_OUTPUT_CH_MAX (EPWM_OUTPUT_CH_B)
 /**< Maximum value of enumeration. Used for input validation. */
 /** @} */

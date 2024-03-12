@@ -275,7 +275,7 @@ void EPWM_aqActionOnOutputCfg(uint32_t baseAddr,
                               const EPWM_AqActionCfg *pCfg)
 {
     uint16_t regVal = 0U;
-
+    /* Note that channel A is an alias of channel 0. */
     if (EPWM_OUTPUT_CH_A == pwmOutputCh)
     {
         regVal =
@@ -289,6 +289,7 @@ void EPWM_aqActionOnOutputCfg(uint32_t baseAddr,
         HW_WR_REG16(((baseAddr + CSL_EPWM_OFFSET) + CSL_EPWM_AQCTLA),
             (uint16_t)regVal);
     }
+    /* Note that channel B is an alias of channel 1. */
     else if (EPWM_OUTPUT_CH_B == pwmOutputCh)
     {
         regVal =
@@ -313,7 +314,7 @@ void EPWM_aqSwTriggerOneTimeAction(uint32_t baseAddr,
                                    uint32_t swTrigAction)
 {
     uint16_t regVal = 0U;
-
+    /* Note that channel A is an alias of channel 0. */
     if (EPWM_OUTPUT_CH_A == pwmOutputCh)
     {
         regVal =
@@ -328,6 +329,7 @@ void EPWM_aqSwTriggerOneTimeAction(uint32_t baseAddr,
         HW_WR_REG16(((baseAddr + CSL_EPWM_OFFSET) + CSL_EPWM_AQSFRC),
             (uint16_t)regVal);
     }
+    /* Note that channel B is an alias of channel 1. */
     else if (EPWM_OUTPUT_CH_B == pwmOutputCh)
     {
         regVal =
@@ -356,13 +358,14 @@ void EPWM_aqSwTriggerContAction(uint32_t baseAddr,
     /* Program AQCSFRC Active Register Reload From Shadow Options */
     HW_WR_FIELD16(((baseAddr + CSL_EPWM_OFFSET) + CSL_EPWM_AQSFRC),
         CSL_EPWM_AQSFRC_RLDCSF, (uint16_t)activeRegReloadMode);
-
+    /* Note that channel A is an alias of channel 0. */
     if (EPWM_OUTPUT_CH_A == pwmOutputCh)
     {
         /* Continuous software forced output on A */
         HW_WR_FIELD16(((baseAddr + CSL_EPWM_OFFSET) + CSL_EPWM_AQCSFRC),
             CSL_EPWM_AQCSFRC_CSFA, (uint16_t)swTrigAction);
     }
+    /* Note that channel B is an alias of channel 1. */
     else if (EPWM_OUTPUT_CH_B == pwmOutputCh)
     {
         /* Continuous software forced output on B */
@@ -457,11 +460,12 @@ void EPWM_tzTriggerTripAction(uint32_t baseAddr,
 {
     uint16_t regVal =
         HW_RD_REG16((baseAddr + CSL_EPWM_OFFSET) + CSL_EPWM_TZCTL);
-
+    /* Note that channel A is an alias of channel 0. */
     if (EPWM_OUTPUT_CH_A == pwmOutputCh)
     {
         HW_SET_FIELD16(regVal, CSL_EPWM_TZCTL_TZA, tripAction);
     }
+    /* Note that channel B is an alias of channel 1. */
     else if (EPWM_OUTPUT_CH_B == pwmOutputCh)
     {
         HW_SET_FIELD16(regVal, CSL_EPWM_TZCTL_TZB, tripAction);

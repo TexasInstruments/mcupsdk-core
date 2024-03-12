@@ -53,7 +53,7 @@
  * This example also showcases how to configure and use the ePWM module.
  */
 
-/* Output channel - A or B */
+/* Output channel - A or B. Note that channel A is an alias of channel 0 and channel B is alias of channel 1. */
 #define APP_EPWM_OUTPUT_CH              (EPWM_OUTPUT_CH_A)
 /* Duty Cycle of PWM output signal in % - give value from 0 to 100 */
 #define APP_EPWM_DUTY_CYCLE             (25U)
