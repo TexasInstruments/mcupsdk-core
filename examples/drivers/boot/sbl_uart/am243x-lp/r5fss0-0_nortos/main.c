@@ -240,7 +240,7 @@ int main(void)
             {
                 status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
             }
-            if(status == SystemP_SUCCESS && (TRUE == isSelfBoot))
+            if(status == SystemP_SUCCESS)
             {
                 /* Load the image on self core now */
                 if( bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
