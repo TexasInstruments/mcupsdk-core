@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-23 Texas Instruments Incorporated
+ *  Copyright (C) 2021-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -180,6 +180,7 @@ static void mcspi_low_latency_transfer_16bit(uint32_t baseAddr,
                                             uint32_t bufWidthShift);
 void test_mcspi_loopback_bitrate(void *args);
 void test_mcspi_loopback_turbo_mode(void *args);
+void test_mcspi_loopback_multi_word_access(void *args);
 
 #if (CONFIG_MCSPI_NUM_INSTANCES > 2)
 void test_mcspi_loopback_dma(void *args);
@@ -358,6 +359,9 @@ void test_main(void *args)
 #endif
     test_mcspi_set_params(&testParams, 1009);
     RUN_TEST(test_mcspi_loopback_simultaneous, 1009, (void*)&testParams);
+    test_mcspi_set_params(&testParams, 11538);
+    testParams.transferLength = 128U;
+    RUN_TEST(test_mcspi_loopback_multi_word_access,  11538, (void*)&testParams);
 
     /* Print Performance Numbers. */
     DebugP_log("\nMCSPI Performance Numbers Print Start\r\n\n");
@@ -2407,6 +2411,197 @@ void test_mcspi_loopback_turbo_mode(void *args)
     return;
 }
 
+void test_mcspi_loopback_multi_word_access(void *args)
+{
+    int32_t             status = SystemP_SUCCESS;
+    uint32_t            i, dataWidth, fifoBitMask, tempTxData, dataWidthIdx;
+    int32_t             transferOK, NumOfIteration = 100U;
+    MCSPI_Transaction   spiTransaction;
+    MCSPI_Handle        mcspiHandle;
+    MCSPI_TestParams   *testParams = (MCSPI_TestParams *)args;
+    uint8_t            *tempRxPtr8 = NULL, *tempTxPtr8 = NULL;
+    uint16_t           *tempRxPtr16 = NULL, *tempTxPtr16 = NULL;
+    uint32_t           *tempRxPtr32 = NULL, *tempTxPtr32 = NULL;
+    MCSPI_OpenParams   *mcspiOpenParams = &(testParams->mcspiOpenParams);
+    uint64_t            startTimeInUSec, elapsedTimeInUsecs, elapsedTimeInUsecsMultiAccess;
+    MCSPI_Config        *config = &gMcspiConfig[CONFIG_MCSPI0];;
+    MCSPI_Attrs   *attrParams = (MCSPI_Attrs *)config->attrs;
+
+    /* Memset Buffers */
+    memset(&gMcspiTxBuffer[0U], 0, APP_MCSPI_MSGSIZE * sizeof(gMcspiTxBuffer[0U]));
+    memset(&gMcspiRxBuffer[0U], 0, APP_MCSPI_MSGSIZE * sizeof(gMcspiRxBuffer[0U]));
+    memset(&gMcspiTxBuffer1[0U], 0, APP_MCSPI_MSGSIZE * sizeof(gMcspiTxBuffer1[0U]));
+    memset(&gMcspiRxBuffer1[0U], 0, APP_MCSPI_MSGSIZE * sizeof(gMcspiRxBuffer1[0U]));
+
+    MCSPI_close(gMcspiHandle[CONFIG_MCSPI0]);
+    attrParams->multiWordAccess = FALSE;
+    mcspiHandle = MCSPI_open(CONFIG_MCSPI0, mcspiOpenParams);
+    TEST_ASSERT_NOT_NULL(mcspiHandle);
+
+    if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
+    {
+        status = SemaphoreP_constructBinary(&gMcspiTransferDoneSem, 0);
+        DebugP_assert(SystemP_SUCCESS == status);
+    }
+
+    dataWidth = testParams->dataSize;
+    if (dataWidth < 9U)
+    {
+        /* Init TX buffer with known data and memset RX buffer */
+        tempTxPtr8 = (uint8_t *) &gMcspiTxBuffer[0U];
+        tempRxPtr8 = (uint8_t *) &gMcspiRxBuffer[0U];
+    }
+    else if (dataWidth < 17U)
+    {
+        /* Init TX buffer with known data and memset RX buffer */
+        tempTxPtr16 = (uint16_t *) &gMcspiTxBuffer[0U];
+        tempRxPtr16 = (uint16_t *) &gMcspiRxBuffer[0U];
+    }
+    else
+    {
+        /* Init TX buffer with known data and memset RX buffer */
+        tempTxPtr32 = (uint32_t *) &gMcspiTxBuffer[0U];
+        tempRxPtr32 = (uint32_t *) &gMcspiRxBuffer[0U];
+    }
+    fifoBitMask = 0x0U;
+    for (dataWidthIdx = 0U;
+         dataWidthIdx < dataWidth; dataWidthIdx++)
+    {
+        fifoBitMask |= (1U << dataWidthIdx);
+    }
+     /* Memfill buffers */
+    for (i = 0U; i < testParams->transferLength; i++)
+    {
+        tempTxData = 0xDEADBABE;
+        tempTxData &= (fifoBitMask);
+        if (dataWidth < 9U)
+        {
+            *tempTxPtr8++ = (uint8_t) (tempTxData);
+            *tempRxPtr8++ = 0U;
+        }
+        else if (dataWidth < 17U)
+        {
+            *tempTxPtr16++ = (uint16_t) (tempTxData);
+            *tempRxPtr16++ = 0U;
+        }
+        else
+        {
+            *tempTxPtr32++ = (uint32_t) (tempTxData);
+            *tempRxPtr32++ = 0U;
+        }
+    }
+    /* Initiate transfer */
+    spiTransaction.channel   = testParams->mcspiChConfigParams->chNum;
+    spiTransaction.count     = testParams->transferLength;
+    spiTransaction.dataSize  = dataWidth;
+    spiTransaction.csDisable = TRUE;
+    spiTransaction.txBuf     = (void *)gMcspiTxBuffer;
+    spiTransaction.rxBuf     = (void *)gMcspiRxBuffer;
+    spiTransaction.args      = NULL;
+
+    startTimeInUSec = ClockP_getTimeUsec();
+    for(uint8_t j = 0U; j < NumOfIteration; j++)
+    {
+        transferOK = MCSPI_transfer(mcspiHandle, &spiTransaction);
+    }
+    elapsedTimeInUsecs = ClockP_getTimeUsec() - startTimeInUSec;
+    TEST_APP_MCSPI_ASSERT_ON_FAILURE(transferOK, spiTransaction);
+
+    DebugP_log("----------------------------------------------------------\r\n");
+    DebugP_log("\nWITH MULTI WORD ACCESS MODE DISABLED \r\n");
+    DebugP_log("McSPI Clock %d Hz\r\n", gConfigMcspi0ChCfg[0U].bitRate);
+    DebugP_log("----------------------------------------------------------\r\n");
+    DebugP_log("Data Width \tData Length \tTransfer Time (micro sec)\r\n");
+    DebugP_log("%u\t\t%u\t\t%5.2f\r\n", spiTransaction.dataSize, spiTransaction.count,
+                        (float)elapsedTimeInUsecs / NumOfIteration);
+
+    if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
+    {
+        /* Wait for transfer completion */
+        SemaphoreP_pend(&gMcspiTransferDoneSem, SystemP_WAIT_FOREVER);
+    }
+
+    /* Compare data */
+    uint8_t *tempTxPtr, *tempRxPtr;
+    tempTxPtr = (uint8_t *) &gMcspiTxBuffer[0U];
+    tempRxPtr = (uint8_t *) &gMcspiRxBuffer[0U];
+    for(i = 0U; i < (APP_MCSPI_MSGSIZE * 4); i++)
+    {
+        if(*tempTxPtr++ != *tempRxPtr++)
+        {
+            status = SystemP_FAILURE;   /* Data mismatch */
+            DebugP_log("Data Mismatch at offset %d\r\n", i);
+            break;
+        }
+    }
+
+    MCSPI_close(gMcspiHandle[CONFIG_MCSPI0]);
+    attrParams->multiWordAccess = TRUE;
+    mcspiHandle = MCSPI_open(CONFIG_MCSPI0, mcspiOpenParams);
+    TEST_ASSERT_NOT_NULL(mcspiHandle);
+
+    /* Initiate transfer */
+    spiTransaction.channel   = testParams->mcspiChConfigParams->chNum;
+    spiTransaction.count     = testParams->transferLength;
+    spiTransaction.dataSize  = dataWidth;
+    spiTransaction.csDisable = TRUE;
+    spiTransaction.txBuf     = (void *)gMcspiTxBuffer;
+    spiTransaction.rxBuf     = (void *)gMcspiRxBuffer;
+    spiTransaction.args      = NULL;
+
+    startTimeInUSec = ClockP_getTimeUsec();
+    for(uint8_t j = 0U; j < NumOfIteration; j++)
+    {
+        transferOK = MCSPI_transfer(mcspiHandle, &spiTransaction);
+    }
+    elapsedTimeInUsecsMultiAccess = ClockP_getTimeUsec() - startTimeInUSec;
+    TEST_APP_MCSPI_ASSERT_ON_FAILURE(transferOK, spiTransaction);
+
+    DebugP_log("----------------------------------------------------------\r\n");
+    DebugP_log("\nWITH MULTI WORD ACCESS ENABLED \r\n");
+    DebugP_log("McSPI Clock %d Hz\r\n", gConfigMcspi0ChCfg[0U].bitRate);
+    DebugP_log("----------------------------------------------------------\r\n");
+    DebugP_log("Data Width \tData Length \tTransfer Time (micro sec)\r\n");
+    DebugP_log("%u\t\t%u\t\t%5.2f\r\n", spiTransaction.dataSize, spiTransaction.count,
+                        (float)elapsedTimeInUsecsMultiAccess / NumOfIteration);
+    DebugP_log("----------------------------------------------------------\r\n\n");
+
+    if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
+    {
+        /* Wait for transfer completion */
+        SemaphoreP_pend(&gMcspiTransferDoneSem, SystemP_WAIT_FOREVER);
+    }
+
+    /* Compare data */
+    uint8_t *tempTxPtr1, *tempRxPtr1;
+    tempTxPtr1 = (uint8_t *) &gMcspiTxBuffer1[0U];
+    tempRxPtr1 = (uint8_t *) &gMcspiRxBuffer1[0U];
+    for(i = 0U; i < (APP_MCSPI_MSGSIZE * 4); i++)
+    {
+        if(*tempTxPtr1++ != *tempRxPtr1++)
+        {
+            status = SystemP_FAILURE;   /* Data mismatch */
+            DebugP_log("Data Mismatch at offset %d\r\n", i);
+            break;
+        }
+    }
+
+    if(mcspiOpenParams->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
+    {
+        SemaphoreP_destruct(&gMcspiTransferDoneSem);
+    }
+    /* Multi Word Access transer will take less time. */
+    if((elapsedTimeInUsecsMultiAccess < elapsedTimeInUsecs) & (status != SystemP_FAILURE))
+    {
+        status = SystemP_SUCCESS;
+    }
+
+    MCSPI_close(mcspiHandle);
+
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+    return;
+}
+
 static void test_mcspi_set_params(MCSPI_TestParams *testParams, uint32_t tcId)
 {
     uint32_t bufWidthShift;
@@ -2630,6 +2825,12 @@ static void test_mcspi_set_params(MCSPI_TestParams *testParams, uint32_t tcId)
             break;
         case 11537:
             chConfig->turboEnable        = TRUE;
+            break;
+        /* Multi Word Acess */
+        case 11538:
+            testParams->dataSize         = 8;
+            chConfig->txFifoTrigLvl      = 16U;
+            chConfig->rxFifoTrigLvl      = 16U;
             break;
 #if (CONFIG_MCSPI_NUM_INSTANCES > 2)
         case 2394:

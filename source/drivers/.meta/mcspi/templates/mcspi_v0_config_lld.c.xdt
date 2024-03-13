@@ -116,7 +116,7 @@ MCSPILLD_InitObject gMcspiInitObject[`module.$instances.length`] =
         .chMode                      = MCSPI_CH_MODE_`chMode`,
         .pinMode                     = MCSPI_PINMODE_`config.pinMode`PIN,
         .initDelay                   = MCSPI_INITDLY_`config.initDelay`,
-        .multiWordAccess             = FALSE,
+        .multiWordAccess             = `config.multiWordAccess.toString(10).toUpperCase()`,
         .msMode                      = MCSPI_MS_MODE_`msMode`,
         .chEnabled                   = {`channelEnable[i][0]`, `channelEnable[i][1]`, `channelEnable[i][2]`, `channelEnable[i][3]`},
         % if(config.intrEnable == "DMA") {

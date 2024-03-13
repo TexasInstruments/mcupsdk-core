@@ -5,6 +5,13 @@
 - Controller and Peripheral mode of operation
 - Per transfer selection of different channels/chip select
 - Non-blocking (Callback) transfers
+-  Multi Word Acess. To use this feature, following requirement must be satisfied.
+    - It is only supported in interrupt mode.
+    - The channel selected must have the FIFO enable.
+    - Transmit and receive registers must write and read 32-bits respectively.
+    - FIFO Trigger level must be 32 bit aligned i.e, It must be in power of 2.
+    - Data Size must be 8 bits or 1 byte.
+    - Total frame i.e spiTransaction.count must be in multiple of data size.
 
 ## Features NOT Supported
 \cond SOC_AM64X || SOC_AM243X

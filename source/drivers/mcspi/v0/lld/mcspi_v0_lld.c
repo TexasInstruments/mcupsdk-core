@@ -72,6 +72,14 @@ static inline void MCSPI_fifoRead(uint32_t baseAddr,
                                   MCSPI_ChObject *chObj,
                                   uint32_t transferLength);
 
+static inline void MCSPI_fifoReadMultiWord(uint32_t baseAddr,
+                                           MCSPI_ChObject *chObj,
+                                           uint32_t transferLength);
+
+static inline void MCSPI_fifoWriteMultiWord(uint32_t baseAddr,
+                                           MCSPI_ChObject *chObj,
+                                           uint32_t transferLength);
+
 static uint32_t MCSPI_getDataWidthBitMask(uint32_t dataWidth);
 static uint32_t Spi_mcspiGetRxMask(uint32_t csNum);
 static uint32_t Spi_mcspiGetTxMask(uint32_t csNum);
@@ -1524,8 +1532,16 @@ static uint32_t MCSPI_continueTxRx(MCSPILLD_Handle hMcspi,
                 {
                     numWordsToRead = chObj->effRxFifoDepth;
                 }
-                /* Read data from RX FIFO. */
-                MCSPI_fifoRead(baseAddr, chObj, numWordsToRead);
+                if(hMcspi->hMcspiInit->multiWordAccess == TRUE)
+                {
+                    /* In case of Multi word Access, always read 32 bits of data from RX FIFO. */
+                    MCSPI_fifoReadMultiWord(baseAddr, chObj, numWordsToRead);
+                }
+                else
+                {
+                    /* Read data from RX FIFO. */
+                    MCSPI_fifoRead(baseAddr, chObj, numWordsToRead);
+                }
             }
         }
         if ((irqStatus & txEmptyMask) == txEmptyMask)
@@ -1535,10 +1551,16 @@ static uint32_t MCSPI_continueTxRx(MCSPILLD_Handle hMcspi,
             {
                 numWordsToWrite = chObj->effTxFifoDepth;
             }
-
-            /* Write the data in TX FIFO.Even in RX only mode, dummy data has to
-               be written to receive data from Peripheral */
-            MCSPI_fifoWrite(baseAddr, chObj, numWordsToWrite);
+            if(hMcspi->hMcspiInit->multiWordAccess == TRUE)
+            {
+                /* Write the data in TX FIFO.Even in RX only mode, dummy data has to
+                be written to receive data from Peripheral */
+                MCSPI_fifoWriteMultiWord(baseAddr, chObj, numWordsToWrite);
+            }
+            else
+            {
+                MCSPI_fifoWrite(baseAddr, chObj, numWordsToWrite);
+            }
         }
         if ((irqStatus & CSL_MCSPI_IRQSTATUS_EOW_MASK) == CSL_MCSPI_IRQSTATUS_EOW_MASK)
         {
@@ -1808,8 +1830,17 @@ static uint32_t MCSPI_continuePeripheralTxRx(MCSPILLD_Handle hMcspi,
                 {
                     numWordsToRead = chObj->effRxFifoDepth;
                 }
-                /* Read data from RX FIFO. */
-                MCSPI_fifoRead(baseAddr, chObj, numWordsToRead);
+                if(hMcspi->hMcspiInit->multiWordAccess == TRUE)
+                {
+                    /* In case of Multi word Access, always read 32 bits of data from RX FIFO. */
+                    MCSPI_fifoReadMultiWord(baseAddr, chObj, numWordsToRead);
+                }
+                else
+                {
+                    /* Read data from RX FIFO. */
+                    MCSPI_fifoRead(baseAddr, chObj, numWordsToRead);
+                }
+
                 /* Check if transfer is completed for current transaction. */
                 if (transaction->count == chObj->curRxWords)
                 {
@@ -1827,8 +1858,16 @@ static uint32_t MCSPI_continuePeripheralTxRx(MCSPILLD_Handle hMcspi,
                 {
                     numWordsToWrite = chObj->effTxFifoDepth;
                 }
-                /* Write the data in TX FIFO. */
-                MCSPI_fifoWrite(baseAddr, chObj, numWordsToWrite);
+                if(hMcspi->hMcspiInit->multiWordAccess == TRUE)
+                {
+                    MCSPI_fifoWriteMultiWord(baseAddr, chObj, numWordsToWrite);
+                }
+                else
+                {
+                    /* Write the data in TX FIFO. */
+                    MCSPI_fifoWrite(baseAddr, chObj, numWordsToWrite);
+                }
+
                 if(MCSPI_TR_MODE_TX_ONLY == chObj->chCfg->trMode)
                 {
                     /* Check if transfer is completed for current transaction. */
@@ -1972,6 +2011,31 @@ static inline void MCSPI_fifoWrite(uint32_t baseAddr, MCSPI_ChObject *chObj, uin
     return;
 }
 
+static inline void MCSPI_fifoWriteMultiWord(uint32_t baseAddr,
+                                           MCSPI_ChObject *chObj,
+                                           uint32_t transferLength)
+{
+    uint32_t    chNum = chObj->chCfg->chNum;
+
+    /* Check if cuRxBufPtr is NULL */
+    if(NULL != chObj->curRxBufPtr)
+    {
+        /* Read all the bytes that are multiple of 4 */
+        if((transferLength % 4U) == 0U)
+        {
+            chObj->curTxBufPtr = (uint8_t *) MCSPI_fifoWrite32(
+                                     baseAddr,
+                                     chNum,
+                                     (uint32_t *) chObj->curTxBufPtr,
+                                     (transferLength / 4U));
+
+            chObj->curTxWords += transferLength;
+        }
+    }
+
+    return;
+}
+
 static inline void MCSPI_fifoRead(uint32_t baseAddr, MCSPI_ChObject *chObj, uint32_t transferLength)
 {
     uint32_t        chNum;
@@ -2014,6 +2078,33 @@ static inline void MCSPI_fifoRead(uint32_t baseAddr, MCSPI_ChObject *chObj, uint
         MCSPI_fifoReadDiscard(baseAddr, chNum, transferLength);
     }
     chObj->curRxWords += transferLength;
+
+    return;
+}
+
+static inline void MCSPI_fifoReadMultiWord(uint32_t baseAddr,
+                                           MCSPI_ChObject *chObj,
+                                           uint32_t transferLength)
+{
+    uint32_t    chNum = chObj->chCfg->chNum;
+    uint32_t    dataWidthBitMask = 0xFFFFFFFFU;
+
+    /* Check if cuRxBufPtr is NULL */
+    if(NULL != chObj->curRxBufPtr)
+    {
+        /* Read all the bytes that are multiple of 4 */
+        if((transferLength / 4U) > 0U)
+        {
+            chObj->curRxBufPtr = (uint8_t *) MCSPI_fifoRead32(
+                                            baseAddr,
+                                            chNum,
+                                            (uint32_t *) chObj->curRxBufPtr,
+                                            (transferLength / 4U),
+                                            dataWidthBitMask);
+
+            chObj->curRxWords += transferLength;
+        }
+    }
 
     return;
 }
