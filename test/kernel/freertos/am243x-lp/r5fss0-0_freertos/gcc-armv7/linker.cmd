@@ -149,7 +149,9 @@ SECTIONS
     } > MSRAM
 
     /* Sections needed for C++ projects */
+    __exidx_start = .;
     .ARM.exidx  : ALIGN (8) {} > MSRAM  /* Needed for C++ exception handling */
+    __exidx_end = .;
     .init_array : ALIGN (8) {} > MSRAM  /* Contains function pointers called before main */
     .fini_array : ALIGN (8) {} > MSRAM  /* Contains function pointers called after main */
 
