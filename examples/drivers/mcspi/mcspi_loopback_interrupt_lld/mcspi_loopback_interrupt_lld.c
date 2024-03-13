@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -82,8 +82,8 @@ void *mcspi_loopback_interrupt_lld_main(void *args)
     /*  Interrupt configuration and registration*/
     intrNum = gConfigMcspi0InitObject[CONFIG_MCSPI0].intrNum;
     intcBaseAddr = gHwiConfig.intcBaseAddr;
-    gMcspiVimStsAddr = intcBaseAddr + (0x404u + (((intrNum)>> 5) & 0xFu) * 0x20u);
-    gMcspiVimStsClrMask = 0x1u << ((intrNum) & 0x1Fu);
+    gMcspiVimStsAddr = intcBaseAddr + (0x404U + (((intrNum)>> 5) & 0xFU) * 0x20U);
+    gMcspiVimStsClrMask = 0x1U << ((intrNum) & 0x1FU);
 
     HwiP_setVecAddr(intrNum, (uintptr_t)&App_MCSPI_ISR);
     HwiP_setPri(intrNum, gConfigMcspi0InitObject[CONFIG_MCSPI0].intrPriority);
@@ -106,7 +106,7 @@ void *mcspi_loopback_interrupt_lld_main(void *args)
     extendedParams.dataSize   = 32;
     count = APP_MCSPI_MSGSIZE / (extendedParams.dataSize/8);
 
-    for(int32_t loopCount=0; loopCount < APP_MCSPI_TRANSFER_LOOPCOUNT; loopCount++)
+    for(uint32_t loopCount = 0U; loopCount < APP_MCSPI_TRANSFER_LOOPCOUNT; loopCount++)
     {
         status += MCSPI_lld_readWriteIntr(gMcspiHandle0, \
                                             gMcspiTxBuffer, \
@@ -114,7 +114,7 @@ void *mcspi_loopback_interrupt_lld_main(void *args)
                                             count, \
                                             timeout, \
                                             &extendedParams);
-        while(try_lock_mutex(gMcspiObject[CONFIG_MCSPI0].transferMutex) == MUTEX_ARM_LOCKED);
+        while(try_lock_mutex(gMcspiObject[CONFIG_MCSPI0].transferMutex) == (uint32_t)MUTEX_ARM_LOCKED);
     }
 
     if(MCSPI_TRANSFER_COMPLETED != status)

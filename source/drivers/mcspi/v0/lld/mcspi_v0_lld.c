@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -128,7 +128,7 @@ static inline int32_t MCSPI_lld_isPinModeValid(uint32_t pinMode);
 static inline int32_t MCSPI_lld_isInitDelayValid(uint32_t initDelay);
 static inline int32_t MCSPI_lld_isMsModeValid(uint32_t msMode);
 static inline int32_t MCSPI_lld_isDataSizeValid(uint32_t dataSize);
-static inline int32_t MCSPI_lld_isHandleValid(MCSPI_DmaHandle);
+static inline int32_t MCSPI_lld_isHandleValid(MCSPI_DmaHandle handle);
 static inline int32_t MCSPI_lld_isParameterValid(uint32_t handleParameters);
 static inline int32_t MCSPI_lld_isChannelValid(uint32_t channel);
 static inline int32_t MCSPI_lld_isChCfgValid(const MCSPI_ChConfig *chCfg);
@@ -968,8 +968,6 @@ int32_t MCSPI_lld_readWrite(MCSPILLD_Handle hMcspi, void *txBuf, void *rxBuf, ui
     if(MCSPI_STATUS_SUCCESS == status)
     {
         transaction = &hMcspi->transaction;
-        chNum = hMcspi->transaction.channel;
-        chObj = &hMcspi->hMcspiInit->chObj[chNum];
         /* Check if any transaction is in progress */
         if(hMcspi->state == MCSPI_STATE_READY)
         {
@@ -1075,8 +1073,6 @@ int32_t MCSPI_lld_readWriteIntr(MCSPILLD_Handle hMcspi, void *txBuf, void *rxBuf
     if(MCSPI_STATUS_SUCCESS == status)
     {
         transaction = &hMcspi->transaction;
-        chNum = hMcspi->transaction.channel;
-        chObj = &hMcspi->hMcspiInit->chObj[chNum];
         /* Check if any transaction is in progress */
         if(hMcspi->state == MCSPI_STATE_READY)
         {
@@ -1170,8 +1166,6 @@ int32_t MCSPI_lld_readWriteDma(MCSPILLD_Handle hMcspi, void *txBuf, void *rxBuf,
     if(MCSPI_STATUS_SUCCESS == status)
     {
         transaction = &hMcspi->transaction;
-        chNum = hMcspi->transaction.channel;
-        chObj = &hMcspi->hMcspiInit->chObj[chNum];
 
         /* Check if any transaction is in progress */
         if(hMcspi->state == MCSPI_STATE_READY)
@@ -1634,7 +1628,6 @@ static int32_t MCSPI_transferControllerPoll(MCSPILLD_Handle hMcspi,
     startTicks = hMcspiInit->clockP_get();
 
     /* wait for the Tx Empty bit to be set. */
-    txEmptyMask = Spi_mcspiGetTxMask(chNum);
     while (((MCSPI_readChStatusReg(baseAddr, chNum) & CSL_MCSPI_CH0STAT_TXS_MASK) == 0U)
             && (timeoutElapsed != TRUE))
     {
@@ -2218,7 +2211,7 @@ static void MCSPI_setClkConfig(uint32_t baseAddr,
 
     /* Calculate the value of fRatio. */
     fRatio = inputClkFreq / bitRate;
-    if(((inputClkFreq % bitRate) != 0) && (fRatio < MCSPI_MAX_CLK_DIVIDER_SUPPORTED))
+    if(((inputClkFreq % bitRate) != 0U) && (fRatio < MCSPI_MAX_CLK_DIVIDER_SUPPORTED))
     {
         /* use a higher divider value in case the ratio
          * is fractional so that we get a lower SPI clock
@@ -2836,7 +2829,7 @@ static inline int32_t MCSPI_lld_isParameterValid(uint32_t handleParameters)
 {
     int32_t status = MCSPI_INVALID_PARAM;
 
-    if(handleParameters != 0)
+    if(handleParameters != 0U)
     {
         status = MCSPI_STATUS_SUCCESS;
     }

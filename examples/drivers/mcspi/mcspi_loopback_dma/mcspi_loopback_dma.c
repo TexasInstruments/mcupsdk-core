@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-22 Texas Instruments Incorporated
+ *  Copyright (C) 2021-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -42,12 +42,12 @@
  * When transfer is completed, TX and RX buffer data are compared.
  * If data is matched, test result is passed otherwise failed.
  */
-
 #include <kernel/dpl/CacheP.h>
 #include <kernel/dpl/DebugP.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+#include <drivers/hw_include/tistdtypes.h>
 
 #define APP_MCSPI_MSGSIZE                   (128U)
 #define APP_MCSPI_TRANSFER_LOOPCOUNT        (10U)
@@ -61,7 +61,7 @@ void *mcspi_loopback_dma_main(void *args)
     uint32_t            i, j;
     int32_t             transferOK;
     MCSPI_Transaction   spiTransaction;
-    uint64_t            startTimeInUSec, elapsedTimeInUsecs;
+    uint32_t            startTimeInUSec, elapsedTimeInUsecs;
 
     Drivers_open();
     Board_driversOpen();
@@ -100,7 +100,7 @@ void *mcspi_loopback_dma_main(void *args)
     DebugP_log("----------------------------------------------------------\r\n");
     DebugP_log("Data Width \tData Length \tTransfer Time (micro sec)\r\n");
     DebugP_log("%u\t\t%u\t\t%5.2f\r\n", spiTransaction.dataSize, APP_MCSPI_MSGSIZE,
-                        (float)elapsedTimeInUsecs / APP_MCSPI_TRANSFER_LOOPCOUNT);
+                        (Float32)(elapsedTimeInUsecs / (uint32_t)APP_MCSPI_TRANSFER_LOOPCOUNT));
     DebugP_log("----------------------------------------------------------\r\n\n");
 
     if((SystemP_SUCCESS != transferOK) ||

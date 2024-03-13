@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -91,7 +91,7 @@ void *mcspi_loopback_dma_lld_main(void *args)
     extendedParams.dataSize   = 32;
     count = APP_MCSPI_MSGSIZE / (extendedParams.dataSize/8);
 
-    for(int32_t loopCount=0; loopCount < APP_MCSPI_TRANSFER_LOOPCOUNT; loopCount++)
+    for(uint32_t loopCount = 0; loopCount < APP_MCSPI_TRANSFER_LOOPCOUNT; loopCount++)
     {
         status += MCSPI_lld_readWriteDma(gMcspiHandle[CONFIG_MCSPI0], \
                                         gMcspiTxBuffer, \
@@ -99,7 +99,7 @@ void *mcspi_loopback_dma_lld_main(void *args)
                                         count, \
                                         timeout, \
                                         &extendedParams);
-        while(try_lock_mutex(gMcspiObject[CONFIG_MCSPI0].transferMutex) == MUTEX_ARM_LOCKED);
+        while(try_lock_mutex(gMcspiObject[CONFIG_MCSPI0].transferMutex) == (uint32_t)MUTEX_ARM_LOCKED);
     }
 
     if(MCSPI_TRANSFER_COMPLETED != status)

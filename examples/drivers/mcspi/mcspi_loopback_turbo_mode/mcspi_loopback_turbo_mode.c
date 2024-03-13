@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -53,6 +53,7 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <kernel/dpl/TaskP.h>
+#include <drivers/hw_include/tistdtypes.h>
 
 #define APP_MCSPI_MSGSIZE                   (128U)
 
@@ -98,7 +99,7 @@ void *mcspi_loopback_turbo_mode_main(void *args)
     DebugP_log("----------------------------------------------------------\r\n");
     DebugP_log("Data Width \tData Length \tTransfer Time (micro sec)\r\n");
     DebugP_log("%u\t\t%u\t\t%5.2f\r\n", spiTransaction.dataSize, APP_MCSPI_MSGSIZE,
-                        (float)elapsedTimeInUsecs);
+                        (Float32)elapsedTimeInUsecs);
     DebugP_log("----------------------------------------------------------\r\n\n");
 
     if((SystemP_SUCCESS != transferOK) ||

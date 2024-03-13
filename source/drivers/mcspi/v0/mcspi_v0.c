@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-23 Texas Instruments Incorporated
+ *  Copyright (C) 2021-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -397,6 +397,7 @@ int32_t MCSPI_dmaChConfig(MCSPI_Handle handle,
 int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
 {
     int32_t             status = MCSPI_STATUS_SUCCESS, semStatus;
+    int32_t             lldStatus = MCSPI_STATUS_SUCCESS;
     uint32_t            chNum = 0;
     MCSPI_Config       *config;
     MCSPI_Object       *obj;
@@ -410,10 +411,10 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
     /* Check parameters */
     if((NULL == handle) || (NULL == transaction))
     {
-        status = MCSPI_INVALID_PARAM;
+        lldStatus = MCSPI_INVALID_PARAM;
     }
 
-    if(MCSPI_STATUS_SUCCESS == status)
+    if(MCSPI_STATUS_SUCCESS == lldStatus)
     {
         config = (MCSPI_Config *) handle;
         obj = config->object;
@@ -445,17 +446,17 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
             {
                 if (MCSPI_OPER_MODE_INTERRUPT == attrs->operMode)
                 {
-                    status = MCSPI_lld_readWriteIntr(mcspiLldHandle, transaction->txBuf,
+                    lldStatus = MCSPI_lld_readWriteIntr(mcspiLldHandle, transaction->txBuf,
                                                     transaction->rxBuf, transaction->count,
                                                     transaction->timeout, &extendedParams);
                 }
                 else
                 {
-                    status = MCSPI_lld_readWriteDma(mcspiLldHandle, transaction->txBuf,
+                    lldStatus = MCSPI_lld_readWriteDma(mcspiLldHandle, transaction->txBuf,
                                                     transaction->rxBuf, transaction->count,
                                                     transaction->timeout, &extendedParams);
                 }
-                if (status == MCSPI_STATUS_SUCCESS)
+                if (lldStatus == MCSPI_STATUS_SUCCESS)
                 {
                     if (obj->openPrms.transferMode == MCSPI_TRANSFER_MODE_BLOCKING)
                     {
@@ -487,11 +488,11 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
             }
             else
             {
-                status = MCSPI_lld_readWrite(mcspiLldHandle, transaction->txBuf,
+                lldStatus = MCSPI_lld_readWrite(mcspiLldHandle, transaction->txBuf,
                                             transaction->rxBuf, transaction->count,
                                             transaction->timeout, &extendedParams);
 
-                if (status == MCSPI_STATUS_SUCCESS)
+                if (lldStatus == MCSPI_STATUS_SUCCESS)
                 {
                     status = SystemP_SUCCESS;
                     /* update HLD current transaction status from LLD */
@@ -501,17 +502,17 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
 
                     transaction->status = MCSPI_TRANSFER_COMPLETED;
                 }
-                if (status == MCSPI_STATUS_FAILURE)
+                else if(lldStatus == MCSPI_TRANSFER_TIMEOUT)
+                {
+                    status = SystemP_FAILURE;
+                    transaction->status = MCSPI_TRANSFER_TIMEOUT;
+                }
+                else
                 {
                     status  = SystemP_FAILURE;
                     transaction->status = MCSPI_TRANSFER_FAILED;
                 }
 
-                if(status == MCSPI_TRANSFER_TIMEOUT)
-                {
-                    status = SystemP_FAILURE;
-                    transaction->status = MCSPI_TRANSFER_TIMEOUT;
-                }
                 obj->transaction = NULL;
             }
         }
@@ -529,7 +530,8 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
 
 int32_t MCSPI_transferCancel(MCSPI_Handle handle)
 {
-    int32_t              status = MCSPI_STATUS_SUCCESS;
+    int32_t             status = MCSPI_STATUS_SUCCESS;
+    int32_t             lldStatus = MCSPI_STATUS_SUCCESS;
     MCSPI_Config        *config;
     MCSPI_Object        *obj;
     const MCSPI_Attrs   *attrs;
@@ -559,19 +561,19 @@ int32_t MCSPI_transferCancel(MCSPI_Handle handle)
         mcspiLldHandle = obj->mcspiLldHandle;
         if (MCSPI_OPER_MODE_DMA != attrs->operMode)
         {
-            status = MCSPI_lld_readWriteCancel(mcspiLldHandle);
+            lldStatus = MCSPI_lld_readWriteCancel(mcspiLldHandle);
         }
         else
         {
-            status = MCSPI_lld_readWriteDmaCancel(mcspiLldHandle);
+            lldStatus = MCSPI_lld_readWriteDmaCancel(mcspiLldHandle);
         }
 
         obj->transaction->status = MCSPI_TRANSFER_CANCELLED;
         obj->transaction = NULL;
     }
-    if ((status != MCSPI_STATUS_SUCCESS) &&
-        (status == MCSPI_INVALID_PARAM)  &&
-        (status != MCSPI_TRANSFER_CANCELLED))
+    if ((lldStatus != MCSPI_STATUS_SUCCESS) &&
+        (lldStatus == MCSPI_INVALID_PARAM)  &&
+        (lldStatus != MCSPI_TRANSFER_CANCELLED))
     {
         status = SystemP_FAILURE;
     }
@@ -616,7 +618,7 @@ void MCSPI_transferCallback (void *args, uint32_t transferStatus)
                          &hMcspi->transaction,
                          sizeof(hMcspi->transaction));
 
-            if(transferStatus == MCSPI_TRANSFER_CANCELLED)
+            if(transferStatus == (uint32_t) MCSPI_TRANSFER_CANCELLED)
             {
                 obj->transaction->status = MCSPI_TRANSFER_CANCELLED;
             }

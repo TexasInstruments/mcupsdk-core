@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -78,9 +78,9 @@ void *mcspi_loopback_polling_lld_main(void *args)
     extendedParams.channel    = gConfigMcspi0ChCfg[0].chNum;
     extendedParams.csDisable  = TRUE;
     extendedParams.dataSize   = 8;
-    count = APP_MCSPI_MSGSIZE / (extendedParams.dataSize/8);
+    count = (uint32_t) APP_MCSPI_MSGSIZE / (extendedParams.dataSize / 8U);
 
-    for(int32_t loopCount=0; loopCount < APP_MCSPI_TRANSFER_LOOPCOUNT; loopCount++)
+    for(uint32_t loopCount = 0U; loopCount < APP_MCSPI_TRANSFER_LOOPCOUNT; loopCount++)
     {
         status += MCSPI_lld_readWrite(gMcspiHandle[CONFIG_MCSPI0], \
                                      gMcspiTxBuffer, \
