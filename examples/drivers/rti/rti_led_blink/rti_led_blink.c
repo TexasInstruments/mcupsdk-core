@@ -37,9 +37,9 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
-#define LED_ON           (0x01)
-#define LED_OFF          (0x00)
-#define LED_BLINK_COUNT  (10)
+#define LED_ON           (0x01U)
+#define LED_OFF          (0x00U)
+#define LED_BLINK_COUNT  (10U)
 
 
 /*
@@ -53,8 +53,6 @@ uint32_t gpioBaseAddr, pinNum;
 
 void rti_led_blink(void *args)
 {
-    int32_t status = SystemP_SUCCESS;
-
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
@@ -73,7 +71,7 @@ void rti_led_blink(void *args)
     GPIO_pinWriteHigh(gpioBaseAddr, pinNum);
 
     /* Start the RTI counter */
-    RTI_counterEnable(CONFIG_RTI0_BASE_ADDR, RTI_TMR_CNT_BLK_INDEX_0);
+    (void)RTI_counterEnable(CONFIG_RTI0_BASE_ADDR, RTI_TMR_CNT_BLK_INDEX_0);
 
     DebugP_log("[RTI LED Blink Test] Timer Started...\r\n");
 
@@ -81,18 +79,11 @@ void rti_led_blink(void *args)
     while(gBlinkCount < LED_BLINK_COUNT);
 
     /* Stop the RTI counter */
-    RTI_counterDisable(CONFIG_RTI0_BASE_ADDR, RTI_TMR_CNT_BLK_INDEX_0);
+    (void)RTI_counterDisable(CONFIG_RTI0_BASE_ADDR, RTI_TMR_CNT_BLK_INDEX_0);
 
     DebugP_log("[RTI LED Blink Test] Timer Stopped...\r\n");
 
-    if(SystemP_SUCCESS == status)
-    {
-        DebugP_log("All tests have passed!!\r\n");
-    }
-    else
-    {
-        DebugP_log("Some tests have failed!!\r\n");
-    }
+    DebugP_log("All tests have passed!!\r\n");
 
     Board_driversClose();
     Drivers_close();

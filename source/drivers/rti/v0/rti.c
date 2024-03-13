@@ -43,7 +43,6 @@
 
 #include <drivers/rti.h>
 #include <stdint.h>
-#include <stdio.h>
 #include <kernel/dpl/SystemP.h>
 #include <drivers/hw_include/hw_types.h>
 #include <drivers/hw_include/csl_types.h>
@@ -241,6 +240,9 @@ int32_t RTI_compareClear(uint32_t baseAddr, uint32_t cmpIndex)
                 HW_WR_REG32(baseAddr + CSL_RTI_RTIUDCP3, 0);
                 HW_WR_FIELD32(baseAddr + CSL_RTI_RTICOMPCTRL, CSL_RTI_RTICOMPCTRL_COMP3SEL, 0);
                 break;
+
+            default:
+                break;
         }
         retVal = SystemP_SUCCESS;
     }
@@ -348,6 +350,9 @@ int32_t RTI_compareEventConfig(uint32_t baseAddr, uint32_t cmpIndex, uint32_t cn
                 HW_WR_REG32(baseAddr + CSL_RTI_RTIUDCP3, period);
                 HW_WR_FIELD32(baseAddr + CSL_RTI_RTICOMPCTRL, CSL_RTI_RTICOMPCTRL_COMP3SEL, cntBlkIndex);
                 break;
+
+            default:
+                break;
         }
         retVal = SystemP_SUCCESS;
     }
@@ -357,7 +362,7 @@ int32_t RTI_compareEventConfig(uint32_t baseAddr, uint32_t cmpIndex, uint32_t cn
 uint32_t RTI_compareGet(uint32_t baseAddr, uint32_t cmpIndex)
 {
     uint32_t regVal = 0U;
-    uint32_t regOffset;
+    uint32_t regOffset = 0;
 
     if ((baseAddr != ((uint32_t) NULL)) &&
         (cmpIndex <= RTI_TMR_CMP_BLK_INDEX_MAX))
@@ -378,6 +383,9 @@ uint32_t RTI_compareGet(uint32_t baseAddr, uint32_t cmpIndex)
 
             case RTI_TMR_CMP_BLK_INDEX_3:
                 regOffset = CSL_RTI_RTICOMP3;
+                break;
+
+            default:
                 break;
         }
         regVal = HW_RD_REG32(baseAddr + regOffset);
@@ -410,6 +418,9 @@ int32_t RTI_compareClearConfig(uint32_t baseAddr, uint32_t cmpIndex, uint32_t cm
             case RTI_TMR_CMP_BLK_INDEX_3:
                 HW_WR_REG32(baseAddr + CSL_RTI_RTICOMP3CLR, cmpClearVal);
                 break;
+
+            default:
+                break;
         }
         retVal = SystemP_SUCCESS;
     }
@@ -434,7 +445,7 @@ int32_t RTI_intStatusClear(uint32_t baseAddr, uint32_t intFlags)
     uint32_t flags = intFlags & RTI_TMR_INT_STATUS_ALL;
 
     if ((baseAddr != ((uint32_t) NULL)) &&
-        (flags    != 0U))
+        (flags    != (uint32_t)0))
     {
         /* Clear the interrupt status from IRQSTATUS register */
         HW_WR_REG32(baseAddr + CSL_RTI_RTIINTFLAG, flags);
@@ -449,7 +460,7 @@ int32_t RTI_intEnable(uint32_t baseAddr, uint32_t intFlags)
     uint32_t flags = intFlags & RTI_TMR_INT_REQ_ALL;
 
     if ((baseAddr != ((uint32_t) NULL)) &&
-        (flags    != 0U))
+        (flags    != (uint32_t)0))
     {
         /* Enable the Timer interrupts represented by intFlags */
         HW_WR_REG32(baseAddr + CSL_RTI_RTISETINT, flags);
@@ -464,7 +475,7 @@ int32_t RTI_intDisable(uint32_t baseAddr, uint32_t intFlags)
     uint32_t flags = intFlags & RTI_TMR_INT_REQ_ALL;
 
     if ((baseAddr != ((uint32_t) NULL)) &&
-        (flags    != 0U))
+        (flags    != (uint32_t)0))
     {
         /* Enable the Timer interrupts represented by intFlags */
         HW_WR_REG32(baseAddr + CSL_RTI_RTICLEARINT, flags);
@@ -498,6 +509,9 @@ int32_t RTI_intAutoClearEnable(uint32_t baseAddr, uint32_t cmpIndex)
             case RTI_TMR_CMP_BLK_INDEX_3:
                 HW_WR_FIELD32(baseAddr + CSL_RTI_RTIINTCLRENABLE, CSL_RTI_RTICOMP3CLR_COMP3CLR, RTI_TMR_INT_AUTO_CLR_ENABLE_FLAG);
                 break;
+
+            default:
+                break;
         }
         retVal = SystemP_SUCCESS;
     }
@@ -528,6 +542,9 @@ int32_t RTI_intAutoClearDisable(uint32_t baseAddr, uint32_t cmpIndex)
 
             case RTI_TMR_CMP_BLK_INDEX_3:
                 HW_WR_FIELD32(baseAddr + CSL_RTI_RTIINTCLRENABLE, CSL_RTI_RTICOMP3CLR_COMP3CLR, RTI_TMR_INT_AUTO_CLR_DISABLE_FLAG);
+                break;
+
+            default:
                 break;
         }
         retVal = SystemP_SUCCESS;
