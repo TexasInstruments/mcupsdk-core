@@ -2,7 +2,7 @@
 *
 * ESM0 INTERRUPT MAP. header file
 *
-* Copyright (C) 2022 Texas Instruments Incorporated.
+* Copyright (C) 2022-2024 Texas Instruments Incorporated.
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions
 *  are met:
@@ -100,9 +100,10 @@ extern "C"
 #define SDL_ESM0_R5FSS0_CORE1_R5FSS1_ECC_DE_TO_ESM_1_0              60U
 #define SDL_ESM0_R5FSS0_CORE0_R5FSS1_ECC_SE_TO_ESM_0_0              61U
 #define SDL_ESM0_R5FSS0_CORE1_R5FSS1_ECC_SE_TO_ESM_1_0              62U
+#define SDL_ESM0_EDMA0_TPCC_ERRINTAGG                               63U
 
 /* Pulse Events */
-#define SDL_ESM0_RTI0_WWD_NMI   									64U
+#define SDL_ESM0_RTI0_WWD_NMI                                       64U
 #define SDL_ESM0_WWDT1_RTI1_WWD_NMI                                 65U
 #define SDL_ESM0_WWDT2_RTI2_WWD_NMI                                 66U
 #define SDL_ESM0_WWDT3_RTI3_WWD_NMI                                 67U
@@ -124,6 +125,7 @@ extern "C"
 #define SDL_ESM0_CCM_0_SELFTEST_ERR                                 83U
 #define SDL_ESM0_CCM_0_LOCKSTEP_COMPARE_ERR                         84U
 #define SDL_ESM0_CCM_1_SELFTEST_ERR                                 85U
+#define SDL_ESM0_CCM_1_LOCKSTEP_COMPARE_ERR                         86U
 
 #ifdef __cplusplus
 }
