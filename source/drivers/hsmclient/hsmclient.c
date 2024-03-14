@@ -48,6 +48,14 @@
 #include <string.h>
 #include <kernel/dpl/DebugP.h>
 
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
+/**
+ * @brief
+ *        Macro calculates the cache-aligned size for a given buffer or data structure
+ */
+#define GET_CACHE_ALIGNED_SIZE(x) ((x + CacheP_CACHELINE_ALIGNMENT) & ~(CacheP_CACHELINE_ALIGNMENT - 1))
 
 /*==========================================================================
  *                        Static Function Declarations
@@ -223,9 +231,6 @@ int32_t HsmClient_getVersion(HsmClient_t* HsmClient ,
     int32_t status ;
     uint16_t crcArgs;
 
-    /* Cache Aligned Size for HsmVer_t */
-    uint32_t alignedHsmVerCacheSize = (sizeof(HsmVer_t) + CacheP_CACHELINE_ALIGNMENT) & ~(CacheP_CACHELINE_ALIGNMENT - 1);
-
     /*populate the send message structure */
     HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
     HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
@@ -244,7 +249,7 @@ int32_t HsmClient_getVersion(HsmClient_t* HsmClient ,
        Write back the HsmVer struct and
        invalidate the cache before passing it to HSM
     */
-    CacheP_wbInv(hsmVer, alignedHsmVerCacheSize, CacheP_TYPE_ALL);
+    CacheP_wbInv(hsmVer, GET_CACHE_ALIGNED_SIZE(sizeof(HsmVer_t)), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient,timeout);
 
@@ -261,9 +266,6 @@ int32_t HsmClient_getVersion(HsmClient_t* HsmClient ,
         {
             /* Change the Arguments Address in Physical Address */
             HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
-
-            /* Invalidate the cache before reading the struct fields from HSM */
-            CacheP_inv(HsmClient->RespMsg.args, alignedHsmVerCacheSize, CacheP_TYPE_ALL);
 
             /* check the integrity of args */
             crcArgs = crc16_ccit((uint8_t*)(HsmClient->RespMsg.args),sizeof(HsmVer_t));
@@ -311,6 +313,12 @@ int32_t HsmClient_getUID(HsmClient_t* HsmClient,
 
     /* Change the Arguments Address in Physical Address */
     HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(uid);
+
+    /*
+       Write back the uid and
+       invalidate the cache before passing it to HSM
+    */
+    CacheP_wbInv(uid, GET_CACHE_ALIGNED_SIZE(sizeof(uid)), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
@@ -376,6 +384,12 @@ int32_t HsmClient_openDbgFirewall(HsmClient_t* HsmClient,
 
     /* Change the Arguments Address in Physical Address */
     HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(cert);
+
+    /*
+       Write back the debug cert and
+       invalidate the cache before passing it to HSM
+    */
+    CacheP_wbInv(cert, GET_CACHE_ALIGNED_SIZE(cert_size), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
@@ -443,6 +457,12 @@ int32_t HsmClient_importKeyring(HsmClient_t* HsmClient,
     /* Change the Arguments Address in Physical Address */
     HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(cert);
 
+    /*
+       Write back the keyring cert and
+       invalidate the cache before passing it to HSM
+    */
+    CacheP_wbInv(cert, GET_CACHE_ALIGNED_SIZE(cert_size), CacheP_TYPE_ALL);
+
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
     {
@@ -504,6 +524,12 @@ int32_t HsmClient_readOTPRow(HsmClient_t* HsmClient,
 
     /* Add arg crc */
     HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *) readRow, sizeof(EfuseRead_t));
+
+    /*
+       Write back the EfuseRead struct and
+       invalidate the cache before passing it to HSM
+    */
+    CacheP_wbInv(readRow, GET_CACHE_ALIGNED_SIZE(sizeof(EfuseRead_t)), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
@@ -567,6 +593,12 @@ int32_t HsmClient_writeOTPRow(HsmClient_t* HsmClient,
     /* Add arg crc */
     HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *) writeRow, sizeof(EfuseRowWrite_t));
 
+    /*
+       Write back the EfuseRowWrite struct and
+       invalidate the cache before passing it to HSM
+    */
+    CacheP_wbInv(writeRow, GET_CACHE_ALIGNED_SIZE(sizeof(EfuseRowWrite_t)), CacheP_TYPE_ALL);
+
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
     {
@@ -627,6 +659,12 @@ int32_t HsmClient_lockOTPRow(HsmClient_t* HsmClient,
 
     /* Add arg crc */
     HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *) protRow, sizeof(EfuseRowProt_t));
+
+    /*
+       Write back the EfuseRowProt struct and
+       invalidate the cache before passing it to HSM
+    */
+    CacheP_wbInv(protRow, GET_CACHE_ALIGNED_SIZE(sizeof(EfuseRowProt_t)), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
@@ -689,6 +727,12 @@ int32_t HsmClient_getOTPRowCount(HsmClient_t* HsmClient,
     /* Add arg crc */
     HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *) rowCount, sizeof(EfuseRowCount_t));
 
+    /*
+       Write back the EfuseRowCount struct and
+       invalidate the cache before passing it to HSM
+    */
+    CacheP_wbInv(rowCount, GET_CACHE_ALIGNED_SIZE(sizeof(EfuseRowCount_t)), CacheP_TYPE_ALL);
+
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
     {
@@ -749,6 +793,12 @@ int32_t HsmClient_getOTPRowProtection(HsmClient_t* HsmClient,
 
     /* Add arg crc */
     HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *) rowProt, sizeof(EfuseRowProt_t));
+
+    /*
+       Write back the EfuseRowProt struct and
+       invalidate the cache before passing it to HSM
+    */
+    CacheP_wbInv(rowProt, GET_CACHE_ALIGNED_SIZE(sizeof(EfuseRowProt_t)), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
@@ -815,6 +865,12 @@ int32_t HsmClient_procAuthBoot(HsmClient_t* HsmClient,
     /* Change the Arguments Address in Physical Address */
     HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(cert);
 
+    /*
+       Write back the cert and
+       invalidate the cache before passing it to HSM
+    */
+    CacheP_wbInv(cert, GET_CACHE_ALIGNED_SIZE(cert_size), CacheP_TYPE_ALL);
+
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
     {
@@ -866,9 +922,6 @@ int32_t HsmClient_setFirewall(HsmClient_t* HsmClient,
     uint16_t crcArgs;
     uint16_t crcFirewallRegionArr ;
 
-    /* Cache Aligned Size for FirewallReq_t */
-    uint32_t alignedFirewallReqObjCacheSize = (sizeof(FirewallReq_t) + CacheP_CACHELINE_ALIGNMENT) & ~(CacheP_CACHELINE_ALIGNMENT - 1);
-
     /*populate the send message structure */
     HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
     HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
@@ -889,7 +942,7 @@ int32_t HsmClient_setFirewall(HsmClient_t* HsmClient,
     /*
        Write back the FirewallReq_t struct
     */
-    CacheP_wbInv((void*)FirewallReqObj, alignedFirewallReqObjCacheSize, CacheP_TYPE_ALL);
+    CacheP_wbInv((void*)FirewallReqObj, GET_CACHE_ALIGNED_SIZE(sizeof(FirewallReq_t)), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
@@ -905,9 +958,6 @@ int32_t HsmClient_setFirewall(HsmClient_t* HsmClient,
         {
             /* Change the Arguments Address in Physical Address */
             HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
-
-            /* Invalidate the cache before reading the struct fields from HSM */
-            CacheP_inv((void*)FirewallReqObj, alignedFirewallReqObjCacheSize, CacheP_TYPE_ALL);
 
             /* check the integrity of args */
             crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, 0U);
@@ -943,9 +993,6 @@ int32_t HsmClient_FirewallIntr(HsmClient_t* HsmClient,
     int32_t status ;
     uint16_t crcArgs;
 
-    /* Cache Aligned Size for FirewallReq_t */
-    uint32_t alignedFirewallIntrReqObjCacheSize = (sizeof(FirewallIntrReq_t) + CacheP_CACHELINE_ALIGNMENT) & ~(CacheP_CACHELINE_ALIGNMENT - 1);
-
     /*populate the send message structure */
     HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
     HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
@@ -961,7 +1008,7 @@ int32_t HsmClient_FirewallIntr(HsmClient_t* HsmClient,
     /*
        Write back the FirewallIntrReq_t struct
     */
-    CacheP_wbInv((void*)FirewallIntrReqObj, alignedFirewallIntrReqObjCacheSize, CacheP_TYPE_ALL);
+    CacheP_wbInv((void*)FirewallIntrReqObj, GET_CACHE_ALIGNED_SIZE(sizeof(FirewallIntrReq_t)), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
@@ -977,9 +1024,6 @@ int32_t HsmClient_FirewallIntr(HsmClient_t* HsmClient,
         {
             /* Change the Arguments Address in Physical Address */
             HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
-
-            /* Invalidate the cache before reading the struct fields from HSM */
-            CacheP_inv((void*) FirewallIntrReqObj, alignedFirewallIntrReqObjCacheSize, CacheP_TYPE_ALL);
 
             /* check the integrity of args */
             crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, 0U);
@@ -1026,6 +1070,11 @@ int32_t HsmClient_getDKEK(HsmClient_t* HsmClient,
 
     /* Add arg crc */
     HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)getDKEK, sizeof(DKEK_t));
+
+    /*
+       Write back the DKEK_t struct
+    */
+    CacheP_wbInv((void*)getDKEK, GET_CACHE_ALIGNED_SIZE(sizeof(getDKEK)), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
@@ -1105,9 +1154,6 @@ int32_t HsmClient_keyWriter(HsmClient_t* HsmClient, KeyWriterCertHeader_t* certH
     int32_t status ;
     uint16_t crcArgs;
 
-    /* Cache Aligned Size for KeyWriterCertHeader_t */
-    uint32_t alignedKeywrCertHeaderCacheSize = (sizeof(KeyWriterCertHeader_t) + CacheP_CACHELINE_ALIGNMENT) & ~(CacheP_CACHELINE_ALIGNMENT - 1);
-
     /*populate the send message structure */
     HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
     HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
@@ -1127,7 +1173,7 @@ int32_t HsmClient_keyWriter(HsmClient_t* HsmClient, KeyWriterCertHeader_t* certH
        Write back the KwrCertHeader struct and
        invalidate the cache before passing it to HSM
     */
-    CacheP_wbInv(certHeader, alignedKeywrCertHeaderCacheSize, CacheP_TYPE_ALL);
+    CacheP_wbInv(certHeader, GET_CACHE_ALIGNED_SIZE(sizeof(KeyWriterCertHeader_t)), CacheP_TYPE_ALL);
 
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
@@ -1145,9 +1191,6 @@ int32_t HsmClient_keyWriter(HsmClient_t* HsmClient, KeyWriterCertHeader_t* certH
         {
             /* Change the Arguments Address in Physical Address */
             HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
-
-            /* Invalidate the cache before reading the struct fields from HSM */
-            CacheP_inv(HsmClient->RespMsg.args, alignedKeywrCertHeaderCacheSize, CacheP_TYPE_ALL);
 
             /* check the integrity of args */
             crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, sizeof(KeyWriterCertHeader_t));
@@ -1195,6 +1238,12 @@ int32_t HsmClient_readSWRev(HsmClient_t* HsmClient,
 
     /* Add arg crc */
     HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)readSWRev, sizeof(SWRev_t));
+
+    /*
+       Write back the SWRev_t struct and
+       invalidate the cache before passing it to HSM
+    */
+    CacheP_wbInv(readSWRev, GET_CACHE_ALIGNED_SIZE(sizeof(SWRev_t)), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
@@ -1257,6 +1306,12 @@ int32_t HsmClient_writeSWRev(HsmClient_t* HsmClient,
 
     /* Add arg crc */
     HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)writeSWRev, sizeof(SWRev_t));
+
+    /*
+       Write back the SWRev_t struct and
+       invalidate the cache before passing it to HSM
+    */
+    CacheP_wbInv(writeSWRev, GET_CACHE_ALIGNED_SIZE(sizeof(SWRev_t)), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
@@ -1323,6 +1378,12 @@ int32_t HsmClient_getRandomNum(HsmClient_t* HsmClient,
 
     /* Add arg crc */
     HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)getRandomNum, sizeof(RNGReq_t));
+
+    /*
+       Write back the RNGReq_t struct and
+       invalidate the cache before passing it to HSM
+    */
+    CacheP_wbInv(getRandomNum, GET_CACHE_ALIGNED_SIZE(sizeof(RNGReq_t)), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if(status == SystemP_SUCCESS)
