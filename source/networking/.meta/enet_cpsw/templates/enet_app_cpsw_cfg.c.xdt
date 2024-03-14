@@ -371,6 +371,14 @@ static void EnetApp_initHostPortConfig(CpswHostPort_Cfg *pHostPortCfg)
     *pHostPortCfg = enetAppCpswHostPortCfg;
 }
 
+% if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA"){
+static void EnetApp_initCpdmaConfig(EnetCpdma_Cfg *pCpdmaCfg)
+{
+    pCpdmaCfg->enHostRxTsFlag = `instance.cptsHostRxTsEn`;
+
+}
+%}
+
 static void EnetApp_getCpswInitCfg(Enet_Type enetType,
                                    uint32_t instId,
                                    Cpsw_Cfg *cpswCfg)
@@ -384,6 +392,9 @@ static void EnetApp_getCpswInitCfg(Enet_Type enetType,
     EnetApp_initMdioConfig(&cpswCfg->mdioCfg);
     EnetApp_initCptsConfig(&cpswCfg->cptsCfg);
     EnetApp_initHostPortConfig(&cpswCfg->hostPortCfg);
+% if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_CPDMA"){
+    EnetApp_initCpdmaConfig((EnetCpdma_Cfg *)cpswCfg->dmaCfg);
+%}
 }
 
 static void EnetApp_getMacPortInitConfig(CpswMacPort_Cfg *pMacPortCfg, const Enet_MacPort portIdx)

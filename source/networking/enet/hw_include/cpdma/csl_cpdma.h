@@ -1034,6 +1034,18 @@ Uint32 CSL_CPSW_getCpdmaDmaIntStatMasked
     CSL_CpdmaRegs           *hCpdmaRegs
 );
 
+/**
+ * \brief   This function sets the thost_ts_encap bit in the CPDMA Control Register.
+ *
+ * \param   hCpdmaRegs    Pointer to CSL_CpdmaRegs structure
+ *
+ * \return  None
+ *
+ **/
+void CSL_CPSW_enableCpdmaThostTsEncap
+(
+    CSL_CpdmaRegs           *hCpdmaRegs
+);
 
 /**
 @}

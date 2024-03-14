@@ -64,6 +64,7 @@ mpu_armv76.size       = 14;
 mpu_armv76.attributes = "NonCached";
 
 enet_cpsw1.$name                           = "CONFIG_ENET_CPSW0";
+enet_cpsw1.cptsHostRxTsEn                  = false;
 enet_cpsw1.txDmaChannel[0].$name           = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel[0].$name           = "ENET_DMA_RX_CH0";
 enet_cpsw1.pinmux[0].$name                 = "ENET_CPSW_PINMUX0";

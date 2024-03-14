@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
@@ -233,6 +233,7 @@ enet_cpsw1.MediumPoolPktSize                = 384;
 enet_cpsw1.LargePoolPktCount                = 0;
 enet_cpsw1.MediumPoolPktCount               = 32;
 enet_cpsw1.hostportRxCsumOffloadEn          = false;
+enet_cpsw1.cptsHostRxTsEn                   = false;
 enet_cpsw1.txDmaChannel[0].$name            = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel[0].$name            = "ENET_DMA_RX_CH0";
 enet_cpsw1.rxDmaChannel[0].macAddrCount     = 2;

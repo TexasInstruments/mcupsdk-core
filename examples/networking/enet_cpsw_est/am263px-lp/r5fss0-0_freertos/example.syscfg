@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
@@ -229,6 +229,7 @@ section9.output_section[0].alignment = 128;
 
 enet_cpsw1.$name                    = "CONFIG_ENET_CPSW0";
 enet_cpsw1.BoardType                = "am263px-lp";
+enet_cpsw1.cptsHostRxTsEn           = false;
 enet_cpsw1.txDmaChannel[0].$name    = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel[0].$name    = "ENET_DMA_RX_CH0";
 enet_cpsw1.pinmux[0].$name          = "ENET_CPSW_PINMUX0";

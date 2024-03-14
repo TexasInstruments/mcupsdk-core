@@ -266,6 +266,14 @@ void CSL_CPSW_enableCpdmaRx
     CSL_FINS (hCpdmaRegs->RX_CONTROL, CPDMA_RX_CONTROL_RX_EN, (uint32_t)1U);
 }
 
+void CSL_CPSW_enableCpdmaThostTsEncap
+(
+    CSL_CpdmaRegs           *hCpdmaRegs
+)
+{
+    CSL_FINS (hCpdmaRegs->DMACONTROL, CPDMA_DMACONTROL_RX_TS_ENCAP, (uint32_t)1U);
+}
+
 #if ENET_CFG_IS_ON(CPDMA_CH_OVERRIDE)
 void CSL_CPSW_enableCpdmaChOverride
 (

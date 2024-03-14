@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM273x" --package "ZCE" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
@@ -247,6 +247,7 @@ section11.output_section[0].input_section[0].$name           = " ";
 
 enet_cpsw1.$name                           = "CONFIG_ENET_CPSW0";
 enet_cpsw1.LargePoolPktCount               = 128;
+enet_cpsw1.cptsHostRxTsEn                  = false;
 enet_cpsw1.txDmaChannel[0].$name           = "ENET_DMA_TX_CH0";
 enet_cpsw1.txDmaChannel[0].PacketsCount    = 64;
 enet_cpsw1.rxDmaChannel[0].$name           = "ENET_DMA_RX_CH0";

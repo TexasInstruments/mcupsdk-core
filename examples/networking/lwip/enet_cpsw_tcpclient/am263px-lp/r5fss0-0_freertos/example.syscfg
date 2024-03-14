@@ -1,8 +1,8 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P2" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
@@ -62,6 +62,7 @@ debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -225,17 +226,18 @@ section9.output_section.create(1);
 section9.output_section[0].$name     = ".bss:ENET_DMA_PKT_MEMPOOL";
 section9.output_section[0].alignment = 128;
 
-enet_cpsw1.$name                            = "CONFIG_ENET_CPSW0";
-enet_cpsw1.DisableMacPort2                  = true;
-enet_cpsw1.BoardType                        = "am263px-lp";
-enet_cpsw1.LargePoolPktCount                = 32;
-enet_cpsw1.PktInfoOnlyEnable                = true;
-enet_cpsw1.txDmaChannel[0].$name            = "ENET_DMA_TX_CH0";
-enet_cpsw1.rxDmaChannel[0].$name            = "ENET_DMA_RX_CH0";
-enet_cpsw1.pinmux[0].$name                  = "ENET_CPSW_PINMUX0";
-enet_cpsw1.pinmux[0].RGMII1.$assign         = "RGMII1";
+enet_cpsw1.$name                    = "CONFIG_ENET_CPSW0";
+enet_cpsw1.DisableMacPort2          = true;
+enet_cpsw1.BoardType                = "am263px-lp";
+enet_cpsw1.LargePoolPktCount        = 32;
+enet_cpsw1.PktInfoOnlyEnable        = true;
+enet_cpsw1.cptsHostRxTsEn           = false;
+enet_cpsw1.txDmaChannel[0].$name    = "ENET_DMA_TX_CH0";
+enet_cpsw1.rxDmaChannel[0].$name    = "ENET_DMA_RX_CH0";
+enet_cpsw1.pinmux[0].$name          = "ENET_CPSW_PINMUX0";
+enet_cpsw1.pinmux[0].RGMII1.$assign = "RGMII1";
 enet_cpsw1.netifInstance.create(1);
-enet_cpsw1.netifInstance[0].$name           = "NETIF_INST_ID0";
+enet_cpsw1.netifInstance[0].$name   = "NETIF_INST_ID0";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

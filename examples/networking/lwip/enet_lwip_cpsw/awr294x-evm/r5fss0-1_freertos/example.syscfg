@@ -67,6 +67,7 @@ enet_cpsw1.$name                           = "CONFIG_ENET_CPSW0";
 enet_cpsw1.AppLinkUpPortMask               = "ALL_PORTS";
 enet_cpsw1.LargePoolPktCount               = 32;
 enet_cpsw1.PktInfoOnlyEnable               = true;
+enet_cpsw1.cptsHostRxTsEn                  = false;
 enet_cpsw1.txDmaChannel[0].$name           = "ENET_DMA_TX_CH0";
 enet_cpsw1.rxDmaChannel[0].$name           = "ENET_DMA_RX_CH0";
 enet_cpsw1.pinmux[0].$name                 = "ENET_CPSW_PINMUX0";
