@@ -1,6 +1,6 @@
 %%{
     let module = system.modules["/networking/enet_cpsw/enet_cpsw"];
-    let pinMuxModule = system.modules['/networking/enet_cpsw/v2/enet_cpsw_v2_pinmux']; 
+    let pinMuxModule = system.modules['/networking/enet_cpsw/v2/enet_cpsw_v2_pinmux'];
 %%}
 % let instance = module.$instances[0];
 % let pinMuxInstance = pinMuxModule.$instances[0];
@@ -85,10 +85,10 @@ static const EnetBoard_PortCfg *EnetBoard_findPortCfg(const EnetBoard_EthPort *e
  */
 static const Dp83867_Cfg gEnetCpbBoard_dp83867PhyCfg =
 {
-    .txClkShiftEn         = true,
+    .txClkShiftEn         = false,
     .rxClkShiftEn         = true,
-    .txDelayInPs          = 1750U,  /* 2.00 ns */
-    .rxDelayInPs          = 1750U,  /* 2.00 ns */
+    .txDelayInPs          = 250U,  /* 2.00 ns */
+    .rxDelayInPs          = 2000U,  /* 2.00 ns */
     .txFifoDepth          = 4U,
     .idleCntThresh        = 4U,     /* Improves short cable performance */
     .impedanceInMilliOhms = 35000,  /* 35 ohms */
@@ -235,7 +235,7 @@ int32_t EnetBoard_setupPorts(EnetBoard_EthPort *ethPorts,
 
     DebugP_assert(numEthPorts == 1);
     DebugP_assert(ethPorts->mii.sublayerType == ENET_MAC_SUBLAYER_REDUCED);
-    
+
     switch(ethPorts->macPort)
     {
         case ENET_MAC_PORT_1:
@@ -243,7 +243,7 @@ int32_t EnetBoard_setupPorts(EnetBoard_EthPort *ethPorts,
             CSL_FINS( mssCtrlRegs->CPSW_CONTROL,MSS_CTRL_CPSW_CONTROL_CPSW_CONTROL_PORT1_MODE_SEL, MSS_CPSW_CONTROL_PORT_MODE_RGMII);
 % } else {
             CSL_FINS( mssCtrlRegs->CPSW_CONTROL,MSS_CTRL_CPSW_CONTROL_CPSW_CONTROL_PORT1_MODE_SEL, MSS_CPSW_CONTROL_PORT_MODE_RMII);
-%}           
+%}
             break;
         default:
             DebugP_assert(false);

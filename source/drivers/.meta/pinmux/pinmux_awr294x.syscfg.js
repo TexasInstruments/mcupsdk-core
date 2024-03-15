@@ -9,59 +9,113 @@ function getPinModeOverRide(peripheralPin, muxSetting)
 }
 
 /* SOC specific configurables for pinmux */
-
 function getPinConfigurables(interfaceName, pinName)
 {
     let pinConfig = [];
-    pinConfig.push(
-        {
-            "type": "DropDown",
-            "name": "pu_pd",
-            "readOnly": false,
-            "hidden": false,
-            "displayName": "Pull Up/Down",
-            "options": [
-                {
-                    "name": "pu",
-                    "displayName": "Pull Up",
-                    "value": "N/A"
-                },
-                {
-                    "name": "pd",
-                    "displayName": "Pull Down",
-                    "value": "N/A"
-                },
-                {
-                    "name": "nopull",
-                    "displayName": "No Pull",
-                    "value": "N/A"
-                }
-            ],
-            "default": "nopull",
-            "legacy": true
-        },
-        {
-            "type": "DropDown",
-            "name": "slewRate",
-            "readOnly": false,
-            "hidden": false,
-            "displayName": "Slew Rate",
-            "options": [
-                {
-                    "name": "high",
-                    "displayName": "High",
-                    "value": "N/A"
-                },
-                {
-                    "name": "low",
-                    "displayName": "Low",
-                    "value": "N/A"
-                },
-            ],
-            "default": "low",
-            "legacy": true
-        },
-    );
+    let pinlist = ["MDIO","RGMII"]
+    if(pinlist.includes(interfaceName))
+    {
+        pinConfig.push(
+            {
+                "type": "DropDown",
+                "name": "pu_pd",
+                "readOnly": false,
+                "hidden": false,
+                "displayName": "Pull Up/Down",
+                "options": [
+                    {
+                        "name": "pu",
+                        "displayName": "Pull Up",
+                        "value": "N/A"
+                    },
+                    {
+                        "name": "pd",
+                        "displayName": "Pull Down",
+                        "value": "N/A"
+                    },
+                    {
+                        "name": "nopull",
+                        "displayName": "No Pull",
+                        "value": "N/A"
+                    }
+                ],
+                "default": "pd",
+                "legacy": true
+            },
+            {
+                "type": "DropDown",
+                "name": "slewRate",
+                "readOnly": false,
+                "hidden": false,
+                "displayName": "Slew Rate",
+                "options": [
+                    {
+                        "name": "high",
+                        "displayName": "High",
+                        "value": "N/A"
+                    },
+                    {
+                        "name": "low",
+                        "displayName": "Low",
+                        "value": "N/A"
+                    },
+                ],
+                "default": "high",
+                "legacy": true
+            },
+        );
+    }
+    else {
+        pinConfig.push(
+            {
+                "type": "DropDown",
+                "name": "pu_pd",
+                "readOnly": false,
+                "hidden": false,
+                "displayName": "Pull Up/Down",
+                "options": [
+                    {
+                        "name": "pu",
+                        "displayName": "Pull Up",
+                        "value": "N/A"
+                    },
+                    {
+                        "name": "pd",
+                        "displayName": "Pull Down",
+                        "value": "N/A"
+                    },
+                    {
+                        "name": "nopull",
+                        "displayName": "No Pull",
+                        "value": "N/A"
+                    }
+                ],
+                "default": "nopull",
+                "legacy": true
+            },
+            {
+                "type": "DropDown",
+                "name": "slewRate",
+                "readOnly": false,
+                "hidden": false,
+                "displayName": "Slew Rate",
+                "options": [
+                    {
+                        "name": "high",
+                        "displayName": "High",
+                        "value": "N/A"
+                    },
+                    {
+                        "name": "low",
+                        "displayName": "Low",
+                        "value": "N/A"
+                    },
+                ],
+                "default": "low",
+                "legacy": true
+            },
+        );
+    }
 
     return pinConfig;
 }
