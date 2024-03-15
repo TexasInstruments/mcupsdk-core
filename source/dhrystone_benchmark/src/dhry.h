@@ -466,7 +466,7 @@ typedef struct dhryInstance_s {
 extern int dhryLogEnable;
 
 void *dhryThread (void*);
-int dhryCreateThreads(uint32_t numThreads, int numIterations, uint32_t *dhryPerSec);
+int dhryCreateThreads(uint32_t numThreads, int numIterations, float *dhryPerSec);
 
 #ifdef __cplusplus
 }

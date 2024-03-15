@@ -120,7 +120,7 @@ void *dhryThread (void* args)
                 End_Time = 0,
                 User_Time = 0;
 
-    uint32_t    Microseconds = 0,
+    float    Microseconds = 0,
                 Dhrystones_Per_Second = -1;
 
     /* Initializations */
@@ -469,17 +469,15 @@ void *dhryThread (void* args)
     }
     else
     {
-        Microseconds = User_Time / Number_Of_Runs;
-        Dhrystones_Per_Second = ( Number_Of_Runs * Mic_secs_Per_Second) / ( User_Time );
+        Microseconds = User_Time / (float)Number_Of_Runs;
+        Dhrystones_Per_Second = ( (float)Number_Of_Runs * Mic_secs_Per_Second) / ( User_Time );
 
         if (dhryLogEnable)
         {
             DebugP_log ("Microseconds for one run through Dhrystone: ");
-            //DebugP_log ("%6.1f \r\n", Microseconds);
-            DebugP_log ("%d \r\n", (int)Microseconds);
+            DebugP_log ("%6.1f \r\n", Microseconds);
             DebugP_log ("Dhrystones per Second:                      ");
-            //DebugP_log ("%6.1f \r\n", Dhrystones_Per_Second);
-            DebugP_log ("%d \r\n", (int)Dhrystones_Per_Second);
+            DebugP_log ("%6.1f \r\n", Dhrystones_Per_Second);
             DebugP_log ("\r\n");
         }
     }
@@ -738,7 +736,7 @@ Boolean Func_3 (Enumeration Enum_Par_Val)
     }
 } /* Func_3 */
 
-int dhryCreateThreads(uint32_t numThreads, int numIterations, uint32_t *dhryPerSec)
+int dhryCreateThreads(uint32_t numThreads, int numIterations, float *dhryPerSec)
 {
     int i = 0, status = SystemP_SUCCESS;
     uint64_t beginTime, endTime, totalTime;
@@ -819,7 +817,7 @@ int dhryCreateThreads(uint32_t numThreads, int numIterations, uint32_t *dhryPerS
 
         totalTime = endTime - beginTime;
 
-        *dhryPerSec = ( numThreads * numIterations * Mic_secs_Per_Second) /totalTime;
+        *dhryPerSec = ( (float)numThreads * numIterations * Mic_secs_Per_Second) /totalTime;
     }
 
     return status;

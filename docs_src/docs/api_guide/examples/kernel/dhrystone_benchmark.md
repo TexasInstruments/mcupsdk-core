@@ -43,19 +43,19 @@ Shown below is a sample output when the benchmark application is run,
 \code
 [DHRYSTONE BENCHMARKING] Iterations                       : 30000000
 [DHRYSTONE BENCHMARKING] Threads                          : 1
-[DHRYSTONE BENCHMARKING] Dhrystones per second            : 1299
+[DHRYSTONE BENCHMARKING] Dhrystones per second            : 9629845.0
 
 [DHRYSTONE BENCHMARKING] Iterations                       : 30000000
 [DHRYSTONE BENCHMARKING] Threads                          : 2
-[DHRYSTONE BENCHMARKING] Dhrystones per second            : 1183
+[DHRYSTONE BENCHMARKING] Dhrystones per second            : 9629879.0
 
 [DHRYSTONE BENCHMARKING] Iterations                       : 30000000
 [DHRYSTONE BENCHMARKING] Threads                          : 5
-[DHRYSTONE BENCHMARKING] Dhrystones per second            : 281
+[DHRYSTONE BENCHMARKING] Dhrystones per second            : 9629927.0
 
 [DHRYSTONE BENCHMARKING] Iterations                       : 30000000
 [DHRYSTONE BENCHMARKING] Threads                          : 10
-[DHRYSTONE BENCHMARKING] Dhrystones per second            : 50
+[DHRYSTONE BENCHMARKING] Dhrystones per second            : 9629947.0
 
 All tests have passed!!
 \endcode

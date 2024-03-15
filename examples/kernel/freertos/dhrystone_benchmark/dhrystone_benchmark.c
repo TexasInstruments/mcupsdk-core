@@ -47,7 +47,7 @@ void dhrystone_benchmark_main(void *args)
     Drivers_open();
     Board_driversOpen();
 
-    uint32_t dhryPerSec = 0;
+    float dhryPerSec = 0;
     int status = SystemP_SUCCESS;
 
     /* Run Dhrystone demo with 1 thread */
@@ -56,7 +56,7 @@ void dhrystone_benchmark_main(void *args)
     {
         DebugP_log("[DHRYSTONE BENCHMARKING] %-32s : %d\r\n", "Iterations", DHRY_ITERATIONS);
         DebugP_log("[DHRYSTONE BENCHMARKING] %-32s : %d\r\n", "Threads", 1);
-        DebugP_log("[DHRYSTONE BENCHMARKING] %-32s : %d\r\n", "Dhrystones per second", dhryPerSec);
+        DebugP_log("[DHRYSTONE BENCHMARKING] %-32s : %6.1f\r\n", "Dhrystones per second", dhryPerSec);
         DebugP_log("\r\n");
     }
 
@@ -68,7 +68,7 @@ void dhrystone_benchmark_main(void *args)
         {
             DebugP_log("[DHRYSTONE BENCHMARKING] %-32s : %d\r\n", "Iterations", DHRY_ITERATIONS);
             DebugP_log("[DHRYSTONE BENCHMARKING] %-32s : %d\r\n", "Threads", 2);
-            DebugP_log("[DHRYSTONE BENCHMARKING] %-32s : %d\r\n", "Dhrystones per second", dhryPerSec);
+            DebugP_log("[DHRYSTONE BENCHMARKING] %-32s : %6.1f\r\n", "Dhrystones per second", dhryPerSec);
             DebugP_log("\r\n");
         }
     }
@@ -81,7 +81,7 @@ void dhrystone_benchmark_main(void *args)
         {
             DebugP_log("[DHRYSTONE BENCHMARKING] %-32s : %d\r\n", "Iterations", DHRY_ITERATIONS);
             DebugP_log("[DHRYSTONE BENCHMARKING] %-32s : %d\r\n", "Threads", 5);
-            DebugP_log("[DHRYSTONE BENCHMARKING] %-32s : %d\r\n", "Dhrystones per second", dhryPerSec);
+            DebugP_log("[DHRYSTONE BENCHMARKING] %-32s : %6.1f\r\n", "Dhrystones per second", dhryPerSec);
             DebugP_log("\r\n");
         }
     }
@@ -94,7 +94,7 @@ void dhrystone_benchmark_main(void *args)
         {
             DebugP_log("[DHRYSTONE BENCHMARKING] %-32s : %d\r\n", "Iterations", DHRY_ITERATIONS);
             DebugP_log("[DHRYSTONE BENCHMARKING] %-32s : %d\r\n", "Threads", 10);
-            DebugP_log("[DHRYSTONE BENCHMARKING] %-32s : %d\r\n", "Dhrystones per second", dhryPerSec);
+            DebugP_log("[DHRYSTONE BENCHMARKING] %-32s : %6.1f\r\n", "Dhrystones per second", dhryPerSec);
             DebugP_log("\r\n");
         }
     }
