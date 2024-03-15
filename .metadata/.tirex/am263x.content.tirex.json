@@ -3431,6 +3431,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This Example Demonstrates the Configure Signal API usage. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_configure_signal",
+        "location": "../../examples/drivers/epwm/epwm_configure_signal/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_configure_signal",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This Example Demonstrates the Configure Signal API usage. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_configure_signal",
+        "location": "../../examples/drivers/epwm/epwm_configure_signal/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_configure_signal",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "This Example Demonstrates the Chopper Submodule Functionalities of EPWM. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_chopper",
         "location": "../../examples/drivers/epwm/epwm_chopper/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

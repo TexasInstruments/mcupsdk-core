@@ -233,6 +233,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_EDMA_POLLED_TRANSFER
 -# EPWM
    -# \subpage EXAMPLES_DRIVERS_EPWM_HR_DUTY_CYCLE
+   -# \subpage EXAMPLES_DRIVERS_EPWM_CONFIGURE_SIGNAL
    -# \subpage EXAMPLES_DRIVERS_EPWM_TRIP_ZONE
    -# \subpage EXAMPLES_DRIVERS_EPWM_DMA
    -# \subpage EXAMPLES_DRIVERS_EPWM_SYNCHRONIZATION
