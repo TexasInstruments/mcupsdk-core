@@ -35,7 +35,10 @@ const files_r5f = {
         "sdl_ip_tog.c",
         "sdl_tog.c",
         "sdl_soc_tog.c",
-
+        "sdl_ip_vtm.c",
+        "sdl_vtm_pvt_sensor.c",
+        "sdl_vtm.c",
+        "sdl_soc_vtm.c",
     ],
 };
 
@@ -90,6 +93,9 @@ const filedirs = {
         "stog/v0",
         "stog/v0/soc",
         "stog/v0/soc/am263px",
+        "vtm",
+        "vtm/v1",
+        "vtm/v1/soc/am263px",
     ],
 };
 

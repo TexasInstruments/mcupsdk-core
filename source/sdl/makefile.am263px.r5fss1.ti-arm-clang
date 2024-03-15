@@ -59,6 +59,9 @@ FILES_PATH_common = \
     stog/v0 \
     stog/v0/soc \
     stog/v0/soc/am263px \
+    vtm \
+    vtm/v1 \
+    vtm/v1/soc/am263px \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

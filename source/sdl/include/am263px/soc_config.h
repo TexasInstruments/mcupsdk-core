@@ -55,6 +55,7 @@ extern "C"
 #define IP_VERSION_ECC_V1
 #define IP_VERSION_TMU_ROMCHECKSUM_V0
 #define IP_VERSION_TOG_V0
+#define IP_VERSION_VTM_V1
 #ifdef __cplusplus
 }
 #endif
