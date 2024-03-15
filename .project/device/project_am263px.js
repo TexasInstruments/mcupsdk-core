@@ -255,6 +255,7 @@ const example_file_list = [
     "examples/sdl/stog/.project/project.js",
     "examples/sdl/vtm/vtm_mcu/.project/project.js",
     "examples/networking/enet_tx_scatter_gather/.project/project.js",
+    "test/examples/drivers/ospiPhy/.project/project_nortos.js",
     "test/sdl/pbist/sdl_pbist_test/.project/project.js",
     "test/sdl/pbist/ip_pbist_test/.project/project.js",
     "test/sdl/dcc/dcc_mcu/dcc_func_test/.project/project.js",
