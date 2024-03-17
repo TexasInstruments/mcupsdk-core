@@ -31,7 +31,7 @@ const files_r5f = {
         "sdl_mcu_armss_ccmr5.c",
         "sdl_stc_soc.c",
         "sdl_tmu_rom_checksum.c",
-
+        "sdl_r5f_utils.c",
     ],
 };
 
