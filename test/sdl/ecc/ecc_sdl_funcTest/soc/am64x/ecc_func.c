@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2019-2023
+ *   Copyright (c) Texas Instruments Incorporated 2019-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -73,16 +73,21 @@ extern volatile bool esmError;
 SDL_ESM_config ECC_Test_esmInitConfig_MCU =
 {
     .esmErrorConfig = {0u, 3u}, /* Self test error config */
-    .enableBitmap = {0xffffffffu, 0x013fffffu, 0x7fffff7fu, 0xffffffe6u,
+    .enableBitmap = {0xffffe7ffu, 0x013fffffu, 0x7fffff7fu, 0xffffffe6u,
                 },
-     /**< All events enable: except timer and self test  events, and Main ESM output */
-    /* Temporarily disabling vim compare error as well*/
-    .priorityBitmap = {0xffffffffu, 0x013fffffu, 0x7fffff7fu, 0xffffffe6u,
+    /**< All events enable: except timer and self test events */
+    /* Temporarily disabling vim compare error as well */
+    /*
+     * Enable only the Main VTM ECC events. Enabling both MCU and Main doesn't work
+     * well with event routing. And only one is needed to get notification of VTM ECC events.
+     */
+
+    .priorityBitmap = {0xffffe7ffu, 0x013fffffu, 0x7fffff7fu, 0xffffffe6u,
                         },
-    /**< All events high priority: except timer, selftest error events, and Main ESM output */
-    .errorpinBitmap = {0xffffffffu, 0x013fffffu, 0x7fffff7fu, 0xffffffe6u,
+    /**< All events high priority */
+    .errorpinBitmap = {0xffffe7ffu, 0x013fffffu, 0x7fffff7fu, 0xffffffe6u,
                       },
-    /**< All events high priority: except timer, selftest error events, and Main ESM output */
+    /**< All high priority events trigger error pin */
 };
 
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
@@ -122,16 +127,20 @@ SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 SDL_ESM_config ECC_Test_esmInitConfig_MCU =
 {
     .esmErrorConfig = {0u, 3u}, /* Self test error config */
-    .enableBitmap = {0xfffffff8u, 0x013fffffu, 0x7fffff7fu, 0xffffffe6u,
+    .enableBitmap = {0xffffe7f8u, 0x013fffffu, 0x7fffff7fu, 0xffffffe6u,
                 },
-     /**< All events enable: except timer and self test  events, and Main ESM output */
-    /* Temporarily disabling vim compare error as well*/
-    .priorityBitmap = {0xfffffff8u, 0x013fffffu, 0x7fffff7fu, 0xffffffe6u,
+    /**< All events enable: except timer and self test  events, and Main ESM output */
+    /* Temporarily disabling vim compare error as well */
+    /*
+     * Enable only the Main VTM ECC events. Enabling both MCU and Main doesn't work
+     * well with event routing. And only one is needed to get notification of VTM ECC events.
+     */
+    .priorityBitmap = {0xffffe7f8u, 0x013fffffu, 0x7fffff7fu, 0xffffffe6u,
                         },
     /**< All events high priority: except timer, selftest error events, and Main ESM output */
-    .errorpinBitmap = {0xfffffff8u, 0x013fffffu, 0x7fffff7fu, 0xffffffe6u,
+    .errorpinBitmap = {0xffffe7f8u, 0x013fffffu, 0x7fffff7fu, 0xffffffe6u,
                       },
-    /**< All events high priority: except timer, selftest error events, and Main ESM output */
+    /**< All high priority events trigger error pin */
 };
 
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =

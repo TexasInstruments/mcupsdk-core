@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
@@ -13,12 +13,15 @@ const gpio1           = gpio.addInstance();
 const gpio2           = gpio.addInstance();
 const pcie            = scripting.addModule("/drivers/pcie/pcie", {}, false);
 const pcie1           = pcie.addInstance();
+const addr_translate  = scripting.addModule("/kernel/dpl/addr_translate", {}, false);
+const addr_translate1 = addr_translate.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
 const mpu_armv72      = mpu_armv7.addInstance();
 const mpu_armv73      = mpu_armv7.addInstance();
 const mpu_armv74      = mpu_armv7.addInstance();
+const mpu_armv75      = mpu_armv7.addInstance();
 const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
 const default_linker1 = default_linker.addInstance();
 const general         = scripting.addModule("/memory_configurator/general", {}, false);
@@ -53,11 +56,20 @@ gpio2.GPIO.gpioPin.$assign = "SPI0_CS1";
 
 pcie1.$name = "CONFIG_PCIE0";
 
+addr_translate1.$name     = "CONFIG_ADDR_TRANSLATE_REGION0";
+addr_translate1.localAddr = 0x10000000;
+addr_translate1.size      = 12;
+
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
 debug_log.uartLog.UART.$assign     = "USART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -79,6 +91,11 @@ mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 21;
 mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
 mpu_armv74.attributes        = "NonCached";
+
+mpu_armv75.$name      = "CONFIG_MPU_REGION4";
+mpu_armv75.baseAddr   = 0x10000000;
+mpu_armv75.size       = 12;
+mpu_armv75.attributes = "NonCached";
 
 default_linker1.$name = "memory_configurator_default_linker0";
 
