@@ -35,7 +35,6 @@ const cgt_common = {
     cflags: {
         common: [
             "-Wall",
-            "-mthumb",
             "-Werror",
             "-g",
             "-Wno-unused-function",

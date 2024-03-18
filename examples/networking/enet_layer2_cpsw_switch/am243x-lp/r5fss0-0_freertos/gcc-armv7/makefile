@@ -85,7 +85,6 @@ CFLAGS_common := \
 	-mfloat-abi=hard \
 	-mfpu=vfpv3-d16 \
 	-Wall \
-	-mthumb \
 	-Werror \
 	-g \
 	-Wno-unused-function \
