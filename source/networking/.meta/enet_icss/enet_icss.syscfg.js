@@ -27,7 +27,6 @@ const enet_icssg_lwipIf_config = {
 	longDescription: "Configuration of LWIP Interface",
     collapsed:true,
     config: [
-
     ],
 };
 

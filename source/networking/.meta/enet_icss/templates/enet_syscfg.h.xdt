@@ -4,6 +4,7 @@
 %%}
 % let instance = module.$instances[0];
 % let instances = module.$instances;
+% let ipc = system.modules["/drivers/ipc/ipc"];
 %%{
 
 function getMaxMacNum(instances)
@@ -84,6 +85,12 @@ function getTotalTxChCount(instances)
         num += module.getTxChannelCount(instances[i]);
     }
     return num;
+}
+
+function isLinuxEnabled(){
+    
+    let instance = ipc.$static;
+    return instance.enableLinuxIpc;
 }
 
 %%}
@@ -205,3 +212,7 @@ function getTotalTxChCount(instances)
 #define ENET_MEM_LARGE_POOL_PKT_SIZE        ENET_UTILS_ALIGN(`Number(instance.LargePoolPktSize)`U, ENET_UTILS_CACHELINE_SIZE)
 #define ENET_MEM_MEDIUM_POOL_PKT_SIZE       ENET_UTILS_ALIGN(`Number(instance.MediumPoolPktSize)`U, ENET_UTILS_CACHELINE_SIZE)
 #define ENET_MEM_SMALL_POOL_PKT_SIZE        ENET_UTILS_ALIGN(`Number(instance.SmallPoolPktSize)`U, ENET_UTILS_CACHELINE_SIZE)
+
+% if(!(ipc == undefined)){
+#define ENET_IS_LINUX_PRESENT `isLinuxEnabled()`
+% }
