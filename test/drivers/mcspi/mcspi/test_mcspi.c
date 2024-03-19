@@ -1568,42 +1568,46 @@ void test_mcspi_loopback_simultaneous(void *args)
     MCSPI_Handle        mcspiHandle, mcspiHandle1;
     MCSPI_TestParams   *testParams = (MCSPI_TestParams *)args;
     uint16_t           *tempRxPtr16 = NULL, *tempTxPtr16 = NULL;
-    uint32_t           *tempRxPtr32 = NULL, *tempTxPtr32 = NULL, dataWidth1, bufWidthShift;
-    MCSPI_TestParams   testParams1, testParams2;
-    MCSPI_OpenParams   *mcspiOpenParams = &(testParams->mcspiOpenParams);
+    uint32_t           *tempRxPtr32 = NULL, *tempTxPtr32 = NULL;
+    uint32_t            dataWidth1, bufWidthShift, bufWidthShift1;
+    MCSPI_TestParams   testParams1;
+    MCSPI_OpenParams   *mcspiOpenParams     = &(testParams->mcspiOpenParams);
     MCSPI_ChConfig     *mcspiChConfigParams = testParams->mcspiChConfigParams;
-    MCSPI_OpenParams   *mcspiOpenParams1 = &(testParams1.mcspiOpenParams);
-    MCSPI_OpenParams   *mcspiOpenParams2 = &(testParams2.mcspiOpenParams);
-    MCSPI_Config      *config = &gMcspiConfig[CONFIG_MCSPI1];
-    MCSPI_Attrs       *attrParams = (MCSPI_Attrs *)config->attrs;
-    mcspiOpenParams->transferMode = MCSPI_TRANSFER_MODE_BLOCKING;
+    MCSPI_OpenParams   *mcspiOpenParams1    = &(testParams1.mcspiOpenParams);
+    MCSPI_Config       *config1     = &gMcspiConfig[CONFIG_MCSPI1];
+    MCSPI_Attrs        *attrParams1 = (MCSPI_Attrs *)config1->attrs;
+    uint8_t            *tempTxPtr, *tempRxPtr;
+
+    testParams->mcspiChConfigParams = gConfigMcspiChCfg[0];
     testParams1.mcspiChConfigParams = gConfigMcspiChCfg[1];
-    testParams2.mcspiChConfigParams = gConfigMcspiChCfg[2];
-    uint8_t *tempTxPtr, *tempRxPtr;
+    mcspiOpenParams->transferMode   = MCSPI_TRANSFER_MODE_BLOCKING;
 
 #if (CONFIG_MCSPI_NUM_INSTANCES > 2U)
     MCSPI_Transaction  spiTransaction2;
     MCSPI_Handle       mcspiHandle2;
-    MCSPI_Config      *config2 = &gMcspiConfig[CONFIG_MCSPI2];
+    MCSPI_Config      *config2     = &gMcspiConfig[CONFIG_MCSPI2];
     MCSPI_Attrs       *attrParams2 = (MCSPI_Attrs *)config2->attrs;
+    MCSPI_TestParams   testParams2;
+    MCSPI_OpenParams   *mcspiOpenParams2    = &(testParams2.mcspiOpenParams);
     attrParams2->baseAddr           = MCSPI4_BASE_ADDRESS;
     attrParams2->intrNum            = MCSPI4_INT_NUM;
-    attrParams2->operMode = MCSPI_OPER_MODE_POLLED;
+    attrParams2->operMode           = MCSPI_OPER_MODE_POLLED;
+    testParams2.mcspiChConfigParams = gConfigMcspiChCfg[2];
+    test_mcspi_set_params(&testParams2, 1009);
+    mcspiOpenParams2->transferMode = MCSPI_TRANSFER_MODE_BLOCKING;
 #endif
     /* Instance 1 Init params */
     test_mcspi_set_params(&testParams1, 1009);
-    test_mcspi_set_params(&testParams2, 1009);
-    mcspiOpenParams2->transferMode = MCSPI_TRANSFER_MODE_BLOCKING;
 
 #if (CONFIG_MCSPI_NUM_INSTANCES > 2U)
-    attrParams->baseAddr           = MCSPI1_BASE_ADDRESS;
-    attrParams->intrNum            = MCSPI1_INT_NUM;
+    attrParams1->baseAddr           = MCSPI1_BASE_ADDRESS;
+    attrParams1->intrNum            = MCSPI1_INT_NUM;
 #else /* LP Case */
-    attrParams->baseAddr           = MCSPI3_BASE_ADDRESS;
-    attrParams->intrNum            = MCSPI3_INT_NUM;
+    attrParams1->baseAddr           = MCSPI3_BASE_ADDRESS;
+    attrParams1->intrNum            = MCSPI3_INT_NUM;
 #endif
-    attrParams->operMode                                = MCSPI_OPER_MODE_INTERRUPT;
-    attrParams->intrPriority                            = 4U;
+    attrParams1->operMode                                = MCSPI_OPER_MODE_INTERRUPT;
+    attrParams1->intrPriority                            = 4U;
     testParams1.mcspiChConfigParams->bitRate            = 12500000;
     testParams1.mcspiChConfigParams->csPolarity         = MCSPI_CS_POL_HIGH;
     testParams1.dataSize                                = 16;
@@ -1615,6 +1619,7 @@ void test_mcspi_loopback_simultaneous(void *args)
     memset(&gMcspiTxBuffer1[0U], 0, APP_MCSPI_MSGSIZE * sizeof(gMcspiTxBuffer1[0U]));
     memset(&gMcspiRxBuffer1[0U], 0, APP_MCSPI_MSGSIZE * sizeof(gMcspiRxBuffer1[0U]));
 
+    MCSPI_close(gMcspiHandle[CONFIG_MCSPI0]);
     MCSPI_close(gMcspiHandle[CONFIG_MCSPI1]);
 
 #if (CONFIG_MCSPI_NUM_INSTANCES > 2U)
@@ -1622,7 +1627,6 @@ void test_mcspi_loopback_simultaneous(void *args)
     memset(&gMcspiTxBuffer2[0U], 0, APP_MCSPI_MSGSIZE * sizeof(gMcspiTxBuffer2[0U]));
     memset(&gMcspiRxBuffer2[0U], 0, APP_MCSPI_MSGSIZE * sizeof(gMcspiRxBuffer2[0U]));
 
-    MCSPI_close(gMcspiHandle[CONFIG_MCSPI0]);
     MCSPI_close(gMcspiHandle[CONFIG_MCSPI2]);
 #endif
     mcspiHandle = MCSPI_open(CONFIG_MCSPI0, mcspiOpenParams);
@@ -1664,7 +1668,7 @@ void test_mcspi_loopback_simultaneous(void *args)
     }
 
     dataWidth1 = testParams1.dataSize;
-    bufWidthShift = MCSPI_getBufWidthShift(dataWidth1);
+    bufWidthShift1 = MCSPI_getBufWidthShift(dataWidth1);
     if (dataWidth1 <= 16U)
     {
         /* Init TX buffer with known data and memset RX buffer */
@@ -1673,14 +1677,13 @@ void test_mcspi_loopback_simultaneous(void *args)
     }
 
     fifoBitMask = 0x0U;
-    for (dataWidthIdx = 0U;
-         dataWidthIdx < dataWidth1; dataWidthIdx++)
+    for (dataWidthIdx = 0U; dataWidthIdx < dataWidth1; dataWidthIdx++)
     {
         fifoBitMask |= (1U << dataWidthIdx);
     }
 
     /* Memfill buffers */
-    for (i = 0U; i < (APP_MCSPI_MSGSIZE * (sizeof(gMcspiTxBuffer1[0U]) / (1 << bufWidthShift))); i++)
+    for (i = 0U; i < (APP_MCSPI_MSGSIZE * (sizeof(gMcspiTxBuffer1[0U]) / (1 << bufWidthShift1))); i++)
     {
         tempTxData = 0xBEDEEFAD;
         tempTxData &= (fifoBitMask);
@@ -1692,7 +1695,7 @@ void test_mcspi_loopback_simultaneous(void *args)
     spiTransaction1.channel  = testParams1.mcspiChConfigParams->chNum;
     spiTransaction1.dataSize  = testParams1.dataSize;
     spiTransaction1.csDisable = TRUE;
-    spiTransaction1.count    = (APP_MCSPI_MSGSIZE * (sizeof(gMcspiTxBuffer1[0U]) / (1 << bufWidthShift)));
+    spiTransaction1.count    = (APP_MCSPI_MSGSIZE * (sizeof(gMcspiTxBuffer1[0U]) / (1 << bufWidthShift1)));
     spiTransaction1.txBuf    = (void *)gMcspiTxBuffer1;
     spiTransaction1.rxBuf    = (void *)gMcspiRxBuffer1;
     spiTransaction1.args     = NULL;
@@ -1700,9 +1703,9 @@ void test_mcspi_loopback_simultaneous(void *args)
     TEST_APP_MCSPI_ASSERT_ON_FAILURE(transferOK, spiTransaction1);
 
     /* Initiate transfer */
-    spiTransaction.channel  = mcspiChConfigParams->chNum;
-    spiTransaction.count    = testParams->transferLength;
-    spiTransaction.dataSize  = dataWidth;
+    spiTransaction.channel   = mcspiChConfigParams->chNum;
+    spiTransaction.count     = (APP_MCSPI_MSGSIZE * (sizeof(gMcspiTxBuffer[0U]) / (1 << bufWidthShift)));
+    spiTransaction.dataSize  = testParams->dataSize;
     spiTransaction.csDisable = TRUE;
     spiTransaction.txBuf    = (void *)gMcspiTxBuffer;
     spiTransaction.rxBuf    = (void *)gMcspiRxBuffer;
@@ -1722,12 +1725,6 @@ void test_mcspi_loopback_simultaneous(void *args)
     transferOK = MCSPI_transfer(mcspiHandle2, &spiTransaction2);
     TEST_APP_MCSPI_ASSERT_ON_FAILURE(transferOK, spiTransaction2);
 
-    if(mcspiOpenParams1->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
-    {
-        /* Wait for transfer completion */
-        SemaphoreP_pend(&gMcspiTransferDoneSem, SystemP_WAIT_FOREVER);
-    }
-
     /* Compare data */
     tempTxPtr = (uint8_t *) &gMcspiTxBuffer2[0U];
     tempRxPtr = (uint8_t *) &gMcspiRxBuffer2[0U];
@@ -1742,17 +1739,23 @@ void test_mcspi_loopback_simultaneous(void *args)
     }
 #endif
 
+    if(mcspiOpenParams1->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)
+    {
+        /* Wait for transfer completion */
+        SemaphoreP_pend(&gMcspiTransferDoneSem, SystemP_WAIT_FOREVER);
+    }
+
     /* Compare data */
     tempTxPtr = (uint8_t *) &gMcspiTxBuffer[0U];
     tempRxPtr = (uint8_t *) &gMcspiRxBuffer[0U];
     for(i = 0U; i < (APP_MCSPI_MSGSIZE * 4); i++)
     {
-        if(*tempTxPtr++ != *tempRxPtr++)
-        {
-            status = SystemP_FAILURE;   /* Data mismatch */
-            DebugP_log("Data Mismatch at offset %d\r\n", i);
-            break;
-        }
+         if(*tempTxPtr++ != *tempRxPtr++)
+         {
+             status = SystemP_FAILURE;   /* Data mismatch */
+             DebugP_log("Data Mismatch at offset %d\r\n", i);
+             break;
+         }
     }
 
     /* Compare data */
@@ -1760,12 +1763,12 @@ void test_mcspi_loopback_simultaneous(void *args)
     tempRxPtr = (uint8_t *) &gMcspiRxBuffer1[0U];
     for(i = 0U; i < (APP_MCSPI_MSGSIZE * 4); i++)
     {
-        if(*tempTxPtr++ != *tempRxPtr++)
-        {
-            status = SystemP_FAILURE;   /* Data mismatch */
-            DebugP_log("Data Mismatch at offset %d\r\n", i);
-            break;
-        }
+       if(*tempTxPtr++ != *tempRxPtr++)
+       {
+           status = SystemP_FAILURE;   /* Data mismatch */
+           DebugP_log("Data Mismatch at offset %d\r\n", i);
+           break;
+       }
     }
 
     if(mcspiOpenParams1->transferMode == MCSPI_TRANSFER_MODE_CALLBACK)

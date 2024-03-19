@@ -537,11 +537,11 @@ int32_t MCSPI_lld_writeIntr(MCSPILLD_Handle hMcspi, void *txBuf, uint32_t count,
             hMcspi->state = MCSPI_STATE_BUSY;
             /* Initialize transaction with default parameters */
             MCSPI_lld_Transaction_init(transaction);
-
             if(extendedParams != NULL)
             {
-                transaction->count   = count;
-                transaction->timeout = timeout;
+                transaction->channel   = extendedParams->channel;
+                transaction->dataSize  = extendedParams->dataSize;
+                transaction->csDisable = extendedParams->csDisable;
             }
 
             baseAddr             = hMcspi->baseAddr;
