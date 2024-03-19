@@ -407,6 +407,7 @@ let ADC_FORCE = [
 	{ name: "ADC_FORCE_SOC14", displayName: "SW trigger ADC SOC 14" },
 	{ name: "ADC_FORCE_SOC15", displayName: "SW trigger ADC SOC 15" },
 ]
+
 // let ADC_REPEATER = [
 // 	{ name: "ADC_REPEATER_MODULE_BUSY", displayName: "REPEATER MODULE BUSY" },
 // 	{ name: "ADC_REPEATER_PHASE_OVERFLOW", displayName: "REPEATER PHASE OVERFLOW" },
@@ -427,6 +428,12 @@ let ADC_FORCE = [
 // let ADC_SAFECHECK_STATUS_MASK = [
 // 	{ name: "ADC_SAFECHECK_STATUS_MASK", displayName: "SAFECHECK STATUS MASK" },
 // ]
+
+let ADC_SafetyAggr_Instances = [
+    {name:  "ADC_SAFETY_CHECKER_AGGR1",
+     displayName: "ADC Safety Checker Aggregator 1"},
+]
+
 let ADC_Sysclk_Mhz = 200
 function getInterfaceName(inst) {
 
@@ -441,9 +448,6 @@ function getInterfaceNameAdcSC(inst) {
     return "ADC_SC";
 }
 
-function getInterfaceNameAdcSCTILE(inst) {
-    return "ADC_SC_TILE";
-}
 
 const staticConfig = [
     {
@@ -549,7 +553,7 @@ const staticConfig = [
         instanceNumber : "11",
     },
     {
-        name: "ADC_SC_TILE_1",
+        name: "ADC_SAFETY_CHECKER_AGGR1",
         baseAddr: "CSL_CONTROLSS_ADCSAFE_EVENT_AGG_U_BASE",
         instanceNumber : "1",
     },
@@ -594,9 +598,9 @@ exports = {
 	ADC_EVT: ADC_EVT,
 	ADC_FORCE: ADC_FORCE,
     ADC_Sysclk_Mhz: ADC_Sysclk_Mhz,
+    ADC_SafetyAggr_Instances,
     getInterfaceName,
     getInterfaceNameAdcR,
     getStaticConfigArr,
     getInterfaceNameAdcSC,
-    getInterfaceNameAdcSCTILE,
 }
