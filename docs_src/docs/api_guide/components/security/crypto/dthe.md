@@ -63,6 +63,7 @@ The IP supports the following features:
         - <b>AES-CBC</b>(128/192/256)(<b>C</b>ipher <b>B</b>lock <b>C</b>haining)
         - <b>AES-ECB</b>(128/192/256)(<b>E</b>lectronic <b>C</b>ode <b>B</b>ook)
         - <b>AES-CTR</b>(128/192/256)(<b>C</b>oun<b>T</b>e<b>R</b>)
+        - <b>AES-CFB</b>(128/192/256)(<b>C</b>ipher <b>F</b>eed<b>B</b>ack)
         - <b>AES-CMAC</b>(128/256)(<b>C</b>ipher-based <b>M</b>essage <b>A</b>uthentication <b>C</b>ode)
 \endcond
 ### Block diagram

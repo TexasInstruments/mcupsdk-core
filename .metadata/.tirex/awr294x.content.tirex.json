@@ -4538,6 +4538,40 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Crypto Aes Cfb Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "crypto_aes_cfb",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cfb/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "security",
+            "crypto",
+            "dthe_aes",
+            "crypto_aes_cfb",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Dthe Sha 256 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "dthe_sha_256",
         "location": "../../examples/security/crypto/dthe_sha/crypto_sha_256/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

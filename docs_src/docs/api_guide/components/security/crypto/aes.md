@@ -41,6 +41,14 @@ creating the output result. The IV is built out of two components, one fixed par
 a counter part. The counter part is incremented with each block. The counter width is
 variable per context and can be 16, 32, 64, 96 or 128-bit wide. Note that in this mode,
 encryption and decryption use the same operation.
+#### AES-CFB
+\imageStyle{aes_cfb_mode.png,width:80%}
+\image html aes_cfb_mode.png "AES CFB mode"
+- Above figure illustrates the full block (128-bit) Cipher Feedback (CFB) mode of operation
+for both encryption and decryption. The input for the crypto core is the IV; the result is
+XOR-ed with the data. The result is fed back via the IV register, as the next input for the
+crypto core. The decrypt operation is reversed, but the crypto core is still performing an encryption.
+
 #### AES-CMAC
 \imageStyle{aes_cmac_mode.png,width:80%}
 \image html aes_cmac_mode.png "AES CMAC mode"
