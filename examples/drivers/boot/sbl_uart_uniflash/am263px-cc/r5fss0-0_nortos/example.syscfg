@@ -222,5 +222,5 @@ flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "OSPI0_D3";
 flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "OSPI0_D2";
 flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "OSPI0_D1";
 flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "OSPI0_D0";
-uart1.UART.RXD.$suggestSolution                    = "UART0_RXD";
-uart1.UART.TXD.$suggestSolution                    = "UART0_TXD";
+uart1.UART.RXD.$assign                    = "UART0_RXD";
+uart1.UART.TXD.$assign                    = "UART0_TXD";
