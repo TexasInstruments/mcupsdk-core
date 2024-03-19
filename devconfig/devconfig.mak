@@ -9,6 +9,7 @@ KD_SALT=$(SIGNING_TOOL_PATH)/kd_salt.txt
 
 # Path to the keys
 ROM_DEGENERATE_KEY:=$(SIGNING_TOOL_PATH)/rom_degenerateKey.pem
+APP_DEGENERATE_KEY:=$(SIGNING_TOOL_PATH)/app_degenerateKey.pem
 ifeq ($(DEVICE),am263x)
     CUST_MPK=$(SIGNING_TOOL_PATH)/mcu_custMpk.pem
 	CUST_MEK=$(SIGNING_TOOL_PATH)/mcu_custMek.key
@@ -52,7 +53,7 @@ ifeq ($(DEVICE_TYPE),HS)
 	APP_ENCRYPTION_KEY=$(CUST_MEK)
 	APP_SIGNING_HASH_ALGO=sha512
 else
-	APP_SIGNING_KEY=$(ROM_DEGENERATE_KEY)
+	APP_SIGNING_KEY=$(APP_DEGENERATE_KEY)
 endif
 
 # Key id in keyring for application authentication and decryption
