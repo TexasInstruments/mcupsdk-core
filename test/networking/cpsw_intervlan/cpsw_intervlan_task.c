@@ -244,6 +244,8 @@ int32_t EnetApp_cpswInterVlanTest(void)
     EnetApp_releaseHandleInfo(gEnetCpswInterVlan.enetType, gEnetCpswInterVlan.instId);
     gEnetCpswInterVlan.hEnet = NULL;
 
+    EnetApp_driverDeInit();
+
     /* Disable peripheral clocks */
     EnetAppUtils_disableClocks(gEnetCpswInterVlan.enetType, gEnetCpswInterVlan.instId);
 

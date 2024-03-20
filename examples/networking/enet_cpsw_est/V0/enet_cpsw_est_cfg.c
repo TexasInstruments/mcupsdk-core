@@ -272,6 +272,8 @@ void EnetApp_close(void)
     EnetApp_releaseHandleInfo(gEnetApp.enetType, gEnetApp.instId);
     gEnetApp.hEnet = NULL;
 
+    EnetApp_driverDeInit();
+
     /* Do peripheral dependent deinitalization */
     EnetAppUtils_disableClocks(gEnetApp.enetType, gEnetApp.instId);
 }

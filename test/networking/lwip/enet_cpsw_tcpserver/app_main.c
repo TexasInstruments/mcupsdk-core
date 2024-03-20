@@ -198,6 +198,7 @@ int appMain(void *args)
     }
 
     App_shutdownNetworkStack();
+    EnetApp_driverDeInit();
     return 0;
 }
 

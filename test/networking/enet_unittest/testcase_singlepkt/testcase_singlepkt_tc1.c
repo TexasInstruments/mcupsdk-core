@@ -224,6 +224,8 @@ int32_t TestApp_SinglePktTestcase(void)
     EnetApp_releaseHandleInfo(gTestApp.enetType, gTestApp.instId);
     gTestApp.hEnet = NULL;
 
+    EnetApp_driverDeInit();
+
     /* Disable peripheral clocks */
     EnetAppUtils_disableClocks(gTestApp.enetType, gTestApp.instId);
 

@@ -162,7 +162,6 @@ static uint32_t EnetApp_getEnetIdx(Enet_Type enetType, uint32_t instId)
 
 static Enet_Handle EnetApp_doIcssgOpen(Enet_Type enetType, uint32_t instId, const Icssg_Cfg *icssgCfg)
 {
-    int32_t status = ENET_SOK;
     void *perCfg = NULL_PTR;
     uint32_t cfgSize;
     Enet_Handle hEnet;
@@ -178,9 +177,6 @@ static Enet_Handle EnetApp_doIcssgOpen(Enet_Type enetType, uint32_t instId, cons
         EnetAppUtils_print("Enet_open failed\r\n");
         EnetAppUtils_assert(hEnet != NULL_PTR);
     }
-
-    status = EnetMem_init();
-    EnetAppUtils_assert(ENET_SOK == status);
 
     return hEnet;
 }
@@ -329,6 +325,7 @@ void EnetApp_driverInit()
 /* keep this implementation that is generic across enetType and instId.
  * Initialization should be done only once.
  */
+    int32_t status = ENET_SOK;
     EnetOsal_Cfg osalPrms;
     EnetUtils_Cfg utilsPrms;
 
@@ -336,6 +333,9 @@ void EnetApp_driverInit()
     Enet_initOsalCfg(&osalPrms);
     Enet_initUtilsCfg(&utilsPrms);
     Enet_init(&osalPrms, &utilsPrms);
+
+    status = EnetMem_init();
+    EnetAppUtils_assert(ENET_SOK == status);
 }
 
 void EnetApp_driverDeInit()

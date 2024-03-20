@@ -270,6 +270,8 @@ int32_t EnetTxSG_txsgTest(void)
     EnetApp_releaseHandleInfo(gEnetTxSG.enetType, gEnetTxSG.instId);
     gEnetTxSG.hEnet = NULL;
 
+    EnetApp_driverDeInit();
+
     /* Disable peripheral clocks */
     EnetAppUtils_disableClocks(gEnetTxSG.enetType, gEnetTxSG.instId);
 

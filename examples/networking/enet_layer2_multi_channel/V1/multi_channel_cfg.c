@@ -418,6 +418,8 @@ void EnetApp_close(EnetApp_PerCtxt *perCtxts,
         perCtxt->hEnet = NULL;
     }
 
+    EnetApp_driverDeInit();
+
     /* Do peripheral dependent initalization */
     EnetAppUtils_print("\nDeinit all peripheral clocks\r\n");
     EnetAppUtils_print("----------------------------------------------\r\n");

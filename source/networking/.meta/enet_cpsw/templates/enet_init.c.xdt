@@ -134,7 +134,6 @@ void EnetApp_phyStateHandler(void * appHandle);
 
 static Enet_Handle EnetApp_doCpswOpen(Enet_Type enetType, uint32_t instId, const Cpsw_Cfg *cpswCfg)
 {
-    int32_t status = ENET_SOK;
     void *perCfg = NULL_PTR;
     uint32_t cfgSize;
     Enet_Handle hEnet;
@@ -150,9 +149,6 @@ static Enet_Handle EnetApp_doCpswOpen(Enet_Type enetType, uint32_t instId, const
         EnetAppUtils_print("Enet_open failed\r\n");
         EnetAppUtils_assert(hEnet != NULL_PTR);
     }
-
-    status = EnetMem_init();
-    EnetAppUtils_assert(ENET_SOK == status);
 
     return hEnet;
 }
@@ -245,6 +241,7 @@ void EnetApp_driverInit()
 /* keep this implementation that is generic across enetType and instId.
  * Initialization should be done only once.
  */
+    int32_t status = ENET_SOK;
     EnetOsal_Cfg osalPrms;
     EnetUtils_Cfg utilsPrms;
 
@@ -252,6 +249,19 @@ void EnetApp_driverInit()
     Enet_initOsalCfg(&osalPrms);
     Enet_initUtilsCfg(&utilsPrms);
     Enet_init(&osalPrms, &utilsPrms);
+
+    status = EnetMem_init();
+    EnetAppUtils_assert(ENET_SOK == status);
+}
+
+void EnetApp_driverDeInit()
+{
+/* keep this implementation that is generic across enetType and instId.
+ * Denitialization should be done only once.
+ */
+
+    EnetMem_deInit();
+    Enet_deinit();
 }
 
 int32_t EnetApp_driverOpen(Enet_Type enetType, uint32_t instId)
@@ -592,10 +602,6 @@ void EnetApp_driverClose(Enet_Type enetType, uint32_t instId)
     }
 
     Enet_close(hEnet);
-
-    EnetMem_deInit();
-
-    Enet_deinit();
 }
 
 % }

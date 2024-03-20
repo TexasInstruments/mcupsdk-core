@@ -813,6 +813,7 @@ static void EnetMp_close(EnetMp_PerCtxt *perCtxts,
         EnetApp_releaseHandleInfo(perCtxt->enetType, perCtxt->instId);
         perCtxt->handleInfo.hEnet = NULL;
     }
+
     EnetApp_driverDeInit();
 
     /* Do peripheral dependent initalization */

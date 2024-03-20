@@ -243,6 +243,8 @@ int32_t EnetApp_loopbackTest(void)
     EnetApp_releaseHandleInfo(gEnetLpbk.enetType, gEnetLpbk.instId);
     gEnetLpbk.hEnet = NULL;
 
+    EnetApp_driverDeInit();
+
     /* Disable peripheral clocks */
     EnetAppUtils_disableClocks(gEnetLpbk.enetType, gEnetLpbk.instId);
 

@@ -35,6 +35,12 @@
 void EnetApp_driverInit();
 
 /*!
+ * \brief  Denitialize Enet Driver from Application.
+ *
+ */
+void EnetApp_driverDeInit();
+
+/*!
  * \brief  Opens Enet Driver from Application.
  *
  * \param enetType  Enet Peripheral type

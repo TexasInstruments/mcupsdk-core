@@ -190,6 +190,7 @@ int appMain(void *args)
     }
 
     App_shutdownNetworkStack();
+    EnetApp_driverDeInit();
     EventP_destruct(&hEvent);
     return 0;
 }

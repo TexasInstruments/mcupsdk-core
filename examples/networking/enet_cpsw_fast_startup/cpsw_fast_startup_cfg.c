@@ -173,6 +173,8 @@ void EnetApp_close(void)
     EnetApp_releaseHandleInfo(gEnetApp.enetType, gEnetApp.instId);
     gEnetApp.hEnet = NULL;
 
+    EnetApp_driverDeInit();
+
     /* Disable peripheral Clocks */
     EnetAppUtils_disableClocks(gEnetApp.enetType, gEnetApp.instId);
 
