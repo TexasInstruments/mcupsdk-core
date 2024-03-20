@@ -455,7 +455,7 @@ BUILD_COMBO_unity = unity_r5f.ti-arm-clang unity_m4f.ti-arm-clang
 BUILD_COMBO_doxy_samples = doxy_samples_r5f.ti-arm-clang
 
 # Various GCC Component Targets
-BUILD_COMBO_GCC_unity =
+BUILD_COMBO_GCC_unity = unity_r5f.gcc-armv7
 BUILD_COMBO_GCC_doxy_samples =
 
 # Combine all Components
@@ -501,7 +501,7 @@ BUILD_COMBO_CLEAN_unity = unity_r5f.ti-arm-clang_clean unity_m4f.ti-arm-clang_cl
 BUILD_COMBO_CLEAN_doxy_samples = doxy_samples_r5f.ti-arm-clang_clean
 
 # Various GCC Component Clean Targets
-BUILD_COMBO_CLEAN_GCC_unity =
+BUILD_COMBO_CLEAN_GCC_unity = unity_r5f.gcc-armv7_clean
 BUILD_COMBO_CLEAN_GCC_doxy_samples =
 
 # Combine all Components Clean
