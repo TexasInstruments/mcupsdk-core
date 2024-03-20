@@ -23,6 +23,7 @@ SDK features and tools.
 - \subpage SECURE_BOOT
 \cond SOC_AM64X
 - \subpage SMP_FREERTOS_GUIDE
+- \subpage GRACEFUL_REMOTECORE_SHUTDOWN
 \endcond
 - \subpage MCU_RESET_ISOLATION
 -\subpage ICSSG0_USAGE_GUIDE
