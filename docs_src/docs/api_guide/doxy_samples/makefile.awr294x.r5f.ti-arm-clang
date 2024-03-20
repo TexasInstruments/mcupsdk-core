@@ -37,6 +37,8 @@ FILES_common := \
     MpuP_arm_v7_sample.c \
     Mibspi_sample.c \
     Pmu_sample.c \
+    Qspi_sample.c \
+    Qspi_lld_sample.c \
     QueueP_sample.c \
     SemaphoreP_sample.c \
     TaskP_sample.c \

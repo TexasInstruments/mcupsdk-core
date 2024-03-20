@@ -2086,6 +2086,270 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A QSPI Flash diag interrupt example. This example demonstrates diag using QSPI. CPU is R5FSS0-0 running NORTOS.",
+        "name": "qspi_flash_interrupt",
+        "location": "../../examples/drivers/qspi/qspi_flash_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "qspi",
+            "qspi_flash_interrupt",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A QSPI Flash diag interrupt example. This example demonstrates diag using QSPI. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "qspi_flash_interrupt",
+        "location": "../../examples/drivers/qspi/qspi_flash_interrupt/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "qspi",
+            "qspi_flash_interrupt",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A QSPI Flash diag dma lld example. This example demonstrates diag using QSPI. CPU is R5FSS0-0 running NORTOS.",
+        "name": "qspi_flash_dma_lld",
+        "location": "../../examples/drivers/qspi/qspi_flash_dma_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "qspi",
+            "qspi_flash_dma_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A QSPI Flash diag dma lld example. This example demonstrates diag using QSPI. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "qspi_flash_dma_lld",
+        "location": "../../examples/drivers/qspi/qspi_flash_dma_lld/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "qspi",
+            "qspi_flash_dma_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A QSPI Flash diag lld example. This example demonstrates diag using QSPI. CPU is R5FSS0-0 running NORTOS.",
+        "name": "qspi_flash_diag_lld",
+        "location": "../../examples/drivers/qspi/qspi_flash_diag_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "qspi",
+            "qspi_flash_diag_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A QSPI Flash diag lld example. This example demonstrates diag using QSPI. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "qspi_flash_diag_lld",
+        "location": "../../examples/drivers/qspi/qspi_flash_diag_lld/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "qspi",
+            "qspi_flash_diag_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A QSPI Flash diag interrupt lld example. This example demonstrates diag using QSPI. CPU is R5FSS0-0 running NORTOS.",
+        "name": "qspi_flash_interrupt_lld",
+        "location": "../../examples/drivers/qspi/qspi_flash_interrupt_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "qspi",
+            "qspi_flash_interrupt_lld",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A QSPI Flash diag interrupt lld example. This example demonstrates diag using QSPI. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "qspi_flash_interrupt_lld",
+        "location": "../../examples/drivers/qspi/qspi_flash_interrupt_lld/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AWR294X_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "qspi",
+            "qspi_flash_interrupt_lld",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An example to demonstrate LED blink using RTI. CPU is R5FSS0-0 running NORTOS.",
         "name": "rti_led_blink",
         "location": "../../examples/drivers/rti/rti_led_blink/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

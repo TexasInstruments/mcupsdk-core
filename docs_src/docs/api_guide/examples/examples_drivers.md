@@ -172,6 +172,10 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_DIAG
    -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_TRANSFER
    -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_DMA_TRANSFER
+   -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_INTERRUPT
+   -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_DIAG_LLD
+   -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_DMA_LLD
+   -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_INTERRUPT_LLD
 -# RTI
    -# \subpage EXAMPLES_DRIVERS_RTI_LED_BLINK
 -# UART
@@ -311,6 +315,10 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_DIAG
    -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_TRANSFER
    -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_DMA_TRANSFER
+   -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_INTERRUPT
+   -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_DIAG_LLD
+   -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_DMA_LLD
+   -# \subpage EXAMPLES_DRIVERS_QSPI_FLASH_INTERRUPT_LLD
 \endcond
 \cond SOC_AM263PX
 -# OSPI
