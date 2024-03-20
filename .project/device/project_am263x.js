@@ -152,6 +152,7 @@ const example_file_list = [
     "examples/drivers/uart/uart_echo_low_latency_interrupt/.project/project.js",
     "examples/drivers/uart/uart_echo_low_latency_polling/.project/project.js",
     "examples/drivers/uart/uart_echo_polling_lld/.project/project.js",
+    "examples/drivers/uart/uart_hld_lld_external_loopback/.project/project.js",
     "examples/drivers/watchdog/watchdog_reset/.project/project.js",
     "examples/drivers/watchdog/watchdog_interrupt/.project/project.js",
     "examples/drivers/mcspi/mcspi_loopback_turbo_mode/.project/project.js",
