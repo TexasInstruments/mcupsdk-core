@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -237,12 +237,10 @@ void ClockP_usleep(uint32_t usec)
         ticksToSleep = usec / gClockCtrl.usecPerTick;
         ClockP_sleepTicks(ticksToSleep);
     }
-    else
-    {
+
+    curTime = ClockP_getTimeUsec();
+    while (curTime < endTime) {
         curTime = ClockP_getTimeUsec();
-        while (curTime < endTime) {
-            curTime = ClockP_getTimeUsec();
-        }
     }
 }
 
