@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -71,8 +71,8 @@ NorSpi_SfdpGenericDefines gNorSpiDevDefines;
 void qspi_flash_diag_test_fill_buffers(void);
 int32_t qspi_flash_diag_test_compare_buffers(void);
 int32_t qspi_flash_diag_print_sfdp(QSPI_Handle handle);
-void qspi_flash_diag_print_defines(NorSpi_SfdpGenericDefines *norSpiDefines);
 void qspi_flash_diag_print_defines_json(NorSpi_SfdpGenericDefines *norSpiDefines);
+void qspi_flash_diag(void *args);
 
 void qspi_flash_diag(void *args)
 {
@@ -83,7 +83,7 @@ void qspi_flash_diag(void *args)
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
-    Board_driversOpen();
+    (void) Board_driversOpen();
 
     DebugP_log("[QSPI Flash Diagnostic Test] Starting ...\r\n");
 
@@ -91,9 +91,9 @@ void qspi_flash_diag(void *args)
     qspi_flash_diag_test_fill_buffers();
 
     /* Zero init the dev defines struct */
-    memset(&gNorSpiDevDefines, 0, sizeof(gNorSpiDevDefines));
+    (void) memset(&gNorSpiDevDefines, 0, sizeof(gNorSpiDevDefines));
 
-    QSPI_norFlashInit(qspiHandle);
+    (void) QSPI_norFlashInit(qspiHandle);
 
     /* Read ID */
     status = QSPI_norFlashReadId(qspiHandle, &manfId, &deviceId);
@@ -118,13 +118,12 @@ void qspi_flash_diag(void *args)
     {
         qspi_flash_diag_test_fill_buffers();
         DebugP_log("[QSPI Flash Diagnostic Test] Executing Flash Erase on first block...\r\n");
-        QSPI_norFlashErase(qspiHandle, offset);
+        (void) QSPI_norFlashErase(qspiHandle, offset);
         DebugP_log("[QSPI Flash Diagnostic Test] Done !!!\r\n");
         DebugP_log("[QSPI Flash Diagnostic Test] Performing Write-Read Test...\r\n");
-        QSPI_norFlashWrite(qspiHandle, offset, gQspiTxBuf, APP_QSPI_DATA_SIZE);
-        QSPI_norFlashRead(qspiHandle, offset, gQspiRxBuf, APP_QSPI_DATA_SIZE);
-
-        status |= qspi_flash_diag_test_compare_buffers();
+        (void) QSPI_norFlashWrite(qspiHandle, offset, gQspiTxBuf, APP_QSPI_DATA_SIZE);
+        (void) QSPI_norFlashRead(qspiHandle, offset, gQspiRxBuf, APP_QSPI_DATA_SIZE);
+        status += qspi_flash_diag_test_compare_buffers();
 
         if(SystemP_SUCCESS == status)
         {
@@ -311,16 +310,11 @@ int32_t qspi_flash_diag_print_sfdp(QSPI_Handle handle)
         /* Print the final config */
         if(status == SystemP_SUCCESS)
         {
-            qspi_flash_diag_print_defines(&gNorSpiDevDefines);
             qspi_flash_diag_print_defines_json(&gNorSpiDevDefines);
         }
     }
 
     return status;
-}
-
-void qspi_flash_diag_print_defines(NorSpi_SfdpGenericDefines *norSpiDefines)
-{
 }
 
 void qspi_flash_diag_print_defines_json(NorSpi_SfdpGenericDefines *norSpiDefines)

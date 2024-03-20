@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
@@ -119,9 +119,8 @@ region1.memory_region[3].auto               = false;
 region1.memory_region[3].manualStartAddress = 0x70002000;
 region1.memory_region[3].size               = 0x100;
 region1.memory_region[4].$name              = "MSRAM_0";
-region1.memory_region[4].auto               = false;
 region1.memory_region[4].manualStartAddress = 0x70002100;
-region1.memory_region[4].size               = 0x25700;
+region1.memory_region[4].size               = 0x2E500;
 region1.memory_region[5].$name              = "MSRAM_HSMRT";
 region1.memory_region[5].auto               = false;
 region1.memory_region[5].manualStartAddress = 0x70027800;

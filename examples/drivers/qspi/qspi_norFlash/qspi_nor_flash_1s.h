@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -94,6 +94,20 @@ int32_t QSPI_norFlashReadId(QSPI_Handle handle, uint32_t *manufacturerId, uint32
 int32_t QSPI_norFlashWrite(QSPI_Handle handle, uint32_t offset, uint8_t *buf, uint32_t len);
 
 /**
+ *  \brief  This function writes data to the flash at a specified offset in interrupt mode.
+ *
+ *  \pre    QSPI controller has been opened using #QSPI_open()
+ *
+ *  \param  handle    A #QSPI_Handle returned from a #QSPI_open()
+ *  \param  offset    Offset at which the data is to be written
+ *  \param  buf       Buffer which has the data to be written to the flash
+ *  \param  len       Number of bytes to be written to the flash
+ *
+ *  \return #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
+ */
+int32_t QSPI_norFlashWriteIntr(QSPI_Handle handle, uint32_t offset, uint8_t *buf, uint32_t len);
+
+/**
  *  \brief  This function reads data from the flash from a specified offset
  *
  *  \pre    QSPI controller has been opened using #QSPI_open()
@@ -108,6 +122,21 @@ int32_t QSPI_norFlashWrite(QSPI_Handle handle, uint32_t offset, uint8_t *buf, ui
 int32_t QSPI_norFlashRead(QSPI_Handle handle, uint32_t offset, uint8_t *buf, uint32_t len);
 
 /**
+ *  \brief  This function reads data from the flash at a specified offset in interrupt mode.
+ *
+ *  \pre    QSPI controller has been opened using #QSPI_open()
+ *
+ *  \param  handle    A #QSPI_Handle returned from a #QSPI_open()
+ *  \param  offset    Offset at which the data is to be written
+ *  \param  buf       Buffer which has the data to be written to the flash
+ *  \param  len       Number of bytes to be written to the flash
+ *
+ *  \return #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
+ */
+
+int32_t QSPI_norFlashReadIntr(QSPI_Handle handle, uint32_t offset, uint8_t *buf, uint32_t len);
+
+/**
  *  \brief  This function erases 1 block of data starting from a provided address
  *
  *  \pre    QSPI controller has been opened using #QSPI_open()
@@ -118,6 +147,19 @@ int32_t QSPI_norFlashRead(QSPI_Handle handle, uint32_t offset, uint8_t *buf, uin
  *  \return #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
  */
 int32_t QSPI_norFlashErase(QSPI_Handle handle, uint32_t address);
+
+/**
+ *  \brief  This function gets the serial flash discoverable parameter information from the flash
+ *
+ *  \pre    QSPI controller has been opened using #QSPI_open()
+ *
+ *  \param  handle    A #QSPI_Handle returned from a #QSPI_open()
+ *  \param  offset    Address in the flash to read SFDP information
+ *  \param  buf       Buffer to which data will be read into
+ *  \param  len       Number of bytes to be read from the flash
+ *
+ *  \return #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
+ */
 int32_t QSPI_norFlashReadSfdp(QSPI_Handle handle, uint32_t offset, uint8_t *buf, uint32_t len);
 #ifdef __cplusplus
 }

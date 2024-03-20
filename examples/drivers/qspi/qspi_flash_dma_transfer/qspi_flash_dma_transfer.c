@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -43,10 +43,12 @@
 #include <kernel/dpl/DebugP.h>
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+#include <kernel/dpl/MutexArmP.h>
+#include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
 
 #define APP_QSPI_FLASH_OFFSET  (0x40000U)
 
-#define APP_QSPI_DATA_SIZE (32*1024)
+ #define APP_QSPI_DATA_SIZE (42*1024)
 
 /* The source buffer used for transfer */
 uint8_t gQspiTxBuf[APP_QSPI_DATA_SIZE];
@@ -55,6 +57,7 @@ uint8_t gQspiRxBuf[APP_QSPI_DATA_SIZE] __attribute__((aligned(CacheP_CACHELINE_A
 
 void qspi_flash_diag_test_fill_buffers(void);
 int32_t qspi_flash_diag_test_compare_buffers(void);
+uint32_t transferMutex = MUTEX_ARM_LOCKED;
 
 void qspi_flash_dma_transfer(void *args)
 {
@@ -84,8 +87,7 @@ void qspi_flash_dma_transfer(void *args)
     DebugP_log("[QSPI Flash DMA Transfer Test] Performing Write-Read Test...\r\n");
     Flash_write(gFlashHandle[CONFIG_FLASH0], offset, gQspiTxBuf, APP_QSPI_DATA_SIZE);
     Flash_read(gFlashHandle[CONFIG_FLASH0], offset, gQspiRxBuf, APP_QSPI_DATA_SIZE);
-
-    status |= qspi_flash_diag_test_compare_buffers();
+    status += qspi_flash_diag_test_compare_buffers();
 
     if(SystemP_SUCCESS == status)
     {
@@ -102,26 +104,25 @@ void qspi_flash_dma_transfer(void *args)
 
 void qspi_flash_diag_test_fill_buffers(void)
 {
-    uint32_t i;
+    uint32_t itr;
 
-    for(i = 0U; i < APP_QSPI_DATA_SIZE; i++)
+    for(itr = 0U; itr < APP_QSPI_DATA_SIZE; itr++)
     {
-        gQspiTxBuf[i] = i;
-        gQspiRxBuf[i] = 0U;
+        gQspiTxBuf[itr] = itr;
+        gQspiRxBuf[itr] = 0U;
     }
 }
 
 int32_t qspi_flash_diag_test_compare_buffers(void)
 {
     int32_t status = SystemP_SUCCESS;
-    uint32_t i;
+    uint32_t itr;
 
-    for(i = 0U; i < APP_QSPI_DATA_SIZE; i++)
+    for(itr = 0U; itr < APP_QSPI_DATA_SIZE; itr++)
     {
-        if(gQspiTxBuf[i] != gQspiRxBuf[i])
+        if(gQspiTxBuf[itr] != gQspiRxBuf[itr])
         {
             status = SystemP_FAILURE;
-            DebugP_logError("QSPI read data mismatch !!!\r\n");
             break;
         }
     }

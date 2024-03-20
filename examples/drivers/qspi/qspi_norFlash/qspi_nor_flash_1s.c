@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -61,6 +61,7 @@
 
 #define QSPI_NOR_WRR_WRITE_TIMEOUT  (1200U * 1000U)
 #define QSPI_NOR_PAGE_PROG_TIMEOUT  (400U)
+#define QSPI_Timeout_10ms           (10000)
 
 int32_t QSPI_norFlashCmdRead(QSPI_Handle handle, uint8_t cmd, uint32_t cmdAddr, uint8_t *rxBuf, uint32_t rxLen)
 {
@@ -167,20 +168,20 @@ int32_t QSPI_norFlashInit(QSPI_Handle handle)
 
     /* Reset the Flash */
     cmd = QSPI_NOR_CMD_RSTEN;
-    QSPI_norFlashCmdWrite(handle, cmd, QSPI_CMD_INVALID_ADDR, NULL, 0);
+    (void) QSPI_norFlashCmdWrite(handle, cmd, QSPI_CMD_INVALID_ADDR, NULL, 0U);
 
     cmd = QSPI_NOR_CMD_RST;
-    QSPI_norFlashCmdWrite(handle, cmd, QSPI_CMD_INVALID_ADDR, NULL, 0);
+    (void) QSPI_norFlashCmdWrite(handle, cmd, QSPI_CMD_INVALID_ADDR, NULL, 0U);
 
-    QSPI_norFlashWaitReady(handle, QSPI_NOR_WRR_WRITE_TIMEOUT);
+    (void) QSPI_norFlashWaitReady(handle, QSPI_NOR_WRR_WRITE_TIMEOUT);
 
-    QSPI_setWriteCmd(handle, QSPI_NOR_PAGE_PROG);
+    (void) QSPI_setWriteCmd(handle, QSPI_NOR_PAGE_PROG);
 
-    QSPI_setReadCmd(handle, QSPI_NOR_CMD_SINGLE_READ);
+    (void) QSPI_setReadCmd(handle, QSPI_NOR_CMD_SINGLE_READ);
 
-    QSPI_setAddressByteCount(handle, 3);
+    (void) QSPI_setAddressByteCount(handle, 3U);
 
-    QSPI_setDummyBitCount(handle, 0);
+    (void) QSPI_setDummyBitCount(handle, 0);
 
     return 0;
 }
@@ -315,32 +316,75 @@ int32_t QSPI_norFlashReadId(QSPI_Handle handle, uint32_t *manufacturerId, uint32
 int32_t QSPI_norFlashReadSfdp(QSPI_Handle handle, uint32_t offset, uint8_t *buf, uint32_t len)
 {
     int32_t status = SystemP_SUCCESS;
-    uint8_t cmd;
-    uint32_t dummyClks;
 
     if(handle != NULL)
     {
-        QSPI_Object  *object = ((QSPI_Config *)handle)->object;
-
-        /* Save the current command and dummy cycles */
-        cmd = object->readCmd;
-        dummyClks = object->numDummyBits;
-
         /* Set read command and dummyClks for reading sfdp table */
-        object->readCmd = QSPI_NOR_CMD_RDSFDP;
-        object->numDummyBits = QSPI_NOR_SFDP_DC;
+        (void)QSPI_setReadCmd(handle,QSPI_NOR_CMD_RDSFDP);
+        (void)QSPI_setDummyBitCount(handle,QSPI_NOR_SFDP_DC);
 
         /* Perform SFDP read */
         status = QSPI_norFlashRead(handle, offset, buf, len);
 
-        /* Set back to old read command and dummy clocks */
-        object->readCmd = cmd;
-        object->numDummyBits = dummyClks;
+        (void) QSPI_setWriteCmd(handle, QSPI_NOR_PAGE_PROG);
+        (void) QSPI_setReadCmd(handle, QSPI_NOR_CMD_SINGLE_READ);
     }
     else
     {
         status = SystemP_FAILURE;
     }
 
+    return status;
+}
+
+int32_t QSPI_norFlashWriteIntr(QSPI_Handle handle, uint32_t offset, uint8_t *buf, uint32_t len)
+{
+    int32_t status = SystemP_SUCCESS;
+
+    /* Check offset alignment */
+    if(0U != (offset % 256U))
+    {
+        status = SystemP_FAILURE;
+    }
+    if(status == SystemP_SUCCESS)
+    {
+
+        uint8_t cmdWren = QSPI_NOR_CMD_WREN;
+        uint8_t cmrProg = QSPI_NOR_PAGE_PROG;
+        QSPI_WriteCmdParams wrParams = {0};
+
+        status = QSPI_norFlashCmdWrite(handle, cmdWren, QSPI_CMD_INVALID_ADDR, NULL, 0U);
+
+        if(status == SystemP_SUCCESS)
+        {
+            status = QSPI_norFlashWriteEnableLatched(handle, QSPI_NOR_WRR_WRITE_TIMEOUT);
+        }
+        if(status == SystemP_SUCCESS)
+        {
+            /* Send Page Program command */
+            wrParams.cmd = cmrProg;
+            wrParams.cmdAddr = offset;
+            wrParams.numAddrBytes = 3U;
+            wrParams.txDataBuf = (void *)(buf);
+            wrParams.txDataLen = len;
+            status = QSPI_writeConfigModeIntr(handle, &wrParams);
+        }
+    }
+
+    return status;
+}
+
+int32_t QSPI_norFlashReadIntr(QSPI_Handle handle, uint32_t offset, uint8_t *buf, uint32_t len)
+{
+    int32_t status = SystemP_SUCCESS;
+    QSPI_ReadCmdParams rdParams = {0};
+
+    /* Send Read Program command */
+    rdParams.cmd = QSPI_NOR_CMD_SINGLE_READ;
+    rdParams.cmdAddr = offset;
+    rdParams.numAddrBytes = 3U;
+    rdParams.rxDataBuf = (void *)(buf);
+    rdParams.rxDataLen = len;
+    status = QSPI_readConfigModeIntr(handle,&rdParams);
     return status;
 }

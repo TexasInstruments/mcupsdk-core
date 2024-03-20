@@ -31,6 +31,7 @@
         compilerBuildOptions="
             -I${CG_TOOL_ROOT}/include/c
             -I${MCU_PLUS_SDK_PATH}/source
+            -I${MCU_PLUS_SDK_PATH}/examples/drivers/qspi/qspi_norFlash
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
@@ -89,7 +90,7 @@
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
         <file path="../../../qspi_flash_diag.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="../../../qspi_nor_flash_1s.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        <file path="../../../../qspi_norFlash/qspi_nor_flash_1s.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
@@ -98,7 +99,7 @@
         <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263x/EXAMPLES_DRIVERS_QSPI_FLASH_DIAG.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
-        <file path="../../../qspi_nor_flash_1s.h" openOnCreation="false" excludeFromBuild="true" action="copy">
+        <file path="../../../../qspi_norFlash/qspi_nor_flash_1s.h" openOnCreation="false" excludeFromBuild="true" action="copy">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>

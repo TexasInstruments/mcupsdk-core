@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -43,7 +43,6 @@
 #include <kernel/dpl/DebugP.h>
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
-
 #define APP_QSPI_FLASH_OFFSET  (0x40000U)
 
 #define APP_QSPI_DATA_SIZE (256)
@@ -55,7 +54,7 @@ uint8_t gQspiRxBuf[APP_QSPI_DATA_SIZE] __attribute__((aligned(CacheP_CACHELINE_A
 
 void qspi_flash_diag_test_fill_buffers(void);
 int32_t qspi_flash_diag_test_compare_buffers(void);
-
+void qspi_flash_transfer(void *args);
 void qspi_flash_transfer(void *args)
 {
 
@@ -65,9 +64,9 @@ void qspi_flash_transfer(void *args)
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
-    Board_driversOpen();
+    (void) Board_driversOpen();
 
-    Flash_getAttrs(CONFIG_FLASH0);
+    (void) Flash_getAttrs(CONFIG_FLASH0);
 
     DebugP_log("[QSPI Flash Transfer Test] Starting ...\r\n");
 
@@ -81,13 +80,13 @@ void qspi_flash_transfer(void *args)
     qspi_flash_diag_test_fill_buffers();
 
     DebugP_log("[QSPI Flash Transfer Test] Executing Flash Erase on first block...\r\n");
-    Flash_offsetToBlkPage(gFlashHandle[CONFIG_FLASH0], offset, &blk, &page);
-    Flash_eraseBlk(gFlashHandle[CONFIG_FLASH0], blk);
+    (void) Flash_offsetToBlkPage(gFlashHandle[CONFIG_FLASH0], offset, &blk, &page);
+    (void) Flash_eraseBlk(gFlashHandle[CONFIG_FLASH0], blk);
     DebugP_log("[QSPI Flash Transfer Test] Performing Write-Read Test...\r\n");
     Flash_write(gFlashHandle[CONFIG_FLASH0], offset, gQspiTxBuf, APP_QSPI_DATA_SIZE);
     Flash_read(gFlashHandle[CONFIG_FLASH0], offset, gQspiRxBuf, APP_QSPI_DATA_SIZE);
 
-    status |= qspi_flash_diag_test_compare_buffers();
+    status += qspi_flash_diag_test_compare_buffers();
 
     if(SystemP_SUCCESS == status)
     {
@@ -98,7 +97,7 @@ void qspi_flash_transfer(void *args)
         DebugP_log("Some tests have failed!!\r\n");
     }
 
-    Board_driversClose();
+    (void) Board_driversClose();
     Drivers_close();
 }
 

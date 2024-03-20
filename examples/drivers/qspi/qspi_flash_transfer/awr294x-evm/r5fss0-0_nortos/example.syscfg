@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AWR294X" --package "ETS" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.10.0+2123"}
+ * @versions {"tool":"1.18.1+3343"}
  */
 
 /**
@@ -21,24 +21,27 @@ const mpu_armv75 = mpu_armv7.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-flash1.$name                  = "CONFIG_FLASH0";
-flash1.peripheralDriver.$name = "CONFIG_QSPI0";
+flash1.$name                        = "CONFIG_FLASH0";
+flash1.peripheralDriver.$name       = "CONFIG_QSPI0";
+flash1.peripheralDriver.dmaEnable   = false;
+flash1.peripheralDriver.child.$name = "drivers_qspi_v0_qspi_v0_template0";
+
+debug_log.enableUartLog           = true;
+debug_log.uartLog.$name           = "CONFIG_UART0";
+debug_log.uartLog.UART.$assign    = "UARTA";
+debug_log.uartLog.UART.RX.$assign = "PAD_DA";
+debug_log.uartLog.UART.TX.$assign = "PAD_DB";
 
 const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                        = edma.addInstance({}, false);
 edma1.$name                        = "CONFIG_EDMA0";
 flash1.peripheralDriver.edmaConfig = edma1;
+debug_log.uartLog.edmaConfig       = edma1;
 edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM0";
 edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
 edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
 edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
 edma1.edmaRmReservedDmaCh[0].$name = "CONFIG_EDMA_RM4";
-
-debug_log.enableUartLog           = true;
-debug_log.uartLog.$name           = "CONFIG_UART0";
-debug_log.uartLog.UART.$assign    = "UARTA";
-debug_log.uartLog.UART.RX.$assign = "ball.B16";
-debug_log.uartLog.UART.TX.$assign = "ball.C16";
 
 mpu_armv71.$name        = "CONFIG_MPU_REGION0";
 mpu_armv71.attributes   = "Device";
@@ -66,10 +69,10 @@ mpu_armv75.allowExecute = false;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-flash1.peripheralDriver.QSPI["0"].$suggestSolution = "ball.U11";
-flash1.peripheralDriver.QSPI["1"].$suggestSolution = "ball.V11";
-flash1.peripheralDriver.QSPI["2"].$suggestSolution = "ball.T11";
-flash1.peripheralDriver.QSPI["3"].$suggestSolution = "ball.R12";
+flash1.peripheralDriver.QSPI["0"].$suggestSolution = "PAD_AL";
+flash1.peripheralDriver.QSPI["1"].$suggestSolution = "PAD_AM";
+flash1.peripheralDriver.QSPI["2"].$suggestSolution = "PAD_AN";
+flash1.peripheralDriver.QSPI["3"].$suggestSolution = "PAD_AO";
 flash1.peripheralDriver.QSPI.$suggestSolution      = "QSPI0";
-flash1.peripheralDriver.QSPI.CLK.$suggestSolution  = "ball.R10";
-flash1.peripheralDriver.QSPI.CS.$suggestSolution   = "ball.U12";
+flash1.peripheralDriver.QSPI.CLK.$suggestSolution  = "PAD_AP";
+flash1.peripheralDriver.QSPI.CS.$suggestSolution   = "PAD_AQ";

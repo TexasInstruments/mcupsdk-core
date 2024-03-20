@@ -17,6 +17,13 @@ const filedirs = {
     common: [
         "..",       /* core_os_combo base */
         "../../..", /* Example base */
+        "../../../../qspi_norFlash", /* QSPI NOR Flash Layer */
+    ],
+};
+
+const includes_nortos_r5f = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/examples/drivers/qspi/qspi_norFlash",       
     ],
 };
 
@@ -41,6 +48,7 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am273x/r5f",
+        "${MCU_PLUS_SDK_PATH}/examples/drivers/qspi/qspi_norFlash",       
     ],
 };
 
@@ -70,7 +78,7 @@ const lnkfiles = {
 
 const projectspec_files = {
     common: [
-        "../../../qspi_nor_flash_1s.h",
+        "../../../../qspi_norFlash/qspi_nor_flash_1s.h",
     ]
 }
 
@@ -140,6 +148,7 @@ function getComponentBuildProperty(buildOption) {
         }
         else
         {
+            build_property.includes = includes_nortos_r5f;
             build_property.libs = libs_nortos_r5f;
             build_property.templates = templates_nortos_r5f;
         }

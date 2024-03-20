@@ -55,11 +55,13 @@ FILES_common := \
 FILES_PATH_common = \
 	.. \
 	../../.. \
+	../../../../qspi_norFlash \
 	generated \
 
 INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
+	-I${MCU_PLUS_SDK_PATH}/examples/drivers/qspi/qspi_norFlash \
 	-Igenerated \
 
 DEFINES_common := \
