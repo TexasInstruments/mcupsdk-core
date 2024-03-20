@@ -53,6 +53,7 @@ const asmfiles_r5f = {
         "MpuP_armv7r_asm.S",
         "CpuId_armv7r_asm.S",
         "PmuP_armv7r_asm.S",
+        "Mutex_armv7r_asm.S",
     ],
 };
 

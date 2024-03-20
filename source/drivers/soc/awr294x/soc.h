@@ -67,6 +67,12 @@ extern "C"
 #define SOC_DOMAIN_ID_MSS_IOMUX         (7U)
 /** @} */
 
+/** \brief Macro to check if the QSPI base address is valid */
+#define IS_QSPI_BASE_ADDR_VALID(baseAddr)    (baseAddr == CSL_MSS_QSPI_U_BASE)
+
+/** \brief Macro to check if the QSPI Memory Mapped address is valid */
+#define IS_QSPI_MEMORY_MAP_ADDR_VALID(baseAddr)    (baseAddr == CSL_EXT_FLASH_U_BASE)
+
 /**
  * \brief Enable clock to specified module
  *

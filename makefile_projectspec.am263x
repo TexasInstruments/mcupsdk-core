@@ -100,10 +100,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_polled_transfer_am263x-cc_r5fs
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_polled_transfer_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_polled_transfer_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_polled_transfer_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_configure_signal_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_configure_signal_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_chopper_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_chopper_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_dma_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_dma_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_hr_duty_cycle_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
@@ -202,10 +198,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_dma_lld_am263x-cc_r5
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_dma_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_dma_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_dma_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_multi_instances_multi_channels_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_multi_instances_multi_channels_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_multi_instances_multi_channels_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_multi_instances_multi_channels_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_performance_8bit_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_performance_8bit_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_performance_8bit_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
@@ -238,6 +230,22 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_transfer_am263x-cc_r5fss
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_transfer_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_transfer_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_transfer_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_interrupt_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_interrupt_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_interrupt_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_interrupt_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_dma_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_dma_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_dma_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_dma_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_diag_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_diag_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_diag_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_diag_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_interrupt_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_interrupt_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_interrupt_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += qspi_flash_interrupt_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rti_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rti_led_blink_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rti_led_blink_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build
@@ -712,18 +720,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  edma_polled_transfer_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
- epwm_configure_signal_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/epwm/epwm_configure_signal/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
-
- epwm_configure_signal_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/epwm/epwm_configure_signal/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
-
- epwm_chopper_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/epwm/epwm_chopper/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
-
- epwm_chopper_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/epwm/epwm_chopper/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
-
  epwm_dma_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/epwm/epwm_dma/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -1018,18 +1014,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  mcspi_loopback_dma_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- mcspi_loopback_multi_instances_multi_channels_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- mcspi_loopback_multi_instances_multi_channels_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
-
- mcspi_loopback_multi_instances_multi_channels_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- mcspi_loopback_multi_instances_multi_channels_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
-
  mcspi_performance_8bit_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -1125,6 +1109,54 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  qspi_flash_transfer_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/qspi/qspi_flash_transfer/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_interrupt_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_interrupt_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_interrupt_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_interrupt_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_dma_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_dma_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_dma_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_dma_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_diag_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_diag_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_diag_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_diag_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_interrupt_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_interrupt_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_interrupt_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ qspi_flash_interrupt_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  rti_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1754,10 +1786,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_polled_transfer_am263x-cc_r5fs
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_polled_transfer_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_polled_transfer_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_polled_transfer_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_configure_signal_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_configure_signal_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_chopper_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_chopper_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_dma_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_dma_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_hr_duty_cycle_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1856,10 +1884,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_dma_lld_am263x-cc_r5
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_dma_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_dma_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_dma_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_multi_instances_multi_channels_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_multi_instances_multi_channels_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_multi_instances_multi_channels_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_multi_instances_multi_channels_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_performance_8bit_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_performance_8bit_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_performance_8bit_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1892,6 +1916,22 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_transfer_am263x-cc_r5fss
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_transfer_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_transfer_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_transfer_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_interrupt_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_interrupt_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_interrupt_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_interrupt_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_dma_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_dma_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_dma_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_dma_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_diag_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_diag_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_diag_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_diag_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_interrupt_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_interrupt_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_interrupt_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += qspi_flash_interrupt_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rti_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rti_led_blink_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rti_led_blink_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2366,18 +2406,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  edma_polled_transfer_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
- epwm_configure_signal_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/epwm/epwm_configure_signal/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
-
- epwm_configure_signal_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/epwm/epwm_configure_signal/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
-
- epwm_chopper_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/epwm/epwm_chopper/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
-
- epwm_chopper_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/epwm/epwm_chopper/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
-
  epwm_dma_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/epwm/epwm_dma/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -2672,18 +2700,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  mcspi_loopback_dma_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- mcspi_loopback_multi_instances_multi_channels_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- mcspi_loopback_multi_instances_multi_channels_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
-
- mcspi_loopback_multi_instances_multi_channels_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- mcspi_loopback_multi_instances_multi_channels_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
-
  mcspi_performance_8bit_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -2779,6 +2795,54 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  qspi_flash_transfer_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/qspi/qspi_flash_transfer/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_interrupt_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_interrupt_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_interrupt_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_interrupt_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_dma_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_dma_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_dma_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_dma_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_diag_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_diag_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_diag_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_diag_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_interrupt_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_interrupt_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_interrupt_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ qspi_flash_interrupt_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  rti_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -3408,10 +3472,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_polled_transfer_am263x-cc_r5f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_polled_transfer_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_polled_transfer_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_polled_transfer_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_configure_signal_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_configure_signal_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_chopper_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_chopper_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_dma_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_dma_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_hr_duty_cycle_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
@@ -3510,10 +3570,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_dma_lld_am263x-cc_r
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_dma_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_dma_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_dma_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_multi_instances_multi_channels_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_multi_instances_multi_channels_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_multi_instances_multi_channels_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_multi_instances_multi_channels_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_performance_8bit_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_performance_8bit_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_performance_8bit_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
@@ -3546,6 +3602,22 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_transfer_am263x-cc_r5fs
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_transfer_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_transfer_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_transfer_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_interrupt_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_interrupt_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_interrupt_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_interrupt_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_dma_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_dma_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_dma_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_dma_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_diag_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_diag_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_diag_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_diag_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_interrupt_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_interrupt_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_interrupt_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += qspi_flash_interrupt_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rti_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rti_led_blink_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rti_led_blink_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export
@@ -4020,18 +4092,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  edma_polled_transfer_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/edma/edma_polled_transfer/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
- epwm_configure_signal_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/epwm/epwm_configure_signal/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
-
- epwm_configure_signal_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/epwm/epwm_configure_signal/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
-
- epwm_chopper_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/epwm/epwm_chopper/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
-
- epwm_chopper_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/epwm/epwm_chopper/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
-
  epwm_dma_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/epwm/epwm_dma/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -4326,18 +4386,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  mcspi_loopback_dma_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- mcspi_loopback_multi_instances_multi_channels_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- mcspi_loopback_multi_instances_multi_channels_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
-
- mcspi_loopback_multi_instances_multi_channels_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- mcspi_loopback_multi_instances_multi_channels_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
-
  mcspi_performance_8bit_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/mcspi/mcspi_performance_8bit/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -4433,6 +4481,54 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  qspi_flash_transfer_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/qspi/qspi_flash_transfer/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_interrupt_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_interrupt_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_interrupt_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_interrupt_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_dma_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_dma_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_dma_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_dma_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_dma_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_diag_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_diag_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_diag_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_diag_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_diag_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_interrupt_lld_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_interrupt_lld_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_interrupt_lld_am263x-lp_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ qspi_flash_interrupt_lld_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/qspi/qspi_flash_interrupt_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  rti_led_blink_am263x-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -5078,10 +5174,6 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_polled_transfer/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_polled_transfer/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_polled_transfer/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_configure_signal/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_configure_signal/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_chopper/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_chopper/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_dma/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_dma/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_hr_duty_cycle/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -5180,10 +5272,6 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_dma_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_performance_8bit/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_performance_8bit/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_performance_8bit/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -5216,6 +5304,22 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_transfer/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_transfer/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_transfer/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_interrupt/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_interrupt/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_interrupt/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_interrupt/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_dma_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_dma_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_dma_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_dma_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_diag_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_diag_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_diag_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_diag_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_interrupt_lld/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_interrupt_lld/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_interrupt_lld/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/qspi/qspi_flash_interrupt_lld/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]

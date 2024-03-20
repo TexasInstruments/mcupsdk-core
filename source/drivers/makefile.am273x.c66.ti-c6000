@@ -86,7 +86,8 @@ FILES_PATH_common = \
     pinmux/am273x \
     rti/v0 \
     qspi/v0 \
-    qspi/v0/edma \
+    qspi/v0/lld \
+    qspi/v0/lld/edma \
     secure_ipc_notify/ \
     secure_ipc_notify/soc/am273x \
     secure_ipc_notify/soc/ \

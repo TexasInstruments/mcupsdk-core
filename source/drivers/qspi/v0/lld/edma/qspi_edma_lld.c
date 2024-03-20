@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -41,7 +41,7 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include <drivers/qspi/v0/edma/qspi_edma.h>
+#include <drivers/qspi/v0/lld/edma/qspi_edma_lld.h>
 #include <drivers/soc.h>
 #include <kernel/dpl/CacheP.h>
 
@@ -51,8 +51,8 @@
 
 /* Value for A count*/
 #define EDMA_QSPI_A_COUNT           (1U)
-/* Max Value for EDMA count */
-#define MAX_EDMA_COUNT              (31*1024)
+/* Max Value for EDMA count - 31KB */
+#define MAX_EDMA_COUNT              (31744U)
 /* Value for C count */
 #define EDMA_QSPI_C_COUNT           (1U)
 /* Event queue to be used  */
@@ -63,34 +63,37 @@
 /* ========================================================================== */
 
 static void QSPI_edmaIsrFxn(Edma_IntrHandle intrHandle, void *args);
+static void QSPI_EdmaParams_init(QSPI_EdmaParams *edmaParams);
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void QSPI_EdmaParams_init(QSPI_EdmaParams *edmaParams)
+static void QSPI_EdmaParams_init(QSPI_EdmaParams *edmaParams)
 {
     if( edmaParams != NULL)
     {
         edmaParams->edmaTcc = EDMA_RESOURCE_ALLOC_ANY;
         edmaParams->edmaChId = EDMA_RESOURCE_ALLOC_ANY;
+        edmaParams->edmaChainChId = EDMA_RESOURCE_ALLOC_ANY;
         edmaParams->edmaParam = EDMA_RESOURCE_ALLOC_ANY;
+        edmaParams->edmaChainParam = EDMA_RESOURCE_ALLOC_ANY;
         edmaParams->edmaRegionId = 0U;
         edmaParams->edmaBaseAddr = 0U;
         edmaParams->isIntEnabled = 0U;
     }
 }
 
-int32_t QSPI_edmaChannelConfig(QSPI_Handle qspiHandle, uint32_t edmaInst)
+int32_t QSPI_edmaChannelConfig(QSPILLD_Handle hQspi)
 {
-    uint32_t            baseAddr, regionId, dmaCh, tcc, param;
-    int32_t             status = SystemP_FAILURE;
+    uint32_t            baseAddr, regionId, dmaCh, dmaChainCh, tcc, param, chainParam;
+    int32_t             status = QSPI_SYSTEM_FAILURE;
+    uint32_t            edmaStatus;
     uint32_t            isEdmaInterruptEnabled;
-    QSPI_Object         *object = ((QSPI_Config *)qspiHandle)->object;
-    QSPI_EdmaParams     *edmaParams = &object->qspiEdmaParams;
+    QSPILLD_InitHandle  hQspiInit = hQspi->hQspiInit;
+    QSPI_EdmaParams     *edmaParams = (QSPI_EdmaParams *)hQspiInit->qspiDmaChConfig;
     Edma_IntrObject     *edmaIntrObject = &edmaParams->edmaIntrObj;
-    EDMA_Handle         qspiEdmaHandle = EDMA_getHandle(edmaInst);
-    SemaphoreP_Object   *gEdmaTransferDoneSem = &edmaParams->gEdmaTransferDoneSem;
+    EDMA_Handle         qspiEdmaHandle = (EDMA_Handle *)hQspiInit->qspiDmaHandle;
 
     if (qspiEdmaHandle != NULL)
     {
@@ -98,9 +101,9 @@ int32_t QSPI_edmaChannelConfig(QSPI_Handle qspiHandle, uint32_t edmaInst)
         /* Read base address of allocated EDMA instance */
         baseAddr = EDMA_getBaseAddr(qspiEdmaHandle);
 
-        if(baseAddr != 0)
+        if(baseAddr != 0U)
         {
-            status = SystemP_SUCCESS;
+            status = QSPI_SYSTEM_SUCCESS;
 
             /* Check if interrupt is enabled */
             isEdmaInterruptEnabled = EDMA_isInterruptEnabled(qspiEdmaHandle);
@@ -113,6 +116,10 @@ int32_t QSPI_edmaChannelConfig(QSPI_Handle qspiHandle, uint32_t edmaInst)
                 dmaCh = EDMA_RESOURCE_ALLOC_ANY;
                 status += EDMA_allocDmaChannel(qspiEdmaHandle, &dmaCh);
 
+                /* Allocate EDMA chained channel for QSPI transfer */
+                dmaChainCh = EDMA_RESOURCE_ALLOC_ANY;
+                status += EDMA_allocDmaChannel(qspiEdmaHandle, &dmaChainCh);
+
                 /* Allocate EDMA TCC for QSPI transfer */
                 tcc = EDMA_RESOURCE_ALLOC_ANY;
                 status += EDMA_allocTcc(qspiEdmaHandle, &tcc);
@@ -120,52 +127,73 @@ int32_t QSPI_edmaChannelConfig(QSPI_Handle qspiHandle, uint32_t edmaInst)
                 /* Allocate a Param ID for QSPI transfer */
                 param = EDMA_RESOURCE_ALLOC_ANY;
                 status += EDMA_allocParam(qspiEdmaHandle, &param);
-                if(status == SystemP_SUCCESS)
+
+                /* Allocate a Param ID for chained channel in QSPI transfer */
+                chainParam = EDMA_RESOURCE_ALLOC_ANY;
+                status += EDMA_allocParam(qspiEdmaHandle, &chainParam);
+
+                if(status == QSPI_SYSTEM_SUCCESS)
                 {
-                    EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+                    edmaStatus = EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
                         dmaCh, tcc, param, EDMA_QSPI_EVT_QUEUE_NO);
+
+                    if(edmaStatus == TRUE)
+                    {
+                        edmaStatus = EDMA_configureChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+                            dmaChainCh, tcc, chainParam, EDMA_QSPI_EVT_QUEUE_NO);
+                    }
+                    if(edmaStatus != TRUE )
+                    {
+                        status = QSPI_SYSTEM_FAILURE;
+                    }
 
                     if(isEdmaInterruptEnabled == TRUE)
                     {
-                        status = SemaphoreP_constructBinary(gEdmaTransferDoneSem, 0);
-                        DebugP_assert(SystemP_SUCCESS == status);
 
                         /* Register interrupt */
                         edmaIntrObject->tccNum = tcc;
                         edmaIntrObject->cbFxn  = &QSPI_edmaIsrFxn;
-                        edmaIntrObject->appData = (void *) gEdmaTransferDoneSem;
-                        status = EDMA_registerIntr(qspiEdmaHandle, edmaIntrObject);
-                        DebugP_assert(status == SystemP_SUCCESS);
+                        edmaIntrObject->appData = (void *) hQspi;
+                        status += EDMA_registerIntr(qspiEdmaHandle, edmaIntrObject);
                     }
 
                     /* Store the EDMA paramters and handle*/
-                    object->qspiEdmaHandle  = qspiEdmaHandle;
                     edmaParams->edmaBaseAddr = baseAddr;
                     edmaParams->edmaRegionId = regionId;
                     edmaParams->edmaParam = param;
+                    edmaParams->edmaChainParam = chainParam;
                     edmaParams->edmaChId = dmaCh;
+                    edmaParams->edmaChainChId = dmaChainCh;
                     edmaParams->edmaTcc = tcc;
                     edmaParams->isIntEnabled = isEdmaInterruptEnabled;
                 }
-                if(status != SystemP_SUCCESS)
+                if(status != QSPI_SYSTEM_SUCCESS)
                 {
                     if(dmaCh != EDMA_RESOURCE_ALLOC_ANY)
                     {
-                        EDMA_freeDmaChannel(qspiEdmaHandle, &dmaCh);
+                        status += EDMA_freeDmaChannel(qspiEdmaHandle, &dmaCh);
+                    }
+                    if(dmaChainCh != EDMA_RESOURCE_ALLOC_ANY)
+                    {
+                        status += EDMA_freeDmaChannel(qspiEdmaHandle, &dmaChainCh);
                     }
                     if(tcc != EDMA_RESOURCE_ALLOC_ANY)
                     {
-                        EDMA_freeTcc(qspiEdmaHandle, &tcc);
+                        status += EDMA_freeTcc(qspiEdmaHandle, &tcc);
                     }
                     if(param != EDMA_RESOURCE_ALLOC_ANY)
                     {
-                        EDMA_freeParam(qspiEdmaHandle, &param);
+                        status += EDMA_freeParam(qspiEdmaHandle, &param);
+                    }
+                    if(param != EDMA_RESOURCE_ALLOC_ANY)
+                    {
+                        status += EDMA_freeParam(qspiEdmaHandle, &chainParam);
                     }
                 }
             }
             else
             {
-                status = SystemP_FAILURE;
+                status = QSPI_SYSTEM_FAILURE;
             }
         }
     }
@@ -174,19 +202,23 @@ int32_t QSPI_edmaChannelConfig(QSPI_Handle qspiHandle, uint32_t edmaInst)
 }
 
 void QSPI_edmaTransfer(void* dst, void* src, uint32_t length,
-                       QSPI_Handle qspiHandle)
+                       QSPILLD_Handle hQspi, uint32_t timeout)
 {
-    uint32_t            baseAddr, regionId, dmaCh, tcc, param;
-    QSPI_Object         *object = ((QSPI_Config *)qspiHandle)->object;
-    QSPI_EdmaParams     *edmaParams = &object->qspiEdmaParams;
+    uint32_t            baseAddr, regionId, dmaCh, tcc, param, chainParam, chainOptions,dmaChainCh;
+    QSPI_EdmaParams     *edmaParams = (QSPI_EdmaParams *)hQspi->hQspiInit->qspiDmaChConfig;
     EDMACCPaRAMEntry   edmaParam;
+    uint32_t            edmaStatus;
+    uint32_t startTicks, elapsedTicks = 0;
+    QSPILLD_InitHandle hQspiInit = hQspi->hQspiInit;
 
     /* Fetch the EDMA paramters for QSPI transfer */
-    baseAddr = edmaParams->edmaBaseAddr;
-    regionId = edmaParams->edmaRegionId;
-    dmaCh    = edmaParams->edmaChId;
-    tcc      = edmaParams->edmaTcc;
-    param    = edmaParams->edmaParam;
+    baseAddr      = edmaParams->edmaBaseAddr;
+    regionId      = edmaParams->edmaRegionId;
+    dmaCh         = edmaParams->edmaChId;
+    dmaChainCh    = edmaParams->edmaChainChId;
+    tcc           = edmaParams->edmaTcc;
+    param         = edmaParams->edmaParam;
+    chainParam    = edmaParams->edmaChainParam;
 
     CacheP_wb(src, length*EDMA_QSPI_A_COUNT, CacheP_TYPE_ALL);
     CacheP_wb(dst, length*EDMA_QSPI_A_COUNT, CacheP_TYPE_ALL);
@@ -207,74 +239,100 @@ void QSPI_edmaTransfer(void* dst, void* src, uint32_t length,
     edmaParam.bCnt          = (uint16_t) (length/edmaParam.aCnt);
     edmaParam.cCnt          = (uint16_t) EDMA_QSPI_C_COUNT;
     edmaParam.bCntReload    = (uint16_t) (length/edmaParam.aCnt);
-    edmaParam.srcBIdx       = (int16_t) EDMA_PARAM_BIDX(edmaParam.aCnt);
-    edmaParam.destBIdx      = (int16_t) EDMA_PARAM_BIDX(edmaParam.aCnt);
+    edmaParam.srcBIdx       = (int16_t) edmaParam.aCnt;
+    edmaParam.destBIdx      = (int16_t) edmaParam.aCnt;
     edmaParam.srcCIdx       = (int16_t) EDMA_QSPI_A_COUNT;
     edmaParam.destCIdx      = (int16_t) EDMA_QSPI_A_COUNT;
     edmaParam.linkAddr      = 0xFFFFU;
-    edmaParam.srcBIdxExt    = (int8_t) EDMA_PARAM_BIDX_EXT(edmaParam.aCnt);
-    edmaParam.destBIdxExt   = (int8_t) EDMA_PARAM_BIDX_EXT(edmaParam.aCnt);
-    edmaParam.opt          |=
-        (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_ITCINTEN_MASK | EDMA_OPT_SYNCDIM_MASK |
-         (((tcc) << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
-
-    EDMA_setPaRAM(baseAddr, param, &edmaParam);
-
-    /* Set manual trigger to start QSPI transfer */
-    EDMA_enableTransferRegion(baseAddr, regionId, dmaCh,
-             EDMA_TRIG_MODE_MANUAL);
-
-    if(edmaParams->isIntEnabled == true)
+    /*
+     * Check if transfer length is less than maximum EDMA transfer count or if it's a
+     * multiple of maximum transfer length in which case, chaining is not required and this
+     * channel is enough to complete the transfer.
+     * If not, chaining has to be enabled and interrupt is not enabled for this channel
+     * Interrupt is enabled only for the chained channel to signal completion.
+     */
+    if(length <= MAX_EDMA_COUNT)
     {
-        SemaphoreP_pend(&edmaParams->gEdmaTransferDoneSem, SystemP_WAIT_FOREVER);
+        edmaParam.opt      |=  (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_ITCINTEN_MASK | EDMA_OPT_SYNCDIM_MASK |
+            (((tcc) << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
     }
     else
     {
-        /* Poll for transfer completion */
-        while(EDMA_readIntrStatusRegion(baseAddr, regionId, tcc) != 1);
+        edmaParam.opt      |=
+        (EDMA_OPT_SYNCDIM_MASK |
+         ((((uint32_t)tcc) << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
 
-        EDMA_clrIntrRegion(baseAddr, regionId, tcc);
     }
 
-    if((length > MAX_EDMA_COUNT) && (length % MAX_EDMA_COUNT != 0))
+    EDMA_setPaRAM(baseAddr, param, &edmaParam);
+
+    if(length <= MAX_EDMA_COUNT)
+    {
+        /* Set manual trigger to start QSPI transfer */
+        edmaStatus = EDMA_enableTransferRegion(baseAddr, regionId, dmaCh, EDMA_TRIG_MODE_MANUAL);
+
+        if (edmaStatus == TRUE)
+        {
+            if(edmaParams->isIntEnabled != TRUE)
+            {
+                startTicks = hQspiInit->Clock_getTicks();
+                /* Poll for transfer completion */
+                while((EDMA_readIntrStatusRegion(baseAddr, regionId, tcc) != 1U) && (elapsedTicks < timeout))
+                {
+                    elapsedTicks = hQspiInit->Clock_getTicks() - startTicks;
+                }
+
+                EDMA_clrIntrRegion(baseAddr, regionId, tcc);
+            }
+        }
+    }
+    else
     {
         edmaParam.srcAddr       = (uint32_t) SOC_virtToPhy(src) + (MAX_EDMA_COUNT * (length / MAX_EDMA_COUNT));
         edmaParam.destAddr      = (uint32_t) SOC_virtToPhy(dst) + (MAX_EDMA_COUNT * (length / MAX_EDMA_COUNT));
         edmaParam.aCnt      = (uint16_t) EDMA_QSPI_A_COUNT;
         edmaParam.bCnt      = (uint16_t) (length % MAX_EDMA_COUNT);
-        edmaParam.srcBIdx   = (int16_t) EDMA_PARAM_BIDX(EDMA_QSPI_A_COUNT);
-        edmaParam.destBIdx  = (int16_t) EDMA_PARAM_BIDX(EDMA_QSPI_A_COUNT);
-        edmaParam.srcBIdxExt    = (int8_t) EDMA_PARAM_BIDX_EXT(EDMA_QSPI_A_COUNT);
-        edmaParam.destBIdxExt   = (int8_t) EDMA_PARAM_BIDX_EXT(EDMA_QSPI_A_COUNT);
+        edmaParam.srcBIdx   = (int16_t) EDMA_QSPI_A_COUNT;
+        edmaParam.destBIdx  = (int16_t) EDMA_QSPI_A_COUNT;
+        edmaParam.opt      |=  (EDMA_OPT_TCINTEN_MASK | EDMA_OPT_ITCINTEN_MASK | EDMA_OPT_SYNCDIM_MASK |
+            (((tcc) << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));    // Working in polled
 
-        EDMA_setPaRAM(baseAddr, param, &edmaParam);
+        EDMA_setPaRAM(baseAddr, chainParam, &edmaParam);
+
+        chainOptions = (EDMA_OPT_TCCHEN_MASK |
+                             EDMA_OPT_ITCCHEN_MASK);
+
+        EDMA_chainChannel(baseAddr, param, dmaChainCh, chainOptions);
 
         /* Set manual trigger to start QSPI transfer */
-        EDMA_enableTransferRegion(baseAddr, regionId, dmaCh,
-                EDMA_TRIG_MODE_MANUAL);
+        edmaStatus = EDMA_enableTransferRegion(baseAddr, regionId, dmaCh, EDMA_TRIG_MODE_MANUAL);
 
-        if(edmaParams->isIntEnabled == TRUE)
+        if (edmaStatus == TRUE)
         {
-            SemaphoreP_pend(&edmaParams->gEdmaTransferDoneSem, SystemP_WAIT_FOREVER);
-        }
-        else
-        {
-            /* Poll for transfer completion */
-            while(EDMA_readIntrStatusRegion(baseAddr, regionId, tcc) != 1);
+            if(edmaParams->isIntEnabled != TRUE)
+            {
+                EDMA_disableEvtIntrRegion(baseAddr, regionId, dmaCh);
+                startTicks = hQspiInit->Clock_getTicks();
+                /* Poll for transfer completion */
+                while((EDMA_readIntrStatusRegion(baseAddr, regionId, tcc) != 1U) && (elapsedTicks < timeout))
+                {
+                    elapsedTicks =  hQspiInit->Clock_getTicks()  - startTicks;
+                }
 
-            EDMA_clrIntrRegion(baseAddr, regionId, tcc);
+                EDMA_clrIntrRegion(baseAddr, regionId, tcc);
+            }
         }
     }
-
     CacheP_inv(dst, length*EDMA_QSPI_A_COUNT, CacheP_TYPE_ALL);
 }
 
-int32_t QSPI_edmaChannelFree(QSPI_Handle qspiHandle)
+int32_t QSPI_edmaChannelFree(QSPILLD_Handle hQspi)
 {
-    int32_t             status = SystemP_SUCCESS;
+    int32_t             status = QSPI_SYSTEM_SUCCESS;
+    uint32_t            edmaStatus;
     uint32_t            baseAddr, regionId, dmaCh, tcc, param;
-    QSPI_Object         *object = ((QSPI_Config *)qspiHandle)->object;
-    QSPI_EdmaParams     *edmaParams = &object->qspiEdmaParams;
+    QSPILLD_InitHandle  hQspiInit = hQspi->hQspiInit;
+    QSPI_EdmaParams     *edmaParams = (QSPI_EdmaParams *)hQspiInit->qspiDmaChConfig;
 
     /* Fetch the EDMA paramters */
     baseAddr = edmaParams->edmaBaseAddr;
@@ -284,25 +342,31 @@ int32_t QSPI_edmaChannelFree(QSPI_Handle qspiHandle)
     param    = edmaParams->edmaParam;
 
     /* Free channel */
-    EDMA_freeChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
+    edmaStatus = EDMA_freeChannelRegion(baseAddr, regionId, EDMA_CHANNEL_TYPE_DMA,
          dmaCh, EDMA_TRIG_MODE_MANUAL, tcc, EDMA_QSPI_EVT_QUEUE_NO);
+
+    if(edmaStatus == TRUE)
+    {
+        status = QSPI_SYSTEM_SUCCESS;
+    }
+    else
+    {
+        status = QSPI_SYSTEM_FAILURE;
+    }
 
     if(edmaParams->isIntEnabled == TRUE)
     {
-        status = EDMA_unregisterIntr(object->qspiEdmaHandle, &edmaParams->edmaIntrObj);
-        SemaphoreP_destruct(&edmaParams->gEdmaTransferDoneSem);
+        status = EDMA_unregisterIntr(hQspiInit->qspiDmaHandle, &edmaParams->edmaIntrObj);
     }
     /* Free the EDMA resources managed by driver. */
-    status += EDMA_freeDmaChannel(object->qspiEdmaHandle, &dmaCh);
-    status += EDMA_freeTcc(object->qspiEdmaHandle, &tcc);
-    status += EDMA_freeParam(object->qspiEdmaHandle, &param);
+    status += EDMA_freeDmaChannel(hQspiInit->qspiDmaHandle, &dmaCh);
+    status += EDMA_freeTcc(hQspiInit->qspiDmaHandle, &tcc);
+    status += EDMA_freeParam(hQspiInit->qspiDmaHandle, &param);
 
     return status;
 }
 
 static void QSPI_edmaIsrFxn(Edma_IntrHandle intrHandle, void *args)
 {
-    SemaphoreP_Object *semObjPtr = (SemaphoreP_Object *)args;
-    DebugP_assert(semObjPtr != NULL);
-    SemaphoreP_post(semObjPtr);
+    QSPI_lld_readCompleteCallback((QSPILLD_Handle)args);
 }

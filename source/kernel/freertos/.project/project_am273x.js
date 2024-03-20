@@ -154,6 +154,7 @@ const asmfiles_r5f = {
         "CacheP_armv7r_asm.S",
         "CpuId_armv7r_asm.S",
         "PmuP_armv7r_asm.S",
+        "Mutex_armv7r_asm.S",
         // picked from freertos DPL
         "HwiP_armv7r_vectors_freertos_asm.S",
         "HwiP_armv7r_handlers_freertos_asm.S",

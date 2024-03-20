@@ -79,7 +79,8 @@ FILES_PATH_common = \
     mibspi/v0/soc/awr294x \
     pinmux/awr294x \
     qspi/v0 \
-    qspi/v0/edma \
+    qspi/v0/lld \
+    qspi/v0/lld/edma \
     rti/v0 \
     secure_ipc_notify/ \
     secure_ipc_notify/soc/awr294x \

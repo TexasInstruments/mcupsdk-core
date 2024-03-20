@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -34,8 +34,9 @@
 #define QSPI_EDMA_H_
 
 #include <stdint.h>
-#include <drivers/edma.h>
-#include <drivers/qspi.h>
+
+#include <drivers/edma/v0/edma.h>
+#include <drivers/qspi/v0/lld/qspi_lld.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -43,14 +44,41 @@ extern "C"
 #endif
 
 /**
+ *  \brief QSPI EDMA Parameters
+ *
+ *  Used to store the EDMA parameters allocated for QSPI transfer.
+ *
+ */
+typedef struct
+{
+    uint32_t edmaTcc;
+    /**< EDMA TCC used for QSPI transfer */
+    uint32_t edmaChId;
+    /**< EDMA Channel used for QSPI transfer */
+    uint32_t edmaChainChId;
+    /**< EDMA Chained Channel used for QSPI transfer */
+    uint32_t edmaParam;
+    /**< EDMA Param ID used for QSPI transfer */
+    uint32_t edmaChainParam;
+    /**< EDMA Param ID used for Chained channel in QSPI transfer */
+    uint32_t edmaRegionId;
+    /**< EDMA Region used for QSPI transfer */
+    uint32_t edmaBaseAddr;
+    /**< EDMA Base address used for QSPI transfer */
+    uint32_t isIntEnabled;
+    /**< EDMA Interrupt enabled status */
+    Edma_IntrObject edmaIntrObj;
+    /**< EDMA Interrupt object */
+} QSPI_EdmaParams;
+
+/**
  *  \brief  Function to initialize EDMA before transfers.
  *
- *  \param  qspiHandle   #QSPI_Handle returned from #QSPI_open().
- *  \param  edmaInst     EDMA instance used for QSPI transfers.
+ *  \param  qspiHandle   #QSPILLD_Handle returned from #QSPI_open().
  *
  *  \return #SystemP_SUCCESS if configured successfully; else error on failure
  */
-int32_t QSPI_edmaChannelConfig(QSPI_Handle qspiHandle, uint32_t edmaInst);
+int32_t QSPI_edmaChannelConfig(QSPILLD_Handle qspiHandle);
 
 /**
  *  \brief  Function to transfer QSPI data using EDMA.
@@ -58,21 +86,21 @@ int32_t QSPI_edmaChannelConfig(QSPI_Handle qspiHandle, uint32_t edmaInst);
  *  \param  dst         Destination address of DMA transfer.
  *  \param  src         Source address for DMA transfer.
  *  \param  length      Number of bytes to be transferred.
- *  \param  qspiHandle  #QSPI_Handle returned from #QSPI_open().
+ *  \param  qspiHandle  #QSPILLD_Handle returned from #QSPI_open().
+ *  \param  timeout     timeout parameter
  *
- *  \return none
  */
 void QSPI_edmaTransfer(void* dst, void* src, uint32_t length,
-                       QSPI_Handle qspiHandle);
+                       QSPILLD_Handle qspiHandle, uint32_t timeout);
 
 /**
  *  \brief  Function to free EDMA resources.
  *
- *  \param  qspiHandle   #QSPI_Handle returned from #QSPI_open().
+ *  \param  qspiHandle   #QSPILLD_Handle returned from #QSPI_open().
  *
  *  \return #SystemP_SUCCESS if resources freed successfully; else error on failure
  */
-int32_t QSPI_edmaChannelFree(QSPI_Handle qspiHandle);
+int32_t QSPI_edmaChannelFree(QSPILLD_Handle qspiHandle);
 
 #ifdef __cplusplus
 }

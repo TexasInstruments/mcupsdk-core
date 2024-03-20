@@ -95,6 +95,13 @@ static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
     return status;
 }
 
+/** \brief Macro to check if the QSPI base address is valid */
+#define IS_QSPI_BASE_ADDR_VALID(baseAddr)    (baseAddr == CSL_QSPI0_U_BASE)
+
+/** \brief Macro to check if the QSPI Memory Mapped address is valid */
+#define IS_QSPI_MEMORY_MAP_ADDR_VALID(baseAddr)    ((baseAddr == CSL_EXT_FLASH0_U_BASE) || \
+                                                    (baseAddr == CSL_EXT_FLASH1_U_BASE))
+
 /**
  * \brief Enable clock to specified module
  *
@@ -398,11 +405,23 @@ uint64_t SOC_virtToPhy(void *virtAddr);
 void *SOC_phyToVirt(uint64_t phyAddr);
 
 /**
- *  \brief  This function gets the SOC mapped data base address of the flash
+ *  \brief  Configure GPIO pin Slew rate.
  *
- *  \return Data BaseAddress of the flash
+ *  \param baseAddr     Base Address of IOMUX registers (CSL_IOMUX_U_BASE)
+ *
+ *  \param bankNum      Bank number of GPIO Pin
+ *
+ *  \param groupNum     Group Number where one group register applies to 8 GPIO's.
+ *                      So, one bank will be in two groups. For lower half, pass
+ *                      group number as 0 and for upper half pass 1.
+ *
+ *  \param samplePeriod Sampling period in units of clock cycles.
+ *
+ *  \note  Qualifier selection should be done for Pad config register using \ref Pinmux_config
+ *
  */
-uint32_t SOC_getFlashDataBaseAddr(void);
+void SOC_configSlewRate(uint32_t baseAddr, uint32_t bankNum, uint32_t groupNum, uint32_t samplePeriod);
+
 
 /** \brief Macro to validate UART base address */
 
@@ -423,6 +442,14 @@ static inline int32_t UART_IsBaseAddrValid(uint32_t baseAddr)
 
     return status;
 }
+
+/**
+ *  \brief  This function gets the SOC mapped data base address of the flash
+ *
+ *  \return Data BaseAddress of the flash
+ */
+uint32_t SOC_getFlashDataBaseAddr(void);
+
 /** @} */
 
 #ifdef __cplusplus

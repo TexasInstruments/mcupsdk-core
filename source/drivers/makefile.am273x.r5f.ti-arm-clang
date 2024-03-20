@@ -61,7 +61,8 @@ FILES_common := \
     pinmux.c \
     pmu.c \
     qspi.c \
-    qspi_edma.c \
+    qspi_lld.c \
+    qspi_edma_lld.c \
     rti.c \
     sipc_notify_src.c \
     sipc_notify_cfg.c \
@@ -107,7 +108,8 @@ FILES_PATH_common = \
     pinmux/am273x \
     rti/v0 \
     qspi/v0 \
-    qspi/v0/edma \
+    qspi/v0/lld \
+    qspi/v0/lld/edma \
     secure_ipc_notify/ \
     secure_ipc_notify/soc/am273x \
     secure_ipc_notify/soc/ \

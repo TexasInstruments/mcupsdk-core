@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -60,6 +60,8 @@
 #include <kernel/dpl/SemaphoreP.h>
 #include <drivers/hw_include/cslr_qspi.h>
 #include <drivers/edma.h>
+#include <drivers/qspi/v0/lld/qspi_lld.h>
+#include <drivers/qspi/v0/lld/edma/qspi_edma_lld.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -71,20 +73,6 @@ extern "C" {
 
 /** \brief A handle that is returned from a #QSPI_open() call */
 typedef void *QSPI_Handle;
-
-/**
-*  \anchor QSPI_ChipSelect
-*  \name Chip Selects
-*
-*  Chip selects
-*
-*  @{
-*/
-#define QSPI_CS0  (0U)
-#define QSPI_CS1  (1U)
-#define QSPI_CS2  (2U)
-#define QSPI_CS3  (3U)
-/** @} */
 
 /**
 *  \anchor QSPI_CmdMacros
@@ -114,77 +102,6 @@ typedef void *QSPI_Handle;
 #define QSPI_TRANSFER_TIMEOUT          (5U)
 /** @} */
 
-/**
-*  \anchor QSPI_TransferLines
-*  \name Transfer Lines Number
-*
-*  Number of lines used for QSPI read transaction
-*
-*  @{
-*/
-#define QSPI_RX_LINES_SINGLE    (0U)
-#define QSPI_RX_LINES_DUAL      (1U)
-#define QSPI_RX_LINES_QUAD      (2U)
-/** @} */
-
-/**
- *  \anchor QSPI_FrameFormat
- *  \name Frame Format
- *
- *  Definitions for various SPI data frame formats
- *
- *  POL0 = QSPICLK is held low during the INACTIVE state
- *  POL1 = QSPICLK is held high during the INACTIVE state
- *
- *  PHA0 = Data launch is on the falling edge of QSPICLK
- *  PHA1 = Data launch is on the rising edge of QSPICLK
- *
- *  @{
- */
-#define QSPI_FF_POL0_PHA0   ((CSL_QSPI_SPI_DC_REG_CKPH0_CKP_0_SHIFT_OUT_FALLING_EDGE \
-                            << CSL_QSPI_SPI_DC_REG_CKPH0_SHIFT) |                    \
-                            (CSL_QSPI_SPI_DC_REG_CKP0_DATA_INACTIVE <<               \
-                            CSL_QSPI_SPI_DC_REG_CKP0_SHIFT))
-#define QSPI_FF_POL0_PHA1   ((CSL_QSPI_SPI_DC_REG_CKPH0_CKP_0_SHIFT_OUT_RISING_EDGE  \
-                            << CSL_QSPI_SPI_DC_REG_CKPH0_SHIFT) |                    \
-                            (CSL_QSPI_SPI_DC_REG_CKP0_DATA_INACTIVE <<               \
-                            CSL_QSPI_SPI_DC_REG_CKP0_SHIFT))
-#define QSPI_FF_POL1_PHA0   ((CSL_QSPI_SPI_DC_REG_CKPH0_CKP_1_SHIFT_OUT_RISING_EDGE  \
-                            << CSL_QSPI_SPI_DC_REG_CKPH0_SHIFT) |                    \
-                            (CSL_QSPI_SPI_DC_REG_CKP0_DATA_ACTIVE <<                 \
-                            CSL_QSPI_SPI_DC_REG_CKP0_SHIFT))
-#define QSPI_FF_POL1_PHA1   ((CSL_QSPI_SPI_DC_REG_CKPH0_CKP_1_SHIFT_OUT_FALLING_EDGE \
-                            << CSL_QSPI_SPI_DC_REG_CKPH0_SHIFT) |                    \
-                            (CSL_QSPI_SPI_DC_REG_CKP0_DATA_ACTIVE <<                 \
-                            CSL_QSPI_SPI_DC_REG_CKP0_SHIFT))
-/** @} */
-
-/**
-*  \anchor QSPI_ChipSelectPolarity
-*  \name Chip select polarity
-*
-*  Polarity of Chip Select
-*
-*  @{
-*/
-#define QSPI_CS_POL_ACTIVE_LOW    (CSL_QSPI_SPI_DC_REG_CSP0_ACTIVE_LOW)
-#define QSPI_CS_POL_ACTIVE_HIGH   (CSL_QSPI_SPI_DC_REG_CSP0_ACTIVE_HIGH)
-/** @} */
-
-/**
-*  \anchor QSPI_DataDelay
-*  \name Data Delay
-*
-*  Value of delay in data output after CS goes active.
-*
-*  @{
-*/
-#define QSPI_DATA_DELAY_0   (CSL_QSPI_SPI_DC_REG_DD0_CS_TO_DATA_DELAY_0)
-#define QSPI_DATA_DELAY_1   (CSL_QSPI_SPI_DC_REG_DD0_CS_TO_DATA_DELAY_1)
-#define QSPI_DATA_DELAY_2   (CSL_QSPI_SPI_DC_REG_DD0_CS_TO_DATA_DELAY_2)
-#define QSPI_DATA_DELAY_3   (CSL_QSPI_SPI_DC_REG_DD0_CS_TO_DATA_DELAY_3)
-/** @} */
-
 /* ========================================================================== */
 /*                             Structure Definitions                          */
 /* ========================================================================== */
@@ -212,31 +129,31 @@ typedef struct
 
 typedef struct
 {
-    uint8_t cmd;
+    uint8_t                 cmd;
     /**< [IN] Command Opcode */
-    uint32_t cmdAddr;
+    uint32_t                cmdAddr;
     /**< Address required by the command. Usually needed in reading flash registers.
     Should be initialized to #QSPI_CMD_INVALID_ADDR if not used. */
-    uint8_t numAddrBytes;
+    uint8_t                 numAddrBytes;
     /**< [IN] Number of address bytes used to send cmd address */
-    void *rxDataBuf;
+    void                    *rxDataBuf;
     /**< [OUT] Buffer to store response from flash */
-    uint32_t rxDataLen;
+    uint32_t                rxDataLen;
     /**< [IN] Length of response buffer */
 } QSPI_ReadCmdParams;
 
 typedef struct
 {
-    uint8_t cmd;
+    uint8_t                 cmd;
     /**< [IN] Command Opcode */
-    uint32_t cmdAddr;
+    uint32_t                cmdAddr;
     /**< [IN] Address required by the command. Usually needed in writing to flash registers.
     Should be initialized to #QSPI_CMD_INVALID_ADDR if not used. */
-    uint8_t numAddrBytes;
+    uint8_t                 numAddrBytes;
     /**< [IN] Number of address bytes used to send cmd address */
-    void *txDataBuf;
+    void                    *txDataBuf;
     /**< [IN] Buffer containing command data */
-    uint32_t txDataLen;
+    uint32_t                txDataLen;
     /**< [IN] Length of response buffer */
 } QSPI_WriteCmdParams;
 
@@ -252,35 +169,9 @@ typedef struct
  */
 typedef struct
 {
-    uint32_t edmaInst;
+    uint32_t                edmaInst;
     /**< EDMA instance used for QSPI transfer */
 } QSPI_Params;
-
-/**
- *  \brief QSPI EDMA Parameters
- *
- *  Used to store the EDMA parameters allocated for QSPI transfer.
- *
- */
-typedef struct
-{
-    uint32_t edmaTcc;
-    /**< EDMA TCC used for QSPI transfer */
-    uint32_t edmaChId;
-    /**< EDMA Channel used for QSPI transfer */
-    uint32_t edmaParam;
-    /**< EDMA Param ID used for QSPI transfer */
-    uint32_t edmaRegionId;
-    /**< EDMA Region used for QSPI transfer */
-    uint32_t edmaBaseAddr;
-    /**< EDMA Base address used for QSPI transfer */
-    uint32_t isIntEnabled;
-    /**< EDMA Interrupt enabled status */
-    Edma_IntrObject edmaIntrObj;
-    /**< EDMA Interrupt object */
-    SemaphoreP_Object gEdmaTransferDoneSem;
-    /**< EDMA transfer done Semaphore */
-} QSPI_EdmaParams;
 
 /**
  *  \brief QSPI driver object
@@ -290,41 +181,48 @@ typedef struct
     /*
      * User params
      */
-    QSPI_Handle     handle;
+    QSPI_Handle             handle;
     /**< Instance handle */
-    uint32_t        transferMode;
+    uint32_t                transferMode;
     /**< Polling, Blocking or Callback mode. */
-    uint32_t        rxLines;
+    uint32_t                rxLines;
     /**< Number of lines used for QSPI reading */
-    uint8_t         readCmd;
+    uint8_t                 readCmd;
     /**< Transfer command to be used for reading from QSPI flash */
-    uint8_t         writeCmd;
+    uint8_t                 writeCmd;
     /**< Transfer command to be used for writing to QSPI flash */
-    uint32_t        frmLength;
+    uint32_t                frmLength;
     /**< Frame length of total transfer */
-    uint32_t        numAddrBytes;
+    uint32_t                numAddrBytes;
     /**< Number of bytes used to represent address to be sent to flash. */
-    uint32_t        numDummyBits;
+    uint32_t                numDummyBits;
     /**< Number of dummy bits required while reading from flash */
-    QSPI_EdmaParams qspiEdmaParams;
     /**< EDMA parameters allocated for QSPI */
-    void*           qspiEdmaHandle;
+    void*                   qspiEdmaHandle;
     /**< EDMA handle allocated for QSPI */
 
     /*
      * State variables
      */
-    uint32_t            isOpen;
+    uint32_t                isOpen;
     /**< Flag to indicate if the instance is already open */
-    SemaphoreP_Object   lockObj;
+    SemaphoreP_Object       lockObj;
     /**< Driver lock object */
-    SemaphoreP_Object   transferSemObj;
+    SemaphoreP_Object       transferSemObj;
     /**< Transfer Sync Semaphore object */
-    HwiP_Object         hwiObj;
+    HwiP_Object             hwiObj;
     /**< Interrupt object */
 
-    QSPI_Transaction    *transaction;
+    QSPI_Transaction        *transaction;
     /**< Pointer to current transaction struct */
+
+    QSPILLD_InitObject      qspilldInitObject;
+    QSPILLD_InitHandle      qspilldInitHandle;
+    /* QSPI LLD Init Object and Handle */
+
+    QSPILLD_Object          qspilldObject;
+    QSPILLD_Handle          qspilldHandle;
+    /* QSPI LLD Object and Handle */
 } QSPI_Object;
 
 
@@ -334,42 +232,46 @@ typedef struct
     /*
      * SOC configuration
      */
-    uintptr_t   baseAddr;
+    uintptr_t               baseAddr;
     /**< Peripheral base address */
-    uintptr_t   memMapBaseAddr;
+    uintptr_t               memMapBaseAddr;
     /**< Memory mapped mode base address of QSPI flash */
-    uint32_t    inputClkFreq;
+    uint32_t                inputClkFreq;
     /**< Module input clock frequency */
-    uint32_t    baudRateDiv;
+    uint32_t                baudRateDiv;
     /**< Module clock divider */
-    uint32_t    chipSelect;
+    uint32_t                chipSelect;
     /**< Qspi Chip select number */
-    uint32_t    csPol;
+    uint32_t                csPol;
     /**< Qspi Chip select polarity */
-    uint32_t    frmFmt;
+    uint32_t                frmFmt;
     /**< Qspi Frame format */
-    uint32_t    dataDelay;
+    uint32_t                dataDelay;
     /**< QSPI data delay */
-    uint32_t    rxLines;
+    uint32_t                rxLines;
     /**< Number of rx Lines used for QSPI reading */
-    uint32_t    wrdLen;
+    uint32_t                wrdLen;
     /**< Number of bits in a word */
-    uint32_t    intrNum;
+    uint32_t                intrNum;
     /**< Peripheral interrupt number */
-    uint32_t    intrEnable;
+    bool                    intrEnable;
     /**< Enable interrupt mode */
-    uint8_t     intrPriority;
+    bool                    wordIntr;
+    /**< Word interrupt mode */
+    bool                    frameIntr;
+    /**< Word interrupt mode */
+    uint8_t                 intrPriority;
     /**< Interrupt priority */
-    uint32_t    dmaEnable;
+    bool                    dmaEnable;
     /**< Enable DMA mode */
 
 } QSPI_Attrs;
 
 typedef struct
 {
-    const QSPI_Attrs *attrs;
+    const QSPI_Attrs        *attrs;
     /**< Pointer to driver specific hardware attributes */
-    QSPI_Object *object;
+    QSPI_Object             *object;
     /**< Pointer to driver specific data object */
 } QSPI_Config;
 
@@ -377,6 +279,8 @@ typedef struct
 extern QSPI_Config gQspiConfig[];
 /** \brief Externally defined driver configuration array size */
 extern uint32_t    gQspiConfigNum;
+/** \brief EDMA Paramter for QSPI Transaction */
+QSPI_EdmaParams    gqspiEdmaParam;
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
@@ -474,6 +378,18 @@ uint32_t QSPI_getInputClk(QSPI_Handle handle);
 int32_t QSPI_readMemMapMode(QSPI_Handle handle, QSPI_Transaction *trans);
 
 /**
+ *  \brief  Function to send specific commands and related data to flash
+ *
+ *  \param  handle      #QSPI_Handle returned from #QSPI_open()
+ *  \param  wrParams    Pointer to a #QSPI_WriteCmdParams
+ *
+ *  \return #SystemP_SUCCESS if command write was successful; else error on failure
+ *
+ *  \sa     #QSPI_open
+ */
+int32_t QSPI_writeCmd(QSPI_Handle handle, QSPI_WriteCmdParams *wrParams);
+
+/**
  *  \brief  Function to perform writes to the flash in configuration mode.
  *
  *  \param  handle      #QSPI_Handle returned from #QSPI_open()
@@ -483,7 +399,46 @@ int32_t QSPI_readMemMapMode(QSPI_Handle handle, QSPI_Transaction *trans);
  *
  *  \sa     #QSPI_open
  */
-int32_t QSPI_writeConfigMode(QSPI_Handle handle, QSPI_Transaction *trans);
+int32_t QSPI_writeConfigMode(QSPI_Handle handle, const QSPI_Transaction *trans);
+
+/**
+ *  \brief  Function to perform write to the flash in interrupt mode
+ *          mode.
+ *
+ *  \param  handle      #QSPI_Handle returned from #QSPI_open()
+ *  \param  wrParams    Pointer to a #QSPI_WriteCmdParams
+ *
+ *  \return #SystemP_SUCCESS on successful read; else error on failure
+ *
+ *  \sa     #QSPI_open
+ */
+int32_t QSPI_writeConfigModeIntr(QSPI_Handle handle, QSPI_WriteCmdParams *wrParams);
+
+/**
+ *  \brief  Function to send specific commands and receive related data from flash
+ *
+ *  \param  handle      #QSPI_Handle returned from #QSPI_open()
+ *  \param  rdParams    Pointer to a #QSPI_ReadCmdParams
+ *
+ *  \return #SystemP_SUCCESS if command read was successful; else error on failure
+ *
+ *  \sa     #QSPI_open
+ */
+int32_t QSPI_readCmd(QSPI_Handle handle, QSPI_ReadCmdParams *rdParams);
+
+/**
+ *  \brief  Function to perform read from the flash in interrupt mode
+ *
+ *
+ *  \param  handle      #QSPI_Handle returned from #QSPI_open()
+ *  \param  rdParams    Pointer to a #QSPI_ReadCmdParams
+ *
+ *  \return #SystemP_SUCCESS on successful read; else error on failure
+ *
+ *  \sa     #QSPI_open
+ */
+int32_t QSPI_readConfigModeIntr(QSPI_Handle handle, QSPI_ReadCmdParams *rdParams);
+
 /** @} */
 
 /**
@@ -514,28 +469,23 @@ void QSPI_readCmdParams_init(QSPI_ReadCmdParams *rdParams);
 void QSPI_writeCmdParams_init(QSPI_WriteCmdParams *wrParams);
 
 /**
- *  \brief  Function to send specific commands and receive related data from flash
+ *  \brief   Set the QSPI clock register divider value.
  *
- *  \param  handle      #QSPI_Handle returned from #QSPI_open()
- *  \param  rdParams    Pointer to a #QSPI_ReadCmdParams
+ *  \details This function sets the QSPI clock control register
+ *           with serial data clock divider ratio (DCLK_DIV)
+ *           according to the input clock provided and the output clock
+ *           required.
+ *           DCLK_DIV = ((input clock) / (output clock)) - 1.
+ *           This function also enables the clock for QSPI module.
+ *           This can only be done if QSPI module is not busy.
  *
- *  \return #SystemP_SUCCESS if command read was successful; else error on failure
+ *  \param   handle           A #QSPI_Handle returned from a #QSPI_open()
  *
- *  \sa     #QSPI_open
+ *  \param   clkDividerVal    Clock divider value to be set.
+ *
+ *  \return  #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
  */
-int32_t QSPI_readCmd(QSPI_Handle handle, QSPI_ReadCmdParams *rdParams);
-
-/**
- *  \brief  Function to send specific commands and related data to flash
- *
- *  \param  handle      #QSPI_Handle returned from #QSPI_open()
- *  \param  wrParams    Pointer to a #QSPI_WriteCmdParams
- *
- *  \return #SystemP_SUCCESS if command write was successful; else error on failure
- *
- *  \sa     #QSPI_open
- */
-int32_t QSPI_writeCmd(QSPI_Handle handle, QSPI_WriteCmdParams *wrParams);
+int32_t QSPI_setPreScaler(QSPI_Handle handle, uint32_t clkDividerVal);
 
 /**
  *  \brief  Function to set write command to be used.
@@ -623,25 +573,6 @@ int32_t QSPI_intDisable(QSPI_Handle handle, uint32_t intFlag);
  *  \return  #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
  */
 int32_t QSPI_intClear(QSPI_Handle handle, uint32_t intFlag);
-
-/**
- *  \brief   Set the QSPI clock register divider value.
- *
- *  \details This function sets the QSPI clock control register
- *           with serial data clock divider ratio (DCLK_DIV)
- *           according to the input clock provided and the output clock
- *           required.
- *           DCLK_DIV = ((input clock) / (output clock)) - 1.
- *           This function also enables the clock for QSPI module.
- *           This can only be done if QSPI module is not busy.
- *
- *  \param   handle           A #QSPI_Handle returned from a #QSPI_open()
- *
- *  \param   clkDividerVal    Clock divider value to be set.
- *
- *  \return  #SystemP_SUCCESS on success, #SystemP_FAILURE otherwise
- */
-int32_t QSPI_setPreScaler(QSPI_Handle handle, uint32_t clkDividerVal);
 
 /**
  *  \brief   Set QSPI Rx lines in the QSPI object
