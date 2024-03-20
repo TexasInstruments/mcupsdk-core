@@ -1,0 +1,61 @@
+%%{
+    let common = system.getScript("/common");
+    let soc = system.getScript(`/drivers/soc/drivers_${common.getSocName()}`);
+    let driverVer = soc.getDriverVer("qspi");
+    let module = system.modules['/drivers/qspi/qspi'];
+%%}
+/*
+ * QSPI
+ */
+/* QSPI Driver handles */
+#include <stdbool.h>
+
+void Drivers_qspiOpen(void)
+{
+    uint32_t instCnt;
+    int32_t  status = SystemP_SUCCESS;
+
+    % let instance = module.$instances[0];
+    % let config = module.getInstanceConfig(instance);
+
+    /* Open all instances */
+    for(instCnt = 0U; instCnt < CONFIG_QSPI_NUM_INSTANCES; instCnt++)
+    {
+        %if(config.dmaEnable == true) {
+        status = QSPI_lld_initDma(gQspiHandle);
+        %}
+        %else{
+        status = QSPI_lld_init(gQspiHandle);
+        %}
+        if(NULL == gQspiHandle)
+        {
+            DebugP_logError("QSPI open failed for instance %d !!!\r\n", instCnt);
+            status = SystemP_FAILURE;
+            break;
+        }
+    }
+
+    if(SystemP_SUCCESS != status)
+    {
+        QSPI_lld_deInit(gQspiHandle);  /* Exit gracefully */
+    }
+
+    return;
+}
+
+void Drivers_qspiClose(void)
+{
+    uint32_t instCnt;
+
+    /* Close all instances that are open */
+    for(instCnt = 0U; instCnt < CONFIG_QSPI_NUM_INSTANCES; instCnt++)
+    {
+        if(gQspiHandle != NULL)
+        {
+            QSPI_lld_deInit(gQspiHandle);
+            gQspiHandle = NULL;
+        }
+    }
+
+    return;
+}

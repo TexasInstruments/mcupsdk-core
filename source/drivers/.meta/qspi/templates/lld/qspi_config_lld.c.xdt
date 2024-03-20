@@ -1,0 +1,102 @@
+%%{
+    let module = system.modules['/drivers/qspi/qspi'];
+
+    function getLines(proto, dataLines) {
+        let lines = "SINGLE";
+        if(proto == "1s_1s_2s") {
+            lines = "DUAL";
+        } else if (proto == "1s_1s_4s") {
+            lines = "QUAD";
+        } else if (proto == "custom") {
+            if(dataLines == "2") {
+                lines = "DUAL";
+            } else if(dataLines == "4") {
+                lines = "QUAD";
+            }
+        }
+        return lines;
+    }
+%%}
+
+#include <kernel/dpl/ClockP.h>
+#include <drivers/qspi/v0/lld/qspi_lld.h>
+#include <drivers/qspi/v0/lld/edma/qspi_edma_lld.h>
+/*
+ * QSPI
+ */
+QSPI_EdmaParams gqspiEdmaParam;
+
+/* QSPI Initialization */
+QSPILLD_InitObject gQspiInitObject[CONFIG_QSPI_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let name = config.name;
+    {
+        .memMapBaseAddr       = `config.memMapBaseAddr`,
+        .inputClkFreq         = `config.inputClkFreq`U,
+        .rxLines              = QSPI_RX_LINES_`getLines(config.protocol, config.dataLines)`,
+        .chipSelect           = QSPI_`config.chipSelect`,
+        .csPol                = QSPI_CS_POL_`config.csPol`,
+        .dataDelay            = QSPI_DATA_`config.dataDelay`,
+        .frmFmt               = QSPI_FF_`config.frmFmt`,
+        .wrdLen               = `config.wrdLen`,
+        .qspiClockDiv         = `config.baudRateDiv`,
+        .dmaEnable            = `config.dmaEnable`,
+        .intrEnable           = `config.intrEnable`,
+        %if(config.intrEnable == 1)
+        %{
+        .wordIntr             = `config.wordIntr`,
+        .frameIntr            = `config.frameIntr`,
+        %}
+        %else
+        %{
+        .wordIntr             = NULL,
+        .frameIntr            = NULL,
+        %}
+        .intrPriority         = `config.intrPriority`,
+        .intrNum              = `config.intrNum`,
+        .Clock_getTicks       = ClockP_getTicks,
+        .Clock_usecToTicks    = ClockP_usecToTicks,
+        %if(config.dmaEnable == 1)
+        %{
+        .qspiDmaChConfig      = (QSPI_DmaChConfig) &gqspiEdmaParam,
+        .qspiDmaHandle        = (QSPI_DmaHandle) &gEdmaConfig,
+        %}
+        %else
+        %{
+        .qspiDmaChConfig      = NULL,
+        .qspiDmaHandle        = NULL,
+        %}
+    },
+% }
+};
+
+/* QSPI Object */
+QSPILLD_Object gQspiObject[CONFIG_QSPI_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let name = config.name;
+    {
+        .baseAddr             = `config.baseAddr`,
+        .state                = QSPI_STATE_RESET,
+        .hQspiInit            = (QSPILLD_InitHandle) &gQspiInitObject[0] ,
+        %if(config.dmaEnable == 1)
+        %{
+        .readCompleteCallback = &QSPI_lld_readCompleteCallback,
+        %}
+        %else
+        %{
+        .readCompleteCallback = NULL,
+        %}
+        .transaction = NULL,
+    },
+% }
+};
+
+QSPILLD_Handle gQspiHandle = &gQspiObject[0];
+
+uint32_t gQspiConfigNum = CONFIG_QSPI_NUM_INSTANCES;

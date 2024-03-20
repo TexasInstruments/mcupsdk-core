@@ -1,6 +1,6 @@
 %%{
     let module = system.modules['/drivers/qspi/qspi'];
-    
+
     function getLines(proto, dataLines) {
         let lines = "SINGLE";
         if(proto == "1s_1s_2s") {
@@ -20,7 +20,9 @@
 /*
  * QSPI
  */
-
+#include <drivers/qspi/v0/lld/edma/qspi_edma_lld.h>
+#include <drivers/qspi/v0/lld/qspi_lld.h>
+QSPI_EdmaParams gqspiEdmaParam;
 
 /* QSPI attributes */
 static QSPI_Attrs gQspiAttrs[CONFIG_QSPI_NUM_INSTANCES] =
@@ -35,6 +37,16 @@ static QSPI_Attrs gQspiAttrs[CONFIG_QSPI_NUM_INSTANCES] =
         .inputClkFreq         = `config.inputClkFreq`U,
         .intrNum              = `config.intrNum`U,
         .intrEnable           = `config.intrEnable.toString(10).toUpperCase()`,
+        %if(config.intrEnable == 1)
+        %{
+        .wordIntr             = `config.wordIntr.toString(10).toUpperCase()`,
+        .frameIntr            = `config.frameIntr.toString(10).toUpperCase()`,
+        %}
+        %else
+        %{
+        .wordIntr             = NULL,
+        .frameIntr            = NULL,
+        %}
         .dmaEnable            = `config.dmaEnable.toString(10).toUpperCase()`,
         .intrPriority         = `config.intrPriority`U,
         .rxLines              = QSPI_RX_LINES_`getLines(config.protocol, config.dataLines)`,
@@ -49,14 +61,15 @@ static QSPI_Attrs gQspiAttrs[CONFIG_QSPI_NUM_INSTANCES] =
 };
 /* QSPI objects - initialized by the driver */
 static QSPI_Object gQspiObjects[CONFIG_QSPI_NUM_INSTANCES];
+
 /* QSPI driver configuration */
 QSPI_Config gQspiConfig[CONFIG_QSPI_NUM_INSTANCES] =
 {
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
     {
-        &gQspiAttrs[`instance.$name.toUpperCase()`],
-        &gQspiObjects[`instance.$name.toUpperCase()`],
+        .attrs = &gQspiAttrs[`instance.$name.toUpperCase()`],
+        .object = &gQspiObjects[`instance.$name.toUpperCase()`],
     },
 % }
 };

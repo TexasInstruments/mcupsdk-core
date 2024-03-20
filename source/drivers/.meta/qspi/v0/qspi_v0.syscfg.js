@@ -45,6 +45,7 @@ function getPeripheralPinNames(inst) {
 
 function pinmuxRequirements(inst) {
 
+
     let resources = [];
     let interfaceName = getInterfaceName(inst);
 
@@ -91,22 +92,6 @@ let qspi_module_name = "/drivers/qspi/qspi";
 let qspi_module = {
     displayName: "QSPI",
     templates: {
-        "/drivers/system/system_config.c.xdt": {
-            driver_config: "/drivers/qspi/templates/qspi_config.c.xdt",
-            driver_init: "/drivers/qspi/templates/qspi_init.c.xdt",
-            driver_deinit: "/drivers/qspi/templates/qspi_deinit.c.xdt",
-        },
-        "/drivers/system/system_config.h.xdt": {
-            driver_config: "/drivers/qspi/templates/qspi.h.xdt",
-        },
-        "/drivers/system/drivers_open_close.c.xdt": {
-            driver_open_close_config: "/drivers/qspi/templates/qspi_open_close_config.c.xdt",
-            driver_open: "/drivers/qspi/templates/qspi_open.c.xdt",
-            driver_close: "/drivers/qspi/templates/qspi_close.c.xdt",
-        },
-        "/drivers/system/drivers_open_close.h.xdt": {
-            driver_open_close_config: "/drivers/qspi/templates/qspi_open_close.h.xdt",
-        },
         "/drivers/pinmux/pinmux_config.c.xdt": {
             moduleName: qspi_module_name,
         },
@@ -197,7 +182,7 @@ let qspi_module = {
         {
             name: "dmaEnable",
             displayName: "Enable DMA",
-            default: false,
+            default: true,
             description: `Enable data transfer using DMA`,
         },
         /* Advanced parameters */
@@ -212,6 +197,7 @@ let qspi_module = {
                 }
                 ui.intrEnable.hidden = hideConfigs;
                 ui.intrPriority.hidden = hideConfigs;
+                ui.intrNum.hidden = hideConfigs;
                 ui.frmFmt.hidden = hideConfigs;
                 ui.csPol.hidden = hideConfigs;
                 ui.dataDelay.hidden = hideConfigs;
@@ -223,6 +209,35 @@ let qspi_module = {
             description: "NOT tested, DO NOT USE",
             default: false,
             hidden: true,
+            onChange: function (inst, ui) {
+                let hideConfigs = true;
+                if(inst.intrEnable == true) {
+                    hideConfigs = false;
+                }
+                ui.wordIntr.hidden = hideConfigs;
+                ui.frameIntr.hidden = hideConfigs;
+            },
+        },
+        {
+            name: "wordIntr",
+            displayName: "Word Interrupt",
+            description: "NOT tested, DO NOT USE",
+            default: true,
+            hidden: true,
+        },
+        {
+            name: "frameIntr",
+            displayName: "Frame Interrupt",
+            description: "NOT tested, DO NOT USE",
+            default: true,
+            hidden: true,
+        },
+        {
+            name: "intrNum",
+            displayName: "Interrupt Number",
+            description: "NOT tested, DO NOT USE",
+            default: soc.getDefaultConfig().intrNum,
+            hidden: true,
         },
         {
             name: "intrPriority",
@@ -231,6 +246,22 @@ let qspi_module = {
             default: 4,
             hidden: true,
             description: `Interrupt Priority: 0 (highest) to x (lowest)`,
+        },
+        {
+            name: "sdkInfra",
+            displayName: "SDK Infra",
+            default: "HLD",
+            options: [
+                {
+                    name: "HLD",
+                    displayName: "HLD"
+                },
+                {
+                    name: "LLD",
+                    displayName: "LLD"
+                },
+            ],
+            description: "SDK Infra",
         },
         /* Advance Open attributes */
         {
@@ -279,6 +310,7 @@ let qspi_module = {
         },
     },
     sharedModuleInstances: addModuleInstances,
+    moduleInstances: moduleInstances,
     pinmuxRequirements,
     getInstanceConfig,
     getClockEnableIds,
@@ -299,6 +331,33 @@ function addModuleInstances(instance) {
     });
 
     return modInstances;
+}
+
+/*
+ *  ======== moduleInstances ========
+ */
+function moduleInstances(inst) {
+    let modInstances = new Array();
+
+    if( inst.sdkInfra == "HLD")
+    {
+        modInstances.push({
+            name: "child",
+            moduleName: '/drivers/qspi/v0/qspi_v0_template',
+            },
+        );
+    }
+    else
+    {
+        modInstances.push({
+            name: "child",
+            moduleName: '/drivers/qspi/v0/qspi_v0_lld_template',
+            },
+        );
+    }
+
+
+    return (modInstances);
 }
 
 function validate(instance, report) {
