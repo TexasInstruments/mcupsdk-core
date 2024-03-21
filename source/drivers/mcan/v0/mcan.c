@@ -930,8 +930,7 @@ int32_t MCAN_txBufAddReq(uint32_t baseAddr, uint32_t bufNum)
 
     if (MCANSS_TX_BUFFER_MAX > bufNum)
     {
-        regVal  = HW_RD_REG32(MCAN_CfgAddr(baseAddr) + MCAN_TXBAR);
-        regVal |= ((uint32_t) 1U << bufNum);
+        regVal = ((uint32_t) 1U << bufNum);
         HW_WR_REG32(MCAN_CfgAddr(baseAddr) + MCAN_TXBAR, regVal);
         status = CSL_PASS;
     }
