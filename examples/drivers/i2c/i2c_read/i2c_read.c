@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -76,11 +76,11 @@ void i2c_read_main(void *arg0)
         }
         else
         {
-            i2c_read_error_handler(sample, status);
+            i2c_read_error_handler(sample, i2cTransaction.status);
         }
     }
 
-    DebugP_log("[I2C] Read data ... DONE !!!");
+    DebugP_log("[I2C] Read data ... DONE !!!\r\n");
     if(status == SystemP_SUCCESS)
     {
         DebugP_log("All tests have passed!!\r\n");
@@ -112,8 +112,8 @@ static void i2c_read_error_handler(uint16_t sample, int32_t status)
         case I2C_STS_ERR_ARBITRATION_LOST:
             DebugP_logError("[I2C] Sample %u: Arbitration lost", sample);
             break;
-        case I2C_STS_ERR_ACCESS_ERROR:
-            DebugP_logError("[I2C] Sample %u: Bus Access error occurred", sample);
+        case I2C_STS_ERR_BUS_BUSY:
+            DebugP_logError("[I2C] Sample %u: Bus Bus Busy error occurred", sample);
             break;
     }
 

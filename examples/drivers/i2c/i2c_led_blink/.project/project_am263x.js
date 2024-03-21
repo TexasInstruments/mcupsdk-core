@@ -44,7 +44,6 @@ const includes_freertos_r5f = {
     ],
 };
 
-
 const libs_nortos_r5f = {
     common: [
         "nortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib",

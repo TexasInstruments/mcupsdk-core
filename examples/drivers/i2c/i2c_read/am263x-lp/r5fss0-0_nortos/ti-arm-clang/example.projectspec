@@ -95,7 +95,7 @@
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263x/EXAMPLES_DRIVERS_I2C_READ.html"
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263x/EXAMPLES_DRIVERS_I2C_READ_V1.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">

@@ -76,7 +76,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg"
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_I2C_READ";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_I2C_READ_V1";
 
 const templates_nortos_r5f =
 [
@@ -125,6 +125,7 @@ const templates_nortos_c66 =
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "awr294x-evm", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "awr294x-evm", os: "freertos"},
 ];
 
 function getComponentProperty() {
@@ -150,8 +151,18 @@ function getComponentBuildProperty(buildOption) {
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
     if(buildOption.cpu.match(/r5f*/)) {
-        build_property.libs = libs_nortos_r5f;
-        build_property.templates = templates_nortos_r5f;
+        if(buildOption.os.match(/freertos*/) )
+        {
+            build_property.includes = includes_freertos_r5f;
+            build_property.libdirs = libdirs_freertos;
+            build_property.libs = libs_freertos_r5f;
+            build_property.templates = templates_freertos_r5f;
+        }
+        else
+        {
+            build_property.libs = libs_nortos_r5f;
+            build_property.templates = templates_nortos_r5f;
+        }
     }
     if(buildOption.cpu.match(/c66*/)) {
         build_property.libs = libs_nortos_c66;
