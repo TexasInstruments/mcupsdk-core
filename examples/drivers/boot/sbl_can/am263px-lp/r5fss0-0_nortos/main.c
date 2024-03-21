@@ -40,7 +40,7 @@
 #include <drivers/hsmclient.h>
 #include <drivers/bootloader/bootloader_can.h>
 #include <drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
-#include <drivers/gpio.h>
+#include <board/ioexp/ioexp_tca6416.h>
 
 #define BOOTLOADER_CAN_STATUS_LOAD_SUCCESS           (0x53554343) /* SUCC */
 #define BOOTLOADER_CAN_STATUS_LOAD_CPU_FAIL          (0x4641494C) /* FAIL */
@@ -55,6 +55,9 @@ const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.h
 extern HsmClient_t gHSMClient ;
 
 uint32_t gRunApp;
+
+#define IO_MUX_MCAN_STB                             (10U)                       // PORT 1, PIN 2         -> ioIndex : 1*8 + 2 = 10
+#define TCA6416_IO_MUX_MCAN_STB_PORT_LINE_STATE     (TCA6416_OUT_STATE_LOW)     // MCAN_STB PIN OUTPUT   -> 0
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -78,23 +81,40 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
 
 void mcanEnableTransceiver(void)
 {
-    uint32_t    gpioBaseAddr, pinNum;
+    static TCA6416_Config  gTCA6416_Config;
+    int32_t             status = SystemP_SUCCESS;
+    TCA6416_Params      tca6416Params;
+    TCA6416_Params_init(&tca6416Params);
 
-    gpioBaseAddr = (uint32_t)AddrTranslateP_getLocalAddr(CONFIG_GPIO0_BASE_ADDR);
-    pinNum       = CONFIG_GPIO0_PIN;
+    status = TCA6416_open(&gTCA6416_Config, &tca6416Params);
+    DebugP_assert(SystemP_SUCCESS == status);
 
-    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_DIRECTION_OUTPUT);
+    status = TCA6416_setOutput(
+                    &gTCA6416_Config,
+                    IO_MUX_MCAN_STB,
+                    TCA6416_IO_MUX_MCAN_STB_PORT_LINE_STATE);
+    DebugP_assert(SystemP_SUCCESS == status);
 
-    GPIO_pinWriteLow(gpioBaseAddr, pinNum);
+    /* Configure as output  */
+    status += TCA6416_config(
+                    &gTCA6416_Config,
+                    IO_MUX_MCAN_STB,
+                    TCA6416_MODE_OUTPUT);
+
+    if(status != SystemP_SUCCESS)
+    {
+        DebugP_log("Transceiver Setup Failure !!");
+        TCA6416_close(&gTCA6416_Config);
+    }
+
+    TCA6416_close(&gTCA6416_Config);
 }
 
 int main()
 {
     int32_t status;
-    Bootloader_profileReset();
 
     Bootloader_socConfigurePll();
-    Bootloader_socInitL2MailBoxMemory();
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");
@@ -103,21 +123,22 @@ int main()
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socInitL2MailBoxMemory();
+    DebugP_log("\r\n");
 
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
 
-    DebugP_log("\r\n");
-    DebugP_log("Starting CAN Bootloader...");
-
     status = Board_driversOpen();
-
     DebugP_assert(status == SystemP_SUCCESS);
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
     Bootloader_socCpuSetClock(CSL_CORE_ID_R5FSS0_0, (uint32_t)(400*1000000));
     mcanEnableTransceiver();
     Bootloader_CANInit(CONFIG_MCAN0_BASE_ADDR);
+
+    DebugP_log("\r\n");
+    DebugP_log("Starting CAN Bootloader...");
 
     if(SystemP_SUCCESS == status)
     {
@@ -137,7 +158,7 @@ int main()
 
         if(BOOTLOADER_MEDIA_MEM == Bootloader_getBootMedia(bootHandle))
         {
-            uint32_t fileSize;
+            uint32_t fileSize = 0U;
             /* CAN Receive */
             status = Bootloader_CANReceiveFile(&fileSize, gAppImageBuf, &gRunApp);
 
@@ -231,6 +252,11 @@ int main()
             }
             if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
             {
+                /* Load the image on self core now */
+                if( bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
+                {
+                    status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
+                }
                 /* Reset self cluster, both Core0 and Core 1. Init RAMs and run the app  */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
             }

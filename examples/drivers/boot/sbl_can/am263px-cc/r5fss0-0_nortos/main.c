@@ -117,7 +117,7 @@ int main()
 
         if(BOOTLOADER_MEDIA_MEM == Bootloader_getBootMedia(bootHandle))
         {
-            uint32_t fileSize;
+            uint32_t fileSize = 0U;
             /* CAN Receive */
             status = Bootloader_CANReceiveFile(&fileSize, gAppImageBuf, &gRunApp);
 
