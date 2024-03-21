@@ -1,15 +1,30 @@
 %%{
     let module = system.modules['/drivers/pruicss/pruicss'];
+    let common = system.getScript("/common");
+
+    function getDeviceName() {
+        return common.getDeviceName();
+    }
 %%}
 /*
  * PRUICSS
  */
 #include <drivers/pruicss.h>
 
+% let device = getDeviceName();
 /* PRUICSS Instance Macros */
 % for(let i = 0; i < module.$instances.length; i++) {
     % let instance = module.$instances[i];
+    % let period;
 #define `instance.$name.toUpperCase()` (`i`U)
-#define `instance.$name.toUpperCase()`_CORE_CLK_FREQ_HZ (`instance.coreClk`U)
-% }
+    %if((device === "am64x-evm") || (device === "am243x-evm") || (device === "am243x-lp"))
+    %{
+        % period = (1000000000/instance.coreClk)
+#define `instance.$name.toUpperCase()`_CORE_CLK_FREQ_HZ     (`instance.coreClk`U)
+#define `instance.$name.toUpperCase()`_CORE_CLK_PERIOD_NSEC (`period`U)
+        % period = (1000000000/instance.iepClk)
+#define `instance.$name.toUpperCase()`_IEP_CLK_FREQ_HZ      (`instance.iepClk`U)
+#define `instance.$name.toUpperCase()`_IEP_CLK_PERIOD_NSEC  (`period`U)
+    %}
+%}
 #define CONFIG_PRUICSS_NUM_INSTANCES (`module.$instances.length`U)
