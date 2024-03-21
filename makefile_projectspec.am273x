@@ -43,7 +43,15 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hwa_real_fft_am273x-evm_c66ss0_nort
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hwa_bfp_compression_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hwa_bfp_compression_am273x-evm_c66ss0_nortos_ti-c6000_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_read_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_memory_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_memory_read_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_temperature_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_temperature_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_memory_read_polling_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_memory_read_interrupt_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_temperature_polling_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_temperature_interrupt_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build
@@ -312,8 +320,32 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  i2c_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
+ i2c_read_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ i2c_memory_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ i2c_memory_read_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
  i2c_temperature_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ i2c_temperature_am273x-evm_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ i2c_memory_read_polling_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ i2c_memory_read_interrupt_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_interrupt_lld/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ i2c_temperature_polling_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_polling_lld/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
+
+ i2c_temperature_interrupt_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_interrupt_lld/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
  mcan_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -781,7 +813,15 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hwa_real_fft_am273x-evm_c66ss0_nort
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hwa_bfp_compression_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hwa_bfp_compression_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_read_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_memory_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_memory_read_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_temperature_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_temperature_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_memory_read_polling_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_memory_read_interrupt_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_temperature_polling_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_temperature_interrupt_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1050,8 +1090,32 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  i2c_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
+ i2c_read_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ i2c_memory_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ i2c_memory_read_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
  i2c_temperature_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ i2c_temperature_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ i2c_memory_read_polling_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ i2c_memory_read_interrupt_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_interrupt_lld/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ i2c_temperature_polling_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_polling_lld/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
+
+ i2c_temperature_interrupt_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_interrupt_lld/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
  mcan_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -1519,7 +1583,15 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hwa_real_fft_am273x-evm_c66ss0_nor
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hwa_bfp_compression_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hwa_bfp_compression_am273x-evm_c66ss0_nortos_ti-c6000_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_read_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_memory_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_memory_read_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_temperature_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_temperature_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_memory_read_polling_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_memory_read_interrupt_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_temperature_polling_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_temperature_interrupt_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_loopback_interrupt_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_loopback_polling_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export
@@ -1788,8 +1860,32 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  i2c_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
+ i2c_read_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ i2c_memory_read_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ i2c_memory_read_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
  i2c_temperature_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ i2c_temperature_am273x-evm_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ i2c_memory_read_polling_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ i2c_memory_read_interrupt_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_interrupt_lld/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ i2c_temperature_polling_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_polling_lld/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
+
+ i2c_temperature_interrupt_lld_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_interrupt_lld/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
  mcan_loopback_interrupt_am273x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -2273,7 +2369,15 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/hwa/hwa_bfp_compression/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/hwa/hwa_bfp_compression/am273x-evm/c66ss0_nortos/ti-c6000 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read_polling_lld/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read_interrupt_lld/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature_polling_lld/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature_interrupt_lld/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_interrupt/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_interrupt/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_polling/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]

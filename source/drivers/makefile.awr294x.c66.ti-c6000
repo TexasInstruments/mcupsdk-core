@@ -31,6 +31,7 @@ FILES_common := \
     hsmclient_utils.c \
     hwa.c \
     i2c_v1.c \
+    i2c_v1_lld.c \
     ipc_notify_v1.c \
     ipc_notify_v1_cfg.c \
     ipc_rpmsg.c \
@@ -68,6 +69,7 @@ FILES_PATH_common = \
     hsmclient/utils \
     hwa/v0 \
     i2c/v1 \
+    i2c/v1/lld \
     ipc_notify/v1 \
     ipc_notify/v1/soc/awr294x \
     ipc_rpmsg \

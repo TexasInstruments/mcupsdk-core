@@ -102,6 +102,9 @@ const templates_nortos_r5f_gcc =
     {
         input: ".project/templates/am243x/common/linker_r5f_gcc.cmd.xdt",
         output: "linker.cmd",
+        options: {
+            isSingleCore: true,
+        },
     },
     {
         input: ".project/templates/am243x/nortos/main_nortos.c.xdt",
@@ -117,6 +120,9 @@ const templates_freertos_r5f_gcc =
     {
         input: ".project/templates/am243x/common/linker_r5f_gcc.cmd.xdt",
         output: "linker.cmd",
+        options: {
+            isSingleCore: true,
+        },
     },
     {
         input: ".project/templates/am243x/freertos/main_freertos.c.xdt",

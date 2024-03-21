@@ -47,6 +47,8 @@ FILES_common := \
     Uart_sample.c \
     Uart_lld_sample.c \
     Watchdog_sample.c \
+    I2c_lld_sample_v1.c \
+    I2c_lld_sample_v1.c \
 
 FILES_PATH_common = \
     board \

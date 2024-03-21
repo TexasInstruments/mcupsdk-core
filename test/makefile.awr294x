@@ -108,9 +108,9 @@ help:
 	@echo  $(MAKE) -s -C drivers/hwa/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/hwa/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/i2c/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/i2c/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/qspi/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/qspi/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C drivers/i2c/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mailbox/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mailbox/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mailbox/mailbox_ut/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -347,9 +347,9 @@ BUILD_COMBO_EXAMPLE_ALL += test_gpio_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_hwa_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_hwa_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += test_i2c_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_i2c_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_qspi_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_qspi_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_i2c_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mailbox_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += mailbox_ut_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -635,14 +635,14 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_i2c_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C drivers/i2c/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ test_i2c_awr294x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/i2c/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
  test_qspi_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C drivers/qspi/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  test_qspi_awr294x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C drivers/qspi/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
-
- test_i2c_awr294x-evm_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C drivers/i2c/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  test_mailbox_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C drivers/mailbox/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -942,9 +942,9 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_gpio_awr294x-evm_r5fss0-0_nortos_ti-arm-cl
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_hwa_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_hwa_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_i2c_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_i2c_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_qspi_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_qspi_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_i2c_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mailbox_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mailbox_ut_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1225,14 +1225,14 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  test_i2c_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/i2c/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ test_i2c_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/i2c/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
  test_qspi_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/qspi/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  test_qspi_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/qspi/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
-
- test_i2c_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C drivers/i2c/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  test_mailbox_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/mailbox/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -1532,9 +1532,9 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_gpio_awr294x-evm_r5fss0-0_nortos_ti-arm-cl
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_hwa_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_hwa_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_i2c_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_i2c_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_qspi_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_qspi_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_i2c_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mailbox_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mailbox_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mailbox_ut_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -1815,14 +1815,14 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  test_i2c_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/i2c/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ test_i2c_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/i2c/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
  test_qspi_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/qspi/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  test_qspi_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/qspi/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
-
- test_i2c_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C drivers/i2c/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  test_mailbox_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/mailbox/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

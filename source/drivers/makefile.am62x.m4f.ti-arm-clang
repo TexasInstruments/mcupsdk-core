@@ -18,6 +18,7 @@ LIBNAME:=drivers.am62x.m4f.ti-arm-clang.$(PROFILE).lib
 FILES_common := \
     csl_sec_proxy.c \
     i2c_v0.c \
+    i2c_v0_lld.c \
     gpio.c \
     pinmux.c \
     mcspi_v0.c \
@@ -44,6 +45,7 @@ FILES_common := \
 
 FILES_PATH_common = \
     i2c/v0 \
+    i2c/v0/lld \
     pinmux/am62x \
     mcan/v0 \
     ipc_notify/v0 \

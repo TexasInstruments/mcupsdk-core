@@ -245,11 +245,42 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink/am243x-lp/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/am243x-lp/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read/am243x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read/am243x-evm/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read/am243x-lp/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_freertos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink_polling_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink_polling_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink_interrupt_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_read_write_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_read_write_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read_polling_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read_polling_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read_interrupt_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_dma/am243x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_dma/am243x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1687,8 +1718,27 @@ BUILD_COMBO_EXAMPLE_ALL += i2c_led_blink_am243x-evm_r5fss0-0_freertos_ti-arm-cla
 BUILD_COMBO_EXAMPLE_ALL += i2c_led_blink_am243x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += i2c_led_blink_am243x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += i2c_read_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += i2c_read_am243x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_memory_read_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_memory_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_memory_read_am243x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_memory_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += i2c_temperature_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_temperature_am243x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_led_blink_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_led_blink_polling_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_led_blink_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_led_blink_interrupt_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_led_read_write_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_led_read_write_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_memory_read_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_memory_read_polling_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_memory_read_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_memory_read_interrupt_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_temperature_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_temperature_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcan_loopback_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcan_loopback_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcan_loopback_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang
@@ -2047,8 +2097,20 @@ BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_led_blink_am243x-evm_r5fss0-0_freertos_gcc-ar
 BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_led_blink_am243x-lp_r5fss0-0_nortos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_led_blink_am243x-lp_r5fss0-0_freertos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_read_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_read_am243x-evm_r5fss0-0_freertos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_read_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_read_am243x-lp_r5fss0-0_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_memory_read_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_memory_read_am243x-evm_r5fss0-0_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_memory_read_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_memory_read_am243x-lp_r5fss0-0_freertos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_temperature_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_temperature_am243x-evm_r5fss0-0_freertos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_led_blink_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_led_blink_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_memory_read_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_memory_read_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7
+BUILD_COMBO_EXAMPLE_ALL_GCC += i2c_temperature_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += mcan_loopback_dma_am243x-evm_r5fss0-0_nortos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += mcan_loopback_dma_am243x-evm_r5fss0-0_freertos_gcc-armv7
 BUILD_COMBO_EXAMPLE_ALL_GCC += mcan_loopback_dma_am243x-lp_r5fss0-0_nortos_gcc-armv7
@@ -2389,10 +2451,34 @@ examples_gcc: $(BUILD_COMBO_EXAMPLE_ALL_GCC)
 	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile all
  i2c_read_am243x-evm_r5fss0-0_nortos_gcc-armv7:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ i2c_read_am243x-evm_r5fss0-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile all
  i2c_read_am243x-lp_r5fss0-0_nortos_gcc-armv7:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ i2c_read_am243x-lp_r5fss0-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile all
+ i2c_memory_read_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ i2c_memory_read_am243x-evm_r5fss0-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile all
+ i2c_memory_read_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ i2c_memory_read_am243x-lp_r5fss0-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile all
  i2c_temperature_am243x-evm_r5fss0-0_nortos_gcc-armv7:
 	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ i2c_temperature_am243x-evm_r5fss0-0_freertos_gcc-armv7:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile all
+ i2c_led_blink_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ i2c_led_blink_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_polling_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ i2c_memory_read_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ i2c_memory_read_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile all
+ i2c_temperature_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
  mcan_loopback_dma_am243x-evm_r5fss0-0_nortos_gcc-armv7:
 	$(MAKE) -C examples/drivers/mcan/mcan_loopback_dma/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile all
  mcan_loopback_dma_am243x-evm_r5fss0-0_freertos_gcc-armv7:
@@ -2970,11 +3056,68 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  i2c_read_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ i2c_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
  i2c_read_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ i2c_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ i2c_memory_read_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_memory_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ i2c_memory_read_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_memory_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
  i2c_temperature_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_temperature_am243x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ i2c_led_blink_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_led_blink_polling_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_polling_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_led_blink_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_led_blink_interrupt_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_interrupt_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_led_read_write_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_read_write_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_led_read_write_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_read_write_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_memory_read_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_memory_read_polling_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_memory_read_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_memory_read_interrupt_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_interrupt_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_temperature_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_temperature_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  mcan_loopback_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/mcan/mcan_loopback_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -4059,8 +4202,27 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_led_blink_am243x-evm_r5fss0-0_freertos_ti-a
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_led_blink_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_led_blink_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_read_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_read_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_memory_read_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_memory_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_memory_read_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_memory_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_temperature_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_temperature_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_led_blink_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_led_blink_polling_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_led_blink_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_led_blink_interrupt_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_led_read_write_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_led_read_write_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_memory_read_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_memory_read_polling_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_memory_read_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_memory_read_interrupt_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_temperature_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_temperature_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_loopback_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_loopback_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_loopback_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -4440,8 +4602,20 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_led_blink_am243x-evm_r5fss0-0_freertos_
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_led_blink_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_led_blink_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_read_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_read_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_read_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_read_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_memory_read_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_memory_read_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_memory_read_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_memory_read_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_temperature_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_temperature_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_led_blink_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_led_blink_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_memory_read_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_memory_read_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += i2c_temperature_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += mcan_loopback_dma_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += mcan_loopback_dma_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC += mcan_loopback_dma_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean
@@ -5023,20 +5197,113 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  i2c_read_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ i2c_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
  i2c_read_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  i2c_read_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
 
+ i2c_read_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile clean
+
  i2c_read_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ i2c_read_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile clean
+
+ i2c_memory_read_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_memory_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ i2c_memory_read_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_memory_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ i2c_memory_read_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ i2c_memory_read_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile clean
+
+ i2c_memory_read_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ i2c_memory_read_am243x-lp_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile clean
 
  i2c_temperature_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ i2c_temperature_am243x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
  i2c_temperature_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
 	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ i2c_temperature_am243x-evm_r5fss0-0_freertos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile clean
+
+ i2c_led_blink_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_led_blink_polling_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_polling_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_led_blink_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ i2c_led_blink_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_polling_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ i2c_led_blink_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_led_blink_interrupt_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_interrupt_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_led_read_write_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_read_write_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_led_read_write_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_read_write_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_memory_read_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_memory_read_polling_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_memory_read_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ i2c_memory_read_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ i2c_memory_read_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_memory_read_interrupt_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_interrupt_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_temperature_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_temperature_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile clean
+
+ i2c_temperature_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  mcan_loopback_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mcan/mcan_loopback_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -6667,8 +6934,27 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_led_blink_am243x-evm_r5fss0-0_freertos_ti-a
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_led_blink_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_led_blink_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_read_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_read_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_memory_read_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_memory_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_memory_read_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_memory_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_temperature_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_temperature_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_led_blink_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_led_blink_polling_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_led_blink_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_led_blink_interrupt_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_led_read_write_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_led_read_write_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_memory_read_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_memory_read_polling_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_memory_read_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_memory_read_interrupt_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_temperature_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_temperature_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_loopback_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_loopback_dma_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_loopback_dma_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -7048,8 +7334,20 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_led_blink_am243x-evm_r5fss0-0_freertos_
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_led_blink_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_led_blink_am243x-lp_r5fss0-0_freertos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_read_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_read_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_read_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_read_am243x-lp_r5fss0-0_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_memory_read_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_memory_read_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_memory_read_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_memory_read_am243x-lp_r5fss0-0_freertos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_temperature_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_temperature_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_led_blink_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_led_blink_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_memory_read_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_memory_read_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += i2c_temperature_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += mcan_loopback_dma_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += mcan_loopback_dma_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC += mcan_loopback_dma_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub
@@ -7631,20 +7929,113 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  i2c_read_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ i2c_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
  i2c_read_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  i2c_read_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
 
+ i2c_read_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile scrub
+
  i2c_read_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ i2c_read_am243x-lp_r5fss0-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile scrub
+
+ i2c_memory_read_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_memory_read_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ i2c_memory_read_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_memory_read_am243x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ i2c_memory_read_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ i2c_memory_read_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile scrub
+
+ i2c_memory_read_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ i2c_memory_read_am243x-lp_r5fss0-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/am243x-lp/r5fss0-0_freertos/gcc-armv7 -f makefile scrub
 
  i2c_temperature_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ i2c_temperature_am243x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
  i2c_temperature_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
 	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ i2c_temperature_am243x-evm_r5fss0-0_freertos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am243x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile scrub
+
+ i2c_led_blink_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_led_blink_polling_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_polling_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_led_blink_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ i2c_led_blink_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_polling_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ i2c_led_blink_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_led_blink_interrupt_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_blink_interrupt_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_led_read_write_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_read_write_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_led_read_write_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_led_read_write_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_memory_read_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_memory_read_polling_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_memory_read_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ i2c_memory_read_polling_lld_am243x-lp_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/am243x-lp/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ i2c_memory_read_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_memory_read_interrupt_lld_am243x-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_interrupt_lld/am243x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_temperature_polling_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_polling_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_temperature_polling_lld_am243x-evm_r5fss0-0_nortos_gcc-armv7_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_polling_lld/am243x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile scrub
+
+ i2c_temperature_interrupt_lld_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_interrupt_lld/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  mcan_loopback_dma_am243x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/mcan/mcan_loopback_dma/am243x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

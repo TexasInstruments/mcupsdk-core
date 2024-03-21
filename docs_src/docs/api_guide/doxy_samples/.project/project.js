@@ -215,20 +215,25 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.device=="am263x")
     {
         build_property.files = files_am263x;
+        build_property.files.common.push("I2c_lld_sample_v1.c");
     }
     if(buildOption.device=="am263px")
     {
         build_property.files = files_am263px;
+        build_property.files.common.push("I2c_lld_sample_v1.c");
     }
     if(buildOption.device=="am64x" || buildOption.device=="am243x")
     {
         build_property.files = files;
         build_property.files.common.push("Soc_am64x_sample.c");
+        build_property.files.common.push("I2c_lld_sample_v0.c");
+
     }
     if(buildOption.device=="am273x" || buildOption.device=="awr294x")
     {
         build_property.files = files_am273x;
         build_property.files.common.push("CacheP_c6x_sample.c");
+        build_property.files.common.push("I2c_lld_sample_v1.c");
         if(buildOption.device=="awr294x")
         {
             build_property.files.common.push("Adcbuf_sample.c");
@@ -242,6 +247,7 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.device=="am62x")
     {
         build_property.files = files_am62x;
+        build_property.files.common.push("I2c_lld_sample_v0.c");
     }
     build_property.filedirs = filedirs;
 

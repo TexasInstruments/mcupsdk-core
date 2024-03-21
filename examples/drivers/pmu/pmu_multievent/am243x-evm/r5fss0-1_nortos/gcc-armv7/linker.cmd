@@ -53,17 +53,17 @@ MEMORY
     R5F_TCMB0 : ORIGIN = 0x41010000 , LENGTH = 0x00008000
 
     /* memory segment used to hold CPU specific non-cached data, MAKE to add a MPU entry to mark this as non-cached */
-    NON_CACHE_MEM : ORIGIN = 0x70068000 , LENGTH = 0x8000
+    NON_CACHE_MEM : ORIGIN = 0x70060000 , LENGTH = 0x8000
 
     /* when using multi-core application's i.e more than one R5F/M4F active, make sure
      * this memory does not overlap with other R5F's
      */
-    MSRAM     : ORIGIN = 0x700C0000 , LENGTH = 0x40000
+    MSRAM     : ORIGIN = 0x70080000 , LENGTH = 0x100000
 
     /* This section can be used to put XIP section of the application in flash, make sure this does not overlap with
      * other CPUs. Also make sure to add a MPU entry for this section and mark it as cached and code executable
      */
-    FLASH     : ORIGIN = 0x60180000 , LENGTH = 0x80000
+    FLASH     : ORIGIN = 0x60100000 , LENGTH = 0x80000
 
     /* shared memory segments */
     /* On R5F,

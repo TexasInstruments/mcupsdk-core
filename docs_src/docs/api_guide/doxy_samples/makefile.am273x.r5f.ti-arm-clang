@@ -45,8 +45,10 @@ FILES_common := \
     TimerP_sample.c \
     Uart_sample.c \
     CacheP_c6x_sample.c \
+    I2c_lld_sample_v1.c \
     Mcasp_sample.c \
     CacheP_c6x_sample.c \
+    I2c_lld_sample_v1.c \
     Mcasp_sample.c \
 
 FILES_PATH_common = \

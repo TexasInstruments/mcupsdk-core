@@ -45,9 +45,11 @@ FILES_common := \
     TimerP_sample.c \
     Uart_sample.c \
     CacheP_c6x_sample.c \
+    I2c_lld_sample_v1.c \
     Adcbuf_sample.c \
     Mailbox_sample.c \
     CacheP_c6x_sample.c \
+    I2c_lld_sample_v1.c \
     Adcbuf_sample.c \
     Mailbox_sample.c \
 

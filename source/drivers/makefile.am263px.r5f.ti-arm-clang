@@ -42,6 +42,7 @@ FILES_common := \
     hsmclient_loadhsmrt.c \
     hsmclient_utils.c \
     i2c_v1.c \
+    i2c_v1_lld.c \
     ipc_notify_v1.c \
     ipc_notify_v1_cfg.c \
     ipc_rpmsg.c \
@@ -104,6 +105,7 @@ FILES_PATH_common = \
     hsmclient/soc/am263px \
     hsmclient/utils \
     i2c/v1 \
+    i2c/v1/lld \
     ipc_notify/v1 \
     ipc_notify/v1/soc/am263px \
     ipc_rpmsg/ \

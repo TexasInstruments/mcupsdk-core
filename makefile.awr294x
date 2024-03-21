@@ -98,7 +98,15 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/hwa/hwa_bfp_compression/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/hwa/hwa_bfp_compression/awr294x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_read/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read_polling_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_memory_read_interrupt_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature_polling_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature_interrupt_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_interrupt/awr294x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_loopback_polling/awr294x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -491,7 +499,15 @@ BUILD_COMBO_EXAMPLE_ALL += hwa_real_fft_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += hwa_bfp_compression_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += hwa_bfp_compression_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += i2c_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_read_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_memory_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_memory_read_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += i2c_temperature_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_temperature_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_memory_read_polling_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_memory_read_interrupt_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_temperature_polling_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += i2c_temperature_interrupt_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcan_loopback_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcan_loopback_interrupt_awr294x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcan_loopback_polling_awr294x-evm_r5fss0-0_nortos_ti-arm-clang
@@ -726,8 +742,32 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  i2c_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
+ i2c_read_awr294x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ i2c_memory_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_memory_read_awr294x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
  i2c_temperature_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/i2c/i2c_temperature/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_temperature_awr294x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ i2c_memory_read_polling_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_memory_read_interrupt_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_interrupt_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_temperature_polling_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_polling_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ i2c_temperature_interrupt_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_interrupt_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  mcan_loopback_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -1141,7 +1181,15 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += hwa_real_fft_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += hwa_bfp_compression_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += hwa_bfp_compression_awr294x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_read_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_memory_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_memory_read_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_temperature_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_temperature_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_memory_read_polling_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_memory_read_interrupt_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_temperature_polling_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_temperature_interrupt_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_loopback_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_loopback_interrupt_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_loopback_polling_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1371,8 +1419,32 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  i2c_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
+ i2c_read_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ i2c_memory_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_memory_read_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
  i2c_temperature_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/i2c/i2c_temperature/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_temperature_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ i2c_memory_read_polling_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_memory_read_interrupt_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_interrupt_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_temperature_polling_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_polling_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ i2c_temperature_interrupt_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_interrupt_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  mcan_loopback_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -1786,7 +1858,15 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += hwa_real_fft_awr294x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += hwa_bfp_compression_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += hwa_bfp_compression_awr294x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_read_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_memory_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_memory_read_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_temperature_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_temperature_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_memory_read_polling_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_memory_read_interrupt_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_temperature_polling_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_temperature_interrupt_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_loopback_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_loopback_interrupt_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_loopback_polling_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -2016,8 +2096,32 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  i2c_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/i2c/i2c_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
+ i2c_read_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_read/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ i2c_memory_read_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_memory_read_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
  i2c_temperature_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/i2c/i2c_temperature/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_temperature_awr294x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/awr294x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ i2c_memory_read_polling_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_polling_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_memory_read_interrupt_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_memory_read_interrupt_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_temperature_polling_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_polling_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ i2c_temperature_interrupt_lld_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature_interrupt_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  mcan_loopback_interrupt_awr294x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/mcan/mcan_loopback_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

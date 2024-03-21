@@ -58,7 +58,7 @@ MEMORY
     /* when using multi-core application's i.e more than one R5F/M4F active, make sure
      * this memory does not overlap with other R5F's
      */
-    MSRAM     : ORIGIN = 0x70080000 , LENGTH = 0x40000
+    MSRAM     : ORIGIN = 0x70080000 , LENGTH = 0x100000
 
     /* This section can be used to put XIP section of the application in flash, make sure this does not overlap with
      * other CPUs. Also make sure to add a MPU entry for this section and mark it as cached and code executable
@@ -94,8 +94,6 @@ SECTIONS
 
     /* This is rest of initialized data. This can be placed in DDR if DDR is available and needed */
     .data           : ALIGN (8)    {} > MSRAM   /* This is where initialized globals and static go */
-    
-    .rodata.crc : ALIGN (8) {} > FLASH
 
     /* This is rest of uninitialized data. This can be placed in DDR if DDR is available and needed */
     .bss : {
