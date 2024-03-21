@@ -44,7 +44,7 @@
     .asg	    R2.b2,	CH3_CRC4_RES
     .asg	    R2.b3,	CH4_CRC4_RES
     .asg	    R3.b0,	CH5_CRC4_RES
-    ;.asg		R3.b1,  unused
+    .asg		R3.b1,  TEMP_BYTE0
     .asg		R3.w2,  APPROX_VAL_MIN
     .asg        R4,     BNS_ARG_LUTBASE
     .asg        R5,     BNS_ARG_VAL
@@ -90,7 +90,7 @@ SMEM                        .set     C28
 
 ;DMEM
 
-;crc look up table
+;crc4 look up table
 CRC4_LUT_OFFSET      	    .set     (0x0)
 CRC4_LUT_SIZE               .set     (0x100)
 CRC4_SEED            		.set     (0x5)
@@ -136,7 +136,21 @@ CH3_LUT_BASE                .set    (0x1C0)
 CH4_LUT_BASE                .set	(0x200)
 CH5_LUT_BASE                .set	(0x240)
 
+
+;crc6 look up table
+CRC6_LUT_OFFSET      	    .set     (0x400)
+CRC6_LUT_SIZE               .set     (0x40)
+CRC6_SEED            		.set     (0x15)
+
 CH0_SERIAL_MSG_BASE         .set    (0x800)
+CH1_SERIAL_MSG_BASE         .set    (0x810)
+CH2_SERIAL_MSG_BASE         .set    (0x820)
+CH3_SERIAL_MSG_BASE         .set    (0x830)
+CH4_SERIAL_MSG_BASE         .set    (0x840)
+CH5_SERIAL_MSG_BASE         .set    (0x850)
+
+    .if $defined("ENABLE_SHORT_SERIAL_MESSAGE")
+; Format of data for short serial message 
 ; Byte 0 : Lower 8 bits of Bit 2 from Status and Communication Data
 SERIAL_MSG_SCBIT2_LOW       .set    (0x0)
 ; Byte 1 : Upper 8 bits of Bit 2 from Status and Communication Data
@@ -153,11 +167,34 @@ SERIAL_MSG_ONGOING          .set    (0x5)
 SERIAL_MSG_CRC              .set    (0x6)
 ; Byte 7 : Data Ready
 SERIAL_MSG_DATA_READY       .set    (0x7)
-CH1_SERIAL_MSG_BASE         .set    (0x808)
-CH2_SERIAL_MSG_BASE         .set    (0x810)
-CH3_SERIAL_MSG_BASE         .set    (0x818)
-CH4_SERIAL_MSG_BASE         .set    (0x820)
-CH5_SERIAL_MSG_BASE         .set    (0x828)
+    .endif
+
+    .if $defined("ENABLE_ENHANCED_SERIAL_MESSAGE")
+; Byte 0 : Lower 8 bits of Bit 2 from Status and Communication Data
+SERIAL_MSG_SCBIT2_LOW       .set    (0x0)
+; Byte 1 : Middle 8 bits of Bit 2 from Status and Communication Data
+SERIAL_MSG_SCBIT2_MID       .set    (0x1)
+; Byte 2 : Upper 2 bits of Bit 2 from Status and Communication Data
+SERIAL_MSG_SCBIT2_HIGH      .set    (0x2)
+; Byte 3 : Reserved
+; Byte 4 : Lower 8 bits of Bit 3 from Status and Communication Data
+SERIAL_MSG_SCBIT3_LOW       .set    (0x4)
+; Byte 5 : Middle 8 bits of Bit 3 from Status and Communication Data
+SERIAL_MSG_SCBIT3_MID       .set    (0x5)
+; Byte 6 : Upper 2 bits of Bit 3 from Status and Communication Data
+SERIAL_MSG_SCBIT3_HIGH      .set    (0x6)
+; Byte 7 : Reserved
+; Byte 8 : Count of remaining bits
+SERIAL_MSG_REMAINING_BITS   .set    (0x8)
+; Byte 8 : Serial message ongoing status
+SERIAL_MSG_ONGOING          .set    (0x9)
+; Byte 10 : Data byte (6-bit value) for CRC calculation
+SERIAL_MSG_DATA_FOR_CRC     .set    (0xA)
+; Byte 11 : Calculated CRC
+SERIAL_MSG_CRC              .set    (0xB)
+; Byte 12 : Data Ready
+SERIAL_MSG_DATA_READY       .set    (0xC)
+    .endif
 
 ;SMEM
 
@@ -180,11 +217,11 @@ CH5_INTR_BYTE               .set	(0x05)
 
 ;(serial message data+crc is stored)
 CH0_SERIAL_MSG_DATA_BASE               .set	(0x80)
-CH1_SERIAL_MSG_DATA_BASE               .set	(0x82)
-CH2_SERIAL_MSG_DATA_BASE               .set	(0x84)
-CH3_SERIAL_MSG_DATA_BASE               .set	(0x86)
-CH4_SERIAL_MSG_DATA_BASE               .set (0x88)
-CH5_SERIAL_MSG_DATA_BASE               .set	(0x8A)
+CH1_SERIAL_MSG_DATA_BASE               .set	(0x88)
+CH2_SERIAL_MSG_DATA_BASE               .set	(0x90)
+CH3_SERIAL_MSG_DATA_BASE               .set	(0x98)
+CH4_SERIAL_MSG_DATA_BASE               .set (0xA0)
+CH5_SERIAL_MSG_DATA_BASE               .set	(0xA8)
 
 ;SCRATCH PAD 2
 ;--------------------------------------------

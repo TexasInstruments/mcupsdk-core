@@ -82,7 +82,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "sent_decoder_using_ecap";
+    property.name = "sent_decoder_using_iep_capture";
     property.isInternal = false;
     property.tirexResourceSubClass = [ "example.gettingstarted" ];
     property.description = "SENT Decoder Example Using PRUICSS IEP ECAP"

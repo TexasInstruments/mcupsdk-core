@@ -24,17 +24,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=sent_decoder_using_ecap.$(PROFILE).out
+OUTNAME:=sent_decoder_using_iep_capture.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=sent_decoder_using_ecap.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=sent_decoder_using_ecap.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=sent_decoder_using_ecap.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=sent_decoder_using_ecap.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=sent_decoder_using_ecap.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=sent_decoder_using_ecap.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=sent_decoder_using_ecap.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=sent_decoder_using_ecap.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=sent_decoder_using_iep_capture.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=sent_decoder_using_iep_capture.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=sent_decoder_using_iep_capture.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=sent_decoder_using_iep_capture.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=sent_decoder_using_iep_capture.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=sent_decoder_using_iep_capture.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=sent_decoder_using_iep_capture.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=sent_decoder_using_iep_capture.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
@@ -201,7 +201,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263x:r5fss0-0:freertos:ti-arm-clang sent_decoder_using_ecap ...
+	@echo  Scrubing: am263x:r5fss0-0:freertos:ti-arm-clang sent_decoder_using_iep_capture ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -320,12 +320,12 @@ endif
 endif
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for sent_decoder_using_ecap.$(PROFILE) ...
+	@echo Creating Coverage Report for sent_decoder_using_iep_capture.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o sent_decoder_using_ecap.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=sent_decoder_using_ecap.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=sent_decoder_using_ecap.$(PROFILE).profdata > coverage/sent_decoder_using_ecap.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/sent_decoder_using_ecap.$(PROFILE).profdata.json --output-json=coverage/sent_decoder_using_ecap.$(PROFILE).analysis.json --output=../sent_decoder_using_ecap.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o sent_decoder_using_iep_capture.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=sent_decoder_using_iep_capture.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=sent_decoder_using_iep_capture.$(PROFILE).profdata > coverage/sent_decoder_using_iep_capture.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/sent_decoder_using_iep_capture.$(PROFILE).profdata.json --output-json=coverage/sent_decoder_using_iep_capture.$(PROFILE).analysis.json --output=../sent_decoder_using_iep_capture.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

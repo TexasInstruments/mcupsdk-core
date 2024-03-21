@@ -12,7 +12,6 @@ CG_TOOL_ROOT := $(CGT_TI_PRU_PATH)
 # Add inputs and outputs from these tool invocations to the build variables
 CMD_SRCS += \
 	linker.cmd \
-	decoder_pru0_hexpru.cmd \
 
 ASM_SRCS += \
 	main.asm \
@@ -29,6 +28,7 @@ FILES_PATH_common = \
 	. \
 	.. \
 	../../.. \
+	../../../../pru0 \
 
 FILES_PATH := $(FILES_PATH_common)
 
@@ -39,20 +39,20 @@ vpath %.cmd $(FILES_PATH)
 
 # Add inputs and outputs from these tool invocations to the build variables
 EXE_OUTPUTS += \
-sent_decoder_using_ecap_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out \
+sent_decoder_using_iep_capture_short_serial_msg_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out \
 
 EXE_OUTPUTS__QUOTED += \
-"sent_decoder_using_ecap_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out" \
+"sent_decoder_using_iep_capture_short_serial_msg_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out" \
 
 BIN_OUTPUTS += \
-sent_decoder_using_ecap_am263x-cc_icssm-pru0_fw_ti-pru-cgt.hex \
+sent_decoder_using_iep_capture_short_serial_msg_am263x-cc_icssm-pru0_fw_ti-pru-cgt.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"sent_decoder_using_ecap_am263x-cc_icssm-pru0_fw_ti-pru-cgt.hex" \
+"sent_decoder_using_iep_capture_short_serial_msg_am263x-cc_icssm-pru0_fw_ti-pru-cgt.hex" \
 
 # All Target
 all: $(OBJS) $(CMD_SRCS)
-	@$(MAKE) --no-print-directory -Onone "sent_decoder_using_ecap_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out"
+	@$(MAKE) --no-print-directory -Onone "sent_decoder_using_iep_capture_short_serial_msg_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out"
 
 # Each subdirectory must supply rules for building sources it contributes
 $(OBJDIR)/%.obj %.obj: $(ASM_SRCS) 
@@ -63,10 +63,10 @@ $(OBJDIR)/%.obj %.obj: $(ASM_SRCS)
 	@echo ' '
 
 # Tool invocations
-sent_decoder_using_ecap_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out: $(OBJS) $(CMD_SRCS)
+sent_decoder_using_iep_capture_short_serial_msg_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out: $(OBJS) $(CMD_SRCS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: PRU Linker'
-	"$(CGT_TI_PRU_PATH)/bin/clpru" -DPRU0 -DSLICE0 -v4 --define=SOC_AM263X --define=ENABLE_SHORT_SERIAL_MESSAGE  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"sent_decoder_using_ecap_am263x-cc_icssm-pru0_fw_ti-pru-cgt.map" --disable_auto_rts   --diag_wrap=off --display_error_number --warn_sections --xml_link_info="sent_decoder_using_ecap_am263x-cc_icssm-pru0_fw_ti-pru-cgt_linkInfo.xml" --disable_auto_rts --entry_point=main  --rom_model -o "sent_decoder_using_ecap_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out" $^	
+	"$(CGT_TI_PRU_PATH)/bin/clpru" -DPRU0 -DSLICE0 -v4 --define=SOC_AM263X --define=ENABLE_SHORT_SERIAL_MESSAGE  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"sent_decoder_using_iep_capture_short_serial_msg_am263x-cc_icssm-pru0_fw_ti-pru-cgt.map" --disable_auto_rts   --diag_wrap=off --display_error_number --warn_sections --xml_link_info="sent_decoder_using_iep_capture_short_serial_msg_am263x-cc_icssm-pru0_fw_ti-pru-cgt_linkInfo.xml" --disable_auto_rts --entry_point=main  --rom_model -o "sent_decoder_using_iep_capture_short_serial_msg_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out" $^	
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build
@@ -80,8 +80,7 @@ clean:
 	-@echo ' '
 
 post-build:
-		-$(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru  -o sent_decoder_pru0_bin.h sent_decoder_using_ecap_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out
-		- $(CCS_INSTALL_DIR)/utils/cygwin/mv sent_decoder_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/example/firmware/sent_decoder_pru0_bin.h
+		-$(CCS_INSTALL_DIR)/utils/cygwin/mv sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/example/firmware/sent_decoder_using_iep_capture_short_serial_msg_pru0_bin.h
 	-@echo ' '
 
 .PHONY: all clean

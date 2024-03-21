@@ -52,11 +52,15 @@
 
 #define NUM_SENT_CHANNELS           (6U)
 
-#define DATA_READY                  (1<<0)
-#define SERIAL_MESSAGE_DATA_READY   (1<<1)
+#define DATA_READY                          (1<<0)
+#define SHORT_SERIAL_MESSAGE_DATA_READY     (1<<1)
+#define ENHANCED_SERIAL_MESSAGE_DATA_READY  (1<<2)
 
 /*CRC4 LUT offset*/
-#define CRC4_LUT_OFFSET             (0x00U)
+#define CRC4_LUT_OFFSET             (0x0000U)
+
+/*CRC6 LUT offset*/
+#define CRC6_LUT_OFFSET             (0x0400U)
 
 /*Data ready flag offset located in SRAM*/
 #define CH0_DATA_READY_FLAG_OFFSET  (0x00U)
@@ -76,11 +80,11 @@
 #define CH5_DATA_OFFSET             (0x7CU)
 
 #define CH0_SERIAL_MSG_DATA_BASE    (0x80)
-#define CH1_SERIAL_MSG_DATA_BASE    (0x82)
-#define CH2_SERIAL_MSG_DATA_BASE    (0x84)
-#define CH3_SERIAL_MSG_DATA_BASE    (0x86)
-#define CH4_SERIAL_MSG_DATA_BASE    (0x88)
-#define CH5_SERIAL_MSG_DATA_BASE    (0x8A)
+#define CH1_SERIAL_MSG_DATA_BASE    (0x84)
+#define CH2_SERIAL_MSG_DATA_BASE    (0x88)
+#define CH3_SERIAL_MSG_DATA_BASE    (0x8C)
+#define CH4_SERIAL_MSG_DATA_BASE    (0x90)
+#define CH5_SERIAL_MSG_DATA_BASE    (0x94)
 
 /*Offset for data nibbles*/
 #define CONFIG_TICK_TIME_OFFSET     (0x0U)
@@ -94,17 +98,43 @@
 #define CRC_OFFSET                  (0x9U)
 #define ERROR_STATUS_OFFSET         (0xAU)
 
-/*Offset for serial message data nibbles*/
-#define SERIAL_MESSAGE_BYTE0                (0x0U)
-#define SERIAL_MESSAGE_BYTE1                (0x1U)
-#define SERIAL_MESSAGE_BYTE0_DATA1_MASK     (0xF0)
-#define SERIAL_MESSAGE_BYTE0_DATA1_SHIFT    (0x4)
-#define SERIAL_MESSAGE_BYTE0_CRC_MASK       (0x0F)
-#define SERIAL_MESSAGE_BYTE0_CRC_SHIFT      (0x0)
-#define SERIAL_MESSAGE_BYTE1_ID_MASK        (0xF0)
-#define SERIAL_MESSAGE_BYTE1_ID_SHIFT       (0x4)
-#define SERIAL_MESSAGE_BYTE1_DATA0_MASK     (0x0F)
-#define SERIAL_MESSAGE_BYTE1_DATA0_SHIFT    (0x0)
+/*Offsets, masks and shift values for short serial message data nibbles*/
+#define SHORT_SERIAL_MESSAGE_BYTE0                (0x0U)
+#define SHORT_SERIAL_MESSAGE_BYTE1                (0x1U)
+#define SHORT_SERIAL_MESSAGE_BYTE0_DATA1_MASK     (0xF0)
+#define SHORT_SERIAL_MESSAGE_BYTE0_DATA1_SHIFT    (0x4)
+#define SHORT_SERIAL_MESSAGE_BYTE0_CRC_MASK       (0x0F)
+#define SHORT_SERIAL_MESSAGE_BYTE0_CRC_SHIFT      (0x0)
+#define SHORT_SERIAL_MESSAGE_BYTE1_ID_MASK        (0xF0)
+#define SHORT_SERIAL_MESSAGE_BYTE1_ID_SHIFT       (0x4)
+#define SHORT_SERIAL_MESSAGE_BYTE1_DATA0_MASK     (0x0F)
+#define SHORT_SERIAL_MESSAGE_BYTE1_DATA0_SHIFT    (0x0)
+
+/*Offsets, masks and shift values for enhanced serial message data nibbles*/
+/* Word = 4 bytes for following macros */
+#define ENHANCED_SERIAL_MESSAGE_WORD0                   (0x0U)
+#define ENHANCED_SERIAL_MESSAGE_WORD1                   (0x4U)
+
+#define ENHANCED_SERIAL_MESSAGE_WORD0_CRC_MASK          (0x0003F000)
+#define ENHANCED_SERIAL_MESSAGE_WORD0_CRC_SHIFT         (0xC)
+
+#define ENHANCED_SERIAL_MESSAGE_WORD0_DATA_MASK         (0x00000FFF)
+#define ENHANCED_SERIAL_MESSAGE_WORD0_DATA_SHIFT        (0x0)
+
+#define ENHANCED_SERIAL_MESSAGE_WORD1_CONFIG_MASK       (0x00000400)
+#define ENHANCED_SERIAL_MESSAGE_WORD1_CONFIG_SHIFT      (0xA)
+
+#define ENHANCED_SERIAL_MESSAGE_WORD1_C0_ID_LOW_MASK    (0x0000001E)
+#define ENHANCED_SERIAL_MESSAGE_WORD1_C0_ID_LOW_SHIFT   (0x1)
+
+#define ENHANCED_SERIAL_MESSAGE_WORD1_C0_ID_HIGH_MASK   (0x000003C0)
+#define ENHANCED_SERIAL_MESSAGE_WORD1_C0_ID_HIGH_SHIFT  (0x6)
+
+#define ENHANCED_SERIAL_MESSAGE_WORD1_C1_DATA_MASK      (0x0000001E)
+#define ENHANCED_SERIAL_MESSAGE_WORD1_C1_DATA_SHIFT     (0x1)
+
+#define ENHANCED_SERIAL_MESSAGE_WORD1_C1_ID_MASK        (0x000003C0)
+#define ENHANCED_SERIAL_MESSAGE_WORD1_C1_ID_SHIFT       (0x6)
 
 /** \brief Global Structure pointer holding PRUSS1 memory Map. */
 PRUICSS_Handle gPruIcss0Handle;
@@ -146,7 +176,7 @@ typedef struct Sent_Obj_s
     uint16_t error_status;
 } Sent_Obj;
 
-typedef struct Sent_SerialMessage_s
+typedef struct Sent_ShortSerialMessage_s
 {
     /*Message ID */
     uint8_t MessageId;
@@ -156,7 +186,23 @@ typedef struct Sent_SerialMessage_s
     uint8_t Data1;
     /*CRC*/
     uint8_t CRC;
-} Sent_SerialMessage;
+} Sent_ShortSerialMessage;
+
+typedef struct Sent_EnhancedSerialMessage_s
+{
+    /*Configuration Bit */
+    uint8_t ConfigBit;
+    /*Message ID*/
+    uint8_t MessageId;
+    /*Data*/
+    uint16_t Data;
+    /*CRC*/
+    uint8_t CRC;
+    /*Reserved*/
+    uint8_t reserved0;
+    uint8_t reserved1;
+    uint8_t reserved2;
+} Sent_EnhancedSerialMessage;
 
 /*!
  * \brief SENT FRame handle.

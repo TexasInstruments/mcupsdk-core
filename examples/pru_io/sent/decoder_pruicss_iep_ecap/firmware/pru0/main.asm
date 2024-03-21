@@ -247,10 +247,17 @@ m_ch_status_comm .macro ch_buf, ch_state, ch_data0, ch_msg_offset
     m_process_short_serial_message ch_buf.b2, ch_msg_offset
     .endif
 
+    .if $defined("ENABLE_ENHANCED_SERIAL_MESSAGE")
+; Do the processing for enhanced serial message
+    m_process_enhanced_serial_message ch_buf.b2, ch_msg_offset
+    .endif
+
 ;Update channel state register for Data 0 decoding
     ldi   ch_state, $CODE(ch_data0)
     jmp   return_addr1
     .endm
+
+    .if $defined("ENABLE_SHORT_SERIAL_MESSAGE")
 
 ;************************************************************************************
 ;
@@ -410,6 +417,227 @@ m_reset_short_serial_message .macro ch_msg_offset
     add TEMP_REG1.w0, TEMP_REG1.w0, 4
     sbco &TEMP_REG2, C24, TEMP_REG1.w0, 4
     .endm
+
+    .endif
+
+    .if $defined("ENABLE_ENHANCED_SERIAL_MESSAGE")
+
+;************************************************************************************
+;
+;   Macro: m_process_enhanced_serial_message
+;
+;
+;   PEAK cycles:
+;
+;   Invokes:
+;       None
+;
+;   Pseudo code:
+;       None
+;
+;   Parameters:
+;      ch_buf: Buffer for channel to store calculated value
+;      ch_msg_offset: DMEM offset for storing data related to serial message
+;   Returns:
+;      None
+;
+;************************************************************************************
+
+m_process_enhanced_serial_message .macro ch_buf, ch_msg_offset
+; Calculate the DMEM offset for serial message related data for this channel
+    ldi TEMP_REG1.w0, ch_msg_offset
+; Check if serial message is ongoing
+    add TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_ONGOING
+    lbco &TEMP_REG2.b2, C24, TEMP_REG2.w0, 1
+    qbeq serial_msg_ongoing?, TEMP_REG2.b2, 1
+no_serial_msg_ongoing?:
+; Check bit 3 of Status and Communication Data
+    qbbc process_enhanced_serial_message_done?, ch_buf, 3
+new_serial_message?:
+; Set Serial message ongoing byte
+; Assumption : TEMP_REG2.w0 contains address of SERIAL_MSG_ONGOING byte for this channel
+    ldi TEMP_REG2.b2, 1
+    sbco &TEMP_REG2.b2, C24, TEMP_REG2.w0, 1
+; Initialize remaining bits
+    add TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_REMAINING_BITS
+    ldi TEMP_BYTE0, 18
+    sbco &TEMP_BYTE0, C24, TEMP_REG2.w0, 1
+; Initialize CRC Seed 
+    ldi  TEMP_REG2.b2, CRC6_SEED
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_CRC
+    sbco &TEMP_REG2.b2, C24, TEMP_REG2.w0, 1
+serial_msg_ongoing?:
+; Decrement remaining bits
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_REMAINING_BITS
+    lbco &TEMP_BYTE0, C24, TEMP_REG2.w0, 1
+    sub  TEMP_BYTE0, TEMP_BYTE0, 1
+    sbco &TEMP_BYTE0, C24, TEMP_REG2.w0, 1
+; Update SERIAL_MSG_SCBIT3
+    add  TEMP_REG1.w2, TEMP_REG1.w0, SERIAL_MSG_SCBIT3_LOW
+    lbco &TEMP_REG2, C24, TEMP_REG1.w2, 4
+    qbbc scbit3_clear?, ch_buf, 3
+    set  TEMP_REG2, TEMP_REG2, TEMP_BYTE0
+; Additional checks for detecting 4-bit error. Data bit 3 in nibbles number 7, 13, and 18 should be 0
+    qbeq enhanced_serial_message_bit3_pattern_not_matched?, TEMP_BYTE0, 11
+    qbeq enhanced_serial_message_bit3_pattern_not_matched?, TEMP_BYTE0, 5
+    qbeq enhanced_serial_message_bit3_pattern_not_matched?, TEMP_BYTE0, 0
+    sbco &TEMP_REG2, C24, TEMP_REG1.w2, 4
+    qba  scbit3_store_done?
+scbit3_clear?:    
+; First 6 bits should be 1. If not, discard the message
+; Assumption : TEMP_BYTE0 contains data of SERIAL_MSG_ONGOING byte for this channel
+    qble enhanced_serial_message_bit3_pattern_not_matched?, TEMP_BYTE0, 12
+scbit3_store_done?:
+; Update SERIAL_MSG_SCBIT2
+    add  TEMP_REG1.w2, TEMP_REG1.w0, SERIAL_MSG_SCBIT2_LOW
+    lbco &TEMP_REG2, C24, TEMP_REG1.w2, 4
+    qbbc scbit2_store_done?, ch_buf, 2
+    set  TEMP_REG2, TEMP_REG2, TEMP_BYTE0
+    sbco &TEMP_REG2, C24, TEMP_REG1.w2, 4
+scbit2_store_done?:
+; Update SERIAL_MSG_DATA_FOR_CRC after first 6 bits
+; Assumption : TEMP_BYTE0 contains data of SERIAL_MSG_ONGOING byte for this channel
+    qble skip_crc_data_store?, TEMP_BYTE0, 12
+
+    add  TEMP_REG1.w2, TEMP_REG1.w0, SERIAL_MSG_DATA_FOR_CRC
+    lbco &TEMP_REG2.b0, C24, TEMP_REG1.w2, 1
+
+    qbeq enhanced_serial_message_crc_store_high_bits?, TEMP_BYTE0, 11
+    qbeq enhanced_serial_message_crc_store_high_bits?, TEMP_BYTE0, 8
+    qbeq enhanced_serial_message_crc_store_high_bits?, TEMP_BYTE0, 5
+    qbeq enhanced_serial_message_crc_store_high_bits?, TEMP_BYTE0, 2
+
+    qbeq enhanced_serial_message_crc_store_mid_bits?, TEMP_BYTE0, 10
+    qbeq enhanced_serial_message_crc_store_mid_bits?, TEMP_BYTE0, 7
+    qbeq enhanced_serial_message_crc_store_mid_bits?, TEMP_BYTE0, 4
+    qbeq enhanced_serial_message_crc_store_mid_bits?, TEMP_BYTE0, 1
+
+    qbeq enhanced_serial_message_crc_store_low_bits?, TEMP_BYTE0, 9
+    qbeq enhanced_serial_message_crc_store_low_bits?, TEMP_BYTE0, 6
+    qbeq enhanced_serial_message_crc_store_low_bits?, TEMP_BYTE0, 3
+    qbeq enhanced_serial_message_crc_store_low_bits_last?, TEMP_BYTE0, 0
+
+enhanced_serial_message_crc_store_high_bits?:
+    qbbc scbit3_clear2?, ch_buf, 3
+    set  TEMP_REG2.b0, TEMP_REG2.b0, 4
+scbit3_clear2?:    
+    qbbc scbit2_clear2?, ch_buf, 2
+    set  TEMP_REG2.b0, TEMP_REG2.b0, 5
+scbit2_clear2?:
+    sbco &TEMP_REG2.b0, C24, TEMP_REG1.w2, 1
+    qba  crc_data_store_done?
+
+enhanced_serial_message_crc_store_mid_bits?:
+    qbbc scbit3_clear3?, ch_buf, 3
+    set  TEMP_REG2.b0, TEMP_REG2.b0, 2
+scbit3_clear3?:    
+    qbbc scbit2_clear3?, ch_buf, 2
+    set  TEMP_REG2.b0, TEMP_REG2.b0, 3
+scbit2_clear3?:
+    sbco &TEMP_REG2.b0, C24, TEMP_REG1.w2, 1
+    qba  crc_data_store_done?
+
+enhanced_serial_message_crc_store_low_bits?:
+
+    qbbc scbit3_clear4?, ch_buf, 3
+    set  TEMP_REG2.b0, TEMP_REG2.b0, 0
+scbit3_clear4?:    
+    qbbc scbit2_clear4?, ch_buf, 2
+    set  TEMP_REG2.b0, TEMP_REG2.b0, 1
+scbit2_clear4?:
+    add  TEMP_REG1.w2, TEMP_REG1.w0, SERIAL_MSG_CRC
+    lbco &TEMP_REG2.b1, C24, TEMP_REG1.w2, 1
+    ldi  TEMP_REG2.w2, CRC6_LUT_OFFSET
+    add  TEMP_REG2.b2, TEMP_REG2.b2, TEMP_REG2.b1
+    lbco &TEMP_REG2.b1, C24, TEMP_REG2.w2, 1
+    xor  TEMP_REG2.b1, TEMP_REG2.b1, TEMP_REG2.b0
+
+    add  TEMP_REG1.w2, TEMP_REG1.w0, SERIAL_MSG_CRC
+    sbco &TEMP_REG2.b1, C24, TEMP_REG1.w2, 1
+    ldi  TEMP_REG2.b1, 0
+    add  TEMP_REG1.w2, TEMP_REG1.w0, SERIAL_MSG_DATA_FOR_CRC
+    sbco &TEMP_REG2.b1, C24, TEMP_REG1.w2, 1
+    qba  crc_data_store_done?
+
+enhanced_serial_message_crc_store_low_bits_last?:
+
+    qbbc scbit3_clear5?, ch_buf, 3
+    set  TEMP_REG2.b0, TEMP_REG2.b0, 0
+scbit3_clear5?:    
+    qbbc scbit2_clear5?, ch_buf, 2
+    set  TEMP_REG2.b0, TEMP_REG2.b0, 1
+scbit2_clear5?:
+    add  TEMP_REG1.w2, TEMP_REG1.w0, SERIAL_MSG_CRC
+    lbco &TEMP_REG2.b1, C24, TEMP_REG1.w2, 1
+    ldi  TEMP_REG2.w2, CRC6_LUT_OFFSET
+    add  TEMP_REG2.b2, TEMP_REG2.b2, TEMP_REG2.b1
+    lbco &TEMP_REG2.b1, C24, TEMP_REG2.w2, 1
+    xor  TEMP_REG2.b1, TEMP_REG2.b1, TEMP_REG2.b0
+
+    ldi  TEMP_REG2.w2, CRC6_LUT_OFFSET
+    add  TEMP_REG2.b2, TEMP_REG2.b2, TEMP_REG2.b1
+    lbco &TEMP_REG2.b1, C24, TEMP_REG2.w2, 1
+    ldi  TEMP_REG2.b0, 0
+    xor  TEMP_REG2.b1, TEMP_REG2.b1, TEMP_REG2.b0
+
+enhanced_serial_message_crc_compare?:
+; Compare the calculated CRC and received CRC
+    add  TEMP_REG2.w2, TEMP_REG1.w0, SERIAL_MSG_SCBIT2_MID
+    lbco &TEMP_REG2.w2, C24, TEMP_REG2.w2, 2
+    and  TEMP_REG2.b2, TEMP_REG2.b2, 0xF0
+    and  TEMP_REG2.b3, TEMP_REG2.b3, 0x03
+    lsr  TEMP_REG2.w2, TEMP_REG2.w2, 4
+    qbne enhanced_serial_message_crc_not_matched?, TEMP_REG2.b2, TEMP_REG2.b1
+; enhanced serial message received successfully
+    add  TEMP_REG1.w2, TEMP_REG1.w0, SERIAL_MSG_DATA_READY
+    ldi  TEMP_REG2.b3, 1
+    sbco &TEMP_REG2.b3, C24, TEMP_REG1.w2, 1
+crc_data_store_done?:
+skip_crc_data_store?:
+    qba  process_enhanced_serial_message_done?
+enhanced_serial_message_crc_not_matched?:
+; CRC check failed
+enhanced_serial_message_bit3_pattern_not_matched?:
+; Bit 3 Pattern did not match
+    m_reset_enhanced_serial_message ch_msg_offset
+enhanced_serial_message_crc_calculation_done?:
+process_enhanced_serial_message_done?:
+    .endm
+
+;************************************************************************************
+;
+;   Macro: m_reset_enhanced_serial_message
+;
+;
+;   PEAK cycles:
+;
+;   Invokes:
+;       None
+;
+;   Pseudo code:
+;       None
+;
+;   Parameters:
+;      ch_msg_offset: DMEM offset for storing data related to enhanced serial message
+;   Returns:
+;      None
+;
+;************************************************************************************
+
+m_reset_enhanced_serial_message .macro ch_msg_offset
+    LDI TEMP_REG1.w0, ch_msg_offset
+; Zero out the 8 bytes for serial message related data for this channel
+    ZERO &TEMP_REG2, 4
+    sbco &TEMP_REG2, C24, TEMP_REG1.w0, 4
+    add TEMP_REG1.w0, TEMP_REG1.w0, 4
+    sbco &TEMP_REG2, C24, TEMP_REG1.w0, 4
+    add TEMP_REG1.w0, TEMP_REG1.w0, 4
+    sbco &TEMP_REG2, C24, TEMP_REG1.w0, 4   
+    add TEMP_REG1.w0, TEMP_REG1.w0, 4
+    sbco &TEMP_REG2.b0, C24, TEMP_REG1.w0, 1
+    .endm
+    
+    .endif
 ;************************************************************************************
 ;
 ;   Macro: m_ch_data0
@@ -442,7 +670,7 @@ m_ch_data0 .macro ch_buf, ch_state, ch_data0_spad_base, ch_data1, ch_crc4_res
     ldi   ch_crc4_res, CRC4_SEED
     lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b3
-    lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
+    lbbo  &ch_crc4_res, CRC_LUT_ADDR , ch_crc4_res, 1
     jmp   return_addr1
     .endm
 
@@ -473,7 +701,7 @@ m_ch_data1 .macro ch_buf, ch_state, ch_data2, ch_crc4_res
     ldi   ch_state, $CODE(ch_data2)
     lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b0
-    lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
+    lbbo  &ch_crc4_res, CRC_LUT_ADDR , ch_crc4_res, 1
     jmp   return_addr1
     .endm
 
@@ -504,7 +732,7 @@ m_ch_data2 .macro ch_buf, ch_state, ch_data3, ch_crc4_res
   	ldi   ch_state, $CODE(ch_data3)
     lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b1
-    lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
+    lbbo  &ch_crc4_res, CRC_LUT_ADDR , ch_crc4_res, 1
     jmp   return_addr1
     .endm
 
@@ -535,7 +763,7 @@ m_ch_data3 .macro ch_buf, ch_state, ch_data4, ch_crc4_res
     ldi   ch_state, $CODE(ch_data4)
     lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b2
-    lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
+    lbbo  &ch_crc4_res, CRC_LUT_ADDR , ch_crc4_res, 1
     jmp   return_addr1
     .endm
 
@@ -570,7 +798,7 @@ m_ch_data4 .macro ch_buf, ch_state, ch_data4_spad_base, ch_data5, ch_crc4_res
   	ldi   ch_state, $CODE(ch_data5)
     lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b3
-    lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
+    lbbo  &ch_crc4_res, CRC_LUT_ADDR , ch_crc4_res, 1
     jmp   return_addr1
     .endm
 
@@ -601,7 +829,7 @@ m_ch_data5 .macro ch_buf, ch_state, ch_crc, ch_crc4_res
     ldi   ch_state, $CODE(ch_crc)
     lsl   ch_crc4_res, ch_crc4_res, 4
     add   ch_crc4_res, ch_crc4_res, ch_buf.b0
-    lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
+    lbbo  &ch_crc4_res, CRC_LUT_ADDR , ch_crc4_res, 1
     jmp   return_addr1
     .endm
 
@@ -630,13 +858,11 @@ m_ch_data5 .macro ch_buf, ch_state, ch_crc, ch_crc4_res
 m_ch_crc .macro ch_buf, ch_state, ch_crcdata_spad_base, ch_crc4_res, ch_crc_error
     jal   return_addr2, FN_BINARY_SEARCH
     mvib  ch_buf.b1, *BNS_ARG_RETVAL_ADDR
-    lsl   ch_crc4_res, ch_crc4_res, 4
-    lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
     mov   ch_buf.b2, ch_crc4_res
     mov   ch_buf.b3, BNS_ARG_STATUS
     ldi   R0.b0, ch_crcdata_spad_base
     xout  PRU_SPAD_B2_XID, &ch_buf, 4
-    qbne  ch_crc_error, ch_crc4_res, 0
+    qbne  ch_crc_error, ch_crc4_res, ch_buf.b1
     .endm
 
 ;************************************************************************************
@@ -675,6 +901,7 @@ m_ch_data_out .macro ch_reg, ch_data_base, ch_intr_byte, ch_state, ch_sync, ch_m
     zero	&ch_reg, 12
     xout  PRU_SPAD_B2_XID, &ch_reg, 12
     xin   PRU_SPAD_B1_XID, &ch_reg, 12
+    .if $defined("ENABLE_SHORT_SERIAL_MESSAGE")
 ; check if serial message was received
     ldi  TEMP_REG1.w0, ch_msg_offset
     add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_DATA_READY
@@ -685,8 +912,24 @@ m_ch_data_out .macro ch_reg, ch_data_base, ch_intr_byte, ch_state, ch_sync, ch_m
     lbco &TEMP_REG1.w2, C24, TEMP_REG2.w0, 2
     sbco &TEMP_REG1.w2, SMEM, ch_msg_data_base, 2
     m_reset_short_serial_message ch_msg_offset    
-    set   R0, R0, 1
+    set   R0, R0, 1    
 data_out_no_serial_message?:
+    .endif
+    .if $defined("ENABLE_ENHANCED_SERIAL_MESSAGE")
+; check if enhanced serial message was received
+    ldi  TEMP_REG1.w0, ch_msg_offset
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_DATA_READY
+    lbco &TEMP_REG1.b2, C24, TEMP_REG2.w0, 1
+    qbne data_out_no_serial_message?, TEMP_REG1.b2, 1
+; Store the data in SMEM
+    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_SCBIT2_LOW
+; TEMP_REG2 will also be used in following lbco and sbco    
+    lbco &TEMP_REG1, C24, TEMP_REG2.w0, 8
+    sbco &TEMP_REG1, SMEM, ch_msg_data_base, 8
+    m_reset_enhanced_serial_message ch_msg_offset    
+    set   R0, R0, 2    
+data_out_no_serial_message?:
+    .endif    
     set   R0, R0, 0
 ;Trigger Interrupt to R5F/*TODO*/
     sbco  &R0, C28, ch_intr_byte, 1
@@ -864,12 +1107,23 @@ spad_shift_enable:
 ;Intialize  CRC_LUT_ADDR
     ldi    CRC_LUT_ADDR, (CRC4_LUT_OFFSET+PDMEM00)
 
+    .if $defined("ENABLE_SHORT_SERIAL_MESSAGE")
     m_reset_short_serial_message CH0_SERIAL_MSG_BASE
     m_reset_short_serial_message CH1_SERIAL_MSG_BASE
     m_reset_short_serial_message CH2_SERIAL_MSG_BASE
     m_reset_short_serial_message CH3_SERIAL_MSG_BASE
     m_reset_short_serial_message CH4_SERIAL_MSG_BASE
     m_reset_short_serial_message CH5_SERIAL_MSG_BASE
+    .endif
+
+    .if $defined("ENABLE_ENHANCE_SERIAL_MESSAGE")
+    m_reset_enhanced_serial_message CH0_SERIAL_MSG_BASE
+    m_reset_enhanced_serial_message CH1_SERIAL_MSG_BASE
+    m_reset_enhanced_serial_message CH2_SERIAL_MSG_BASE
+    m_reset_enhanced_serial_message CH3_SERIAL_MSG_BASE
+    m_reset_enhanced_serial_message CH4_SERIAL_MSG_BASE
+    m_reset_enhanced_serial_message CH5_SERIAL_MSG_BASE
+    .endif
 
 	ldi32   APPROX_VAL_MAX, 0xFFFFFF00
 	ldi   APPROX_VAL_MIN, 256
@@ -923,7 +1177,12 @@ CH0_DATA_OUT:
 ;/*TODO: Add error handling mechanism for each label below*/
 CH0_CRC_ERROR:
 ch0_data_error:
+    .if $defined("ENABLE_SHORT_SERIAL_MESSAGE")    
     m_reset_short_serial_message CH0_SERIAL_MSG_BASE
+    .endif
+    .if $defined("ENABLE_ENHANCED_SERIAL_MESSAGE")    
+    m_reset_enhanced_serial_message CH0_SERIAL_MSG_BASE
+    .endif
 ERROR_CH0:
     ldi   CH0_STATE, $CODE(CH0_SYNC)
     jmp   return_addr1
@@ -953,7 +1212,12 @@ CH1_DATA_OUT:
 ;/*TODO: Add error handling mechanism for each label below*/
 CH1_CRC_ERROR:
 ch1_data_error:
+    .if $defined("ENABLE_SHORT_SERIAL_MESSAGE")    
     m_reset_short_serial_message CH1_SERIAL_MSG_BASE
+    .endif
+    .if $defined("ENABLE_ENHANCED_SERIAL_MESSAGE")    
+    m_reset_enhanced_serial_message CH1_SERIAL_MSG_BASE
+    .endif
 ERROR_CH1:
     ldi   CH1_STATE, $CODE(CH1_SYNC)
     jmp   return_addr1
@@ -982,7 +1246,12 @@ CH2_DATA_OUT:
 ;/*TODO: Add error handling mechanism for each label below*/
 CH2_CRC_ERROR:
 ch2_data_error:
+    .if $defined("ENABLE_SHORT_SERIAL_MESSAGE")    
     m_reset_short_serial_message CH2_SERIAL_MSG_BASE
+    .endif
+    .if $defined("ENABLE_ENHANCED_SERIAL_MESSAGE")    
+    m_reset_enhanced_serial_message CH2_SERIAL_MSG_BASE
+    .endif
 ERROR_CH2:
     ldi   CH2_STATE, $CODE(CH2_SYNC)
     jmp   return_addr1
@@ -1012,7 +1281,12 @@ CH3_DATA_OUT:
 ;/*TODO: Add error handling mechanism for each label below*/
 CH3_CRC_ERROR:
 ch3_data_error:
+    .if $defined("ENABLE_SHORT_SERIAL_MESSAGE")    
     m_reset_short_serial_message CH3_SERIAL_MSG_BASE
+    .endif
+    .if $defined("ENABLE_ENHANCED_SERIAL_MESSAGE")    
+    m_reset_enhanced_serial_message CH3_SERIAL_MSG_BASE
+    .endif
 ERROR_CH3:
     ldi   CH3_STATE, $CODE(CH3_SYNC)
     jmp   return_addr1
@@ -1042,7 +1316,12 @@ CH4_DATA_OUT:
 ;/*TODO: Add error handling mechanism for each label below*/
 CH4_CRC_ERROR:
 ch4_data_error:
+    .if $defined("ENABLE_SHORT_SERIAL_MESSAGE")    
     m_reset_short_serial_message CH4_SERIAL_MSG_BASE
+    .endif
+    .if $defined("ENABLE_ENHANCED_SERIAL_MESSAGE")    
+    m_reset_enhanced_serial_message CH4_SERIAL_MSG_BASE
+    .endif
 ERROR_CH4:
     ldi   CH4_STATE, $CODE(CH4_SYNC)
     jmp   return_addr1
@@ -1072,7 +1351,12 @@ CH5_DATA_OUT:
 ;/*TODO: Add error handling mechanism for each label below*/
 CH5_CRC_ERROR:
 ch5_data_error:
+    .if $defined("ENABLE_SHORT_SERIAL_MESSAGE")    
     m_reset_short_serial_message CH5_SERIAL_MSG_BASE
+    .endif
+    .if $defined("ENABLE_ENHANCED_SERIAL_MESSAGE")    
+    m_reset_enhanced_serial_message CH5_SERIAL_MSG_BASE
+    .endif
 ERROR_CH5:
     ldi   CH5_STATE, $CODE(CH5_SYNC)
     jmp   return_addr1

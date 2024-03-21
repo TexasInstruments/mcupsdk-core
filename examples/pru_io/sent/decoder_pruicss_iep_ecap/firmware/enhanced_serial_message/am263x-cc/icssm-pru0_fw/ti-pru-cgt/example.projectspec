@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Sent Decoder Using Ecap"
-        name = "sent_decoder_using_ecap_am263x-cc_icssm-pru0_fw_ti-pru-cgt"
+        title="Sent Decoder Using Iep Capture Enhanced Serial Msg"
+        name = "sent_decoder_using_iep_capture_enhanced_serial_msg_am263x-cc_icssm-pru0_fw_ti-pru-cgt"
         products="com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -36,10 +36,10 @@
             -DSLICE0
             -v4
             -DSOC_AM263X
-            -DENABLE_SHORT_SERIAL_MESSAGE
+            -DENABLE_ENHANCED_SERIAL_MESSAGE
         "
         linkerBuildOptions="
-            -m=sent_decoder_using_ecap.${ConfigName}.map
+            -m=sent_decoder_using_iep_capture_enhanced_serial_msg.${ConfigName}.map
             --disable_auto_rts
             --entry_point=main
         "
@@ -48,14 +48,14 @@
         hexBuildOptions="
             --diag_wrap=off
             --array
-            --array:name_prefix=PRUFirmware
-            -o=firmware_binary.h
+            --array:name_prefix=SentDecoderFirmwarePru
+            -o=sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h
         "
         postBuildStep="
-            $(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru  -o sent_decoder_pru0_bin.h sent_decoder_using_ecap_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out; $(CCS_INSTALL_DIR)/utils/cygwin/mv sent_decoder_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/example/firmware/sent_decoder_pru0_bin.h;
+            $(CCS_INSTALL_DIR)/utils/cygwin/mv sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/example/firmware/sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h;
         "
 
-        description="A Sent Decoder Using Ecap FW project">
+        description="A Sent Decoder Using Iep Capture Enhanced Serial Msg FW project">
 
         <configuration name="Debug"
             compilerBuildOptions="
@@ -74,9 +74,7 @@
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
         <file path="./linker.cmd" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="../../../main.asm" openOnCreation="false" excludeFromBuild="false" action="link">
-        </file>
-        <file path="../../../decoder_pru0_hexpru.cmd" openOnCreation="false" excludeFromBuild="false" action="link">
+        <file path="../../../../pru0/main.asm" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263x/EXAMPLES_SENT_DECODER_PRUICSS_IEP_ECAP.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">

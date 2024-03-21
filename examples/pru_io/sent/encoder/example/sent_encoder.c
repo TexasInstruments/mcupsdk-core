@@ -66,15 +66,18 @@
 
 #define	SENT_DATA_AND_CRC_LENGTH	(7)
 #define SHORT_SERIAL_MSG_LENGTH     (16)
+#define ENHANCED_SERIAL_MSG_LENGTH  (18)
 
 #define SLEEP_USECS                 (100000)
 
-#define SENT_CMD_SINGLE_FRAME                   (0)
-#define SENT_CMD_MULTIPLE_FRAMES                (1)
-#define SENT_CMD_SINGLE_SHORT_SERIAL_MESSAGE    (2)
-#define SENT_CMD_MULTIPLE_SHORT_SERIAL_MESSAGES (3)
-#define SENT_CMD_EXIT_APP                       (4)
-#define SENT_CMD_MAX                            (5)
+#define SENT_CMD_SINGLE_FRAME                      (0)
+#define SENT_CMD_MULTIPLE_FRAMES                   (1)
+#define SENT_CMD_SINGLE_SHORT_SERIAL_MESSAGE       (2)
+#define SENT_CMD_MULTIPLE_SHORT_SERIAL_MESSAGES    (3)
+#define SENT_CMD_SINGLE_ENHANCED_SERIAL_MESSAGE    (4)
+#define SENT_CMD_MULTIPLE_ENHANCED_SERIAL_MESSAGES (5)
+#define SENT_CMD_EXIT_APP                          (6)
+#define SENT_CMD_MAX                               (7)
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -83,13 +86,27 @@
 /** \brief Global Structure pointer holding PRUSS1 memory Map. */
 PRUICSS_Handle gPruIcss0Handle;
 
-uint8_t dataAndCrcArray[SENT_DATA_AND_CRC_LENGTH] = {0x7, 0x4, 0x8, 0x7, 0x4, 0x8, 0x5};
+uint8_t dataAndCrcArray[SENT_DATA_AND_CRC_LENGTH] = {
+    0x7, /* Data0 7 */
+    0x4, /* Data1 4 */
+    0x8, /* Data2 8 */
+    0x7, /* Data3 7 */
+    0x4, /* Data4 4 */
+    0x8, /* Data5 8 */
+    0x5  /* CRC   5 */
+};
 
 uint8_t scDataArray[SHORT_SERIAL_MSG_LENGTH] = {
-    0x8, 0x4, 0x4, 0x4 , /* Data 7*/
-    0x0, 0x4, 0x0, 0x0 , /* Data 4*/
-    0x4, 0x0, 0x0, 0x0 , /* Data 8*/
-    0x4, 0x4, 0x4, 0x0 , /* CRC  E*/
+    0x8, 0x4, 0x4, 0x4, /* Data 7 */
+    0x0, 0x4, 0x0, 0x0, /* Data 4 */
+    0x4, 0x0, 0x0, 0x0, /* Data 8 */
+    0x4, 0x4, 0x4, 0x0, /* CRC  E */
+};
+
+uint8_t scDataArray2[ENHANCED_SERIAL_MSG_LENGTH] = {
+    0xC, 0x8, 0xC, 0x8, 0x8, 0xC, /* CRC  0x29  */
+    0x4, 0x4, 0x4, 0x4, 0x4, 0x4, /* Data 0xaaa */
+    0x4, 0x4, 0x4, 0x4, 0x4, 0x4, /* Data 0xaaa */
 };
 
 Pinmux_PerCfg_t gPinMuxMainDomainCfg_1[] = {
@@ -238,7 +255,9 @@ void display_menu()
     DebugP_log("\r\n| 1 : Send n messages                                                          |");
     DebugP_log("\r\n| 2 : Send 16 messages with 1 short serial message                             |");
     DebugP_log("\r\n| 3 : Send 16 messages with 1 short serial message n times                     |");
-    DebugP_log("\r\n| 4 : Exit application                                                         |");
+    DebugP_log("\r\n| 4 : Send 18 messages with 1 enhanced serial message                          |");
+    DebugP_log("\r\n| 5 : Send 18 messages with 1 enhanced serial message n times                  |");    
+    DebugP_log("\r\n| 6 : Exit application                                                         |");
     DebugP_log("\r\n|------------------------------------------------------------------------------|\n");
     DebugP_log("\r\n| Enter value: ");
 }
@@ -260,7 +279,7 @@ void get_command(uint32_t *cmd, uint32_t *count)
         DebugP_log("\r\n| WARNING: invalid command, 0 will be selected\n");
     }   
 
-    if(*cmd == SENT_CMD_MULTIPLE_FRAMES || *cmd == SENT_CMD_MULTIPLE_SHORT_SERIAL_MESSAGES)
+    if(*cmd == SENT_CMD_MULTIPLE_FRAMES || *cmd == SENT_CMD_MULTIPLE_SHORT_SERIAL_MESSAGES || *cmd == SENT_CMD_MULTIPLE_ENHANCED_SERIAL_MESSAGES)
     {
         DebugP_log("\r\n| Enter count : ");
 
@@ -353,9 +372,31 @@ void encoder_main(void *args)
                 }
             }
 
-            DebugP_log("\n\r%d SENT Frames transmitted\n\r", count*16);
-            total_frames_tx += count*16;
-        }            
+            DebugP_log("\n\r%d SENT Frames transmitted\n\r", count*SHORT_SERIAL_MSG_LENGTH);
+            total_frames_tx += count*SHORT_SERIAL_MSG_LENGTH;
+        }         
+        else if((cmd == SENT_CMD_SINGLE_ENHANCED_SERIAL_MESSAGE) || (cmd == SENT_CMD_MULTIPLE_ENHANCED_SERIAL_MESSAGES))
+        {
+
+            for(loop = 0; loop < count; loop++)
+            {
+                for(sc_data_index = 0; sc_data_index < ENHANCED_SERIAL_MSG_LENGTH; sc_data_index++)
+                {
+                    HW_WR_REG8((uint32_t)frame_tx_base + SC_NIBBLE_OFFSET, scDataArray2[sc_data_index]);
+                    /*Call Frame Send API*/
+                    transmit_sent_frame(1);
+                    /*Wait for frame to be transmitted*/
+                    while(tx_ok)
+                    {
+                        tx_ok = HW_RD_REG8((uint32_t)frame_tx_base + TX_DONE_OFFSET);
+                    }
+                    ClockP_usleep(SLEEP_USECS);
+                }
+            }
+
+            DebugP_log("\n\r%d SENT Frames transmitted\n\r", count*ENHANCED_SERIAL_MSG_LENGTH);
+            total_frames_tx += count*ENHANCED_SERIAL_MSG_LENGTH;
+        }             
         else if(cmd == SENT_CMD_EXIT_APP)
         {
             DebugP_log("\n\rExiting Application\n\r");
