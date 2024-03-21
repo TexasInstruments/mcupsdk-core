@@ -497,17 +497,21 @@ int32_t MCSPI_lld_write(MCSPILLD_Handle hMcspi, void *txBuf, uint32_t count,
             status = MCSPI_transferPeripheralPoll(hMcspi, chObj, transaction);
         }
 
-        if (status == MCSPI_STATUS_SUCCESS)
-        {
-            /* transfer completed */
-            status  = MCSPI_TRANSFER_COMPLETED;
-            hMcspi->state = MCSPI_STATE_READY;
-        }
         if(status == MCSPI_TIMEOUT)
         {
             status = MCSPI_TRANSFER_TIMEOUT;
-            hMcspi->state = MCSPI_STATE_READY;
         }
+        else if ((status == MCSPI_TRANSFER_CANCELLED) && (hMcspi->errorFlag != 0U))
+        {
+            status = MCSPI_TRANSFER_FAILED;
+        }
+        else
+        {
+            /* success case */
+            status  = MCSPI_TRANSFER_COMPLETED;
+        }
+
+        hMcspi->state = MCSPI_STATE_READY;
     }
 
     return (status);
@@ -770,18 +774,21 @@ int32_t MCSPI_lld_read(MCSPILLD_Handle hMcspi, void *rxBuf, uint32_t count,
             status = MCSPI_transferPeripheralPoll(hMcspi, chObj, transaction);
         }
 
-        if (status == MCSPI_STATUS_SUCCESS)
-        {
-            /* transfer completed */
-            status  = MCSPI_TRANSFER_COMPLETED;
-            hMcspi->state = MCSPI_STATE_READY;
-        }
-
         if(status == MCSPI_TIMEOUT)
         {
             status = MCSPI_TRANSFER_TIMEOUT;
-            hMcspi->state = MCSPI_STATE_READY;
         }
+        else if ((status == MCSPI_TRANSFER_CANCELLED) && (hMcspi->errorFlag != 0U))
+        {
+            status = MCSPI_TRANSFER_FAILED;
+        }
+        else
+        {
+            /* success case */
+            status  = MCSPI_TRANSFER_COMPLETED;
+        }
+
+        hMcspi->state = MCSPI_STATE_READY;
     }
 
     return (status);
@@ -1049,16 +1056,21 @@ int32_t MCSPI_lld_readWrite(MCSPILLD_Handle hMcspi, void *txBuf, void *rxBuf, ui
             status = MCSPI_transferPeripheralPoll(hMcspi, chObj, transaction);
         }
 
-        if (status == MCSPI_STATUS_SUCCESS)
-        {
-            status  = MCSPI_TRANSFER_COMPLETED;
-            hMcspi->state = MCSPI_STATE_READY;
-        }
         if(status == MCSPI_TIMEOUT)
         {
             status = MCSPI_TRANSFER_TIMEOUT;
-            hMcspi->state = MCSPI_STATE_READY;
         }
+        else if ((status == MCSPI_TRANSFER_CANCELLED) && (hMcspi->errorFlag != 0U))
+        {
+            status = MCSPI_TRANSFER_FAILED;
+        }
+        else
+        {
+            /* success case */
+            status  = MCSPI_TRANSFER_COMPLETED;
+        }
+
+        hMcspi->state = MCSPI_STATE_READY;
     }
 
     return (status);
@@ -1269,7 +1281,14 @@ int32_t MCSPI_lld_readWriteCancel(MCSPILLD_Handle hMcspi)
             }
 
             hMcspi->state = MCSPI_STATE_READY;
-            hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, status);
+            if(hMcspi->errorFlag != 0U)
+            {
+                hMcspi->hMcspiInit->errorCallbackFxn(hMcspi, status);
+            }
+            else
+            {
+                hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, status);
+            }
         }
         else
         {
@@ -1312,7 +1331,15 @@ int32_t MCSPI_lld_readWriteDmaCancel(MCSPILLD_Handle hMcspi)
             }
 
             hMcspi->state = MCSPI_STATE_READY;
-            hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, status);
+            if(hMcspi->errorFlag != 0U)
+            {
+                hMcspi->hMcspiInit->errorCallbackFxn(hMcspi, status);
+
+            }
+            else
+            {
+                hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, status);
+            }
         }
         else
         {
@@ -1353,6 +1380,12 @@ void MCSPI_lld_controllerIsr(void* args)
             hMcspi->state = MCSPI_STATE_READY;
             hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, transferStatus);
         }
+
+        if((hMcspi->errorFlag != 0U) && (transferStatus == MCSPI_TRANSFER_CANCELLED))
+        {
+            hMcspi->state = MCSPI_STATE_READY;
+            hMcspi->hMcspiInit->errorCallbackFxn(hMcspi, transferStatus);
+        }
         /*
         * Else the transfer is still pending.
         * Do nothing, wait for next interrupt.
@@ -1381,8 +1414,7 @@ void MCSPI_lld_peripheralIsr(void* args)
         chObj = &hMcspi->hMcspiInit->chObj[chNum];
         transferStatus = MCSPI_continuePeripheralTxRx(hMcspi, chObj, transaction);
 
-        if ((MCSPI_TRANSFER_COMPLETED == (int32_t)transferStatus) ||
-            (MCSPI_TRANSFER_CANCELLED == (int32_t)transferStatus))
+        if (MCSPI_TRANSFER_COMPLETED == (int32_t)transferStatus)
         {
             /* Process the transfer completion. */
             /* Stop MCSPI Channel */
@@ -1403,6 +1435,11 @@ void MCSPI_lld_peripheralIsr(void* args)
             {
                 hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, transferStatus);
             }
+        }
+
+        if((hMcspi->errorFlag != 0U) && (transferStatus == MCSPI_TRANSFER_CANCELLED))
+        {
+            hMcspi->hMcspiInit->errorCallbackFxn(hMcspi, transferStatus);
         }
         /*
         * Else the transfer is still pending.
@@ -1612,6 +1649,21 @@ static uint32_t MCSPI_continueTxRx(MCSPILLD_Handle hMcspi,
                 }
             }
         }
+
+        /* Check for Rx overflow or Tx underflow.
+         * Cancel the current transfer and return error. */
+        if ((irqStatus & ((uint32_t)CSL_MCSPI_IRQSTATUS_RX0_OVERFLOW_MASK)) != 0U)
+        {
+            retVal = MCSPI_TRANSFER_CANCELLED;
+            hMcspi->errorFlag |= MCSPI_ERROR_RX_OVERFLOW;
+        }
+
+        if (((irqStatus & ((uint32_t)CSL_MCSPI_IRQSTATUS_TX0_UNDERFLOW_MASK << (4U * chNum))) != 0U) &&
+            (hMcspi->hMcspiInit->msMode == MCSPI_MS_MODE_PERIPHERAL))
+        {
+            retVal  = MCSPI_TRANSFER_CANCELLED;
+            hMcspi->errorFlag |= MCSPI_ERROR_TX_UNDERFLOW;
+        }
     }
 
     return retVal;
@@ -1623,7 +1675,7 @@ static int32_t MCSPI_transferControllerPoll(MCSPILLD_Handle hMcspi,
 {
     int32_t                  status = MCSPI_STATUS_SUCCESS;
     uint32_t                 baseAddr, chNum;
-    uint32_t                 numWordsToWrite, txEmptyMask, irqStatus;
+    uint32_t                 numWordsToWrite, txEmptyMask, irqStatus = 0U;
     uint32_t                 timeout, startTicks, elapsedTicks;
     uint32_t                 timeoutElapsed  = FALSE;
     MCSPILLD_InitHandle      hMcspiInit = hMcspi->hMcspiInit;
@@ -1680,6 +1732,7 @@ static int32_t MCSPI_transferControllerPoll(MCSPILLD_Handle hMcspi,
                 ((transaction->count - chObj->curRxWords) != 0U)) &&
                (timeoutElapsed != TRUE))
         {
+            irqStatus = CSL_REG32_RD(baseAddr + CSL_MCSPI_IRQSTATUS);
             /* Now keep polling the CH_STAT register, if RXs bit is set, at least 1 word is available.
             Read the data from Rx register, also write the same number of bytes in Tx register.
             In case of Controller mode only when 1 word is sent out, 1 word will be received. */
@@ -1760,6 +1813,15 @@ static int32_t MCSPI_transferControllerPoll(MCSPILLD_Handle hMcspi,
         }
     }
 
+    /* Check for Rx overflow or Tx underflow.
+     * Cancel the current transfer and return error.
+     */
+    if ((irqStatus & ((uint32_t)CSL_MCSPI_IRQSTATUS_RX0_OVERFLOW_MASK)) != 0U)
+    {
+        status = MCSPI_TRANSFER_CANCELLED;
+        hMcspi->errorFlag |= MCSPI_ERROR_RX_OVERFLOW;
+    }
+
     if(timeoutElapsed == TRUE)
     {
         status = MCSPI_TIMEOUT;
@@ -1814,7 +1876,6 @@ static uint32_t MCSPI_continuePeripheralTxRx(MCSPILLD_Handle hMcspi,
     baseAddr = hMcspi->baseAddr;
     chNum    = chObj->chCfg->chNum;
     irqStatus = CSL_REG32_RD(baseAddr + CSL_MCSPI_IRQSTATUS);
-
     if ((irqStatus & chObj->intrMask) != 0U)
     {
         /* Clear the interrupts being serviced. */
@@ -1886,6 +1947,7 @@ static uint32_t MCSPI_continuePeripheralTxRx(MCSPILLD_Handle hMcspi,
                 }
             }
         }
+
         /* Check for Rx overflow or Tx underflow.
          * Cancel the current transfer and return error. */
         if ((irqStatus & ((uint32_t)CSL_MCSPI_IRQSTATUS_RX0_OVERFLOW_MASK)) != 0U)
@@ -1933,6 +1995,13 @@ static int32_t MCSPI_transferPeripheralPoll(MCSPILLD_Handle hMcspi,
             /* timeout occured */
             timeoutElapsed = TRUE;
         }
+
+        if(transferStatus == MCSPI_TRANSFER_CANCELLED)
+        {
+            status = MCSPI_TRANSFER_CANCELLED;
+            break;
+        }
+
     } while ((transferStatus != (uint32_t)MCSPI_TRANSFER_COMPLETED) && (timeoutElapsed != TRUE));
 
     /* Stop MCSPI Channel */

@@ -76,7 +76,7 @@ static int32_t MCSPI_checkOpenParams(const MCSPI_OpenParams *openPrms);
 /* Transfer complete callback function */
 void MCSPI_transferCallback (void *args, uint32_t transferStatus);
 /* Error callback function */
-void MCSPI_errorCallback (void  *args);
+void MCSPI_errorCallback (void  *args, uint32_t transferStatus);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -641,7 +641,7 @@ void MCSPI_transferCallback (void *args, uint32_t transferStatus)
     }
 }
 
-void MCSPI_errorCallback (void *args)
+void MCSPI_errorCallback (void *args, uint32_t transferStatus)
 {
     MCSPI_Config   *config;
     MCSPI_Object   *obj;

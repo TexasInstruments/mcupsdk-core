@@ -41,8 +41,8 @@ uint32_t gMcspiDmaConfigNum = CONFIG_MCSPI_NUM_DMA_INSTANCES;
 %if(config.intrEnable != "POLLED") {
 /*   MCSPI Transfer Callback Function    */
 void `config.transferCallbackFxn`(void *args, uint32_t transferStatus);
-/*   MCSPI Error Callback Function       */
-void `config.errorCallbackFxn`(void *args);
+/* MCSPI Error Callback Function */
+void `config.errorCallbackFxn`(void *args, uint32_t transferStatus);
 %}
 %}
 

@@ -616,16 +616,18 @@ typedef struct
  *  the SPI driver when used in #MCSPI_TRANSFER_MODE_CALLBACK
  *
  *  \param void*          void pointer
+ *  \param transferStatus transfer Status
  */
-typedef void (*MCSPI_transferCallbackFxn) (void *args, uint32_t tansferStatus);
+typedef void (*MCSPI_transferCallbackFxn) (void *args, uint32_t transferStatus);
 
 /**
  *  \brief  The definition of a error callback function used by the SPI driver
  *  when used in #MCSPI_TRANSFER_MODE_CALLBACK
  *
  *  \param void*          void pointer
+ *  \param transferStatus transfer Status
  */
-typedef void (*MCSPI_errorCallbackFxn) (void *args);
+typedef void (*MCSPI_errorCallbackFxn) (void *args, uint32_t transferStatus);
 
 /* ========================================================================== */
 /*                  Internal/Private Structure Declarations                   */

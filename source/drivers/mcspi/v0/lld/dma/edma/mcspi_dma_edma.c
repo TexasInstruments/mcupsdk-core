@@ -618,7 +618,8 @@ static void MCSPI_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
     uint32_t                baseAddr;
     volatile uint32_t       chStat;
     MCSPILLD_InitHandle     hMcspiInit;
-    uint32_t startTicks, elapsedTicks = 0;
+    uint32_t startTicks, elapsedTicks = 0, irqStatus = 0U;
+    int32_t status  =       MCSPI_STATUS_SUCCESS;
 
     if((NULL != args) && (intrHandle != NULL))
     {
@@ -641,7 +642,24 @@ static void MCSPI_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
             /* Stop MCSPI Channel */
             MCSPI_lld_dmaStop(hMcspi, chObj, chNum);
             hMcspi->state = MCSPI_STATE_READY;
-            hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, MCSPI_TRANSFER_COMPLETED);
+
+            irqStatus = CSL_REG32_RD(baseAddr + CSL_MCSPI_IRQSTATUS);
+            if (((irqStatus & ((uint32_t)CSL_MCSPI_IRQSTATUS_TX0_UNDERFLOW_MASK << (4U * chNum))) != 0U) &&
+                (hMcspiInit->msMode == MCSPI_MS_MODE_PERIPHERAL))
+                {
+                    status = MCSPI_TRANSFER_CANCELLED;
+                    hMcspi->errorFlag |= MCSPI_ERROR_TX_UNDERFLOW;
+                }
+
+            if(hMcspi->errorFlag != 0U)
+            {
+                hMcspi->state = MCSPI_STATE_READY;
+                hMcspi->hMcspiInit->errorCallbackFxn(hMcspi, status);
+            }
+            else
+            {
+                hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, MCSPI_TRANSFER_COMPLETED);
+            }
         }
     }
     return;
@@ -653,10 +671,13 @@ static void MCSPI_edmaIsrRx(Edma_IntrHandle intrHandle, void *args)
     uint32_t              chNum;
     MCSPI_Transaction    *transaction;
     MCSPILLD_Handle       hMcspi = NULL;
+    int32_t               status = MCSPI_STATUS_SUCCESS;
+    uint32_t              baseAddr, irqStatus = 0U;
 
     if((NULL != args) && (intrHandle != NULL))
     {
         hMcspi = (MCSPILLD_Handle)args;
+        baseAddr = hMcspi->baseAddr;
         transaction = &hMcspi->transaction;
         chNum = transaction->channel;
         chObj = &hMcspi->hMcspiInit->chObj[chNum];
@@ -666,7 +687,29 @@ static void MCSPI_edmaIsrRx(Edma_IntrHandle intrHandle, void *args)
             /* Stop MCSPI Channel */
             MCSPI_lld_dmaStop(hMcspi, chObj, chNum);
             hMcspi->state = MCSPI_STATE_READY;
-            hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, MCSPI_TRANSFER_COMPLETED);
+
+            irqStatus = CSL_REG32_RD(baseAddr + CSL_MCSPI_IRQSTATUS);
+            if ((irqStatus & ((uint32_t)CSL_MCSPI_IRQSTATUS_RX0_OVERFLOW_MASK)) != 0U)
+            {
+                status = MCSPI_TRANSFER_CANCELLED;
+                hMcspi->errorFlag |= MCSPI_ERROR_RX_OVERFLOW;
+            }
+
+            if (((irqStatus & ((uint32_t)CSL_MCSPI_IRQSTATUS_TX0_UNDERFLOW_MASK << (4U * chNum))) != 0U) &&
+                ((hMcspi->hMcspiInit->msMode == MCSPI_MS_MODE_PERIPHERAL)))
+            {
+                status = MCSPI_TRANSFER_CANCELLED;
+                hMcspi->errorFlag |= MCSPI_ERROR_TX_UNDERFLOW;
+            }
+
+            if(hMcspi->errorFlag != 0U)
+            {
+                hMcspi->hMcspiInit->errorCallbackFxn(hMcspi, status);
+            }
+            else
+            {
+                hMcspi->hMcspiInit->transferCallbackFxn(hMcspi, MCSPI_TRANSFER_COMPLETED);
+            }
         }
     }
     return;
