@@ -94,6 +94,12 @@ static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
 
     return status;
 }
+/** \brief Macro to check if the I2C base address is valid */
+#define IS_I2C_BASE_ADDR_VALID(baseAddr)    ((baseAddr == CSL_I2C0_U_BASE) || \
+                                             (baseAddr == CSL_I2C1_U_BASE) || \
+                                             (baseAddr == CSL_I2C2_U_BASE) || \
+                                             (baseAddr == CSL_I2C3_U_BASE))
+
 
 /** \brief Macro to check if the QSPI base address is valid */
 #define IS_QSPI_BASE_ADDR_VALID(baseAddr)    (baseAddr == CSL_QSPI0_U_BASE)

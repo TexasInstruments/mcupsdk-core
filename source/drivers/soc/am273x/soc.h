@@ -52,6 +52,7 @@ extern "C"
 #include <kernel/dpl/SystemP.h>
 #include <drivers/soc/am273x/soc_rcm.h>
 #include <drivers/hw_include/am273x/cslr_soc_baseaddress.h>
+#include <drivers/hw_include/cslr_soc.h>
 
 /**
  *  \anchor SOC_DomainId_t
@@ -73,6 +74,11 @@ extern "C"
 
 /** \brief Macro to check if the QSPI Memory Mapped address is valid */
 #define IS_QSPI_MEMORY_MAP_ADDR_VALID(baseAddr)    (baseAddr == CSL_EXT_FLASH_U_BASE)
+/** \brief Macro to check if the I2C base address is valid */
+#define IS_I2C_BASE_ADDR_VALID(baseAddr)    ((baseAddr == CSL_MSS_I2C_U_BASE) || \
+                                             (baseAddr == CSL_RCSS_I2CA_U_BASE) || \
+                                             (baseAddr == CSL_RCSS_I2CB_U_BASE))
+
 
 /**
  * \brief Enable clock to specified module
