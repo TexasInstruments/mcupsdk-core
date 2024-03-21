@@ -61,8 +61,10 @@ FILES_PATH_common = \
 INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f \
 	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
-	-I${MCU_PLUS_SDK_PATH}/test/drivers/i2c/am263x-evm \
 	-Igenerated \
 
 DEFINES_common := \
@@ -101,13 +103,13 @@ LNK_FILES_common = \
 	generated/linker.cmd \
 
 LIBS_PATH_common = \
-	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/test/unity/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
-	-lnortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lfreertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ldrivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lunity.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
@@ -120,14 +122,14 @@ LFLAGS_common = \
 
 
 LIBS_NAME = \
-	nortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	unity.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
 LIBS_PATH_NAME = \
-	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
+	${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	${MCU_PLUS_SDK_PATH}/test/unity/lib \
 	${CG_TOOL_ROOT}/lib \

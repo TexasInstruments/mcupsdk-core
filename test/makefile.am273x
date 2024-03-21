@@ -103,6 +103,7 @@ help:
 	@echo  $(MAKE) -s -C drivers/hwa/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/hwa/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/i2c/am273x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/i2c/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcan/am273x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/mcasp/mcasp_multiinst_loopback/am273x-evm/c66ss0_freertos/ti-c6000 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/dpl/dpl_ut/nortos/c66/ClockP_nortos_c66/am273x-evm/c66ss0_nortos/ti-c6000 [all clean syscfg-gui syscfg]
@@ -378,6 +379,7 @@ BUILD_COMBO_EXAMPLE_ALL += test_gpio_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += test_hwa_am273x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_hwa_am273x-evm_c66ss0_nortos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += test_i2c_am273x-evm_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_i2c_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_mcan_am273x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000
 BUILD_COMBO_EXAMPLE_ALL += dpl_ut_ClockP_c66_am273x-evm_c66ss0_nortos_ti-c6000
@@ -690,6 +692,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  test_i2c_am273x-evm_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C drivers/i2c/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ test_i2c_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C drivers/i2c/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  test_mcan_am273x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C drivers/mcan/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
@@ -1116,6 +1121,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_gpio_am273x-evm_c66ss0_nortos_ti-c6000_cle
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_hwa_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_hwa_am273x-evm_c66ss0_nortos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_i2c_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_i2c_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_ut_ClockP_c66_am273x-evm_c66ss0_nortos_ti-c6000_clean
@@ -1423,6 +1429,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_i2c_am273x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/i2c/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ test_i2c_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C drivers/i2c/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  test_mcan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/mcan/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -1849,6 +1858,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_gpio_am273x-evm_c66ss0_nortos_ti-c6000_scr
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_hwa_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_hwa_am273x-evm_c66ss0_nortos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_i2c_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_i2c_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcasp_multiinst_loopback_am273x-evm_c66ss0_freertos_ti-c6000_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_ut_ClockP_c66_am273x-evm_c66ss0_nortos_ti-c6000_scrub
@@ -2156,6 +2166,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_i2c_am273x-evm_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/i2c/am273x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ test_i2c_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C drivers/i2c/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  test_mcan_am273x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/mcan/am273x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub

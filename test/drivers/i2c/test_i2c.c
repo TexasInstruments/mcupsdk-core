@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-24 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -254,7 +254,8 @@ static void test_i2c_write_read(void* args)
         /* wait for previous write to complete */
         do
         {
-            status = I2C_transfer(i2cHandle, &i2cTransaction);
+            (void)I2C_transfer(i2cHandle, &i2cTransaction);
+            status = i2cTransaction.status;
             if(status==I2C_STS_ERR_NO_ACK)
             {
                 /* previous write is not yet complete, try again */
@@ -390,7 +391,6 @@ static void test_i2c_timeout(void* args)
     I2C_Params          params;
     I2C_Transaction     transaction;
     uint8_t             txBuffer;
-    int32_t             status;
 
     I2C_close(gI2cHandle[CONFIG_I2C0]);
 
@@ -405,8 +405,8 @@ static void test_i2c_timeout(void* args)
     transaction.targetAddress = NON_EXISTENT_DEVICE_ADDRESS;
     txBuffer = 0xFE;
 
-    status = I2C_transfer(i2cHandle, &transaction);
-    TEST_ASSERT_EQUAL_INT32(I2C_STS_ERR_NO_ACK, status);
+    (void)I2C_transfer(i2cHandle, &transaction);
+    TEST_ASSERT_EQUAL_INT32(I2C_STS_ERR_NO_ACK, transaction.status);
 
     I2C_close(i2cHandle);
 }
@@ -447,7 +447,7 @@ static void test_i2c_error_nack(void* args)
     I2C_Transaction     transaction2;
     uint8_t             txBuffer;
     uint8_t             rxBuffer;
-    int32_t             status;
+
     I2C_HwAttrs         *hwAttrs = NULL;
 
     I2C_close(gI2cHandle[CONFIG_I2C0]);
@@ -472,12 +472,12 @@ static void test_i2c_error_nack(void* args)
     transaction2.readCount = 1;
     transaction2.targetAddress = Board_i2cGetEepromDeviceAddr();
 
-    for(int i =0;i<10;i++)
+    for(int i = 0; i < 10; i++)
     {
-        status = I2C_transfer(i2cHandle, &transaction1);
-        TEST_ASSERT_EQUAL_INT32(I2C_STS_ERR_NO_ACK, status);
-        status = I2C_transfer(i2cHandle, &transaction2);
-        TEST_ASSERT_EQUAL_INT32(I2C_STS_SUCCESS, status);
+        (void)I2C_transfer(i2cHandle, &transaction1);
+        TEST_ASSERT_EQUAL_INT32(I2C_STS_ERR_NO_ACK,  transaction1.status);
+        (void)I2C_transfer(i2cHandle, &transaction2);
+        TEST_ASSERT_EQUAL_INT32(I2C_STS_SUCCESS,  transaction2.status);
     }
 
     I2C_close(i2cHandle);
@@ -547,4 +547,3 @@ static void test_i2c_callback(I2C_Handle i2cHnd, I2C_Transaction * msg, int32_t 
         SemaphoreP_post((SemaphoreP_Object*)msg->arg);
     }
 }
-

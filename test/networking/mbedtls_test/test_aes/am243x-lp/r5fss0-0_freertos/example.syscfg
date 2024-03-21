@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM243x_ALX_beta" --package "ALX" --part "ALX" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.17.0+3128"}
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
@@ -50,11 +50,18 @@ i2c1.$name           = "CONFIG_I2C0";
 i2c1.I2C.$assign     = "I2C0";
 i2c1.I2C.SCL.$assign = "I2C0_SCL";
 i2c1.I2C.SDA.$assign = "I2C0_SDA";
+i2c1.I2C_child.$name = "drivers_i2c_v0_i2c_v0_template0";
 
-i2c2.$name = "CONFIG_I2C1";
+i2c2.$name           = "CONFIG_I2C1";
+i2c2.I2C_child.$name = "drivers_i2c_v0_i2c_v0_template1";
 
 debug_log.enableUartLog = true;
 debug_log.uartLog.$name = "CONFIG_UART0";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -114,8 +121,8 @@ region1.memory_region[3].manualStartAddress = 0x70060000;
 region1.memory_region[3].size               = 0x8000;
 region1.memory_region[4].$name              = "MSRAM";
 region1.memory_region[4].auto               = false;
-region1.memory_region[4].manualStartAddress = 0x70080000;
-region1.memory_region[4].size               = 0xE20D0;
+region1.memory_region[4].manualStartAddress = 0x70070000;
+region1.memory_region[4].size               = 0x100000;
 region1.memory_region[5].type               = "FLASH";
 region1.memory_region[5].$name              = "FLASH";
 region1.memory_region[5].auto               = false;

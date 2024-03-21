@@ -36,9 +36,36 @@ const libdirs_nortos = {
     ],
 };
 
+const libdirs_freertos = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/test/unity/lib"
+    ],
+};
+
+const includes_freertos_r5f = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/awr294x/r5f",
+        "${MCU_PLUS_SDK_PATH}/test/unity/",
+    ],
+};
+
 const libs_nortos_r5f = {
     common: [
         "nortos.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "unity.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
+
+const libs_freertos_r5f = {
+    common: [
+        "freertos.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
         "unity.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
@@ -77,6 +104,21 @@ const templates_nortos_r5f =
     }
 ];
 
+const templates_freertos_r5f =
+[
+    {
+        input: ".project/templates/awr294x/common/linker_r5f.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/awr294x/freertos/main_freertos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "test_main",
+        },
+    }
+];
+
 const templates_nortos_c66 =
 [
     {
@@ -94,6 +136,7 @@ const templates_nortos_c66 =
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "awr294x-evm", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "awr294x-evm", os: "freertos"},
 ];
 
 function getComponentProperty() {
@@ -122,6 +165,10 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/r5f*/)) {
         if(buildOption.os.match(/freertos*/) )
         {
+            build_property.includes = includes_freertos_r5f;
+            build_property.libdirs = libdirs_freertos;
+            build_property.libs = libs_freertos_r5f;
+            build_property.templates = templates_freertos_r5f;
         }
         else
         {
