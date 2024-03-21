@@ -29,6 +29,7 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+#include <stdint.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
@@ -37,6 +38,7 @@
 #include <drivers/bootloader/bootloader_can.h>
 #include <drivers/bootloader/bootloader_uniflash.h>
 #include <drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
+#include <board/ioexp/ioexp_tca6416.h>
 
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
     = HSMRT_IMG;
@@ -50,6 +52,9 @@ uint8_t gUniflashFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((align
 uint8_t gUniflashVerifyBuf[BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE] __attribute__((aligned(128), section(".bss")));
 
 uint32_t gRunApp;
+
+#define IO_MUX_MCAN_STB                             (10U)                       // PORT 1, PIN 2         -> ioIndex : 1*8 + 2 = 10
+#define TCA6416_IO_MUX_MCAN_STB_PORT_LINE_STATE     (TCA6416_OUT_STATE_LOW)     // MCAN_STB PIN OUTPUT   -> 0
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -71,23 +76,42 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
     return SystemP_SUCCESS;
 }
 
-void mcanEnableTransceiver(void)
+void mcanEnableTransceiver()
 {
-    uint32_t    gpioBaseAddr, pinNum;
+    static TCA6416_Config  gTCA6416_Config;
+    int32_t             status = SystemP_SUCCESS;
+    TCA6416_Params      tca6416Params;
+    TCA6416_Params_init(&tca6416Params);
 
-    gpioBaseAddr = (uint32_t)AddrTranslateP_getLocalAddr(CONFIG_GPIO0_BASE_ADDR);
-    pinNum       = CONFIG_GPIO0_PIN;
+    status = TCA6416_open(&gTCA6416_Config, &tca6416Params);
+    DebugP_assert(SystemP_SUCCESS == status);
 
-    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_DIRECTION_OUTPUT);
+    status = TCA6416_setOutput(
+                    &gTCA6416_Config,
+                    IO_MUX_MCAN_STB,
+                    TCA6416_IO_MUX_MCAN_STB_PORT_LINE_STATE);
+    DebugP_assert(SystemP_SUCCESS == status);
 
-    GPIO_pinWriteLow(gpioBaseAddr, pinNum);
+    /* Configure as output  */
+    status += TCA6416_config(
+                    &gTCA6416_Config,
+                    IO_MUX_MCAN_STB,
+                    TCA6416_MODE_OUTPUT);
+
+    if(status != SystemP_SUCCESS)
+    {
+        DebugP_log("Transceiver Setup Failure !!");
+        TCA6416_close(&gTCA6416_Config);
+    }
+
+    TCA6416_close(&gTCA6416_Config);
 }
 
 int main()
 {
     int32_t status;
     uint32_t done = 0U;
-    uint32_t fileSize;
+    uint32_t fileSize = 0U;
     Bootloader_UniflashConfig uniflashConfig;
     Bootloader_UniflashResponseHeader respHeader;
 

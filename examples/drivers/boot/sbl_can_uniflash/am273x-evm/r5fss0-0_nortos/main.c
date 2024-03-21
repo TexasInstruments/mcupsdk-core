@@ -78,7 +78,7 @@ int main(void)
 {
     int32_t status = SystemP_SUCCESS;
     uint32_t done = 0U;
-    uint32_t fileSize;
+    uint32_t fileSize = 0U;
     Bootloader_UniflashConfig uniflashConfig;
     Bootloader_UniflashResponseHeader respHeader;
 

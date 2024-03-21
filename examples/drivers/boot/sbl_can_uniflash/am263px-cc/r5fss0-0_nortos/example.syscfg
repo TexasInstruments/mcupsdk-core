@@ -259,14 +259,14 @@ section7.output_section[0].palignment = true;
  * re-solve from scratch.
  */
 flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "OSPI0_CLK";
-flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "EPWM11_A";
+flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "OSPI0_CSn0";
 flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "UART1_TXD";
 flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "MCAN1_RX";
 flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "MCAN0_RX";
-flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "EPWM13_A";
+flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "OSPI0_D3";
 flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "OSPI0_D2";
-flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "EPWM11_B";
-flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "OSPI0_CSn0";
+flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "OSPI0_D1";
+flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "OSPI0_D0";
 mcspi1.SPI.CLK.$suggestSolution                    = "SPI1_CLK";
 mcspi1.SPI.D0.$suggestSolution                     = "SPI1_D0";
 mcspi1.SPI.D1.$suggestSolution                     = "SPI1_D1";
