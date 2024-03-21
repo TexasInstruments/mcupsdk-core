@@ -365,6 +365,9 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_UART_ECHO_DMA_LLD
    -# \subpage EXAMPLES_DRIVERS_UART_ECHO_INTERRUPT_LLD
    -# \subpage EXAMPLES_DRIVERS_UART_ECHO_POLLING_LLD
+\cond SOC_AM263X
+   -# \subpage EXAMPLES_DRIVERS_UART_HLD_LLD_EXTERNAL_LOOPBACK
+\endcond
 -# WATCHDOG
    -# \subpage EXAMPLES_DRIVERS_WATCHDOG_INTERRUPT_MODE
    -# \subpage EXAMPLES_DRIVERS_WATCHDOG_RESET_MODE
