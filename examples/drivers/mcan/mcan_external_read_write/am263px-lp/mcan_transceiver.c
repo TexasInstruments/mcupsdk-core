@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -33,18 +33,50 @@
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
-#include <drivers/gpio.h>
-#include <kernel/dpl/AddrTranslateP.h>
-#include "ti_drivers_open_close.h"
+#include <stdint.h>
+#include <board/ioexp/ioexp_tca6416.h>
+#include "ti_board_open_close.h"
 
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
+#define IO_MUX_MCAN_STB                             (10U)                       /* PORT 1, PIN 2         -> ioIndex : 1*8 + 2 = 10 */
+#define TCA6416_IO_MUX_MCAN_STB_PORT_LINE_STATE     (TCA6416_OUT_STATE_LOW)     /* MCAN_STB PIN OUTPUT   -> 0 */
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
+static TCA6416_Config  gTCA6416_Config;
+
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
 void mcanEnableTransceiver(void)
 {
-    uint32_t    gpioBaseAddr, pinNum;
+    int32_t             status = SystemP_SUCCESS;
+    TCA6416_Params      tca6416Params;
+    TCA6416_Params_init(&tca6416Params);
 
-    gpioBaseAddr = (uint32_t)AddrTranslateP_getLocalAddr(CONFIG_GPIO0_BASE_ADDR);
-    pinNum       = CONFIG_GPIO0_PIN;
+    status = TCA6416_open(&gTCA6416_Config, &tca6416Params);
+    DebugP_assert(SystemP_SUCCESS == status);
 
-    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_DIRECTION_OUTPUT);
+    status = TCA6416_setOutput(
+                    &gTCA6416_Config,
+                    IO_MUX_MCAN_STB,
+                    TCA6416_IO_MUX_MCAN_STB_PORT_LINE_STATE);
+    DebugP_assert(SystemP_SUCCESS == status);
 
-    GPIO_pinWriteLow(gpioBaseAddr, pinNum);
+    /* Configure as output  */
+    status += TCA6416_config(
+                    &gTCA6416_Config,
+                    IO_MUX_MCAN_STB,
+                    TCA6416_MODE_OUTPUT);
+
+    if(status != SystemP_SUCCESS)
+    {
+        DebugP_log("Transceiver Setup Failure !!");
+        TCA6416_close(&gTCA6416_Config);
+    }
+
+    TCA6416_close(&gTCA6416_Config);
 }
