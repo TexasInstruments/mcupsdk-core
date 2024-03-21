@@ -41,27 +41,31 @@ eeprom1.$name      = "CONFIG_EEPROM0";
 eeprom1.i2cAddress = 0x53;
 
 ethphy1.$name    = "CONFIG_ETHPHY0";
-ethphy1.mdioPort = 3;
+ethphy1.mdioPort = 12;
 
 ethphy2.$name    = "CONFIG_ETHPHY1";
-ethphy2.mdioPort = 12;
+ethphy2.mdioPort = 3;
 
 gpio1.$name                = "CONFIG_GPIO0";
 gpio1.pinDir               = "OUTPUT";
+gpio1.enableIntr           = true;
 gpio1.GPIO.$assign         = "GPIO0";
 gpio1.GPIO.gpioPin.$assign = "PR0_PRU1_GPIO10";
 
 gpio2.$name                = "CONFIG_GPIO1";
 gpio2.pinDir               = "OUTPUT";
+gpio2.enableIntr           = true;
 gpio2.GPIO.$assign         = "GPIO0";
 gpio2.GPIO.gpioPin.$assign = "QSPI_CSn1";
 
 gpio3.$name                = "CONFIG_GPIO2";
+gpio3.enableIntr           = true;
 gpio3.GPIO.$assign         = "GPIO0";
 gpio3.GPIO.gpioPin.$assign = "EPWM7_B";
 
 i2c1.$name               = "CONFIG_I2C0";
 eeprom1.peripheralDriver = i2c1;
+i2c1.I2C.$assign         = "I2C1";
 
 pruicss1.$name                           = "CONFIG_PRU_ICSS1";
 pruicss1.AdditionalICSSSettings[0].$name = "CONFIG_PRU_ICSS_IO0";
@@ -112,19 +116,17 @@ mpu_armv77.size       = 16;
 mpu_armv77.attributes = "Cached+Sharable";
 
 icss_emac1.$name            = "CONFIG_ICSS_EMAC0";
-icss_emac1.mode             = "DUAL MAC | MAC1";
-icss_emac1.phyAddr0         = 3;
-icss_emac1.phyAddr1         = 0;
 icss_emac1.queue            = "QUEUE1";
 icss_emac1.linkTaskPriority = 12;
 icss_emac1.rxTaskPriority   = 10;
 icss_emac1.txTaskPriority   = 10;
+icss_emac1.phyAddr1         = 3;
+icss_emac1.phyAddr0         = 12;
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-i2c1.I2C.$suggestSolution     = "I2C1";
 i2c1.I2C.SCL.$suggestSolution = "I2C1_SCL";
 i2c1.I2C.SDA.$suggestSolution = "I2C1_SDA";

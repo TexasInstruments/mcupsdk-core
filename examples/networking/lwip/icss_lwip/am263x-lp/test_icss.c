@@ -789,7 +789,6 @@ int icss_lwip_example(void *args)
     status = Board_driversOpen();
     DebugP_assert(status==SystemP_SUCCESS);
 
-    ICSS_EMAC_testBoardInit();
     icssmMuxSelection();
 
     // app_getEmacHandle(lwipifHandle);
@@ -847,6 +846,7 @@ int icss_lwip_example(void *args)
         PRUICSS_enableCore(pruicssHandle, PRUICSS_PRU0);
         PRUICSS_enableCore(pruicssHandle, PRUICSS_PRU1);
     }
+    ICSS_EMAC_testBoardInit();
 
 
     //  TaskP_Params            taskParamsLwipInit;
@@ -872,8 +872,8 @@ int icss_lwip_example(void *args)
 
 void icssmMuxSelection(void)
 {
-    uint32_t pinNum[3] = {CONFIG_GPIO0_PIN, CONFIG_GPIO1_PIN, CONFIG_GPIO2_PIN};
-    uint32_t pinDir[3] = {CONFIG_GPIO0_DIR, CONFIG_GPIO1_DIR, CONFIG_GPIO2_DIR};
+    uint32_t pinNum[CONFIG_GPIO_NUM_INSTANCES] = {CONFIG_GPIO0_PIN, CONFIG_GPIO1_PIN, CONFIG_GPIO2_PIN};
+    uint32_t pinDir[CONFIG_GPIO_NUM_INSTANCES] = {CONFIG_GPIO0_DIR, CONFIG_GPIO1_DIR, CONFIG_GPIO2_DIR};
 
     for(uint32_t index = 0; index < CONFIG_GPIO_NUM_INSTANCES-1; index++)
     {

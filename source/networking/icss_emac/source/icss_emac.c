@@ -333,7 +333,6 @@ ICSS_EMAC_Handle ICSS_EMAC_open(uint32_t idx, const ICSS_EMAC_Params *params)
                 ICSS_EMAC_hostInit(icssEmacHandle, params->pruicssIntcInitData);
                 ICSS_EMAC_macInit((uint8_t)ICSS_EMAC_PORT_1, icssEmacHandle);
                 ICSS_EMAC_mdioIntrEnable(ICSS_EMAC_PORT_1, icssEmacHandle);
-                ICSS_EMAC_mdioIntrEnable(ICSS_EMAC_PORT_2, icssEmacHandle);
                 port = ICSS_EMAC_PORT_1;
                 break;
             case ICSS_EMAC_MODE_MAC1:
