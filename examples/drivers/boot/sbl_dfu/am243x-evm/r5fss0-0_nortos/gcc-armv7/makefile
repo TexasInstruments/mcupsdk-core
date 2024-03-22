@@ -69,6 +69,7 @@ CFLAGS_common := \
 	-mfpu=vfpv3-d16 \
 	-Wall \
 	-Werror \
+	-mthumb-interwork \
 	-g \
 	-Wno-unused-function \
 	-Wno-enum-compare \
