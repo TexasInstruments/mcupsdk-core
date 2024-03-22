@@ -76,6 +76,9 @@ const templates_nortos_r5f_gcc =
     {
         input: ".project/templates/am243x/common/linker_r5f_gcc.cmd.xdt",
         output: "linker.cmd",
+        options: {
+            codeDataSize : "150000",
+        },
     },
     {
         input: ".project/templates/am243x/nortos/main_nortos.c.xdt",
