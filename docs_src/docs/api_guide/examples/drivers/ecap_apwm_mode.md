@@ -36,6 +36,15 @@ The example does the below
 
 Connect OUTPUTXBAR1 output to oscilloscope
 
+## AM263PX-CC
+
+When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+- Connect HSEC Pin 85 to oscilloscope
+
+## AM263PX-LP
+When using AM263x-LP
+- Connect boosterpack header J6/J8 Pin 50 to oscilloscope
+
 ## AM263X-CC
 
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
