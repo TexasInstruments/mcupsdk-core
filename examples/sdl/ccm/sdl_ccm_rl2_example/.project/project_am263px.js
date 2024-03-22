@@ -56,7 +56,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg"
 
-const readmeDoxygenPageTag = "EXAMPLES_SDL_CCM_RL2";
+const readmeDoxygenPageTag = "EXAMPLES_SDL_CCM";
 
 const templates_nortos_r5f =
 [
