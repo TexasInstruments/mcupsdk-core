@@ -8,6 +8,7 @@ const files_r5f = {
         "eeprom_at24c.c",
         "ethphy.c",
         "ethphy_dp83869.c",
+        "ethphy_dp83826e.c",
         "flash.c",
         "flash_nand_gpmc.c",
         "flash_nor_ospi.c",
