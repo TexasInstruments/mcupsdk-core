@@ -35,14 +35,14 @@ Watch  Variables
 - ADC0_AIN2 pin should be connected to DAC output pin.
 - EPWM0A, EPWM0B, EPWM1A, EPWM1B, EPWM2A, EPWM2B can be connected to an oscilloscope to validate tripping.
 
-## AM263X-CC E2 or AM263X-CC E1
+## AM263PX-CC E2 or AM263X-CC E2 or AM263X-CC E1
 
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 
 - Connect HSEC Pin 15 (ADC input) to HSEC Pin 9 (DAC out)
 - Capture and analyze waveforms at HSEC Pin 49, HSEC Pin 51, HSEC Pin 53, HSEC Pin 55, HSEC Pin 50, HSEC Pin 52
 
-## AM263X-LP
+## AM263PX-LP or AM263X-LP
 
 When using AM263x-LP
 - Connect booster pack header J5/J7 pin 66 (ADC input) to J1/J3 pin 30 (DAC out)

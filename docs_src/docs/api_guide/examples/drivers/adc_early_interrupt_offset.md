@@ -36,14 +36,14 @@ INT xbar0 is set for ADC 1 INT 2.
     - reads the delays in SOC1.
     - clears the INT 1, 2 flags
 # External Connections
-## Am263x-CC E2
+##  AM263Px-CC E2 or AM263x-CC E2
 Feed analog inputs to channels
          ADC1_AIN0 - HSEC Pin 12
 
-## Am263x-CC E1
+## AM263x-CC E1
 Feed analog inputs to channels
          ADC1_AIN0 - HSEC Pin 18
-## Am263x-LP
+## AM263Px-LP or AM263x-LP
 Feed analog inputs to channels
          ADC1_AIN0 - J1/3 Pin 24
 # Watch Variables

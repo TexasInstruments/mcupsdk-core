@@ -66,11 +66,11 @@
  *
  * External Connections
  * ADC1_AIN0 and ADC2_AIN0 pins should be connected to signals to be converted.
- * AM263X-CC E2:
+ * AM263pX-CC E2 or AM263X-CC E2 :
  *  - Feed the External Volatage to the following
  *      - ADC1_AIN0 :   HSEC-PIN 12
  *      - ADC2_AIN0 :   HSEC-PIN 31
- * AM263X-LP :
+ * AM263PX-LP or AM263X-LP :
  *  - Feed the External Volatage to the following
  *      - ADC1_AIN0 :   J1/3 24
  *      - ADC2_AIN0 :   J1/3 25

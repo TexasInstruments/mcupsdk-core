@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
@@ -54,11 +54,13 @@ adc1.interrupt2SOCSource  = "ADC_SOC_NUMBER1";
 adc1.enableInterrupt2     = true;
 adc1.$name                = "CONFIG_ADC1";
 adc1.ppb1SOCNumber        = "ADC_SOC_NUMBER1";
+adc1.ADC.$assign          = "ADC1";
 
 mcspi1.$name                 = "CONFIG_MCSPI0";
 pmic1.peripheralDriver       = mcspi1;
 mcspi1.SPI.$assign           = "SPI1";
 mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
+mcspi1.child.$name           = "drivers_mcspi_v1_mcspi_v1_template1";
 
 const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                 = edma.addInstance({}, false);
@@ -73,6 +75,7 @@ debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -291,13 +294,12 @@ int_xbar1.xbarOutput = ["ADC1_INT2"];
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-adc1.ADC.$suggestSolution                   = "ADC0";
-adc1.ADC.AIN0.$suggestSolution              = "ADC0_AIN0";
-adc1.ADC.AIN1.$suggestSolution              = "ADC0_AIN1";
-adc1.ADC.AIN2.$suggestSolution              = "ADC0_AIN2";
-adc1.ADC.AIN3.$suggestSolution              = "ADC0_AIN3";
-adc1.ADC.AIN4.$suggestSolution              = "ADC0_AIN4";
-adc1.ADC.AIN5.$suggestSolution              = "ADC0_AIN5";
+adc1.ADC.AIN0.$suggestSolution              = "ADC1_AIN0";
+adc1.ADC.AIN1.$suggestSolution              = "ADC1_AIN1";
+adc1.ADC.AIN2.$suggestSolution              = "ADC1_AIN2";
+adc1.ADC.AIN3.$suggestSolution              = "ADC1_AIN3";
+adc1.ADC.AIN4.$suggestSolution              = "ADC1_AIN4";
+adc1.ADC.AIN5.$suggestSolution              = "ADC1_AIN5";
 mcspi1.SPI.CLK.$suggestSolution             = "SPI1_CLK";
 mcspi1.SPI.D0.$suggestSolution              = "SPI1_D0";
 mcspi1.SPI.D1.$suggestSolution              = "SPI1_D1";

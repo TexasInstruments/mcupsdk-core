@@ -60,9 +60,9 @@ no pin fault.
 5. OSD circuit is enabeld for ADC0, Channel 2 (see below execution)
 ## External Connections
 ADC0-SOC0 Samples on Channel 2.
-- on AM263x CC E2, AM263Px CC E2, with HSEC Dock
+- on AM263Px CC E2, with HSEC Dock
     - Feed Analog input to ADC0_AIN2 - HSEC PIN 15
-- on AM263x LP E2, AM263Px LP
+- on AM263Px LP
     - Feed Analog Input to the ADC0_AIN2 - J7 Pin 66
 
 ## Watch Variables
@@ -72,7 +72,7 @@ adcResult         - a digital representation of the voltage on ADC Channel.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_OPEN_SHORTS_DETECTION_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

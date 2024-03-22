@@ -23,8 +23,8 @@ The example does the below
 # External Connections
 - ADC2_AIN0, ADC2_AIN1, ADC2_AIN2 and ADC1_AIN0, ADC1_AIN1, ADC1_AIN2 pins should be connected to signals to be converted.
 
-## AM263X-CC E2
-When using AM263x-CC E2 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263PX-CC E2 or AM263X-CC E2
+When using AM263Px-CC E2 or AM263x-CC E2 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Feed analog inputs to the following.
     - ADC2_AIN0 - HSEC 31
     - ADC2_AIN1 - HSEC 33
@@ -43,7 +43,7 @@ When using AM263x-CC E1 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking
     - ADC1_AIN1 - HSEC 20
     - ADC1_AIN2 - HSEC 21
 
-## AM263X-LP
+## AM263X-LP or AM263X-LP
 When using LP
 - Feed the analog inputs
 - Feed analog inputs to the following.

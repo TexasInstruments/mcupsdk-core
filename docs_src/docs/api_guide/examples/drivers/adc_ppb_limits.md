@@ -35,14 +35,14 @@ Note :  PPBEVTINT is a logical OR for all the PPBxEVTINT, and is source for ISR
 
 # External Connections
 
-## Am263x-CC E2
+## AM263PX-CC E2 or AM263X-CC E2
 Loop DAC output back to ADC1 Channel 0
 - Connect HSEC Pin 9 to HSEC Pin 12
-## Am263x-CC E1
+## AM263X-CC E1
 Loop DAC output back to ADC1 Channel 0
 - Connect HSEC Pin 9 to HSEC Pin 18
 
-## Am263x-LP
+## AM263PX-LP or AM263X-LP
 Loop DAC output back to ADC1 Channel 0
 - Connect J1/J3 Pin 30 to J1/J3 Pin 24
 

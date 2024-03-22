@@ -23,7 +23,7 @@ The below watch variables can be used to view ADC conversion results.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_DAC_LOOPBACK_COMBOS}
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263PX
 
  Parameter      | Value
  ---------------|-----------

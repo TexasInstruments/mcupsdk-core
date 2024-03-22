@@ -12,16 +12,16 @@ The example does the below
 - Forces the SOC0 through software and waits for completion by polling ADC interrupt 1 status.
 
 # External Connections
-- ADC0_AIN0 pin should be connected to signals to be converted.
+- ADC0_AIN2 pin should be connected to signals to be converted.
 
-## AM263X-CC E2 or AM263X-CC E1
+## AM263PX-CC E2 or AM263X-CC E2 or AM263X-CC E1
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Feed analog input for the following
     - ADC0_AIN2 - HSEC 15
 
-## AM263X-LP
+## AM263PX-LP or AM263X-LP
 When using AM263x-LP
-- Feed analog input (non-zero voltage) to boosterpack header J1/J3 Pin 23.
+- Feed analog input (non-zero voltage) to boosterpack header J5/J7 Pin 66.
 
 # Supported Combinations {#EXAMPLES_DRIVERS_ADC_SOC_SOFTWARE_COMBOS}
 

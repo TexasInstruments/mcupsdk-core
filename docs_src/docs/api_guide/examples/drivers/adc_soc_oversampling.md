@@ -21,7 +21,7 @@
      - freezes EPWM counter if required conversions are complete.
 
 # External Connections
-## AM263X-CC E2
+## AM263Px-CC or AM263X-CC E2 
      - Feed Analog Voltages on ADC 1 Channel 0 - HSEC PIN 12
      - Feed Analog Voltages on ADC 1 Channel 1 - HSEC PIN 14
      - Feed Analog Voltages on ADC 1 Channel 2 - HSEC PIN 18
@@ -30,7 +30,8 @@
      - Feed Analog Voltages on ADC 1 Channel 0 - HSEC PIN 18
      - Feed Analog Voltages on ADC 1 Channel 1 - HSEC PIN 20
      - Feed Analog Voltages on ADC 1 Channel 2 - HSEC PIN 21
-## AM263X-LP
+
+## AM263PX-LP or AM263X-LP
      - Feed Analog Voltages on ADC 1 Channel 0 - J1/3 PIN 24
      - Feed Analog Voltages on ADC 1 Channel 1 - J1/3 PIN 29
      - Feed Analog Voltages on ADC 1 Channel 2 - J5/7 PIN 67

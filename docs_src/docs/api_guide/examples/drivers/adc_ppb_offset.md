@@ -38,11 +38,11 @@ ADC SOC0 and SOC1 are set for Channel 0, with sample window 17 each and are trig
 - ADC1_INT1 is set to EOC/SOC1.
 
 ## External Connections
-### AM263X-CC E2
+### AM263PX-CC E2 or AM263X-CC E2
 - Feed Analog Input to ADC1_AIN0, HSEC Pin 12
 ### AM263X-CC E1
 - Feed Analog Input to ADC1_AIN0, HSEC Pin 18
-### AM263X-LP
+### AM263PX-LP or AM263X-LP
 - Feed Analog Input to ADC1_AIN0, J1/3 Pin 24
 
 # Watch Variables

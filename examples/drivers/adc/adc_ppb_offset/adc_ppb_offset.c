@@ -74,8 +74,8 @@
  *      ADC1_INT1 is set to EOC/SOC1.
  *
  * External Connections :
- * AM263X-CC    :   Feed Analog Input to ADC1_AIN0, HSEC Pin 12
- * AM263X-LP    :   Feed Analog Input to ADC1_AIN0, J1/3 Pin 24
+ * AM263X-CC or AM263PX-CC    :   Feed Analog Input to ADC1_AIN0, HSEC Pin 12
+ * AM263X-LP or AM263PX-LP    :   Feed Analog Input to ADC1_AIN0, J1/3 Pin 24
  *
  * Watch Variables :
  * - gAdc1Soc0Result[] holds the digital representation of the Analog signal on ADC1_AIN0

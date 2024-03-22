@@ -63,20 +63,33 @@
  * - App_adcISR read the results stored by SOC0,1 in ADC1,2.
  *
  * External Connections
- * - AM263x-CC E2
- *      - Connect loopback on GPIO 24, GPIO 23, i.e., HSEC PINS 87, 85.
- *      - Feed Analog voltage on
- *          - ADC 1 Channel 0 : HSEC PIN 12
- *          - ADC 1 Channel 1 : HSEC PIN 14
- *          - ADC 2 Channel 0 : HSEC PIN 31
- *          - ADC 2 Channel 1 : HSEC PIN 33
- * - AM263x-LP
- *      - Connect loopback on GPIO 24, GPIO 23, i.e., J5/7 PINS 49,50.
- *      - Feed Analog voltage on
- *          - ADC 1 Channel 0 : J1/3 PIN 24
- *          - ADC 1 Channel 1 : J1/3 PIN 29
- *          - ADC 2 Channel 0 : J1/3 PIN 25
- *          - ADC 2 Channel 1 : J5/7 PIN 63
+ *  AM263PX-LP
+ *  - input trigger pulse on GPIO 16 (configured as input) - J6/J8 pin - 79 or connect it to GPIO 15 (Configured as output) -  J6/J8 Jpin - 80
+ *  - feed analog input on ADC 1 Channel 0 - J1/J3 Pin - 24
+ *  - feed analog input on ADC 1 Channel 1 - J1/J3 Pin - 29
+ *  - feed analog input on ADC 2 Channel 0 - J1/J3 Pin - 25
+ *  - feed analog input on ADC 2 Channel 1 - J5/J7 Pin - 63
+ *
+ *  AM263X-CC E2
+ *  - input trigger pulse on GPIO 7 (configured as input) - HSEC connecter pin - 80 or connect it to GPIO 8 (Configured as output) - HSEC Connecter pin - 82
+ *  - feed analog input on ADC 1 Channel 0 - HSEC connecter pin - 12
+ *  - feed analog input on ADC 1 Channel 1 - HSEC connecter pin - 14
+ *  - feed analog input on ADC 2 Channel 0 - HSEC connecter pin - 31
+ *  - feed analog input on ADC 2 Channel 1 - HSEC connecter pin - 33
+ *
+ *  AM263X-CC E1
+ *  - input trigger pulse on GPIO 7 (configured as input) - HSEC connecter pin - 80 or connect it to GPIO 8 (Configured as output) - HSEC Connecter pin - 82
+ *  - feed analog input on ADC 1 Channel 0 - HSEC connecter pin - 18
+ *  - feed analog input on ADC 1 Channel 1 - HSEC connecter pin - 20
+ *  - feed analog input on ADC 2 Channel 0 - HSEC connecter pin - 24
+ *  - feed analog input on ADC 2 Channel 1 - HSEC connecter pin - 26
+ *
+ *  AM263X-LP
+ *  - input trigger pulse on GPIO 16 (configured as input) - J5/J7 pin - 47 or connect it to GPIO 15 (Configured as output) -  J6/J8 Jpin - 58
+ *  - feed analog input on ADC 1 Channel 0 - J1/J3 Pin - 24
+ *  - feed analog input on ADC 1 Channel 1 - J1/J3 Pin - 29
+ *  - feed analog input on ADC 2 Channel 0 - J1/J3 Pin - 25
+ *  - feed analog input on ADC 2 Channel 1 - J5/J7 Pin - 63
  *
  * Watch Variables
  * - gAdc1Result0 : Digital representation of Voltages on ADC 1 Channel 0

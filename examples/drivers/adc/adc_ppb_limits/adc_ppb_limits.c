@@ -77,11 +77,11 @@
  *
  * External Connections
  *
- * 1. Am263x-CC
+ * 1. Am263px-CC or Am263x-CC
  *      Loop DAC output back to ADC1 Channel 0
  *      Connect HSEC Pin 9 to HSEC Pin 12
  *
- * 2. Am263x-LP
+ * 2. Am263px-LP or Am263x-LP
  *      Loop DAC output back to ADC1 Channel 0
  *      Connect J1/J3 Pin 30 to J1/J3 Pin 24
  *

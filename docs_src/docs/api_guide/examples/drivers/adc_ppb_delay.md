@@ -52,16 +52,16 @@ INT xbar0, INT xbar1 are set for ADC 1 INT 1 and ADC 1 INT 2 respectively.
     - Counter Mode will be set to Up-count mode in the example.
 
 # External Connections
-## Am263x-CC E2
+## AM263Px-CC E2 or AM263x-CC E2
 Feed analog inputs to channels
     - ADC1_AIN0 - HSEC Pin 12
     - ADC1_AIN1 - HSEC Pin 14
-## Am263x-CC E1
+## AM263x-CC E1
 Feed analog inputs to channels
     - ADC1_AIN0 - HSEC Pin 18
     - ADC1_AIN1 - HSEC Pin 20
 
-## Am263x-LP
+## AM263Px-LP or AM263x-LP
 Feed analog inputs to channels
     - ADC1_AIN0 - J1/3 Pin 24
     - ADC1_AIN1 - J1/3 Pin 29

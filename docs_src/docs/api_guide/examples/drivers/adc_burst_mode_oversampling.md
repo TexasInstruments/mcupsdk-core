@@ -20,7 +20,7 @@ Watch  Variables
 # External Connections
 - ADC1_AIN0, ADC1_AIN1, ADC1_AIN3 pins should be connected to signals to be converted.
 
-## AM263X-CC E2
+## AM263PX-CC E2 or AM263X-CC E2
 When using AM263x-CC E2 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Feed analog inputs
     - ADC1_AIN0 - HSEC 12
@@ -35,7 +35,7 @@ When using AM263x-CC E1 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking
     - ADC1_AIN3 - HSEC 23
 
 
-## AM263X-LP
+## AM263PX-LP or AM263X-LP
 When using LP
 - Feed analog inputs (non-zero volatage) to Boosterpack header Pin 24, Pin 29 and Pin 6.
 
