@@ -23,7 +23,7 @@ const filedirs = {
 
 const includes_nortos_r5f = {
     common: [
-        "${MCU_PLUS_SDK_PATH}/examples/drivers/qspi/qspi_norFlash",       
+        "${MCU_PLUS_SDK_PATH}/examples/drivers/qspi/qspi_norFlash",
     ],
 };
 
@@ -48,7 +48,7 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/awr294x/r5f",
-        "${MCU_PLUS_SDK_PATH}/examples/drivers/qspi/qspi_norFlash",       
+        "${MCU_PLUS_SDK_PATH}/examples/drivers/qspi/qspi_norFlash",
     ],
 };
 
@@ -121,7 +121,7 @@ function getComponentProperty() {
     property.type = "executable";
     property.name = "qspi_flash_dma_lld";
     property.isInternal = false;
-    property.description = "A QSPI Flash diag dma lld example. This example demonstrates diag using QSPI."
+    property.description = "A QSPI Flash DMA LLD Example."
     property.buildOptionCombos = buildOptionCombos;
 
     return property;

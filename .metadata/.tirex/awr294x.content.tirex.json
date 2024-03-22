@@ -2350,7 +2350,7 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A QSPI Flash diag interrupt example. This example demonstrates diag using QSPI. CPU is R5FSS0-0 running NORTOS.",
+        "description": "A QSPI Flash Interrupt Example. This example demonstrates transfer using QSPI-Interrupt method. CPU is R5FSS0-0 running NORTOS.",
         "name": "qspi_flash_interrupt",
         "location": "../../examples/drivers/qspi/qspi_flash_interrupt/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
@@ -2383,7 +2383,7 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A QSPI Flash diag interrupt example. This example demonstrates diag using QSPI. CPU is R5FSS0-0 running FREERTOS.",
+        "description": "A QSPI Flash Interrupt Example. This example demonstrates transfer using QSPI-Interrupt method. CPU is R5FSS0-0 running FREERTOS.",
         "name": "qspi_flash_interrupt",
         "location": "../../examples/drivers/qspi/qspi_flash_interrupt/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
@@ -2416,7 +2416,7 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A QSPI Flash diag dma lld example. This example demonstrates diag using QSPI. CPU is R5FSS0-0 running NORTOS.",
+        "description": "A QSPI Flash DMA LLD Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "qspi_flash_dma_lld",
         "location": "../../examples/drivers/qspi/qspi_flash_dma_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
@@ -2449,7 +2449,7 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A QSPI Flash diag dma lld example. This example demonstrates diag using QSPI. CPU is R5FSS0-0 running FREERTOS.",
+        "description": "A QSPI Flash DMA LLD Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "qspi_flash_dma_lld",
         "location": "../../examples/drivers/qspi/qspi_flash_dma_lld/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
@@ -2548,7 +2548,7 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A QSPI Flash diag interrupt lld example. This example demonstrates diag using QSPI. CPU is R5FSS0-0 running NORTOS.",
+        "description": "A QSPI Flash Interrupt LLD Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "qspi_flash_interrupt_lld",
         "location": "../../examples/drivers/qspi/qspi_flash_interrupt_lld/awr294x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
@@ -2581,7 +2581,7 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A QSPI Flash diag interrupt lld example. This example demonstrates diag using QSPI. CPU is R5FSS0-0 running FREERTOS.",
+        "description": "A QSPI Flash Interrupt LLD Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "qspi_flash_interrupt_lld",
         "location": "../../examples/drivers/qspi/qspi_flash_interrupt_lld/awr294x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [

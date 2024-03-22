@@ -23,7 +23,7 @@ const filedirs = {
 
 const includes_nortos_r5f = {
     common: [
-        "${MCU_PLUS_SDK_PATH}/examples/drivers/qspi/qspi_norFlash",       
+        "${MCU_PLUS_SDK_PATH}/examples/drivers/qspi/qspi_norFlash",
     ],
 };
 
@@ -48,7 +48,7 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f",
-        "${MCU_PLUS_SDK_PATH}/examples/drivers/qspi/qspi_norFlash",       
+        "${MCU_PLUS_SDK_PATH}/examples/drivers/qspi/qspi_norFlash",
     ],
 };
 
@@ -84,7 +84,7 @@ const projectspec_files = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_QSPI_FLASH_DIAG_INTERRUPT";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_QSPI_FLASH_INTERRUPT";
 
 const templates_nortos_r5f =
 [
@@ -123,7 +123,7 @@ function getComponentProperty() {
     property.type = "executable";
     property.name = "qspi_flash_interrupt";
     property.isInternal = false;
-    property.description = "A QSPI Flash diag interrupt example. This example demonstrates diag using QSPI."
+    property.description = "A QSPI Flash Interrupt Example. This example demonstrates transfer using QSPI-Interrupt method."
     property.buildOptionCombos = buildOptionCombos;
 
     return property;
