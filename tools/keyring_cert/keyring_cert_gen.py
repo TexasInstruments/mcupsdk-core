@@ -3,6 +3,7 @@
 #
 # Python 3.10 script
 
+import bin2c
 import argparse
 import os
 import subprocess
@@ -14,7 +15,6 @@ import json
 import sys
 from textwrap import dedent
 sys.path.insert(0, '../bin2c/')
-import bin2c
 
 g_sha_to_use = "sha512"
 max_keyring_size = 8192
@@ -23,9 +23,9 @@ max_keyring_size = 8192
 
 output_info: dict[str, str] = {}
 hash_algo: dict[str, int] = {
-"SHA384" : 2, 
-"SHA512" : 4,
-"SHA256" : 6
+    "SHA384": 2,
+    "SHA512": 4,
+    "SHA256": 6
 }
 
 ###########################################################################################################
@@ -224,7 +224,7 @@ public_key=FORMAT:HEX,OCT:public_key_val
             .replace('key_id_val', str(iter + index_start_asymm))\
             .replace('key_rights_val', keys_data['keyring_asymm'][iter]['key_rights'])\
             .replace('public_key_val', utils_hex_from_file(os.path.join('tmpdir', 'pub_key_hash')))\
-            .replace('hash_algo_val', str(hash_algo[keys_data['keyring_asymm'][iter]['hash_algo']]) )
+            .replace('hash_algo_val', str(hash_algo[keys_data['keyring_asymm'][iter]['hash_algo']]))
 
     keyring_ext_asymm_seq += asymm_keys
     print(keyring_ext_asymm_seq)
@@ -232,7 +232,7 @@ public_key=FORMAT:HEX,OCT:public_key_val
 
 def get_cert(args) -> None:
     """
-    This function reads keys from a JSON file and generates a certificate 
+    This function reads keys from a JSON file and generates a certificate
     based on the keyring information.
 
     Args:
@@ -313,6 +313,10 @@ if __name__ == "__main__":
                            required=True, help='Customer MPK key')
     my_parser.add_argument('--keys_info',               type=str,
                            required=True, help='Keys info json file')
+    my_parser.add_argument('--rsassa_pss',
+                           help='If binary needs to be signed RSASSA PSS scheme or not',  action="store_true")
+    my_parser.add_argument('--pss_saltlen', type=int,   default=0,
+                           help='Salt length for RSASSA PSS scheme',)
 
     args = my_parser.parse_args()
 
@@ -333,8 +337,12 @@ if __name__ == "__main__":
     cert_name = "x509_keyringcert_"+str(randint(111, 999))+".cert"
 
     # Generate the certificate
-    subprocess.check_output('openssl req -new -x509 -key {} -nodes -outform DER -out {} -config {} -{}'.format(
-        args.root_key, cert_name, cert_file_name, g_sha_to_use), shell=True)
+    if args.rsassa_pss:
+        subprocess.check_output('openssl req -new -x509 -key {} -nodes -outform DER -out {} -config {} -{} -sigopt rsa_padding_mode:pss -sigopt rsa_pss_saltlen:{} '.format(
+            args.root_key, cert_name, cert_file_name, g_sha_to_use, args.pss_saltlen), shell=True)
+    else:
+        subprocess.check_output('openssl req -new -x509 -key {} -nodes -outform DER -out {} -config {} -{}'.format(
+            args.root_key, cert_name, cert_file_name, g_sha_to_use), shell=True)
 
     bin2c.binary_to_header(cert_name, 'keyringCert.h', 'CUST_KEYRINGCERT')
 

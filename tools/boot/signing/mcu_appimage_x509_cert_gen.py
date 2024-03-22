@@ -26,17 +26,17 @@ g_valid_cores = [
 ]
 
 g_core_ids = {
-    "r5_cl0_c0" : 0x01,
-    "r5_cl0_c1" : 0x02,
-    "r5_cl1_c0" : 0x06,
-    "r5_cl1_c1" : 0x07,
+    "r5_cl0_c0": 0x01,
+    "r5_cl0_c1": 0x02,
+    "r5_cl1_c0": 0x06,
+    "r5_cl1_c1": 0x07,
 }
 
 g_sha_oids = {
-    "sha256" : "2.16.840.1.101.3.4.2.1",
-    "sha384" : "2.16.840.1.101.3.4.2.2",
-    "sha512" : "2.16.840.1.101.3.4.2.3",
-    "sha224" : "2.16.840.1.101.3.4.2.4",
+    "sha256": "2.16.840.1.101.3.4.2.1",
+    "sha384": "2.16.840.1.101.3.4.2.2",
+    "sha512": "2.16.840.1.101.3.4.2.3",
+    "sha224": "2.16.840.1.101.3.4.2.4",
 }
 
 g_x509_template = '''
@@ -91,6 +91,7 @@ iterationCnt =  INTEGER:{TEST_IMAGE_KEY_DERIVE_INDEX}
 salt         =  FORMAT:HEX,OCT:{TEST_IMAGE_KEY_DERIVE_SALT}
 '''
 
+
 def get_cert(args):
     '''Generate the x509 certificate config'''
     print("Generating certificate for {} ...".format(args.bin))
@@ -105,16 +106,16 @@ def get_cert(args):
             g_sha_to_use = hash_algo
 
     # Default values of template replacements
-    v_TEST_IMAGE_SHA_OID          = g_sha_oids[g_sha_to_use]
-    v_TEST_IMAGE_SHA_VAL          = None
-    v_TEST_IMAGE_LENGTH           = None
-    v_TEST_BOOT_CORE              = None
-    v_RESET_VECTOR                = ""
-    v_TEST_IMAGE_ENC_IV           = "0000"
-    v_TEST_IMAGE_ENC_RS           = "0000"
+    v_TEST_IMAGE_SHA_OID = g_sha_oids[g_sha_to_use]
+    v_TEST_IMAGE_SHA_VAL = None
+    v_TEST_IMAGE_LENGTH = None
+    v_TEST_BOOT_CORE = None
+    v_RESET_VECTOR = ""
+    v_TEST_IMAGE_ENC_IV = "0000"
+    v_TEST_IMAGE_ENC_RS = "0000"
     v_TEST_IMAGE_KEY_DERIVE_INDEX = 0
-    v_TEST_IMAGE_KEY_DERIVE_SALT  = "0000"
-    device_cert_type              = 0xA5A50000
+    v_TEST_IMAGE_KEY_DERIVE_SALT = "0000"
+    device_cert_type = 0xA5A50000
 
     # Validation of args.
 
@@ -129,24 +130,27 @@ def get_cert(args):
     else:
         # Check if encryption is enabled
         if(args.enc == 'y'):
-            enc_app_name, v_TEST_IMAGE_ENC_IV, v_TEST_IMAGE_ENC_RS = get_encrypted_file_iv_rs(args.bin, args.enckey)
+            enc_app_name, v_TEST_IMAGE_ENC_IV, v_TEST_IMAGE_ENC_RS = get_encrypted_file_iv_rs(
+                args.bin, args.enckey)
             if args.kd_salt:
                 v_TEST_IMAGE_KEY_DERIVE_INDEX = 1
-                v_TEST_IMAGE_KEY_DERIVE_SALT = get_key_derivation_salt(args.kd_salt)
+                v_TEST_IMAGE_KEY_DERIVE_SALT = get_key_derivation_salt(
+                    args.kd_salt)
             bin_file = enc_app_name
         else:
             pass
 
         # Get file size and SHA value
         v_TEST_IMAGE_LENGTH = os.path.getsize(bin_file)
-        sha_val = subprocess.check_output('openssl dgst -{} -hex {}'.format(g_sha_to_use, bin_file), shell=True).decode()
+        sha_val = subprocess.check_output(
+            'openssl dgst -{} -hex {}'.format(g_sha_to_use, bin_file), shell=True).decode()
         v_TEST_IMAGE_SHA_VAL = sub("^.*= ", r'', sha_val).strip('\n')
 
     # Load address has to be valid hex
     # TODO
 
     # Has to provide key for authentication
-    if((args.key is None) or(not os.path.exists(args.key))):
+    if((args.key is None) or (not os.path.exists(args.key))):
         # No file, exit
         print("Authentication key file not found!")
         exit(2)
@@ -154,10 +158,10 @@ def get_cert(args):
         pass
 
     if(swrev is None):
-            # Default to 1
-            swrev = 1
+        # Default to 1
+        swrev = 1
         # Replace the variables in the main template now.
-    enc_seq=''
+    enc_seq = ''
     if args.enc:
         enc_seq = "1.3.6.1.4.1.294.1.4 = ASN1:SEQUENCE:encryption"
     else:
@@ -174,28 +178,30 @@ def get_cert(args):
         enc_key_id = args.enc_key_id
 
     ret_cert = g_x509_template.format(TEST_IMAGE_SHA_OID=v_TEST_IMAGE_SHA_OID,
-                TEST_IMAGE_SHA_VAL=v_TEST_IMAGE_SHA_VAL,
-                TEST_IMAGE_LENGTH=v_TEST_IMAGE_LENGTH,
-                CERT_TYPE=device_cert_type,
-                SWRV=swrev,
-                ASYMM_KEY_ID=sign_key_id,
-                SYMM_KEY_ID=enc_key_id,
-                IMAGE_LENGTH = os.path.getsize(bin_file),
-                ENCRYPTION_SEQUENCE=enc_seq)
+                                      TEST_IMAGE_SHA_VAL=v_TEST_IMAGE_SHA_VAL,
+                                      TEST_IMAGE_LENGTH=v_TEST_IMAGE_LENGTH,
+                                      CERT_TYPE=device_cert_type,
+                                      SWRV=swrev,
+                                      ASYMM_KEY_ID=sign_key_id,
+                                      SYMM_KEY_ID=enc_key_id,
+                                      IMAGE_LENGTH=os.path.getsize(bin_file),
+                                      ENCRYPTION_SEQUENCE=enc_seq)
 
     # If encryption is enabled, append that sequence to the current certificate
     if args.enc:
         ret_cert += g_enc_boot_seq.format(TEST_IMAGE_ENC_IV=v_TEST_IMAGE_ENC_IV,
-                                            TEST_IMAGE_ENC_RS=v_TEST_IMAGE_ENC_RS,
-                                            TEST_IMAGE_KEY_DERIVE_INDEX=v_TEST_IMAGE_KEY_DERIVE_INDEX,
-                                            TEST_IMAGE_KEY_DERIVE_SALT=v_TEST_IMAGE_KEY_DERIVE_SALT)
+                                          TEST_IMAGE_ENC_RS=v_TEST_IMAGE_ENC_RS,
+                                          TEST_IMAGE_KEY_DERIVE_INDEX=v_TEST_IMAGE_KEY_DERIVE_INDEX,
+                                          TEST_IMAGE_KEY_DERIVE_SALT=v_TEST_IMAGE_KEY_DERIVE_SALT)
 
     # NOTE: Boot sequence is not used. We assume that SBL always sets the reset vectors and does image load
 
     return dedent(ret_cert)
 
+
 def get_enc_filename(fname):
     return fname+"-enc"
+
 
 def get_encrypted_file_iv_rs(bin_file_name, enc_key):
     if((enc_key is None) or (not os.path.exists(enc_key))):
@@ -224,7 +230,7 @@ def get_encrypted_file_iv_rs(bin_file_name, enc_key):
         v_TEST_IMAGE_ENC_RS = binascii.hexlify(enc_rs).decode('ascii')
 
         # Pad zeros to a temporary binary to make the size multiple of 16
-        zeros_pad = bytearray( 16 - (os.path.getsize(bin_file_name) % 16))
+        zeros_pad = bytearray(16 - (os.path.getsize(bin_file_name) % 16))
         tempfile_name = "tmpfile" + str(randint(1111, 9999))
         encbin_name = get_enc_filename(bin_file_name)
 
@@ -237,12 +243,14 @@ def get_encrypted_file_iv_rs(bin_file_name, enc_key):
             f.write(enc_rs)
 
         # Finally generate the encrypted image
-        subprocess.check_output('openssl aes-256-cbc -e -K {} -iv {} -in {} -out {} -nopad'.format(enckey, enc_iv, tempfile_name, encbin_name), shell=True)
+        subprocess.check_output('openssl aes-256-cbc -e -K {} -iv {} -in {} -out {} -nopad'.format(
+            enckey, enc_iv, tempfile_name, encbin_name), shell=True)
 
         # Delete the tempfile
         os.remove(tempfile_name)
 
         return encbin_name, v_TEST_IMAGE_ENC_IV, v_TEST_IMAGE_ENC_RS
+
 
 def get_key_derivation_salt(kd_salt_file_name):
     if(not os.path.exists(kd_salt_file_name)):
@@ -259,20 +267,37 @@ def get_key_derivation_salt(kd_salt_file_name):
 
 
 # arguments definition
-my_parser = argparse.ArgumentParser(description="Generates a x509 certificate for an application binary to boot it in HS device")
+my_parser = argparse.ArgumentParser(
+    description="Generates a x509 certificate for an application binary to boot it in HS device")
 
-my_parser.add_argument('--bin',             type=str, help='Bin file that needs to be signed')
-my_parser.add_argument('--key',             type=str, help='File with signing key inside it')
-my_parser.add_argument('--swrv',            type=str, help='Sw Revision of the application')
-my_parser.add_argument('--sign_key_id',     type=str, help='Index of signing key inside keyring')
-my_parser.add_argument('--enc_key_id',      type=str, help='Index of encryption key inside keyring')
-my_parser.add_argument('--enckey',          type=str, help='File with encryption key inside it')
-my_parser.add_argument('--cert',            type=str, help='Certificate file name (optional, will use a default name otherwise)')
-my_parser.add_argument('--output',          type=str, help='Output file name (concatenated cert+bin)')
-my_parser.add_argument('--enc',             type=str, help='If the binary need to be encrypted or not [y/n]')
-my_parser.add_argument('--kd-salt' ,        type=str, help='Path to the salt required to calculate derived key from manufacturers encryption key')
-my_parser.add_argument('--loadaddr',        type=str, help='Target load address of the binary in hex. Default to 0x70000000')
-my_parser.add_argument('--hash_algo',       type=str, help='Hash algorithm for digest calculation')
+my_parser.add_argument('--bin',             type=str,
+                       help='Bin file that needs to be signed')
+my_parser.add_argument('--key',             type=str,
+                       help='File with signing key inside it')
+my_parser.add_argument('--swrv',            type=str,
+                       help='Sw Revision of the application')
+my_parser.add_argument('--sign_key_id',     type=str,
+                       help='Index of signing key inside keyring')
+my_parser.add_argument('--enc_key_id',      type=str,
+                       help='Index of encryption key inside keyring')
+my_parser.add_argument('--enckey',          type=str,
+                       help='File with encryption key inside it')
+my_parser.add_argument('--cert',            type=str,
+                       help='Certificate file name (optional, will use a default name otherwise)')
+my_parser.add_argument('--output',          type=str,
+                       help='Output file name (concatenated cert+bin)')
+my_parser.add_argument('--enc',             type=str,
+                       help='If the binary need to be encrypted or not [y/n]')
+my_parser.add_argument('--kd-salt',        type=str,
+                       help='Path to the salt required to calculate derived key from manufacturers encryption key')
+my_parser.add_argument('--loadaddr',        type=str,
+                       help='Target load address of the binary in hex. Default to 0x70000000')
+my_parser.add_argument('--hash_algo',       type=str,
+                       help='Hash algorithm for digest calculation')
+my_parser.add_argument('--rsassa_pss',
+                       help='If binary needs to be signed RSASSA PSS scheme or not [y/n]', action="store_true")
+my_parser.add_argument('--pss_saltlen',     type=int,   default=0,
+                       help='Salt length for RSASSA PSS scheme')
 
 args = my_parser.parse_args()
 cert_str = get_cert(args)
@@ -291,7 +316,12 @@ if(args.output is None):
     out_name = args.bin + "signed"
 
 # Generate the certificate
-subprocess.check_output('openssl req -new -x509 -key {} -nodes -outform DER -out {} -config {} -{}'.format(args.key, cert_name, cert_file_name, g_sha_to_use), shell=True)
+if (args.rsassa_pss):
+    subprocess.check_output('openssl req -new -x509 -key {} -nodes -outform DER -out {} -config {} -{} -sigopt rsa_padding_mode:pss -sigopt rsa_pss_saltlen:{} '.format(
+        args.key, cert_name, cert_file_name, g_sha_to_use, args.pss_saltlen), shell=True)
+else:
+    subprocess.check_output('openssl req -new -x509 -key {} -nodes -outform DER -out {} -config {} -{} '.format(
+        args.key, cert_name, cert_file_name, g_sha_to_use), shell=True)
 
 # Concatenate the certificate with the binary. If binary was encrypted, concatenate with the encrypted image
 
