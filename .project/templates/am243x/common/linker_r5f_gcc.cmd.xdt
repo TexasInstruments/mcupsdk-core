@@ -256,6 +256,21 @@ SECTIONS
     .data           : ALIGN (8)    {} > MSRAM   /* This is where initialized globals and static go */
     % }
 
+    % if (isIcssPktBufEnable) {
+    /* Packet buffer memory used by ICCS */
+    .bss.icss_emac_pktbuf_mem (NOLOAD) : { KEEP(*(.bss.icss_emac_pktbuf_mem)) } > ICSS_PKT_BUF_MEM
+    % }
+    /* General purpose user shared memory, used in some examples */
+    .bss.user_shared_mem (NOLOAD) : { KEEP(*(.bss.user_shared_mem)) } > USER_SHM_MEM
+    /* this is used when Debug log's to shared memory are enabled, else this is not used */
+    .bss.log_shared_mem  (NOLOAD) : { KEEP(*(.bss.log_shared_mem)) } > LOG_SHM_MEM
+    /* this is used only when IPC RPMessage is enabled, else this is not used */
+    .bss.ipc_vring_mem   (NOLOAD) : { KEEP(*(.bss.ipc_vring_mem)) } > RTOS_NORTOS_IPC_SHM_MEM
+    % if ( ! args.project.isLinuxInSystem) { /* This is not used when Linux is there */
+    /* General purpose non cacheable memory, used in some examples */
+    .bss.nocache   (NOLOAD) : { KEEP(*(.bss.nocache)) } > NON_CACHE_MEM
+    % }
+
     /* This is rest of uninitialized data. This can be placed in DDR if DDR is available and needed */
     % if(useDdr) {
     .bss : {
@@ -379,18 +394,5 @@ SECTIONS
     .fini_array : ALIGN (8) {} > MSRAM  /* Contains function pointers called after main */
     % }
 
-    % if (isIcssPktBufEnable) {
-    /* Packet buffer memory used by ICCS */
-    .bss.icss_emac_pktbuf_mem (NOLOAD) : { KEEP(*(.bss.icss_emac_pktbuf_mem)) } > ICSS_PKT_BUF_MEM
-    % }
-    /* General purpose user shared memory, used in some examples */
-    .bss.user_shared_mem (NOLOAD) : { KEEP(*(.bss.user_shared_mem)) } > USER_SHM_MEM
-    /* this is used when Debug log's to shared memory are enabled, else this is not used */
-    .bss.log_shared_mem  (NOLOAD) : { KEEP(*(.bss.log_shared_mem)) } > LOG_SHM_MEM
-    /* this is used only when IPC RPMessage is enabled, else this is not used */
-    .bss.ipc_vring_mem   (NOLOAD) : { KEEP(*(.bss.ipc_vring_mem)) } > RTOS_NORTOS_IPC_SHM_MEM
-    % if ( ! args.project.isLinuxInSystem) { /* This is not used when Linux is there */
-    /* General purpose non cacheable memory, used in some examples */
-    .bss.nocache   (NOLOAD) : { KEEP(*(.bss.nocache)) } > NON_CACHE_MEM
-    % }
+
 }
