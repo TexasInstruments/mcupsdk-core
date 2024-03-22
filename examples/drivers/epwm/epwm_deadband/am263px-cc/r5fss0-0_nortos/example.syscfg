@@ -2,14 +2,12 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const pmic            = scripting.addModule("/board/pmic/pmic", {}, false);
-const pmic1           = pmic.addInstance();
 const ecap            = scripting.addModule("/drivers/ecap/ecap", {}, false);
 const ecap1           = ecap.addInstance();
 const ecap2           = ecap.addInstance();
@@ -22,8 +20,6 @@ const epwm4           = epwm.addInstance();
 const epwm5           = epwm.addInstance();
 const epwm6           = epwm.addInstance();
 const epwm7           = epwm.addInstance();
-const mcspi           = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
-const mcspi1          = mcspi.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
@@ -57,8 +53,6 @@ const input_xbar3     = input_xbar.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-pmic1.$name = "CONFIG_PMIC0";
-
 ecap1.eventStop           = "ECAP_EVENT_2";
 ecap1.eventTwoPolarity    = "ECAP_EVNT_FALLING_EDGE";
 ecap1.syncInPulseSource   = "ECAP_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM0";
@@ -221,24 +215,11 @@ epwm7.epwmDeadband_inputFED                                      = "EPWM_DB_INPU
 epwm7.epwmDeadband_outputSwapOutA                                = true;
 epwm7.EPWM.$assign                                               = "EPWM4";
 
-mcspi1.$name                 = "CONFIG_MCSPI0";
-pmic1.peripheralDriver       = mcspi1;
-mcspi1.SPI.$assign           = "SPI1";
-mcspi1.mcspiChannel[0].$name = "CONFIG_MCSPI_CH0";
-
-const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
-const edma1                 = edma.addInstance({}, false);
-edma1.$name                 = "CONFIG_EDMA0";
-mcspi1.edmaDriver           = edma1;
-edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
-edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
-edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
-edma1.edmaRmParam[0].$name  = "CONFIG_EDMA_RM3";
-
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -465,22 +446,18 @@ input_xbar3.xbarOutput = "GPIO46";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution               = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution               = "EPWM0_B";
-epwm2.EPWM.A.$suggestSolution               = "EPWM1_A";
-epwm2.EPWM.B.$suggestSolution               = "EPWM4_B";
-epwm3.EPWM.A.$suggestSolution               = "EPWM2_A";
-epwm3.EPWM.B.$suggestSolution               = "EPWM2_B";
-epwm4.EPWM.A.$suggestSolution               = "EPWM3_A";
-epwm4.EPWM.B.$suggestSolution               = "EPWM3_B";
-epwm5.EPWM.A.$suggestSolution               = "EPWM13_A";
-epwm5.EPWM.B.$suggestSolution               = "EPWM13_B";
-epwm6.EPWM.A.$suggestSolution               = "EPWM5_A";
-epwm6.EPWM.B.$suggestSolution               = "EPWM5_B";
-epwm7.EPWM.A.$suggestSolution               = "EPWM4_A";
-epwm7.EPWM.B.$suggestSolution               = "EPWM1_B";
-mcspi1.SPI.CLK.$suggestSolution             = "SPI1_CLK";
-mcspi1.SPI.D0.$suggestSolution              = "SPI1_D0";
-mcspi1.SPI.D1.$suggestSolution              = "SPI1_D1";
-mcspi1.mcspiChannel[0].CSn.$suggestSolution = "SPI1_CS0";
-debug_log.uartLog.UART.$suggestSolution     = "UART0";
+epwm1.EPWM.A.$suggestSolution           = "EPWM0_A";
+epwm1.EPWM.B.$suggestSolution           = "EPWM0_B";
+epwm2.EPWM.A.$suggestSolution           = "EPWM1_A";
+epwm2.EPWM.B.$suggestSolution           = "EPWM1_B";
+epwm3.EPWM.A.$suggestSolution           = "EPWM2_A";
+epwm3.EPWM.B.$suggestSolution           = "EPWM2_B";
+epwm4.EPWM.A.$suggestSolution           = "EPWM3_A";
+epwm4.EPWM.B.$suggestSolution           = "EPWM3_B";
+epwm5.EPWM.A.$suggestSolution           = "EPWM13_A";
+epwm5.EPWM.B.$suggestSolution           = "EPWM13_B";
+epwm6.EPWM.A.$suggestSolution           = "EPWM5_A";
+epwm6.EPWM.B.$suggestSolution           = "EPWM5_B";
+epwm7.EPWM.A.$suggestSolution           = "EPWM4_A";
+epwm7.EPWM.B.$suggestSolution           = "EPWM4_B";
+debug_log.uartLog.UART.$suggestSolution = "UART0";
