@@ -1,0 +1,45 @@
+{
+    "keyring_sw_rev" : 1,
+    "keyring_ver" : 1,
+    "num_of_asymm_keys" : 7,
+    "num_of_symm_keys" : 0,
+    "keyring_asymm" :  [
+                {
+                    "key_rights": "000000AA",
+                    "pub_key": "aux_keys/public2k.pem",
+                    "hash_algo": "SHA256"
+                },
+                {
+                    "key_rights": "000000AA",
+                    "pub_key": "aux_keys/public3k.pem",
+                    "hash_algo" : "SHA512"
+                },
+                {
+                    "key_rights": "000000AA",
+                    "pub_key": "aux_keys/public4k.pem",
+                    "hash_algo" : "SHA512"
+                },
+                {
+                    "key_rights": "000000AA",
+                    "pub_key": "aux_keys/prime265v1_public.pem",
+                    "hash_algo" : "SHA512"
+                },
+                {
+                    "key_rights": "000000AA",
+                    "pub_key": "aux_keys/secp384r1_public.pem",
+                    "hash_algo" : "SHA512"
+                },
+                {
+                    "key_rights": "000000AA",
+                    "pub_key": "aux_keys/secp521r1_public.pem",
+                    "hash_algo" : "SHA384"
+                },
+                {
+                    "key_rights": "000000AA",
+                    "pub_key": "aux_keys/brainpoolp512r1_public.pem",
+                    "hash_algo" : "SHA384"
+                }
+      ],
+    "keyring_symm" :  []
+}
+  
