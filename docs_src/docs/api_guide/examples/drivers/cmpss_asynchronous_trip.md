@@ -49,15 +49,15 @@ When a high input(higher than VDD/2) is provided to CMPIN1P,
     - EPWM0B gets tripped and outputs as high
 
 # External Connections
- - Give input on CMPIN1P (HSEC Pin 15)
+ - Give input on CMPIN1P
  - Outputs can be observed on XBAROUT0 and EPWM0B using an oscilloscope
 
-## AM263X-CC E2
+## AM263PX-CC E2 or AM263X-CC E2
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Feed analog input on HSEC Pin 15
 - Capture and analyze waveforms on USER_LED1 and HSEC pin 51
 
-## AM263X-LP
+## AM263PX-LP or AM263X-LP
 When using AM263x-LP
 - Feed analog input on J1/J3 Pin 23
 - Capture and analyze waveforms on DS2 LED and boosterpack header J6/J8 pin 59

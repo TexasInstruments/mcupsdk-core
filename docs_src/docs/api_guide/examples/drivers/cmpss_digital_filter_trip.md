@@ -27,12 +27,17 @@ When a high input(higher than VDD/2) is provided to CMPIN1P,
 - OUTPUTXBAR can be connected to an oscilloscope to view the Digital Filter Output.
 - For External Voltage (Input to CMPIN1P), we can use the Dac Output as well (Here we generate a sine wave at DAC_OUT)
 
-## @VAR_BOARD_NAME
+## AM263PX-CC E2 
     - Give input on CMPIN1P (ADC0_AIN2 - HSEC Pin 15)
-    - Outputs can be observed on OUTPUTXBAR1 (HSEC Pin 81)
+    - Outputs can be observed on OUTPUTXBAR8 (HSEC Pin 85)
     - For DAC loop back as input, connect DAC_OUT (HSEC Pin 9) to CMPIN1P
 
-## @VAR_LP_BOARD_NAME
+## AM263X-CC E2 
+    - Give input on CMPIN1P (ADC0_AIN2 - HSEC Pin 15)
+    - Outputs can be observed on OUTPUTXBAR0 (HSEC Pin 81)
+    - For DAC loop back as input, connect DAC_OUT (HSEC Pin 9) to CMPIN1P
+
+## AM263PX-LP or AM263X-LP
     - Give input on CMPIN1P (Pin j7.66)
     - Outputs can be observed on OUTPUTXBAR8 (j5.50)
     - For DAC loop back as input, connect DAC_OUT (J3.30) to CMPIN1P

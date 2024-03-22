@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
@@ -48,6 +48,7 @@ const output_xbar1    = output_xbar.addInstance();
 cmpss1.$name        = "CONFIG_CMPSS0";
 cmpss1.enableModule = true;
 cmpss1.dacValHigh   = 2048;
+cmpss1.cmpssBase    = "CSL_CONTROLSS_CMPSSA1_U_BASE";
 
 epwm1.$name                                                       = "CONFIG_EPWM0";
 epwm1.epwmTimebase_emulationMode                                  = "EPWM_EMULATION_FREE_RUN";
@@ -72,6 +73,7 @@ debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -283,11 +285,12 @@ section12.output_section[0].$name     = ".bss.sipc_r5f_queue_mem";
 section12.output_section[0].alignment = 0;
 
 epwm_xbar1.$name      = "CONFIG_EPWM_XBAR0";
-epwm_xbar1.xbarOutput = ["CMPSSA0_CTRIPH"];
 epwm_xbar1.instance   = "EPWM_XBAR_3";
+epwm_xbar1.xbarOutput = ["CMPSSA1_CTRIPH"];
 
-output_xbar1.$name      = "CONFIG_OUTPUT_XBAR0";
-output_xbar1.xbarOutput = ["CMPSSA0_CTRIPH"];
+output_xbar1.$name              = "CONFIG_OUTPUT_XBAR0";
+output_xbar1.xbarOutput         = ["CMPSSA1_CTRIPH"];
+output_xbar1.OUTPUTXBAR.$assign = "OUTPUTXBAR8";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
@@ -297,5 +300,4 @@ output_xbar1.xbarOutput = ["CMPSSA0_CTRIPH"];
 epwm1.EPWM.A.$suggestSolution                    = "EPWM0_A";
 epwm1.EPWM.B.$suggestSolution                    = "EPWM0_B";
 debug_log.uartLog.UART.$suggestSolution          = "UART0";
-output_xbar1.OUTPUTXBAR.$suggestSolution         = "OUTPUTXBAR0";
-output_xbar1.OUTPUTXBAR.XBAROUT.$suggestSolution = "OSPI0_CSn1";
+output_xbar1.OUTPUTXBAR.XBAROUT.$suggestSolution = "I2C1_SDA";
