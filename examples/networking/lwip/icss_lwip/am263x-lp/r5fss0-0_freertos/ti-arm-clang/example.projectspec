@@ -55,6 +55,7 @@
             -Wno-gnu-variable-sized-type-not-at-end
             -Wno-unused-function
             -DSOC_AM263X
+            -DAM263X_LP
         "
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
@@ -113,7 +114,7 @@
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
         <file path="../../../test.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="../../test_icss.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        <file path="../../../test_icss.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>

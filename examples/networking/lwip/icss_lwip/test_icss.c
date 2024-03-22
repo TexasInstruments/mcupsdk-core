@@ -43,17 +43,17 @@
 #include<board/eeprom.h>
 #include<board/ethphy/ethphy_dp83826e.h>
 #include<board/ethphy/ethphy_dp83869.h>
-#include "../test_icss_lwip.h"
+#include "test_icss_lwip.h"
 #include "lwip2icss_emac.h"
 #include "icss_emac.h"
 
 #include <icss_emac_mmap.h>
 #include <tiemac_pruicss_intc_mapping.h>
 
-#ifdef SOC_AM243X
-#include <mii/am243x-lp/pruicss_pinmux.h>
-#elif defined SOC_AM263X
+#ifdef AM263X_CC
 #include <mii/am263x-cc/pruicss_pinmux.h>
+#elif AM263X_LP
+#include <mii/am263x-lp/pruicss_pinmux.h>
 #endif
 
 
@@ -75,13 +75,17 @@ uint32_t gtaskLwipInitStack[LWIPINIT_TASK_STACK_SIZE/sizeof(uint32_t)] __attribu
 
 TaskP_Object taskLwipInitObject;
 
-//ICSS_EMAC Tx API Call Task
+/*ICSS_EMAC Tx API Call Task*/
 #define ICSS_EMAC_Tx_TASK_PRIORITY            (10)
 #define ICSS_EMAC_Tx_TASK_STACK_SIZE          (0x4000)
 
 uint32_t gtaskIcssEmacTxStack[ICSS_EMAC_Tx_TASK_STACK_SIZE/sizeof(uint32_t)] __attribute__((aligned(32)));
 
 TaskP_Object taskIcssEmacTxObject;
+
+#ifdef AM263X_LP
+void icssmMuxSelection(void);
+#endif
 
 uint8_t ICSS_EMAC_testPktPromiscuous[] = {
     0x02, 0xb0, 0xc3, 0xdd, 0xee, 0xff, /* broadcast mac */
@@ -495,155 +499,6 @@ uint8_t ICSS_EMAC_testLclMac0[6];
 
 
 
-// void hsrprp_LwipInitStack();
-// static void hsrprp_LwipTest_init(void * arg);
-// static void hsrprp_LwipTest_netif_init(void);
-// static void hsrprp_LwipApps_init(void);
-// static void hsrprp_LwipStatus_callback(struct netif *state_netif);
-// static void hsrprp_LwipLink_callback(struct netif *state_netif);
-
-// void hsrprp_LwipInitStack()
-// {
-//     err_t err;
-//     sys_sem_t init_sem;
-
-//     /* initialize lwIP stack, network interfaces and applications */
-//     err = sys_sem_new(&init_sem, 0);
-//     LWIP_ASSERT("failed to create init_sem", err == ERR_OK);
-//     LWIP_UNUSED_ARG(err);
-//     tcpip_init(hsrprp_LwipTest_init, &init_sem);
-//     /* we have to wait for initialization to finish before calling update_adapter() */
-//     sys_sem_wait(&init_sem);
-//     sys_sem_free(&init_sem);
-// }
-
-// static void hsrprp_LwipTest_init(void * arg)
-// {
-//     sys_sem_t *init_sem;
-//     LWIP_ASSERT("arg != NULL", arg != NULL);
-//     init_sem = (sys_sem_t*)arg;
-
-//     /* init randomizer again (seed per thread) */
-//     srand((unsigned int)sys_now()/1000);
-
-//     /* init network interfaces */
-//     hsrprp_LwipTest_netif_init();
-
-//     /* init apps */
-//     hsrprp_LwipApps_init();
-
-//     sys_sem_signal(init_sem);
-// }
-
-
-// /* This function initializes applications */
-// static void hsrprp_LwipApps_init(void)
-// {
-//     /*Initialise for Iperf Test*/
-//     lwiperf_example_init();
-//     print_app_header();
-//     sys_thread_new("UDP Iperf", start_application, NULL, DEFAULT_THREAD_STACKSIZE,
-//       14);
-// //    DEFAULT_THREAD_PRIO);
-
-
-// }
-
-// /* This function initializes all network interfaces */
-// static void hsrprp_LwipTest_netif_init(void)
-// {
-//     /*Variables to store ipAddress, Netmask & Gateway*/
-//     ip4_addr_t ipaddr, netmask, gw;
-//     /*Initialise network parameters to zero*/
-//     ip4_addr_set_zero(&gw);
-//     ip4_addr_set_zero(&ipaddr);
-//     ip4_addr_set_zero(&netmask);
-
-// //    /*Assign the IP read from EEPROM*/
-// //    EEPROM_read(gEepromHandle[CONFIG_EEPROM0], SPI_EEPROM_DEVICEIP_OFFSET, (uint8_t *)&ipAddress, 4);
-// //    changeIPEndianness(&ipAddress);
-// //    /*Converting Ip from EEPROM to ASCII format & assign to network parametr ipaddr*/
-// //    if(ip4addr_aton(ip4addr_ntoa((ip4_addr_t *)&ipAddress), &ipaddr) && isValidIP(ip4addr_ntoa((ip4_addr_t *)&ipAddress)))
-// //    {
-// //        DebugP_log("Starting lwIP, local interface IP is %s\r\n", ip4addr_ntoa(&ipaddr));
-// //    }
-// //    else
-// //    {
-//         /*Initialise default IP address : Can be changed in cfg file */
-//         LWIP_PORT_INIT_IPADDR(&ipaddr);
-//         DebugP_log("Starting lwIP, local interface IP is %s\r\n", ip4addr_ntoa(&ipaddr));
-// //    }
-
-//     /*Initialise default gateway address : Can be changed in cfg file*/
-//     LWIP_PORT_INIT_GW(&gw);
-//     /*Initialise default Subnet mask : Can be changed in cfg file*/
-//     LWIP_PORT_INIT_NETMASK(&netmask);
-
-//     /*Initialise ICSS EMAC based netif as default netif with above parameters*/
-//     init_default_netif(&ipaddr, &netmask, &gw);
-
-//     /*Inform application about netif status*/
-//     netif_set_status_callback(netif_default, hsrprp_LwipStatus_callback);
-//     /*Inform application about link status*/
-//     netif_set_link_callback(netif_default, hsrprp_LwipLink_callback);
-
-// #if USE_DHCP
-//     err_t err;
-//     autoip_set_struct(netif_default, &netif_autoip);
-//     dhcp_set_struct(netif_default, &netif_dhcp);
-// #endif
-//     netif_set_up(netif_default);
-// #if USE_DHCP
-//     err = dhcp_start(netif_default);
-//     LWIP_ASSERT("dhcp_start failed", err == ERR_OK);
-// #elif USE_AUTOIP
-//     err = autoip_start(netif_default);
-//     LWIP_ASSERT("autoip_start failed", err == ERR_OK);
-// #endif
-// }
-
-// static void hsrprp_LwipStatus_callback(struct netif *state_netif)
-// {
-//     if (netif_is_up(state_netif))
-//     {
-// #if LWIP_IPV4
-//         DebugP_log("status_callback==UP, local interface IP is %s\r\n", ip4addr_ntoa(netif_ip4_addr(state_netif)));
-// #endif
-//     }
-//     else
-//     {
-//         DebugP_log("status_callback==DOWN\r\n");
-//     }
-// }
-
-// static void hsrprp_LwipLink_callback(struct netif *state_netif)
-// {
-//     if (netif_is_link_up(state_netif))
-//     {
-//         DebugP_log("link_callback==UP\r\n");
-//     }
-//     else
-//     {
-//         DebugP_log("link_callback==DOWN\r\n");
-//     }
-// }
-// /**
-//  * @brief main task to initialize  the stack
-//  *
-//  * @param args not used
-//  *
-//  * @return none
-//  */
-// void taskLwip(void *args)
-// {
-//     hsrprp_LwipInitStack();
-
-//     TaskP_destruct(&taskLwipInitObject);
-
-// }
-
-
-
 void print_cpu_load()
 {
     static uint32_t start_time = 0;
@@ -669,7 +524,58 @@ void print_cpu_load()
     }
 }
 
-#ifdef SOC_AM263X
+#ifdef AM263X_LP
+void ICSS_EMAC_testBoardInit(void)
+{
+    ETHPHY_DP83869_LedSourceConfig ledConfig;
+    ETHPHY_DP83869_LedBlinkRateConfig ledBlinkConfig;
+
+    Pinmux_config(gPruicssPinMuxCfg, PINMUX_DOMAIN_ID_MAIN);
+
+    // Set bits for input pins in ICSSM_PRU0_GPIO_OUT_CTRL and ICSSM_PRU1_GPIO_OUT_CTRL registers
+    HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU0_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
+    HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU1_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
+
+    DebugP_log("MII mode\r\n");
+
+    /* PHY pin LED_0 as link */
+    ledConfig.ledNum = ETHPHY_DP83869_LED0;
+    ledConfig.mode = ETHPHY_DP83869_LED_MODE_100BTX_LINK_UP;
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
+
+    /* PHY pin LED_1 indication is on if 1G link established for PHY0, and if 10M speed id configured for PHY1 */
+    ledConfig.ledNum = ETHPHY_DP83869_LED1;
+    ledConfig.mode = ETHPHY_DP83869_LED_MODE_1000BT_LINK_UP;
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
+
+    /* PHY pin LED_2 as Rx/Tx Activity */
+    ledConfig.ledNum = ETHPHY_DP83869_LED2;
+    ledConfig.mode = ETHPHY_DP83869_LED_MODE_LINK_OK_AND_BLINK_ON_RX_TX;
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
+
+    ledBlinkConfig.rate = ETHPHY_DP83869_LED_BLINK_RATE_200_MS;
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig, sizeof(ledBlinkConfig));
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig, sizeof(ledBlinkConfig));
+
+    /* Enable MII mode  */
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_ENABLE_MII, NULL, 0);
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_ENABLE_MII, NULL, 0);
+
+    /* Disable 1G advertisement and sof-reset to restart auto-negotiation in case 1G link was establised */
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
+
+    /* Soft-reset PHY */
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
+
+    /*Wait for PHY to come out of reset*/
+    ClockP_sleep(1);
+}
+#elif AM263X_CC
 void ICSS_EMAC_testBoardInit(void)
 {
     ETHPHY_DP83869_LedSourceConfig ledConfig0;
@@ -724,30 +630,8 @@ void ICSS_EMAC_testBoardInit(void)
     /*Wait for PHY to come out of reset*/
     ClockP_sleep(1);
 }
-#else
-void ICSS_EMAC_testBoardInit(void)
-{
-    Pinmux_config(gPruicssPinMuxCfg, PINMUX_DOMAIN_ID_MAIN);
-
-    DebugP_log("MII mode\r\n");
-
-    /* Select MII mode */
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_ENABLE_MII, NULL, 0);
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_ENABLE_MII, NULL, 0);
-
-    /* Disable 1G advertisement */
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
-
-    /* Soft-reset PHY */
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
-
-    /*Wait for PHY to come out of reset*/
-    ClockP_sleep(1);
-}
-
 #endif
+
 int32_t ICSS_EMAC_testPruicssInstanceSetup(void)
 {
     PRUICSS_IntcInitData    pruss_intc_initdata = PRUSS_INTC_INITDATA;
@@ -801,21 +685,15 @@ void ICSS_EMAC_testGetPruFwPtr(uint32_t *pru0FwPtr, uint32_t *pru0FwLength, uint
 
 void lwipIcss_socgetMACAddress()
 {
-#ifdef SOC_AM263X
     uint32_t status = SystemP_FAILURE;
     status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0], I2C_EEPROM_MAC0_DATA_OFFSET, ICSS_EMAC_testLclMac0, 6U);
     DebugP_assert(SystemP_SUCCESS == status);
-#else
-    uint32_t status = SystemP_FAILURE;
-    status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0], I2C_EEPROM_MAC0_DATA_OFFSET, ICSS_EMAC_testLclMac0, 6U);
-    DebugP_assert(SystemP_SUCCESS == status);
-#endif
 }
 
 int icss_lwip_example(void *args)
 {
     uint32_t                status = SystemP_FAILURE;
-    uint32_t                icssgBaseAddr;
+    uint32_t                icssBaseAddr;
     bool                    retVal = false;
     uint32_t                result_flag = 0;
     uint32_t                pru0FwPtr = 0;
@@ -827,30 +705,34 @@ int icss_lwip_example(void *args)
     status = Board_driversOpen();
     DebugP_assert(status==SystemP_SUCCESS);
 
+#ifdef AM263X_LP
+    icssmMuxSelection();
+#else
     ICSS_EMAC_testBoardInit();
+#endif
     // app_getEmacHandle(lwipifHandle);
     pruicssHandle = PRUICSS_open(CONFIG_PRU_ICSS1);
     DebugP_assert(pruicssHandle != NULL);
 
-    //Setup the local MAC Addresses of Port from EEPROM
+    /*Setup the local MAC Addresses of Port from EEPROM*/
     lwipIcss_socgetMACAddress();
 
     ICSS_EMAC_testPruicssInstanceSetup();
 
-    //Setup RAT configuration for buffer region
+    /* Setup RAT configuration for buffer region*/
     /* Setting up RAT config to map emacBaseAddr->l3OcmcBaseAddr to C30 constant of PRUICSS */
     /* Mapping 0xE0000000 (C30 constant of PRUICSS) to l3OcmcBaseAddr */
-    icssgBaseAddr = (uint32_t)((PRUICSS_HwAttrs *)(pruicssHandle->hwAttrs)->baseAddr);
+    icssBaseAddr = (uint32_t)((PRUICSS_HwAttrs *)(pruicssHandle->hwAttrs)->baseAddr);
 
-    HW_WR_REG32(icssgBaseAddr + CSL_ICSS_RAT_REGS_0_BASE + 0x24, (0xE0000000)); //rat0 base0
-    HW_WR_REG32(icssgBaseAddr + CSL_ICSS_RAT_REGS_0_BASE + 0x28, (0x70000000)); //rat0 trans_low0
-    HW_WR_REG32(icssgBaseAddr + CSL_ICSS_RAT_REGS_0_BASE + 0x2C, (0x00000000)); //rat0 trans_low0
-    HW_WR_REG32(icssgBaseAddr + CSL_ICSS_RAT_REGS_0_BASE + 0x20, (1u << 31) | (22)); //rat0 ctrl0
+    HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_0_BASE + 0x24, (0xE0000000));         /*rat0 base0 */
+    HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_0_BASE + 0x28, (0x70000000));         /*rat0 trans_low0 */
+    HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_0_BASE + 0x2C, (0x00000000));         /*rat0 trans_low0 */
+    HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_0_BASE + 0x20, (1u << 31) | (22));    /*rat0 ctrl0 */
 
-    HW_WR_REG32(icssgBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x24, (0xE0000000)); //rat0 base0
-    HW_WR_REG32(icssgBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x28, (0x70000000)); //rat0 trans_low0
-    HW_WR_REG32(icssgBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x2C, (0x00000000)); //rat0 trans_low0
-    HW_WR_REG32(icssgBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x20, (1u << 31) | (22)); //rat0 ctrl0
+    HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x24, (0xE0000000));         /*rat0 base0 */
+    HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x28, (0x70000000));         /*rat0 trans_low0 */
+    HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x2C, (0x00000000));         /*rat0 trans_low0 */
+    HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x20, (1u << 31) | (22));    /*rat0 ctrl0 */
 
     PRUICSS_disableCore(pruicssHandle, PRUICSS_PRU0);
     PRUICSS_disableCore(pruicssHandle, PRUICSS_PRU1);
@@ -884,25 +766,29 @@ int icss_lwip_example(void *args)
         PRUICSS_enableCore(pruicssHandle, PRUICSS_PRU1);
     }
 
-
-    //  TaskP_Params            taskParamsLwipInit;
-
-    //  TaskP_Params_init(&taskParamsLwipInit);
-    //  taskParamsLwipInit.priority = LWIPINIT_TASK_PRIORITY;
-    //  taskParamsLwipInit.stackSize = LWIPINIT_TASK_STACK_SIZE;
-    //  taskParamsLwipInit.stack = (uint8_t *)gtaskLwipInitStack;
-    //  taskParamsLwipInit.name = "LwipInitTask";
-    //  taskParamsLwipInit.taskMain = (TaskP_FxnMain)taskLwip;
-    //  status = TaskP_construct(&taskLwipInitObject, &taskParamsLwipInit);
-
-    //  if(status != SystemP_SUCCESS)
-    //  {
-    //      DebugP_log("LwipInitTask Creation failed\r\n");
-    //  }
-
+#ifdef AM263X_LP
+    ICSS_EMAC_testBoardInit();
+#endif
 
     main_loop(NULL);
 
     return 0;
 }
 
+#ifdef AM263X_LP
+void icssmMuxSelection(void)
+{
+    uint32_t pinNum[CONFIG_GPIO_NUM_INSTANCES] = {CONFIG_GPIO0_PIN, CONFIG_GPIO1_PIN, CONFIG_GPIO2_PIN};
+    uint32_t pinDir[CONFIG_GPIO_NUM_INSTANCES] = {CONFIG_GPIO0_DIR, CONFIG_GPIO1_DIR, CONFIG_GPIO2_DIR};
+
+    for(uint32_t index = 0; index < CONFIG_GPIO_NUM_INSTANCES-1; index++)
+    {
+        /* Address translate */
+        uint32_t gGpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(CONFIG_GPIO0_BASE_ADDR);
+
+        /* Setup GPIO for ICSSM MDIO Mux selection */
+        GPIO_setDirMode(gGpioBaseAddr, pinNum[index], pinDir[index]);
+        GPIO_pinWriteHigh(gGpioBaseAddr, pinNum[index]);
+    }
+}
+#endif

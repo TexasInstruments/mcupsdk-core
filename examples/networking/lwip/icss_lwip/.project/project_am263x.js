@@ -88,7 +88,6 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-//const readmeDoxygenPageTag = "EXAMPLES_LWIP_ENET";
 
 const templates_freertos_r5f =
 [
@@ -138,7 +137,6 @@ function getComponentBuildProperty(buildOption) {
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
     build_property.projecspecFileAction = "link";
-    // build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
     if(buildOption.cpu.match(/r5f*/)) {
         if(buildOption.os.match(/freertos*/) )
         {

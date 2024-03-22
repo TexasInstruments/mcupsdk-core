@@ -18,8 +18,8 @@ const files = {
  */
 const filedirs = {
     common: [
-        "../..",       /* core_os_combo base */
-        "../../..", /* Example base */
+        "../..",        /* core_os_combo base */
+        "../../..",     /* Example base */
         "../../../../src",
     ],
 };
@@ -59,10 +59,9 @@ const cflags = {
         "-DICSS_DUAL_EMAC_BUILD",
         "-DPTP",
 
-        //Need to fix these flags
-        //"-eo.$(OBJEXT)",
-        //"-fr=$(OBJDIR)",
-        //"-fs=$(OBJDIR)",
+        "-eo.$(OBJEXT)",
+        "-fr=$(OBJDIR)",
+        "-fs=$(OBJDIR)",
     ],
 };
 
@@ -80,10 +79,9 @@ const lflags = {
         "--warn_sections",
         "--entry_point=micro_scheduler",
 
-        //Need to fix these flags
-        //"-v3",
-        //"--hardware_mac=on",
-        //"-z", //
+        "-v3",
+        "--hardware_mac=on",
+        "-z",
     ],
 };
 
@@ -107,7 +105,6 @@ const postBuildSteps_pru1 = [
     "${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe dual_emac_am263x-cc_icssm-pru1_fw_ti-pru-cgt.b00 PRU1_bin.h PRU1_b00 4;",
     "cp PRU1_bin.h ${MCU_PLUS_SDK_PATH}/test/networking/icss_emac_loopback/firmware/mii;",
 ];
-//
 
 const buildOptionCombos = [
     { device: device, cpu: "icssm-pru0", cgt: "ti-pru-cgt", board: "am263x-cc", os: "fw"},

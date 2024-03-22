@@ -122,6 +122,7 @@ icss_emac1.rxTaskPriority   = 10;
 icss_emac1.txTaskPriority   = 10;
 icss_emac1.phyAddr1         = 3;
 icss_emac1.phyAddr0         = 12;
+icss_emac1.mode             = "MAC1";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
