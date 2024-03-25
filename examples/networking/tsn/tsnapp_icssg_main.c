@@ -51,10 +51,7 @@
 /*                                Function Declarations                       */
 /* ========================================================================== */
 
-EnetApp_Cfg gEnetAppCfg =
-{
-    .name = "sitara-icssg",
-};
+EnetApp_Cfg gEnetAppCfg;
 
 #define EnetAppAbort(message) \
     EnetAppUtils_print(message);                \
@@ -63,11 +60,47 @@ EnetApp_Cfg gEnetAppCfg =
 /* these vars are shared with gptp task to configure gptp, put it in the global mem */
 static char g_netdevices[MAX_NUM_MAC_PORTS][CB_MAX_NETDEVNAME] = {0};
 
-static void EnetApp_updateCfg(EnetApp_Cfg *enet_cfg)
+static void EnetApp_updateCfg(void)
 {
-    EnetApp_getEnetInstInfo(CONFIG_ENET_ICSS0, &enet_cfg->enetType, &enet_cfg->instId);
-    EnetApp_getEnetInstMacInfo(enet_cfg->enetType, enet_cfg->instId,
-                               enet_cfg->macPorts, &enet_cfg->numMacPorts);
+    uint32_t i = 0U;
+
+    for (i = 0U; i < gEnetAppCfg.numPerCtxts; i++)
+    {
+        gEnetAppCfg.perCtxt[i].name = "sitara-icssg";
+        EnetApp_getEnetInstInfo(CONFIG_ENET_ICSS0 + i,
+                                &(gEnetAppCfg.perCtxt[i].enetType),
+                                &(gEnetAppCfg.perCtxt[i].instId));
+
+        EnetApp_getEnetInstMacInfo(gEnetAppCfg.perCtxt[i].enetType,
+                                   gEnetAppCfg.perCtxt[i].instId,
+                                   gEnetAppCfg.perCtxt[i].macPort,
+                                   &(gEnetAppCfg.perCtxt[i].macPortNum));
+
+        EnetApp_getNonPtpRxDmaInfo(gEnetAppCfg.perCtxt[i].enetType,
+                                   gEnetAppCfg.perCtxt[i].instId,
+                                   gEnetAppCfg.perCtxt[i].nonPtpRxFlowId,
+                                   &gEnetAppCfg.perCtxt[i].nonPtpRxFlowNum);
+
+        EnetApp_getNonPtpTxDmaInfo(gEnetAppCfg.perCtxt[i].enetType,
+                                   gEnetAppCfg.perCtxt[i].instId,
+                                   gEnetAppCfg.perCtxt[i].nonPtpTxChId,
+                                   &gEnetAppCfg.perCtxt[i].nonPtpTxChNum);
+    }
+    gEnetAppCfg.gptpPerIdx = 0U;
+#if ENET_SYSCFG_DUAL_MAC
+    /* Fill the PTP MAC Port to the app cfg. In Dual Mac mode, only Mac Port 1 is supported currently. */
+    gEnetAppCfg.numPtpPorts = 1U;
+    gEnetAppCfg.ptpMacPorts[0] = ENET_MAC_PORT_1;
+#else
+    /* ICSSG switch case */
+    /* Fill the PTP MAC Ports to the app cfg */
+    EnetAppUtils_assert(gEnetAppCfg.numPerCtxts == 1U);
+    gEnetAppCfg.numPtpPorts = gEnetAppCfg.perCtxt[0].macPortNum;
+    for (i = 0U; i < gEnetAppCfg.numPtpPorts; i++)
+    {
+        gEnetAppCfg.ptpMacPorts[i] = gEnetAppCfg.perCtxt[0].macPort[i];
+    }
+#endif
 }
 
 #define LOG_BUFFER_SIZE (1024)
@@ -94,17 +127,17 @@ static int EnetApp_initTsn(void)
         .consoleOutCb = ConsolePrint,
     };
 
-    for (i = 0; i < gEnetAppCfg.numMacPorts; i++)
+    for (i = 0; i < gEnetAppCfg.numPtpPorts; i++)
     {
         snprintf(&g_netdevices[i][0], CB_MAX_NETDEVNAME, "tilld%d", i);
         appCfg.netdevs[i] = &g_netdevices[i][0];
         ethdevs[i].netdev = g_netdevices[i];
-        ethdevs[i].macport = gEnetAppCfg.macPorts[i];
+        ethdevs[i].macport = gEnetAppCfg.ptpMacPorts[i];
         if (i == 0)
         {
             /* tilld0 reuses the allocated source mac, other interfaces will allocate
              * the mac by themself */
-            memcpy(ethdevs[i].srcmac, gEnetAppCfg.macAddr, ENET_MAC_ADDR_LEN);
+            memcpy(ethdevs[i].srcmac, gEnetAppCfg.perCtxt[gEnetAppCfg.gptpPerIdx].macAddr, ENET_MAC_ADDR_LEN);
         }
     }
     appCfg.netdevs[i] = NULL;
@@ -112,8 +145,8 @@ static int EnetApp_initTsn(void)
     {
         EnetAppAbort("Failed to int tsn!\r\n");
     }
-    if (cb_lld_init_devs_table(ethdevs, i, gEnetAppCfg.enetType,
-                               gEnetAppCfg.instId) < 0)
+    if (cb_lld_init_devs_table(ethdevs, i, gEnetAppCfg.perCtxt[gEnetAppCfg.gptpPerIdx].enetType,
+                               gEnetAppCfg.perCtxt[gEnetAppCfg.gptpPerIdx].instId) < 0)
     {
         EnetAppAbort("Failed to int devs table!\r\n");
     }
@@ -156,6 +189,8 @@ void EnetApp_mainTask(void *args)
 {
     EnetPer_AttachCoreOutArgs attachCoreOutArgs;
     EnetApp_HandleInfo handleInfo;
+    int32_t status = ENET_SOK;
+    uint32_t i = 0U;
 
     Drivers_open();
     Board_driversOpen();
@@ -164,22 +199,34 @@ void EnetApp_mainTask(void *args)
     DebugP_log("          gPTP App        \r\n");
     DebugP_log("==========================\r\n");
 
-    /* To support gptp switch mode, we must configure from syscfg file:
-     * enet_cpsw1.DisableMacPort2 = false; */
-    EnetApp_updateCfg(&gEnetAppCfg);
+    memset(&gEnetAppCfg, 0, sizeof(gEnetAppCfg));
+    gEnetAppCfg.numPerCtxts = ENET_SYSCFG_NUM_PERIPHERAL;
+
+    EnetApp_updateCfg();
 
     gEnetAppCfg.coreId = EnetSoc_getCoreId();
     EnetQueue_initQ(&gEnetAppCfg.txFreePktInfoQ);
-    EnetAppUtils_enableClocks(gEnetAppCfg.enetType, gEnetAppCfg.instId);
+    for (i = 0U; i < gEnetAppCfg.numPerCtxts; i++)
+    {
+        gEnetAppCfg.perCtxt[i].perIdx= i;
+        EnetAppUtils_enableClocks(gEnetAppCfg.perCtxt[i].enetType, gEnetAppCfg.perCtxt[i].instId);
+    }
     DebugP_log("start to open driver.\r\n");
     EnetApp_driverInit();
-    EnetApp_driverOpen(gEnetAppCfg.enetType, gEnetAppCfg.instId);
-    EnetApp_acquireHandleInfo(gEnetAppCfg.enetType, gEnetAppCfg.instId, &handleInfo);
-    gEnetAppCfg.hEnet = handleInfo.hEnet;
-    EnetApp_coreAttach(gEnetAppCfg.enetType, gEnetAppCfg.instId, gEnetAppCfg.coreId, &attachCoreOutArgs);
-    gEnetAppCfg.coreKey = attachCoreOutArgs.coreKey;
-    EnetAppUtils_print("%s: Create RX task for regular traffic \r\n", gEnetAppCfg.name);
-    EnetApp_createRxTask();
+    for (i = 0U; i < gEnetAppCfg.numPerCtxts; i++)
+    {
+        status = EnetApp_driverOpen(gEnetAppCfg.perCtxt[i].enetType, gEnetAppCfg.perCtxt[i].instId);
+        if (status != ENET_SOK)
+        {
+            EnetAppUtils_print("Failed to open ENET: %d\r\n", status);
+        }
+        EnetApp_acquireHandleInfo(gEnetAppCfg.perCtxt[i].enetType, gEnetAppCfg.perCtxt[i].instId, &handleInfo);
+        gEnetAppCfg.perCtxt[i].hEnet = handleInfo.hEnet;
+        EnetApp_coreAttach(gEnetAppCfg.perCtxt[i].enetType, gEnetAppCfg.perCtxt[i].instId, gEnetAppCfg.coreId, &attachCoreOutArgs);
+        gEnetAppCfg.perCtxt[i].coreKey = attachCoreOutArgs.coreKey;
+        EnetAppUtils_print("%s perCtxt %d: Create RX task for regular traffic \r\n", gEnetAppCfg.perCtxt[i].name, i);
+        EnetApp_createRxTask(&gEnetAppCfg.perCtxt[i]);
+    }
 
     if (EnetApp_initTsn())
     {
@@ -232,22 +279,17 @@ void EnetApp_initLinkArgs(Enet_Type enetType, uint32_t instId,
     EnetPhy_Cfg *phyCfg = &linkArgs->phyCfg;
     int32_t status = ENET_SOK;
 
-    EnetAppUtils_print("%s: Open port %u\r\n",
-                       gEnetAppCfg.name, ENET_MACPORT_ID(macPort));
+    EnetAppUtils_print("Open port %u\r\n", ENET_MACPORT_ID(macPort));
 
     /* Setup board for requested Ethernet port */
-    ethPort.enetType = gEnetAppCfg.enetType;
-    ethPort.instId = gEnetAppCfg.instId;
+    ethPort.enetType = enetType;
+    ethPort.instId = instId;
     ethPort.macPort = macPort;
     ethPort.boardId = ENETBOARD_AM64X_AM243X_EVM;
     EnetApp_macMode2MacMii(RGMII, &ethPort.mii);
 
     status = EnetBoard_setupPorts(&ethPort, 1U);
-    if (status != ENET_SOK) {
-        EnetAppUtils_print("%s: Failed to setup MAC port %u\r\n",
-                           gEnetAppCfg.name, ENET_MACPORT_ID(macPort));
-        EnetAppUtils_assert(false);
-    }
+    EnetAppUtils_assert(status == ENET_SOK);
     icssgMacCfg = linkArgs->macCfg;
 
     IcssgMacPort_initCfg(icssgMacCfg);
@@ -274,7 +316,8 @@ void EnetApp_initLinkArgs(Enet_Type enetType, uint32_t instId,
         memcpy(phyCfg->extendedCfg, boardPhyCfg->extendedCfg, phyCfg->extendedCfgSize);
 
     } else {
-        EnetAppUtils_print("%s: No PHY configuration found\r\n", gEnetAppCfg.name);
+        EnetAppUtils_print("No PHY configuration found for MAC port %u\r\n",
+                ENET_MACPORT_ID(ethPort.macPort));
         EnetAppUtils_assert(false);
     }
 }
@@ -291,57 +334,74 @@ void EnetApp_updateIcssgInitCfg(Enet_Type enetType, uint32_t instId, Icssg_Cfg *
     #endif
 }
 
-static void EnetApp_closePort()
+static void EnetApp_closePort(EnetApp_PerCtxt *perCtxts,
+                              uint32_t numPerCtxts)
 {
     Enet_IoctlPrms prms;
     Enet_MacPort macPort;
     uint32_t i;
     int32_t status;
 
-    for (i = 0U; i < gEnetAppCfg.numMacPorts; i++)
+    for (i = 0U; i < numPerCtxts; i++)
     {
-        macPort = gEnetAppCfg.macPorts[i];
-
-        EnetAppUtils_print("%s: Close port %u\r\n", gEnetAppCfg.name, ENET_MACPORT_ID(macPort));
-
-        /* Close port link */
-        ENET_IOCTL_SET_IN_ARGS(&prms, &macPort);
-
-        EnetAppUtils_print("%s: Close port %u link\r\n", gEnetAppCfg.name, ENET_MACPORT_ID(macPort));
-        ENET_IOCTL(gEnetAppCfg.hEnet, gEnetAppCfg.coreId, ENET_PER_IOCTL_CLOSE_PORT_LINK, &prms, status);
-        if (status != ENET_SOK)
+        for (uint32_t idx = 0U; idx < perCtxts[i].macPortNum; idx++)
         {
-            EnetAppUtils_print("%s: Failed to close port link: %d\r\n", gEnetAppCfg.name, status);
+            macPort = perCtxts[i].macPort[idx];
+            EnetAppUtils_print("%s: Close port %u\r\n", perCtxts[i].name, ENET_MACPORT_ID(macPort));
+            /* Close port link */
+            ENET_IOCTL_SET_IN_ARGS(&prms, &macPort);
+            EnetAppUtils_print("%s: Close port %u link\r\n", perCtxts[i].name, ENET_MACPORT_ID(macPort));
+            ENET_IOCTL(perCtxts[i].hEnet, gEnetAppCfg.coreId, ENET_PER_IOCTL_CLOSE_PORT_LINK, &prms, status);
+            if (status != ENET_SOK)
+            {
+                EnetAppUtils_print("%s: Failed to close port link: %d\r\n", perCtxts[i].name, status);
+            }
         }
     }
 }
 
 void EnetApp_close()
 {
+    uint32_t numPerCtxts = gEnetAppCfg.numPerCtxts;
+    uint32_t i = 0U;
+
     EnetAppUtils_print("\nClose Ports for all peripherals\r\n");
     EnetAppUtils_print("----------------------------------------------\r\n");
-    EnetApp_closePort();
+    EnetApp_closePort(gEnetAppCfg.perCtxt, numPerCtxts);
 
     /* Delete RX tasks created for all peripherals */
     EnetAppUtils_print("\nDelete RX tasks\r\n");
     EnetAppUtils_print("----------------------------------------------\r\n");
-    EnetApp_destroyRxTask();
+    for(i = 0U; i < numPerCtxts; i++)
+    {
+        EnetApp_destroyRxTask(&gEnetAppCfg.perCtxt[i]);
+    }
 
     /* Detach core */
     EnetAppUtils_print("\nDetach core from all peripherals\r\n");
     EnetAppUtils_print("----------------------------------------------\r\n");
-    EnetApp_coreDetach(gEnetAppCfg.enetType,gEnetAppCfg.instId,
-                       gEnetAppCfg.coreId,
-                       gEnetAppCfg.coreKey);
+    for(i = 0U; i < numPerCtxts; i++)
+    {
+        EnetApp_coreDetach(gEnetAppCfg.perCtxt[i].enetType,
+                           gEnetAppCfg.perCtxt[i].instId,
+                           gEnetAppCfg.coreId,
+                           gEnetAppCfg.perCtxt[i].coreKey);
+    }
 
     /* Close opened Enet drivers if any peripheral failed */
     EnetAppUtils_print("\nClose all peripherals\r\n");
     EnetAppUtils_print("----------------------------------------------\r\n");
-    EnetApp_releaseHandleInfo(gEnetAppCfg.enetType, gEnetAppCfg.instId);
-    gEnetAppCfg.hEnet = NULL;
+    for(i = 0U; i < numPerCtxts; i++)
+    {
+        EnetApp_releaseHandleInfo(gEnetAppCfg.perCtxt[i].enetType, gEnetAppCfg.perCtxt[i].instId);
+        gEnetAppCfg.perCtxt[i].hEnet = NULL;
+    }
 
     /* Do peripheral dependent initalization */
     EnetAppUtils_print("\nDeinit all peripheral clocks\r\n");
     EnetAppUtils_print("----------------------------------------------\r\n");
-    EnetAppUtils_disableClocks(gEnetAppCfg.enetType, gEnetAppCfg.instId);
+    for(i = 0U; i < numPerCtxts; i++)
+    {
+        EnetAppUtils_disableClocks(gEnetAppCfg.perCtxt[i].enetType, gEnetAppCfg.perCtxt[i].instId);
+    }
 }

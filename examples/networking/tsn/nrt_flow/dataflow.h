@@ -67,8 +67,6 @@
 /* ========================================================================== */
 /*                                Function Declarations                       */
 /* ========================================================================== */
-void EnetApp_destroyRxTask();
-void EnetApp_createRxTask();
 int EnetApp_lldCfgUpdateCb(cb_socket_lldcfg_update_t *update_cfg);
 void rxDefaultDataCb(void *data, int size, int port, void *cbArg);
 

@@ -583,6 +583,16 @@ int32_t EnetAppUtils_addHostPortMcastMembership(Enet_Handle hEnet,
 int32_t EnetAppUtils_delHostPortMcastMembership(Enet_Handle hEnet,
                                                 uint8_t *mcastMacAddr);
 
+void EnetApp_getNonPtpRxDmaInfo(Enet_Type enetType,
+                                uint32_t instId,
+                                uint32_t nonPtpRxFlowId[],
+                                uint8_t *nonPtpRxFlowNum);
+
+void EnetApp_getNonPtpTxDmaInfo(Enet_Type enetType,
+                                uint32_t instId,
+                                uint32_t nonPtpTxFlowId[],
+                                uint8_t *nonPtpTxFlowNum);
+
 /* ========================================================================== */
 /*                       Static Function Definitions                          */
 /* ========================================================================== */

@@ -122,7 +122,7 @@ static EnetApp_DbNameVal_t gGptpPortDs[] =
     {"current-log-pdelay-req-interval", "0"},
     {"allowed-lost-responses", "9"},
     {"allowed-faults", "9"},
-    {"mean-link-delay-thresh", "0x27100000"}
+    {"mean-link-delay-thresh", "0x75300000"} /* (30000 << 16)*/
 };
 
 static EnetApp_DbNameVal_t gGptpDefaultDs[] =

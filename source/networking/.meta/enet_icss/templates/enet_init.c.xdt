@@ -755,7 +755,6 @@ int32_t EnetApp_applyClassifier(Enet_Handle hEnet, uint32_t coreId, uint8_t *dst
     int32_t status = ENET_SOK;
     SemaphoreP_Object asyncIoctlSemObj;
 
-    EnetAppUtils_assert(hEnet->enetPer->enetType == ENET_ICSSG_SWITCH);
     EnetAppUtils_print("For ICSSG, EthType and VlanId are not used to match the packet only dest addr is used \r\n");
     if(IsMacAddrSet(dstMacAddr) == false)
     {
@@ -774,12 +773,27 @@ int32_t EnetApp_applyClassifier(Enet_Handle hEnet, uint32_t coreId, uint8_t *dst
     fdbEntry.vlanId = ((int16_t)-1);
     memcpy(&fdbEntry.macAddr, dstMacAddr, 6U);
 
-    fdbEntry.fdbEntry[0] = (uint8_t)((ICSSG_FDB_ENTRY_P0_MEMBERSHIP |
-                                     ICSSG_FDB_ENTRY_BLOCK |
-                                     ICSSG_FDB_ENTRY_VALID) & 0xFF);
-    fdbEntry.fdbEntry[1] = (uint8_t)((ICSSG_FDB_ENTRY_P0_MEMBERSHIP |
-                                     ICSSG_FDB_ENTRY_BLOCK |
-                                     ICSSG_FDB_ENTRY_VALID) & 0xFF);
+    if(hEnet->enetPer->enetType == ENET_ICSSG_SWITCH)
+    {
+        fdbEntry.fdbEntry[0] = (uint8_t)((ICSSG_FDB_ENTRY_P0_MEMBERSHIP |
+                                         ICSSG_FDB_ENTRY_BLOCK          |
+                                         ICSSG_FDB_ENTRY_VALID) & 0xFF);
+        fdbEntry.fdbEntry[1] = (uint8_t)((ICSSG_FDB_ENTRY_P0_MEMBERSHIP |
+                                         ICSSG_FDB_ENTRY_BLOCK          |
+                                         ICSSG_FDB_ENTRY_VALID) & 0xFF);
+    }
+    else
+    {
+        fdbEntry.fdbEntry[0] = (uint8_t)((ICSSG_FDB_ENTRY_P1_MEMBERSHIP |
+                                         ICSSG_FDB_ENTRY_P2_MEMBERSHIP  |
+                                         ICSSG_FDB_ENTRY_BLOCK          |
+                                         ICSSG_FDB_ENTRY_VALID) & 0xFF);
+        fdbEntry.fdbEntry[1] = (uint8_t)((ICSSG_FDB_ENTRY_P1_MEMBERSHIP |
+                                         ICSSG_FDB_ENTRY_P2_MEMBERSHIP  |
+                                         ICSSG_FDB_ENTRY_BLOCK          |
+                                         ICSSG_FDB_ENTRY_VALID) & 0xFF);
+    }
+
     ENET_IOCTL_SET_IN_ARGS(&prms, &fdbEntry);
     ENET_IOCTL(hEnet, coreId, ICSSG_FDB_IOCTL_ADD_ENTRY, &prms, status);
     if (status == ENET_SINPROGRESS)

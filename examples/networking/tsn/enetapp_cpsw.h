@@ -95,4 +95,8 @@ typedef struct EnetApp_Cfg_s
     Enet_MacPort macPorts[MAX_NUM_MAC_PORTS];
 } EnetApp_Cfg;
 
+
+void EnetApp_destroyRxTask();
+void EnetApp_createRxTask();
+
 #endif //_ENETAPP_H_

@@ -41,106 +41,103 @@
 /*                                Function Declarations                       */
 /* ========================================================================== */
 extern EnetApp_Cfg gEnetAppCfg;
-static uint8_t gEnetAppTaskStackRx[ENETAPP_TASK_STACK_SZ] __attribute__ ((aligned(32)));
+static uint8_t gEnetAppTaskStackRx[ENET_SYSCFG_MAX_ENET_INSTANCES][ENETAPP_TASK_STACK_SZ] __attribute__ ((aligned(32)));
 
 static void EnetApp_initTxFreePktQ(void);
-static uint32_t EnetApp_retrieveFreeTxPkts();
+static uint32_t EnetApp_retrieveFreeTxPkts(EnetApp_PerCtxt *perCtxt);
 static void EnetApp_initRxReadyPktQ(EnetDma_RxChHandle hRxCh);
 
 /* Rx Isr for non-gPTP traffic */
 static void EnetApp_rxIsrFxn(void *appData)
 {
-    SemaphoreP_post(&gEnetAppCfg.rxSemObj);
+    EnetApp_PerCtxt *perCtxt = (EnetApp_PerCtxt *)appData;
+    SemaphoreP_post(&perCtxt->rxSemObj);
 }
 
-static int32_t EnetApp_openDma()
+/* Open non-gPTP channels */
+static int32_t EnetApp_openDma(EnetApp_PerCtxt *perCtxt)
 {
     EnetApp_GetDmaHandleInArgs     txInArgs;
     EnetApp_GetTxDmaHandleOutArgs  txChInfo;
     int32_t status = ENET_SOK;
 
-    /* Open the TX channel */
-    txInArgs.cbArg   = NULL;
-    txInArgs.notifyCb = NULL;
-
-    EnetApp_getTxDmaHandle((ENET_DMA_TX_CH0),
-                           &txInArgs,
-                           &txChInfo);
-
-    gEnetAppCfg.txChNum = txChInfo.txChNum;
-    gEnetAppCfg.hTxCh   = txChInfo.hTxCh;
-
-    if (gEnetAppCfg.hTxCh == NULL)
+    for (uint32_t chNum = 0U; chNum < perCtxt->nonPtpTxChNum; chNum++)
     {
+        txInArgs.cbArg   = NULL;
+        txInArgs.notifyCb = NULL;
+        EnetApp_getTxDmaHandle(perCtxt->nonPtpTxChId[chNum],
+                               &txInArgs,
+                               &txChInfo);
+        perCtxt->txChNum[chNum] = txChInfo.txChNum;
+        perCtxt->hTxCh[chNum]   = txChInfo.hTxCh;
+        if (perCtxt->hTxCh[chNum] == NULL)
+        {
 #if FIX_RM
-        /* Free the channel number if open Tx channel failed */
-        EnetAppUtils_freeTxCh(gEnetAppCfg.hEnet,
-                              gEnetAppCfg.coreKey,
-                              gEnetAppCfg.coreId,
-                              gEnetAppCfg.txChNum);
+            /* Free the channel number if open Tx channel failed */
+            EnetAppUtils_freeTxCh(perCtxt->hEnet,
+                                  perCtxt->coreKey,
+                                  gEnetAppCfg.coreId,
+                                  perCtxt->txChNum[chNum]);
 #endif
-        EnetAppUtils_print("EnetApp_openDma() failed to open TX channel\r\n");
-        status = ENET_EFAIL;
-        EnetAppUtils_assert(gEnetAppCfg.hTxCh != NULL);
+            EnetAppUtils_print("EnetApp_openDma() failed to open TX channel\r\n");
+            status = ENET_EFAIL;
+            EnetAppUtils_assert(perCtxt->hTxCh[chNum] != NULL);
+         }
+        /* Allocate TX packets and keep them locally enqueued */
+        if (status == ENET_SOK)
+        {
+            EnetApp_initTxFreePktQ();
+        }
     }
-
-    /* Allocate TX packets and keep them locally enqueued */
-    if (status == ENET_SOK)
-    {
-        EnetApp_initTxFreePktQ();
-    }
-    uint32_t nonPtpRxChId[] = {ENET_DMA_RX_CH0, ENET_DMA_RX_CH1};
-    /* Open the RX flow for Regular frames */
+    /* Open the RX flow */
     if (status == ENET_SOK)
     {
         EnetApp_GetDmaHandleInArgs     rxInArgs;
         EnetApp_GetRxDmaHandleOutArgs  rxChInfo;
         rxInArgs.notifyCb = EnetApp_rxIsrFxn;
         rxInArgs.cbArg   = NULL;
-        for(uint32_t chIdx = 0U; chIdx < sizeof(nonPtpRxChId)/sizeof(uint32_t); chIdx++)
+        for(uint32_t flowNum = 0U; flowNum < perCtxt->nonPtpRxFlowNum; flowNum++)
         {
-            EnetApp_getRxDmaHandle(nonPtpRxChId[chIdx],
+            EnetApp_getRxDmaHandle(perCtxt->nonPtpRxFlowId[flowNum],
                                    &rxInArgs,
                                    &rxChInfo);
-            gEnetAppCfg.rxStartFlowIdx[chIdx] = rxChInfo.rxFlowStartIdx;
-            gEnetAppCfg.rxFlowIdx[chIdx] = rxChInfo.rxFlowIdx;
-            gEnetAppCfg.hRxCh[chIdx]  = rxChInfo.hRxCh;
-            if(chIdx == 0)
+            perCtxt->rxStartFlowIdx[flowNum] = rxChInfo.rxFlowStartIdx;
+            perCtxt->rxFlowIdx[flowNum] = rxChInfo.rxFlowIdx;
+            perCtxt->hRxCh[flowNum]  = rxChInfo.hRxCh;
+            if(flowNum == 0U)
             {
                 EnetAppUtils_assert(rxChInfo.numValidMacAddress == 1U);
-                EnetUtils_copyMacAddr(gEnetAppCfg.macAddr, rxChInfo.macAddr[rxChInfo.numValidMacAddress - 1]);
+                EnetUtils_copyMacAddr(perCtxt->macAddr, rxChInfo.macAddr[rxChInfo.numValidMacAddress - 1]);
                 EnetAppUtils_print("MAC port addr: ");
-                EnetAppUtils_printMacAddr(gEnetAppCfg.macAddr);
+                EnetAppUtils_printMacAddr(perCtxt->macAddr);
             }
-            if (gEnetAppCfg.hRxCh[chIdx] == NULL)
+            if (perCtxt->hRxCh[flowNum] == NULL)
             {
                 EnetAppUtils_print("EnetApp_openRxCh() failed to open RX flow\r\n");
                 status = ENET_EFAIL;
-                EnetAppUtils_assert(gEnetAppCfg.hRxCh[chIdx] != NULL);
+                EnetAppUtils_assert(perCtxt->hRxCh[flowNum] != NULL);
             }
             /* Submit all ready RX buffers to DMA */
-            EnetApp_initRxReadyPktQ(gEnetAppCfg.hRxCh[chIdx]);
+            EnetApp_initRxReadyPktQ(perCtxt->hRxCh[flowNum]);
         }
     }
-
-     return status;
+    return status;
 }
 
-static void EnetApp_closeDma()
+static void EnetApp_closeDma(EnetApp_PerCtxt *perCtxt)
 {
     EnetDma_PktQ fqPktInfoQ;
     EnetDma_PktQ cqPktInfoQ;
 
     EnetQueue_initQ(&fqPktInfoQ);
     EnetQueue_initQ(&cqPktInfoQ);
-    uint32_t nonPtpRxChId[] = {ENET_DMA_RX_CH0, ENET_DMA_RX_CH1};
 
-    for(uint32_t i = 0U; i < sizeof(nonPtpRxChId)/sizeof(uint32_t); i++)
+    for(uint32_t i = 0U; i < perCtxt->nonPtpRxFlowNum; i++)
     {
-    /* Close Regular RX channel */
-       EnetApp_closeRxDma(nonPtpRxChId[i],
-                          gEnetAppCfg.hEnet,
-                          gEnetAppCfg.coreKey,
+       /* Close Regular RX channel */
+       EnetApp_closeRxDma(perCtxt->nonPtpRxFlowId[i],
+                          perCtxt->hEnet,
+                          perCtxt->coreKey,
                           gEnetAppCfg.coreId,
                           &fqPktInfoQ,
                           &cqPktInfoQ);
@@ -154,16 +151,20 @@ static void EnetApp_closeDma()
     EnetQueue_initQ(&cqPktInfoQ);
 
     /* Retrieve any pending TX packets from driver */
-    EnetApp_retrieveFreeTxPkts();
+    EnetApp_retrieveFreeTxPkts(perCtxt);
 
-    EnetApp_closeTxDma(ENET_DMA_TX_CH0,
-                       gEnetAppCfg.hEnet,
-                       gEnetAppCfg.coreKey,
-                       gEnetAppCfg.coreId,
-                       &fqPktInfoQ,
-                       &cqPktInfoQ);
+    for (uint32_t chIdx = 0; chIdx < perCtxt->nonPtpTxChNum; chIdx++)
+    {
+        EnetApp_closeTxDma(perCtxt->nonPtpTxChId[chIdx],
+                           perCtxt->hEnet,
+                           perCtxt->coreKey,
+                           gEnetAppCfg.coreId,
+                           &fqPktInfoQ,
+                           &cqPktInfoQ);
 
-    EnetAppUtils_freePktInfoQ(&fqPktInfoQ);
+        EnetAppUtils_freePktInfoQ(&fqPktInfoQ);
+        EnetAppUtils_freePktInfoQ(&cqPktInfoQ);
+    }
     EnetAppUtils_freePktInfoQ(&cqPktInfoQ);
 
     EnetAppUtils_freePktInfoQ(&gEnetAppCfg.txFreePktInfoQ);
@@ -235,36 +236,39 @@ static void EnetApp_initRxReadyPktQ(EnetDma_RxChHandle hRxCh)
     EnetAppUtils_assert(EnetQueue_getQCount(&rxFreeQ) == 0U);
 }
 
-static uint32_t EnetApp_retrieveFreeTxPkts()
+static uint32_t EnetApp_retrieveFreeTxPkts(EnetApp_PerCtxt *perCtxt)
 {
     EnetDma_PktQ txFreeQ;
     EnetDma_Pkt *pktInfo;
-    uint32_t txFreeQCnt = 0U;
+    uint32_t i, txFreeQCnt = 0U;
     int32_t status;
 
     EnetQueue_initQ(&txFreeQ);
 
     /* Retrieve any packets that may be free now */
-    status = EnetDma_retrieveTxPktQ(gEnetAppCfg.hTxCh, &txFreeQ);
-    if (status == ENET_SOK)
+    for (i = 0; i < perCtxt->nonPtpTxChNum; i++)
     {
-        txFreeQCnt = EnetQueue_getQCount(&txFreeQ);
-
-        pktInfo = (EnetDma_Pkt *)EnetQueue_deq(&txFreeQ);
-        while (NULL != pktInfo)
+        status = EnetDma_retrieveTxPktQ(perCtxt->hTxCh[i], &txFreeQ);
+        if (status == ENET_SOK)
         {
-            EnetDma_checkPktState(&pktInfo->pktState,
-                                    ENET_PKTSTATE_MODULE_APP,
-                                    ENET_PKTSTATE_APP_WITH_DRIVER,
-                                    ENET_PKTSTATE_APP_WITH_FREEQ);
+            txFreeQCnt = EnetQueue_getQCount(&txFreeQ);
 
-            EnetQueue_enq(&gEnetAppCfg.txFreePktInfoQ, &pktInfo->node);
             pktInfo = (EnetDma_Pkt *)EnetQueue_deq(&txFreeQ);
+            while (NULL != pktInfo)
+            {
+                EnetDma_checkPktState(&pktInfo->pktState,
+                                        ENET_PKTSTATE_MODULE_APP,
+                                        ENET_PKTSTATE_APP_WITH_DRIVER,
+                                        ENET_PKTSTATE_APP_WITH_FREEQ);
+
+                EnetQueue_enq(&gEnetAppCfg.txFreePktInfoQ, &pktInfo->node);
+                pktInfo = (EnetDma_Pkt *)EnetQueue_deq(&txFreeQ);
+            }
         }
-    }
-    else
-    {
-        EnetAppUtils_print("retrieveFreeTxPkts() failed to retrieve pkts: %d\r\n", status);
+        else
+        {
+            EnetAppUtils_print("retrieveFreeTxPkts() failed to retrieve pkts: %d\r\n", status);
+        }
     }
 
     return txFreeQCnt;
@@ -273,6 +277,7 @@ static uint32_t EnetApp_retrieveFreeTxPkts()
 /* Rx Echo task for non-gPTP traffic */
 static void EnetApp_rxTask(void *args)
 {
+    EnetApp_PerCtxt *perCtxt = (EnetApp_PerCtxt *)args;
     EnetDma_PktQ rxReadyQ;
     EnetDma_PktQ rxFreeQ;
     EnetDma_PktQ txSubmitQ;
@@ -280,23 +285,24 @@ static void EnetApp_rxTask(void *args)
     EnetDma_Pkt *txPktInfo;
     EthFrame *rxFrame;
     EthFrame *txFrame;
+    uint32_t flowIdx;
     int32_t status = ENET_SOK;
 
-    EnetAppUtils_print("%s: default RX flow started\r\n",
-                       gEnetAppCfg.name);
+    EnetAppUtils_print("%s:%d: default RX flow started\r\n",
+            perCtxt->name, perCtxt->perIdx);
 
-    while ((ENET_SOK == status))
+    while (ENET_SOK == status)
     {
         /* Wait for packet reception */
-        SemaphoreP_pend(&gEnetAppCfg.rxSemObj, SystemP_WAIT_FOREVER);
-        for (uint32_t i = 0U; i < 2U; i++)
+        SemaphoreP_pend(&perCtxt->rxSemObj, SystemP_WAIT_FOREVER);
+        for (flowIdx = 0; flowIdx < perCtxt->nonPtpRxFlowNum; flowIdx++)
         {
             EnetQueue_initQ(&rxReadyQ);
             EnetQueue_initQ(&rxFreeQ);
             EnetQueue_initQ(&txSubmitQ);
 
             /* Get the packets received so far */
-            status = EnetDma_retrieveRxPktQ(gEnetAppCfg.hRxCh[i], &rxReadyQ);
+            status = EnetDma_retrieveRxPktQ(perCtxt->hRxCh[flowIdx], &rxReadyQ);
             if (status != ENET_SOK)
             {
                 /* Should we bail out here? */
@@ -305,7 +311,7 @@ static void EnetApp_rxTask(void *args)
                 continue;
             }
 #if DEBUG
-        EnetAppUtils_print("%s: Received %u packets\r\n", gEnetAppCfg.name, EnetQueue_getQCount(&rxReadyQ));
+        EnetAppUtils_print("%s: Received %u packets\r\n", perCtxt->name, EnetQueue_getQCount(&rxReadyQ));
 #endif
 
             /* Consume the received packets and send them back */
@@ -318,18 +324,17 @@ static void EnetApp_rxTask(void *args)
                         ENET_PKTSTATE_APP_WITH_READYQ);
 
                 /* Retrieve TX packets from driver and recycle them */
-                EnetApp_retrieveFreeTxPkts();
+                EnetApp_retrieveFreeTxPkts(perCtxt);
 
                 /* Dequeue one free TX Eth packet */
-                txPktInfo = (EnetDma_Pkt*) EnetQueue_deq(
-                        &gEnetAppCfg.txFreePktInfoQ);
+                txPktInfo = (EnetDma_Pkt*) EnetQueue_deq(&gEnetAppCfg.txFreePktInfoQ);
                 if (txPktInfo != NULL)
                 {
                     /* Fill the TX Eth frame with test content */
                     txFrame = (EthFrame*) txPktInfo->sgList.list[0].bufPtr;
                     memcpy(txFrame->hdr.dstMac, rxFrame->hdr.srcMac,
                             ENET_MAC_ADDR_LEN);
-                    memcpy(txFrame->hdr.srcMac, &gEnetAppCfg.macAddr[0U],
+                    memcpy(txFrame->hdr.srcMac, &perCtxt->macAddr[0U],
                             ENET_MAC_ADDR_LEN);
                     txFrame->hdr.etherType = rxFrame->hdr.etherType;
 
@@ -359,7 +364,7 @@ static void EnetApp_rxTask(void *args)
                 {
                     EnetAppUtils_print(
                             "%s: Drop due to TX pkt not available\r\n",
-                            gEnetAppCfg.name);
+                            perCtxt->name);
                 }
 
                 EnetDma_checkPktState(&rxPktInfo->pktState,
@@ -372,11 +377,11 @@ static void EnetApp_rxTask(void *args)
             }
 
             /* Transmit all enqueued packets */
-            status = EnetDma_submitTxPktQ(gEnetAppCfg.hTxCh, &txSubmitQ);
+            status = EnetDma_submitTxPktQ(perCtxt->hTxCh[0], &txSubmitQ);
             if (status != ENET_SOK)
             {
                 EnetAppUtils_print("%s: Failed to submit TX pkt queue: %d\r\n",
-                        gEnetAppCfg.name, status);
+                        perCtxt->name, status);
             }
 
             EnetAppUtils_validatePacketState(&rxFreeQ,
@@ -384,43 +389,42 @@ static void EnetApp_rxTask(void *args)
                     ENET_PKTSTATE_APP_WITH_DRIVER);
 
             /* Submit now processed buffers */
-            EnetDma_submitRxPktQ(gEnetAppCfg.hRxCh[i], &rxFreeQ);
+            EnetDma_submitRxPktQ(perCtxt->hRxCh[flowIdx], &rxFreeQ);
             if (status != ENET_SOK)
             {
                 EnetAppUtils_print("%s: Failed to submit RX pkt queue: %d\r\n",
-                        gEnetAppCfg.name, status);
+                                    perCtxt->name, status);
             }
         }
     }
-
     TaskP_exit();
 }
 
-void EnetApp_createRxTask()
+void EnetApp_createRxTask(EnetApp_PerCtxt *perCtxt)
 {
     TaskP_Params taskParams;
     int32_t status;
 
-    status = EnetApp_openDma();
+    status = EnetApp_openDma(perCtxt);
     DebugP_assert(ENET_SOK == status);
 
-    status = SemaphoreP_constructBinary(&gEnetAppCfg.rxSemObj, 0);
+    status = SemaphoreP_constructBinary(&perCtxt->rxSemObj, 0);
     DebugP_assert(SystemP_SUCCESS == status);
     TaskP_Params_init(&taskParams);
     taskParams.priority       = 2U;
-    taskParams.stack          = gEnetAppTaskStackRx;
-    taskParams.stackSize      = sizeof(gEnetAppTaskStackRx);
-    taskParams.args           = (void*)&gEnetAppCfg;
+    taskParams.stack          = &gEnetAppTaskStackRx[perCtxt->perIdx][0];
+    taskParams.stackSize      = sizeof(gEnetAppTaskStackRx[perCtxt->perIdx]);
+    taskParams.args           = (void*)perCtxt;
     taskParams.name           = "Rx Task";
     taskParams.taskMain       = &EnetApp_rxTask;
 
-    status = TaskP_construct(&gEnetAppCfg.rxTaskObj, &taskParams);
+    status = TaskP_construct(&perCtxt->rxTaskObj, &taskParams);
     DebugP_assert(SystemP_SUCCESS == status);
 }
 
-void EnetApp_destroyRxTask()
+void EnetApp_destroyRxTask(EnetApp_PerCtxt *perCtxt)
 {
-    SemaphoreP_destruct(&gEnetAppCfg.rxSemObj);
-    TaskP_destruct(&gEnetAppCfg.rxTaskObj);
-    EnetApp_closeDma();
+    SemaphoreP_destruct(&perCtxt->rxSemObj);
+    TaskP_destruct(&perCtxt->rxTaskObj);
+    EnetApp_closeDma(perCtxt);
 }

@@ -85,6 +85,48 @@ function getRxDmaSizeThreshEn(module, instance) {
     return rxDmaCfgAry;
 }
 
+function getNonPtpRxDmaCfg(module, instances, enetType, instId) {
+    let rxDmaCfgAry = new Array();
+    for (let i in instances)
+    {
+        let instance = instances[i];
+        let matchInstId = module.getInstId(instance);
+        if((matchInstId.instId == instId) && (matchInstId.enetType == enetType))
+        {
+            for (var j = 0; j < module.getRxChannelCount(instance); j++)
+            {
+                let rxChCfg = module.getChannelConfig(instance, "RX", j);
+                if(rxChCfg.$name.toUpperCase().includes("PTP") == false)
+                {
+                    rxDmaCfgAry.push(rxChCfg.$name);
+                }
+            }
+        }
+    }
+    return rxDmaCfgAry;
+}
+
+function getNonPtpTxDmaCfg(module, instances, enetType, instId) {
+    let txDmaCfgAry = new Array();
+    for (let i in instances)
+    {
+        let instance = instances[i];
+        let matchInstId = module.getInstId(instance);
+        if((matchInstId.instId == instId) && (matchInstId.enetType == enetType))
+        {
+            for (var j = 0; j < module.getTxChannelCount(instance); j++)
+            {
+                let txChCfg = module.getChannelConfig(instance, "TX", j);
+                if(txChCfg.$name.toUpperCase().includes("PTP") == false)
+                {
+                    txDmaCfgAry.push(txChCfg.$name);
+                }
+            }
+        }
+    }
+    return txDmaCfgAry;
+}
+
 function getDmaCfgInitArray(module, instances, indent) {
     let rxDmaCfgAry = new Array();
     let count = 0;
@@ -762,6 +804,69 @@ void EnetApp_getMacAddress(uint32_t enetRxDmaChId,
 
 }
 
+void EnetApp_getNonPtpRxDmaInfo(Enet_Type enetType,
+                                uint32_t instId,
+                                uint32_t nonPtpRxFlowId[],
+                                uint8_t *nonPtpRxFlowNum)
+{
+    if (enetType == ENET_ICSSG_DUALMAC && (instId == 2U))
+    {
+      % let rxFlowInfo = getNonPtpRxDmaCfg(module, instances, "ENET_ICSSG_DUALMAC", 2);
+        *nonPtpRxFlowNum = `(rxFlowInfo.length)`U;
+%for(let i = 0; i < rxFlowInfo.length; i++) {
+        nonPtpRxFlowId[`i`] = `(rxFlowInfo[i])`;
+%}
+    }
+    if (enetType == ENET_ICSSG_DUALMAC && (instId == 3U))
+    {
+      % rxFlowInfo = getNonPtpRxDmaCfg(module, instances, "ENET_ICSSG_DUALMAC", 3);
+        *nonPtpRxFlowNum = `(rxFlowInfo.length)`U;
+%for(let i = 0; i < rxFlowInfo.length; i++) {
+        nonPtpRxFlowId[`i`] = `(rxFlowInfo[i])`;
+%}
+    }
+    if (enetType == ENET_ICSSG_SWITCH && (instId == 1U))
+    {
+      % rxFlowInfo = getNonPtpRxDmaCfg(module, instances, "ENET_ICSSG_SWITCH", 1);
+        *nonPtpRxFlowNum = `(rxFlowInfo.length)`U;
+%for(let i = 0; i < rxFlowInfo.length; i++) {
+        nonPtpRxFlowId[`i`] = `(rxFlowInfo[i])`;
+%}
+    }
+    EnetAppUtils_assert(*nonPtpRxFlowNum != 0U);
+}
+
+void EnetApp_getNonPtpTxDmaInfo(Enet_Type enetType,
+                                uint32_t instId,
+                                uint32_t nonPtpTxFlowId[],
+                                uint8_t *nonPtpTxFlowNum)
+{
+    if (enetType == ENET_ICSSG_DUALMAC && (instId == 2U))
+    {
+      % let txFlowInfo = getNonPtpTxDmaCfg(module, instances, "ENET_ICSSG_DUALMAC", 2);
+        *nonPtpTxFlowNum = `(txFlowInfo.length)`U;
+%for(let i = 0; i < txFlowInfo.length; i++) {
+        nonPtpTxFlowId[`i`] = `(txFlowInfo[i])`;
+%}
+    }
+    if (enetType == ENET_ICSSG_DUALMAC && (instId == 3U))
+    {
+      % txFlowInfo = getNonPtpTxDmaCfg(module, instances, "ENET_ICSSG_DUALMAC", 3);
+        *nonPtpTxFlowNum = `(txFlowInfo.length)`U;
+%for(let i = 0; i < txFlowInfo.length; i++) {
+        nonPtpTxFlowId[`i`] = `(txFlowInfo[i])`;
+%}
+    }
+    if (enetType == ENET_ICSSG_SWITCH && (instId == 1U))
+    {
+      % txFlowInfo = getNonPtpTxDmaCfg(module, instances, "ENET_ICSSG_SWITCH", 1);
+        *nonPtpTxFlowNum = `(txFlowInfo.length)`U;
+%for(let i = 0; i < txFlowInfo.length; i++) {
+        nonPtpTxFlowId[`i`] = `(txFlowInfo[i])`;
+%}
+    }
+    EnetAppUtils_assert(*nonPtpTxFlowNum != 0U);
+}
 void EnetApp_getRxDmaHandle(uint32_t enetRxDmaChId,
                             const EnetApp_GetDmaHandleInArgs *inArgs,
                             EnetApp_GetRxDmaHandleOutArgs *outArgs)
