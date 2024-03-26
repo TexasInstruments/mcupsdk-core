@@ -42,6 +42,9 @@
 
     .set     CSL_ARM_R5_PMU_CYCLE_COUNTER_NUM, 0x1f
 
+    .thumb
+    .syntax unified
+
 /*
 ;==============================================================================
 ;   void CSL_armR5PmuSelectCntr( uint32_t cntrNum )
