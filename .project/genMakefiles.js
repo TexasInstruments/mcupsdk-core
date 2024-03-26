@@ -173,6 +173,7 @@ function genMakefileDeviceTop(component_file_list, example_file_list, device, is
         example_list: example_make_list,
         system_example_list: system_example_make_list,
         device: device,
+        ...(require(`./device/project_${device}.js`).getAddGcc() ? { isgcc:require(`./device/project_${device}.js`).getAddGcc() } : {}),
     };
 
     common.convertTemplateToFile(
