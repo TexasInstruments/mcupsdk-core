@@ -36,7 +36,7 @@ const cgt_common = {
         common: [
             "-Wall",
             "-Werror",
-            "-mthumb-interwork",
+            "-mthumb",
             "-g",
             "-Wno-unused-function",
             "-Wno-enum-compare",
