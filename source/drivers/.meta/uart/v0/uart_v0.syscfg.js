@@ -318,6 +318,44 @@ function getConfigurables()
                 },
             ],
             description: "SDK Infra",
+            onChange: function (inst, ui) {
+                if(inst.sdkInfra == "LLD")
+                {
+                    if(inst.intrEnable == "ENABLE")
+                    {
+                        inst.readMode = "CALLBACK",
+                        inst.writeMode = "CALLBACK",
+                        ui.readMode.readOnly = true;
+                        ui.writeMode.readOnly = true;
+                        ui.readCallbackFxn.hidden = false;
+                        ui.writeCallbackFxn.hidden = false;
+                    }
+                    else if(inst.intrEnable == "DISABLE")
+                    {
+                        ui.readMode.hidden = true;
+                        ui.writeMode.hidden = true;
+                        ui.readCallbackFxn.hidden = true;
+                        ui.writeCallbackFxn.hidden = true;
+                    }
+                }
+                else
+                {
+                    if(inst.intrEnable == "ENABLE")
+                    {
+                        ui.readMode.readOnly = false;
+                        ui.writeMode.readOnly = false;
+                        ui.readCallbackFxn.hidden = false;
+                        ui.writeCallbackFxn.hidden = false;
+                    }
+                    else if(inst.intrEnable == "DISABLE")
+                    {
+                        ui.readMode.hidden = true;
+                        ui.writeMode.hidden = true;
+                        ui.readCallbackFxn.hidden = true;
+                        ui.writeCallbackFxn.hidden = true;
+                    }
+                }
+            },
         },
         /* Advanced parameters */
         {
@@ -482,7 +520,7 @@ function getConfigurables()
             ],
             description: "This determines whether the driver operates synchronously or asynchronously",
             longDescription:`
-- **Blocking Mode:** Blocks code execution until the transaction has completed
+- **Blocking Mode:** Blocks code execution until the transaction has completed(Not supported in LLD)
 - **CallBack Mode:** Does not block code execution and instead calls a #UART_CallbackFxn callback function when the transaction has completed`,
             onChange: function (inst, ui) {
                 if(inst.readMode == "BLOCKING") {
@@ -517,7 +555,7 @@ function getConfigurables()
             ],
             description: "This determines whether the driver operates synchronously or asynchronously",
             longDescription:`
-- **Blocking Mode:** Blocks code execution until the transaction has completed
+- **Blocking Mode:** Blocks code execution until the transaction has completed(Not supported in LLD)
 - **CallBack Mode:** Does not block code execution and instead calls a #UART_CallbackFxn callback function when the transaction has completed`,
             onChange: function (inst, ui) {
                 if(inst.writeMode == "BLOCKING") {
@@ -577,12 +615,12 @@ function validateBaudrate(inst, report) {
 function validate(inst, report) {
     common.validate.checkValidCName(inst, report, "readCallbackFxn");
     common.validate.checkValidCName(inst, report, "writeCallbackFxn");
-    if((inst.readMode == "CALLBACK") &&
+    if((inst.readMode == "CALLBACK") && (inst.intrEnable == "ENABLE") &&
         ((inst.readCallbackFxn == "NULL") ||
             (inst.readCallbackFxn == ""))) {
         report.logError("Callback function MUST be provided for callback transfer mode", inst, "readCallbackFxn");
     }
-    if((inst.writeMode == "CALLBACK") &&
+    if((inst.writeMode == "CALLBACK") && (inst.intrEnable == "ENABLE") &&
         ((inst.writeCallbackFxn == "NULL") ||
             (inst.writeCallbackFxn == ""))) {
         report.logError("Callback function MUST be provided for callback transfer mode", inst, "writeCallbackFxn");
