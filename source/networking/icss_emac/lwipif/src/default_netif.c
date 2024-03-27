@@ -40,6 +40,7 @@ void init_default_netif(const ip4_addr_t *ipaddr, const ip4_addr_t *netmask, con
 {
     netif_add(&netif, ipaddr, netmask, gw, NULL, LWIPIF_LWIP_init, tcpip_input);
     netif_set_default(&netif);
+    netif.flags               |= NETIF_FLAG_ETHARP;
 }
 
 void default_netif_poll(void)

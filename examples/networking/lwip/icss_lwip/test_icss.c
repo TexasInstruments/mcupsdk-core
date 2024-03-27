@@ -54,11 +54,17 @@
 #include <mii/am263x-cc/pruicss_pinmux.h>
 #elif AM263X_LP
 #include <mii/am263x-lp/pruicss_pinmux.h>
+#elif AM263PX_LP
+#include <mii/am263px-lp/pruicss_pinmux.h>
 #endif
 
 
 #include <drivers/hw_include/cslr_soc.h>
+#ifdef SOC_AM263X
 #include <drivers/hw_include/am263x/cslr_mss_ctrl.h>
+#elif SOC_AM263PX
+#include <drivers/hw_include/am263px/cslr_mss_ctrl.h>
+#endif
 #include <drivers/pinmux.h>
 #include<drivers/pruicss/m_v0/pruicss.h>
 #include <drivers/hw_include/hw_types.h>
@@ -83,7 +89,7 @@ uint32_t gtaskIcssEmacTxStack[ICSS_EMAC_Tx_TASK_STACK_SIZE/sizeof(uint32_t)] __a
 
 TaskP_Object taskIcssEmacTxObject;
 
-#ifdef AM263X_LP
+#if defined AM263X_LP || defined AM263PX_LP
 void icssmMuxSelection(void);
 #endif
 
@@ -488,7 +494,7 @@ extern void Lwip2Emac_getHandle(Lwip2Emac_Handle *AppLwipHandle);
 /** \brief LwIP Interface Layer Handle */
 Lwip2Emac_Handle lwipifHandle;
 
-#ifdef SOC_AM263X
+#if defined SOC_AM263X || defined SOC_AM263PX
 #define I2C_EEPROM_MAC0_DATA_OFFSET      (0x43)
 #else
 #define I2C_EEPROM_MAC0_DATA_OFFSET      (0x3D)
@@ -524,7 +530,7 @@ void print_cpu_load()
     }
 }
 
-#ifdef AM263X_LP
+#if defined AM263X_LP || defined AM263PX_LP
 void ICSS_EMAC_testBoardInit(void)
 {
     ETHPHY_DP83869_LedSourceConfig ledConfig;
@@ -705,7 +711,7 @@ int icss_lwip_example(void *args)
     status = Board_driversOpen();
     DebugP_assert(status==SystemP_SUCCESS);
 
-#ifdef AM263X_LP
+#if defined AM263X_LP || defined AM263PX_LP
     icssmMuxSelection();
 #else
     ICSS_EMAC_testBoardInit();
@@ -766,7 +772,7 @@ int icss_lwip_example(void *args)
         PRUICSS_enableCore(pruicssHandle, PRUICSS_PRU1);
     }
 
-#ifdef AM263X_LP
+#if defined AM263X_LP || defined AM263PX_LP
     ICSS_EMAC_testBoardInit();
 #endif
 
@@ -775,7 +781,7 @@ int icss_lwip_example(void *args)
     return 0;
 }
 
-#ifdef AM263X_LP
+#if defined AM263X_LP || defined AM263PX_LP
 void icssmMuxSelection(void)
 {
     uint32_t pinNum[CONFIG_GPIO_NUM_INSTANCES] = {CONFIG_GPIO0_PIN, CONFIG_GPIO1_PIN, CONFIG_GPIO2_PIN};

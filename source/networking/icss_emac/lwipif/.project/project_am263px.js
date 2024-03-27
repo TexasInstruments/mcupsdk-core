@@ -29,6 +29,7 @@ const includes = {
        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px",
        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include",
        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include",
+       "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/ports/freertos/include",
     ],
 };
 
