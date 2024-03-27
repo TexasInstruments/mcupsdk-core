@@ -1317,8 +1317,10 @@ LIN_setSyncFields(uint32_t base, uint16_t syncBreak, uint16_t delimiter)
     DebugP_assert((delimiter >= 1U) && (delimiter < 5U));
 
     /* Clear sync values and set new values */
-    HW_WR_FIELD32_RAW((base + CSL_LIN_LINCOMP), (CSL_LIN_LINCOMP_SDEL_MASK|CSL_LIN_LINCOMP_SBREAK_MASK),
-                        CSL_LIN_LINCOMP_SDEL_SHIFT, (syncBreak | (delimiter - 1U)));
+    HW_WR_FIELD32_RAW((base + CSL_LIN_LINCOMP), CSL_LIN_LINCOMP_SDEL_MASK,
+                        CSL_LIN_LINCOMP_SDEL_SHIFT, (delimiter - 1U));
+    HW_WR_FIELD32_RAW((base + CSL_LIN_LINCOMP), CSL_LIN_LINCOMP_SBREAK_MASK,
+                        CSL_LIN_LINCOMP_SBREAK_SHIFT, syncBreak);
 }
 
 /**
