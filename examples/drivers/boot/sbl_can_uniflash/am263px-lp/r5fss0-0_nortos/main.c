@@ -45,7 +45,7 @@ const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.h
 
 extern HsmClient_t gHSMClient ;
 
-#define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x1C0000) /* This has to match the size of MSRAM1 section in linker.cmd */
+#define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x170000) /* This has to match the size of MSRAM1 section in linker.cmd */
 uint8_t gUniflashFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
 
 #define BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE (32*1024)
