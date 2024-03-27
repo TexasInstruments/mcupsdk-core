@@ -41,7 +41,7 @@ help:
 	@echo  $(MAKE) -s -f makefile.am263x nortos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am263x freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am263x mathlib_r5f.ti-arm-clang
-    @echo  $(MAKE) -s -f makefile.am263x icss_emac_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am263x icss_emac_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am263x icss_emac_lwip_if_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am263x enet-cpsw_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am263x lwipif-cpsw-freertos_r5f.ti-arm-clang

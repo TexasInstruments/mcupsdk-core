@@ -39,10 +39,12 @@
 
 #include "lwip/opt.h"
 
-#include<board/ethphy.h>
-#include<board/eeprom.h>
-#include<board/ethphy/ethphy_dp83826e.h>
-#include<board/ethphy/ethphy_dp83869.h>
+#include <board/ethphy.h>
+#include <board/eeprom.h>
+#include <board/ethphy/ethphy_dp83826e.h>
+#include <board/ethphy/ethphy_dp83869.h>
+#include <board/ioexp/ioexp_tca6424.h>
+
 #include "test_icss_lwip.h"
 #include "lwip2icss_emac.h"
 #include "icss_emac.h"
@@ -54,6 +56,8 @@
 #include <mii/am263x-cc/pruicss_pinmux.h>
 #elif AM263X_LP
 #include <mii/am263x-lp/pruicss_pinmux.h>
+#elif AM263PX_CC
+#include <mii/am263x-cc/pruicss_pinmux.h>
 #elif AM263PX_LP
 #include <mii/am263px-lp/pruicss_pinmux.h>
 #endif
@@ -72,18 +76,27 @@
 #include <firmware/mii/PRU0_bin.h>
 #include <firmware/mii/PRU1_bin.h>
 
+
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
+
 #define MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE  (0x0001077F)
 
 #define LWIPINIT_TASK_PRIORITY            (8)
 #define LWIPINIT_TASK_STACK_SIZE          (0x4000)
 
-uint32_t gtaskLwipInitStack[LWIPINIT_TASK_STACK_SIZE/sizeof(uint32_t)] __attribute__((aligned(32)));
-
-TaskP_Object taskLwipInitObject;
+/*I2C Instance and Index for IO Expander programming*/
+#define MDIO_MDC_MUX_SEL1                       (0x12)
+#define IO_EXP_I2C_INSTANCE                     (0x01)
 
 /*ICSS_EMAC Tx API Call Task*/
 #define ICSS_EMAC_Tx_TASK_PRIORITY            (10)
 #define ICSS_EMAC_Tx_TASK_STACK_SIZE          (0x4000)
+
+uint32_t gtaskLwipInitStack[LWIPINIT_TASK_STACK_SIZE/sizeof(uint32_t)] __attribute__((aligned(32)));
+
+TaskP_Object taskLwipInitObject;
 
 uint32_t gtaskIcssEmacTxStack[ICSS_EMAC_Tx_TASK_STACK_SIZE/sizeof(uint32_t)] __attribute__((aligned(32)));
 
@@ -91,6 +104,11 @@ TaskP_Object taskIcssEmacTxObject;
 
 #if defined AM263X_LP || defined AM263PX_LP
 void icssmMuxSelection(void);
+#endif
+
+#ifdef AM263PX_CC
+void setIOExpMuxSelection(void *args);
+static TCA6424_Config  gTCA6424_Config;
 #endif
 
 uint8_t ICSS_EMAC_testPktPromiscuous[] = {
@@ -530,58 +548,7 @@ void print_cpu_load()
     }
 }
 
-#if defined AM263X_LP || defined AM263PX_LP
-void ICSS_EMAC_testBoardInit(void)
-{
-    ETHPHY_DP83869_LedSourceConfig ledConfig;
-    ETHPHY_DP83869_LedBlinkRateConfig ledBlinkConfig;
-
-    Pinmux_config(gPruicssPinMuxCfg, PINMUX_DOMAIN_ID_MAIN);
-
-    // Set bits for input pins in ICSSM_PRU0_GPIO_OUT_CTRL and ICSSM_PRU1_GPIO_OUT_CTRL registers
-    HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU0_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
-    HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU1_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
-
-    DebugP_log("MII mode\r\n");
-
-    /* PHY pin LED_0 as link */
-    ledConfig.ledNum = ETHPHY_DP83869_LED0;
-    ledConfig.mode = ETHPHY_DP83869_LED_MODE_100BTX_LINK_UP;
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
-
-    /* PHY pin LED_1 indication is on if 1G link established for PHY0, and if 10M speed id configured for PHY1 */
-    ledConfig.ledNum = ETHPHY_DP83869_LED1;
-    ledConfig.mode = ETHPHY_DP83869_LED_MODE_1000BT_LINK_UP;
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
-
-    /* PHY pin LED_2 as Rx/Tx Activity */
-    ledConfig.ledNum = ETHPHY_DP83869_LED2;
-    ledConfig.mode = ETHPHY_DP83869_LED_MODE_LINK_OK_AND_BLINK_ON_RX_TX;
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
-
-    ledBlinkConfig.rate = ETHPHY_DP83869_LED_BLINK_RATE_200_MS;
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig, sizeof(ledBlinkConfig));
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig, sizeof(ledBlinkConfig));
-
-    /* Enable MII mode  */
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_ENABLE_MII, NULL, 0);
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_ENABLE_MII, NULL, 0);
-
-    /* Disable 1G advertisement and sof-reset to restart auto-negotiation in case 1G link was establised */
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
-
-    /* Soft-reset PHY */
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
-    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
-
-    /*Wait for PHY to come out of reset*/
-    ClockP_sleep(1);
-}
-#elif AM263X_CC
+#if defined AM263X_CC || AM263PX_CC
 void ICSS_EMAC_testBoardInit(void)
 {
     ETHPHY_DP83869_LedSourceConfig ledConfig0;
@@ -632,6 +599,57 @@ void ICSS_EMAC_testBoardInit(void)
     /* Disable 1G advertisement and sof-reset to restart auto-negotiation in case 1G link was establised */
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
     ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
+
+    /*Wait for PHY to come out of reset*/
+    ClockP_sleep(1);
+}
+#else
+void ICSS_EMAC_testBoardInit(void)
+{
+    ETHPHY_DP83869_LedSourceConfig ledConfig;
+    ETHPHY_DP83869_LedBlinkRateConfig ledBlinkConfig;
+
+    Pinmux_config(gPruicssPinMuxCfg, PINMUX_DOMAIN_ID_MAIN);
+
+    // Set bits for input pins in ICSSM_PRU0_GPIO_OUT_CTRL and ICSSM_PRU1_GPIO_OUT_CTRL registers
+    HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU0_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
+    HW_WR_REG32(CSL_MSS_CTRL_U_BASE + CSL_MSS_CTRL_ICSSM_PRU1_GPIO_OUT_CTRL, MSS_CTRL_ICSSM_PRU_GPIO_OUT_CTRL_VALUE);
+
+    DebugP_log("MII mode\r\n");
+
+    /* PHY pin LED_0 as link */
+    ledConfig.ledNum = ETHPHY_DP83869_LED0;
+    ledConfig.mode = ETHPHY_DP83869_LED_MODE_100BTX_LINK_UP;
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
+
+    /* PHY pin LED_1 indication is on if 1G link established for PHY0, and if 10M speed id configured for PHY1 */
+    ledConfig.ledNum = ETHPHY_DP83869_LED1;
+    ledConfig.mode = ETHPHY_DP83869_LED_MODE_1000BT_LINK_UP;
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
+
+    /* PHY pin LED_2 as Rx/Tx Activity */
+    ledConfig.ledNum = ETHPHY_DP83869_LED2;
+    ledConfig.mode = ETHPHY_DP83869_LED_MODE_LINK_OK_AND_BLINK_ON_RX_TX;
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_SOURCE, (void *)&ledConfig, sizeof(ledConfig));
+
+    ledBlinkConfig.rate = ETHPHY_DP83869_LED_BLINK_RATE_200_MS;
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig, sizeof(ledBlinkConfig));
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_CONFIGURE_LED_BLINK_RATE, (void *)&ledBlinkConfig, sizeof(ledBlinkConfig));
+
+    /* Enable MII mode  */
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_ENABLE_MII, NULL, 0);
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_ENABLE_MII, NULL, 0);
+
+    /* Disable 1G advertisement and sof-reset to restart auto-negotiation in case 1G link was establised */
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_DISABLE_1000M_ADVERTISEMENT, NULL, 0);
+
+    /* Soft-reset PHY */
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY0], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
+    ETHPHY_command(gEthPhyHandle[CONFIG_ETHPHY1], ETHPHY_CMD_SOFT_RESTART, NULL, 0);
 
     /*Wait for PHY to come out of reset*/
     ClockP_sleep(1);
@@ -717,6 +735,11 @@ int icss_lwip_example(void *args)
     ICSS_EMAC_testBoardInit();
 #endif
     // app_getEmacHandle(lwipifHandle);
+
+#ifdef AM263PX_CC
+    setIOExpMuxSelection(NULL);
+#endif
+
     pruicssHandle = PRUICSS_open(CONFIG_PRU_ICSS1);
     DebugP_assert(pruicssHandle != NULL);
 
@@ -796,5 +819,43 @@ void icssmMuxSelection(void)
         GPIO_setDirMode(gGpioBaseAddr, pinNum[index], pinDir[index]);
         GPIO_pinWriteHigh(gGpioBaseAddr, pinNum[index]);
     }
+}
+#endif
+
+#ifdef AM263PX_CC
+/* Set MDIO/MDC_MUX_SEL1 to low using IO Expander to configure:
+ *  On-Board PHY               ->  PRU0 MII0
+ *  ETHERNET ADD-ON CONNECTOR  ->  PRU1 MII1
+ *
+ * Refer to Ethenet Routing in AM263Px User Guide for more details
+ */
+void setIOExpMuxSelection(void *args)
+{
+    int32_t             status = SystemP_SUCCESS;
+    uint32_t            ioIndex = MDIO_MDC_MUX_SEL1;
+    TCA6424_Params      tca6424Params;
+
+    TCA6424_Params_init(&tca6424Params);
+
+    tca6424Params.i2cInstance = IO_EXP_I2C_INSTANCE;
+
+    status = TCA6424_open(&gTCA6424_Config, &tca6424Params);
+
+    if(status == SystemP_SUCCESS)
+    {
+        /* Configure as output  */
+        status = TCA6424_config(
+                      &gTCA6424_Config,
+                      ioIndex,
+                      TCA6424_MODE_OUTPUT);
+
+        /* set P22 low which controls MDIO/MDC_MUX_SEL1 -> enable PRU0_MII0 and PRU1_MII1 */
+        status = TCA6424_setOutput(
+                     &gTCA6424_Config,
+                     ioIndex,
+                     TCA6424_OUT_STATE_LOW);
+
+    }
+    TCA6424_close(&gTCA6424_Config);
 }
 #endif

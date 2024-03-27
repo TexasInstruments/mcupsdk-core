@@ -54,7 +54,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
-	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f \
+	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lwipif/inc \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/source \
@@ -62,7 +62,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x \
 	-I${MCU_PLUS_SDK_PATH}/test/networking/icss_emac_loopback \
 	-I${MCU_PLUS_SDK_PATH}/test/networking/icss_emac_loopback/firmware \
 	-Igenerated \
@@ -112,13 +112,13 @@ LIBS_PATH_common = \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
-	-lfreertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ldrivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-lboard.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-licss_emac.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-licss_emac_lwip_if.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-llwip-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-llwip-contrib-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lfreertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ldrivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lboard.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-licss_emac.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-licss_emac_lwip_if.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-llwip-freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-llwip-contrib-freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 
 LFLAGS_common = \
@@ -130,13 +130,13 @@ LFLAGS_common = \
 
 
 LIBS_NAME = \
-	freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	board.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	icss_emac.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	icss_emac_lwip_if.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	lwip-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	lwip-contrib-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	board.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	icss_emac.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	icss_emac_lwip_if.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	lwip-freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	lwip-contrib-freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 
 LIBS_PATH_NAME = \
@@ -171,11 +171,11 @@ vpath %.lib $(LIBS_PATH_NAME)
 vpath %.a $(LIBS_PATH_NAME)
 
 $(OBJDIR)/%.obj %.obj: %.c
-	@echo  Compiling: am263px:r5fss0-0:freertos:ti-arm-clang $(OUTNAME): $<
+	@echo  Compiling: am263x:r5fss0-0:freertos:ti-arm-clang $(OUTNAME): $<
 	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
 
 $(OBJDIR)/%.obj %.obj: %.S
-	@echo  Compiling: am263px:r5fss0-0:freertos:ti-arm-clang $(LIBNAME): $<
+	@echo  Compiling: am263x:r5fss0-0:freertos:ti-arm-clang $(LIBNAME): $<
 	$(CC) -c $(CFLAGS) -o $(OBJDIR)/$@ $<
 
 all: $(BOOTIMAGE_NAME)
@@ -189,13 +189,13 @@ SYSCFG_GEN_FILES+=generated/ti_board_open_close.c generated/ti_board_open_close.
 
 $(OUTNAME): syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(LNK_FILES) $(LIBS_NAME)
 	@echo  .
-	@echo  Linking: am263px:r5fss0-0:freertos:ti-arm-clang $@ ...
+	@echo  Linking: am263x:r5fss0-0:freertos:ti-arm-clang $@ ...
 	$(LNK) $(LFLAGS) $(LIBS_PATH) -Wl,-m=$(basename $@).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(LIBS) $(LNK_FILES)
-	@echo  Linking: am263px:r5fss0-0:freertos:ti-arm-clang $@ Done !!!
+	@echo  Linking: am263x:r5fss0-0:freertos:ti-arm-clang $@ Done !!!
 	@echo  .
 
 clean:
-	@echo  Cleaning: am263px:r5fss0-0:freertos:ti-arm-clang $(OUTNAME) ...
+	@echo  Cleaning: am263x:r5fss0-0:freertos:ti-arm-clang $(OUTNAME) ...
 	$(RMDIR) $(OBJDIR)
 	$(RM) $(OUTNAME)
 	$(RM) $(BOOTIMAGE_NAME)
@@ -206,7 +206,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263px:r5fss0-0:freertos:ti-arm-clang icss_lwip ...
+	@echo  Scrubing: am263x:r5fss0-0:freertos:ti-arm-clang icss_lwip ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -238,10 +238,10 @@ $(SYSCFG_GEN_FILES): syscfg
 
 syscfg: ../example.syscfg
 	@echo Generating SysConfig files ...
-	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM263P4 --package ZCZ --output generated/ ../example.syscfg
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context r5fss0-0 --part AM263x --package ZCZ_C --output generated/ ../example.syscfg
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM263Px --context r5fss0-0 --part AM263P4 --package ZCZ --output generated/  ../example.syscfg
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM263x_beta --context r5fss0-0 --part AM263x --package ZCZ_C --output generated/  ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)
@@ -280,7 +280,7 @@ MULTI_CORE_IMAGE_PARAMS_XIP = \
 	$(BOOTIMAGE_RPRC_NAME_XIP)@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
 
 $(BOOTIMAGE_NAME): $(OUTNAME)
-	@echo  Boot image: am263px:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
+	@echo  Boot image: am263x:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ ...
 ifneq ($(OS),Windows_NT)
 	$(CHMOD) a+x $(XIPGEN_CMD)
 endif
@@ -292,7 +292,7 @@ endif
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
-	@echo  Boot image: am263px:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  Boot image: am263x:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))
