@@ -317,9 +317,10 @@ scbit2_store_done?:
     lbco &TEMP_REG1.w2, C24, TEMP_REG2.w0, 2
     qbbc scbit3_store_done?, ch_buf, 3
     set  TEMP_REG1.w2, TEMP_REG1.w2, TEMP_REG2.b2
+; Additional check for error. Data bit 3 should not be 1 except nibble 0
+    qbne short_serial_message_bit3_pattern_not_matched?, TEMP_REG2.b2, 15
     sbco &TEMP_REG1.w2, C24, TEMP_REG2.w0, 2
 scbit3_store_done?:
-
 short_serial_message_crc_calculation?:
 ; Calculate CRC on 4 bit blocks
     qbeq short_serial_message_crc_first_nibble?, TEMP_REG2.b2, 12
@@ -370,11 +371,6 @@ short_serial_message_crc_compare?:
     lbco &TEMP_REG1.b2, C24, TEMP_REG2.w0, 1
     and  TEMP_REG1.b2, TEMP_REG1.b2, 0x0F
     qbne short_serial_message_crc_not_matched?, TEMP_REG2.b2, TEMP_REG1.b2
-; Check the pattern in bit 3 data
-    add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_SCBIT3_LOW
-    lbco &TEMP_REG1.w2, C24, TEMP_REG2.w0, 2
-    qbne short_serial_message_bit3_pattern_not_matched?, TEMP_REG1.b3, 0x80
-    qbne short_serial_message_bit3_pattern_not_matched?, TEMP_REG1.b2, 0x0
 ; Short serial message received successfully
     add  TEMP_REG2.w0, TEMP_REG1.w0, SERIAL_MSG_DATA_READY
     ldi  TEMP_REG1.b2, 1
