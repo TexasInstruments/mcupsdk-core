@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) Texas Instruments Incorporated 2021
+ *  Copyright (c) Texas Instruments Incorporated 2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -95,6 +95,14 @@
 
 /*Maximum Tx channels allowed*/
 #define ENETMP_MAX_TX_CHANNEL_NUM                (8U)
+
+/*Number of Bucket entires in one FDB slot*/
+#define ICSSG_NUM_FDB_BUCKET_ENTRIES             (4U)
+/*Number of slots in FDB*/
+#define ICSSG_NUM_OF_SLOTS                       (512U)
+/*ICSSG FDB Size is Slots*Bucket_Entries  */
+#define ICSSG_SIZE_OF_FDB                        (2048U)
+
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -255,6 +263,9 @@ static void EnetMp_resetStats(EnetMp_PerCtxt *perCtxts,
 static void EnetMp_showMacAddrs(EnetMp_PerCtxt *perCtxts,
                                 uint32_t numPerCtxts);
 
+static void EnetMp_readAllFdbSlots(EnetMp_PerCtxt *perCtxts,
+                                uint32_t numPerCtxts);                                
+
 static int32_t EnetMp_waitForLinkUp(EnetMp_PerCtxt *perCtxt);
 
 static void EnetMp_macMode2MacMii(emac_mode macMode,
@@ -319,6 +330,7 @@ static void EnetMp_showMenu(void)
     EnetAppUtils_print(" 'r'  -  Reset statistics\r\n");
     EnetAppUtils_print(" 'm'  -  Show allocated MAC addresses\r\n");
     EnetAppUtils_print(" 'd'  -  Enable dscp based priority mapping\r\n");
+    EnetAppUtils_print(" 'f'  -  Read all ICSSG FDB slots\r\n");
     EnetAppUtils_print(" 'x'  -  Stop the test\r\n\n");
 }
 
@@ -407,6 +419,10 @@ void EnetMp_mainTask(void *args)
             else if (option == 'd')
             {
                 EnetMp_enableDscpPriority(gEnetMp.perCtxt, gEnetMp.numPerCtxts);
+            }
+            else if (option == 'f')
+            {
+                EnetMp_readAllFdbSlots(gEnetMp.perCtxt, gEnetMp.numPerCtxts);
             }
             else
             {
@@ -984,6 +1000,109 @@ static void EnetMp_showMacAddrs(EnetMp_PerCtxt *perCtxts,
         for (uint32_t macAddrIdx = 0U; macAddrIdx < perCtxt->numValidMacAddress; macAddrIdx++)
         {
                 EnetAppUtils_printMacAddr(&perCtxt->macAddr[macAddrIdx][0]);
+        }
+    }
+}
+
+static void EnetMp_readAllFdbSlots(EnetMp_PerCtxt *perCtxts,
+                                uint32_t numPerCtxts)
+{
+    uint16_t hw_fdb_slot = 0;    
+    int32_t semStatus;
+    int32_t retVal_1;
+    int32_t retVal_2;    
+    uint8_t macAddr[ENET_MAC_ADDR_LEN];
+    uint8_t fid_c1;
+    uint8_t fid_c2;     
+      
+    for (uint32_t ctxIdx = 0U; ctxIdx < numPerCtxts; ctxIdx++)
+    {
+        EnetMp_PerCtxt *perCtxt = &gEnetMp.perCtxt[ctxIdx]; 
+        EnetAppUtils_print("\n\nPeripheral Context: %u\n\r", ctxIdx);
+        for(hw_fdb_slot = 0U; hw_fdb_slot < ICSSG_NUM_OF_SLOTS; hw_fdb_slot++)
+        {
+            Enet_IoctlPrms prms_1, prms_2;
+            Icssg_FdbEntry_GetSlotOutArgs fdbResult;
+            Icssg_FdbEntry_ReadSlotInArgs params;
+            retVal_1 = ENET_EFAIL;
+            retVal_2 = ENET_EFAIL;
+            params.broadSideSlot = hw_fdb_slot;
+            ENET_IOCTL_SET_IN_ARGS(&prms_1, &params);
+            ENET_IOCTL(perCtxt->handleInfo.hEnet, gEnetMp.coreId, ICSSG_FDB_IOCTL_READ_SLOT_ENTRIES, &prms_1, retVal_1);
+
+            if (retVal_1 == ENET_SINPROGRESS)
+            {   
+                EnetAppUtils_print("\n\nSuccess: IOCTL command to read the FDB entries for slot: %u\n\r", hw_fdb_slot);
+                do
+                {
+                    Enet_poll(perCtxt->handleInfo.hEnet, ENET_EVT_ASYNC_CMD_RESP, NULL, 0U);
+                    semStatus = SemaphoreP_pend(&perCtxt->ayncIoctlSemObj, 1U);
+                } while (gEnetMp.run && (semStatus != SystemP_SUCCESS));
+
+                retVal_1 = ENET_SOK;
+            }
+            else
+            {
+                EnetAppUtils_print("ERROR: IOCTL command sent for reading entries of requested FDB slot\n\r");
+            }
+
+            if(retVal_1 == ENET_SOK)
+            {
+                /*Printing the out args which is a 32B slot result with 4 entries*/
+                ENET_IOCTL_SET_OUT_ARGS(&prms_2, &fdbResult);
+                ENET_IOCTL(perCtxt->handleInfo.hEnet, gEnetMp.coreId, ICSSG_FDB_IOCTL_GET_SLOT_ENTRIES, &prms_2, retVal_2);
+                if (retVal_2 == ENET_SINPROGRESS)
+                {
+                    EnetAppUtils_print("Success: IOCTL command to get FDB result for slot: %u\n\r", hw_fdb_slot);
+                    do
+                    {
+                        Enet_poll(perCtxt->handleInfo.hEnet, ENET_EVT_ASYNC_CMD_RESP, NULL, 0U);
+                        semStatus = SemaphoreP_pend(&perCtxt->ayncIoctlSemObj, 1U);
+                    } while (gEnetMp.run && (semStatus != SystemP_SUCCESS));
+
+                    retVal_2 = ENET_SOK;
+                }
+                else if (retVal_2 != ENET_SOK)
+                {
+                    EnetAppUtils_print("ERROR: IOCTL command sent for getting result of requested FDB slot\n\r");
+                }
+                if (retVal_2 == ENET_SOK)
+                {
+                    EnetAppUtils_print("Success: IOCTL command to get FDB result for slot: %u\n\r", hw_fdb_slot);
+                    /*Extracting the bucket entry from the OutArg*/
+                    for(uint32_t bucket_index = 0; bucket_index < ICSSG_NUM_FDB_BUCKET_ENTRIES; bucket_index++)
+                    {
+                        for(uint32_t i=0; i < ENET_MAC_ADDR_LEN; i++)
+                        {  
+                            macAddr[i] = fdbResult.fdbSlotEntries[bucket_index].macAddr[i];
+                        }
+                        fid_c1 = fdbResult.fdbSlotEntries[bucket_index].fid_c1;
+                        fid_c2 = fdbResult.fdbSlotEntries[bucket_index].fid_c2;
+
+                        /*Printing the non-zero FDB entries in each slot*/
+                        if(fid_c1 | fid_c2)
+                        {
+                            EnetAppUtils_print("\nSlot: %u \n\r", hw_fdb_slot);
+                            EnetAppUtils_print("Bucket- %u : MAC: %02x:%02x:%02x:%02x:%02x:%02x FID_C1:%02x FID_C2:%02x \n\r",(bucket_index+1),
+                                        macAddr[0],macAddr[1],macAddr[2],macAddr[3],macAddr[4],macAddr[5],
+                                        fid_c1,
+                                        fid_c2);
+                        }
+                        else
+                        {
+                        EnetAppUtils_print("Slot: %u Bucket: %u is empty\n\r", hw_fdb_slot, bucket_index); 
+                        }
+                    }
+                }
+                else
+                {
+                    EnetAppUtils_print("Error: Getting fdb result for %u\n\r", hw_fdb_slot);
+                }
+            }
+            else
+            {
+                EnetAppUtils_print("Error reading the FDB IOCTL entry for slot: %u\n\r", hw_fdb_slot);
+            }
         }
     }
 }
