@@ -104,7 +104,8 @@ __attribute__(( aligned(128), section(".boardcfg_data") )) =
 			.magic = TISCI_BOARDCFG_SA2UL_CFG_MAGIC_NUM_RSVD,
 			.size = 0,
 		},
-		.rsvd = {0, 0},
+		.safety_host_present = 0,
+        .safety_host = 0,
 	},
 
 	/* Secure JTAG Unlock Configuration */

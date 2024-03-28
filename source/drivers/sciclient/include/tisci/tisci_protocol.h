@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2017-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -267,6 +267,12 @@ struct tisci_sec_header {
 /** Message to derive a KEK and return it via TISCI */
 #define TISCI_MSG_SA2UL_GET_DKEK                (0x9029U)
 
+/** Message to allow safety host to read fwl control region */
+#define TISCI_MSG_ALLOW_FWL_CTRL_READ           (0x902CU)
+
+/** Message to forbid hosts other than tifs from reading fwl control region */
+#define TISCI_MSG_FORBID_FWL_CTRL_READ          (0x902DU)
+
 /** Message for handing over subset of security functionality to
  * another core. Only available on certain platforms.
  */
@@ -300,6 +306,12 @@ struct tisci_sec_header {
 
 /** Message to import keyring */
 #define TISCI_MSG_KEYRING_IMPORT                (0X9039U)
+
+/** Message to derive a constant DKEK and set SA2UL DKEK register */
+#define TISCI_MSG_SA2UL_SET_DKEK_CONST            (0x902AU)
+
+/** Message to derive a constant DKEK and return it via TISCI */
+#define TISCI_MSG_SA2UL_GET_DKEK_CONST            (0x902BU)
 
 /* Processor Control APIs */
 

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2017-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -267,7 +267,8 @@ struct tisci_boardcfg_sa2ul_cfg {
     struct tisci_boardcfg_substructure_header    subhdr;
     uint8_t                    auth_resource_owner;
     uint8_t                    enable_saul_psil_global_config_writes;
-    uint8_t                    rsvd[2];
+    uint8_t                    safety_host_present;
+    uint8_t                    safety_host;
 };
 
 

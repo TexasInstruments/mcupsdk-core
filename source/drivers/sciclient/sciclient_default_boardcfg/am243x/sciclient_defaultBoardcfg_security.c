@@ -233,7 +233,8 @@ __attribute__(( aligned(128), section(".boardcfg_data") )) =
             .size = 0,
         },
         .auth_resource_owner = 0,
-        .rsvd = {0, 0},
+        .safety_host_present = 0,
+        .safety_host = 0,
     },
     /* Debug  config */
     .sec_dbg_config = {

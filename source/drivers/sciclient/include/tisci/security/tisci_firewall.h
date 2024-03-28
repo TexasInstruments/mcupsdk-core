@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2017-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -214,6 +214,24 @@ struct tisci_msg_fwl_get_firewall_region_resp {
     uint32_t            permissions[FWL_MAX_PRIVID_SLOTS];
     uint64_t        start_address;
     uint64_t        end_address;
+} __attribute__((__packed__));
+
+/**
+ * \brief Message to request firewall configuration region read access to the safety core.
+ *
+ * \param hdr Generic TISCI message header.
+ */
+struct tisci_fwl_req {
+    struct tisci_header hdr;
+} __attribute__((__packed__));
+
+/**
+ * \brief Response for requesting read access of the firewall configuration region to the safety core.
+ *
+ * \param hdr Generic TISCI message header.
+ */
+struct tisci_fwl_resp {
+    struct tisci_header hdr;
 } __attribute__((__packed__));
 
 
