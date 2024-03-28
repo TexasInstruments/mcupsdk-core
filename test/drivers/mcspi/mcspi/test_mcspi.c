@@ -1306,7 +1306,7 @@ void test_mcspi_loopback_dma(void *args)
         spiTransaction.channel  = gConfigMcspi3ChCfg[0U].chNum;
         spiTransaction.count    = testParams->transferLength;
         spiTransaction.dataSize  = dataWidth;
-        spiTransaction.csDisable = FALSE;
+        spiTransaction.csDisable = TRUE;
         spiTransaction.txBuf    = (void *)gMcspiTxBufferDma;
         spiTransaction.rxBuf    = (void *)gMcspiRxBufferDma;
         spiTransaction.args     = NULL;
