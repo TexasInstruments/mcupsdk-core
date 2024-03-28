@@ -69,7 +69,7 @@ const files_r5f = {
         "ospi_dma.c",
         "ospi_dma_udma.c",
         "ospi_nor_flash.c",
-        "ospi_phy.c",
+        "ospi_phy_dqs.c",
         "pcie.c",
         "pcie_v0.c",
         "pcie_serdes.c",
