@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @versions {"tool":"1.19.0+3426"}
  */
 
 /**
@@ -12,9 +12,6 @@ const gpio            = scripting.addModule("/drivers/gpio/gpio", {}, false);
 const gpio1           = gpio.addInstance();
 const mcan            = scripting.addModule("/drivers/mcan/mcan", {}, false);
 const mcan1           = mcan.addInstance();
-const mcan2           = mcan.addInstance();
-const mcan3           = mcan.addInstance();
-const mcan4           = mcan.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
@@ -53,21 +50,12 @@ mcan1.MCAN.$assign    = "MCAN0";
 mcan1.MCAN.RX.$assign = "MCAN0_RX";
 mcan1.MCAN.TX.$assign = "MCAN0_TX";
 
-mcan2.$name           = "CONFIG_MCAN1";
-mcan2.MCAN.$assign    = "MCAN1";
-mcan2.MCAN.RX.$assign = "MCAN1_RX";
-mcan2.MCAN.TX.$assign = "MCAN1_TX";
-
-mcan3.$name        = "CONFIG_MCAN2";
-mcan3.MCAN.$assign = "MCAN2";
-
-mcan4.$name = "CONFIG_MCAN3";
-
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign     = "UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -276,14 +264,3 @@ section12.type                        = "NOLOAD";
 section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_r5f_queue_mem";
 section12.output_section[0].alignment = 0;
-
-/**
- * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
- * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
- * re-solve from scratch.
- */
-mcan3.MCAN.RX.$suggestSolution = "MCAN2_RX";
-mcan3.MCAN.TX.$suggestSolution = "MCAN2_TX";
-mcan4.MCAN.$suggestSolution    = "MCAN3";
-mcan4.MCAN.RX.$suggestSolution = "SDFM0_D3";
-mcan4.MCAN.TX.$suggestSolution = "SDFM0_CLK3";
