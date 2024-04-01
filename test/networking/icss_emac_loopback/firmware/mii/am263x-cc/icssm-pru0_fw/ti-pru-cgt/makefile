@@ -1,68 +1,54 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
 ################################################################################
+#   Required input arguments :
+#   CCS_PROJECT_DEBUG=${CWD}   Use this input argument to include files from external paths 
 
-#   Required input arguments:
-#   MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH}      sdk_dir_path
-#   CCS_INSTALL_DIR=${CCS_INSTALL_DIR}          ccs_dir_path
-#   CCS_PROJECT_DEBUG=${CWD}       				project_debug_dir_path
-
-SHELL = cmd.exe
-CCS_PATH?=$(CCS_INSTALL_DIR)/ccs_base/pru/include
-CG_TOOL_ROOT := C:/ti/ti-cgt-pru_2.3.3
+export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../../..)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
 SYSCFG_DIR := $(CCS_PROJECT_DEBUG)/syscfg
-
-GEN_OPTS__FLAG :=
-GEN_CMDS__FLAG :=
-
-ORDERED_OBJS += \
-"./micro_scheduler.obj" \
-"$(MCU_PLUS_SDK_PATH)/test/networking/icss_emac_loopback/firmware/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt/pru.cmd" \
-$(GEN_CMDS__FLAG) \
--llibc.a \
-
--include ../makefile.init
-
-RM := DEL /F
-RMDIR := RMDIR /S/Q
-
-# Every subdirectory with source files must be described here
-SUBDIRS := \
-. \
+CG_TOOL_ROOT := $(CGT_TI_PRU_PATH)
 
 # Add inputs and outputs from these tool invocations to the build variables
 CMD_SRCS += \
-$(MCU_PLUS_SDK_PATH)/test/networking/icss_emac_loopback/firmware/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt/pru.cmd \
 
 ASM_SRCS += \
-$(MCU_PLUS_SDK_PATH)/test/networking/icss_emac_loopback/firmware/mii/micro_scheduler.asm
+	emac_MII_Rcv.asm \
+	emac_MII_Xmt.asm \
+	emac_ptp.asm \
+	emac_statistics.asm \
+	emac_tts.asm \
+	micro_scheduler.asm \
 
 OBJS += \
-./micro_scheduler.obj
+	emac_MII_Rcv.obj \
+	emac_MII_Xmt.obj \
+	emac_ptp.obj \
+	emac_statistics.obj \
+	emac_tts.obj \
+	micro_scheduler.obj \
 
 ASM_DEPS += \
-./micro_scheduler.d
+	emac_MII_Rcv.d \
+	emac_MII_Xmt.d \
+	emac_ptp.d \
+	emac_statistics.d \
+	emac_tts.d \
+	micro_scheduler.d \
 
-OBJS__QUOTED += \
-"micro_scheduler.obj"
+OBJDIR := .
 
-ASM_DEPS__QUOTED += \
-"micro_scheduler.d"
+FILES_PATH_common = \
+	../.. \
+	../../.. \
+	../../../../src \
 
-ASM_SRCS__QUOTED += \
-"$(MCU_PLUS_SDK_PATH)/test/networking/icss_emac_loopback/firmware/mii/micro_scheduler.asm"
+FILES_PATH := $(FILES_PATH_common)
 
-# Each subdirectory must supply rules for building sources it contributes
-micro_scheduler.obj: $(MCU_PLUS_SDK_PATH)/test/networking/icss_emac_loopback/firmware/mii/micro_scheduler.asm $(GEN_OPTS) | $(GEN_FILES) $(GEN_MISC_FILES)
-	@echo 'Building file: "$<"'
-	@echo 'Invoking: PRU Compiler'
-	"$(CG_TOOL_ROOT)/bin/clpru" -DPRU0 -DSLICE0 -v4 -al -ax --silicon_version=4 --diag_suppress=10063 --display_error_number --code_address_listing_unit=word -DTX_L2_ENABLED -DMII_TX_PIN_SWAP -v3 -g --diag_wrap=off --diag_warning=225 --hardware_mac=on --preproc_with_compile -DICSS_REV2 -DPRU -DTTS -DHALF_DUPLEX_ENABLED -DICSS_DUAL_EMAC_BUILD -DPTP --define=SOC_AM263X --include_path="$(CCS_PATH)" --include_path="$(SYSCFG_DIR)" --include_path="${CG_TOOL_ROOT}/include" --include_path="${MCU_PLUS_SDK_PATH}/source" --include_path="${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/common" --include_path="${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include" --include_path="${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F" --include_path="${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f" --include_path="${MCU_PLUS_SDK_PATH}/test/networking/icss_emac_loopback" --include_path="${MCU_PLUS_SDK_PATH}/test/networking/icss_emac_loopback/mii/am263x-cc" --include_path="${MCU_PLUS_SDK_PATH}/test/unity/"  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little --preproc_with_compile --preproc_dependency="$(basename $(<F)).d_raw" $(GEN_OPTS__FLAG) "$<"
-	@echo 'Finished building: "$<"'
-	@echo ' '
+vpath %.asm $(FILES_PATH)
+vpath %.obj $(OBJDIR)
+vpath %.cmd $(FILES_PATH)
 
-LIBS := -llibc.a
-
--include ../makefile.defs
 
 # Add inputs and outputs from these tool invocations to the build variables
 EXE_OUTPUTS += \
@@ -77,43 +63,39 @@ dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.hex \
 BIN_OUTPUTS__QUOTED += \
 "dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.hex" \
 
-
 # All Target
-all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+all: $(OBJS) $(CMD_SRCS)
 	@$(MAKE) --no-print-directory -Onone "dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out"
 
+# Each subdirectory must supply rules for building sources it contributes
+$(OBJDIR)/$(OBJS) %.obj: $(ASM_SRCS) 
+	@echo 'Building file: "$^"'
+	@echo 'Invoking: PRU Compiler'
+	"$(CGT_TI_PRU_PATH)/bin/clpru" -DPRU0 -DSLICE0 -v4 -al -ax --silicon_version=4 --diag_suppress=10063 --display_error_number --code_address_listing_unit=word -DTX_L2_ENABLED -DMII_TX_PIN_SWAP -v3 -g --diag_wrap=off --diag_warning=225 --hardware_mac=on --preproc_with_compile -DICSS_REV2 -DPRU -DTTS -DHALF_DUPLEX_ENABLED -DICSS_DUAL_EMAC_BUILD -DPTP -eo.$(OBJEXT) -fr=$(OBJDIR) -fs=$(OBJDIR) --define=SOC_AM263X --include_path="$(SYSCFG_DIR)" --include_path="${CG_TOOL_ROOT}/include" --include_path="${MCU_PLUS_SDK_PATH}/source" --include_path="${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/common" --include_path="${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include" --include_path="${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F" --include_path="${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f" --include_path="${MCU_PLUS_SDK_PATH}/test/networking/icss_emac_loopback" --include_path="${MCU_PLUS_SDK_PATH}/test/networking/icss_emac_loopback/mii/am263x-cc" --include_path="${MCU_PLUS_SDK_PATH}/test/unity/"  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little --preproc_with_compile --preproc_dependency="$(basename $(<F)).d_raw" $^
+	@echo 'Finished building: "$^"'
+	@echo ' '
+
 # Tool invocations
-dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out: $(OBJS) $(CMD_SRCS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: PRU Linker'
-	"$(CG_TOOL_ROOT)/bin/clpru" -DPRU0 -DSLICE0 -v4 -al -ax --silicon_version=4 --diag_suppress=10063 --display_error_number --code_address_listing_unit=word -DTX_L2_ENABLED -DMII_TX_PIN_SWAP -v3 -g --diag_wrap=off --diag_warning=225 --hardware_mac=on --preproc_with_compile -DICSS_REV2 -DPRU -DTTS -DHALF_DUPLEX_ENABLED -DICSS_DUAL_EMAC_BUILD -DPTP --define=SOC_AM263X  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.map" -i"$(CG_TOOL_ROOT)/lib" --diag_wrap=off --display_error_number --warn_sections --xml_link_info="dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt_linkInfo.xml" --rom_model -o "dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out" $(ORDERED_OBJS)
+	"$(CGT_TI_PRU_PATH)/bin/clpru" -DPRU0 -DSLICE0 -v4 -al -ax --silicon_version=4 --diag_suppress=10063 --display_error_number --code_address_listing_unit=word -DTX_L2_ENABLED -DMII_TX_PIN_SWAP -v3 -g --diag_wrap=off --diag_warning=225 --hardware_mac=on --preproc_with_compile -DICSS_REV2 -DPRU -DTTS -DHALF_DUPLEX_ENABLED -DICSS_DUAL_EMAC_BUILD -DPTP -eo.$(OBJEXT) -fr=$(OBJDIR) -fs=$(OBJDIR) --define=SOC_AM263X  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.map" --disable_auto_rts   --diag_wrap=off --display_error_number --warn_sections --xml_link_info="dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt_linkInfo.xml" --disable_auto_rts -i${CG_TOOL_ROOT}/lib -i${CG_TOOL_ROOT}/include --stack_size=0 --heap_size=0 --disable_auto_rts -g --diag_wrap=off --diag_warning=225 --reread_libs --warn_sections --entry_point=micro_scheduler -v3 --hardware_mac=on -z  --rom_model -o "dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out" $^	
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build
 
-dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.hex: $(EXE_OUTPUTS)
-	@echo 'Building secondary target: "$@"'
-	@echo 'Invoking: PRU Hex Utility'
-	"$(CG_TOOL_ROOT)/bin/hexpru" -o "dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.hex" $(EXE_OUTPUTS__QUOTED)
-	@echo 'Finished building secondary target: "$@"'
-	@echo ' '
-	@$(MAKE) --no-print-directory post-build
-
-# Other Targets
+# To clean generated files
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "micro_scheduler.obj"
-	-$(RM) "micro_scheduler.d"
+	-$(RM) $(OBJS)
+	-$(RM) $(ASM_DEPS)
 	-@echo 'Finished clean'
 	-@echo ' '
 
 post-build:
-	-$(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/test/networking/icss_emac_loopback/firmware/mii/icss_emac_hexpru.cmd dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out
-	-${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.b00 PRU0_bin.h PRU0_b00 4
-	-cp PRU0_bin.h ${MCU_PLUS_SDK_PATH}/test/networking/icss_emac_loopback/firmware/mii
+		-$(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/test/networking/icss_emac_loopback/firmware/mii/icss_emac_hexpru.cmd dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out
+		-${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.b00 PRU0_bin.h PRU0_b00 4
+		-cp PRU0_bin.h ${MCU_PLUS_SDK_PATH}/test/networking/icss_emac_loopback/firmware/mii
 	-@echo ' '
 
-.PHONY: all clean dependents
-.SECONDARY:
-
--include ../makefile.targets
+.PHONY: all clean

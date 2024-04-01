@@ -14,8 +14,8 @@
         name = "dual_emac_am263x-cc_icssm-pru1_fw_ti-pru-cgt"
         products="com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
-            Debug,
             Release,
+            Debug,
         "
         connection="TIXDS110_Connection.xml"
         toolChain="TI"
@@ -58,6 +58,9 @@
             -DHALF_DUPLEX_ENABLED
             -DICSS_DUAL_EMAC_BUILD
             -DPTP
+            -eo.$(OBJEXT)
+            -fr=$(OBJDIR)
+            -fs=$(OBJDIR)
             -DSOC_AM263X
         "
         linkerBuildOptions="
@@ -73,6 +76,9 @@
             --reread_libs
             --warn_sections
             --entry_point=micro_scheduler
+            -v3
+            --hardware_mac=on
+            -z
         "
 
         postBuildStep="
@@ -107,8 +113,6 @@
         <file path="../../../../src/emac_tts.asm" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../../../../src/micro_scheduler.asm" openOnCreation="false" excludeFromBuild="false" action="link">
-        </file>
-        <file path="../../../../src/pru.cmd" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
     </project>
 </projectSpec>
