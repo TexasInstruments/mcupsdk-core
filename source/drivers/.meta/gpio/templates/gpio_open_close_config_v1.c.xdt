@@ -16,6 +16,7 @@ void Drivers_gpioOpen(void)
     % let config = module.getInstanceConfig(instance);
     % if(!config.pinIndex.includes("INVALID")){
     uint32_t    baseAddr;
+    % break;
     %}
     %}
     % for(let i = 0; i < module.$instances.length; i++) {
