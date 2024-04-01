@@ -68,6 +68,14 @@ let postBuildSteps = [
     "$(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru  -o sent_decoder_pru0_bin.h sent_decoder_using_ecap_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out; $(CCS_INSTALL_DIR)/utils/cygwin/mv sent_decoder_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/example/firmware/sent_decoder_pru0_bin.h;"
 ];
 
+const templates_pru =
+[
+    {
+        input: ".project/templates/am263x/common/pru/linker_pru0.cmd.xdt",
+        output: "linker.cmd",
+    }
+];
+
 function getComponentProperty() {
     let property = {};
 
@@ -102,7 +110,8 @@ function getComponentBuildProperty(buildOption) {
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
     build_property.projecspecFileAction = "link";
     build_property.skipMakefileCcsBootimageGen = true;
-
+    build_property.templates = templates_pru;
+    
     return build_property;
 }
 

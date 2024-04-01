@@ -35,6 +35,14 @@ const lnkfiles = {
 
 const readmeDoxygenPageTag = "EXAMPLES_PRU_EMPTY";
 
+const templates_pru =
+[
+    {
+        input: ".project/templates/am263x/common/pru/linker_pru0.cmd.xdt",
+        output: "linker.cmd",
+    }
+];
+
 const buildOptionCombos = [
     { device: device, cpu: "icssm-pru0", cgt: "ti-pru-cgt", board: "am263x-cc", os: "fw"},
 ];
@@ -95,7 +103,8 @@ function getComponentBuildProperty(buildOption) {
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
     build_property.projecspecFileAction = "link";
     build_property.skipMakefileCcsBootimageGen = true;
-
+    build_property.templates = templates_pru;
+    
     return build_property;
 }
 

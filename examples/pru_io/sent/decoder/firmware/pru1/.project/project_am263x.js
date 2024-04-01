@@ -54,6 +54,14 @@ const cflags = {
     ],
 };
 
+const templates_pru =
+[
+    {
+        input: ".project/templates/am263x/common/pru/linker_pru1.cmd.xdt",
+        output: "linker.cmd",
+    }
+];
+
 const lflags = {
     common: [
         "--entry_point=main",
@@ -103,6 +111,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
     build_property.projecspecFileAction = "link";
     build_property.skipMakefileCcsBootimageGen = true;
+    build_property.templates = templates_pru;
 
     return build_property;
 }
