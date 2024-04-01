@@ -63,11 +63,8 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x \
-	-I${MCU_PLUS_SDK_PATH}/test/networking \
 	-I${MCU_PLUS_SDK_PATH}/test/networking/icss_emac_loopback \
 	-I${MCU_PLUS_SDK_PATH}/test/networking/icss_emac_loopback/firmware \
-	-I${MCU_PLUS_SDK_PATH}/test/networking/icss_switch \
-	-I${MCU_PLUS_SDK_PATH}/test/networking/icss_switch/firmware \
 	-Igenerated \
 
 DEFINES_common := \
