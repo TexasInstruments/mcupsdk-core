@@ -210,6 +210,11 @@ Initially when we open an empty project, no memory configurator related configur
 \note
 When user opens a multi core project and clicks this button in each core, he/she will get conflicts in the Memory Region module because of the shared regions being added in sysconfig of all the cores. Here, user has to manually delete the conflicting regions.
 
+\cond  SOC_AM273X
+\note
+When enabling memory log from syscfg, user needs to add an output section named ".bss.debug_mem_trace_buf".
+\endcond
+
 ### MPU Settings
 
 As discussed earlier, let's revisit the functionality of MPU settings with the Automate option.
