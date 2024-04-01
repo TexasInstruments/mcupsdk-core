@@ -38,7 +38,7 @@ __icss_regs_h	.set	1
 	.asg	c3,	ICSS_ECAP
 	.asg	c4,	ICSS_CFG
 	.asg	c21,	ICSS_MDIO
-	.if $isdefed("PRU1")
+	.if $isdefed("SLICE1")
 	.asg	c24,	PRU1_DMEM
 	.asg	c25,	PRU0_DMEM
 	.else
