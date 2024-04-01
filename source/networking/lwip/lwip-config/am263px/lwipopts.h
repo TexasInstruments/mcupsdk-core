@@ -63,11 +63,6 @@
 #ifndef LWIP_LWIPOPTS_H
 #define LWIP_LWIPOPTS_H
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 #ifdef LWIP_OPTTEST_FILE
 #include "lwipopts_test.h"
 #else /* LWIP_OPTTEST_FILE */
