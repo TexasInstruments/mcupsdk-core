@@ -38,12 +38,16 @@
             -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lwipif/inc
             -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/source
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include
+            -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include/lwip
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib
+            -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/apps/httpserver
+            -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x
             -I${MCU_PLUS_SDK_PATH}/test/networking/icss_emac_loopback
             -I${MCU_PLUS_SDK_PATH}/test/networking/icss_emac_loopback/firmware
+            -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
