@@ -1,6 +1,7 @@
 
 let common = system.getScript("/common");
 let soc = system.getScript(`/security/crypto/crypto_${common.getSocName()}`);
+let sa2ul = system.getScript(`/security/sa2ul/sa2ul_${common.getSocName()}`);
 
 function getConfigArr() {
     return soc.getConfigArr();
@@ -30,7 +31,7 @@ let crypto_module = {
             driver_config: "/security/crypto/templates/crypto.h.xdt",
         },
     },
-    maxInstances: getConfigArr().length,
+    maxInstances: sa2ul.getConfigArr().length,
     defaultInstanceName: "CONFIG_CRYPTO",
     config: [
     ],
