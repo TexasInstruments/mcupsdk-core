@@ -1,6 +1,8 @@
 %%{
     isDevelopmentMode = args.common.isDevelopmentMode();
     deviceName = args.utils.getProjectSpecDevice(args.device);
+    if(args.device == "am273x")
+        deviceName = "AM273x"
     if(args.device == "am62x")
         deviceName = "AM62x"
     sysCfgVersion = args.utils.getSysCfgVersionProjectSpec();
