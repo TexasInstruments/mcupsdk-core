@@ -240,7 +240,7 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
-
+#if defined (SOC_AM263X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
 
@@ -250,7 +250,7 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
         }
     }
-
+#endif
     if (testStatus == SDL_APP_TEST_PASS)
     {
 
@@ -300,7 +300,7 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
-
+#if defined (SOC_AM263X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
 
@@ -320,7 +320,7 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
         }
     }
-
+#endif
     if (testStatus == SDL_APP_TEST_PASS)
     {
 
@@ -330,7 +330,7 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
-
+#if defined (SOC_AM263X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
 
@@ -350,7 +350,7 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
         }
     }
-
+#endif
     if (testStatus == SDL_APP_TEST_PASS)
     {
 
@@ -360,7 +360,7 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
         }
     }
-
+#if defined (SOC_AM263X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
 
@@ -380,7 +380,7 @@ int32_t sdl_Esm_posTest(void)
             DebugP_log("sdlEsm_apiTest: failure on line no. %d \n", __LINE__);
         }
     }
-
+#endif
     if (testStatus == SDL_APP_TEST_PASS)
     {
 
@@ -847,7 +847,7 @@ int32_t sdl_Esm_posTest(void)
         }
     }
 
-
+#if defined (SOC_AM263X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         /* Test case: PROC_SDL-7438 */
@@ -867,7 +867,7 @@ int32_t sdl_Esm_posTest(void)
             testStatus = SDL_APP_TEST_FAILED;
         }
     }
-
+#endif
     if (testStatus == SDL_APP_TEST_PASS)
     {
         /* Test case: PROC_SDL-2011 */
