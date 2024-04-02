@@ -186,6 +186,7 @@ typedef struct
     /** VTM individual sensor threshold information */
     uint32_t                    vtm_ts_th;
     /** VTM individual sensor threshold2 information */
+    uint32_t                    vtm_ts_th2;
 } SDL_VTM_staticRegsTs;
 
 #endif
