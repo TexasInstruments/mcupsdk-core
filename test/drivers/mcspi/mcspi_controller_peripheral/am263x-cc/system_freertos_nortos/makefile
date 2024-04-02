@@ -111,21 +111,21 @@ ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED), no)
 ifeq ($(RSASSAPSS_ENABLED), no)
-    @echo Boot image signing: Encryption is disabled.
-    $(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --output $(MULTI_CORE_BOOTIMAGE_NAME_HS)
+	@echo Boot image signing: Encryption is disabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --output $(MULTI_CORE_BOOTIMAGE_NAME_HS)
 else
-    @echo Boot image signing: Encryption is disabled. RSASSAPSS is enabled.
-    $(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --pss_saltlen $(APP_SIGNING_SALT_LENGTH) --output $(BOOTIMAGE_NAME_HS) --rsassa_pss
+	@echo Boot image signing: Encryption is disabled. RSASSAPSS is enabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --pss_saltlen $(APP_SIGNING_SALT_LENGTH) --output $(BOOTIMAGE_NAME_HS) --rsassa_pss
 endif
 else
 ifeq ($(RSASSAPSS_ENABLED), no)
-    @echo Boot image signing: Encryption is enabled.
-    $(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --enc_key_id $(APP_ENCRYPTION_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --output $(MULTI_CORE_BOOTIMAGE_NAME_HS)
-    $(RM) $(MULTI_CORE_BOOTIMAGE_NAME)-enc
+	@echo Boot image signing: Encryption is enabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --enc_key_id $(APP_ENCRYPTION_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --output $(MULTI_CORE_BOOTIMAGE_NAME_HS)
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)-enc
 else
-    @echo Boot image signing: Encryption is enabled. RSASSAPSS is enabled.
-    $(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --enc_key_id $(APP_ENCRYPTION_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --pss_saltlen $(APP_SIGNING_SALT_LENGTH) --output $(BOOTIMAGE_NAME_HS) --rsassa_pss
-    $(RM) $(BOOTIMAGE_NAME)-enc
+	@echo Boot image signing: Encryption is enabled. RSASSAPSS is enabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --kd-salt $(KD_SALT) --sign_key_id $(APP_SIGNING_KEY_KEYRING_ID) --enc_key_id $(APP_ENCRYPTION_KEY_KEYRING_ID) --hash_algo $(APP_SIGNING_HASH_ALGO) --pss_saltlen $(APP_SIGNING_SALT_LENGTH) --output $(BOOTIMAGE_NAME_HS) --rsassa_pss
+	$(RM) $(BOOTIMAGE_NAME)-enc
 endif
 endif
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
