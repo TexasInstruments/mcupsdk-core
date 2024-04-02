@@ -71,8 +71,9 @@ void test_sdl_esm_baremetal_test_app_runner(void);
 void test_sdl_esm_baremetal_test_app (void *args);
 extern int32_t sdl_config_test(void);
 extern int32_t sdl_ecc_cb_test(void);
+#if defined (SOC_AM263X)
 extern int32_t sdl_config_pwm_test(void);
-
+#endif
 void sdlApp_print(char * str)
 {
     DebugP_log(str);
@@ -84,7 +85,9 @@ void sdlApp_print(char * str)
 extern volatile uint8_t cfg_triggered;
 
 sdlEsmTest_t  sdlEsmTestList[] = {
+#if defined (SOC_AM263X)
     {sdl_config_pwm_test,   "sdl config pwm test" , SDL_APP_TEST_NOT_RUN},
+#endif
     {sdl_ecc_cb_test,   "ecc cb test" , SDL_APP_TEST_NOT_RUN},
     {test_sdr_test,   "callback test" , SDL_APP_TEST_NOT_RUN},
     {sdl_config_test,   "sdl config test" , SDL_APP_TEST_NOT_RUN},
