@@ -1,5 +1,5 @@
 
-# Enet TSN EST Example
+# Ethernet TSN EST Example {#EXAMPLES_ENET_CPSW_TSN_EST}
 
 [TOC]
 

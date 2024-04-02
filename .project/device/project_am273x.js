@@ -260,6 +260,7 @@ const example_file_list = [
     "test/networking/mbedtls_benchmark/.project/project.js",
     "test/networking/cpsw_intervlan/.project/project.js",
     "test/networking/enet_unittest/testcase_singlepkt/.project/project.js",
+    "test/networking/performance_benchmarks/ethernet_cpsw/layer2_performance/.project/project.js",
     "tools/flasher/jtag_uniflash/.project/project.js",
 ];
 

@@ -332,6 +332,7 @@ const example_file_list = [
     "test/networking/lwip/enet_cpsw_tcpserver/.project/project.js",
     "test/networking/lwip/enet_icssg_tcpserver/.project/project.js",
     "test/networking/lwip/enet_multicore_lwip/.project/project.js",
+    "test/networking/performance_benchmarks/ethernet_cpsw/layer2_performance/.project/project.js",
     "test/syscfg/syscfg_combo_1/.project/project.js",
     "test/security/crypto/test_sa2ul_sha/.project/project.js",
     "test/security/crypto/test_sa2ul_aes/.project/project.js",

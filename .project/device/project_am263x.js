@@ -342,6 +342,7 @@ const example_file_list = [
     "test/networking/mbedtls_test/test_sha_entropy/.project/project.js",
     "test/networking/mbedtls_test/test_ssl_x509/.project/project.js",
     "test/networking/mbedtls_benchmark/.project/project.js",
+    "test/networking/performance_benchmarks/ethernet_cpsw/layer2_performance/.project/project.js",
     "test/syscfg/syscfg_combo_1/.project/project.js",
     "examples/pru_io/empty/.project/project.js",
     "examples/pru_io/empty/firmware/.project/project.js",

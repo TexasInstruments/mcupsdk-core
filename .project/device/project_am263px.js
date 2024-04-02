@@ -320,6 +320,7 @@ const example_file_list = [
 	"test/kernel/dpl/dpl_ut/nortos/r5/HwiP_armv7r_handlers_nortos/.project/project.js",
 	"test/kernel/dpl/dpl_ut/nortos/r5/PmuP_armv7r/.project/project.js",
 	"test/kernel/freertos/.project/project.js",
+    "test/networking/performance_benchmarks/ethernet_cpsw/layer2_performance/.project/project.js",
     "test/security/crypto/test_dthe_aes_cbc/.project/project.js",
     "test/security/crypto/test_dthe_aes_cbc_stream/.project/project.js",
     "test/security/crypto/test_dthe_aes_cfb/.project/project.js",
