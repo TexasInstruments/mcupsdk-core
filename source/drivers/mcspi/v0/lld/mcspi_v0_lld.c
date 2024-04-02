@@ -952,7 +952,7 @@ int32_t MCSPI_lld_readDma(MCSPILLD_Handle hMcspi, void *rxBuf, uint32_t count,
         chNum = transaction->channel;
         chObj = &hMcspiInit->chObj[chNum];
         chObj->curTxBufPtr = NULL;
-        chObj->curRxBufPtr = (uint8_t *) transaction->txBuf;
+        chObj->curRxBufPtr = (uint8_t *) transaction->rxBuf;
         chObj->curTxWords  = 0U;
         chObj->curRxWords  = 0U;
 
