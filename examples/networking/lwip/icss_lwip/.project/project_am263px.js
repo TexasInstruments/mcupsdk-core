@@ -45,10 +45,10 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include/lwip",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include",
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px",
-        "${MCU_PLUS_SDK_PATH}/test/networking/icss_emac_loopback",
-        "${MCU_PLUS_SDK_PATH}/test/networking/icss_emac_loopback/firmware",
+        "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_loopback",
+        "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_loopback/firmware",
     ],
 };
 
@@ -82,10 +82,21 @@ const lflags_r5f = {
 
 const lnkfiles = {
     common: [
-        "linker.cmd",
+        "../linker.cmd",
     ]
 };
 
+const ccmacro_r5f = {
+    common: [
+        "AM263PX_CC",
+    ]
+};
+
+const lpmacro_r5f = {
+    common: [
+        "AM263PX_LP",
+    ]
+};
 const syscfgfile = "../example.syscfg";
 
 
@@ -103,8 +114,8 @@ const templates_freertos_r5f =
         output: "linker.cmd",
         options: {
             stackSize: "65536",
-            codeDataAddr: "70080000",
-            codeDataSize: "00080000",
+            codeDataAddr: "70040000",
+            codeDataSize: "000140000",
             isIcssPktBufEnable: true,
         },
 
@@ -147,6 +158,16 @@ function getComponentBuildProperty(buildOption) {
             build_property.defines = defines_r5f;
             build_property.cflags = cflags_r5f;
             build_property.lflags = lflags_r5f;
+        }
+    }
+    if(buildOption.cpu.match(/r5f*/)) {
+        if(buildOption.board.match(/am263px-cc/) )
+        {
+            build_property.ccmacro = ccmacro_r5f;
+        }
+        else if(buildOption.board.match(/am263px-lp/))
+        {
+            build_property.lpmacro = lpmacro_r5f;
         }
     }
 

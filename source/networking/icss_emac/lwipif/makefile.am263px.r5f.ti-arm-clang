@@ -34,8 +34,9 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/ports/freertos/include \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/ports/freertos/include \
 
 DEFINES_common := \
     -DSOC_AM263PX \
@@ -78,6 +79,9 @@ ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
 FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
 CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
 ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ifeq ($(INSTRUMENTATION_MODE), yes)
+CFLAGS += -fprofile-instr-generate -fcoverage-mapping
+endif
 ifeq ($(CPLUSPLUS_BUILD), yes)
 CFLAGS += $(CFLAGS_cpp_common)
 endif

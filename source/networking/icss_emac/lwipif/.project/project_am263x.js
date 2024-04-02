@@ -30,7 +30,7 @@ const includes = {
        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include",
        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include",
        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include",
-       "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-contrib/ports/freertos/include",
+       "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib/ports/freertos/include",
     ],
 };
 

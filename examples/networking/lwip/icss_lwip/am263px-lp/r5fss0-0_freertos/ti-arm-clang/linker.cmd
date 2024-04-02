@@ -11,7 +11,7 @@
 /* This is the heap size for malloc() API in NORTOS and FreeRTOS
  * This is also the heap used by pvPortMalloc in FreeRTOS
  */
---heap_size=65536
+--heap_size=32768
 -e_vectors  /* This is the entry of the application, _vector MUST be plabed starting address 0x0 */
 
 /* This is the size of stack when R5 is in IRQ mode
@@ -104,6 +104,9 @@ SECTIONS
     .bss.log_shared_mem  (NOLOAD) : {} > LOG_SHM_MEM
     /* this is used only when IPC RPMessage is enabled, else this is not used */
     .bss.ipc_vring_mem   (NOLOAD) : {} > RTOS_NORTOS_IPC_SHM_MEM
+    /* this is used only when Secure IPC is enabled */
+    .bss.sipc_hsm_queue_mem   (NOLOAD) : {} > MAILBOX_HSM
+    .bss.sipc_r5f_queue_mem   (NOLOAD) : {} > MAILBOX_R5F
 }
 
 MEMORY
@@ -133,4 +136,7 @@ MEMORY
     USER_SHM_MEM            : ORIGIN = 0x701D0000, LENGTH = 0x00004000
     LOG_SHM_MEM             : ORIGIN = 0x701D4000, LENGTH = 0x00004000
     /* MSS mailbox memory is used as shared memory, we dont use bottom 32*12 bytes, since its used as SW queue by ipc_notify */
-    RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0x72000000, LENGTH = 0x3E80}
+    RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0x72000000, LENGTH = 0x3E80
+    MAILBOX_HSM:    ORIGIN = 0x44000000 , LENGTH = 0x000003CE
+    MAILBOX_R5F:    ORIGIN = 0x44000400 , LENGTH = 0x000003CE
+    }
