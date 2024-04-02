@@ -5,7 +5,7 @@
 # Introduction
 
 This example demonstrates the Context Save and Restore functionality of TMU. We make use of a software interrupt
-that will get enable while the TMU operation is being executed. On receiving this high priority interrupt, the ISR gets invoked
+that will get enabled while the TMU operation is being executed. On receiving this high priority interrupt, the ISR gets invoked
 which will use the TMU hardware. Due to the context save functionality of the TMU result registers, we can enable the use of TMU
 in an ISR context while simultaneously used in main function.
 

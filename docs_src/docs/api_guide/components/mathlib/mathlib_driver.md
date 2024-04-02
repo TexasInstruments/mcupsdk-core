@@ -61,8 +61,6 @@ result = HWREG(y)
 Here, x is the address of the TMU specific operation registers and y is the address of the result register
 
 
-
-
 ### Features Not Supported:
 
 - div, sqrt and quad operations
