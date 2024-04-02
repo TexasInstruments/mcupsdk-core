@@ -1813,25 +1813,25 @@ void SDL_ECC_disableTMUROMParity(void)
     uint32_t tmuParityCtrl;
 
     tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL);
-    tmuParityCtrl &= 0xFFFFFFFE;
+    tmuParityCtrl &= 0xFFFFFFFEU;
     /* Write 0 to TMU0_ROM_PARITY_EN in
        SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL register */
     SDL_REG32_WR(SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL, tmuParityCtrl);
 
     tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL);
-    tmuParityCtrl &= 0xFFFFFFFE;
+    tmuParityCtrl &= 0xFFFFFFFEU;
     /* Write 0 to TMU0_ROM_PARITY_EN in
        SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL register */
     SDL_REG32_WR(SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL, tmuParityCtrl);
 
     tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL);
-    tmuParityCtrl &= 0xFFFFFFFE;
+    tmuParityCtrl &= 0xFFFFFFFEU;
     /* Write 0 to TMU0_ROM_PARITY_EN in
        SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL register */
     SDL_REG32_WR(SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL, tmuParityCtrl);
 
     tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL);
-    tmuParityCtrl &= 0xFFFFFFFE;
+    tmuParityCtrl &= 0xFFFFFFFEU;
     /* Write 0 to TMU0_ROM_PARITY_EN in
        SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL register */
     SDL_REG32_WR(SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL, tmuParityCtrl);
@@ -1852,25 +1852,25 @@ void SDL_ECC_disableTMUROMParityErrorForce(void)
     uint32_t tmuParityCtrl;
 
     tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL);
-    tmuParityCtrl &= 0xFFFFFFFD;
+    tmuParityCtrl &= 0xFFFFFFFDU;
     /* Write 0 to SDL_TMU0_ROM_PARITY_FORCE_ERR in
        SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL register */
     SDL_REG32_WR(SDL_TMU_R5SS0_CORE0_ROM_PARITY_CTRL, tmuParityCtrl);
 
     tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL);
-    tmuParityCtrl &= 0xFFFFFFFD;
+    tmuParityCtrl &= 0xFFFFFFFDU;
     /* Write 0 to SDL_TMU0_ROM_PARITY_FORCE_ERR in
        SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL register */
     SDL_REG32_WR(SDL_TMU_R5SS0_CORE1_ROM_PARITY_CTRL, tmuParityCtrl);
 
     tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL);
-    tmuParityCtrl &= 0xFFFFFFFD;
+    tmuParityCtrl &= 0xFFFFFFFDU;
     /* Write 0 to SDL_TMU0_ROM_PARITY_FORCE_ERR in
        SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL register */
     SDL_REG32_WR(SDL_TMU_R5SS1_CORE0_ROM_PARITY_CTRL, tmuParityCtrl);
 
     tmuParityCtrl = SDL_REG32_RD(SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL);
-    tmuParityCtrl &= 0xFFFFFFFD;
+    tmuParityCtrl &= 0xFFFFFFFDU;
     /* Write 0 to SDL_TMU0_ROM_PARITY_FORCE_ERR in
        SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL register */
     SDL_REG32_WR(SDL_TMU_R5SS1_CORE1_ROM_PARITY_CTRL, tmuParityCtrl);

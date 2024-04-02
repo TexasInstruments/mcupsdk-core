@@ -50,7 +50,7 @@ extern "C" {
  * ----------------------------------------------------------------------------
  */
 typedef enum {
-   SDL_ESM_INST_MAIN_ESM0 = 2,
+   SDL_ESM_INST_MAIN_ESM0 = 2U,
     /**< ESM0 (Main domain) instance  */
    SDL_ESM_INSTANCE_MAX=0xFFFF
 } SDL_ESM_Inst;

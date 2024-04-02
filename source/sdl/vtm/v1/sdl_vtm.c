@@ -364,7 +364,7 @@ int32_t SDL_VTM_getTemp(SDL_VTM_InstTs instance, uint32_t *pTempVal)
     sdlResult = SDL_VTM_tsConvADCToTemp (adcCode, &pMilliDegreeTempVal);
     if(sdlResult == SDL_PASS)
     {
-        *pTempVal = pMilliDegreeTempVal;
+        *pTempVal = (uint32_t)pMilliDegreeTempVal;
     }
 
     return (sdlResult);
@@ -567,7 +567,7 @@ int32_t SDL_VTM_getSensorStatus(SDL_VTM_Stat_val *pStat_val)
                             SDL_TOP_CTRL_U_BASE+SDL_VTM_TSENSE_STATUS), \
                     TOP_CTRL_TSENSE_STATUS_TSENSE_STATUS_S1_LOW_THRHLD);
 
-            sdlResult = SDL_PASS;
+        sdlResult = SDL_PASS;
     }
     return (sdlResult);
 }
@@ -581,7 +581,7 @@ int32_t SDL_VTM_getStaticRegistersTs(SDL_VTM_staticRegsTs *pStaticRegs)
 	uint32_t baseAddr;
     int32_t sdlResult = SDL_EBADARGS;
 
-	SDL_VTM_getBaseAddr(&baseAddr);
+	(void)SDL_VTM_getBaseAddr(&baseAddr);
     p_cfg1 = (SDL_VTM_cfg1Regs *) baseAddr;
 
     /* arg checked */
@@ -605,7 +605,6 @@ int32_t SDL_VTM_getStaticRegistersTs(SDL_VTM_staticRegsTs *pStaticRegs)
 
     return (sdlResult);
 }
-
 /**
  * Design: TBD: PROC_SDL-7256
  */

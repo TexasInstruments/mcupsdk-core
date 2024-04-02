@@ -105,7 +105,7 @@ int32_t SDL_VTM_tsGetCtrl (SDL_VTM_InstTs  instance, uint32_t *ptsenseCTRL)
 
     /* argument checks */
     if((instance  >=  SDL_VTM_INSTANCE_TS_2) ||
-       (ptsenseCTRL != NULL_PTR))
+       (ptsenseCTRL == NULL_PTR))
     {
         sdlResult = SDL_EBADARGS;
     }

@@ -77,11 +77,11 @@ int32_t SDL_TOG_registerInterrupt(void)
     int32_t status = SDL_PASS;
     SDL_DPL_HwipParams intrParams;
 
-    status = SDL_DPL_disableInterrupt(SDL_R5FSS0_CORE0_INTR_FSS_VBUSM_TIMEOUT);
+    status = SDL_DPL_disableInterrupt((int32_t)SDL_R5FSS0_CORE0_INTR_FSS_VBUSM_TIMEOUT);
 
     if (status == SDL_PASS)
     {
-        intrParams.intNum = SDL_R5FSS0_CORE0_INTR_FSS_VBUSM_TIMEOUT;
+        intrParams.intNum = (int32_t)SDL_R5FSS0_CORE0_INTR_FSS_VBUSM_TIMEOUT;
         intrParams.callback = (pSDL_DPL_InterruptCallbackFunction)SDL_TOG_irqHandler;
         intrParams.callbackArg = (uintptr_t)SDL_TOG_INSTANCE;
 
@@ -92,7 +92,7 @@ int32_t SDL_TOG_registerInterrupt(void)
 
     if (status == SDL_PASS)
     {
-        status = SDL_DPL_enableInterrupt(SDL_R5FSS0_CORE0_INTR_FSS_VBUSM_TIMEOUT);
+        status = SDL_DPL_enableInterrupt((int32_t)SDL_R5FSS0_CORE0_INTR_FSS_VBUSM_TIMEOUT);
     }
 
     return (status);
