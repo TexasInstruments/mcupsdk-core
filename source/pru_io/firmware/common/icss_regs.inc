@@ -41,7 +41,7 @@ __icss_regs_h	.set	1
 	.if $isdefed("SLICE1")
 	.asg	c24,	PRU1_DMEM
 	.asg	c25,	PRU0_DMEM
-	.else
+	.else ;SLICE0
 	.asg	c24,	PRU0_DMEM
 	.asg	c25,	PRU1_DMEM
 	.endif

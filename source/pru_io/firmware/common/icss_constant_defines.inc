@@ -137,7 +137,7 @@ ____icss_constant_defines_h   .set    1
     .if $isdefed("SLICE0")
     .asg c24, ICSS_DMEM0_CONST
     .asg c25, ICSS_DMEM1_CONST
-    .else ;PRU1
+    .else ;SLICE1
     .asg c24, ICSS_DMEM1_CONST
     .asg c25, ICSS_DMEM0_CONST
     .endif
@@ -154,7 +154,7 @@ ICSS_MSMC_RAM_CONST .set ICSS_RAT_REGION8_CONST
     .if $isdefed("SLICE0")
 PRU_DMEM_ADDR       .set    ICSS_DMEM0_CONST
 PRU_CROSS_DMEM      .set    ICSS_DMEM1_CONST
-    .else ;PRU1
+    .else ;SLICE1
 PRU_DMEM_ADDR       .set    ICSS_DMEM1_CONST
 PRU_CROSS_DMEM      .set    ICSS_DMEM0_CONST
     .endif

@@ -35,7 +35,7 @@ const cgt_pru1 = {
     },
 }
 
-const cgt_rtpru0 = {
+const cgt_rtupru0 = {
     cflags: {
         common: [
             "-DRTU_PRU0",
@@ -44,7 +44,7 @@ const cgt_rtpru0 = {
     },
 }
 
-const cgt_rtpru1 = {
+const cgt_rtupru1 = {
     cflags: {
         common: [
             "-DRTU_PRU1",
@@ -115,13 +115,13 @@ function getCgtOptions(cpu, device)
     {
         cgtOptions = common.mergeCgtOptions(cgt_common, cgt_pru1);
     }
-    if(cpu.match(/rtpru0/))
+    if(cpu.match(/rtupru0/))
     {
-        cgtOptions = common.mergeCgtOptions(cgt_common, cgt_rtpru0);
+        cgtOptions = common.mergeCgtOptions(cgt_common, cgt_rtupru0);
     }
-    if(cpu.match(/rtpru1/))
+    if(cpu.match(/rtupru1/))
     {
-        cgtOptions = common.mergeCgtOptions(cgt_common, cgt_rtpru1);
+        cgtOptions = common.mergeCgtOptions(cgt_common, cgt_rtupru1);
     }
     if(cpu.match(/txpru0/))
     {
