@@ -43,7 +43,9 @@
 #include <board/eeprom.h>
 #include <board/ethphy/ethphy_dp83826e.h>
 #include <board/ethphy/ethphy_dp83869.h>
+#ifdef SOC_AM263PX
 #include <board/ioexp/ioexp_tca6424.h>
+#endif
 
 #include "test_icss_lwip.h"
 #include "lwip2icss_emac.h"
@@ -57,7 +59,7 @@
 #elif AM263X_LP
 #include <mii/am263x-lp/pruicss_pinmux.h>
 #elif AM263PX_CC
-#include <mii/am263x-cc/pruicss_pinmux.h>
+#include <mii/am263px-cc/pruicss_pinmux.h>
 #elif AM263PX_LP
 #include <mii/am263px-lp/pruicss_pinmux.h>
 #endif

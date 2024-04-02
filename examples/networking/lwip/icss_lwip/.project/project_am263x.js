@@ -86,17 +86,18 @@ const lnkfiles = {
     ]
 };
 
-const ccmacro_r5f = {
+const defines_r5f_cc = {
     common: [
-        "AM263X_CC",
-    ]
+        "AM263X_CC"
+    ],
 };
 
-const lpmacro_r5f = {
+const defines_r5f_lp = {
     common: [
-        "AM263X_LP",
-    ]
+        "AM263X_LP"
+    ],
 };
+
 const syscfgfile = "../example.syscfg";
 
 
@@ -160,15 +161,12 @@ function getComponentBuildProperty(buildOption) {
             build_property.lflags = lflags_r5f;
         }
     }
-    if(buildOption.cpu.match(/r5f*/)) {
-        if(buildOption.board.match(/am263x-cc/) )
-        {
-            build_property.ccmacro = ccmacro_r5f;
-        }
-        else if(buildOption.board.match(/am263x-lp/))
-        {
-            build_property.lpmacro = lpmacro_r5f;
-        }
+    if(buildOption.board.match(/cc*/)) {
+        build_property.defines = defines_r5f_cc;
+    }
+
+    if(buildOption.board.match(/lp*/)) {
+        build_property.defines = defines_r5f_lp;
     }
 
     return build_property;
