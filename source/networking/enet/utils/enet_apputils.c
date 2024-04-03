@@ -499,8 +499,16 @@ void EnetAppUtils_printIcssgPaStats(IcssgStats_Pa *st)
 {
     EnetAppUtils_printStatsNonZero("  hostRxByteCnt              = %llu\r\n", st->hostRxByteCnt);
     EnetAppUtils_printStatsNonZero("  hostTxByteCnt              = %llu\r\n", st->hostTxByteCnt);
+    EnetAppUtils_printStatsNonZero("  hostRxByteCntSlice0        = %llu\r\n", st->hostRxByteCntMacSlice0);
+    EnetAppUtils_printStatsNonZero("  hostRxByteCntSlice1        = %llu\r\n", st->hostRxByteCntMacSlice1);
+    EnetAppUtils_printStatsNonZero("  hostTxByteCntSlice0        = %llu\r\n", st->hostTxByteCntMacSlice0);
+    EnetAppUtils_printStatsNonZero("  hostTxByteCntSlice1        = %llu\r\n", st->hostTxByteCntMacSlice1);
     EnetAppUtils_printStatsNonZero("  hostRxPktCnt               = %llu\r\n", (uint64_t)st->hostRxPktCnt);
     EnetAppUtils_printStatsNonZero("  hostTxPktCnt               = %llu\r\n", (uint64_t)st->hostTxPktCnt);
+    EnetAppUtils_printStatsNonZero("  hostRxPktCntSlice0         = %llu\r\n", (uint64_t)st->hostRxPktCntMacSlice0);
+    EnetAppUtils_printStatsNonZero("  hostRxPktCntSlice1         = %llu\r\n", (uint64_t)st->hostRxPktCntMacSlice1);
+    EnetAppUtils_printStatsNonZero("  hostTxPktCntSlice0         = %llu\r\n", (uint64_t)st->hostTxPktCntMacSlice0);
+    EnetAppUtils_printStatsNonZero("  hostTxPktCntSlice1         = %llu\r\n", (uint64_t)st->hostTxPktCntMacSlice1);
     EnetAppUtils_printStatsNonZero("  rtu0PktDroppedSlice0       = %llu\r\n", (uint64_t)st->rtu0PktDroppedSlice0);
     EnetAppUtils_printStatsNonZero("  rtu0PktDroppedSlice1       = %llu\r\n", (uint64_t)st->rtu0PktDroppedSlice1);
     EnetAppUtils_printStatsNonZero("  port1Q0Overflow            = %llu\r\n", (uint64_t)st->port1Q0Overflow);
