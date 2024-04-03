@@ -7,15 +7,9 @@ all:
 	$(MAKE) -f makefile.am64x sbl
 	$(MAKE) -f makefile.am64x examples
 
-all_gcc:
-	$(MAKE) -f makefile.am64x libs_gcc
-	$(MAKE) -f makefile.am64x sbl_gcc
-	$(MAKE) -f makefile.am64x examples_gcc
 
 clean: libs-clean sbl-clean examples-clean
 scrub: libs-scrub sbl-scrub examples-scrub
-clean_gcc: libs_gcc-clean sbl_gcc-clean examples_gcc-clean
-scrub_gcc: libs_gcc-scrub sbl_gcc-scrub examples_gcc-scrub
 
 help:
 	@echo  Notes,
@@ -208,33 +202,24 @@ help:
 BUILD_COMBO_unity = unity_r5f.ti-arm-clang unity_m4f.ti-arm-clang unity_a53.gcc-aarch64
 BUILD_COMBO_doxy_samples = doxy_samples_r5f.ti-arm-clang
 
-# Various GCC Component Targets
-BUILD_COMBO_GCC_unity = unity_r5f.gcc-armv7
-BUILD_COMBO_GCC_doxy_samples =
 
 # Combine all Components
 BUILD_COMBO_ALL = $(BUILD_COMBO_unity) $(BUILD_COMBO_doxy_samples)
 
-# Combine all gcc Components
-BUILD_COMBO_ALL_GCC =  $(BUILD_COMBO_GCC_unity) $(BUILD_COMBO_GCC_doxy_samples)
 
 # Combine all Pre-built Components
 BUILD_COMBO_PREBUILT_ALL =
 
-# Combine all Pre-built Components
-BUILD_COMBO_PREBUILT_ALL_GCC =
 
 # Combine all Private Components
 BUILD_COMBO_PRIVATE_ALL =
 
 libs: $(BUILD_COMBO_ALL)
-libs_gcc: $(BUILD_COMBO_ALL_GCC)
 
 libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
 
 libs-private: $(BUILD_COMBO_PRIVATE_ALL)
 
-libs_gcc-prebuilt: $(BUILD_COMBO_PREBUILT_ALL_GCC)
 
 $(BUILD_COMBO_unity):
 	$(MAKE) -C unity -f makefile.am64x.$(subst unity_,,$@) all
@@ -243,37 +228,23 @@ $(BUILD_COMBO_doxy_samples):
 	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.am64x.$(subst doxy_samples_,,$@) all
 
 
-$(BUILD_COMBO_GCC_unity):
-	$(MAKE) -C unity -f makefile.am64x.$(subst unity_,,$@) all
-
-$(BUILD_COMBO_GCC_doxy_samples):
-	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.am64x.$(subst doxy_samples_,,$@) all
-
 
 # Various Component Clean Targets
 BUILD_COMBO_CLEAN_unity = unity_r5f.ti-arm-clang_clean unity_m4f.ti-arm-clang_clean unity_a53.gcc-aarch64_clean
 BUILD_COMBO_CLEAN_doxy_samples = doxy_samples_r5f.ti-arm-clang_clean
 
-# Various GCC Component Clean Targets
-BUILD_COMBO_CLEAN_GCC_unity = unity_r5f.gcc-armv7_clean
-BUILD_COMBO_CLEAN_GCC_doxy_samples =
 
 # Combine all Components Clean
 BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_unity) $(BUILD_COMBO_CLEAN_doxy_samples)
 
-BUILD_COMBO_CLEAN_ALL_GCC= $(BUILD_COMBO_CLEAN_GCC_unity) $(BUILD_COMBO_CLEAN_GCC_doxy_samples)
 
 # Combine all Pre-built Components Clean
 BUILD_COMBO_PREBUILT_CLEAN_ALL =
 
-# Combine all GCC Pre-built Components Clean
-BUILD_COMBO_PREBUILT_CLEAN_ALL_GCC =
 
 libs-clean: $(BUILD_COMBO_CLEAN_ALL)
-libs_gcc-clean: $(BUILD_COMBO_CLEAN_ALL_GCC)
 libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
 
-libs_gcc-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL_GCC)
 
 $(BUILD_COMBO_CLEAN_unity):
 	$(MAKE) -C unity -f makefile.am64x.$(subst unity_,,$(subst _clean,,$@)) clean
@@ -282,45 +253,27 @@ $(BUILD_COMBO_CLEAN_doxy_samples):
 	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.am64x.$(subst doxy_samples_,,$(subst _clean,,$@)) clean
 
 
-$(BUILD_COMBO_CLEAN_GCC_unity):
-	$(MAKE) -C unity -f makefile.am64x.$(subst unity_,,$(subst _clean,,$@)) clean
-
-$(BUILD_COMBO_CLEAN_GCC_doxy_samples):
-	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.am64x.$(subst doxy_samples_,,$(subst _clean,,$@)) clean
-
 
 # Various Component Scrub Targets
 BUILD_COMBO_SCRUB_unity = unity_r5f.ti-arm-clang_scrub unity_m4f.ti-arm-clang_scrub unity_a53.gcc-aarch64_scrub_scrub
 BUILD_COMBO_SCRUB_doxy_samples = doxy_samples_r5f.ti-arm-clang_scrub_scrub
 
-# Various GCC Component Scrub Targets
 
 # Combine all Components Scrub Targets
 BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_unity) $(BUILD_COMBO_SCRUB_doxy_samples)
-BUILD_COMBO_SCRUB_ALL_GCC= $(BUILD_COMBO_SCRUB_GCC_unity) $(BUILD_COMBO_SCRUB_GCC_doxy_samples)
 
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
 
-# Combine all Pre-built Components Scrub Targets
-BUILD_COMBO_PREBUILT_SCRUB_ALL_GCC =
 
 libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
-libs_gcc-scrub: $(BUILD_COMBO_SCRUB_ALL_GCC)
 libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
 
-libs-prebuilt-scrub_gcc: $(BUILD_COMBO_PREBUILT_SCRUB_ALL_GCC)
 
 $(BUILD_COMBO_SCRUB_unity):
 	$(MAKE) -C unity -f makefile.am64x.$(subst unity_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_doxy_samples):
-	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.am64x.$(subst doxy_samples_,,$(subst _scrub,,$@)) scrub
-
-$(BUILD_COMBO_SCRUB_GCC_unity):
-	$(MAKE) -C unity -f makefile.am64x.$(subst unity_,,$(subst _scrub,,$@)) scrub
-
-$(BUILD_COMBO_SCRUB_GCC_doxy_samples):
 	$(MAKE) -C ../docs_src/docs/api_guide/doxy_samples -f makefile.am64x.$(subst doxy_samples_,,$(subst _scrub,,$@)) scrub
 
 
@@ -478,10 +431,7 @@ BUILD_COMBO_EXAMPLE_ALL += enet_multicore_lwip_am64x-evm_system_enet_multicore_l
 BUILD_COMBO_EXAMPLE_ALL += test_syscfg_combo_1_am64x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_syscfg_combo_1_am64x-sk_system_freertos_nortos
 
-BUILD_COMBO_EXAMPLE_ALL_GCC =
-# Various Gcc Example Targets
 
-# Various System GCC Example Targets
 
 BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
 # Various Private Example Targets
@@ -490,7 +440,6 @@ BUILD_COMBO_EXAMPLE_PRIVATE_ALL =
 
 examples: $(BUILD_COMBO_EXAMPLE_ALL)
 
-examples_gcc: $(BUILD_COMBO_EXAMPLE_ALL_GCC)
 
 
 examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
@@ -1096,15 +1045,12 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_multicore_lwip_am64x-evm_system_enet_multi
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_syscfg_combo_1_am64x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_syscfg_combo_1_am64x-sk_system_freertos_nortos_clean
 
-BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC =
-# Various Example_Gcc Clean Targets
 
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
 # Various Private Example Targets
 # Various Private System Example Targets
 
 examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
-examples_gcc-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC)
 
 examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
@@ -1709,15 +1655,12 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_multicore_lwip_am64x-evm_system_enet_multi
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_syscfg_combo_1_am64x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_syscfg_combo_1_am64x-sk_system_freertos_nortos_scrub
 
-BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC =
-# Various Example_Gcc Scrub Targets
 
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
 # Various Private Example Targets
 # Various Private System Example Targets
 
 examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
-examples_gcc-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC)
 
 examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
@@ -2170,21 +2113,13 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
 
 sbl: libs
-sbl_gcc: libs_gcc
 
 sbl-clean:
 
 sbl-scrub:
 
-sbl_gcc-clean:
 
-sbl_gcc-scrub:
 
-sbl-hs:
-
-sbl-hs-clean:
-
-sbl-hs-scrub:
 
 .PHONY: all clean scrub help
 .PHONY: libs libs-clean libs-scrub

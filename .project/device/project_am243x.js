@@ -461,9 +461,9 @@ function getFlashAddr() {
     return 0x60000000;
 }
 
-function getAddGcc() {
-    const IsGcc = 0;
-    return IsGcc;
+function getEnableGccBuild() {
+    const IsGccBuildEnabled = 0;
+    return IsGccBuildEnabled;
 }
 
 module.exports = {
@@ -480,5 +480,5 @@ module.exports = {
     getLinuxFwName,
     getProductNameProjectSpec,
     getFlashAddr,
-    getAddGcc,
+    getEnableGccBuild,
 };
