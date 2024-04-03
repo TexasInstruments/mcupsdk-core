@@ -18,12 +18,12 @@
                 doGenerateCode = true;
         %%}
         % if(doGenerateCode) {
-            % if (interfaceName == "GPIO" && !(common.getSocName() == "am64x" || common.getSocName() == "am273x")){
+            % if (interfaceName == "GPIO" && !(common.getSocName() == "am64x" || common.getSocName() == "am273x" || common.getSocName() == "awr294x")){
             %    interfaceName = interfaceName + "_n"
             %}
             % let peripheral = (module.defaultInstanceName === "CONFIG_ENET_CPSW") ? (instance.pinmux[0])[interfaceName] :instance[interfaceName];
             % let pinNames = (module.getPeripheralPinNames) ? module.getPeripheralPinNames(instance) : "";
-            % if (interfaceName == "GPIO_n" && !(common.getSocName() == "am64x" || common.getSocName() == "am273x")){
+            % if (interfaceName == "GPIO_n" && !(common.getSocName() == "am64x" || common.getSocName() == "am273x" || common.getSocName() == "awr294x")){
         `soc.getPinConfigCStruct(peripheral, interfaceName, instance)`
             % } else {
             % for (let pinName of pinNames) {
