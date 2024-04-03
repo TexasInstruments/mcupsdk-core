@@ -194,8 +194,6 @@ help:
 	@echo  $(MAKE) -s -C kernel/dpl/dpl_ut/nortos/r5/HwiP_armv7r_handlers_nortos/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/freertos/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C kernel/freertos/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C ../source/networking/icss_emac_loopback/mii/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C ../source/networking/icss_emac_loopback/mii/am263x-lp/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C ../source/networking/icss_emac_loopback/firmware/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C ../source/networking/icss_emac_loopback/firmware/mii/am263x-cc/icssm-pru1_fw/ti-pru-cgt [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C networking/enet_unittest/testcase_singlepkt/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -482,8 +480,6 @@ BUILD_COMBO_EXAMPLE_ALL += dpl_HwiP_armv7r_handlers_nortos_test_pos_am263x-cc_r5
 BUILD_COMBO_EXAMPLE_ALL += dpl_HwiP_armv7r_handlers_nortos_test_pos_am263x-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_freertos_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_freertos_am263x-lp_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_icss_emac_loopback_mii_am263x-cc_r5fss0-0_freertos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += test_icss_emac_loopback_mii_am263x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += testcase_singlepkt_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += testcase_singlepkt_am263x-lp_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += cpsw_intervlan_am263x-cc_r5fss0-0_freertos_ti-arm-clang
@@ -998,12 +994,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  test_freertos_am263x-lp_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C kernel/freertos/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
- test_icss_emac_loopback_mii_am263x-cc_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C ../source/networking/icss_emac_loopback/mii/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
-
- test_icss_emac_loopback_mii_am263x-lp_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C ../source/networking/icss_emac_loopback/mii/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile all
-
  dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt:
 	$(MAKE) -C ../source/networking/icss_emac_loopback/firmware/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile all
 
@@ -1307,8 +1297,6 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_HwiP_armv7r_handlers_nortos_test_pos_am263x
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dpl_HwiP_armv7r_handlers_nortos_test_pos_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_freertos_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_icss_emac_loopback_mii_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_icss_emac_loopback_mii_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += testcase_singlepkt_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += testcase_singlepkt_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cpsw_intervlan_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
@@ -1818,12 +1806,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  test_freertos_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C kernel/freertos/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
- test_icss_emac_loopback_mii_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C ../source/networking/icss_emac_loopback/mii/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
-
- test_icss_emac_loopback_mii_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C ../source/networking/icss_emac_loopback/mii/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile clean
-
  dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt_clean:
 	$(MAKE) -C ../source/networking/icss_emac_loopback/firmware/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile clean
 
@@ -2127,8 +2109,6 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_HwiP_armv7r_handlers_nortos_test_pos_am263x
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dpl_HwiP_armv7r_handlers_nortos_test_pos_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_freertos_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_icss_emac_loopback_mii_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_icss_emac_loopback_mii_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += testcase_singlepkt_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += testcase_singlepkt_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cpsw_intervlan_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
@@ -2637,12 +2617,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_freertos_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C kernel/freertos/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
-
- test_icss_emac_loopback_mii_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C ../source/networking/icss_emac_loopback/mii/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
-
- test_icss_emac_loopback_mii_am263x-lp_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C ../source/networking/icss_emac_loopback/mii/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt_scrub:
 	$(MAKE) -C ../source/networking/icss_emac_loopback/firmware/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile scrub

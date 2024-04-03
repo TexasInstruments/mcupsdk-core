@@ -31,7 +31,6 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f",
         "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_loopback",
-        "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_loopback/mii/am263x-cc",
         "${MCU_PLUS_SDK_PATH}/test/unity/",
     ],
 };
