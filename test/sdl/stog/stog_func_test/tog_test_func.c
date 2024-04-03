@@ -38,10 +38,14 @@
  *
  *  \brief This file triggers input for the Timeout Gasket (TOG) example
  */
-
+#include <stdio.h>
 #include "tog_test_main.h"
 #include <dpl_interface.h>
 #include<kernel/dpl/HwiP.h>
+#if defined (SOC_AM263PX)
+#include <sdl/sdl_exception.h>
+#include <sdl/r5/v0/sdl_interrupt.h>
+#endif
 
 /* ========================================================================== */
 /*                                Macros                                      */
@@ -184,9 +188,12 @@ uint32_t __attribute__((section(".vectors"), aligned(32))) gHwiP_vectorTable[Hwi
 #endif
 
 #define TOG_TEST_TIMEOUTVAL 0x10000U
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 static uint32_t arg;
-
+#endif
 volatile bool handlerFlag __attribute__((section(".data:TOG_test"))) = false;
+
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
 
 SDL_ESM_config TOG_Test_esmInitConfig_MCU =
 {
@@ -223,6 +230,75 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 
     return retVal;
 }
+#endif
+
+#if defined (SOC_AM263PX)
+extern uint8_t SDL_TOG_interruptDone;
+/* This is the list of exception handle and the parameters */
+const SDL_R5ExptnHandlers TOG_Test_R5ExptnHandlers =
+{
+    .udefExptnHandler = &SDL_EXCEPTION_undefInstructionExptnHandler,
+    .swiExptnHandler = &SDL_EXCEPTION_swIntrExptnHandler,
+    .pabtExptnHandler = &SDL_EXCEPTION_prefetchAbortExptnHandler,
+    .dabtExptnHandler = &SDL_EXCEPTION_dataAbortExptnHandler,
+    .irqExptnHandler = &SDL_EXCEPTION_irqExptnHandler,
+    .fiqExptnHandler = &SDL_EXCEPTION_fiqExptnHandler,
+    .udefExptnHandlerArgs = ((void *)0u),
+    .swiExptnHandlerArgs = ((void *)0u),
+    .pabtExptnHandlerArgs = ((void *)0u),
+    .dabtExptnHandlerArgs = ((void *)0u),
+    .irqExptnHandlerArgs = ((void *)0u),
+};
+
+void TOG_Test_undefInstructionExptnCallback(void)
+{
+    printf("\r\nUndefined Instruction exception\r\n");
+}
+
+void TOG_Test_swIntrExptnCallback(void)
+{
+    printf("\r\nSoftware interrupt exception\r\n");
+}
+
+void TOG_Test_prefetchAbortExptnCallback(void)
+{
+    printf("\r\nPrefetch Abort exception\r\n");
+}
+void TOG_Test_dataAbortExptnCallback(void)
+{
+    printf("\r\nData Abort exception\r\n");
+    TOG_eventHandler((uint32_t)SDL_TOG_INSTANCE_TIMEOUT0_CFG);
+}
+void TOG_Test_irqExptnCallback(void)
+{
+    printf("\r\nIrq exception\r\n");
+}
+
+void TOG_Test_fiqExptnCallback(void)
+{
+    printf("\r\nFiq exception\r\n");
+}
+
+void TOG_exceptionInit(void)
+{
+    SDL_EXCEPTION_CallbackFunctions_t exceptionCallbackFunctions =
+            {
+             .udefExptnCallback = TOG_Test_undefInstructionExptnCallback,
+             .swiExptnCallback = TOG_Test_swIntrExptnCallback,
+             .pabtExptnCallback = TOG_Test_prefetchAbortExptnCallback,
+             .dabtExptnCallback = TOG_Test_dataAbortExptnCallback,
+             .irqExptnCallback = TOG_Test_irqExptnCallback,
+             .fiqExptnCallback = TOG_Test_fiqExptnCallback,
+            };
+
+    /* Initialize SDL exception handler */
+    SDL_EXCEPTION_init(&exceptionCallbackFunctions);
+    /* Register SDL exception handler */
+    Intc_RegisterExptnHandlers(&TOG_Test_R5ExptnHandlers);
+
+    return;
+}
+#endif
 
 void TOG_eventHandler( uint32_t instanceIndex )
 {
@@ -314,6 +390,9 @@ void TOG_eventHandler( uint32_t instanceIndex )
 /* Mailbox BaseAddress 0xA9000000 translated to system address 0x29000000 for instance 0 */
 #define END_POINT_ACCESS0 0xA9000000
 
+/* For AM263px, this is the address of OSPI memory. */
+#define END_POINT_ACCESS 0x60000000
+
 void TOG_injectESMError(uint32_t instanceIndex)
 {
     SDL_TOG_Inst instance;
@@ -330,7 +409,8 @@ void TOG_injectESMError(uint32_t instanceIndex)
         DebugP_log("   Inject SDL_TOG_init TimeoutVal Failed \r\n");
         /* Assert */
     }
-	if(instanceIndex==0)
+#if !defined (SOC_AM263PX)
+    if(instanceIndex==0)
 	{
 	  SDL_REG32_RD(END_POINT_ACCESS0);
 	}
@@ -338,6 +418,10 @@ void TOG_injectESMError(uint32_t instanceIndex)
 
       SDL_REG32_RD(END_POINT_ACCESS1);
 	}
+#else
+    /* Read from OSPI memory. */
+    status = (*(volatile uint32_t *)(END_POINT_ACCESS));
+#endif
 
     /* Call SDL API to set configure back to original timeout value */
     cfg.timeoutVal = TOG_TEST_TIMEOUTVAL;
@@ -354,7 +438,9 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
 {
     SDL_TOG_Inst instance;
     SDL_TOG_config cfg;
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
     void *ptr = (void *)&arg;
+#endif
     int32_t status = SDL_PASS;
     int32_t result = 0;
     volatile uint32_t timeoutCount = 0;
@@ -421,6 +507,13 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
         }
     }
 
+#if defined (SOC_AM263PX)
+    SDL_TOG_registerInterrupt();
+    /* Initialise exception handler */
+    TOG_exceptionInit();
+#endif
+
+
     /* Step 3: Inject timeout error */
     if (result == 0)
     {
@@ -431,13 +524,21 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
     if (result == 0)
     {
         /* Timeout if exceeds time */
+#if defined (SOC_AM263PX)
+        while ((!SDL_TOG_interruptDone)
+#else
         while ((!handlerFlag)
+#endif
                && (timeoutCount < TOG_MAX_TEST_TIMEOUT_VALUE))
         {
             timeoutCount++;
         }
 
+#if defined (SOC_AM263PX)
+        if (!(SDL_TOG_interruptDone))
+#else
         if (!(handlerFlag))
+#endif
         {
             SDL_TOG_stop( instance );
             DebugP_log("   TOG test timed out \r\n");
@@ -447,6 +548,9 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
         }
         /* reset Done flag so we can run again */
         handlerFlag = false;
+#if defined (SOC_AM263PX)
+        SDL_TOG_interruptDone = false;
+#endif
     }
 
     return (result);

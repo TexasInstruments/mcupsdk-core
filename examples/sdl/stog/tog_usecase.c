@@ -398,7 +398,6 @@ void TOG_eventHandler( uint32_t instanceIndex )
 /* DDR Baseaddress 0x60000000 translated to system address 0x080000000 for instance 0 */
 /* For AM263px, this is the address of OSPI memory. */
 #define END_POINT_ACCESS 0x60000000
-//#define END_POINT_ACCESS  0x70040000
 /* According to instance, This END_POINT_ACCESS have to be changed */
 
 void TOG_injectESMError(uint32_t instanceIndex)
@@ -418,16 +417,21 @@ void TOG_injectESMError(uint32_t instanceIndex)
         /* Assert */
     }
     /* According to instance, need to access this Address*/
+#if !defined (SOC_AM263PX)
     SDL_REG32_RD(END_POINT_ACCESS);
+#else
+    /* Read from OSPI memory. */
+    status = (*(volatile uint32_t *)(END_POINT_ACCESS));
+#endif
 
     /* Call SDL API to set configure back to original timeout value */
-    cfg.timeoutVal = TOG_TEST_TIMEOUTVAL;
-    status = SDL_TOG_init(instance, &cfg);
-    if (status != SDL_PASS)
-    {
-        DebugP_log("   Configure back SDL_TOG_init TimeoutVal Failed \r\n");
-        /* Assert */
-    }
+   cfg.timeoutVal = TOG_TEST_TIMEOUTVAL;
+   status = SDL_TOG_init(instance, &cfg);
+   if (status != SDL_PASS)
+   {
+       DebugP_log("   Configure back SDL_TOG_init TimeoutVal Failed \r\n");
+       /* Assert */
+   }
 }
 
 int32_t tog_minTimeout(uint32_t instanceIndex)
@@ -522,7 +526,7 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
     if (result == 0)
     {
         /* Timeout if exceeds time */
-#if defined (SOC_AM6263PX)
+#if defined (SOC_AM263PX)
         while ((!SDL_TOG_interruptDone)
 #else
         while ((!handlerFlag)
@@ -532,7 +536,7 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
             timeoutCount++;
         }
 
-#if defined (SOC_AM6263PX)
+#if defined (SOC_AM263PX)
         if (!(SDL_TOG_interruptDone))
 #else
         if (!(handlerFlag))
@@ -545,11 +549,17 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
         }
         else
         {
+            #if defined (SOC_AM263PX)
+            DebugP_log("\r\nTOG Interrupt received \r\n");
+            #endif
             DebugP_log("\r\nSDL_TOG_stop complete \r\n");
             DebugP_log("\r\nAll tests have passed.\r\n");
         }
         /* reset Done flag so we can run again */
         handlerFlag = false;
+#if defined (SOC_AM263PX)
+        SDL_TOG_interruptDone = false;
+#endif
     }
 
     return (result);
