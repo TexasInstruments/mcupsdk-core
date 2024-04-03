@@ -3,7 +3,6 @@
 #
 # Python 3.10 script
 
-import bin2c
 import argparse
 import os
 import subprocess
@@ -15,6 +14,7 @@ import json
 import sys
 from textwrap import dedent
 sys.path.insert(0, '../bin2c/')
+import bin2c
 
 g_sha_to_use = "sha512"
 max_keyring_size = 8192
