@@ -3,8 +3,13 @@
 [TOC]
 
 # Introduction
-
+\cond SOC_AM64X || SOC_AM243X
 This example demonstrates the usage of the TOG module. The example shows how to listen for TOG error events using the ESM, and also forcing an error in order to demonstrate application notification of a timeout event.
+\endcond
+
+\cond SOC_AM263PX
+This example demonstrates the usage of the TOG module. The example shows how to listen for TOG error events using the interrupt, and also forcing an error in order to demonstrate application notification of a timeout event.
+\endcond
 
 The example demonstrates:
 
@@ -52,8 +57,9 @@ Use Cases
 - **When using makefiles to build**, note the required combination and build using
   make command (see \ref MAKEFILE_BUILD_PAGE)
 - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
-
+\cond SOC_AM64X || SOC_AM243X
 - **STOG_r5f**  STOG example for r5f core, First R5F binary should be loaded and run followed by M4F binary.
+\endcond
 
 # See Also
 
@@ -120,7 +126,9 @@ SDL_TOG_init.timeout complete
 
 SDL_TOG_start complete
 
-Waiting for reading END_POINT_ACCESS by R5F core...
+Data Abort exception
+
+TOG Interrupt received
 
 SDL_TOG_stop complete
 
