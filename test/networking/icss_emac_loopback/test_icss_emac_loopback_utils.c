@@ -1331,7 +1331,7 @@ int32_t ICSS_EMAC_testCallbackRxPacket3(void *icssEmacHandleVoidPtr, void *queue
                 if(packetLength)
                 {
                     // if (!(memcmp(&ICSS_EMAC_testPacketArrayInstance2_1[0], &ICSS_EMAC_testPkt3[0], ICSS_EMAC_TEST_PKT_SIZE)))
-                    if ((memcmp(&ICSS_EMAC_testPacketArrayInstance2_1[0], &ICSS_EMAC_testPkt2[0], packetLength)))
+                    if (!(memcmp(&ICSS_EMAC_testPacketArrayInstance2_1[0], &ICSS_EMAC_testPkt2[0], packetLength)))
                     {
                         DebugP_log("ICSS_EMAC_testTaskPruss2(PRU2 ETH1): received pkt: %d\r\n", ICSS_EMAC_testTotalPktRcvd);
                         ICSS_EMAC_testTotalPktRcvd++;
@@ -1350,6 +1350,7 @@ int32_t ICSS_EMAC_testCallbackRxPacket3(void *icssEmacHandleVoidPtr, void *queue
                             {
                                 DebugP_log("ICSS_EMAC_testTaskPruss2(PRU2 ETH1): DATA MISMATCH in received pkt in promiscuous mode: %d !\r\n", ICSS_EMAC_testTotalPktRcvd);
                             }
+                            /* DebugP_log("Unit Test Passed, Promiscuous mode packet mismatch occured\r\n"); */
                         }
                         else
                         {

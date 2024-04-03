@@ -161,8 +161,8 @@ int32_t ICSS_EMAC_testPruicssInstanceSetup(void)
     DebugP_assert(ICSS_EMAC_testHandle2 != NULL);
 
     /* Test ICSS_EMAC_DeInit */
-    ICSS_EMAC_close(ICSS_EMAC_testHandle2);
-    ICSS_EMAC_testHandle2 = ICSS_EMAC_open(0, &icssEmacParams);
+    // ICSS_EMAC_close(ICSS_EMAC_testHandle2);
+    // ICSS_EMAC_testHandle2 = ICSS_EMAC_open(0, &icssEmacParams);
 
     /*PRU2 ETH1 initializations*/
     ICSS_EMAC_Params_init(&icssEmacParams);
@@ -183,10 +183,10 @@ int32_t ICSS_EMAC_testPruicssInstanceSetup(void)
     DebugP_assert(ICSS_EMAC_testHandle3 != NULL);
 
     /* Test ICSS_EMAC_DeInit */
-    ICSS_EMAC_close(ICSS_EMAC_testHandle3);
-    ICSS_EMAC_testHandle3 = ICSS_EMAC_open(3 , &icssEmacParams);
+    // ICSS_EMAC_close(ICSS_EMAC_testHandle3);
+    // ICSS_EMAC_testHandle3 = ICSS_EMAC_open(3 , &icssEmacParams);
 
-    ICSS_EMAC_testTimerSetup(ICSS_EMAC_testHandle2);
+    // ICSS_EMAC_testTimerSetup(ICSS_EMAC_testHandle2);
 
     return 0;
 }

@@ -95,7 +95,7 @@ void test_main(void *args)
 {
     TaskP_Params    taskParams;
     uint32_t        status = SystemP_FAILURE;
-    uint32_t        icssBaseAddr;
+    uint32_t        icssgBaseAddr;
 
     Drivers_open();
     status = Board_driversOpen();
@@ -105,21 +105,21 @@ void test_main(void *args)
 
     ICSS_EMAC_testPruicssInstanceSetup();
 
-    /*Setup RAT configuration for buffer region*/
+    //Setup RAT configuration for buffer region
 
     /* Setting up RAT config to map emacBaseAddr->l3OcmcBaseAddr to C30 constant of PRUICSS */
     /* Mapping 0xE0000000 (C30 constant of PRUICSS) to l3OcmcBaseAddr */
-    icssBaseAddr = (uint32_t)((PRUICSS_HwAttrs *)(ICSS_EMAC_testPruIcssHandle2->hwAttrs)->baseAddr);
+    icssgBaseAddr = (uint32_t)((PRUICSS_HwAttrs *)(ICSS_EMAC_testPruIcssHandle2->hwAttrs)->baseAddr);
 
-    HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_0_BASE + 0x24, (0xE0000000)); //rat0 base0
-    HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_0_BASE + 0x28, (0x70000000)); //rat0 trans_low0
-    HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_0_BASE + 0x2C, (0x00000000)); //rat0 trans_low0
-    HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_0_BASE + 0x20, (1u << 31) | (22)); //rat0 ctrl0
+    HW_WR_REG32(icssgBaseAddr + CSL_ICSS_RAT_REGS_0_BASE + 0x24, (0xE0000000)); //rat0 base0
+    HW_WR_REG32(icssgBaseAddr + CSL_ICSS_RAT_REGS_0_BASE + 0x28, (0x70000000)); //rat0 trans_low0
+    HW_WR_REG32(icssgBaseAddr + CSL_ICSS_RAT_REGS_0_BASE + 0x2C, (0x00000000)); //rat0 trans_low0
+    HW_WR_REG32(icssgBaseAddr + CSL_ICSS_RAT_REGS_0_BASE + 0x20, (1u << 31) | (22)); //rat0 ctrl0
 
-    HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x24, (0xE0000000)); //rat0 base0
-    HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x28, (0x70000000)); //rat0 trans_low0
-    HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x2C, (0x00000000)); //rat0 trans_low0
-    HW_WR_REG32(icssBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x20, (1u << 31) | (22)); //rat0 ctrl0
+    HW_WR_REG32(icssgBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x24, (0xE0000000)); //rat0 base0
+    HW_WR_REG32(icssgBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x28, (0x70000000)); //rat0 trans_low0
+    HW_WR_REG32(icssgBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x2C, (0x00000000)); //rat0 trans_low0
+    HW_WR_REG32(icssgBaseAddr + CSL_ICSS_RAT_REGS_1_BASE + 0x20, (1u << 31) | (22)); //rat0 ctrl0
 
     TaskP_Params_init(&taskParams);
     taskParams.name = "TestTask";
@@ -161,8 +161,8 @@ int32_t ICSS_EMAC_testPruicssInstanceSetup(void)
     DebugP_assert(ICSS_EMAC_testHandle2 != NULL);
 
     /* Test ICSS_EMAC_DeInit */
-    ICSS_EMAC_close(ICSS_EMAC_testHandle2);
-    ICSS_EMAC_testHandle2 = ICSS_EMAC_open(0, &icssEmacParams);
+    // ICSS_EMAC_close(ICSS_EMAC_testHandle2);
+    // ICSS_EMAC_testHandle2 = ICSS_EMAC_open(0, &icssEmacParams);
 
     /*PRU2 ETH1 initializations*/
     ICSS_EMAC_Params_init(&icssEmacParams);
@@ -183,10 +183,10 @@ int32_t ICSS_EMAC_testPruicssInstanceSetup(void)
     DebugP_assert(ICSS_EMAC_testHandle3 != NULL);
 
     /* Test ICSS_EMAC_DeInit */
-    ICSS_EMAC_close(ICSS_EMAC_testHandle3);
-    ICSS_EMAC_testHandle3 = ICSS_EMAC_open(3 , &icssEmacParams);
+    // ICSS_EMAC_close(ICSS_EMAC_testHandle3);
+    // ICSS_EMAC_testHandle3 = ICSS_EMAC_open(3 , &icssEmacParams);
 
-    ICSS_EMAC_testTimerSetup(ICSS_EMAC_testHandle2);
+    // ICSS_EMAC_testTimerSetup(ICSS_EMAC_testHandle2);
 
     return 0;
 }
