@@ -1,34 +1,33 @@
 /*
- * Copyright (c) 2001,2002 Florian Schulze.
- * All rights reserved.
+ * Copyright (C) 2024 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
  *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the authors nor the names of the contributors
- *    may be used to endorse or promote products derived from this software
- *    without specific prior written permission.
+ *   Redistributions of source code must retain the above copyright
+ *   notice, this list of conditions and the following disclaimer.
  *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHORS AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHORS OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
+ *   Redistributions in binary form must reproduce the above copyright
+ *   notice, this list of conditions and the following disclaimer in the
+ *   documentation and/or other materials provided with the
+ *   distribution.
  *
- * test.c - This file is part of lwIP test
+ *   Neither the name of Texas Instruments Incorporated nor the names of
+ *   its contributors may be used to endorse or promote products derived
+ *   from this software without specific prior written permission.
  *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 
@@ -674,11 +673,8 @@ int32_t ICSS_EMAC_testPruicssInstanceSetup(void)
     icssEmacParams.fwVlanFilterParams = &icss_emacFwVlanFilterCfg;
     icssEmacParams.fwMulticastFilterParams = &icss_emacFwMulticastFilterCfg;
     icssEmacParams.pruicssHandle = pruicssHandle;
-    // icssEmacParams.callBackObject.port0LinkCallBack.callBack = (ICSS_EMAC_CallBack)ICSS_EMAC_testLinkIsrCb;
-    // icssEmacParams.callBackObject.port0LinkCallBack.userArg = (void*)ICSS_EMAC_TEST_PRU2ETH0;
     icssEmacParams.callBackObject.rxNRTCallBack.callBack = (ICSS_EMAC_CallBack)Lwip2Emac_serviceRx;
     icssEmacParams.callBackObject.rxNRTCallBack.userArg = (void*)(lwipifHandle);
-    // icssEmacParams.callBackObject.txCallBack.callBack = (ICSS_EMAC_CallBack)ICSS_EMAC_testCallbackTxComplete;
     icssEmacParams.ethphyHandle[0] = gEthPhyHandle[CONFIG_ETHPHY0];
     memcpy(&(icssEmacParams.macId[0]), &(ICSS_EMAC_testLclMac0[0]), 6);
 
@@ -736,7 +732,6 @@ int icss_lwip_example(void *args)
 #else
     ICSS_EMAC_testBoardInit();
 #endif
-    // app_getEmacHandle(lwipifHandle);
 
 #ifdef AM263PX_CC
     setIOExpMuxSelection(NULL);
@@ -829,7 +824,7 @@ void icssmMuxSelection(void)
  *  On-Board PHY               ->  PRU0 MII0
  *  ETHERNET ADD-ON CONNECTOR  ->  PRU1 MII1
  *
- * Refer to Ethenet Routing in AM263Px User Guide for more details
+ * Refer to Ethernet Routing in AM263Px User Guide for more details
  */
 void setIOExpMuxSelection(void *args)
 {

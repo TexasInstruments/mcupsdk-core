@@ -118,8 +118,6 @@ function updateConfig(inst, config)
     config.linkIntNum = INTERRUPT_OFFSET_ICSS[inst.instance] + PORT_INT_OFFSET["linkIntNum"][port];
     config.rxIntNum = INTERRUPT_OFFSET_ICSS[inst.instance] + PORT_INT_OFFSET["rxIntNum"][port];
     config.txIntNum = INTERRUPT_OFFSET_ICSS[inst.instance] + PORT_INT_OFFSET["txIntNum"][port];
-//    config.phyAddr[0] = inst.phyAddr0;
-//    config.phyAddr[1] = inst.phyAddr1;
     config.ethPrioQueue = `ICSS_EMAC_${inst.queue}`;
     config.pktBufSize = inst.pktBufSizeKB*1024;
 }

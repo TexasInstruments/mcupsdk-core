@@ -60,9 +60,6 @@
             -DHALF_DUPLEX_ENABLED
             -DICSS_DUAL_EMAC_BUILD
             -DPTP
-            -eo.$(OBJEXT)
-            -fr=$(OBJDIR)
-            -fs=$(OBJDIR)
             -DSOC_AM263X
         "
         linkerBuildOptions="
@@ -79,9 +76,6 @@
             --reread_libs
             --warn_sections
             --entry_point=micro_scheduler
-            -v3
-            --hardware_mac=on
-            -z
         "
 
         postBuildStep="

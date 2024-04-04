@@ -58,9 +58,10 @@ const cflags = {
         "-DICSS_DUAL_EMAC_BUILD",
         "-DPTP",
 
-        "-eo.$(OBJEXT)",
-        "-fr=$(OBJDIR)",
-        "-fs=$(OBJDIR)",
+        //Need to fix these flags
+        //"-eo.$(OBJEXT)",
+        //"-fr=$(OBJDIR)",
+        //"-fs=$(OBJDIR)",
     ],
 };
 
@@ -78,9 +79,10 @@ const lflags = {
         "--warn_sections",
         "--entry_point=micro_scheduler",
 
-        "-v3",
-        "--hardware_mac=on",
-        "-z",
+        //Need to fix these flags
+        //"-v3",
+        //"--hardware_mac=on",
+        //"-z", //
     ],
 };
 
