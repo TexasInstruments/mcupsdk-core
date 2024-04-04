@@ -194,6 +194,7 @@ help:
 	@echo  $(MAKE) -s -C drivers/mcspi/mcspi_controller_peripheral/am64x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/soc/soc_r5f/am64x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C networking/lwip/enet_multicore_lwip/am64x-evm/system_enet_multicore_lwip [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C syscfg/syscfg_combo_1/am64x-evm/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C syscfg/syscfg_combo_1/am64x-sk/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  .
@@ -428,6 +429,7 @@ BUILD_COMBO_EXAMPLE_ALL += ipc_safeipc_test_am64x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_mcspi_controller_peripheral_am64x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += test_soc_r5f_am64x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += enet_multicore_lwip_am64x-evm_system_enet_multicore_lwip
+BUILD_COMBO_EXAMPLE_ALL += enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg
 BUILD_COMBO_EXAMPLE_ALL += test_syscfg_combo_1_am64x-evm_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += test_syscfg_combo_1_am64x-sk_system_freertos_nortos
 
@@ -885,6 +887,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  enet_multicore_lwip_am64x-evm_system_enet_multicore_lwip:
 	$(MAKE) -C networking/lwip/enet_multicore_lwip/am64x-evm/system_enet_multicore_lwip -f makefile all
 
+ enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg:
+	$(MAKE) -C networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile all
+
  test_syscfg_combo_1_am64x-evm_system_freertos_nortos:
 	$(MAKE) -C syscfg/syscfg_combo_1/am64x-evm/system_freertos_nortos -f makefile all
 
@@ -1042,6 +1047,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += ipc_safeipc_test_am64x-evm_system_freertos_nort
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mcspi_controller_peripheral_am64x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_soc_r5f_am64x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_multicore_lwip_am64x-evm_system_enet_multicore_lwip_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_syscfg_combo_1_am64x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_syscfg_combo_1_am64x-sk_system_freertos_nortos_clean
 
@@ -1495,6 +1501,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  enet_multicore_lwip_am64x-evm_system_enet_multicore_lwip_clean:
 	$(MAKE) -C networking/lwip/enet_multicore_lwip/am64x-evm/system_enet_multicore_lwip -f makefile clean
 
+ enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_clean:
+	$(MAKE) -C networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile clean
+
  test_syscfg_combo_1_am64x-evm_system_freertos_nortos_clean:
 	$(MAKE) -C syscfg/syscfg_combo_1/am64x-evm/system_freertos_nortos -f makefile clean
 
@@ -1652,6 +1661,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += ipc_safeipc_test_am64x-evm_system_freertos_nort
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mcspi_controller_peripheral_am64x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_soc_r5f_am64x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_multicore_lwip_am64x-evm_system_enet_multicore_lwip_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_syscfg_combo_1_am64x-evm_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_syscfg_combo_1_am64x-sk_system_freertos_nortos_scrub
 
@@ -2104,6 +2114,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  enet_multicore_lwip_am64x-evm_system_enet_multicore_lwip_scrub:
 	$(MAKE) -C networking/lwip/enet_multicore_lwip/am64x-evm/system_enet_multicore_lwip -f makefile scrub
+
+ enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_scrub:
+	$(MAKE) -C networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile scrub
 
  test_syscfg_combo_1_am64x-evm_system_freertos_nortos_scrub:
 	$(MAKE) -C syscfg/syscfg_combo_1/am64x-evm/system_freertos_nortos -f makefile scrub

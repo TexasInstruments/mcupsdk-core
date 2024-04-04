@@ -467,7 +467,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_nortos_am64x-evm_system_no
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += cdc_echo_freertos_am64x-evm_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_stog_r5f_am64x-evm_system_nortos_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_build
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
 # Various Private Example Projectspec Build Targets
@@ -1898,9 +1897,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  sdl_stog_r5f_am64x-evm_system_nortos_build:
 	$(MAKE) -C examples/sdl/stog_r5f/am64x-evm/system_nortos -f makefile_projectspec all
 
- enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_build:
-	$(MAKE) -C test/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile_projectspec all
-
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
@@ -2365,7 +2361,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_nortos_am64x-evm_system_no
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += cdc_echo_freertos_am64x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_stog_r5f_am64x-evm_system_nortos_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_clean
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
 # Various Private Example Projectspec Clean Targets
@@ -3796,9 +3791,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  sdl_stog_r5f_am64x-evm_system_nortos_clean:
 	$(MAKE) -C examples/sdl/stog_r5f/am64x-evm/system_nortos -f makefile_projectspec clean
 
- enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_clean:
-	$(MAKE) -C test/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile_projectspec clean
-
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
@@ -4263,7 +4255,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_nortos_am64x-evm_system_n
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += cdc_echo_freertos_am64x-evm_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_stog_r5f_am64x-evm_system_nortos_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_export
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
 # Various Private Example Projectspec Export Targets
@@ -5694,9 +5685,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  sdl_stog_r5f_am64x-evm_system_nortos_export:
 	$(MAKE) -C examples/sdl/stog_r5f/am64x-evm/system_nortos -f makefile_projectspec export
 
- enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_export:
-	$(MAKE) -C test/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile_projectspec export
-
 
 # Import extra components into CCS workspace before creating a project
 # Setup dependency separately so that it runs if one or all projects are built via the makefile
@@ -6199,7 +6187,6 @@ help:
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am64x-evm/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/stog_r5f/am64x-evm/system_nortos -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C test/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile_projectspec [export all clean]
 	@echo  .
 
 .PHONY: all all-private

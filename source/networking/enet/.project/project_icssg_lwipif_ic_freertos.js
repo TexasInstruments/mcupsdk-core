@@ -6,7 +6,9 @@ const files = {
         /* lwip if ic */
         "lwip_ic.c",
         "lwip2lwipif_ic.c",
-        "ShdMemCircularBufferP_nortos.c"
+        "ShdMemCircularBufferP_nortos.c",
+        "pbufQ_ic.c",
+        "custom_pbuf_ic.c"
     ],
 };
 

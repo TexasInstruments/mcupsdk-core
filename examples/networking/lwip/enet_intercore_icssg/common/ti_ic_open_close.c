@@ -57,10 +57,19 @@
 #include <kernel/dpl/SemaphoreP.h>
 
 #include "ti_ic_open_close.h"
+#include "custom_pbuf_ic.h"
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
+#define IC_MAX_QUEUE_LEN (64U)
+
+/* These must be sufficient for total number of rx pbufs and tx packets */
+pbufIcNode gFreeIcPbufArr[IC_MAX_QUEUE_LEN * SHDMEM_CIRCULAR_BUFFER_MAX_QUEUES];
+
+LWIP_MEMPOOL_DECLARE(IC_CUSTOM_POOL, IC_MAX_QUEUE_LEN, sizeof(Ic_CustomPbuf), "Ic Custom Pbuf pool");
+
+uint8_t gBufferPool[IC_MAX_QUEUE_LEN][PBUF_POOL_BUFSIZE];
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -83,22 +92,22 @@ const LwipIc_QueueTbl gLwipIcQueueTbl[SHDMEM_CIRCULAR_BUFFER_MAX_QUEUES]=
 {
     {
         .pShdMemBuffStartAdd  = (void *)0xA0400000U,
-        .elemCount            = 8U,
+        .elemCount            = 16U,
         .elemSize             = SHDMEM_CIRCULAR_BUFFER_MAX_ELEM_SIZE,
     },
     {
         .pShdMemBuffStartAdd  = (void *)0xA0500000U,
-        .elemCount            = 8U,
+        .elemCount            = 16U,
         .elemSize             = SHDMEM_CIRCULAR_BUFFER_MAX_ELEM_SIZE,
     },
     {
         .pShdMemBuffStartAdd  = (void *)0xA0600000U,
-        .elemCount            = 8U,
+        .elemCount            = 16U,
         .elemSize             = SHDMEM_CIRCULAR_BUFFER_MAX_ELEM_SIZE,
     },
     {
         .pShdMemBuffStartAdd  = (void *)0xA0700000U,
-        .elemCount            = 8U,
+        .elemCount            = 16U,
         .elemSize             = SHDMEM_CIRCULAR_BUFFER_MAX_ELEM_SIZE,
     },
 };
@@ -175,6 +184,8 @@ Ic_Object_Handle App_doIcOpen(uint32_t instId)
 {
     Ic_Object_Handle hIcObj = NULL;
     int32_t status;
+    Ic_CustomPbuf *cPbuf;
+    uint32_t numCustomPbuf = 0U;
 
     hIcObj = App_acquireIcHandle(instId);
     LwipIc_assert(hIcObj != NULL);
@@ -206,6 +217,7 @@ Ic_Object_Handle App_doIcOpen(uint32_t instId)
                                                   gLwipIcQueueTbl[hIcObj->rxQId].elemSize);
     LwipIc_assert(hIcObj->shmTxQ != NULL);
     LwipIc_assert(hIcObj->shmRxQ != NULL);
+    numCustomPbuf = gLwipIcQueueTbl[hIcObj->txQId].elemCount + gLwipIcQueueTbl[hIcObj->rxQId].elemCount;
 
 #if (!IC_ETH_RX_POLLING_MODE)
     /* Initialize IPC */
@@ -213,6 +225,26 @@ Ic_Object_Handle App_doIcOpen(uint32_t instId)
     LwipIc_assert(status == LWIPIC_OK);
     hIcObj->pktNotifyThresh = IC_PKT_NOTIFY_THRESHOLD;
 #endif
+
+
+    pbufQ_ic_init(&hIcObj->freePbufQ);
+    pbufQ_ic_init_freeQ(gFreeIcPbufArr, numCustomPbuf);
+    LWIP_MEMPOOL_INIT(IC_CUSTOM_POOL);
+    for (uint32_t i = 0U; i < numCustomPbuf; i++)
+    {
+        /* Allocate the Custom Pbuf structures and put them in freePbufInfoQ */
+        cPbuf = NULL;
+        cPbuf = (Ic_CustomPbuf*)LWIP_MEMPOOL_ALLOC(IC_CUSTOM_POOL);
+        LwipIc_assert(cPbuf != NULL);
+        cPbuf->p.custom_free_function = custom_pbuf_ic_free;
+        cPbuf->customPbufArgs         = (Ic_CustomPbuf_Args)(hIcObj);
+        cPbuf->orgBufLen              = 0U;
+        cPbuf->orgBufPtr              = &gBufferPool[i][0];
+        cPbuf->p.pbuf.payload         = &gBufferPool[i][0];
+        cPbuf->p.pbuf.next            = NULL;
+        cPbuf->p.pbuf.flags          |= PBUF_FLAG_IS_CUSTOM;
+        pbufQ_ic_enQ(&hIcObj->freePbufQ, (struct pbuf*)(cPbuf));
+    }
 
     /* If we are the owner of this interface then initialize shared memory
      * transport otherwise wait here until it is initialized by the owner

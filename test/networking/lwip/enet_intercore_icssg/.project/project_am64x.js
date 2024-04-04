@@ -86,6 +86,7 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am64x",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwip_ic",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwip_ic/lwipific/inc",
         "${MCU_PLUS_SDK_PATH}/examples/networking/lwip/enet_intercore_icssg/common",
 
     ],
@@ -191,7 +192,7 @@ function getComponentProperty() {
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
     property.name = "enet_intercore_icssg";
-    property.isInternal = false;
+    property.isInternal = true;
     property.buildOptionCombos = buildOptionCombos;
 
     return property;

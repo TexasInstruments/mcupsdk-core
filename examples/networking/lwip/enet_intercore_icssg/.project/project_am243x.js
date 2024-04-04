@@ -85,6 +85,7 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am243x",
         "${MCU_PLUS_SDK_PATH}/examples/networking/lwip/enet_lwip_icssg/extPhyMgmt",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwip_ic",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwip_ic/lwipific/inc",
         "${MCU_PLUS_SDK_PATH}/examples/networking/lwip/enet_intercore_icssg/common",
     ],
 };

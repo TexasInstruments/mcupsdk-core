@@ -205,7 +205,6 @@ const example_file_list = [
     "examples/networking/enet_vlan_icssg/.project/project.js",
     "examples/networking/lwip/enet_icssg_tcpserver/.project/project.js",
     "examples/networking/lwip/enet_lwip_icssg/.project/project.js",
-    "examples/networking/lwip/enet_intercore_icssg/.project/project.js",
     "examples/pru_io/adc/ads85x8/.project/project.js",
     "examples/pru_io/adc/ads85x8/firmware/.project/project.js",
     "examples/pru_io/adc/ads127/.project/project.js",

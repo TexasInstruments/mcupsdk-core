@@ -579,7 +579,6 @@ help:
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am64x-evm/system_freertos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/stog_r5f/am64x-evm/system_nortos [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C test/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg [all clean syscfg-gui syscfg]
 	@echo  .
 
 # Various Component Targets
@@ -1535,7 +1534,6 @@ BUILD_COMBO_EXAMPLE_ALL += cdc_echo_nortos_am64x-evm_system_nortos
 BUILD_COMBO_EXAMPLE_ALL += cdc_echo_freertos_am64x-evm_system_freertos
 BUILD_COMBO_EXAMPLE_ALL += enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg
 BUILD_COMBO_EXAMPLE_ALL += sdl_stog_r5f_am64x-evm_system_nortos
-BUILD_COMBO_EXAMPLE_ALL += enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg
 
 
 
@@ -2935,9 +2933,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sdl_stog_r5f_am64x-evm_system_nortos:
 	$(MAKE) -C examples/sdl/stog_r5f/am64x-evm/system_nortos -f makefile all
 
- enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg:
-	$(MAKE) -C test/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile all
-
 
 BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
@@ -3368,7 +3363,6 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_nortos_am64x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += cdc_echo_freertos_am64x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_stog_r5f_am64x-evm_system_nortos_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_clean
 
 
 BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL =
@@ -4764,9 +4758,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sdl_stog_r5f_am64x-evm_system_nortos_clean:
 	$(MAKE) -C examples/sdl/stog_r5f/am64x-evm/system_nortos -f makefile clean
 
- enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_clean:
-	$(MAKE) -C test/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile clean
-
 
 BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
@@ -5197,7 +5188,6 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_nortos_am64x-evm_system_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += cdc_echo_freertos_am64x-evm_system_freertos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_stog_r5f_am64x-evm_system_nortos_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_scrub
 
 
 BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
@@ -6592,9 +6582,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  sdl_stog_r5f_am64x-evm_system_nortos_scrub:
 	$(MAKE) -C examples/sdl/stog_r5f/am64x-evm/system_nortos -f makefile scrub
-
- enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_scrub:
-	$(MAKE) -C test/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile scrub
 
 
 sbl: libs

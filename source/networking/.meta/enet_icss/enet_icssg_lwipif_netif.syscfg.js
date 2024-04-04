@@ -97,6 +97,20 @@ function getEnet2TxChIdMap()
 
 function validate(instance, report)
 {
+    if (instance.mode === "SWITCH")
+    {
+        if (getDefaultNetifCount() > 1)
+        {
+            report.logError(`Switch case should have only one default netif`, instance, "netifInstance");
+        }
+    }
+    if (instance.mode === "DUAL MAC")
+    {
+        if (getDefaultNetifCount() > 1)
+        {
+            report.logError(`DUAL MAC case should have only one default netif`, instance, "netifInstance");
+        }
+    }
     for(let i = 0; i < module.$instances.length; i++)
      {
         for (let Idx = 0; Idx < module.getNetifCount(module.$instances[i]); Idx++)

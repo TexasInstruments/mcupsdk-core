@@ -16022,76 +16022,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Enet Intercore Icssg Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "enet_intercore_icssg",
-        "location": "../../test/networking/lwip/enet_intercore_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "test",
-            "networking",
-            "lwip",
-            "enet_intercore_icssg",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Enet Intercore Icssg Example. CPU is R5FSS0-1 running FREERTOS.",
-        "name": "enet_intercore_icssg",
-        "location": "../../test/networking/lwip/enet_intercore_icssg/am64x-evm/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "..",
-            "test",
-            "networking",
-            "lwip",
-            "enet_intercore_icssg",
-            "r5fss0-1_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "A Benchmark Demo System Example.",
         "name": "benchmark_demo",
         "location": "../../examples/benchmarks/benchmark_demo/am64x-evm/system_nortos/system.projectspec",
@@ -16816,38 +16746,6 @@
             "sdl",
             "stog_r5f",
             "system_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Enet Intercore Icssg System Example.",
-        "name": "enet_intercore_icssg",
-        "location": "../../test/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg/system.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "subCategories": [
-            "..",
-            "test",
-            "networking",
-            "lwip",
-            "enet_intercore_icssg",
-            "system_enet_intercore_icssg"
         ],
         "mainCategories": [
             [
