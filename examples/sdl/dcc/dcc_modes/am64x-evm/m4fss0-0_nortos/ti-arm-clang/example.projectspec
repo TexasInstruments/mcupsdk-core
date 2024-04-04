@@ -10,8 +10,8 @@
     </applicability>
 
     <project
-        title="Dcc Test"
-        name = "dcc_test_am64x-evm_m4fss0-0_nortos_ti-arm-clang"
+        title="Dcc"
+        name = "dcc_am64x-evm_m4fss0-0_nortos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
                 Debug,
@@ -49,7 +49,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${MCU_PLUS_SDK_PATH}/source/sdl/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=dcc_test.${ConfigName}.map
+            -m=dcc.${ConfigName}.map
             --ram_model
             --reread_libs
         "
@@ -61,7 +61,7 @@
             --context m4fss0-0 --part Default --package ALV
         "
 
-        description="A Dcc Test NORTOS project">
+        description="A Dcc NORTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="

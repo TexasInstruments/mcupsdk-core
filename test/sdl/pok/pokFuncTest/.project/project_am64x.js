@@ -109,7 +109,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "pok_func_test";
+    property.name = "sdl_pok_test_app";
     property.isInternal = true;
     property.skipProjectSpec = true;
     property.buildOptionCombos = buildOptionCombos;
@@ -126,7 +126,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
-    
+
 	 if(buildOption.cpu.match(/m4f*/)) {
         build_property.libs = libs_m4f;
         build_property.templates = templates_nortos_m4f;

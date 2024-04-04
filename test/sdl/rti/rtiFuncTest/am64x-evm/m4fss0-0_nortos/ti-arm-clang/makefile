@@ -24,17 +24,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=sdl_rti_test_app.$(PROFILE).out
+OUTNAME:=rti_func_test_app.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=sdl_rti_test_app.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=sdl_rti_test_app.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=sdl_rti_test_app.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=sdl_rti_test_app.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=sdl_rti_test_app.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=sdl_rti_test_app.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=sdl_rti_test_app.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=sdl_rti_test_app.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=rti_func_test_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=rti_func_test_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=rti_func_test_app.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=rti_func_test_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=rti_func_test_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=rti_func_test_app.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=rti_func_test_app.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=rti_func_test_app.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 FILES_common := \
@@ -205,7 +205,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am64x:m4fss0-0:nortos:ti-arm-clang sdl_rti_test_app ...
+	@echo  Scrubing: am64x:m4fss0-0:nortos:ti-arm-clang rti_func_test_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -320,12 +320,12 @@ else
 endif
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for sdl_rti_test_app.$(PROFILE) ...
+	@echo Creating Coverage Report for rti_func_test_app.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o sdl_rti_test_app.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=sdl_rti_test_app.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=sdl_rti_test_app.$(PROFILE).profdata > coverage/sdl_rti_test_app.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/sdl_rti_test_app.$(PROFILE).profdata.json --output-json=coverage/sdl_rti_test_app.$(PROFILE).analysis.json --output=../sdl_rti_test_app.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o rti_func_test_app.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=rti_func_test_app.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=rti_func_test_app.$(PROFILE).profdata > coverage/rti_func_test_app.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/rti_func_test_app.$(PROFILE).profdata.json --output-json=coverage/rti_func_test_app.$(PROFILE).analysis.json --output=../rti_func_test_app.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

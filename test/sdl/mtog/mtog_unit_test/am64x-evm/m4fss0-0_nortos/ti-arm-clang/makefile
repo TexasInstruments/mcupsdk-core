@@ -24,17 +24,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=mtog_unit_test.$(PROFILE).out
+OUTNAME:=mtog_test_app.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=mtog_unit_test.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=mtog_unit_test.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=mtog_unit_test.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=mtog_unit_test.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=mtog_unit_test.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=mtog_unit_test.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=mtog_unit_test.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=mtog_unit_test.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=mtog_test_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=mtog_test_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=mtog_test_app.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=mtog_test_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=mtog_test_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=mtog_test_app.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=mtog_test_app.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=mtog_test_app.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 FILES_common := \
@@ -205,7 +205,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am64x:m4fss0-0:nortos:ti-arm-clang mtog_unit_test ...
+	@echo  Scrubing: am64x:m4fss0-0:nortos:ti-arm-clang mtog_test_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -320,12 +320,12 @@ else
 endif
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for mtog_unit_test.$(PROFILE) ...
+	@echo Creating Coverage Report for mtog_test_app.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o mtog_unit_test.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=mtog_unit_test.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=mtog_unit_test.$(PROFILE).profdata > coverage/mtog_unit_test.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/mtog_unit_test.$(PROFILE).profdata.json --output-json=coverage/mtog_unit_test.$(PROFILE).analysis.json --output=../mtog_unit_test.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o mtog_test_app.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=mtog_test_app.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=mtog_test_app.$(PROFILE).profdata > coverage/mtog_test_app.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/mtog_test_app.$(PROFILE).profdata.json --output-json=coverage/mtog_test_app.$(PROFILE).analysis.json --output=../mtog_test_app.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

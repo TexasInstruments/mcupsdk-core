@@ -24,17 +24,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=test_ecc_unit.$(PROFILE).out
+OUTNAME:=ecc_test_app.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=test_ecc_unit.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=test_ecc_unit.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=test_ecc_unit.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=test_ecc_unit.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=test_ecc_unit.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=test_ecc_unit.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=test_ecc_unit.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=test_ecc_unit.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=ecc_test_app.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=ecc_test_app.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=ecc_test_app.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=ecc_test_app.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=ecc_test_app.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=ecc_test_app.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=ecc_test_app.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=ecc_test_app.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 FILES_common := \
@@ -216,7 +216,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am64x:r5fss0-0:nortos:ti-arm-clang test_ecc_unit ...
+	@echo  Scrubing: am64x:r5fss0-0:nortos:ti-arm-clang ecc_test_app ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -331,12 +331,12 @@ else
 endif
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for test_ecc_unit.$(PROFILE) ...
+	@echo Creating Coverage Report for ecc_test_app.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o test_ecc_unit.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=test_ecc_unit.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=test_ecc_unit.$(PROFILE).profdata > coverage/test_ecc_unit.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/test_ecc_unit.$(PROFILE).profdata.json --output-json=coverage/test_ecc_unit.$(PROFILE).analysis.json --output=../test_ecc_unit.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o ecc_test_app.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=ecc_test_app.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=ecc_test_app.$(PROFILE).profdata > coverage/ecc_test_app.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/ecc_test_app.$(PROFILE).profdata.json --output-json=coverage/ecc_test_app.$(PROFILE).analysis.json --output=../ecc_test_app.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))

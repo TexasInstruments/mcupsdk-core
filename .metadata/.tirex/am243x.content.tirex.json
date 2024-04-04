@@ -25081,7 +25081,7 @@
             "example.general"
         ],
         "description": "This example verifies DCC in various modes of operation CPU is R5FSS0-0 running NORTOS.",
-        "name": "dcc_test",
+        "name": "dcc",
         "location": "../../examples/sdl/dcc/dcc_modes/am243x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_GP_EVM"
@@ -25114,7 +25114,7 @@
             "example.general"
         ],
         "description": "This example verifies DCC in various modes of operation CPU is M4FSS0-0 running NORTOS.",
-        "name": "dcc_test",
+        "name": "dcc",
         "location": "../../examples/sdl/dcc/dcc_modes/am243x-evm/m4fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_GP_EVM"
