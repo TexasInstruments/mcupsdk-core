@@ -1,57 +1,57 @@
 ;
 ;  TEXAS INSTRUMENTS TEXT FILE LICENSE
-; 
-;   Copyright (c) 2017-2018 Texas Instruments Incorporated
-; 
+;
+;   Copyright (c) 2024 Texas Instruments Incorporated
+;
 ;  All rights reserved not granted herein.
-;  
-;  Limited License.  
-; 
-;  Texas Instruments Incorporated grants a world-wide, royalty-free, non-exclusive 
-;  license under copyrights and patents it now or hereafter owns or controls to 
-;  make, have made, use, import, offer to sell and sell ("Utilize") this software 
-;  subject to the terms herein.  With respect to the foregoing patent license, 
-;  such license is granted  solely to the extent that any such patent is necessary 
-;  to Utilize the software alone.  The patent license shall not apply to any 
-;  combinations which include this software, other than combinations with devices 
+;
+;  Limited License.
+;
+;  Texas Instruments Incorporated grants a world-wide, royalty-free, non-exclusive
+;  license under copyrights and patents it now or hereafter owns or controls to
+;  make, have made, use, import, offer to sell and sell ("Utilize") this software
+;  subject to the terms herein.  With respect to the foregoing patent license,
+;  such license is granted  solely to the extent that any such patent is necessary
+;  to Utilize the software alone.  The patent license shall not apply to any
+;  combinations which include this software, other than combinations with devices
 ;  manufactured by or for TI (“TI Devices”).  No hardware patent is licensed hereunder.
-; 
-;  Redistributions must preserve existing copyright notices and reproduce this license 
-;  (including the above copyright notice and the disclaimer and (if applicable) source 
-;  code license limitations below) in the documentation and/or other materials provided 
+;
+;  Redistributions must preserve existing copyright notices and reproduce this license
+;  (including the above copyright notice and the disclaimer and (if applicable) source
+;  code license limitations below) in the documentation and/or other materials provided
 ;  with the distribution.
-;  
-;  Redistribution and use in binary form, without modification, are permitted provided 
+;
+;  Redistribution and use in binary form, without modification, are permitted provided
 ;  that the following conditions are met:
-; 	No reverse engineering, decompilation, or disassembly of this software is 
+; 	No reverse engineering, decompilation, or disassembly of this software is
 ;   permitted with respect to any software provided in binary form.
 ; 	Any redistribution and use are licensed by TI for use only with TI Devices.
-; 	Nothing shall obligate TI to provide you with source code for the software 
+; 	Nothing shall obligate TI to provide you with source code for the software
 ;   licensed and provided to you in object code.
-;  
-;  If software source code is provided to you, modification and redistribution of the 
+;
+;  If software source code is provided to you, modification and redistribution of the
 ;  source code are permitted provided that the following conditions are met:
-; 	Any redistribution and use of the source code, including any resulting derivative 
+; 	Any redistribution and use of the source code, including any resulting derivative
 ;   works, are licensed by TI for use only with TI Devices.
 ; 	Any redistribution and use of any object code compiled from the source code
 ;   and any resulting derivative works, are licensed by TI for use only with TI Devices.
-; 
-;  Neither the name of Texas Instruments Incorporated nor the names of its suppliers 
-;  may be used to endorse or promote products derived from this software without 
+;
+;  Neither the name of Texas Instruments Incorporated nor the names of its suppliers
+;  may be used to endorse or promote products derived from this software without
 ;  specific prior written permission.
-; 
+;
 ;  DISCLAIMER.
-; 
-;  THIS SOFTWARE IS PROVIDED BY TI AND TI’S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED 
-;  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY 
-;  AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND TI’S 
-;  LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-;  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE 
-;  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
-;  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-;  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, 
+;
+;  THIS SOFTWARE IS PROVIDED BY TI AND TI’S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED
+;  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+;  AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND TI’S
+;  LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+;  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+;  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+;  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+;  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 ;  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-; 
+;
 ; file:   icss_ptp_macro.h
 ;
 ; brief:  Implements common macros & defines.
@@ -68,7 +68,7 @@ M_SET_TX_TS_AVAILABLE_PKT_P1    .macro
     ;set an interrupt
     LDI        R31, 0x2a       ; Maps to system event 26
     .endm
-    
+
 ;---------------------------------------------------------------------------------------------------------
 ; Macro Name: M_SET_TX_TS_AVAILABLE_PKT_P2
 ; Description: Let the host know there is a Timestamp available. For Port 1
@@ -78,8 +78,8 @@ M_SET_TX_TS_AVAILABLE_PKT_P1    .macro
 M_SET_TX_TS_AVAILABLE_PKT_P2    .macro
     ;set an interrupt
     LDI        R31, 0x2b       ; Maps to system event 27
-    .endm   
-    
+    .endm
+
 ;---------------------------------------------------------------------------------------------------------
 ; Macro Name: M_GPTP_ASSIGN_QOS
 ; Description: Assign PTP frame to highest priority queue
@@ -106,11 +106,11 @@ M_GPTP_ASSIGN_QOS    .macro
 
     .endif ;ICSS_SWITCH_BUILD
 
-    
+
     QBA     FB_QOS_LOADED
 NOT_A_PTP_FRAME_2:
-    .endm 
-    
+    .endm
+
 ;---------------------------------------------------------------------------------------------------------
 ; Macro Name: M_GPTP_CHECK_AND_SET_FLAGS
 ; Description: Checks for PTP mac ID and sets host and fwd flags including the PTP R22 flag
@@ -122,18 +122,18 @@ M_GPTP_CHECK_AND_SET_FLAGS    .macro
     CLR     R22, R22, RX_IS_VLAN_BIT
     ;This code is used to control PTP packet forwarding from driver, if mem location
     ;is set to 1 then FW skips the flow. By default (0) flow is taken
-    LBCO    &RCV_TEMP_REG_3.b0, ICSS_SHARED_CONST, DISABLE_PTP_FRAME_FORWARDING_CTRL_OFFSET, 1    
+    LBCO    &RCV_TEMP_REG_3.b0, ICSS_SHARED_CONST, DISABLE_PTP_FRAME_FORWARDING_CTRL_OFFSET, 1
     ;PTP_HSR_NON_LL_MAC_ID_L is 0
     QBNE    CHECK_PTP_LINK_LOCAL_RX, R3.w0, 0
     LDI32   RCV_TEMP_REG_2, PTP_HSR_PRP_NON_LL_MAC_ID_H
     QBNE    CHECK_PTP_LINK_LOCAL_RX, R2, RCV_TEMP_REG_2
     .if $defined(ICSS_SWITCH_BUILD)
-        QBEQ    SKIP_PTP_FWD_FLAG_SET_1, RCV_TEMP_REG_3.b0, 1      
+        QBEQ    SKIP_PTP_FWD_FLAG_SET_1, RCV_TEMP_REG_3.b0, 1
         SET     MII_RCV.rx_flags, MII_RCV.rx_flags, fwd_flag_shift
 SKIP_PTP_FWD_FLAG_SET_1:
     .endif ;ICSS_SWITCH_BUILD
     QBA     SET_PTP_TAG_RX
-    
+
 CHECK_PTP_LINK_LOCAL_RX:
     LDI     RCV_TEMP_REG_2.w0, PTP_HSR_PRP_LL_MAC_ID_L
     QBNE    CHECK_UDP_PTP, R3.w0, RCV_TEMP_REG_2.w0
@@ -149,10 +149,10 @@ SET_PTP_TAG_RX:
 CHECK_UDP_PTP:
     LDI     RCV_TEMP_REG_2.w0, PTP_E2E_UDP_MAC_ID_H & 0xFFFF
     LDI     RCV_TEMP_REG_2.w2, PTP_E2E_UDP_MAC_ID_H >> 16
-    QBNE    GPTP_CHECK_EXIT, R2, RCV_TEMP_REG_2    
-    LDI     RCV_TEMP_REG_2.w0, PTP_E2E_UDP_MAC_ID_L    
+    QBNE    GPTP_CHECK_EXIT, R2, RCV_TEMP_REG_2
+    LDI     RCV_TEMP_REG_2.w0, PTP_E2E_UDP_MAC_ID_L
     QBEQ    SET_PTP_UDP_TAG_RX, R3.w0, RCV_TEMP_REG_2.w0
-    LDI     RCV_TEMP_REG_2.w0, PTP_E2E_UDP_PDELAY_MAC_ID_L    
+    LDI     RCV_TEMP_REG_2.w0, PTP_E2E_UDP_PDELAY_MAC_ID_L
     QBNE    GPTP_CHECK_EXIT, R3.w0, RCV_TEMP_REG_2.w0
 SET_PTP_UDP_TAG_RX:
     SET     R22, R22, RX_IS_UDP_PTP_BIT
@@ -161,11 +161,11 @@ SET_PTP_UDP_TAG_RX:
     ;At this point we dont know if this is a link local frame or not so we will
     ;set the forward flag and handle it later
     .if $defined(ICSS_SWITCH_BUILD)
-        QBEQ    SKIP_PTP_FWD_FLAG_SET_2, RCV_TEMP_REG_3.b0, 1 
+        QBEQ    SKIP_PTP_FWD_FLAG_SET_2, RCV_TEMP_REG_3.b0, 1
         SET     MII_RCV.rx_flags, MII_RCV.rx_flags, fwd_flag_shift
 SKIP_PTP_FWD_FLAG_SET_2:
     .endif ;ICSS_SWITCH_BUILD
-   
+
 GPTP_SKIP_CUT_THROUGH:
 
     QBNE    PTP_RX_IS_NOT_VLAN, R5.w0, VLAN_EtherType
@@ -182,7 +182,7 @@ PTP_RX_IS_NOT_VLAN:
     .endif
 
 GPTP_CHECK_EXIT:
-    .endm     
+    .endm
 
 ;---------------------------------------------------------------------------------------------------------
 ; Macro Name: M_GPTP_CHECK_AND_SET_FLAGS_L4
@@ -196,7 +196,7 @@ M_GPTP_CHECK_AND_SET_FLAGS_L4    .macro
     QBBS    GPTP_CHECK_EXIT_L4?, R22, RX_IS_UDP_PTP_BIT
     ;This code is used to control PTP packet forwarding from driver, if mem location
     ;is set to 1 then FW skips the flow. By default (0) flow is taken
-    LBCO    &RCV_TEMP_REG_3.b0, ICSS_SHARED_CONST, DISABLE_PTP_FRAME_FORWARDING_CTRL_OFFSET, 1   
+    LBCO    &RCV_TEMP_REG_3.b0, ICSS_SHARED_CONST, DISABLE_PTP_FRAME_FORWARDING_CTRL_OFFSET, 1
     CLR     R22, R22, RX_IS_VLAN_BIT
     LDI     RCV_TEMP_REG_2.w0, IPV4_EtherType
     QBNE    NO_VLAN_RX_CHECK?, R5.w0, VLAN_EtherType
@@ -215,14 +215,14 @@ SET_RX_UDP_PTP_BIT?:
     SET     R22, R22, RX_IS_UDP_PTP_BIT
     SET     R22, R22, RX_IS_PTP_BIT
     .if $defined(ICSS_SWITCH_BUILD)
-        QBEQ    SKIP_PTP_FWD_FLAG_SET_3, RCV_TEMP_REG_3.b0, 1 
+        QBEQ    SKIP_PTP_FWD_FLAG_SET_3, RCV_TEMP_REG_3.b0, 1
         SET     MII_RCV.rx_flags, MII_RCV.rx_flags, fwd_flag_shift
 SKIP_PTP_FWD_FLAG_SET_3:
     .endif ;ICSS_SWITCH_BUILD
 
 GPTP_CHECK_EXIT_L4?:
-    .endm   
-    
+    .endm
+
 ;---------------------------------------------------------------------------------------------------------
 ; Macro Name: M_GPTP_SET_CALLBACK_INTERRUPT
 ; Description: Give the callback interrupt to host
@@ -247,8 +247,8 @@ M_GPTP_SET_CALLBACK_INTERRUPT    .macro
     .endif ;PRU0
     .endif
 NOT_A_PTP_FRAME_3:
-    .endm         
-    
+    .endm
+
 ;****************************************************************************
 ;
 ;     NAME             : M_GPTP_TX_PRE_PROC
@@ -265,8 +265,8 @@ NOT_A_PTP_FRAME_3:
 ;        if DUT is currently a master:
 ;            set flag indicating so
 ;else:
-;    exit  
-;                     
+;    exit
+;
 ;
 ;****************************************************************************
 M_GPTP_TX_PRE_PROC  .macro
@@ -275,12 +275,12 @@ M_GPTP_TX_PRE_PROC  .macro
     LDI32   R10, PTP_HSR_PRP_NON_LL_MAC_ID_H
     QBNE    CHECK_PTP_LINK_LOCAL_TX, R2, R10
     QBA     SET_PTP_TAG_TX
-        
+
 CHECK_PTP_LINK_LOCAL_TX:
     LDI     R10.w0, PTP_HSR_PRP_LL_MAC_ID_L
     QBNE    CHECK_UDP_PTP_TX, R3.w0, R10.w0
     LDI32   R10, PTP_HSR_PRP_LL_MAC_ID_H
-    QBNE    CHECK_UDP_PTP_TX, R2, R10 
+    QBNE    CHECK_UDP_PTP_TX, R2, R10
     ;make sure we don't tag LLDP frames
     LDI     R10.w0, LLDP_EtherType
     QBEQ    CHECK_UDP_PTP_TX, R5.w0, R10.w0
@@ -293,13 +293,13 @@ SET_PTP_TAG_TX:
     SET     two_step_reg_vlan, two_step_reg_vlan, GPTP_802_3_two_step_bit
     QBA     CONTINUE_PRE_PROC
 NO_VLAN_TX_PRE_PROC:
-    SET     two_step_reg, two_step_reg, GPTP_802_3_two_step_bit   
+    SET     two_step_reg, two_step_reg, GPTP_802_3_two_step_bit
     QBA     CONTINUE_PRE_PROC
-    
+
 CHECK_UDP_PTP_TX:
     ; Check for UDP PTP multicast MAC
     LDI32   R10, PTP_E2E_UDP_MAC_ID_H
-    QBNE    CONTINUE_PRE_PROC, R2, R10 
+    QBNE    CONTINUE_PRE_PROC, R2, R10
     LDI     R10.w0, PTP_E2E_UDP_MAC_ID_L
     QBEQ    SET_PTP_UDP_TX_TAG, R3.w0, R10.w0
     LDI     R10.w0, PTP_E2E_UDP_PDELAY_MAC_ID_L
@@ -338,12 +338,12 @@ CONTINUE_PRE_PROC:
     .endif ; ICSS_REV1
 
 EXIT_PTP_TX_PRE_PROC:
-    .endm 
-    
+    .endm
+
 ;---------------------------------------------------------------------------------------------------------
 ; Macro Name: M_GPTP_LOAD_TS_OFFSET
 ; Description: Load Rx TS offset to R20
-; Input Parameters: 
+; Input Parameters:
 ; Output Parameters: none
 ;---------------------------------------------------------------------------------------------------------
 M_GPTP_LOAD_TS_OFFSET    .macro
@@ -352,4 +352,4 @@ M_GPTP_LOAD_TS_OFFSET    .macro
     .else
         LDI     RCV_TEMP_REG_1.w0, RX_TIMESTAMP_OFFSET_P2
     .endif
-    .endm      
+    .endm
