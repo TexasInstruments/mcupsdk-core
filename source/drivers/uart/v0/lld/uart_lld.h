@@ -644,6 +644,7 @@ typedef struct
 
 uint32_t UART_operatingModeSelect(uint32_t baseAddr, uint32_t modeFlag);
 uint32_t UART_spaceAvail(uint32_t baseAddr);
+uint32_t UART_IsTxRxFifoEmpty(uint32_t baseAddr);
 int32_t UART_writeCancelNoCB(UARTLLD_Handle hUart);
 int32_t UART_readCancelNoCB(UARTLLD_Handle hUart);
 

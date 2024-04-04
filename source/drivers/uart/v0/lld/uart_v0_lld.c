@@ -644,6 +644,7 @@ static void UART_fifoRegisterWrite(uint32_t baseAddr, uint32_t fcrValue)
     uint32_t divLatchRegVal;
     uint32_t enhanFnBitVal;
     uint32_t lcrRegValue;
+    uint32_t isTxRxFifoEmpty = FALSE;
 
     /* Switching to Register Configuration Mode A of operation. */
     lcrRegValue = UART_regConfigModeEnable(baseAddr, UART_REG_CONFIG_MODE_A);
@@ -656,6 +657,11 @@ static void UART_fifoRegisterWrite(uint32_t baseAddr, uint32_t fcrValue)
 
     /* Writing the 'fcrValue' to the FCR register. */
     HW_WR_REG32(baseAddr + UART_FCR, fcrValue);
+
+    while(isTxRxFifoEmpty == FALSE)
+    {
+        isTxRxFifoEmpty = UART_IsTxRxFifoEmpty(baseAddr);
+    }
 
     /* Restoring the value of EFR[4] to its original value. */
     UART_enhanFuncBitValRestore(baseAddr, enhanFnBitVal);
@@ -1006,6 +1012,36 @@ uint32_t UART_spaceAvail(uint32_t baseAddr)
     if ((UART_LSR_TX_SR_E_MASK | UART_LSR_TX_FIFO_E_MASK) ==
         (HW_RD_REG32(baseAddr + UART_LSR) &
             (UART_LSR_TX_SR_E_MASK | UART_LSR_TX_FIFO_E_MASK)))
+    {
+        retVal = (uint32_t) TRUE;
+    }
+
+    /* Restoring the value of LCR. */
+    HW_WR_REG32(baseAddr + UART_LCR, lcrRegValue);
+
+    return retVal;
+}
+
+uint32_t UART_IsTxRxFifoEmpty(uint32_t baseAddr)
+{
+    uint32_t lcrRegValue = 0;
+    uint32_t retVal      = FALSE;
+
+    /* Switching to Register Operational Mode of operation. */
+    lcrRegValue = UART_regConfigModeEnable(baseAddr, UART_REG_OPERATIONAL_MODE);
+
+    /*
+    ** Checking if either TXFIFOE and RXFIFOE bits of Line Status Register(LSR)
+    ** are set/unset. TXFIFOE bit is set if TX FIFO(or THR in non-FIFO mode) is
+    ** empty. RXFIFOE bit is unset if the RX FIFO(or RHR in non-FIFO mode) is
+    ** empty.
+    */
+
+    if (((UART_LSR_TX_FIFO_E_TX_FIFO_E_VALUE_1 << UART_LSR_TX_FIFO_E_SHIFT) |
+         (UART_LSR_RX_FIFO_E_RX_FIFO_E_VALUE_0 << UART_LSR_RX_FIFO_E_SHIFT)) ==
+        (HW_RD_REG32(baseAddr + UART_LSR) &
+            ((UART_LSR_TX_FIFO_E_TX_FIFO_E_VALUE_1 << UART_LSR_TX_FIFO_E_SHIFT) |
+            (UART_LSR_RX_FIFO_E_RX_FIFO_E_VALUE_0 << UART_LSR_RX_FIFO_E_SHIFT))))
     {
         retVal = (uint32_t) TRUE;
     }
