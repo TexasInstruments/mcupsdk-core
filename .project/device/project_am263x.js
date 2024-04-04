@@ -27,6 +27,7 @@ const component_file_list = [
     "source/networking/tsn/.project/project_tsn_uniconf.js",
     "source/networking/tsn/.project/project_tsn_unibase.js",
     "source/networking/tsn/.project/project_tsn_lldp.js",
+    "source/networking/tsn/.project/project_tsn_l2.js",
  ];
 
 const device_defines = {
@@ -196,6 +197,7 @@ const example_file_list = [
     "examples/networking/enet_cpsw_est/.project/project.js",
     "examples/networking/lwip/icss_lwip/.project/project.js",
     "examples/networking/enet_tx_scatter_gather/.project/project.js",
+    "examples/networking/tsn/est_cpsw_app/.project/project.js",
     "examples/networking/tsn/lldp_cpsw_app/.project/project.js",
     "examples/networking/tsn/gptp_cpsw_app/.project/project.js",
     "examples/networking/tsn/gptp_lwip_cpsw/.project/project.js",

@@ -36,6 +36,8 @@
 #include <tsn_combase/combase.h>
 #include "dataflow.h"
 #include "enetapp_cpsw.h"
+#include "tsnapp_porting.h"
+
 /* ========================================================================== */
 /*                                Function Declarations                       */
 /* ========================================================================== */

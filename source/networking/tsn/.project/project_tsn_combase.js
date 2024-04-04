@@ -9,10 +9,12 @@ const files = {
         "cb_lld_tmevent.c",
         "ub_lld_binding.c",
         "lldenet.c",
+        "lldenetext.c",
         "bufring.c",
         "lldtsync.c",
         "cb_link_tilld.c",
         "cb_xtimer.c",
+        "cb_rate_reporter.c",
     ],
 };
 const filedirs = {

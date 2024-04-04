@@ -36,10 +36,9 @@
 
 #include <tsn_combase/combase.h>
 #include <tsn_unibase/unibase_binding.h>
-#include <tsn_uniconf/yangs/tsn_data.h>
 #include <tsn_uniconf/yangs/yang_db_runtime.h>
 #include <tsn_uniconf/yangs/yang_modules.h>
-#include "tsn_uniconf/yangs/ieee1588-ptp_access.h"
+#include <tsn_uniconf/yangs/ieee1588-ptp-tt_access.h>
 #include <tsn_uniconf/ucman.h>
 #include <tsn_uniconf/uc_dbal.h>
 #include "debug_log.h"
@@ -75,10 +74,10 @@ typedef struct
     char* val;
 } EnetApp_LldpMgmtAddrKv_t;
 
-typedef struct 
+typedef struct
 {
-    char* dest_mac;
-    EnetApp_DbNameVal_t cfg_kv[11];
+    char* destMac;
+    EnetApp_DbNameVal_t cfgKeyVal[11];
 } EnetApp_LldpPortCfg_t;
 
 /* ========================================================================== */
@@ -86,8 +85,7 @@ typedef struct
 /* ========================================================================== */
 static int EnetApp_setLldpRtConfig(yang_db_runtime_dataq_t *ydrd, EnetApp_Ctx_t * ctx);
 static void *EnetApp_lldpTask(void* arg);
-static int EnetApp_lldpDbInit(EnetApp_ModuleCtx_t* modCtx,
-                              yang_db_runtime_dataq_t *ydrd);
+static int EnetApp_lldpDbInit(EnetApp_ModuleCtx_t* modCtx, EnetApp_dbArgs *dbargs);
 
 /* ========================================================================== */
 /*                            Local Variables                                */
@@ -124,8 +122,8 @@ static EnetApp_DbNameVal_t gLldpLocalSysData[] =
 static EnetApp_LldpPortCfg_t gLldpPortCfgData[] =
 {
     {
-        .dest_mac = "01-80-c2-00-00-0e",
-        .cfg_kv = 
+        .destMac = "01-80-c2-00-00-0e",
+        .cfgKeyVal =
         {
             {"admin-status", "3"},
             {"tlvs-tx-enable", "1111"},
@@ -141,8 +139,8 @@ static EnetApp_LldpPortCfg_t gLldpPortCfgData[] =
         }
     },
     {
-        .dest_mac = "01-80-c2-00-00-03",
-        .cfg_kv = 
+        .destMac = "01-80-c2-00-00-03",
+        .cfgKeyVal =
         {
             {"admin-status", "3"},
             {"tlvs-tx-enable", "1111"},
@@ -158,8 +156,8 @@ static EnetApp_LldpPortCfg_t gLldpPortCfgData[] =
         }
     },
     {
-        .dest_mac = "01-80-c2-00-00-00",
-        .cfg_kv = 
+        .destMac = "01-80-c2-00-00-00",
+        .cfgKeyVal =
         {
             {"admin-status", "3"},
             {"tlvs-tx-enable", "1111"},
@@ -182,14 +180,15 @@ __attribute__ ((aligned(TSN_TSK_STACK_ALIGN)));
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
-EnetApp_Ctx_t gAppCtx =
-{
-    .dbName = NULL,
-};
+extern EnetApp_Ctx_t gAppCtx;
 
-EnetApp_ModuleCtx_t gModCtxTable[ENETAPP_MAX_TASK_IDX] =
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
+
+int EnetApp_addLldpModCtx(EnetApp_ModuleCtx_t *modCtxTbl)
 {
-    [ENETAPP_LLDP_TASK_IDX] = {
+    EnetApp_ModuleCtx_t lldpModCtx = {
         .enable = true,
         .stopFlag = true,
         .taskPriority = LLDP_TASK_PRIORITY,
@@ -199,12 +198,11 @@ EnetApp_ModuleCtx_t gModCtxTable[ENETAPP_MAX_TASK_IDX] =
         .onModuleDBInit = EnetApp_lldpDbInit,
         .onModuleRunner = EnetApp_lldpTask,
         .appCtx = &gAppCtx
-    },
-};
-
-/* ========================================================================== */
-/*                          Function Definitions                              */
-/* ========================================================================== */
+    };
+    memcpy(&modCtxTbl[ENETAPP_LLDP_TASK_IDX], &lldpModCtx,
+           sizeof(EnetApp_ModuleCtx_t));
+    return 0;
+}
 
 static int EnetApp_setLldpRtConfig(yang_db_runtime_dataq_t *ydrd, EnetApp_Ctx_t *appCtx)
 {
@@ -239,14 +237,14 @@ static int EnetApp_setLldpRtConfig(yang_db_runtime_dataq_t *ydrd, EnetApp_Ctx_t 
     {
         for (i = 0; i < sizeof(gLldpPortCfgData)/sizeof(gLldpPortCfgData[0]); i++)
         {
-            for (j = 0; j < sizeof(gLldpPortCfgData[i].cfg_kv)/ sizeof(EnetApp_DbNameVal_t); j++ )
+            for (j = 0; j < sizeof(gLldpPortCfgData[i].cfgKeyVal)/ sizeof(EnetApp_DbNameVal_t); j++ )
             {
                 snprintf(buffer, sizeof(buffer),
                         "%sport|name:%s|dest-mac-address:%s|/%s",
-                        LLDP_NODE, appCtx->netdev[ndev], gLldpPortCfgData[i].dest_mac, gLldpPortCfgData[i].cfg_kv[j].name);
+                        LLDP_NODE, appCtx->netdev[ndev], gLldpPortCfgData[i].destMac, gLldpPortCfgData[i].cfgKeyVal[j].name);
 
                 // DPRINT("[%s] %s:%s", __func__, buffer, gLldpPerPortData[i].val);
-                yang_db_runtime_put_oneline(ydrd, buffer, gLldpPortCfgData[i].cfg_kv[j].val,
+                yang_db_runtime_put_oneline(ydrd, buffer, gLldpPortCfgData[i].cfgKeyVal[j].val,
                                             YANG_DB_ONHW_NOACTION);
             }
         }
@@ -257,13 +255,13 @@ static int EnetApp_setLldpRtConfig(yang_db_runtime_dataq_t *ydrd, EnetApp_Ctx_t 
     return 0;
 }
 
-static int EnetApp_lldpDbInit(EnetApp_ModuleCtx_t* modCtx, yang_db_runtime_dataq_t *ydrd)
+static int EnetApp_lldpDbInit(EnetApp_ModuleCtx_t* modCtx, EnetApp_dbArgs *dbargs)
 {
     EnetApp_Ctx_t *appCtx = modCtx->appCtx;
 
     lldpd_uniconf_access_mode(UC_CALLMODE_THREAD);
 
-    EnetApp_setLldpRtConfig(ydrd, appCtx);
+    EnetApp_setLldpRtConfig(dbargs->ydrd, appCtx);
 
     return 0;
 }

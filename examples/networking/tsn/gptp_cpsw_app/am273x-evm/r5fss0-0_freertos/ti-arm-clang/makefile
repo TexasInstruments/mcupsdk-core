@@ -45,6 +45,8 @@ FILES_common := \
 	sharedrx_flow_cfg.c \
 	tsninit.c \
 	debug_log.c \
+	enet_custom_board_config.c \
+	enetapp_cpsw.c \
 	tsnapp_cpsw_main.c \
 	sharedrx_flow.c \
 	main.c \
@@ -86,6 +88,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/examples/networking/tsn \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_unibase \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/tilld \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/gptpconf \
@@ -98,7 +101,7 @@ DEFINES_common := \
 	-DENET_ENABLE_PER_CPSW=1 \
 	-DPRINT_FORMAT_NO_WARNING \
 	-DSITARA \
-	-DDISABLE_UC_CLIENT \
+	-DGPTP_ENABLED=1 \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \

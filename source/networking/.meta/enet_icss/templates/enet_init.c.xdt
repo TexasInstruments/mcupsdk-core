@@ -728,6 +728,12 @@ int32_t EnetApp_getRxTimeStamp(Enet_Handle hEnet, uint32_t coreId, EnetTimeSync_
     return ENET_SOK;
 }
 
+int32_t EnetApp_filterPriorityPacketsCfg(Enet_Handle hEnet, uint32_t coreId)
+{
+    /* Need this funtion definition to align CPSW and ICSSG for TSN libs */
+    return ENET_SOK;
+}
+
 int32_t EnetApp_setTimeStampComplete(Enet_Handle hEnet, uint32_t coreId)
 {
     int32_t status = ENET_SOK;

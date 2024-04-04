@@ -38,6 +38,7 @@ const component_file_list = [
     "source/networking/tsn/.project/project_tsn_uniconf.js",
     "source/networking/tsn/.project/project_tsn_unibase.js",
     "source/networking/tsn/.project/project_tsn_lldp.js",
+    "source/networking/tsn/.project/project_tsn_l2.js",
     "test/unity/.project/project.js",
     "docs_src/docs/api_guide/doxy_samples/.project/project.js",
 ];
@@ -193,6 +194,7 @@ const example_file_list = [
     "examples/networking/enet_layer2_multi_channel/.project/project.js",
     "examples/networking/enet_layer2_cpsw_switch/.project/project.js",
     "examples/networking/enet_cpsw_est/.project/project.js",
+    "examples/networking/tsn/est_cpsw_app/.project/project.js",
     "examples/networking/tsn/gptp_cpsw_app/.project/project.js",
     "examples/networking/tsn/gptp_icssg_app/gptp_icssg_dualmac/.project/project.js",
     "examples/networking/tsn/gptp_icssg_app/gptp_icssg_switch/.project/project.js",

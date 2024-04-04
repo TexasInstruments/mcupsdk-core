@@ -42,6 +42,7 @@ FILES_common := \
 	default_flow_cfg.c \
 	tsninit.c \
 	debug_log.c \
+	enetapp_cpsw.c \
 	tsnapp_cpsw_main.c \
 	default_flow_cpsw.c \
 	main.c \
@@ -96,7 +97,6 @@ DEFINES_common := \
 	-DENET_ENABLE_PER_CPSW=1 \
 	-DPRINT_FORMAT_NO_WARNING \
 	-DSITARA \
-	-DDISABLE_UC_CLIENT \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \

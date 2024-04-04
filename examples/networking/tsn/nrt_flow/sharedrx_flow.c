@@ -68,8 +68,8 @@ static void EthIpv4RxTask(void *args)
     CB_SOCKET_T lldsock;
     ub_macaddr_t bmac;
     uint8_t buf[1518];
-    int port;
     int res;
+    CB_SOCKADDR_LL_T addr;
 
     /* The RX DMA channel is shared with gptp, we need to make sure the
      * gptp has already done its DMA initialization before re-using that channel.
@@ -96,7 +96,7 @@ static void EthIpv4RxTask(void *args)
     {
         /* Wait for packet reception */
         SemaphoreP_pend(&gIpv4RxSemObj, SystemP_WAIT_FOREVER);
-        res = cb_lld_recv(lldsock, buf, sizeof(buf), &port);
+        res = cb_lld_recv(lldsock, buf, sizeof(buf), &addr, sizeof(CB_SOCKADDR_LL_T));
         if (res <= 0)
         {
             EnetAppUtils_print("%s:failed to recv pkt: res=%d\r\n",
@@ -109,12 +109,12 @@ static void EthIpv4RxTask(void *args)
                 uint8_t *p = buf;
                 uint16_t ethtype = ntohs(*(uint16_t *)(p + 12));
                 EnetAppUtils_print("%s:pkt ethtype=0x%x, size=%d, port=%d\r\n",
-                                __func__, ethtype, res, port);
+                                __func__, ethtype, res, addr.macport);
             }
             else
             {
                 EnetAppUtils_print("%s:pkt size=%d, port=%d\r\n",
-                                   __func__, res, port);
+                                   __func__, res, addr.macport);
             }
         }
     }

@@ -21,12 +21,12 @@ FILES_common := \
     simpledb.c \
     simpledb_ucbind.c \
     yang_config_init.c \
-    yang_modules.c \
-    yang_modules_namespaces.c \
+    yang_modules_runconf.c \
     yang_db_identiyref.c \
     yang_db_enumeration.c \
     yang_db_runtime.c \
     yang_db_access.c \
+    yang_node.c \
     ietf-netconf-monitoring.c \
     ietf-netconf-monitoring_runconf.c \
     ietf-yang-library.c \
@@ -34,26 +34,35 @@ FILES_common := \
     ietf-interfaces.c \
     ietf-interfaces_runconf.c \
     ietf-interfaces_access.c \
-    ieee1588-ptp.c \
-    ieee1588-ptp_runconf.c \
-    ieee1588-ptp_access.c \
+    ieee1588-ptp-tt.c \
+    ieee1588-ptp-tt_runconf.c \
+    ieee1588-ptp-tt_access.c \
     ieee802-dot1q-bridge.c \
     ieee802-dot1q-bridge_runconf.c \
+    ieee802-dot1q-bridge_nconf.c \
     ieee802-dot1q-tsn-config-uni.c \
     ieee802-dot1q-tsn-config-uni_runconf.c \
+    ieee802-dot1q-tsn-config-uni_nconf.c \
     ieee802-dot1ab-lldp.c \
     ieee802-dot1ab-lldp_runconf.c \
+    ieee802-dot1ab-lldp_nconf.c \
     excelfore-tsn-remote.c \
     excelfore-tsn-remote_runconf.c \
+    excelfore-netconf-server_nconf.c \
+    excelfore-tsn-remote_nconf.c \
     ieee802-dot1ab-lldp_access.c \
     ietf-interfaces_access.c \
     ietf-interfaces.c \
     ietf-interfaces_runconf.c \
+    ietf-interfaces_nconf.c \
+    ietf-netconf-monitoring_nconf.c \
+    ietf-yang-library_nconf.c \
     excelfore-netconf-server.c \
     excelfore-netconf-server_runconf.c \
     uc_hwal.c \
-    tsn_data.c \
     uc_notice_tilld.c \
+    excelfore-netconf-server_nconf.c \
+    ieee1588-ptp-tt_nconf.c \
 
 FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf \
@@ -88,6 +97,8 @@ DEFINES_common := \
     -DPRINT_FORMAT_NO_WARNING \
     -DUB_LOGCAT=2 \
     -DUB_LOGTSTYPE=UB_CLOCK_REALTIME \
+    -D__STDC_LIBC_EXT1__ \
+    -D__STDC_WANT_LIB_EXT1__=1 \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \

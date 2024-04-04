@@ -36,14 +36,13 @@
 
 #include <tsn_combase/combase.h>
 #include <tsn_unibase/unibase_binding.h>
-#include <tsn_uniconf/yangs/tsn_data.h>
 #include <tsn_uniconf/yangs/yang_db_runtime.h>
 #include <tsn_uniconf/yangs/yang_modules.h>
 #include <tsn_gptp/gptpman.h>
 #include <tsn_gptp/tilld/lld_gptp_private.h>
 #include <tsn_gptp/gptpconf/gptpgcfg.h>
 #include <tsn_gptp/gptpconf/xl4-extmod-xl4gptp.h>
-#include "tsn_uniconf/yangs/ieee1588-ptp_access.h"
+#include <tsn_uniconf/yangs/ieee1588-ptp-tt_access.h>
 #include <tsn_uniconf/ucman.h>
 #include <tsn_uniconf/uc_dbal.h>
 #include "debug_log.h"
@@ -54,28 +53,57 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 #define UNICONF_TASK_PRIORITY   (2)
-#define GPTP_TASK_PRIORITY      (2)
-
-#define GPTP_TASK_NAME          "gptp2d_task"
 #define UNICONF_TASK_NAME       "uniconf_task"
 
-#define MAX_KEY_SIZE            (256)
+#ifndef TSNAPP_LOGLEVEL
+#define TSNAPP_LOGLEVEL "4,ubase:45,cbase:45,uconf:45,gptp:55,lldp:45,avtp:45,nconf:45"
+#endif
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
 static int EnetApp_initDb(void);
 static void *EnetApp_uniconfTask(void *arg);
-static int EnetApp_uniconfInit(EnetApp_ModuleCtx_t* modCtx,
-                               yang_db_runtime_dataq_t *ydrd);
+static int EnetApp_uniconfInit(EnetApp_ModuleCtx_t* modCtx, EnetApp_dbArgs *dbargs);
 static int EnetApp_startUniconfTask(void);
-static int EnetApp_startTask(EnetApp_ModuleCtx_t* ctx);
+static int EnetApp_startTask(EnetApp_ModuleCtx_t* modCtx, int moduleIdx);
 
+/* ========================================================================== */
+/*                     External Function Declarations                         */
+/* ========================================================================== */
+
+#ifdef NETCONF_ENABLED
+extern int EnetApp_addNetconfModCtx(EnetApp_ModuleCtx_t *modCtxTbl);
+#endif //NETCONF_ENABLED
+
+#ifdef AVTP_ENABLED
+extern int EnetApp_avtpInit(EnetApp_ModuleCtx_t *modCtxTbl);
+extern void EnetApp_avtpDeinit(void);
+#endif //AVTP_ENABLED
+
+#ifdef LLD_ENABLED
+extern int EnetApp_addLldpModCtx(EnetApp_ModuleCtx_t *modCtxTbl);
+#endif //LLD_ENABLED
+
+#ifdef GPTP_ENABLED
+extern int EnetApp_addGptpModCtx(EnetApp_ModuleCtx_t *modCtxTbl);
+#endif //GPTP_ENABLED
+
+#ifdef EST_APP_ENABLED
+extern int EnetApp_addEstAppModCtx(EnetApp_ModuleCtx_t *modCtxTbl);
+#endif /* EST_APP_ENABLED */
+
+#ifdef CBS_APP_ENABLED
+extern int EnetApp_addCbsAppModCtx(EnetApp_ModuleCtx_t *modCtxTbl);
+#endif /* EST_APP_ENABLED */
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
-extern EnetApp_ModuleCtx_t gModCtxTable[ENETAPP_MAX_TASK_IDX];
-extern EnetApp_Ctx_t gAppCtx;
+EnetApp_Ctx_t gAppCtx =
+{
+    .dbName = UNICONF_DBFILE_PATH,
+};
+EnetApp_ModuleCtx_t gModCtxTable[ENETAPP_MAX_TASK_IDX];
 
 /* ========================================================================== */
 /*                            Local Variables                                */
@@ -91,20 +119,24 @@ static void *EnetApp_uniconfTask(void *arg)
 {
     EnetApp_ModuleCtx_t *modCtx = (EnetApp_ModuleCtx_t *)arg;
     EnetApp_Ctx_t *appCtx = modCtx->appCtx;
+    const char *configFiles[2] = {INTERFACE_CONFFILE_PATH, NULL};
 
     appCtx->ucCtx.ucmode = UC_CALLMODE_THREAD|UC_CALLMODE_UNICONF;
     appCtx->ucCtx.stoprun = &modCtx->stopFlag;
     appCtx->ucCtx.hwmod="";
-    appCtx->ucCtx.ucmanstart = appCtx->ucReadySem;
+    appCtx->ucCtx.ucmanstart = &appCtx->ucReadySem;
     appCtx->ucCtx.dbname = appCtx->dbName;
+    appCtx->ucCtx.configfiles = configFiles;
+    appCtx->ucCtx.numconfigfile = UNICONF_CONF_FILE_NUM;
 
     DPRINT("%s: dbname: %s", __func__, appCtx->dbName ? appCtx->dbName : "NULL");
 
     return uniconf_main(&appCtx->ucCtx);
 }
 
-static int EnetApp_uniconfInit(EnetApp_ModuleCtx_t* modCtx, yang_db_runtime_dataq_t *ydrd)
+static int EnetApp_uniconfInit(EnetApp_ModuleCtx_t* modCtx, EnetApp_dbArgs *dbargs)
 {
+#ifdef DISABLE_FAT_FS
     EnetApp_Ctx_t *appCtx = modCtx->appCtx;
     char buffer[MAX_KEY_SIZE]={0};
     int res=-1;
@@ -115,22 +147,24 @@ static int EnetApp_uniconfInit(EnetApp_ModuleCtx_t* modCtx, yang_db_runtime_data
         snprintf(buffer, sizeof(buffer),
                  "/ietf-interfaces/interfaces/interface|name:%s|/enabled",
                  appCtx->netdev[i]);
-        res=yang_db_runtime_put_oneline(ydrd, buffer, (char*)"true",
+        res=yang_db_runtime_put_oneline(dbargs->ydrd, buffer, (char*)"true",
                                         YANG_DB_ONHW_NOACTION);
         if (res != 0) {
             DPRINT("%s: yang_db_runtime_put_oneline failed=%d", __func__, res);
         }
     }
     return res;
+#else
+    TSNAPP_UNUSED_ARG(dbargs);
+    return 0;
+#endif
 }
 
 // Can be read from cfg files, or in case of no db file is specified, init runtime config
 static int EnetApp_initDb(void)
 {
     EnetApp_ModuleCtx_t *mod;
-    uc_dbald *dbald = NULL;
-    xl4_data_data_t *xdd = NULL;
-    yang_db_runtime_dataq_t *ydrd = NULL;
+    EnetApp_dbArgs dbargs;
     int res = 0;
     int timeout_ms = 500;
     int i;
@@ -149,22 +183,15 @@ static int EnetApp_initDb(void)
             DPRINT("The uniconf must be run first !");
             break;
         }
-        dbald = uc_dbal_open(gAppCtx.dbName, "w", UC_CALLMODE_THREAD);
-        if (!dbald)
+        dbargs.dbald = uc_dbal_open(gAppCtx.dbName, "w", UC_CALLMODE_THREAD);
+        if (!dbargs.dbald)
         {
             DPRINT("Failed to open DB!");
             res = -1;
             break;
         }
-        xdd = xl4_data_init(dbald);
-        if (!xdd)
-        {
-            DPRINT("Failed to init xl4 data");
-            res = -1;
-            break;
-        }
-        ydrd = yang_db_runtime_init(xdd, dbald, NULL);
-        if (!ydrd)
+        dbargs.ydrd = yang_db_runtime_init(dbargs.dbald, NULL);
+        if (!dbargs.ydrd)
         {
             DPRINT("Failed to init yang db runtime");
             res = -1;
@@ -176,42 +203,61 @@ static int EnetApp_initDb(void)
             mod = &gModCtxTable[i];
             if ((mod->enable == true) && (mod->onModuleDBInit != NULL))
             {
-                mod->onModuleDBInit(mod, ydrd);
+                mod->onModuleDBInit(mod, &dbargs);
             }
         }
 
     } while (0);
-    if (ydrd)
+    if (dbargs.ydrd)
     {
-        yang_db_runtime_close(ydrd);
+        yang_db_runtime_close(dbargs.ydrd);
     }
-    if (xdd)
+    if (dbargs.dbald)
     {
-        xl4_data_close(xdd);
-    }
-    if (dbald)
-    {
-        uc_dbal_close(dbald, UC_CALLMODE_THREAD);
+        uc_dbal_close(dbargs.dbald, UC_CALLMODE_THREAD);
     }
 
     return res;
 }
 
+static bool EnetApp_isDBFileInit(char *filename)
+{
+#ifndef DISABLE_FAT_FS
+    EnetApp_fsInfo_t fsInfo;
+    return (FSTAT(filename, &fsInfo) == FSSTAT_OK);
+#else
+    return false;
+#endif /* !DISABLE_FAT_FS */
+}
+
 int EnetApp_initTsnByCfg(AppTsnCfg_t *cfg)
 {
     int i = 0;
-    unibase_init_para_t init_para;
+    int res = 0;
+    unibase_init_para_t initPara;
+    EnetApp_ModuleCtx_t uniconfModCtx = {
+        .enable = true,
+        .stopFlag = true,
+        .taskPriority = UNICONF_TASK_PRIORITY,
+        .taskName = UNICONF_TASK_NAME,
+        .stackBuffer = gUniconfStackBuf,
+        .stackSize = sizeof(gUniconfStackBuf),
+        .onModuleDBInit = EnetApp_uniconfInit,
+        .onModuleRunner = EnetApp_uniconfTask,
+        .appCtx = &gAppCtx
+    };
 
     Logger_init(cfg->consoleOutCb);
 
-    ubb_default_initpara(&init_para);
-    init_para.ub_log_initstr="4,ubase:45,cbase:45,uconf:45,gptp:55,lldp:45";
+    ubb_default_initpara(&initPara);
+
+    initPara.ub_log_initstr = TSNAPP_LOGLEVEL;
     if (cfg->consoleOutCb)
     {
-        init_para.cbset.console_out=LOG_OUTPUT;
+        initPara.cbset.console_out=LOG_OUTPUT;
     }
 
-    unibase_init(&init_para);
+    unibase_init(&initPara);
     ubb_memory_out_init(NULL, 0);
 
     while (cfg->netdevs[i] != NULL && i < MAX_NUMBER_ENET_DEVS)
@@ -224,16 +270,85 @@ int EnetApp_initTsnByCfg(AppTsnCfg_t *cfg)
         }
         i++;
     }
-    return 0;
+
+    if (gAppCtx.dbName != NULL)
+    {
+        /* set DB File initialized flag to be used later during onModuleDBInit */
+        gAppCtx.dbInitFlag = EnetApp_isDBFileInit(gAppCtx.dbName);
+        DPRINT("DB File Initialized: %s", gAppCtx.dbInitFlag ? "True" : "False");
+    }
+
+    if (CB_SEM_INIT(&gAppCtx.ucReadySem, 0, 0) < 0)
+    {
+        DPRINT("Failed to initialize ucReadySem semaphore!");
+        res = -1;
+    }
+
+    memcpy(&gModCtxTable[ENETAPP_UNICONF_TASK_IDX],
+           &uniconfModCtx, sizeof(EnetApp_ModuleCtx_t));
+
+#ifdef GPTP_ENABLED
+    if (res == 0)
+    {
+        res = EnetApp_addGptpModCtx(gModCtxTable);
+    }
+#endif //GPTP_ENABLED
+
+#ifdef LLDP_ENABLED
+    if (res == 0)
+    {
+        res = EnetApp_addLldpModCtx(gModCtxTable);
+    }
+#endif //LLDP_ENABLED
+
+#ifdef AVTP_ENABLED
+    if (res == 0)
+    {
+        res = EnetApp_avtpInit(gModCtxTable);
+    }
+#endif //AVTP_ENABLED
+
+#ifdef NETCONF_ENABLED
+    if (res == 0)
+    {
+        res = EnetApp_addNetconfModCtx(gModCtxTable);
+    }
+#endif //NETCONF_ENABLED
+
+#ifdef EST_APP_ENABLED
+    if (res == 0)
+    {
+        res = EnetApp_addEstAppModCtx(gModCtxTable);
+    }
+#endif //EST_APP_ENABLED
+
+#ifdef CBS_APP_ENABLED
+    if (res == 0)
+    {
+        res = EnetApp_addCbsAppModCtx(gModCtxTable);
+    }
+#endif //CBS_APP_ENABLED
+    return res;
 }
 
 void EnetApp_deInitTsn(void)
 {
+#ifdef AVTP_ENABLED
+    EnetApp_avtpDeinit();
+#endif //AVTP_ENABLED
+    if (gAppCtx.ucReadySem != NULL)
+    {
+        CB_SEM_DESTROY(&gAppCtx.ucReadySem);
+        gAppCtx.ucReadySem = NULL;
+    }
+    memset(&gAppCtx, 0, sizeof(gAppCtx));
+    memset(gModCtxTable, 0, sizeof(gModCtxTable));
+
     Logger_deInit();
     unibase_close();
 }
 
-static int EnetApp_startTask(EnetApp_ModuleCtx_t *modCtx)
+static int EnetApp_startTask(EnetApp_ModuleCtx_t *modCtx, int moduleIdx)
 {
     cb_tsn_thread_attr_t attr;
     int res = 0;
@@ -252,6 +367,12 @@ static int EnetApp_startTask(EnetApp_ModuleCtx_t *modCtx)
     else
     {
         DPRINT("Start: %s", modCtx->taskName);
+        if (moduleIdx == ENETAPP_UNICONF_TASK_IDX)
+        {
+            /* initDb must be run right after UNICONF is started and
+             * before starting any other tasks. */
+            res = EnetApp_initDb();
+        }
     }
     return res;
 }
@@ -260,53 +381,13 @@ int EnetApp_startTsn(void)
 {
     int i;
     int res = 0;
-    EnetApp_ModuleCtx_t *mod;
-    EnetApp_ModuleCtx_t uniconfModCtx = {
-        .enable = true,
-        .stopFlag = true,
-        .taskPriority = UNICONF_TASK_PRIORITY,
-        .taskName = UNICONF_TASK_NAME,
-        .stackBuffer = gUniconfStackBuf,
-        .stackSize = sizeof(gUniconfStackBuf),
-        .onModuleDBInit = EnetApp_uniconfInit,
-        .onModuleRunner = EnetApp_uniconfTask,
-        .appCtx = &gAppCtx
-    };
 
-    memcpy(&gModCtxTable[ENETAPP_UNICONF_TASK_IDX],
-           &uniconfModCtx, sizeof(EnetApp_ModuleCtx_t));
-
-    if (CB_SEM_INIT(&gAppCtx.ucReadySem, 0, 0) < 0)
+    for (i = 0; i < ENETAPP_MAX_TASK_IDX; i++)
     {
-        DPRINT("Failed to initialize ucReadySem semaphore!");
-        res = -1;
-    }
-
-    if (res == 0)
-    {
-        res = EnetApp_startTask(&gModCtxTable[ENETAPP_UNICONF_TASK_IDX]);
-    }
-    if (res == 0)
-    {
-        res = EnetApp_initDb();
-    }
-    else
-    {
-        DPRINT("Failed to init db!");
-    }
-    if (res == 0)
-    {
-        for (i = 0; i < ENETAPP_MAX_TASK_IDX; i++)
+        res = EnetApp_startTsnModule(i);
+        if (res != 0)
         {
-            mod = &gModCtxTable[i];
-            if ((mod->enable == true) && (mod->stopFlag == true))
-            {
-                res = EnetApp_startTask(mod);
-                if (res != 0)
-                {
-                    break;
-                }
-            }
+            break;
         }
     }
     return res;
@@ -316,15 +397,46 @@ void EnetApp_stopTsn(void)
 {
     int i;
 
-    if (gAppCtx.ucReadySem != NULL)
+    /* The uniconf with index = 0 must be stopped finally */
+    for (i = ENETAPP_MAX_TASK_IDX-1; i >= 0; i--)
     {
-        CB_SEM_DESTROY(&gAppCtx.ucReadySem);
+        EnetApp_stopTsnModule(i);
     }
-    for (i = 0; i < ENETAPP_MAX_TASK_IDX; i++)
+}
+
+int EnetApp_startTsnModule(int moduleIdx)
+{
+    int res = 0;
+
+    if ((moduleIdx >= 0) && (moduleIdx < ENETAPP_MAX_TASK_IDX))
     {
-        CB_THREAD_JOIN(gModCtxTable[i].hTaskHandle, NULL);
-        gModCtxTable[i].hTaskHandle = NULL;
+        EnetApp_ModuleCtx_t *mod;
+        mod = &gModCtxTable[moduleIdx];
+
+        if ((mod->enable == true) && (mod->stopFlag == true))
+        {
+            res = EnetApp_startTask(mod, moduleIdx);
+        }
     }
-    memset(&gAppCtx, 0, sizeof(gAppCtx));
-    memset(gModCtxTable, 0, sizeof(gModCtxTable));
+    else
+    {
+        res = -1;
+    }
+    return res;
+}
+
+void EnetApp_stopTsnModule(int moduleIdx)
+{
+    if ((moduleIdx >= 0) && (moduleIdx < ENETAPP_MAX_TASK_IDX))
+    {
+        EnetApp_ModuleCtx_t *mod;
+        mod = &gModCtxTable[moduleIdx];
+        if (mod->hTaskHandle != NULL)
+        {
+            mod->stopFlag = true;
+            CB_THREAD_JOIN(mod->hTaskHandle, NULL);
+            mod->hTaskHandle = NULL;
+            DPRINT("Task: %s is terminated.", mod->taskName);
+        }
+    }
 }

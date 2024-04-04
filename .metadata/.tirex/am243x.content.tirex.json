@@ -13574,6 +13574,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Enet Cpsw Tsn Est App Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_tsn_est_app",
+        "location": "../../examples/networking/tsn/est_cpsw_app/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "tsn",
+            "est_cpsw_app",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Enet Cpsw Tsn Est App Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "enet_cpsw_tsn_est_app",
+        "location": "../../examples/networking/tsn/est_cpsw_app/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_LAUNCHPAD"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "networking",
+            "tsn",
+            "est_cpsw_app",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Gptp App Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "gptp_app",
         "location": "../../examples/networking/tsn/gptp_cpsw_app/am243x-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",

@@ -15,6 +15,8 @@ const gpio1      = gpio.addInstance();
 const gpio2      = gpio.addInstance();
 const i2c        = scripting.addModule("/drivers/i2c/i2c", {}, false);
 const i2c1       = i2c.addInstance();
+const pruicss    = scripting.addModule("/drivers/pruicss/pruicss", {}, false);
+const pruicss1   = pruicss.addInstance();
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71 = mpu_armv7.addInstance();
@@ -47,15 +49,13 @@ i2c1.$name               = "CONFIG_I2C0";
 eeprom1.peripheralDriver = i2c1;
 i2c1.I2C.$assign         = "I2C0";
 
+pruicss1.$name                           = "CONFIG_PRU_ICSS0";
+pruicss1.AdditionalICSSSettings[0].$name = "CONFIG_PRU_ICSS_IO0";
+
 debug_log.enableUartLog        = true;
 debug_log.enableCssLog         = false;
 debug_log.uartLog.$name        = "CONFIG_UART0";
 debug_log.uartLog.UART.$assign = "USART0";
-
-const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
-const uart_v0_template1 = uart_v0_template.addInstance({}, false);
-uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
-debug_log.uartLog.child = uart_v0_template1;
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;

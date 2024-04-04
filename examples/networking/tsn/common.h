@@ -32,23 +32,56 @@
 
 #ifndef __COMMON_H__
 #define __COMMON_H__
+#include "tsnapp_porting.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
 #define MAX_KEY_SIZE            (256)
+#define TSNAPP_UNUSED_ARG(x)    (void)x
+
+#ifdef DISABLE_FAT_FS
+#define UNICONF_CONF_FILE_NUM   (0)
+#define INTERFACE_CONFFILE_PATH (NULL)
+#define UNICONF_DBFILE_PATH     (NULL)
+#else
+#define UNICONF_CONF_FILE_NUM   (1)
+#endif //DISABLE_FAT_FS
+
+#ifndef AVTP_TALKER_NUM
+#define AVTP_TALKER_NUM         (2)
+#endif
+
+#ifndef AVTP_LISTENER_NUM
+#define AVTP_LISTENER_NUM       (2)
+#endif
 
 typedef enum {
-	ENETAPP_UNICONF_TASK_IDX,
-	ENETAPP_GPTP_TASK_IDX,
-	ENETAPP_LLDP_TASK_IDX,
-	ENETAPP_MAX_TASK_IDX
+    ENETAPP_UNICONF_TASK_IDX,
+    ENETAPP_NETCONF_TASK_IDX,
+    ENETAPP_GPTP_TASK_IDX,
+    ENETAPP_LLDP_TASK_IDX,
+    ENETAPP_AVTPD_TASK_IDX,
+    ENETAPP_CRF_TALKER_TASK_IDX,
+    ENETAPP_CRF_LISTENER_TASK_IDX,
+    ENETAPP_ACF_TASK_IDX,
+    ENETAPP_TALKER_TASK_IDX,
+    ENETAPP_LISTENER_TASK_IDX = ENETAPP_TALKER_TASK_IDX + AVTP_TALKER_NUM,
+    ENETAPP_EST_TASK_IDX = ENETAPP_LISTENER_TASK_IDX + AVTP_LISTENER_NUM,
+    ENETAPP_CBS_TASK_IDX,
+    ENETAPP_MAX_TASK_IDX
 } EnetApp_TsnTask_Idx_t;
+
+typedef struct {
+    uc_dbald *dbald;
+    yang_db_runtime_dataq_t *ydrd;
+    uc_notice_data_t *ucntd;
+} EnetApp_dbArgs;
 
 typedef struct EnetApp_ModuleCtx EnetApp_ModuleCtx_t;
 typedef int (*EnetApp_OnModuleDBInit)(EnetApp_ModuleCtx_t* mdctx,
-                                      yang_db_runtime_dataq_t *ydrd);
+                                      EnetApp_dbArgs *dbargs);
 typedef void* (*EnetApp_OnModuleStart)(void *arg);
 
 /* ========================================================================== */
@@ -57,11 +90,11 @@ typedef void* (*EnetApp_OnModuleStart)(void *arg);
 typedef struct
 {
     char *dbName; // Specify same DB for all modules.
-    bool initFlag;
     ucman_data_t ucCtx;
     char netdev[MAX_NUMBER_ENET_DEVS][CB_MAX_NETDEVNAME];
     uint8_t netdevSize;
-    CB_SEM_T ucReadySem;
+    UC_NOTICE_SIG_T ucReadySem;
+    bool dbInitFlag;
 } EnetApp_Ctx_t;
 
 struct EnetApp_ModuleCtx

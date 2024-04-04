@@ -8,6 +8,7 @@ const files = {
         "default_flow_cfg.c",
         "tsninit.c",
         "debug_log.c",
+        "enetapp_cpsw.c",
         "tsnapp_cpsw_main.c",
         "default_flow_cpsw.c",
         "main.c",
@@ -91,7 +92,6 @@ const defines_r5f = {
         "ENET_ENABLE_PER_CPSW=1",
         'PRINT_FORMAT_NO_WARNING',
         'SITARA',
-        'DISABLE_UC_CLIENT', // Add this macro to disable uc_client which configure TAS.
     ],
 };
 
@@ -132,7 +132,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_ENET_CPSW_LLDP";
+const readmeDoxygenPageTag = "EXAMPLES_ENET_CPSW_TSN_GPTP";
 
 const templates_freertos_r5f =
 [

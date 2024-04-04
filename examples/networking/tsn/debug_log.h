@@ -36,19 +36,24 @@
 
 #ifndef __DEBUG_LOG_H__
 #define __DEBUG_LOG_H__
+#include "tsnapp_porting.h"
+
+/* Writing log directly to the console can impact the performance.
+ * So by the default the log will be written to the buffer and then a log task
+ * will print to the console later. */
+#ifndef TSN_USE_LOG_BUFFER
+#define TSN_USE_LOG_BUFFER 1
+#endif
 
 typedef void (*Logger_onConsoleOut)(const char *str, ...);
 
 extern Logger_onConsoleOut sDrvConsoleOut;
-#if defined(SITARA)
-#define DPRINT(str,...) sDrvConsoleOut(str"\r\n", ##__VA_ARGS__)
-#else
-#define DPRINT(str,...) sDrvConsoleOut(str"\n", ##__VA_ARGS__)
-#endif
+
+#define DPRINT(str,...) sDrvConsoleOut(str ENDLINE, ##__VA_ARGS__)
 
 int Logger_logToBuffer(bool flush, const char *str);
 int Logger_directLog(bool flush, const char *str);
-#ifdef TSN_USE_LOG_BUFFER
+#if TSN_USE_LOG_BUFFER == 1
 #define LOG_OUTPUT Logger_logToBuffer
 #else
 #define LOG_OUTPUT Logger_directLog

@@ -33,25 +33,33 @@
 #ifndef __TSNINIT_H__
 #define __TSNINIT_H__
 
+#include <tsn_combase/tilld/lldtype.h>
+
 #if defined(SAFERTOS)
 #define TSN_TSK_STACK_SIZE                         (16U * 1024U)
 #define TSN_TSK_STACK_ALIGN                        TSN_TSK_STACK_SIZE
 #else
+#if _DEBUG_ == 1
 /* 16k is enough for debug mode */
 #define TSN_TSK_STACK_SIZE                         (16U * 1024U)
+#else
+#define TSN_TSK_STACK_SIZE                         (8U * 1024U)
+#endif
 #define TSN_TSK_STACK_ALIGN                        (32U)
 #endif
 
 typedef struct AppTsnCfg {
-	Logger_onConsoleOut consoleOutCb; //<! A callback function for log output on console.
-	char *netdevs[MAX_NUMBER_ENET_DEVS+1]; //!< A list of network interfaces each is a string, terminated by NULL;
+    Logger_onConsoleOut consoleOutCb; //<! A callback function for log output on console.
+    char *netdevs[LLDENET_MAX_PORTS+1]; //!< A list of network interfaces each is a string, terminated by NULL;
 } AppTsnCfg_t;
 
 int EnetApp_initTsnByCfg(AppTsnCfg_t *cfg);
-
-void EnetApp_deInitTsn(void);
-
+/* start and stop a single TSN module, @ref EnetApp_TsnTask_Idx_t for the moduleIdx */
+int EnetApp_startTsnModule(int moduleIdx);
+void EnetApp_stopTsnModule(int moduleIdx);
+/* start and stop all the TSN modules */
 int EnetApp_startTsn(void);
 void EnetApp_stopTsn(void);
+void EnetApp_deInitTsn(void);
 
 #endif

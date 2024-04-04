@@ -67,7 +67,6 @@
             -DENET_ENABLE_PER_CPSW=1
             -DPRINT_FORMAT_NO_WARNING
             -DSITARA
-            -DDISABLE_UC_CLIENT
         "
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
@@ -144,6 +143,8 @@
         </file>
         <file path="../../../../debug_log.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
+        <file path="../../../../enetapp_cpsw.c" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
         <file path="../../../../tsnapp_cpsw_main.c" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
         <file path="../../../../nrt_flow/default_flow_cpsw.c" openOnCreation="false" excludeFromBuild="false" action="link">
@@ -152,7 +153,7 @@
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263x/EXAMPLES_ENET_CPSW_LLDP.html"
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263x/EXAMPLES_ENET_CPSW_TSN_GPTP.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">

@@ -160,4 +160,3 @@ module.exports = {
     getComponentProperty,
     getComponentBuildProperty,
 };
-

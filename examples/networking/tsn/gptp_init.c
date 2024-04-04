@@ -36,14 +36,13 @@
 
 #include <tsn_combase/combase.h>
 #include <tsn_unibase/unibase_binding.h>
-#include <tsn_uniconf/yangs/tsn_data.h>
 #include <tsn_uniconf/yangs/yang_db_runtime.h>
 #include <tsn_uniconf/yangs/yang_modules.h>
 #include <tsn_gptp/gptpman.h>
 #include <tsn_gptp/tilld/lld_gptp_private.h>
 #include <tsn_gptp/gptpconf/gptpgcfg.h>
 #include <tsn_gptp/gptpconf/xl4-extmod-xl4gptp.h>
-#include "tsn_uniconf/yangs/ieee1588-ptp_access.h"
+#include <tsn_uniconf/yangs/ieee1588-ptp-tt_access.h>
 #include <tsn_uniconf/ucman.h>
 #include <tsn_uniconf/uc_dbal.h>
 #include "debug_log.h"
@@ -74,16 +73,15 @@ typedef struct
 /* ========================================================================== */
 
 static void EnetApp_cfgGptpPortDs(yang_db_runtime_dataq_t *ydrd, int instance,
-                    int domain, int port_index);
+        int domain, int port_index, bool dbInitFlag);
 static void EnetApp_cfgGptpDefaultDs(yang_db_runtime_dataq_t *ydrd, int instance,
-                    int domain);
+        int domain, bool dbInitFlag);
 static int EnetApp_gptpYangConfig(yang_db_runtime_dataq_t *ydrd, int instance,
-                    int domain, const char *netdevs[], int numOfPorts);
+        int domain, EnetApp_Ctx_t *appCtx);
 static int EnetApp_gptpNonYangConfig(uint8_t instance);
 
 static void *EnetApp_gptpTask(void *arg);
-static int EnetApp_gptpDbInit(EnetApp_ModuleCtx_t* modCtx,
-                              yang_db_runtime_dataq_t *ydrd);
+static int EnetApp_gptpDbInit(EnetApp_ModuleCtx_t* modCtx, EnetApp_dbArgs *dbargs);
 
 /* ========================================================================== */
 /*                            Local Variables                                */
@@ -105,36 +103,48 @@ static EnetApp_GptpOpt_t gGptpOpt =
     .numConf = 0,
 };
 
-static EnetApp_DbNameVal_t gGptpPortDs[] =
+static EnetApp_DbNameVal_t gGptpPortDsRw[] =
 {
     {"port-enable", "true"},
     {"log-announce-interval", "0"},
     {"gptp-cap-receipt-timeout", "3"},
     {"announce-receipt-timeout", "3"},
-    {"log-sync-interval", "-3"},
-    {"minor-version-number", "1"},
     {"initial-log-announce-interval", "0"},
-    {"sync-receipt-timeout", "3"},
     {"initial-log-sync-interval", "-3"},
-    {"current-log-sync-interval", "-3"},
-    {"current-log-gptp-cap-interval", "3"},
+    {"sync-receipt-timeout", "3"},
     {"initial-log-pdelay-req-interval", "0"},
-    {"current-log-pdelay-req-interval", "0"},
     {"allowed-lost-responses", "9"},
     {"allowed-faults", "9"},
-    {"mean-link-delay-thresh", "0x75300000"} /* (30000 << 16)*/
+    {"mean-link-delay-thresh", "0x75300000"},/* (30000 << 16)*/
 };
 
-static EnetApp_DbNameVal_t gGptpDefaultDs[] =
+static EnetApp_DbNameVal_t gGptpPortDsRo[] =
+{
+    {"log-sync-interval", "-3"},
+    {"minor-version-number", "1"},
+    {"current-log-sync-interval", "-3"},
+    {"current-log-gptp-cap-interval", "3"},
+    {"current-log-pdelay-req-interval", "0"},
+    {"initial-one-step-tx-oper", "1"},
+    {"current-one-step-tx-oper", "1"},
+    {"use-mgt-one-step-tx-oper", "false"},
+    {"mgt-one-step-tx-oper", "1"},
+};
+
+static EnetApp_DbNameVal_t gGptpDefaultDsRw[] =
 {
     {"priority1", "248"},
     {"priority2", "248"},
     {"external-port-config-enable", "false"},
-    {"time-source", "internal-oscillator"},
-    {"ptp-timescale", "true"},
     {"clock-quality/clock-class", "cc-default"},
     {"clock-quality/clock-accuracy", "ca-time-accurate-to-250-ns"},
     {"clock-quality/offset-scaled-log-variance", "0x436a"}
+};
+
+static EnetApp_DbNameVal_t gGptpDefaultDsRo[] =
+{
+    {"time-source", "internal-oscillator"},
+    {"ptp-timescale", "true"},
 };
 
 static EnetApp_DbIntVal_t gGptpNonYangDs[] =
@@ -160,15 +170,15 @@ __attribute__ ((aligned(TSN_TSK_STACK_ALIGN)));
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-EnetApp_Ctx_t gAppCtx =
-{
-    .dbName = NULL,
-};
+extern EnetApp_Ctx_t gAppCtx;
 
-EnetApp_ModuleCtx_t gModCtxTable[ENETAPP_MAX_TASK_IDX] =
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
+
+int EnetApp_addGptpModCtx(EnetApp_ModuleCtx_t *modCtxTbl)
 {
-    [ENETAPP_GPTP_TASK_IDX] =
-    {
+    EnetApp_ModuleCtx_t gptpModCtx = {
         .enable = true,
         .stopFlag = true,
         .taskPriority = GPTP_TASK_PRIORITY,
@@ -178,87 +188,127 @@ EnetApp_ModuleCtx_t gModCtxTable[ENETAPP_MAX_TASK_IDX] =
         .onModuleDBInit = EnetApp_gptpDbInit,
         .onModuleRunner = EnetApp_gptpTask,
         .appCtx = &gAppCtx
-    },
-};
+    };
+    memcpy(&modCtxTbl[ENETAPP_GPTP_TASK_IDX], &gptpModCtx,
+           sizeof(EnetApp_ModuleCtx_t));
+    return 0;
+}
 
-/* ========================================================================== */
-/*                          Function Definitions                              */
-/* ========================================================================== */
 static void EnetApp_cfgGptpPortDs(yang_db_runtime_dataq_t *ydrd, int instance,
-                             int domain, int port_index)
+                                  int domain, int port_index, bool dbInitFlag)
 {
     int i;
     char buffer[MAX_KEY_SIZE];
 
-    for (i = 0; i < sizeof(gGptpPortDs)/sizeof(gGptpPortDs[0]); i++)
+    if (!dbInitFlag)
+    {
+        for (i = 0; i < sizeof(gGptpPortDsRw)/sizeof(gGptpPortDsRw[0]); i++)
+        {
+            snprintf(buffer, sizeof(buffer),
+                     "/ieee1588-ptp-tt/ptp/instances/instance|instance-index:%d,%d|"
+                     "/ports/port|port-index:%d|/port-ds/%s",
+                     instance, domain, port_index, gGptpPortDsRw[i].name);
+
+            yang_db_runtime_put_oneline(ydrd, buffer, gGptpPortDsRw[i].val,
+                                        YANG_DB_ONHW_NOACTION);
+        }
+    }
+
+    for (i = 0; i < sizeof(gGptpPortDsRo)/sizeof(gGptpPortDsRo[0]); i++)
     {
         snprintf(buffer, sizeof(buffer),
-                 "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
+                 "/ieee1588-ptp-tt/ptp/instances/instance|instance-index:%d,%d|"
                  "/ports/port|port-index:%d|/port-ds/%s",
-                 instance, domain, port_index, gGptpPortDs[i].name);
+                 instance, domain, port_index, gGptpPortDsRo[i].name);
 
-        yang_db_runtime_put_oneline(ydrd, buffer, gGptpPortDs[i].val,
+        yang_db_runtime_put_oneline(ydrd, buffer, gGptpPortDsRo[i].val,
                                     YANG_DB_ONHW_NOACTION);
     }
 }
 
 static void EnetApp_cfgGptpDefaultDs(yang_db_runtime_dataq_t *ydrd, int instance,
-                                   int domain)
+                                     int domain, bool dbInitFlag)
 {
     int i;
     char buffer[MAX_KEY_SIZE];
 
-    for (i = 0; i < sizeof(gGptpDefaultDs)/sizeof(gGptpDefaultDs[0]); i++)
+    if (!dbInitFlag)
+    {
+        for (i = 0; i < sizeof(gGptpDefaultDsRw)/sizeof(gGptpDefaultDsRw[0]); i++)
+        {
+            snprintf(buffer, sizeof(buffer),
+                     "/ieee1588-ptp-tt/ptp/instances/instance|instance-index:%d,%d|"
+                     "/default-ds/%s",
+                     instance, domain, gGptpDefaultDsRw[i].name);
+            yang_db_runtime_put_oneline(ydrd, buffer, gGptpDefaultDsRw[i].val,
+                                        YANG_DB_ONHW_NOACTION);
+        }
+    }
+
+    for (i = 0; i < sizeof(gGptpDefaultDsRo)/sizeof(gGptpDefaultDsRo[0]); i++)
     {
         snprintf(buffer, sizeof(buffer),
-                 "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
+                 "/ieee1588-ptp-tt/ptp/instances/instance|instance-index:%d,%d|"
                  "/default-ds/%s",
-                 instance, domain, gGptpDefaultDs[i].name);
-        yang_db_runtime_put_oneline(ydrd, buffer, gGptpDefaultDs[i].val,
+                 instance, domain, gGptpDefaultDsRo[i].name);
+        yang_db_runtime_put_oneline(ydrd, buffer, gGptpDefaultDsRo[i].val,
                                     YANG_DB_ONHW_NOACTION);
     }
 }
 
 static int EnetApp_gptpYangConfig(yang_db_runtime_dataq_t *ydrd, int instance,
-               int domain, const char *netdevs[], int numOfPorts)
+               int domain, EnetApp_Ctx_t *appCtx)
 {
     char buffer[MAX_KEY_SIZE];
     char value_str[32];
-    char *plus;
+    const char *plus;
     int i, res = 0;
 
     DPRINT("%s:domain=%d", __func__, domain);
 
     do {
-        plus = ((instance | domain) != 0) ? "+": "";
-        snprintf(buffer, sizeof(buffer), "/ieee1588-ptp/ptp/instance-domain-map%s",
-                 plus);
-        snprintf(value_str, sizeof(value_str), "0x%04x", instance<<8|domain);
-        yang_db_runtime_put_oneline(ydrd, buffer,
-                                    value_str, YANG_DB_ONHW_NOACTION);
+        /* skip setting of 'rw' yang configs when db is already initialized */
+        if (!appCtx->dbInitFlag)
+        {
+            plus = ((instance | domain) != 0) ? "+": "";
+            snprintf(buffer, sizeof(buffer), "/ieee1588-ptp-tt/ptp/instance-domain-map%s",
+                     plus);
+            snprintf(value_str, sizeof(value_str), "0x%04x", instance<<8|domain);
+            yang_db_runtime_put_oneline(ydrd, buffer,
+                                        value_str, YANG_DB_ONHW_NOACTION);
+        }
 
         /* set for default-ds */
-        EnetApp_cfgGptpDefaultDs(ydrd, instance, domain);
+        EnetApp_cfgGptpDefaultDs(ydrd, instance, domain, appCtx->dbInitFlag);
 
         // portindex starts from 1
-        for (i = 0; i < numOfPorts; i++)
+        for (i = 0; i < appCtx->netdevSize; i++)
         {
-            snprintf(buffer, sizeof(buffer),
-                     "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
-                     "/ports/port|port-index:%d|/underlying-interface",
-                     instance, domain, i+1);
-            yang_db_runtime_put_oneline(ydrd, buffer, (char*)netdevs[i],
-                                        YANG_DB_ONHW_NOACTION);
+            /* skip setting of 'rw' yang configs when db is already initialized */
+            if (!appCtx->dbInitFlag)
+            {
+                snprintf(buffer, sizeof(buffer),
+                         "/ieee1588-ptp-tt/ptp/instances/instance|instance-index:%d,%d|"
+                         "/ports/port|port-index:%d|/underlying-interface",
+                         instance, domain, i+1);
+                yang_db_runtime_put_oneline(ydrd, buffer, appCtx->netdev[i],
+                                            YANG_DB_ONHW_NOACTION);
+            }
 
             /* set for port-ds */
-            EnetApp_cfgGptpPortDs(ydrd, instance, domain, i+1);
+            EnetApp_cfgGptpPortDs(ydrd, instance, domain, i+1, appCtx->dbInitFlag);
         }
-        /* disable performance by default */
-        snprintf(buffer, sizeof(buffer),
-                 "/ieee1588-ptp/ptp/instances/instance|instance-index:%d,%d|"
-                 "/performance-monitoring-ds/enable",
-                 instance, domain);
-        yang_db_runtime_put_oneline(ydrd, buffer, "false", YANG_DB_ONHW_NOACTION);
+
+        /* skip setting of 'rw' yang configs when db is already initialized */
+        if (!appCtx->dbInitFlag)
+        {
+            /* disable performance by default */
+            snprintf(buffer, sizeof(buffer),
+                     "/ieee1588-ptp-tt/ptp/instances/instance|instance-index:%d,%d|"
+                     "/performance-monitoring-ds/enable",
+                     instance, domain);
+            yang_db_runtime_put_oneline(ydrd, buffer, "false", YANG_DB_ONHW_NOACTION);
+        }
     } while (0);
 
     return res;
@@ -301,56 +351,43 @@ static void *EnetApp_gptpTask(void *arg)
         netdevs[i] = appCtx->netdev[i];
     }
 
-    /* This function has a true loop inside */
-    res = gptpman_run(gGptpOpt.instNum, netdevs, appCtx->netdevSize,
-                     NULL, &modCtx->stopFlag);
-    if (res)
+    res = gptpgcfg_init(appCtx->dbName, gGptpOpt.confFiles,
+                        gGptpOpt.instNum, true, EnetApp_gptpNonYangConfig);
+    if (res != 0)
     {
-        DPRINT("%s: gptpman_run() error", __func__);
+        DPRINT("%s: gptpgcfg_init() error", __func__);
     }
-
+    else
+    {
+        /* This function has a true loop inside */
+        res = gptpman_run(gGptpOpt.instNum, netdevs, appCtx->netdevSize,
+                        NULL, &modCtx->stopFlag);
+        if (res != 0)
+        {
+            DPRINT("%s: gptpman_run() error", __func__);
+        }
+    }
+    gptpgcfg_close(gGptpOpt.instNum);
     return NULL;
 }
 
-static int EnetApp_gptpDbInit(EnetApp_ModuleCtx_t* modCtx, yang_db_runtime_dataq_t *ydrd)
+static int EnetApp_gptpDbInit(EnetApp_ModuleCtx_t* modCtx, EnetApp_dbArgs *dbargs)
 {
     EnetApp_Ctx_t *appCtx = modCtx->appCtx;
-    const char *netdevs[CB_MAX_NETDEVNAME];
-    int (*gptpNonYangConfig)(uint8_t instance);
     int res = 0;
     int i;
-
-    for (i = 0; i < appCtx->netdevSize; i++)
-    {
-        netdevs[i] = appCtx->netdev[i];
-    }
 
     if (gGptpOpt.numConf == 0)
     {
         /* There is no config file is specified, set config file for gptp*/
         for (i = 0; i < gGptpOpt.domainNum; i++)
         {
-            res = EnetApp_gptpYangConfig(ydrd, gGptpOpt.instNum, gGptpOpt.domains[i],
-                        netdevs, appCtx->netdevSize);
+            res = EnetApp_gptpYangConfig(dbargs->ydrd, gGptpOpt.instNum,
+                        gGptpOpt.domains[i], appCtx);
             if (res)
             {
                 DPRINT("Failed to set gptp run time config");
             }
-        }
-        gptpNonYangConfig = EnetApp_gptpNonYangConfig;
-    }
-    else
-    {
-        gptpNonYangConfig = NULL;
-    }
-
-    if (res == 0)
-    {
-        res = gptpgcfg_init(appCtx->dbName, gGptpOpt.confFiles, gGptpOpt.instNum, true,
-                            gptpNonYangConfig);
-        if (res != 0)
-        {
-            DPRINT("%s: gptpgcfg_init() error", __func__);
         }
     }
 

@@ -32,6 +32,16 @@
 #ifndef _ENETAPP_H_
 #define _ENETAPP_H_
 
+/*============================================================================*/
+/*                           Macros and Constants                             */
+/*============================================================================*/
+
+#define ENETAPP_PORT_MAX            (3)
+#define ENETAPP_DEFAULT_CFG_NAME    "sitara-cpsw"
+#define EnetAppAbort(message)       \
+    EnetAppUtils_print(message);    \
+    EnetAppUtils_assert(false);
+
 /* ========================================================================== */
 /*                          Structure Declarations                            */
 /* ========================================================================== */
@@ -92,9 +102,18 @@ typedef struct EnetApp_Cfg_s
     SemaphoreP_Object rxDoneSemObj;
 
     /* Peripheral's MAC ports to use */
-    Enet_MacPort macPorts[MAX_NUM_MAC_PORTS];
+    Enet_MacPort macPorts[ENETAPP_PORT_MAX];
 } EnetApp_Cfg;
 
+/* ========================================================================== */
+/*                          External Functions                                */
+/* ========================================================================== */
+
+int EnetApp_initTsn(void);
+void EnetApp_initAppCfg(EnetPer_AttachCoreOutArgs *attachArgs, EnetApp_HandleInfo *handleInfo);
+void EnetApp_setMacAddr(uint8_t hwaddr[]);
+void EnetApp_addBroadcastEntry(void);
+void EnetApp_printCpuLoad(void);
 
 void EnetApp_destroyRxTask();
 void EnetApp_createRxTask();

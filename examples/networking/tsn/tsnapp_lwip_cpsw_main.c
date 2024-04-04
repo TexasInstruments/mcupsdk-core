@@ -633,3 +633,23 @@ static void EnetApp_portLinkStatusChangeCb(Enet_MacPort macPort,
                        ENET_MACPORT_ID(macPort), isLinkUp ? "up" : "down");
 }
 
+int32_t EnetApp_filterPriorityPacketsCfg(Enet_Handle hEnet, uint32_t coreId)
+{
+    EnetMacPort_SetPriorityRegenMapInArgs params;
+    Enet_IoctlPrms prms;
+    int32_t retVal = ENET_SOK;
+
+    params.macPort = ENET_MAC_PORT_1;
+
+    params.priorityRegenMap.priorityMap[0] =0U;
+    for (int i = 1; i < 8U; i++)
+    {
+        params.priorityRegenMap.priorityMap[i] =1U;  // Map all priorities from (1 to 7) to priority 1, these packets will be received on DMA channel 1.
+    }
+
+    ENET_IOCTL_SET_IN_ARGS(&prms, &params);
+
+    ENET_IOCTL(hEnet, coreId, ENET_MACPORT_IOCTL_SET_PRI_REGEN_MAP, &prms, retVal);
+
+    return retVal;
+}

@@ -8,6 +8,8 @@ const files = {
         "sharedrx_flow_cfg.c",
         "tsninit.c",
         "debug_log.c",
+        "enet_custom_board_config.c",
+        "enetapp_cpsw.c",
         "tsnapp_cpsw_main.c",
         "sharedrx_flow.c",
         "main.c",
@@ -55,6 +57,7 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/examples/networking/tsn",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp",
+        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_unibase",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/tilld",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/gptpconf",
@@ -90,7 +93,7 @@ const defines_r5f = {
         "ENET_ENABLE_PER_CPSW=1",
         'PRINT_FORMAT_NO_WARNING',
         'SITARA',
-        'DISABLE_UC_CLIENT', // Add this macro to disable uc_client which configure TAS.
+        'GPTP_ENABLED=1',
     ],
 };
 

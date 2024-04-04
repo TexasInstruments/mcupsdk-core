@@ -37,19 +37,12 @@
 #include <tsn_combase/combase.h>
 #include <tsn_unibase/unibase_binding.h>
 #include "debug_log.h"
+#include "tsninit.h"
 
 Logger_onConsoleOut sDrvConsoleOut;
 /* Reason: Printing to the console directly will create a lot of timing issue in gptp.
  * Solution: Writing to a buffer, a log task will print it out a bit later. */
-#ifdef TSN_USE_LOG_BUFFER
-
-#if defined(SAFERTOS)
-#define LOGGER_STACK_SIZE                         (16U * 1024U)
-#define LOGGER_STACK_ALIGN                        LOGGER_STACK_SIZE
-#else
-#define LOGGER_STACK_SIZE                         (10U * 1024U)
-#define LOGGER_STACK_ALIGN                        (32U)
-#endif
+#if TSN_USE_LOG_BUFFER == 1
 
 static CB_THREAD_MUTEX_T gLogMutex;
 static CB_THREAD_T hLogTask;
@@ -57,9 +50,12 @@ static CB_THREAD_T hLogTask;
 #define INIT_LOG_TASK(priority) \
     if(Logger_startTask(priority) < 0){return -1;}
 
-static uint8_t gLogStackBuf[LOGGER_STACK_SIZE] __attribute__ ((aligned(LOGGER_STACK_ALIGN)));
+static uint8_t gLogStackBuf[TSN_TSK_STACK_SIZE]
+__attribute__ ((aligned(TSN_TSK_STACK_ALIGN)));
 static uint8_t gLogBuf[4096];
 static uint8_t gPrintBuf[4096];
+
+
 
 static void *Logger_task(void *arg)
 {
@@ -80,9 +76,7 @@ static void *Logger_task(void *arg)
 
         if (len > 0)
         {
-            /* The print function will take a long time, we should not
-             * call it inside the mutex lock. */
-            DPRINT("%s", gPrintBuf);
+            sDrvConsoleOut("%s", (char*)gPrintBuf);
         }
 
         CB_USLEEP(10000);
@@ -92,20 +86,44 @@ static void *Logger_task(void *arg)
 
 int Logger_logToBuffer(bool flush, const char *str)
 {
-    int used_len;
-    int remain_bufsize;
-    int loglen = strlen(str);
+    int usedLen;
+    int remainBufsize;
+    int logLen = strlen(str);
+
+    if (str[0] == 0)
+    {
+        return 0;
+    }
 
     CB_THREAD_MUTEX_LOCK(&gLogMutex);
-    used_len = strlen((const char *)gLogBuf);
-    remain_bufsize = sizeof(gLogBuf)-used_len;
-    if (remain_bufsize > loglen)
+    usedLen = strlen((const char *)gLogBuf);
+    remainBufsize = sizeof(gLogBuf)-usedLen;
+
+#ifdef USE_CRLF
+    char *lf = strrchr(str, '\n');
+    bool replace = false;
+    if (lf)
     {
-        snprintf((char *)&gLogBuf[used_len], remain_bufsize, "%s", str);
+        *lf = 0;
+        replace = true;
     }
+    if (remainBufsize > (logLen+2))
+    {
+        if(replace){
+            snprintf((char *)&gLogBuf[usedLen], remainBufsize, "%s"ENDLINE, str);
+        }else{
+            snprintf((char *)&gLogBuf[usedLen], remainBufsize, "%s", str);
+        }
+    }
+#else
+    if (remainBufsize > logLen)
+    {
+        snprintf((char *)&gLogBuf[usedLen], remainBufsize, "%s", str);
+    }
+#endif
     else
     {
-        snprintf((char *)&gLogBuf[0], sizeof(gLogBuf), "log ovflow!\n");
+        snprintf((char *)&gLogBuf[0], sizeof(gLogBuf), "log ovflow!"ENDLINE);
     }
     CB_THREAD_MUTEX_UNLOCK(&gLogMutex);
 
@@ -129,7 +147,7 @@ static int Logger_startTask(int log_pri)
     return err;
 }
 
-#else //!TSN_USE_LOG_BUFFER
+#else //TSN_USE_LOG_BUFFER != 1
 
 #define INIT_LOG_TASK(priority)
 
@@ -139,20 +157,25 @@ int Logger_directLog(bool flush, const char *str)
     {
         return 0;
     }
+#ifdef USE_CRLF
+    // SITARA uses \r\n(CR,LF) for the new line so
+    // we have to replace \n in the general log
     char *lf = strrchr(str, '\n');
     if (lf)
     {
         *lf = 0;
+        flush = true;
     }
-    sDrvConsoleOut("%s", (char*)str);
-    if (flush || (lf && *lf == 0))
+#endif
+    sDrvConsoleOut((char*)str);
+    if (flush)
     {
-        sDrvConsoleOut("\r\n");
+        sDrvConsoleOut(ENDLINE);
     }
     return 0;
 }
 
-#endif //!TSN_USE_LOG_BUFFER
+#endif //TSN_USE_LOG_BUFFER != 1
 
 int Logger_init(Logger_onConsoleOut consoleOutCb)
 {
@@ -160,7 +183,7 @@ int Logger_init(Logger_onConsoleOut consoleOutCb)
     {
         sDrvConsoleOut = consoleOutCb;
     }
-#ifdef TSN_USE_LOG_BUFFER
+#if TSN_USE_LOG_BUFFER == 1
     if (CB_THREAD_MUTEX_INIT(&gLogMutex, NULL) < 0)
     {
         DPRINT("Failed to int mutex!");
@@ -174,12 +197,12 @@ int Logger_init(Logger_onConsoleOut consoleOutCb)
 
 void Logger_deInit(void)
 {
-    #ifdef TSN_USE_LOG_BUFFER
+#if TSN_USE_LOG_BUFFER == 1
     if (hLogTask != NULL)
     {
         CB_THREAD_JOIN(hLogTask, NULL);
         hLogTask = NULL;
     }
     CB_THREAD_MUTEX_DESTROY(&gLogMutex);
-    #endif
+#endif
 }
