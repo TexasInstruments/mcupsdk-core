@@ -2,7 +2,7 @@
 DEVICE_TYPE?=GP
 
 # Path to the signing tools, keys etc
-SIGNING_TOOL_PATH=$(MCU_PLUS_SDK_PATH)/tools/boot/signing
+SIGNING_TOOL_PATH?=$(MCU_PLUS_SDK_PATH)/tools/boot/signing
 
 # Path to the salt required for calculation of Derived key using manufacturers encryption key.
 KD_SALT=$(SIGNING_TOOL_PATH)/kd_salt.txt
