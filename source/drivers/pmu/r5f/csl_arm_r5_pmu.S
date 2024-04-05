@@ -42,8 +42,10 @@
 
     .set     CSL_ARM_R5_PMU_CYCLE_COUNTER_NUM, 0x1f
 
+#if defined(__GNUC__) && !defined(__clang__)
     .thumb
     .syntax unified
+#endif
 
 /*
 ;==============================================================================
