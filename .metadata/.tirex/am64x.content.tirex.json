@@ -11148,37 +11148,6 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
-        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running NORTOS.",
-        "name": "hello_world",
-        "location": "../../examples/hello_world/am64x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "gcc"
-        ],
-        "subCategories": [
-            "hello_world",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
         "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running FREERTOS.",
         "name": "hello_world",
         "location": "../../examples/hello_world/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -11190,37 +11159,6 @@
         ],
         "compiler": [
             "ticlang"
-        ],
-        "subCategories": [
-            "hello_world",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running FREERTOS.",
-        "name": "hello_world",
-        "location": "../../examples/hello_world/am64x-evm/r5fss0-0_freertos/gcc-armv7/example.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "gcc"
         ],
         "subCategories": [
             "hello_world",
@@ -11396,37 +11334,6 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
-        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running NORTOS.",
-        "name": "hello_world",
-        "location": "../../examples/hello_world/am64x-sk/r5fss0-0_nortos/gcc-armv7/example.projectspec",
-        "devtools": [
-            "AM64x_SK_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "gcc"
-        ],
-        "subCategories": [
-            "hello_world",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
         "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running FREERTOS.",
         "name": "hello_world",
         "location": "../../examples/hello_world/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -11438,37 +11345,6 @@
         ],
         "compiler": [
             "ticlang"
-        ],
-        "subCategories": [
-            "hello_world",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running FREERTOS.",
-        "name": "hello_world",
-        "location": "../../examples/hello_world/am64x-sk/r5fss0-0_freertos/gcc-armv7/example.projectspec",
-        "devtools": [
-            "AM64x_SK_EVM"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "gcc"
         ],
         "subCategories": [
             "hello_world",
@@ -11894,39 +11770,6 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
-        "description": "A \"Hello, World\" Example. This example shows configuration and usage of CPU+OS for MPU, cache, interrupts, heaps, semaphores, timers and cycle counters. CPU is R5FSS0-0 running NORTOS.",
-        "name": "dpl_demo",
-        "location": "../../examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_nortos/gcc-armv7/example.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "gcc"
-        ],
-        "subCategories": [
-            "kernel",
-            "dpl",
-            "dpl_demo",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
         "description": "A \"Hello, World\" Example. This example shows configuration and usage of CPU+OS for MPU, cache, interrupts, heaps, semaphores, timers and cycle counters. CPU is R5FSS0-0 running FREERTOS.",
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -11938,39 +11781,6 @@
         ],
         "compiler": [
             "ticlang"
-        ],
-        "subCategories": [
-            "kernel",
-            "dpl",
-            "dpl_demo",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A \"Hello, World\" Example. This example shows configuration and usage of CPU+OS for MPU, cache, interrupts, heaps, semaphores, timers and cycle counters. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "dpl_demo",
-        "location": "../../examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_freertos/gcc-armv7/example.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "gcc"
         ],
         "subCategories": [
             "kernel",
@@ -12158,39 +11968,6 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
-        "description": "A \"Hello, World\" Example. This example shows configuration and usage of CPU+OS for MPU, cache, interrupts, heaps, semaphores, timers and cycle counters. CPU is R5FSS0-0 running NORTOS.",
-        "name": "dpl_demo",
-        "location": "../../examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_nortos/gcc-armv7/example.projectspec",
-        "devtools": [
-            "AM64x_SK_EVM"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "gcc"
-        ],
-        "subCategories": [
-            "kernel",
-            "dpl",
-            "dpl_demo",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
         "description": "A \"Hello, World\" Example. This example shows configuration and usage of CPU+OS for MPU, cache, interrupts, heaps, semaphores, timers and cycle counters. CPU is R5FSS0-0 running FREERTOS.",
         "name": "dpl_demo",
         "location": "../../examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -12202,39 +11979,6 @@
         ],
         "compiler": [
             "ticlang"
-        ],
-        "subCategories": [
-            "kernel",
-            "dpl",
-            "dpl_demo",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A \"Hello, World\" Example. This example shows configuration and usage of CPU+OS for MPU, cache, interrupts, heaps, semaphores, timers and cycle counters. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "dpl_demo",
-        "location": "../../examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_freertos/gcc-armv7/example.projectspec",
-        "devtools": [
-            "AM64x_SK_EVM"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "gcc"
         ],
         "subCategories": [
             "kernel",
@@ -12752,39 +12496,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Posix Demo Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "posix_demo",
-        "location": "../../examples/kernel/freertos/posix_demo/am64x-evm/r5fss0-0_freertos/gcc-armv7/example.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "gcc"
-        ],
-        "subCategories": [
-            "kernel",
-            "freertos",
-            "posix_demo",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "A Posix Demo Example. CPU is M4FSS0-0 running FREERTOS.",
         "name": "posix_demo",
         "location": "../../examples/kernel/freertos/posix_demo/am64x-evm/m4fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -12862,39 +12573,6 @@
         ],
         "compiler": [
             "ticlang"
-        ],
-        "subCategories": [
-            "kernel",
-            "freertos",
-            "posix_demo",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Posix Demo Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "posix_demo",
-        "location": "../../examples/kernel/freertos/posix_demo/am64x-sk/r5fss0-0_freertos/gcc-armv7/example.projectspec",
-        "devtools": [
-            "AM64x_SK_EVM"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "gcc"
         ],
         "subCategories": [
             "kernel",
@@ -13016,39 +12694,6 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
-        "description": "A Task Switch Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "task_switch",
-        "location": "../../examples/kernel/freertos/task_switch/am64x-evm/r5fss0-0_freertos/gcc-armv7/example.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "gcc"
-        ],
-        "subCategories": [
-            "kernel",
-            "freertos",
-            "task_switch",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
         "description": "A Task Switch Example. CPU is A53SS0-0 running FREERTOS.",
         "name": "task_switch",
         "location": "../../examples/kernel/freertos/task_switch/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
@@ -13126,39 +12771,6 @@
         ],
         "compiler": [
             "ticlang"
-        ],
-        "subCategories": [
-            "kernel",
-            "freertos",
-            "task_switch",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.gettingstarted"
-        ],
-        "description": "A Task Switch Example. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "task_switch",
-        "location": "../../examples/kernel/freertos/task_switch/am64x-sk/r5fss0-0_freertos/gcc-armv7/example.projectspec",
-        "devtools": [
-            "AM64x_SK_EVM"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "gcc"
         ],
         "subCategories": [
             "kernel",

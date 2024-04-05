@@ -68,6 +68,11 @@ function genTirexExampleContentList(example_file_list, device) {
 
     let tirex_content_list = [];
     let deviceData = require(`./device/project_${device}.js`);
+    let gccEnabled = false;
+
+    if (typeof deviceData.getEnableGccBuild != 'undefined')
+        gccEnabled = deviceData.getEnableGccBuild();
+
     let devtools_list = []; /* For userguide */
 
     for(example of example_file_list) {
@@ -82,6 +87,9 @@ function genTirexExampleContentList(example_file_list, device) {
             let projectSpecOutPath = common.path.makeExampleOutPath(property.dirPath, buildOption);
             let folder_list = common.path.relative("examples", property.dirPath).split("/");
             let tirex_content = {};
+
+            if (gccEnabled == false && buildOption.cgt == "gcc-armv7")
+                continue;
 
             tirex_content.resourceType = `project.ccs`;
             tirex_content.resourceClass = [ `example` ];
@@ -153,6 +161,10 @@ function genTirexExampleContentList(example_file_list, device) {
             continue;
         let systemProjects = require(`../${example}`).getSystemProjects(device);
         for(project of systemProjects) {
+
+            if (gccEnabled == false && project.tag.match(/gcc*/))
+                continue;
+
             tirex_content = genTirexSystemProjectContent(example, device);
             tirex_content_list.push(tirex_content);
         }
