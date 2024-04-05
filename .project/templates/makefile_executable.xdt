@@ -10,6 +10,10 @@ include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 include $(`args.sdkPath`)/devconfig/devconfig.mak
 % }
 
+%let args_compiler = "ticlang"
+%if (args.cgtOptions.cc.includes("gcc")) {
+%   args_compiler = "gcc"
+%}
 CG_TOOL_ROOT=$(`args.cgtOptions.path`)
 
 CC=$(CG_TOOL_ROOT)/bin/`args.cgtOptions.cc`
@@ -516,11 +520,19 @@ $(SYSCFG_GEN_FILES): syscfg
 ifeq ($(SYSTEM_FLAG), false)
 syscfg: `args.project.syscfgfile`
 	@echo Generating SysConfig files ...
+%   if ( args_compiler == "gcc" ){
+	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context `args.syscfg.cpu` --part `args.syscfg.part` --package `args.syscfg.pkg` --output generated/ --compiler `args_compiler` `args.project.syscfgfile`
+%   } else{
 	$(SYSCFG_NODE) $(SYSCFG_CLI_PATH)/dist/cli.js --product $(SYSCFG_SDKPRODUCT) --context `args.syscfg.cpu` --part `args.syscfg.part` --package `args.syscfg.pkg` --output generated/ `args.project.syscfgfile`
+%}
 endif
 
 syscfg-gui:
+%   if ( args_compiler == "gcc" ){
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device `args.syscfg.device` --context `args.syscfg.cpu` --part `args.syscfg.part` --package `args.syscfg.pkg` --output generated/ --compiler `args_compiler` `args.project.syscfgfile`
+%    } else{
 	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device `args.syscfg.device` --context `args.syscfg.cpu` --part `args.syscfg.part` --package `args.syscfg.pkg` --output generated/  `args.project.syscfgfile`
+%    }
 % }
 
 % if (args.project.isBootLoader) {

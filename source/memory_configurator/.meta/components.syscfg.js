@@ -3,7 +3,7 @@ let selfCoreName = common.getSelfSysCfgCoreName();
 
 let memory_configurator_module = {}
 
-if ( (!selfCoreName.includes ("a53")) && (common.getSocName() != "awr294x") )
+if ( (!selfCoreName.includes ("a53")) && (common.getSocName() != "awr294x") && (system.compiler != "gcc"))
 {
     memory_configurator_module = {
         displayName: "TI Memory Configurator",
