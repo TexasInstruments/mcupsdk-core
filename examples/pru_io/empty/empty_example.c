@@ -37,13 +37,20 @@
 #include "ti_board_open_close.h"
 
 #include <drivers/pruicss.h>
-#include <pru_load_bin.h> // > PRUFirmware array
 
-/**
- *  @brief PRU Core
- *  Wil come from sysconfig
- */
-#define PRUICSS_PRUx                PRUICSS_PRU0
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+#include <pru0_load_bin.h>
+#include <pru1_load_bin.h>
+#include <rtupru0_load_bin.h>
+#include <rtupru1_load_bin.h>
+#include <txpru0_load_bin.h>
+#include <txpru1_load_bin.h>
+#endif
+
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#include <pru0_load_bin.h>
+#include <pru1_load_bin.h>
+#endif
 
 /*
  *  This is an example project to show R5F
@@ -54,7 +61,7 @@
 
 PRUICSS_Handle gPruIcss0Handle;
 
-void load_pru_firmware(void *args)
+void load_pru_firmware(uint8_t PRUICSS_PRUx, const uint32_t PRUxFirmware[], uint32_t bytelength)
 {
      /* ----------------------------------------------------------------- */
      /* Program empty code on PRU Core/s;                                   */
@@ -71,7 +78,7 @@ void load_pru_firmware(void *args)
 
      /* Load firmware. Set buffer = write to Pru memory */
      status = PRUICSS_writeMemory(gPruIcss0Handle, PRUICSS_IRAM_PRU(PRUICSS_PRUx), 0,
-                        (uint32_t *) PRUFirmware_0, sizeof(PRUFirmware_0));
+                        (const uint32_t *) PRUxFirmware, bytelength);
      DebugP_assert(status != 0);
 
      status = PRUICSS_resetCore(gPruIcss0Handle, PRUICSS_PRUx);
@@ -91,8 +98,20 @@ void pru_io_empty_example_main(void *args)
 
      gPruIcss0Handle = PRUICSS_open(CONFIG_PRU_ICSS0);
 
-     load_pru_firmware(NULL);
-     
+     #if defined(SOC_AM64X) || defined(SOC_AM243X)
+     load_pru_firmware(PRUICSS_PRU0, PRU0Firmware_0, sizeof(PRU0Firmware_0));
+     load_pru_firmware(PRUICSS_PRU1, PRU1Firmware_0, sizeof(PRU1Firmware_0));
+     load_pru_firmware(PRUICSS_RTU_PRU0, RTUPRU0Firmware_0, sizeof(RTUPRU0Firmware_0));
+     load_pru_firmware(PRUICSS_RTU_PRU1, RTUPRU1Firmware_0, sizeof(RTUPRU1Firmware_0));
+     load_pru_firmware(PRUICSS_TX_PRU0, TXPRU0Firmware_0, sizeof(TXPRU0Firmware_0));
+     load_pru_firmware(PRUICSS_TX_PRU1, TXPRU1Firmware_0, sizeof(TXPRU1Firmware_0));
+     #endif
+
+     #if defined(SOC_AM263X) || defined(SOC_AM263PX)
+     load_pru_firmware(PRUICSS_PRU0, PRU0Firmware_0, sizeof(PRU0Firmware_0));
+     load_pru_firmware(PRUICSS_PRU1, PRU1Firmware_0, sizeof(PRU1Firmware_0));
+     #endif
+
      while (1)
      {
         ClockP_usleep(1);

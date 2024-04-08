@@ -453,6 +453,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_pru_io_am263x-cc_r5fs
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_pru_io_am263x-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_am263x-cc_icssm-pru0_fw_ti-pru-cgt_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_am263x-lp_icssm-pru1_fw_ti-pru-cgt_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_am263x-cc_icssm-pru1_fw_ti-pru-cgt_build
 # Various Private System Example Projectspec Build Targets
 
 all: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL)
@@ -1737,6 +1739,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  empty_am263x-cc_icssm-pru0_fw_ti-pru-cgt_build:
 	$(MAKE) -C examples/pru_io/empty/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec all
 
+ empty_am263x-lp_icssm-pru1_fw_ti-pru-cgt_build:
+	$(MAKE) -C examples/pru_io/empty/firmware/am263x-lp/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec all
+
+ empty_am263x-cc_icssm-pru1_fw_ti-pru-cgt_build:
+	$(MAKE) -C examples/pru_io/empty/firmware/am263x-cc/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec all
+
  edma_interrupt_transfer_am263x-cc_system_freertos_nortos_build:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263x-cc/system_freertos_nortos -f makefile_projectspec all
 
@@ -2247,6 +2255,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_pru_io_am263x-cc_r5fs
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_pru_io_am263x-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_am263x-cc_icssm-pru0_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_am263x-lp_icssm-pru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_am263x-cc_icssm-pru1_fw_ti-pru-cgt_clean
 # Various Private System Example Projectspec Clean Targets
 
 clean: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL)
@@ -3531,6 +3541,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  empty_am263x-cc_icssm-pru0_fw_ti-pru-cgt_clean:
 	$(MAKE) -C examples/pru_io/empty/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec clean
 
+ empty_am263x-lp_icssm-pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C examples/pru_io/empty/firmware/am263x-lp/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec clean
+
+ empty_am263x-cc_icssm-pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C examples/pru_io/empty/firmware/am263x-cc/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec clean
+
  edma_interrupt_transfer_am263x-cc_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263x-cc/system_freertos_nortos -f makefile_projectspec clean
 
@@ -4041,6 +4057,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_pru_io_am263x-cc_r5f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_pru_io_am263x-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_am263x-lp_icssm-pru0_fw_ti-pru-cgt_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_am263x-cc_icssm-pru0_fw_ti-pru-cgt_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_am263x-lp_icssm-pru1_fw_ti-pru-cgt_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_am263x-cc_icssm-pru1_fw_ti-pru-cgt_export
 # Various Private System Example Projectspec Export Targets
 
 export: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL)
@@ -5325,6 +5343,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  empty_am263x-cc_icssm-pru0_fw_ti-pru-cgt_export:
 	$(MAKE) -C examples/pru_io/empty/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec export
 
+ empty_am263x-lp_icssm-pru1_fw_ti-pru-cgt_export:
+	$(MAKE) -C examples/pru_io/empty/firmware/am263x-lp/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec export
+
+ empty_am263x-cc_icssm-pru1_fw_ti-pru-cgt_export:
+	$(MAKE) -C examples/pru_io/empty/firmware/am263x-cc/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec export
+
  edma_interrupt_transfer_am263x-cc_system_freertos_nortos_export:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263x-cc/system_freertos_nortos -f makefile_projectspec export
 
@@ -5828,6 +5852,8 @@ help:
 	@echo  $(MAKE) -s -C examples/pru_io/empty/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am263x-lp/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am263x-lp/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am263x-cc/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  .
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================

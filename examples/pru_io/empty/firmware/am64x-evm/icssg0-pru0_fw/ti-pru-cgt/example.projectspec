@@ -41,10 +41,11 @@
         linkerBuildOptions="
             -m=empty.${ConfigName}.map
             --disable_auto_rts
+            --entry_point=main
         "
 
         postBuildStep="
-            -$(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=PRUFirmware  -o pru_load_bin.h empty_am64x-evm_icssg0-pru0_fw_ti-pru-cgt.out
+             $(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=PRU0Firmware  -o pru0_load_bin.h empty_am64x-evm_icssg0-pru0_fw_ti-pru-cgt.out; move pru0_load_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am64x-evm/pru0_load_bin.h 
         "
 
         description="A Empty FW project">
@@ -64,9 +65,9 @@
             "
         ></configuration>
         <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
-        <file path="../../../main.asm" openOnCreation="false" excludeFromBuild="false" action="link">
+        <file path="../../../main.asm" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="./linker.cmd" openOnCreation="false" excludeFromBuild="false" action="link">
+        <file path="./linker.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am64x/EXAMPLES_PRU_EMPTY.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">

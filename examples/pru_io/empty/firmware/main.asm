@@ -45,7 +45,8 @@
 ; icss_constant_defines.inc: Defines symbols corresponding to Constant Table Entries
     .include "icss_constant_defines.inc"
 
-    .asg	R2,	TEMP_REG
+    .asg	R2,	   TEMP_REG
+    .asg    R3.w0, OFFSET_ADDR
 
 ;********
 ;* MAIN *
@@ -80,19 +81,32 @@ init:
 ; - for lsb 16 bits and then for msb 16 bits
 	ldi32	TEMP_REG, 0x12345678
 
+    .if	$isdefed("PRU0")
+    ldi     OFFSET_ADDR, 0x0 
+    .elseif	$isdefed("PRU1")
+    ldi     OFFSET_ADDR, 0x1
+    .elseif	$isdefed("RTUPRU0")
+    ldi     OFFSET_ADDR, 0x2 
+    .elseif	$isdefed("RTUPRU0")
+    ldi     OFFSET_ADDR, 0x3 
+    .elseif	$isdefed("TXPRU0")
+    ldi     OFFSET_ADDR, 0x4
+    .elseif	$isdefed("TXPRU1")
+    ldi     OFFSET_ADDR, 0x5  
+    .endif
+
 ;----------------------------------------------------------------------------
 ;   Writing to PRU memories
 ;   Sample code to write to DMEM and SMEM.
 ;----------------------------------------------------------------------------
 
-; Write 4 byte register value to DMEM0 at offset 0x14
-    sbco    &TEMP_REG, ICSS_DMEM0_CONST, 0x14, 4
+; Write 4 byte register value to DMEM0 at OFFSET_ADDR
+    sbco    &TEMP_REG, ICSS_DMEM0_CONST, OFFSET_ADDR, 4
 
-; Write 3 byte register value to DMEM1 at offset 0x10
-    sbco    &TEMP_REG, ICSS_DMEM1_CONST, 0x10, 3
+; Write 3 byte register value to DMEM1 at OFFSET_ADDR
+    sbco    &TEMP_REG, ICSS_DMEM1_CONST, OFFSET_ADDR, 3
 
-; Write 2 byte register value to SMEM0 at offset 0x22
-    sbco    &TEMP_REG, ICSS_SMEM_CONST,  0x22, 2
+; Write 2 byte register value to SMEM0 at OFFSET_ADDR
+    sbco    &TEMP_REG, ICSS_SMEM_CONST,  OFFSET_ADDR, 2
 
-	set R30,R30,0
     halt ; end of program

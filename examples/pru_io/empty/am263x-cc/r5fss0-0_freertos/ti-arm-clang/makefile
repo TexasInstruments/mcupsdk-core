@@ -63,7 +63,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f \
 	-I${MCU_PLUS_SDK_PATH}/source/pru_io/driver \
-	-I${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt \
+	-I${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am263x-cc \
 	-Igenerated \
 
 DEFINES_common := \
@@ -99,7 +99,7 @@ CFLAGS_release := \
 	-Os \
 
 LNK_FILES_common = \
-	generated/../linker.cmd \
+	generated/linker.cmd \
 
 LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib \

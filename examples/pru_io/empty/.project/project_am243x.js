@@ -34,7 +34,7 @@ const includes_freertos_r5f_am243x_evm = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/r5f",
         "${MCU_PLUS_SDK_PATH}/source/pru_io/driver",
-        "${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt",
+        "${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am243x-evm",
     ],
 };
 
@@ -44,7 +44,7 @@ const includes_freertos_r5f_am243x_lp = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/r5f",
         "${MCU_PLUS_SDK_PATH}/source/pru_io/driver",
-        "${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am243x-lp/icssg0-pru0_fw/ti-pru-cgt"
+        "${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am243x-lp"
     ],
 };
 
@@ -58,7 +58,7 @@ const libs_freertos_r5f = {
 
 const lnkfiles = {
     common: [
-        "../linker.cmd",
+        "linker.cmd",
     ]
 };
 
@@ -109,20 +109,9 @@ function getComponentBuildProperty(buildOption) {
     build_property.filedirs = filedirs;
 
     if(buildOption.board=="am243x-evm"){
-        build_property.importOtherProject="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}/examples/pru_io/empty/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt/example.projectspec";
-        build_property.preBuildSteps = [
-            "$(MAKE) -C ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile -k clean MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_PROJECT_DEBUG=${CWD};",
-            "$(MAKE) -C ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile -k all MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_PROJECT_DEBUG=${CWD};",
-        ];
         build_property.includes = includes_freertos_r5f_am243x_evm;
     }else{
-        build_property.importOtherProject="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}/examples/pru_io/empty/firmware/am243x-lp/icssg0-pru0_fw/ti-pru-cgt/example.projectspec"; 
-        build_property.preBuildSteps = [
-            "$(MAKE) -C ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am243x-lp/icssg0-pru0_fw/ti-pru-cgt -f makefile -k clean MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_PROJECT_DEBUG=${CWD};",
-            "$(MAKE) -C ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am243x-lp/icssg0-pru0_fw/ti-pru-cgt -f makefile -k all MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_PROJECT_DEBUG=${CWD};",
-        ];
         build_property.includes = includes_freertos_r5f_am243x_lp;
-        // CG_TOOL_ROOT path to be decided
     }
 
     build_property.lnkfiles = lnkfiles;

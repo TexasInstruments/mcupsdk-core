@@ -65,7 +65,7 @@ $(OBJDIR)/%.obj %.obj: $(ASM_SRCS)
 empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt.out: $(OBJS) $(CMD_SRCS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: PRU Linker'
-	"$(CGT_TI_PRU_PATH)/bin/clpru" -DICSSG0 -DPRU0 -DSLICE0 -v4 --define=SOC_AM243X  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt.map" --disable_auto_rts   --diag_wrap=off --display_error_number --warn_sections --xml_link_info="empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_linkInfo.xml" --disable_auto_rts  --rom_model -o "empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt.out" $^	
+	"$(CGT_TI_PRU_PATH)/bin/clpru" -DICSSG0 -DPRU0 -DSLICE0 -v4 --define=SOC_AM243X  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt.map" --disable_auto_rts   --diag_wrap=off --display_error_number --warn_sections --xml_link_info="empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt_linkInfo.xml" --disable_auto_rts --entry_point=main  --rom_model -o "empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt.out" $^	
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build
@@ -79,7 +79,8 @@ clean:
 	-@echo ' '
 
 post-build:
-	-$(CGT_TI_PRU_PATH)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=PRUFirmware  -o pru_load_bin.h empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt.out
+		- $(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=PRU0Firmware  -o pru0_load_bin.h empty_am243x-evm_icssg0-pru0_fw_ti-pru-cgt.out
+		- move pru0_load_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am243x-evm/pru0_load_bin.h
 	-@echo ' '
 
 .PHONY: all clean
