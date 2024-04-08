@@ -195,7 +195,7 @@ const example_file_list = [
     "examples/networking/enet_layer2_cpsw_switch/.project/project.js",
     "examples/networking/enet_layer2_multi_channel/.project/project.js",
     "examples/networking/enet_cpsw_est/.project/project.js",
-    "examples/networking/lwip/icss_lwip/.project/project.js",
+    "examples/networking/lwip/icss_emac_lwip/.project/project.js",
     "examples/networking/enet_tx_scatter_gather/.project/project.js",
     "examples/networking/tsn/est_cpsw_app/.project/project.js",
     "examples/networking/tsn/lldp_cpsw_app/.project/project.js",
