@@ -52,6 +52,8 @@
             -Wno-unused-but-set-variable
             -fdata-sections
             -ffunction-sections
+            -O3
+            -march=armv8-a
             -DSOC_AM64X
         "
         linkerBuildOptions="

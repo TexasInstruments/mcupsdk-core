@@ -36,7 +36,7 @@
 #include "ti_board_open_close.h"
 
 /* Number of Dhrystone iterations */
-#define DHRY_ITERATIONS     (30000000U)
+#define DHRY_ITERATIONS     (10000000U)
 
 /* Disable logging in dhrystone */
 int dhryLogEnable = 0;

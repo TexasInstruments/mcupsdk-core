@@ -34,16 +34,16 @@ An SMP example for A53 can be imported and build just as a single core A53 appli
 
 ## Dhrystone benchmark values for SMP FreeRTOS on A53
 
-\note The values obtained is from example - \ref EXAMPLES_KERNEL_FREERTOS_DHRYSTONE_BENCHMARK when build in release mode
+\note The values obtained is from example - \ref EXAMPLES_KERNEL_FREERTOS_DHRYSTONE_BENCHMARK when built in release mode
 
-The dhrystone values can be used to compare the performance between single core FreeRTOS on A53 and SMP FreeRTOS on A53.
+The dhrystone values can be used to compare the performance between single core FreeRTOS on A53 and SMP FreeRTOS on A53 (both at 800 MHz).
 
 No of Threads   | No of Iterations | Dhrystone per second for Single Core FreeRTOS on A53    | Dhrystone per second for SMP FreeRTOS on A53
 ----------------|------------------|---------------------------------------------------------|-----------------------------------------------
-1               | 30000000         | 9629845.0                                               | 9638310.0
-2               | 30000000         | 9629879.0                                               | 19241352.0
-5               | 30000000         | 9629927.0                                               | 16064053.0
-10              | 30000000         | 9629947.0                                               | 19248824.0
+1               | 10000000         | 4343856.0                                               | 4347665.5
+2               | 10000000         | 4355748.0                                               | 8679335.0
+5               | 10000000         | 4372456.5                                               | 7307816.5
+10              | 10000000         | 4374856.0                                               | 8682912.0
 
 ## See also
 

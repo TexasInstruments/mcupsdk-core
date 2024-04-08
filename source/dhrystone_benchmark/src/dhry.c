@@ -84,17 +84,17 @@ typedef struct {
 } threadInst_t;
 
 /* Static Function declarations */
-static void Proc_1 (dhryInstance_t *inst, REG Rec_Pointer Ptr_Val_Par);
-static void Proc_2 (dhryInstance_t *inst, One_Fifty *Int_Par_Ref);
-static void Proc_3 (dhryInstance_t *inst, Rec_Pointer *Ptr_Ref_Par);
-static void Proc_4 (dhryInstance_t *inst); /* without parameters */
-static void Proc_5 (dhryInstance_t *inst); /* without parameters */
-static void Proc_6 (dhryInstance_t *inst, Enumeration Enum_Val_Par, Enumeration *Enum_Ref_Par);
-static void Proc_7 (One_Fifty Int_1_Par_Val, One_Fifty Int_2_Par_Val, One_Fifty *Int_Par_Ref);
-static void Proc_8 (dhryInstance_t *inst, Arr_1_Dim Arr_1_Par_Ref, Arr_2_Dim Arr_2_Par_Ref, int Int_1_Par_Val, int Int_2_Par_Val);
-static Enumeration Func_1 (dhryInstance_t *inst, Capital_Letter, Capital_Letter);
-static Boolean Func_2 (dhryInstance_t *inst, Str_30 Str_1_Par_Ref, Str_30 Str_2_Par_Ref);
-static Boolean Func_3 (Enumeration Enum_Par_Val);
+void Proc_1 (dhryInstance_t *inst, REG Rec_Pointer Ptr_Val_Par);
+void Proc_2 (dhryInstance_t *inst, One_Fifty *Int_Par_Ref);
+void Proc_3 (dhryInstance_t *inst, Rec_Pointer *Ptr_Ref_Par);
+void Proc_4 (dhryInstance_t *inst); /* without parameters */
+void Proc_5 (dhryInstance_t *inst); /* without parameters */
+void Proc_6 (dhryInstance_t *inst, Enumeration Enum_Val_Par, Enumeration *Enum_Ref_Par);
+void Proc_7 (One_Fifty Int_1_Par_Val, One_Fifty Int_2_Par_Val, One_Fifty *Int_Par_Ref);
+void Proc_8 (dhryInstance_t *inst, Arr_1_Dim Arr_1_Par_Ref, Arr_2_Dim Arr_2_Par_Ref, int Int_1_Par_Val, int Int_2_Par_Val);
+Enumeration Func_1 (dhryInstance_t *inst, Capital_Letter, Capital_Letter);
+Boolean Func_2 (dhryInstance_t *inst, Str_30 Str_1_Par_Ref, Str_30 Str_2_Par_Ref);
+Boolean Func_3 (Enumeration Enum_Par_Val);
 
 static int nIterations;
 
@@ -127,7 +127,7 @@ void *dhryThread (void* args)
 
     Number_Of_Runs = nIterations;
 
-    DebugP_assert(Number_Of_Runs == 30000000U);
+    DebugP_assert(Number_Of_Runs == 10000000U);
 
     inst.Next_Ptr_Glob = (Rec_Pointer) malloc (sizeof (Rec_Type));
 

@@ -72,6 +72,13 @@ const libs_a53_smp = {
     ],
 };
 
+const cflags_a53 = {
+    common: [
+        "-O3",
+        "-march=armv8-a"
+    ],
+};
+
 const lnkfiles = {
     common: [
         "linker.cmd",
@@ -156,6 +163,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.templates = templates_a53;
         build_property.includes = includes_a53;
         build_property.libs = libs_a53;
+        build_property.cflags = cflags_a53;
 
         if(buildOption.os.match("freertos-smp"))
         {
