@@ -59,6 +59,9 @@ void Drivers_Rl2Open()
 {
     for(uint32_t i = 0; i < sizeof(gRL2Config)/sizeof(gRL2Config[0]); i++)
     {
+        gRL2Config[i].l2Sram0Len = gRL2Config[i].l2Sram0Len - gRL2Config[i].l2Sram0Base;
+        gRL2Config[i].l2Sram1Len = gRL2Config[i].l2Sram1Len - gRL2Config[i].l2Sram1Base;
+        gRL2Config[i].l2Sram2Len = gRL2Config[i].l2Sram2Len - gRL2Config[i].l2Sram2Base;
         RL2_configure(&(gRL2Config[i]));
     }
 }
