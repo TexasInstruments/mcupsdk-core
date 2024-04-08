@@ -64,6 +64,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f \
+	-I${MCU_PLUS_SDK_PATH}/source/networking \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lwipif/inc \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/source \
@@ -75,6 +76,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_loopback \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_loopback/firmware \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_switch \
 	-Igenerated \
 
 DEFINES_common := \

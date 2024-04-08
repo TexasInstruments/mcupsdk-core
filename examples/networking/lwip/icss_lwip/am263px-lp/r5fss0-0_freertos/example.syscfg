@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.19.0+3426"}
+ * @versions {"tool":"1.20.0+3587"}
  */
 
 /**
@@ -46,23 +46,24 @@ ethphy1.mdioPort = 12;
 ethphy2.$name    = "CONFIG_ETHPHY1";
 ethphy2.mdioPort = 3;
 
-gpio1.$name                = "CONFIG_GPIO0";
-gpio1.pinDir               = "OUTPUT";
-gpio1.GPIO.$assign         = "GPIO";
-gpio1.GPIO.gpioPin.$assign = "PR0_PRU1_GPIO10";
+gpio1.$name          = "CONFIG_GPIO0";
+gpio1.pinDir         = "OUTPUT";
+gpio1.rx             = true;
+gpio1.GPIO_n.$assign = "PR0_PRU1_GPIO10";
 
-gpio2.$name                = "CONFIG_GPIO1";
-gpio2.pinDir               = "OUTPUT";
-gpio2.GPIO.$assign         = "GPIO";
-gpio2.GPIO.gpioPin.$assign = "OSPI0_CSn1";
+gpio2.$name          = "CONFIG_GPIO1";
+gpio2.pinDir         = "OUTPUT";
+gpio2.rx             = true;
+gpio2.GPIO_n.$assign = "OSPI0_CSn1";
 
-gpio3.$name                = "CONFIG_GPIO2";
-gpio3.GPIO.$assign         = "GPIO";
-gpio3.GPIO.gpioPin.$assign = "EPWM7_B";
+gpio3.$name          = "CONFIG_GPIO2";
+gpio3.rx             = true;
+gpio3.GPIO_n.$assign = "EPWM7_B";
 
 i2c1.$name               = "CONFIG_I2C0";
 eeprom1.peripheralDriver = i2c1;
 i2c1.I2C.$assign         = "I2C1";
+i2c1.I2C_child.$name     = "drivers_i2c_v1_i2c_v1_template1";
 
 pruicss1.$name = "CONFIG_PRU_ICSS1";
 
@@ -111,11 +112,11 @@ mpu_armv77.attributes = "Cached+Sharable";
 icss_emac1.$name            = "CONFIG_ICSS_EMAC0";
 icss_emac1.phyAddr0         = 12;
 icss_emac1.phyAddr1         = 3;
-icss_emac1.queue            = "QUEUE1";
 icss_emac1.linkTaskPriority = 12;
 icss_emac1.rxTaskPriority   = 10;
 icss_emac1.txTaskPriority   = 10;
-icss_emac1.mode             = "DUAL MAC | MAC1";
+icss_emac1.queue            = "QUEUE4";
+icss_emac1.learningEnable   = true;
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

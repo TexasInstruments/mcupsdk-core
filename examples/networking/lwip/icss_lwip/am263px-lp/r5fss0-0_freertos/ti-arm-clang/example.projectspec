@@ -34,6 +34,7 @@
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f
+            -I${MCU_PLUS_SDK_PATH}/source/networking
             -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac
             -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/lwipif/inc
             -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/source
@@ -45,6 +46,7 @@
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px
             -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_loopback
             -I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_loopback/firmware
+            -I${MCU_PLUS_SDK_PATH}/source/networking/icss_switch
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16

@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2024 Texas Instruments Incorporated
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -51,7 +52,11 @@
 #include "icss_emac.h"
 
 #include <icss_emac_mmap.h>
+#ifdef ICSS_SWITCH
+#include <tiswitch_pruss_intc_mapping.h>
+#else
 #include <tiemac_pruicss_intc_mapping.h>
+#endif
 
 #ifdef AM263X_CC
 #include <mii/am263x-cc/pruicss_pinmux.h>
@@ -74,8 +79,13 @@
 #include<drivers/pruicss/m_v0/pruicss.h>
 #include <drivers/hw_include/hw_types.h>
 
-#include <firmware/mii/PRU0_bin.h>
-#include <firmware/mii/PRU1_bin.h>
+#ifdef ICSS_SWITCH
+#include <icss_switch/firmware/mii/PRU0_bin.h>
+#include <icss_switch/firmware/mii/PRU1_bin.h>
+#else
+#include <icss_emac_loopback/firmware/mii/PRU0_bin.h>
+#include <icss_emac_loopback/firmware/mii/PRU1_bin.h>
+#endif
 
 
 /* ========================================================================== */
@@ -676,6 +686,9 @@ int32_t ICSS_EMAC_testPruicssInstanceSetup(void)
     icssEmacParams.callBackObject.rxNRTCallBack.callBack = (ICSS_EMAC_CallBack)Lwip2Emac_serviceRx;
     icssEmacParams.callBackObject.rxNRTCallBack.userArg = (void*)(lwipifHandle);
     icssEmacParams.ethphyHandle[0] = gEthPhyHandle[CONFIG_ETHPHY0];
+#ifdef ICSS_SWITCH
+    icssEmacParams.ethphyHandle[1] = gEthPhyHandle[CONFIG_ETHPHY1];
+#endif
     memcpy(&(icssEmacParams.macId[0]), &(ICSS_EMAC_testLclMac0[0]), 6);
 
     icssemacHandle2 = ICSS_EMAC_open(CONFIG_ICSS_EMAC0, &icssEmacParams);
