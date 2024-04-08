@@ -27,10 +27,17 @@ The size of the message is also increased with increasing id.
 
 \endcond
 
+\cond SOC_AM263X
 \note This Example is only functional on am263x-cc E2 board. This is not supported on am263x-cc E1 or am263x-lp. For support on these boards, please reach out to your TI representative. This example is only functional on Windows setup due to limited availibility of PLIN-View Pro.
+\endcond
+
+\cond SOC_AM263PX
+\note This example is not supported on am263px-lp. For support on these boards, please reach out to your TI representative. This example is only functional on Windows setup due to limited availibility of PLIN-View Pro.
+\endcond
 
 # Steps to Run the Example
 
+\cond SOC_AM263X
 - **Board Configuration**, change the SW9 to ON mode, and change the SW10 to 1-2.
 \imageStyle{lin_external_sw9_config.PNG,width:12.5%}
 \image html lin_external_sw9_config.PNG LIN SW9 set to ON
@@ -40,7 +47,19 @@ The size of the message is also increased with increasing id.
 
 - **Hardware Conectivity**, connect the PLIN-USB module to PC from USB and Serial Port to be connected as mentioned in the image below.
 \imageStyle{lin_external_hw_connect.PNG,width:50%}
-\image html lin_external_hw_connect.PNG LIN Hardware Connectivity with PLIN USB.
+\image html lin_external_hw_connect.PNG LIN Hardware Connectivity with PLIN USB - J32 Header
+\endcond
+
+\cond SOC_AM263PX
+- **Board Configuration**, change the SW5 to ON mode, and change the SW4 to 1-2.
+\imageStyle{am263p_lin_external_connections_config.png,width:20%}
+\image html am263p_lin_external_connections_config.png LIN SW5 and SW4 settings
+
+- **Hardware Conectivity**, connect the PLIN-USB module to PC from USB and Serial Port to be connected as mentioned in the image below.
+\imageStyle{am263p_lin_external_hw_connect.png,width:60%}
+\image html am263p_lin_external_hw_connect.png LIN Hardware Connectivity with PLIN USB - J10 Header.
+\endcond
+
 
 - **Software Setup**, Download and Install the PLIN-View Pro from https://www.peak-system.com/PLIN-USB.485.0.html?&L=1
 - Click on LIN in the menu bar and connect to PLIN-USB. Make sure the LINMode for PLIN is Responder with Baud Rate of 19200.
