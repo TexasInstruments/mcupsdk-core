@@ -39,7 +39,6 @@ const device_defines = {
 const example_file_list = [
     "examples/benchmarks/coremark_benchmark/.project/project.js",
     "examples/benchmarks/dhrystone_benchmark/.project/project.js",
-    "examples/benchmarks/memory_access_latency/.project/project.js",
     "examples/benchmarks/ocmc_benchmarking/.project/project_freertos.js",
     "examples/drivers/adc/adc_multiple_soc_epwm/.project/project.js",
     "examples/drivers/adc/adc_ppb_epwm_trip/.project/project.js",
@@ -246,6 +245,7 @@ const example_file_list = [
     "examples/sdl/mcrc/mcrc_auto_cpu/.project/project.js",
     "examples/sdl/mcrc/mcrc_full_cpu/.project/project.js",
     "examples/sdl/mcrc/mcrc_semi_cpu/.project/project.js",
+    "test/benchmarks/memory_access_latency/.project/project.js",
     "test/examples/drivers/epwm/epwm_dccap/.project/project.js",
     "test/examples/drivers/epwm/epwm_xcmp_dma/.project/project.js",
     "test/examples/drivers/epwm/epwm_xcmp_multiple_edges/.project/project.js",

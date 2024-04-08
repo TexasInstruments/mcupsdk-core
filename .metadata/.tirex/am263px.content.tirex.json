@@ -135,70 +135,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Memory Access Latency Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "memory_access_latency",
-        "location": "../../examples/benchmarks/memory_access_latency/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "TMDSCNCD263P"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "benchmarks",
-            "memory_access_latency",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A Memory Access Latency Example. CPU is R5FSS0-0 running NORTOS.",
-        "name": "memory_access_latency",
-        "location": "../../examples/benchmarks/memory_access_latency/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM263P"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "benchmarks",
-            "memory_access_latency",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "An OCRAM memory benchmark. CPU is R5FSS0-0 running FREERTOS.",
         "name": "ocmc_benchmarking",
         "location": "../../examples/benchmarks/ocmc_benchmarking/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
@@ -15260,6 +15196,74 @@
             "networking",
             "enet_tx_scatter_gather",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Memory Access Latency Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "memory_access_latency",
+        "location": "../../test/benchmarks/memory_access_latency/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "test",
+            "benchmarks",
+            "memory_access_latency",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Memory Access Latency Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "memory_access_latency",
+        "location": "../../test/benchmarks/memory_access_latency/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263P"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "..",
+            "test",
+            "benchmarks",
+            "memory_access_latency",
+            "r5fss0-0_nortos"
         ],
         "mainCategories": [
             [
