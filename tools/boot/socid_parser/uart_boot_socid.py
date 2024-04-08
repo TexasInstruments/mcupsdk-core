@@ -168,6 +168,13 @@ def parser_k3_soc_info(bin_str):
         print("Sec Cust MPK Hash    :", cust_mpk_hash)
         print("Sec Unique ID        :", sec_unique_id)
 
+def modifySocId(str):
+    ans  = str
+    # If 6 leading 0s are there, remove 1
+    if( str[5] == '0' ):
+        ans = str[1:]
+    return ans
+
 def main(argv):
     parser = argparse.ArgumentParser(description=g_script_description)
     group = parser.add_mutually_exclusive_group(required=True)
@@ -185,12 +192,16 @@ def main(argv):
     str_arr = []
 
     if str:
+        if device == "am273x" :
+            str = modifySocId(str)
         str_arr.append(str)
     elif file:
         try:
             print(file)
             fp = open(file, 'rt')
             str_arr = fp.readlines()
+            if device == "am273x" :
+                str_arr[0] = modifySocId(str_arr[0])
             fp.close
         except FileNotFoundError:
             print('[ERROR] File not Found !!')
