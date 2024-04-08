@@ -2348,10 +2348,14 @@ void UART_lld_controllerIsr(void* args)
     uint8_t             rdData;
     UARTLLD_Handle         hUart;
     uint32_t            retVal = TRUE;
+    uint32_t            lineStatus      = 0U;
+    uint32_t            startTicks, elapsedTicks;
+    UARTLLD_InitHandle        hUartInit;
 
     if(NULL != args)
     {
         hUart = (UARTLLD_Handle)args;
+        hUartInit = hUart->hUartInit;
 
         while (retVal == TRUE)
         {
@@ -2421,21 +2425,43 @@ void UART_lld_controllerIsr(void* args)
                     hUart->writeSizeRemaining = (uint32_t)UART_writeData(hUart, (hUart->writeSizeRemaining));
                     if ((hUart->writeSizeRemaining) == 0U)
                     {
-                        UART_intrDisable(hUart->baseAddr, UART_INTR_THR);
-
-                        /* Reset the write buffer so we can pass it back */
-                        hUart->writeBuf = (const void *)((uint8_t *)hUart->writeBuf - hUart->writeCount);
-                        if (hUart->writeTrans.buf != NULL)
+                        /* Update current tick value to perform timeout operation */
+                        startTicks = hUartInit->clockP_get();
+                        do
                         {
-                            hUart->writeTrans.count = (uint32_t)(hUart->writeCount);
-                            hUart->writeTrans.status = UART_TRANSFER_STATUS_SUCCESS;
+                            lineStatus = UART_readLineStatus(hUart->baseAddr);
+                            elapsedTicks = hUartInit->clockP_get() - startTicks;
                         }
-                        /*
-                        * Post transfer Sem in case of bloacking transfer.
-                        * Call the callback function in case of Callback mode.
-                        */
-                        hUart->hUartInit->writeCompleteCallbackFxn(hUart);
-                        UART_lld_Transaction_deInit(&hUart->writeTrans);
+                        while (((uint32_t) (UART_LSR_TX_FIFO_E_MASK |
+                                            UART_LSR_TX_SR_E_MASK) !=
+                                (lineStatus & (uint32_t) (UART_LSR_TX_FIFO_E_MASK |
+                                                        UART_LSR_TX_SR_E_MASK)))
+                                && (elapsedTicks < hUart->lineStatusTimeout));
+                        if(elapsedTicks >= hUart->lineStatusTimeout)
+                        {
+                            retVal             = UART_TRANSFER_TIMEOUT;
+                            hUart->writeTrans.status      = UART_TRANSFER_STATUS_TIMEOUT;
+                            hUart->writeTrans.count       = hUart->writeCount;
+                            UART_lld_Transaction_deInit(&hUart->writeTrans);
+                        }
+                        else
+                        {
+                            UART_intrDisable(hUart->baseAddr, UART_INTR_THR);
+
+                            /* Reset the write buffer so we can pass it back */
+                            hUart->writeBuf = (const void *)((uint8_t *)hUart->writeBuf - hUart->writeCount);
+                            if (hUart->writeTrans.buf != NULL)
+                            {
+                                hUart->writeTrans.count = (uint32_t)(hUart->writeCount);
+                                hUart->writeTrans.status = UART_TRANSFER_STATUS_SUCCESS;
+                            }
+                            /*
+                            * Post transfer Sem in case of bloacking transfer.
+                            * Call the callback function in case of Callback mode.
+                            */
+                            hUart->hUartInit->writeCompleteCallbackFxn(hUart);
+                            UART_lld_Transaction_deInit(&hUart->writeTrans);
+                        }
                     }
                 }
                 else

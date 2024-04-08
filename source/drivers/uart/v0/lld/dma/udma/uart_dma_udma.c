@@ -404,11 +404,15 @@ static void UART_udmaIsrTx(Udma_EventHandle eventHandle,
     Udma_ChHandle      txChHandle;
     UART_UdmaChConfig   *udmaChCfg;
     UARTLLD_Handle        hUart;
+    UARTLLD_InitHandle hUartInit;
+    uint32_t            lineStatus      = 0U;
+    uint32_t            startTicks, elapsedTicks;
 
     /* Check parameters */
     if(NULL != args)
     {
         hUart = (UARTLLD_Handle)args;
+        hUartInit = hUart->hUartInit;
         udmaChCfg    = (UART_UdmaChConfig *)hUart->hUartInit->dmaChCfg;
         txChHandle  = udmaChCfg->txChHandle;
 
@@ -428,8 +432,29 @@ static void UART_udmaIsrTx(Udma_EventHandle eventHandle,
                 hUart->writeTrans.status = UART_TRANSFER_STATUS_ERROR_OTH;
             }
 
-            hUart->hUartInit->writeCompleteCallbackFxn(hUart);
-            UART_lld_Transaction_deInit(&hUart->writeTrans);
+            /* Update current tick value to perform timeout operation */
+            startTicks = hUartInit->clockP_get();
+            do
+            {
+                lineStatus = UART_readLineStatus(hUart->baseAddr);
+                elapsedTicks = hUartInit->clockP_get() - startTicks;
+            }
+            while (((uint32_t) (UART_LSR_TX_FIFO_E_MASK |
+                                UART_LSR_TX_SR_E_MASK) !=
+                    (lineStatus & (uint32_t) (UART_LSR_TX_FIFO_E_MASK |
+                                            UART_LSR_TX_SR_E_MASK)))
+                    && (elapsedTicks < hUart->lineStatusTimeout));
+
+            if(elapsedTicks >= hUart->lineStatusTimeout)
+            {
+                hUart->writeTrans.status      = UART_TRANSFER_STATUS_TIMEOUT;
+                hUart->writeTrans.count       = hUart->writeCount;
+            }
+            else
+            {
+                hUart->hUartInit->writeCompleteCallbackFxn(hUart);
+                UART_lld_Transaction_deInit(&hUart->writeTrans);
+            }
         }
         else
         {
