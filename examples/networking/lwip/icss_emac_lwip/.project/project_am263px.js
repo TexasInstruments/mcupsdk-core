@@ -48,9 +48,10 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px",
-        "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_loopback",
-        "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac_loopback/firmware",
-        "${MCU_PLUS_SDK_PATH}/source/networking/icss_switch",
+        "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware",
+        "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_dual_emac",
+        "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/source",
+        "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch",
     ],
 };
 

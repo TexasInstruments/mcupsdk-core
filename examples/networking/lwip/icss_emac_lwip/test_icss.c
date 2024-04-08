@@ -60,13 +60,13 @@
 #endif
 
 #ifdef AM263X_CC
-#include <mii/am263x-cc/pruicss_pinmux.h>
+#include <am263x-cc/pruicss_pinmux.h>
 #elif AM263X_LP
-#include <mii/am263x-lp/pruicss_pinmux.h>
+#include <am263x-lp/pruicss_pinmux.h>
 #elif AM263PX_CC
-#include <mii/am263px-cc/pruicss_pinmux.h>
+#include <am263px-cc/pruicss_pinmux.h>
 #elif AM263PX_LP
-#include <mii/am263px-lp/pruicss_pinmux.h>
+#include <am263px-lp/pruicss_pinmux.h>
 #endif
 
 
@@ -81,11 +81,11 @@
 #include <drivers/hw_include/hw_types.h>
 
 #if ICSS_EMAC_MODE == ICSS_EMAC_MODE_SWITCH
-#include <icss_switch/firmware/mii/PRU0_bin.h>
-#include <icss_switch/firmware/mii/PRU1_bin.h>
+#include <icss_switch/mii/PRU0_bin.h>
+#include <icss_switch/mii/PRU1_bin.h>
 #else
-#include <icss_emac_loopback/firmware/mii/PRU0_bin.h>
-#include <icss_emac_loopback/firmware/mii/PRU1_bin.h>
+#include <icss_dual_emac/mii/PRU0_bin.h>
+#include <icss_dual_emac/mii/PRU1_bin.h>
 #endif
 
 
