@@ -38,6 +38,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
 # Various Private Example Projectspec Build Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += dual_emac_am263x-cc_icssm-pru1_fw_ti-pru-cgt_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += switch_am263x-cc_icssm-pru0_fw_ti-pru-cgt_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += switch_am263x-cc_icssm-pru1_fw_ti-pru-cgt_build
 # Various Private System Example Projectspec Build Targets
 
 all: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL)
@@ -78,10 +80,16 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 	$(MAKE) -C drivers/qspi/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt_build:
-	$(MAKE) -C ../source/networking/icss_emac_loopback/firmware/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec all
 
  dual_emac_am263x-cc_icssm-pru1_fw_ti-pru-cgt_build:
-	$(MAKE) -C ../source/networking/icss_emac_loopback/firmware/mii/am263x-cc/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec all
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec all
+
+ switch_am263x-cc_icssm-pru0_fw_ti-pru-cgt_build:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec all
+
+ switch_am263x-cc_icssm-pru1_fw_ti-pru-cgt_build:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec all
 
  testcase_singlepkt_am263x-cc_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
@@ -172,6 +180,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
 # Various Private Example Projectspec Clean Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += dual_emac_am263x-cc_icssm-pru1_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += switch_am263x-cc_icssm-pru0_fw_ti-pru-cgt_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += switch_am263x-cc_icssm-pru1_fw_ti-pru-cgt_clean
 # Various Private System Example Projectspec Clean Targets
 
 clean: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL)
@@ -212,10 +222,16 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 	$(MAKE) -C drivers/qspi/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt_clean:
-	$(MAKE) -C ../source/networking/icss_emac_loopback/firmware/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec clean
 
  dual_emac_am263x-cc_icssm-pru1_fw_ti-pru-cgt_clean:
-	$(MAKE) -C ../source/networking/icss_emac_loopback/firmware/mii/am263x-cc/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec clean
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec clean
+
+ switch_am263x-cc_icssm-pru0_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec clean
+
+ switch_am263x-cc_icssm-pru1_fw_ti-pru-cgt_clean:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec clean
 
  testcase_singlepkt_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
@@ -306,6 +322,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
 # Various Private Example Projectspec Export Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += dual_emac_am263x-cc_icssm-pru1_fw_ti-pru-cgt_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += switch_am263x-cc_icssm-pru0_fw_ti-pru-cgt_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += switch_am263x-cc_icssm-pru1_fw_ti-pru-cgt_export
 # Various Private System Example Projectspec Export Targets
 
 export: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL)
@@ -346,10 +364,16 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 	$(MAKE) -C drivers/qspi/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt_export:
-	$(MAKE) -C ../source/networking/icss_emac_loopback/firmware/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec export
 
  dual_emac_am263x-cc_icssm-pru1_fw_ti-pru-cgt_export:
-	$(MAKE) -C ../source/networking/icss_emac_loopback/firmware/mii/am263x-cc/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec export
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec export
+
+ switch_am263x-cc_icssm-pru0_fw_ti-pru-cgt_export:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec export
+
+ switch_am263x-cc_icssm-pru1_fw_ti-pru-cgt_export:
+	$(MAKE) -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec export
 
  testcase_singlepkt_am263x-cc_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C networking/enet_unittest/testcase_singlepkt/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
@@ -433,8 +457,10 @@ help:
 	@echo  $(MAKE) -s -C drivers/qspi/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C drivers/qspi/am263x-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C drivers/qspi/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C ../source/networking/icss_emac_loopback/firmware/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C ../source/networking/icss_emac_loopback/firmware/mii/am263x-cc/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_dual_emac/mii/am263x-cc/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icssm-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C ../source/networking/icss_emac/firmware/icss_switch/mii/am263x-cc/icssm-pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C networking/enet_unittest/testcase_singlepkt/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C networking/enet_unittest/testcase_singlepkt/am263x-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C networking/cpsw_intervlan/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
