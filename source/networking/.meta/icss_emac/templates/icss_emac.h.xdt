@@ -12,3 +12,4 @@
 #define `instance.$name.toUpperCase()` (`i`U)
 % }
 #define CONFIG_ICSS_EMAC_INSTANCES (`module.$instances.length`U)
+#define ICSS_EMAC_MODE             (`module.getInstanceConfig(module.$instances[0]).emacMode[0]`)

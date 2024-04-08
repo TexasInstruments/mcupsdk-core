@@ -188,7 +188,6 @@ let icss_emac_module = {
             driver_config: "/networking/icss_emac/templates/icss_emac_config.c.xdt",
             driver_init: "/networking/icss_emac/templates/icss_emac_init.c.xdt",
             driver_deinit: "/networking/icss_emac/templates/icss_emac_deinit.c.xdt",
-            driver_switch_config: "/networking/icss_emac/templates/icss_emac_switch_config.c.xdt",
         },
         "/drivers/system/system_config.h.xdt": {
             driver_config: "/networking/icss_emac/templates/icss_emac.h.xdt",

@@ -34,6 +34,7 @@
 
 /* lwIP core includes */
 #include "ti_drivers_open_close.h"
+#include "ti_drivers_config.h"
 #include "ti_board_open_close.h"
 #include "ti_board_config.h"
 
@@ -52,7 +53,7 @@
 #include "icss_emac.h"
 
 #include <icss_emac_mmap.h>
-#ifdef ICSS_SWITCH
+#if ICSS_EMAC_MODE == ICSS_EMAC_MODE_SWITCH
 #include <tiswitch_pruss_intc_mapping.h>
 #else
 #include <tiemac_pruicss_intc_mapping.h>
@@ -79,7 +80,7 @@
 #include<drivers/pruicss/m_v0/pruicss.h>
 #include <drivers/hw_include/hw_types.h>
 
-#ifdef ICSS_SWITCH
+#if ICSS_EMAC_MODE == ICSS_EMAC_MODE_SWITCH
 #include <icss_switch/firmware/mii/PRU0_bin.h>
 #include <icss_switch/firmware/mii/PRU1_bin.h>
 #else
@@ -686,7 +687,7 @@ int32_t ICSS_EMAC_testPruicssInstanceSetup(void)
     icssEmacParams.callBackObject.rxNRTCallBack.callBack = (ICSS_EMAC_CallBack)Lwip2Emac_serviceRx;
     icssEmacParams.callBackObject.rxNRTCallBack.userArg = (void*)(lwipifHandle);
     icssEmacParams.ethphyHandle[0] = gEthPhyHandle[CONFIG_ETHPHY0];
-#ifdef ICSS_SWITCH
+#if ICSS_EMAC_MODE == ICSS_EMAC_MODE_SWITCH
     icssEmacParams.ethphyHandle[1] = gEthPhyHandle[CONFIG_ETHPHY1];
 #endif
     memcpy(&(icssEmacParams.macId[0]), &(ICSS_EMAC_testLclMac0[0]), 6);

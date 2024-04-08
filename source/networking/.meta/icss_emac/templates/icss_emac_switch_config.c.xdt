@@ -1,7 +1,0 @@
-/*
- * ICSS-EMAC
- */
-
-/* ICSS-EMAC Switch Instance Macros */
-
-#define ICSS_SWITCH                (`inst.mode` & "SWITCH")
