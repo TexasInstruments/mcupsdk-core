@@ -82,17 +82,17 @@ init:
 	ldi32	TEMP_REG, 0x12345678
 
     .if	$isdefed("PRU0")
-    ldi     OFFSET_ADDR, 0x0 
+    ldi     OFFSET_ADDR, 0 
     .elseif	$isdefed("PRU1")
-    ldi     OFFSET_ADDR, 0x1
-    .elseif	$isdefed("RTUPRU0")
-    ldi     OFFSET_ADDR, 0x2 
-    .elseif	$isdefed("RTUPRU0")
-    ldi     OFFSET_ADDR, 0x3 
-    .elseif	$isdefed("TXPRU0")
-    ldi     OFFSET_ADDR, 0x4
-    .elseif	$isdefed("TXPRU1")
-    ldi     OFFSET_ADDR, 0x5  
+    ldi     OFFSET_ADDR, 4
+    .elseif	$isdefed("RTU_PRU0")
+    ldi     OFFSET_ADDR, 8 
+    .elseif	$isdefed("RTU_PRU1")
+    ldi     OFFSET_ADDR, 12 
+    .elseif	$isdefed("TX_PRU0")
+    ldi     OFFSET_ADDR, 16
+    .elseif	$isdefed("TX_PRU1")
+    ldi     OFFSET_ADDR, 20  
     .endif
 
 ;----------------------------------------------------------------------------

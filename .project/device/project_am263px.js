@@ -335,6 +335,8 @@ const example_file_list = [
     "test/security/crypto/test_dthe_hmac_sha/.project/project.js",
     "test/syscfg/syscfg_combo_1/.project/project.js",
     "tools/flasher/jtag_uniflash/.project/project.js",
+    "examples/pru_io/empty/.project/project.js",
+    "examples/pru_io/empty/firmware/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {

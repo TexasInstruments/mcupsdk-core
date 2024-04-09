@@ -35,22 +35,18 @@
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
-
 #include <drivers/pruicss.h>
 
-#if defined(SOC_AM64X) || defined(SOC_AM243X)
 #include <pru0_load_bin.h>
 #include <pru1_load_bin.h>
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
 #include <rtupru0_load_bin.h>
 #include <rtupru1_load_bin.h>
 #include <txpru0_load_bin.h>
 #include <txpru1_load_bin.h>
 #endif
 
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
-#include <pru0_load_bin.h>
-#include <pru1_load_bin.h>
-#endif
+
 
 /*
  *  This is an example project to show R5F
@@ -61,32 +57,6 @@
 
 PRUICSS_Handle gPruIcss0Handle;
 
-void load_pru_firmware(uint8_t PRUICSS_PRUx, const uint32_t PRUxFirmware[], uint32_t bytelength)
-{
-     /* ----------------------------------------------------------------- */
-     /* Program empty code on PRU Core/s;                                   */
-     /* depends on usecase - might have to program multiple cores         */
-     /* ----------------------------------------------------------------- */
-     /* clear ICSS PRUx data RAM */
-     int status;
-     status = PRUICSS_initMemory(gPruIcss0Handle, PRUICSS_DATARAM(PRUICSS_PRUx));
-     DebugP_assert(status != 0);
-     status = PRUICSS_resetCore(gPruIcss0Handle, PRUICSS_PRUx);
-     DebugP_assert(SystemP_SUCCESS == status);
-     status = PRUICSS_disableCore(gPruIcss0Handle, PRUICSS_PRUx);
-     DebugP_assert(SystemP_SUCCESS == status);
-
-     /* Load firmware. Set buffer = write to Pru memory */
-     status = PRUICSS_writeMemory(gPruIcss0Handle, PRUICSS_IRAM_PRU(PRUICSS_PRUx), 0,
-                        (const uint32_t *) PRUxFirmware, bytelength);
-     DebugP_assert(status != 0);
-
-     status = PRUICSS_resetCore(gPruIcss0Handle, PRUICSS_PRUx);
-     DebugP_assert(SystemP_SUCCESS == status);
-     /* Run firmware */
-     status = PRUICSS_enableCore(gPruIcss0Handle, PRUICSS_PRUx);
-     DebugP_assert(SystemP_SUCCESS == status);
-}
 
 void pru_io_empty_example_main(void *args)
 {
@@ -98,18 +68,26 @@ void pru_io_empty_example_main(void *args)
 
      gPruIcss0Handle = PRUICSS_open(CONFIG_PRU_ICSS0);
 
-     #if defined(SOC_AM64X) || defined(SOC_AM243X)
-     load_pru_firmware(PRUICSS_PRU0, PRU0Firmware_0, sizeof(PRU0Firmware_0));
-     load_pru_firmware(PRUICSS_PRU1, PRU1Firmware_0, sizeof(PRU1Firmware_0));
-     load_pru_firmware(PRUICSS_RTU_PRU0, RTUPRU0Firmware_0, sizeof(RTUPRU0Firmware_0));
-     load_pru_firmware(PRUICSS_RTU_PRU1, RTUPRU1Firmware_0, sizeof(RTUPRU1Firmware_0));
-     load_pru_firmware(PRUICSS_TX_PRU0, TXPRU0Firmware_0, sizeof(TXPRU0Firmware_0));
-     load_pru_firmware(PRUICSS_TX_PRU1, TXPRU1Firmware_0, sizeof(TXPRU1Firmware_0));
-     #endif
+     status = PRUICSS_initMemory(gPruIcss0Handle, PRUICSS_DATARAM(PRUICSS_PRU0));
+     DebugP_assert(status != 0);
 
-     #if defined(SOC_AM263X) || defined(SOC_AM263PX)
-     load_pru_firmware(PRUICSS_PRU0, PRU0Firmware_0, sizeof(PRU0Firmware_0));
-     load_pru_firmware(PRUICSS_PRU1, PRU1Firmware_0, sizeof(PRU1Firmware_0));
+     status = PRUICSS_initMemory(gPruIcss0Handle, PRUICSS_DATARAM(PRUICSS_PRU1));
+     DebugP_assert(status != 0);
+
+     status = PRUICSS_loadFirmware(gPruIcss0Handle, PRUICSS_PRU0, PRU0Firmware_0, sizeof(PRU0Firmware_0));
+     DebugP_assert(SystemP_SUCCESS == status);
+     status = PRUICSS_loadFirmware(gPruIcss0Handle, PRUICSS_PRU1, PRU1Firmware_0, sizeof(PRU1Firmware_0));
+     DebugP_assert(SystemP_SUCCESS == status);
+
+     #if defined(SOC_AM64X) || defined(SOC_AM243X)
+     status = PRUICSS_loadFirmware(gPruIcss0Handle, PRUICSS_RTU_PRU0, RTUPRU0Firmware_0, sizeof(RTUPRU0Firmware_0));
+     DebugP_assert(SystemP_SUCCESS == status);
+     status = PRUICSS_loadFirmware(gPruIcss0Handle, PRUICSS_RTU_PRU1, RTUPRU1Firmware_0, sizeof(RTUPRU1Firmware_0));
+     DebugP_assert(SystemP_SUCCESS == status);
+     status = PRUICSS_loadFirmware(gPruIcss0Handle, PRUICSS_TX_PRU0, TXPRU0Firmware_0, sizeof(TXPRU0Firmware_0));
+     DebugP_assert(SystemP_SUCCESS == status);
+     status = PRUICSS_loadFirmware(gPruIcss0Handle, PRUICSS_TX_PRU1, TXPRU1Firmware_0, sizeof(TXPRU1Firmware_0));
+     DebugP_assert(SystemP_SUCCESS == status);
      #endif
 
      while (1)

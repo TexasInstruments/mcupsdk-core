@@ -735,6 +735,19 @@ int32_t PRUICSS_setIcssCfgTxFifo(PRUICSS_Handle handle, uint8_t fifoInstance, ui
  * \return \ref PRUICSS_HwAttrs, else NULL if instance is invalid
  */
 const PRUICSS_HwAttrs *PRUICSS_getAttrs(uint32_t instance);
+
+/**
+ * \brief  This API disables pruIcssCore, loads IMEM, resets pruIcssCore, enables pruIcssCore
+ *
+ * \param   handle          #PRUICSS_Handle returned from #PRUICSS_open()
+ * \param   pruIcssCore     pruIcssCore from \ref PRUICSS_Cores
+ * \param   pruFirmware     firmware array
+ * \param   byteLength      size of firmware array
+ * \return  #SystemP_SUCCESS on success, #SystemP_FAILURE on error
+ *
+ */
+int32_t PRUICSS_loadFirmware(PRUICSS_Handle handle, uint8_t pruIcssCore, const uint32_t pruFirmware[], uint32_t byteLength);
+
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
