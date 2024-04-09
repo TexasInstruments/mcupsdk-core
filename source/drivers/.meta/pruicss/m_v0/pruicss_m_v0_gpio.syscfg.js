@@ -23,7 +23,7 @@ function validate(inst, report) {
 function moduleInstances(instance) {
     let device = common.getDeviceName();
     let modInstances = new Array();
-    if(device==="am263x-cc" || device==="am263-lp"){
+    if(device==="am263x-cc" || device==="am263-lp" || device==="am263px-cc" || device==="am263px-lp"){
         modInstances.push({
             name: "PruGPIO",
             displayName: "PRU (ICSS) GPIO",

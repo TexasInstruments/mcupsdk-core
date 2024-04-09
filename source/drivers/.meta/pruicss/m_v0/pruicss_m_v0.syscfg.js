@@ -40,7 +40,7 @@ function getConfigurables()
             ],
         },
     )
-    if(device==="am263x-cc" || device==="am263-lp"){
+    if(device==="am263x-cc" || device==="am263-lp" || device==="am263px-cc" || device==="am263px-lp"){
         config.push(
             {
                 name: "INTC MODE",
@@ -90,7 +90,7 @@ let pruicss_top_module = {
 function moduleInstances(instance) {
     let device = common.getDeviceName();
     let modInstances = new Array();
-    if(device==="am263x-cc" || device==="am263-lp"){
+    if(device==="am263x-cc" || device==="am263-lp" || device==="am263px-cc" || device==="am263px-lp"){
         modInstances.push({
             name: "AdditionalICSSSettings",
             displayName: "Additional ICSS Settings",
