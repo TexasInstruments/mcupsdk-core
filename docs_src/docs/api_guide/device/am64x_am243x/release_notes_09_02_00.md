@@ -60,7 +60,7 @@ Mbed-TLS                | R5F            | @VAR_MBEDTLS_VERSION
 
 ## Key Features
 
-### Experimental Features
+### Experimental Features {#EXPERIMENTAL_FEATURES}
 
 \attention Features listed below are early versions and should be considered as "experimental".
 \attention Users can evaluate the feature, however the feature is not fully tested at TI side.
