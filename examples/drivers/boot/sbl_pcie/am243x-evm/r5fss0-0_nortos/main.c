@@ -38,6 +38,7 @@
 #include "ti_board_open_close.h"
 #include <drivers/sciclient.h>
 #include <drivers/bootloader.h>
+#include <drivers/bootloader/soc/bootloader_soc.h>
 #include <drivers/pcie.h>
 
 /******************************************************************************/
@@ -332,6 +333,10 @@ int main(void)
     {
         /* Load CPUs */
         /* Do not load M4 when MCU domain is reset isolated */
+
+        uint32_t coreVariant = Bootloader_socGetCoreVariant();
+        /*Checks the core variant(Dual/Quad) */
+
         if (!Bootloader_socIsMCUResetIsoEnabled())
         {
             if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_M4FSS0_0)))
@@ -345,7 +350,8 @@ int main(void)
             bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_0);
             status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
         }
-        if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
+        /*Checks the core variant(Dual/Quad) */
+        if((coreVariant == BOOTLOADER_DEVICE_VARIANT_QUAD_CORE) && status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
         {
             bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_1);
             status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
@@ -357,8 +363,8 @@ int main(void)
         {
             isSelfBoot = TRUE;
         }
-
-        if(TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1))
+        /*Checks the core variant(Dual/Quad) */
+        if((coreVariant == BOOTLOADER_DEVICE_VARIANT_QUAD_CORE) && TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1))
         {
             isSelfBoot = TRUE;
         }
@@ -368,7 +374,11 @@ int main(void)
         {
             /* Set clocks for self cluster */
             bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
-            bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_1);
+
+            if((Bootloader_socIsR5FSSDual(BOOTLOADER_R5FSS0)))
+            {
+                bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_1);
+            }
 
             /* Reset self cluster, both Core0 and Core 1. Init RAMs and load the app  */
             /* Skip the image load by passing TRUE, so that image load on self core doesnt corrupt the SBLs IVT. Load the image later before the reset release of the self core  */
@@ -407,7 +417,8 @@ int main(void)
         {
             status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
         }
-        if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
+        /*Checks the core variant(Dual/Quad) */
+        if((Bootloader_socIsR5FSSDual(BOOTLOADER_R5FSS1)) && status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
         {
             status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
         }
