@@ -1,4 +1,4 @@
-#include "generated/ti_enet_config.h"
+.,.k`1#include "generated/ti_enet_config.h"
 
 /* This is the stack that is used by code running within main()
  * In case of NORTOS,

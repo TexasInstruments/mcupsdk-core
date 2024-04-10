@@ -386,7 +386,7 @@ void LwipifEnetAppCb_getTxHandleInfo(LwipifEnetAppIf_GetTxHandleInArgs *inArgs,
     outArgs->hTxChannel = txChInfo.hTxCh;
     outArgs->txChNum = txChInfo.txChNum;
     outArgs->numPackets = txChInfo.maxNumTxPkts;
-    outArgs->disableEvent = true;
+    outArgs->disableEvent = false;
 
     /* Initialize the DMA free queue */
     EnetQueue_initQ(inArgs->pktInfoQ);
@@ -412,7 +412,7 @@ void LwipifEnetAppCb_getRxHandleInfo(LwipifEnetAppIf_GetRxHandleInArgs *inArgs,
     EnetDma_Pkt *pPktInfo;
     Rx_CustomPbuf *cPbuf;
 % if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_UDMA") {
-    bool useRingMon = false;
+    // bool useRingMon = false;
 % }
     EnetApp_HandleInfo handleInfo;
     EnetPer_AttachCoreOutArgs attachInfo;
@@ -459,9 +459,9 @@ void LwipifEnetAppCb_getRxHandleInfo(LwipifEnetAppIf_GetRxHandleInArgs *inArgs,
     outArgs->hRxFlow  = rxChInfo.hRxCh;
     outArgs->numPackets  = rxChInfo.maxNumRxPkts;
 % if(module.getDmaInterface(instance) == "ENET_SOC_HOSTPORT_DMA_TYPE_UDMA") {
-    outArgs->disableEvent = !useRingMon;
+    outArgs->disableEvent = false;
 % } else{
-    outArgs->disableEvent = true;
+    outArgs->disableEvent = false;
 % }
     for (uint32_t i = 0; i < rxChInfo.numValidMacAddress; i++)
     {

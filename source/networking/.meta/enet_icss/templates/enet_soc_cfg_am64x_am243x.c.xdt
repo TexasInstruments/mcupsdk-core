@@ -82,7 +82,9 @@ function getIcssgInstName(instance)
 #include <soc/k3/icssg_soc.h>
 #include <src/dma/udma/enet_udma_priv.h>
 #include <networking/enet/utils/include/enet_appsoc.h>
-#pragma clang section rodata=".icssfw"
+
+#define ICSSG_FW_PLACEMENT_SECTION __attribute__((section(".rodata")))
+
 #include <networking/enet/core/src/per/firmware/icssg/dualmac/RX_PRU_SLICE0_bin.h>
 #include <networking/enet/core/src/per/firmware/icssg/dualmac/RX_PRU_SLICE1_bin.h>
 #include <networking/enet/core/src/per/firmware/icssg/dualmac/RTU0_SLICE0_bin.h>
@@ -96,7 +98,6 @@ function getIcssgInstName(instance)
 #include <networking/enet/core/src/per/firmware/icssg/switch/RTU0_SLICE1_bin.h>
 #include <networking/enet/core/src/per/firmware/icssg/switch/TX_PRU_SLICE0_bin.h>
 #include <networking/enet/core/src/per/firmware/icssg/switch/TX_PRU_SLICE1_bin.h>
-#pragma clang section rodata=""
 
 #include "ti_enet_config.h"
 #include "ti_drivers_config.h"

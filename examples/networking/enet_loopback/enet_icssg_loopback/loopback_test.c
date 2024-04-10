@@ -98,8 +98,6 @@ void EnetApp_printStats();
 /* ========================================================================== */
 
 /* Test application stack */
-//static uint8_t gEnetLpbkTaskStackTx[ENETLPBK_TASK_STACK_SZ] __attribute__ ((aligned(32)));
-//static uint8_t gEnetLpbkTaskStackRx[ENETLPBK_TASK_STACK_SZ] __attribute__ ((aligned(32)));
 extern EnetLpbk_Obj gEnetLpbk;
 /* ========================================================================== */
 /*                          Function Definitions                              */
