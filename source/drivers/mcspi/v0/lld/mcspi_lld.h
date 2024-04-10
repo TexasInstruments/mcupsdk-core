@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -553,6 +553,8 @@ typedef struct MCSPI_ExtendedParams_s
      *   If the dataSize is greater than 16 bits, the driver assumes the
      *   data buffers are uint32_t (unsigned long).
      */
+    void                   *args;
+    /**< [IN] Argument to be passed to the callback function */
 } MCSPI_ExtendedParams;
 
 /**

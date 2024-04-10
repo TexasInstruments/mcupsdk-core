@@ -428,6 +428,7 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
         extendedParams.channel   = transaction->channel;
         extendedParams.dataSize  = transaction->dataSize;
         extendedParams.csDisable = transaction->csDisable;
+        extendedParams.args      = transaction->args;
 
         /*  update timeout parameter from syscfg  */
         transaction->timeout = obj->openPrms.transferTimeout;
@@ -439,6 +440,8 @@ int32_t MCSPI_transfer(MCSPI_Handle handle, MCSPI_Transaction *transaction)
             /* Start transfer */
             obj->transaction = transaction;
             obj->transaction->status = MCSPI_TRANSFER_STARTED;
+            (void)memcpy(&mcspiLldHandle->transaction, obj->transaction,
+                         sizeof(mcspiLldHandle->transaction));
             HwiP_restore(key);
 
             if ((MCSPI_OPER_MODE_INTERRUPT == attrs->operMode) ||
@@ -627,16 +630,15 @@ void MCSPI_transferCallback (void *args, uint32_t transferStatus)
                 obj->transaction->status = MCSPI_TRANSFER_COMPLETED;
             }
 
-            obj->transaction = NULL;
-
             if((obj->openPrms.transferMode) == MCSPI_TRANSFER_MODE_CALLBACK)
             {
-                obj->openPrms.transferCallbackFxn(hMcspi, &hMcspi->transaction);
+                obj->openPrms.transferCallbackFxn(hMcspi, obj->transaction);
             }
             else
             {
                 SemaphoreP_post((SemaphoreP_Object *)hMcspi->transferMutex);
             }
+            obj->transaction = NULL;
         }
     }
 }

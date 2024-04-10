@@ -436,6 +436,7 @@ int32_t MCSPI_lld_write(MCSPILLD_Handle hMcspi, void *txBuf, uint32_t count,
                 transaction->channel   = extendedParams->channel;
                 transaction->dataSize  = extendedParams->dataSize;
                 transaction->csDisable = extendedParams->csDisable;
+                transaction->args      = extendedParams->args;
             }
 
             baseAddr             = hMcspi->baseAddr;
@@ -546,6 +547,7 @@ int32_t MCSPI_lld_writeIntr(MCSPILLD_Handle hMcspi, void *txBuf, uint32_t count,
                 transaction->channel   = extendedParams->channel;
                 transaction->dataSize  = extendedParams->dataSize;
                 transaction->csDisable = extendedParams->csDisable;
+                transaction->args      = extendedParams->args;
             }
 
             baseAddr             = hMcspi->baseAddr;
@@ -639,6 +641,7 @@ int32_t MCSPI_lld_writeDma(MCSPILLD_Handle hMcspi, void *txBuf, uint32_t count, 
                 transaction->channel   = extendedParams->channel;
                 transaction->dataSize  = extendedParams->dataSize;
                 transaction->csDisable = extendedParams->csDisable;
+                transaction->args      = extendedParams->args;
             }
 
             baseAddr             = hMcspi->baseAddr;
@@ -718,6 +721,7 @@ int32_t MCSPI_lld_read(MCSPILLD_Handle hMcspi, void *rxBuf, uint32_t count,
                 transaction->channel   = extendedParams->channel;
                 transaction->dataSize  = extendedParams->dataSize;
                 transaction->csDisable = extendedParams->csDisable;
+                transaction->args      = extendedParams->args;
             }
 
             baseAddr             = hMcspi->baseAddr;
@@ -823,6 +827,7 @@ int32_t MCSPI_lld_readIntr(MCSPILLD_Handle hMcspi, void *rxBuf, uint32_t count,
                 transaction->channel   = extendedParams->channel;
                 transaction->dataSize  = extendedParams->dataSize;
                 transaction->csDisable = extendedParams->csDisable;
+                transaction->args      = extendedParams->args;
             }
 
             baseAddr             = hMcspi->baseAddr;
@@ -916,6 +921,7 @@ int32_t MCSPI_lld_readDma(MCSPILLD_Handle hMcspi, void *rxBuf, uint32_t count,
                 transaction->channel   = extendedParams->channel;
                 transaction->dataSize  = extendedParams->dataSize;
                 transaction->csDisable = extendedParams->csDisable;
+                transaction->args      = extendedParams->args;
             }
 
             baseAddr             = hMcspi->baseAddr;
@@ -995,6 +1001,7 @@ int32_t MCSPI_lld_readWrite(MCSPILLD_Handle hMcspi, void *txBuf, void *rxBuf, ui
                 transaction->channel   = extendedParams->channel;
                 transaction->dataSize  = extendedParams->dataSize;
                 transaction->csDisable = extendedParams->csDisable;
+                transaction->args      = extendedParams->args;
             }
 
             baseAddr             = hMcspi->baseAddr;
@@ -1104,6 +1111,7 @@ int32_t MCSPI_lld_readWriteIntr(MCSPILLD_Handle hMcspi, void *txBuf, void *rxBuf
                 transaction->channel   = extendedParams->channel;
                 transaction->dataSize  = extendedParams->dataSize;
                 transaction->csDisable = extendedParams->csDisable;
+                transaction->args      = extendedParams->args;
             }
 
             baseAddr             = hMcspi->baseAddr;
@@ -1199,6 +1207,7 @@ int32_t MCSPI_lld_readWriteDma(MCSPILLD_Handle hMcspi, void *txBuf, void *rxBuf,
                 transaction->channel   = extendedParams->channel;
                 transaction->dataSize  = extendedParams->dataSize;
                 transaction->csDisable = extendedParams->csDisable;
+                transaction->args      = extendedParams->args;
             }
 
             baseAddr             = hMcspi->baseAddr;
