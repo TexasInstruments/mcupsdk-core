@@ -836,7 +836,7 @@ static void ADC_setPrescalerApiCheck(void *args)
         /* ADC_forceSafetyCheckerSync - Write only API. need Functional test */
         /* ADC_getSafetyCheckerStatus - get API. need Functional test */
 
-        for(ADC_SafetyCheckInst checkInst = ADC_SAFETY_CHECK1; checkInst <= ADC_SAFETY_CHECK2; checkInst++)
+        for(ADC_SafetyCheckInst checkInst = ADC_SAFETY_CHECK1; checkInst <= ADC_SAFETY_CHECK2; checkInst = checkInst+4)
         {
             for(ADC_Select adcInst = ADC_0; adcInst <= ADC_4; adcInst++)
             {
@@ -845,7 +845,7 @@ static void ADC_setPrescalerApiCheck(void *args)
 
                     ADC_configureSafetyChecker(CSL_CONTROLSS_ADCSAFE0_U_BASE, checkInst, adcInst, adcResultInst);
                     TEST_ASSERT_EQUAL_INT32(
-                        (HW_RD_REG16(CSL_CONTROLSS_ADCSAFE0_U_BASE + CSL_ADC_SAFETY_ADCRESSEL1+ ((uint16_t) checkInst)*4U) &
+                        (HW_RD_REG16(CSL_CONTROLSS_ADCSAFE0_U_BASE + CSL_ADC_SAFETY_ADCRESSEL1+ ((uint16_t) checkInst)) &
                         (CSL_ADC_SAFETY_ADCRESSEL1_ADCSEL_MASK| CSL_ADC_SAFETY_ADCRESSEL1_ADCRESULTSEL_MASK) ),
                         ((uint16_t)adcInst << CSL_ADC_SAFETY_ADCRESSEL1_ADCSEL_SHIFT) |
                         ((uint16_t)adcResultInst << CSL_ADC_SAFETY_ADCRESSEL1_ADCRESULTSEL_SHIFT));
@@ -960,7 +960,7 @@ static void ADC_setPrescalerApiCheck(void *args)
 
     /* SOC API r/w checks */
     for(uint32_t adcInstance = 0; adcInstance <= 6; adcInstance++)
-    {   
+    {
 
         for(uint32_t channel = 0; channel <= 5; channel++)
         {
@@ -983,10 +983,10 @@ static void ADC_setPrescalerApiCheck(void *args)
             SOC_enableAdcOsdChannel(adcInstance, channel, TRUE);
             DebugP_log("%x %x %d %d\r\n", CSL_TOP_CTRL_U_BASE+CSL_TOP_CTRL_ADCR01_OSD_CHEN, regOffset, adcInstance, channel_shift);
 
-            TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & (1U<<channel_shift), (1U<<channel_shift)); 
+            TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & (1U<<channel_shift), (1U<<channel_shift));
 
             SOC_enableAdcOsdChannel(adcInstance, channel, FALSE);
-            TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & (1U<<channel_shift), 0); 
+            TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & (1U<<channel_shift), 0);
 
         }
         for(uint32_t config = 0; config <= 7; config++)
@@ -1003,18 +1003,18 @@ static void ADC_setPrescalerApiCheck(void *args)
                 regOffset += CSL_TOP_CTRL_ADC0_OSD_CTRL + adcInstance*(CSL_TOP_CTRL_ADC1_OSD_CTRL - CSL_TOP_CTRL_ADC0_OSD_CTRL);
             }
             SOC_setAdcOsdConfig(adcInstance, config);
-            TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & mask, config); 
+            TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & mask, config);
         }
-        
+
         uint32_t regOffset = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL;
 
         SOC_enableAdcGlobalForce(adcInstance, TRUE);
-        TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL_ENABLE_MASK, (1U << adcInstance)); 
+        TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL_ENABLE_MASK, (1U << adcInstance));
         SOC_enableAdcGlobalForce(adcInstance, FALSE);
-        TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & ~(1U << adcInstance), 0); 
+        TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & ~(1U << adcInstance), 0);
 
     }
-    
+
     /* SOC_adcSocGlobalForce(socNumber) write only. need functional test */
     for(uint32_t extChXbarOut = 0; extChXbarOut <= 9; extChXbarOut++)
     {
@@ -1036,10 +1036,10 @@ static void ADC_setPrescalerApiCheck(void *args)
     /* adc - dac loop back enable*/
     regOffset = CSL_TOP_CTRL_U_BASE + CSL_TOP_CTRL_ADC_LOOPBACK_CTRL;
     SOC_enableAdcDacLoopback(TRUE);
-    TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & CSL_TOP_CTRL_ADC_LOOPBACK_CTRL_ADC_LOOPBACK_CTRL_ADC_LOOPBACK_EN_MASK, 
+    TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & CSL_TOP_CTRL_ADC_LOOPBACK_CTRL_ADC_LOOPBACK_CTRL_ADC_LOOPBACK_EN_MASK,
             CSL_TOP_CTRL_ADC_LOOPBACK_CTRL_ADC_LOOPBACK_CTRL_ADC_LOOPBACK_EN_MASK);
     SOC_enableAdcDacLoopback(FALSE);
-    TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & CSL_TOP_CTRL_ADC_LOOPBACK_CTRL_ADC_LOOPBACK_CTRL_ADC_LOOPBACK_EN_MASK, 
+    TEST_ASSERT_EQUAL_INT32(HW_RD_REG32(regOffset) & CSL_TOP_CTRL_ADC_LOOPBACK_CTRL_ADC_LOOPBACK_CTRL_ADC_LOOPBACK_EN_MASK,
             0);
 
 

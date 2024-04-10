@@ -689,7 +689,7 @@ typedef enum
 typedef enum
 {
   ADC_SAFETY_CHECK1  = 0x0,            //!< Safety Check Result 1
-  ADC_SAFETY_CHECK2  = 0x2             //!< Safety Check Result 2
+  ADC_SAFETY_CHECK2  = 0x4             //!< Safety Check Result 2
 } ADC_SafetyCheckInst;
 
 //*****************************************************************************
@@ -3307,8 +3307,8 @@ ADC_configureSafetyChecker(uint32_t scBase, ADC_SafetyCheckInst checkInst,
     //
     // Configure safety checker instance
     //
-    HW_WR_REG16(scBase + CSL_ADC_SAFETY_ADCRESSEL1 + ((uint16_t)checkInst)*4U,
-    ((HW_RD_REG16(scBase + CSL_ADC_SAFETY_ADCRESSEL1 + ((uint16_t)checkInst)*4U) &
+    HW_WR_REG16(scBase + CSL_ADC_SAFETY_ADCRESSEL1 + ((uint16_t)checkInst),
+    ((HW_RD_REG16(scBase + CSL_ADC_SAFETY_ADCRESSEL1 + ((uint16_t)checkInst)) &
     ~(CSL_ADC_SAFETY_ADCRESSEL1_ADCSEL_MASK |
     CSL_ADC_SAFETY_ADCRESSEL1_ADCRESULTSEL_MASK)) |
     ((uint16_t)adcInst << CSL_ADC_SAFETY_ADCRESSEL1_ADCSEL_SHIFT) |
