@@ -1170,135 +1170,47 @@ void EnetAppUtils_assertLocal(bool condition,
     return;
 }
 
-int32_t EnetAppUtils_addHostPortMcastMembership(Enet_Handle hEnet, uint8_t *mcastMacAddr)
+int32_t EnetAppUtils_addAllPortMcastMembership(Enet_Handle hEnet, uint8_t *mcastMacAddr)
 {
     int32_t status = ENET_SOK;
     Enet_IoctlPrms prms;
-    CpswAle_GetMcastEntryInArgs getMcastInArgs;
-    CpswAle_GetMcastEntryOutArgs getMcastOutArgs;
     CpswAle_SetMcastEntryInArgs setMcastInArgs;
     uint32_t setMcastOutArgs;
     uint32_t coreId = EnetSoc_getCoreId();
-    EnetTrace_TraceLevel prevTraceLevel;
 
-    /* Change the Trace level to NONE to avoid failure prints in LOOKUP_MCAST ioctl when addr is not found */
-    prevTraceLevel = Enet_setTraceLevel(ENET_TRACE_NONE);
-    memset(&getMcastInArgs, 0, sizeof(getMcastInArgs));
-    memcpy(&(getMcastInArgs.addr.addr[0U]), &(mcastMacAddr[0U]), sizeof(getMcastInArgs.addr.addr));
-    ENET_IOCTL_SET_INOUT_ARGS(&prms, &getMcastInArgs, &getMcastOutArgs);
-    ENET_IOCTL(hEnet, coreId, CPSW_ALE_IOCTL_LOOKUP_MCAST, &prms, status);
-    /* Restore the Trace level after the ioctl call */
-    Enet_setTraceLevel(prevTraceLevel);
-    if ((status != ENET_ENOTFOUND) && (status != ENET_SOK))
+    memset(&setMcastInArgs, 0, sizeof(setMcastInArgs));
+    memcpy(&(setMcastInArgs.addr.addr[0U]), &(mcastMacAddr[0U]), sizeof(setMcastInArgs.addr.addr));
+    setMcastInArgs.info.super = false;
+    setMcastInArgs.info.numIgnBits = 0U;
+    setMcastInArgs.info.fwdState = CPSW_ALE_FWDSTLVL_FWD;
+    setMcastInArgs.info.portMask = CPSW_ALE_ALL_PORTS_MASK;
+    ENET_IOCTL_SET_INOUT_ARGS(&prms, &setMcastInArgs, &setMcastOutArgs);
+    ENET_IOCTL(hEnet, coreId, CPSW_ALE_IOCTL_ADD_MCAST, &prms, status);
+    if (status != ENET_SOK)
     {
-        EnetAppUtils_print("Unexpected return from ALE lookup, CPSW_ALE_IOCTL_LOOKUP_MCAST: %d\n", status);
+        EnetAppUtils_print("failed to add a new mcast entry to ALE table: %d\n", status);
     }
-    else
-    {
-        /* Duplicates are handled in the ioctl */
-        memset(&setMcastInArgs, 0, sizeof(setMcastInArgs));
-        memcpy(&(setMcastInArgs.addr.addr[0U]), &(mcastMacAddr[0U]), sizeof(setMcastInArgs.addr.addr));
-        /* If there is no entry with the Mcast addr, create the entry with port mask as host port */
-        if (status == ENET_ENOTFOUND)
-        {
-            setMcastInArgs.info.super = false;
-            setMcastInArgs.info.numIgnBits = 0U;
-            setMcastInArgs.info.fwdState = CPSW_ALE_FWDSTLVL_FWD;
-            setMcastInArgs.info.portMask = CPSW_ALE_HOST_PORT_MASK;
-            ENET_IOCTL_SET_INOUT_ARGS(&prms, &setMcastInArgs, &setMcastOutArgs);
-            ENET_IOCTL(hEnet, coreId, CPSW_ALE_IOCTL_ADD_MCAST, &prms, status);
-            if (status != ENET_SOK)
-            {
-                EnetAppUtils_print("failed to add a new mcast entry to ALE table: %d\n", status);
-            }
-        }
-        else if (status == ENET_SOK)
-        {
-            /* If the entry is already present, add the host port to the port mask */
-            setMcastInArgs.info = getMcastOutArgs.info;
-            setMcastInArgs.info.portMask = ((getMcastOutArgs.info.portMask) | CPSW_ALE_HOST_PORT_MASK);
-            ENET_IOCTL_SET_INOUT_ARGS(&prms, &setMcastInArgs, &setMcastOutArgs);
-            ENET_IOCTL(hEnet, coreId, CPSW_ALE_IOCTL_ADD_MCAST, &prms, status);
-            if (status != ENET_SOK)
-            {
-                EnetAppUtils_print("failed to update the existing mcast entry in ALE table: %d\n", status);
-            }
-            else if (status == ENET_SOK && getMcastOutArgs.info.numIgnBits != 0U)
-            {
-                EnetAppUtils_print("Added host port to Mcast Address range with %d ignore bits\n", getMcastOutArgs.info.numIgnBits);
-            }
-        }
-    }
-
     return status;
 }
 
-int32_t EnetAppUtils_delHostPortMcastMembership(Enet_Handle hEnet, uint8_t *mcastMacAddr)
+int32_t EnetAppUtils_delAllPortMcastMembership(Enet_Handle hEnet, uint8_t *mcastMacAddr)
 {
     int32_t status = ENET_SOK;
     Enet_IoctlPrms prms;
-    CpswAle_GetMcastEntryInArgs getMcastInArgs;
-    CpswAle_GetMcastEntryOutArgs getMcastOutArgs;
     CpswAle_MacAddrInfo delMcastInArgs;
-    CpswAle_SetMcastEntryInArgs setMcastInArgs;
-    uint32_t setMcastOutArgs;
     uint32_t coreId = EnetSoc_getCoreId();
-    EnetTrace_TraceLevel prevTraceLevel;
 
-    /* Change the Trace level to NONE to avoid failure prints in LOOKUP_MCAST ioctl when addr is not found */
-    prevTraceLevel = Enet_setTraceLevel(ENET_TRACE_NONE);
-    memset(&getMcastInArgs, 0, sizeof(getMcastInArgs));
-    memcpy(&(getMcastInArgs.addr.addr[0U]), &(mcastMacAddr[0U]), sizeof(getMcastInArgs.addr.addr));
-    ENET_IOCTL_SET_INOUT_ARGS(&prms, &getMcastInArgs, &getMcastOutArgs);
-    ENET_IOCTL(hEnet, coreId, CPSW_ALE_IOCTL_LOOKUP_MCAST, &prms, status);
-    /* Restore the Trace level after the ioctl call */
-    Enet_setTraceLevel(prevTraceLevel);
-    if ((status != ENET_ENOTFOUND) && (status != ENET_SOK))
+    memset(&delMcastInArgs, 0, sizeof(delMcastInArgs));
+    memcpy(&(delMcastInArgs.addr[0U]), &(mcastMacAddr[0U]), sizeof(delMcastInArgs.addr));
+    delMcastInArgs.vlanId = 0U;
+    ENET_IOCTL_SET_IN_ARGS(&prms, &delMcastInArgs);
+    ENET_IOCTL(hEnet, coreId, CPSW_ALE_IOCTL_REMOVE_ADDR, &prms, status);
+    if (status != ENET_SOK)
     {
-        EnetAppUtils_print("Unexpected return from ALE lookup, CPSW_ALE_IOCTL_LOOKUP_MCAST: %d\n", status);
-    }
-    else
-    {
-        if (status == ENET_ENOTFOUND)
-        {
-            /* If there is no entry with the Mcast addr */
-            EnetAppUtils_print("mcast address not found in ALE table to remove");
-            status = ENET_SOK;
-        }
-        else if (status == ENET_SOK)
-        {
-            /* If the entry is specific to host port, remove the entry */
-            if (getMcastOutArgs.info.portMask == CPSW_ALE_HOST_PORT_MASK)
-            {
-                memset(&delMcastInArgs, 0, sizeof(delMcastInArgs));
-                memcpy(&(delMcastInArgs.addr[0U]), &(mcastMacAddr[0U]), sizeof(delMcastInArgs.addr));
-                delMcastInArgs.vlanId = 0U;
-                ENET_IOCTL_SET_IN_ARGS(&prms, &delMcastInArgs);
-                ENET_IOCTL(hEnet, coreId, CPSW_ALE_IOCTL_REMOVE_ADDR, &prms, status);
-                if (status != ENET_SOK)
-                {
-                    EnetAppUtils_print("failed to remove the mcast entry from ALE table: %d\n", status);
-                }
-            }
-            else
-            {
-                /* Else remove the host port from the port mask */
-                memset(&setMcastInArgs, 0, sizeof(setMcastInArgs));
-                memcpy(&(setMcastInArgs.addr.addr[0U]), &(mcastMacAddr[0U]), sizeof(setMcastInArgs.addr.addr));
-                setMcastInArgs.addr.vlanId = 0U;
-                setMcastInArgs.info = getMcastOutArgs.info;
-                setMcastInArgs.info.portMask = ((getMcastOutArgs.info.portMask) & (~CPSW_ALE_HOST_PORT_MASK));
-                ENET_IOCTL_SET_INOUT_ARGS(&prms, &setMcastInArgs, &setMcastOutArgs);
-                ENET_IOCTL(hEnet, coreId, CPSW_ALE_IOCTL_ADD_MCAST, &prms, status);
-                if (status != ENET_SOK)
-                {
-                    EnetAppUtils_print("failed to update the existing mcast entry in ALE table: %d\n", status);
-                }
-            }
-        }
+        EnetAppUtils_print("failed to remove the mcast entry from ALE table: %d\n", status);
     }
 
     return status;
-
 }
+
 /* end of file */

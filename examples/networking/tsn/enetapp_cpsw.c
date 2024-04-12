@@ -204,10 +204,10 @@ int32_t EnetApp_applyClassifier(Enet_Handle hEnet, uint32_t coreId, uint8_t *dst
 
     if (IsMacAddrSet(dstMacAddr) == true)
     {
-        status = EnetAppUtils_addHostPortMcastMembership(hEnet, dstMacAddr);
+        status = EnetAppUtils_addAllPortMcastMembership(hEnet, dstMacAddr);
         if (status != ENET_SOK)
         {
-            EnetAppUtils_print("%s:EnetAppUtils_addHostPortMcastMembership failed: %d\r\n",
+            EnetAppUtils_print("%s:EnetAppUtils_addAllPortMcastMembership failed: %d\r\n",
                                gEnetAppCfg.name, status);
         }
     }

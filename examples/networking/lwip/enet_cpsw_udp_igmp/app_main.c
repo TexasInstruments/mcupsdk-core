@@ -316,14 +316,14 @@ static err_t App_igmpMacFilter(struct netif *netif, const ip4_addr_t *group, enu
 
     if (action == NETIF_ADD_MAC_FILTER)
     {
-        if (EnetAppUtils_addHostPortMcastMembership(hEnet, mcastMacAddr) != ENET_SOK)
+        if (EnetAppUtils_addAllPortMcastMembership(hEnet, mcastMacAddr) != ENET_SOK)
         {
             retVal = ERR_IF;
         }
     }
     else if (action == NETIF_DEL_MAC_FILTER)
     {
-       if (EnetAppUtils_delHostPortMcastMembership(hEnet, mcastMacAddr) != ENET_SOK)
+       if (EnetAppUtils_delAllPortMcastMembership(hEnet, mcastMacAddr) != ENET_SOK)
        {
            retVal = ERR_IF;
        }

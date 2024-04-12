@@ -577,11 +577,11 @@ void EnetApp_getTxDmaHandle(uint32_t enetTxDmaChId,
                             const EnetApp_GetDmaHandleInArgs *inArgs,
                             EnetApp_GetTxDmaHandleOutArgs *outArgs);
 
-int32_t EnetAppUtils_addHostPortMcastMembership(Enet_Handle hEnet,
-                                                uint8_t *mcastMacAddr);
+int32_t EnetAppUtils_addAllPortMcastMembership(Enet_Handle hEnet,
+                                               uint8_t *mcastMacAddr);
 
-int32_t EnetAppUtils_delHostPortMcastMembership(Enet_Handle hEnet,
-                                                uint8_t *mcastMacAddr);
+int32_t EnetAppUtils_delAllPortMcastMembership(Enet_Handle hEnet,
+                                               uint8_t *mcastMacAddr);
 
 void EnetApp_getNonPtpRxDmaInfo(Enet_Type enetType,
                                 uint32_t instId,
