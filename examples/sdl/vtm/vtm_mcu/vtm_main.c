@@ -41,6 +41,7 @@
  */
 
 #include <stdio.h>
+#include <kernel/dpl/ClockP.h>
 #include <sdl/sdl_esm.h>
 #include <stdint.h>
 #include <stdbool.h>
@@ -205,6 +206,7 @@ void vtm_example_app(void)
     retValue = SDL_VTM_initTs(&SDL_VTM_configTempSense);
     SDL_VTM_enableTs(SDL_VTM_SENSOR_SEL0, 0);
     SDL_VTM_enableTc();
+    ClockP_usleep(9000);
     SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_0, &temp0);
     SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_1, &temp1);
     SDL_VTM_getTemp(SDL_VTM_INSTANCE_TS_2, &temp2);
