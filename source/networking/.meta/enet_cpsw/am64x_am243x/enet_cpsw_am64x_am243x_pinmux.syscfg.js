@@ -102,41 +102,46 @@ function getPeripheralRequirements(inst, peripheralName, name)
     }
     else if (name == "RMII")
     {
+        pinResource = pinmux.getPinRequirements(interfaceName, "RMII_REF_CLK", "REF_CLK");
+        pinmux.setConfigurableDefault( pinResource, "rx", true );
+        resources.push( pinResource);
+        pinResource = pinmux.getPinRequirements(interfaceName, "RMII1_CRS_DV", "CRS_DV");
+        pinmux.setConfigurableDefault( pinResource, "rx", true );
+        resources.push( pinResource);
+        pinResource = pinmux.getPinRequirements(interfaceName, "RMII1_RX_ER", "RX_ER");
+        pinmux.setConfigurableDefault( pinResource, "rx", true );
+        resources.push( pinResource);
         pinResource = pinmux.getPinRequirements(interfaceName, "RMII1_RXD0", "RXD0");
         pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
         pinResource = pinmux.getPinRequirements(interfaceName, "RMII1_RXD1", "RXD1");
         pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
-        pinResource = pinmux.getPinRequirements(interfaceName, "RMII1_RX_ER", "RX_ER");
-        pinmux.setConfigurableDefault( pinResource, "rx", true );
-        resources.push( pinResource);
         pinResource = pinmux.getPinRequirements(interfaceName, "RMII1_TXD0", "TXD0");
-        pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
         pinResource = pinmux.getPinRequirements(interfaceName, "RMII1_TXD1", "TXD1");
-        pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
-        pinResource = pinmux.getPinRequirements(interfaceName, "RMII1_CRS_DV", "CRS_DV");
+        pinResource = pinmux.getPinRequirements(interfaceName, "RMII1_TX_EN", "TX_EN");
         pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
 
+        pinResource = pinmux.getPinRequirements(interfaceName, "RMII2_CRS_DV", "CRS_DV");
+        pinmux.setConfigurableDefault( pinResource, "rx", true );
+        resources.push( pinResource);
+        pinResource = pinmux.getPinRequirements(interfaceName, "RMII2_RX_ER", "RX_ER");
+        pinmux.setConfigurableDefault( pinResource, "rx", true );
+        resources.push( pinResource);
         pinResource = pinmux.getPinRequirements(interfaceName, "RMII2_RXD0", "RXD0");
         pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
         pinResource = pinmux.getPinRequirements(interfaceName, "RMII2_RXD1", "RXD1");
         pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
-        pinResource = pinmux.getPinRequirements(interfaceName, "RMII2_RX_ER", "RX_ER");
-        pinmux.setConfigurableDefault( pinResource, "rx", true );
-        resources.push( pinResource);
         pinResource = pinmux.getPinRequirements(interfaceName, "RMII2_TXD0", "TXD0");
-        pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
         pinResource = pinmux.getPinRequirements(interfaceName, "RMII2_TXD1", "TXD1");
-        pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
-        pinResource = pinmux.getPinRequirements(interfaceName, "RMII2_CRS_DV", "CRS_DV");
+        pinResource = pinmux.getPinRequirements(interfaceName, "RMII2_TX_EN", "TX_EN");
         pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
     }
