@@ -19,12 +19,16 @@
 \cond SOC_AM64X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
+PLL Configuration sequence updated to latest recommendation                                     | SYSFW (DMSC)
+Updates to support ICSSG reset isolation                                                        | SYSFW (DMSC)
 -                                                                                               | -
 \endcond
 
 \cond SOC_AM243X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
+PLL Configuration sequence updated to latest recommendation                                     | SYSFW (DMSC)
+Updates to support ICSSG reset isolation                                                        | SYSFW (DMSC)
 -                                                                                               | -
 \endcond
 
@@ -263,6 +267,46 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> Applicable Devices
     <th> Resolution/Comments
 </tr>
+<tr>
+    <td> SYSFW-6763
+    <td> TISCI_MSG_SET_DEVICE_RESETS message returns success for invalid device reset range
+    <td> SYSFW
+    <td> 07.03.00 onwards
+    <td> AM64x, AM243x
+    <td> The parameter range is validated now
+</tr>
+<tr>
+    <td> SYSFW-6941
+    <td> TISCI_MSG_SYS_RESET fails for negative testcase
+    <td> SYSFW
+    <td> 07.03.00 onwards
+    <td> AM64x, AM243x
+    <td> The parameter range is validated now
+</tr>
+<tr>
+    <td> SYSFW-7056
+    <td> Implement New PLL sequence Proposed by HW team
+    <td> SYSFW
+    <td> 07.03.00 onwards
+    <td> AM64x, AM243x
+    <td> PLL sequence in DMSC firmware updated
+</tr>
+<tr>
+    <td> SYSFW-6892
+    <td> TISCI Clock api returns success for invalid Clock ID
+    <td> SYSFW
+    <td> 07.03.00 onwards
+    <td> AM64x, AM243x
+    <td> TISCI message with invalid clock id now returns NAK
+</tr>
+<tr>
+    <td> SYSFW-6903
+    <td> REF_DEF Value must be 1 for proper PLL operations
+    <td> SYSFW
+    <td> 07.03.00 onwards
+    <td> AM64x, AM243x
+    <td> PLLs which had REF_DIV greater than 1 were updated to be 1
+</tr>
 </table>
 
 ## Known Issues
@@ -469,6 +513,22 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> Networking
     <td> AM64x, AM243x
     <td> 08.06.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> SYSFW-6432
+    <td> Set device API doesn't return Error when PD is in transition state
+    <td> SYSFW
+    <td> AM64x, AM243x
+    <td> 07.03.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> SYSFW-6426
+    <td> Ownership of a firewall region can be transferred to an invalid host
+    <td> SYSFW
+    <td> AM64x, AM243x
+    <td> 07.03.00 onwards
     <td> -
 </tr>
 </table>
