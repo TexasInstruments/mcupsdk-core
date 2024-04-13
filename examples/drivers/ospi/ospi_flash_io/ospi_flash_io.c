@@ -70,11 +70,6 @@ void ospi_flash_io_main(void *args)
     Flash_offsetToBlkPage(gFlashHandle[CONFIG_FLASH0], offset, &blk, &page);
     status = Flash_eraseBlk(gFlashHandle[CONFIG_FLASH0], blk);
 
-    /* taps value to be 9 in case of 8D NON-PHY mode */
-    #if AM263P_LP
-    OSPI_setRdDataCaptureDelay(OSPI_getHandle(CONFIG_OSPI0), 9);
-    #endif
-
     if(status != SystemP_SUCCESS)
     {
         DebugP_log("Block Erase Failed at 0x%X offset !!!", offset);

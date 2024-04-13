@@ -1,8 +1,8 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_C" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.17.0+3128"}
  */
 
 /**
@@ -17,6 +17,7 @@ const mpu_armv71 = mpu_armv7.addInstance();
 const mpu_armv72 = mpu_armv7.addInstance();
 const mpu_armv73 = mpu_armv7.addInstance();
 const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
 const general    = scripting.addModule("/memory_configurator/general", {}, false);
 const general1   = general.addInstance();
 const region     = scripting.addModule("/memory_configurator/region", {}, false);
@@ -31,55 +32,43 @@ const section5   = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-flash1.$name                              = "CONFIG_FLASH0";
-flash1.fname                              = "MX25UW512";
-flash1.flashBlockSize                     = 65536;
-flash1.resetType                          = "0x10";
-flash1.deviceBusyType                     = "1";
-flash1.cmdExtType                         = "INVERSE";
-flash1.xspiWipRdCmd                       = "0x05";
-flash1.cmdWr                              = "0x12";
-flash1.strDtr_cmdRegWr                    = "0x72";
-flash1.strDtr_shift                       = 255;
-flash1.strDtr_mask                        = "255";
-flash1.rdIdAddressSzieInBytes             = 4;
-flash1.strDtr_cmdRegRd                    = "0x71";
-flash1.addressByteSupport                 = "2";
-flash1.fourByteEnableSeq                  = "0xC0";
-flash1.protocol                           = "8d_8d_8d";
-flash1.dummy_mask                         = "0x7";
-flash1.cmdRd                              = "0xEE";
-flash1.proto_bitP                         = 2;
-flash1.strDtr_isAddrReg                   = true;
-flash1.dummyId8                           = 19;
-flash1.idNumBytes                         = 6;
-flash1.flashDeviceId                      = "0xC2C2";
-flash1.flashManfId                        = "0x39";
-flash1.dummyClksCmd                       = 20;
-flash1.dummyClksRd                        = 20;
-flash1.proto_isAddrReg                    = true;
-flash1.dummy_isAddrReg                    = true;
-flash1.proto_cmdRegRd                     = "0x71";
-flash1.proto_cmdRegWr                     = "0x72";
-flash1.proto_mask                         = "0x3";
-flash1.dummy_cfgReg                       = "0x00000300";
-flash1.dummy_cmdRegRd                     = "0x71";
-flash1.dummy_cmdRegWr                     = "0x72";
-flash1.dummy_bitP                         = 0;
-flash1.peripheralDriver.$name             = "CONFIG_OSPI0";
-flash1.peripheralDriver.inputClkFreq      = 100000000;
-flash1.peripheralDriver.baudRateDiv       = 32;
-flash1.peripheralDriver.dmaEnable         = true;
-flash1.peripheralDriver.OSPI.CLK.$assign  = "OSPI0_CLK";
-flash1.peripheralDriver.OSPI.CSn0.$assign = "OSPI0_CSn0";
-flash1.peripheralDriver.OSPI.DQS.$assign  = "UART1_TXD";
-flash1.peripheralDriver.OSPI.D7.$assign   = "MCAN1_TX";
-flash1.peripheralDriver.OSPI.D5.$assign   = "MCAN0_TX";
-flash1.peripheralDriver.OSPI.D4.$assign   = "MCAN0_RX";
-flash1.peripheralDriver.OSPI.D3.$assign   = "OSPI0_D3";
-flash1.peripheralDriver.OSPI.D2.$assign   = "OSPI0_D2";
-flash1.peripheralDriver.OSPI.D1.$assign   = "OSPI0_D1";
-flash1.peripheralDriver.OSPI.D0.$assign   = "OSPI0_D0";
+
+flash1.$name                            = "CONFIG_FLASH0";
+flash1.proto_isAddrReg                  = true;
+flash1.proto_cmdRegRd                   = "0x85";
+flash1.proto_cmdRegWr                   = "0x81";
+flash1.proto_mask                       = "0xff";
+flash1.dummy_isAddrReg                  = true;
+flash1.dummy_cfgReg                     = "1";
+flash1.dummy_cmdRegRd                   = "0x85";
+flash1.dummy_cmdRegWr                   = "0x81";
+flash1.strDtr_isAddrReg                 = true;
+flash1.strDtr_cmdRegRd                  = "0x85";
+flash1.strDtr_cmdRegWr                  = "0x81";
+flash1.strDtr_mask                      = "255";
+flash1.xspiWipRdCmd                     = "0x05";
+flash1.strDtr_shift                     = 255;
+flash1.proto_cfgReg                     = "0";
+flash1.dummy_mask                       = "0xFF";
+flash1.protocol                         = "8d_8d_8d";
+flash1.proto_bitP                       = 231;
+flash1.fourByteEnableSeq                = "0";
+flash1.dummyClksCmd                     = 16;
+flash1.dummyClksRd                      = 16;
+flash1.dummy_bitP                       = 16;
+flash1.peripheralDriver.$name           = "CONFIG_OSPI0";
+flash1.peripheralDriver.dmaEnable       = true;
+flash1.peripheralDriver.OSPI.D7.$suggestSolution = "MCAN1_TX";
+flash1.peripheralDriver.OSPI.D5.$suggestSolution = "MCAN0_TX";
+
+const edma                         = scripting.addModule("/drivers/edma/edma", {}, false);
+const edma1                        = edma.addInstance({}, false);
+edma1.$name                        = "CONFIG_EDMA0";
+flash1.peripheralDriver.edmaDriver = edma1;
+edma1.edmaRmDmaCh[0].$name         = "CONFIG_EDMA_RM4";
+edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM5";
+edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM6";
+edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM7";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_LOG";
@@ -106,6 +95,10 @@ mpu_armv74.$name             = "CONFIG_MPU_REGION3";
 mpu_armv74.baseAddr          = 0x70000000;
 mpu_armv74.size              = 21;
 mpu_armv74.accessPermissions = "Supervisor RD+WR, User RD";
+
+mpu_armv75.$name    = "CONFIG_MPU_REGION5";
+mpu_armv75.baseAddr = 0x80000000;
+mpu_armv75.size     = 31;
 
 general1.$name          = "CONFIG_GENERAL0";
 general1.irq_stack_size = 4096;
@@ -141,7 +134,6 @@ region1.memory_region[5].size               = 0x1C0000;
 
 section1.load_memory                              = "MSRAM_VECS";
 section1.group                                    = false;
-section1.run_memory                               = "R5F_VECS";
 section1.$name                                    = "Sbl Initialization Code";
 section1.output_section.create(1);
 section1.output_section[0].$name                  = ".sbl_init_code";
@@ -221,5 +213,13 @@ section5.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-flash1.peripheralDriver.OSPI.$suggestSolution    = "OSPI0";
-flash1.peripheralDriver.OSPI.D6.$suggestSolution = "MCAN1_RX";
+flash1.peripheralDriver.OSPI.$suggestSolution      = "OSPI0";
+flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "OSPI0_CLK";
+flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "OSPI0_CSn0";
+flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "UART1_TXD";
+flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "MCAN1_RX";
+flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "MCAN0_RX";
+flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "OSPI0_D3";
+flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "OSPI0_D2";
+flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "OSPI0_D1";
+flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "OSPI0_D0";

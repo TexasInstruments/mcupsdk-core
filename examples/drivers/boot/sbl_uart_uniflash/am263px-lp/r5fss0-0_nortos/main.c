@@ -72,9 +72,8 @@ int main(void)
 
     System_init();
     Drivers_open();
+
     status = Board_driversOpen();
-    // taps value to be 9 in case of 8D NON-PHY mode
-    OSPI_setRdDataCaptureDelay( OSPI_getHandle(CONFIG_OSPI0), 9);
     DebugP_assert(status == SystemP_SUCCESS);
 
     while(!done)
