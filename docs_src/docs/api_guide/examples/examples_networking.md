@@ -132,6 +132,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_TCPSERVER
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_UDP_IGMP
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_UDPCLIENT
+-# \subpage EXAMPLES_ICSS_EMAC_LWIP
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
 \endcond
