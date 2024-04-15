@@ -22,6 +22,7 @@ Feature                                                                         
 PLL Configuration sequence updated to latest recommendation                                     | SYSFW (DMSC)
 Updates to support ICSSG reset isolation                                                        | SYSFW (DMSC)
 Updated empty example to support PRU1, RTUPRU0, RTUPRU1, TXPRU0, TXPRU1 cores                   | PRU-IO
+Default value for GPIO can be configured from sysconfig                                         | GPIO
 -                                                                                               | -
 \endcond
 
@@ -31,6 +32,7 @@ Feature                                                                         
 PLL Configuration sequence updated to latest recommendation                                     | SYSFW (DMSC)
 Updates to support ICSSG reset isolation                                                        | SYSFW (DMSC)
 Updated empty example to support PRU1, RTUPRU0, RTUPRU1, TXPRU0, TXPRU1 cores                   | PRU-IO
+Default value for GPIO can be configured from sysconfig                                         | GPIO
 -                                                                                               | -
 \endcond
 
@@ -326,6 +328,110 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
     <td> Correct status of pending interrupts returned now
 </tr>
+<tr>
+    <td> MCUSDK-2336
+    <td> SysConfig crashes if many GPIOs are added
+    <td> GPIO
+    <td> 08.01.00 onwards
+    <td> AM64x, AM243x
+    <td> Sysconfig device data is fixed
+</tr>
+<tr>
+    <td> MCUSDK-11247
+    <td> Delay missing after setting FIFO CLEAR bit
+    <td> UART
+    <td> 08.06.00 onwards
+    <td> AM64x, AM243x
+    <td> Wait is added till the FIFO to become empty
+</tr>
+<tr>
+    <td> MCUSDK-11942
+    <td> The McSPI driver does not output CLK when it is set to RX only mode and data size is not 8 bit
+    <td> McSPI
+    <td> 09.00.00 onwards
+    <td> AM64x, AM243x
+    <td> Updated the documentation on how to set txBug and rxBuf size
+</tr>
+<tr>
+    <td> MCUSDK-12173
+    <td> The MCU+ SDK uses the incorrect ROM degenerate key to sign the ROM certificates for GP/HS-FS devices. This results in the ROM skipping the integrity check
+    <td> Build
+    <td> 08.06.00 onwards
+    <td> AM64x, AM243x
+    <td> Update the ROM degenerate key used
+</tr>
+<tr>
+    <td> MCUSDK-12281
+    <td> Bootloader profile numbers for System_init are incorrect
+    <td> Build
+    <td> 09.00.00 onwards
+    <td> AM64x, AM243x
+    <td> Removing the CycleP_counterInit() from system_init() for bootloaders
+</tr>
+<tr>
+    <td> MCUSDK-12347
+    <td> SysCfg for System examples generating code in single context mode
+    <td> Build
+    <td> 09.00.00 onwards
+    <td> AM64x, AM243x
+    <td> For the induvidual projects in the system projects, do not call sysconfig to generate files
+</tr>
+<tr>
+    <td> MCUSDK-12594
+    <td> API to enable/disable writes to tripzone
+    <td> EPWM
+    <td> 09.00.00 onwards
+    <td> AM64x, AM243x
+    <td> APIs added to write to trip zone registers
+</tr>
+<tr>
+    <td> MCUSDK-12647
+    <td> MCAN_txBufAddReq API does read-modify-write to TXBAR register
+    <td> MCAN
+    <td> 09.00.00 onwards
+    <td> AM64x, AM243x
+    <td> Update the API to do direct write to TXBAR register
+</tr>
+<tr>
+    <td> MCUSDK-12658
+    <td> McSPI LLD multiple instance build issue is resolved
+    <td> MCSPI
+    <td> 09.00.00 onwards
+    <td> AM64x, AM243x
+    <td> Fixed the sysconfig generated files for McSPI LLD
+</tr>
+<tr>
+    <td> MCUSDK-12729
+    <td> K3-resource partition tool is not generating the required rm-cfg.yaml and tifs-cfg.yaml
+    <td> K3-Resource_partition tool
+    <td> 09.01.00 onwards
+    <td> AM64x
+    <td> Fixed the toll to generate yaml instead of .c files
+</tr>
+<tr>
+    <td> MCUSDK-12776
+    <td> OTP examples are not working
+    <td> Linker
+    <td> 09.01.00 onwards
+    <td> AM64x
+    <td> Used the correct entry point in the memory configurator
+</tr>
+<tr>
+    <td> MCUSDK-12823
+    <td> Read cancel API flushes out the characters while cancelling the read
+    <td> UART
+    <td> 09.01.00 onwards
+    <td> AM64x, AM243x
+    <td> Remove RX fifo flush when UART_read times out
+</tr>
+<tr>
+    <td> MCUSDK-13064
+    <td> PHY tuning algorithm updates for robusteness
+    <td> OSPI
+    <td> 09.01.00 onwards
+    <td> AM64x, AM243x
+    <td> Update PHY tuning algorithm
+</tr>
 </table>
 
 ## Known Issues
@@ -445,20 +551,20 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-11942
-    <td> The McSPI driver does not output CLK when it is set to RX only mode and data size is not 8 bit
+    <td> MCUSDK-12984
+    <td> McSPI LLD Read and write APIs not working
     <td> McSPI
+    <td> 9.1.0 onwards
+    <td> AM64x, AM243x
+    <td> Use MCSPI_transfer() APIs
+</tr>
+<tr>
+    <td> MCUSDK-13120
+    <td> Pcie_legacy_irq example is broken
+    <td> PCIE
     <td> 9.0.0 onwards
     <td> AM64x, AM243x
     <td> -
-</tr>
-<tr>
-    <td> MCUSDK-12211
-    <td> OSPI: Unsafe (uint32_t*) in OSPI_write() API. Causing abort with Oz optimization in case of unaligned access
-    <td> OSPI
-    <td> 9.0.0 onwards
-    <td> AM64x, AM243x
-    <td> Make sure source and destination buffers are 4 byte aligned
 </tr>
 <tr>
     <td> MCUSDK-3626
@@ -696,6 +802,13 @@ earlier SDKs.
     <th> Affected API
     <th> Change
     <th> Additional Remarks
+</tr>
+<tr>
+    <td> GPIO
+    <td> NA
+    <td> The GPIO deviceData has been modified to reduce the load from the solver working at the backend of sysconfig application. Instead of choosing the gpio peripheral GPIO0 or GPIO1 for the main domain, user can now directy choose the pins. With this change, user can add as many gpios as possible without facing any sysconfig crash. SDK changes thereby had to be adjusted accordingly.  
+    <td> Please note that these changes are backward compatible, so the old example.syscfg will still work.  
+However, this change will break compatibility with users who are not using the SDK but directly using pinmux. They will have to remove the gpio related configurations from their syscfg file, then open the file in syscfg and add those gpios configurations again via gui.
 </tr>
 </table>
 
