@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.19.0+3426"}
+ * @versions {"tool":"1.20.0+3587"}
  */
 
 /**
@@ -13,6 +13,7 @@ const mcspi1          = mcspi.addInstance();
 const mcspi2          = mcspi.addInstance();
 const mcspi3          = mcspi.addInstance();
 const mcspi4          = mcspi.addInstance();
+const mcspi5          = mcspi.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
@@ -79,6 +80,11 @@ mcspi4.mcspiChannel[0].mcspiRxConfigXbar.$name    = "CONFIG_DMA_TRIG_XBAR0";
 mcspi4.mcspiChannel[0].mcspiTxConfigXbar.$name    = "CONFIG_DMA_TRIG_XBAR1";
 mcspi4.mcspiChannel[0].mcspiTxConfigXbar.instance = "DMA_TRIG_XBAR_EDMA_MODULE_1";
 
+mcspi5.$name                 = "CONFIG_MCSPI4";
+mcspi5.inputSelect           = "0";
+mcspi5.mcspiChannel[0].$name = "CONFIG_MCSPI_CH1";
+mcspi5.child.$name           = "drivers_mcspi_v1_mcspi_v1_template4";
+
 const edma                  = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1                 = edma.addInstance({}, false);
 edma1.$name                 = "CONFIG_EDMA0";
@@ -86,6 +92,7 @@ mcspi1.edmaDriver           = edma1;
 mcspi2.edmaDriver           = edma1;
 mcspi3.edmaDriver           = edma1;
 mcspi4.edmaDriver           = edma1;
+mcspi5.edmaDriver           = edma1;
 edma1.edmaRmDmaCh[0].$name  = "CONFIG_EDMA_RM0";
 edma1.edmaRmQdmaCh[0].$name = "CONFIG_EDMA_RM1";
 edma1.edmaRmTcc[0].$name    = "CONFIG_EDMA_RM2";
@@ -322,3 +329,8 @@ mcspi4.SPI.CLK.$suggestSolution             = "I2C1_SDA";
 mcspi4.SPI.D0.$suggestSolution              = "UART0_RTSn";
 mcspi4.SPI.D1.$suggestSolution              = "UART0_CTSn";
 mcspi4.mcspiChannel[0].CSn.$suggestSolution = "I2C1_SCL";
+mcspi5.SPI.$suggestSolution                 = "SPI4";
+mcspi5.SPI.CLK.$suggestSolution             = "EQEP0_A";
+mcspi5.SPI.D0.$suggestSolution              = "EQEP0_STROBE";
+mcspi5.SPI.D1.$suggestSolution              = "EQEP0_INDEX";
+mcspi5.mcspiChannel[0].CSn.$suggestSolution = "EQEP0_B";
