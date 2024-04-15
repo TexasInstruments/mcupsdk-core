@@ -33,7 +33,7 @@
 			component_target_scrub_list_string +=` \$(BUILD_COMBO_SCRUB_${component.name})`
 
 			if((device == "am64x") || (device == "am243x")){
-			if (!["sdl","pru_ipc","tsn_gptp-freertos-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos","cmsis"].includes(component.name)) {
+			if (!["sdl","pru_ipc","tsn_gptp-freertos-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos", "tsn_l2-freertos","cmsis"].includes(component.name)) {
 			component_target_list_string_gcc +=` \$(BUILD_COMBO_GCC_${component.name})`
 			component_target_clean_list_string_gcc +=` \$(BUILD_COMBO_CLEAN_GCC_${component.name})`
 			component_target_scrub_list_string_gcc +=` \$(BUILD_COMBO_SCRUB_GCC_${component.name})`
