@@ -54,7 +54,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg"
 
-/*const readmeDoxygenPageTag = "EXAMPLES_SDL_VTM";*/
+const readmeDoxygenPageTag = "EXAMPLES_SDL_VTM";
 
 const projectspecfiles = {
     common: [
@@ -98,7 +98,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.libdirs = libdirs_nortos;
     build_property.lnkfiles = lnkfiles;
     build_property.syscfgfile = syscfgfile;
-    /*build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;*/
+    build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
 
     if(buildOption.cpu.match(/r5f*/))
     {

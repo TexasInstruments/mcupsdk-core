@@ -63,6 +63,8 @@ This page lists all the examples related to usage of SDL.
    -# \subpage EXAMPLES_SDL_TMU_ROM_CHECKSUM
 -# STOG
    -# \subpage EXAMPLES_SDL_STOG
+-# VTM
+   -# \subpage EXAMPLES_SDL_VTM
 \endcond
 
 \cond  SOC_AWR294X

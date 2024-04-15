@@ -279,6 +279,9 @@ int32_t SDL_VTM_initTs(const SDL_VTM_configTs *pConfig)
     return (sdlResult);
 }
 
+/**
+ * Design: PROC_SDL-7525
+ */
 void SDL_VTM_enableTs(uint32_t sensorSelect, uint8_t delay)
 {
     /* Enable all the required sensors */
@@ -301,7 +304,7 @@ void SDL_VTM_enableTs(uint32_t sensorSelect, uint8_t delay)
 }
 
 /**
- * Design: TBD
+ * Design: PROC_SDL-7526
  */
 void SDL_VTM_enableTc(void)
 {
@@ -311,7 +314,7 @@ void SDL_VTM_enableTc(void)
 }
 
  /**
- * Design: TBD
+ * Design: PROC_SDL-7528
  */
 void SDL_VTM_disableTc(void)
 {
@@ -371,7 +374,7 @@ int32_t SDL_VTM_getTemp(SDL_VTM_InstTs instance, uint32_t *pTempVal)
 }
 
 /**
- * Design: TBD
+ * Design: PROC_SDL-7529, PROC_SDL-7530
  */
 int32_t SDL_VTM_setAlertTemp(SDL_VTM_InstTs instance, int32_t alertThHot,
                              int32_t alertThCold)
@@ -425,7 +428,7 @@ int32_t SDL_VTM_setAlertTemp(SDL_VTM_InstTs instance, int32_t alertThHot,
 }
 
 /**
- * Design: TBD
+ * Design: PROC_SDL-7531, PROC_SDL-7532
  */
 int32_t SDL_VTM_setTShutTemp(SDL_VTM_InstTs instance,
                              int32_t tshutThHot, int32_t tshutThCold)
@@ -485,7 +488,7 @@ int32_t SDL_VTM_setTShutTemp(SDL_VTM_InstTs instance,
 }
 
 /**
- * Design: TBD
+ * Design: PROC_SDL-7533
  */
 int32_t SDL_VTM_setClearInterrupts(SDL_VTM_InstTs instance,
                                    uint8_t  hotIntr,
@@ -606,7 +609,7 @@ int32_t SDL_VTM_getStaticRegistersTs(SDL_VTM_staticRegsTs *pStaticRegs)
     return (sdlResult);
 }
 /**
- * Design: TBD: PROC_SDL-7256
+ * Design: PROC_SDL-7534
  */
 int32_t SDL_VTM_enableESMWarmReset(SDL_VTM_InstTs instance)
 {
