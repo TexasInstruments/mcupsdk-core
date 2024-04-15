@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.19.0+3426"}
+ * @versions {"tool":"1.20.0+3587"}
  */
 
 /**
@@ -18,9 +18,6 @@ const hsmclient       = scripting.addModule("/drivers/hsmclient/hsmclient", {}, 
 const hsmclient1      = hsmclient.addInstance();
 const mcan            = scripting.addModule("/drivers/mcan/mcan", {}, false);
 const mcan1           = mcan.addInstance();
-const mcan2           = mcan.addInstance();
-const mcan3           = mcan.addInstance();
-const mcan4           = mcan.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
@@ -40,6 +37,7 @@ const section2        = section.addInstance();
 const section3        = section.addInstance();
 const section4        = section.addInstance();
 const section5        = section.addInstance();
+const section6        = section.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -67,9 +65,9 @@ edma1.edmaRmQdmaCh[0].$name        = "CONFIG_EDMA_RM1";
 edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
 edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
 
-gpio1.$name                = "CONFIG_GPIO0";
-gpio1.GPIO.$assign         = "GPIO0";
-gpio1.GPIO.gpioPin.$assign = "EPWM4_A";
+gpio1.$name          = "CONFIG_GPIO0";
+gpio1.rx             = true;
+gpio1.GPIO_n.$assign = "EPWM4_A";
 
 hsmclient1.$name = "CONFIG_HSMCLIENT0";
 
@@ -77,17 +75,6 @@ mcan1.$name           = "CONFIG_MCAN0";
 mcan1.MCAN.$assign    = "MCAN0";
 mcan1.MCAN.RX.$assign = "MCAN0_RX";
 mcan1.MCAN.TX.$assign = "MCAN0_TX";
-
-mcan2.$name           = "CONFIG_MCAN1";
-mcan2.MCAN.$assign    = "MCAN1";
-mcan2.MCAN.RX.$assign = "MCAN1_RX";
-mcan2.MCAN.TX.$assign = "MCAN1_TX";
-
-mcan3.$name        = "CONFIG_MCAN2";
-mcan3.MCAN.$assign = "MCAN2";
-
-mcan4.$name        = "CONFIG_MCAN3";
-mcan4.MCAN.$assign = "MCAN3";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
@@ -238,6 +225,12 @@ section5.output_section.create(1);
 section5.output_section[0].$name     = ".bss.filebuf";
 section5.output_section[0].alignment = 0;
 
+section6.$name                   = "Hsmrt";
+section6.load_memory             = "MSRAM_HSMRT";
+section6.group                   = false;
+section6.output_section.create(1);
+section6.output_section[0].$name = ".rodata.hsmrt";
+
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
@@ -250,8 +243,4 @@ flash1.peripheralDriver.QSPI.QSPI_D2.$suggestSolution   = "QSPI_D2";
 flash1.peripheralDriver.QSPI.QSPI_D3.$suggestSolution   = "QSPI_D3";
 flash1.peripheralDriver.QSPI.QSPI_CLK.$suggestSolution  = "QSPI_CLK";
 flash1.peripheralDriver.QSPI.QSPI_CSn0.$suggestSolution = "QSPI_CSn0";
-mcan3.MCAN.RX.$suggestSolution                          = "MCAN2_RX";
-mcan3.MCAN.TX.$suggestSolution                          = "MCAN2_TX";
-mcan4.MCAN.RX.$suggestSolution                          = "SDFM0_D3";
-mcan4.MCAN.TX.$suggestSolution                          = "SDFM0_CLK3";
 debug_log.uartLog.UART.$suggestSolution                 = "UART0";
