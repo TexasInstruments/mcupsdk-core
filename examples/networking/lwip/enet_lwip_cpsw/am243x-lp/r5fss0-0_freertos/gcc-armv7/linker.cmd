@@ -75,6 +75,7 @@ SECTIONS
     .enet_dma_mem (NOLOAD) : ALIGN(128) {
         *(.ENET_DMA_DESC_MEMPOOL)
         *(.ENET_DMA_RING_MEMPOOL)
+        *(.ENET_DMA_PKT_MEMPOOL)
     } > MSRAM
     .bss:ENET_DMA_OBJ_MEM (NOLOAD) : ALIGN (128) {} > MSRAM
     .bss:ENET_DMA_PKT_INFO_MEMPOOL (NOLOAD) : ALIGN (128) {} > MSRAM

@@ -1,5 +1,4 @@
 #include "generated/ti_enet_config.h"
-
 /* This is the stack that is used by code running within main()
  * In case of NORTOS,
  * - This means all the code outside of ISR uses this stack
@@ -83,6 +82,86 @@ SECTIONS
     .text.boot  : ALIGN (8) {} > MSRAM
     .text:abort : ALIGN (8) {} > MSRAM  /* this helps in loading symbols when using XIP mode */
 
+    OVERLAY : NOCROSSREFS
+    {
+        .icssfw {
+        }
+
+        .icss_mem {
+#if (ENET_SYSCFG_ICSSG0_ENABLED == 1)
+    #if(ENET_SYSCFG_DUAL_MAC == 1)
+        #if(ENET_SYSCFG_DUALMAC_PORT1_ENABLED == 1)
+            *(*gEnetSoc_icssg0HostPoolMem_0)
+            *(*gEnetSoc_icssg0HostQueueMem_0)
+            *(*gEnetSoc_icssg0ScratchMem_0)
+            #if (ENET_SYSCFG_PREMPTION_ENABLE == 1)
+                *(*gEnetSoc_icssg0HostPreQueueMem_0)
+            #endif
+        #else
+            *(*gEnetSoc_icssg0HostPoolMem_1)
+            *(*gEnetSoc_icssg0HostQueueMem_1)
+            *(*gEnetSoc_icssg0ScratchMem_1)
+            #if (ENET_SYSCFG_PREMPTION_ENABLE == 1)
+                    *(*gEnetSoc_icssg0HostPreQueueMem_1)
+            #endif
+        #endif
+    #endif
+#endif
+#if (ENET_SYSCFG_ICSSG1_ENABLED == 1)
+    #if(ENET_SYSCFG_DUAL_MAC == 1)
+        #if(ENET_SYSCFG_DUALMAC_PORT1_ENABLED == 1)
+                *(*gEnetSoc_icssg1HostPoolMem_0)
+                *(*gEnetSoc_icssg1HostQueueMem_0)
+                *(*gEnetSoc_icssg1ScratchMem_0)
+            #if (ENET_SYSCFG_PREMPTION_ENABLE == 1)
+                *(*gEnetSoc_icssg1HostPreQueueMem_0)
+            #endif
+        #else
+                *(*gEnetSoc_icssg1HostPoolMem_1)
+                *(*gEnetSoc_icssg1HostQueueMem_1)
+                *(*gEnetSoc_icssg1ScratchMem_1)
+            #if (ENET_SYSCFG_PREMPTION_ENABLE == 1)
+                *(*gEnetSoc_icssg1HostPreQueueMem_1)
+            #endif
+        #endif
+    #endif
+#endif
+#if (ENET_SYSCFG_ICSSG0_ENABLED == 1)
+    #if(ENET_SYSCFG_DUAL_MAC == 0)
+        *(*gEnetSoc_icssg0PortPoolMem_0)
+        *(*gEnetSoc_icssg0PortPoolMem_1)
+        *(*gEnetSoc_icssg0HostPoolMem_0)
+        *(*gEnetSoc_icssg0HostPoolMem_1)
+        *(*gEnetSoc_icssg0HostQueueMem_0)
+        *(*gEnetSoc_icssg0HostQueueMem_1)
+        *(*gEnetSoc_icssg0ScratchMem_0)
+        *(*gEnetSoc_icssg0ScratchMem_1)
+        #if (ENET_SYSCFG_PREMPTION_ENABLE == 1)
+            *(*gEnetSoc_icssg0HostPreQueueMem_0)
+            *(*gEnetSoc_icssg0HostPreQueueMem_1)
+        #endif
+    #endif
+#endif
+#if (ENET_SYSCFG_ICSSG1_ENABLED == 1)
+    #if(ENET_SYSCFG_DUAL_MAC == 0)
+        *(*gEnetSoc_icssg1PortPoolMem_0)
+        *(*gEnetSoc_icssg1PortPoolMem_1)
+        *(*gEnetSoc_icssg1HostPoolMem_0)
+        *(*gEnetSoc_icssg1HostPoolMem_1)
+        *(*gEnetSoc_icssg1HostQueueMem_0)
+        *(*gEnetSoc_icssg1HostQueueMem_1)
+        *(*gEnetSoc_icssg1ScratchMem_0)
+        *(*gEnetSoc_icssg1ScratchMem_1)
+        #if (ENET_SYSCFG_PREMPTION_ENABLE == 1)
+            *(*gEnetSoc_icssg1HostPreQueueMem_0)
+            *(*gEnetSoc_icssg1HostPreQueueMem_1)
+        #endif
+    #endif
+#endif
+        }
+    } > MSRAM
+
+
     /* This is rest of code. This can be placed in DDR if DDR is available and needed */
     .text       : ALIGN (8) {} > MSRAM  /* This is where code resides */
     .rodata     : ALIGN (8) {} > MSRAM  /* This is where const's go */
@@ -144,10 +223,10 @@ SECTIONS
     } > MSRAM
 
     .enet_dma_mem (NOLOAD) : ALIGN(128) {
-        *(.ENET_DMA_DESC_MEMPOOL)
-        *(.ENET_DMA_RING_MEMPOOL)
+        *(.bss:ENET_DMA_DESC_MEMPOOL)
+        *(.bss:ENET_DMA_RING_MEMPOOL)
 #if (ENET_SYSCFG_PKT_POOL_ENABLE == 1)
-        *(.ENET_DMA_PKT_MEMPOOL)
+        *(.bss:ENET_DMA_PKT_MEMPOOL)
 #endif
     } > MSRAM
 

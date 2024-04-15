@@ -22,11 +22,21 @@ SECTIONS
     .text.mpu : ALIGN (8) {} > MSRAM
     .text.boot : ALIGN (8) {} > MSRAM
     .text:abort : ALIGN (8) {} > MSRAM
-     OVERLAY : NOCROSSREFS
-     {
-         .icss_fw
-         .
-     } 
+    OVERLAY : NOCROSSREFS
+    {
+        .icssfw {
+        }
+        .icss_mem {
+        *(*gEnetSoc_icssg1PortPoolMem_0)
+        *(*gEnetSoc_icssg1PortPoolMem_1)
+        *(*gEnetSoc_icssg1HostPoolMem_0)
+        *(*gEnetSoc_icssg1HostPoolMem_1)
+        *(*gEnetSoc_icssg1HostQueueMem_0)
+        *(*gEnetSoc_icssg1HostQueueMem_1)
+        *(*gEnetSoc_icssg1ScratchMem_0)
+        *(*gEnetSoc_icssg1ScratchMem_1)
+        }
+    } > MSRAM
     .text : ALIGN (8) {} > MSRAM
     .rodata : ALIGN (8) {} > MSRAM
     .data : ALIGN (8) {} > MSRAM
@@ -78,9 +88,9 @@ SECTIONS
         __STACK_END = .;
     } > MSRAM
     .enet_dma_mem (NOLOAD) : ALIGN(128) {
-        *(.ENET_DMA_DESC_MEMPOOL)
-        *(.ENET_DMA_RING_MEMPOOL)
-        *(.ENET_DMA_PKT_MEMPOOL)
+        *(.bss:ENET_DMA_DESC_MEMPOOL)
+        *(.bss:ENET_DMA_RING_MEMPOOL)
+        *(.bss:ENET_DMA_PKT_MEMPOOL)
     } > MSRAM
     .bss:ENET_DMA_OBJ_MEM (NOLOAD) : ALIGN (128) {} > MSRAM
     .bss:ENET_DMA_PKT_INFO_MEMPOOL (NOLOAD) : ALIGN (128) {} > MSRAM

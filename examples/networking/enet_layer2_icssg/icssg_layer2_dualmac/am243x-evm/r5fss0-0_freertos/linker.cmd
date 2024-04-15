@@ -27,14 +27,9 @@ SECTIONS
         .icssfw {
         }
         .icss_mem {
-        *(*gEnetSoc_icssg1PortPoolMem_0)
-        *(*gEnetSoc_icssg1PortPoolMem_1)
-        *(*gEnetSoc_icssg1HostPoolMem_0)
-        *(*gEnetSoc_icssg1HostPoolMem_1)
-        *(*gEnetSoc_icssg1HostQueueMem_0)
-        *(*gEnetSoc_icssg1HostQueueMem_1)
-        *(*gEnetSoc_icssg1ScratchMem_0)
-        *(*gEnetSoc_icssg1ScratchMem_1)
+                *(*gEnetSoc_icssg1HostPoolMem_0)
+                *(*gEnetSoc_icssg1HostQueueMem_0)
+                *(*gEnetSoc_icssg1ScratchMem_0)
         }
     } > MSRAM
     .text : ALIGN (8) {} > MSRAM

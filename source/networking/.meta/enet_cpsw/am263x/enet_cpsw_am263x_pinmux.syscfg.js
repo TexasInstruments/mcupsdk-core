@@ -75,6 +75,9 @@ function getPeripheralRequirements(inst, peripheralName, name)
         pinResource = pinmux.getPinRequirements(interfaceName, "CRS_DV", "CRS_DV");
         pinmux.setConfigurableDefault( pinResource, "rx", true );
         resources.push( pinResource);
+        pinResource = pinmux.getPinRequirements(interfaceName, "REF_CLK", "REF_CLK"); 
+        pinmux.setConfigurableDefault( pinResource, "rx", true );
+        resources.push( pinResource);
     }
     else if (name == "CPSW_CPTS")
     {
@@ -147,16 +150,16 @@ function pinmuxRequirements(inst) {
     }
     else if( inst.phyToMacInterfaceMode === "RMII")
     {
-        let rmii = getPeripheralRequirements(inst, "RMII", "RMII");
+        let rmii1 = getPeripheralRequirements(inst, "RMII", "RMII");
 
-        pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII1_TXD0", "rx", false);
-        pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII1_TXD1", "rx", false);
-        pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII1_TX_EN", "rx", false);
-        pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII2_TXD0", "rx", false);
-        pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII2_TXD1", "rx", false);
-        pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII2_TX_EN", "rx", false);
+        //pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII1_TXD0", "rx", false);
+        //pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII1_TXD1", "rx", false);
+        //pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII1_TX_EN", "rx", false);
+        //pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII2_TXD0", "rx", false);
+        //pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII2_TXD1", "rx", false);
+        //pinmux.setPeripheralPinConfigurableDefault( rmii, "RMII2_TX_EN", "rx", false);
 
-        perRequirements.push(rmii);
+        perRequirements.push(rmii1);
     }
     else
     {
@@ -166,7 +169,7 @@ function pinmuxRequirements(inst) {
         perRequirements.push(rgmii1);
         perRequirements.push(rgmii2);
     }
-        return perRequirements;
+    return perRequirements;
 }
 
 function getInterfaceNameList(inst) {
