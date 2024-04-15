@@ -56,6 +56,11 @@ uint32_t gRunApp;
 #define IO_MUX_MCAN_STB                             (10U)                       // PORT 1, PIN 2         -> ioIndex : 1*8 + 2 = 10
 #define TCA6416_IO_MUX_MCAN_STB_PORT_LINE_STATE     (TCA6416_OUT_STATE_LOW)     // MCAN_STB PIN OUTPUT   -> 0
 
+extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
+
+void flashFixUpOspiBoot(OSPI_Handle oHandle);
+void gpio_flash_reset(void);
+
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
  * with debugger connected.
@@ -117,7 +122,7 @@ int main()
 
     Bootloader_profileReset();
     Bootloader_socConfigurePll();
-    Bootloader_socInitL2MailBoxMemory();
+    Bootloader_socSetAutoClock();
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");
@@ -127,10 +132,13 @@ int main()
 
     DebugP_log("\r\n");
     Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socInitL2MailBoxMemory();
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
+
+    flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
@@ -242,9 +250,21 @@ int main()
             }
             if((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
             {
-                if( bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
+               if (bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
                 {
                     status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
+                }
+                if (status == SystemP_SUCCESS)
+                {
+                    /* enable Phy and Phy pipeline for XIP execution */
+                    if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
+                    {
+                        status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
+                        DebugP_assert(status == SystemP_SUCCESS);
+
+                        status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
+                        DebugP_assert(status == SystemP_SUCCESS);
+                    }
                 }
                 /* If any of the R5 core 0 have valid image reset the R5 core. */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
@@ -263,4 +283,12 @@ int main()
     System_deinit();
 
     return 0;
+}
+
+void flashFixUpOspiBoot(OSPI_Handle oHandle)
+{
+    gpio_flash_reset();
+    OSPI_enableSDR(oHandle);
+    OSPI_clearDualOpCodeMode(oHandle);
+    OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));
 }
