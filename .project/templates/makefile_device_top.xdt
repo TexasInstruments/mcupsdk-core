@@ -23,7 +23,7 @@
 			component_target_prebuilt_clean_list_string +=` \$(BUILD_COMBO_CLEAN_${component.name})`
 			component_target_prebuilt_scrub_list_string +=` \$(BUILD_COMBO_SCRUB_${component.name})`
 
-			if (!["sdl","pru_ipc","tsn_gptp-freertos-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos", "tsn_l2-freertos","cmsis"].includes(component.name)){
+			if (!["sdl","pru_ipc","tsn_gptp-freertos-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos", "tsn_l2-freertos","tsn_icssg_combase-freertos","cmsis"].includes(component.name)){
 				component_target_prebuilt_list_string_gcc +=` \$(BUILD_COMBO_GCC_${component.name})`
 				component_target_prebuilt_clean_list_string_gcc +=` \$(BUILD_COMBO_CLEAN_GCC_${component.name})`
 				component_target_prebuilt_scrub_list_string_gcc +=` \$(BUILD_COMBO_SCRUB_GCC_${component.name})`
@@ -35,7 +35,7 @@
 			component_target_scrub_list_string +=` \$(BUILD_COMBO_SCRUB_${component.name})`
 
 			if((device == "am64x") || (device == "am243x")){
-			if (!["sdl","pru_ipc","tsn_gptp-freertos-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos", "tsn_l2-freertos","cmsis"].includes(component.name)) {
+			if (!["sdl","pru_ipc","tsn_gptp-freertos-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos", "tsn_l2-freertos","tsn_icssg_combase-freertos","cmsis"].includes(component.name)) {
 			component_target_list_string_gcc +=` \$(BUILD_COMBO_GCC_${component.name})`
 			component_target_clean_list_string_gcc +=` \$(BUILD_COMBO_CLEAN_GCC_${component.name})`
 			component_target_scrub_list_string_gcc +=` \$(BUILD_COMBO_SCRUB_GCC_${component.name})`
@@ -153,7 +153,7 @@ BUILD_COMBO_`component.name` =`component.buildTarget`
 % if (((device == "am64x") || (device == "am243x")) && args.isGccBuildEnabled == 1) {
 # Various GCC Component Targets
 % for (component of args.component_list) {
-%     if (!["sdl","pru_ipc","tsn_gptp-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos","tsn_l2-freertos","cmsis"].includes(component.name)) {
+%     if (!["sdl","pru_ipc","tsn_gptp-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos","tsn_l2-freertos","tsn_icssg_combase-freertos","cmsis"].includes(component.name)) {
 BUILD_COMBO_GCC_`component.name` =`component.buildTarget_gcc`
 %  }
 % }
@@ -199,7 +199,7 @@ $(BUILD_COMBO_`component.name`):
 
 % if (((device == "am64x") || (device == "am243x")) && args.isGccBuildEnabled == 1) {
 % for (component of args.component_list) {
-%     if (!["sdl","pru_ipc","tsn_gptp-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos","tsn_l2-freertos","cmsis"].includes(component.name)) {
+%     if (!["sdl","pru_ipc","tsn_gptp-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos","tsn_l2-freertos","tsn_icssg_combase-freertos","cmsis"].includes(component.name)) {
 $(BUILD_COMBO_GCC_`component.name`):
 	$(MAKE) -C `component.relpath` -f makefile`component.tag`.`args.device`.$(subst `component.name`_,,$@) all
 
@@ -215,7 +215,7 @@ BUILD_COMBO_CLEAN_`component.name` =`component.buildTargetClean`
 % if (((device == "am64x") || (device == "am243x")) && args.isGccBuildEnabled == 1) {
 # Various GCC Component Clean Targets
 % for (component of args.component_list) {
-%     if (!["sdl","pru_ipc","tsn_gptp-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos","tsn_l2-freertos","cmsis"].includes(component.name)) {
+%     if (!["sdl","pru_ipc","tsn_gptp-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos","tsn_l2-freertos","tsn_icssg_combase-freertos","cmsis"].includes(component.name)) {
 BUILD_COMBO_CLEAN_GCC_`component.name` =`component.buildTargetClean_gcc`
 %  }
 % }
@@ -254,7 +254,7 @@ $(BUILD_COMBO_CLEAN_`component.name`):
 
 % if (((device == "am64x") || (device == "am243x")) && args.isGccBuildEnabled == 1) {
 % for (component of args.component_list) {
-%     if (!["sdl","pru_ipc","tsn_gptp-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos","tsn_l2-freertos","cmsis"].includes(component.name)) {
+%     if (!["sdl","pru_ipc","tsn_gptp-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos","tsn_l2-freertos","tsn_icssg_combase-freertos","cmsis"].includes(component.name)) {
 $(BUILD_COMBO_CLEAN_GCC_`component.name`):
 	$(MAKE) -C `component.relpath` -f makefile`component.tag`.`args.device`.$(subst `component.name`_,,$(subst _clean,,$@)) clean
 
@@ -270,7 +270,7 @@ BUILD_COMBO_SCRUB_`component.name` =`component.buildTargetScrub`_scrub
 % if (((device == "am64x") || (device == "am243x")) && args.isGccBuildEnabled == 1) {
 # Various GCC Component Scrub Targets
 % for (component of args.component_list) {
-%     if ((device == "am243x") && !["sdl","pru_ipc","tsn_gptp-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos","tsn_l2-freertos","cmsis","unity","doxy_samples"].includes(component.name)) {
+%     if ((device == "am243x") && !["sdl","pru_ipc","tsn_gptp-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos","tsn_l2-freertos","tsn_icssg_combase-freertos","cmsis","unity","doxy_samples"].includes(component.name)) {
 BUILD_COMBO_SCRUB_GCC_`component.name` =`component.buildTargetScrub_gcc`_scrub
 %  }
 %     else if ((device == "am64x") && ["board","drivers","freertos","nortos"].includes(component.name)) {
@@ -310,7 +310,7 @@ $(BUILD_COMBO_SCRUB_`component.name`):
 % }
 % if (((device == "am64x") || (device == "am243x")) && args.isGccBuildEnabled == 1) {
 % for (component of args.component_list) {
-%     if (!["sdl","pru_ipc","tsn_gptp-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos","tsn_l2-freertos","cmsis"].includes(component.name)) {
+%     if (!["sdl","pru_ipc","tsn_gptp-freertos","tsn_combase-freertos","tsn_uniconf-freertos","tsn_unibase-freertos","tsn_lldp-freertos","tsn_l2-freertos","tsn_icssg_combase-freertos","cmsis"].includes(component.name)) {
 $(BUILD_COMBO_SCRUB_GCC_`component.name`):
 	$(MAKE) -C `component.relpath` -f makefile`component.tag`.`args.device`.$(subst `component.name`_,,$(subst _scrub,,$@)) scrub
 

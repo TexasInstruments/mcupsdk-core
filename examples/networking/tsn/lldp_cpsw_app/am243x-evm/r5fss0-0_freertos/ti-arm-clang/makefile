@@ -97,6 +97,7 @@ DEFINES_common := \
 	-DENET_ENABLE_PER_CPSW=1 \
 	-DPRINT_FORMAT_NO_WARNING \
 	-DSITARA \
+	-DLLDP_ENABLED \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \

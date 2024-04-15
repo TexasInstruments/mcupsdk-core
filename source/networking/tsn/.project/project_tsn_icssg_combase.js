@@ -48,7 +48,7 @@ const defines = {
     common: [
         'TSNPKGVERSION=\\"1.1.3\\"',
         'PRINT_FORMAT_NO_WARNING',
-        "ENET_ENABLE_PER_CPSW=1",
+        "ENET_ENABLE_PER_ICSSG=1",
     ],
 };
 
@@ -84,6 +84,10 @@ const cflags = {
         "-Oz",
         "-flto",
     ],
+    debug: [
+        "-Oz",
+        "-flto",
+    ],
 };
 
 const deviceSpecific_cflags = {
@@ -95,22 +99,11 @@ const deviceSpecific_cflags = {
         "-mthumb",
         "-fno-strict-aliasing",
     ],
-    am263x : [
-    ],
-    am273x : [
-        "-fno-strict-aliasing",
-    ],
-    awr294x : [
-        "-fno-strict-aliasing",
-    ],
 };
 
 const buildOptionCombos = [
-    { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am243x", cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "am273x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am64x",  cpu: "r5f", cgt: "ti-arm-clang"},
-    { device: "awr294x", cpu: "r5f", cgt: "ti-arm-clang"},
 ];
 
 function getComponentProperty(device) {
@@ -118,8 +111,8 @@ function getComponentProperty(device) {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "library";
-    property.name = "tsn_combase-freertos";
-    property.tag  = "tsn_combase_freertos";
+    property.name = "tsn_icssg_combase-freertos";
+    property.tag  = "tsn_icssg_combase_freertos";
     property.isInternal = false;
 
     deviceBuildCombos = []

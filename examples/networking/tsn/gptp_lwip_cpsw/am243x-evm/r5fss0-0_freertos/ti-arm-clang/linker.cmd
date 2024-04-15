@@ -12,7 +12,7 @@
 /* This is the heap size for malloc() API in NORTOS and FreeRTOS
  * This is also the heap used by pvPortMalloc in FreeRTOS
  */
---heap_size=1024
+--heap_size=16000
 -e_vectors  /* This is the entry of the application, _vector MUST be plabed starting address 0x0 */
 
 /* This is the size of stack when R5 is in IRQ mode
@@ -148,3 +148,4 @@ MEMORY
     LOG_SHM_MEM             : ORIGIN = 0x701D4000, LENGTH = 0x00004000
     RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0x701D8000, LENGTH = 0x00008000*/
 }
+

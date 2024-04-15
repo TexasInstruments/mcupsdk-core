@@ -81,9 +81,9 @@ extern int EnetApp_avtpInit(EnetApp_ModuleCtx_t *modCtxTbl);
 extern void EnetApp_avtpDeinit(void);
 #endif //AVTP_ENABLED
 
-#ifdef LLD_ENABLED
+#ifdef LLDP_ENABLED
 extern int EnetApp_addLldpModCtx(EnetApp_ModuleCtx_t *modCtxTbl);
-#endif //LLD_ENABLED
+#endif //LLDP_ENABLED
 
 #ifdef GPTP_ENABLED
 extern int EnetApp_addGptpModCtx(EnetApp_ModuleCtx_t *modCtxTbl);

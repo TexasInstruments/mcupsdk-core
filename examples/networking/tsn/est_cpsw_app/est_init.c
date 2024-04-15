@@ -104,7 +104,7 @@ UB_SD_GETMEM_DEF_EXTERN(YANGINIT_GEN_SMEM);
     (uint32_t)( (((uint64_t)(pl_bytes)+18)*8*UB_SEC_US)/ ((interval_us)*1000ULL) )
 
 #define ENETEST_TX_PKT_PAYLOAD_LEN (1200U)
-#define MIN_INTERVAL_NS            (62000U)
+#define EST_INTERVAL_NS            (62000U)
 #define ADMIN_DELAY_OFFSET_FACTOR  (100000)
 
 /*! Base path of admin list parameters in yang file of Qbv */
@@ -151,20 +151,20 @@ static EnetEstAppTestParam_t gEnetEstAppTestLists[] =
         .list =
         {
             .baseTime    = 0ULL,
-            .cycleTime   = 4*MIN_INTERVAL_NS,
+            .cycleTime   = 4*EST_INTERVAL_NS,
             .gateCmdList =
             {
                 { .gateStateMask = ENET_TAS_GATE_MASK(1, 0, 0, 0, 0, 0, 0, 1),
-                  .timeInterval =  MIN_INTERVAL_NS
+                  .timeInterval =  EST_INTERVAL_NS
                 },
                 { .gateStateMask = ENET_TAS_GATE_MASK(1, 0, 0, 0, 0, 1, 0, 0),
-                  .timeInterval =  MIN_INTERVAL_NS
+                  .timeInterval =  EST_INTERVAL_NS
                 },
                 { .gateStateMask = ENET_TAS_GATE_MASK(1, 0, 0, 0, 0, 0, 0, 1),
-                  .timeInterval =  MIN_INTERVAL_NS
+                  .timeInterval =  EST_INTERVAL_NS
                 },
                 { .gateStateMask = ENET_TAS_GATE_MASK(1, 0, 0, 0, 0, 1, 0, 0),
-                  .timeInterval =  MIN_INTERVAL_NS
+                  .timeInterval =  EST_INTERVAL_NS
                 },
             },
             .listLength = 4U,
@@ -173,15 +173,15 @@ static EnetEstAppTestParam_t gEnetEstAppTestLists[] =
         {
             .streamParams =
             {
-                /* test appliction sends packet with interval 400us */
-                {.bitRateKbps = CALC_BITRATE_KBPS(ENETEST_TX_PKT_PAYLOAD_LEN, 400),
+                /* test appliction sends packet with interval 800us */
+                {.bitRateKbps = CALC_BITRATE_KBPS(ENETEST_TX_PKT_PAYLOAD_LEN, 800),
                  .payloadLen = ENETEST_TX_PKT_PAYLOAD_LEN,
                  .tc = 0,
                  .priority = 0,
                 },
 
-                /* test appliction sends packet with interval 200us */
-                {.bitRateKbps = CALC_BITRATE_KBPS(ENETEST_TX_PKT_PAYLOAD_LEN, 200),
+                /* test appliction sends packet with interval 400us */
+                {.bitRateKbps = CALC_BITRATE_KBPS(ENETEST_TX_PKT_PAYLOAD_LEN, 400),
                  .payloadLen = ENETEST_TX_PKT_PAYLOAD_LEN,
                  .tc = 2,
                  .priority = 2,

@@ -102,7 +102,7 @@ DEFINES_common := \
 	-DENET_ENABLE_PER_ICSSG=1 \
 	-DPRINT_FORMAT_NO_WARNING \
 	-DSITARA \
-	-DDISABLE_UC_CLIENT \
+	-DGPTP_ENABLED=1 \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -158,7 +158,7 @@ LIBS_common = \
 	-lboard.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
-	-ltsn_combase-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ltsn_icssg_combase-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ltsn_unibase-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ltsn_gptp-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ltsn_uniconf-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
@@ -191,7 +191,7 @@ LIBS_NAME = \
 	board.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
-	tsn_combase-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
+	tsn_icssg_combase-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	tsn_unibase-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	tsn_gptp-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \
 	tsn_uniconf-freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib \

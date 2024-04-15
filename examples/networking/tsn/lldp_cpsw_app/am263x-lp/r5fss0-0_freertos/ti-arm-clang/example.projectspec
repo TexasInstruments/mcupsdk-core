@@ -67,6 +67,7 @@
             -DENET_ENABLE_PER_CPSW=1
             -DPRINT_FORMAT_NO_WARNING
             -DSITARA
+            -DLLDP_ENABLED
         "
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
@@ -153,7 +154,7 @@
         </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="link">
         </file>
-        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263x/EXAMPLES_ENET_CPSW_TSN_GPTP.html"
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263x/EXAMPLES_ENET_CPSW_LLDP.html"
                 openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">

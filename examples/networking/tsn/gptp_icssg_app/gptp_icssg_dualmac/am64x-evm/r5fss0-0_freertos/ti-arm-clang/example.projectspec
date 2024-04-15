@@ -67,7 +67,7 @@
             -DENET_ENABLE_PER_ICSSG=1
             -DPRINT_FORMAT_NO_WARNING
             -DSITARA
-            -DDISABLE_UC_CLIENT
+            -DGPTP_ENABLED=1
         "
         linkerBuildOptions="
             -i${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
@@ -106,7 +106,7 @@
                 -lboard.am64x.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
-                -ltsn_combase-freertos.am64x.r5f.ti-arm-clang.debug.lib
+                -ltsn_icssg_combase-freertos.am64x.r5f.ti-arm-clang.debug.lib
                 -ltsn_unibase-freertos.am64x.r5f.ti-arm-clang.debug.lib
                 -ltsn_gptp-freertos.am64x.r5f.ti-arm-clang.debug.lib
                 -ltsn_uniconf-freertos.am64x.r5f.ti-arm-clang.debug.lib
@@ -127,7 +127,7 @@
                 -lboard.am64x.r5f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a
-                -ltsn_combase-freertos.am64x.r5f.ti-arm-clang.release.lib
+                -ltsn_icssg_combase-freertos.am64x.r5f.ti-arm-clang.release.lib
                 -ltsn_unibase-freertos.am64x.r5f.ti-arm-clang.release.lib
                 -ltsn_gptp-freertos.am64x.r5f.ti-arm-clang.release.lib
                 -ltsn_uniconf-freertos.am64x.r5f.ti-arm-clang.release.lib

@@ -95,7 +95,7 @@ static int32_t EnetApp_openDma(EnetApp_PerCtxt *perCtxt)
         EnetApp_GetDmaHandleInArgs     rxInArgs;
         EnetApp_GetRxDmaHandleOutArgs  rxChInfo;
         rxInArgs.notifyCb = EnetApp_rxIsrFxn;
-        rxInArgs.cbArg   = NULL;
+        rxInArgs.cbArg   = perCtxt;
         for(uint32_t flowNum = 0U; flowNum < perCtxt->nonPtpRxFlowNum; flowNum++)
         {
             EnetApp_getRxDmaHandle(perCtxt->nonPtpRxFlowId[flowNum],

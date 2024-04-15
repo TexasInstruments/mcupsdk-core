@@ -76,7 +76,7 @@ const libs_freertos_r5f = {
         "board.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "libc.a",
         "libsysbm.a",
-        "tsn_combase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "tsn_icssg_combase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "tsn_unibase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "tsn_gptp-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "tsn_uniconf-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
@@ -95,7 +95,7 @@ const defines_r5f = {
         "ENET_ENABLE_PER_ICSSG=1",
         'PRINT_FORMAT_NO_WARNING',
         'SITARA',
-        'DISABLE_UC_CLIENT', // Add this macro to disable uc_client which configure TAS.
+        'GPTP_ENABLED=1',
     ],
 };
 

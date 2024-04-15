@@ -12,7 +12,7 @@
 /* This is the heap size for malloc() API in NORTOS and FreeRTOS
  * This is also the heap used by pvPortMalloc in FreeRTOS
  */
---heap_size=1024
+--heap_size=16000
 -e_vectors  /* This is the entry of the application, _vector MUST be plabed starting address 0x0 */
 
 /* This is the size of stack when R5 is in IRQ mode
@@ -207,7 +207,7 @@ MEMORY
     /* when using multi-core application's i.e more than one R5F/M4F active, make sure
      * this memory does not overlap with other R5F's
      */
-    MSRAM     : ORIGIN = 0x70080000 , LENGTH = 0x17FFFF
+    MSRAM     : ORIGIN = 0x70080000 , LENGTH = 0x17C000
 
     /* This section can be used to put XIP section of the application in flash, make sure this does not overlap with
      * other CPUs. Also make sure to add a MPU entry for this section and mark it as cached and code executable

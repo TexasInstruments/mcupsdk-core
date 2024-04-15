@@ -125,6 +125,10 @@ const cflags = {
         "-Oz",
         "-flto",
     ],
+    debug: [
+        "-Oz",
+        "-flto",
+    ],
 };
 
 const deviceSpecific_cflags = {

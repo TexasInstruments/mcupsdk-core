@@ -1133,7 +1133,6 @@ static int32_t EnetTas_openDma(EnetTas_PerCtxt *perCtxt, uint32_t perCtxtIndex)
                 EnetAppUtils_assert(rxChInfo.sizeThreshEn == 0U);
                 EnetAppUtils_assert(rxChInfo.maxNumRxPkts >= (ENET_SYSCFG_TOTAL_NUM_RX_PKT/2U));
                 EnetAppUtils_assert(rxChInfo.chIdx == i);
-                EnetAppUtils_assert(rxChInfo.useDefaultFlow == true);
 
                 if (perCtxt->hRxCh[i] == NULL)
                 {

@@ -105,7 +105,7 @@ DEFINES_common := \
 	-DENET_ENABLE_PER_CPSW=1 \
 	-DPRINT_FORMAT_NO_WARNING \
 	-DSITARA \
-	-DDISABLE_UC_CLIENT \
+	-DGPTP_ENABLED=1 \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \

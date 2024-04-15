@@ -58,6 +58,7 @@ DEFINES_common := \
     -DSOC_AM273X \
     -DTSNPKGVERSION=\"1.1.3\" \
     -DPRINT_FORMAT_NO_WARNING \
+    -DENET_ENABLE_PER_CPSW=1 \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \

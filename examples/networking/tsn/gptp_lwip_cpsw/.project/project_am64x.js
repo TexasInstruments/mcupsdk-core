@@ -102,7 +102,7 @@ const defines_r5f = {
         "ENET_ENABLE_PER_CPSW=1",
         'PRINT_FORMAT_NO_WARNING',
         'SITARA',
-        'DISABLE_UC_CLIENT', // Add this macro to disable uc_client which configure TAS.
+        'GPTP_ENABLED=1',
     ],
 };
 
@@ -126,7 +126,7 @@ const lflags_r5f = {
 
 const lnkfiles = {
     common: [
-        "./linker.cmd",
+        "../linker.cmd",
     ]
 };
 
