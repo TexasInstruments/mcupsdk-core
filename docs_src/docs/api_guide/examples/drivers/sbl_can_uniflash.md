@@ -186,17 +186,19 @@ In this application, the CAN settings are:
     - **CAN Uniflash Python Script**
 
     - For sending the app-image default_sbl_can_uniflash_app.cfg can be editted with the path of the app-image of the desired application.
-    - cfg file contains only one command with arguments like --file, --operation and --flash-offset. For example,
-
+    - cfg file contains only one command with arguments like --file, --operation and --flash-offset. \n
+\if SOC_AM263X
         For AM263x, Default Flash Offset is at 0x80000.
         \code
         --file=C:/ti/mcu_plus_sdk_am263x_08_05_00_13/examples/drivers/ipc/ipc_rpmsg_echo/am263x-lp/system_freertos_nortos/ipc_rpmsg_echo_system.debug.appimage --operation=flash --flash-offset=0x80000
         \endcode
-
+\endif
+\if SOC_AM273X
         For AM273x, Default Flash Offset is at 0xA0000.
         \code
-        --file=C:/ti/mcu_plus_sdk_am263x_08_05_00_13/examples/drivers/ipc/ipc_rpmsg_echo/am273x-evm/system_freertos_nortos/ipc_rpmsg_echo_system.debug.appimage --operation=flash --flash-offset=0xA0000
+        --file=C:/ti/mcu_plus_sdk_am273x_08_05_00_13/examples/drivers/ipc/ipc_rpmsg_echo/am273x-evm/system_freertos_nortos/ipc_rpmsg_echo_system.debug.appimage --operation=flash --flash-offset=0xA0000
         \endcode
+\endif
     - The application image file is sent using `can_uniflash.py` python script:
 
         \code
