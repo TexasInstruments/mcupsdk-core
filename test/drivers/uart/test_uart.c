@@ -88,10 +88,11 @@ static void uart_echo_read_partial_test(void *args);
 static void test_printExitString(void *args);
 static void uart_echo_read_full_test_dmaMode(void *args);
 static void uart_echo_read_partial_external_loopback_full_test(void *args);
-static void uart_echo_read_external_loopback_full_test(void *args);
-static void uart_echo_read_autobaud_external_loopback_full_test(void *args);
-static void uart_echo_write_cancel_external_loopback_full_test(void *args);
-static void uart_echo_read_cancel_external_loopback_full_test(void *args);
+static void uart_external_loopback_full_test(void *args);
+static void uart_autobaud_external_loopback_full_test(void *args);
+static void uart_write_cancel_external_loopback_full_test(void *args);
+static void uart_read_cancel_external_loopback_full_test(void *args);
+static void uart_six_bit_char_length_external_loopback_full_test(void *args);
 
 void test_main(void *args)
 {
@@ -111,81 +112,77 @@ void test_main(void *args)
     RUN_TEST(uart_echo_read_partial_test, 1117, (void*)&testParams);
 #else
     test_uart_set_params(&testParams, 12291);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12291, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12291, (void*)&testParams);
     test_uart_set_params(&testParams, 12292);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12292, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12292, (void*)&testParams);
     test_uart_set_params(&testParams, 12293);
     RUN_TEST(uart_echo_read_partial_external_loopback_full_test, 12293, (void*)&testParams);
     test_uart_set_params(&testParams, 12294);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12294, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12294, (void*)&testParams);
     test_uart_set_params(&testParams, 12295);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12295, (void*)&testParams);
-    //test_uart_set_params(&testParams, 12297);
-    //RUN_TEST(uart_echo_read_external_loopback_full_test, 12297, (void*)&testParams);
-    //test_uart_set_params(&testParams, 12298);
-    //RUN_TEST(uart_echo_read_external_loopback_full_test, 12298, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12295, (void*)&testParams);
+    test_uart_set_params(&testParams, 12298);
+    RUN_TEST(uart_six_bit_char_length_external_loopback_full_test, 12298, (void*)&testParams);
     test_uart_set_params(&testParams, 12299);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12299, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12299, (void*)&testParams);
     test_uart_set_params(&testParams, 12300);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12300, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12300, (void*)&testParams);
     test_uart_set_params(&testParams, 12301);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12301, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12301, (void*)&testParams);
     test_uart_set_params(&testParams, 12302);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12302, (void*)&testParams);
-   // test_uart_set_params(&testParams, 12303);
-   // RUN_TEST(uart_echo_read_external_loopback_full_test, 12303, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12302, (void*)&testParams);
     test_uart_set_params(&testParams, 12304);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12304, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12304, (void*)&testParams);
     test_uart_set_params(&testParams, 12314);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12314, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12314, (void*)&testParams);
     test_uart_set_params(&testParams, 12315);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12315, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12315, (void*)&testParams);
     test_uart_set_params(&testParams, 12316);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12316, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12316, (void*)&testParams);
     test_uart_set_params(&testParams, 12317);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12317, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12317, (void*)&testParams);
     test_uart_set_params(&testParams, 12318);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12318, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12318, (void*)&testParams);
     test_uart_set_params(&testParams, 12319);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12319, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12319, (void*)&testParams);
     test_uart_set_params(&testParams, 12320);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12320, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12320, (void*)&testParams);
     test_uart_set_params(&testParams, 12321);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12321, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12321, (void*)&testParams);
     test_uart_set_params(&testParams, 12322);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12322, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12322, (void*)&testParams);
     test_uart_set_params(&testParams, 12323);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12323, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12323, (void*)&testParams);
     test_uart_set_params(&testParams, 12324);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12324, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12324, (void*)&testParams);
     test_uart_set_params(&testParams, 12325);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12325, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12325, (void*)&testParams);
     test_uart_set_params(&testParams, 12326);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12326, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12326, (void*)&testParams);
     test_uart_set_params(&testParams, 12327);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12327, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12327, (void*)&testParams);
     test_uart_set_params(&testParams, 12305);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12305, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12305, (void*)&testParams);
     test_uart_set_params(&testParams, 12306);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12306, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12306, (void*)&testParams);
     test_uart_set_params(&testParams, 12328);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12328, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12328, (void*)&testParams);
     test_uart_set_params(&testParams, 12329);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12329, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12329, (void*)&testParams);
     test_uart_set_params(&testParams, 12330);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12330, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12330, (void*)&testParams);
     test_uart_set_params(&testParams, 12331);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12331, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12331, (void*)&testParams);
     test_uart_set_params(&testParams, 12307);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12307, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12307, (void*)&testParams);
     test_uart_set_params(&testParams, 12308);
-    RUN_TEST(uart_echo_read_external_loopback_full_test, 12308, (void*)&testParams);
+    RUN_TEST(uart_external_loopback_full_test, 12308, (void*)&testParams);
     test_uart_set_params(&testParams, 12309);
-    RUN_TEST(uart_echo_read_autobaud_external_loopback_full_test, 12309, (void*)&testParams);
+    RUN_TEST(uart_autobaud_external_loopback_full_test, 12309, (void*)&testParams);
     test_uart_set_params(&testParams, 12602);
-    RUN_TEST(uart_echo_write_cancel_external_loopback_full_test, 12602, (void*)&testParams);
+    RUN_TEST(uart_write_cancel_external_loopback_full_test, 12602, (void*)&testParams);
     test_uart_set_params(&testParams, 12603);
-    RUN_TEST(uart_echo_read_cancel_external_loopback_full_test, 12603, (void*)&testParams);
+    RUN_TEST(uart_read_cancel_external_loopback_full_test, 12603, (void*)&testParams);
 #endif
     #if defined(SOC_AM64X) || defined(SOC_AM243X)
     test_uart_set_params(&testParams, 2514);
@@ -403,7 +400,7 @@ static void uart_echo_read_partial_test(void *args)
 }
 
 #if defined(SOC_AM263X)
-static void uart_echo_read_external_loopback_full_test(void *args)
+static void uart_external_loopback_full_test(void *args)
 {
     int32_t          transferOK, status;
     UART_Transaction trans;
@@ -446,6 +443,90 @@ static void uart_echo_read_external_loopback_full_test(void *args)
 
     trans.buf   = &gUartTxBuffer[0U];
     strncpy(trans.buf,"This is uart echo read FULL mode Test...\r\n", APP_UART_BUFSIZE);
+    trans.count = strlen(trans.buf);
+    transferOK = UART_write(gUartHandle[CONFIG_UART0], &trans);
+    APP_UART_ASSERT_ON_FAILURE(transferOK, trans);
+
+    if (uartParams->writeMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        /* Wait for write completion */
+        SemaphoreP_pend(&gUartWriteDoneSem, SystemP_WAIT_FOREVER);
+        DebugP_assert(strlen(trans.buf) == gNumBytesWritten);
+    }
+
+    trans.buf   = &gUartRxBuffer[0U];
+    trans.count = trans.count;
+    transferOK = UART_read(gUartHandle[CONFIG_UART1], &trans);
+    APP_UART_ASSERT_ON_FAILURE(transferOK, trans);
+
+    if (uartParams->readMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        /* Wait for read completion */
+        SemaphoreP_pend(&gUartReadDoneSem, SystemP_WAIT_FOREVER);
+        DebugP_assert(gNumBytesWritten == gNumBytesRead);
+    }
+
+    transferOK = memcmp(&gUartTxBuffer[0U], &gUartRxBuffer[0U], trans.count);
+    DebugP_assert(transferOK == 0U);
+
+    if (uartParams->writeMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        SemaphoreP_destruct(&gUartWriteDoneSem);
+    }
+    if (uartParams->readMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        SemaphoreP_destruct(&gUartReadDoneSem);
+    }
+
+    UART_close(uartHandle);
+    UART_close(uartHandle1);
+
+    return;
+}
+
+static void uart_six_bit_char_length_external_loopback_full_test(void *args)
+{
+    int32_t          transferOK, status;
+    UART_Transaction trans;
+    UART_Handle      uartHandle, uartHandle1;
+    UART_TestParams *testParams = (UART_TestParams*)args;
+    UART_TestParams  *testParams1 = (UART_TestParams*)args;
+    UART_Params     *uartParams = &(testParams->uartParams);
+    UART_Params     *uartParams1 = &(testParams1->uartParams);
+    uint32_t         baseAddr, baseAddr1;
+
+    UART_close(gUartHandle[CONFIG_UART0]);
+    UART_close(gUartHandle[CONFIG_UART1]);
+    uartHandle = UART_open(CONFIG_UART0, uartParams);
+    TEST_ASSERT_NOT_NULL(uartHandle);
+    uartParams1->intrNum = CSLR_R5FSS0_CORE0_INTR_UART1_IRQ;
+    uartHandle1 = UART_open(CONFIG_UART1, uartParams1);
+    TEST_ASSERT_NOT_NULL(uartHandle1);
+
+    if (uartParams->writeMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        status = SemaphoreP_constructBinary(&gUartWriteDoneSem, 0);
+        DebugP_assert(SystemP_SUCCESS == status);
+    }
+
+    if (uartParams->readMode == UART_TRANSFER_MODE_CALLBACK)
+    {
+        status = SemaphoreP_constructBinary(&gUartReadDoneSem, 0);
+        DebugP_assert(SystemP_SUCCESS == status);
+    }
+
+    baseAddr = UART_getBaseAddr(gUartHandle[CONFIG_UART0]);
+    DebugP_assert(baseAddr != 0U);
+    baseAddr1 = UART_getBaseAddr(gUartHandle[CONFIG_UART1]);
+    DebugP_assert(baseAddr1 != 0U);
+
+    UART_disableLoopbackMode(baseAddr);
+    UART_disableLoopbackMode(baseAddr1);
+
+    UART_Transaction_init(&trans);
+
+    trans.buf   = &gUartTxBuffer[0U];
+    strncpy(trans.buf,"123456789", APP_UART_BUFSIZE);
     trans.count = strlen(trans.buf);
     transferOK = UART_write(gUartHandle[CONFIG_UART0], &trans);
     APP_UART_ASSERT_ON_FAILURE(transferOK, trans);
@@ -565,7 +646,7 @@ static void uart_echo_read_partial_external_loopback_full_test(void *args)
     return;
 }
 
-static void uart_echo_read_autobaud_external_loopback_full_test(void *args)
+static void uart_autobaud_external_loopback_full_test(void *args)
 {
     int32_t          transferOK, status;
     UART_Transaction trans;
@@ -653,7 +734,7 @@ static void uart_echo_read_autobaud_external_loopback_full_test(void *args)
     return;
 }
 
-static void uart_echo_write_cancel_external_loopback_full_test(void *args)
+static void uart_write_cancel_external_loopback_full_test(void *args)
 {
     int32_t          transferOK, status;
     UART_Transaction trans;
@@ -739,7 +820,7 @@ static void uart_echo_write_cancel_external_loopback_full_test(void *args)
     return;
 }
 
-static void uart_echo_read_cancel_external_loopback_full_test(void *args)
+static void uart_read_cancel_external_loopback_full_test(void *args)
 {
     int32_t          transferOK, status;
     UART_Transaction trans;
@@ -953,11 +1034,6 @@ static void test_uart_set_params(UART_TestParams *testParams, uint32_t tcId)
             params->readMode = UART_TRANSFER_MODE_BLOCKING;
             params->writeMode = UART_TRANSFER_MODE_BLOCKING;
             break;
-        case 12297:
-            //AD:Review: Need to check this:
-            // for now we are testing len 7
-            params->dataLength = UART_LEN_5;
-            break;
         case 12298:
             params->dataLength =  UART_LEN_6;
             break;
@@ -972,14 +1048,6 @@ static void test_uart_set_params(UART_TestParams *testParams, uint32_t tcId)
             break;
         case 12302:
             params->stopBits =  UART_STOPBITS_2;
-            break;
-        case 12303:
-            //AD:Review: Need to check this:
-            // because this works only if length is 5(for the stop bit to be 1.5)
-            // and length 5bit is failing??
-            // for now we are testing len 7
-            params->dataLength = UART_LEN_5;
-            params->stopBits = UART_STOPBITS_1P5;
             break;
         case 12304:
             params->baudRate =  300;
