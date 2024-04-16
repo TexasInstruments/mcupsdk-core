@@ -153,10 +153,12 @@ ESM               | R5F             | NA                |  NORTOS | Tested in co
 RTI               | R5F             | NA                |  NORTOS | WINDOWSIZE_100_PERCENT, WINDOWSIZE_50_PERCENT ,Latency/Propagation timing error(early)(50% window),Latency/Propagation timing error(late)(50% window)                                     | -
 ECC               | R5F             | NA                |  NORTOS | ECC of MSS_L2, R5F TCM, MCAN, VIM, ICSSM, TPTC      | R5F Cache
 ECC Bus Safety    | R5F             | NA                |  NORTOS | AHB, AXI, TPTC                           | -
-CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode,Error Forcing Mode and Self Test Error Forcing Mode.                      | -
+CCM               | R5F             | NA                |  NORTOS | CCM Self Test Mode,Error Forcing Mode and Self Test Error Forcing Mode. TMU and RL2 are also validated                      | -
 R5F STC(LBIST), Static Register Read| R5F               | NA                |  NORTOS | STC of R5F, R5F CPU Static Register Read                                 |-
+TMU ROM Checksum  | R5F             | NA                |  NORTOS | ROM checksum for TMU                                                                         | -
+Time out Gasket(STOG)  | R5F             | NA                |  NORTOS | Timeout gasket feature                    | -
+Thermal Monitor(VTM)| R5F             | NA                |  NORTOS | Over, under and thershold temperature interrupts                   | -
 
-**Note**: This is Engineering Release for SDL. \n
 **Note**: SDL is validate only on ControlCard.
 
 ## Fixed Issues
