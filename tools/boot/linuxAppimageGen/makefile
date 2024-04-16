@@ -77,7 +77,7 @@ endif
 	@echo .
 	@echo Creating
 	$(MULTI_CORE_IMAGE_GEN) LE $(SBL_DEV_ID) $(LINUX_BOOTIMAGE_NAME) $(COMBINED_APPIMAGE_PARAMS) >> $(BOOTIMAGE_TEMP_OUT_FILE)
-	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(LINUX_BOOTIMAGE_NAME) --authtype 1 --key $(ROM_DEGENERATE_KEY) --output $(LINUX_BOOTIMAGE_NAME_HS_FS)
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(LINUX_BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(LINUX_BOOTIMAGE_NAME_HS_FS)
 ifeq ($(DEVICE_TYPE),HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED),no)
