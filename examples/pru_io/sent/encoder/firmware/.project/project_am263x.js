@@ -45,12 +45,6 @@ const templates_pru =
 const buildOptionCombos = [
     { device: device, cpu: "icssm-pru0", cgt: "ti-pru-cgt", board: "am263x-cc", os: "fw"},
 ];
-const hexBuildOptions = [
-    "--diag_wrap=off",
-    "--array",
-    "--array:name_prefix=PRUFirmware",
-    "-o=firmware_binary.h",
-];
 
 const cflags = {
     common: [
@@ -61,13 +55,22 @@ const cflags = {
 const lflags = {
     common: [
         "--entry_point=main",
-        "--disable_auto_rts",
     ],
 };
 
-let postBuildSteps = [
-    "$(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/firmware/encoder_pru_hexpru.cmd sent_encoder_pru_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out; ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe sent_encoder_pru_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.b00 sent_encoder_pru_bin.h SentencoderFirmwarepru 4; move sent_encoder_pru_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/example/firmware/sent_encoder_pru_bin.h ;"
-];
+function getmakefilePruPostBuildSteps(cpu, board)
+{
+    return  [
+        "$(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=SentencoderFirmwarepru -o sent_encoder_pru_bin.h sent_encoder_pru_fw_" + board + "_" + cpu + "_fw_ti-pru-cgt.out; $(SED) -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_encoder_pru_bin.h ; $(MOVE) sent_encoder_pru_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/example/firmware/sent_encoder_pru_bin.h"
+    ];
+}
+
+function getccsPruPostBuildSteps(cpu, board)
+{
+    return  [
+        "$(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru -o sent_encoder_pru_bin.h sent_encoder_pru_fw_" + board + "_" + cpu + "_fw_ti-pru-cgt.out; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_encoder_pru_bin.h ; if ${CCS_HOST_OS} == linux sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_encoder_pru_bin.h; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/mv sent_encoder_pru_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/example/firmware/sent_encoder_pru_bin.h; if ${CCS_HOST_OS} == linux mv sent_encoder_pru_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/encoder/example/firmware/sent_decoder_using_iep_capture_enhanced_serial_msg_pru0_bin.h"
+    ];
+}
 
 function getComponentProperty() {
     let property = {};
@@ -83,9 +86,6 @@ function getComponentProperty() {
     property.pru_linker_file = "linker";
     property.isSkipTopLevelBuild = true;
     property.skipUpdatingTirex = true;
-    property.enableHexTool = true;
-    property.hexBuildOptions = hexBuildOptions;
-    property.postBuildSteps = postBuildSteps;
 
     return property;
 }
@@ -103,6 +103,9 @@ function getComponentBuildProperty(buildOption) {
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
     build_property.projecspecFileAction = "link";
     build_property.skipMakefileCcsBootimageGen = true;
+    build_property.ccsPruPostBuildSteps = getccsPruPostBuildSteps(buildOption.cpu, buildOption.board);
+    build_property.makefilePruPostBuildSteps = getmakefilePruPostBuildSteps(buildOption.cpu, buildOption.board);
+
 
     return build_property;
 }

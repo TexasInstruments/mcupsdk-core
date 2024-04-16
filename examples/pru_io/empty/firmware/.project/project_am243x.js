@@ -60,15 +60,14 @@ const buildOptionCombos = [
     { device: device, cpu: "icssg0-rtupru0", cgt: "ti-pru-cgt", board: "am243x-lp", os: "fw"},
     { device: device, cpu: "icssg0-rtupru1", cgt: "ti-pru-cgt", board: "am243x-evm", os: "fw"},
     { device: device, cpu: "icssg0-rtupru1", cgt: "ti-pru-cgt", board: "am243x-lp", os: "fw"},
-    
+
     { device: device, cpu: "icssg0-txpru0", cgt: "ti-pru-cgt", board: "am243x-evm", os: "fw"},
     { device: device, cpu: "icssg0-txpru0", cgt: "ti-pru-cgt", board: "am243x-lp", os: "fw"},
     { device: device, cpu: "icssg0-txpru1", cgt: "ti-pru-cgt", board: "am243x-evm", os: "fw"},
     { device: device, cpu: "icssg0-txpru1", cgt: "ti-pru-cgt", board: "am243x-lp", os: "fw"},
 ];
 
-
-function getPostBuildSteps(cpu, board)
+function getmakefilePruPostBuildSteps(cpu, board)
 {
     let core = "PRU0"
 
@@ -94,7 +93,37 @@ function getPostBuildSteps(cpu, board)
     }
 
     return [
-        " $(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix="+ core + "Firmware  -o "+ core.toLocaleLowerCase() + "_load_bin.h " + "empty_" + board + "_" + cpu + "_fw_ti-pru-cgt.out; move "+ core.toLocaleLowerCase() + "_load_bin.h " + "${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/"+ board + "/" +core.toLocaleLowerCase() + "_load_bin.h;"
+        " $(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix="+ core + "Firmware  -o "+ core.toLocaleLowerCase() + "_load_bin.h " + "empty_" + board + "_" + cpu + "_fw_ti-pru-cgt.out; $(SED) -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' "+ core.toLocaleLowerCase() + "_load_bin.h ; $(MOVE) "+ core.toLocaleLowerCase() + "_load_bin.h " + "${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/"+ board + "/" +core.toLocaleLowerCase() + "_load_bin.h "
+    ];
+}
+
+function getccsPruPostBuildSteps(cpu, board)
+{
+    let core = "PRU0"
+
+    switch(cpu)
+    {
+        case "icssg0-txpru1":
+            core = "TXPRU1"
+            break;
+        case "icssg0-txpru0":
+            core = "TXPRU0"
+            break;
+        case "icssg0-rtupru1":
+            core = "RTUPRU1"
+            break;
+        case "icssg0-rtupru0":
+            core = "RTUPRU0"
+            break;
+        case "icssg0-pru1":
+            core = "PRU1"
+            break;
+        case "icssg0-pru0":
+            core = "PRU0"
+    }
+
+    return [
+        " $(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix="+ core + "Firmware  -o "+ core.toLocaleLowerCase() + "_load_bin.h " + "empty_" + board + "_" + cpu + "_fw_ti-pru-cgt.out; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' "+ core.toLocaleLowerCase() + "_load_bin.h ; if ${CCS_HOST_OS} == linux sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' "+ core.toLocaleLowerCase() + "_load_bin.h ;" + "if ${CCS_HOST_OS} == win32 move "+ core.toLocaleLowerCase() + "_load_bin.h " + "${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/"+ board + "/" +core.toLocaleLowerCase() + "_load_bin.h; if ${CCS_HOST_OS} == linux mv "+ core.toLocaleLowerCase() + "_load_bin.h " + "${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/"+ board + "/" +core.toLocaleLowerCase() + "_load_bin.h "
     ];
 }
 
@@ -128,7 +157,8 @@ function getComponentBuildProperty(buildOption) {
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
     build_property.projecspecFileAction = "copy";
     build_property.skipMakefileCcsBootimageGen = true;
-    build_property.postBuildSteps = getPostBuildSteps(buildOption.cpu, buildOption.board);
+    build_property.ccsPruPostBuildSteps = getccsPruPostBuildSteps(buildOption.cpu, buildOption.board);
+    build_property.makefilePruPostBuildSteps = getmakefilePruPostBuildSteps(buildOption.cpu, buildOption.board);
 
     return build_property;
 }

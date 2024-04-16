@@ -168,12 +168,12 @@ void pruicss_load_run_fw(void)
 
     /*Load firmware. Set buffer = write to Pru memory */
     if(PRUICSS_writeMemory(gPruIcss0Handle, PRUICSS_IRAM_PRU(PRUICSS_PRU0), 0,
-                                     (uint32_t *) SentDecoderFirmwarePru0,
-                                        sizeof(SentDecoderFirmwarePru0)))
+                                     (uint32_t *) SentDecoderFirmwarePru0_0,
+                                        sizeof(SentDecoderFirmwarePru0_0)))
     {
         if(PRUICSS_writeMemory(gPruIcss0Handle, PRUICSS_IRAM_PRU(PRUICSS_PRU1), 0,
-                                        (uint32_t *) SentDecoderFirmwarePru1,
-                                            sizeof(SentDecoderFirmwarePru1)))
+                                        (uint32_t *) SentDecoderFirmwarePru1_0,
+                                            sizeof(SentDecoderFirmwarePru1_0)))
         {
             /*Run firmware */
             PRUICSS_enableCore(gPruIcss0Handle, PRUICSS_PRU1);

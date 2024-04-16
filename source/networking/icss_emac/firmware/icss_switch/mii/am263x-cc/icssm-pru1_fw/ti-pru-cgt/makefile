@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 #   Required input arguments :
-#   CCS_PROJECT_DEBUG=${CWD}   Use this input argument to include files from external paths 
+#   CCS_PROJECT_DEBUG=${CWD}   Use this input argument to include files from external paths
 
 export MCU_PLUS_SDK_PATH?=$(abspath ../../../../../../../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
@@ -68,7 +68,7 @@ all: $(OBJS) $(CMD_SRCS)
 	@$(MAKE) --no-print-directory -Onone "switch_am263x-cc_icssm-pru1_fw_ti-pru-cgt.out"
 
 # Each subdirectory must supply rules for building sources it contributes
-$(OBJDIR)/%.obj %.obj: $(ASM_SRCS) 
+$(OBJDIR)/%.obj %.obj: $(ASM_SRCS)
 	@echo 'Building file: "$^"'
 	@echo 'Invoking: PRU Compiler'
 	"$(CGT_TI_PRU_PATH)/bin/clpru" -DPRU1 -DSLICE1 -v4 -al -ax --silicon_version=4 --diag_suppress=10063 --display_error_number --code_address_listing_unit=word -DTX_L2_ENABLED -DMII_TX_PIN_SWAP -v3 -g --diag_wrap=off --diag_warning=225 --hardware_mac=on --preproc_with_compile -DICSS_REV2 -DPRU -DHALF_DUPLEX_ENABLED -DICSS_SWITCH_BUILD -DTWO_PORT_CFG -DPTP --define=SOC_AM263X --include_path="$(SYSCFG_DIR)" --include_path="${CG_TOOL_ROOT}/include" --include_path="${MCU_PLUS_SDK_PATH}/source" --include_path="${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/common" --include_path="${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include" --include_path="${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F" --include_path="${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f" --include_path="${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_dual_mac" --include_path="${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch" --include_path="${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/source" --include_path="${MCU_PLUS_SDK_PATH}/test/unity/"  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little --preproc_with_compile --preproc_dependency="$(basename $(<F)).d_raw" $^
@@ -79,7 +79,7 @@ $(OBJDIR)/%.obj %.obj: $(ASM_SRCS)
 switch_am263x-cc_icssm-pru1_fw_ti-pru-cgt.out: $(OBJS) $(CMD_SRCS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: PRU Linker'
-	"$(CGT_TI_PRU_PATH)/bin/clpru" -DPRU1 -DSLICE1 -v4 -al -ax --silicon_version=4 --diag_suppress=10063 --display_error_number --code_address_listing_unit=word -DTX_L2_ENABLED -DMII_TX_PIN_SWAP -v3 -g --diag_wrap=off --diag_warning=225 --hardware_mac=on --preproc_with_compile -DICSS_REV2 -DPRU -DHALF_DUPLEX_ENABLED -DICSS_SWITCH_BUILD -DTWO_PORT_CFG -DPTP --define=SOC_AM263X  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"switch_am263x-cc_icssm-pru1_fw_ti-pru-cgt.map" --disable_auto_rts   --diag_wrap=off --display_error_number --warn_sections --xml_link_info="switch_am263x-cc_icssm-pru1_fw_ti-pru-cgt_linkInfo.xml" --disable_auto_rts -i${CG_TOOL_ROOT}/lib -i${CG_TOOL_ROOT}/include --stack_size=0 --heap_size=0 --disable_auto_rts -g --diag_wrap=off --diag_warning=225 --reread_libs --warn_sections --entry_point=micro_scheduler  --rom_model -o "switch_am263x-cc_icssm-pru1_fw_ti-pru-cgt.out" $^	
+	"$(CGT_TI_PRU_PATH)/bin/clpru" -DPRU1 -DSLICE1 -v4 -al -ax --silicon_version=4 --diag_suppress=10063 --display_error_number --code_address_listing_unit=word -DTX_L2_ENABLED -DMII_TX_PIN_SWAP -v3 -g --diag_wrap=off --diag_warning=225 --hardware_mac=on --preproc_with_compile -DICSS_REV2 -DPRU -DHALF_DUPLEX_ENABLED -DICSS_SWITCH_BUILD -DTWO_PORT_CFG -DPTP --define=SOC_AM263X  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little -z -m"switch_am263x-cc_icssm-pru1_fw_ti-pru-cgt.map" --disable_auto_rts   --diag_wrap=off --display_error_number --warn_sections --xml_link_info="switch_am263x-cc_icssm-pru1_fw_ti-pru-cgt_linkInfo.xml" --disable_auto_rts -i${CG_TOOL_ROOT}/lib -i${CG_TOOL_ROOT}/include --stack_size=0 --heap_size=0 --disable_auto_rts -g --diag_wrap=off --diag_warning=225 --reread_libs --warn_sections --entry_point=micro_scheduler  --rom_model -o "switch_am263x-cc_icssm-pru1_fw_ti-pru-cgt.out" $^
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build

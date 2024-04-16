@@ -10,6 +10,9 @@ ifeq ($(OS),Windows_NT)
     RMDIR=$(CYGWIN_PATH)/rm -rf
     RM=$(CYGWIN_PATH)/rm -f
     COPY=$(CYGWIN_PATH)/cp
+    MOVE=$(CYGWIN_PATH)/mv
+    CAT=$(CYGWIN_PATH)/cat
+    SED=$(CYGWIN_PATH)/sed
     TOUCH=$(CYGWIN_PATH)/touch
     PATHSEP=\\
     CHMOD=$(CYGWIN_PATH)/echo
@@ -27,6 +30,9 @@ else
         export RMDIR=rm -rf
         export RM=rm -f
         export COPY=cp
+        export MOVE=mv
+        export CAT=cat
+        export SED=sed
         export TOUCH=touch
         export PATHSEP=/
         export CHMOD=chmod

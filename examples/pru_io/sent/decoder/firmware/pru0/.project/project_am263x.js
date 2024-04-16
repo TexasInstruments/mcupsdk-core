@@ -5,7 +5,6 @@ let device = "am263x";
 const files = {
     common: [
         "main.asm",
-        "decoder_pru0_hexpru.cmd",
         "linker.cmd"
     ],
 };
@@ -61,14 +60,45 @@ const cflags = {
 
 const lflags = {
     common: [
-        "--entry_point=main",
-        // "--disable_auto_rts",
+        "--entry_point=main"
     ],
 };
 
-let postBuildSteps = [
-    "$(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/firmware/pru0/decoder_pru0_hexpru.cmd sent_decoder_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out; ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe sent_decoder_pru0_fw_am263x-cc_icssm-pru0_fw_ti-pru-cgt.b00 sent_decoder_pru0_bin.h SentDecoderFirmwarePru0 4; move sent_decoder_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/example/firmware/sent_decoder_pru0_bin.h ;"
-];
+function getmakefilePruPostBuildSteps(cpu, board)
+{
+    let core = "pru0"
+
+    switch(cpu)
+    {
+        case "icssm-pru1":
+            core = "pru1"
+            break;
+        case "icssm-pru0":
+            core = "pru0"
+    }
+
+    return  [
+        "$(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru"+core[3]+" -o sent_decoder_"+core+"_bin.h sent_decoder_"+core+"_fw_" + board + "_" + cpu + "_fw_ti-pru-cgt.out; $(SED) -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_"+core+"_bin.h ; $(MOVE) sent_decoder_"+core+"_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/example/firmware/sent_decoder_"+core+"_bin.h"
+    ];
+}
+
+function getccsPruPostBuildSteps(cpu, board)
+{
+    let core = "pru0"
+
+    switch(cpu)
+    {
+        case "icssm-pru1":
+            core = "pru1"
+            break;
+        case "icssm-pru0":
+            core = "pru0"
+    }
+
+    return  [
+        "$(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru"+core[3]+" -o sent_decoder_"+core+"_bin.h sent_decoder_"+core+"_fw_" + board + "_" + cpu + "_fw_ti-pru-cgt.out; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_"+core+"_bin.h ; if ${CCS_HOST_OS} == linux sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_"+core+"_bin.h; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/mv sent_decoder_"+core+"_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/example/firmware/sent_decoder_"+core+"_bin.h; if ${CCS_HOST_OS} == linux mv sent_decoder_"+core+"_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder/example/firmware/sent_decoder_"+core+"_bin.h"
+    ];
+}
 
 function getComponentProperty() {
     let property = {};
@@ -84,9 +114,6 @@ function getComponentProperty() {
     property.pru_linker_file = "linker";
     property.isSkipTopLevelBuild = true;
     property.skipUpdatingTirex = true;
-    property.enableHexTool = true;
-    property.hexBuildOptions = hexBuildOptions;
-    property.postBuildSteps = postBuildSteps;
 
     return property;
 }
@@ -104,7 +131,10 @@ function getComponentBuildProperty(buildOption) {
     build_property.projecspecFileAction = "link";
     build_property.skipMakefileCcsBootimageGen = true;
     build_property.templates = templates_pru;
-    
+    build_property.ccsPruPostBuildSteps = getccsPruPostBuildSteps(buildOption.cpu, buildOption.board);
+    build_property.makefilePruPostBuildSteps = getmakefilePruPostBuildSteps(buildOption.cpu, buildOption.board);
+
+
     return build_property;
 }
 

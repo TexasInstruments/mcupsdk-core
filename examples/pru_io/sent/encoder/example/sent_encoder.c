@@ -204,8 +204,8 @@ void pruicss_load_run_fw(void)
 
     /*Load firmware. Set buffer = write to Pru memory */
     if(PRUICSS_writeMemory(gPruIcss0Handle, PRUICSS_IRAM_PRU(PRUICSS_PRU0), 0,
-                                     (uint32_t *) SentencoderFirmwarepru,
-                                        sizeof(SentencoderFirmwarepru)))
+                                     (uint32_t *) SentencoderFirmwarepru_0,
+                                        sizeof(SentencoderFirmwarepru_0)))
     {
             /*Run firmware */
         PRUICSS_enableCore(gPruIcss0Handle, PRUICSS_PRU0);
@@ -256,7 +256,7 @@ void display_menu()
     DebugP_log("\r\n| 2 : Send 16 messages with 1 short serial message                             |");
     DebugP_log("\r\n| 3 : Send 16 messages with 1 short serial message n times                     |");
     DebugP_log("\r\n| 4 : Send 18 messages with 1 enhanced serial message                          |");
-    DebugP_log("\r\n| 5 : Send 18 messages with 1 enhanced serial message n times                  |");    
+    DebugP_log("\r\n| 5 : Send 18 messages with 1 enhanced serial message n times                  |");
     DebugP_log("\r\n| 6 : Exit application                                                         |");
     DebugP_log("\r\n|------------------------------------------------------------------------------|\n");
     DebugP_log("\r\n| Enter value: ");
@@ -277,7 +277,7 @@ void get_command(uint32_t *cmd, uint32_t *count)
     {
         *cmd = 0;
         DebugP_log("\r\n| WARNING: invalid command, 0 will be selected\n");
-    }   
+    }
 
     if(*cmd == SENT_CMD_MULTIPLE_FRAMES || *cmd == SENT_CMD_MULTIPLE_SHORT_SERIAL_MESSAGES || *cmd == SENT_CMD_MULTIPLE_ENHANCED_SERIAL_MESSAGES)
     {
@@ -287,7 +287,7 @@ void get_command(uint32_t *cmd, uint32_t *count)
         {
             *count = 1;
             DebugP_log("\r\n| WARNING: invalid count, 1 will be selected\n");
-        } 
+        }
     }
 }
 
@@ -300,7 +300,7 @@ void encoder_main(void *args)
     uint32_t            cmd;
     uint32_t            count;
     uint32_t            loop;
-    
+
     Drivers_open();
     status = Board_driversOpen();
     DebugP_assert(SystemP_SUCCESS == status);
@@ -352,7 +352,7 @@ void encoder_main(void *args)
 
             DebugP_log("\n\r%d SENT Frame(s) transmitted\n\r", count);
             total_frames_tx += count ;
-        }   
+        }
         else if((cmd == SENT_CMD_SINGLE_SHORT_SERIAL_MESSAGE) || (cmd == SENT_CMD_MULTIPLE_SHORT_SERIAL_MESSAGES))
         {
 
@@ -374,7 +374,7 @@ void encoder_main(void *args)
 
             DebugP_log("\n\r%d SENT Frames transmitted\n\r", count*SHORT_SERIAL_MSG_LENGTH);
             total_frames_tx += count*SHORT_SERIAL_MSG_LENGTH;
-        }         
+        }
         else if((cmd == SENT_CMD_SINGLE_ENHANCED_SERIAL_MESSAGE) || (cmd == SENT_CMD_MULTIPLE_ENHANCED_SERIAL_MESSAGES))
         {
 
@@ -396,7 +396,7 @@ void encoder_main(void *args)
 
             DebugP_log("\n\r%d SENT Frames transmitted\n\r", count*ENHANCED_SERIAL_MSG_LENGTH);
             total_frames_tx += count*ENHANCED_SERIAL_MSG_LENGTH;
-        }             
+        }
         else if(cmd == SENT_CMD_EXIT_APP)
         {
             DebugP_log("\n\rExiting Application\n\r");

@@ -172,7 +172,7 @@
         % let projectPath = `${obj.relpath}/${obj.board}/${obj.cpu}_${obj.os}/${obj.cgt}`;
         % if(args.project["defaultPruPostBuildSteps"]) {
         postBuildStep="
-            -$(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=PRUFirmware  -o pru_load_bin.h `projectName`.out
+            -$(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=PRUFirmware  -o pru_load_bin.h `projectName`.out; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' pru_load_bin.h ; if ${CCS_HOST_OS} == linux sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' pru_load_bin.h ;
         "
         % }
         % if("postBuildSteps" in args.project) {
@@ -183,6 +183,14 @@
         % }
         "
         % } else if (args.project.cpu.includes("pru")) {
+        % if("ccsPruPostBuildSteps" in args.project) {
+        postBuildStep="
+        % steps = args.project.ccsPruPostBuildSteps;
+        % for (let step of steps) {
+            `step`
+        % }
+        "
+        % }
         % } else {
         postBuildStep="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_ccs_bootimage_gen OUTNAME=${BuildArtifactFileBaseName} PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE} DEVICE=`args.project.device`"
         % }
