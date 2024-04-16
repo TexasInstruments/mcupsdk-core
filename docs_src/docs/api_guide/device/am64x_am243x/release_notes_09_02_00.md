@@ -200,6 +200,7 @@ MTOG      | M4F            | NO
 POK       | M4F, R5F       | NO
 ECC       | M4F, R5F       | NO
 LBIST     | M4F            | NO
+ROM Checksum| R5F          | NO
 \endcond
 
 ### Board Device Drivers
@@ -306,6 +307,22 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 07.03.00 onwards
     <td> AM64x, AM243x
     <td> PLLs which had REF_DIV greater than 1 were updated to be 1
+</tr>
+<tr>
+    <td> PROC_SDL-6445
+    <td> ECC error injection test fails for VTM aggregator from R5F domain.
+    <td> SDL
+    <td> 9.2.0 onwards
+    <td> AM64x, AM243x
+    <td> Test passes now
+</tr>
+<tr>
+    <td> PROC_SDL-7048
+    <td> DCC: SDL_DCC_getStatus() does not return correct status of DONE and ERR pending interrupts
+    <td> SDL
+    <td> 9.2.0 onwards
+    <td> AM64x, AM243x
+    <td> Correct status of pending interrupts returned now
 </tr>
 </table>
 
@@ -474,14 +491,6 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> 8.6.0
     <td> AM64x, AM243x
     <td> -
-</tr>
-<tr>
-    <td> PROC_SDL-6445
-    <td> ECC error injection test fails for VTM aggregator from R5F domain.
-    <td> SDL
-    <td> 8.6.0
-    <td> AM64x, AM243x
-    <td> For VTM ECC aggregator, use M4F for error injection.
 </tr>
 <tr>
     <td> PINDSW-6452
