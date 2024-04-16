@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @versions {"tool":"1.20.0+3587"}
  */
 
 /**
@@ -72,6 +72,7 @@ debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.intrEnable       = "DISABLE";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -126,7 +127,7 @@ region1.memory_region[3].size               = 0x100;
 region1.memory_region[4].$name              = "MSRAM_0";
 region1.memory_region[4].auto               = false;
 region1.memory_region[4].manualStartAddress = 0x70002100;
-region1.memory_region[4].size               = 0x33F00;
+region1.memory_region[4].size               = 0x3DF00;
 region1.memory_region[5].auto               = false;
 region1.memory_region[5].manualStartAddress = 0x70180000;
 region1.memory_region[5].size               = 0x80000;
@@ -134,7 +135,7 @@ region1.memory_region[5].$name              = "MSRAM_2";
 region1.memory_region[6].$name              = "MSRAM_HSMRT";
 region1.memory_region[6].auto               = false;
 region1.memory_region[6].size               = 0x40000;
-region1.memory_region[6].manualStartAddress = 0x70036000;
+region1.memory_region[6].manualStartAddress = 0x70040000;
 region1.memory_region[7].type               = "CUSTOM";
 region1.memory_region[7].$name              = "MAILBOX_HSM";
 region1.memory_region[7].auto               = false;
