@@ -267,6 +267,25 @@ int32_t SDL_ESM_clrNError(SDL_ESM_Inst instance);
 int32_t SDL_ESM_setNError(SDL_ESM_Inst instance);
 
 /** ============================================================================
+ * \brief   This API is use to set error pin out mode(LEVEL or PWM).
+ *          This API must be called after the below API- #SDL_ESM_init
+ *
+ *
+ *
+ * \param   instance        ESM Instance.
+ *
+ * \param   pinOutMode      enum value to select error pin out mode.
+ *                          Refer enum #esmErrOutMode_t.
+ *
+ * \return                  SDL_PASS - API success
+ *                          SDL_EBADARGS  - Instance is not valid.
+ *                          SDL_EFAIL     - Output (LVL or PWM) is not changed.
+ *
+ *
+ */
+int32_t SDL_ESM_setPinOutMode(SDL_ESM_Inst instance, esmErrOutMode_t pinOutMode);
+
+/** ============================================================================
  *
  * \brief  There are modules within SDL which will generate ESM errors
  *         intentionally in the course of running self-tests. The ECC module is

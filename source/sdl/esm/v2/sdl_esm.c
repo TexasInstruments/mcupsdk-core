@@ -130,6 +130,8 @@ int32_t SDL_ESM_getNErrorStatus(SDL_ESM_Inst instance, uint32_t *pStatus)
                 pStaticRegs->PIN_CTRL      = esmRegs->PIN_CTRL;
                 pStaticRegs->PIN_CNTR      = esmRegs->PIN_CNTR;
                 pStaticRegs->PIN_CNTR_PRE  = esmRegs->PIN_CNTR_PRE;
+                pStaticRegs->PWMH_PIN_CNTR_PRE          = esmRegs->PWMH_PIN_CNTR_PRE;
+                pStaticRegs->PWML_PIN_CNTR_PRE          = esmRegs->PWML_PIN_CNTR_PRE;
 
                 /*It reads Error group Register of ESM instances*/
 
@@ -444,6 +446,9 @@ static SDL_Result ESM_init (const SDL_ESM_Inst esmInstType,
         /* ESM reset and configure */
         (void)SDL_ESM_reset(esmInstBaseAddr);
 
+        /* Set the Critical Priority Interrupt Delay Counter  */
+        (void)SDL_ESM_setCriticalIntrDelay(esmInstBaseAddr, esmInitConfig->criticalInterruptDelayCounter);
+
         /* Enable interrupt for all events from init configuration*/
         for(i=((uint32_t)NULL); i <= (esmMaxNumevents/BITS_PER_WORD); i++)
         {
@@ -484,6 +489,19 @@ static SDL_Result ESM_init (const SDL_ESM_Inst esmInstType,
 
                 (void)SDL_ESM_getIntrStatus(esmInstBaseAddr, intNum, &intStatus);
 
+                /* Depending on the bitmap configuration enable critical interrupt */
+                if(((esmInitConfig->enableCriticalBitmap[i]) & (((uint32_t)MASK_BIT)<<j)) != 0u)
+                {
+                    /* Enable Critical interrupt and verifiy if interrupt status is enabled */
+                    (void)SDL_ESM_enableCriticalIntr(esmInstBaseAddr, intNum);
+
+                    (void)SDL_ESM_isEnableCriticalIntr(esmInstBaseAddr, intNum, &intStatus);
+
+                    if (intStatus != ((uint32_t)STATUS_NUM))
+                    {
+                        SDLRet = SDL_EFAIL;
+                    }
+                }
 
                 /* Depending on the bitmap configuration enable interrupt and set priority level */
                 if(((esmInitConfig->enableBitmap[i]) & (((uint32_t)MASK_BIT)<<j)) != 0u)
@@ -498,20 +516,6 @@ static SDL_Result ESM_init (const SDL_ESM_Inst esmInstType,
                     {
                         SDLRet = SDL_EFAIL;
                     }
-
-                    /* Enable Critical interrupt and verifiy if interrupt status is enabled */
-
-                    (void)SDL_ESM_enableCriticalIntr(esmInstBaseAddr, intNum);
-
-                    (void)SDL_ESM_isEnableCriticalIntr(esmInstBaseAddr, intNum, &intStatus);
-
-                    if (intStatus != ((uint32_t)STATUS_NUM))
-                    {
-                        SDLRet = SDL_EFAIL;
-                    }
-
-                    /* Set the Critical Priority Interrupt Delay Counter  */
-                    (void)SDL_ESM_setCriticalIntrDelay(esmInstBaseAddr, esmInitConfig->criticalInterruptDelayCounter);
 
                     /* Set interrupt priority level and verifiy if priority level is set */
                     if (SDLRet == SDL_PASS)
@@ -740,4 +744,81 @@ void SDL_ESM_enableESMWarmReset(void)
     kickAddr = (volatile uint32_t *) (baseAddr + SDL_TOP_RCM_LOCK0_KICK1);
     SDL_REG32_WR(kickAddr, KICK_LOCK_VAL);      /* KICK 1 */
 
+}
+
+/**
+ * Design: PROC_SDL-7376
+ */
+int32_t SDL_ESM_setPinOutMode(SDL_ESM_Inst instance, esmErrOutMode_t pinOutMode)
+{
+    int32_t    retVal = SDL_EBADARGS;
+    int32_t    sdlRet;
+    uint32_t   intStatus;
+    uint32_t   baseAddr;
+    uint32_t   pinOutVal;
+
+    if (((instance != SDL_ESM_INSTANCE_MAX) && (SDL_ESM_getBaseAddr(instance, &baseAddr) == ((bool)true))))
+    {
+        /* In SDL_ESM_init API, global interrupt are enabled so here
+           it should get disabled before change outPut mode.
+        */
+        /* Disable global interrupt */
+        sdlRet = SDL_ESM_disableGlobalIntr(baseAddr);
+
+        if (sdlRet == SDL_PASS)
+        {
+            if (pinOutMode == SDL_ESM_PWM_PINOUT)
+            {
+                /* Enable PWM error Output */
+                HW_WR_FIELD32(baseAddr + SDL_ESM_PIN_CTRL, SDL_ESM_PIN_CTRL_PWM_EN, SDL_ESM_PWM_PINOUT);
+                /* Verify PWM error Output */
+                pinOutVal = HW_RD_FIELD32(baseAddr + SDL_ESM_PIN_CTRL, SDL_ESM_PIN_CTRL_PWM_EN);
+
+                if (pinOutVal == SDL_ESM_PWM_PINOUT)
+                {
+                    retVal = SDL_PASS;
+                }
+            }
+            else if(pinOutMode == SDL_ESM_LVL_PINOUT)
+            {
+                /* Enable LVL error Output */
+                HW_WR_FIELD32(baseAddr + SDL_ESM_PIN_CTRL, SDL_ESM_PIN_CTRL_PWM_EN, SDL_ESM_LVL_PINOUT);
+                /* Verify PWM error Output */
+                pinOutVal = HW_RD_FIELD32(baseAddr + SDL_ESM_PIN_CTRL, SDL_ESM_PIN_CTRL_PWM_EN);
+
+                if (pinOutVal == SDL_ESM_LVL_PINOUT)
+                {
+                    retVal = SDL_PASS;
+                }
+            }
+            else
+            {
+                /* For MISRA C Compliance */
+            }
+            /* global interrupt are disabled, enable again global interrupt */
+            sdlRet = SDL_ESM_enableGlobalIntr(baseAddr);
+
+            if (sdlRet == SDL_PASS)
+            {
+                sdlRet = SDL_ESM_getGlobalIntrEnabledStatus(baseAddr, &intStatus);
+            }
+            if (sdlRet == SDL_PASS)
+            {
+                if (intStatus != SDL_ESM_EN_KEY_ENBALE_VAL)
+                {
+                    sdlRet = SDL_EFAIL;
+                }
+            }
+            if (sdlRet != SDL_PASS)
+            {
+                retVal = SDL_EFAIL;
+            }
+        }
+        else
+        {
+            retVal = SDL_EFAIL;
+        }
+    }
+
+    return (retVal);
 }

@@ -46,9 +46,16 @@
 #include <string.h>
 #include <stdio.h>
 #include <sdl/include/sdl_types.h>
-#include <sdl/esm/v0/sdl_esm.h>
 #include <sdl/include/hw_types.h>
+#if defined (SOC_AM263X)
+#include <sdl/esm/v0/sdl_esm.h>
 #include <sdl/esm/v0/v0_0/sdl_esm_priv.h>
+#endif
+
+#if defined (SOC_AM263PX)
+#include <sdl/esm/v2/sdl_esm.h>
+#include <sdl/esm/v2/v2_0/sdl_esm_priv.h>
+#endif
 
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"

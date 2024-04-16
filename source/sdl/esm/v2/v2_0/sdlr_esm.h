@@ -65,10 +65,13 @@ typedef struct {
     volatile uint32_t PIN_EN_SET;                /* Level Error Interrupt Pin Influence Set Register */
     volatile uint32_t PIN_EN_CLR;                /* Level Error Interrupt Pin Influence Clear Register */
     volatile uint8_t  Resv_32[4];                /* 0x1C is reserved */
-    volatile uint8_t  Resv_16120[2015];          /* 0x20-0x7FF is reserved */
-    volatile uint32_t CRI_EN_SET;                /* Critical Priority Interrupt Influence Set Register */
-    volatile uint32_t CRI_EN_CLR;                /* Critical Priority Interrupt Influence Clear Register */
 } SDL_esmRegs_ERR_GRP;
+
+typedef struct {
+    volatile uint32_t CRI_EN_SET;               /* Level Critical Priority Interrupt Enabled Clear Register */
+    volatile uint32_t CRI_EN_CLR;               /* Level Critical Priority Interrupt Enabled Clear Register */
+    volatile uint8_t  Resv_32[24];
+} SDL_esmRegs_ERR_EXT_GRP;
 
 
 typedef struct {
@@ -90,8 +93,13 @@ typedef struct {
     volatile uint32_t PIN_STS;                   /* Error Pin Status Register */
     volatile uint32_t PIN_CNTR;                  /* Error Counter Value Register */
     volatile uint32_t PIN_CNTR_PRE;              /* Error Counter Value Pre-Load Register */
-    volatile uint8_t  Resv_1024[944];
+    volatile uint32_t PWMH_PIN_CNTR;             /* Error PWM High Counter Value Register */
+    volatile uint32_t PWMH_PIN_CNTR_PRE;         /* Error PWM High Counter Value Pre-Load Register */
+    volatile uint32_t PWML_PIN_CNTR;             /* Error PWM Low Counter Value Register */
+    volatile uint32_t PWML_PIN_CNTR_PRE;         /* Error PWM Low Counter Value Pre-Load Register */
+    volatile uint8_t  Resv_1024[928];
     SDL_esmRegs_ERR_GRP ERR_GRP[32];
+    SDL_esmRegs_ERR_EXT_GRP ERR_EXT_GRP[32];
 } SDL_esmRegs;
 
 
@@ -116,10 +124,10 @@ typedef struct {
 #define SDL_ESM_PIN_STS                                                        (0x00000044U)
 #define SDL_ESM_PIN_CNTR                                                       (0x00000048U)
 #define SDL_ESM_PIN_CNTR_PRE                                                   (0x0000004CU)
-#define SDL_ESM_PIN_PWM_HIGH_CNTR                                              (0x00000050U)
-#define SDL_ESM_PIN_PWM_HIGH_CNTR_PRE                                          (0x00000054U)
-#define SDL_ESM_PIN_PWM_LOW_CNTR                                               (0x00000058U)
-#define SDL_ESM_PIN_PWM_LOW_CNTR_PRE                                           (0x0000005CU)
+#define SDL_ESM_PWMH_PIN_CNTR                                                  (0x00000050U)
+#define SDL_ESM_PWMH_PIN_CNTR_PRE                                              (0x00000054U)
+#define SDL_ESM_PWML_PIN_CNTR                                                  (0x00000058U)
+#define SDL_ESM_PWML_PIN_CNTR_PRE                                              (0x0000005CU)
 #define SDL_ESM_CRITICAL_PRI_INT_DELAY_CNTR                                    (0x00000060U)
 #define SDL_ESM_CRITICAL_PRI_INT_DELAY_CNTR_PRE                                (0x00000064U)
 #define SDL_ESM_ERR_GRP_RAW(ERR_GRP)                                           (0x00000400U+((ERR_GRP)*0x20U))
@@ -302,6 +310,10 @@ typedef struct {
 #define SDL_ESM_PIN_CTRL_KEY_MASK                                              (0x0000000FU)
 #define SDL_ESM_PIN_CTRL_KEY_SHIFT                                             (0x00000000U)
 #define SDL_ESM_PIN_CTRL_KEY_MAX                                               (0x0000000FU)
+
+#define SDL_ESM_PIN_CTRL_PWM_EN_MASK                                           (0x000000F0U)
+#define SDL_ESM_PIN_CTRL_PWM_EN_SHIFT                                          (0x00000004U)
+#define SDL_ESM_PIN_CTRL_PWM_EN_MAX                                            (0x0000000FU)
 
 /* PIN_STS */
 

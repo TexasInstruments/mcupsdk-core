@@ -46,10 +46,20 @@
 #include <stdio.h>
 #include <kernel/dpl/ClockP.h>
 #include <sdl/include/sdl_types.h>
+#if defined (SOC_AM263X)
 #include <sdl/esm/v0/v0_0/sdl_ip_esm.h>
 #include <sdl/esm/v0/v0_0/sdl_esm_priv.h>
 #include <sdl/esm/v0/esm.h>
 #include <sdl/esm/v0/sdl_esm.h>
+#endif
+
+#if defined (SOC_AM263PX)
+#include <sdl/esm/v2/v2_0/sdl_ip_esm.h>
+#include <sdl/esm/v2/v2_0/sdl_esm_priv.h>
+#include <sdl/esm/v2/esm.h>
+#include <sdl/esm/v2/sdl_esm.h>
+#endif
+
 #define BITS_PER_WORD (32u)
 
 #if defined (SOC_AM64X)

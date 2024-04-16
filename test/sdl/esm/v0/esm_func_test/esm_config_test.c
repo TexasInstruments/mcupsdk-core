@@ -234,7 +234,7 @@ int32_t sdl_config_test(void)
 
 return retVal;
 }
-#if defined (SOC_AM263X)
+
 int32_t sdl_config_pwm_test(void)
 {
     /* Declarations of variables */
@@ -292,4 +292,4 @@ int32_t sdl_config_pwm_test(void)
 
 return retVal;
 }
-#endif
+
