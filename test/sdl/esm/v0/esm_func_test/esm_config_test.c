@@ -58,19 +58,16 @@ SDL_ESM_config SDTF_esmInitConfig_MAIN =
 SDL_ESM_config SDTF_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
-    .enableBitmap = {0xffffffffu, 0xffffffffu, 0x1ffbff, 0x00000000u,
+    .enableBitmap = {0x01E00000u, 0x00000000u, 0x00000000, 0x00000000u,
                 },
-     /**< All events enable: except clkstop events for unused clocks
-      *   and PCIE events */
+     /**< Only DCC events enable:**/
 	  /* CCM_1_SELFTEST_ERR and _R5FSS1_COMPARE_ERR_PULSE_0 */
-    .priorityBitmap = {0xffffffffu, 0xffffffffu, 0x1ffbff, 0x00000000u,
+    .priorityBitmap = {0x01E00000u, 0x00000000u, 0x00000000, 0x00000000u,
                         },
-    /**< All events high priority: except clkstop events for unused clocks
-     *   and PCIE events */
-    .errorpinBitmap = {0xffffffffu, 0xffffffffu, 0x1ffbff, 0x00000000u,
+    /**< DCC events high priority:**/
+    .errorpinBitmap = {0x01E00000u, 0x00000000u, 0x00000000, 0x00000000u,
                       },
-    /**< All events high priority: except clkstop for unused clocks
-     *   and PCIE events */
+    /**< All events high priority:**/
 };
 #endif
 
