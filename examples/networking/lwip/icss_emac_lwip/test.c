@@ -677,6 +677,11 @@ main_loop(void * a0)
   netconn_thread_init();
 #endif
 
+  /* Enable iperf example for iperf test by default */
+  sys_lock_tcpip_core();
+  lwiperf_example_init();
+  sys_unlock_tcpip_core();
+
   /* MAIN LOOP for driver update (and timers if NO_SYS) */
   while (!LWIP_EXAMPLE_APP_ABORT()) {
 #if NO_SYS
