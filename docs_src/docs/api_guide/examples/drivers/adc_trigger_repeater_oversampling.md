@@ -13,7 +13,7 @@
 This example configures ADC for oversampling using trigger repeater block. The ePWM0 is configured to periodically trigger the ADC1_AIN0 and the trigger repeater module is configured to generate 4 repeated pulses. Post-processing block will take the repeated pulses, increment PPB conversion count and generates an oversampling interrupt (OSINT1) which triggers a CPU interrupt. The accumulated samples will be stored in PPB SUM register.
 
 \imageStyle{adc_trigger_repeater_oversampling.png,width:50%}
-\image html ADC_trigger_repeater_oversampling.png "ADC Tigger Repeater Oversampling"
+\image html adc_trigger_repeater_oversampling.png "ADC Tigger Repeater Oversampling"
 
 ## ADC Configurations
 1. SOC0 is triggered by EPWMSOCA. Sample window is set at 16

@@ -13,7 +13,7 @@
  This example configures ADC for undersampling using trigger repeater block. The ePWM0 is configured to periodically trigger the trigger repeater module on ADC1 for conversion of inputs on ADC1_AIN0. The trigger repeater module is condifured to generate 1 pulse out of 4 pulses.
 
 \imageStyle{adc_trigger_repeater_undersampling.png,width:50%}
-\image html ADC_trigger_repeater_undersampling.png "ADC Tigger Repeater Undersampling"
+\image html adc_trigger_repeater_undersampling.png "ADC Tigger Repeater Undersampling"
 
 ## ADC Configurations
 1. Trigger repeater module on ADC1 is triggered by EPWMSOCA
