@@ -174,3 +174,7 @@ ICSS-EMAC is dependent on the Application/Transport layer for proper functioning
 ## API
 
 \ref NETWORKING_ICSS_EMAC_MODULE
+
+## Dual EMAC and Switch Firmwares
+
+\subpage DUAL_EMAC_AND_SWITCH

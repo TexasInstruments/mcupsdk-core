@@ -66,6 +66,15 @@ Ethernet Low-Level Driver (\ref ENET_LLD) is a driver that aims at providing the
 
 \endcond
 
+\cond SOC_AM263X || SOC_AM263PX
+### ICSS-EMAC Driver
+ICSS-EMAC (Industrial Communications Subsystem Ethernet Media Access Controller) driver provide APIs to transmit and receive packets with a firmware based MAC and Ethernet Switch that has been implemented on PRUICSS cores.
+- \subpage ICSS_EMAC describes the driver features and debugging guide.
+- \ref DUAL_EMAC_AND_SWITCH describes the firmware features supported.
+- \ref EXAMPLES_ICSS_EMAC_LWIP is ICSS-EMAC application using the LwIP networking stack.
+
+\endcond
+
 \cond SOC_AM273X || SOC_AWR294X
 ## Overview
 Advances in automated factories and smart vehicles require advanced networking capabilities, real-time processing and more advanced motor-control topologies. TI Networking solution packaged with the SDK provide a rapidly growing need for Sitara MCU to outpace traditional MCUs and deliver processor-like capabilities. Networking is a broad terms used to cover Ethernet (IEEE 802.3) communication protocol used in industrial, automotive and other general use cases.

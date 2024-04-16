@@ -1,4 +1,4 @@
-# ICSS-EMAC Lwip Example{#EXAMPLES_ICSS_EMAC_LWIP}
+# ICSS-EMAC Lwip Example {#EXAMPLES_ICSS_EMAC_LWIP}
 
 [TOC]
 
@@ -82,11 +82,6 @@ The examples do below
 - Iperf version to be used is version 2.0.9-win64(on windows) and version 2.+ on linux(Ubuntu 18.04 64bit).
 
 - The lwip app has iperf enabled by default.
-
-- The data streams can be either Transmission Control Protocol (TCP) or User Datagram Protocol (UDP).
-
- - UDP: When used for testing UDP capacity, iperf allows the user to specify the datagram size and provides results for the datagram throughput and the packet loss.
- - TCP: When used for testing TCP capacity, iperf measures the throughput of the payload. Iperf uses 1024 × 1024 for mebibytes and 1000 × 1000 for megabytes.
 
 ## Important Iperf Arguments:
 
@@ -236,11 +231,7 @@ TCP window size:  208 KByte (default)
 
 ## Troubleshooting issues
 
-- If you see a valid, non-zero MAC address but IP address is `0.0.0.0` then
-   - Make sure you see `link_callback==UP` message, if not check the ethernet cable
-   - Check the local network and check if the DHCP server is indeed running as expected
-   - When using a home broadband/wifi router, its possible to check the clients connected to the DHCP server via a web
-     browser. Check your router user manual for more details.
+- Refer to \ref ICSS_EMAC_DEBUG_GUIDE for troubleshooting issues.
 
 # See Also
 \cond SOC_AM263X || SOC_AM263PX
