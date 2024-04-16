@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -55,6 +55,7 @@
 #include <sdl/include/am273x/sdlr_soc_ecc_aggr.h>
 #include <sdl/sdl_ecc.h>
 #include "ecc_test_main.h"
+#include <kernel/dpl/ClockP.h>
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
@@ -906,7 +907,8 @@ int32_t ECC_Test_run_MCANB_2BitInjectTest(void)
 
     /* Note the address is relative to start of ram */
     injectErrorConfig.pErrMem = (uint32_t *)(0x03040000u);
-
+    /* Add delay here else observing CPU hang. */
+    ClockP_usleep(9000);
     /* Run one shot test for MCANB 2 bit error */
     injectErrorConfig.flipBitMask = 0x03;
     result = SDL_ECC_injectError(SDL_MSS_MCANB_ECC,

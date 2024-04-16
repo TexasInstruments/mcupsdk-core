@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -53,6 +53,7 @@
 #include <sdl/include/am273x/sdlr_soc_baseaddress.h>
 #include <sdl/sdl_ecc.h>
 #include "ecc_test_main.h"
+#include <kernel/dpl/ClockP.h>
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
@@ -90,6 +91,12 @@
 /* DSS Registers */
 #define DSS_STATUS_1BIT_REG			(0x060A0040u)
 #define DSS_STATUS_2BIT_REG			(0x060A0140U)
+
+#if defined(SOC_AM273X) || defined(SOC_AWR294X)
+#define SDL_DSS_ECC_AGG_ECC_VECTOR_ADDR                     (0x060A0008)
+#define SDL_DSS_ECC_AGG_ERROR_STATUS1_ADDR                  (0x060A0020)
+#define SDL_DSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES               22
+#endif
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -2452,6 +2459,7 @@ static int32_t DSS_ECC_FuncTest(void)
 {
     int32_t result;
     int32_t retVal = 0;
+    uint8_t i=0;
 
     DebugP_log("\n\n ECC Safety Example tests: starting");
 	
@@ -2466,6 +2474,17 @@ static int32_t DSS_ECC_FuncTest(void)
 		DebugP_log("\nECC_Test_init: Initialize of DSS ECC AGGR Memory is complete \n");
 	}
 	if (retVal == 0) {
+
+       /* Clear all status registers.*/
+       for(i=0;i<=SDL_DSS_ECC_AGG_RAM_IDS_TOTAL_ENTRIES;i++)
+       {
+           /* Write the RAM ID in to Vector register*/
+           SDL_REG32_FINS(SDL_DSS_ECC_AGG_ECC_VECTOR_ADDR, DSS_ECC_AGG_ECC_VECTOR_ECC_VECTOR, i);
+           /* Clear pending interrupts.*/
+           SDL_REG32_WR(SDL_DSS_ECC_AGG_ERROR_STATUS1_ADDR, 0xF0F);
+           ClockP_usleep(100);
+       }
+
 		SDL_ESM_init(SDL_ESM_INST_DSS_ESM, &ECC_TestparamsDSS[0],NULL,NULL);
 		DebugP_log("\nDSS_L3RAMA_1Bit_N_RowRepeatInjectTest: starting\n");
         result = SDL_Test_run_DSS_L3RAMA_1Bit_N_RowRepeatInjectTest();

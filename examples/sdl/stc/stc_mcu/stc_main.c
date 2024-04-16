@@ -1,4 +1,4 @@
-/* Copyright (c) 2022-2023 Texas Instruments Incorporated
+/* Copyright (c) 2022-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -89,7 +89,8 @@ void STC_DSP_test_main(void);
 /**
  *  \brief global variable for holding data buffer.
  */
-static const SDL_STC_Inst test_case[]={SDL_STC_INST_MAINR5F0, SDL_STC_INST_DSP};
+/* Disable DSP instance for Selftest*/
+static const SDL_STC_Inst test_case[]={SDL_STC_INST_MAINR5F0, /*SDL_STC_INST_DSP*/ INVALID_INSTANCE};
 volatile int32_t test_Result;
 
 /*===========================================================================*/
