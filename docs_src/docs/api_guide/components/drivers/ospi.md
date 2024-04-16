@@ -36,7 +36,6 @@ status registers.
 
 ## Features not Supported
 
-- PHY mode is not supported yet.
 - Interrupt mode is not supported yet.
 
 ## Example Usage

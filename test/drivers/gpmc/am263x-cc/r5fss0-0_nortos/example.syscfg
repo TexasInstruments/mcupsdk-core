@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @versions {"tool":"1.20.0+3587"}
  */
 
 /**
@@ -45,13 +45,20 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-psram1.$name                               = "CONFIG_PSRAM0";
-psram1.psramDriverIoExpander.$name         = "CONFIG_I2C0";
-psram1.psramDriverIoExpander.I2C.$assign   = "I2C2";
-psram1.psramDriverIoExpander.I2C.SDA.pu_pd = "pd";
-psram1.psramDriver.$name                   = "CONFIG_GPMC0";
+psram1.$name                                 = "CONFIG_PSRAM0";
+psram1.psramDriverIoExpander.$name           = "CONFIG_I2C0";
+psram1.psramDriverIoExpander.I2C.$assign     = "I2C2";
+psram1.psramDriverIoExpander.I2C.SDA.pu_pd   = "pd";
+psram1.psramDriverIoExpander.I2C_child.$name = "drivers_i2c_v1_i2c_v1_template0";
+psram1.psramDriver.$name                     = "CONFIG_GPMC0";
+psram1.psramDriver.GPMC.GPMC_OEn_REn.$assign = "PR0_PRU1_GPIO5";
+psram1.psramDriver.GPMC.GPMC_WEn.$assign     = "PR0_PRU1_GPIO8";
+psram1.psramDriver.GPMC.GPMC_CSn0.$assign    = "PR0_PRU1_GPIO14";
+psram1.psramDriver.GPMC.GPMC_AD6.$assign     = "UART1_RXD";
+psram1.psramDriver.GPMC.GPMC_AD7.$assign     = "UART1_TXD";
 
 gpio1.$name = "CONFIG_GPIO0";
+gpio1.rx    = true;
 
 debug_log.enableUartLog            = true;
 debug_log.enableLogZoneInfo        = true;
@@ -301,9 +308,7 @@ section12.output_section[0].alignment = 0;
 psram1.psramDriverIoExpander.I2C.SCL.$suggestSolution  = "UART0_RTSn";
 psram1.psramDriverIoExpander.I2C.SDA.$suggestSolution  = "UART0_CTSn";
 psram1.psramDriver.GPMC.$suggestSolution               = "GPMC";
-psram1.psramDriver.GPMC.GPMC_OEn_REn.$suggestSolution  = "EPWM11_B";
 psram1.psramDriver.GPMC.GPMC_ADVn_ALE.$suggestSolution = "SDFM0_CLK2";
-psram1.psramDriver.GPMC.GPMC_WEn.$suggestSolution      = "EPWM12_A";
 psram1.psramDriver.GPMC.GPMC_BE0n_CLE.$suggestSolution = "PR0_PRU1_GPIO9";
 psram1.psramDriver.GPMC.GPMC_A0.$suggestSolution       = "PR0_PRU0_GPIO4";
 psram1.psramDriver.GPMC.GPMC_A1.$suggestSolution       = "PR0_PRU0_GPIO0";
@@ -328,15 +333,12 @@ psram1.psramDriver.GPMC.GPMC_A19.$suggestSolution      = "PR0_PRU1_GPIO11";
 psram1.psramDriver.GPMC.GPMC_A20.$suggestSolution      = "PR0_PRU1_GPIO12";
 psram1.psramDriver.GPMC.GPMC_A21.$suggestSolution      = "PR0_PRU1_GPIO13";
 psram1.psramDriver.GPMC.GPMC_BE1n.$suggestSolution     = "PR0_PRU1_GPIO10";
-psram1.psramDriver.GPMC.GPMC_CSn0.$suggestSolution     = "EPWM12_B";
 psram1.psramDriver.GPMC.GPMC_AD0.$suggestSolution      = "EPWM13_A";
 psram1.psramDriver.GPMC.GPMC_AD1.$suggestSolution      = "EPWM13_B";
 psram1.psramDriver.GPMC.GPMC_AD2.$suggestSolution      = "EPWM14_A";
 psram1.psramDriver.GPMC.GPMC_AD3.$suggestSolution      = "EPWM14_B";
 psram1.psramDriver.GPMC.GPMC_AD4.$suggestSolution      = "EPWM15_A";
 psram1.psramDriver.GPMC.GPMC_AD5.$suggestSolution      = "EPWM15_B";
-psram1.psramDriver.GPMC.GPMC_AD6.$suggestSolution      = "UART1_RXD";
-psram1.psramDriver.GPMC.GPMC_AD7.$suggestSolution      = "UART1_TXD";
 psram1.psramDriver.GPMC.GPMC_AD8.$suggestSolution      = "MMC_CLK";
 psram1.psramDriver.GPMC.GPMC_AD9.$suggestSolution      = "MMC_CMD";
 psram1.psramDriver.GPMC.GPMC_AD10.$suggestSolution     = "MMC_DAT0";
@@ -346,5 +348,4 @@ psram1.psramDriver.GPMC.GPMC_AD13.$suggestSolution     = "MMC_DAT3";
 psram1.psramDriver.GPMC.GPMC_AD14.$suggestSolution     = "MMC_SDWP";
 psram1.psramDriver.GPMC.GPMC_AD15.$suggestSolution     = "MMC_SDCD";
 psram1.psramDriver.GPMC.GPMC_WAIT0.$suggestSolution    = "PR0_PRU0_GPIO10";
-gpio1.GPIO.$suggestSolution                            = "GPIO0";
-gpio1.GPIO.gpioPin.$suggestSolution                    = "QSPI_CSn0";
+gpio1.GPIO_n.$suggestSolution                          = "QSPI_CSn0";

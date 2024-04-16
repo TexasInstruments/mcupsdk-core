@@ -65,96 +65,140 @@ in 1s1s1s mode.
 # Sample Output
 
 \code
-[OSPI Flash Diagnostic Test] Starting ...
-[OSPI Flash Diagnostic Test] Flash Manufacturer ID : 0x34
-[OSPI Flash Diagnostic Test] Flash Device ID       : 0x5B1A
+[Cortex_R5_0] [OSPI Flash Diagnostic Test] Starting ...
+[OSPI Flash Diagnostic Test] Flash Manufacturer ID : 0x9D
+[OSPI Flash Diagnostic Test] Flash Device ID       : 0x5A19
 [OSPI Flash Diagnostic Test] Executing Flash Erase on first block...
 [OSPI Flash Diagnostic Test] Done !!!
 [OSPI Flash Diagnostic Test] Performing Write-Read Test...
 [OSPI Flash Diagnostic Test] Write-Read Test Passed!
-[OSPI Flash Diagnostic Test] SFDP Information :
+[QSPI Flash Diagnostic Test] SFDP Information :
 ================================================
                       SFDP
 ================================================
 SFDP Major Revision                       : 0x1
-SFDP Minor Revision                       : 0x8
-Number of Parameter Headers in this Table : 6
+SFDP Minor Revision                       : 0x9
+Number of Parameter Headers in this Table : 4
 
 Types of Additional Parameter Tables in this flash
 ---------------------------------------------------
 4 BYTE ADDRESSING MODE INSTRUCTIONS TABLE
-XSPI PROFILE TABLE
-STATUS CONTROL AND CONFIGURATION REGISTER MAP TABLE
+NOR SPI PROFILE TABLE
 OCTAL DDR MODE COMMAND SEQUENCE TABLE
-SECTOR MAP TABLE
 
 Parsing of OCTAL DDR MODE COMMAND SEQUENCE TABLE table not yet supported.
+JSON Data for the flash :
 
-Flash_NorXspiDevDefines gFlashNorXspiDeviceDefines_<part-number> = {
+{
 
-    .XSPI_NOR_CMD_RSTEN = 0x66,
-    .XSPI_NOR_CMD_RSTMEM = 0x99,
-    .XSPI_NOR_CMD_WREN = 0x06,
-    .XSPI_NOR_CMD_WRREG = 0x71,
-    .XSPI_NOR_CMD_BULK_ERASE = 0xC7,
-    .XSPI_NOR_CMD_SECTOR_ERASE_3B = 0x21,
-    .XSPI_NOR_CMD_SECTOR_ERASE_4B = 0x21,
-    .XSPI_NOR_CMD_BLOCK_ERASE_3B = 0xDC,
-    .XSPI_NOR_CMD_BLOCK_ERASE_4B = 0xDC,
-    .XSPI_NOR_CMD_PAGE_PROG_3B = 0x02,
-    .XSPI_NOR_CMD_PAGE_PROG_4B = 0x12,
-    .XSPI_NOR_CMD_RDSR = 0x05,
-    .XSPI_NOR_CMD_RDREG = 0x65,
-    .XSPI_NOR_CMD_RDID = 0x9F,
-    .XSPI_NOR_CMD_READ = 0x03,
-    .XSPI_NOR_CMD_888_SDR_READ = 0x00,
-    .XSPI_NOR_CMD_888_DDR_READ = 0xEE,
-    .XSPI_NOR_CMD_444_SDR_READ = 0x00,
-    .XSPI_NOR_CMD_444_DDR_READ = 0x00,
-    .XSPI_NOR_CMD_114_READ = 0x00,
-    .XSPI_NOR_SR_WIP = 1,
-    .XSPI_NOR_SR_WEL = 2,
-    .XSPI_NOR_RDID_NUM_BYTES = 5,
-    .XSPI_NOR_MANF_ID = 0x34,
-    .XSPI_NOR_DEVICE_ID = 0x5B1A,
-    .XSPI_NOR_114_READ_MODE_CLKS = 0,
-    .XSPI_NOR_114_READ_DUMMY_CYCLES = 0,
-    .XSPI_NOR_444_READ_MODE_CLKS = 0,
-    .XSPI_NOR_444_READ_DUMMY_CYCLES = 0,
-    .XSPI_NOR_444_READ_DUMMY_CYCLES_LC = 0xFF,
-    .XSPI_NOR_QUAD_CMD_READ_DUMMY_CYCLES = 0x00,
-    .XSPI_NOR_OCTAL_READ_DUMMY_CYCLE = 24,
-    .XSPI_NOR_OCTAL_READ_DUMMY_CYCLE_LC = 0x0B,
-    .XSPI_NOR_OCTAL_DDR_RDSR_DUMMY_CYCLE = 4,
-    .XSPI_NOR_OCTAL_DDR_RDREG_ADDR_BYTES = 4,
-    .XSPI_NOR_OCTAL_DDR_WRREG_ADDR_BYTES = 4,
-    .XSPI_NOR_OCTAL_DDR_RDVREG_DUMMY_CYCLE = 4,
-    .XSPI_NOR_OCTAL_DDR_RDNVREG_DUMMY_CYCLE = 8,
-    .XSPI_NOR_OCTAL_RDSFDP_DUMMY_CYCLE = 8,
-    .XSPI_NOR_OCTAL_RDSFDP_ADDR_TYPE = 0,
-    .XSPI_NOR_WRR_WRITE_TIMEOUT = 5120,
-    .XSPI_NOR_BULK_ERASE_TIMEOUT = 256000000,
-    .XSPI_NOR_PAGE_PROG_TIMEOUT = 512,
-    .XSPI_NOR_VREG_OFFSET = 0x800000,
-    .XSPI_NOR_NVREG_OFFSET = 0x0,
-    .XSPI_NOR_QUAD_MODE_CFG_ADDR = 0x0,
-    .XSPI_NOR_QUAD_MODE_CFG_BIT_LOCATION = 0x0,
-    .XSPI_NOR_DDR_OCTAL_MODE_CFG_ADDR = 0x6,
-    .XSPI_NOR_DDR_OCTAL_MODE_CFG_BIT_LOCATION = 0x1,
-    .XSPI_NOR_DUMMY_CYCLE_CFG_ADDR = 0x3,
-    .XSPI_NOR_FLASH_SIZE = 67108864,
-    .XSPI_NOR_PAGE_SIZE = 256,
-    .XSPI_NOR_BLOCK_SIZE = 262144,
-    .XSPI_NOR_SECTOR_SIZE = 4096,
-    .addrByteSupport = 1,
-    .dtrSupport = 1,
-    .qeType = 0,
-    .seq444Enable = { 0, 0, 0, 0, 0 },
-    .seq444Disable = { 0, 0, 0, 0 },
-    .oeType = 0,
-    .cmdExtType = 0,
-    .byteOrder = 0,
-};
+    "flashSize": 33554432,
+    "flashPageSize": 256,
+    "flashManfId": "0x9D",
+    "flashDeviceId": "0x5A19",
+    "flashBlockSize": 131072,
+    "flashSectorSize": 4096,
+    "cmdBlockErase3B": "0xD8",
+    "cmdBlockErase4B": "0xDC",
+    "cmdSectorErase3B": "0x20",
+    "cmdSectorErase4B": "0x21",
+    "protos": {
+        "p111": {
+            "isDtr": false,
+            "cmdRd": "0x03",
+            "cmdWr": "0x02",
+            "modeClksCmd": 0,
+            "modeClksRd": 0,
+            "dummyClksCmd": 0,
+            "dummyClksRd": 0,
+            "enableType": "0",
+            "enableSeq": "0x00",
+            "dummyCfg": null,
+            "protoCfg": null,
+            "strDtrCfg": null
+        },
+        "p112": null,
+        "p114": null,
+        "p118": {
+            "isDtr": false,
+            "cmdRd": "0x7C",
+            "cmdWr": "0x84",
+            "modeClksCmd": 0,
+            "modeClksRd": 1,
+            "dummyClksCmd": 0,
+            "dummyClksRd": 7,
+            "enableType": "0",
+            "enableSeq": "0x00",
+            "dummyCfg": null,
+            "protoCfg": null,
+            "strDtrCfg": null
+        },
+        "p444s": null,
+        "p444d": null,
+        "p888s": null,
+        "p888d": {
+            "isDtr": false,
+            "cmdRd": "0x0B",
+            "cmdWr": "0x12",
+            "modeClksCmd": 0,
+            "modeClksRd": 0,
+            "dummyClksCmd": 8,
+            "dummyClksRd": 14,
+            "enableType": "0",
+            "enableSeq": "0x00",
+            "dummyCfg": {
+                "isAddrReg": false,
+                "cmdRegRd":"0x00",
+                "cmdRegWr":"0x00",
+                "cfgReg":"0x00000000",
+                "shift":0,
+                "mask":"0x00",
+                "bitP":14
+            },
+            "protoCfg": {
+                "isAddrReg": false,
+                "cmdRegRd": "0x00",
+                "cmdRegWr": "0x00",
+                "cfgReg": "0x00000000",
+                "shift": 0,
+                "mask": "0x00",
+                "bitP": 0
+            },
+            "strDtrCfg": {
+                "isAddrReg": false,
+                "cmdRegRd": "0x00",
+                "cmdRegWr": "0x00",
+                "cfgReg": "0x00000000",
+                "shift": 0,
+                "mask": "0x00",
+                "bitP": 0
+            }
+        },
+        "pCustom": {
+            "fxn": null
+        }
+    },
+    "addrByteSupport": "1",
+    "fourByteAddrEnSeq": "0xA1",
+    "cmdExtType": "REPEAT",
+    "resetType": "0x30",
+    "deviceBusyType": "0",
+    "cmdWren": "0x06",
+    "cmdRdsr": "0x05",
+    "srWip":  0,
+    "srWel":  1,
+    "cmdChipErase": "0xC7",
+    "rdIdSettings": {
+        "cmd": "0x9F",
+        "numBytes": 5,
+        "dummy4": 0,
+        "dummy8": 0
+    },
+    "xspiWipRdCmd": "0x00",
+    "xspiWipReg": "0x00000000",
+    "xspiWipBit": 0,
+    "flashDeviceBusyTimeout": 72000000,
+    "flashPageProgTimeout": 120
+}
 
 All tests have passed!!
 \endcode
