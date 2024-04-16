@@ -668,7 +668,7 @@ static void uart_echo_write_cancel_external_loopback_full_test(void *args)
     UART_close(gUartHandle[CONFIG_UART1]);
     uartHandle = UART_open(CONFIG_UART0, uartParams);
     TEST_ASSERT_NOT_NULL(uartHandle);
-    uartParams1->intrNum = CSLR_R5FSS0_CORE0_INTR_UART4_IRQ;
+    uartParams1->intrNum = CSLR_R5FSS0_CORE0_INTR_UART1_IRQ;
     uartHandle1 = UART_open(CONFIG_UART1, uartParams1);
     TEST_ASSERT_NOT_NULL(uartHandle1);
 
@@ -754,7 +754,7 @@ static void uart_echo_read_cancel_external_loopback_full_test(void *args)
     UART_close(gUartHandle[CONFIG_UART1]);
     uartHandle = UART_open(CONFIG_UART0, uartParams);
     TEST_ASSERT_NOT_NULL(uartHandle);
-    uartParams1->intrNum = CSLR_R5FSS0_CORE0_INTR_UART4_IRQ;
+    uartParams1->intrNum = CSLR_R5FSS0_CORE0_INTR_UART1_IRQ;
     uartHandle1 = UART_open(CONFIG_UART1, uartParams1);
     TEST_ASSERT_NOT_NULL(uartHandle1);
 
