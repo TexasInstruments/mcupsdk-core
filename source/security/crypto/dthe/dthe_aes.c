@@ -369,8 +369,12 @@ DTHE_AES_Return_t DTHE_AES_execute(DTHE_Handle handle, const DTHE_AES_Params* pt
                     /* Normal Key Mode: */
                     CSL_REG32_FINS(&ptrAesRegs->SYSCONFIG,AES_S_SYSCONFIG_DIRECTBUSEN,0U);
 
-                    /* Configure the key which is to be used: */
-                    DTHE_AES_set256BitKey1 (ptrAesRegs, ptrParams->ptrKey);
+                    /* Normal Mode: Key should always be specified */
+                    if (ptrParams->ptrKey != NULL)
+                    {
+                        /* Configure the key which is to be used: */
+                        DTHE_AES_set256BitKey1 (ptrAesRegs, ptrParams->ptrKey);
+                    }
 
                     if (ptrParams->algoType == DTHE_AES_CMAC_MODE)
                     {
@@ -393,7 +397,10 @@ DTHE_AES_Return_t DTHE_AES_execute(DTHE_Handle handle, const DTHE_AES_Params* pt
                     ||(ptrParams->algoType == DTHE_AES_ICM_MODE)\
                     ||(ptrParams->algoType == DTHE_AES_CFB_MODE))
                 {
-                    DTHE_AES_setIV(ptrAesRegs, ptrParams->ptrIV);
+                    if (ptrParams->ptrIV != NULL)
+                    {
+                        DTHE_AES_setIV(ptrAesRegs, ptrParams->ptrIV);
+                    }
                 }
                 else if((ptrParams->algoType == DTHE_AES_CBC_MAC_MODE)||(ptrParams->algoType == DTHE_AES_CMAC_MODE))
                 {
@@ -508,7 +515,7 @@ DTHE_AES_Return_t DTHE_AES_execute(DTHE_Handle handle, const DTHE_AES_Params* pt
                 if((ptrParams->streamState == DTHE_AES_ONE_SHOT_SUPPORT)||(ptrParams->streamState == DTHE_AES_STREAM_FINISH))
                 {
                     /* Process any left over data: */
-                    if((partialDataSize != 0U) && (partialDataSize < 16U))
+                    if(partialDataSize != 0U)
                     {
                         /* Initialize the partial block: */
                         (void)memset ((void *)&inPartialBlock, 0, sizeof(inPartialBlock));
