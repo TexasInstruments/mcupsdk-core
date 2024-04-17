@@ -124,17 +124,17 @@ appimage is allocated in OCRAM, so it's limited. This is not the case in OSPI.
 
 Caching status                          | Cycles taken
 ----------------------------------------|-------------
-Code/Data fully cached                  |    26750
-Code/Data not cached                    |    53540
-Code/Data not cached 1 of 10 iterations |    29552
+Code/Data fully cached                  |    26710
+Code/Data not cached                    |    178717
+Code/Data not cached 1 of 10 iterations |    42210
 
 - MEMCPY operation
 
 Caching status                          | Cycles taken
 ----------------------------------------|-------------
-Code/Data fully cached                  |    1565
-Code/Data not cached                    |    3473
-Code/Data not cached 1 of 10 iterations |    1759
+Code/Data fully cached                  |    1564
+Code/Data not cached                    |    6284
+Code/Data not cached 1 of 10 iterations |    2043
 
 ### MCAN performance
 
@@ -162,9 +162,9 @@ CAN FD EXTENDED FORMAT  | 1                         | 5                   |  46 
 
 Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time  | Interrupt mode (Mbps) Throughput / Transfer time | Dma mode (Mbps) Throughput / Transfer time
 ----------------|-----------------------|-------------------------------|-------------------------------|-------------------------------
- 400		| 08			| 15.63 Mbps / 204.78 us 	| 23.75 Mbps / 134.76 us 	|  0.91 Mbps / 3500.59 us
- 200		| 16			| 32.49 Mbps / 98.48 us 	| 31.46 Mbps / 101.71 us 	|  0.95 Mbps / 3356.64 us
- 100		| 32			| 38.82 Mbps / 82.43 us 	| 37.58 Mbps / 85.16 us 	|  0.97 Mbps / 3284.78 us
+400        | 08            | 12.91 Mbps / 247.78 us     | 23.74 Mbps / 134.81 us     |  0.91 Mbps / 3500.67 us
+200        | 16            | 26.22 Mbps / 122.05 us     | 31.49 Mbps / 101.60 us     |  0.95 Mbps / 3356.72 us
+100        | 32            | 38.84 Mbps / 82.40 us     | 37.58 Mbps / 85.15 us     |  0.97 Mbps / 3284.85 us
 
 
 - Theoretically for 400 Bytes at 50MHz time required for clocks is 64us.
@@ -277,12 +277,12 @@ Number of Words | Word Width (Bits)     | Polled mode Throughput / Transfer time
 
 Local Core  | Remote Core | Average Message Latency (us)
 ------------|-------------|------------------------------
- r5f0-0	| m4f0-0	|  1.49
- r5f0-0	| r5f0-1	|  0.78
- r5f0-0	| r5f1-0	|  0.83
- r5f0-0	| r5f1-1	|  0.91
- r5f0-0	| a530-0	|  0.00
- r5f0-0	| a530-1	|  0.00
+r5f0-0    | m4f0-0    |  1.76
+r5f0-0    | r5f0-1    |  0.77
+r5f0-0    | r5f1-0    |  0.83
+r5f0-0    | r5f1-1    |  0.89
+r5f0-0    | a530-0    |  1.03
+r5f0-0    | a530-1    |  0.00
 
 #### IPC RPMSG
 
@@ -290,16 +290,15 @@ Local Core  | Remote Core | Average Message Latency (us)
 
 Local Core  | Remote Core | Message Size | Average Message Latency (us)
 ------------|-------------|--------------|------------------------------
- r5f0-0	| r5f0-1	| 4	| 0.571
- r5f0-0	| r5f1-0	| 4	| 0.573
- r5f0-0	| r5f1-1	| 4	| 0.573
- r5f0-0	| m4f0-0	| 4	| 1.138
- r5f0-0	| r5f0-1	| 32	| 0.775
- r5f0-0	| r5f0-1	| 64	| 1.034
- r5f0-0	| r5f0-1	| 112	| 1.413
- r5f0-0	| m4f0-0	| 32	| 1.666
- r5f0-0	| m4f0-0	| 64	| 2.268
- r5f0-0	| m4f0-0	| 112	| 3.179
+r5f0-0    | r5f0-1    | 32    | 7.870
+r5f0-0    | r5f0-1    | 64    | 10.416
+r5f0-0    | r5f0-1    | 112    | 14.273
+r5f0-0    | m4f0-0    | 32    | 17.348
+r5f0-0    | m4f0-0    | 64    | 23.326
+r5f0-0    | m4f0-0    | 112    | 32.296
+r5f0-0    | a530-0    | 32    | 7.239
+r5f0-0    | a530-0    | 64    | 8.545
+r5f0-0    | a530-0    | 112    | 10.751
 
 ### MATHLIB
 
@@ -310,14 +309,14 @@ Local Core  | Remote Core | Message Size | Average Message Latency (us)
 - The max error for each operation between the optimized Mathlib mcusdk functions and the compiler mathlib version is printed
 Function	| Err		| Max Cycles Mathlib (mcusdk) 	| avg cycles Mathlib (mcusdk) 	| max cycles mathlib (clang) 	| avg cycles mathlib (clang) 	|
 ----------------|---------------|-----------------------|-----------------------|-----------------------|-----------------------|
-sin 		|0.0000007150	| 52			| 52.226002 		| 758			| 277.294006		|
-cos  		|0.0000002870	| 64			| 64.103996 		| 689			| 278.225983		|
-sincos sin  	|0.0000001790	| 79			| 79.223999 		| 467			| 274.265991		|
-sincos cos	|0.0000001900	|			|			|			|			|
-asin 		|0.0000003430	| 73			| 73.098000 		| 1160			| 431.116028		|
-acos 		|0.0000004770	| 74			| 74.096001 		| 1010			| 385.179993		|
-atan 		|0.0000005360	| 85			| 85.089996 		| 900			| 373.325989		|
-atan2 		|0.0000007150	| 119			| 106.730003 		| 1150			| 479.428009		|
+sin 		|0.0000007150    | 52            | 52.250000         | 659            | 277.497986        |
+cos          |0.0000002870    | 64            | 63.896000         | 593            | 278.550018        |
+sincos sin      |0.0000001790    | 79            | 79.094002         | 467            | 274.223999        |
+sincos cos    |0.0000001900    |            |            |            |            |
+asin         |0.0000003430    | 73            | 73.096001         | 1271            | 431.056000        |
+acos         |0.0000004770    | 74            | 74.194000         | 1075            | 385.683990        |
+atan         |0.0000005360    | 85            | 85.085999         | 623            | 371.787994        |
+atan2         |0.0000007150    | 120            | 107.704002         | 660            | 478.279999        |
 
 ### SA2UL
 
@@ -341,20 +340,20 @@ atan2 		|0.0000007150	| 119			| 106.730003 		| 1150			| 479.428009		|
 - CPU with operating speed  : R5F with 800MHZ
 | SHA | Size | Performance (Mbps) |
 |-----|------|-------------|
-| 512 |  32.00 KB | 2041.659690 |
-| 512 |  16.00 KB | 1814.239493 |
-| 512 |  8.00 KB | 1422.878389 |
-| 512 |  4.00 KB | 987.025114 |
-| 512 |  2.00 KB | 602.546775 |
-| 512 |  1024.00 B | 333.652378 |
-| 512 |  512.00 B | 174.669510 |
-| 256 |  32.00 KB | 1581.002209 |
-| 256 |  16.00 KB | 1403.678616 |
-| 256 |  8.00 KB | 1143.161154 |
-| 256 |  4.00 KB | 827.030949 |
-| 256 |  2.00 KB | 534.573188 |
-| 256 |  1024.00 B | 312.552461 |
-| 256 |  512.00 B | 171.398682 |
+| 512 | 32.00 KB | 2042.136834 |
+| 512 | 16.00 KB | 1799.234716 |
+| 512 | 8.00 KB | 1401.427388 |
+| 512 | 4.00 KB | 954.153017 |
+| 512 | 2.00 KB | 579.451813 |
+| 512 | 1024.00 B | 331.040057 |
+| 512 | 512.00 B | 176.086840 |
+| 256 | 32.00 KB | 1586.191978 |
+| 256 | 16.00 KB | 1406.767018 |
+| 256 | 8.00 KB | 1142.388983 |
+| 256 | 4.00 KB | 829.254713 |
+| 256 | 2.00 KB | 537.951980 |
+| 256 | 1024.00 B | 316.537867 |
+| 256 | 512.00 B | 172.299926 |
 
 ### PKA ECDSA
 
@@ -376,34 +375,34 @@ atan2 		|0.0000007150	| 119			| 106.730003 		| 1150			| 479.428009		|
 - CPU with operating speed  : R5F with 800MHZ
 | Key Length | operation  | Size | Performance (Mbps) |
 |-------------|------------|------|-------------|
-| 128 | Encryption |  32.00 KB | 1495.924845 |
-| 128 | Decryption |  32.00 KB | 1844.947655 |
-| 128 | Encryption |  16.00 KB | 1392.216897 |
-| 128 | Decryption |  16.00 KB | 1665.728356 |
-| 128 | Encryption |  8.00 KB | 1178.228235 |
-| 128 | Decryption |  8.00 KB | 1339.109113 |
-| 128 | Encryption |  4.00 KB | 918.707507 |
-| 128 | Decryption |  4.00 KB | 1023.600156 |
-| 128 | Encryption |  2.00 KB | 651.192369 |
-| 128 | Decryption |  2.00 KB | 701.895684 |
-| 128 | Encryption |  1024.00 B | 409.933071 |
-| 128 | Decryption |  1024.00 B | 423.140496 |
-| 128 | Encryption |  512.00 B | 232.727273 |
-| 128 | Decryption |  512.00 B | 239.427152 |
-| 256 | Encryption |  32.00 KB | 1333.277387 |
-| 256 | Decryption |  32.00 KB | 1521.251732 |
-| 256 | Encryption |  16.00 KB | 1219.558037 |
-| 256 | Decryption |  16.00 KB | 1377.222638 |
-| 256 | Encryption |  8.00 KB | 1046.608376 |
-| 256 | Decryption |  8.00 KB | 1153.066925 |
-| 256 | Encryption |  4.00 KB | 823.316583 |
-| 256 | Decryption |  4.00 KB | 896.893390 |
-| 256 | Encryption |  2.00 KB | 611.086764 |
-| 256 | Decryption |  2.00 KB | 637.788915 |
-| 256 | Encryption |  1024.00 B | 388.269447 |
-| 256 | Decryption |  1024.00 B | 403.820322 |
-| 256 | Encryption |  512.00 B | 228.014752 |
-| 256 | Decryption |  512.00 B | 230.923185 |
+| 128 | Encryption | 32.00 KB | 1402.083250 |
+| 128 | Decryption | 32.00 KB | 1820.570873 |
+| 128 | Encryption | 16.00 KB | 1273.409113 |
+| 128 | Decryption | 16.00 KB | 1618.172840 |
+| 128 | Encryption | 8.00 KB | 1070.259457 |
+| 128 | Decryption | 8.00 KB | 1338.015517 |
+| 128 | Encryption | 4.00 KB | 839.989746 |
+| 128 | Decryption | 4.00 KB | 981.445152 |
+| 128 | Encryption | 2.00 KB | 590.574029 |
+| 128 | Decryption | 2.00 KB | 674.204002 |
+| 128 | Encryption | 1024.00 B | 371.856559 |
+| 128 | Decryption | 1024.00 B | 394.154087 |
+| 128 | Encryption | 512.00 B | 217.698645 |
+| 128 | Decryption | 512.00 B | 217.915808 |
+| 256 | Encryption | 32.00 KB | 1324.377644 |
+| 256 | Decryption | 32.00 KB | 1507.473565 |
+| 256 | Encryption | 16.00 KB | 1206.341318 |
+| 256 | Decryption | 16.00 KB | 1361.150631 |
+| 256 | Encryption | 8.00 KB | 1037.885777 |
+| 256 | Decryption | 8.00 KB | 1137.456881 |
+| 256 | Encryption | 4.00 KB | 822.928897 |
+| 256 | Decryption | 4.00 KB | 874.804779 |
+| 256 | Encryption | 2.00 KB | 585.875201 |
+| 256 | Decryption | 2.00 KB | 615.910906 |
+| 256 | Encryption | 1024.00 B | 374.555638 |
+| 256 | Decryption | 1024.00 B | 382.200968 |
+| 256 | Encryption | 512.00 B | 211.161232 |
+| 256 | Decryption | 512.00 B | 208.288838 |
 
 ### RSA ENCRYPT DECRYPT
 
@@ -414,10 +413,10 @@ atan2 		|0.0000007150	| 119			| 106.730003 		| 1150			| 479.428009		|
 - Software/Application used : test_sa2ul_rsa
 | Key Length | operation  | Size | Performance(Mbps) |
 |-------------|------------|------|-------------|
-| 2048 | Encryption |  256.00 B | 0.554920 |
-| 2048 | Decryption |  256.00 B | 1.295509 |
-| 4096 | Encryption |  512.00 B | 0.597262 |
-| 4096 | Decryption |  512.00 B | 0.400676 |
+| 2048 | Encryption | 256.00 B | 0.554899 |
+| 2048 | Decryption | 256.00 B | 1.295114 |
+| 4096 | Encryption | 512.00 B | 0.597249 |
+| 4096 | Decryption | 512.00 B | 0.400690 |
 
 ### USB
 
