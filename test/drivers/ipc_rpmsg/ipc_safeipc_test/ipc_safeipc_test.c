@@ -157,7 +157,7 @@ void ipc_safeipc_test_main_core()
 
     for(msg=0; msg<gMsgEchoCount; msg++)
     {
-        snprintf(msgBuf, MAX_MSG_SIZE-1, "%d", msg);
+        snprintf(msgBuf, MAX_MSG_SIZE-1, "%" PRIu32, msg);
         msgBuf[MAX_MSG_SIZE-1] = 0;
         msgSize = strlen(msgBuf) + 1; /* count the terminating char as well */
 
