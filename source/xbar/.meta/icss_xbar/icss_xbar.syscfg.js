@@ -25,7 +25,7 @@ ICSS_XBAR.map(function(item) {
 
 let icss_xbar_module = {
     displayName: "ICSS XBAR",
-    longDescription : '![](../source/xbar/.meta/images/icss_xbar.png)',
+    longDescription : '![](../source/xbar/.meta/images/'+common.getSocName()+'/icss_xbar.png)',
     templates: {
         "/drivers/system/system_config.h.xdt": {
             driver_config: "/xbar/icss_xbar/templates/icss_xbar.h.xdt",

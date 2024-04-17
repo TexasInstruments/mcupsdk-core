@@ -25,7 +25,7 @@ DMA_XBAR.map(function(item) {
 
 let dma_trig_xbar_module = {
     displayName: "DMA TRIGGER XBAR",
-    longDescription : '![](../source/xbar/.meta/images/dma_trig_xbar.png)',
+    longDescription : '![](../source/xbar/.meta/images/'+common.getSocName()+'/dma_trig_xbar.png)',
     templates: {
         "/drivers/system/system_config.h.xdt": {
             driver_config: "/xbar/dma_trig_xbar/templates/dma_trig_xbar.h.xdt",

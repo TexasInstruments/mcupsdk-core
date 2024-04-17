@@ -71,7 +71,7 @@ let outputxbar_module_name = "/xbar/output_xbar/output_xbar";
 
 let output_xbar_module = {
     displayName: "OUTPUT XBAR",
-    longDescription : '![](../source/xbar/.meta/images/output_xbar.png)',
+    longDescription : '![](../source/xbar/.meta/images/'+common.getSocName()+'/output_xbar.png)',
     templates: {
         "/drivers/system/system_config.h.xdt": {
             driver_config: "/xbar/output_xbar/templates/output_xbar.h.xdt",

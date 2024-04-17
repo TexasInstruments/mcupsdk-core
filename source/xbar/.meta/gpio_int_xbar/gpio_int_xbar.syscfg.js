@@ -25,7 +25,7 @@ GPIO_INT_XBAR.map(function(item) {
 
 let gpio_int_xbar_module = {
     displayName: "GPIO INT XBAR",
-    longDescription : '![](../source/xbar/.meta/images/gpio_int_xbar.png)',
+    longDescription : '![](../source/xbar/.meta/images/'+common.getSocName()+'/gpio_int_xbar.png)',
     templates: {
         "/drivers/system/system_config.h.xdt": {
             driver_config: "/xbar/gpio_int_xbar/templates/gpio_int_xbar.h.xdt",

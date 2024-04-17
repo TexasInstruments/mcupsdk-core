@@ -26,7 +26,7 @@ INT_XBAR.map(function(item) {
 
 let int_xbar_module = {
     displayName: "INT XBAR",
-    longDescription : '![](../source/xbar/.meta/images/int_xbar.png)',
+    longDescription : '![](../source/xbar/.meta/images/'+common.getSocName()+'/int_xbar.png)',
     templates: {
         "/drivers/system/system_config.h.xdt": {
             driver_config: "/xbar/int_xbar/templates/int_xbar.h.xdt",

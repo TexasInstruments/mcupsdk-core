@@ -26,7 +26,7 @@ ICL_XBAR.map(function(item) {
 
 let icl_xbar_module = {
     displayName: "ICL XBAR",
-    longDescription : '![](../source/xbar/.meta/images/icl_xbar.png)',
+    longDescription : '![](../source/xbar/.meta/images/'+common.getSocName()+'/icl_xbar.png)',
     templates: {
         "/drivers/system/system_config.h.xdt": {
             driver_config: "/xbar/icl_xbar/templates/icl_xbar.h.xdt",

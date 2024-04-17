@@ -26,7 +26,7 @@ EPWM_XBAR.map(function(item) {
 
 let epwm_xbar_module = {
     displayName: "EPWM XBAR",
-    longDescription : '![](../source/xbar/.meta/images/epwm_xbar.png)',
+    longDescription : '![](../source/xbar/.meta/images/'+common.getSocName()+'/epwm_xbar.png)',
     templates: {
         "/drivers/system/system_config.h.xdt": {
             driver_config: "/xbar/epwm_xbar/templates/epwm_xbar.h.xdt",

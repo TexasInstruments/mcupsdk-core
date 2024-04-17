@@ -26,7 +26,7 @@ MDL_XBAR.map(function(item) {
 
 let mdl_xbar_module = {
     displayName: "MDL XBAR",
-    longDescription : '![](../source/xbar/.meta/images/mdl_xbar.png)',
+    longDescription : '![](../source/xbar/.meta/images/'+common.getSocName()+'/mdl_xbar.png)',
     templates: {
         "/drivers/system/system_config.h.xdt": {
             driver_config: "/xbar/mdl_xbar/templates/mdl_xbar.h.xdt",

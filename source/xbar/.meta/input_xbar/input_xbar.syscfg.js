@@ -26,7 +26,7 @@ INPUT_XBAR.map(function(item) {
 
 let input_xbar_module = {
     displayName: "INPUT XBAR",
-    longDescription : '![](../source/xbar/.meta/images/input_xbar.png)',
+    longDescription : '![](../source/xbar/.meta/images/'+common.getSocName()+'/input_xbar.png)',
     templates: {
         "/drivers/system/system_config.h.xdt": {
             driver_config: "/xbar/input_xbar/templates/input_xbar.h.xdt",

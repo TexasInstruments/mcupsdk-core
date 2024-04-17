@@ -25,7 +25,7 @@ SOC_TIMESYNC_XBAR0.map(function(item) {
 
 let soc_timesync_xbar0_module = {
     displayName: "SOC TIMESYNC XBAR 0",
-    longDescription : '![](../source/xbar/.meta/images/soc_timesync_xbar0.png)',
+    longDescription : '![](../source/xbar/.meta/images/'+common.getSocName()+'/soc_timesync_xbar0.png)',
     templates: {
         "/drivers/system/system_config.h.xdt": {
             driver_config: "/xbar/soc_timesync_xbar0/templates/soc_timesync_xbar0.h.xdt",

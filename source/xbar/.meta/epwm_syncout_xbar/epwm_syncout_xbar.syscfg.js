@@ -26,7 +26,7 @@ EPWM_SYNCOUT_XBAR.map(function(item) {
 
 let epwm_syncout_xbar_module = {
     displayName: "EPWM SYNCOUT XBAR",
-    longDescription : '![](../source/xbar/.meta/images/epwm_syncout_xbar.png)',
+    longDescription : '![](../source/xbar/.meta/images/'+common.getSocName()+'/epwm_syncout_xbar.png)',
     templates: {
         "/drivers/system/system_config.h.xdt": {
             driver_config: "/xbar/epwm_syncout_xbar/templates/epwm_syncout_xbar.h.xdt",
