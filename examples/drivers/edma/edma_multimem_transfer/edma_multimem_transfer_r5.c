@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -108,56 +108,58 @@ static void EDMA_regionIsrFxn(Edma_IntrHandle intrHandle, void *args);
 
 void edma_multimem_transfer(void *args)
 {
-    int32_t             status = SystemP_SUCCESS;
+    int32_t  status = SystemP_SUCCESS;
     uint64_t curTime;
+    uint64_t ocmToOcm, tcmaToTcmA, tcmbToTcmB, ocmToTcma, tcmaToOcm;
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
 
     DebugP_log("[EDMA] Interrupt Transfer Test Started...\r\n");
-    
+
     App_edmaConfig();
 
     curTime = ClockP_getTimeUsec();
     /* OCRAM to OCRAM transfer */
     App_edmaTransfer(gEdmaOcramSrcBuff, gEdmaOcramDstBuff);
-    curTime = ClockP_getTimeUsec() - curTime;
-
-    DebugP_log("[EDMA MULTIMEM TRANSFER] OCRAM to OCRAM Total transfer time for 1KB = %" PRId64 " usecs\r\n", curTime);
+    ocmToOcm = ClockP_getTimeUsec() - curTime;
 
     curTime = ClockP_getTimeUsec();
     /* TCMA to TCMA transfer */
     App_edmaTransfer(gEdmaTCMASrcBuff, gEdmaTCMADstBuff);
-    curTime = ClockP_getTimeUsec() - curTime;
-
-    DebugP_log("[EDMA MULTIMEM TRANSFER] TCMA to TCMA Total transfer time for 1KB = %" PRId64 " usecs\r\n", curTime);
+    tcmaToTcmA = ClockP_getTimeUsec() - curTime;
 
     curTime = ClockP_getTimeUsec();
     /* TCMB to TCMB transfer */
     App_edmaTransfer(gEdmaTCMBSrcBuff, gEdmaTCMBDstBuff);
-    curTime = ClockP_getTimeUsec() - curTime;
-
-    DebugP_log("[EDMA MULTIMEM TRANSFER] TCMB to TCMB Total transfer time for 1KB = %" PRId64 " usecs\r\n", curTime);
+    tcmbToTcmB = ClockP_getTimeUsec() - curTime;
 
     curTime = ClockP_getTimeUsec();
     /* OCRAM to TCMA transfer */
     App_edmaTransfer(gEdmaOcramSrcBuff, gEdmaTCMADstBuff);
-    curTime = ClockP_getTimeUsec() - curTime;
-
-    DebugP_log("[EDMA MULTIMEM TRANSFER] OCRAM to TCMA Total transfer time for 1KB = %" PRId64 " usecs\r\n", curTime);
+    ocmToTcma = ClockP_getTimeUsec() - curTime;
 
     curTime = ClockP_getTimeUsec();
     /* TCMA to OCRAM transfer */
     App_edmaTransfer(gEdmaTCMADstBuff, gEdmaOcramSrcBuff);
-    curTime = ClockP_getTimeUsec() - curTime;
+    tcmaToOcm = ClockP_getTimeUsec() - curTime;
 
-    DebugP_log("[EDMA MULTIMEM TRANSFER] TCMA to OCRAM Total transfer time for 1KB = %" PRId64 " usecs\r\n", curTime);
+    DebugP_log("BENCHMARK START - EDMA - EDMA Memory Copy BENCHMARK \r\n");
+    DebugP_log("\nEDMA Memory Copy Benchmark Numbers Print Start\r\n\n");
+    DebugP_log("Size in Bytes | Source Memory | Destination Memory | Transfer time(us)\r\n");
+    DebugP_log("--------------|---------------|--------------------|------------------\r\n");
+    DebugP_log("    1024      |      OCRAM    |     OCRAM          |    %" PRId64 "   \r\n", ocmToOcm);
+    DebugP_log("    1024      |      TCMA     |     TCMA           |    %" PRId64 "   \r\n", tcmaToTcmA);
+    DebugP_log("    1024      |      TCMB     |     TCMB           |    %" PRId64 "   \r\n", tcmbToTcmB);
+    DebugP_log("    1024      |      OCRAM    |     TCMA           |    %" PRId64 "   \r\n", ocmToTcma);
+    DebugP_log("    1024      |      TCMA     |     OCRAM          |    %" PRId64 "   \r\n", tcmaToOcm);
 
     App_edmaDeConfig();
 
     if(status == SystemP_SUCCESS)
     {
+        DebugP_log("\nBENCHMARK END \r\n");
         DebugP_log("[EDMA] Interrupt Transfer Test Completed!!\r\n");
         DebugP_log("All tests have passed!!\r\n");
     }
@@ -270,7 +272,7 @@ static void App_edmaTransfer(uint8_t *srcBuffPtr, uint8_t *dstBuffPtr)
 
     /* Invalidate destination buffer and compare with src buffer */
     CacheP_inv((void *)dstBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
-    
+
     status = App_compareBuffers(srcBuffPtr, dstBuffPtr);
     DebugP_assert(status == SystemP_SUCCESS);
 }
