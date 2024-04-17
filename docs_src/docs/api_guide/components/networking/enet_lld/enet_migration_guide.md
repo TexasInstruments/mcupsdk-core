@@ -251,7 +251,10 @@ The MCU+SDK enet driver supports a set of boards for each SoC out of the box
 The board specific portion of the enet code is auto generated in the file ti_board_config.c for supported boards
 
 For porting enet based applications to custom board the following need to be done:
-Enable "Custom Board" syscfg option ![CustomBoardSyscfg](CustomBoardSyscfg.png "Custom Board syscfg") {html: width=50%} 
+Enable "Custom Board" syscfg option
+  \imageStyle{CustomBoardSyscfg.png,width:30%}
+  \image html CustomBoardSyscfg.png
+
 - Enabling “Custom Board” will prevent auto generation of board specific code.
 - A C file will have to be then written that is specific to the board.
 

@@ -24,7 +24,7 @@ are not supported, but read and write helper functions are provided.
 
 # PHY Driver {#enetphy_guide_driver}
 
-The top-layer of PHY driver is located at `<ENET_LLD>/src/phy/enetphy.c`. This
+The top-layer of PHY driver is located at `source/networking/enet/core/src/phy/enetphy.c`. This
 layer implements the basic APIs that are needed to communicate the driver,
 such as `EnetPhy_open()`, `EnetPhy_tick()`, `EnetPhy_close()`, etc.
 
@@ -125,7 +125,7 @@ extended register read/write functions by the DP83867 driver.
 ![Ethernet PHY Driver Hierarchy]
  (EnetPhy_Drv_Hierarchy.png "Ethernet PHY Driver Hierarchy")
 
-Device specific drivers can be found at `<ENET_LLD>/src/phy/*`.
+Device specific drivers can be found at `source/networking/enet/core/src/phy/*`.
 
 
 ## PHY to Driver Binding {#enetphy_guide_binding}
@@ -173,14 +173,21 @@ PHY full functionality can't be guaranteed.
 The following list of steps is provided as guideline when adding a new PHY
 driver for a device which is not supported by Enet LLD.
 
-- Create the public PHY specific header file at `<ENET_LLD>/include/phy`.
+- Enable "Custom Board" (CPSW/ICSSG -> Board Config -> Custom Board) option in Sys-Cfg gui. This will enable the example specific enet_custom_board_config.c file. Please refer to \ref CustomBoardSupport
+- Create the public PHY specific header file at `source/networking/enet/core/include/phy`.
    + This header file should have the device extended configuration
      structure definition (if applicable) as well as auxiliary structures or
      enumerations.
-  ![](MyPhy_h.png)
+
+  \imageStyle{MyPhy_h.png,width:30%}
+  \image html MyPhy_h.png
+
 - Create new source file and private header file (if needed) for the new PHY
-  driver at `<ENET_LLD>/src/phy`.
-  ![](MyPhy_c.png)
+  driver at `source/networking/enet/core/src/phy`.
+
+  \imageStyle{MyPhy_c.png,width:30%}
+  \image html MyPhy_c.png
+
 - Declare a global structure of type `EnetPhy_Drv`, but don't make it static.
   This variable will be later accessed as an extern symbol by the Ethernet PHY
   driver.
@@ -205,8 +212,9 @@ EnetPhy_Drv gEnetPhyDrvMyDrv =
 };
 \endcode
 
-- Declare the variable of type `EnetPhy_Drv` as extern in main PHY driver
-  located at `<ENET_LLD>/src/phy/enetphy.c`. Also, add it to the `gEnetPhyDrvs`
+- Add the PHY source file to "FILES_common" in `makefile.cpsw.am243x.r5f.ti-arm-clang` at `source/networking/enet/`. Same is applicable for ICSSG makefiles.
+
+- In enet_custom_board_config.c file, Declare the variable of type `EnetPhy_Drv` as extern. Also, add it to the `gEnetPhyDrvs`
   array.
 
 \code{.c}
@@ -228,17 +236,9 @@ static EnetPhyDrv_Handle gEnetPhyDrvs[] =
 };
 \endcode
 
-- Add the PHY source file to `SRCS_COMMON` in the Ethernet PHY driver makefile
-  locate at `<ENET_LLD>/src/phy/makefile`.
+- Please refer to the existing code in enet_custom_board_config.c and add your PHY configuration similar `gEnetCpbBoard_dp83869PhyCfg`.
 
-\code
-SRCS_COMMON += enetphy.c generic_phy.c
-SRCS_COMMON += dp83869.c dp83867.c dp83822.c vsc8514.c
-\endcode
-
-- PHY driver directory is already part of the `SRCDIR`, so just the source
-  name needs to be added.
-
+- Update the EnetBoard_PortCfg structure as needed and pass the above PHY configuration as extendedCfg. You can also refer to ti_board_config.c in generated folder for any example for further details.
 
 # Appendix {#enetphy_guide_appendix}
 
