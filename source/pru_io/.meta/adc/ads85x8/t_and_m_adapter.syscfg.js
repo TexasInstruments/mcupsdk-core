@@ -232,11 +232,7 @@ function moduleInstances(instance) {
             description: "DCDC_5V5_EN pin",
             requiredArgs: {
                 pinDir: "OUTPUT",
-                GPIO: {
-                    gpioPin: {
-                        pu_pd: "pd",
-                    },
-                },
+                pu_pd: "pd",
                 useMcuDomainPeripherals: false,
             },
         },
@@ -247,11 +243,7 @@ function moduleInstances(instance) {
             description: "EVM_5V0_EN pin",
             requiredArgs: {
                 pinDir: "OUTPUT",
-                GPIO: {
-                    gpioPin: {
-                        pu_pd: "pd",
-                    },
-                },
+                pu_pd: "pd",
                 useMcuDomainPeripherals: false,
             },
         },
@@ -262,11 +254,7 @@ function moduleInstances(instance) {
             description: "EVM_5V5_EN pin",
             requiredArgs: {
                 pinDir: "OUTPUT",
-                GPIO: {
-                    gpioPin: {
-                        pu_pd: "pd",
-                    },
-                },
+                pu_pd: "pd",
                 useMcuDomainPeripherals: false,
             },
         },
@@ -275,11 +263,7 @@ function moduleInstances(instance) {
             displayName: "OS0 Pin",
             moduleName: "/drivers/gpio/gpio",
             args: {
-                GPIO: {
-                    gpioPin: {
-                        pu_pd: getOsrPinmuxSettings(instance)[0],
-                    },
-                },
+                pu_pd: getOsrPinmuxSettings(instance)[0],
             },
             requiredArgs: {
                 pinDir: "OUTPUT",
@@ -291,11 +275,7 @@ function moduleInstances(instance) {
             displayName: "OS1 Pin",
             moduleName: "/drivers/gpio/gpio",
             args: {
-                GPIO: {
-                    gpioPin: {
-                        pu_pd: getOsrPinmuxSettings(instance)[1],
-                    },
-                },
+                pu_pd: getOsrPinmuxSettings(instance)[1],
             },
             requiredArgs: {
                 pinDir: "OUTPUT",
@@ -307,11 +287,7 @@ function moduleInstances(instance) {
             displayName: "OS2 Pin",
             moduleName: "/drivers/gpio/gpio",
             args: {
-                GPIO: {
-                    gpioPin: {
-                        pu_pd: getOsrPinmuxSettings(instance)[2],
-                    },
-                },
+                pu_pd: getOsrPinmuxSettings(instance)[2],
             },
             requiredArgs: {
                 pinDir: "OUTPUT",
@@ -328,11 +304,7 @@ function moduleInstances(instance) {
                 else                               pu_pd = "pu";    // 10V
                 return {
                     pinDir: "OUTPUT",
-                    GPIO: {
-                        gpioPin: {
-                            pu_pd: pu_pd,
-                        },
-                    },
+                    pu_pd: pu_pd,
                     useMcuDomainPeripherals: false,
                 };
             })(instance),
@@ -347,11 +319,7 @@ function moduleInstances(instance) {
                 else                pu_pd = "pd";   // external
                 return {
                     pinDir: "OUTPUT",
-                    GPIO: {
-                        gpioPin: {
-                            pu_pd: pu_pd,
-                        },
-                    },
+                    pu_pd: pu_pd,
                     useMcuDomainPeripherals: false,
                 };
             })(instance),
@@ -365,11 +333,7 @@ function moduleInstances(instance) {
                 useMcuDomainPeripherals: false,
             },
             args: {
-                GPIO: {
-                    gpioPin: {
-                        pu_pd: "pu",
-                    },
-                },
+                pu_pd: "pu",
             },
         },
         {
@@ -389,11 +353,7 @@ function moduleInstances(instance) {
                     pu_pd = "pu";
                 return {
                     pinDir: "OUTPUT",
-                    GPIO: {
-                        gpioPin: {
-                            pu_pd: pu_pd,
-                        },
-                    },
+                    pu_pd: pu_pd,
                     useMcuDomainPeripherals: false,
                 };
             })(instance),
@@ -407,11 +367,7 @@ function moduleInstances(instance) {
                 useMcuDomainPeripherals: false,
             },
             args: {
-                GPIO: {
-                    gpioPin: {
-                        pu_pd: "pu",    // reset ADC in starting
-                    },
-                },
+                pu_pd: "pu",    // reset ADC in starting
             },
         },
     ]

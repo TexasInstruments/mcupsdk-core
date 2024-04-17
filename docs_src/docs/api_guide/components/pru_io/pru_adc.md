@@ -4,9 +4,10 @@
 
 ## Introduction
 
-The support for some ADCs from ADS85x8 family and ADS127L11 is present as an example project in [MCU-PLUS-SDK-AM64X](https://www.ti.com/tool/download/MCU-PLUS-SDK-AM64X/) latest release. You can find more details for that at \ref EXAMPLES_PRU_ADC.
+The support for some ADCs from ADS85x8 family , ADS127L11 AND ADS131M08 are present as an example project in [MCU-PLUS-SDK-AM64X](https://www.ti.com/tool/download/MCU-PLUS-SDK-AM64X/) latest release. You can find more details for that at \ref EXAMPLES_PRU_ADC.
 The ADS85x8 family ICs provide us with serial, 8 bit parallel or 16 bit parallel interface options with upto 18 bits resolution and upto 500kSPS conversion speed.
-The 127L11 IC provide us with serial interface option with upto 24 bits resolution and upto 1.068MSPS conversion speed.
+The ADS127L11 IC provide us with serial interface option with upto 24 bits resolution and upto 1.068MSPS conversion speed.
+The ADS131M08 IC provide us with multi channel serial interface option with upto 24 bits resolution and upto 32KSPS conversion speed.
 
 ## General Program Flow
 

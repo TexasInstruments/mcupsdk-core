@@ -84,11 +84,7 @@ function moduleInstances(instance) {
             moduleName: "/drivers/gpio/gpio",
             requiredArgs: {
                 pinDir: "OUTPUT",
-                GPIO: {
-                    gpioPin: {
-                        pu_pd: "pd",
-                    },
-                },
+                pu_pd: "pd",
                 useMcuDomainPeripherals: false,
             },
         },
@@ -101,11 +97,7 @@ function moduleInstances(instance) {
                 useMcuDomainPeripherals: false,
             },
             args: {
-                GPIO: {
-                    gpioPin: {
-                        pu_pd: "pu",    // reset ADC in starting
-                    },
-                },
+                pu_pd: "pu",    // reset ADC in starting
             },
         },
     ]
