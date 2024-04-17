@@ -83,4 +83,3 @@ void EnetApp_mainTask(void *args)
         EnetApp_deInitTsn();
     }
 }
-
