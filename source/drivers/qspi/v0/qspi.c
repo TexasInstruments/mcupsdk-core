@@ -208,7 +208,14 @@ QSPI_Handle QSPI_open(uint32_t index, const QSPI_Params *openParams)
         {
             qspilldInitHandle->qspiDmaHandle    = EDMA_getHandle(openParams->edmaInst);
             qspilldInitHandle->qspiDmaChConfig = (QSPI_DmaChConfig) &gqspiEdmaParam;
-            edmaInterrupt = EDMA_isInterruptEnabled(qspilldInitHandle->qspiDmaHandle);
+            if (NULL != qspilldInitHandle->qspiDmaHandle)
+            {
+                edmaInterrupt = EDMA_isInterruptEnabled(qspilldInitHandle->qspiDmaHandle);
+            }
+            else
+            {
+                edmaInterrupt = FALSE;
+            }
             if (edmaInterrupt == TRUE)
             {
                 qspilldHandle->readCompleteCallback = &QSPI_interruptCallback;
