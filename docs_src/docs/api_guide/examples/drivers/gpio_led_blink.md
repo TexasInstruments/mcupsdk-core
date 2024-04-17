@@ -80,13 +80,24 @@ Make the following connections for this example to work on the AM62X-SK-EVM.
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/drivers/gpio/gpio_led_blink/
+
+\endcond
+
+\cond SOC_AM263PX
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/drivers/gpio/gpio_led_blink/
 
 \endcond
@@ -113,12 +124,17 @@ Make the following connections for this example to work on the AM62X-SK-EVM.
 - Watch out for LED LD26 on the EVM to blink which is controlled by MCU_GPIO0_5.
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 ## AM263X-CC
 - Watch out for LED LD13 on the CC to blink which is controlled by GPIO0_1.
 
 ## AM263X-LP
 - Watch out for LED DS2 on the LP to blink which is controlled by GPIO0_26.
+\endcond
+
+\cond SOC_AM263PX
+## AM263PX-CC
+- Watch out for LED LD6 on the CC to blink.
 \endcond
 
 \cond SOC_AM243X

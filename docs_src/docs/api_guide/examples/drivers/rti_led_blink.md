@@ -21,7 +21,7 @@ The application toggles the LED ON/OFF for 10 seconds using RTI Timer and exits.
 
 \endcond
 
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 
  Parameter      | Value
  ---------------|-----------
@@ -33,6 +33,18 @@ The application toggles the LED ON/OFF for 10 seconds using RTI Timer and exits.
 
 \endcond
 
+\cond SOC_AM263PX
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0 freertos
+ ^              | r5fss0-0 nortos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/drivers/rti/rti_led_blink
+
+\endcond
+
 # Steps to Run the Example
 
 - **When using CCS projects to build**, import the CCS project for the required combination
@@ -40,13 +52,19 @@ The application toggles the LED ON/OFF for 10 seconds using RTI Timer and exits.
 - **When using makefiles to build**, note the required combination and build using
   make command (see \ref MAKEFILE_BUILD_PAGE)
 - Launch a CCS debug session and run the executable, see \ref CCS_LAUNCH_PAGE
-\cond SOC_AM263X || SOC_AM263PX
+\cond SOC_AM263X
 ## AM263X-CC
 - Watch out for LED LD13 on the CC to blink which is controlled by GPIO0_1.
 
 ## AM263X-LP
 - Watch out for LED DS2 on the LP to blink which is controlled by GPIO0_26.
 \endcond
+
+\cond SOC_AM263PX
+## AM263PX-CC
+- Watch out for LED LD6 on the CC to blink.
+\endcond
+
 \cond SOC_AM273X
 ##AM273X-EVM
 - Watch out for LED TPR_MSS_GPIO2 on the EVM to blink which is controlled by MSS_GPIO26.

@@ -5378,39 +5378,6 @@
             "example"
         ],
         "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "A GPIO LED Blink Example. This example blinks a EVM LED for few seconds. CPU is R5FSS0-0 running NORTOS.",
-        "name": "gpio_led_blink",
-        "location": "../../examples/drivers/gpio/gpio_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM263P"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "gpio",
-            "gpio_led_blink",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
             "example.gettingstarted"
         ],
         "description": "A GPIO Multi LED Blink Example. This example blinks each LED for few seconds. CPU is R5FSS0-0 running NORTOS.",
@@ -10035,72 +10002,6 @@
         "location": "../../examples/drivers/rti/rti_led_blink/am263px-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "rti",
-            "rti_led_blink",
-            "r5fss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "An example to demonstrate LED blink using RTI. CPU is R5FSS0-0 running NORTOS.",
-        "name": "rti_led_blink",
-        "location": "../../examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM263P"
-        ],
-        "kernel": [
-            "nortos"
-        ],
-        "compiler": [
-            "ticlang"
-        ],
-        "subCategories": [
-            "drivers",
-            "rti",
-            "rti_led_blink",
-            "r5fss0-0_nortos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "An example to demonstrate LED blink using RTI. CPU is R5FSS0-0 running FREERTOS.",
-        "name": "rti_led_blink",
-        "location": "../../examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
-        "devtools": [
-            "LP-AM263P"
         ],
         "kernel": [
             "freertos"

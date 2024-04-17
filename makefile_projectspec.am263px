@@ -159,7 +159,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += fsi_loopback_polling_am263px-lp_r5f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_input_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_input_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_multi_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hsm_services_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
@@ -279,8 +278,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rl2_am263px-cc_r5fss0-0_nortos_ti-a
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rl2_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rti_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rti_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rti_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += rti_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdfm_epwm_sync_cpuread_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdfm_ecap_loop_back_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdfm_filter_sync_cpuread_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build
@@ -913,9 +910,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  gpio_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- gpio_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
-
  gpio_multi_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/gpio/gpio_multi_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
@@ -1272,12 +1266,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  rti_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- rti_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
-
- rti_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  sdfm_epwm_sync_cpuread_am263px-cc_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_epwm_sync_cpuread/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1909,7 +1897,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += fsi_loopback_polling_am263px-lp_r5f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_input_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_input_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_multi_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hsm_services_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2029,8 +2016,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rl2_am263px-cc_r5fss0-0_nortos_ti-a
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rl2_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rti_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rti_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rti_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += rti_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdfm_epwm_sync_cpuread_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdfm_ecap_loop_back_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdfm_filter_sync_cpuread_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2663,9 +2648,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  gpio_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- gpio_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
-
  gpio_multi_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/gpio/gpio_multi_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
@@ -3022,12 +3004,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  rti_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- rti_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
-
- rti_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  sdfm_epwm_sync_cpuread_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_epwm_sync_cpuread/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -3659,7 +3635,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += fsi_loopback_polling_am263px-lp_r5
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_input_interrupt_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_input_interrupt_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_multi_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hsm_services_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
@@ -3779,8 +3754,6 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rl2_am263px-cc_r5fss0-0_nortos_ti-
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rl2_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rti_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rti_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rti_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += rti_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdfm_epwm_sync_cpuread_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdfm_ecap_loop_back_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdfm_filter_sync_cpuread_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export
@@ -4413,9 +4386,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  gpio_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- gpio_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/gpio/gpio_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
-
  gpio_multi_led_blink_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/gpio/gpio_multi_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
@@ -4772,12 +4742,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  rti_led_blink_am263px-cc_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- rti_led_blink_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
-
- rti_led_blink_am263px-lp_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  sdfm_epwm_sync_cpuread_am263px-cc_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/sdfm/sdfm_epwm_sync_cpuread/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -5425,7 +5389,6 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_input_interrupt/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_input_interrupt/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_multi_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/hsmclient/hsm_services/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
@@ -5545,8 +5508,6 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/rl2/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am263px-cc/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/drivers/rti/rti_led_blink/am263px-lp/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_epwm_sync_cpuread/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_ecap_loop_back/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/sdfm/sdfm_filter_sync_cpuread/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
