@@ -33,6 +33,10 @@
 #ifndef SDL_IP_VTM_TOP_H_
 #define SDL_IP_VTM_TOP_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <sdl/vtm/v1/soc/sdl_soc_vtm.h>
 #include <sdl/vtm/v1/sdl_ip_vtm.h>
 
@@ -252,6 +256,6 @@ int32_t SDL_VTM_enableESMWarmReset(SDL_VTM_InstTs instance);
 }
 #endif  /* extern "C" */
 
-/** @} */
-
 #endif /* SDL_IP_VTM_TOP_H_ */
+
+/** @} */
