@@ -291,18 +291,14 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += watchdog_interrupt_am64x-sk_a53ss0-
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_turbo_mode_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcspi_loopback_turbo_mode_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am64x-evm_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am64x-evm_r5fss0-0_freertos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am64x-evm_m4fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am64x-evm_m4fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am64x-evm_a53ss0-0_nortos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am64x-evm_a53ss0-0_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am64x-sk_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am64x-sk_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am64x-sk_r5fss0-0_freertos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am64x-sk_m4fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am64x-sk_m4fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am64x-sk_a53ss0-0_nortos_gcc-aarch64_build
@@ -317,18 +313,14 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_cpp_am64x-sk_r5fss0-0_f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_cpp_am64x-sk_m4fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_cpp_am64x-sk_m4fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-evm_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-evm_r5fss0-0_freertos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-evm_m4fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-evm_m4fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-evm_a53ss0-0_nortos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-evm_a53ss0-0_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-sk_r5fss0-0_nortos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-sk_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-sk_r5fss0-0_freertos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-sk_m4fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-sk_m4fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am64x-sk_a53ss0-0_nortos_gcc-aarch64_build
@@ -338,21 +330,17 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dhrystone_benchmark_am64x-evm_a53ss
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dhrystone_benchmark_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += interrupt_profiling_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += posix_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += posix_demo_am64x-evm_r5fss0-0_freertos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += posix_demo_am64x-evm_m4fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += posix_demo_am64x-evm_a53ss0-0_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += posix_demo_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += posix_demo_am64x-sk_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += posix_demo_am64x-sk_r5fss0-0_freertos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += posix_demo_am64x-sk_m4fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += posix_demo_am64x-sk_a53ss0-0_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += posix_demo_am64x-sk_a53ss0-0_freertos-smp_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am64x-evm_r5fss0-0_freertos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am64x-evm_a53ss0-0_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am64x-evm_m4fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am64x-sk_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am64x-sk_r5fss0-0_freertos_gcc-armv7_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am64x-sk_a53ss0-0_freertos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am64x-sk_m4fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += smp_task_switch_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_build
@@ -1339,14 +1327,8 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  hello_world_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/hello_world/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- hello_world_am64x-evm_r5fss0-0_nortos_gcc-armv7_build:
-	$(MAKE) -C examples/hello_world/am64x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
-
  hello_world_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/hello_world/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- hello_world_am64x-evm_r5fss0-0_freertos_gcc-armv7_build:
-	$(MAKE) -C examples/hello_world/am64x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec all
 
  hello_world_am64x-evm_m4fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/hello_world/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1366,14 +1348,8 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  hello_world_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/hello_world/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- hello_world_am64x-sk_r5fss0-0_nortos_gcc-armv7_build:
-	$(MAKE) -C examples/hello_world/am64x-sk/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
-
  hello_world_am64x-sk_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/hello_world/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- hello_world_am64x-sk_r5fss0-0_freertos_gcc-armv7_build:
-	$(MAKE) -C examples/hello_world/am64x-sk/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec all
 
  hello_world_am64x-sk_m4fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/hello_world/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1417,14 +1393,8 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  dpl_demo_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- dpl_demo_am64x-evm_r5fss0-0_nortos_gcc-armv7_build:
-	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
-
  dpl_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- dpl_demo_am64x-evm_r5fss0-0_freertos_gcc-armv7_build:
-	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec all
 
  dpl_demo_am64x-evm_m4fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1444,14 +1414,8 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  dpl_demo_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
 
- dpl_demo_am64x-sk_r5fss0-0_nortos_gcc-armv7_build:
-	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec all
-
  dpl_demo_am64x-sk_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- dpl_demo_am64x-sk_r5fss0-0_freertos_gcc-armv7_build:
-	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec all
 
  dpl_demo_am64x-sk_m4fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1480,9 +1444,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  posix_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
- posix_demo_am64x-evm_r5fss0-0_freertos_gcc-armv7_build:
-	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec all
-
  posix_demo_am64x-evm_m4fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
@@ -1494,9 +1455,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  posix_demo_am64x-sk_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- posix_demo_am64x-sk_r5fss0-0_freertos_gcc-armv7_build:
-	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-sk/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec all
 
  posix_demo_am64x-sk_m4fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
@@ -1510,9 +1468,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  task_switch_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
- task_switch_am64x-evm_r5fss0-0_freertos_gcc-armv7_build:
-	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec all
-
  task_switch_am64x-evm_a53ss0-0_freertos_gcc-aarch64_build:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec all
 
@@ -1521,9 +1476,6 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  task_switch_am64x-sk_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- task_switch_am64x-sk_r5fss0-0_freertos_gcc-armv7_build:
-	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-sk/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec all
 
  task_switch_am64x-sk_a53ss0-0_freertos_gcc-aarch64_build:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec all
@@ -2185,18 +2137,14 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += watchdog_interrupt_am64x-sk_a53ss0-
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_turbo_mode_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcspi_loopback_turbo_mode_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am64x-evm_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am64x-evm_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am64x-evm_m4fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am64x-evm_a53ss0-0_nortos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am64x-sk_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am64x-sk_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am64x-sk_m4fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am64x-sk_a53ss0-0_nortos_gcc-aarch64_clean
@@ -2211,18 +2159,14 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_cpp_am64x-sk_r5fss0-0_f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_cpp_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_cpp_am64x-sk_m4fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-evm_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-evm_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-evm_m4fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-evm_a53ss0-0_nortos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-sk_r5fss0-0_nortos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-sk_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-sk_m4fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am64x-sk_a53ss0-0_nortos_gcc-aarch64_clean
@@ -2232,21 +2176,17 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dhrystone_benchmark_am64x-evm_a53ss
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dhrystone_benchmark_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += interrupt_profiling_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += posix_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += posix_demo_am64x-evm_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += posix_demo_am64x-evm_m4fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += posix_demo_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += posix_demo_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += posix_demo_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += posix_demo_am64x-sk_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += posix_demo_am64x-sk_m4fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += posix_demo_am64x-sk_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += posix_demo_am64x-sk_a53ss0-0_freertos-smp_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am64x-evm_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am64x-evm_m4fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am64x-sk_r5fss0-0_freertos_gcc-armv7_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am64x-sk_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am64x-sk_m4fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += smp_task_switch_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_clean
@@ -3233,14 +3173,8 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  hello_world_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/hello_world/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- hello_world_am64x-evm_r5fss0-0_nortos_gcc-armv7_clean:
-	$(MAKE) -C examples/hello_world/am64x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
-
  hello_world_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/hello_world/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- hello_world_am64x-evm_r5fss0-0_freertos_gcc-armv7_clean:
-	$(MAKE) -C examples/hello_world/am64x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec clean
 
  hello_world_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/hello_world/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -3260,14 +3194,8 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  hello_world_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/hello_world/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- hello_world_am64x-sk_r5fss0-0_nortos_gcc-armv7_clean:
-	$(MAKE) -C examples/hello_world/am64x-sk/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
-
  hello_world_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/hello_world/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- hello_world_am64x-sk_r5fss0-0_freertos_gcc-armv7_clean:
-	$(MAKE) -C examples/hello_world/am64x-sk/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec clean
 
  hello_world_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/hello_world/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -3311,14 +3239,8 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  dpl_demo_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- dpl_demo_am64x-evm_r5fss0-0_nortos_gcc-armv7_clean:
-	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
-
  dpl_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- dpl_demo_am64x-evm_r5fss0-0_freertos_gcc-armv7_clean:
-	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec clean
 
  dpl_demo_am64x-evm_m4fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -3338,14 +3260,8 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  dpl_demo_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
 
- dpl_demo_am64x-sk_r5fss0-0_nortos_gcc-armv7_clean:
-	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec clean
-
  dpl_demo_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- dpl_demo_am64x-sk_r5fss0-0_freertos_gcc-armv7_clean:
-	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec clean
 
  dpl_demo_am64x-sk_m4fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -3374,9 +3290,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  posix_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
- posix_demo_am64x-evm_r5fss0-0_freertos_gcc-armv7_clean:
-	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec clean
-
  posix_demo_am64x-evm_m4fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
@@ -3388,9 +3301,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  posix_demo_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- posix_demo_am64x-sk_r5fss0-0_freertos_gcc-armv7_clean:
-	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-sk/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec clean
 
  posix_demo_am64x-sk_m4fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
@@ -3404,9 +3314,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  task_switch_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
- task_switch_am64x-evm_r5fss0-0_freertos_gcc-armv7_clean:
-	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec clean
-
  task_switch_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec clean
 
@@ -3415,9 +3322,6 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  task_switch_am64x-sk_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- task_switch_am64x-sk_r5fss0-0_freertos_gcc-armv7_clean:
-	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-sk/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec clean
 
  task_switch_am64x-sk_a53ss0-0_freertos_gcc-aarch64_clean:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec clean
@@ -4079,18 +3983,14 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += watchdog_interrupt_am64x-sk_a53ss0
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_turbo_mode_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcspi_loopback_turbo_mode_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am64x-evm_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am64x-evm_r5fss0-0_freertos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am64x-evm_m4fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am64x-evm_m4fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am64x-evm_a53ss0-0_nortos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am64x-evm_a53ss0-0_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am64x-sk_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am64x-sk_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am64x-sk_r5fss0-0_freertos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am64x-sk_m4fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am64x-sk_m4fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am64x-sk_a53ss0-0_nortos_gcc-aarch64_export
@@ -4105,18 +4005,14 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_cpp_am64x-sk_r5fss0-0_
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_cpp_am64x-sk_m4fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_cpp_am64x-sk_m4fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-evm_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-evm_r5fss0-0_freertos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-evm_m4fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-evm_m4fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-evm_a53ss0-0_nortos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-evm_a53ss0-0_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-sk_r5fss0-0_nortos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-sk_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-sk_r5fss0-0_freertos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-sk_m4fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-sk_m4fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am64x-sk_a53ss0-0_nortos_gcc-aarch64_export
@@ -4126,21 +4022,17 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dhrystone_benchmark_am64x-evm_a53s
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dhrystone_benchmark_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += interrupt_profiling_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += posix_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += posix_demo_am64x-evm_r5fss0-0_freertos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += posix_demo_am64x-evm_m4fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += posix_demo_am64x-evm_a53ss0-0_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += posix_demo_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += posix_demo_am64x-sk_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += posix_demo_am64x-sk_r5fss0-0_freertos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += posix_demo_am64x-sk_m4fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += posix_demo_am64x-sk_a53ss0-0_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += posix_demo_am64x-sk_a53ss0-0_freertos-smp_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am64x-evm_r5fss0-0_freertos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am64x-evm_a53ss0-0_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am64x-evm_m4fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am64x-sk_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am64x-sk_r5fss0-0_freertos_gcc-armv7_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am64x-sk_a53ss0-0_freertos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am64x-sk_m4fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += smp_task_switch_am64x-evm_a53ss0-0_freertos-smp_gcc-aarch64_export
@@ -5127,14 +5019,8 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  hello_world_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/hello_world/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- hello_world_am64x-evm_r5fss0-0_nortos_gcc-armv7_export:
-	$(MAKE) -C examples/hello_world/am64x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
-
  hello_world_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/hello_world/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- hello_world_am64x-evm_r5fss0-0_freertos_gcc-armv7_export:
-	$(MAKE) -C examples/hello_world/am64x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec export
 
  hello_world_am64x-evm_m4fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/hello_world/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -5154,14 +5040,8 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  hello_world_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/hello_world/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- hello_world_am64x-sk_r5fss0-0_nortos_gcc-armv7_export:
-	$(MAKE) -C examples/hello_world/am64x-sk/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
-
  hello_world_am64x-sk_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/hello_world/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- hello_world_am64x-sk_r5fss0-0_freertos_gcc-armv7_export:
-	$(MAKE) -C examples/hello_world/am64x-sk/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec export
 
  hello_world_am64x-sk_m4fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/hello_world/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -5205,14 +5085,8 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  dpl_demo_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- dpl_demo_am64x-evm_r5fss0-0_nortos_gcc-armv7_export:
-	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
-
  dpl_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- dpl_demo_am64x-evm_r5fss0-0_freertos_gcc-armv7_export:
-	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec export
 
  dpl_demo_am64x-evm_m4fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -5232,14 +5106,8 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  dpl_demo_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
 
- dpl_demo_am64x-sk_r5fss0-0_nortos_gcc-armv7_export:
-	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec export
-
  dpl_demo_am64x-sk_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- dpl_demo_am64x-sk_r5fss0-0_freertos_gcc-armv7_export:
-	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec export
 
  dpl_demo_am64x-sk_m4fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/dpl/dpl_demo/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -5268,9 +5136,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  posix_demo_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
- posix_demo_am64x-evm_r5fss0-0_freertos_gcc-armv7_export:
-	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec export
-
  posix_demo_am64x-evm_m4fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
@@ -5282,9 +5147,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  posix_demo_am64x-sk_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- posix_demo_am64x-sk_r5fss0-0_freertos_gcc-armv7_export:
-	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-sk/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec export
 
  posix_demo_am64x-sk_m4fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/freertos/posix_demo/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
@@ -5298,9 +5160,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  task_switch_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
- task_switch_am64x-evm_r5fss0-0_freertos_gcc-armv7_export:
-	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec export
-
  task_switch_am64x-evm_a53ss0-0_freertos_gcc-aarch64_export:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec export
 
@@ -5309,9 +5168,6 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  task_switch_am64x-sk_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- task_switch_am64x-sk_r5fss0-0_freertos_gcc-armv7_export:
-	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-sk/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec export
 
  task_switch_am64x-sk_a53ss0-0_freertos_gcc-aarch64_export:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am64x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec export
@@ -5998,18 +5854,14 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_turbo_mode/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcspi/mcspi_loopback_turbo_mode/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/hello_world/am64x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/hello_world/am64x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/hello_world/am64x-sk/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/hello_world/am64x-sk/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world/am64x-sk/a53ss0-0_nortos/gcc-aarch64 -f makefile_projectspec [export all clean]
@@ -6024,18 +5876,14 @@ help:
 	@echo  $(MAKE) -s -C examples/hello_world_cpp/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/hello_world_cpp/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-evm/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_nortos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-sk/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-sk/m4fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/dpl/dpl_demo/am64x-sk/a53ss0-0_nortos/gcc-aarch64 -f makefile_projectspec [export all clean]
@@ -6045,21 +5893,17 @@ help:
 	@echo  $(MAKE) -s -C examples/kernel/freertos/dhrystone_benchmark/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/interrupt_profiling/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am64x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am64x-sk/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am64x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/posix_demo/am64x-sk/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am64x-evm/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am64x-evm/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am64x-sk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am64x-sk/r5fss0-0_freertos/gcc-armv7 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am64x-sk/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am64x-sk/m4fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/kernel/freertos/smp_task_switch/am64x-evm/a53ss0-0_freertos-smp/gcc-aarch64 -f makefile_projectspec [export all clean]
