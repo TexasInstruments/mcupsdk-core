@@ -31,12 +31,44 @@ Secure boot process, like the normal boot, consists of two stages - ROM loading 
 \note In AM243x/AM64x devices, the HSM runtime binary mentioned is the System Firmware (SYSFW) and HSM core is the DMSC Cortex M3 core. Hereafter for generality sake we'll use the terms 'HSMRt' and 'HSM core' but understand that for AM64x/AM243x this means the SYSFW and Cortex M3 core.
 \endcond
 
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X
+## Public Keyring Support
+The keyring is a set of keys which can be imported by SBL after importing the HSM runtime binary on an **HS-SE** device. For importing keyring TIFS-MCU expects an X.509 certificate signed by customer active root of trust (MPK). For certificate generation script usage, see \ref KEYRING_CERT_GEN_PYTHON_SCRIPT.
+
+TIFS-MCU supports application authentication using the following algorithms with Keyring.
+
+<table>
+    <tr>
+        <th>Signature Algorithm</th>
+        <th>Supported Keys</th>
+        <th>Hash Function</th>
+    </tr>
+    <tr>
+        <td>RSA-PKCS#1 v1.5</td>
+        <td>RSA2k, RSA3k, RSA4k</td>
+        <td>SHA256, SHA384, SHA512</td>
+    </tr>
+    <tr>
+        <td>RSASSA-PSS</td>
+        <td>RSA2k, RSA3k, RSA4k</td>
+        <td>SHA256, SHA384, SHA512</td>
+    </tr>
+    <tr>
+        <td>ECDSA</td>
+        <td>P-256, P-384, P-521, BrainpoolP512t1</td>
+        <td>SHA256, SHA384, SHA512</td>
+    </tr>
+</table>
+
+For more information, please refer TIFS-MCU documentation
+
+\endcond
 ## Secure Boot Support in SDK
 
 ### Device configuration file
 
 To make the secure/non-secure differences seamless for the user, a configuration file is provided at `${SDK_INSTALL_PATH}/devconfig/devconfig.mak`.
-In this configuration file, you can set certain options like the device type, keys to be used for signing and encryption etc. By default they will point to the dummy customer MPKs and MEKs but if you're using a production device with your own keys burned into the eFUSEs, please change the paths here to point to the right key files. Configuration of this file is currently manual, this will be made configurable by a GUI in an upcoming release.
+In this configuration file, you can set certain options like the device type, keys to be used for signing and encryption etc. By default they will point to the dummy customer MPKs and MEKs but if you're using a production device with your own keys, please change the paths here to point to the right key files. Configuration of this file is currently manual, this will be made configurable by a GUI in an upcoming release.
 
 The devconfig.mak file looks something like this:
 
@@ -94,6 +126,9 @@ DBG_ENABLED?=no
 # Debug control with TIFS (yes/no)
 DEBUG_TIFS?=yes
 
+# RSASSA-PSS scheme option for application signing (yes/no)
+RSASSAPSS_ENABLED?=no
+
 # Debug options for HS (DBG_PERM_DISABLE / DBG_SOC_DEFAULT / DBG_PUBLIC_ENABLE / DBG_FULL_ENABLE)
 # This option is valid only if DEBUG_TIFS is false
 DEBUG_OPTION?=DBG_SOC_DEFAULT
@@ -101,13 +136,21 @@ DEBUG_OPTION?=DBG_SOC_DEFAULT
 # Generic macros to be used depending on the device type
 APP_SIGNING_KEY=
 APP_ENCRYPTION_KEY=
+APP_SIGNING_HASH_ALGO=
+APP_SIGNING_SALT_LENGTH=
 
 ifeq ($(DEVICE_TYPE),HS)
 	APP_SIGNING_KEY=$(CUST_MPK)
 	APP_ENCRYPTION_KEY=$(CUST_MEK)
+	APP_SIGNING_HASH_ALGO=sha512
+	APP_SIGNING_SALT_LENGTH=0
 else
-	APP_SIGNING_KEY=$(ROM_DEGENERATE_KEY)
+	APP_SIGNING_KEY=$(APP_DEGENERATE_KEY)
 endif
+
+# Key id in keyring for application authentication and decryption
+APP_SIGNING_KEY_KEYRING_ID?=0
+APP_ENCRYPTION_KEY_KEYRING_ID?=0
 
 \endcode
 \endcond
@@ -142,6 +185,9 @@ DBG_ENABLED?=no
 # Debug control with TIFS (yes/no)
 DEBUG_TIFS?=yes
 
+# RSASSA-PSS scheme option for application signing (yes/no)
+RSASSAPSS_ENABLED?=no
+
 # Debug options for HS (DBG_PERM_DISABLE / DBG_SOC_DEFAULT / DBG_PUBLIC_ENABLE / DBG_FULL_ENABLE)
 # This option is valid only if DEBUG_TIFS is false
 DEBUG_OPTION?=DBG_SOC_DEFAULT
@@ -149,13 +195,21 @@ DEBUG_OPTION?=DBG_SOC_DEFAULT
 # Generic macros to be used depending on the device type
 APP_SIGNING_KEY=
 APP_ENCRYPTION_KEY=
+APP_SIGNING_HASH_ALGO=
+APP_SIGNING_SALT_LENGTH=
 
 ifeq ($(DEVICE_TYPE),HS)
 	APP_SIGNING_KEY=$(CUST_MPK)
 	APP_ENCRYPTION_KEY=$(CUST_MEK)
+	APP_SIGNING_HASH_ALGO=sha512
+	APP_SIGNING_SALT_LENGTH=0
 else
-	APP_SIGNING_KEY=$(ROM_DEGENERATE_KEY)
+	APP_SIGNING_KEY=$(APP_DEGENERATE_KEY)
 endif
+
+# Key id in keyring for application authentication and decryption
+APP_SIGNING_KEY_KEYRING_ID?=0
+APP_ENCRYPTION_KEY_KEYRING_ID?=0
 
 \endcode
 \endcond
@@ -341,6 +395,21 @@ encrypt the image  with Customer MEK as well.
 flag in devconfig file (which is set as `yes`).
 \endcond
 
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X
+Keyring can be imported in SBL by using keyring import module in sysconfig.
+- Add instance of keyring import module in sysconfig.
+\imageStyle{keyring_syscfg_1.png,width:50%}
+\image html keyring_syscfg_1.png "Keyring Import Module Instance"
+
+
+- Load the keyring certificate header file which is generated using \ref KEYRING_CERT_GEN_PYTHON_SCRIPT.
+\imageStyle{keyring_syscfg_2.png,width:50%}
+\image html keyring_syscfg_2.png ""
+
+The sysconfig module auto-generates APIs for keyring import and builds SBL along with keyring certificate.
+For certificate generation script usage, see \ref KEYRING_CERT_GEN_PYTHON_SCRIPT.
+\endcond
+
 \cond SOC_AM64X | SOC_AM243X
 #### Signing the HSM Runtime binary (SYSFW)
 As mentioned above, since we follow a combined boot method, SYSFW and SBL is signed with the same certificate using the same key. In case of a GP device this will be a degenerate key for easy parsing from ROM. In the case of an HS device, SYSFW will be already signed with TI MPK (and encrypted). This is then countersigned again with dummy customer MPK during the combined image generation process.
@@ -356,7 +425,7 @@ The SBL doesn't have innate abilities to do the image integrity check, or verify
 \endcond
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
-The SBL doesn't have innate abilities to do the image integrity check, or verify the SHA512 of the application image. It relies on HSMRt for this. The image is stored in a readable memory and a pointer to the start of the image is passed to the HSMRt with other details like load address, type of authentication etc.
+The SBL doesn't have innate abilities to do the image integrity check, or verify the hash of the application image. It relies on HSMRt for this. The image is stored in a readable memory and a pointer to the start of the image is passed to the HSMRt with other details like load address, type of authentication etc.
 \endcond
 
 \cond SOC_AM64X || SOC_AM243X
@@ -388,20 +457,25 @@ basicConstraints = CA:true
 1.3.6.1.4.1.294.1.2=ASN1:SEQUENCE:image_integrity
 1.3.6.1.4.1.294.1.3=ASN1:SEQUENCE:swrv
 
+1.3.6.1.4.1.294.1.12=ASN1:SEQUENCE:keyring_index
 
 [ boot_seq ]
 certType     =  INTEGER:2779054080
 bootCore     =  INTEGER:0
 bootCoreOpts =  INTEGER:0
 destAddr     =  FORMAT:HEX,OCT:00000000
-imageSize    =  INTEGER:25004
+imageSize    =  INTEGER:30332
 
 [ image_integrity ]
 shaType = OID:2.16.840.1.101.3.4.2.3
-shaValue = FORMAT:HEX,OCT:f3b4b8e837425d4f1dba213f4cececb6e4f629ccb12d390345ec808028b5da0d8725e46fce77258c3721c36f3aa0c7fe6dc0712d049922109453a7dcfd6aba65
+shaValue = FORMAT:HEX,OCT:fd7e922c982cce91be14d5335c9afe34b171c0686103a0159f2334aa39dcd13f244e9f635216b6178f4f81bb7b67cd7596458f8835322e9e203b1f792ae8e874
 
 [ swrv ]
 swrv = INTEGER:1
+
+[ keyring_index ]
+sign_key_id = INTEGER:0
+enc_key_id  = INTEGER:0
 \endcode
 
 The application images can be built with the following flags for appending the
@@ -422,7 +496,97 @@ make -s -C examples/hello_world/am273x-evm/r5fss0-0_nortos/ti-arm-clang all DEVI
 make -s -C examples/hello_world/awr294x-evm/r5fss0-0_nortos/ti-arm-clang all DEVICE=awr294x DEVICE_TYPE=HS
 \endcode
 \endcond
+
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X
+##### RSASSA-PSS Support
+
+The RSASSA-PSS algorithm can be used instead of the default RSA PKCS#1v1.5 signature algorithm by specifying RSASSAPSS_ENABLED=yes and APP_SIGNING_SALT_LENGTH. Maximum supported salt length value for RSASSA-PSS is **255**.
+
+See the command below for reference.
+\endcond
+
+\cond SOC_AM263X || SOC_AM263PX
+\code
+make -s -C examples/hello_world/am263x-cc/r5fss0-0_nortos/ti-arm-clang all DEVICE=am263x DEVICE_TYPE=HS RSASSAPSS_ENABLED=yes APP_SIGNING_SALT_LENGTH=64
+\endcode
+\endcond
+\cond SOC_AM273X
+\code
+make -s -C examples/hello_world/am273x-evm/r5fss0-0_nortos/ti-arm-clang all DEVICE=am273x DEVICE_TYPE=HS RSASSAPSS_ENABLED=yes APP_SIGNING_SALT_LENGTH=64
+\endcode
+\endcond
+
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X
+##### Auxiliary Keys Support
+\note Sample auxiliary keys are present at location `${SDK_INSTALL_PATH}/tools/keyring_cert/aux_keys`.
+\note RSASSA-PSS algorithm can be used with RSA auxiliary keys.
+
+The auxiliary keys in the keyring begin at index 32. If the application binary is signed with an auxiliary private key, the corresponding public key hash of which is available in the keyring, the customer must specify the keyring index corresponding to the auxiliary key used for authentication.
+
+If imported public key is available at index 38 in keyring for brainpoolp512r1_private.pem,
+the application images can be built with the following flags for appending the
+X509 certificate for HS-SE devices:
+
+\cond SOC_AM263X || SOC_AM263PX
+\code
+make -s -C examples/hello_world/am263x-cc/r5fss0-0_nortos/ti-arm-clang all DEVICE=am263x DEVICE_TYPE=HS APP_SIGNING_KEY_KEYRING_ID=38 APP_SIGNING_KEY=/home/user/ti/mcu_plus_sdk/tools/keyring_cert/aux_keys/brainpoolp512r1_private.pem
+\endcode
+\endcond
+\cond SOC_AM273X
+\code
+make -s -C examples/hello_world/am273x-evm/r5fss0-0_nortos/ti-arm-clang all DEVICE=am273x DEVICE_TYPE=HS APP_SIGNING_KEY_KEYRING_ID=38 APP_SIGNING_KEY=/home/user/ti/mcu_plus_sdk/tools/keyring_cert/aux_keys/brainpoolp512r1_private.pem
+\endcode
+\endcond
+\endcond
+\cond SOC_AM263X || SOC_AM263PX || SOC_AM273X
+Here is an example of x509 certificate template for application images:
+\code
+
+[ req ]
+distinguished_name     = req_distinguished_name
+x509_extensions        = v3_ca
+prompt                 = no
+
+dirstring_type = nobmp
+
+[ req_distinguished_name ]
+C                      = US
+ST                     = SC
+L                      = New York
+O                      = Texas Instruments., Inc.
+OU                     = DSP
+CN                     = Albert
+emailAddress           = Albert@gt.ti.com
+
+[ v3_ca ]
+basicConstraints = CA:true
+1.3.6.1.4.1.294.1.1=ASN1:SEQUENCE:boot_seq
+1.3.6.1.4.1.294.1.2=ASN1:SEQUENCE:image_integrity
+1.3.6.1.4.1.294.1.3=ASN1:SEQUENCE:swrv
+
+1.3.6.1.4.1.294.1.12=ASN1:SEQUENCE:keyring_index
+
+[ boot_seq ]
+certType     =  INTEGER:2779054080
+bootCore     =  INTEGER:0
+bootCoreOpts =  INTEGER:0
+destAddr     =  FORMAT:HEX,OCT:00000000
+imageSize    =  INTEGER:30332
+
+[ image_integrity ]
+shaType = OID:2.16.840.1.101.3.4.2.3
+shaValue = FORMAT:HEX,OCT:fd7e922c982cce91be14d5335c9afe34b171c0686103a0159f2334aa39dcd13f244e9f635216b6178f4f81bb7b67cd7596458f8835322e9e203b1f792ae8e874
+
+[ swrv ]
+swrv = INTEGER:1
+
+[ keyring_index ]
+sign_key_id = INTEGER:38
+enc_key_id  = INTEGER:0
+\endcode
+\endcond
 ### Encryption support for application images
+\note Support for encryption with auxiliary keys will be added in future releases.
 
 Optionally, one can encrypt the application image to meet security goals.
 This can be accomplished with adding one more flag ENC_ENABLED with the make command:
@@ -441,10 +605,10 @@ make -s -C examples/hello_world/am273x-evm/r5fss0-0_nortos/ti-arm-clang all DEVI
 make -s -C examples/hello_world/awr294x-evm/r5fss0-0_nortos/ti-arm-clang all DEVICE=awr294x DEVICE_TYPE=HS ENC_ENABLED=yes
 \endcode
 \endcond
-\note Application image signing and encryption via CCS GUI will be supported in upcoming releases
 
 Here is an example x509 configuration template with apllication authentication and encryption support:
 \code
+
 [ req ]
 distinguished_name     = req_distinguished_name
 x509_extensions        = v3_ca
@@ -467,25 +631,30 @@ basicConstraints = CA:true
 1.3.6.1.4.1.294.1.2=ASN1:SEQUENCE:image_integrity
 1.3.6.1.4.1.294.1.3=ASN1:SEQUENCE:swrv
 1.3.6.1.4.1.294.1.4 = ASN1:SEQUENCE:encryption
+1.3.6.1.4.1.294.1.12=ASN1:SEQUENCE:keyring_index
 
 [ boot_seq ]
 certType     =  INTEGER:2779054080
 bootCore     =  INTEGER:0
 bootCoreOpts =  INTEGER:0
 destAddr     =  FORMAT:HEX,OCT:00000000
-imageSize    =  INTEGER:25040
+imageSize    =  INTEGER:30368
 
 [ image_integrity ]
 shaType = OID:2.16.840.1.101.3.4.2.3
-shaValue = FORMAT:HEX,OCT:2a4eda3df125d3bbf507f2b78261bf068ea7073a9e9da972bde999c9f2996acbe88471dde4b18e0b4c13bdd5255484b90b72051208bb214defac4882adc46456
+shaValue = FORMAT:HEX,OCT:d65fe2f380a4aa365ec90eb646e68c2f1dc738bfd5ba7ee0385cea9f41d1101fac6141c3981367493e17a883d588b692ded275daacaf33ff70a38a5e04cc12fc
 
 [ swrv ]
 swrv = INTEGER:1
 
+[ keyring_index ]
+sign_key_id = INTEGER:0
+enc_key_id  = INTEGER:0
+
 
 [ encryption ]
-initalVector =  FORMAT:HEX,OCT:ca38d1bb9c966fcb26436cc26622d37b
-randomString =  FORMAT:HEX,OCT:5effc6efd651364460a6be0b40a33a4cc99e28b53c225de9f46c70c7586b8fad
+initalVector =  FORMAT:HEX,OCT:c31abc423ccd831385b7fdd649be0ee1
+randomString =  FORMAT:HEX,OCT:347c0707c36290697d294770da607d43d02d41242eadcd718bb825589d437f22
 iterationCnt =  INTEGER:1
 salt         =  FORMAT:HEX,OCT:acca65ded29296fea498ab8a9a15aaa27445ab7c75757c99125254619e4a513b
 \endcode
