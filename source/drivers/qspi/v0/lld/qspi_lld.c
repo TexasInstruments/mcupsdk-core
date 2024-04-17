@@ -768,15 +768,19 @@ static int32_t QSPI_spiMemMapRead(QSPILLD_Handle hQspi, void *buf, uint32_t addr
 static int32_t QSPI_spiMemMapReadDma(QSPILLD_Handle hQspi, void *buf, uint32_t addrOffset, uint32_t count, uint32_t timeout)
 {
     /* Destination address */
-    uint32_t *pDst = NULL;
+    uint8_t *pDst = NULL;
     /* Source address */
-    uint32_t *pSrc = NULL;
+    uint8_t *pSrc = NULL;
     /* Memory mapped command */
     uint32_t mmapReadCmd;
     uint32_t temp_addr;
     int32_t status = QSPI_SYSTEM_SUCCESS;
     uint32_t dummyBytes, dummyBits;
     QSPILLD_InitHandle hQspiInit;
+    uint32_t dmaOffset;
+    uint32_t nonAlignedBytes;
+    uint8_t *pDmaDst  = NULL;
+    uint32_t dmaLen;
 
     hQspiInit = hQspi->hQspiInit;
     const CSL_QspiRegs *pReg = (const CSL_QspiRegs *)hQspi->baseAddr;
@@ -825,10 +829,41 @@ static int32_t QSPI_spiMemMapReadDma(QSPILLD_Handle hQspi, void *buf, uint32_t a
         break;
     }
     temp_addr = (uint32_t)(hQspiInit->memMapBaseAddr + addrOffset);
-    pSrc = ((uint32_t *)(temp_addr));
-    pDst = (uint32_t *)buf;
+    pSrc = ((uint8_t *)(temp_addr));
+    pDst = (uint8_t *)buf;
+    /* Check if the qspi memory address is 4 byte aligned. */
+    dmaOffset  = (addrOffset + 0x3) & (~0x3);
+    nonAlignedBytes = dmaOffset - addrOffset;
+    pDmaDst = (uint8_t *)(pDst + nonAlignedBytes);
+    dmaLen = count - nonAlignedBytes;
 
-    QSPI_edmaTransfer(pDst, pSrc, count, hQspi, timeout);
+    while(nonAlignedBytes != 0U)
+    {
+        *pDst = *pSrc;
+        pDst++;
+        pSrc++;
+        nonAlignedBytes--;
+    }
+    if(dmaLen != 0U)
+    {
+        /* calculate the nonAligned bytes at the end */
+        nonAlignedBytes = dmaLen - ((dmaLen ) & (~0x3));
+
+        /* Get the previous multiple of 4 of dmaLen as edma transfer can only be done with length in multiple of 4*/
+        dmaLen = (dmaLen ) & (~0x3);
+        QSPI_edmaTransfer(pDmaDst, pSrc, dmaLen, hQspi, timeout);
+        pDst += dmaLen;
+        pSrc += dmaLen;
+
+        /* Do the normal memory to memory transfer of nonAligned bytes at the end. */
+        while(nonAlignedBytes != 0)
+        {
+            *pDst = *pSrc;
+            pDst++;
+            pSrc++;
+            nonAlignedBytes--;
+        }
+    }
 
     return status;
 }
