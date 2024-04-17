@@ -23,6 +23,9 @@ PLL Configuration sequence updated to latest recommendation                     
 Updates to support ICSSG reset isolation                                                        | SYSFW (DMSC)
 Updated empty example to support PRU1, RTUPRU0, RTUPRU1, TXPRU0, TXPRU1 cores                   | PRU-IO
 Default value for GPIO can be configured from sysconfig                                         | GPIO
+New feature in enet driver to exchange ethernet packets between CPU cores using shared memory   | Ethernet and Networking
+ICSSG MAC mode (dual mac) support added in TSN stack for IEEE 802.1AS (gPTP)                    | Ethernet and Networking
+New example added to demonstrate IEEE 802.1Qbv (EST) with IEEE 802.1AS (gPTP) on CPSW           | Ethernet and Networking
 -                                                                                               | -
 \endcond
 
@@ -33,6 +36,8 @@ PLL Configuration sequence updated to latest recommendation                     
 Updates to support ICSSG reset isolation                                                        | SYSFW (DMSC)
 Updated empty example to support PRU1, RTUPRU0, RTUPRU1, TXPRU0, TXPRU1 cores                   | PRU-IO
 Default value for GPIO can be configured from sysconfig                                         | GPIO
+ICSSG MAC mode (dual mac) support added in TSN stack for IEEE 802.1AS (gPTP)                    | Ethernet and Networking
+New example added to demonstrate IEEE 802.1Qbv (EST) with IEEE 802.1AS (gPTP) on CPSW           | Ethernet and Networking
 -                                                                                               | -
 \endcond
 
@@ -84,6 +89,7 @@ SBL booting A53 NORTOS                                              | Bootloader
 GCC support for R5F for limited examples                            | R5F
 A53 FreeRTOS dual core in SMP mode and A53 SMP FreeRTOS examples    | DPL, FreeRTOS
 GUI for UART Uniflash Tool (No support for EMMC flashing)           | Bootloader
+
 
 \endcond
 
@@ -432,6 +438,46 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
     <td> Update PHY tuning algorithm
 </tr>
+<tr>
+    <td> MCUSDK-12526
+    <td> ICSSG Firmware is not updating the Host Port statistics
+    <td> Ethernet
+    <td> 09.01.0 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-11421
+    <td> enet_layer2_icssg example crashing while exiting 
+    <td> Ethernet
+    <td> 08.06.00 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-12526
+    <td> ENET ICSSG: Host port (PA) statistics is broken for ICSSG MAC mode 
+    <td> Ethernet
+    <td> 09.01.00 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-12597
+    <td> am243x/am64x: ENET: Memory Init and De-init flow is not complete on ICSSG
+    <td> Ethernet
+    <td> 09.01.00 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-12923, MCUSDK-12950
+    <td> ENET: RMII pinmux settings miss some pins in syscfg GUI
+    <td> Ethernet
+    <td> 08.06.00 onwards
+    <td> AM64x
+    <td> -
+</tr>
 </table>
 
 ## Known Issues
@@ -609,27 +655,19 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-12526
-    <td> am243x/am64x: ENET ICSSG: Host port (PA) statistics is broken for ICSSG MAC mode
-    <td> Ethernet
-    <td> AM64x, AM243x
-    <td> 09.01.00 onwards
-    <td> No issues with ICSSG switch mode. In ICSSG MAC mode firmware, rx packet stats are broken.
-</tr>
-<tr>
     <td> MCUSDK-8376
     <td> LWIP web server application crashes in server stress test
-    <td> PLATFORM_SW_CONNECTIVITY
+    <td> Ethernet
     <td> AM64x, AM243x
     <td> 09.00.00 onwards
     <td> -
 </tr>
 <tr>
-    <td> MCUSDK-11421
-    <td> enet_layer2_icssg example crashing while exiting
-    <td> Networking
+    <td> MCUSDK-13138
+    <td> AM243x/ AM64x: ENET: gPTP in ICSSG Mac mode (dual mac) doesn't work on Mac Port 2
+    <td> Ethernet
     <td> AM64x, AM243x
-    <td> 08.06.00 onwards
+    <td> 09.01.00 onwards
     <td> -
 </tr>
 <tr>
@@ -806,8 +844,8 @@ earlier SDKs.
 <tr>
     <td> GPIO
     <td> NA
-    <td> The GPIO deviceData has been modified to reduce the load from the solver working at the backend of sysconfig application. Instead of choosing the gpio peripheral GPIO0 or GPIO1 for the main domain, user can now directy choose the pins. With this change, user can add as many gpios as possible without facing any sysconfig crash. SDK changes thereby had to be adjusted accordingly.  
-    <td> Please note that these changes are backward compatible, so the old example.syscfg will still work.  
+    <td> The GPIO deviceData has been modified to reduce the load from the solver working at the backend of sysconfig application. Instead of choosing the gpio peripheral GPIO0 or GPIO1 for the main domain, user can now directy choose the pins. With this change, user can add as many gpios as possible without facing any sysconfig crash. SDK changes thereby had to be adjusted accordingly.
+    <td> Please note that these changes are backward compatible, so the old example.syscfg will still work.
 However, this change will break compatibility with users who are not using the SDK but directly using pinmux. They will have to remove the gpio related configurations from their syscfg file, then open the file in syscfg and add those gpios configurations again via gui.
 </tr>
 </table>

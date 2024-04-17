@@ -152,7 +152,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_ENET_LAYER2_ICSSG";
+const readmeDoxygenPageTag = "EXAMPLES_ENET_INTERCORE_ICSSG";
 
 const templates_freertos_r5f =
 [

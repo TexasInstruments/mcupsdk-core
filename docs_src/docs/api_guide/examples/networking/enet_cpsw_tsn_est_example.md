@@ -5,20 +5,16 @@
 
 # Introduction
 
-  This example application demonstrates how to configure the 802.1 Qbv (EST)
-  through our TSN yang interface.
+  This example application demonstrates how to configure the IEEE 802.1 Qbv (EST) through our TSN yang interface.
 
-  The yang interface in the TSN is governed by a module called uniconf which runs as a daemon. Any application which interacts
-  with the uniconf is called as a uniconf client. The uniconf client configures Qbv by
-  opening yang database (DB), write config yang parameters to DB and triggers
-  the uniconf for reading parameters from DB and writing to HW. The uniconf
-  reads or writes parameters from or to HW by calling Enet LLD driver.
+  The yang interface in the TSN is governed by a module called uniconf which runs as a daemon. Any application which interacts with the uniconf is called as a uniconf client. The uniconf client configures 802.1 Qbv by
+  opening yang database (DB), write config yang parameters to DB and triggers the uniconf for reading parameters from DB and writing to HW. The uniconf reads or writes parameters from or to HW by calling Enet LLD driver.
 
   Please note that the file system support is not yet integrated to ethernet examples.
 
   In this example, we configure the talker DUT to send out traffic as per the EST schedule and the listner DUT can verify the time-slots of the received packets.
 
-  \note Host based receive packet time-stamping is enabled for this demo purpose. But, Please note we have a HW errata i2401 regarding this feature and should not be used in production.
+  \note Host based receive packet time-stamping is enabled to estimate the packet reception timing accuracy, on the listner side.However, note we have a HW errata i2401 regarding this feature and hence host based rx packet timestamping feature should be disabled in production code.
 
 See also : \ref EXAMPLES_ENET_CPSW_EST, \ref ENET_CPSW_TSN_GPTP
 

@@ -10,7 +10,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL
 -# \subpage EXAMPLES_ENET_LAYER2_MULTI_CHANNEL_PTP
 -# \subpage EXAMPLES_ENET_CPSW_EST
--# \subpage EXAMPLES_ENET_LAYER2_ICSSG (Switch and MAC)
+-# \subpage EXAMPLES_ENET_LAYER2_ICSSG (Switch & MAC)
 -# \subpage EXAMPLES_ENET_VLAN_ICSSG
 -# \subpage EXAMPLES_ENET_ICSSG_TAS
 ### Layer 2 Examples on Baremetal (NoRTOS)
@@ -69,6 +69,7 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_CPSW_LWIP_MQTT
 -# \subpage EXAMPLES_ENET_LWIP_ICSSG_TCPSERVER
 -# \subpage EXAMPLES_ENET_LWIP_ICSSG
+-# \subpage EXAMPLES_ENET_INTERCORE_ICSSG
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
 ### Time-Sensitive Networking (TSN) Examples on FreeRTOS
