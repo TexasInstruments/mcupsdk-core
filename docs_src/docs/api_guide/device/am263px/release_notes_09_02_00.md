@@ -17,6 +17,8 @@
 
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
+Added empty example to support PRU0, PRU1 cores                                                 | PRU-IO
+Added PRU-ICSSM INTC and pinmux configuration from SysConfig                                    | PRU-IO
 -                                                                                               | -
 
 # Modules Not tested/supported in this release

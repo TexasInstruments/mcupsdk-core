@@ -14,6 +14,7 @@
 
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
+Updated empty example to support PRU1 core                                                      | PRU-IO
 -                                                                                               | -
 
 ## Device and Validation Information

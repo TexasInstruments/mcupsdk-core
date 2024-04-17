@@ -21,6 +21,7 @@ Feature                                                                         
 ------------------------------------------------------------------------------------------------|-----------------------------------
 PLL Configuration sequence updated to latest recommendation                                     | SYSFW (DMSC)
 Updates to support ICSSG reset isolation                                                        | SYSFW (DMSC)
+Updated empty example to support PRU1, RTUPRU0, RTUPRU1, TXPRU0, TXPRU1 cores                   | PRU-IO
 -                                                                                               | -
 \endcond
 
@@ -29,6 +30,7 @@ Feature                                                                         
 ------------------------------------------------------------------------------------------------|-----------------------------------
 PLL Configuration sequence updated to latest recommendation                                     | SYSFW (DMSC)
 Updates to support ICSSG reset isolation                                                        | SYSFW (DMSC)
+Updated empty example to support PRU1, RTUPRU0, RTUPRU1, TXPRU0, TXPRU1 cores                   | PRU-IO
 -                                                                                               | -
 \endcond
 
