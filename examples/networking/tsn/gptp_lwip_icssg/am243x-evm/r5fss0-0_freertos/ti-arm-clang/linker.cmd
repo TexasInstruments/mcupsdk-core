@@ -133,24 +133,24 @@ SECTIONS
     GROUP {
         .text:   {} palign(8)   /* This is where code resides */
         .rodata: {} palign(8)   /* This is where const's go */
-    } > MSRAM
+    } > DDR
 
     /* This is rest of initialized data. This can be placed in DDR if DDR is available and needed */
     GROUP {
         .data:   {} palign(8)   /* This is where initialized globals and static go */
-    } > MSRAM
+    } > DDR
 
     /* This is rest of uninitialized data. This can be placed in DDR if DDR is available and needed */
     GROUP {
         .sysmem: {} palign(8)   /* This is where the malloc heap goes */
         .stack:  {} palign(8)   /* This is where the main() stack goes */
-    } > MSRAM
+    } > DDR
 
     GROUP {
         .bss:    {} palign(8)   /* This is where uninitialized globals go */
         RUN_START(__BSS_START)
         RUN_END(__BSS_END)
-    } > MSRAM
+    } > DDR
 
     /* This is where the stacks for different R5F modes go */
     GROUP {
@@ -169,7 +169,7 @@ SECTIONS
         .undefinedstack: {. = . + __UNDEFINED_STACK_SIZE;} align(8)
         RUN_START(__UNDEFINED_STACK_START)
         RUN_END(__UNDEFINED_STACK_END)
-    } > MSRAM
+    } > DDR
 
 
     .enet_dma_mem {
@@ -178,7 +178,7 @@ SECTIONS
 #if (ENET_SYSCFG_PKT_POOL_ENABLE == 1)
         *(*ENET_DMA_PKT_MEMPOOL)
 #endif
-    } (NOLOAD) > MSRAM
+    } (NOLOAD) > DDR
 }
 
 /*
@@ -206,6 +206,7 @@ MEMORY
      * this memory does not overlap with other R5F's
      */
     MSRAM     : ORIGIN = 0x70080000 , LENGTH = 0x17C000
+    DDR       : ORIGIN = 0x801F0000 , LENGTH = 0x1F0000
 
     /* This section can be used to put XIP section of the application in flash, make sure this does not overlap with
      * other CPUs. Also make sure to add a MPU entry for this section and mark it as cached and code executable

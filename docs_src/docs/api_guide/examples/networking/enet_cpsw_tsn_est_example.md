@@ -6,13 +6,56 @@
 # Introduction
 
   This example application demonstrates how to configure the 802.1 Qbv (EST)
-  through the TSN yang interface. The yang interface in the TSN is governed by
-  a module called uniconf which runs as a daemon. Any application which interacts
-  with the uniconf called a uniconf client. The uniconf client configures Qbv by
-  opening yang database (DB), write config yang parameters to DB and trigger
-  the uniconf for reading parameters from DB and writing to HW. The uniconf
-  reads or writes parameters from or to HW by calling TI's Enet LLD driver.
+  through our TSN yang interface.
 
+  The yang interface in the TSN is governed by a module called uniconf which runs as a daemon. Any application which interacts
+  with the uniconf is called as a uniconf client. The uniconf client configures Qbv by
+  opening yang database (DB), write config yang parameters to DB and triggers
+  the uniconf for reading parameters from DB and writing to HW. The uniconf
+  reads or writes parameters from or to HW by calling Enet LLD driver.
+
+  Please note that the file system support is not yet integrated to ethernet examples.
+
+  In this example, we configure the talker DUT to send out traffic as per the EST schedule and the listner DUT can verify the time-slots of the received packets.
+
+  \note Host based receive packet time-stamping is enabled for this demo purpose. But, Please note we have a HW errata i2401 regarding this feature and should not be used in production.
+
+See also : \ref EXAMPLES_ENET_CPSW_EST, \ref ENET_CPSW_TSN_GPTP
+
+# Supported Combinations
+
+\cond SOC_AM64X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos
+ Toolchain      | ti-arm-clang
+ Board          | @VAR_BOARD_NAME_LOWER
+ Example folder | examples/networking/tsn/est_cpsw_app
+
+\endcond
+
+\cond SOC_AM243X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/networking/tsn/est_cpsw_app
+
+\endcond
+
+\cond SOC_AM263X
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/networking/tsn/est_cpsw_app
+
+\endcond
 
 # Constraints
 
@@ -69,8 +112,8 @@ Each of the 8 gates (one per priority) can be in one of two states:
   value from the VLAN tag (`P0_RX_REMAP_VLAN = 1`).
 
 - The EST schedule is 248us long and it is composed of 4 intervals, each with a
-  gate mask that enables transmission of 2 priorities. The priority 7 is for
-  PTP traffic.
+  gate mask that enables transmission of 2 priorities. PTP traffic can be sent on any
+  non-zero priority. Here we are using the priority 7 for PTP traffic.
   The gate of this priority is always opened to make sure there is no interruption
   of the PTP packet which keeps the PTP in good synchronization status.
   The remaining priorities are for test traffic (avtp packets).
@@ -84,7 +127,7 @@ Each of the 8 gates (one per priority) can be in one of two states:
 
    **Where**
 
-   + `baseTime`: PTP time round up to the `delayOffset` to have the same both
+   + `baseTime`: PTP time round-off to the `delayOffset` to have the same both
      `baseTime` on talker and listener to apply the EST schedule that the same
      time in the future.
 
@@ -149,9 +192,9 @@ Then the EST application will be started when the `EnetApp_startTsn` is called.
   and `standard/ieee/draft/802.1/Qcw/ieee802-dot1q-sched.yang`
   from the https://github.com/YangModels/yang.git
 
-- Since enet-lld only supports to configure the `admin-control-list`,
+- Enet-lld supports to configure the `admin-control-list`,
   `baseTime` (`admin-base-time`) and cycleTime (`admin-cycle-time`),
-  this section only describes the parameters of the `admin-control-list`
+  this section describes the parameters of the `admin-control-list`
   Here are parameters of the `admin-control-list` after converting
   parameters from yang to to xml
 
@@ -217,7 +260,6 @@ Then the EST application will be started when the `EnetApp_startTsn` is called.
    for yang configuration.
 
    Note
-
    The network interface `tilld0` is default network interface name, name of network interface
    can be changed by changing default Mac port configured for the example.
 
@@ -232,19 +274,6 @@ In addition, follow the steps in the next section.
 
 \note Ethernet cable must be connected and link must be up in order for the example
       application to continue execution.
-
-## AM263X-CC
-
-- If using MAC port 1 (default), connect an Ethernet cable to the RJ-45 jack labeled
-  as `J7`.
-- If using MAC port 2, connect an Ethernet cable to the RJ-45 jack labeled as `J4`.
-
-## AM263X-LP
-
-- If using MAC port 1 (default), connect an Ethernet cable to the RJ-45 jack labeled
-  as `J7`.
-- If using MAC port 2, connect an Ethernet cable to the RJ-45 jack labeled as `J8`.
-
 
 # Running Enet TSN EST example
 

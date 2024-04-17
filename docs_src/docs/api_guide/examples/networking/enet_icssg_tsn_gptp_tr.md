@@ -12,9 +12,10 @@ However, the application used here supports all the below modes:
 In this example, connected Host PC is configured to force gPTP grand master role, so that the DUT becomes time_receiver (i.e. gPTP slave) mode.
 Yang based configuration is also supported. Currently File System is not supported, will be added in future releases.
 
-In this example, We use dedicated Rx and Tx DMA channels for gPTP traffic. Please note that only ICSSG switch mode is supported with gPTP.
+In this example, We use dedicated Rx and Tx DMA channels for gPTP traffic. This example is supported in both ICSSG Switch and Dual Mac modes.
+In ICSSG Dual Mac mode, Currently only Mac Port 1 is supported for gPTP.
 
-Along with PTP traffic, application also handles non-PTP traffic in a separate RTOS task and DMA Channel. Received non-PTP packets are sent back by the application, by interchanging source and destination MAC address.
+Along with PTP traffic, application also handles non-PTP traffic in a separate RTOS task and DMA Channel. Received non-PTP packets are echoed back by the application.
 
 See also :\ref ENET_CPSW_TSN_GPTP for gPTP stack documentation.
 
@@ -55,7 +56,7 @@ $ ptp4l -v
 \endcode
 - Configure linuxptp
 \code
-$ wget https://raw.githubusercontent.com/richardcochran/linuxptp/master/configs/gPTP.cfg -O ~/ptp_config.cfg
+$ wget https://raw.githubusercontent.com/richardcochran/linuxptp/master/configs/gPTP.cfg -O ~/gptp_config.cfg
 \endcode
 \attention Change the value of `priority1` in ~/gptp_config.cfg file to `100`, to enforce it to gPTP master
 

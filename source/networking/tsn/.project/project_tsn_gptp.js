@@ -16,7 +16,6 @@ const files = {
         "gptpcommon.c" ,
         "gptpman.c" ,
         "gptpmasterclock.c" ,
-        "gptpmasterclock_response.c" ,
         "link_delay_interval_setting_sm.c" ,
         "md_abnormal_hooks.c" ,
         "md_announce_receive_sm.c" ,

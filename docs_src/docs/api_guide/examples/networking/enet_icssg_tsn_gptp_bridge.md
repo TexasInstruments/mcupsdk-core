@@ -10,11 +10,11 @@ However, the application used here supports all the below modes:
     - gPTP End-Point time_receiver mode (i.e. slave mode)
     - gPTP Bridge mode
 
-Please note that only ICSSG switch mode is supported with gPTP. In this example, there are two PCs connected to EVM (DUT). One of the PC is configured as PTP master and another as PTP slave.
+Please note that only ICSSG switch mode supports gPTP bridge. In this example, there are two PCs connected to EVM (DUT). One of the PC is configured as PTP master and another as PTP slave.
 
 Yang based configuration is also supported. Currently File System is not supported, will be added in future releases.
 
-Along with PTP traffic, application also handles non-PTP traffic in a separate RTOS task and DMA Channel. Received non-PTP packets are sent back by the application, by interchanging source and destination MAC address.
+Along with PTP traffic, application also handles non-PTP traffic in a separate RTOS task and DMA Channel. Received non-PTP packets are echoed back by the application.
 
 See also :\ref ENET_CPSW_TSN_GPTP for gPTP stack documentation.
 
@@ -27,7 +27,7 @@ See also :\ref ENET_CPSW_TSN_GPTP for gPTP stack documentation.
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Board          | @VAR_BOARD_NAME_LOWER
- Example folder | examples/networking/tsn/gptp_icssg_app
+ Example folder | examples/networking/tsn/gptp_icssg_app/gptp_icssg_switch
 
 \endcond
 
@@ -38,7 +38,7 @@ See also :\ref ENET_CPSW_TSN_GPTP for gPTP stack documentation.
  CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
- Example folder | examples/networking/tsn/gptp_icssg_app
+ Example folder | examples/networking/tsn/gptp_icssg_app/gptp_icssg_switch
 
 \endcond
 
@@ -55,7 +55,7 @@ $ ptp4l -v
 \endcode
 - Configure linuxptp
 \code
-$ wget https://raw.githubusercontent.com/richardcochran/linuxptp/master/configs/gPTP.cfg -O ~/ptp_config.cfg
+$ wget https://raw.githubusercontent.com/richardcochran/linuxptp/master/configs/gPTP.cfg -O ~/gptp_config.cfg
 \endcode
 \attention On PC1, change the value of `priority1` in ~/gptp_config.cfg file to `100`, to enforce PC1 to gPTP master.
 
