@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -33,12 +33,22 @@
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
+#include <stdint.h>
+#include <board/ioexp/ioexp_tca6424.h>
+#include <board/eeprom.h>
 #include <drivers/i2c.h>
 #include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
+#define IO_MUX_MCAN_SEL                             (4U)                        /* PORT 0, PIN 4         -> ioIndex : 0*8 + 4 = 4*/
+#define IO_MUX_MCAN_STB                             (17U)                       /* PORT 2, PIN 1         -> ioIndex : 2*8 + 1 = 17 */
+#define TCA6424_IO_MUX_MCAN_SEL_PORT_LINE_STATE     (TCA6424_OUT_STATE_LOW)     /* MCAN_SEL PIN OUTPUT   -> 0 */
+#define TCA6424_IO_MUX_MCAN_STB_PORT_LINE_STATE     (TCA6424_OUT_STATE_HIGH)    /* MCAN_STB PIN OUTPUT   -> 1 */
+#define EEPROM_OFFSET_READ_PCB_REV                  (0x0022U)
+#define EEPROM_READ_PCB_REV_DATA_LEN                (0x2U)
 
 /* Input status register */
 #define TCA6416_REG_INPUT0              ((UInt8) 0x00U)
@@ -54,42 +64,20 @@
 #define TCA6416_REG_CONFIG1             ((uint8_t) 0x07U)
 
 /* ========================================================================== */
-/*                          Function Declarations                             */
+/*                            Global Variables                                */
 /* ========================================================================== */
-static void SetupI2CTransfer(I2C_Handle handle,  uint32_t targetAddr,
-                      uint8_t *writeData, uint32_t numWriteBytes,
-                      uint8_t *readData,  uint32_t numReadBytes);
 
-void mcanEnableTransceiver(void)
-{
-    I2C_Handle      i2cHandle;
-    uint8_t         dataToSlave[4];
+static TCA6424_Config  gTCA6424_Config;
 
-    i2cHandle = gI2cHandle[CONFIG_I2C0];
-    dataToSlave[0] = TCA6416_REG_CONFIG0;
-    dataToSlave[1] = 0x0U;
-    SetupI2CTransfer(i2cHandle, 0x20, &dataToSlave[0], 1, &dataToSlave[1], 1);
-    /* set the P00 to 0 make them output ports. */
-    dataToSlave[1] &= ~(0x1U);
-    SetupI2CTransfer(i2cHandle, 0x20, &dataToSlave[0], 2, NULL, 0);
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
 
-    /* Get the port values. */
-    dataToSlave[0] = TCA6416_REG_INPUT0;
-    dataToSlave[1] = 0x0U;
-    SetupI2CTransfer(i2cHandle, 0x20, &dataToSlave[0], 1, &dataToSlave[1], 1);
-
-    /* Set P10 and P11 to 0.
-     */
-    dataToSlave[0] = TCA6416_REG_OUTPUT0;
-    dataToSlave[1] &= ~(0x1);
-    SetupI2CTransfer(i2cHandle, 0x20, &dataToSlave[0], 2, NULL, 0);
-}
-
-static void SetupI2CTransfer(I2C_Handle handle,  uint32_t targetAddr,
+static int32_t SetupI2CTransfer(I2C_Handle handle,  uint32_t targetAddr,
                       uint8_t *writeData, uint32_t numWriteBytes,
                       uint8_t *readData,  uint32_t numReadBytes)
 {
-    int32_t status;
+    int32_t status = SystemP_SUCCESS;
     I2C_Transaction i2cTransaction;
 
     /* Enable Transceiver */
@@ -100,5 +88,113 @@ static void SetupI2CTransfer(I2C_Handle handle,  uint32_t targetAddr,
     i2cTransaction.readBuf = (uint8_t *)&readData[0];
     i2cTransaction.readCount = numReadBytes;
     status = I2C_transfer(handle, &i2cTransaction);
+    return status;
+}
+
+int32_t TCA6416_Transceiver(void)
+{
+    I2C_Handle      i2cHandle;
+    uint8_t         dataToSlave[4];
+    int32_t status = SystemP_SUCCESS;
+
+    i2cHandle = gI2cHandle[CONFIG_I2C0];
+    dataToSlave[0] = TCA6416_REG_CONFIG0;
+    dataToSlave[1] = 0x0U;
+    status = SetupI2CTransfer(i2cHandle, 0x20, &dataToSlave[0], 1, &dataToSlave[1], 1);
+    DebugP_assert(status == SystemP_SUCCESS);
+
+    /* set the P00 to 0 make them output ports. */
+    dataToSlave[1] &= ~(0x1U);
+    status = SetupI2CTransfer(i2cHandle, 0x20, &dataToSlave[0], 2, NULL, 0);
+    DebugP_assert(status == SystemP_SUCCESS);
+
+    /* Get the port values. */
+    dataToSlave[0] = TCA6416_REG_INPUT0;
+    dataToSlave[1] = 0x0U;
+    status = SetupI2CTransfer(i2cHandle, 0x20, &dataToSlave[0], 1, &dataToSlave[1], 1);
+    DebugP_assert(status == SystemP_SUCCESS);
+
+    /* Set P10 and P11 to 0.
+     */
+    dataToSlave[0] = TCA6416_REG_OUTPUT0;
+    dataToSlave[1] &= ~(0x1);
+    status = SetupI2CTransfer(i2cHandle, 0x20, &dataToSlave[0], 2, NULL, 0);
+    DebugP_assert(status == SystemP_SUCCESS);
+
+    return status;
+}
+
+int32_t TCA6424_Transceiver(void)
+{
+    int32_t             status = SystemP_SUCCESS;
+    TCA6424_Params      tca6424Params;
+    TCA6424_Params_init(&tca6424Params);
+
+    status = TCA6424_open(&gTCA6424_Config, &tca6424Params);
     DebugP_assert(SystemP_SUCCESS == status);
+
+    /* For MCAN_SEL */
+    status = TCA6424_setOutput(
+                    &gTCA6424_Config,
+                    IO_MUX_MCAN_SEL,
+                    TCA6424_IO_MUX_MCAN_SEL_PORT_LINE_STATE);
+    DebugP_assert(SystemP_SUCCESS == status);
+
+    status += TCA6424_config(
+                    &gTCA6424_Config,
+                    IO_MUX_MCAN_SEL,
+                    TCA6424_MODE_OUTPUT);
+    DebugP_assert(SystemP_SUCCESS == status);
+
+
+    /* For MCAN_STB*/
+    status += TCA6424_setOutput(
+                    &gTCA6424_Config,
+                    IO_MUX_MCAN_STB,
+                    TCA6424_IO_MUX_MCAN_STB_PORT_LINE_STATE);
+    DebugP_assert(SystemP_SUCCESS == status);
+
+    status += TCA6424_config(
+                    &gTCA6424_Config,
+                    IO_MUX_MCAN_STB,
+                    TCA6424_MODE_OUTPUT);
+
+    if(status != SystemP_SUCCESS)
+    {
+        DebugP_log("Transceiver Setup Failure !!");
+        TCA6424_close(&gTCA6424_Config);
+    }
+
+    TCA6424_close(&gTCA6424_Config);
+    return status;
+}
+
+void mcanEnableTransceiver()
+{
+    int32_t status = SystemP_SUCCESS;
+    uint8_t boardVer[2] = "";
+
+    Board_eepromOpen();
+
+    status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0], EEPROM_OFFSET_READ_PCB_REV, boardVer, EEPROM_READ_PCB_REV_DATA_LEN);
+    if(status == SystemP_SUCCESS)
+    {
+        if(boardVer[1] == '2')
+        {
+            /* boardVer is E2 */
+            status = TCA6424_Transceiver();
+        }
+        else if(boardVer[1] == '1')
+        {
+            /* boardVer is E1 */
+            status = TCA6416_Transceiver();
+        }
+        else
+        {
+            status = TCA6416_Transceiver();
+        }
+    }
+
+    DebugP_assert(status == SystemP_SUCCESS);
+    Board_eepromClose();
 }
