@@ -12,6 +12,7 @@
 MCU+ SDK is a software development package designed for usage with Sitara MCU+ class of devices from Texas Instruments. These devices currently include
 
 - [AM2431](https://www.ti.com/product/AM2431), [AM2432](https://www.ti.com/product/AM2432), [AM2434](https://www.ti.com/product/AM2434)
+- [AM263P4](https://www.ti.com/product/AM263P4)
 - [AM2634](https://www.ti.com/product/AM2634), [AM2634-Q1](https://www.ti.com/product/AM2634-Q1)
 - [AM2732](https://www.ti.com/product/AM2732)
 - [AM6411](https://www.ti.com/product/AM6411), [AM6412](https://www.ti.com/product/AM6412), [AM6421](https://www.ti.com/product/AM6421), [AM6422](https://www.ti.com/product/AM6422), [AM6441](https://www.ti.com/product/AM6441), [AM6442](https://www.ti.com/product/AM6442)
@@ -66,6 +67,7 @@ multiple repositories. To setup the repo tool, navigate to [repo tool setup](#re
 Prebuilt SDK installers  for specific devices are available at below links. Please note that installers are packaged specific to each device to reduce size.
 
 - [AM243x MCU+ SDK](https://www.ti.com/tool/MCU-PLUS-SDK-AM243X)
+- [AM263Px MCU+ SDK](https://www.ti.com/tool/MCU-PLUS-SDK-AM263PX)
 - [AM263x MCU+ SDK](https://www.ti.com/tool/MCU-PLUS-SDK-AM263X)
 - [AM273x MCU+ SDK](https://www.ti.com/tool/MCU-PLUS-SDK-AM273X)
 - [AM64x  MCU+ SDK](https://www.ti.com/tool/download/MCU-PLUS-SDK-AM64X/08.04.00.17)
@@ -75,6 +77,8 @@ Prebuilt SDK installers  for specific devices are available at below links. Plea
 TI has an amazing collection of tutorials on MCU+ Academy to help you get started.
 
 - [AM243x MCU+ Academy](https://dev.ti.com/tirex/explore/node?node=A__AIo8NlrG3wSiDMUMT-uDWg__com.ti.MCU_PLUS_ACADEMY_AM243X__6zyEKJF__LATEST)
+
+- [AM263Px MCU+ Academy](https://dev.ti.com/tirex/explore/node?node=A__AEIJm0rwIeU.2P1OBWwlaA__MCU-PLUS-SDK-AM263PX__HVz3lnH__LATEST)
 
 - [AM263x MCU+ Academy](https://dev.ti.com/tirex/explore/node?node=A__ADxJvKS8txu3Or8Qrf1ZiQ__com.ti.MCU_PLUS_ACADEMY_AM263X__rGFXMCu__LATEST)
 
@@ -331,6 +335,7 @@ For more details on SDK usage, please refer to the SDK userguide. User guides co
 Note that userguides are specific to a particular device. The links for all the supported devices are given below.
 
 - [AM243x User Guide](https://software-dl.ti.com/mcu-plus-sdk/esd/AM243X/latest/exports/docs/api_guide_am243x/index.html)
+- [AM263Px User Guide](https://software-dl.ti.com/mcu-plus-sdk/esd/AM263PX/latest/exports/docs/api_guide_am263px/index.html)
 - [AM263x User Guide](https://software-dl.ti.com/mcu-plus-sdk/esd/AM263X/latest/exports/docs/api_guide_am263x/index.html)
 - [AM273x User Guide](https://software-dl.ti.com/mcu-plus-sdk/esd/AM273X/latest/exports/docs/api_guide_am273x/index.html)
 - [AM64x  User Guide](https://software-dl.ti.com/mcu-plus-sdk/esd/AM64X/latest/exports/docs/api_guide_am64x/index.html)
