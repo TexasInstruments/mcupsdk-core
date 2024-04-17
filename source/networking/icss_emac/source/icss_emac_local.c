@@ -1425,17 +1425,7 @@ void ICSS_EMAC_mdioIntrEnable(uint8_t portNum, ICSS_EMAC_Handle icssEmacHandle)
     PRUICSS_Handle          pruicssHandle = ((ICSS_EMAC_Object *)icssEmacHandle->object)->pruicssHandle;
     PRUICSS_HwAttrs const   *pruicssHwAttrs = (PRUICSS_HwAttrs const *)(pruicssHandle->hwAttrs);
     uint32_t                baseAddr = pruicssHwAttrs->miiMdioRegBase + CSL_MDIO_USER_PHY_SEL_REG((uint32_t)portNum - (uint32_t)1U) ;
-    uint32_t                phyAddr;
-    //uint32_t                phyAddr = (((ICSS_EMAC_Attrs *)icssEmacHandle->attrs))->phyAddr[0];
-
-    if(ICSS_EMAC_PORT_1 == portNum)
-    {
-        phyAddr = (((ICSS_EMAC_Attrs *)icssEmacHandle->attrs))->phyAddr[0];
-    }
-    else
-    {
-        phyAddr = (((ICSS_EMAC_Attrs *)icssEmacHandle->attrs))->phyAddr[1];
-    }
+    uint32_t                phyAddr = (((ICSS_EMAC_Attrs *)icssEmacHandle->attrs))->phyAddr[0];
 
     /* TODO: Use MDIO API directly */
     phySel = phyAddr;
