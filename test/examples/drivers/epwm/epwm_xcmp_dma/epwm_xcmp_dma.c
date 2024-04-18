@@ -34,6 +34,7 @@
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+#include <linker_defines.h>
 
 /*
  * Example Description :
@@ -104,25 +105,28 @@ uint32_t gEdmaChannels[APP_EDMA_CHANNELS];
 
 uint32_t gEdmaRegionId, gEdmaTcc;
 
-uint32_t gEpwm0ShadowSet1[SHADOW_REGS] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT), section(".bss.tcm_a_mem"))) = {0};
-uint32_t gEpwm0ShadowSet2[SHADOW_REGS] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT), section(".bss.tcm_a_mem"))) = {0};
-uint32_t gEpwm0ShadowSet3[SHADOW_REGS] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT), section(".bss.tcm_a_mem"))) = {0};
+/* Placing these in the TCM memory for faster access. Note this Memory is not cached.
+if these arrays are placed in any memory where cache is enabeld, one might have to use the CacheP_wb to reflect the data in the memories */
 
-uint32_t gEpwm1ShadowSet1[SHADOW_REGS] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT), section(".bss.tcm_a_mem"))) = {0};
-uint32_t gEpwm1ShadowSet2[SHADOW_REGS] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT), section(".bss.tcm_a_mem"))) = {0};
-uint32_t gEpwm1ShadowSet3[SHADOW_REGS] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT), section(".bss.tcm_a_mem"))) = {0};
+uint32_t gEpwm0ShadowSet1[SHADOW_REGS] TCM_A_MEM_SECTION = {0};
+uint32_t gEpwm0ShadowSet2[SHADOW_REGS] TCM_A_MEM_SECTION = {0};
+uint32_t gEpwm0ShadowSet3[SHADOW_REGS] TCM_A_MEM_SECTION = {0};
 
-uint32_t gEpwm2ShadowSet1[SHADOW_REGS] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT), section(".bss.tcm_a_mem"))) = {0};
-uint32_t gEpwm2ShadowSet2[SHADOW_REGS] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT), section(".bss.tcm_a_mem"))) = {0};
-uint32_t gEpwm2ShadowSet3[SHADOW_REGS] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT), section(".bss.tcm_a_mem"))) = {0};
+uint32_t gEpwm1ShadowSet1[SHADOW_REGS] TCM_A_MEM_SECTION = {0};
+uint32_t gEpwm1ShadowSet2[SHADOW_REGS] TCM_A_MEM_SECTION = {0};
+uint32_t gEpwm1ShadowSet3[SHADOW_REGS] TCM_A_MEM_SECTION = {0};
 
-uint32_t gEpwm3ShadowSet1[SHADOW_REGS] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT), section(".bss.tcm_a_mem"))) = {0};
-uint32_t gEpwm3ShadowSet2[SHADOW_REGS] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT), section(".bss.tcm_a_mem"))) = {0};
-uint32_t gEpwm3ShadowSet3[SHADOW_REGS] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT), section(".bss.tcm_a_mem"))) = {0};
+uint32_t gEpwm2ShadowSet1[SHADOW_REGS] TCM_A_MEM_SECTION = {0};
+uint32_t gEpwm2ShadowSet2[SHADOW_REGS] TCM_A_MEM_SECTION = {0};
+uint32_t gEpwm2ShadowSet3[SHADOW_REGS] TCM_A_MEM_SECTION = {0};
 
-uint32_t gEpwm4ShadowSet1[SHADOW_REGS] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT), section(".bss.tcm_a_mem"))) = {0};
-uint32_t gEpwm4ShadowSet2[SHADOW_REGS] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT), section(".bss.tcm_a_mem"))) = {0};
-uint32_t gEpwm4ShadowSet3[SHADOW_REGS] __attribute__((aligned(CacheP_CACHELINE_ALIGNMENT), section(".bss.tcm_a_mem"))) = {0};
+uint32_t gEpwm3ShadowSet1[SHADOW_REGS] TCM_A_MEM_SECTION = {0};
+uint32_t gEpwm3ShadowSet2[SHADOW_REGS] TCM_A_MEM_SECTION = {0};
+uint32_t gEpwm3ShadowSet3[SHADOW_REGS] TCM_A_MEM_SECTION = {0};
+
+uint32_t gEpwm4ShadowSet1[SHADOW_REGS] TCM_A_MEM_SECTION = {0};
+uint32_t gEpwm4ShadowSet2[SHADOW_REGS] TCM_A_MEM_SECTION = {0};
+uint32_t gEpwm4ShadowSet3[SHADOW_REGS] TCM_A_MEM_SECTION = {0};
 
 uint32_t* gShadowSets[NUM_TEST_PWM][MAX_SHADOW_LEVEL] = {
     { gEpwm0ShadowSet1,    gEpwm0ShadowSet2,    gEpwm0ShadowSet3},
@@ -246,6 +250,15 @@ void App_epwmUpdateISR(void *args)
                     break;
                 }
                 gShadowSets[epwm_index][shadow_index][xcmp_index] = scale_value*set_1Mhz[xcmp_index];
+
+                /*
+                if the  gShadowSets[epwm_index][shadow_index] are not in the TCM memory,
+                and Cache is enabled for the memory where these are positioned,
+                then the writes to these arrays might not reflect back on the memories, rather cached.
+                In such a case, please use Cache write back to reflect these data in memories,
+                so the EDMA (another Bus Master) can access these data. the following can be uncommented for the same purpose.
+                */
+                //CacheP_wb((void *)gShadowSets[epwm_index][shadow_index], SHADOW_REGS*4, CacheP_TYPE_ALL);
             }
         }
     }

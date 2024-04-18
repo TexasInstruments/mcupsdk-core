@@ -42,8 +42,9 @@ const section9        = section.addInstance();
 const section10       = section.addInstance();
 const section11       = section.addInstance();
 const section12       = section.addInstance();
-const int_xbar   = scripting.addModule("/xbar/int_xbar/int_xbar", {}, false);
-const int_xbar1  = int_xbar.addInstance();
+const section13       = section.addInstance();
+const int_xbar        = scripting.addModule("/xbar/int_xbar/int_xbar", {}, false);
+const int_xbar1       = int_xbar.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -386,10 +387,12 @@ epwm6.epwmEventTrigger_interruptSource               = "EPWM_INT_TBCTR_PERIOD";
 epwm6.epwmEventTrigger_interruptEventCount           = "1";
 epwm6.epwmEventTrigger_interruptEventCountInitEnable = true;
 epwm6.EPWM.$assign                                   = "EPWM31";
+
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
 debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
 debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
+debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
 
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
@@ -600,6 +603,13 @@ section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_r5f_queue_mem";
 section12.output_section[0].alignment = 0;
 
+section13.$name                             = "TCM_A_MEMORY";
+section13.load_memory                       = "R5F_TCMA";
+section13.output_section.create(1);
+section13.output_section[0].$name           = ".tcm_a_mem";
+section13.output_section[0].palignment      = true;
+section13.output_section[0].include_defines = true;
+
 int_xbar1.$name      = "CONFIG_INT_XBAR0";
 int_xbar1.xbarOutput = ["EPWM31_INT"];
 
@@ -611,13 +621,13 @@ int_xbar1.xbarOutput = ["EPWM31_INT"];
 epwm1.EPWM.A.$suggestSolution           = "EPWM0_A";
 epwm1.EPWM.B.$suggestSolution           = "EPWM0_B";
 epwm2.EPWM.A.$suggestSolution           = "EPWM1_A";
-epwm2.EPWM.B.$suggestSolution           = "EPWM4_B";
+epwm2.EPWM.B.$suggestSolution           = "EPWM1_B";
 epwm3.EPWM.A.$suggestSolution           = "EPWM2_A";
 epwm3.EPWM.B.$suggestSolution           = "EPWM2_B";
 epwm4.EPWM.A.$suggestSolution           = "EPWM3_A";
 epwm4.EPWM.B.$suggestSolution           = "EPWM3_B";
 epwm5.EPWM.A.$suggestSolution           = "EPWM4_A";
-epwm5.EPWM.B.$suggestSolution           = "EPWM1_B";
+epwm5.EPWM.B.$suggestSolution           = "EPWM4_B";
 epwm6.EPWM.A.$suggestSolution           = "PR0_PRU1_GPIO10";
 epwm6.EPWM.B.$suggestSolution           = "PR0_PRU1_GPIO8";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

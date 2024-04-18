@@ -42,8 +42,9 @@ const section9        = section.addInstance();
 const section10       = section.addInstance();
 const section11       = section.addInstance();
 const section12       = section.addInstance();
-const int_xbar   = scripting.addModule("/xbar/int_xbar/int_xbar", {}, false);
-const int_xbar1  = int_xbar.addInstance();
+const section13       = section.addInstance();
+const int_xbar        = scripting.addModule("/xbar/int_xbar/int_xbar", {}, false);
+const int_xbar1       = int_xbar.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -599,6 +600,13 @@ section12.type                        = "NOLOAD";
 section12.output_section.create(1);
 section12.output_section[0].$name     = ".bss.sipc_r5f_queue_mem";
 section12.output_section[0].alignment = 0;
+
+section13.$name                             = "TCM_A_MEMORY";
+section13.load_memory                       = "R5F_TCMA";
+section13.output_section.create(1);
+section13.output_section[0].$name           = ".tcm_a_mem";
+section13.output_section[0].palignment      = true;
+section13.output_section[0].include_defines = true;
 
 int_xbar1.$name      = "CONFIG_INT_XBAR0";
 int_xbar1.xbarOutput = ["EPWM31_INT"];
