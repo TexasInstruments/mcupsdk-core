@@ -5,7 +5,11 @@
     if("syscfgfile" in args.project) {
         products+=`sysconfig;`
     }
+    if((args.project.device == "am263px") && (args.utils.getProductNameProjectSpec(args.project.device) != "MCU_PLUS_SDK_AMXXX")) {
+    products+="MCU-PLUS-SDK-"+args.project.device.toUpperCase()
+    } else {
     products+=`com.ti.${args.utils.getProductNameProjectSpec(args.project.device)}`
+    }
     productName = args.utils.getProductNameProjectSpec(args.project.device);
     if(args.project.projecspecFileAction)  // should be renamed to projectspecFileAction
     {

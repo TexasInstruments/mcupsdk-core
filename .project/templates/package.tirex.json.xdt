@@ -12,7 +12,11 @@
 [
     {
         "metadataVersion": "3.01.00",
+        % if((args.device == "am263px") && (!isDevelopmentMode)) {
+        "id": "`"MCU-PLUS-SDK-"+args.device.toUpperCase()`",
+        % } else {
         "id": "com.ti.`productName`",
+        % }
         "name": "MCU+ SDK for `deviceName`",
         "rootCategory": [ "MCU+ SDK", "MCU+ SDK for `deviceName`" ],
         "version": "07.03.00.01",
