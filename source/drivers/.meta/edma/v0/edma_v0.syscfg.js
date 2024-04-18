@@ -1,5 +1,6 @@
 
 let common = system.getScript("/common");
+let hwi = system.getScript("/kernel/dpl/hwi.js");
 
 function getConfigArr() {
     return system.getScript(`/drivers/edma/soc/edma_${common.getSocName()}`).getConfigArr();
@@ -244,6 +245,13 @@ let edma_module = {
             description: "This determines whether the interrupt needs to be registered",
         },
         {
+            name: "intrPriority",
+            displayName: "Interrupt Priority",
+            default: hwi.getHwiDefaultPriority(),
+            hidden: !hwi.getPriorityConfigSupported(),
+            description: `Interrupt Priority: 0 (highest) to ${hwi.getHwiMaxPriority()} (lowest)`,
+        },
+        {
             name: "enableOwnDmaChannelConfig",
             displayName: "Enable Core Dma Channel Config",
             default: true,
@@ -293,6 +301,7 @@ function validate(instance, report) {
     let maxRegion = getMaxRegionId(instance);
     let maxQueue  = getMaxQueue(instance);
 
+    common.validate.checkNumberRange(instance, report, "intrPriority", 0, hwi.getHwiMaxPriority(), "dec");
     common.validate.checkNumberRange(instance, report, "regionId", 0, Number(maxRegion) - Number(1), "dec");
     common.validate.checkNumberRange(instance, report, "queNum", 0, Number(maxQueue) - Number(1), "dec");
     common.validate.checkSameInstanceName(instance, report);

@@ -149,6 +149,7 @@ static EDMA_Attrs gEdmaAttrs[CONFIG_EDMA_NUM_INSTANCES] =
         % }
         .baseAddr           = `config.baseAddr`,
         .compIntrNumber     = `config.compIntrNumber`,
+        .intrPriority       = `instance.intrPriority`U,
         .intrAggEnableAddr  = `config.intrAggEnableAddr`,
         .intrAggEnableMask  = 0x1FF & (~(2U << `instance.regionId`)),
         .intrAggStatusAddr  = `config.intrAggStatusAddr`,

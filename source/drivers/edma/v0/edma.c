@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-23 Texas Instruments Incorporated
+ * Copyright (C) 2022-24 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -1368,6 +1368,7 @@ EDMA_Handle EDMA_open(uint32_t index, const EDMA_Params *prms)
                 /* Register interrupt */
                 HwiP_Params_init(&hwiPrms);
                 hwiPrms.intNum   = config->attrs->compIntrNumber;
+                hwiPrms.priority = config->attrs->intrPriority;
                 hwiPrms.callback = &EDMA_transferCompletionMasterIsrFxn;
                 hwiPrms.args     = object->handle;
                 hwiPrms.isPulse     = 1;

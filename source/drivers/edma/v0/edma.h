@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-23 Texas Instruments Incorporated
+ * Copyright (C) 2022-24 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -514,6 +514,8 @@ typedef struct
     /**< Init params */
     uint32_t                compIntrNumber;
     /**< Completion interrupt number. */
+    uint8_t  intrPriority;
+    /**< Interrupt priority. */
     uint32_t                intrAggEnableAddr;
     /**< Interrupt Aggregator enable address */
     uint32_t                intrAggEnableMask;
