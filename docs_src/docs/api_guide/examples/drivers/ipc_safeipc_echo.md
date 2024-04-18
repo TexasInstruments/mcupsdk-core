@@ -10,7 +10,7 @@ In this example,
 - One "main" CPU, sends multi-byte messages to other "remote" CPUs using the RP Message APIs
 - The "remote" CPUs, then echo back the same message to the main CPUs
 - Once all messages are echoed the main CPU exits. The remote CPUs remain waiting to receive new messages.
-- SafeIPC and CRC is enabled between the two cores. Firewalls are configured to prevent unwanted access and CRC 
+- SafeIPC and CRC is enabled between the two cores. Firewalls are configured to prevent unwanted access and CRC
   is used for data integrity check.
 
 # Supported Combinations
@@ -76,7 +76,7 @@ In this example,
   and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE). This will build all the dependant CPU projects as well
 - **When using makefiles to build**, build the system makefile using
   make command (see \ref MAKEFILE_BUILD_PAGE). This will build all the dependant CPU makefiles as well.
-\if SOC_AM263X || SOC_AM263PX
+\if (SOC_AM263X || SOC_AM263PX)
 - Launch a CCS debug session, follow the steps for running multi core applications in \ref PREREQUISITES and run the executables, see \ref CCS_LAUNCH_PAGE
 \else
 - Launch a CCS debug session and run the executables, see \ref CCS_LAUNCH_PAGE
