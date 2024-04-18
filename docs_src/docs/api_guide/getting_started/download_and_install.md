@@ -145,9 +145,11 @@ To build applications using this SDK, one needs below host PC machine
 ### OpenSSL {#INSTALL_OPENSSL}
 
 - OpenSSL is needed for signing the bootloader and application images when booting using a bootloader.
+- Current signing scripts of SDK support both v1.1.1 and v3 of OpenSSL.
+- With am263x, am263px, am273x OpenSSL v3 is **recommended** as v1.1.1 has reached END OF LIFE.
 - Download and install OpenSSL as below,
   - In windows,
-    - Download v1.1.1 from https://slproweb.com/products/Win32OpenSSL.html
+    - Download OpenSSL v1.1.1 or v3 from https://slproweb.com/products/Win32OpenSSL.html
     - You can install the "light" version which is smaller download size
     - Install to default path, which is `C:/Program Files/OpenSSL-Win64/`
     - When prompted select option to install binaries to `/bin` folder of installed path instead of Windows system path.
@@ -159,18 +161,22 @@ To build applications using this SDK, one needs below host PC machine
       other versions of openssl, https://wiki.openssl.org/index.php/Binaries
 
   - In Linux,
-    - The v1.1.1 is important, OpenSSL 3.0 won't work with the current signing scripts of SDK. So if you have Ubuntu 18.04,
-    do below in Linux Ubuntu shell to install openssl
+    -  So if you have Ubuntu 22.04, do below in Linux Ubuntu shell to install openssl
 
             $ sudo apt install openssl
 
-	- If you have an Ubuntu version higher than that, make sure that you install the 1.1.1 version. You can get the 1.1.1 packages
+	- Make sure that you install the v1.1.1 or v3 of OpenSSL. You can get the v1.1.1 or v3 packages
     from http://security.ubuntu.com/ubuntu/pool/main/o/openssl/. The packages required are openssl, libssl and libssl-dev
 
 - Test "openssl" by doing below on a command prompt and make sure there is no error. Example output on Windows is shown below,
 
         C:\> openssl version
         OpenSSL 1.1.1k  25 Mar 2021
+
+    OR
+
+        ~/workarea/mcu_plus_sdk$ openssl version
+        OpenSSL 3.0.2 15 Mar 2022 (Library: OpenSSL 3.0.2 15 Mar 2022)
 
 \cond SOC_AM64X || SOC_AM243X
 

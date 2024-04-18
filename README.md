@@ -223,11 +223,12 @@ and so on. For a complete list of arguments you can pass to the script, please r
 
 **Installing OpenSSL**
 
-Some of the SDK signing scripts are dependent on OpenSSL v1.1.1. The v1.1.1 is
-important, OpenSSL 3.0 is not compatible with the current signing scripts of SDK.
+Some of the SDK signing scripts are dependent on OpenSSL.
+Current signing scripts of SDK support both v1.1.1 and v3 of OpenSSL.
+With am263x, am263px, am273x OpenSSL v3 is **recommended** as v1.1.1 has reached END OF LIFE.
 
 In Windows,
-  - Download v1.1.1 from [here](https://slproweb.com/products/Win32OpenSSL.html)
+  - Download OpenSSL v1.1.1 or v3 from [here](https://slproweb.com/products/Win32OpenSSL.html)
   - You can install the "light" version which is smaller download size
   - Install to default path, which is C:/Program Files/OpenSSL-Win64/
   - When prompted select option to install binaries to /bin folder of installed path instead of Windows system path.
@@ -236,11 +237,11 @@ In Windows,
 
 In Linux,
   - There is a chance that OpenSSL is already installed. If not, here are the steps:
-  - If you have Ubuntu 18.04, do below in Linux Ubuntu shell to install openssl
+  - If you have Ubuntu 22.04, do below in Linux Ubuntu shell to install openssl
     -`$ sudo apt install openssl`
 
-    If you have an Ubuntu version higher than that, make sure that you install the 1.1.1 version.
-    You can get the 1.1.1 packages from [here](http://security.ubuntu.com/ubuntu/pool/main/o/openssl/).
+    Make sure that v1.1.1 or v3 version of OpenSSL is installed.
+    The v1.1.1 or v3 packages are also available [here](http://security.ubuntu.com/ubuntu/pool/main/o/openssl/).
     The packages required are openssl, libssl and libssl-dev
 
 Test openssl version by running `openssl version` on a command prompt and make sure there is no error.
@@ -249,6 +250,13 @@ Example output is shown below,
 ```bash
   C:\> openssl version
   OpenSSL 1.1.1k  25 Mar 2021
+```
+
+OR
+
+```bash
+    ~/workarea/mcu_plus_sdk$ openssl version
+    OpenSSL 3.0.2 15 Mar 2022 (Library: OpenSSL 3.0.2 15 Mar 2022)
 ```
 
 Now that the dependencies are installed, you can start the repositories with a
