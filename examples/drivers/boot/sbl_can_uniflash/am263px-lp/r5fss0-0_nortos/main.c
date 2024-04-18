@@ -53,13 +53,11 @@ uint8_t gUniflashVerifyBuf[BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE] __attribute_
 
 uint32_t gRunApp;
 
-#define IO_MUX_MCAN_STB                             (10U)                       // PORT 1, PIN 2         -> ioIndex : 1*8 + 2 = 10
-#define TCA6416_IO_MUX_MCAN_STB_PORT_LINE_STATE     (TCA6416_OUT_STATE_LOW)     // MCAN_STB PIN OUTPUT   -> 0
-
 extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle);
 void gpio_flash_reset(void);
+void mcanEnableTransceiver(void);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -79,37 +77,6 @@ void loop_forever()
 __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
 {
     return SystemP_SUCCESS;
-}
-
-void mcanEnableTransceiver()
-{
-    static TCA6416_Config  gTCA6416_Config;
-    int32_t             status = SystemP_SUCCESS;
-    TCA6416_Params      tca6416Params;
-    TCA6416_Params_init(&tca6416Params);
-
-    status = TCA6416_open(&gTCA6416_Config, &tca6416Params);
-    DebugP_assert(SystemP_SUCCESS == status);
-
-    status = TCA6416_setOutput(
-                    &gTCA6416_Config,
-                    IO_MUX_MCAN_STB,
-                    TCA6416_IO_MUX_MCAN_STB_PORT_LINE_STATE);
-    DebugP_assert(SystemP_SUCCESS == status);
-
-    /* Configure as output  */
-    status += TCA6416_config(
-                    &gTCA6416_Config,
-                    IO_MUX_MCAN_STB,
-                    TCA6416_MODE_OUTPUT);
-
-    if(status != SystemP_SUCCESS)
-    {
-        DebugP_log("Transceiver Setup Failure !!");
-        TCA6416_close(&gTCA6416_Config);
-    }
-
-    TCA6416_close(&gTCA6416_Config);
 }
 
 int main()

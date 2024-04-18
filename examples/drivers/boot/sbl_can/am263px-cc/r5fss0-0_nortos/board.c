@@ -29,75 +29,98 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
 #include <stdint.h>
-#include <board/ioexp/ioexp_tca6416.h>
+#include <board/ioexp/ioexp_tca6424.h>
 #include <board/eeprom.h>
 #include <drivers/i2c.h>
-#include <drivers/gpio.h>
-#include <kernel/dpl/AddrTranslateP.h>
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
-#include "ti_drivers_config.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/* PORT 1, PIN 2         -> ioIndex : 1*8 + 2 = 10 */
-#define IO_MUX_MCAN_STB                             (10U)
-/* MCAN_STB PIN OUTPUT   -> 0 */
-#define TCA6416_IO_MUX_MCAN_STB_PORT_LINE_STATE     (TCA6416_OUT_STATE_LOW)
+/* PORT 0, PIN 4         -> ioIndex : 0*8 + 4 = 4*/
+#define IO_MUX_MCAN_SEL                             (4U)
+/* PORT 2, PIN 1         -> ioIndex : 2*8 + 1 = 17 */
+#define IO_MUX_MCAN_STB                             (17U)
+/* MCAN_SEL PIN OUTPUT   -> 0 */
+#define TCA6424_IO_MUX_MCAN_SEL_PORT_LINE_STATE     (TCA6424_OUT_STATE_LOW)
+/* MCAN_STB PIN OUTPUT   -> 1 */
+#define TCA6424_IO_MUX_MCAN_STB_PORT_LINE_STATE     (TCA6424_OUT_STATE_HIGH)
+
+#define EEPROM_OFFSET_READ_PCB_REV                  (0x0022U)
+#define EEPROM_READ_PCB_REV_DATA_LEN                (0x2U)
+#define BOARD_VERSION_E2                            ('2')
 
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-static TCA6416_Config  gTCA6416_Config;
+static TCA6424_Config  gTCA6424_Config;
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
 /* ========================================================================== */
-void mcanEnableTransceiver(void)
+
+int32_t TCA6424_Transceiver(void)
 {
     int32_t             status = SystemP_SUCCESS;
-    TCA6416_Params      tca6416Params;
+    TCA6424_Params      tca6424Params;
 
-    TCA6416_Params_init(&tca6416Params);
-    status = TCA6416_open(&gTCA6416_Config, &tca6416Params);
+    TCA6424_Params_init(&tca6424Params);
+    status = TCA6424_open(&gTCA6424_Config, &tca6424Params);
     DebugP_assert(SystemP_SUCCESS == status);
 
-    status = TCA6416_setOutput(
-                    &gTCA6416_Config,
-                    IO_MUX_MCAN_STB,
-                    TCA6416_IO_MUX_MCAN_STB_PORT_LINE_STATE);
+    /* For MCAN_SEL */
+    status = TCA6424_setOutput(&gTCA6424_Config,IO_MUX_MCAN_SEL,TCA6424_IO_MUX_MCAN_SEL_PORT_LINE_STATE);
     DebugP_assert(SystemP_SUCCESS == status);
 
-    /* Configure as output  */
-    status += TCA6416_config(
-                    &gTCA6416_Config,
-                    IO_MUX_MCAN_STB,
-                    TCA6416_MODE_OUTPUT);
+    status += TCA6424_config(&gTCA6424_Config,IO_MUX_MCAN_SEL,TCA6424_MODE_OUTPUT);
+    DebugP_assert(SystemP_SUCCESS == status);
+
+    /* For MCAN_STB*/
+    status += TCA6424_setOutput(&gTCA6424_Config,IO_MUX_MCAN_STB,TCA6424_IO_MUX_MCAN_STB_PORT_LINE_STATE);
+    DebugP_assert(SystemP_SUCCESS == status);
+
+    status += TCA6424_config(&gTCA6424_Config,IO_MUX_MCAN_STB,TCA6424_MODE_OUTPUT);
 
     if(status != SystemP_SUCCESS)
     {
         DebugP_log("Transceiver Setup Failure !!");
-        TCA6416_close(&gTCA6416_Config);
+        TCA6424_close(&gTCA6424_Config);
     }
 
-    TCA6416_close(&gTCA6416_Config);
+    TCA6424_close(&gTCA6424_Config);
+    return status;
 }
 
-void gpio_flash_reset(void)
+void mcanEnableTransceiver(void)
 {
-    uint32_t    gpioBaseAddr, pinNum;
-    /* Get address after translation translate */
-    gpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(GPIO_OSPI_RST_BASE_ADDR);
-    pinNum       = GPIO_OSPI_RST_PIN;
-    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_OSPI_RST_DIR);
-    GPIO_pinWriteLow(gpioBaseAddr, pinNum);
-    GPIO_pinWriteHigh(gpioBaseAddr, pinNum);
+    int32_t status = SystemP_SUCCESS;
+    uint8_t boardVer[2] = "";
 
+    Board_eepromOpen();
+
+    status = EEPROM_read(gEepromHandle[CONFIG_EEPROM0], EEPROM_OFFSET_READ_PCB_REV, boardVer, EEPROM_READ_PCB_REV_DATA_LEN);
+    if(status == SystemP_SUCCESS)
+    {
+        if(boardVer[1] == BOARD_VERSION_E2)
+        {
+            /* boardVer is E2 */
+            status = TCA6424_Transceiver();
+        }
+        else
+        {
+            /* boardVer is E1 */
+            /* MCAN Transceiver is enabled by default in E1*/
+        }
+    }
+
+    DebugP_assert(status == SystemP_SUCCESS);
+    Board_eepromClose();
 }

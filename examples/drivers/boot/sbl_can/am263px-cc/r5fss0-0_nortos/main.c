@@ -51,6 +51,8 @@ extern HsmClient_t gHSMClient ;
 
 uint32_t gRunApp;
 
+void mcanEnableTransceiver(void);
+
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
  * with debugger connected.
@@ -75,6 +77,7 @@ int main()
 {
     int32_t status;
 
+    Bootloader_profileReset();
     Bootloader_socConfigurePll();
     Bootloader_socSetAutoClock();
 
@@ -95,6 +98,8 @@ int main()
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
     Bootloader_profileAddProfilePoint("Board_driversOpen");
+
+    mcanEnableTransceiver();
 
     DebugP_log("Starting CAN Bootloader...\r\n");
     Bootloader_CANInit(CONFIG_MCAN0_BASE_ADDR);

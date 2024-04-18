@@ -56,8 +56,7 @@ extern HsmClient_t gHSMClient ;
 
 uint32_t gRunApp;
 
-#define IO_MUX_MCAN_STB                             (10U)                       // PORT 1, PIN 2         -> ioIndex : 1*8 + 2 = 10
-#define TCA6416_IO_MUX_MCAN_STB_PORT_LINE_STATE     (TCA6416_OUT_STATE_LOW)     // MCAN_STB PIN OUTPUT   -> 0
+void mcanEnableTransceiver(void);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -79,42 +78,13 @@ __attribute__((weak)) int32_t Keyring_init(HsmClient_t *gHSMClient)
     return SystemP_SUCCESS;
 }
 
-void mcanEnableTransceiver(void)
-{
-    static TCA6416_Config  gTCA6416_Config;
-    int32_t             status = SystemP_SUCCESS;
-    TCA6416_Params      tca6416Params;
-    TCA6416_Params_init(&tca6416Params);
-
-    status = TCA6416_open(&gTCA6416_Config, &tca6416Params);
-    DebugP_assert(SystemP_SUCCESS == status);
-
-    status = TCA6416_setOutput(
-                    &gTCA6416_Config,
-                    IO_MUX_MCAN_STB,
-                    TCA6416_IO_MUX_MCAN_STB_PORT_LINE_STATE);
-    DebugP_assert(SystemP_SUCCESS == status);
-
-    /* Configure as output  */
-    status += TCA6416_config(
-                    &gTCA6416_Config,
-                    IO_MUX_MCAN_STB,
-                    TCA6416_MODE_OUTPUT);
-
-    if(status != SystemP_SUCCESS)
-    {
-        DebugP_log("Transceiver Setup Failure !!");
-        TCA6416_close(&gTCA6416_Config);
-    }
-
-    TCA6416_close(&gTCA6416_Config);
-}
-
 int main()
 {
     int32_t status;
 
+    Bootloader_profileReset();
     Bootloader_socConfigurePll();
+    Bootloader_socSetAutoClock();
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");
@@ -122,9 +92,10 @@ int main()
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");
 
-    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
-    Bootloader_socInitL2MailBoxMemory();
     DebugP_log("\r\n");
+    Bootloader_socInitL2MailBoxMemory();
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
@@ -133,7 +104,6 @@ int main()
     DebugP_assert(status == SystemP_SUCCESS);
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
-    Bootloader_socCpuSetClock(CSL_CORE_ID_R5FSS0_0, (uint32_t)(400*1000000));
     mcanEnableTransceiver();
     Bootloader_CANInit(CONFIG_MCAN0_BASE_ADDR);
 

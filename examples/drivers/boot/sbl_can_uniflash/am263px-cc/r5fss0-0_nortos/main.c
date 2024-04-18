@@ -53,6 +53,7 @@ extern Flash_Config gFlashConfig[CONFIG_FLASH_NUM_INSTANCES];
 
 void flashFixUpOspiBoot(OSPI_Handle oHandle);
 void i2c_flash_reset(void);
+void mcanEnableTransceiver(void);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -106,6 +107,7 @@ int main(void)
     DebugP_assert(status == SystemP_SUCCESS);
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
+    mcanEnableTransceiver();
     Bootloader_CANInit(CONFIG_MCAN0_BASE_ADDR);
 
     DebugP_log("\r\n");
