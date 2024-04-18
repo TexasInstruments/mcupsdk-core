@@ -45,12 +45,12 @@ AWR294x | R5F, C66x       | AWR294x GP EVM (referred to as awr294x-evm in code) 
 \cond SOC_AM273X
 Tools / SW module       | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F, C66x      | @VAR_CCS_VERSION
-SysConfig               | R5F, C66x      | @VAR_SYSCFG_VERSION_AM273X build, build @VAR_SYSCFG_BUILD_AM273X
-TI ARM CLANG            | R5F            | @VAR_TI_ARM_CLANG_VERSION
-TI C6000 Compiler       | C66x           | @VAR_TI_C6000_CGT_VERSION
-FreeRTOS Kernel         | R5F, C66x      | @VAR_FREERTOS_KERNEL_VERSION
-DSP LIB                 | C66x           | @VAR_DSPLIB_VERSION
+Code Composer Studio    | R5F, C66x      | 12.0.0
+SysConfig               | R5F, C66x      | 1.13.0 build, build 2553
+TI ARM CLANG            | R5F            | 2.1.1.LTS
+TI C6000 Compiler       | C66x           | 8.3.12
+FreeRTOS Kernel         | R5F, C66x      | 10.4.3
+DSP LIB                 | C66x           | 3.4.0.0
 
 DSP LIB package is modified to fix the build in Linux environment from the base version dsplib_c66x_3_4_0_0
 
@@ -61,11 +61,11 @@ DSP LIB package is modified to fix the build in Linux environment from the base 
 \cond SOC_AWR294X
 Tools / SW module       | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F, C66x      | @VAR_CCS_VERSION
-SysConfig               | R5F, C66x      | @VAR_SYSCFG_VERSION_AM273X build, build @VAR_SYSCFG_BUILD_AM273X
-TI ARM CLANG            | R5F            | @VAR_TI_ARM_CLANG_VERSION
-TI C6000 Compiler       | C66x           | @VAR_TI_C6000_CGT_VERSION
-FreeRTOS Kernel         | R5F, C66x      | @VAR_FREERTOS_KERNEL_VERSION
+Code Composer Studio    | R5F, C66x      | 12.0.0
+SysConfig               | R5F, C66x      | 1.13.0 build, build 2553
+TI ARM CLANG            | R5F            | 2.1.1.LTS
+TI C6000 Compiler       | C66x           | 8.3.12
+FreeRTOS Kernel         | R5F, C66x      | 10.4.3
 \endcond
 
 ## Key Features

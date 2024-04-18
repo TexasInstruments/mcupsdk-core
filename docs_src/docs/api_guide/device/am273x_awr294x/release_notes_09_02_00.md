@@ -9,14 +9,14 @@
       Unless noted otherwise, the SW modules would work on any of the CPU present on the SOC. \n
       Unless noted otherwise, the SW modules would work on all supported EVMs \n
 
-\attention Klockwork Static Analysis report is not updated for this release
-
 ## New in this Release
 
 \cond SOC_AM273X
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|--------------------------
--                                                                                               | -
+I2C LLD driver support (\ref DRIVERS_I2C_LLD_PAGE)                                              | I2C
+QSPI LLD driver support (\ref DRIVERS_QSPI_LLD_PAGE)                                            | QSPI
+STHE AES CTR, CFB, Streaming examples (\ref EXAMPLES_SECURITY)                                  | Security
 \endcond
 \cond SOC_AWR294X
 Feature                                                                                         | Module
@@ -43,13 +43,13 @@ AWR294x | R5F, C66x       | AWR294x GP EVM (referred to as awr294x-evm in code) 
 \cond SOC_AM273X
 Tools / SW module       | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F, C66x      | @VAR_CCS_VERSION
-SysConfig               | R5F, C66x      | @VAR_SYSCFG_VERSION_AM273X build, build @VAR_SYSCFG_BUILD_AM273X
-TI ARM CLANG            | R5F            | @VAR_TI_ARM_CLANG_VERSION
-TI C6000 Compiler       | C66x           | @VAR_TI_C6000_CGT_VERSION
-FreeRTOS Kernel         | R5F, C66x      | @VAR_FREERTOS_KERNEL_VERSION
-DSP LIB                 | C66x           | @VAR_DSPLIB_VERSION
-Mbed-TLS                | R5F            | @VAR_MBEDTLS_VERSION
+Code Composer Studio    | R5F, C66x      | 12.7.0
+SysConfig               | R5F, C66x      | 1.20.0 build, build 3587
+TI ARM CLANG            | R5F            | 3.2.2.LTS
+TI C6000 Compiler       | C66x           | 8.3.12
+FreeRTOS Kernel         | R5F, C66x      | 10.4.3
+DSP LIB                 | C66x           | 3.4.0.0
+Mbed-TLS                | R5F            | mbedtls-2.13.1
 
 DSP LIB package is modified to fix the build in Linux environment from the base version dsplib_c66x_3_4_0_0
 \endcond
@@ -57,11 +57,11 @@ DSP LIB package is modified to fix the build in Linux environment from the base 
 \cond SOC_AWR294X
 Tools / SW module       | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F, C66x      | @VAR_CCS_VERSION
-SysConfig               | R5F, C66x      | @VAR_SYSCFG_VERSION_AM273X build, build @VAR_SYSCFG_BUILD_AM273X
-TI ARM CLANG            | R5F            | @VAR_TI_ARM_CLANG_VERSION
-TI C6000 Compiler       | C66x           | @VAR_TI_C6000_CGT_VERSION
-FreeRTOS Kernel         | R5F, C66x      | @VAR_FREERTOS_KERNEL_VERSION
+Code Composer Studio    | R5F, C66x      | 12.7.0
+SysConfig               | R5F, C66x      | 1.20.0 build, build 3587
+TI ARM CLANG            | R5F            | 3.2.2.LTS
+TI C6000 Compiler       | C66x           | 8.3.12
+FreeRTOS Kernel         | R5F, C66x      | 10.4.3
 \endcond
 
 ## Key Features
@@ -194,6 +194,154 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F a
     <td> 09.00, 09.01
     <td> While Joining a igmp group, the mcast addr needs to be added to ALE with all ports as members. This is fixed
 </tr>
+<tr>
+    <td> MCUSDK-13000
+    <td> SBL CAN and CAN_Uniflash not working
+    <td> SBL
+    <td> 09.01.00
+    <td> Variable fileSize in application was not initialized
+</tr>
+<tr>
+    <td> MCUSDK-12951
+    <td> EPWM: Nomenclature disparity
+    <td> EDMA
+    <td> 09.00.00
+    <td> Disparity between the TRM, SDK driver, SDK syscfg, Register definition, Pinmux datasheet on the nomenclature being used. Updated comments as per TRM
+</tr>
+<tr>
+    <td> MCUSDK-12946
+    <td> IPC: RPMSG Send fails if timeout is 0
+    <td> IPC
+    <td> 09.01.00
+    <td> Timeout implemented while calling IpcNotify_send
+</tr>
+<tr>
+    <td> MCUSDK-12639
+    <td> CMAC performance is very low
+    <td> DTHE
+    <td> 09.00.00 onwards
+    <td> Use hardware offloading instead of using CMAC via software
+</tr>
+<tr>
+    <td> MCUSDK-12574
+    <td> EDMA: Unable to configure Interrupt priority
+    <td> SBL
+    <td> 09.00.00 onwards
+    <td> Enabled interrupt priority configuration from SysCfg
+</tr>
+<tr>
+    <td> MCUSDK-12514
+    <td> Package migration script is not working
+    <td> Common
+    <td> 09.01.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-8402
+    <td> AM273 shows up incorrectly in SysConfig "Software Product" drop-down list
+    <td> SysConfig
+    <td> 08.02.00 onwards
+    <td> -
+</tr>
+</table>
+
+## Known Issues
+<table>
+<tr>
+    <th> ID
+    <th> Head Line
+    <th> Module
+    <th> Applicable Releases
+    <th> Workaround
+</tr>
+\cond SOC_AM273X
+<tr>
+    <td> MCUSDK-3897
+    <td> MCASP Audio playback demo does not work in interrupt mode
+    <td> MCASP
+    <td> 8.03.00 onwards
+    <td> Use the McASP in DMA mode
+</tr>
+<tr>
+    <td> MCUSDK-5873
+    <td> FIQ handler data missing in HwIP_armv7r_handlers_nortos_asm.S file
+    <td> DPL
+    <td> 8.03.00 onwards
+    <td> None
+</tr>
+<tr>
+    <td> <a href="https://mbed-tls.readthedocs.io/en/latest/tech-updates/security-advisories/mbedtls-security-advisory-2021-07-1/">mbedTLS-advisory</a> <br> MCUSDK-9082
+    <td> MbedTLS - RSA exploit by kernel-privileged cache side-channel attackers
+    <td> Mbed-TLS
+    <td> 8.6.0 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-11730
+    <td> A wrong counter is used for Event 2 in PMU configuration
+    <td> PMU
+    <td> 09.00.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> PROC_SDL-7549
+    <td> STC example for DSP fails.
+    <td> SDL
+    <td> 09.02.00 onwards
+    <td> None.
+</tr>
+\endcond
+\cond SOC_AM273X || SOC_AWR294X
+<tr>
+    <td> PROC_SDL-4749
+    <td> AXI DED Bus Safety fail.
+    <td> SDL
+    <td> 8.5.0 onwards
+    <td> None.
+</tr>
+<tr>
+    <td> PROC_SDL-5159
+    <td> SEC ECC Bus Safety for MSS_AXI_RD not supported.
+    <td> SDL
+    <td> 8.5.0 onwards
+    <td> None.
+</tr>
+<tr>
+    <td> PROC_SDL-5616
+    <td> For ECC Bus Safety, SEC and DED are not supported for CPSW.
+    <td> SDL
+    <td> 8.6.0 onwards
+    <td> None.
+</tr>
+<tr>
+    <td> PROC_SDL-5617
+    <td> ECC Bus safety for SEC and DED not supported for MSS_L2.
+    <td> SDL
+    <td> 8.6.0 onwards
+    <td> None.
+</tr>
+<tr>
+    <td> PROC_SDL-5650
+    <td> ECC Bus safety for SEC and DED not supported for DSS_DSP_MDMA.
+    <td> SDL
+    <td> 8.6.0 onwards
+    <td> None.
+</tr>
+<tr>
+    <td> MCUSDK-11506
+    <td> ENET: CPDMA Goes To Lockup State.
+    <td> CPSW
+    <td> 8.5.0 onwards
+    <td> Disable THOST checksum Offload.
+</tr>
+<tr>
+    <td> MCUSDK-11507
+    <td> ENET: CPSW MAC port is stuck forever and dropping all the Rx/Tx packets with reception of corrupts preamble.
+    <td> CPSW
+    <td> 8.2.0 onwards
+    <td> Disable hostRxTimestampEn flag in CPSW CPST configuration. This does not impact the CPTS Rx or Tx Timestamp Events for PTP packets and is orthogonal feature.
+</tr>
+\endcond
 </table>
 
 \cond SOC_AM273X

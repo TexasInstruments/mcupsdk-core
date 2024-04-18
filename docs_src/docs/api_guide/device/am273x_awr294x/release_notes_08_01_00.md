@@ -39,11 +39,11 @@ AWR294x | R5F, C66x       | AWR294x GP EVM (referred to as awr294x-evm in code) 
 
 Tools / SW module       | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F, C66x      | @VAR_CCS_VERSION
-SysConfig               | R5F, C66x      | @VAR_SYSCFG_VERSION_AM273X build, build @VAR_SYSCFG_BUILD_AM273X
-TI ARM CLANG            | R5F            | @VAR_TI_ARM_CLANG_VERSION
-TI C6000 Compiler       | C66x           | @VAR_TI_C6000_CGT_VERSION
-FreeRTOS Kernel         | R5F, C66x      | @VAR_FREERTOS_KERNEL_VERSION
+Code Composer Studio    | R5F, C66x      | 11.0.0
+SysConfig               | R5F, C66x      | 1.10.0 build, build 2163
+TI ARM CLANG            | R5F            | 1.3.0.LTS
+TI C6000 Compiler       | C66x           | 8.3.11
+FreeRTOS Kernel         | R5F, C66x      | 10.4.3
 
 ## Key Features
 
