@@ -190,12 +190,15 @@ int main(void)
                         DebugP_assert(status == SystemP_SUCCESS);
                     }
                 }
-                Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
-                Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, OSPI_getInputClk(ospiHandle));
-                Bootloader_profileAddProfilePoint("SBL End");
-                Bootloader_profilePrintProfileLog();
-                DebugP_log("Image loading done, switching to application ...\r\n");
-                UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
+                if(status == SystemP_SUCCESS)
+                {
+                    Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
+                    Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, OSPI_getInputClk(ospiHandle));
+                    Bootloader_profileAddProfilePoint("SBL End");
+                    Bootloader_profilePrintProfileLog();
+                    DebugP_log("Image loading done, switching to application ...\r\n");
+                    UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
+                }
 
                 /* If any of the R5 core 0 have valid image reset the R5 core. */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);

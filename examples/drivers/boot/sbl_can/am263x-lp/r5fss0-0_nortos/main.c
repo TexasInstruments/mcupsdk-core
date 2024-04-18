@@ -209,14 +209,6 @@ int main()
                 /* do nothing */
             }
 
-            if(status == SystemP_SUCCESS)
-            {
-                Bootloader_profileAddProfilePoint("SBL End");
-                Bootloader_profilePrintProfileLog();
-                DebugP_log("Image loading done, switching to application ...\r\n");
-                UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
-            }
-
             /* Run CPUs */
             if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
             {
@@ -236,6 +228,13 @@ int main()
                 if( bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
                 {
                     status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
+                }
+                if(status == SystemP_SUCCESS)
+                {
+                    Bootloader_profileAddProfilePoint("SBL End");
+                    Bootloader_profilePrintProfileLog();
+                    DebugP_log("Image loading done, switching to application ...\r\n");
+                    UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
                 }
                 /* Reset self cluster, both Core0 and Core 1. Init RAMs and run the app  */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);

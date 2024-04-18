@@ -76,6 +76,7 @@ int main()
     int32_t status;
 
     Bootloader_socConfigurePll();
+    Bootloader_socSetAutoClock();
 
     System_init();
     Bootloader_profileAddProfilePoint("System_init");
@@ -83,9 +84,10 @@ int main()
     Drivers_open();
     Bootloader_profileAddProfilePoint("Drivers_open");
 
-    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
-    Bootloader_socInitL2MailBoxMemory();
     DebugP_log("\r\n");
+    Bootloader_socInitL2MailBoxMemory();
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
@@ -93,8 +95,6 @@ int main()
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
     Bootloader_profileAddProfilePoint("Board_driversOpen");
-
-    Bootloader_socCpuSetClock(CSL_CORE_ID_R5FSS0_0, (uint32_t)(400*1000000));
 
     DebugP_log("Starting CAN Bootloader...\r\n");
     Bootloader_CANInit(CONFIG_MCAN0_BASE_ADDR);
@@ -187,13 +187,6 @@ int main()
             {
                 /* do nothing */
             }
-            if(status == SystemP_SUCCESS)
-            {
-                Bootloader_profileAddProfilePoint("SBL End");
-                Bootloader_profilePrintProfileLog();
-                DebugP_log("Image loading done, switching to application ...\r\n");
-                UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
-            }
 
             /* Run CPUs */
             if(status == SystemP_SUCCESS && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
@@ -214,6 +207,13 @@ int main()
                 if( bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
                 {
                     status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
+                }
+                if(status == SystemP_SUCCESS)
+                {
+                    Bootloader_profileAddProfilePoint("SBL End");
+                    Bootloader_profilePrintProfileLog();
+                    DebugP_log("Image loading done, switching to application ...\r\n");
+                    UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
                 }
                 /* Reset self cluster, both Core0 and Core 1. Init RAMs and run the app  */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
