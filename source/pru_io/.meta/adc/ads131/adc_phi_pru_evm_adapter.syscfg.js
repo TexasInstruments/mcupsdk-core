@@ -78,7 +78,44 @@ function getPeripheralPinNames(inst)
 
 function moduleInstances(instance) {
     // if the pin is not being used or hardwired just unselect the pin
-    let modInstances =  [{
+    let modInstances = [];
+    let soc = common.getSocName();
+    if(soc == "am64x"){
+        modInstances.push({
+            name: "power",
+            displayName: "Power Enable Pin",
+            moduleName: "/drivers/gpio/gpio",
+            requiredArgs: {
+                pinDir: "OUTPUT",
+                GPIO: {
+                    gpioPin: {
+                        pu_pd: "pd",
+                    },
+                },
+                useMcuDomainPeripherals: false,
+            },
+        },
+        {
+            name: "rst",
+            displayName: "RESET",
+            moduleName: "/drivers/gpio/gpio",
+            requiredArgs: {
+                pinDir: "OUTPUT",
+                useMcuDomainPeripherals: false,
+            },
+            args: {
+                GPIO: {
+                    gpioPin: {
+                        pu_pd: "pu",    // reset ADC in starting
+                    },
+                },
+            },
+        },
+    )}
+    
+    else if(soc == "am243x")
+    {
+        modInstances.push({
             name: "power",
             displayName: "Power Enable Pin",
             moduleName: "/drivers/gpio/gpio",
@@ -97,10 +134,10 @@ function moduleInstances(instance) {
                 useMcuDomainPeripherals: false,
             },
             args: {
-                pu_pd: "pu",    // reset ADC in starting
+                pu_pd: "pu",
             },
-        },
-    ]
+        },    
+    )}
 
     modInstances.push({
         name: "pruIpc",

@@ -225,7 +225,171 @@ function getOsrPinmuxSettings(instance) {
 
 function moduleInstances(instance) {
     // if the pin is not being used or hardwired just unselect the pin
-    let modInstances =  [{
+    let modInstances = [];
+    let soc = common.getSocName();
+    if(soc == "am64x"){
+        modInstances.push({
+            name: "power",
+            displayName: "Power Enable Pin",
+            moduleName: "/drivers/gpio/gpio",
+            requiredArgs: {
+                pinDir: "OUTPUT",
+                GPIO: {
+                    gpioPin: {
+                        pu_pd: "pd",
+                    },
+                },
+                useMcuDomainPeripherals: false,
+            },
+        },
+        {
+            name: "oversampling0",
+            displayName: "OS0 Pin",
+            moduleName: "/drivers/gpio/gpio",
+            args: {
+                GPIO: {
+                    gpioPin: {
+                        pu_pd: getOsrPinmuxSettings(instance)[0],
+                    },
+                },
+            },
+            requiredArgs: {
+                pinDir: "OUTPUT",
+                useMcuDomainPeripherals: false,
+            },
+        },
+        {
+            name: "oversampling1",
+            displayName: "OS1 Pin",
+            moduleName: "/drivers/gpio/gpio",
+            args: {
+                GPIO: {
+                    gpioPin: {
+                        pu_pd: getOsrPinmuxSettings(instance)[1],
+                    },
+                },
+            },
+            requiredArgs: {
+                pinDir: "OUTPUT",
+                useMcuDomainPeripherals: false,
+            },
+        },
+        {
+            name: "oversampling2",
+            displayName: "OS2 Pin",
+            moduleName: "/drivers/gpio/gpio",
+            args: {
+                GPIO: {
+                    gpioPin: {
+                        pu_pd: getOsrPinmuxSettings(instance)[2],
+                    },
+                },
+            },
+            requiredArgs: {
+                pinDir: "OUTPUT",
+                useMcuDomainPeripherals: false,
+            },
+        },
+        {
+            name: "range",
+            displayName: "RANGE",
+            moduleName: "/drivers/gpio/gpio",
+            requiredArgs: (function(inst) {
+                let pu_pd = "pd";
+                if (inst.inputRange === "range5V") pu_pd = "pd";    // 5V
+                else                               pu_pd = "pu";    // 10V
+                return {
+                    pinDir: "OUTPUT",
+                    GPIO: {
+                        gpioPin: {
+                            pu_pd: pu_pd,
+                        },
+                    },
+                    useMcuDomainPeripherals: false,
+                };
+            })(instance),
+        },
+        {
+            name: "ref",
+            displayName: "REFSEL",
+            moduleName: "/drivers/gpio/gpio",
+            requiredArgs: (function(inst) {
+                let pu_pd = "pu";
+                if (inst.reference) pu_pd = "pu";   // internal
+                else                pu_pd = "pd";   // external
+                return {
+                    pinDir: "OUTPUT",
+                    GPIO: {
+                        gpioPin: {
+                            pu_pd: pu_pd,
+                        },
+                    },
+                    useMcuDomainPeripherals: false,
+                };
+            })(instance),
+        },
+        {
+            name: "stby",
+            displayName: "S̅T̅B̅Y̅",
+            moduleName: "/drivers/gpio/gpio",
+            requiredArgs: {
+                pinDir: "OUTPUT",
+                useMcuDomainPeripherals: false,
+            },
+            args: {
+                GPIO: {
+                    gpioPin: {
+                        pu_pd: "pu",
+                    },
+                },
+            },
+        },
+        {
+            // jumper J9 on Adapter board: was meant for switching between serial and eSPI on 9224 adc
+            // SELECTED INTERFACE MODE  | PAR/SER/BYTE SEL | DB15/BYTE SEL
+            // Parallel interface       |       0          |       x
+            // Parallel byte interface  |       1          |       1
+            // Serial interface         |       1          |       0
+            name: "par",
+            displayName: " P̅A̅R̅/SER/BYTE SEL",
+            moduleName: "/drivers/gpio/gpio",
+            requiredArgs: (function(inst) {
+                let pu_pd = "pu";
+                if (inst.interface === "parallel")
+                    pu_pd = "pd";
+                else
+                    pu_pd = "pu";
+                return {
+                    pinDir: "OUTPUT",
+                    GPIO: {
+                        gpioPin: {
+                            pu_pd: pu_pd,
+                        },
+                    },
+                    useMcuDomainPeripherals: false,
+                };
+            })(instance),
+        },
+        {
+            name: "rst",
+            displayName: "RESET",
+            moduleName: "/drivers/gpio/gpio",
+            requiredArgs: {
+                pinDir: "OUTPUT",
+                useMcuDomainPeripherals: false,
+            },
+            args: {
+                GPIO: {
+                    gpioPin: {
+                        pu_pd: "pu",    // reset ADC in starting
+                    },
+                },
+            },
+        },
+    )}
+    else if(soc == "am243x")
+    {
+        modInstances.push({
             name: "power",
             displayName: "Power Enable Pin",
             moduleName: "/drivers/gpio/gpio",
@@ -347,8 +511,7 @@ function moduleInstances(instance) {
                 pu_pd: "pu",    // reset ADC in starting
             },
         },
-    ]
-
+    )}
     modInstances.push({
         name: "pruIpc",
         displayName: "PRU IPC",
