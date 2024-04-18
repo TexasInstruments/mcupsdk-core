@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -54,8 +54,11 @@
 #include <sdl/r5/v0/sdl_mcu_armss_ccmr5.h>
 #include <dpl_interface.h>
 #include <sdl/sdl_ecc.h>
-#if defined(SOC_AM263X) || defined (SOC_AM263PX)
+#if defined(SOC_AM263X)
 #include <sdl/esm/v0/sdl_esm.h>
+#endif
+#if defined (SOC_AM263PX)
+#include <sdl/esm/v2/sdl_esm.h>
 #endif
 #if defined(SOC_AM273X)
 #include <sdl/esm/v1/sdl_esm.h>

@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021 Texas Instruments Incorporated
+ *  Copyright (c) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -67,7 +67,7 @@
 #endif
 
 #if defined (SOC_AM263PX)
-#include <sdl/esm/v0/sdl_esm.h>
+#include <sdl/esm/v2/sdl_esm.h>
 #include <sdl/include/am263px/sdlr_soc_baseaddress.h>
 #include <sdl/include/am263px/sdlr_intr_r5fss0_core0.h>
 #endif

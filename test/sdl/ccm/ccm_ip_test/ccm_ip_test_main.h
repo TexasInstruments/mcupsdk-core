@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-2023
+ *   Copyright (c) Texas Instruments Incorporated 2022-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -56,8 +56,11 @@ extern "C"
 #include <sdl/sdl_ccm.h>
 #include <sdl/r5/v0/sdlr_vim.h>
 #include <sdl/r5/v0/sdl_ip_ccm.h>
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined(SOC_AM263X)
 #include <sdl/esm/v0/sdl_esm.h>
+#endif
+#if defined (SOC_AM263PX)
+#include <sdl/esm/v2/sdl_esm.h>
 #endif
 #if defined (SOC_AM263X)
 #include <sdl/include/am263x/sdlr_intr_r5fss0_core0.h>
