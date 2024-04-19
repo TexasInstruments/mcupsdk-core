@@ -79,8 +79,8 @@ clean:
 	-@echo ' '
 
 post-build:
-        -$(CGT_TI_PRU_PATH)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=PRUFirmware  -o pru_load_bin.h adc_am64x-evm_icssg0-pru0_fw_ti-pru-cgt.out
-        -$(SED) -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' pru_load_bin.h
+		-$(CGT_TI_PRU_PATH)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=PRUFirmware  -o pru_load_bin.h adc_am64x-evm_icssg0-pru0_fw_ti-pru-cgt.out
+		-$(SED) -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' pru_load_bin.h
 	-@echo ' '
 
 .PHONY: all clean

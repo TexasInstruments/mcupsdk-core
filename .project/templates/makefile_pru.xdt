@@ -77,40 +77,40 @@ vpath %.cmd $(FILES_PATH)
 % let commandString = "";
 % let cflags = obj.cflags;
 % for (let prop in cflags) {
-    % if ( cflags.hasOwnProperty(prop) && Array.isArray(cflags[prop]) && prop == 'common') {
-        % for(let val of cflags[prop]) {
-            % commandString += `${val} `;
-        % }
-    % }
+	% if ( cflags.hasOwnProperty(prop) && Array.isArray(cflags[prop]) && prop == 'common') {
+		% for(let val of cflags[prop]) {
+			% commandString += `${val} `;
+		% }
+	% }
 % }
 % let lflags = obj.lflags;
 % let lflagsString = "";
 % for (let prop in lflags) {
-    % if ( lflags.hasOwnProperty(prop) && Array.isArray(lflags[prop]) && prop == 'common') {
-        % for(let val of lflags[prop]) {
-            % lflagsString += `${val} `;
-        % }
-    % }
+	% if ( lflags.hasOwnProperty(prop) && Array.isArray(lflags[prop]) && prop == 'common') {
+		% for(let val of lflags[prop]) {
+			% lflagsString += `${val} `;
+		% }
+	% }
 % }
 % let defines = obj.defines;
 % for (let prop in defines) {
-    % if ( defines.hasOwnProperty(prop) && Array.isArray(defines[prop]) && prop == 'common') {
-        % for(let val of defines[prop]) {
-            % commandString += `--define=${val} `;
-        % }
-    % }
+	% if ( defines.hasOwnProperty(prop) && Array.isArray(defines[prop]) && prop == 'common') {
+		% for(let val of defines[prop]) {
+			% commandString += `--define=${val} `;
+		% }
+	% }
 % }
 % let cmdSubStr = commandString;
 % if ("postBuildSteps" in obj || obj["defaultPruPostBuildSteps"]) {
-    % commandString += `--include_path="$(SYSCFG_DIR)" `;
+	% commandString += `--include_path="$(SYSCFG_DIR)" `;
 % }
 % let includes = obj.includes;
 % for (let prop in includes) {
-    % if ( includes.hasOwnProperty(prop) && Array.isArray(includes[prop]) && prop == 'common') {
-        % for(let val of includes[prop]) {
-            % commandString += `--include_path="${val}" `;
-        % }
-    % }
+	% if ( includes.hasOwnProperty(prop) && Array.isArray(includes[prop]) && prop == 'common') {
+		% for(let val of includes[prop]) {
+			% commandString += `--include_path="${val}" `;
+		% }
+	% }
 % }
 
 # Add inputs and outputs from these tool invocations to the build variables
@@ -188,8 +188,8 @@ post-build:
 % }
 % if(obj["defaultPruPostBuildSteps"]) {
 post-build:
-        -$(CGT_TI_PRU_PATH)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=PRUFirmware  -o pru_load_bin.h `projectName`.out
-        -$(SED) -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' pru_load_bin.h
+		-$(CGT_TI_PRU_PATH)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=PRUFirmware  -o pru_load_bin.h `projectName`.out
+		-$(SED) -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' pru_load_bin.h
 	-@echo ' '
 % }
 
