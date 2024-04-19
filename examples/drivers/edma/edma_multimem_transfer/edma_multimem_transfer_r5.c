@@ -146,7 +146,7 @@ void edma_multimem_transfer(void *args)
     tcmaToOcm = ClockP_getTimeUsec() - curTime;
 
     DebugP_log("BENCHMARK START - EDMA - EDMA Memory Copy BENCHMARK \r\n");
-    DebugP_log("\nEDMA Memory Copy Benchmark Numbers Print Start\r\n\n");
+    DebugP_log("\nEDMA Memory Copy Benchmark Numbers\r\n\n");
     DebugP_log("Size in Bytes | Source Memory | Destination Memory | Transfer time(us)\r\n");
     DebugP_log("--------------|---------------|--------------------|------------------\r\n");
     DebugP_log("    1024      |      OCRAM    |     OCRAM          |    %" PRId64 "   \r\n", ocmToOcm);

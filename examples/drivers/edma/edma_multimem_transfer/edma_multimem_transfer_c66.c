@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2023-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -103,35 +103,40 @@ static void EDMA_regionIsrFxn(Edma_IntrHandle intrHandle, void *args);
 
 void edma_multimem_transfer(void *args)
 {
-    int32_t             status = SystemP_SUCCESS;
+    int32_t  status = SystemP_SUCCESS;
     uint64_t curTime;
+    uint64_t l2ToL2, l3ToL3;
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
 
     DebugP_log("[EDMA] Interrupt Transfer Test Started...\r\n");
-    
+
     App_edmaConfig();
 
     curTime = ClockP_getTimeUsec();
     /* OCRAM to OCRAM transfer */
     App_edmaTransfer(gEdmaDssL2SrcBuff, gEdmaDssL2DstBuff);
-    curTime = ClockP_getTimeUsec() - curTime;
-
-    DebugP_log("[EDMA MULTIMEM TRANSFER] DSS L2 Total transfer time for 1KB= %" PRId64 " usecs\r\n", curTime);
+    l2ToL2 = ClockP_getTimeUsec() - curTime;
 
     curTime = ClockP_getTimeUsec();
     /* TCMA to TCMA transfer */
     App_edmaTransfer(gEdmaDssL3SrcBuff, gEdmaDssL3DstBuff);
-    curTime = ClockP_getTimeUsec() - curTime;
+    l3ToL3 = ClockP_getTimeUsec() - curTime;
 
-    DebugP_log("[EDMA MULTIMEM TRANSFER] DSS L3 Total transfer time for 1KB= %" PRId64 " usecs\r\n", curTime);
+    DebugP_log("BENCHMARK START - EDMA - EDMA Memory Copy BENCHMARK \r\n");
+    DebugP_log("\nEDMA Memory Copy Benchmark Numbers\r\n\n");
+    DebugP_log("Size in Bytes | Source Memory | Destination Memory | Transfer time(us)\r\n");
+    DebugP_log("--------------|---------------|--------------------|------------------\r\n");
+    DebugP_log("    1024      |      L2       |     L2             |    %" PRId64 "   \r\n", l2ToL2);
+    DebugP_log("    1024      |      L3       |     L3             |    %" PRId64 "   \r\n", l3ToL3);
 
     App_edmaDeConfig();
 
     if(status == SystemP_SUCCESS)
     {
+        DebugP_log("\nBENCHMARK END \r\n");
         DebugP_log("[EDMA] Interrupt Transfer Test Completed!!\r\n");
         DebugP_log("All tests have passed!!\r\n");
     }
@@ -244,7 +249,7 @@ static void App_edmaTransfer(uint8_t *srcBuffPtr, uint8_t *dstBuffPtr)
 
     /* Invalidate destination buffer and compare with src buffer */
     CacheP_inv((void *)dstBuffPtr, EDMA_TEST_BUFFER_SIZE, CacheP_TYPE_ALL);
-    
+
     status = App_compareBuffers(srcBuffPtr, dstBuffPtr);
     DebugP_assert(status == SystemP_SUCCESS);
 }
