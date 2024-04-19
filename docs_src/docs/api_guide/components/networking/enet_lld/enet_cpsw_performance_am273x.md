@@ -11,6 +11,63 @@ Core Operating Speed  | 400 MHz         |
 Memory Type           | MSS L2 RAM             |
 Cache status          | Enabled         |
 
+# Layer 2 Performance
+  \imageStyle{CPSW_latency_measurement_diagram.bmp,width:30%}
+  \image html CPSW_latency_measurement_diagram.bmp Latency defination
+
+## Configuration Details
+Configuration          | Value                    |
+--------------------------------|--------------------------|
+Processing Core                 | Main R5F0 Core 0         |
+Core Frequency                  | 400 MHz                  |
+Ethernet Interface Type         | RGMII at 100 mbps           |
+Packet buffer memory      | MSS L2 RAM (un-cached)         |
+Scatter-gather TX         | Yes                      |
+Scatter-gather RX         | Yes                      |
+CPDMA interrupt pacing    | Yes                      |
+RTOS                            | FreeRTOS                 |
+RTOS application                | Modified \ref EXAMPLES_ENET_CPSW_LOOPBACK \n example   |
+Host PC tool version            | nload                   |
+Rx packet length     | 200 B                       |
+Tx packet length     | 200 B                       |
+\n
+
+## Layer 2 Latency
+<table>
+    <tr>
+        <td style="text-align: center;"><b>Parameter</b></td>
+        <td style="text-align: center;"><b>CPU<->CPSW \n Latency Value (ns)</b></td>
+        <td style="text-align: center;"><b>PHY latency\n (from datasheet) in ns</b></td>
+        <td style="text-align: center;"><b>Total Latency \n (ns)</b></td>
+    </tr>
+    <tr>
+        <td>RX Latency</td>
+        <td>4000</td>
+        <td>193</td>
+        <td>4193</td>
+    </tr>
+    <tr>
+        <td>TX Latency</td>
+        <td>14000</td>
+        <td>384</td>
+        <td>14384</td>
+    </tr>
+</table>
+
+## Layer 2 Throughput
+<table>
+    <tr>
+        <td style="text-align: left;"><b>Test</b></td>
+        <td style="text-align: center;"><b>Bandwidth \n (Mbps)</b></td>
+        <td style="text-align: center;"><b>CPU Load \n (%) </b></td>
+        <td style="text-align: center;"><b>Packet Size \n (bytes)</b></td>
+    </tr>
+    <tr>
+        <td>Layer 2 Transmission</td><td>950</td><td>24</td><td>1500</td>
+    </tr>
+</table>
+
+
 # TCP/IP Performance
 
 ## Configuration Details

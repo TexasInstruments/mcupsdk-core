@@ -478,6 +478,47 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x
     <td> -
 </tr>
+<tr>
+    <td> PINDSW-5417
+    <td> Static MC unlearned with UC flooding
+    <td> ICSSG Ethernet firmware
+    <td> 08.00.00 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> PINDSW-4984
+    <td> FDB ageing configuration and behavior
+    <td> ICSSG Ethernet firmware
+    <td> 08.00.00 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> PINDSW-7643
+    <td> Ethernet: LI stall on undirected packet send
+    <td> ICSSG Ethernet firmware
+    <td> 09.01.00 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> PINDSW-7644
+    <td> Ethernet: Host egress Q stall
+    <td> ICSSG Ethernet firmware
+    <td> 09.01.00 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+<tr>
+    <td> PINDSW-7645
+    <td> Improper sequence of RX FIFO reset and MII RX enable
+    <td> ICSSG Ethernet firmware
+    <td> 08.00.00 onwards
+    <td> AM64x, AM243x
+    <td> -
+</tr>
+
 </table>
 
 ## Known Issues

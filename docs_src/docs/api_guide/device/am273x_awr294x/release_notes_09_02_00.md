@@ -187,6 +187,13 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F a
     <th> Applicable Releases
     <th> Resolution/Comments
 </tr>
+<tr>
+    <td> MCUSDK-12778
+    <td> Multicast IP frames not being sent out from the device.
+    <td> Ethernet and Netwroking
+    <td> 09.00, 09.01
+    <td> While Joining a igmp group, the mcast addr needs to be added to ALE with all ports as members. This is fixed
+</tr>
 </table>
 
 \cond SOC_AM273X

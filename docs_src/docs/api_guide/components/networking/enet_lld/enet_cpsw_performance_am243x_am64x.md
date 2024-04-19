@@ -12,6 +12,49 @@ Memory Type           | MSRAM           |
 Cache status          | Enabled         |
 EVM Type              | AM243x-LP E3    |
 
+# Layer 2 Performance
+  \imageStyle{CPSW_latency_measurement_diagram.bmp,width:30%}
+  \image html CPSW_latency_measurement_diagram.bmp Latency defination
+
+## Configuration Details
+Configuration          | Value                    |
+--------------------------------|--------------------------|
+Processing Core                 | Main R5F0 Core 0         |
+Core Frequency                  | 800 MHz                  |
+Ethernet Interface Type         | RGMII at 1 Gbps           |
+Packet buffer memory      | MSRAM                      |
+Scatter-gather TX         | Yes                      |
+Scatter-gather RX         | Yes                      |
+UPDMA interrupt pacing    | NO                      |
+RTOS                            | FreeRTOS                 |
+RTOS application                | Modified \ref EXAMPLES_ENET_CPSW_LOOPBACK \n example   |
+Host PC tool version            | nload                   |
+Rx packet length     | 200 B                       |
+Tx packet length     | 200 B                       |
+\n
+
+## Layer 2 Latency
+<table>
+    <tr>
+        <td style="text-align: center;"><b>Parameter</b></td>
+        <td style="text-align: center;"><b>CPU<->CPSW \n Latency Value (ns)</b></td>
+        <td style="text-align: center;"><b>PHY Latency\n (from datasheet) in ns</b></td>
+        <td style="text-align: center;"><b>Total Latency \n (ns)</b></td>
+    </tr>
+    <tr>
+        <td>RX Latency</td>
+        <td>14000</td>
+        <td>193</td>
+        <td>14193</td>
+    </tr>
+    <tr>
+        <td>TX Latency</td>
+        <td>7000</td>
+        <td>384</td>
+        <td>7384</td>
+    </tr>
+</table>
+
 # TCP/IP Performance
 
 ## Configuration Details

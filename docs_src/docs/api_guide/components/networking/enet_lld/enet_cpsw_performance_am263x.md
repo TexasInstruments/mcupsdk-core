@@ -37,20 +37,20 @@ Tx packet length     | 200 B                       |
     <tr>
         <td style="text-align: center;"><b>Parameter</b></td>
         <td style="text-align: center;"><b>CPU<->CPSW \n Latency Value (ns)</b></td>
-        <td style="text-align: center;"><b>PHY (DP83869HM)atency\n (from datasheet) in ns</b></td>
+        <td style="text-align: center;"><b>PHY (DP83869HM)Latency\n (from datasheet) in ns</b></td>
         <td style="text-align: center;"><b>Total Latency \n (ns)</b></td>
     </tr>
     <tr>
         <td>RX Latency</td>
-        <td>39400</td>
+        <td>6400</td>
         <td>193</td>
-        <td>39593</td>
+        <td>6193</td>
     </tr>
     <tr>
         <td>TX Latency</td>
-        <td>11000</td>
+        <td>13000</td>
         <td>384</td>
-        <td>11384</td>
+        <td>13384</td>
     </tr>
 </table>
 
