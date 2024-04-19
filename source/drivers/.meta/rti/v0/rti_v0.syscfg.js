@@ -55,7 +55,6 @@ function pinmuxRequirements(inst) {
         filter        : timerFilter,
         resources     : [],
         canShareWith: "/drivers/rti/rti",
-        maxShareCount: 2,
     };
 
     return [peripheral];
