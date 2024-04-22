@@ -19,11 +19,10 @@ Feature                                                                         
 ------------------------------------------------------------------------------------------------|-----------------------------------
 Added empty example to support PRU0, PRU1 cores                                                 | PRU-IO
 Added PRU-ICSSM INTC and pinmux configuration from SysConfig                                    | PRU-IO
--                                                                                               | -
+Added ICSS-EMAC driver support                                                                  | ICSS-EMAC
+Added ICSS-EMAC LwIP example configured in Switch and MAC mode                                  | ICSS-EMAC
 
 # Modules Not tested/supported in this release
-- Ethernet phy (ETHPHY) board driver
-- ICSS-EMAC
 
 
 ## Device and Validation Information
@@ -140,9 +139,9 @@ Module                      | Supported CPUs | SysConfig Support | OS Support  |
 ----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------|------------------------
 LwIP                        | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping                         | Other LwIP features
 Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping,  interrupt pacing, Policer and Classifier  | RMII mode, CPSW EST, MDIO Manual Mode, CBS (IEEE 802.1Qav), Strapped PHY (Early Ethernet)
+ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Switch and MAC features, Storm Prevention (MAC), Host Statistics, Multicast Filtering  | Promiscuous Mode
 
-<!-- ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Only compiled                                                                          | Not tested
-Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography -->
+<!-- Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography -->
 
 ### Safety Diagnostic Library
 
@@ -275,6 +274,13 @@ Thermal Monitor(VTM)| R5F             | NA                |  NORTOS | Over, unde
     <td> Networking
     <td> 09.01.00
     <td> Use UART boot mode
+</tr>
+<tr>
+    <td> PINDSW-7715
+    <td> Dual EMAC instance not working with both ports together for icss_emac_lwip example
+    <td> ICSS-EMAC
+    <td> 09.02.00 onwards
+    <td> None
 </tr>
 </table>
 

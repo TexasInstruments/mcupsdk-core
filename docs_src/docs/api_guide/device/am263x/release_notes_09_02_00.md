@@ -15,7 +15,8 @@
 Feature                                                                                         | Module
 ------------------------------------------------------------------------------------------------|-----------------------------------
 Updated empty example to support PRU1 core                                                      | PRU-IO
--                                                                                               | -
+Added ICSS-EMAC driver support                                                                  | ICSS-EMAC
+Added ICSS-EMAC LwIP example configured in Switch and MAC mode                                  | ICSS-EMAC
 
 ## Device and Validation Information
 
@@ -136,17 +137,6 @@ Module                      | Supported CPUs | SysConfig Support | OS Support   
 ----------------------------|----------------|-------------------|-------------------|---------------------------------------------------------------------------------------------|------------------------
 -                           | -              | -                 | -                 | -                                                                                           |  -
 
-### Industrial Communications Toolkit
-
-Module                                | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                                      | Key features not tested
---------------------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------------------------|------------------------
-EtherCAT SubDevice FWHAL                  | R5F            | NO                | FreeRTOS    | Tested with ethercat_slave_beckhoff_ssc_demo example                                                     | Reset isolation
-
-### Motor Control
-
-Module                      | Supported CPUs | SysConfig Support | OS Support        | Key features tested                             | Key features not tested
-----------------------------|----------------|-------------------|-------------------|-------------------------------------------------|------------------------
--                           | -              | -                 | -                 | -                                               |  -
 
 ### Ethernet and Networking
 
@@ -155,7 +145,7 @@ Module                      | Supported CPUs | SysConfig Support | OS Support  |
 Time-Sensitive Networking(gPTP-IEEE 802.1AS) | R5F            | NO                | FreeRTOS    | gPTP IEEE 802.1 AS-2020 compliant gPTP stack, End Nodes and Bridge mode support, YANG data model configuration  | Multi-Clock Domain
 LwIP                                         | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping                         | Other LwIP features
 Ethernet driver (ENET)                       | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, CPSW EST, interrupt pacing, Policer and Classifier, MDIO Manual Mode, Credit Based Shaper (IEEE 802.1Qav), Strapped PHY (Early Ethernet)  | RMII, MII mode
-ICSS-EMAC                                    | R5F            | YES               | FreeRTOS    | Only compiled                                                                          | Not tested
+ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Switch and MAC features, Storm Prevention (MAC), Host Statistics, Multicast Filtering  | Promiscuous Mode
 Mbed-TLS                                     | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography
 
 ### Demos
@@ -268,6 +258,13 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> PMU
     <td> 09.00.00 onwards
     <td> -
+</tr>
+<tr>
+    <td> PINDSW-7715
+    <td> Dual EMAC instance not working with both ports together for icss_emac_lwip example
+    <td> ICSS-EMAC
+    <td> 09.02.00 onwards
+    <td> None
 </tr>
 <tr>
     <td> PROC_SDL-5616

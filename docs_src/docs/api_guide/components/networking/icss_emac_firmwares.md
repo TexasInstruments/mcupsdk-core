@@ -33,7 +33,7 @@ ICSS DUAL EMAC FIRMWARE is a single port Ethernet MAC (Media Access Control) i.e
 </tr>
 <tr>
     <td>Storm Prevention
-    <td>Experimental Feature which is to be tested extensively
+    <td>Supported
 </tr>
 <tr>
     <td>Promiscuous Mode
@@ -49,15 +49,11 @@ ICSS DUAL EMAC FIRMWARE is a single port Ethernet MAC (Media Access Control) i.e
 </tr>
 <tr>
     <td>Multicast filtering
-    <td>Experimental Feature which is to be tested extensively
+    <td>Supported
 </tr>
 <tr>
     <td>VLAN filtering
     <td>Experimental Feature which is to be tested extensively
-</tr>
-<tr>
-    <td>VLAN filtering
-    <td>Not Supported
 </tr>
 </table>
 
@@ -108,7 +104,7 @@ ICSS SWITCH FIRMWARE is a three port learning Ethernet switch i.e. Layer 2 of OS
 </tr>
 <tr>
     <td>Storm Prevention
-    <td>Experimental Feature which is to be tested extensively
+    <td>Not Supported
 </tr>
 <tr>
     <td>Error Handling
