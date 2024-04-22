@@ -109,6 +109,7 @@ When using Linux,
 - Applications, typically in user space, can access this RP Message kernel module using the `rpmsg_char` character driver in user space.
 - **Processor SDK Linux** provides a user space `rpmsg_char` library which gives simplified APIs to send and receive
   messages to other CPUs using RP Message.
+- SafeIPC cannot be used to communicate with Linux core.
 \endcond
 
 ### Important usage points
@@ -170,11 +171,11 @@ And the end point values MUST be less than \ref IPC_NOTIFY_CLIENT_ID_MAX
 \cond !SOC_AM62X
 ### SafeIPC Design
 
-SafeIPC in a Multi core system requires both Firewalling of shared memory and Data integrity check of payload. SafeIPC can be enabled using SysCfg
-which configures the shared memory in a way that firewalling is possible(limitation being number of firewalls and firewall granularity).
-Firewall configuration is not automatic and need to be manually enabled and configured. The SysCfg generated code for IPC has details on 
+SafeIPC is used in a system where Safe cores are involved. The data being sent to and from these Safe cores must be protected from unwanted access by Non Safe cores. SafeIPC implementation in a Multi core system requires both Firewalling of shared memory and Data integrity check of payload.
+SafeIPC can be enabled using SysCfg which configures the shared memory in a way that firewalling is possible(limitation being number of firewalls and firewall granularity).
+Firewall configuration is not automatic and need to be manually enabled and configured. The SysCfg generated code for IPC has details on
 Cores involved as well as Start and End addresses which help in firewall configuration.
-Data Integrity check has to be enabled using SysCfg. Once Enabled, Data Integrity Check using CRC is enabled for IPC Notify and RPMsg Data. The 
+Data Integrity check has to be enabled using SysCfg. Once Enabled, Data Integrity Check using CRC is enabled for IPC Notify and RPMsg Data. The
 calculated CRC is sent as a part of IPC Payload and decoded in the receiver end. Application has to define a hook function which will be used by driver for CRC calculation. 8 Bit CRC is used by IPC Notify and 16 Bit CRC is used by IPC RPMsg.
 
 \endcond
