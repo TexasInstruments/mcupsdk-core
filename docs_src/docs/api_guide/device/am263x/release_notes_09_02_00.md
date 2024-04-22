@@ -294,6 +294,13 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> 8.5.0 onwards
     <td> None.
 </tr>
+<tr>
+    <td> MCUSDK-12756
+    <td> MbedTLS - Timing side channel attack in RSA private operation exposing plaintext.
+    <td> Mbed-TLS
+    <td> 08.06.00 onwards
+    <td> None
+</tr>
 </table>
 
 ## Errata

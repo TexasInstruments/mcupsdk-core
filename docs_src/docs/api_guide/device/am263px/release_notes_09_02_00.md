@@ -282,6 +282,13 @@ Thermal Monitor(VTM)| R5F             | NA                |  NORTOS | Over, unde
     <td> 09.02.00 onwards
     <td> None
 </tr>
+<tr>
+    <td> MCUSDK-12756
+    <td> MbedTLS - Timing side channel attack in RSA private operation exposing plaintext.
+    <td> Mbed-TLS
+    <td> 08.06.00 onwards
+    <td> None
+</tr>
 </table>
 
 ## Errata

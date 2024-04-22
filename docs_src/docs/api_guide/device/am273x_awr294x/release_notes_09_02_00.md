@@ -243,6 +243,13 @@ R5F STC(LBIST)    | R5F             | NA                |  NORTOS | STC of R5F a
     <td> 08.02.00 onwards
     <td> -
 </tr>
+<tr>
+    <td> MCUSDK-12756
+    <td> MbedTLS - Timing side channel attack in RSA private operation exposing plaintext.
+    <td> Mbed-TLS
+    <td> 08.06.00 onwards
+    <td> None
+</tr>
 </table>
 
 ## Known Issues

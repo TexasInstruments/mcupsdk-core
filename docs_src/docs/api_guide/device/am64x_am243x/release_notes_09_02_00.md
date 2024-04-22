@@ -448,7 +448,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
 </tr>
 <tr>
     <td> MCUSDK-11421
-    <td> enet_layer2_icssg example crashing while exiting 
+    <td> enet_layer2_icssg example crashing while exiting
     <td> Ethernet
     <td> 08.06.00 onwards
     <td> AM64x, AM243x
@@ -456,7 +456,7 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
 </tr>
 <tr>
     <td> MCUSDK-12526
-    <td> ENET ICSSG: Host port (PA) statistics is broken for ICSSG MAC mode 
+    <td> ENET ICSSG: Host port (PA) statistics is broken for ICSSG MAC mode
     <td> Ethernet
     <td> 09.01.00 onwards
     <td> AM64x, AM243x
@@ -726,6 +726,13 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <td> AM64x, AM243x
     <td> 07.03.00 onwards
     <td> -
+</tr>
+<tr>
+    <td> MCUSDK-12756
+    <td> MbedTLS - Timing side channel attack in RSA private operation exposing plaintext.
+    <td> Mbed-TLS
+    <td> 08.06.00 onwards
+    <td> None
 </tr>
 </table>
 
