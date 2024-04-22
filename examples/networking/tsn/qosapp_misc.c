@@ -633,7 +633,7 @@ static void EnetQoSApp_handleRxPacket(EnetQoSApp_AppCtx_t *ctx,
         ctx->packetHandlerCb(ctx, &pktinfo);
     }
 }
-
+#if LISTNER_VERIFY_ENABLE
 static void *EnetQoSApp_listenerHandler(void *arg)
 {
     int ret;
@@ -710,6 +710,7 @@ void EnetQoSApp_startListener(EnetQoSApp_AppCtx_t *ctx,
         }
     }
 }
+#endif
 
 void EnetQoSApp_printStats(EnetQoSApp_AppCtx_t *ctx)
 {

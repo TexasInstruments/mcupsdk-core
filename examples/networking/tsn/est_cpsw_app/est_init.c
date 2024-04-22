@@ -138,8 +138,10 @@ __attribute__ ((aligned(TSN_TSK_STACK_ALIGN)));
 static uint8_t gEnetEstAppTalkerStackBuf[TSN_TSK_STACK_SIZE]
 __attribute__ ((aligned(TSN_TSK_STACK_ALIGN)));
 
+#if LISTNER_VERIFY_ENABLE
 static uint8_t gEnetEstAppListenerStackBuf[TSN_TSK_STACK_SIZE]
 __attribute__ ((aligned(TSN_TSK_STACK_ALIGN)));
+#endif
 
 extern EnetApp_ModuleCtx_t gModCtxTable[ENETAPP_MAX_TASK_IDX];
 extern EnetApp_Ctx_t gAppCtx;
@@ -548,6 +550,7 @@ static void EnetEstApp_stopTalker(EnetQoSApp_AppCtx_t *ctx)
     return EnetQoSApp_stopTalker(ctx);
 }
 
+#if LISTNER_VERIFY_ENABLE
 static void EnetEstApp_startListener(EnetQoSApp_AppCtx_t *ctx)
 {
     EnetQoSApp_TaskCfg_t cfg =
@@ -559,6 +562,7 @@ static void EnetEstApp_startListener(EnetQoSApp_AppCtx_t *ctx)
     };
     return EnetQoSApp_startListener(ctx, &cfg);
 }
+#endif
 
 static void EnetEstApp_stopListener(EnetQoSApp_AppCtx_t *ctx)
 {
@@ -638,6 +642,7 @@ static void EnetEstApp_runTalker(EnetQoSApp_AppCtx_t *ctx)
     }
 }
 
+#if LISTNER_VERIFY_ENABLE
 static void EnetEstApp_defragmentTimeSlots(PerPriorityTimeSlot_t *prm)
 {
     int i;
@@ -656,7 +661,9 @@ static void EnetEstApp_defragmentTimeSlots(PerPriorityTimeSlot_t *prm)
     memcpy(prm->timeSlots, timeSlots, count*sizeof(TimeSlot_t));
     prm->nLength = count;
 }
+#endif
 
+#if LISTNER_VERIFY_ENABLE
 static void EnetEstApp_calcExpectedTimeSlot(EnetQoSApp_AppCtx_t *ctx,
                                             EnetTas_ControlList *list,
                                             QoSAppStreamConfigParam_t *stParam)
@@ -697,9 +704,11 @@ static void EnetEstApp_calcExpectedTimeSlot(EnetQoSApp_AppCtx_t *ctx,
         DPRINT("%s ", buffer);
     }
 }
+#endif
 
 static void EnetEstApp_runListener(EnetQoSApp_AppCtx_t *ctx)
 {
+#if LISTNER_VERIFY_ENABLE
     EnetEstAppCtx_t *estAppCtx = (EnetEstAppCtx_t *)ctx;
 
     while (!EnetEstApp_isPTPClockStateSync(ctx, ctx->netdev[ctx->ifidx]))
@@ -721,6 +730,7 @@ static void EnetEstApp_runListener(EnetQoSApp_AppCtx_t *ctx)
 
         EnetEstApp_startListener(ctx);
     }
+#endif
 }
 
 static void EnetEstApp_runBridgeMode(EnetQoSApp_AppCtx_t *ctx)

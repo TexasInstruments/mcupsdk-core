@@ -12,9 +12,15 @@
 
   Please note that the file system support is not yet integrated to ethernet examples.
 
-  In this example, we configure the talker DUT to send out traffic as per the EST schedule and the listner DUT can verify the time-slots of the received packets.
+  In this example, we configure the talker DUT to send out traffic as per the EST schedule and the listner DUT or device can verify the time-slots of the received packets.
 
-  \note Host based receive packet time-stamping is enabled to estimate the packet reception timing accuracy, on the listner side.However, note we have a HW errata i2401 regarding this feature and hence host based rx packet timestamping feature should be disabled in production code.
+\cond SOC_AM263X
+Please note, The receive packet time stamping of non-ptp traffic is currently not supported on AM263x. User needs to use other time-stamping device to capture the receive time-stamps. The receive packet time-stamping support is available on AM243x and AM64x. If AM243x or AM64x is available, you can connect to them and configure them as listener.
+\endcond
+
+\cond SOC_AM64X || SOC_AM243X
+  \note Host based receive packet time-stamping is enabled to estimate the packet reception timing accuracy, on the listener side.However, note we have a HW errata i2401 regarding this feature and hence host based rx packet timestamping feature should be disabled in production code.
+\endcond
 
 See also : \ref EXAMPLES_ENET_CPSW_EST, \ref ENET_CPSW_TSN_GPTP
 
@@ -60,17 +66,24 @@ See also : \ref EXAMPLES_ENET_CPSW_EST, \ref ENET_CPSW_TSN_GPTP
   To change default Mac port for this example, please change the macro
   *DEFAULT_INTERFACE_INDEX* from *qosapp_misc.h* from 0 another value (1, 2, 3).
 
+\cond SOC_AM263X
+- The application can be only run as talker. Please input character "t" from UART terminal.
+\endcond
+\cond SOC_AM64X || SOC_AM243X
 - The application can be only run as talker, listener or bridge mode depending on  
   input characters from UART terminal. (t: talker, l: listener; b: bridge mode)
+\endcond
 
 - Num of streams on talker is 2 with traffic priorities 0 and 2 mapped to HW queue 0
   and 2 respectively. Num of streams and priority can be changed by modifying the
   *gEnetEstAppTestLists* from the est_init.c.
 
+\cond SOC_AM64X || SOC_AM243X
 - Both talker and listener need to apply the same EST schedule with the same *baseTime*
   to have accurate test results. Thus, there is a *delayOffset* added to the *baseTime*
   of the EST's AdminList so that both schedules can be applied in the future
   and at the same time.
+\endcond
 
 - The EST schedule should be applied and talker starts sending test traffic
   after PTP synchronization is in good condition to have accurate test results.
@@ -135,6 +148,9 @@ Each of the 8 gates (one per priority) can be in one of two states:
      The factor '100000' is chosen to have `delayOffset` above 20secs.
 
 # Expected Behavior
+\cond SOC_AM263X
+- The below is the expected behavior on listener side, If you have AM243x or AM64x, you can configure them to perform this verification process.
+\endcond
 
 -  With the schedule configured above, the expectation is that
 
@@ -274,14 +290,22 @@ In addition, follow the steps in the next section.
 # Running Enet TSN EST example
 
 - HW devices configuration
+\cond SOC_AM263X
+  Connect AM263x SOC to any gPTP capable device, PC or AM243x or AM64x.
+\endcond
+\cond SOC_AM243X || SOC_AM64X
   Connect two MCUs directly through the MAC port 1.
+\endcond
 
 \code
-    [MCU#1 (talker)]<---------------->[MCU#2 (Listener)]
+    [MCU#1 (talker)]<---------------->[PC or MCU#2 (Listener)]
 \endcode
+
+- Please note that if you want to perform verification on listener side, listener device should be capable of time-stamping all receive packets.
 
 - Launch a CCS debug session, load and run the example executable, see \ref CCS_LAUNCH_PAGE
 
+\cond SOC_AM243X || SOC_AM64X
 - The talker or listener can be run on GM or Slave, whichever devices you choose.
   However, we recommend running the talker on the Slave device and listener on the GM.
   The reason for that is the slave device needs to be adjusted PTP time to sync
@@ -290,6 +314,7 @@ In addition, follow the steps in the next section.
   synchronization issue than running the talker on the GM.
   After running both devices, the PTP slave device is the one which shows the
   following debug log on UART
+\endcond
 
 \code
 
@@ -301,6 +326,7 @@ In addition, follow the steps in the next section.
 
 - When the abs(GMdiff) is below 1000ns, it is a good time to start the EST usecase.
 
+\cond SOC_AM243X || SOC_AM64X
 - Start the listener.
   On the GM device, press `l` to start a listener. It will show log on UART terminal
   as follows
@@ -319,6 +345,7 @@ In addition, follow the steps in the next section.
     INF:cbase:LLDEnetFilter:destmac:91:E0:F0:00:FE:00, vlanId:110, ethType:0x22f0
 
 \endcode
+\endcond
 
 - Start the talker right after the listener.
 
@@ -335,13 +362,16 @@ In addition, follow the steps in the next section.
     INF:cbase:Successfully configure TAS
 \endcode
 
+\cond SOC_AM243X || SOC_AM64X
 - The test result will have the best accuracy if the *Base time* is the same
   for both talker and listener. To achieve that, we need to start the talker (press *t*)
   right after pressing *l* on the listener.
+\endcond
 
 - After starting the talker, it will start sending traffic after the EST schedule takes
   effect (around 20 seconds).
 
+\cond SOC_AM243X || SOC_AM64X
 - Observe test result
   The number of packets received inside expected time windows are called good packets
   and outside the expected time windows are bad packets.
@@ -362,6 +392,7 @@ In addition, follow the steps in the next section.
 \endcode
 
 The expected percentage of bad packets is 0-1%.
+\endcond
 
 # Note
 

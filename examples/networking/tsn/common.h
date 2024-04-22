@@ -124,4 +124,9 @@ typedef struct
     int val;
 } EnetApp_DbIntVal_t;
 
+#if defined (SOC_AM263X)
+#define LISTNER_VERIFY_ENABLE   0
+#else
+#define LISTNER_VERIFY_ENABLE   1
+#endif
 #endif
