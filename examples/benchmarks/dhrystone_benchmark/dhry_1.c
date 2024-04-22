@@ -247,6 +247,9 @@ void dhrystone( void *args)
         // strcpy(Reg_Define, "Register option not selected.");
     #endif
     DebugP_log("BENCHMARK END\r\n");
+
+    DebugP_log("\n All tests have passed. \n");
+
     Board_driversClose();
     Drivers_close();
 }

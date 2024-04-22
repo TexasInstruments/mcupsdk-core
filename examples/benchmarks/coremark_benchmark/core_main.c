@@ -509,6 +509,9 @@ MAIN_RETURN_TYPE core_main(int argc, char *argv[]) {
     }
 #endif
     DebugP_log("BENCHMARK END\r\n");
+
+    DebugP_log("\n All tests have passed. \n");
+
     /* And last call any target specific code for finalizing */
     portable_fini(&(results[0].port));
 
