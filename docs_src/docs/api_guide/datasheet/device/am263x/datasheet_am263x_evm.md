@@ -796,20 +796,30 @@ CoreMark/MHz :3.769829 / STACK
 ### MATHLIB
 
 ### MATHLIB BENCHMARK
-
 - Calculated for the 500 samples taken between 0 and 2 * Pi
-- Trignometric function timings compared between the optimized Mathlib mcusdk implementation and the compiler mathlib version
+- Trignometric function timings compared between the optimized Mathlib (ti_arm_trig and fastrts) mcusdk implementation and the compiler mathlib version
 - The max error for each operation between the optimized Mathlib mcusdk functions and the compiler mathlib version is printed
-Function	| Err		| Max Cycles Mathlib (mcusdk) 	| avg cycles Mathlib (mcusdk) 	| max cycles mathlib (clang) 	| avg cycles mathlib (clang) 	|
+Function	| Err		| Max Cycles Mathlib (ti_arm_trig) 	| avg cycles Mathlib (ti_arm_trig) 	| max cycles mathlib (clang) 	| avg cycles mathlib (clang) 	|
 ----------------|---------------|-----------------------|-----------------------|-----------------------|-----------------------|
 sin 		|0.0000007150	| 52			| 52.048000 		| 517			| 275.247986		|
 cos  		|0.0000002870	| 64			| 64.071999 		| 513			| 276.701996		|
 sincos sin  	|0.0000001790	| 79			| 79.038002 		| 467			| 274.231995		|
 sincos cos	|0.0000001900	|			|			|			|			|
-asin 		|0.0000003430	| 73			| 73.038002 		| 580			| 428.742004		|
-acos 		|0.0000004770	| 74			| 74.033997 		| 807			| 383.768005		|
-atan 		|0.0000005360	| 85			| 85.150002 		| 492			| 371.135986		|
-atan2 		|0.0000007150	| 119			| 106.744003 		| 893			| 478.372009		|
+asin 		|0.0000003430	| 73			| 73.082001 		| 578			| 428.697998		|
+acos 		|0.0000004770	| 74			| 74.033997 		| 810			| 383.730011		|
+atan 		|0.0000005360	| 85			| 85.071999 		| 493			| 371.148010		|
+atan2 		|0.0000007150	| 119			| 106.711998 		| 729			| 478.171997		|
+
+Function	| Err		| Max Cycles Mathlib (fastrts) 	| avg cycles Mathlib (fastrts) 	| max cycles mathlib (clang) 	| avg cycles mathlib (clang) 	|
+----------------|---------------|-----------------------|-----------------------|-----------------------|-----------------------|
+sin 		|0.0000004170	| 51			| 51.048000 		| 517			| 275.503998		|
+cos  		|0.0000003870	| 54			| 54.015999 		| 512			| 276.832001		|
+sincos sin  	|0.0000004170	| 58			| 58.084000 		| 483			| 274.227997		|
+sincos cos	|0.0000003750	|			|			|			|			|
+asin 		|0.0000003430	| 75			| 75.038002 		| 578			| 428.697998		|
+acos 		|0.0000004770	| 76			| 76.033997 		| 810			| 383.730011		|
+atan 		|0.0000001190	| 70			| 70.113998 		| 493			| 371.148010		|
+atan2 		|0.0000002380	| 109			| 109.122002 		| 729			| 478.171997		|
 
 ### Ethernet Performance
 

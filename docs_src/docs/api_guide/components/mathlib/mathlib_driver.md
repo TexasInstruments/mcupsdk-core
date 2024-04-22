@@ -8,7 +8,7 @@ Trigonometric functions are commonly used in real-time control applications, par
 
 ## Features Supported
 
-Supports Below trignometric functions
+Supports Below trignometric functions (ti_arm_trig):
 
 - Sine
 - Cosine
@@ -30,6 +30,36 @@ NA
 
 \ref DRV_MATHLIB_MODULE
 
+\cond SOC_AM263X
+
+## FastRTS library
+
+Addintionally, TI also offers a traditional Look-up Table based trigonometric functions for users needing the most optimized operation with the trade-off of increase data size (3344Bytes of LUT stored in .trigData). It also bypasses some limitations of the aforementioned TI Arm Trig libary such as the limited input range of 0 - 2PI for sine/cosine functions. Furthermore, the Fast Run-Time-Support (FastRTS) library also offers an optimized math operation of logs and exponents.
+
+## Features Supported
+
+Supports Below trignometric and math functions (fastrts):
+
+- Sine
+- Cosine
+- Sine + Cosine
+- Arcsine
+- Arccosine
+- Arctangent
+- Arctangent2
+- Log (base of e)
+- Exponent (base of e)
+
+## Features Not Supported
+
+NA
+
+## API
+
+\ref DRV_FASTRTS_MODULE
+
+\endcond
+
 \cond SOC_AM263PX
 
 ## TMU library
@@ -39,7 +69,7 @@ MCU PLUS SDK integrates a software library to use the TMU (Trigonometric Math Un
 
 ### Features Supported:
 
-TMU library supports below trignometric and math functions
+TMU library supports below trignometric and math functions (ti_arm_tmu):
 - sin, sin_pu
 - cos, cos_pu
 - atan, atan_pu
