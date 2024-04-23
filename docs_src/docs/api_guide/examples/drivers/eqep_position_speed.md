@@ -52,14 +52,14 @@ measured speed:  295 < posSpeed.speedRPMFR < 305
 - Connect ePWM0B to eQEP0B (EPWM_B simulates eQEP Phase B signal)
 - Connect GPIO48 to eQEP0I (GPIO simulates eQEP Index Signal)
 
-## AM263X-CC
+## AM263X-CC or AM263PX-CC
 
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Connect HSEC Pin 49 (ePWM0A) to HSEC Pin 102 (eQEP0A)
 - Connect HSEC Pin 51 (ePWM0B) to HSEC Pin 100 (eQEP0B)
 - Connect HSEC Pin 52 (GPIO48) to HSEC Pin 106 (eQEP0I)
 
-## AM263X-LP
+## AM263X-LP or AM263PX-LP
 - Connect J2 Pin 11 (ePWM0A) to J25 Pin 1 (eQEP2A)
 - Connect J6 Pin 59 (ePWM0B) to J25 Pin 2 (eQEP2B)
 - Connect J2 Pin 40 (GPIO48) to J25 Pin 3 (eQEP2I)

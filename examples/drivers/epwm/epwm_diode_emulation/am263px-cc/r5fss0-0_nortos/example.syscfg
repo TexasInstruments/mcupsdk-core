@@ -119,6 +119,7 @@ epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB = "EPWM_AQ_OUTPUT
 epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_PERIOD  = "EPWM_AQ_OUTPUT_LOW";
 epwm4.epwmTimebase_syncInPulseSource                           = "EPWM_SYNC_IN_PULSE_SRC_SYNCOUT_EPWM4";
 epwm4.EPWM.$assign                                             = "EPWM3";
+epwm4.EPWM.B.$assign                                           = "EPWM3_B";
 
 epwm5.epwmTimebase_counterMode                                 = "EPWM_COUNTER_MODE_UP";
 epwm5.epwmTimebase_phaseEnable                                 = true;
@@ -134,6 +135,7 @@ epwm5.$name                                                    = "EPWM_before_DE
 epwm5.epwmDigitalCompare_EPWM_TZ_DC_OUTPUT_A1                  = "EPWM_TZ_EVENT_DCXH_HIGH";
 epwm5.epwmEventTrigger_enableInterrupt                         = true;
 epwm5.EPWM.$assign                                             = "EPWM4";
+epwm5.EPWM.B.$assign                                           = "EPWM4_B";
 
 epwm6.$name                                                    = "CONFIG_EPWM5";
 epwm6.epwmTimebase_period                                      = 24000;
@@ -436,17 +438,15 @@ output_xbar2.OUTPUTXBAR.XBAROUT.$assign = "PR0_PRU1_GPIO18";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution           = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution           = "EPWM0_B";
-epwm2.EPWM.A.$suggestSolution           = "EPWM1_A";
-epwm3.EPWM.A.$suggestSolution           = "EPWM2_A";
-epwm3.EPWM.B.$suggestSolution           = "EPWM2_B";
-epwm4.EPWM.A.$suggestSolution           = "EPWM3_A";
-epwm4.EPWM.B.$suggestSolution           = "EPWM6_A";
-epwm5.EPWM.A.$suggestSolution           = "EPWM4_A";
-epwm5.EPWM.B.$suggestSolution           = "EPWM1_B";
-epwm6.EPWM.A.$suggestSolution           = "EPWM5_A";
-epwm6.EPWM.B.$suggestSolution           = "EPWM5_B";
-epwm7.EPWM.A.$suggestSolution           = "EPWM3_B";
-epwm7.EPWM.B.$suggestSolution           = "EPWM6_B";
+epwm1.EPWM.A.$assign           = "EPWM0_A";
+epwm1.EPWM.B.$assign           = "EPWM0_B";
+epwm2.EPWM.A.$assign           = "EPWM1_A";
+epwm3.EPWM.A.$assign           = "EPWM2_A";
+epwm3.EPWM.B.$assign           = "EPWM2_B";
+epwm4.EPWM.A.$assign           = "EPWM3_A";
+epwm5.EPWM.A.$assign           = "EPWM4_A";
+epwm6.EPWM.A.$assign           = "EPWM5_A";
+epwm6.EPWM.B.$assign           = "EPWM5_B";
+epwm7.EPWM.A.$assign           = "EPWM6_A";
+epwm7.EPWM.B.$assign           = "EPWM6_B";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

@@ -415,11 +415,11 @@ icl_xbar4.xbarOutput = ["MDL3_OUTB"];
 icl_xbar4.instance   = "ICL_XBAR_3";
 
 icl_xbar5.$name      = "CONFIG_ICL_XBAR4";
-icl_xbar5.xbarOutput = ["MDL5_OUTA"];
+icl_xbar5.xbarOutput = ["MDL11_OUTA"];
 icl_xbar5.instance   = "ICL_XBAR_4";
 
 icl_xbar6.$name      = "CONFIG_ICL_XBAR5";
-icl_xbar6.xbarOutput = ["MDL5_OUTB"];
+icl_xbar6.xbarOutput = ["MDL11_OUTB"];
 icl_xbar6.instance   = "ICL_XBAR_5";
 
 /**

@@ -142,8 +142,8 @@ We select EPWM3A_sclk as the output for MDLXBAR_1.
 - EPWM5_A/B, pin can be connected to an oscilloscope to view the waveform.
 - EPWM6_A/B, pin can be connected to an oscilloscope to view the waveform.
 
-## AM263X-CC
-When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263X-CC or AM263PX-CC
+When using AM263x-CC or AM263Px-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Connect HSEC pin 49, 51 to scope for EPWM0A(B)
 - Connect HSEC pin 53, 55 to scope for EPWM1A(B)
 - Connect HSEC pin 50, 52 to scope for EPWM2A(B)
@@ -151,7 +151,7 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 - Connect HSEC pin 57, 59 to scope for EPWM4A(B)
 - Connect HSEC pin 58, 60 to scope for EPWM6A(B)
 
-## AM263X-LP
+## AM263X-LP or AM263PX-LP
 - Connect J2/J4 pin 11, J6/J8 pin 59 to scope for EPWM0A(B)
 - Connect J2/J4 pin 37, 38 to scope for EPWM1A(B)
 - Connect J2/J4 pin 39, 40 to scope for EPWM2A(B)

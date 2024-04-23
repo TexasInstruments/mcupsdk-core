@@ -13,13 +13,13 @@ The example does the below
 # External Connections
 - EPWM9_A/B pin can be connected to an oscilloscope to view the waveform.
 
-## AM263X-CC
-When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263X-CC or AM263PX-CC
+When using AM263x-CC or AM263Px-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Connect FSI header (on ControlCard) pin 8 for epwm9_A
 - Connect FSI header (on ControlCard) pin 1 for epwm9_B
 
-## AM263X-LP
-When using AM263x-LP
+## AM263X-LP or AM263PX-LP
+When using AM263x-LP or AM263Px-LP
 - Connect boosterpack J6/J8 pin 75 for epwm9_A
 - Connect boosterpack J6/J8 pin 76 for epwm9_B
 

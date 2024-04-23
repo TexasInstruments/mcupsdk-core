@@ -59,7 +59,7 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 
 ## AM263PX-LP or AM263X-LP
 When using AM263x-LP
-- Feed analog input on J1/J3 Pin 23
+- Feed analog input on J5/J6 Pin 66
 - Capture and analyze waveforms on DS2 LED and boosterpack header J6/J8 pin 59
 
 # Supported Combinations {#EXAMPLES_DRIVERS_CMPSS_ASYNCHRONOUS_TRIP_COMBOS}

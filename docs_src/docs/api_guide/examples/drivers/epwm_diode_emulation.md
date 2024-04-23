@@ -12,7 +12,7 @@ All total 7 epwm instances have been used out of which EPWM0A and EPWM1A are mad
 The screenshots attached in the documentation are as per the results obtained by executing the example on CC. Please note that there are some instance differences between CC and LP.
 
 The mapping is such that:
-
+\cond SOC_AM263X
 EPWM0A(B) on CC <--> EPWM0A(B) on LP  \n
 EPWM1A    on CC <--> EPWM1A on LP     \n
 EPWM2A(B) on CC <--> EPWM2A(B) on LP  \n
@@ -20,6 +20,16 @@ EPWM3A(B) on CC <--> EPWM3A(B) on LP  \n
 EPWM4A(B) on CC <--> EPWM9A(B) on LP  \n
 EPWM5A(B) on CC <--> EPWM11A(B) on LP \n
 EPWM6A(B) on CC <--> EPWM12A(B) on LP \n
+\endcond
+\cond SOC_AM263PX
+EPWM0A(B) on CC <--> EPWM0A(B) on LP  \n
+EPWM1A    on CC <--> EPWM1A on LP     \n
+EPWM2A(B) on CC <--> EPWM2A(B) on LP  \n
+EPWM3A(B) on CC <--> EPWM3A(B) on LP  \n
+EPWM4A(B) on CC <--> EPWM9A(B) on LP  \n
+EPWM5A(B) on CC <--> EPWM13A(B) on LP \n
+EPWM6A(B) on CC <--> EPWM12A(B) on LP \n
+\endcond
 
 \imageStyle{am263_epwm_de_basic_config.PNG,width:40%}
  \image html am263_epwm_de_basic_config.PNG "Figure 1.a Basic waveform configuration"

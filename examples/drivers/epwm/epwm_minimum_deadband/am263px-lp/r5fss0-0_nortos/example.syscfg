@@ -141,6 +141,7 @@ epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPB = "EPWM_AQ_OUTPUT
 epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_LOW";
 epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB = "EPWM_AQ_OUTPUT_HIGH";
 epwm6.EPWM.$assign                                             = "EPWM12";
+epwm6.EPWM.B.$assign                                           = "EPWM12_B";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
@@ -365,16 +366,15 @@ mdl_xbar1.instance   = "MDL_XBAR_1";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution           = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution           = "EPWM0_B";
-epwm2.EPWM.A.$suggestSolution           = "EPWM1_A";
-epwm2.EPWM.B.$suggestSolution           = "EPWM1_B";
-epwm3.EPWM.A.$suggestSolution           = "EPWM2_A";
-epwm3.EPWM.B.$suggestSolution           = "EPWM2_B";
-epwm4.EPWM.A.$suggestSolution           = "EPWM3_A";
-epwm4.EPWM.B.$suggestSolution           = "EPWM3_B";
-epwm5.EPWM.A.$suggestSolution           = "EPWM9_A";
-epwm5.EPWM.B.$suggestSolution           = "EPWM8_B";
-epwm6.EPWM.A.$suggestSolution           = "EPWM12_A";
-epwm6.EPWM.B.$suggestSolution           = "EPWM11_B";
+epwm1.EPWM.A.$assign           = "EPWM0_A";
+epwm1.EPWM.B.$assign           = "EPWM0_B";
+epwm2.EPWM.A.$assign           = "EPWM1_A";
+epwm2.EPWM.B.$assign           = "EPWM1_B";
+epwm3.EPWM.A.$assign           = "EPWM2_A";
+epwm3.EPWM.B.$assign           = "EPWM2_B";
+epwm4.EPWM.A.$assign           = "EPWM3_A";
+epwm4.EPWM.B.$assign           = "EPWM3_B";
+epwm5.EPWM.A.$assign           = "EPWM9_A";
+epwm5.EPWM.B.$assign           = "EPWM9_B";
+epwm6.EPWM.A.$assign           = "EPWM12_A";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

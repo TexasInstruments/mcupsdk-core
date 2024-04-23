@@ -221,8 +221,8 @@ Execution time - from detection of input fault signal to generation of trip outp
 # External Connections
 
 
-## AM263X-CC
-Connect AM263x ControlCard to TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263X-CC or AM263PX-CC
+Connect AM263x or AM263Px ControlCard to TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 
 
 \imageStyle{am263_epwm_protection_pru_fig4a.png,width:91%}
@@ -263,8 +263,8 @@ Connect AM263x ControlCard to TMDSHSECDOCK (HSEC180 controlCARD Baseboard Dockin
 - Capture EPWM2_B waveform at HSEC Pin 52
 
 
-## AM263X-LP
-This example is not supported on AM263X-LP
+## AM263X-LP or AM263PX-LP
+This example is not supported on AM263X-LP or AM263PX-LP
 
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_PROTECTION_PRU_COMBOS}

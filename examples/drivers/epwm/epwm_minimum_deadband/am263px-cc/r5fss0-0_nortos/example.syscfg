@@ -83,6 +83,7 @@ epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT
 epwm2.epwmCounterCompare_cmpB                                  = 18000;
 epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_LOW";
 epwm2.EPWM.$assign                                             = "EPWM1";
+epwm2.EPWM.B.$assign                                           = "EPWM1_B";
 
 epwm3.$name                                                    = "CONFIG_EPWM2";
 epwm3.epwmTimebase_counterMode                                 = "EPWM_COUNTER_MODE_UP";
@@ -112,6 +113,7 @@ epwm4.epwmTimebase_phaseEnable                                 = true;
 epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_PERIOD  = "EPWM_AQ_OUTPUT_LOW";
 epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_HIGH";
 epwm4.EPWM.$assign                                             = "EPWM3";
+epwm4.EPWM.B.$assign                                           = "EPWM3_B";
 
 epwm5.$name                                                    = "CONFIG_EPWM4";
 epwm5.epwmTimebase_period                                      = 24000;
@@ -147,6 +149,7 @@ epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPB = "EPWM_AQ_OUTPUT
 epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_LOW";
 epwm6.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB = "EPWM_AQ_OUTPUT_HIGH";
 epwm6.EPWM.$assign                                             = "EPWM6";
+epwm6.EPWM.B.$assign                                           = "EPWM6_B";
 
 mcspi1.$name                 = "CONFIG_MCSPI0";
 pmic1.peripheralDriver       = mcspi1;
@@ -385,18 +388,15 @@ mdl_xbar1.instance   = "MDL_XBAR_1";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution               = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution               = "EPWM0_B";
-epwm2.EPWM.A.$suggestSolution               = "EPWM1_A";
-epwm2.EPWM.B.$suggestSolution               = "EPWM4_B";
-epwm3.EPWM.A.$suggestSolution               = "EPWM2_A";
-epwm3.EPWM.B.$suggestSolution               = "EPWM2_B";
-epwm4.EPWM.A.$suggestSolution               = "EPWM3_A";
-epwm4.EPWM.B.$suggestSolution               = "EPWM6_A";
-epwm5.EPWM.A.$suggestSolution               = "EPWM4_A";
-epwm5.EPWM.B.$suggestSolution               = "EPWM1_B";
-epwm6.EPWM.A.$suggestSolution               = "EPWM3_B";
-epwm6.EPWM.B.$suggestSolution               = "EPWM6_B";
+epwm1.EPWM.A.$assign               = "EPWM0_A";
+epwm1.EPWM.B.$assign               = "EPWM0_B";
+epwm2.EPWM.A.$assign               = "EPWM1_A";
+epwm3.EPWM.A.$assign               = "EPWM2_A";
+epwm3.EPWM.B.$assign               = "EPWM2_B";
+epwm4.EPWM.A.$assign               = "EPWM3_A";
+epwm5.EPWM.A.$assign               = "EPWM4_A";
+epwm5.EPWM.B.$assign               = "EPWM4_B";
+epwm6.EPWM.A.$assign               = "EPWM6_A";
 mcspi1.SPI.CLK.$suggestSolution             = "SPI1_CLK";
 mcspi1.SPI.D0.$suggestSolution              = "SPI1_D0";
 mcspi1.SPI.D1.$suggestSolution              = "SPI1_D1";

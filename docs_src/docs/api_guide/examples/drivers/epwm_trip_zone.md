@@ -62,13 +62,13 @@ For CBC as observed at the end, after exiting the loop, it recovers from trip st
 - Connect boosterpack header J4 pin 38 to scope for EHRPWM1_A
 \endcond
 \cond SOC_AM263X || SOC_AM263PX
-## AM263X-CC
+## AM263X-CC or AM263PX-CC
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Connect HSEC Pin 52 to HSEC Pin 72
 - Connect FSI header (on ControlCard) pin 8 to scope for epwm9_A
 - Connect HSEC Pin 53 to scope for epwm1_A
 
-## AM263X-LP
+## AM263X-LP or AM263PX-LP
 - Connect boosterpack header J1/J3 pin 7 to J2/J4 pin 18
 - Connect boosterpack header J6/J8 pin 75 to scope
 - Connect J2/J4 pin 37 to scope

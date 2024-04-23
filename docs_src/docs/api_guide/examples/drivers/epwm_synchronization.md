@@ -71,7 +71,7 @@ The sync-out event options available are:
 
  # External Connections
 
-When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+When using AM263x-CC or AM263Px-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 Probe the following
 - CONFIG_EPWM0 output on HSEC PIN 49  (EPWM0_A)
 - CONFIG_EPWM0 output on HSEC PIN 51  (EPWM0_B)
@@ -89,7 +89,7 @@ Probe the following
 
 Early Access: For AM263Px-CC E1, the connections is same as that of AM263x
 
-When using AM263X-LP
+When using AM263X-LP or AM263PX-LP
 - CONFIG_EPWM0 output on J2.11  (EPWM0_A)
 - CONFIG_EPWM0 output on J6.59  (EPWM0_B)
 - CONFIG_EPWM1 output on J4.37  (EPWM1_A)

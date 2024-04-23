@@ -17,18 +17,18 @@ This example uses the ePWM module to generate multiple edges in a pwm cycle.
 
 # External Connections
 
-- For AM263PX-CC
+- For AM263PX-CC or AM263PX-CC
     - EPWM0_A and EPWM0_B pin can be connected to an oscilloscope to view the waveform.
     - EPWM1_A and EPWM1_B pin can be connected to an oscilloscope to view the waveform.
     - EPWM2_A and EPWM2_B pin can be connected to an oscilloscope to view the waveform.
 
-- For AM263PX-LP
+- For AM263PX-LP or AM263PX-LP
     - EPWM1_A and EPWM1_B pin can be connected to an oscilloscope to view the waveform.
     - EPWM2_A and EPWM2_B pin can be connected to an oscilloscope to view the waveform.
     - EPWM3_A and EPWM3_B pin can be connected to an oscilloscope to view the waveform.
 
-## AM263PX-CC
-When using AM263PX-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263PX-CC or AM263PX-CC
+When using AM263PX-CC or AM263PX-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Capture waveform on HSEC Pin 49 for epwm0_A
 - Capture waveform on HSEC Pin 51 for epwm0_B
 - Capture waveform on HSEC Pin 53 for epwm1_A
@@ -36,7 +36,7 @@ When using AM263PX-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking S
 - Capture waveform on HSEC Pin 50 for epwm2_A
 - Capture waveform on HSEC Pin 52 for epwm2_B
 
-## AM263PX-LP
+## AM263PX-LP or AM263PX-LP
 - Capture waveform on boosterpack header J2/J4 Pin 37 for epwm1_A
 - Capture waveform on boosterpack header J2/J4 Pin 38 for epwm1_B
 - Capture waveform on boosterpack header J2/J4 Pin 39 for epwm2_A

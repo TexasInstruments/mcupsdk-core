@@ -14,6 +14,7 @@ The screenshots attached in the documentation are as per the results obtained by
 
 The mapping is such that:
 
+\cond SOC_AM263X
 EPWM0A(B) on CC <--> EPWM0A(B) on LP   \n
 EPWM1A    on CC <--> EPWM1A on LP      \n
 EPWM2B    on CC <--> EPWM2B on LP      \n
@@ -21,6 +22,16 @@ EPWM3A(B) on CC <--> EPWM3A(B) on LP   \n
 EPWM4A(B) on CC <--> EPWM9A(B) on LP   \n
 EPWM5A(B) on CC <--> EPWM11A(B) on LP  \n
 EPWM6A(B) on CC <--> EPWM12A(B) on LP  \n
+\endcond
+\cond SOC_AM263PX
+EPWM0A(B) on CC <--> EPWM0A(B) on LP   \n
+EPWM1A    on CC <--> EPWM1A on LP      \n
+EPWM2B    on CC <--> EPWM2B on LP      \n
+EPWM3A(B) on CC <--> EPWM3A(B) on LP   \n
+EPWM4A(B) on CC <--> EPWM9A(B) on LP   \n
+EPWM5A(B) on CC <--> EPWM13A(B) on LP  \n
+EPWM6A(B) on CC <--> EPWM12A(B) on LP  \n
+\endcond
 
 ## XOR and XNOR
 
@@ -134,8 +145,8 @@ X                  | 1                 | 1                     | 0 (both cannot 
 - EPWM4_A/B, pin can be connected to an oscilloscope to view the waveform.
 - EPWM6_A/B, pin can be connected to an oscilloscope to view the waveform.
 
-## AM263X-CC
-When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+## AM263X-CC or AM263Px-CC
+When using AM263x-CC or AM263Px-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Connect HSEC pin 49, 51 to scope for EPWM0A(B)
 - Connect HSEC pin 53 to scope for EPWM1A
 - Connect HSEC pin 52 to scope for EPWM2B
@@ -144,6 +155,7 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 - Connect HSEC pin 61, 63 to scope for EPWM5A(B)
 - Connect HSEC pin 58, 60 to scope for EPWM6A(B)
 
+\cond SOC_AM263X
 ## AM263X-LP
 - Connect J2/J4 pin 11, J6/J8 pin 59 to scope for EPWM0A(B)
 - Connect J2/J4 pin 37 to scope for EPWM1A
@@ -152,6 +164,18 @@ When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking St
 - Connect J6/J8 pin 75, 76 to scope for EPWM9A(B)
 - Connect J6/J8 pin 51, 52 to scope for EPWM11A(B)
 - Connect J6/J8 pin 53, 57 to scope for EPWM12A(B)
+\endcond
+
+\cond SOC_AM263PX
+## AM263PX-LP
+- Connect J2/J4 pin 11, J6/J8 pin 59 to scope for EPWM0A(B)
+- Connect J2/J4 pin 37 to scope for EPWM1A
+- Connect J2/J4 pin 40 to scope for EPWM2B
+- Connect J6/J8 pin 77, 78 to scope for EPWM3A(B)
+- Connect J6/J8 pin 75, 76 to scope for EPWM9A(B)
+- Connect J6/J8 pin 79, 80 to scope for EPWM13A(B)
+- Connect J6/J8 pin 53, 57 to scope for EPWM12A(B)
+\endcond
 
 # Supported Combinations {#EXAMPLES_DRIVERS_EPWM_ILLEGAL_COMBO_LOGIC_COMBOS}
 

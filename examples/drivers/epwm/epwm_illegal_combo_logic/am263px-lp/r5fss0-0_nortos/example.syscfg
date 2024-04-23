@@ -140,6 +140,7 @@ epwm5.epwmICLB_LUTDEC_7  = "1";
 epwm5.epwmICLA_IN3source = "2";
 epwm5.epwmICLB_IN3source = "3";
 epwm5.EPWM.$assign       = "EPWM9";
+epwm5.EPWM.B.$assign     = "EPWM9_B";
 
 epwm6.$name                                                      = "CONFIG_EPWM5";
 epwm6.epwmTimebase_period                                        = 24000;
@@ -165,7 +166,9 @@ epwm6.epwmICLA_LUTDEC_4                                          = "1";
 epwm6.epwmICLA_LUTDEC_6                                          = "1";
 epwm6.epwmICLB_LUTDEC_0                                          = "1";
 epwm6.epwmICLB_LUTDEC_4                                          = "1";
-epwm6.EPWM.$assign                                               = "EPWM11";
+epwm6.EPWM.$assign                                               = "EPWM13";
+epwm6.EPWM.A.$assign                                             = "EPWM13_A";
+epwm6.EPWM.B.$assign                                             = "EPWM13_B";
 
 epwm7.$name              = "CONFIG_EPWM6";
 epwm7.epwmICL_useICLA    = true;
@@ -181,6 +184,7 @@ epwm7.epwmICLB_LUTDEC_5  = "1";
 epwm7.epwmICLB_LUTDEC_6  = "1";
 epwm7.epwmICLB_LUTDEC_7  = "1";
 epwm7.EPWM.$assign       = "EPWM12";
+epwm7.EPWM.B.$assign     = "EPWM12_B";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART0";
@@ -416,11 +420,11 @@ icl_xbar4.xbarOutput = ["MDL3_OUTB"];
 icl_xbar4.instance   = "ICL_XBAR_3";
 
 icl_xbar5.$name      = "CONFIG_ICL_XBAR4";
-icl_xbar5.xbarOutput = ["MDL5_OUTA"];
+icl_xbar5.xbarOutput = ["MDL13_OUTA"];
 icl_xbar5.instance   = "ICL_XBAR_4";
 
 icl_xbar6.$name      = "CONFIG_ICL_XBAR5";
-icl_xbar6.xbarOutput = ["MDL5_OUTB"];
+icl_xbar6.xbarOutput = ["MDL13_OUTB"];
 icl_xbar6.instance   = "ICL_XBAR_5";
 
 /**
@@ -428,18 +432,14 @@ icl_xbar6.instance   = "ICL_XBAR_5";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-epwm1.EPWM.A.$suggestSolution           = "EPWM0_A";
-epwm1.EPWM.B.$suggestSolution           = "EPWM0_B";
-epwm2.EPWM.A.$suggestSolution           = "EPWM1_A";
-epwm2.EPWM.B.$suggestSolution           = "EPWM1_B";
-epwm3.EPWM.A.$suggestSolution           = "EPWM2_A";
-epwm3.EPWM.B.$suggestSolution           = "EPWM2_B";
-epwm4.EPWM.A.$suggestSolution           = "EPWM3_A";
-epwm4.EPWM.B.$suggestSolution           = "EPWM3_B";
-epwm5.EPWM.A.$suggestSolution           = "EPWM9_A";
-epwm5.EPWM.B.$suggestSolution           = "EPWM8_B";
-epwm6.EPWM.A.$suggestSolution           = "EPWM11_A";
-epwm6.EPWM.B.$suggestSolution           = "EPWM9_B";
-epwm7.EPWM.A.$suggestSolution           = "EPWM12_A";
-epwm7.EPWM.B.$suggestSolution           = "EPWM11_B";
+epwm1.EPWM.A.$assign           = "EPWM0_A";
+epwm1.EPWM.B.$assign           = "EPWM0_B";
+epwm2.EPWM.A.$assign           = "EPWM1_A";
+epwm2.EPWM.B.$assign           = "EPWM1_B";
+epwm3.EPWM.A.$assign           = "EPWM2_A";
+epwm3.EPWM.B.$assign           = "EPWM2_B";
+epwm4.EPWM.A.$assign           = "EPWM3_A";
+epwm4.EPWM.B.$assign           = "EPWM3_B";
+epwm5.EPWM.A.$assign           = "EPWM9_A";
+epwm7.EPWM.A.$assign           = "EPWM12_A";
 debug_log.uartLog.UART.$suggestSolution = "UART0";

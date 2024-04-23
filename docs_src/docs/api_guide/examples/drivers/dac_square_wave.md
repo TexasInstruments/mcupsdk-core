@@ -14,16 +14,16 @@ The example does the below
 # External Connections
 - DAC output pin can be connected to an oscilloscope to view the square wave output.
 
-## AM263X-CC
+## AM263X-CC or AM263PX-CC
 Note: To use the reference voltage generated on ControlCard, make sure that the System VREF source select switch SW8 on ControlCard is set to position 1-2
 
-When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
+When using AM263x-CC or AM263PX-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Capture waveform on HSEC Pin 9
 
-## AM263X-LP
+## AM263X-LP or AM263PX-LP
 Note: To use the reference voltage generated on LaunchPad, make sure that the DAC_VREF source select switch S1 on LaunchPad is set to position 1-2
 
-With AM263X-LP
+With AM263X-LP or AM263Px-LP
 - Capture the waveform on boosterpack header J1/J3 Pin 30
 
 # Supported Combinations {#EXAMPLES_DRIVERS_DAC_SQUARE_WAVE_COMBOS}

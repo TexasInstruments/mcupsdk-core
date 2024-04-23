@@ -32,7 +32,7 @@ Note :
 
 # External Connections
 
-## AM263X-CC
+## AM263X-CC or AM263PX-CC
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 Probe the following
 - CONFIG_EPWM0 output on HSEC PIN 49  (EPWM0_A)
@@ -50,7 +50,7 @@ Probe the following
 - CONFIG_EPWM6 output on HSEC PIN 57  (EPWM4_A)
 - CONFIG_EPWM6 output on HSEC PIN 59  (EPWM4_B)
 Early Access:AM263Px-CC E1 EPWM 15_A/15_B doesn't have a pinout so insted used EPWM 5_A/5_B ie: CONFIG_EPWM5 output on HSEC PIN 61 (EPWM5_A) and CONFIG_EPWM5 output on HSEC PIN 63 (EPWM5_B)
-## AM263X-LP
+## AM263X-LP or AM263PX-CC
 Probe the following
 - CONFIG_EPWM0 output on  PIN J2/4 11  (EPWM0_A)
 - CONFIG_EPWM0 output on  PIN J6/8 59  (EPWM0_B)

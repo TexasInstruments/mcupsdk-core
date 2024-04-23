@@ -24,13 +24,13 @@ The example does the below
 
 - Connect ePWM0A to eQEP0A (EPWM simulates eQEP signal)
 
-## AM263X-CC
+## AM263X-CC or AM263PX-CC
 
 When using AM263x-CC with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)
 - Connect HSEC Pin 49 (ePWM0A) to HSEC Pin 102 (eQEP0A)
 
 
-## AM263X-LP
+## AM263X-LP or AM263PX-LP
 - Connect J2 Pin 11 (ePWM0A) to J25 Pin 1 (eQEP0A)
 
 
