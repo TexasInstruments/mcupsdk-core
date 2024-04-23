@@ -35,46 +35,22 @@
 #include <math.h>
 
 /* ========================================================================== */
-/*                   Look-up Table Declarations                               */
-/* ========================================================================== */
-
-/** 
- *  @brief The Sine/Cosine Lookup Table
- */
-const float FastRTS_SinCosTbl[];
-
-/** 
- *  @brief The Arctangent Lookup Table
- */
-const float FastRTS_Arctan2Tbl[];
-
-/** 
- *  @brief The Exponent Lookup Table
- */
-const float FastRTS_expTable[];
-
-/** 
- *  @brief The Natural Logarithm Lookup Table
- */
-const float FastRTS_logTable[];
-
-/* ========================================================================== */
 /*                                 Macros                                     */
 /* ========================================================================== */
 
-/** 
+/**
  *  @brief The Sine/Cosine Lookup Table size
  */
 #define SINCOS_TBLSIZE    (512U)
 
 /** @brief The Arctangent Lookup Table size
- *  @note The table is arranged as 3-tuples, there are ARCTAN2_TBLSIZE + 1 
+ *  @note The table is arranged as 3-tuples, there are ARCTAN2_TBLSIZE + 1
  *  3-tuples
  */
 #define ARCTAN2_TBLSIZE   (64U)
 
 /** @brief The Natural Logarithm Lookup Table size
- *  @note The table is arranged as 3-tuples, there are LOG_TBLSIZE + 1 
+ *  @note The table is arranged as 3-tuples, there are LOG_TBLSIZE + 1
  *  3-tuples
  */
 #define LOG_TBLSIZE   (32U)
@@ -88,7 +64,7 @@ const float FastRTS_logTable[];
 #define RAD_STEP      (TWOPI*ITABLE_SIZE)
 #define RAD_ISTEP     ((float)SINCOS_TBLSIZE * INVTWOPI)
 
-/** 
+/**
  *  Coefficient macros used in function
  */
 #define SINCOS_A0   1.0f
@@ -762,7 +738,7 @@ RTS_DATA_SECTION const float FastRTS_SinCosTbl[641] = {
      0.9996988186962,    // sin(2 * pi *  638/ 512)
      0.9999247018391,    // sin(2 * pi *  639/ 512)
      1.0000000000000,    // sin(2 * pi *  640/ 512)
-}; 
+};
 
 RTS_DATA_SECTION const float FastRTS_Arctan2Tbl[195] = {
      0.0000000000000F,   1.0000406796754F,  -0.0078110697504F,//   0 -> a0 a1 a2
@@ -830,7 +806,7 @@ RTS_DATA_SECTION const float FastRTS_Arctan2Tbl[195] = {
      0.0296734656363F,   1.0115796161864F,  -0.2558558711062F,//  62 -> a0 a1 a2
      0.0334553908381F,   1.0038957163225F,  -0.2519529437632F,//  63 -> a0 a1 a2
      0.0373612832121F,   0.9960839316110F,  -0.2480470514256F,//  64 -> a0 a1 a2
-}; 
+};
 
 RTS_DATA_SECTION const float FastRTS_expTable[89] = {
     1.0000000000000e+00F, // exp(  0)
@@ -922,7 +898,7 @@ RTS_DATA_SECTION const float FastRTS_expTable[89] = {
     2.2352465286716e+37F, // exp( 86)
     6.0760303473996e+37F, // exp( 87)
     1.6516362661361e+38F, // exp( 88)
-}; 
+};
 
 RTS_DATA_SECTION const float FastRTS_logTable[99] = {
      0.0000000000000,   0.9998427992674,  -0.4847911018021,//   0 -> a0 a1 a2
@@ -958,7 +934,7 @@ RTS_DATA_SECTION const float FastRTS_logTable[99] = {
      0.0623444324097,   0.7618749188190,  -0.1310761944828,//  30 -> a0 a1 a2
      0.0661876981423,   0.7539396728045,  -0.1269801903868,//  31 -> a0 a1 a2
      0.0700939481277,   0.7461264574323,  -0.1230732250001,//  32 -> a0 a1 a2
-}; 
+};
 
 /* ========================================================================== */
 /*                          Functions                                         */
@@ -971,7 +947,7 @@ RTS_TEXT_SECTION float FastRTS_cosf(const float theta)
     float x, kf, res;
     const float *S = &FastRTS_SinCosTbl[0];
     const float *C = &FastRTS_SinCosTbl[SINCOS_TBLSIZE/4U];
-    
+
     // Calculate the floating point index into the table
     kf = theta * RAD_ISTEP;
     // Calculate the signed integer index into the table
@@ -994,7 +970,7 @@ RTS_TEXT_SECTION float FastRTS_sinf(const float theta)
     float x, kf, res;
     const float *S = &FastRTS_SinCosTbl[0];
     const float *C = &FastRTS_SinCosTbl[SINCOS_TBLSIZE/4U];
-    
+
     // Calculate the floating point index into the table
     kf = theta * RAD_ISTEP;
     // Calculate the signed integer index into the table
@@ -1015,10 +991,10 @@ RTS_TEXT_SECTION void FastRTS_sincos(const float theta, float *retValues)
     // Locals
     int32_t k;
     float x, kf;
-    
+
     const float *S = &FastRTS_SinCosTbl[0];
     const float *C = &FastRTS_SinCosTbl[SINCOS_TBLSIZE/4U];
-    
+
     // Calculate the floating point index into the table
     kf = theta * RAD_ISTEP;
     // Calculate the signed integer index into the table
@@ -1116,7 +1092,7 @@ RTS_TEXT_SECTION float FastRTS_atanf(const float x)
     // Locals
     int32_t k;
     float r, a0, a1, a2, res;
-    
+
     r = fabsf(x);
 
     // Reduce the xument to the range [-1,1]
@@ -1124,8 +1100,8 @@ RTS_TEXT_SECTION float FastRTS_atanf(const float x)
     {
         r = 1.0f / r;
     }
-    
-    // Calculate the index into the lookup table, the table 
+
+    // Calculate the index into the lookup table, the table
     // is a set of 3-tuples
     k = (uint32_t)(r * ARCTAN2_TBLSIZE);
     k = k * 3U;
@@ -1136,7 +1112,7 @@ RTS_TEXT_SECTION float FastRTS_atanf(const float x)
     // Calculate the arctangent for the first quadrant
     // 0 to +pi/4 (x > 0 && |x| <= 1.0)
     res = a0 + r*(a1 + a2*r);
-    
+
     if(fabsf(x) > 1.0f)
     {
         // if the argument lies in the first quadrant
@@ -1161,7 +1137,7 @@ RTS_TEXT_SECTION float FastRTS_atan2f(const float y, const float x)
     // Locals
     int32_t k;
     float r, a0, a1, a2, res;
-    
+
     // Reduce the argument to the range [-1,1]
     if(fabsf(x) >= fabsf(y))
     {
@@ -1171,8 +1147,8 @@ RTS_TEXT_SECTION float FastRTS_atan2f(const float y, const float x)
     {
         r = fabsf(x)/fabsf(y);
     }
-    
-    // Calculate the index into the lookup table, the table 
+
+    // Calculate the index into the lookup table, the table
     // is a set of 3-tuples
     k = (uint32_t)(r * ARCTAN2_TBLSIZE);
     k = k * 3U;
@@ -1183,7 +1159,7 @@ RTS_TEXT_SECTION float FastRTS_atan2f(const float y, const float x)
     // Calculate the arctangent for the first quadrant
     // 0 to +pi/4 (x,y > 0 && |x| >= |y|)
     res = a0 + r*(a1 + a2*r);
-    
+
     if((x >= 0) && (fabsf(x) < fabsf(y)))
     {
         // The argument y/x lies in the first Quadrant (pi/4 to pi/2)
@@ -1213,7 +1189,7 @@ RTS_TEXT_SECTION float FastRTS_atan2f(const float y, const float x)
         // arctan(y/x) = pi - arctan(|y|/|x|)
         res = PI - res;
     }
-    if ( y < 0 ) 
+    if ( y < 0 )
     {
         // If the argument y/x lies in the third and fourth quadrants,
         // it is the exact mirror of what we have already calculated
@@ -1237,7 +1213,7 @@ RTS_TEXT_SECTION float FastRTS_expf(const float x)
     // exponents
     //   x
     // e   = 1 + x*(1+x/2*(1+x/3*(1+x/4*(1+x/5*(1+x/6*(1+x/7)+...)))))
-    // 
+    //
     float e_fracx = 1 + x_f*(1 + x_f*FPUINV2  *
                               (1 + x_f*FPUINV3  *
                               (1 + x_f*FPUINV4  *
@@ -1247,7 +1223,7 @@ RTS_TEXT_SECTION float FastRTS_expf(const float x)
 
     //  The result,  e^{x} = e^{integer}*e^{fraction}
     float e_x = e_intx * e_fracx;
-    
+
     // If x was negative, calculate the inverse of the result
     if(x < 0.0f)
     {
@@ -1261,32 +1237,32 @@ RTS_TEXT_SECTION float FastRTS_logf(const float x)
 {
     // Locals
     float x_a = fabsf(x);
-    //  A floating point number is represented as 
-    //       X=[S]1.M*2^E 
-    // where S is the  sign bit, M the mantissa, and E the biased exponent. 
+    //  A floating point number is represented as
+    //       X=[S]1.M*2^E
+    // where S is the  sign bit, M the mantissa, and E the biased exponent.
     // The natural logarithm of such a number is given by
     //      log(X)= log(1.M)+ E*log(2)
     union fisize_t{
         float f;
         int32_t i;
     }x_exp, x_mant;
-    
+
     x_exp.f  = x_a;
     x_mant.f = x_a;
-    
+
     // Separate the exponent of X and store as a float
     x_exp.f = (float)(x_exp.i >> (FLT_MANT_DIG - 1)) - FPUEXPBIAS;
-    
+
     float log_exp = x_exp.f * FPULOG2;
-    
+
     // Separate the mantissa (1.M), and then the fractional portion Xm = M
     // ANDing the argument with FPULOG_TABLE_MASK1 will zero out the sign
     // and most significant exponent bit, while ORing with FPULOG_TABLE_MASK2
     // will set the exponent to 127 (single) or 1023 (double)
     //
-    // Consider 10 = 1.25x2^3. In single precision float the leading 1 of the 
-    // significand is implicit and the exponent is biased around 127, so its 
-    // physical representation is 
+    // Consider 10 = 1.25x2^3. In single precision float the leading 1 of the
+    // significand is implicit and the exponent is biased around 127, so its
+    // physical representation is
     //   31|30           23|22                                        0|
     //   +-+---------------+-------------------------------------------+
     //   |0|1|0|0|0|0|0|1|0|0|1|0                 ...........         0|
@@ -1307,28 +1283,28 @@ RTS_TEXT_SECTION float FastRTS_logf(const float x)
     //   |0|0|1|1|1|1|1|1|1|0|1|0                 ...........         0|
     //   +-+---------------+-------------------------------------------+
     //    S| biased exp    | mantissa                                  |
-    //     | E = 127       | 0.25                                      |    
+    //     | E = 127       | 0.25                                      |
     // Now the value of this float (after removing exponent bias)
     //   = 1.25 * 2^(127-127(BIAS)) = 1.25
     // We have extracted just the mantissa (or significand)
-    x_mant.i = (x_mant.i & (int32_t)FPULOG_TABLE_MASK1) | 
+    x_mant.i = (x_mant.i & (int32_t)FPULOG_TABLE_MASK1) |
                            (int32_t)FPULOG_TABLE_MASK2;
     // Get the fractional part of the mantissa
     x_mant.f = x_mant.f - 1.0;
-    
-    // The value of log(1.M) = A0 + M*(A1 + M*A2), where M is the 
+
+    // The value of log(1.M) = A0 + M*(A1 + M*A2), where M is the
     // fractional part of the mantissa extracted in the previous step
-    // The values A0, A1, A2 are a triplet that is obtained from the 
+    // The values A0, A1, A2 are a triplet that is obtained from the
     // lookup table; the table has LOG_TBLSIZE such triplets
     int32_t i = (int32_t)(x_mant.f * LOG_TBLSIZE);
     i *= 3;
-    
+
     float A0 = FastRTS_logTable[i];
     float A1 = FastRTS_logTable[i + 1];
     float A2 = FastRTS_logTable[i + 2];
-    
+
     float log_mant = A0 + x_mant.f*(A1 + x_mant.f*A2);
     float log_x    = log_exp + log_mant;
-    
+
     return(log_x);
 }
