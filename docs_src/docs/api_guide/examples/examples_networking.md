@@ -135,6 +135,13 @@ This page lists all the examples related to Ethernet Communication.
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_UDPCLIENT
 ### TCP/IP Examples using LwIP Stack on Baremetal (NoRTOS)
 -# \subpage EXAMPLES_ENET_LWIP_CPSW_HTTPSERVER
+### Time-Sensitive Networking (TSN) Examples on FreeRTOS
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TR
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_TT
+-# \subpage EXAMPLES_ENET_CPSW_TSN_GPTP_BRIDGE
+-# \subpage EXAMPLES_ENET_CPSW_TSN_LWIP_GPTP
+### LLDP Example on FreeRTOS
+-# \subpage EXAMPLES_ENET_CPSW_LLDP
 \endcond
 
 \cond SOC_AM273X

@@ -57,6 +57,17 @@ See also :\ref ENET_CPSW_TSN_GPTP for gPTP stack documentation.
 
 \endcond
 
+\cond SOC_AM263PX
+
+ Parameter      | Value
+ ---------------|-----------
+ CPU + OS       | r5fss0-0_freertos
+ Toolchain      | ti-arm-clang
+ Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
+ Example folder | examples/networking/tsn/gptp_lwip_cpsw
+
+\endcond
+
 # Steps to Run the Example
 
 ## Prerequisites
