@@ -258,17 +258,26 @@ int32_t UART_lld_dmaWrite(UARTLLD_Handle hUart, const UART_Transaction *transact
     edmaTxParam.srcAddr       = (uint32_t) SOC_virtToPhy((void *) transaction->buf);
     edmaTxParam.destAddr      = (uint32_t) SOC_virtToPhy((void *) (hUart->baseAddr + (uint32_t)UART_THR));
     edmaTxParam.aCnt          = (uint16_t) 1;
-    edmaTxParam.bCnt          = (uint16_t) (transaction->count);
-    edmaTxParam.cCnt          = (uint16_t) 1;
+    if(transaction->count < hUart->hUartInit->txTrigLvl)
+    {
+        edmaTxParam.bCnt = transaction->count;
+        edmaTxParam.cCnt = 1;
+    }
+    else if(transaction->count >= hUart->hUartInit->txTrigLvl)
+    {
+        edmaTxParam.bCnt = (uint16_t) hUart->hUartInit->txTrigLvl;
+        edmaTxParam.cCnt = (uint16_t) transaction->count/hUart->hUartInit->txTrigLvl;
+    }
+
     edmaTxParam.bCntReload    = (uint16_t) edmaTxParam.bCnt;
     edmaTxParam.srcBIdx       = (int16_t) edmaTxParam.aCnt;
     edmaTxParam.destBIdx      = (int16_t) 0;
-    edmaTxParam.srcCIdx       = (int16_t) 0;
+    edmaTxParam.srcCIdx       = (int16_t) hUart->hUartInit->txTrigLvl;
     edmaTxParam.destCIdx      = (int16_t) 0;
     edmaTxParam.linkAddr      = 0xFFFFU;
     edmaTxParam.opt           = 0;
     edmaTxParam.opt          |=
-        (EDMA_OPT_TCINTEN_MASK | ((tccTx << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
+        (EDMA_OPT_SYNCDIM_MASK |EDMA_OPT_TCINTEN_MASK | ((tccTx << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
 
     /* Write Tx param set */
     EDMA_setPaRAM(baseAddr, paramTx, &edmaTxParam);
@@ -346,16 +355,26 @@ int32_t UART_lld_dmaRead(UARTLLD_Handle hUart, const UART_Transaction *transacti
     edmaRxParam.srcAddr       = (uint32_t) SOC_virtToPhy((void *) (hUart->baseAddr + UART_RHR));
     edmaRxParam.destAddr      = (uint32_t) SOC_virtToPhy((void *) transaction->buf);
     edmaRxParam.aCnt          = (uint16_t) 1;
-    edmaRxParam.bCnt          = (uint16_t) (transaction->count);
-    edmaRxParam.cCnt          = (uint16_t) 1;
+
+     if(transaction->count < hUart->hUartInit->rxTrigLvl)
+    {
+        edmaRxParam.bCnt = transaction->count;
+        edmaRxParam.cCnt = 1;
+    }
+    else if(transaction->count >= hUart->hUartInit->rxTrigLvl)
+    {
+        edmaRxParam.bCnt = (uint16_t) hUart->hUartInit->rxTrigLvl;
+        edmaRxParam.cCnt = (uint16_t) (transaction->count/hUart->hUartInit->rxTrigLvl);
+    }
+
     edmaRxParam.bCntReload    = (uint16_t) edmaRxParam.bCnt;
     edmaRxParam.srcBIdx       = (int16_t) 0;
     edmaRxParam.destBIdx      = (int16_t) edmaRxParam.aCnt;
     edmaRxParam.srcCIdx       = (int16_t) 0;
-    edmaRxParam.destCIdx      = (int16_t) 0;
+    edmaRxParam.destCIdx      = (int16_t) hUart->hUartInit->rxTrigLvl;
     edmaRxParam.linkAddr      = 0xFFFFU;
     edmaRxParam.opt           =
-    (EDMA_OPT_TCINTEN_MASK | ((tccRx << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
+    (EDMA_OPT_SYNCDIM_MASK | EDMA_OPT_TCINTEN_MASK | ((tccRx << EDMA_OPT_TCC_SHIFT) & EDMA_OPT_TCC_MASK));
 
     /* Write Rx param set */
     EDMA_setPaRAM(baseAddr, paramRx, &edmaRxParam);
@@ -529,8 +548,11 @@ static void UART_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
 {
     UARTLLD_Handle hUart;
     UARTLLD_InitHandle hUartInit;
-    uint32_t            lineStatus      = 0U;
-    uint32_t            startTicks, elapsedTicks;
+
+    uint32_t lineStatus      = 0U;
+    uint32_t startTicks, elapsedTicks;
+    uint32_t bytesRemain;
+    uint32_t bytesSent;
 
     /* Check parameters */
     if(NULL != args)
@@ -558,7 +580,27 @@ static void UART_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
         }
         else
         {
-            hUart->hUartInit->writeCompleteCallbackFxn(hUart);
+            hUart->writeTrans.status = UART_TRANSFER_STATUS_SUCCESS;
+            bytesRemain = hUart->writeTrans.count % hUart->hUartInit->txTrigLvl;
+            if(hUart->writeTrans.count >= hUart->hUartInit->txTrigLvl)
+            {
+                bytesSent = hUart->writeTrans.count - bytesRemain;
+            }
+            else
+            {
+                bytesSent = bytesRemain;
+            }
+            if(bytesRemain > 0)
+            {
+                UART_lld_flushTxFifo(hUart);
+                hUart->writeTrans.count = bytesRemain;
+                hUart->writeTrans.buf = hUart->writeTrans.buf + bytesSent;
+                UART_lld_dmaWrite(hUart, &hUart->writeTrans);
+            }
+            else
+            {
+                hUart->hUartInit->writeCompleteCallbackFxn(hUart);
+            }
             UART_lld_Transaction_deInit(&hUart->writeTrans);
         }
     }
@@ -568,13 +610,33 @@ static void UART_edmaIsrTx(Edma_IntrHandle intrHandle, void *args)
 static void UART_edmaIsrRx(Edma_IntrHandle intrHandle, void *args)
 {
     UARTLLD_Handle hUart;
-
+    uint32_t bytesRemain = 0;
+    uint32_t bytesReceived;
     /* Check parameters */
     if(NULL != args)
     {
         hUart = (UARTLLD_Handle)args;
         hUart->readTrans.status = UART_TRANSFER_STATUS_SUCCESS;
-        hUart->hUartInit->readCompleteCallbackFxn(hUart);
+        bytesRemain =  hUart->readTrans.count % hUart->hUartInit->rxTrigLvl;
+        if(hUart->readTrans.count >= hUart->hUartInit->rxTrigLvl)
+        {
+            bytesReceived = hUart->readTrans.count - bytesRemain;
+        }
+        else
+        {
+            bytesReceived = bytesRemain;
+        }
+
+        if(bytesRemain > 0)
+        {
+            hUart->readTrans.count = bytesRemain;
+            hUart->readTrans.buf = hUart->readTrans.buf + bytesReceived;
+            UART_lld_dmaRead(hUart, &hUart->readTrans);
+        }
+        else
+        {
+            hUart->hUartInit->readCompleteCallbackFxn(hUart);
+        }
         UART_lld_Transaction_deInit(&hUart->readTrans);
     }
 
