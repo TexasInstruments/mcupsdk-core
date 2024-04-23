@@ -202,7 +202,7 @@ In Linux, the tools are installed by default in ${HOME}/ti.
 ## Licenses
 
 The licensing information of this SDK, as well as any third-party components included which are made available under a number of other open-source licenses are enumerated as part of the manifest.
-A complete manifest along with export control information is detailed here [\htmllink{../../docs/@VAR_SOC_MANIFEST,LINK}] and the SDK Software License Agreement (SLA) is here [\htmllink{../../license.txt,LINK}]
+A complete manifest along with export control information is detailed here [\htmllink{../../docs/@VAR_SOC_MANIFEST,LINK}], [\htmllink{../../docs/mcu_plus_sdk_tsn_manifest.html,LINK}] and the SDK Software License Agreement (SLA) is here [\htmllink{../../license.txt,LINK}]
 
 ## Help and Support
 

@@ -40,13 +40,13 @@ AM263x| R5F             | AM263x LaunchPad Revision E1  (referred to as am263x-l
 
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F            | @VAR_CCS_VERSION_AM263X
-SysConfig               | R5F            | @VAR_SYSCFG_VERSION_AM263X, build @VAR_SYSCFG_BUILD_AM263X
-TI ARM CLANG            | R5F            | @VAR_TI_ARM_CLANG_VERSION
-FreeRTOS Kernel         | R5F            | @VAR_FREERTOS_KERNEL_VERSION
-LwIP                    | R5F            | @VAR_LWIP_VERSION
+Code Composer Studio    | R5F            | 12.1.0
+SysConfig               | R5F            | 1.14.0 build, build 2667
+TI ARM CLANG            | R5F            | 2.1.2.LTS
+FreeRTOS Kernel         | R5F            | 10.4.3
+LwIP                    | R5F            | STABLE-2_1_2_RELEASE
 
-\attention TI ARM CLANG @VAR_TI_ARM_CLANG_VERSION is not part of CCS by default, Follow steps at \ref INSTALL_TIARMCLANG to install the compiler
+\attention TI ARM CLANG 2.1.2.LTS is not part of CCS by default, Follow steps at \ref INSTALL_TIARMCLANG to install the compiler
 
 ## Key Features
 

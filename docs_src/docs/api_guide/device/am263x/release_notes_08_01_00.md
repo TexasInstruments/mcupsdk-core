@@ -21,11 +21,11 @@ AM263x| R5F             | AM263x ControlCard  (referred to as am263x-cc in code)
 
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F            | @VAR_CCS_VERSION_AM263X
-SysConfig               | R5F            | @VAR_SYSCFG_VERSION_AM263X, build @VAR_SYSCFG_BUILD_AM263X
-TI ARM CLANG            | R5F            | @VAR_TI_ARM_CLANG_VERSION
-FreeRTOS Kernel         | R5F            | @VAR_FREERTOS_KERNEL_VERSION
-LwIP                    | R5F            | @VAR_LWIP_VERSION
+Code Composer Studio    | R5F            | 11.1.0
+SysConfig               | R5F            | 1.11.0 build, build 2255
+TI ARM CLANG            | R5F            | 1.3.0.LTS
+FreeRTOS Kernel         | R5F            | 10.4.3
+LwIP                    | R5F            | 2.12.2
 
 ## Key Features
 

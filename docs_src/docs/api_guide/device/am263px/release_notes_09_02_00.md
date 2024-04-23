@@ -10,8 +10,7 @@
 
 \attention Current PMIC support in SDK is bare minimum meant to power up the modules and should not be used beyond this including safety use-case etc
 
-\note This SDK release supports AM263Px-LP board (ZCZ_C) package with limited validation. Please refer to test report for details
-\note CSP 1.2.7 or beyond needs to be used for XIP load/run from CCS. Refer \ref CSP_UPDATE for installation steps.
+\note CSP 12.7 or beyond needs to be used for XIP load/run from CCS. Refer \ref CSP_UPDATE for installation steps.
 
 ## New in this Release
 
@@ -21,6 +20,8 @@ Added empty example to support PRU0, PRU1 cores                                 
 Added PRU-ICSSM INTC and pinmux configuration from SysConfig                                    | PRU-IO
 Added ICSS-EMAC driver support                                                                  | ICSS-EMAC
 Added ICSS-EMAC LwIP example configured in Switch and MAC mode                                  | ICSS-EMAC
+I2C LLD driver support (\ref DRIVERS_I2C_LLD_PAGE)                                              | I2C
+SIP Package(ZCF) Support                                                                        | SOC
 
 # Modules Not tested/supported in this release
 
@@ -39,12 +40,12 @@ AM263Px| R5F             | AM263Px LaunchPad              (referred to as am263P
 
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F            | @VAR_CCS_VERSION
-SysConfig               | R5F            | @VAR_SYSCFG_VERSION, build @VAR_SYSCFG_BUILD
-TI ARM CLANG            | R5F            | @VAR_TI_ARM_CLANG_VERSION
-FreeRTOS Kernel         | R5F            | @VAR_FREERTOS_KERNEL_VERSION
-LwIP                    | R5F            | @VAR_LWIP_VERSION
-Mbed-TLS                | R5F            | @VAR_MBEDTLS_VERSION
+Code Composer Studio    | R5F            | 12.7.0
+SysConfig               | R5F            | 1.20.0 build, build 3587
+TI ARM CLANG            | R5F            | 3.2.2.LTS
+FreeRTOS Kernel         | R5F            | 10.4.3
+LwIP                    | R5F            | STABLE-2_2_0_RELEASE
+Mbed-TLS                | R5F            | mbedtls-3.0.0
 
 
 ## Key Features
@@ -174,11 +175,67 @@ Thermal Monitor(VTM)| R5F             | NA                |  NORTOS | Over, unde
     <th> Resolution/Comments
 </tr>
 <tr>
-    <td> -
-    <td> -
-    <td> -
-    <td> -
-    <td> -
+    <td> MCUSDK-11526
+    <td> UART LLD does not output readable characters with 16x AUTO BAUD operation mode.
+    <td> UART
+    <td> 09.01.00 onwards
+    <td> We need to send the "AT/at" command from the UART_read API then it will work
+</tr>
+<tr>
+    <td> MCUSDK-12347
+    <td> Infra: SysCfg for System examples generating code in single context mode.
+    <td> SDK_INFRA
+    <td> 09.00.00 onwards
+    <td> Infra changes needed..
+</tr>
+<tr>
+    <td> MCUSDK-12574
+    <td> EDMA: Unable to configure Interrupt priority.
+    <td> EDMA
+    <td> 09.00.00 onwards
+    <td> Enabled interrupt priority configuration from SysCfg.
+</tr>
+<tr>
+    <td> MCUSDK-12694
+    <td> [AM263P] RTI4 through RTI7 interrupts unusable with SysConfig.
+    <td> RTI
+    <td> 09.01.00 onwards
+    <td> Update meta content for syscfg module.
+</tr>
+<tr>
+    <td> MCUSDK-12922
+    <td> Non-existent RTI instances can be added to SysConfig file resulting in corruption.
+    <td> RTI
+    <td> 09.00.00 onwards
+    <td> canShareWith parameter removed from SysCfg configuration.
+</tr>
+<tr>
+    <td> MCUSDK-12946
+    <td> IPC: RPMSG Send fails if timeout is 0
+    <td> IPC
+    <td> 09.01.00 onwards
+    <td> Timeout implemented while calling IpcNotify_send.
+</tr>
+<tr>
+    <td> MCUSDK-13073
+    <td> OCRAM Bank4 and Bank5 not initialized
+    <td> RCM
+    <td> 09.01.00 onwards
+    <td> Initialization added for these 2 banks
+</tr>
+<tr>
+    <td> MCUSDK-12658
+    <td> McSPI LLD multiple instances build issue
+    <td> McSPI
+    <td> 09.01.00 onwards
+    <td> Fixed issues in SysCfg template.
+</tr>
+<tr>
+    <td> MCUSDK-12946
+    <td> MCAN_txBufAddReq API should do a direct write on TXBAR register instead of a read-modify-write.
+    <td> MCAN
+    <td> 09.01.00 onwards
+    <td> Updated the API.
 </tr>
 </table>
 
@@ -220,13 +277,6 @@ Thermal Monitor(VTM)| R5F             | NA                |  NORTOS | Over, unde
     <td> Use 64KB TCM in user application
 </tr>
 <tr>
-    <td> MCUSDK-12278
-    <td> Sysconfig: Missing EPWMxSYNCPER configuration
-    <td> EPWM
-    <td> 09.01.00
-    <td> Use HRPWM_setSyncPulseSource API to configure EPWMxSYNCPER
-</tr>
-<tr>
     <td> MCUSDK-12265
     <td> SDFM example failure on am263px-lp
     <td> SDFM
@@ -237,20 +287,6 @@ Thermal Monitor(VTM)| R5F             | NA                |  NORTOS | Over, unde
     <td> MCUSDK-12264
     <td> EQEP position speed example failure on am263px-lp
     <td> EQEP
-    <td> 09.01.00
-    <td> None
-</tr>
-<tr>
-    <td> MCUSDK-12263
-    <td> ECAP APWM example failure on am263px-lp
-    <td> ECAP
-    <td> 09.01.00
-    <td> None
-</tr>
-<tr>
-    <td> MCUSDK-12262
-    <td> EPWM deadband example failure
-    <td> EPWM
     <td> 09.01.00
     <td> None
 </tr>
@@ -269,11 +305,39 @@ Thermal Monitor(VTM)| R5F             | NA                |  NORTOS | Over, unde
     <td> None
 </tr>
 <tr>
-    <td> MCUSDK-12340
-    <td> RGMII1 clock is getting set in gel/CCS boot flow for am263px-lp
-    <td> Networking
-    <td> 09.01.00
-    <td> Use UART boot mode
+    <td> MCUSDK-13111
+    <td> Memory Configurator/syscfg auto-linker generator doesn't support reordering
+    <td> Build
+    <td> 09.01.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-13109
+    <td> RTI Interrupt req is pulse type and not level type
+    <td> RTI
+    <td> 09.01.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-13014
+    <td> The memory read feature of uniflash erases the memory
+    <td> Flash
+    <td> 09.01.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-13011
+    <td> Multicore Empty project not working properly
+    <td> FreeRTOS
+    <td> 09.01.00 onwards
+    <td> -
+</tr>
+<tr>
+    <td> MCUSDK-12986
+    <td> FreeRTOS: Barrier instructions missing in Interrupt Disable/Enable API's
+    <td> FreeRTOS
+    <td> 09.01.00 onwards
+    <td> -
 </tr>
 <tr>
     <td> PINDSW-7715
@@ -300,16 +364,22 @@ Thermal Monitor(VTM)| R5F             | NA                |  NORTOS | Over, unde
     <th> SDK Status
 </tr>
 <tr>
+    <td> i2189
+    <td> OSPI: Controller PHY Tuning Algorithm
+    <td> OSPI
+    <td> Open
+</tr>
+<tr>
     <td> i2311
     <td> USART: Spurious DMA Interrupts
     <td> UART
     <td> Implemented
 </tr>
 <tr>
-    <td> i2354
-    <td> SDFM: Two Back-to-Back Writes to SDCPARMx Register Bit Fields CEVT1SEL, CEVT2SEL, and HZEN Within Three SD-Modulator Clock Cycles can Corrupt SDFM State Machine, Resulting in Spurious Comparator Events
-    <td> SDFM
-    <td> Open
+    <td> i2324
+    <td> No synchronizer present between GCM and GCD status signals
+    <td> Common
+    <td> Implemented
 </tr>
 <tr>
     <td> i2345
@@ -324,21 +394,45 @@ Thermal Monitor(VTM)| R5F             | NA                |  NORTOS | Over, unde
     <td> Open
 </tr>
 <tr>
+    <td> i2351
+    <td> OSPI: Controller does not support Continuous Read mode with NAND Flash
+    <td> OSPI
+    <td> Open
+</tr>
+<tr>
+    <td> i2354
+    <td> SDFM: Two Back-to-Back Writes to SDCPARMx Register Bit Fields CEVT1SEL, CEVT2SEL, and HZEN Within Three SD-Modulator Clock Cycles can Corrupt SDFM State Machine, Resulting in Spurious Comparator Events
+    <td> SDFM
+    <td> Open
+</tr>
+<tr>
     <td> i2356
     <td> ADC: Interrupts may Stop if INTxCONT (Continue-to-Interrupt Mode) is not Set
     <td> ADC
     <td> Implemented
 </tr>
 <tr>
-    <td> i2324
-    <td> No synchronizer present between GCM and GCD status signals
-    <td> Common
+    <td> i2383
+    <td> OSPI: 2-byte address is not supported in PHY DDR mode
+    <td> OSPI
     <td> Open
 </tr>
 <tr>
     <td> i2401
     <td> CPSW: Host Timestamps Cause CPSW Port to Lock up
     <td> CPSW
+    <td> Open
+</tr>
+<tr>
+    <td> i2404
+    <td> Race condition in mailbox registers resulting in events miss
+    <td> IPC, Mailbox
+    <td> Implemented
+</tr>
+<tr>
+    <td> i2405
+    <td> CONTROLSS: Race condition OUTPUT_XBAR and PWM_XBAR resulting in event miss
+    <td> Crossbar
     <td> Open
 </tr>
 </table>
@@ -389,10 +483,11 @@ Thermal Monitor(VTM)| R5F             | NA                |  NORTOS | Over, unde
     <th> Additional Remarks
 </tr>
 <tr>
-    <td> -
-    <td> -
-    <td> -
-    <td> -
+    <td> GPIO
+    <td> NA
+    <td> The GPIO deviceData has been modified to reduce the load from the solver working at the backend of sysconfig application. Instead of choosing the gpio peripheral GPIO0 or GPIO1 for the main domain, user can now directy choose the pins. With this change, user can add as many gpios as possible without facing any sysconfig crash. SDK changes thereby had to be adjusted accordingly.
+    <td> Please note that these changes are backward compatible, so the old example.syscfg will still work.
+However, this change will break compatibility with users who are not using the SDK but directly using pinmux. They will have to remove the gpio related configurations from their syscfg file, then open the file in syscfg and add those gpios configurations again via gui.
 </tr>
 </table>
 

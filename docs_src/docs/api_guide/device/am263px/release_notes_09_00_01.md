@@ -17,12 +17,12 @@
 - Smart placement (\ref SMART_PLACEMENT)
 - OptiFlash Support (\ref OPTIFLASH)
 - Memory Configurator (\ref MEMORY_CONFIGURATOR)
-- Uniflash tool support (\ref TI_UNIFLASH_TOOL) 
+- Uniflash tool support (\ref TI_UNIFLASH_TOOL)
 
 # Modules Not tested/supported in this release
 - AM263Px-LP board
 - Safety Diagnostic Library (SDL)
-- Hardware Trigonometric Math Unit (TMU) 
+- Hardware Trigonometric Math Unit (TMU)
 - MbedTLS based security for Networking
 - Ethernet phy (ETHPHY) board driver
 - ICSS-EMAC
@@ -41,12 +41,12 @@ AM263Px| R5F             | AM263Px ControlCard            (referred to as am263P
 
 Tools                   | Supported CPUs | Version
 ------------------------|----------------|-----------------------
-Code Composer Studio    | R5F            | @VAR_CCS_VERSION
-SysConfig               | R5F            | @VAR_SYSCFG_VERSION, build @VAR_SYSCFG_BUILD
-TI ARM CLANG            | R5F            | @VAR_TI_ARM_CLANG_VERSION
-FreeRTOS Kernel         | R5F            | @VAR_FREERTOS_KERNEL_VERSION
-LwIP                    | R5F            | @VAR_LWIP_VERSION
-Mbed-TLS                | R5F            | @VAR_MBEDTLS_VERSION
+Code Composer Studio    | R5F            | 12.5.0
+SysConfig               | R5F            | 1.18.0 build, build 3266
+TI ARM CLANG            | R5F            | 3.2.0.LTS
+FreeRTOS Kernel         | R5F            | 10.4.3
+LwIP                    | R5F            | STABLE-2_2_0_RELEASE
+Mbed-TLS                | R5F            | mbedtls-2.13.1
 
 
 ## Key Features
