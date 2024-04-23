@@ -22,6 +22,11 @@ Added ICSS-EMAC driver support                                                  
 Added ICSS-EMAC LwIP example configured in Switch and MAC mode                                  | ICSS-EMAC
 I2C LLD driver support (\ref DRIVERS_I2C_LLD_PAGE)                                              | I2C
 SIP Package(ZCF) Support                                                                        | SOC
+YANG data model based configuration support for IET/Frame Preemption(IEEE 802.1Qbu), Credit Based Shaper(IEEE 802.1Qav), Enhancements for Scheduled Traffic(IEEE 802.1Qbv) and other TSN features                                                                                              | Ethernet and Networking
+Ethernet Switch management through standard Link Layer Discovery Protocol(IEEE 802.1AB) for CPSW peripheral               | Ethernet and Networking
+Multi-time domain gPTP(IEEE 802.1AS) support enabled in TSN stack                                                         | Ethernet and Networking
+Example to showcase the simultaneous execution of Time-Sensitive Networking and LwIP stack                                | Ethernet and Networking
+Added support for Ethernet add-on board for Automotive Ethernet PHY in AM263Px-CC board                                | Ethernet and Networking
 
 # Modules Not tested/supported in this release
 
@@ -98,7 +103,7 @@ Peripheral   | Supported CPUs | SysConfig Support | DMA Supported               
 ADC          | R5F            | YES               | Yes. Example:  adc_soc_continuous_dma | Single software triggered conversion, Multiple ADC trigger using PWM, Result read using DMA, EPWM trip through PPB limit, PPB limits, PPB offsets, burst mode oversampling, differential mode, Offset, EPWM triggered conversion                | PPB Aggregrator features, trigger repeaters, external channel selection
 Bootloader   | R5F            | YES               | Yes. DMA enabled for SBL OSPI         | Boot modes: OSPI, UART. All R5F's                                                                                                                               | -
 CMPSS        | R5F            | YES               | NA                                    | Asynchronous PWM trip                                                                                                                                           | -
-CPSW         | R5F            | YES               | No                                    | MAC loopback, PHY loopback, LWIP: Getting IP, Ping, Iperf, Layer 2 MAC, Layer 2 PTP Timestamping and Ethernet CPSW Switch support                               | -
+CPSW         | R5F            | YES               | No                                    | MAC loopback, PHY loopback, LWIP: Getting IP, Ping, Iperf, Layer 2 MAC, Layer 2 PTP Timestamping and Ethernet CPSW Switch support, TSN stack                      | RMII, MII mode
 DAC          | R5F            | YES               | Yes. Example: dac_sine_dma            | Constant voltage, Square wave generation, Sine wave generation with and without DMA, Ramp wave generation, Random Voltage generation                            | -
 ECAP         | R5F            | YES               | No                                    | ECAP APWM mode, PWM capture                                                                                                                                     | -
 EDMA         | R5F            | YES               | NA                                    | DMA transfer using interrupt and polling mode, QDMA Transfer, Channel Chaining, PaRAM Linking                                                                   | -
@@ -138,8 +143,9 @@ ETHPHY     | R5F            | YES               | Tested with ethercat_slave_bec
 
 Module                      | Supported CPUs | SysConfig Support | OS Support  | Key features tested                                                                    | Key features not tested
 ----------------------------|----------------|-------------------|-------------|----------------------------------------------------------------------------------------|------------------------
-LwIP                        | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping                         | Other LwIP features
-Ethernet driver (ENET)      | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping,  interrupt pacing, Policer and Classifier  | RMII mode, CPSW EST, MDIO Manual Mode, CBS (IEEE 802.1Qav), Strapped PHY (Early Ethernet)
+Time-Sensitive Networking(gPTP-IEEE 802.1AS) | R5F            | NO                | FreeRTOS    | gPTP IEEE 802.1 AS-2020 compliant gPTP stack, End Nodes and Bridge mode support, YANG data model configuration  | Multi-Clock Domain
+LwIP                                         | R5F            | YES               | FreeRTOS    | TCP/UDP IP networking stack with and without checksum offload enabled, TCP/UDP IP networking stack with server and client functionality, basic Socket APIs, netconn APIs and raw APIs, DHCP, ping, TCP iperf, scatter-gather, DSCP priority mapping                         | Other LwIP features
+Ethernet driver (ENET)                       | R5F            | YES               | FreeRTOS    | Ethernet as port using CPSW, MAC loopback and PHY loopback, Layer 2 MAC, Packet Timestamping, CPSW Switch, CPSW EST, interrupt pacing, Policer and Classifier, MDIO Manual Mode, Credit Based Shaper (IEEE 802.1Qav), Strapped PHY (Early Ethernet)  | RMII, MII mode
 ICSS-EMAC                   | R5F            | YES               | FreeRTOS    | Switch and MAC features, Storm Prevention (MAC), Host Statistics, Multicast Filtering  | Promiscuous Mode
 
 <!-- Mbed-TLS                    | R5F            | NO                | FreeRTOS    | Tested software cryptography after porting, used mbedTLS with LwIP to implement HTTPS server  | Hardware offloaded cryptography -->

@@ -15,3 +15,6 @@
 - \subpage enet_tas_top
 \endcond
 - \subpage enet_migration_guide_top
+\cond SOC_AM263PX
+- \subpage ETHERNET_ADDON_BOARDS_TOP
+\endcond
