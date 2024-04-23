@@ -33,6 +33,11 @@
 
 .text
 
+#if defined(__GNUC__) && !defined(__clang__)
+    .thumb
+    .syntax unified
+#endif
+
 .equ locked, 0x1
 .equ unlocked, 0x0
 
@@ -58,6 +63,23 @@
 // lock_mutex
 lock_mutex:
     mov     r1, #1
+
+#if defined(__GNUC__) && !defined(__clang__)
+lock_mutex_retry:
+    ldrex   r2, [r0]
+    cmp     r2, r1          // Test if mutex is locked or unlocked
+    it      eq
+    beq     lock_mutex_wait           // If locked - wait for it to be released, from 2
+    it      ne
+    strexne r2, r1, [r0]    // Not locked, attempt to lock it
+    it      ne
+    cmpne   r2, #1          // Check if Store-Exclusive failed
+    it      eq
+    beq     lock_mutex_retry           // Failed - retry from 1
+    // Lock acquired
+    dmb                     // Required before accessing protected resource
+    bx      lr
+#else
 lock_mutex_retry:
     ldrex   r2, [r0]
     cmp     r2, r1          // Test if mutex is locked or unlocked
@@ -68,11 +90,26 @@ lock_mutex_retry:
     // Lock acquired
     dmb                     // Required before accessing protected resource
     bx      lr
-
+#endif
 lock_mutex_wait:            // Take appropriate action while waiting for mutex to become unlocked
     wait_for_update
     b       lock_mutex_retry           // Retry from 1(lock_mutex_retry)
 
+#if defined(__GNUC__) && !defined(__clang__)
+// try_lock_mutex
+try_lock_mutex:
+    mov     r1, #1
+    ldrex   r2, [r0]
+    cmp     r2, r1          // Test if mutex is locked or unlocked
+    it      eq
+    beq     lock_mutex_locked           // If locked, return 1
+    it      ne
+    strexne r2, r1, [r0]    // Not locked, attempt to lock it
+    // Lock acquired
+    dmb                     // Required before accessing protected resource
+    mov     r0, #0
+    bx      lr
+#else
 // try_lock_mutex
 try_lock_mutex:
     mov     r1, #1
@@ -84,6 +121,7 @@ try_lock_mutex:
     dmb                     // Required before accessing protected resource
     mov     r0, #0
     bx      lr
+#endif
 lock_mutex_locked:            // Take appropriate action while waiting for mutex to become unlocked
     mov     r0, #1
     bx      lr           // return with mutex locked
