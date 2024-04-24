@@ -100,14 +100,14 @@ Bootloader | R5FSS0-0        | YES               | NORTOS           | Boot modes
 
 Peripheral   | Supported CPUs | SysConfig Support | DMA Supported                         | Key features tested                                                                                                                                             | Key features not tested / NOT supported
 -------------|----------------|-------------------|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------
-ADC          | R5F            | YES               | Yes. Example:  adc_soc_continuous_dma | Single software triggered conversion, Multiple ADC trigger using PWM, Result read using DMA, EPWM trip through PPB limit, PPB limits, PPB offsets, burst mode oversampling, differential mode, Offset, EPWM triggered conversion                | PPB Aggregrator features, trigger repeaters, external channel selection
+ADC, ADC_R   | R5F            | YES               | Yes. Examples:  adc_soc_continuous_dma, adc_alternate_dma_trigger | Single software triggered conversion, Multiple ADC trigger using PWM, Result read using DMA (normal and alternate triggers), EPWM trip through PPB limit, PPB features, Burst mode, Single and Differential mode, Interrupt with Offset from Aquisition Window, EPWM/ECAP/RTI triggered conversions, Trigger Repeater for Undersampling and Oversampling, Global Force on Multiple ADCs, Internal DAC Loopback to Calibration Channels, Safety Checker and Aggregator, Open Short Detection feature                 | External channel selection
 Bootloader   | R5F            | YES               | Yes. DMA enabled for SBL OSPI         | Boot modes: OSPI, UART. All R5F's                                                                                                                               | -
-CMPSS        | R5F            | YES               | NA                                    | Asynchronous PWM trip                                                                                                                                           | -
+CMPSS        | R5F            | YES               | NA                                    | Asynchronous PWM trip, digital filter                                                                                                                                           | CMPSS Dac LoopBack feature
 CPSW         | R5F            | YES               | No                                    | MAC loopback, PHY loopback, LWIP: Getting IP, Ping, Iperf, Layer 2 MAC, Layer 2 PTP Timestamping and Ethernet CPSW Switch support, TSN stack                      | RMII, MII mode
 DAC          | R5F            | YES               | Yes. Example: dac_sine_dma            | Constant voltage, Square wave generation, Sine wave generation with and without DMA, Ramp wave generation, Random Voltage generation                            | -
-ECAP         | R5F            | YES               | No                                    | ECAP APWM mode, PWM capture                                                                                                                                     | -
+ECAP         | R5F            | YES               | yes. Example : ecap_edma              | ECAP APWM mode, PWM capture, DMA trigger in both APWM and Capture Modes                                                                                         | -
 EDMA         | R5F            | YES               | NA                                    | DMA transfer using interrupt and polling mode, QDMA Transfer, Channel Chaining, PaRAM Linking                                                                   | -
-EPWM         | R5F            | YES               | Yes. Example: epwm_dma                | PWM outputs A and B in up-down count mode, Trip zone, Update PWM using EDMA, Valley switching, High resolution time period adjustment, type5 feature            | -
+EPWM         | R5F            | YES               | Yes. Example: epwm_dma, epwm_xcmp_dma | Multiple EPWM Sync from Top Module, PWM outputs A and B in up-down count mode, Trip zone, Update PWM using EDMA, Valley switching, High resolution time period adjustment, chopper module features, type5 features           | -
 EQEP         | R5F            | YES               | NA                                    | Speed and Position measurement. Frequency Measurement                                                                                                           | -
 FSI          | R5F            | YES               | Yes. Example: fsi_loopback_dma        | RX, TX, polling, interrupt mode, Dma, single lane loopback.                                                                                                     | - FSI Spi Mode
 GPIO         | R5F            | YES               | NA                                    | Output, Input and Interrupt functionality                                                                                                                       | -
@@ -123,12 +123,18 @@ PMU          | R5F            | NO                | NA                          
 OptiFlash    | R5F            | Yes               | NA                                    | FLC, RL2, RAT functionality, XIP with RL2 enabled                                                                                                               | OptiShare
 OSPI         | R5F            | YES               | Yes. Example: ospi_flash_dma          | Read direct, Write indirect, Read/Write commands, DMA for read                                                                                                  | -
 RTI          | R5F            | YES               | No                                    | Counter read, timebase selection, comparator setup for Interrupt, DMA requests                                                                                  | Capture feature, fast enabling/disabling of events not tested
-RESOLVER     | R5F            | YES               | No                                    | Angle and Speed Calcution. input Band Pass Filter, Manual Phase Gain Correction and Manual Ideal Sample Selection Mode calculation                              | Tuning
-SDFM         | R5F            | YES               | No                                    | Filter data read from CPU, Filter data read with PWM sync                                                                                                       | -
+RESOLVER     | R5F            | YES               | No                                    | Angle and Speed Calcution. input Band Pass Filter, Manual Phase Gain Correction and Manual Ideal Sample Selection Mode calculation                              | Tuning, Safety Diagnostic features
+SDFM         | R5F            | YES               | yes. Example : sdfm_filter_sync_dmaread | Filter data read from CPU, Filter data read with PWM sync, triggered DMA read from the Filter FIFO, ECAP Clock LoopBack                                                                                                       | -
 SOC          | R5F            | YES               | NA                                    | Lock/unlock MMRs, clock enable, set Hz, Xbar configuration, SW Warm Reset, Address Translation                                                                  | -
 SPINLOCK     | R5F            | NA                | NA                                    | Lock, unlock HW spinlock                                                                                                                                        | -
 UART         | R5F            | YES               | Yes. Example: uart_echo_dma           | Basic read/write at baud rate 115200, polling, interrupt mode                                                                                                   | HW flow control not tested, DMA mode not supported
 WATCHDOG     | R5F            | YES               | NA                                    | Reset mode, Interrupt mode                                                                                                                                      | -
+
+### Trigonometric Operations
+
+Peripheral   | Supported CPUs | SysConfig Support | DMA Supported                         | Key features tested                                                                                                                                             | Key features not tested / NOT supported
+-------------|----------------|-------------------|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------
+TMU          | R5F            | NO                | NA                                    | TMU Operations, Pipelining, Contex Save                                                                                                                         | Square Root, Division Operations. more than 1 Interrupt Nesting for the contex save is not Supported.
 
 ### Board Device Drivers
 
@@ -242,6 +248,62 @@ Thermal Monitor(VTM)| R5F             | NA                |  NORTOS | Over, unde
     <td> MCAN
     <td> 09.01.00 onwards
     <td> Updated the API.
+</tr>
+<tr>
+    <td> MCUSDK-12278
+    <td> Sysconfig: Missing EPWMxSYNCPER configuration
+    <td> EPWM
+    <td> 09.02.00
+    <td> None
+    <td> Moved this feature the Time Base Submodule Configurations in syscfg. This is not a HRPWM feature, yet positioned in the HRPWM configuration space.
+</tr>
+<tr>
+    <td> MCUSDK-12264
+    <td> EQEP position speed example failure on am263px-lp
+    <td> EQEP
+    <td> 09.02.00
+    <td> None
+    <td> None
+</tr>
+<tr>
+    <td> MCUSDK-12263
+    <td> ECAP APWM example failure on am263px-lp
+    <td> ECAP
+    <td> 09.02.00
+    <td> None
+    <td> Outputxbar fixes
+</tr>
+<tr>
+    <td> MCUSDK-12262
+    <td> EPWM deadband example failure
+    <td> EPWM
+    <td> 09.02.00
+    <td> None
+    <td> Syscfg Pin Suggestion fixes
+</tr>
+<tr>
+    <td> MCUSDK-12247
+    <td> Syscfg: ouptutxbar generated code doesnt change the instance
+    <td> XBAR
+    <td> 09.02.00
+    <td> None
+    <td> Outputxbar driver addition for the extended groups and udpated for the new Device Data
+</tr>
+<tr>
+    <td> MCUSDK-12513
+    <td> EPWM: Sysconfig Fix for MixedSource in EPWM_setADCTriggerSource
+    <td> EPWM
+    <td> 09.02.00
+    <td> None
+    <td> Fixed Code generation for Event Trigger Submodule
+</tr>
+<tr>
+    <td> MCUSDK-12449
+    <td> EPWM: Syscfg API generation miss for period load
+    <td> EPWM
+    <td> 09.02.00
+    <td> None
+    <td> Fixed Code generation for Period Load.
 </tr>
 </table>
 
@@ -496,6 +558,10 @@ Thermal Monitor(VTM)| R5F             | NA                |  NORTOS | Over, unde
     <th> Additional Remarks
 </tr>
 <tr>
+    <td> xbar
+    <td> SOC_xbarSelectInputXBarInputSource, SOC_xbarSelectPWMXBarInputSource, SOC_xbarSelectInterruptXBarInputSource, SOC_xbarSelectDMAXBarInputSource, SOC_xbarSelectPWMSyncOutXBarInput
+    <td> added SOC_xbarSelectInputXBarInputSource_ext, SOC_xbarSelectPWMXBarInputSource_ext, SOC_xbarSelectInterruptXBarInputSource_ext, SOC_xbarSelectDMAXBarInputSource_ext, SOC_xbarSelectPWMSyncOutXBarInput_ext
+    <td> both API versions are kept for compatibility purposes. for the additional/ extended configurations on xbar "API", please use "API_ext"
     <td> GPIO
     <td> NA
     <td> The GPIO deviceData has been modified to reduce the load from the solver working at the backend of sysconfig application. Instead of choosing the gpio peripheral GPIO0 or GPIO1 for the main domain, user can now directy choose the pins. With this change, user can add as many gpios as possible without facing any sysconfig crash. SDK changes thereby had to be adjusted accordingly.
