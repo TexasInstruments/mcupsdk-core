@@ -94,7 +94,7 @@
                 -lboard.am263x.r5f.ti-arm-clang.debug.lib
                 -licss_emac.am263x.r5f.ti-arm-clang.debug.lib
                 -licss_emac_lwip_if.am263x.r5f.ti-arm-clang.debug.lib
-                -llwip-freertos.am263x.r5f.ti-arm-clang.debug.lib
+                -llwip-freertos-icss_emac.am263x.r5f.ti-arm-clang.debug.lib
                 -llwip-contrib-freertos-icss_emac.am263x.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
@@ -110,7 +110,7 @@
                 -lboard.am263x.r5f.ti-arm-clang.release.lib
                 -licss_emac.am263x.r5f.ti-arm-clang.release.lib
                 -licss_emac_lwip_if.am263x.r5f.ti-arm-clang.release.lib
-                -llwip-freertos.am263x.r5f.ti-arm-clang.release.lib
+                -llwip-freertos-icss_emac.am263x.r5f.ti-arm-clang.release.lib
                 -llwip-contrib-freertos-icss_emac.am263x.r5f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a

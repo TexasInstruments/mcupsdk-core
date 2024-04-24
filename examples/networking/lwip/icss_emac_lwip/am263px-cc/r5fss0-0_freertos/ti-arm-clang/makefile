@@ -131,7 +131,7 @@ LIBS_common = \
 	-lboard.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-licss_emac.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-licss_emac_lwip_if.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	-llwip-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	-llwip-freertos-icss_emac.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llwip-contrib-freertos-icss_emac.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
@@ -149,7 +149,7 @@ LIBS_NAME = \
 	board.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	icss_emac.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	icss_emac_lwip_if.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
-	lwip-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
+	lwip-freertos-icss_emac.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	lwip-contrib-freertos-icss_emac.am263px.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \

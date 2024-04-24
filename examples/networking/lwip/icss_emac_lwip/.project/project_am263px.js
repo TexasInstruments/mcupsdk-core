@@ -62,7 +62,7 @@ const libs_freertos_r5f = {
         "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "icss_emac.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "icss_emac_lwip_if.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
-        "lwip-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "lwip-freertos-icss_emac.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "lwip-contrib-freertos-icss_emac.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
