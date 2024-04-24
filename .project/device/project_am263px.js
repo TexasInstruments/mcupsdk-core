@@ -287,6 +287,8 @@ const example_file_list = [
     "test/board/nand_flash/.project/project.js",
 	"test/board/led/.project/project.js",
 	"test/drivers/boot/boot_testapp_mb/.project/project.js",
+	"test/drivers/adc/.project/project.js",
+	"test/drivers/dac/.project/project.js",
 	"test/drivers/cmpss/.project/project.js",
 	"test/drivers/ecap/.project/project.js",
 	"test/drivers/edma/.project/project.js",
