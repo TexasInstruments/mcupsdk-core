@@ -107,6 +107,7 @@ const example_file_list = [
     "examples/drivers/gpio/gpio_input_interrupt/.project/project.js",
     "examples/drivers/gpio/gpio_led_blink/.project/project.js",
     "examples/drivers/gpio/gpio_multi_led_blink/.project/project.js",
+    "examples/drivers/gpio/gpio_controller_mcspi_peripheral/.project/project.js",
     "examples/drivers/gpmc/gpmc_psram_io/.project/project.js",
     "examples/drivers/hsmclient/hsm_services/.project/project.js",
     "examples/drivers/hsmclient/mpu_firewall_services_demo/.project/project.js",

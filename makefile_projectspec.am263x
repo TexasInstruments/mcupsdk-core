@@ -421,6 +421,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_mcrc_semi_cpu_example_am263x-lp
 # Various System Example Projectspec Build Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_interrupt_transfer_am263x-cc_system_freertos_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += edma_interrupt_transfer_am263x-lp_system_freertos_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_controller_mcspi_peripheral_am263x-cc_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mpu_firewall_services_demo_am263x-cc_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_notify_echo_am263x-cc_system_freertos_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_notify_echo_am263x-lp_system_freertos_nortos_build
@@ -1743,6 +1744,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  edma_interrupt_transfer_am263x-lp_system_freertos_nortos_build:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263x-lp/system_freertos_nortos -f makefile_projectspec all
 
+ gpio_controller_mcspi_peripheral_am263x-cc_system_nortos_build:
+	$(MAKE) -C examples/drivers/gpio/gpio_controller_mcspi_peripheral/am263x-cc/system_nortos -f makefile_projectspec all
+
  mpu_firewall_services_demo_am263x-cc_system_nortos_build:
 	$(MAKE) -C examples/drivers/hsmclient/mpu_firewall_services_demo/am263x-cc/system_nortos -f makefile_projectspec all
 
@@ -2215,6 +2219,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_mcrc_semi_cpu_example_am263x-lp
 # Various System Example Projectspec Clean Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_interrupt_transfer_am263x-cc_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += edma_interrupt_transfer_am263x-lp_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_controller_mcspi_peripheral_am263x-cc_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mpu_firewall_services_demo_am263x-cc_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_notify_echo_am263x-cc_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_notify_echo_am263x-lp_system_freertos_nortos_clean
@@ -3537,6 +3542,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  edma_interrupt_transfer_am263x-lp_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263x-lp/system_freertos_nortos -f makefile_projectspec clean
 
+ gpio_controller_mcspi_peripheral_am263x-cc_system_nortos_clean:
+	$(MAKE) -C examples/drivers/gpio/gpio_controller_mcspi_peripheral/am263x-cc/system_nortos -f makefile_projectspec clean
+
  mpu_firewall_services_demo_am263x-cc_system_nortos_clean:
 	$(MAKE) -C examples/drivers/hsmclient/mpu_firewall_services_demo/am263x-cc/system_nortos -f makefile_projectspec clean
 
@@ -4009,6 +4017,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_mcrc_semi_cpu_example_am263x-l
 # Various System Example Projectspec Export Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_interrupt_transfer_am263x-cc_system_freertos_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += edma_interrupt_transfer_am263x-lp_system_freertos_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_controller_mcspi_peripheral_am263x-cc_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mpu_firewall_services_demo_am263x-cc_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_notify_echo_am263x-cc_system_freertos_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_notify_echo_am263x-lp_system_freertos_nortos_export
@@ -5331,6 +5340,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  edma_interrupt_transfer_am263x-lp_system_freertos_nortos_export:
 	$(MAKE) -C examples/drivers/edma/edma_interrupt_transfer/am263x-lp/system_freertos_nortos -f makefile_projectspec export
 
+ gpio_controller_mcspi_peripheral_am263x-cc_system_nortos_export:
+	$(MAKE) -C examples/drivers/gpio/gpio_controller_mcspi_peripheral/am263x-cc/system_nortos -f makefile_projectspec export
+
  mpu_firewall_services_demo_am263x-cc_system_nortos_export:
 	$(MAKE) -C examples/drivers/hsmclient/mpu_firewall_services_demo/am263x-cc/system_nortos -f makefile_projectspec export
 
@@ -5833,6 +5845,7 @@ help:
 	@echo  =========================================
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am263x-cc/system_freertos_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am263x-lp/system_freertos_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_controller_mcspi_peripheral/am263x-cc/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/hsmclient/mpu_firewall_services_demo/am263x-cc/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_notify_echo/am263x-cc/system_freertos_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_notify_echo/am263x-lp/system_freertos_nortos -f makefile_projectspec [export all clean]
