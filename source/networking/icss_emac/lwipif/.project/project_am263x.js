@@ -26,7 +26,7 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f",
 
-       "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x",
+       "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x/icss_emac",
        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include",
        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include",
        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include",

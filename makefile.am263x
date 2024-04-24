@@ -47,8 +47,10 @@ help:
 	@echo  $(MAKE) -s -f makefile.am263x lwipif-cpsw-freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am263x lwipif-cpsw-nortos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am263x lwip-freertos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am263x lwip-freertos-icss_emac_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am263x lwip-nortos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am263x lwip-contrib-freertos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am263x lwip-contrib-freertos-icss_emac_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am263x lwip-contrib-nortos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am263x sdl_r5f.ti-arm-clang sdl_r5fss1.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am263x security_r5f.ti-arm-clang
@@ -75,8 +77,10 @@ help:
 	@echo  $(MAKE) -s -f makefile.am263x lwipif-cpsw-freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am263x lwipif-cpsw-nortos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am263x lwip-freertos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am263x lwip-freertos-icss_emac_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am263x lwip-nortos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am263x lwip-contrib-freertos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am263x lwip-contrib-freertos-icss_emac_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am263x lwip-contrib-nortos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am263x sdl_r5f.ti-arm-clang_clean sdl_r5fss1.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am263x security_r5f.ti-arm-clang_clean
@@ -554,8 +558,10 @@ BUILD_COMBO_enet-cpsw = enet-cpsw_r5f.ti-arm-clang
 BUILD_COMBO_lwipif-cpsw-freertos = lwipif-cpsw-freertos_r5f.ti-arm-clang
 BUILD_COMBO_lwipif-cpsw-nortos = lwipif-cpsw-nortos_r5f.ti-arm-clang
 BUILD_COMBO_lwip-freertos = lwip-freertos_r5f.ti-arm-clang
+BUILD_COMBO_lwip-freertos-icss_emac = lwip-freertos-icss_emac_r5f.ti-arm-clang
 BUILD_COMBO_lwip-nortos = lwip-nortos_r5f.ti-arm-clang
 BUILD_COMBO_lwip-contrib-freertos = lwip-contrib-freertos_r5f.ti-arm-clang
+BUILD_COMBO_lwip-contrib-freertos-icss_emac = lwip-contrib-freertos-icss_emac_r5f.ti-arm-clang
 BUILD_COMBO_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang
 BUILD_COMBO_sdl = sdl_r5f.ti-arm-clang sdl_r5fss1.ti-arm-clang
 BUILD_COMBO_security = security_r5f.ti-arm-clang
@@ -569,7 +575,7 @@ BUILD_COMBO_tsn_l2-freertos = tsn_l2-freertos_r5f.ti-arm-clang
 
 
 # Combine all Components
-BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_sfo) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos_fat) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_icss_emac) $(BUILD_COMBO_icss_emac_lwip_if) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_sdl) $(BUILD_COMBO_security) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_tsn_gptp-freertos) $(BUILD_COMBO_tsn_combase-freertos) $(BUILD_COMBO_tsn_uniconf-freertos) $(BUILD_COMBO_tsn_unibase-freertos) $(BUILD_COMBO_tsn_lldp-freertos) $(BUILD_COMBO_tsn_l2-freertos)
+BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_sfo) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos_fat) $(BUILD_COMBO_nortos) $(BUILD_COMBO_freertos) $(BUILD_COMBO_mathlib) $(BUILD_COMBO_icss_emac) $(BUILD_COMBO_icss_emac_lwip_if) $(BUILD_COMBO_enet-cpsw) $(BUILD_COMBO_lwipif-cpsw-freertos) $(BUILD_COMBO_lwipif-cpsw-nortos) $(BUILD_COMBO_lwip-freertos) $(BUILD_COMBO_lwip-freertos-icss_emac) $(BUILD_COMBO_lwip-nortos) $(BUILD_COMBO_lwip-contrib-freertos) $(BUILD_COMBO_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_lwip-contrib-nortos) $(BUILD_COMBO_sdl) $(BUILD_COMBO_security) $(BUILD_COMBO_mbedtls) $(BUILD_COMBO_tsn_gptp-freertos) $(BUILD_COMBO_tsn_combase-freertos) $(BUILD_COMBO_tsn_uniconf-freertos) $(BUILD_COMBO_tsn_unibase-freertos) $(BUILD_COMBO_tsn_lldp-freertos) $(BUILD_COMBO_tsn_l2-freertos)
 
 
 # Combine all Pre-built Components
@@ -625,11 +631,17 @@ $(BUILD_COMBO_lwipif-cpsw-nortos):
 $(BUILD_COMBO_lwip-freertos):
 	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos.am263x.$(subst lwip-freertos_,,$@) all
 
+$(BUILD_COMBO_lwip-freertos-icss_emac):
+	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos-icss_emac.am263x.$(subst lwip-freertos-icss_emac_,,$@) all
+
 $(BUILD_COMBO_lwip-nortos):
 	$(MAKE) -C source/networking/lwip -f makefile.stack_nortos.am263x.$(subst lwip-nortos_,,$@) all
 
 $(BUILD_COMBO_lwip-contrib-freertos):
 	$(MAKE) -C source/networking/lwip -f makefile.contrib-freertos.am263x.$(subst lwip-contrib-freertos_,,$@) all
+
+$(BUILD_COMBO_lwip-contrib-freertos-icss_emac):
+	$(MAKE) -C source/networking/lwip -f makefile.contrib-freertos-icss_emac.am263x.$(subst lwip-contrib-freertos-icss_emac_,,$@) all
 
 $(BUILD_COMBO_lwip-contrib-nortos):
 	$(MAKE) -C source/networking/lwip -f makefile.contrib-nortos.am263x.$(subst lwip-contrib-nortos_,,$@) all
@@ -677,8 +689,10 @@ BUILD_COMBO_CLEAN_enet-cpsw = enet-cpsw_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_lwipif-cpsw-freertos = lwipif-cpsw-freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_lwipif-cpsw-nortos = lwipif-cpsw-nortos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_lwip-freertos = lwip-freertos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_lwip-freertos-icss_emac = lwip-freertos-icss_emac_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_lwip-nortos = lwip-nortos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_lwip-contrib-freertos = lwip-contrib-freertos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_lwip-contrib-freertos-icss_emac = lwip-contrib-freertos-icss_emac_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_sdl = sdl_r5f.ti-arm-clang_clean sdl_r5fss1.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_security = security_r5f.ti-arm-clang_clean
@@ -692,7 +706,7 @@ BUILD_COMBO_CLEAN_tsn_l2-freertos = tsn_l2-freertos_r5f.ti-arm-clang_clean
 
 
 # Combine all Components Clean
-BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_sfo) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos_fat) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_icss_emac) $(BUILD_COMBO_CLEAN_icss_emac_lwip_if) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_security) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_tsn_gptp-freertos) $(BUILD_COMBO_CLEAN_tsn_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_uniconf-freertos) $(BUILD_COMBO_CLEAN_tsn_unibase-freertos) $(BUILD_COMBO_CLEAN_tsn_lldp-freertos) $(BUILD_COMBO_CLEAN_tsn_l2-freertos)
+BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_sfo) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos_fat) $(BUILD_COMBO_CLEAN_nortos) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_mathlib) $(BUILD_COMBO_CLEAN_icss_emac) $(BUILD_COMBO_CLEAN_icss_emac_lwip_if) $(BUILD_COMBO_CLEAN_enet-cpsw) $(BUILD_COMBO_CLEAN_lwipif-cpsw-freertos) $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos) $(BUILD_COMBO_CLEAN_lwip-freertos) $(BUILD_COMBO_CLEAN_lwip-freertos-icss_emac) $(BUILD_COMBO_CLEAN_lwip-nortos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos) $(BUILD_COMBO_CLEAN_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_CLEAN_lwip-contrib-nortos) $(BUILD_COMBO_CLEAN_sdl) $(BUILD_COMBO_CLEAN_security) $(BUILD_COMBO_CLEAN_mbedtls) $(BUILD_COMBO_CLEAN_tsn_gptp-freertos) $(BUILD_COMBO_CLEAN_tsn_combase-freertos) $(BUILD_COMBO_CLEAN_tsn_uniconf-freertos) $(BUILD_COMBO_CLEAN_tsn_unibase-freertos) $(BUILD_COMBO_CLEAN_tsn_lldp-freertos) $(BUILD_COMBO_CLEAN_tsn_l2-freertos)
 
 
 # Combine all Pre-built Components Clean
@@ -742,11 +756,17 @@ $(BUILD_COMBO_CLEAN_lwipif-cpsw-nortos):
 $(BUILD_COMBO_CLEAN_lwip-freertos):
 	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos.am263x.$(subst lwip-freertos_,,$(subst _clean,,$@)) clean
 
+$(BUILD_COMBO_CLEAN_lwip-freertos-icss_emac):
+	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos-icss_emac.am263x.$(subst lwip-freertos-icss_emac_,,$(subst _clean,,$@)) clean
+
 $(BUILD_COMBO_CLEAN_lwip-nortos):
 	$(MAKE) -C source/networking/lwip -f makefile.stack_nortos.am263x.$(subst lwip-nortos_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_lwip-contrib-freertos):
 	$(MAKE) -C source/networking/lwip -f makefile.contrib-freertos.am263x.$(subst lwip-contrib-freertos_,,$(subst _clean,,$@)) clean
+
+$(BUILD_COMBO_CLEAN_lwip-contrib-freertos-icss_emac):
+	$(MAKE) -C source/networking/lwip -f makefile.contrib-freertos-icss_emac.am263x.$(subst lwip-contrib-freertos-icss_emac_,,$(subst _clean,,$@)) clean
 
 $(BUILD_COMBO_CLEAN_lwip-contrib-nortos):
 	$(MAKE) -C source/networking/lwip -f makefile.contrib-nortos.am263x.$(subst lwip-contrib-nortos_,,$(subst _clean,,$@)) clean
@@ -794,8 +814,10 @@ BUILD_COMBO_SCRUB_enet-cpsw = enet-cpsw_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_lwipif-cpsw-freertos = lwipif-cpsw-freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_lwipif-cpsw-nortos = lwipif-cpsw-nortos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_lwip-freertos = lwip-freertos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_lwip-freertos-icss_emac = lwip-freertos-icss_emac_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_lwip-nortos = lwip-nortos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_lwip-contrib-freertos = lwip-contrib-freertos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_lwip-contrib-freertos-icss_emac = lwip-contrib-freertos-icss_emac_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_sdl = sdl_r5f.ti-arm-clang_scrub sdl_r5fss1.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_security = security_r5f.ti-arm-clang_scrub_scrub
@@ -809,7 +831,7 @@ BUILD_COMBO_SCRUB_tsn_l2-freertos = tsn_l2-freertos_r5f.ti-arm-clang_scrub_scrub
 
 
 # Combine all Components Scrub Targets
-BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_sfo) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos_fat) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_icss_emac) $(BUILD_COMBO_SCRUB_icss_emac_lwip_if) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_security) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_tsn_gptp-freertos) $(BUILD_COMBO_SCRUB_tsn_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_uniconf-freertos) $(BUILD_COMBO_SCRUB_tsn_unibase-freertos) $(BUILD_COMBO_SCRUB_tsn_lldp-freertos) $(BUILD_COMBO_SCRUB_tsn_l2-freertos)
+BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_sfo) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos_fat) $(BUILD_COMBO_SCRUB_nortos) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_mathlib) $(BUILD_COMBO_SCRUB_icss_emac) $(BUILD_COMBO_SCRUB_icss_emac_lwip_if) $(BUILD_COMBO_SCRUB_enet-cpsw) $(BUILD_COMBO_SCRUB_lwipif-cpsw-freertos) $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos) $(BUILD_COMBO_SCRUB_lwip-freertos) $(BUILD_COMBO_SCRUB_lwip-freertos-icss_emac) $(BUILD_COMBO_SCRUB_lwip-nortos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos) $(BUILD_COMBO_SCRUB_lwip-contrib-freertos-icss_emac) $(BUILD_COMBO_SCRUB_lwip-contrib-nortos) $(BUILD_COMBO_SCRUB_sdl) $(BUILD_COMBO_SCRUB_security) $(BUILD_COMBO_SCRUB_mbedtls) $(BUILD_COMBO_SCRUB_tsn_gptp-freertos) $(BUILD_COMBO_SCRUB_tsn_combase-freertos) $(BUILD_COMBO_SCRUB_tsn_uniconf-freertos) $(BUILD_COMBO_SCRUB_tsn_unibase-freertos) $(BUILD_COMBO_SCRUB_tsn_lldp-freertos) $(BUILD_COMBO_SCRUB_tsn_l2-freertos)
 
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
@@ -858,11 +880,17 @@ $(BUILD_COMBO_SCRUB_lwipif-cpsw-nortos):
 $(BUILD_COMBO_SCRUB_lwip-freertos):
 	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos.am263x.$(subst lwip-freertos_,,$(subst _scrub,,$@)) scrub
 
+$(BUILD_COMBO_SCRUB_lwip-freertos-icss_emac):
+	$(MAKE) -C source/networking/lwip -f makefile.stack_freertos-icss_emac.am263x.$(subst lwip-freertos-icss_emac_,,$(subst _scrub,,$@)) scrub
+
 $(BUILD_COMBO_SCRUB_lwip-nortos):
 	$(MAKE) -C source/networking/lwip -f makefile.stack_nortos.am263x.$(subst lwip-nortos_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_lwip-contrib-freertos):
 	$(MAKE) -C source/networking/lwip -f makefile.contrib-freertos.am263x.$(subst lwip-contrib-freertos_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_lwip-contrib-freertos-icss_emac):
+	$(MAKE) -C source/networking/lwip -f makefile.contrib-freertos-icss_emac.am263x.$(subst lwip-contrib-freertos-icss_emac_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_lwip-contrib-nortos):
 	$(MAKE) -C source/networking/lwip -f makefile.contrib-nortos.am263x.$(subst lwip-contrib-nortos_,,$(subst _scrub,,$@)) scrub

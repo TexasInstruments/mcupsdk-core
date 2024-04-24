@@ -73,7 +73,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x/icss_emac \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_dual_emac \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch \
@@ -132,7 +132,7 @@ LIBS_common = \
 	-licss_emac.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-licss_emac_lwip_if.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llwip-freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-llwip-contrib-freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-llwip-contrib-freertos-icss_emac.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -150,7 +150,7 @@ LIBS_NAME = \
 	icss_emac.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	icss_emac_lwip_if.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	lwip-freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
-	lwip-contrib-freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	lwip-contrib-freertos-icss_emac.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 

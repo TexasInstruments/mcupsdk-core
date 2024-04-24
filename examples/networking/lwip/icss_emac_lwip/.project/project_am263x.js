@@ -47,7 +47,7 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib",
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x/icss_emac",
         "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware",
         "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_dual_emac",
         "${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch",
@@ -63,7 +63,7 @@ const libs_freertos_r5f = {
         "icss_emac.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "icss_emac_lwip_if.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "lwip-freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "lwip-contrib-freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "lwip-contrib-freertos-icss_emac.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
