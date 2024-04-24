@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @versions {"tool":"1.20.0+3587"}
  */
 
 /**
@@ -54,6 +54,7 @@ adc1.soc0Trigger       = "ADC_TRIGGER_RTI1";
 adc1.soc0SampleWindow  = 20;
 adc1.enableConverter   = true;
 adc1.enableInterrupt1  = true;
+adc1.ADC.$assign       = "ADC0";
 
 mcspi1.$name                 = "CONFIG_MCSPI0";
 pmic1.peripheralDriver       = mcspi1;
@@ -281,7 +282,6 @@ int_xbar1.xbarOutput = ["ADC0_INT1"];
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-adc1.ADC.$suggestSolution                   = "ADC0";
 adc1.ADC.AIN0.$suggestSolution              = "ADC0_AIN0";
 adc1.ADC.AIN1.$suggestSolution              = "ADC0_AIN1";
 adc1.ADC.AIN2.$suggestSolution              = "ADC0_AIN2";
