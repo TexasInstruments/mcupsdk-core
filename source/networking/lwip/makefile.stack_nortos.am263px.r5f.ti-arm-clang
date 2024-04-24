@@ -170,7 +170,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/nortos/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/library \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px/enet \
 
 DEFINES_common := \
     -DSOC_AM263PX \

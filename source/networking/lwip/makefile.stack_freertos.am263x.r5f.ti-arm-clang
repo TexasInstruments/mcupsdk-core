@@ -172,7 +172,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
     -I${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/library \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x/enet \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f \
 
 DEFINES_common := \

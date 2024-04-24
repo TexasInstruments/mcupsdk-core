@@ -42,11 +42,11 @@ const socIncludes = {
     ],
     am263x : [
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263x",
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x/enet",
     ],
     am263px : [
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263px",
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px/enet",
     ],
     am273x : [
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am273x",

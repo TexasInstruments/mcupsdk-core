@@ -78,10 +78,10 @@ const deviceSpecificIncludes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am64x",
     ],
     am263x : [
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x/enet",
     ],
     am263px : [
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px/enet",
     ],
     am273x : [
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am273x",

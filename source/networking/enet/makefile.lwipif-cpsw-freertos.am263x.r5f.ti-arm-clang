@@ -39,7 +39,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263x \
-    -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x/enet \
 
 DEFINES_common := \
     -DSOC_AM263X \

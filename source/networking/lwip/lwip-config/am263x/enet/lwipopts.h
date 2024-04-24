@@ -164,7 +164,7 @@ extern "C"
 /* MEMP_NUM_PBUF: the number of memp struct pbufs. If the application
    sends a lot of data out of ROM (or other static memory), this
    should be set high. */
-#define MEMP_NUM_PBUF           16
+#define MEMP_NUM_PBUF           128
 /* MEMP_NUM_RAW_PCB: the number of UDP protocol control blocks. One
    per active RAW "connection". */
 #define MEMP_NUM_RAW_PCB        3
@@ -187,7 +187,7 @@ extern "C"
 /* The following four are used only with the sequential API and can be
    set to 0 if the application only will use the raw API. */
 /* MEMP_NUM_NETBUF: the number of struct netbufs. */
-#define MEMP_NUM_NETBUF         2
+#define MEMP_NUM_NETBUF         128
 /* MEMP_NUM_NETCONN: the number of struct netconns. */
 #define MEMP_NUM_NETCONN        10
 /* MEMP_NUM_TCPIP_MSG_*: the number of struct tcpip_msg, which is used
@@ -202,7 +202,7 @@ extern "C"
 
 /* ---------- Pbuf options ---------- */
 /* PBUF_POOL_SIZE: the number of buffers in the pbuf pool. Setting this to zero as Rx Custom Pbufs are used. */
-#define PBUF_POOL_SIZE          64
+#define PBUF_POOL_SIZE          0U
 
 /* PBUF_POOL_BUFSIZE: the size of each pbuf in the pbuf pool. */
 #define PBUF_POOL_BUFSIZE       1536
@@ -239,14 +239,14 @@ extern "C"
 #define TCP_CALCULATE_EFF_SEND_MSS      1
 
 /* TCP Maximum segment size. */
-#define TCP_MSS                 1024
+#define TCP_MSS                 1460
 
 /* TCP sender buffer space (bytes). */
-#define TCP_SND_BUF             2048
+#define TCP_SND_BUF             (16 * TCP_MSS)
 
 /* TCP sender buffer space (pbufs). This must be at least = 2 *
    TCP_SND_BUF/TCP_MSS for things to work. */
-#define TCP_SND_QUEUELEN       (10 * TCP_SND_BUF/TCP_MSS)
+#define TCP_SND_QUEUELEN       (8 * TCP_SND_BUF/TCP_MSS)
 
 /* TCP writable space (bytes). This must be less than or equal
    to TCP_SND_BUF. It is the amount of space which must be
@@ -254,7 +254,7 @@ extern "C"
 #define TCP_SNDLOWAT           (TCP_SND_BUF/2)
 
 /* TCP receive window. */
-#define TCP_WND                 (20 * 1024)
+#define TCP_WND                 (TCP_SND_BUF)
 
 /* Maximum number of retransmissions of data segments. */
 #define TCP_MAXRTX              12
@@ -302,7 +302,7 @@ extern "C"
 
 
 /* ---------- AUTOIP options ------- */
-#define LWIP_AUTOIP            (LWIP_DHCP)
+#define LWIP_AUTOIP            0
 #define LWIP_DHCP_AUTOIP_COOP  (LWIP_DHCP && LWIP_AUTOIP)
 
 
@@ -311,7 +311,7 @@ extern "C"
 #define LWIP_UDPLITE            LWIP_UDP
 #define UDP_TTL                 255
 
-#define DEFAULT_UDP_RECVMBOX_SIZE (MEMP_NUM_TCP_SEG)
+#define DEFAULT_UDP_RECVMBOX_SIZE 320
 
 /* ---------- RAW options ---------- */
 #define LWIP_RAW                1
@@ -335,13 +335,11 @@ extern "C"
 #define MEMP_STATS              1
 #define PBUF_STATS              1
 #define SYS_STATS               1
-#define ETHARP_STATS            1
-
 
 #define LWIP_SNMP               LWIP_UDP
 #define MIB2_STATS              LWIP_SNMP
 #ifdef LWIP_HAVE_MBEDTLS
-#define LWIP_SNMP_V3               (LWIP_SNMP)
+#define LWIP_SNMP_V3            0
 #endif
 
 #endif /* LWIP_STATS */
@@ -383,7 +381,7 @@ extern "C"
 #define LWIP_ARP			  1
 
 /* Checksum on copy from app buffers to pbufs, boosts performance. It is set to zero as checksum offload is not enabled on both Rx and Tx side.*/
-#define LWIP_CHECKSUM_ON_COPY			1
+#define LWIP_CHECKSUM_ON_COPY			0
 
 /* Enable Checksum ctrl per netif */
 #define LWIP_CHECKSUM_CTRL_PER_NETIF    1
@@ -402,11 +400,6 @@ extern "C"
 
 #define DEFAULT_ACCEPTMBOX_SIZE			(TCPIP_MBOX_SIZE)
 
-/* FreeRTOS specific config options */
-#define LWIP_FREERTOS_CHECK_CORE_LOCKING 1
-#define LWIP_FREERTOS_SYS_ARCH_PROTECT_USES_MUTEX     1
-#define LWIP_FREERTOS_SYS_ARCH_PROTECT_SANITY_CHECK   1
-#define LWIP_FREERTOS_CHECK_QUEUE_EMPTY_ON_FREE       1
 
 /*---------------------------------------------------------------*/
 #if defined(__ARM_ARCH) && (defined(__TI_EABI__) || defined(__clang__))
@@ -441,4 +434,3 @@ extern "C"
 #endif
 
 #endif /* LWIP_LWIPOPTS_H */
-

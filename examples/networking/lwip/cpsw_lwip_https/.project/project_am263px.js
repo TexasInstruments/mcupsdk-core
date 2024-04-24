@@ -54,7 +54,7 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/apps/altcp_tls",
-        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px/enet",
         "${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls_ti",
         "${MCU_PLUS_SDK_PATH}/source/kernel/dpl/"

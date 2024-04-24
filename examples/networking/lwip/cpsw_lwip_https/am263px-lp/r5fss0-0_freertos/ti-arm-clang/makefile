@@ -84,7 +84,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/apps/altcp_tls \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px/enet \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls/include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/mbedtls_library/mbedtls_ti \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/dpl/ \

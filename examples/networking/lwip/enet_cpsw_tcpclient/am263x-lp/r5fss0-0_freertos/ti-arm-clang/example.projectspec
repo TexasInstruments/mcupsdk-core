@@ -49,7 +49,7 @@
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include
             -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc
             -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib
-            -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x
+            -I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263x/enet
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
