@@ -36,6 +36,7 @@
  * @brief
  * FastRTS replacements for standard math library (math.h) functions,
  * include this source file if user wanted to replace the standard functions listed below
+ * Not included in mathlib.lib by default
  */
 
 #include "fastrts.h"
@@ -78,4 +79,9 @@ __attribute__((always_inline)) float expf(float x)
 __attribute__((always_inline)) float logf(float x)
 {
     return FastRTS_logf(x);
+}
+
+__attribute__((always_inline)) float sqrtf(float x)
+{
+    return FastRTS_sqrtf(x);
 }

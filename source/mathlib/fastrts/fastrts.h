@@ -42,6 +42,11 @@
 #ifndef FASTRTS_H
 #define FASTRTS_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 /* ========================================================================== */
 /*                                 Macros                                     */
 /* ========================================================================== */
@@ -132,6 +137,10 @@ RTS_TEXT_SECTION static float FastRTS_sqrtf(const float x)
     return r;
 }
 
-#endif /* FASTRTS_H */
-
 /** @} */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* FASTRTS_H */
