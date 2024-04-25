@@ -61,8 +61,8 @@ flash1.dummy_mask                       = "0xFF";
 flash1.protocol                         = "8d_8d_8d";
 flash1.fourByteEnableSeq                = "0";
 flash1.peripheralDriver.$name           = "CONFIG_OSPI0";
-flash1.peripheralDriver.OSPI.D7.$assign = "MCAN1_TX";
-flash1.peripheralDriver.OSPI.D5.$assign = "MCAN0_TX";
+flash1.peripheralDriver.OSPI.D7.$suggestSolution = "MCAN1_TX";
+flash1.peripheralDriver.OSPI.D5.$suggestSolution = "MCAN0_TX";
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_LOG";
