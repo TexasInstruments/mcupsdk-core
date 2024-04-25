@@ -184,7 +184,7 @@ typedef struct NorSpi_SfdpProfile1ParamTable_s
 
 typedef struct NorSpi_SfdpSectorMapParamTable_s
 {
-    uint32_t dwords[2];
+    uint32_t dwords[22];
 
 } NorSpi_SfdpSectorMapParamTable;
 
