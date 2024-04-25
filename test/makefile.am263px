@@ -45,6 +45,8 @@ help:
 	@echo  Example build targets,
 	@echo  ======================
 	@echo  $(MAKE) -s -C drivers/mpu_firewall/mpu_firewall_test_am263px/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ospiPhy/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ospiPhy/am263px-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/pbist/sdl_pbist_test/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/pbist/ip_pbist_test/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C sdl/dcc/dcc_mcu/dcc_func_test/am263px-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -283,6 +285,8 @@ $(BUILD_COMBO_SCRUB_doxy_samples):
 BUILD_COMBO_EXAMPLE_ALL =
 # Various Example Targets
 BUILD_COMBO_EXAMPLE_ALL += test_mpu_firewall_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ospi_phy_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ospi_phy_test_am263px-lp_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_pbist_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pbist_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += dcc_func_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang
@@ -450,6 +454,12 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  test_mpu_firewall_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C drivers/mpu_firewall/mpu_firewall_test_am263px/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ospi_phy_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ospiPhy/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ospi_phy_test_am263px-lp_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ospiPhy/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  sdl_pbist_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C sdl/pbist/sdl_pbist_test/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -908,6 +918,8 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_mpu_firewall_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_phy_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_phy_test_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_pbist_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pbist_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += dcc_func_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean
@@ -1070,6 +1082,12 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_mpu_firewall_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/mpu_firewall/mpu_firewall_test_am263px/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ospi_phy_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospiPhy/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ospi_phy_test_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospiPhy/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  sdl_pbist_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C sdl/pbist/sdl_pbist_test/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -1528,6 +1546,8 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_mpu_firewall_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_phy_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_phy_test_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_pbist_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pbist_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += dcc_func_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -1690,6 +1710,12 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_mpu_firewall_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/mpu_firewall/mpu_firewall_test_am263px/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ospi_phy_test_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ospiPhy/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ospi_phy_test_am263px-lp_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ospiPhy/am263px-lp/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  sdl_pbist_test_app_am263px-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C sdl/pbist/sdl_pbist_test/am263px-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

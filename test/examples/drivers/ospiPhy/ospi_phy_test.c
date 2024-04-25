@@ -61,8 +61,6 @@ void ospi_phy_test_main(void *args)
     Drivers_open();
     Board_driversOpen();
 
-    loop_forever();
-
     DebugP_log(" Sweeping... !!!\r\n");
 
     OSPI_phyTuneGrapher(gOspiHandle[CONFIG_OSPI0], Flash_getPhyTuningOffset(gFlashHandle[CONFIG_FLASH0]), gPhySweepData);
@@ -74,7 +72,7 @@ void ospi_phy_test_main(void *args)
     }
     else
     {
-        DebugP_log("Writing to file\r\n");
+        DebugP_log("Writing to file: %s\r\n", gFilename);
         fwrite((void *)gPhySweepData, 1, RD_DELAY_SWEEP_SZIE*TX_SWEEP_SIZE*RX_SWEEP_SIZE, fp);
     }
 
