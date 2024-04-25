@@ -31,45 +31,19 @@
  */
 
 #include <stdint.h>
+#include <drivers/gpio.h>
+#include <kernel/dpl/AddrTranslateP.h>
+#include "ti_drivers_config.h"
 
-#include <board/ioexp/ioexp_tca6424.h>
 
-#define IO_MUX_OSPI_RST_SEL_PORT_LINE (0U)      // PORT 0, PIN 0    -> ioIndex : 0*8 + 0 = 0
-
-
-void App_TCA6424_Params_init(TCA6424_Params *params)
+void gpio_flash_reset(void)
 {
-    if(NULL != params)
-    {
-        params->i2cInstance = 0U;
-        params->i2cAddress  = 0x22U;
-    }
+    uint32_t    gpioBaseAddr, pinNum;
+    /* Get address after translation translate */
+    gpioBaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(GPIO_OSPI_RST_BASE_ADDR);
+    pinNum       = GPIO_OSPI_RST_PIN;
+    GPIO_setDirMode(gpioBaseAddr, pinNum, GPIO_OSPI_RST_DIR);
+    GPIO_pinWriteLow(gpioBaseAddr, pinNum);
+    GPIO_pinWriteHigh(gpioBaseAddr, pinNum);
 
-    return;
-}
-
-void i2c_flash_reset()
-{
-    static TCA6424_Config  gTCA6424_Config;
-    int32_t             status = SystemP_SUCCESS;
-    TCA6424_Params      TCA6424Params;
-    TCA6424_Params_init(&TCA6424Params);
-    status = TCA6424_open(&gTCA6424_Config, &TCA6424Params);
-
-    /* Configure as output  */
-    status += TCA6424_config(&gTCA6424_Config,
-                    IO_MUX_OSPI_RST_SEL_PORT_LINE,
-                    TCA6424_MODE_OUTPUT);
-
-    status = TCA6424_setOutput(&gTCA6424_Config,IO_MUX_OSPI_RST_SEL_PORT_LINE,TCA6424_OUT_STATE_LOW);
-
-    status = TCA6424_setOutput(&gTCA6424_Config,IO_MUX_OSPI_RST_SEL_PORT_LINE,TCA6424_OUT_STATE_HIGH);
-
-    if(status != SystemP_SUCCESS)
-    {
-        DebugP_log("Failure to reset the Flash!! %d\r\n");
-        TCA6424_close(&gTCA6424_Config);
-    }
-
-    TCA6424_close(&gTCA6424_Config);
 }

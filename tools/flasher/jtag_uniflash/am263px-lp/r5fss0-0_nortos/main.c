@@ -60,7 +60,7 @@ volatile uint32_t gFlashBuffSize;
 volatile Flash_Attrs *gFlashAttrs;
 volatile uint32_t gFlashWriteOpcode;
 
-void i2c_flash_reset();
+void gpio_flash_reset(void);
 void Flash_HwReset(OSPI_Handle oHandle);
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -114,7 +114,7 @@ int main(void)
 
 void Flash_HwReset(OSPI_Handle oHandle)
 {
-    i2c_flash_reset();
+    gpio_flash_reset();
     OSPI_enableSDR(oHandle);
     OSPI_clearDualOpCodeMode(oHandle);
     OSPI_setProtocol(oHandle, OSPI_NOR_PROTOCOL(1,1,1,0));
