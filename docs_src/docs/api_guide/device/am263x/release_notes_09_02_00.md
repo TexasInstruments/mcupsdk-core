@@ -351,6 +351,13 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> None
 </tr>
 <tr>
+    <td> PINDSW-7746
+    <td> icss_emac_lwip example having low iperf values in TCP and UDP
+    <td> ICSS-EMAC
+    <td> 09.02.00 onwards
+    <td> None
+</tr>
+<tr>
     <td> PROC_SDL-5616
     <td> ECC Bus Safety SEC and DED Error Injection fails for CPSW.
     <td> SDL

@@ -23,7 +23,7 @@ The examples do below
 
  Parameter      | Value
  ---------------|-----------
- CPU + OS       | r5fss0-0_freertos r5fss0-1_freertos
+ CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/networking/lwip/icss_emac_lwip
@@ -34,7 +34,7 @@ The examples do below
 
  Parameter      | Value
  ---------------|-----------
- CPU + OS       | r5fss0-0_freertos r5fss0-1_freertos
+ CPU + OS       | r5fss0-0_freertos
  Toolchain      | ti-arm-clang
  Boards         | @VAR_BOARD_NAME_LOWER, @VAR_LP_BOARD_NAME_LOWER
  Example folder | examples/networking/lwip/icss_emac_lwip
@@ -116,7 +116,7 @@ The examples do below
 
 ## Create a network between EVM and host PC
 
-- The EVM will get an IP address od 192.168.0.200. Make sure to connect the other end of the cable
+- The EVM will get an IP address of 192.168.0.200. Make sure to connect the other end of the cable
 to a network which is in the same sub-network..
 
 - To get started, create a simple local network
