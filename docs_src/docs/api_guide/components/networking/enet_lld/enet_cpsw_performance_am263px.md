@@ -11,6 +11,49 @@ Core Operating Speed  | 400 MHz         |
 Memory Type           | MSRAM             |
 Cache status          | Enabled         |
 
+# Layer 2 Performance
+  \imageStyle{CPSW_latency_measurement_diagram.bmp,width:30%}
+  \image html CPSW_latency_measurement_diagram.bmp Latency defination
+
+## Configuration Details
+Configuration          | Value                    |
+--------------------------------|--------------------------|
+Processing Core                 | Main R5F0 Core 0         |
+Core Frequency                  | 400 MHz                  |
+Ethernet Interface Type         | RGMII at 1 Gbps           |
+Packet buffer memory      | MSRAM (un-cached)                      |
+Scatter-gather TX         | Yes                      |
+Scatter-gather RX         | Yes                      |
+CPDMA interrupt pacing    | Yes                      |
+RTOS                            | FreeRTOS                 |
+RTOS application                | Modified \ref EXAMPLES_ENET_CPSW_LOOPBACK \n example   |
+Host PC tool version            | nload                   |
+Rx packet length     | 200 B                       |
+Tx packet length     | 200 B                       |
+\n
+
+## Layer 2 Latency
+<table>
+    <tr>
+        <td style="text-align: center;"><b>Parameter</b></td>
+        <td style="text-align: center;"><b>CPU<->CPSW \n Latency Value (ns)</b></td>
+        <td style="text-align: center;"><b>PHY (DP83869HM)Latency\n (from datasheet) in ns</b></td>
+        <td style="text-align: center;"><b>Total Latency \n (ns)</b></td>
+    </tr>
+    <tr>
+        <td>RX Latency</td>
+        <td>4756</td>
+        <td>193</td>
+        <td>4949</td>
+    </tr>
+    <tr>
+        <td>TX Latency</td>
+        <td>13225</td>
+        <td>384</td>
+        <td>13609</td>
+    </tr>
+</table>
+
 # TCP/IP Performance
 
 ## Configuration Details
@@ -39,13 +82,13 @@ Number of Tx packet buffers     | 16                       |
         <td style="text-align: center;"><b>CPU Load \n (%) </b></td>
     </tr>
     <tr>
-        <td>TCP RX</td><td>210</td><td>97</td>
+        <td>TCP RX</td><td>195</td><td>98</td>
     </tr>
     <tr>
-        <td>TCP TX</td><td>178</td><td>100</td>
+        <td>TCP TX</td><td>158</td><td>100</td>
     </tr>
     <tr>
-        <td>TCP Bidirectional</td><td>RX=53 \n TX=132</td><td>100</td>
+        <td>TCP Bidirectional</td><td>RX=73 \n TX=87</td><td>100</td>
     </tr>
 </table>
 
@@ -75,33 +118,33 @@ Number of Tx packet buffers     | 16                       |
         <td>5</td><td>41</td><td>0.0</td>
         <td>5</td><td>20</td><td>0.0</td>
         <td>25</td><td>48</td><td>0.0</td>
-        <td>50</td><td>40</td><td>0.0</td>
+        <td>50</td><td>42</td><td>0.0</td>
     </tr>
     <tr>
-        <td>10</td><td>75</td><td>0.0</td>
-        <td>15</td><td>54</td><td>0.0</td>
-        <td>50</td><td>88</td><td>0.0</td>
-        <td>60</td><td>47</td><td>0.0</td>
+        <td>10</td><td>72</td><td>0.0</td>
+        <td>15</td><td>53</td><td>0.0</td>
+        <td>50</td><td>85</td><td>0.7</td>
+        <td>60</td><td>48</td><td>0.0</td>
     </tr>
     <tr>
-        <td>15</td><td>78</td><td>21.0</td>
-        <td>25</td><td>84</td><td>0.0</td>
-        <td>55</td><td>96</td><td>0.0</td>
-        <td>95</td><td>73</td><td>0.0</td>
+        <td>15</td><td>91</td><td>7.3</td>
+        <td>25</td><td>81</td><td>0.15</td>
+        <td>55</td><td>95</td><td>0.4</td>
+        <td>95</td><td>72</td><td>0.0</td>
     </tr>
     <tr>
         <td>UDP RX (Max)</td>
-        <td>13.5</td><td>96</td><td>2.0</td>
-        <td>30</td><td>98</td><td>2.5</td>
-        <td>56.6</td><td>99</td><td>2.2</td>
-        <td>130.8</td><td>97</td><td>1.1</td>
+        <td>13</td><td>91</td><td>1.3</td>
+        <td>30</td><td>96</td><td>3.4</td>
+        <td>58</td><td>97</td><td>1.1</td>
+        <td>130.8</td><td>97</td><td>1.4</td>
     </tr>
     <tr>
         <td>UDP TX (Max)</td>
-        <td>23.4</td><td>100</td><td>0.0</td>
-        <td>53.5</td><td>100</td><td>0.0</td>
-        <td>107</td><td>100</td><td>0.0</td>
-        <td>307</td><td>100</td><td>0.0</td>
+        <td>23.7</td><td>100</td><td>0.0</td>
+        <td>54.1</td><td>100</td><td>0.0</td>
+        <td>108</td><td>100</td><td>0.0</td>
+        <td>311</td><td>100</td><td>0.0</td>
     </tr>
 </table>
 
