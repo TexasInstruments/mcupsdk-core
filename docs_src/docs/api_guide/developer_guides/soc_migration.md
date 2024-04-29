@@ -48,7 +48,7 @@ In this case, navigate to migration_script folder using:
 
 For example, let's say you want to switch all the @VAR_SOC_NAME examples in the whole of SDK from package **@VAR_SOC_DEFAULT_PACKAGE** to **@VAR_SOC_MIGRATE_TO_PACKAGE**. Then, enter this command in your terminal:
 
-    $ node migrate.js --product {your_sdk_path}/.metadata/product.json --sourceDevice @VAR_SOC_NAME --destinationDevice @VAR_SOC_NAME --sourcePackage @VAR_SOC_DEFAULT_PACKAGE --destinationpackage @VAR_SOC_MIGRATE_TO_PACKAGE --migratePath {your_sdk_path}
+    $ node migrate.js --product {your_sdk_path}/.metadata/product.json --sourceDevice @VAR_SOC_NAME --destinationDevice @VAR_SOC_NAME --sourcePackage @VAR_SOC_DEFAULT_PACKAGE --destinationPackage @VAR_SOC_MIGRATE_TO_PACKAGE --migratePath {your_sdk_path}
 
 
 The arguments **sourceDevice** and **destinationDevice** are same in this case, both @VAR_SOC_NAME.
