@@ -129,7 +129,11 @@ int32_t PMIC_tps653860xxOpen(PMIC_Config *config, const PMIC_Params *params)
 
         /* Allocate memory for PMIC core Handle */
         coreHandle = (Pmic_CoreHandle_t *)malloc(sizeof(Pmic_CoreHandle_t));
-        memset(coreHandle, 0, sizeof(Pmic_CoreHandle_t));
+        if (NULL != coreHandle)
+        {
+            memset(coreHandle, 0, sizeof(Pmic_CoreHandle_t));
+            object->pmicCoreHandle = coreHandle;
+        }
 
         /* Fill parameters to pmicConfigData */
         pmicConfigData.pmicDeviceType = params->deviceType;
@@ -148,16 +152,16 @@ int32_t PMIC_tps653860xxOpen(PMIC_Config *config, const PMIC_Params *params)
 
         status += Pmic_init(&pmicConfigData, coreHandle);
 
-        if(status == SystemP_SUCCESS)
-        {
-            object->pmicCoreHandle = coreHandle;
-        }
     }
 
     if(SystemP_SUCCESS == status)
     {
         object->isOpen = 1;
         object->handle = (PMIC_Handle)config;
+    }
+    else
+    {
+        PMIC_tps653860xxClose(config);
     }
 
    return status;
