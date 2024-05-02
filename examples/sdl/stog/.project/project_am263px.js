@@ -46,7 +46,7 @@ const libdirs_nortos = {
 const includes_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/",
-        "${MCU_PLUS_SDK_PATH}/examples/sdl/stog_r5f/",
+        "${MCU_PLUS_SDK_PATH}/examples/sdl/stog/",
     ],
 };
 

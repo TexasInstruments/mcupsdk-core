@@ -35,7 +35,7 @@ const includes_nortos = {
     common: [
           "${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/",
 		  "${MCU_PLUS_SDK_PATH}/examples/sdl/ccm/",
-          "${MCU_PLUS_SDK_PATH}/examples/sdl/ccm/sdl_ccm_tmu_example/",
+          "${MCU_PLUS_SDK_PATH}/examples/sdl/ccm/sdl_ccm_rl2_example/",
     ],
 };
 

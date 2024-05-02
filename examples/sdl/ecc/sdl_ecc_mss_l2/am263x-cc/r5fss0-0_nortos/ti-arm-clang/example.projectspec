@@ -101,8 +101,6 @@
         </file>
         <file path="../../../ecc_main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
-        <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
-        </file>
         <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
         </file>
         <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">

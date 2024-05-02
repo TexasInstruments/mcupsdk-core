@@ -64,7 +64,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/ \
 	-I${MCU_PLUS_SDK_PATH}/examples/sdl/ccm/ \
-	-I${MCU_PLUS_SDK_PATH}/examples/sdl/ccm/sdl_ccm_tmu_example/ \
+	-I${MCU_PLUS_SDK_PATH}/examples/sdl/ccm/sdl_ccm_rl2_example/ \
 	-Igenerated \
 
 DEFINES_common := \

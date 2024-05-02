@@ -66,7 +66,7 @@ INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/ \
-	-I${MCU_PLUS_SDK_PATH}/examples/sdl/stog_r5f/ \
+	-I${MCU_PLUS_SDK_PATH}/examples/sdl/stog/ \
 	-Igenerated \
 
 DEFINES_common := \
