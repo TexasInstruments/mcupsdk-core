@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-23 Texas Instruments Incorporated
+ *  Copyright (C) 2021-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -463,7 +463,7 @@ static int32_t Flash_norQspiReadId(Flash_Config *config)
     uint32_t manfID, devID;
     Flash_NorQspiObject *obj = (Flash_NorQspiObject *)(config->object);
     Flash_DevConfig *devCfg = (Flash_DevConfig *)config->devConfig;
-    uint8_t idCode[FLASH_QSPI_JEDEC_ID_SIZE_MAX];
+    uint8_t idCode[FLASH_QSPI_JEDEC_ID_SIZE_MAX] = {0};
     uint8_t cmd = QSPI_CMD_INVALID_OPCODE;
     uint32_t cmdAddr = QSPI_CMD_INVALID_ADDR;
     uint32_t numRdIdBytes = 0U;
