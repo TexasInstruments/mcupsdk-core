@@ -38,7 +38,7 @@
 #include <drivers/bootloader/bootloader_uniflash.h>
 #include <drivers/hsmclient/soc/am263px/hsmRtImg.h> /* hsmRt bin   header file */
 
-const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
+// const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES] __attribute__((section(".rodata.hsmrt"))) = HSMRT_IMG;
 
 extern HsmClient_t gHSMClient ;
 
@@ -94,7 +94,7 @@ int main(void)
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     DebugP_log("\r\n");
-    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    // Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_socInitL2MailBoxMemory();
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
@@ -156,33 +156,44 @@ int main(void)
         Bootloader_BootImageInfo_init(&bootImageInfo);
 
         bootHandle = Bootloader_open(CONFIG_BOOTLOADER0, &bootParams);
-        if (bootHandle != NULL)
+		Bootloader_Config *config = (Bootloader_Config *)bootHandle;
+        uint32_t imageFormat = config->imageFormat;
+
+        if(bootHandle != NULL)
         {
-            status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
+            if(imageFormat == BOOTLOADER_IMAGE_RPRC)
+            {
+                status = Bootloader_parseMultiCoreAppImage(bootHandle, &bootImageInfo);
+            }
             /* Load CPUs */
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
+            if(status == SystemP_SUCCESS)
             {
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_1);
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_1);
-                status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
+                status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1], imageFormat);
             }
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
+            if(status == SystemP_SUCCESS)
             {
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS1_0);
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS1_0);
-                status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
+                status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0], imageFormat);
             }
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1)))
+            if(status == SystemP_SUCCESS)
             {
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_1);
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_1);
-                status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
+                status = Bootloader_loadCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1], imageFormat);
             }
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
+            if(status == SystemP_SUCCESS)
             {
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
-                status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
+                status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], imageFormat);
+            }
+
+			if(imageFormat == BOOTLOADER_IMAGE_MCELF)
+            {
+                status = Bootloader_parseAndLoadMultiCoreELF(bootHandle, &bootImageInfo);
             }
             Bootloader_profileAddProfilePoint("CPU load");
             OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
@@ -201,21 +212,22 @@ int main(void)
             }
 
             /* Run CPUs */
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_1)))
+            if(status == SystemP_SUCCESS)
             {
                 status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_1]);
             }
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS1_0)))
+            if(status == SystemP_SUCCESS)
             {
                 status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS1_0]);
             }
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_1)))
+            if(status == SystemP_SUCCESS)
             {
                 status = Bootloader_runCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_1]);
             }
-            if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
+            if(status == SystemP_SUCCESS)
             {
-                if (bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
+                /* Load the image on self core now */
+                if((imageFormat == BOOTLOADER_IMAGE_RPRC) && bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
                 {
                     status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
                 }

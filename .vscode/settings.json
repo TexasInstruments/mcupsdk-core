@@ -1,9 +1,9 @@
 // Place your settings in this file to overwrite the default settings
 {
     "files.eol": "\n",
-    "editor.fontSize": 14,
+    "editor.fontSize": 12,
     "C_Cpp.dimInactiveRegions": false,
-    "editor.insertSpaces": true,
+    "editor.insertSpaces": false,
     "editor.detectIndentation": false,
     "files.exclude": {
         "**/.git": true,

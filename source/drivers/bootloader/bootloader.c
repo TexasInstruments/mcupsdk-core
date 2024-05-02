@@ -49,7 +49,6 @@
 #endif
 #include <drivers/bootloader/soc/bootloader_soc.h>
 #include <drivers/bootloader/bootloader_priv.h>
-#include <drivers/bootloader/sha512.h>
 #include <string.h>
 
 /* ========================================================================== */
@@ -70,12 +69,6 @@ extern uint32_t gBootloaderConfigNum;
 uint8_t gElfHBuffer[ELF_HEADER_MAX_SIZE];
 uint8_t gNoteSegBuffer[ELF_NOTE_SEGMENT_MAX_SIZE];
 uint8_t gPHTBuffer[ELF_MAX_SEGMENTS * ELF_P_HEADER_MAX_SIZE];
-
-SHA512_CTX gShaCtx;
-uint8_t gHash[SHA512_DIGEST_LENGTH];
-uint8_t gOriginalHash[SHA512_DIGEST_LENGTH] = {
-    0x38, 0xAD, 0x87, 0x63, 0x81, 0xA6, 0x86, 0x8B, 0x98, 0xD4, 0x01, 0x0E, 0x1C, 0x6E, 0x65, 0x59, 0x29, 0x29, 0x84, 0x4E, 0xD0, 0x0A, 0xE7, 0xC7, 0x26, 0x2B, 0x64, 0x1D, 0x10, 0x9C, 0x6B, 0xA7, 0x0B, 0x22, 0x71, 0x53, 0x27, 0x99, 0x20, 0xD2, 0x11, 0x4A, 0x10, 0xB7, 0x67, 0x14, 0x9F, 0xE4, 0xA9, 0x87, 0xE9, 0xC8, 0xC0, 0xE7, 0x9E, 0xE5, 0x51, 0xA9, 0x2D, 0x12, 0x79, 0xB1, 0x78, 0xE8
-};
 
 /* ========================================================================== */
 /*                             Function Definitions                           */
@@ -113,7 +106,7 @@ void Bootloader_close(Bootloader_Handle handle)
     }
 }
 
-int32_t Bootloader_loadCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo)
+int32_t Bootloader_loadCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo, uint32_t imageFormat)
 {
     int32_t status = SystemP_SUCCESS;
 
@@ -129,9 +122,9 @@ int32_t Bootloader_loadCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo
 
     if(SystemP_SUCCESS == status)
     {
-        if( cpuInfo->rprcOffset != BOOTLOADER_INVALID_ID)
+        if( cpuInfo->rprcOffset != BOOTLOADER_INVALID_ID && imageFormat == BOOTLOADER_IMAGE_RPRC)
         {
-            // status = Bootloader_rprcImageLoad(handle, cpuInfo);
+            status = Bootloader_rprcImageLoad(handle, cpuInfo);
         }
     }
 
@@ -170,7 +163,7 @@ int32_t Bootloader_runCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo)
     return status;
 }
 
-int32_t Bootloader_loadSelfCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo, uint32_t skipLoad)
+int32_t Bootloader_loadSelfCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo, uint32_t imageFormat)
 {
     int32_t status = SystemP_SUCCESS;
     uint32_t cpuId = cpuInfo->cpuId;
@@ -201,11 +194,11 @@ int32_t Bootloader_loadSelfCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpu
     {
         status = Bootloader_socMemInitCpu(cpuId);
     }
-    if((SystemP_SUCCESS == status) && (skipLoad == FALSE))
+    if((SystemP_SUCCESS == status) && (imageFormat == BOOTLOADER_IMAGE_RPRC))
     {
         if( cpuInfo->rprcOffset != BOOTLOADER_INVALID_ID)
         {
-            // status = Bootloader_rprcImageLoad(handle, cpuInfo);
+            status = Bootloader_rprcImageLoad(handle, cpuInfo);
         }
     }
     if(status == SystemP_SUCCESS)
@@ -236,7 +229,7 @@ int32_t Bootloader_bootCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo
 {
     int32_t status = SystemP_SUCCESS;
 
-    status = Bootloader_loadCpu(handle, cpuInfo);
+    status = Bootloader_loadCpu(handle, cpuInfo, 0); //change this when porting for SBL NULL
 
     if(status == SystemP_SUCCESS)
     {
@@ -674,32 +667,17 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
 
 int32_t auth_start(uintptr_t certOffset)
 {
-    (void)certOffset;
-    /* Initialize SHA context */
-    sha512_init(&gShaCtx);
     return 0;
 }
 
 int32_t auth_update(uintptr_t startAddr, uint32_t size)
 {
-    sha512_update(&gShaCtx, (void *)(startAddr), size);
     return 0;
 }
 
-int32_t auth_finish(uint8_t *digest)
+int32_t auth_finish()
 {
-    int32_t status = SystemP_FAILURE;
-
-    sha512_final(&gShaCtx, digest);
-
-    if(memcmp(digest, gOriginalHash, SHA512_DIGEST_LENGTH) == 0)
-    {
-        status = SystemP_SUCCESS;
-    }
-    else
-    {
-        status = SystemP_FAILURE;
-    }
+    int32_t status = status = SystemP_SUCCESS;
 
     return status;
 }
@@ -930,7 +908,7 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
 
     if(status == SystemP_SUCCESS && (doAuth == TRUE))
     {
-        status = auth_finish(gHash);
+        status = auth_finish();
     }
 
     return status;

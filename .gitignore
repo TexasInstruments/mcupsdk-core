@@ -26,8 +26,6 @@ docs/datasheet*
 *.tiimage.hs
 *.mcelf
 *-fw
-.vscode/settings.json
-.vscode*
 *.vscode/
 *.vscode-ctags
 temp_stdout_*.txt

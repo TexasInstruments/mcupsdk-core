@@ -22,6 +22,7 @@ MULTI_CORE_BOOTIMAGE_PATH=$(abspath .)
 MULTI_CORE_BOOTIMAGE_NAME:=`args.project.name`_system.$(PROFILE).appimage
 MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(MULTI_CORE_BOOTIMAGE_NAME).signed
 MULTI_CORE_BOOTIMAGE_NAME_XIP:=`args.project.name`_system.$(PROFILE).appimage_xip
+MULTI_CORE_BOOTIMAGE_NAME_MCELF:=`args.project.name`_system.$(PROFILE).mcelf
 % if (args.project.device == "awr294x") {
 MULTI_CORE_BOOTIMAGE_NAME_QSPI:=`args.project.name`_system.$(PROFILE).appimage_qspi
 MULTI_CORE_BOOTIMAGE_NAME_QSPI_HS:=$(MULTI_CORE_BOOTIMAGE_NAME_QSPI).hs
@@ -41,6 +42,12 @@ CORES = \
     $(CORE_`i`) \
 % }
 
+% numProjects = 0;
+% for (let project of args.project.projects) {
+CORE_`numProjects`_IMG=../`project.cpu`_`project.os`/`project.cgt`/`args.project.name`.$(PROFILE).out
+    % numProjects = numProjects + 1;
+% }
+
 SYSTEM_FLAG := true
 
 all: syscfg
@@ -48,6 +55,7 @@ all: syscfg
 	$(MAKE) -C ../`project.cpu`_`project.os`/`project.cgt`/ all SYSTEM_FLAG=${SYSTEM_FLAG}
 % }
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME)
+	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)
 % if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x")|| (args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
 ifeq ($(DEVICE_TYPE), HS)
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
@@ -69,6 +77,7 @@ clean:
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_SIGNED)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_XIP)
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)
 % if (args.project.device == "awr294x") {
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_QSPI)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_QSPI_HS)
@@ -99,6 +108,7 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage*
 % }
 	$(RM) \*.appimage_xip
+	$(RM) \*.mcelf
 else
 	$(RM) *.appimage
 	$(RM) *.appimage.signed
@@ -109,6 +119,7 @@ else
 	$(RM) \*.appimage*
 % }
 	$(RM) *.appimage_xip
+	$(RM) *.mcelf
 endif
 
 syscfg:
@@ -189,6 +200,7 @@ APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_
 % if ((args.project.device == "am263x") ||  (args.project.device == "am263px") || (args.project.device == "am261x")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 % }
+MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
 
 MULTI_CORE_APP_PARAMS = \
 % for (let project of args.project.projects) {
@@ -223,6 +235,20 @@ $(MULTI_CORE_BOOTIMAGE_NAME): $(MULTI_CORE_BOOTIMAGE_DEPENDENCY)
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
 % }
+
+CORE_IMG_ARGS :=
+% for (let i = 0; i<numProjects; i++) {
+CORE_IMG_ARGS +=--core-img=`i`:$(CORE_`i`_IMG)
+% }
+
+$(MULTI_CORE_BOOTIMAGE_NAME_MCELF):
+	@echo  Boot multi-core ELF image: $@ ...
+
+	$(PYTHON) $(MCELF_IMAGE_GEN) $(CORE_IMG_ARGS) --output=$(MULTI_CORE_BOOTIMAGE_NAME_MCELF) --merge-segments --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT)
+
+	@echo  Boot multi-core ELF image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  .
+
 % if ((args.project.device == "am243x") || (args.project.device == "am64x")) {
 ifeq ($(DEVICE_TYPE),HS)
 # Sign the appimage using appimage signing script

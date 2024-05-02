@@ -84,6 +84,9 @@ extern "C"
 #define BOOTLOADER_MEDIA_PCIE      (0xB0070006)
 #define BOOTLOADER_MEDIA_USB       (0xB0070007)
 
+#define BOOTLOADER_IMAGE_RPRC      (0U)
+#define BOOTLOADER_IMAGE_MCELF     (1U)
+
 /**
  * \brief Handle to the Bootloader driver returned by Bootloader_open()
  */
@@ -214,6 +217,7 @@ typedef struct Bootloader_Config_s
     uint32_t disableAppImageAuth;
     /* Whether to initialize ICSS cores or not */
     uint32_t initICSSCores;
+    uint32_t imageFormat;
 
 } Bootloader_Config;
 
@@ -302,7 +306,7 @@ void Bootloader_close(Bootloader_Handle handle);
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-int32_t Bootloader_loadCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo);
+int32_t Bootloader_loadCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo, uint32_t imageFormat);
 
 /**
  * \brief API to load self CPU

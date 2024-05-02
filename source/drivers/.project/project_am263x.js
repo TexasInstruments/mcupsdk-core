@@ -58,7 +58,6 @@ const files_r5f = {
         "qspi_edma_lld.c",
         "rti.c",
         "sdfm.c",
-        "sha512.c",
         "sipc_notify_src.c",
         "sipc_notify_cfg.c",
         "spinlock.c",
