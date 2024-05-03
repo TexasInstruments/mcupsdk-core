@@ -124,7 +124,25 @@ It's important to note that if a memory region is designated as "Shared," the us
 
 \note
 The same shared region instances will not appear in the GUI for the selected cores but will get reflected in their linker files.\n
-Additionally, system projects should not be built at individual core level if there are any shared memory regions.
+Additionally, system projects should not be built at individual core level if there are any shared memory regions. We will see that the individual builds of older projects are breaking with the introduction of this tool. This is due to the fact that some cores do not add some shared memory regions like USER_SHM_MEM, LOG_SHM_MEM from their "respective SYSCFG contexts" (separate syscfg tabs pertaining to these individual cores) yet are still getting them reflected in their tool generated linker.cmd. This is happening because r5fss0-0 is adding these regions and marking them as shared with those other cores. There's a dependency here as we can see, where the only independent core in this case is r5fss0-0 and rest others depend on this.
+So when you try to build r5fss0-0 individually, it will work BUT rest others when done the same way will fail because they would have those shared memory regions missing in their own linker.cmd as the link between r5fss0-0 and itself is now gone.
+To summarize, almost all the system projects in our SDK have this dependency  (and not only IPC) so they need to be built at system level.
+
+
+If we want to test some dependent core individually in a multi-core project, then you need to add those shared regions by opening the syscfg for that core only.
+
+Eg:
+\code
+make -sC examples/empty/{device_name}/{core_name_os}/{compiler}/ syscfg-gui
+\endcode
+
+And not,
+\code
+make -sC examples/empty/{device_name}/system_nortos/ syscfg-gui
+\endcode
+
+But the thing to note here is that now when you build system project, there will be conflict coming from the independent core sharing these regions and your current core under test as it will have the same regions added twice (once by the independent and other by itself). Then we will have to remove those from the dependent ones.
+
 
 #### Impact of Automate MPU Setting
 
