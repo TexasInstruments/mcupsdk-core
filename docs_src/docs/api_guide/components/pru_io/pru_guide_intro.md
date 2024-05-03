@@ -13,8 +13,8 @@ consists of:
 * Data RAMs per PRU core
 * Instruction RAMs per PRU, per RTU_PRU and per TX_PRU cores
 * Shared RAM
-* Peripheral modules: UART0, ECAP0, PWM, IEP0 and IEP1
-* Interrupt controller (INTC) and Task Manager per core
+* Peripheral modules: UART0, ECAP0, PWM, MDIO, IEP0 and IEP1
+* Interrupt controller (INTC) per ICSS subsystem and Task Manager per core
 
 The programmable nature of the PRU cores, along with their access to pins, events and all device resources,
 provides flexibility in implementing fast real-time responses, specialized data handling operations, custom
@@ -28,6 +28,33 @@ instruction memory.
   \image html ICSSG_block_diagram.png "PRU-ICSSG Sub-System Block Diagram"
 
 Refer to latest AM64x TRM (Technical Reference Manual) for complete details. (Can be found here: <https://www.ti.com/product/AM6442>)
+
+\endcond
+
+\cond SOC_AM263X || SOC_AM263PX
+## PRU_ICSSM Subsystem
+
+The Programmable Real-Time Unit Subsystem and Industrial Communication Subsystem (PRU_ICSSM)
+consists of:
+* Two 32-bit load/store RISC CPU cores — Programmable Real-Time Units (PRU0 and PRU1)
+* Data RAMs per PRU core
+* Instruction RAMs per PRU
+* Shared RAM
+* Peripheral modules: UART0, ECAP0, MDIO, IEP0 and IEP1 
+* Interrupt controller (INTC) per ICSS subsystem
+
+The programmable nature of the PRU cores, along with their access to pins, events and all device resources,
+provides flexibility in implementing fast real-time responses, specialized data handling operations, custom
+peripheral interfaces, and in offloading tasks from the other processor cores of the device.
+The PRU cores are programmed with a small, deterministic instruction set. Each PRU can operate
+independently or in coordination with each other and can also work in coordination with the device-level host
+CPU. This interaction between processors is determined by the nature of the firmware loaded into the PRU’s
+instruction memory.
+
+  \imageStyle{ICSSM_block_diagram.png,width:85%}
+  \image html ICSSM_block_diagram.png "PRU-ICSSM Sub-System Block Diagram"
+
+Refer to latest AM263x TRM (Technical Reference Manual) for complete details. (Can be found here: <https://www.ti.com/product/AM2634-Q1>)
 
 \endcond
 
@@ -62,6 +89,7 @@ PRU core is optimized for low latency and jitter. It contains:
 </table>
 
 Refer for usage details: [PRU Assembly Instruction User Guide](https://www.ti.com/lit/ug/spruij2/spruij2.pdf)
+\cond SOC_AM64X || SOC_AM243X
 * TSEN Instruction is used to enable task manager functionality.
 Usage:
 
@@ -69,6 +97,7 @@ Usage:
     TSEN    1  ; Enable Task Manager
     TSEN    0  ; Disable Task Manager
 \endcode
+\endcond
 
 ## PRU Register Addressing
 
@@ -88,22 +117,35 @@ Sample assembly code instructions:
 
 ## PRU Broadside Accelerators
 
-PRU_ICSSG supports a broadside interface, which uses the XFR (XIN, XOUT, or XCHG) instruction to transfer the contents of PRUn, RTU_PRUn or TX_PRUn (where n = 0 or 1) registers to or from accelerators. This interface enables up to 31 registers (R0-R30, or 124 bytes) to be transferred in a single instruction.
-
+\cond SOC_AM64X || SOC_AM243X
+PRU_ICSSG supports a broadside interface, which uses the XFR (XIN, XOUT, or XCHG) instruction to transfer the contents of PRUn, RTU_PRUn or TX_PRUn (where n = 0 or 1) registers to or from accelerators. This interface enables up to 30 registers (R0-R29, or 120 bytes) to be transferred in a single instruction.
   \imageStyle{Pru_broadside.png,width:90%}
   \image html Pru_broadside.png " "
+\endcond
+
+\cond SOC_AM263X || SOC_AM263PX
+PRU_ICSSM supports a broadside interface, which uses the XFR (XIN, XOUT, or XCHG) instruction to transfer the contents of PRUn(where n = 0 or 1) registers to or from accelerators. This interface enables up to 30 registers (R0-R29, or 120 bytes) to be transferred in a single instruction.
+
+Data processing accelerators
+* MAC
+* CRC16/32
+
+Data movement accelerators
+* XFR2VBUS
+\endcond
 
 ## PRU I/O Control Modes
 
 Each slice is directly connected to 20 GPIO pins which can be controlled by the PRUs using **R30** register and pin values can be read using **R31** register. By default **PRU0** and **PRU1** cores are able to control the respective GPIO pins (after they have been correctly pinmuxed).
 Overall:
 * PRU has full input and output control on all interfaces
+\cond SOC_AM64X || SOC_AM243X
 * RTU_PRU and TX_PRU see R31 input and can process receive in parallel (If PRU_ICSSG slice is in GPIO mode, then RTU_PRU and TX_PRU both get the same r31_status (R31 register value) as PRU, but, only PRU core has control over pins, RTU_PRU/TX_PRU only have observation or input. RTU_PRU and TX_PRU has no support for GPO)
 * PRU/RTU_PRU supports load sharing option for sigma-delta and encoder interface (Load sharing across 3 PRU cores per slice of ICSSG which enables RTU (SD0-SD2), PRU (SD3-SD5), TX_PRU (SD6-SD8) control 3 channels each).
 
   \imageStyle{Pru_gpio.png,width:30%}
   \image html Pru_gpio.png "GPIO Connection"
-
+\endcond
   <table>
     <tr><th> Direct Output            <td> 20 GPOs R30[19-0]
     <tr><th> Direct Input             <td> 20 GPIs R31[19-0]
@@ -114,6 +156,7 @@ Overall:
     <tr><th> 3 x Peripheral Interface <td> encoder (RS-485) interface
   </table>
 
+\cond SOC_AM64X || SOC_AM243X
 ## Real-Time Task Manager
 
 The PRU_ICSSG system integrates 6 Task Managers used for efficient switching between tasks.
@@ -134,4 +177,4 @@ manager works independently from the others.
 
   \imageStyle{Pru_task_manager.png,width:30%}
   \image html Pru_task_manager.png " Task Manager Block Diagram"
-
+\endcond

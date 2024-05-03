@@ -23,5 +23,11 @@ This section consists of modules providing support for PRU cores:
 
 \cond SOC_AM263X
 This section consists of description of interfaces/modules developed using PRU:
+- \subpage COMPONENT_PRU_GUIDE
 - \subpage SENT
+\endcond
+
+\cond SOC_AM263PX
+This section consists of description of interfaces/modules developed using PRU:
+- \subpage COMPONENT_PRU_GUIDE
 \endcond
