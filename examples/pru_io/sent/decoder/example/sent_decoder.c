@@ -219,6 +219,7 @@ void sent_main(void *args)
                 gSentDataHandle[i].Data5 = HW_RD_REG8((uint32_t)data_ready_status + (ch_data_offset[i] + DATA5_OFFSET));
                 gSentDataHandle[i].CRC = HW_RD_REG8((uint32_t)data_ready_status + (ch_data_offset[i] + CRC_OFFSET));
                 gSentDataHandle[i].error_status = HW_RD_REG16((uint32_t)data_ready_status + (ch_data_offset[i] + ERROR_STATUS_OFFSET));
+                #ifdef _DEBUG_
                 DebugP_log("\n\r******************CHANNEL%d SENT DATA**********************\n\r",i);
                 DebugP_log("\n\rNumber of Frames received: \t %d", num_frames_recvd[i]);
                 DebugP_log("\n\rChannel0 calculated tick period: \t %d ns", gSentDataHandle[i].ConfigTickTime);
@@ -227,6 +228,7 @@ void sent_main(void *args)
                 DebugP_log("\n\rValue: \t  %02x \t %02x \t %02x \t %02x \t %02x \t %02x \t %02x \t", gSentDataHandle[i].Data0, gSentDataHandle[i].Data1,
                                     gSentDataHandle[i].Data2, gSentDataHandle[i].Data3, gSentDataHandle[i].Data4, gSentDataHandle[i].Data5, gSentDataHandle[i].CRC);
                 DebugP_log("\n\r**********************************************************\n\r");
+                #endif
             }
         }
 

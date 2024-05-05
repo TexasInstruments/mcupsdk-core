@@ -274,6 +274,7 @@ void sent_main(void *args)
                 gSentDataHandle[i].Data5 = HW_RD_REG8((uint32_t)data_ready_status + (ch_data_offset[i] + DATA5_OFFSET));
                 gSentDataHandle[i].CRC = HW_RD_REG8((uint32_t)data_ready_status + (ch_data_offset[i] + CRC_OFFSET));
                 gSentDataHandle[i].error_status = HW_RD_REG16((uint32_t)data_ready_status + (ch_data_offset[i] + ERROR_STATUS_OFFSET));
+#ifdef _DEBUG_
                 DebugP_log("\n\r********************** CHANNEL%d SENT DATA **************************\n\r", i);
                 DebugP_log("\n\rNumber of Frames received:        %d", num_frames_recvd[i]);
                 DebugP_log("\n\rChannel %d calculated tick period: %d ns", i, gSentDataHandle[i].ConfigTickTime);
@@ -282,6 +283,7 @@ void sent_main(void *args)
                 DebugP_log("\n\rValue:   \t  %02x\t %02x\t %02x\t %02x\t %02x\t %02x\t %02x\t", gSentDataHandle[i].Data0, gSentDataHandle[i].Data1,
                                     gSentDataHandle[i].Data2, gSentDataHandle[i].Data3, gSentDataHandle[i].Data4, gSentDataHandle[i].Data5, gSentDataHandle[i].CRC);
                 DebugP_log("\n\r********************************************************************\n\r");
+#endif
 #ifdef ENABLE_SHORT_SERIAL_MESSAGE
                 if(flag & SHORT_SERIAL_MESSAGE_DATA_READY)
                 {
@@ -291,12 +293,13 @@ void sent_main(void *args)
                     gSentSerialMsgDataHandle[i].Data0 = ((HW_RD_REG8((uint32_t)data_ready_status + (ch_serial_message_data_offset[i] + SHORT_SERIAL_MESSAGE_BYTE1))) & SHORT_SERIAL_MESSAGE_BYTE1_DATA0_MASK) >> SHORT_SERIAL_MESSAGE_BYTE1_DATA0_SHIFT ;
                     gSentSerialMsgDataHandle[i].Data1 = ((HW_RD_REG8((uint32_t)data_ready_status + (ch_serial_message_data_offset[i] + SHORT_SERIAL_MESSAGE_BYTE0))) & SHORT_SERIAL_MESSAGE_BYTE0_DATA1_MASK) >> SHORT_SERIAL_MESSAGE_BYTE0_DATA1_SHIFT ;
                     gSentSerialMsgDataHandle[i].CRC = ((HW_RD_REG8((uint32_t)data_ready_status + (ch_serial_message_data_offset[i] + SHORT_SERIAL_MESSAGE_BYTE0))) & SHORT_SERIAL_MESSAGE_BYTE0_CRC_MASK) >> SHORT_SERIAL_MESSAGE_BYTE0_CRC_SHIFT ;
-                
+#ifdef _DEBUG_                
                     DebugP_log("\n\r*********** CHANNEL%d SENT SHORT SERIAL MESSAGE DATA *****************\n\r", i);
                     DebugP_log("\n\rNumber of Serial Messages received: \t %d", num_serial_messages_recvd[i]);
                     DebugP_log("\n\rChannel %d:\t MessageID\t Data0\t Data1\t CRC", i);
                     DebugP_log("\n\rValue:   \t %02x\t\t %02x\t %02x\t %02x\t", gSentSerialMsgDataHandle[i].MessageId, gSentSerialMsgDataHandle[i].Data0, gSentSerialMsgDataHandle[i].Data1, gSentSerialMsgDataHandle[i].CRC);
                     DebugP_log("\n\r********************************************************************\n\r");
+#endif
                 }
 #endif
 #ifdef ENABLE_ENHANCED_SERIAL_MESSAGE
@@ -326,7 +329,7 @@ void sent_main(void *args)
                         gSentEnhancedSerialMsgDataHandle[i].MessageId = ((word1 & ENHANCED_SERIAL_MESSAGE_WORD1_C0_ID_LOW_MASK) >> ENHANCED_SERIAL_MESSAGE_WORD1_C0_ID_LOW_SHIFT) |
                         ((((word1 & ENHANCED_SERIAL_MESSAGE_WORD1_C0_ID_HIGH_MASK) >> ENHANCED_SERIAL_MESSAGE_WORD1_C0_ID_HIGH_SHIFT))<<4);
                     }
-
+#ifdef _DEBUG_ 
                     DebugP_log("\n\r********* CHANNEL%d SENT ENHANCED SERIAL MESSAGE DATA ***************\n\r", i);
                     DebugP_log("\n\rNumber of Serial Messages received: \t %d", num_serial_messages_recvd[i]);
                     if(gSentEnhancedSerialMsgDataHandle[i].ConfigBit)
@@ -340,7 +343,7 @@ void sent_main(void *args)
                     DebugP_log("\n\rChannel %d:\t MessageID\t Data\t CRC", i);
                     DebugP_log("\n\rValue:   \t %02x\t\t %04x\t %02x\t", gSentEnhancedSerialMsgDataHandle[i].MessageId, gSentEnhancedSerialMsgDataHandle[i].Data, gSentEnhancedSerialMsgDataHandle[i].CRC);
                     DebugP_log("\n\r********************************************************************\n\r");
-
+#endif
                 }
 #endif                
             }

@@ -10,13 +10,14 @@
 
 ## New in this Release
 
-Feature                                                                                         | Module
-------------------------------------------------------------------------------------------------|-----------------------------------
-Updated empty example to support PRU1 core                                                      | PRU-IO
-Added ICSS-EMAC driver support                                                                  | ICSS-EMAC
-Added ICSS-EMAC LwIP example configured in Switch and MAC mode                                  | ICSS-EMAC
-I2C LLD driver support (\ref DRIVERS_I2C_LLD_PAGE)                                              | I2C
-QSPI LLD driver support (\ref DRIVERS_QSPI_LLD_PAGE)                                            | QSPI
+Feature                                                                                                  | Module
+---------------------------------------------------------------------------------------------------------|-----------------------------------
+Updated empty example to support PRU1 core                                                               | PRU-IO
+Added ICSS-EMAC driver support                                                                           | ICSS-EMAC
+Added ICSS-EMAC LwIP example configured in Switch and MAC mode                                           | ICSS-EMAC
+I2C LLD driver support (\ref DRIVERS_I2C_LLD_PAGE)                                                       | I2C
+QSPI LLD driver support (\ref DRIVERS_QSPI_LLD_PAGE)                                                     | QSPI
+Added short serial message format, enhanced serial nessage Format support in SENT Decoder IEP CAP EXAMPLE| PRU-IO    
 
 ## Device and Validation Information
 
@@ -52,9 +53,10 @@ Mbed-TLS                | R5F            | mbedtls-3.0.0
 
 Feature                                                             | Module
 --------------------------------------------------------------------|--------------------------
-SENT Encoder Example                                                | PRU_IO
-SENT Decoder Example                                                | PRU_IO
-Empty PRU firmware Example                                          | PRU_IO
+SENT Encoder Example                                                | PRU-IO
+SENT Decoder Example                                                | PRU-IO
+SENT Decoder IEP CAP EXAMPLE                                        | PRU-IO
+Empty PRU firmware Example                                          | PRU-IO
 GUI for UART Uniflash Tool                                          | Bootloader
 GUI for UART Uniflash Tool                                          | Bootloader
 

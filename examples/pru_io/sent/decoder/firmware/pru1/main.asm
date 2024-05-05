@@ -452,13 +452,11 @@ m_ch_data5 .macro ch_buf, ch_state, ch_crc, ch_crc4_res
 m_ch_crc .macro ch_buf, ch_state, ch_crcdata_spad_base, ch_crc4_res, ch_crc_error
     jal   return_addr2, FN_BINARY_SEARCH
     mvib  ch_buf.b1, *BNS_ARG_RETVAL_ADDR
-    lsl   ch_crc4_res, ch_crc4_res, 4
-    lbbo  &ch_crc4_res, TEMP_REG2 , ch_crc4_res, 1
     mov   ch_buf.b2, ch_crc4_res
     mov   ch_buf.b3, BNS_ARG_STATUS
     ldi   R0.b0, ch_crcdata_spad_base
     xout  PRU_SPAD_B2_XID, &ch_buf, 4
-    qbne  ch_crc_error, ch_crc4_res, 0
+    qbne  ch_crc_error, ch_crc4_res, ch_buf.b1
     .endm
 ;************************************************************************************
 ;
