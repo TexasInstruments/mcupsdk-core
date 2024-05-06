@@ -90,7 +90,7 @@ function getConfigurables()
             displayName: "Phy Address 1",
             default: 15,
         },
-        common.ui.makeConfig(phyToMacInterfaceConfig, "phyToMacInterfaceMode", "MII/RGMII"),
+        common.ui.makeConfig(phyToMacInterfaceConfig, "phyToMacInterfaceMode", "MII"),
         {
             name: "queue",
             displayName: "RT/NRT Priority Separation Queue",
