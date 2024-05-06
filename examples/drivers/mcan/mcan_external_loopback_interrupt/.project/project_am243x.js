@@ -158,7 +158,7 @@ const systemProject = {
 
 const systemProject_gcc = {
     name: "mcan_external_loopback_interrupt",
-    tag: "freertos_nortos_gcc",
+    tag: "freertos_nortos_gcc-armv7",
     skipProjectSpec: false,
     readmeDoxygenPageTag: readmeDoxygenPageTag,
     board: "am243x-evm",

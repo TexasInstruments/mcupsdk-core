@@ -220,7 +220,7 @@ const systemProjects = [
     },
     {
         name: "ipc_spinlock_sharedmem",
-        tag: "freertos_nortos_gcc",
+        tag: "freertos_nortos_gcc-armv7",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
         board: "am243x-evm",
@@ -231,7 +231,7 @@ const systemProjects = [
     },
     {
         name: "ipc_spinlock_sharedmem",
-        tag: "freertos_nortos_gcc",
+        tag: "freertos_nortos_gcc-armv7",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
         board: "am243x-lp",

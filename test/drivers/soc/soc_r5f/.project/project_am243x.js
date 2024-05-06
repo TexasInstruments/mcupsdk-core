@@ -121,7 +121,7 @@ const systemProjects = [
     },
     {
         name: "test_soc_r5f",
-        tag: "freertos_gcc",
+        tag: "freertos_gcc-armv7",
         skipProjectSpec: true,
         board: "am243x-evm",
         projects: [
@@ -145,7 +145,7 @@ const systemProjects = [
     },
     {
         name: "test_soc_r5f",
-        tag: "freertos_gcc",
+        tag: "freertos_gcc-armv7",
         skipProjectSpec: true,
         board: "am243x-lp",
         projects: [

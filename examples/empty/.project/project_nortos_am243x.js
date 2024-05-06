@@ -132,7 +132,7 @@ const systemProjects = [
     },
     {
         name: "empty",
-        tag: "nortos_gcc",
+        tag: "nortos_gcc-armv7",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
         board: "am243x-evm",
@@ -159,7 +159,7 @@ const systemProjects = [
     },
     {
         name: "empty",
-        tag: "nortos_gcc",
+        tag: "nortos_gcc-armv7",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
         board: "am243x-lp",

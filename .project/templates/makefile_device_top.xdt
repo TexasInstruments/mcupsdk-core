@@ -127,7 +127,7 @@ help:
 % for (example of args.system_example_list) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end)) {
+%     if(!["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end)) {
 	@echo  $(MAKE) -s -C `example.relpath` [all clean syscfg-gui syscfg]
 %  }
 % }
@@ -138,7 +138,7 @@ help:
 % for (example of args.system_example_list) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end)) {
+%     if(["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end)) {
 	@echo  $(MAKE) -s -C `example.relpath` [all clean syscfg-gui syscfg]
 %   }
 %  }
@@ -335,7 +335,7 @@ BUILD_COMBO_EXAMPLE_ALL +=`example.buildTarget`
 %   if(!example.isSkipTopLevelBuild) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end)) {
+%     if(!["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end)) {
 BUILD_COMBO_EXAMPLE_ALL +=`example.buildTarget`
 %     }
 %   }
@@ -361,7 +361,7 @@ BUILD_COMBO_EXAMPLE_ALL_GCC +=`example.buildTarget`
 %   if(!example.isSkipTopLevelBuild) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end)) {
+%     if(["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end)) {
 BUILD_COMBO_EXAMPLE_ALL_GCC +=`example.buildTarget`
 %     }
 %   }
@@ -414,7 +414,7 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 % for (example of args.system_example_list) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end)) {
+%     if(!["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end)) {
 `example.buildTarget`:
 	$(MAKE) -C `example.relpath` -f makefile all
 
@@ -425,7 +425,7 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 % for (example of args.system_example_list) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end)) {
+%     if(["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end)) {
 `example.buildTarget`:
 	$(MAKE) -C `example.relpath` -f makefile all
 
@@ -448,7 +448,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL +=`example.buildTargetClean`
 %   if(!example.isSkipTopLevelBuild) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end)) {
+%     if(!["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end)) {
 BUILD_COMBO_EXAMPLE_CLEAN_ALL +=`example.buildTargetClean`
 %     }
 %   }
@@ -460,7 +460,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL +=`example.buildTargetClean`
 %   if(!example.isSkipTopLevelBuild) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end)) {
+%     if(["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end)) {
 BUILD_COMBO_EXAMPLE_CLEAN_ALL_GCC +=`example.buildTargetClean`
 %     }
 %   }
@@ -524,7 +524,7 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 % for (example of args.system_example_list) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end)) {
+%     if(!["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end)) {
 `example.buildTargetClean`:
 	$(MAKE) -C `example.relpath` -f makefile clean
 
@@ -534,7 +534,7 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 % for (example of args.example_list) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end)) {
+%     if(["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end)) {
 `example.buildTargetClean`:
 	$(MAKE) -C `example.relpath` -f makefile clean
 
@@ -558,7 +558,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL +=`example.buildTargetScrub`
 %   if(!example.isSkipTopLevelBuild) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end)) {
+%     if(!["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end)) {
 BUILD_COMBO_EXAMPLE_SCRUB_ALL +=`example.buildTargetScrub`
 %     }
 %   }
@@ -570,7 +570,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL +=`example.buildTargetScrub`
 %   if(!example.isSkipTopLevelBuild) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end)) {
+%     if(["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end)) {
 BUILD_COMBO_EXAMPLE_SCRUB_ALL_GCC +=`example.buildTargetScrub`
 %     }
 %   }
@@ -634,7 +634,7 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 % for (example of args.system_example_list) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end)) {
+%     if(!["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end)) {
 `example.buildTargetScrub`:
 	$(MAKE) -C `example.relpath` -f makefile scrub
 
@@ -644,7 +644,7 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 % for (example of args.system_example_list) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end)) {
+%     if(["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end)) {
 `example.buildTargetScrub`:
 	$(MAKE) -C `example.relpath` -f makefile scrub
 

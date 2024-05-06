@@ -154,7 +154,7 @@ const systemProject = [
     },
     {
         name: "xip_benchmark",
-        tag: "freertos_gcc",
+        tag: "freertos_gcc-armv7",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
         board: "am243x-evm",
@@ -167,7 +167,7 @@ const systemProject = [
     },
     {
         name: "xip_benchmark",
-        tag: "freertos_gcc",
+        tag: "freertos_gcc-armv7",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
         board: "am243x-lp",

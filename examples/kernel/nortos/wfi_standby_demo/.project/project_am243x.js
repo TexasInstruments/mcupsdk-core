@@ -111,7 +111,7 @@ const systemProject = [
     },
     {
         name: "wfi_standby_demo",
-        tag: "nortos_gcc",
+        tag: "nortos_gcc-armv7",
         skipProjectSpec: false,
         board: "am243x-evm",
         projects: [

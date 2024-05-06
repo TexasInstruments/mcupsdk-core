@@ -23,7 +23,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=`example.buildTarget`_build
 %   if(!example.isSkipTopLevelBuild) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end) || args.isGccBuildEnabled == 1) {
+%     if(!["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end) || args.isGccBuildEnabled == 1) {
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL +=`example.buildTarget`_build
 %     }
 %   }
@@ -45,7 +45,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL +=`example.buildTarget`_build
 %   if(example.isSkipTopLevelBuild) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end) || args.isGccBuildEnabled == 1) {
+%     if(!["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end) || args.isGccBuildEnabled == 1) {
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL +=`example.buildTarget`_build
 %     }
 %   }
@@ -67,7 +67,7 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 % for (example of args.system_example_list) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end) || args.isGccBuildEnabled == 1) {
+%     if(!["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end) || args.isGccBuildEnabled == 1) {
 `example.buildTarget`_build:
 	$(MAKE) -C `example.relpath` -f makefile_projectspec all
 
@@ -91,7 +91,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=`example.buildTarget`_clean
 %   if(!example.isSkipTopLevelBuild) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end) || args.isGccBuildEnabled == 1) {
+%     if(!["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end) || args.isGccBuildEnabled == 1) {
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL +=`example.buildTarget`_clean
 %     }
 %   }
@@ -113,7 +113,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL +=`example.buildTarget`_clean
 %   if(example.isSkipTopLevelBuild) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end) || args.isGccBuildEnabled == 1) {
+%     if(!["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end) || args.isGccBuildEnabled == 1) {
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL +=`example.buildTarget`_clean
 %     }
 %   }
@@ -135,7 +135,7 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 % for (example of args.system_example_list) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end) || args.isGccBuildEnabled == 1) {
+%     if(!["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end) || args.isGccBuildEnabled == 1) {
 `example.buildTarget`_clean:
 	$(MAKE) -C `example.relpath` -f makefile_projectspec clean
 
@@ -159,7 +159,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=`example.buildTarget`_export
 %   if(!example.isSkipTopLevelBuild) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end) || args.isGccBuildEnabled == 1) {
+%     if(!["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end) || args.isGccBuildEnabled == 1) {
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL +=`example.buildTarget`_export
 %     }
 %   }
@@ -181,7 +181,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL +=`example.buildTarget`_expor
 %   if(example.isSkipTopLevelBuild) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end) || args.isGccBuildEnabled == 1) {
+%     if(!["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end) || args.isGccBuildEnabled == 1) {
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL +=`example.buildTarget`_export
 %     }
 %   }
@@ -203,7 +203,7 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 % for (example of args.system_example_list) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end) || args.isGccBuildEnabled == 1) {
+%     if(!["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end) || args.isGccBuildEnabled == 1) {
 `example.buildTarget`_export:
 	$(MAKE) -C `example.relpath` -f makefile_projectspec export
 
@@ -253,7 +253,7 @@ help:
 % for (example of args.system_example_list) {
 %     const relpathParts = example.relpath.split('/');
 %     const end = relpathParts[relpathParts.length - 1];
-%     if(!["system_freertos_nortos_gcc","system_freertos_gcc","system_nortos_gcc"].includes(end) || args.isGccBuildEnabled == 1) {
+%     if(!["system_freertos_nortos_gcc-armv7","system_freertos_gcc-armv7","system_nortos_gcc-armv7"].includes(end) || args.isGccBuildEnabled == 1) {
 	@echo  $(MAKE) -s -C `example.relpath` -f makefile_projectspec [export all clean]
 %   }
 % }

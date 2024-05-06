@@ -214,7 +214,7 @@ const systemProjects = [
     },
     {
         name: "ipc_notify_echo",
-        tag: "freertos_nortos_gcc",
+        tag: "freertos_nortos_gcc-armv7",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
         board: "am243x-evm",
@@ -242,7 +242,7 @@ const systemProjects = [
     },
     {
         name: "ipc_notify_echo",
-        tag: "freertos_nortos_gcc",
+        tag: "freertos_nortos_gcc-armv7",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
         board: "am243x-lp",

@@ -148,7 +148,7 @@ const systemProjects = [
     },
     {
         name: "ipc_rpmsg_ut",
-        tag: "nortos_gcc",
+        tag: "nortos_gcc-armv7",
         skipProjectSpec: true,
         board: "am243x-evm",
         projects: [
@@ -161,7 +161,7 @@ const systemProjects = [
     },
     {
         name: "ipc_rpmsg_ut",
-        tag: "nortos_gcc",
+        tag: "nortos_gcc-armv7",
         skipProjectSpec: true,
         board: "am243x-lp",
         projects: [

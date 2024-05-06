@@ -169,7 +169,7 @@ const systemProjects = [
     },
     {
         name: "test_mcspi_controller_peripheral_dma",
-        tag: "freertos_nortos_gcc",
+        tag: "freertos_nortos_gcc-armv7",
         skipProjectSpec: true,
         board: "am243x-lp",
         projects: [

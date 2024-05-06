@@ -211,7 +211,7 @@ const systemProjects = [
     },
     {
         name: "test_ipc_notify",
-        tag: "freertos_nortos_gcc",
+        tag: "freertos_nortos_gcc-armv7",
         skipProjectSpec: true,
         board: "am243x-evm",
         projects: [
@@ -224,7 +224,7 @@ const systemProjects = [
     },
     {
         name: "test_ipc_notify",
-        tag: "freertos_nortos_gcc",
+        tag: "freertos_nortos_gcc-armv7",
         skipProjectSpec: true,
         board: "am243x-lp",
         projects: [

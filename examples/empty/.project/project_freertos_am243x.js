@@ -148,7 +148,7 @@ const systemProjects = [
     },
     {
         name: "empty",
-        tag: "freertos_gcc",
+        tag: "freertos_gcc-armv7",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
         board: "am243x-evm",
@@ -175,7 +175,7 @@ const systemProjects = [
     },
     {
         name: "empty",
-        tag: "freertos_gcc",
+        tag: "freertos_gcc-armv7",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
         board: "am243x-lp",

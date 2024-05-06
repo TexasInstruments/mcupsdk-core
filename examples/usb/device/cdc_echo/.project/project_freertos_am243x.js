@@ -120,7 +120,7 @@ const systemProject = [
     },
     {
         name: "cdc_echo_freertos",
-        tag: "freertos_gcc",
+        tag: "freertos_gcc-armv7",
         skipProjectSpec: false,
         board: "am243x-evm",
         projects: [
@@ -130,7 +130,7 @@ const systemProject = [
     },
     {
         name: "cdc_echo_freertos",
-        tag: "freertos_gcc",
+        tag: "freertos_gcc-armv7",
         skipProjectSpec: false,
         board: "am243x-lp",
         projects: [
