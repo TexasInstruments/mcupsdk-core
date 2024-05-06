@@ -394,6 +394,13 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> 09.02.00 onwards
     <td> None
 </tr>
+<tr>
+    <td> MCUSDK-13202
+    <td> Frame drops are seen in PRU GPIO based SENT decoder example while sending frames in burst format
+    <td> PRU-IO
+    <td> 09.00.00 onwards
+    <td> None
+</tr>
 
 </table>
 
