@@ -367,27 +367,6 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> None
 </tr>
 <tr>
-    <td> PROC_SDL-5616
-    <td> ECC Bus Safety SEC and DED Error Injection fails for CPSW.
-    <td> SDL
-    <td> 8.6.0 onwards
-    <td> None.
-</tr>
-<tr>
-    <td> PROC_SDL-5617
-    <td> ECC Bus Safety SEC and DED Error Injection fails for MSS_L2.
-    <td> SDL
-    <td> 8.6.0 onwards
-    <td> None.
-</tr>
-<tr>
-    <td> PROC_SDL-4749
-    <td> ECC Bus Safety DED Error Injection fails for AXI.
-    <td> SDL
-    <td> 8.5.0 onwards
-    <td> None.
-</tr>
-<tr>
     <td> PROC_SDL-5979
     <td> R5F Cache ECC diagnostics are not supported.
     <td> SDL
@@ -407,6 +386,13 @@ R5F STC(LBIST), Static Register Read| R5F               | NA                |  N
     <td> EPWM
     <td> 09.01.00 onwards
     <td> The Waveform of the EPWM is correct and is as expected.
+</tr>
+<tr>
+    <td> PROC_SDL-7615
+    <td> ECC example fails for SEC and DED for TPTC memories.
+    <td> SDL
+    <td> 09.02.00 onwards
+    <td> None
 </tr>
 
 </table>

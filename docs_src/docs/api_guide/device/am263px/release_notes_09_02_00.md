@@ -428,6 +428,13 @@ Thermal Monitor(VTM)| R5F             | NA                |  NORTOS | Over, unde
     <td> 08.06.00 onwards
     <td> None
 </tr>
+<tr>
+    <td> PROC_SDL-7615
+    <td> ECC example fails for SEC and DED for TPTC memories.
+    <td> SDL
+    <td> 09.02.00 onwards
+    <td> None
+</tr>
 </table>
 
 ## Errata
