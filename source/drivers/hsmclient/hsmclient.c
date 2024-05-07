@@ -960,7 +960,7 @@ int32_t HsmClient_setFirewall(HsmClient_t* HsmClient,
             HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
 
             /* check the integrity of args */
-            crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, 0U);
+            crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, sizeof(FirewallReq_t));
             if(crcArgs == HsmClient->RespMsg.crcArgs)
             {
                 status = SystemP_SUCCESS;
@@ -1026,7 +1026,7 @@ int32_t HsmClient_FirewallIntr(HsmClient_t* HsmClient,
             HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
 
             /* check the integrity of args */
-            crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, 0U);
+            crcArgs = crc16_ccit((uint8_t*)HsmClient->RespMsg.args, sizeof(FirewallIntrReq_t));
             if(crcArgs == HsmClient->RespMsg.crcArgs)
             {
                 status = SystemP_SUCCESS;
