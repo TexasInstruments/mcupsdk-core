@@ -131,7 +131,7 @@ all: $(OBJS) $(CMD_SRCS)
 	@$(MAKE) --no-print-directory -Onone "`projectName`.out"
 
 # Each subdirectory must supply rules for building sources it contributes
-$(OBJDIR)/%.obj %.obj: $(ASM_SRCS)
+$(OBJDIR)/%.obj %.obj: %.asm
 	@echo 'Building file: "$^"'
 	@echo 'Invoking: PRU Compiler'
 	"$(CGT_TI_PRU_PATH)/bin/clpru" `commandString` --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little --preproc_with_compile --preproc_dependency="$(basename $(<F)).d_raw" $^
@@ -188,7 +188,7 @@ post-build:
 % }
 % if(obj["defaultPruPostBuildSteps"]) {
 post-build:
-		-$(CGT_TI_PRU_PATH)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=PRUFirmware  -o pru_load_bin.h `projectName`.out
+		-$(CGT_TI_PRU_PATH)/bin/hexpru --diag_wrap=off --array --array:name_prefix=PRUFirmware  -o pru_load_bin.h `projectName`.out
 		-$(SED) -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' pru_load_bin.h
 	-@echo ' '
 % }

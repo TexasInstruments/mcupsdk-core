@@ -97,14 +97,14 @@ const lnkfiles = {
 
 //Need to change the location PRU header files
 const postBuildSteps_pru0 = [
-    "$(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_dual_emac/mii/icss_emac_hexpru.cmd dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out;",
+    "$(CG_TOOL_ROOT)/bin/hexpru ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_dual_emac/mii/icss_emac_hexpru.cmd dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out;",
     "${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe dual_emac_am263x-cc_icssm-pru0_fw_ti-pru-cgt.b00 PRU0_bin.h PRU0_b00 4;",
     "cp PRU0_bin.h ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_dual_emac/mii;",
 
 ];
 
 const postBuildSteps_pru1 = [
-    "$(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_dual_emac/mii/icss_emac_hexpru.cmd dual_emac_am263x-cc_icssm-pru1_fw_ti-pru-cgt.out;",
+    "$(CG_TOOL_ROOT)/bin/hexpru ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_dual_emac/mii/icss_emac_hexpru.cmd dual_emac_am263x-cc_icssm-pru1_fw_ti-pru-cgt.out;",
     "${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe dual_emac_am263x-cc_icssm-pru1_fw_ti-pru-cgt.b00 PRU1_bin.h PRU1_b00 4;",
     "cp PRU1_bin.h ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_dual_emac/mii;",
 ];

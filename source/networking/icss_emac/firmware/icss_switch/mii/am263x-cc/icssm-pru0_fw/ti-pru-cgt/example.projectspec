@@ -81,7 +81,7 @@
         "
 
         postBuildStep="
-            $(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii/icss_emac_hexpru.cmd switch_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out;
+            $(CG_TOOL_ROOT)/bin/hexpru ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii/icss_emac_hexpru.cmd switch_am263x-cc_icssm-pru0_fw_ti-pru-cgt.out;
             ${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe switch_am263x-cc_icssm-pru0_fw_ti-pru-cgt.b00 PRU0_bin.h PRU0_b00 4;
             cp PRU0_bin.h ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch/mii;
         "

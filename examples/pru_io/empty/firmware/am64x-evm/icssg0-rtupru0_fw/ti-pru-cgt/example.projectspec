@@ -42,10 +42,11 @@
             -m=empty.${ConfigName}.map
             --disable_auto_rts
             --entry_point=main
+            --diag_suppress=10063-D
         "
 
         postBuildStep="
-             $(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=RTUPRU0Firmware  -o rtupru0_load_bin.h empty_am64x-evm_icssg0-rtupru0_fw_ti-pru-cgt.out; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' rtupru0_load_bin.h ; if ${CCS_HOST_OS} == linux sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' rtupru0_load_bin.h ;if ${CCS_HOST_OS} == win32 move rtupru0_load_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am64x-evm/rtupru0_load_bin.h; if ${CCS_HOST_OS} == linux mv rtupru0_load_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am64x-evm/rtupru0_load_bin.h 
+             $(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=RTUPRU0Firmware  -o rtupru0_load_bin.h empty_am64x-evm_icssg0-rtupru0_fw_ti-pru-cgt.out; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' rtupru0_load_bin.h ; if ${CCS_HOST_OS} == linux sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' rtupru0_load_bin.h ;if ${CCS_HOST_OS} == win32 move rtupru0_load_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am64x-evm/rtupru0_load_bin.h; if ${CCS_HOST_OS} == linux mv rtupru0_load_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am64x-evm/rtupru0_load_bin.h 
         "
 
         description="A Empty FW project">

@@ -27,6 +27,14 @@ const includes = {
     ],
 };
 
+const lflags = {
+    common: [
+        "--entry_point=main",
+        "--diag_suppress=10063-D", /* Added to suppress entry_point related warning */
+    ],
+};
+
+
 const lnkfiles = {
     common: [
         "linker.cmd",
@@ -40,10 +48,6 @@ const templates_pru =
     {
         input: ".project/templates/am64x/common/pru/linker_pru0.cmd.xdt",
         output: "linker.cmd",
-    },
-    {
-        input: ".project/templates/am64x/common/pru/hexpru.cmd.xdt",
-        output: "hexpru.cmd",
     },
 ];
 
@@ -81,7 +85,8 @@ function getComponentBuildProperty(buildOption) {
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
     build_property.projecspecFileAction = "link";
     build_property.skipMakefileCcsBootimageGen = true;
-
+    build_property.lflags = lflags;
+    
     return build_property;
 }
 

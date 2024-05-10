@@ -41,10 +41,11 @@
             -m=empty.${ConfigName}.map
             --disable_auto_rts
             --entry_point=main
+            --diag_suppress=10063-D
         "
 
         postBuildStep="
-             $(CG_TOOL_ROOT)/bin/hexpru.exe --diag_wrap=off --array --array:name_prefix=PRU0Firmware  -o pru0_load_bin.h empty_am263px-lp_icssm-pru0_fw_ti-pru-cgt.out; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' pru0_load_bin.h ; if ${CCS_HOST_OS} == linux sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' pru0_load_bin.h ;if ${CCS_HOST_OS} == win32 move pru0_load_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am263px-lp/pru0_load_bin.h; if ${CCS_HOST_OS} == linux mv pru0_load_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am263px-lp/pru0_load_bin.h 
+             $(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=PRU0Firmware  -o pru0_load_bin.h empty_am263px-lp_icssm-pru0_fw_ti-pru-cgt.out; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' pru0_load_bin.h ; if ${CCS_HOST_OS} == linux sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' pru0_load_bin.h ;if ${CCS_HOST_OS} == win32 move pru0_load_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am263px-lp/pru0_load_bin.h; if ${CCS_HOST_OS} == linux mv pru0_load_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/empty/firmware/am263px-lp/pru0_load_bin.h 
         "
 
         description="A Empty FW project">

@@ -68,7 +68,7 @@ all: $(OBJS) $(CMD_SRCS)
 	@$(MAKE) --no-print-directory -Onone "dual_emac_am263x-cc_icssm-pru1_fw_ti-pru-cgt.out"
 
 # Each subdirectory must supply rules for building sources it contributes
-$(OBJDIR)/%.obj %.obj: $(ASM_SRCS)
+$(OBJDIR)/%.obj %.obj: %.asm
 	@echo 'Building file: "$^"'
 	@echo 'Invoking: PRU Compiler'
 	"$(CGT_TI_PRU_PATH)/bin/clpru" -DPRU1 -DSLICE1 -v4 -al -ax --silicon_version=4 --diag_suppress=10063 --display_error_number --code_address_listing_unit=word -DTX_L2_ENABLED -DMII_TX_PIN_SWAP -v3 -g --diag_wrap=off --diag_warning=225 --hardware_mac=on --preproc_with_compile -DICSS_REV2 -DPRU -DTTS -DHALF_DUPLEX_ENABLED -DICSS_DUAL_EMAC_BUILD -DPTP --define=SOC_AM263X --include_path="$(SYSCFG_DIR)" --include_path="${CG_TOOL_ROOT}/include" --include_path="${MCU_PLUS_SDK_PATH}/source" --include_path="${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/common" --include_path="${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include" --include_path="${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F" --include_path="${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f" --include_path="${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_dual_emac" --include_path="${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_switch" --include_path="${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/source" --include_path="${MCU_PLUS_SDK_PATH}/test/unity/"  --define=_DEBUG_=1 -g --diag_warning=225 --diag_wrap=off --display_error_number --endian=little --preproc_with_compile --preproc_dependency="$(basename $(<F)).d_raw" $^
@@ -93,7 +93,7 @@ clean:
 	-@echo ' '
 
 post-build:
-		-$(CG_TOOL_ROOT)/bin/hexpru.exe ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_dual_emac/mii/icss_emac_hexpru.cmd dual_emac_am263x-cc_icssm-pru1_fw_ti-pru-cgt.out
+		-$(CG_TOOL_ROOT)/bin/hexpru ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_dual_emac/mii/icss_emac_hexpru.cmd dual_emac_am263x-cc_icssm-pru1_fw_ti-pru-cgt.out
 		-${MCU_PLUS_SDK_PATH}/tools/bin2header/bin2header.exe dual_emac_am263x-cc_icssm-pru1_fw_ti-pru-cgt.b00 PRU1_bin.h PRU1_b00 4
 		-cp PRU1_bin.h ${MCU_PLUS_SDK_PATH}/source/networking/icss_emac/firmware/icss_dual_emac/mii
 	-@echo ' '
