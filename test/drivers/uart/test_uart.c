@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -933,6 +933,7 @@ static void test_printExitString(void *args)
 {
     int32_t          transferOK;
     UART_Transaction trans;
+#if !defined(SOC_AM65X)
     UART_Handle      uartHandle;
     UART_TestParams *testParams = (UART_TestParams*)args;
     UART_Params     *uartParams;
@@ -941,15 +942,22 @@ static void test_printExitString(void *args)
     uartHandle = UART_open(CONFIG_UART0, uartParams);
     TEST_ASSERT_NOT_NULL(uartHandle);
 
+#endif
     UART_Transaction_init(&trans);
     /* Send exit string */
     trans.buf   = &gUartTxBuffer[0U];
     strncpy(trans.buf, "All tests have passed!!\r\n", APP_UART_BUFSIZE);
     trans.count = strlen(trans.buf);
+#if defined(SOC_AM65X)
+    CacheP_wb((void *)trans.buf, trans.count, CacheP_TYPE_ALL);
+    transferOK = UART_write(gUartHandle[CONFIG_UART1], &trans);
+    APP_UART_ASSERT_ON_FAILURE(transferOK, trans);
+#else
     transferOK = UART_write(gUartHandle[CONFIG_UART0], &trans);
     APP_UART_ASSERT_ON_FAILURE(transferOK, trans);
 
     UART_close(uartHandle);
+#endif
 
     return;
 }
