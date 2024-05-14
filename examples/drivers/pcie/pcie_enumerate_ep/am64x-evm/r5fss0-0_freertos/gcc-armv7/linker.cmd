@@ -112,8 +112,6 @@ SECTIONS
     .bss.log_shared_mem  (NOLOAD) : { KEEP(*(.bss.log_shared_mem)) } > LOG_SHM_MEM
     /* this is used only when IPC RPMessage is enabled, else this is not used */
     .bss.ipc_vring_mem   (NOLOAD) : { KEEP(*(.bss.ipc_vring_mem)) } > RTOS_NORTOS_IPC_SHM_MEM
-    /* General purpose non cacheable memory, used in some examples */
-    .bss.nocache   (NOLOAD) : { KEEP(*(.bss.nocache)) } > NON_CACHE_MEM
 
     /* This is rest of uninitialized data. This can be placed in DDR if DDR is available and needed */
     .bss : {
