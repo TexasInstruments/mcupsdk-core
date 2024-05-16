@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -61,10 +61,10 @@
 #include <stdint.h>
 #include <kernel/dpl/SystemP.h>
 #include <kernel/dpl/SemaphoreP.h>
+#include <kernel/dpl/CacheP.h>
 #include <kernel/dpl/HwiP.h>
 #include <drivers/hw_include/csl_types.h>
 #include <drivers/hw_include/cslr_gpmc.h>
-#include <kernel/dpl/CacheP.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -74,7 +74,7 @@ extern "C" {
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 /**
-*   GPMC CHIP select
+*  \name GPMC CHIP select
 *
 *   Macros which can be used as to select CHIP select instance for GPMC.
 *
@@ -87,7 +87,7 @@ extern "C" {
 /** @} */
 
 /**
-*   GPMC Interupt status flags
+*  \name GPMC Interupt status flags
 *
 *   Macros which can be used as 'interupt' parameter to GPMC_interuptStatusGet,
 *   GPMC_interuptStatusClear APIs.
@@ -101,10 +101,10 @@ extern "C" {
 /** @} */
 
 /**
-*   GPMC Interupt Flags
+*  \name GPMC Interupt Flags
 *
 *  Macros which can be used as 'interupt' parameter to GPMC_enableInterupt,
-*  GPMC_disableInterupt APIs.
+*  #GPMC_disableInterupt APIs.
 *
 * @{
 */
@@ -116,7 +116,7 @@ extern "C" {
 
 
 /**
-*   GPMC Interupt Flags
+*  \name GPMC Interupt Flags
 *
 * Macros which can be used as 'mode' parameter to GPMC_prefetchPostWriteConfigEnable API.
 *
@@ -128,7 +128,7 @@ extern "C" {
 
 
 /**
-*   GPMC ECC algorithm
+*  \name GPMC ECC algorithm
 *
 * Macros which can be used to set GPMC ECC engine algorithm.
 *
@@ -139,7 +139,7 @@ extern "C" {
 /** @} */
 
 /**
-*   GPMC ECC error correvel level.
+*  \name GPMC ECC error correvel level.
 *
 * Macros which can be used to set GPMC ECC engine error correction level.
 *
@@ -152,7 +152,7 @@ extern "C" {
 
 
 /**
-*   GPMC ECC Result Register
+*  \name GPMC ECC Result Register
 *
 * Macros which can be used to select ECC result register for GPMC ECC engine.
 *
@@ -170,7 +170,7 @@ extern "C" {
 /** @} */
 
 /**
-*   GPMC ECC Size Config
+*  \name GPMC ECC Size Config
 *
 * Macros which can be used to set length of used and unsued bytes in the ECC value.
 * @{
@@ -180,7 +180,7 @@ extern "C" {
 /** @} */
 
 /**
-*   GPMC ECC Result Register Size
+*  \name GPMC ECC Result Register Size
 *
 * Macros which can be used to set ECC size for ECC result register.
 * @{
@@ -197,7 +197,7 @@ extern "C" {
 /** @} */
 
 /**
-*   GPMC BCH RESULT
+*  \name GPMC BCH RESULT
 *
 * Macros which can be used to get BCH syndrome polynomial in GPMC_eccBchResultGet API.
 * @{
@@ -212,7 +212,7 @@ extern "C" {
 /** @} */
 
 /**
-*   GPMC CHIP Select SIZE
+*  \name GPMC CHIP Select SIZE
 *
 * Macros which can be used to set chip select address size.
 * @{
@@ -235,13 +235,13 @@ extern "C" {
  *                        accesses in GPMC_FCLK cycles
  *
  * \param  CSExtDelayFlag Flag to indicate whether to add half GPMC_FCLK delay
- *                        to CS or not.
- *                        This can take one of the following values :
+ *                        to CS or not. \n
+ *                        This can take one of the following values : \n
  *                        CSL_GPMC_CONFIG2_CSEXTRADELAY_DELAYED : CS# Timing control
  *                                                                 signal is delayed of
- *                                                                 half GPMC_FCLK cycle.
+ *                                                                 half GPMC_FCLK cycle. \n
  *                        CSL_GPMC_CONFIG2_CSEXTRADELAY_NOTDELAYED : CS# Timing control
- *                                                                    signal is not delayed.
+ *                                                                    signal is not delayed. \n
  *
  * \param  CSOnTime       CS# assertion time from start cycle time in GPMC_FCLK
  *                        cycles.
@@ -278,13 +278,13 @@ extern "C" {
  *                               start cycle time for write accesses
  *
  * \param  ADVExtDelayFlag       Flag to indicate whether to add half GPMC_FCLK
- *                               delay to ADV or not.
- *                               This can take one of the following values :
+ *                               delay to ADV or not.  \n
+ *                               This can take one of the following values :   \n
  *                               CSL_GPMC_CONFIG3_ADVEXTRADELAY_DELAYED : ADV# Timing control
  *                                                                        signal is delayed of
- *                                                                        half GPMC_FCLK cycle.
+ *                                                                        half GPMC_FCLK cycle. \n
  *                               CSL_GPMC_CONFIG3_ADVEXTRADELAY_NOTDELAYED : ADV# Timing control
- *                                                                          signal is not delayed.
+ *                                                                          signal is not delayed. \n
  *
  * \param  ADVAADMuxOnTime       ADV# assertion time in GPMC_FCLK cycles for
  *                               first address phase when using the
@@ -317,19 +317,19 @@ extern "C" {
 
 /**
  * \brief  This macro used to make the conf value which is used to configure the
- *         WE# and OE# signal timing configuration.
+ *         WE# and OE# signal timing configuration.\n
  *
  * \param  WEOffTime             WE# de-assertion time in GPMC_FCLK cycles from
  *                               start cycle time.
  *
  * \param  WEExtDelayFlag        Flag to indicate whether to add half GPMC_FCLK
- *                               delay to WE or not.
- *                               This can take one of the following values :
+ *                               delay to WE or not. \n
+ *                               This can take one of the following values :  \n
  *                               CSL_GPMC_CONFIG4_WEEXTRADELAY_DELAYED : WE# Timing control
  *                                                                       signal is delayed of
- *                                                                       half GPMC_FCLK cycle.
+ *                                                                       half GPMC_FCLK cycle.  \n
  *                               CSL_GPMC_CONFIG4_WEEXTRADELAY_NOTDELAYED : WE# Timing control
- *                                                                          signal is not delayed.
+ *                                                                          signal is not delayed. \n
  * \param  WEOnTime              WE# assertion time in GPMC_FCLK cycles from
  *                               start cycle time.
  *
@@ -341,13 +341,13 @@ extern "C" {
  *                               start cycle time.
  *
  * \param  OEExtDelayFlag        Flag to indicate whether to add half GPMC_FCLK
- *                               delay to OE or not.
+ *                               delay to OE or not. \n
  *                               This can take one of the following values :
  *                               CSL_GPMC_CONFIG4_OEEXTRADELAY_DELAYED : OE# Timing control
  *                                                                      signal is delayed of
- *                                                                      half GPMC_FCLK cycle.
+ *                                                                      half GPMC_FCLK cycle. \n
  *                               CSL_GPMC_CONFIG4_OEEXTRADELAY_NOTDELAYED : OE# Timing control
- *                                                                          signal is not delayed.
+ *                                                                          signal is not delayed. \n
  *
  * \param  OEAADMuxOnTime        OE# assertion time in GPMC_FCLK cycles for
  *                               first address phase when using the AAD-Mux
@@ -385,7 +385,7 @@ extern "C" {
 
 /**
  * \brief  This macro used to make the conf value which is used to configure the
- *         read access and cycle time timing configuration.
+ *         read access and cycle time timing configuration.\n
  *
  * \param  rdCycleTime           Total read cycle time in GPMC_FCLK cycles.
  *
@@ -417,7 +417,7 @@ extern "C" {
 
 /**
  * \brief  This macro used to make the conf value which is used to configure the
- *         cycle to cycle and bus turn around time timing configuration.
+ *         cycle to cycle and bus turn around time timing configuration.\n
  *
  * \param  cycle2CycleDelay       Cycle to cycle delay (Chip select high pulse
  *                                delay between two successive accesses)in
@@ -425,17 +425,17 @@ extern "C" {
  *
  * \param  cycle2CycleDelaySameCSCfg Specified whether to add the cycle to cycle
  *                                delay between two successive accesses or not
- *                                (to the same chip-select).
- *                                This can take one of the following values :
- *                                CSL_GPMC_CONFIG6_CYCLE2CYCLESAMECSEN_C2CDELAY : To add the delay.
- *                                CSL_GPMC_CONFIG6_CYCLE2CYCLESAMECSEN_NOC2CDELAY : Don't add the delay.
+ *                                (to the same chip-select). \n
+ *                                This can take one of the following values : \n
+ *                                CSL_GPMC_CONFIG6_CYCLE2CYCLESAMECSEN_C2CDELAY : To add the delay. \n
+ *                                CSL_GPMC_CONFIG6_CYCLE2CYCLESAMECSEN_NOC2CDELAY : Don't add the delay. \n
  *
  * \param  cycle2CycleDelayDiffCSCfg Specified whether to add the cycle to cycle
  *                                delay between two successive accesses or not
- *                                (to the diffrent chip-select).
- *                                This can take one of the following values :
- *                                CSL_GPMC_CONFIG6_CYCLE2CYCLEDIFFCSEN_C2CDELAY : To add the delay.
- *                                CSL_GPMC_CONFIG6_CYCLE2CYCLEDIFFCSEN_NOC2CDELAY : Don't add the delay.
+ *                                (to the diffrent chip-select). \n
+ *                                This can take one of the following values : \n
+ *                                CSL_GPMC_CONFIG6_CYCLE2CYCLEDIFFCSEN_C2CDELAY : To add the delay. \n
+ *                                CSL_GPMC_CONFIG6_CYCLE2CYCLEDIFFCSEN_NOC2CDELAY : Don't add the delay. \n
  *
  * \param  busTAtime             Bus turn aroung time between two successive
  *                               accesses to the same chip-select
@@ -460,122 +460,6 @@ extern "C" {
      (((busTAtime) <<                                                           \
        CSL_GPMC_CONFIG6_BUSTURNAROUND_SHIFT) & CSL_GPMC_CONFIG6_BUSTURNAROUND_MASK))
 
-
-
-/**
-*   GPMC NAND Specific Timing Parameters
-*
-* Nand flash specific GPMC timing parameters. These are used to
-* GPMC CONFIG registers.
-*
-* @{
-*/
-/** \brief Chip select on time  (FCLK periods) */
-#define GPMC_NAND_CS_ON_TIME                0U
-/** \brief Write enable on time (FCLK periods) */
-#define GPMC_NAND_WE_ON_TIME                0U
-/** \brief Address valid on time (FCLK periods) */
-#define GPMC_NAND_ADV_ON_TIME               0U
-/** \brief Chip select off time for write (FCLK periods) */
-#define GPMC_NAND_CS_WR_OFF_TIME            6U
-/** \brief Write cycle time (FCLK periods) */
-#define GPMC_NAND_WR_CYCLE_TIME             6U
-/** \brief Address valid off time for write (FCLK periods) */
-#define GPMC_NAND_ADV_WR_OFF_TIME           4U
-/** \brief Chip select off time for read (FCLK periods) */
-#define GPMC_NAND_CS_RD_OFF_TIME            6U
-/** \brief Read cycle time (FCLK periods) */
-#define GPMC_NAND_RD_CYCLE_TIME             6U
-/** \brief Address valid on time when using AAD- Muxed protocol. (FCLK periods) */
-#define GPMC_NAND_ADV_AADMUX_ON_TIME        0U
-/** \brief Address valid on time for read when using AAD- Muxed protocol. (FCLK periods) */
-#define GPMC_NAND_ADV_AADMUX_RD_OFF_TIME    0U
-/** \brief Address valid on time for write when using AAD- Muxed protocol. (FCLK periods) */
-#define GPMC_NAND_ADV_AADMUX_WR_OFF_TIME    0U
-/** \brief Delay between successive words in a multiple access. (FCLK periods) */
-#define GPMC_NAND_PAGEBURST_ACCESS_TIME     0U
-/** \brief Output enable on time (FCLK periods) */
-#define GPMC_NAND_OE_ON_TIME                1U
-/** \brief Output enable off time (FCLK periods) */
-#define GPMC_NAND_OE_OFF_TIME               4U
-/** \brief Output enable assertion time for the first address phase in an AAD-muxed protocol. (FCLK periods) */
-#define GPMC_NAND_OE_AADMUX_ON_TIME         0U
-/** \brief Output enable deassertion time for the first address phase in an AAD-muxed protocol. (FCLK periods) */
-#define GPMC_NAND_OE_AADMUX_OFF_TIME        0U
-/** \brief Address valid off time for read (FCLK periods) */
-#define GPMC_NAND_ADV_RD_OFF_TIME           4U
-/** \brief Write enable off time (FCLK periods) */
-#define GPMC_NAND_WE_OFF_TIME               3U
-/** \brief Read access time (FCLK periods) */
-#define GPMC_NAND_RD_ACCESS_TIME            4U
-/** \brief CS high pulse delay (FCLK periods) */
-#define GPMC_NAND_C2C_DELAY                 0U
-/** \brief First data write cycle (FCLK) */
-#define GPMC_NAND_ADMUX_DATA_VALID          0U
-/** \brief Write access time (FCLK periods) */
-#define GPMC_NAND_WR_ACCESS_TIME            6U
-/** \brief Burst turnaround latency (FCLK periods) */
-#define GPMC_NAND_BRST_TAROUND_TIME         0U
-/** @} */
-
-/**
-*   GPMC PSRAM Specific Timing Parameters
-*
-* PSRAM specific GPMC timing parameters. These are used to
-* GPMC CONFIG registers.
-*
-* @{
-*/
-/** \brief Chip select on time  (FCLK periods) */
-#define GPMC_PSRAM_CS_ON_TIME                3U
-/** \brief Write enable on time (FCLK periods) */
-#define GPMC_PSRAM_WE_ON_TIME                10U
-/** \brief Address valid on time (FCLK periods) */
-#define GPMC_PSRAM_ADV_ON_TIME               1U
-/** \brief Chip select off time for write (FCLK periods) */
-#define GPMC_PSRAM_CS_WR_OFF_TIME            21U
-/** \brief Write cycle time (FCLK periods) */
-#define GPMC_PSRAM_WR_CYCLE_TIME             23U
-/** \brief Address valid off time for write (FCLK periods) */
-#define GPMC_PSRAM_ADV_WR_OFF_TIME           3U
-/** \brief Chip select off time for read (FCLK periods) */
-#define GPMC_PSRAM_CS_RD_OFF_TIME            21U
-/** \brief Read cycle time (FCLK periods) */
-#define GPMC_PSRAM_RD_CYCLE_TIME             23U
-/** \brief Address valid on time when using AAD- Muxed protocol. (FCLK periods) */
-#define GPMC_PSRAM_ADV_AADMUX_ON_TIME        1U
-/** \brief Address valid on time for read when using AAD- Muxed protocol. (FCLK periods) */
-#define GPMC_PSRAM_ADV_AADMUX_RD_OFF_TIME    2U
-/** \brief Address valid on time for write when using AAD- Muxed protocol. (FCLK periods) */
-#define GPMC_PSRAM_ADV_AADMUX_WR_OFF_TIME    2U
-/** \brief Delay between successive words in a multiple access. (FCLK periods) */
-#define GPMC_PSRAM_PAGEBURST_ACCESS_TIME     3U
-/** \brief Output enable on time (FCLK periods) */
-#define GPMC_PSRAM_OE_ON_TIME                10U
-/** \brief Output enable off time (FCLK periods) */
-#define GPMC_PSRAM_OE_OFF_TIME               1U
-/** \brief Output enable assertion time for the first address phase in an AAD-muxed protocol. (FCLK periods) */
-#define GPMC_PSRAM_OE_AADMUX_ON_TIME         1U
-/** \brief Output enable deassertion time for the first address phase in an AAD-muxed protocol. (FCLK periods) */
-#define GPMC_PSRAM_OE_AADMUX_OFF_TIME        15U
-/** \brief Address valid off time for read (FCLK periods) */
-#define GPMC_PSRAM_ADV_RD_OFF_TIME           3U
-/** \brief Write enable off time (FCLK periods) */
-#define GPMC_PSRAM_WE_OFF_TIME               16U
-/** \brief Read access time (FCLK periods) */
-#define GPMC_PSRAM_RD_ACCESS_TIME            16U
-/** \brief CS high pulse delay (FCLK periods) */
-#define GPMC_PSRAM_C2C_DELAY                 0U
-/** \brief First data write cycle (FCLK) */
-#define GPMC_PSRAM_ADMUX_DATA_VALID          0U
-/** \brief Write access time (FCLK periods) */
-#define GPMC_PSRAM_WR_ACCESS_TIME            8U
-/** \brief Burst turnaround latency (FCLK periods) */
-#define GPMC_PSRAM_BRST_TAROUND_TIME         1U
-/** @} */
-
-
-
 /** \brief size in bytes*/
 #define GPMC_DMA_COPY_LOWER_LIMIT                   (512U)
 /** \brief GPMC CHIP select base address shift value. */
@@ -587,6 +471,7 @@ extern "C" {
 
 #define GPMC_MEM_TYPE_NAND                           (0)
 #define GPMC_MEM_TYPE_PSRAM                          (1)
+#define GPMC_MEM_TYPE_NORLIKE                        (1)    //Same as pSRAM
 
 /** \brief A handle that is returned from a #GPMC_open() call */
 typedef void* GPMC_Handle;
@@ -916,6 +801,10 @@ typedef struct GPMC_HwAttrs_s
     uint32_t                csExDelay;
     /**< Chip Select Extra Delay flag. */
     uint32_t                accessType;
+    /**< Prefetch/Postwrite engine optimised access. */
+    uint32_t                optimisedAccess;
+    /**< Cycle optimisation for prefetch/post write engine. */
+    uint32_t                cycleOptimisation;
     /**< Memory access type */
     const GPMC_AddrRegion   *dmaRestrictedRegions;
     /**< Pointer to array of GPMC_AddrRegion data structures filled by SysConfig. The
@@ -1100,16 +989,6 @@ int32_t GPMC_setDeviceType(GPMC_Handle handle);
 int32_t GPMC_configureTimingParameters(GPMC_Handle handle);
 
 /**
- *  \brief  Function to configure GPMC timing parameters for PSRAM/NOR Devices.
- *
- *  \param  handle  An #GPMC_Handle returned from an #GPMC_open()
- *
- *
- *  \return SystemP_SUCCESS or SystemP_FAILURE
- */
-int32_t GPMC_configureTimingParametersPsram(GPMC_Handle handle);
-
-/**
  *  \brief  Function to set ECC used and unused bytes size in nibbles.
  *
  *  \param  handle  An #GPMC_Handle returned from an #GPMC_open()
@@ -1272,6 +1151,65 @@ int32_t GPMC_disableFlashWriteProtect(GPMC_Handle handle);
  *  \return SystemP_SUCCESS or SystemP_FAILURE
  */
 int32_t GPMC_enableFlashWriteProtect(GPMC_Handle handle);
+
+/**
+ *  \brief  Function to create correct address based on bus width.
+ *
+ *  \param  busWidth  Bus width for the NOR Flash device.
+ *
+ *  \param  blkAddr  Base address for NOR Flash.
+ *
+ *  \param  offset  Base address for NOR Flash.
+ *
+ *
+ *  \return Pointer to Address
+ */
+uint8_t *GPMC_norMakeAddr(uint8_t busWidth,uint32_t blkAddr,uint32_t offset);
+
+/**
+ *  \brief  Function to create correct NOR cmd based on bus width.
+ *
+ *  \param  busWidth  Bus width for the NOR Flash device.
+ *
+ *  \param  cmd  Command to be sent on Data Lines.
+ *
+ *  \param  cmdBuf  Buffer pointer to store the modified cmd.
+ *
+ */
+void GPMC_norMakeCmd(uint8_t busWidth, uint32_t cmd, void *cmdBuf);
+
+/**
+ *  \brief  Function to read data from norlike device.
+ *
+ *  \param  handle  An #GPMC_Handle returned from an #GPMC_open()
+ *
+ *  \param  offset  Offset of read address from GPMC data baseaddress.
+ *
+ *  \param  buf  Pointer to buffer for storing read data.
+ *
+ *  \param  len  Number of bytes to read.
+ *
+ *
+ *  \return SystemP_SUCCESS or SystemP_FAILURE
+ */
+int32_t GPMC_norReadData(GPMC_Handle handle, uint32_t offset,uint8_t *buf, uint32_t len);
+
+/**
+ *  \brief  Function to write data to norlike device.
+ *
+ *  \param  handle  An #GPMC_Handle returned from an #GPMC_open()
+ *
+ *  \param  offset  Offset of write address from GPMC data baseaddress.
+ *
+ *  \param  buf  Pointer to buffer for storing read data.
+ *
+ *  \param  len  Number of bytes to write.
+ *
+ *
+ *  \return SystemP_SUCCESS or SystemP_FAILURE
+ */
+int32_t GPMC_norWriteData(GPMC_Handle handle,uint32_t offset,uint8_t *buf, uint32_t len);
+
 /* ========================================================================== */
 /*                       Static Function Definitions                          */
 /* ========================================================================== */
