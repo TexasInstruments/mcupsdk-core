@@ -1,0 +1,131 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/board/ram/ram'];
+    let parallelmodule = system.modules['/board/ram/parallelRam/parallelram'];
+%%}
+
+% for(let i = 0; i < module.$instances.length; i++) {
+% let instance = module.$instances[i];
+% let config = module.getInstanceConfig(instance);
+% let soc = system.getScript(`/board/soc/board_${common.getSocName()}`);
+% let path;
+% if(config.ramTopology == "serialRam") {
+    % let ramDriverVer = soc.getDriverVer("serialRam");
+    % path = '/board/ram/serialRam/templates/' + ramDriverVer + '/ram_open_close_config.c.xdt';
+%} else if (config.ramTopology == "parallelRam") {
+    % let ramDriverVer = soc.getDriverVer("parallelRam");
+    % path = '/board/ram/parallelRam/templates/' + ramDriverVer + '/ram_open_close_config.c.xdt';
+%}
+`system.getTemplate(path)()`
+%}
+
+/* RAM Driver handles - opened during Board_ramOpen() */
+Ram_Handle gRamHandle[CONFIG_RAM_NUM_INSTANCES];
+
+/* RAM Config */
+Ram_Config gRamConfig[CONFIG_RAM_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+{
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if(config.ramTopology == "parallelRam")
+    %{
+        % let instanceparallel = parallelmodule.$instances[0];
+        % let configparallel = parallelmodule.getInstanceConfig(instanceparallel);
+        .attrs = &gRamAttrs_`configparallel.pname`,
+        .fxns = &gPsramGpmcFxns,
+        .object = (void *)&gRamObject_`configparallel.pname`,
+    %}
+},
+% }
+};
+
+/* RAM Open Params - populated from SysConfig options */
+Ram_Params gRamParams[CONFIG_RAM_NUM_INSTANCES] =
+{
+    % for(let i = 0; i < module.$instances.length; i++) {
+    {
+        % let instance = module.$instances[i];
+        .quirksFxn = NULL,
+        .custProtoFxn = NULL,
+    },
+    % }
+};
+
+uint32_t gRamConfigNum = CONFIG_RAM_NUM_INSTANCES;
+
+int32_t Board_ramOpen()
+{
+    uint32_t instCnt;
+    int32_t  status = SystemP_SUCCESS;
+
+    for(instCnt = 0U; instCnt < CONFIG_RAM_NUM_INSTANCES; instCnt++)
+    {
+        gRamHandle[instCnt] = NULL;   /* Init to NULL so that we can exit gracefully */
+    }
+
+    /* Set the underlying driver instance to the RAM config */
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if(config.ramTopology == "parallelRam")
+    % {
+        % let instanceparallel = parallelmodule.$instances[0];
+        % let configparallel = parallelmodule.getInstanceConfig(instanceparallel);
+        gRamAttrs_`configparallel.pname`.driverInstance = CONFIG_GPMC0;
+    % }
+
+% }
+
+    /* Open all instances */
+    for(instCnt = 0U; instCnt < CONFIG_RAM_NUM_INSTANCES; instCnt++)
+    {
+
+        gRamHandle[instCnt] = Ram_open(instCnt, &gRamParams[instCnt]);
+        if(NULL == gRamHandle[instCnt])
+        {
+            DebugP_logError("RAM open failed for instance %d !!!\r\n", instCnt);
+            status = SystemP_FAILURE;
+            break;
+        }
+    }
+
+%if(parallelmodule !== undefined) {
+    /* Disable pSRAM sleep mode by setting ZZ pin to high */
+%}
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if(config.ramTopology == "parallelRam")
+    % {
+        % let instanceparallel = parallelmodule.$instances[0];
+    uint32_t baseAddr = (uint32_t) AddrTranslateP_getLocalAddr(`instanceparallel.sleepEnGpioDriver.$name.toUpperCase()`_BASE_ADDR);
+    GPIO_pinWriteHigh(baseAddr, `instanceparallel.sleepEnGpioDriver.$name.toUpperCase()`_PIN);
+
+    % }
+
+% }
+
+    if(SystemP_FAILURE == status)
+    {
+        Board_ramClose();   /* Exit gracefully */
+    }
+    return status;
+}
+
+void Board_ramClose(void)
+{
+    uint32_t instCnt;
+
+    /* Close all instances that are open */
+    for(instCnt = 0U; instCnt < CONFIG_RAM_NUM_INSTANCES; instCnt++)
+    {
+        if(gRamHandle[instCnt] != NULL)
+        {
+            Ram_close(gRamHandle[instCnt]);
+            gRamHandle[instCnt] = NULL;
+        }
+    }
+    return;
+}

@@ -1,0 +1,13 @@
+/*
+ * RAM
+ */
+#include <board/ram.h>
+
+/* RAM Driver handles */
+extern Ram_Handle gRamHandle[CONFIG_RAM_NUM_INSTANCES];
+
+/* RAM Driver open/close - can be used by application when Board_driversOpen() and
+ * Board_driversClose() is not used directly and app wants to control the various driver
+ * open/close sequences */
+int32_t Board_ramOpen(void);
+void Board_ramClose(void);
