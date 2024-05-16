@@ -7,6 +7,7 @@ const gpmc_config_r5fss = [
         name            : "GPMC0",
         baseAddr        : "CSL_GPMC0_CFG_BASE",
         dataBaseAddr    : "CSL_GPMC0_DATA_BASE",
+        dataBaseAddrVal : 0x50000000,
         elmBaseAddr     : "CSL_ELM0_BASE",
         inputClkFreq    : gpmc_input_clk_freq,
         clockRateDiv    : 1,
@@ -34,41 +35,78 @@ const gpmc_dma_restrict_regions = [
 
 const gpmc_config_nandlike_device = {
     waitPinPol         :   "CSL_GPMC_CONFIG_WAIT0PINPOLARITY_W0ACTIVEL",
-    addrDataMux        :   "CSL_GPMC_CONFIG1_MUXADDDATA_NONMUX",
-    timeLatency        :   "CSL_GPMC_CONFIG1_TIMEPARAGRANULARITY_X1",//"CSL_GPMC_CONFIG1_TIMEPARAGRANULARITY_X2",
+    addrDataMux        :   "NONMUX",
+    timeLatency        :   "X1",
     timingParams       :
         {
-            csOnTime               :   "GPMC_NAND_CS_ON_TIME",
-            csRdOffTime            :   "GPMC_NAND_CS_RD_OFF_TIME",
-            csWrOffTime            :   "GPMC_NAND_CS_WR_OFF_TIME",
-            advOnTime              :   "GPMC_NAND_ADV_ON_TIME",
-            advRdOffTime           :   "GPMC_NAND_ADV_RD_OFF_TIME",
-            advWrOffTime           :   "GPMC_NAND_ADV_WR_OFF_TIME",
-            advAadMuxOnTime        :   "GPMC_NAND_ADV_AADMUX_ON_TIME",
-            advAadMuxRdOffTime     :   "GPMC_NAND_ADV_AADMUX_RD_OFF_TIME",
-            advAadMuxWrOffTime     :   "GPMC_NAND_ADV_AADMUX_WR_OFF_TIME",
-            weOnTtime              :   "GPMC_NAND_WE_ON_TIME",
-            weOffTime              :   "GPMC_NAND_WE_OFF_TIME",
-            oeOnTime               :   "GPMC_NAND_OE_ON_TIME",
-            oeOffTime              :   "GPMC_NAND_OE_OFF_TIME",
-            oeAadMuxOnTime         :   "GPMC_NAND_OE_AADMUX_ON_TIME",
-            oeAadMuxOffTime        :   "GPMC_NAND_OE_AADMUX_OFF_TIME",
-            pageBurstAccess        :   "GPMC_NAND_PAGEBURST_ACCESS_TIME",
-            rdAccessTime           :   "GPMC_NAND_RD_ACCESS_TIME",
-            wrAcessTime            :   "GPMC_NAND_WR_ACCESS_TIME",
-            rdCycleTime            :   "GPMC_NAND_RD_CYCLE_TIME",
-            wrCycleTime            :   "GPMC_NAND_WR_CYCLE_TIME",
-            wrDataOnMuxBusTime     :   "GPMC_NAND_ADMUX_DATA_VALID",
-            cycle2CycleDelay       :   "GPMC_NAND_C2C_DELAY",
-            cycleDelaySameChipSel  :   "CSL_GPMC_CONFIG6_CYCLE2CYCLESAMECSEN_NOC2CDELAY",//"CSL_GPMC_CONFIG6_CYCLE2CYCLESAMECSEN_C2CDELAY",
-            cycleDelayDiffChipSel  :   "CSL_GPMC_CONFIG6_CYCLE2CYCLEDIFFCSEN_NOC2CDELAY",
-            busTurnAroundTime      :   "GPMC_NAND_BRST_TAROUND_TIME",
+            csOnTime               :   0,
+            csRdOffTime            :   6,
+            csWrOffTime            :   6,
+            advOnTime              :   0,
+            advRdOffTime           :   4,
+            advWrOffTime           :   4,
+            advAadMuxOnTime        :   0,
+            advAadMuxRdOffTime     :   0,
+            advAadMuxWrOffTime     :   0,
+            weOnTtime              :   0,
+            weOffTime              :   3,
+            oeOnTime               :   1,
+            oeOffTime              :   4,
+            oeAadMuxOnTime         :   0,
+            oeAadMuxOffTime        :   0,
+            pageBurstAccess        :   0,
+            rdAccessTime           :   4,
+            wrAcessTime            :   6,
+            rdCycleTime            :   6,
+            wrCycleTime            :   6,
+            wrDataOnMuxBusTime     :   0,
+            cycle2CycleDelay       :   0,
+            cycleDelaySameChipSel  :   "NOC2CDELAY",
+            cycleDelayDiffChipSel  :   "NOC2CDELAY",
+            busTurnAroundTime      :   0,
         },
     eccAlgo            :   "GPMC_NAND_ECC_ALGO_BCH_8BIT",
     readType           :   "CSL_GPMC_CONFIG1_READTYPE_RDASYNC",
     csExDelay          :   "CSL_GPMC_CONFIG2_CSEXTRADELAY_NOTDELAYED",
     accessType         :   "CSL_GPMC_CONFIG1_READMULTIPLE_RDSINGLE",
+    optimisedAccess    :   "DISABLED",
+    cycleOptimisation  :   0,
 }
+
+const gpmc_config_psram_device = {
+    waitPinPol         :   "CSL_GPMC_CONFIG_WAIT0PINPOLARITY_W0ACTIVEL",
+    addrDataMux        :   "NONMUX",
+    timeLatency        :   "X1",
+    timingParams       :
+        {
+            csOnTime               :   1,
+            csRdOffTime            :   0,
+            csWrOffTime            :   1,
+            advOnTime              :   4,
+            advRdOffTime           :   5,
+            advWrOffTime           :   6,
+            advAadMuxOnTime        :   1,
+            advAadMuxRdOffTime     :   2,
+            advAadMuxWrOffTime     :   2,
+            weOnTtime              :   5,
+            weOffTime              :   3,
+            oeOnTime               :   6,
+            oeOffTime              :   0,
+            oeAadMuxOnTime         :   1,
+            oeAadMuxOffTime        :   7,
+            pageBurstAccess        :   1,
+            rdAccessTime           :   15,
+            wrAcessTime            :   15,
+            rdCycleTime            :   17,
+            wrCycleTime            :   17,
+            wrDataOnMuxBusTime     :   0,
+            cycle2CycleDelay       :   0,
+            cycleDelaySameChipSel  :   "NOC2CDELAY",
+            cycleDelayDiffChipSel  :   "NOC2CDELAY",
+            busTurnAroundTime      :   0,
+        },
+}
+
 
 function getDefaultConfig()
 {
@@ -90,10 +128,16 @@ function getNandlikeGpmcConfig ()
     return gpmc_config_nandlike_device;
 }
 
+function getPsramGpmcConfig ()
+{
+    return gpmc_config_psram_device;
+}
+
 exports = {
     getDefaultConfig,
     getConfigArr,
     getNandlikeGpmcConfig,
+    getPsramGpmcConfig,
     getDmaRestrictedRegions,
 };
 

@@ -57,50 +57,59 @@ static GPMC_HwAttrs gGpmcAttrs[CONFIG_GPMC_NUM_INSTANCES] =
         % } else {
         .clkDivider           = CSL_GPMC_CONFIG1_GPMCFCLKDIVIDER_DIVBY4,
         % }
-        % if(config.waitPinselect == "WAIT0 PIN") {
+        % if(config.waitPinselect == "WAIT0") {
         .waitPinNum           = CSL_GPMC_CONFIG1_WAITPINSELECT_W0,
         % } else {
         .waitPinNum           = CSL_GPMC_CONFIG1_WAITPINSELECT_W1,
         % }
-        .addrDataMux          = `deviceConfig.addrDataMux`,
-        .timeLatency          = `deviceConfig.timeLatency`,
-        % if(config.waitPinPol == "ACTIVE LOW POLARITY") {
-        .waitPinPol           = CSL_GPMC_CONFIG_WAIT0PINPOLARITY_W0ACTIVEL,
+        .addrDataMux          = CSL_GPMC_CONFIG1_MUXADDDATA_`config.addrDataMux.toUpperCase()`,
+        .timeLatency          = CSL_GPMC_CONFIG1_TIMEPARAGRANULARITY_`config.timeLatency.toUpperCase()`,
+        % if(config.waitPinPol == "ACTIVEL") {
+        % if(config.waitPinselect == "WAIT0") {
+        .waitPinPol           = CSL_GPMC_CONFIG_`config.waitPinselect.toUpperCase()`PINPOLARITY_W0`config.waitPinPol.toUpperCase()`,
         % } else {
-        .waitPinPol           = CSL_GPMC_CONFIG_WAIT0PINPOLARITY_W0ACTIVEH,
+        .waitPinPol           = CSL_GPMC_CONFIG_`config.waitPinselect.toUpperCase()`PINPOLARITY_W1`config.waitPinPol.toUpperCase()`,
+        % }
         % }
         .timingParams         =
         {
-            .csOnTime               =   `deviceConfig.timingParams.csOnTime`,
-            .csRdOffTime            =   `deviceConfig.timingParams.csRdOffTime`,
-            .csWrOffTime            =   `deviceConfig.timingParams.csWrOffTime`,
-            .advOnTime              =   `deviceConfig.timingParams.advOnTime`,
-            .advRdOffTime           =   `deviceConfig.timingParams.advRdOffTime`,
-            .advWrOffTime           =   `deviceConfig.timingParams.advWrOffTime`,
-            .advAadMuxOnTime        =   `deviceConfig.timingParams.advAadMuxOnTime`,
-            .advAadMuxRdOffTime     =   `deviceConfig.timingParams.advAadMuxRdOffTime`,
-            .advAadMuxWrOffTime     =   `deviceConfig.timingParams.advAadMuxWrOffTime`,
-            .weOnTtime              =   `deviceConfig.timingParams.weOnTtime`,
-            .weOffTime              =   `deviceConfig.timingParams.weOffTime`,
-            .oeOnTime               =   `deviceConfig.timingParams.oeOnTime`,
-            .oeOffTime              =   `deviceConfig.timingParams.oeOffTime`,
-            .oeAadMuxOnTime         =   `deviceConfig.timingParams.oeAadMuxOnTime`,
-            .oeAadMuxOffTime        =   `deviceConfig.timingParams.oeAadMuxOffTime`,
-            .pageBurstAccess        =   `deviceConfig.timingParams.pageBurstAccess`,
-            .rdAccessTime           =   `deviceConfig.timingParams.rdAccessTime`,
-            .wrAcessTime            =   `deviceConfig.timingParams.wrAcessTime`,
-            .rdCycleTime            =   `deviceConfig.timingParams.rdCycleTime`,
-            .wrCycleTime            =   `deviceConfig.timingParams.wrCycleTime`,
-            .wrDataOnMuxBusTime     =   `deviceConfig.timingParams.wrDataOnMuxBusTime`,
-            .cycle2CycleDelay       =   `deviceConfig.timingParams.cycle2CycleDelay`,
-            .cycleDelaySameChipSel  =   `deviceConfig.timingParams.cycleDelaySameChipSel`,
-            .cycleDelayDiffChipSel  =   `deviceConfig.timingParams.cycleDelayDiffChipSel`,
-            .busTurnAroundTime      =   `deviceConfig.timingParams.busTurnAroundTime`,
+            .csOnTime               =   `config.csOnTime`U,
+            .csRdOffTime            =   `config.csRdOffTime`U,
+            .csWrOffTime            =   `config.csWrOffTime`U,
+            .advOnTime              =   `config.advOnTime`U,
+            .advRdOffTime           =   `config.advRdOffTime`U,
+            .advWrOffTime           =   `config.advWrOffTime`U,
+            .advAadMuxOnTime        =   `config.advAadMuxOnTime`U,
+            .advAadMuxRdOffTime     =   `config.advAadMuxRdOffTime`U,
+            .advAadMuxWrOffTime     =   `config.advAadMuxWrOffTime`U,
+            .weOnTtime              =   `config.weOnTtime`U,
+            .weOffTime              =   `config.weOffTime`U,
+            .oeOnTime               =   `config.oeOnTime`U,
+            .oeOffTime              =   `config.oeOffTime`U,
+            .oeAadMuxOnTime         =   `config.oeAadMuxOnTime`U,
+            .oeAadMuxOffTime        =   `config.oeAadMuxOffTime`U,
+            .pageBurstAccess        =   `config.pageBurstAccess`U,
+            .rdAccessTime           =   `config.rdAccessTime`U,
+            .wrAcessTime            =   `config.wrAcessTime`U,
+            .rdCycleTime            =   `config.rdCycleTime`U,
+            .wrCycleTime            =   `config.wrCycleTime`U,
+            .wrDataOnMuxBusTime     =   `config.wrDataOnMuxBusTime`U,
+            .cycle2CycleDelay       =   `config.cycle2CycleDelay`U,
+            .busTurnAroundTime      =   `config.busTurnAroundTime`U,
+            .cycleDelaySameChipSel  =   CSL_GPMC_CONFIG6_CYCLE2CYCLESAMECSEN_`config.cycleDelaySameChipSel.toUpperCase()`,
+            .cycleDelayDiffChipSel  =   CSL_GPMC_CONFIG6_CYCLE2CYCLEDIFFCSEN_`config.cycleDelayDiffChipSel.toUpperCase()`,
         },
+
+        %if(config.deviceType == "PARALLEL_NAND"){
         .eccAlgo                =   `deviceConfig.eccAlgo`,
         .readType               =   `deviceConfig.readType`,
         .csExDelay              =   `deviceConfig.csExDelay`,
         .accessType             =   `deviceConfig.accessType`,
+        .optimisedAccess        =   CSL_GPMC_PREFETCH_CONFIG1_ENABLEOPTIMIZEDACCESS_OPT`config.enableOptimisedAccess.toUpperCase()`,
+        % if(config.enableOptimisedAccess == "ENABLED"){
+        .cycleOptimisation      =   `config.cycleOptimisation`U,
+        % }
+        %}
         .dmaRestrictedRegions   =   gGpmcDmaRestrictRegions,
     },
 % }
