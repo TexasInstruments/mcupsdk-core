@@ -24,6 +24,8 @@ FILES_common := \
     flash.c \
     flash_nand_gpmc.c \
     flash_nor_ospi.c \
+    ram.c \
+    psram_gpmc.c \
     led.c \
     led_gpio.c \
     led_tpic2810.c \
@@ -38,6 +40,8 @@ FILES_PATH_common = \
     flash/gpmc \
     flash/sfdp \
     flash/ospi \
+    ram \
+    ram/gpmc \
     led \
     ioexp \
 

@@ -33,6 +33,8 @@ FILES_PATH_common = \
     flash/gpmc \
     flash/sfdp \
     flash/ospi \
+    ram \
+    ram/gpmc \
     led \
     ioexp \
 
