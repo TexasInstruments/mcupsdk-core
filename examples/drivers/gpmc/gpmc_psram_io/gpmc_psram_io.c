@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -34,12 +34,24 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
-#define APP_GPMC_PSRAM_OFFSET_BASE  0x8000
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+#define APP_GPMC_PSRAM_OFFSET_BASE  (1024*1024)
+#define APP_GPMC_DATA_SIZE          (1024*1024)
+
+uint8_t gGpmcTxBuf[APP_GPMC_DATA_SIZE] __attribute__((aligned(64), section("ddr_data"))) ;
+/* read buffer MUST be cache line aligned when using DMA, we aligned to 64B though 32B is enough */
+uint8_t gGpmcRxBuf[APP_GPMC_DATA_SIZE] __attribute__((aligned(64), section("ddr_data")));
+
+#else
+#define APP_GPMC_PSRAM_OFFSET_BASE  (1024*80)
 #define APP_GPMC_DATA_SIZE          (1024*40)
 
 uint8_t gGpmcTxBuf[APP_GPMC_DATA_SIZE] ;
 /* read buffer MUST be cache line aligned when using DMA, we aligned to 128B though 32B is enough */
 uint8_t gGpmcRxBuf[APP_GPMC_DATA_SIZE];
+#endif
+
+#define NO_OF_ITERATIONS            (2U)
 
 void gpmc_psram_io_fill_buffers();
 int32_t gpmc_psram_io_compare_buffers();
@@ -48,7 +60,13 @@ void gpmc_psram_io_main(void *args)
 {
 
     int32_t status = SystemP_SUCCESS;
+    uint32_t iter = 0;
     uint32_t offset;
+    uint64_t startTime, endTime, duration;
+
+    /* Write & read speed in Mbps(Megabits per second)*/
+    float writeSpeed = 0;
+    float readSpeed = 0;
 
     /* Open GPMC Driver, among others */
     Drivers_open();
@@ -56,19 +74,41 @@ void gpmc_psram_io_main(void *args)
     status = Board_driversOpen();
     DebugP_assert(status==SystemP_SUCCESS);
 
-    /* Fill buffers with known data,
-     * write the data, read back from a specific offset
-     * and finally compare the results.
-     */
-    offset = APP_GPMC_PSRAM_OFFSET_BASE;
-    gpmc_psram_io_fill_buffers();
+    for(iter=0; iter< NO_OF_ITERATIONS; iter++)
+    {
+        /* Fill buffers with known data,
+        * write the data, read back from a specific offset
+        * and finally compare the results.
+        */
+        offset = APP_GPMC_PSRAM_OFFSET_BASE;
+        gpmc_psram_io_fill_buffers();
 
-    Psram_write(gPsramHandle[CONFIG_PSRAM0], offset, gGpmcTxBuf, APP_GPMC_DATA_SIZE);
-    Psram_read(gPsramHandle[CONFIG_PSRAM0], offset, gGpmcRxBuf, APP_GPMC_DATA_SIZE);
-    status |= gpmc_psram_io_compare_buffers();
+        startTime = ClockP_getTimeUsec();
+        Ram_write(gRamHandle[CONFIG_RAM0], offset, gGpmcTxBuf, APP_GPMC_DATA_SIZE);
+        endTime = ClockP_getTimeUsec();
 
+        duration = endTime - startTime;
+        writeSpeed += ((float)APP_GPMC_DATA_SIZE * 8U)/(duration * 1024* 1024);
+
+        startTime = ClockP_getTimeUsec();
+        Ram_read(gRamHandle[CONFIG_RAM0], offset, gGpmcRxBuf, APP_GPMC_DATA_SIZE);
+        endTime = ClockP_getTimeUsec();
+
+        duration = endTime - startTime;
+        readSpeed += ((float)APP_GPMC_DATA_SIZE * 8U )/(duration);
+
+        status |= gpmc_psram_io_compare_buffers();
+
+        if(SystemP_SUCCESS != status)
+        {
+            break;
+        }
+    }
     if(SystemP_SUCCESS == status)
     {
+        writeSpeed = (writeSpeed/NO_OF_ITERATIONS);
+        readSpeed = (readSpeed/NO_OF_ITERATIONS);
+        DebugP_log("Write Speed: %f Mbps\r\nRead Speed: %f Mbps\r\n",writeSpeed,readSpeed);
         DebugP_log("All tests have passed!!\r\n");
     }
     else
