@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) Texas Instruments Incorporated 2022-23
+ *   Copyright (c) Texas Instruments Incorporated 2022-24
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -68,7 +68,7 @@
  */
 int32_t cpu_example_app(uint32_t instance);
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                                    SDL_ESM_IntType esmIntrType,
                                                    uint32_t grpChannel,
@@ -91,7 +91,10 @@ static uint32_t arg;
 volatile bool ESMError = false;
 int32_t loop=0;
 
-#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+/* To store individule instance result */
+int32_t SDL_CCM_Result[CCM_NUM_INSTANCE];
+
+#if defined(SOC_AM263X) || defined (SOC_AM263PX)
 SDL_ESM_config CCM_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -223,7 +226,7 @@ int32_t CCM_Test_init (int32_t instNum)
 
     if (retValue == 0) {
         /* Initialize MAIN ESM module */
-#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX)
         result = SDL_ESM_init(ESM_INSTANCE, &CCM_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
 #endif
 #if defined(SOC_AM273X)||defined(SOC_AWR294X)
@@ -269,33 +272,38 @@ int32_t CCM_Test_init (int32_t instNum)
 /* CCM Functional test */
 int32_t CCM_funcTest(void)
 {
-    int32_t    testResult = 0;
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
-	int32_t loopCnt=2;
-#endif
-#if defined (SOC_AM273X) || defined (SOC_AWR294X)
-	int32_t loopCnt=1;
-#endif
+    int32_t    testResult = SDL_PASS;
+	uint32_t loopCnt = CCM_NUM_INSTANCE;
 
 	for(loop=0; loop < loopCnt; loop++)
 	{
-		DebugP_log("CCM Example Test Started: R5F%d\r\n",loop);
-		testResult = CCM_Test_init(loop);
-		if (testResult != 0)
-		{
-			DebugP_log("CCM SDL API tests: unsuccessful\r\n");
-			return SDL_EFAIL;
-		}
-		if (testResult == SDL_PASS)
-		{
-			DebugP_log("CCM Functional Test \r\n");
-			/* Run the test for diagnostics first */
-			testResult = CCM_runTest(loop);
-		}
-		else
-		{
-			DebugP_log("CCM Init failed. Exiting the app\r\n");
-		}
+        SDL_CCM_Result[loop] = SDL_EFAIL;
+        if (testResult == SDL_PASS)
+        {
+            DebugP_log("CCM Example Test Started: R5F%d\r\n",loop);
+            testResult = CCM_Test_init(loop);
+            if (testResult != 0)
+            {
+                DebugP_log("CCM SDL API tests: unsuccessful\r\n");
+                return SDL_EFAIL;
+            }
+            if (testResult == SDL_PASS)
+            {
+                DebugP_log("CCM Functional Test \r\n");
+                /* Run the test for diagnostics first */
+                testResult = CCM_runTest(loop);
+                /* store the result*/
+                SDL_CCM_Result[loop] = testResult;
+            }
+            else
+            {
+                DebugP_log("CCM Init failed. Exiting the app\r\n");
+            }
+        }
+        else
+        {
+            DebugP_log("\r\nCCM Functional Test failed for CCM_R5F%d \r\n", loop-1);
+        }
 	}
 
     return (testResult);
@@ -336,7 +344,7 @@ int32_t cpu_example_app(uint32_t ccmcore)
 /* ========================================================================== */
 /*                            Internal Function Definition                    */
 /* ========================================================================== */
-#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,
