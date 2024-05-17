@@ -180,37 +180,37 @@
 % if((args.device == "am263x") || (isDevelopmentMode)) {
         "AM263x_beta": [{
             "name": "r5fss0-0",
-            "targetdbId": "r5fss0-0"
+            "targetdbId": "Cortex_R5_0"
         }, {
             "name": "r5fss0-1",
-            "targetdbId": "r5fss0-1"
+            "targetdbId": "Cortex_R5_1"
         },{
             "name": "r5fss1-0",
-            "targetdbId": "r5fss1-0"
+            "targetdbId": "Cortex_R5_2"
         }, {
             "name": "r5fss1-1",
-            "targetdbId": "r5fss1-1"
+            "targetdbId": "Cortex_R5_3"
         }, {
             "name": "hsm0-0",
-            "targetdbId": "hsm0-0"
+            "targetdbId": "Cortex_M4_0"
         }],
 % }
 % if((args.device == "am263px") || (isDevelopmentMode)) {
         "AM263Px": [{
             "name": "r5fss0-0",
-            "targetdbId": "r5fss0-0"
+            "targetdbId": "Cortex_R5_0"
         }, {
             "name": "r5fss0-1",
-            "targetdbId": "r5fss0-1"
+            "targetdbId": "Cortex_R5_1"
         },{
             "name": "r5fss1-0",
-            "targetdbId": "r5fss1-0"
+            "targetdbId": "Cortex_R5_2"
         }, {
             "name": "r5fss1-1",
-            "targetdbId": "r5fss1-1"
+            "targetdbId": "Cortex_R5_3"
         }, {
             "name": "hsm0-0",
-            "targetdbId": "hsm0-0"
+            "targetdbId": "Cortex_M4_0"
         }],
 % }
 % if((args.device == "am62x") || (isDevelopmentMode)) {
