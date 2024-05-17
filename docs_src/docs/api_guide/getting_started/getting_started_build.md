@@ -24,7 +24,7 @@
 
 - **When using makefiles to build**, make sure you have built the example of interest using makefiles (see \ref MAKEFILE_BUILD_PAGE)
 
-- Given below is the command to build the "hello world example". Note, use `make` in Linux
+- Given below is the command to build the "hello world example". Note, use `make` in Linux and MacOS
 
 \cond !SOC_AM62X
         cd ${SDK_INSTALL_PATH}

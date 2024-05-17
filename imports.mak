@@ -1,6 +1,5 @@
 
 DEVICE ?= am64x
-
 ifeq ($(OS),Windows_NT)
     TOOLS_PATH?=C:/ti
     CCS_PATH?=$(TOOLS_PATH)/ccs1280/ccs
@@ -22,7 +21,7 @@ ifeq ($(OS),Windows_NT)
     CGT_GCC_ARMV7_PATH=$(CGT_GCC_ARM_PATH)
 else
     UNAME_S := $(shell uname -s)
-    ifeq ($(UNAME_S),Linux)
+    ifneq (,$(filter $(UNAME_S),Linux Darwin))
         export TOOLS_PATH?=$(HOME)/ti
         export CCS_PATH?=$(TOOLS_PATH)/ccs1280/ccs
         export CCS_ECLIPSE=$(CCS_PATH)/eclipse/eclipse

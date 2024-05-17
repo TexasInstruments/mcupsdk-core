@@ -16,12 +16,16 @@ To build applications using this SDK, one needs below host PC machine
   - Ubuntu 18.04 64bit or higher
   - Minimum 4GB, >8GB RAM recommended
   - At least 10GB of hard disk space
+- MacOS PC
+  - MacOS Ventura or higher
+  - Minimum 4GB, >8GB RAM recommended
+  - At least 10GB of hard disk space
 
 ## Download and Install the SDK
 
 - Download the SDK installer and install at below path on your PC
   - Windows, C:/ti
-  - Linux, ${HOME}/ti
+  - Linux and MacOS, ${HOME}/ti
 - `${SDK_INSTALL_PATH}` in this user guide refers to the path, including the SDK folder name, where the SDK is installed.
   Example, in Windows, `${SDK_INSTALL_PATH}` will refer to the path `C:/ti/mcu_plus_sdk_{soc}_{version}`
 \cond !(SOC_AM263PX || SOC_AM261X)
@@ -35,14 +39,14 @@ To build applications using this SDK, one needs below host PC machine
 - The SysConfig download home page is, https://www.ti.com/tool/SYSCONFIG
 - Download SysConfig 1.21.0 and Install at below path,
   - Windows, C:/ti
-  - Linux, ${HOME}/ti
+  - Linux and MacOS, ${HOME}/ti
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AM243X || SOC_AM261X
 ### Uniflash
 - The TI Uniflash download home page is, https://www.ti.com/tool/UNIFLASH
 - Download the latest Uniflash @VAR_UNIFLASH_VERSION and install at below path,
   - Windows, C:/ti
-  - Linux, ${HOME}/ti
+  - Linux and MacOS, ${HOME}/ti
 \endcond
 
 \cond SOC_AM64X
@@ -74,7 +78,7 @@ To build applications using this SDK, one needs below host PC machine
 \attention It is important to install Python 3.x. If you have Python 2.x installed, then additionally install
            Python 3.x and make sure the command python or python3 indeed points to Python 3.x
 
-\attention All commands mentioned below should be typed in `cmd.exe` command console in Windows and `bash` terminal in Linux.
+\attention All commands mentioned below should be typed in `cmd.exe` command console in Windows, `bash` terminal in Linux and `zsh` terminal for MacOS
 
 - Python scripts are used for below functionality in the SDK,
   - Flashing files to the flash on the EVM via UART.
@@ -142,6 +146,24 @@ To build applications using this SDK, one needs below host PC machine
 
         $ pip3 install pyserial xmodem tqdm --proxy={your proxy server web-link and port}
 
+- In MacOS,
+  - Do below in MacOS zsh shell to install python3
+
+        $ brew install python3
+
+  - Check the python version by doing below
+
+        $ python3 --version
+
+  - Check if the python package manager "pip" is installed, by default pip should be installed along with python.
+
+        $ pip3 --version
+
+  - Install below additional packages via "pip" that are needed for the flashing tools. If you are behind a corporate firewall
+    make sure to pass the server name and port for the proxy as shown below. If proxy is not needed keep `--proxy=` as blank.
+
+        $ pip3 install pyserial xmodem tqdm --proxy={your proxy server web-link and port}
+
 ### OpenSSL {#INSTALL_OPENSSL}
 
 - OpenSSL is needed for signing the bootloader and application images when booting using a bootloader.
@@ -164,6 +186,14 @@ To build applications using this SDK, one needs below host PC machine
     -  So if you have Ubuntu 22.04, do below in Linux Ubuntu shell to install openssl
 
             $ sudo apt install openssl
+
+	- Make sure that you install the v1.1.1 or v3 of OpenSSL. You can get the v1.1.1 or v3 packages
+    from http://security.ubuntu.com/ubuntu/pool/main/o/openssl/. The packages required are openssl, libssl and libssl-dev
+
+  - In MacOS,
+    -  So if you have Ubuntu 22.04, do below in MacOS shell to install openssl
+
+            $ brew install openssl
 
 	- Make sure that you install the v1.1.1 or v3 of OpenSSL. You can get the v1.1.1 or v3 packages
     from http://security.ubuntu.com/ubuntu/pool/main/o/openssl/. The packages required are openssl, libssl and libssl-dev
