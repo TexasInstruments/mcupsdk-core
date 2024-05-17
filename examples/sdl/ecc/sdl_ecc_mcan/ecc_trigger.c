@@ -57,9 +57,6 @@
 #if defined(SOC_AM263PX)
 #include <sdl/include/am263px/sdlr_soc_ecc_aggr.h>
 #endif
-#if defined(SOC_AM261X)
-#include <sdl/include/am261x/sdlr_soc_ecc_aggr.h>
-#endif
 #if defined(SOC_AM273X)
 #include <sdl/include/am273x/sdlr_soc_ecc_aggr.h>
 #endif
@@ -92,7 +89,7 @@
 #define SDL_ECC_AGGR_SEC_ENABLE_SET_REG0_ADDR       (0x02F7F880u)
 #endif
 
-#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 
 #define SDL_EXAMPLE_ECC_RAM_ADDR                    (0x52600000u) /* MCAN0 address */
 #define SDL_EXAMPLE_ECC_AGGR                        SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR
@@ -115,7 +112,7 @@ static SDL_ECC_InitConfig_t ECC_Test_MCANA_ECCInitConfig =
     /**< Sub type list  */
 };
 
-#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 
 static uint32_t ESMarg;
 
@@ -135,7 +132,7 @@ SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
                        0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */
-#if  defined(SOC_AM263PX) || defined (SOC_AM261X)
+#if  defined(SOC_AM263PX)
     .enableCriticalBitmap = {0x0000000cu, 0x00000000u, 0x00000000u, 0x00000000u,
                              0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u},
      .criticalInterruptDelayCounter = 0u,
@@ -199,7 +196,7 @@ int32_t ECC_Example_init (void);
 int32_t ECC_Example_init (void)
 {
     int32_t retValue=0;
-#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
     void *ptr = (void *)&ESMarg;
 #endif
     SDL_ErrType_t result;
@@ -216,7 +213,7 @@ int32_t ECC_Example_init (void)
             DebugP_log("\r\nECC_Test_init: Initialize of MCANA ECC Memory is complete \r\n");
         }
     }
-#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
     if (retValue == 0) {
         /* Initialize ESM module */
         result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
@@ -283,6 +280,7 @@ int32_t ECC_Test_run_MCANA_1BitInjectTest(void)
 
         DebugP_log("\r\nMCANA Single bit error inject at pErrMem = 0x%p and the value of pErrMem is 0x%p :test complete\r\n",
                    injectErrorConfig.pErrMem, testLocationValue);
+        testLocationValue++; /* this is purely to avoid misra unused error */
     }
 
     return retVal;
@@ -325,6 +323,7 @@ int32_t ECC_Test_run_MCANA_2BitInjectTest(void)
     } else {
         DebugP_log("\r\nMCANA Double bit error inject: pErrMem fixed location = 0x%p once test complete: the value of pErrMem is 0x%p\r\n",
                    injectErrorConfig.pErrMem, testLocationValue);
+         testLocationValue++; /* this is purely to avoid misra unused error */
     }
 
     return retVal;
