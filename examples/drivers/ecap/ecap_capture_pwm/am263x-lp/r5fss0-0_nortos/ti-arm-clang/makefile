@@ -30,12 +30,14 @@ BOOTIMAGE_PATH=$(abspath .)
 BOOTIMAGE_NAME:=ecap_capture_pwm.$(PROFILE).appimage
 BOOTIMAGE_NAME_XIP:=ecap_capture_pwm.$(PROFILE).appimage_xip
 BOOTIMAGE_NAME_SIGNED:=ecap_capture_pwm.$(PROFILE).appimage.signed
+BOOTIMAGE_NAME_MCELF:=ecap_capture_pwm.$(PROFILE).mcelf
 BOOTIMAGE_RPRC_NAME:=ecap_capture_pwm.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=ecap_capture_pwm.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=ecap_capture_pwm.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=ecap_capture_pwm.$(PROFILE).appimage.hs
 BOOTIMAGE_NAME_HS_FS:=ecap_capture_pwm.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
+TARGETS += $(BOOTIMAGE_NAME_MCELF)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
 endif
@@ -195,6 +197,7 @@ clean:
 	$(RM) $(BOOTIMAGE_NAME_SIGNED)
 	$(RM) $(BOOTIMAGE_RPRC_NAME)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_XIP)
+	$(RM) $(BOOTIMAGE_NAME_MCELF)
 	$(RMDIR) generated/
 
 scrub:
@@ -207,6 +210,7 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	$(RM) \*.mcelf
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -214,6 +218,7 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	$(RM) *.mcelf
 endif
 	$(RMDIR) generated
 
@@ -261,6 +266,7 @@ SBL_DEV_ID=55
 MULTI_CORE_IMAGE_GEN = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
 OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
+MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
 
 ifeq ($(OS),Windows_NT)
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
@@ -288,6 +294,14 @@ endif
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo  Boot image: am263x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  .
+
+$(BOOTIMAGE_NAME_MCELF):
+	@echo  Boot multi-core ELF image: $(BOOTIMAGE_PATH)/$@ ...
+
+	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_r5fss0-0):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT)
+
+	@echo  Boot multi-core ELF image: $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
 
 $(BOOTIMAGE_NAME_HS): $(BOOTIMAGE_NAME)

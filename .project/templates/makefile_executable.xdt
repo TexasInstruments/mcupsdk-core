@@ -39,6 +39,10 @@ ConfigName:=$(PROFILE)
 
 OUTNAME:=`args.project.name`.$(PROFILE).out
 
+% let isMulticore = false;
+% if(args.project.isPartOfSystemProject == true) {
+% isMulticore = true;
+% }
 BOOTIMAGE_PATH=$(abspath .)
 % if (args.project.isBootLoader) {
 % if ((args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "awr294x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
@@ -71,6 +75,9 @@ BOOTIMAGE_NAME_XIP:=`args.project.name`.$(PROFILE).appimage_xip
 BOOTIMAGE_NAME_QSPI:=`args.project.name`.$(PROFILE).appimage_qspi
 % }
 BOOTIMAGE_NAME_SIGNED:=`args.project.name`.$(PROFILE).appimage.signed
+% if(!isMulticore) {
+BOOTIMAGE_NAME_MCELF:=`args.project.name`.$(PROFILE).mcelf
+% }
 BOOTIMAGE_RPRC_NAME:=`args.project.name`.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=`args.project.name`.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=`args.project.name`.$(PROFILE).rprc_tmp
@@ -83,6 +90,9 @@ BOOTIMAGE_NAME_QSPI_HS:=`args.project.name`.$(PROFILE).appimage_qspi.hs
 BOOTIMAGE_NAME_HS_FS:=`args.project.name`.$(PROFILE).appimage.hs_fs
 % }
 TARGETS := $(BOOTIMAGE_NAME)
+% if(!isMulticore) {
+TARGETS += $(BOOTIMAGE_NAME_MCELF)
+% }
 %if (!["am64x", "am243x"].includes(args.project.device)) {
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
@@ -491,6 +501,9 @@ clean:
  % }
 	$(RM) $(BOOTIMAGE_RPRC_NAME)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_XIP)
+	% if(!isMulticore) {
+	$(RM) $(BOOTIMAGE_NAME_MCELF)
+	% }
 % }
 % if (args.project.syscfgfile) {
 	$(RMDIR) generated/
@@ -515,6 +528,9 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	% if(!isMulticore && !args.project.isBootLoader) {
+	$(RM) \*.mcelf
+	% }
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -522,6 +538,9 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	% if(!isMulticore && !args.project.isBootLoader) {
+	$(RM) *.mcelf
+	% }
 endif
 % if (args.project.syscfgfile) {
 	$(RMDIR) generated
@@ -775,6 +794,9 @@ APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_
 % if (((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")  || (args.project.device == "am273x") || (args.project.device == "awr294x"))) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 % }
+% if(!isMulticore) {
+MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
+% }
 
 ifeq ($(OS),Windows_NT)
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
@@ -819,6 +841,16 @@ endif
 	@echo  .
 % }
 
+% if(!isMulticore) {
+$(BOOTIMAGE_NAME_MCELF):
+	@echo  Boot multi-core ELF image: $(BOOTIMAGE_PATH)/$@ ...
+
+	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_`args.project.cpu`):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT)
+
+	@echo  Boot multi-core ELF image: $(BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  .
+
+% }
 % if (((args.project.device == "am243x") || (args.project.device == "am64x"))) {
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
