@@ -59,7 +59,7 @@ int32_t SDL_STC_getStatus(SDL_STC_Inst instance)
     uint32_t stcReset=0;
     int32_t stcResult= (int32_t)INVALID_RESULT;
 
-    if (instance < INVALID_INSTANCE)
+    if (instance < SDL_STC_INVALID_INSTANCE)
     {
         if(instance == SDL_STC_INST_MAINR5F0)
         {
@@ -120,7 +120,7 @@ static int32_t SDL_STC_configure(SDL_STC_Inst instance, SDL_STC_Config *pConfig,
 {
     int32_t sdlResult = SDL_EFAIL;
     uint32_t baseAddr;
-    if((instance  <INVALID_INSTANCE) && (pConfig != NULL))
+    if((instance  <SDL_STC_INVALID_INSTANCE) && (pConfig != NULL))
     {
         /* Getting base address */
         baseAddr = SDL_STC_baseAddress[instance];
@@ -207,7 +207,7 @@ static int32_t  SDL_STC_runTest(SDL_STC_Inst instance )
    uint32_t baseAddr;
    int32_t count =100;
 
-    if(instance  <INVALID_INSTANCE)
+    if(instance  <SDL_STC_INVALID_INSTANCE)
     {
         /* Getting base address */
         baseAddr = SDL_STC_baseAddress[instance];

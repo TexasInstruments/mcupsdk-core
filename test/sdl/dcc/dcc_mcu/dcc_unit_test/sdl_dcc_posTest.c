@@ -63,7 +63,7 @@ int32_t SDL_DCC_posTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        for(i= DCC_INST_NUM; i <INVALID_INSTANCE; i++)
+        for(i= DCC_INST_NUM; i <SDL_DCC_INVALID_INSTANCE; i++)
         {
             sdlRet = SDL_DCC_configure((SDL_DCC_Inst)i, &config);
 
@@ -83,7 +83,7 @@ int32_t SDL_DCC_posTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
 	{
-        for(i= DCC_INST_NUM; i <INVALID_INSTANCE; i++)
+        for(i= DCC_INST_NUM; i <SDL_DCC_INVALID_INSTANCE; i++)
         {
             sdlRet = SDL_DCC_verifyConfig((SDL_DCC_Inst)i, &config);
 
@@ -141,7 +141,7 @@ int32_t SDL_DCC_posTest(void)
 
      if (testStatus == SDL_APP_TEST_PASS)
      {
-        for(i= DCC_INST_NUM; i <INVALID_INSTANCE; i++)
+        for(i= DCC_INST_NUM; i <SDL_DCC_INVALID_INSTANCE; i++)
         {
             sdlRet = SDL_DCC_enable((SDL_DCC_Inst)i);
 
@@ -161,7 +161,7 @@ int32_t SDL_DCC_posTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        for(i= DCC_INST_NUM; i <INVALID_INSTANCE; i++)
+        for(i= DCC_INST_NUM; i <SDL_DCC_INVALID_INSTANCE; i++)
         {
             sdlRet = SDL_DCC_disable((SDL_DCC_Inst)i);
 
@@ -181,7 +181,7 @@ int32_t SDL_DCC_posTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        for(i= DCC_INST_NUM; i <INVALID_INSTANCE; i++)
+        for(i= DCC_INST_NUM; i <SDL_DCC_INVALID_INSTANCE; i++)
         {
             sdlRet = SDL_DCC_getStatus((SDL_DCC_Inst)i, &status);
 
@@ -201,7 +201,7 @@ int32_t SDL_DCC_posTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        for(i= DCC_INST_NUM; i <INVALID_INSTANCE; i++)
+        for(i= DCC_INST_NUM; i <SDL_DCC_INVALID_INSTANCE; i++)
         {
             sdlRet = SDL_DCC_enableIntr((SDL_DCC_Inst)i, SDL_DCC_INTERRUPT_DONE);
 
@@ -215,7 +215,7 @@ int32_t SDL_DCC_posTest(void)
 
 	if (testStatus == SDL_APP_TEST_PASS)
     {
-        for(i= DCC_INST_NUM; i <INVALID_INSTANCE; i++)
+        for(i= DCC_INST_NUM; i <SDL_DCC_INVALID_INSTANCE; i++)
         {
             sdlRet = SDL_DCC_enableIntr((SDL_DCC_Inst)i, SDL_DCC_INTERRUPT_ERR);
 
@@ -235,7 +235,7 @@ int32_t SDL_DCC_posTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        for(i= DCC_INST_NUM; i <INVALID_INSTANCE; i++)
+        for(i= DCC_INST_NUM; i <SDL_DCC_INVALID_INSTANCE; i++)
         {
             sdlRet = SDL_DCC_clearIntr((SDL_DCC_Inst)i, SDL_DCC_INTERRUPT_DONE);
 
@@ -249,7 +249,7 @@ int32_t SDL_DCC_posTest(void)
 
 	if (testStatus == SDL_APP_TEST_PASS)
     {
-        for(i= DCC_INST_NUM; i <INVALID_INSTANCE; i++)
+        for(i= DCC_INST_NUM; i <SDL_DCC_INVALID_INSTANCE; i++)
         {
             sdlRet = SDL_DCC_clearIntr((SDL_DCC_Inst)i, SDL_DCC_INTERRUPT_ERR);
 
@@ -269,7 +269,7 @@ int32_t SDL_DCC_posTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-        for(i= DCC_INST_NUM; i <INVALID_INSTANCE; i++)
+        for(i= DCC_INST_NUM; i <SDL_DCC_INVALID_INSTANCE; i++)
         {
             sdlRet = SDL_DCC_getStaticRegs((SDL_DCC_Inst)i, &staticRegs);
 

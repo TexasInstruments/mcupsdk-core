@@ -79,7 +79,7 @@ typedef enum {
    /**< MSS DCCC Instance */
    SDL_DCC_INST_MSS_DCCD,
    /**< MSS DCCD Instance */
-   INVALID_INSTANCE,
+   SDL_DCC_INVALID_INSTANCE,
    /**< Invalid Instance */
 
 } SDL_DCC_Inst;

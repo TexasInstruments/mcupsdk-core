@@ -84,7 +84,7 @@ typedef enum {
     SDL_STC_INST_MAINR5F0,
     SDL_STC_INST_DSP,
 
-    INVALID_INSTANCE,
+    SDL_STC_INVALID_INSTANCE,
 
 } SDL_STC_Inst;
 

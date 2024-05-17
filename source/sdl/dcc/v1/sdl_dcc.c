@@ -70,7 +70,7 @@ int32_t SDL_DCC_configure(SDL_DCC_Inst instance, const SDL_DCC_config *pConfig)
     uint32_t clksrcVal;
     unsigned long int baseAddr;
 
-	if((instance <INVALID_INSTANCE) && (pConfig != NULL))
+	if((instance <SDL_DCC_INVALID_INSTANCE) && (pConfig != NULL))
 	{
 		if ((pConfig->clk0Seed      <= DCC_SRC0_COUNT_MAX) &&
 			(pConfig->clk0ValidSeed <= DCC_SRC0_VALID_MAX) &&
@@ -149,7 +149,7 @@ SDL_DCC_verifyConfig(SDL_DCC_Inst instance, const SDL_DCC_config *pConfig)
     unsigned long int baseAddr;
 
 
-	if((instance <INVALID_INSTANCE) && (pConfig != NULL) )
+	if((instance <SDL_DCC_INVALID_INSTANCE) && (pConfig != NULL) )
 	{
 		/* Getting base address */
 		baseAddr = SDL_DCC_baseAddress[instance];
@@ -209,7 +209,7 @@ int32_t SDL_DCC_enable(SDL_DCC_Inst instance)
 	unsigned long int  baseAddr;
 	int32_t sdlResult;
 
-	if(instance <INVALID_INSTANCE)
+	if(instance <SDL_DCC_INVALID_INSTANCE)
 	{
 		/* Getting base address */
 		baseAddr = SDL_DCC_baseAddress[instance];
@@ -239,7 +239,7 @@ int32_t SDL_DCC_disable(SDL_DCC_Inst instance)
 	unsigned long int  baseAddr;
 	int32_t sdlResult;
 
-	if(instance <INVALID_INSTANCE)
+	if(instance <SDL_DCC_INVALID_INSTANCE)
 	{
 		/* Getting base address */
 		baseAddr = SDL_DCC_baseAddress[instance];
@@ -271,7 +271,7 @@ int32_t SDL_DCC_getStatus(SDL_DCC_Inst instance, SDL_DCC_Status *pStatus)
 	int32_t sdlResult, intrStatus;
 
 
-	if((instance <INVALID_INSTANCE) && (pStatus != NULL))
+	if((instance <SDL_DCC_INVALID_INSTANCE) && (pStatus != NULL))
 	{
 		/* Getting base address */
 		baseAddr = SDL_DCC_baseAddress[instance];
@@ -359,7 +359,7 @@ int32_t SDL_DCC_enableIntr(SDL_DCC_Inst instance, SDL_DCC_intrType intr)
 	int32_t sdlResult = SDL_EFAIL;
 	unsigned long int  baseAddr;
 
-	if(instance <INVALID_INSTANCE)
+	if(instance <SDL_DCC_INVALID_INSTANCE)
 	{
 		/* Getting base address */
 		baseAddr = SDL_DCC_baseAddress[instance];
@@ -405,7 +405,7 @@ int32_t SDL_DCC_clearIntr(SDL_DCC_Inst instance, SDL_DCC_intrType intr)
     int32_t sdlResult = SDL_EFAIL;
 	unsigned long int baseAddr;
 
-	if(instance <INVALID_INSTANCE)
+	if(instance <SDL_DCC_INVALID_INSTANCE)
 	{
 		/* Getting base address */
 		baseAddr = SDL_DCC_baseAddress[instance];
@@ -455,7 +455,7 @@ int32_t SDL_DCC_getStaticRegs(SDL_DCC_Inst instance, SDL_DCC_staticRegs *pStatic
 	int32_t  sdlResult;
 
 
-	if((instance <INVALID_INSTANCE) && (pStaticRegs != NULL))
+	if((instance <SDL_DCC_INVALID_INSTANCE) && (pStaticRegs != NULL))
 	{
 		/* Getting base address */
 		baseAddr =(uint32_t) SDL_DCC_baseAddress[instance];

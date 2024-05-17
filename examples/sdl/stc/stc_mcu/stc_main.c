@@ -90,7 +90,7 @@ void STC_DSP_test_main(void);
  *  \brief global variable for holding data buffer.
  */
 /* Disable DSP instance for Selftest*/
-static const SDL_STC_Inst test_case[]={SDL_STC_INST_MAINR5F0, /*SDL_STC_INST_DSP*/ INVALID_INSTANCE};
+static const SDL_STC_Inst test_case[]={SDL_STC_INST_MAINR5F0, /*SDL_STC_INST_DSP*/ SDL_STC_INVALID_INSTANCE};
 volatile int32_t test_Result;
 
 /*===========================================================================*/
