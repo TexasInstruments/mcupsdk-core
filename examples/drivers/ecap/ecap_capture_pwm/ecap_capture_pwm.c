@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -33,65 +33,81 @@
 //
 // Included Files
 //
-#include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/SemaphoreP.h>
 #include <kernel/dpl/HwiP.h>
-#include <drivers/epwm.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
 /*
-    This example configures ePWM9A for:
-     Up count mode
-     Period starts at 500 and goes up to 8000
-     Toggle output on PRD
-
-     eCAP1 is configured to capture the time between rising
-     and falling edge of the ePWM9A output.
-
-     ecap1PassCount - Successful captures.
-     ecap1IntCount - Interrupt counts.
+ * ECAP Capture Mode
+ * ----------------
+ *    ECAP runs at 200 MHz and timestamps the edges (rising and/or falling) into 4 Capture registers
+ * This example reads a PWM wave and determines its frequency and duty cycle.
+ * Configuring the input via GPI and InputXbar into the ECAP for
+ *     Falling, Rising, Falling, Rising
+ * INPUT :
+ *                 _________           _________           _________
+ *                 |       |           |       |           |
+ *         ________|       |___________|       |___________|
+ *                         ^           ^       ^           ^
+ * EDGE EVENT :            1.F         2.R     3.F         4.R
+ * DATA :          <--NA--><-OFF time-><--ON--><-OFF time->
+ * ECAP will be configured to reset counter on each edge recieved, and capture for one shot.
+ * So the timestamp registers hold the data as follows
+ *     2. OFF time
+ *     3. ON time
+ *     4. OFF time
+ *
+ * This example configures ePWM9A (input waveform) for:
+ *    Up count mode
+ *    Period starts at 500 and goes up to 8000
+ *    Toggle output on PRD
+ *
+ * eCAP1 is configured to capture the time between rising and falling edge of the ePWM9A output.
+ *
+ * Watch Variables :
+ *  - ecap1PassCount - Successful captures.
+ *  - ecap1IntCount - Interrupt counts.
+ *
 */
 
-/* Output frequency of the PWM wave (in Hz) */
-#define APP_ECAP_APWM_OUT_FREQ  (1000U)
-/* App run time (in seconds) */
-#define APP_ECAP_RUN_TIME  (10U)
-/* FIXME : To be removed after syscfg integration */
+
+/* Defines */
+
 #define APP_INT_IS_PULSE  (1U)
+
+#define PWM_TIMER_MIN     500U
+#define PWM_TIMER_MAX     8000U
+
+#define EPWM_TIMER_UP      1U
+#define EPWM_TIMER_DOWN    0U
 
 /* Global variables and objects */
 static HwiP_Object  gEcapHwiObject;
 static SemaphoreP_Object  gEcapSyncSemObject;
 
+
+/* Globals */
+/* counters */
+uint32_t ecap1IntCount = 0;
+uint32_t ecap1PassCount = 0;
+volatile uint16_t cap2Count = 0;
+volatile uint16_t cap3Count = 0;
+volatile uint16_t cap4Count = 0;
+volatile uint16_t epwm9PeriodCount = 0;
+
+uint32_t epwm9TimerDirection = EPWM_TIMER_UP;
+
+volatile uint16_t epwm_tick_time = 10; // 10 ns. check syscfg for EPMW Time Base Config. input clock is 200 MHz, Prescalres are 1*2.
+volatile uint16_t ecap_tick_time = 5;  // 5 ns. Input Clock is 200 MHz
+
+/* variables to hold base address of ECAP and EPWM that is used */
+uint32_t gEcapBaseAddr = CONFIG_ECAP0_BASE_ADDR;
+uint32_t gEpwm9BaseAddr  = CONFIG_EPWM9_BASE_ADDR;
+
 /* Function Prototypes */
 static void App_ecapIntrISR(void *handle);
-
-/* variable to hold base address of ECAP and EPWM that is used */
-uint32_t gEcapBaseAddr;
-uint32_t gEpwm9BaseAddr;
-
-//
-// Defines
-//
-#define PWM3_TIMER_MIN     500U
-#define PWM3_TIMER_MAX     8000U
-#define EPWM_TIMER_UP      1U
-#define EPWM_TIMER_DOWN    0U
-
-//
-// Globals
-//
-uint32_t ecap1IntCount;
-uint32_t ecap1PassCount;
-uint32_t epwm9TimerDirection;
-volatile uint16_t cap2Count;
-volatile uint16_t cap3Count;
-volatile uint16_t cap4Count;
-volatile uint16_t epwm9PeriodCount;
-volatile uint16_t epwm_tick_time;
-volatile uint16_t ecap_tick_time;
 
 
 void ecap_capture_pwm_main(void *args)
@@ -104,69 +120,50 @@ void ecap_capture_pwm_main(void *args)
     Drivers_open();
     Board_driversOpen();
 
-    epwm9TimerDirection = EPWM_TIMER_UP;
-    //
-    // Initialize counters:
-    //
-    cap2Count = 0U;
-    cap3Count = 0U;
-    cap4Count = 0U;
-    ecap1IntCount = 0U;
-    ecap1PassCount = 0U;
-    epwm9PeriodCount = 0U;
-
-    /* In EPWM_setClockPrescaler configuration,
-       EPWM_ClockDivider is EPWM_CLOCK_DIVIDER_1
-       EPWM_HSClockDivider is EPWM_HSCLOCK_DIVIDER_2
-       TBCLK = SYSCLK/(1*2)
-       1 clock pulse time = 1/TBCLK
-       Eg: SYSCLK = 200 MHZ => TBCLK = 100 MHz
-       1 tick time = 1/100MHz = 10 ns
-    */
-    epwm_tick_time = 10;
-
-    /* The ECAP gets SYSCLK
-       1 tick time = 1/SYSCLK = 5 ns
-    */
-    ecap_tick_time = 5;
-
     DebugP_log("ECAP Capture Pwm Test Started ...\r\n");
 
-     /* Get ECAP address */
-    gEcapBaseAddr = CONFIG_ECAP0_BASE_ADDR;
-
-     /* Get Address of ePWM */
-    gEpwm9BaseAddr = CONFIG_EPWM9_BASE_ADDR;
-
+    /* Constructing a semaphore, for communicating weather ISR complete to the background loop */
     status = SemaphoreP_constructCounting(&gEcapSyncSemObject, 0, numIsrCnt);
     DebugP_assert(SystemP_SUCCESS == status);
 
     /* Register & enable interrupt */
     HwiP_Params_init(&hwiPrms);
-    /* Integrate with Syscfg */
     hwiPrms.intNum      = CSLR_R5FSS0_CORE0_CONTROLSS_INTRXBAR0_OUT_22;
     hwiPrms.callback    = &App_ecapIntrISR;
-    /* Integrate with Syscfg */
     hwiPrms.isPulse     = APP_INT_IS_PULSE;
     status              = HwiP_construct(&gEcapHwiObject, &hwiPrms);
     DebugP_assert(status == SystemP_SUCCESS);
 
-
     /* Wait for specified time */
     while(numIsrCnt > 0)
     {
-        //
-        // Clear interrupt flags for upcoming interrupts.
-        //
+        /* Clear interrupt flags for upcoming interrupts. */
         ECAP_clearInterrupt(gEcapBaseAddr, ECAP_ISR_SOURCE_CAPTURE_EVENT_4);
         ECAP_clearGlobalInterrupt(gEcapBaseAddr);
 
-        //
-        // Start eCAP
-        //
+        /* Start/ ReArm  eCAP */
         ECAP_reArm(gEcapBaseAddr);
 
+        /* wait on the Semaphore Post from ISR */
         SemaphoreP_pend(&gEcapSyncSemObject, SystemP_WAIT_FOREVER);
+
+        /*
+            Printing the Captured Values
+            the Capture Sequence is Falling Rising Falling Rising.
+                Cap2Count would give OFF time
+                Cap3Count would give ON time
+                Cap4Count would give OFF time
+                Cap2Count + Cap3Count is a period
+         */
+
+        uint32_t period = ((cap2Count+cap3Count)*ecap_tick_time);
+        float duty = ((float) cap2Count)/((float)( cap2Count+cap3Count));
+        float frequency = 1000000/((float)period);
+
+        DebugP_log("Period : %d ns\r\n", period);
+        DebugP_log("Duty : %f %\r\n", duty);
+        DebugP_log("frequency : %f Hz\r\n", frequency );
+
         numIsrCnt--;
     }
 
@@ -199,17 +196,16 @@ static void App_ecapIntrISR(void *handle)
     {
         SemaphoreP_post(&gEcapSyncSemObject);
 
-
-        // Get the capture counts. Each capture should be 4x the ePWM count
-        // because of the ePWM clock divider.
-        //
+        /*
+            Get the capture counts. Each capture should be 4x the ePWM count
+            because of the ePWM clock divider.
+        */
         cap2Count = ECAP_getEventTimeStamp(gEcapBaseAddr, ECAP_EVENT_2);
         cap3Count = ECAP_getEventTimeStamp(gEcapBaseAddr, ECAP_EVENT_3);
         cap4Count = ECAP_getEventTimeStamp(gEcapBaseAddr, ECAP_EVENT_4);
 
-        //
-        // Compare the period value with the captured count
-        //
+        /* Compare the period value with the captured count */
+
         epwm9PeriodCount = EPWM_getTimeBasePeriod(gEpwm9BaseAddr);
 
         if(cap2Count * ecap_tick_time > ((epwm9PeriodCount *epwm_tick_time) + 10) ||
@@ -232,13 +228,13 @@ static void App_ecapIntrISR(void *handle)
 
         ecap1IntCount++;
 
-        //
-        // Keep track of the ePWM direction and adjust period accordingly to
-        // generate a variable frequency PWM.
-        //
+        /*
+            Keep track of the ePWM direction and adjust period accordingly to
+            generate a variable frequency PWM.
+         */
         if(epwm9TimerDirection == EPWM_TIMER_UP)
         {
-            if(epwm9PeriodCount < PWM3_TIMER_MAX)
+            if(epwm9PeriodCount < PWM_TIMER_MAX)
             {
             EPWM_setTimeBasePeriod(gEpwm9BaseAddr, ++epwm9PeriodCount);
             }
@@ -250,7 +246,7 @@ static void App_ecapIntrISR(void *handle)
         }
         else
         {
-            if(epwm9PeriodCount > PWM3_TIMER_MIN)
+            if(epwm9PeriodCount > PWM_TIMER_MIN)
             {
                 EPWM_setTimeBasePeriod(gEpwm9BaseAddr, --epwm9PeriodCount);
             }
@@ -260,10 +256,7 @@ static void App_ecapIntrISR(void *handle)
             EPWM_setTimeBasePeriod(gEpwm9BaseAddr, ++epwm9PeriodCount);
             }
         }
-
-        //
-        // Count correct captures
-        //
+        /* Count correct captures */
         ecap1PassCount++;
 
 
