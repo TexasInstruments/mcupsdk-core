@@ -8,6 +8,12 @@ const driverVer = {
     "psram": {
         version: "v0",
     },
+    "parallelRam": {
+        version: "v0",
+    },
+    "ram": {
+        version: "v0",
+    }
 };
 
 const topModules_main = [
@@ -15,7 +21,7 @@ const topModules_main = [
       "/board/led/led",
       "/board/flash/flash",
       "/board/ethphy/ethphy",
-      "/board/psram/psram",
+      "/board/ram/ram",
 ];
 const topModules_mcu = [
 ];
@@ -34,4 +40,12 @@ exports = {
     getDriverVer: function(driverName) {
         return driverVer[driverName].version;
     },
+    getDriverInstanceValid: function(driverName) {
+        let valid = false;
+        if(driverName in driverVer)
+        {
+            valid = true;
+        }
+        return valid;
+    }
 };
