@@ -2,16 +2,16 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM263x_beta" --package "ZCZ" --part "AM263x" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.18.0+3266"}
+ * @versions {"tool":"1.20.0+3587"}
  */
 
 /**
  * Import the modules used in this configuration.
  */
-const psram           = scripting.addModule("/board/psram/psram", {}, false);
-const psram1          = psram.addInstance();
+const ram             = scripting.addModule("/board/ram/ram", {}, false);
+const ram1            = ram.addInstance();
 const gpio            = scripting.addModule("/drivers/gpio/gpio", {}, false);
-const gpio1           = gpio.addInstance();
+const gpio2           = gpio.addInstance();
 const debug_log       = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7       = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71      = mpu_armv7.addInstance();
@@ -45,63 +45,18 @@ const section12       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-psram1.$name                                 = "CONFIG_PSRAM0";
-psram1.psramDriverIoExpander.$name           = "CONFIG_I2C0";
-psram1.psramDriverIoExpander.I2C.$assign     = "I2C2";
-psram1.psramDriverIoExpander.I2C.SDA.pu_pd   = "pd";
-psram1.psramDriver.$name                     = "CONFIG_GPMC0";
-psram1.psramDriver.clockRateDiv              = 4;
-psram1.psramDriver.GPMC.$assign              = "GPMC";
-psram1.psramDriver.GPMC.GPMC_OEn_REn.pu_pd   = "pu";
-psram1.psramDriver.GPMC.GPMC_OEn_REn.$assign = "PR0_PRU1_GPIO5";
-psram1.psramDriver.GPMC.GPMC_ADVn_ALE.pu_pd  = "pu";
-psram1.psramDriver.GPMC.GPMC_WEn.$assign     = "PR0_PRU1_GPIO8";
-psram1.psramDriver.GPMC.GPMC_BE0n_CLE.pu_pd  = "pu";
-psram1.psramDriver.GPMC.GPMC_A0.pu_pd        = "pu";
-psram1.psramDriver.GPMC.GPMC_A1.pu_pd        = "pu";
-psram1.psramDriver.GPMC.GPMC_A2.pu_pd        = "pu";
-psram1.psramDriver.GPMC.GPMC_A3.pu_pd        = "pu";
-psram1.psramDriver.GPMC.GPMC_A4.pu_pd        = "pu";
-psram1.psramDriver.GPMC.GPMC_A5.pu_pd        = "pu";
-psram1.psramDriver.GPMC.GPMC_A6.pu_pd        = "pu";
-psram1.psramDriver.GPMC.GPMC_A7.pu_pd        = "pu";
-psram1.psramDriver.GPMC.GPMC_A8.pu_pd        = "pu";
-psram1.psramDriver.GPMC.GPMC_A9.pu_pd        = "pu";
-psram1.psramDriver.GPMC.GPMC_A10.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_A11.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_A12.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_A13.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_A14.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_A15.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_A16.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_A17.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_A18.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_A19.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_A20.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_A21.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_BE1n.pu_pd      = "pu";
-psram1.psramDriver.GPMC.GPMC_CSn0.pu_pd      = "pu";
-psram1.psramDriver.GPMC.GPMC_CSn0.$assign    = "PR0_PRU1_GPIO14";
-psram1.psramDriver.GPMC.GPMC_AD0.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_AD1.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_AD2.pu_pd       = "pd";
-psram1.psramDriver.GPMC.GPMC_AD3.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_AD4.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_AD5.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_AD6.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_AD6.$assign     = "UART1_RXD";
-psram1.psramDriver.GPMC.GPMC_AD7.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_AD7.$assign     = "UART1_TXD";
-psram1.psramDriver.GPMC.GPMC_AD8.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_AD9.pu_pd       = "pu";
-psram1.psramDriver.GPMC.GPMC_AD10.pu_pd      = "pu";
-psram1.psramDriver.GPMC.GPMC_AD11.pu_pd      = "pu";
-psram1.psramDriver.GPMC.GPMC_AD12.pu_pd      = "pu";
-psram1.psramDriver.GPMC.GPMC_AD13.pu_pd      = "pu";
-psram1.psramDriver.GPMC.GPMC_AD14.pu_pd      = "pu";
-psram1.psramDriver.GPMC.GPMC_AD15.pu_pd      = "pu";
+ram1.$name                                                   = "CONFIG_RAM0";
+ram1.parallelRamDriver.$name                                 = "board_ram_parallelRam_parallelram0";
+ram1.parallelRamDriver.psramDriverIoExpander.$name           = "CONFIG_I2C0";
+ram1.parallelRamDriver.psramDriverIoExpander.I2C.$assign     = "I2C2";
+ram1.parallelRamDriver.psramDriverIoExpander.I2C_child.$name = "drivers_i2c_v1_i2c_v1_template0";
+ram1.parallelRamDriver.psramDriver.$name                     = "CONFIG_GPMC0";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_OEn_REn.$assign = "PR0_PRU1_GPIO5";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_WEn.$assign     = "PR0_PRU1_GPIO8";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_CSn0.$assign    = "PR0_PRU1_GPIO14";
 
-gpio1.$name = "CONFIG_GPIO0";
+gpio2.$name = "CONFIG_GPIO0";
+gpio2.rx    = true;
 
 debug_log.enableUartLog            = true;
 debug_log.uartLog.$name            = "CONFIG_UART_CONSOLE";
@@ -347,47 +302,50 @@ section12.output_section[0].alignment = 0;
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-psram1.psramDriverIoExpander.I2C.SCL.$suggestSolution  = "UART0_RTSn";
-psram1.psramDriverIoExpander.I2C.SDA.$suggestSolution  = "UART0_CTSn";
-psram1.psramDriver.GPMC.GPMC_ADVn_ALE.$suggestSolution = "SDFM0_CLK2";
-psram1.psramDriver.GPMC.GPMC_BE0n_CLE.$suggestSolution = "PR0_PRU1_GPIO9";
-psram1.psramDriver.GPMC.GPMC_A0.$suggestSolution       = "PR0_PRU0_GPIO4";
-psram1.psramDriver.GPMC.GPMC_A1.$suggestSolution       = "PR0_PRU0_GPIO0";
-psram1.psramDriver.GPMC.GPMC_A2.$suggestSolution       = "PR0_PRU0_GPIO1";
-psram1.psramDriver.GPMC.GPMC_A3.$suggestSolution       = "PR0_PRU0_GPIO2";
-psram1.psramDriver.GPMC.GPMC_A4.$suggestSolution       = "PR0_PRU0_GPIO3";
-psram1.psramDriver.GPMC.GPMC_A5.$suggestSolution       = "PR0_PRU0_GPIO16";
-psram1.psramDriver.GPMC.GPMC_A6.$suggestSolution       = "PR0_PRU0_GPIO15";
-psram1.psramDriver.GPMC.GPMC_A7.$suggestSolution       = "PR0_PRU0_GPIO11";
-psram1.psramDriver.GPMC.GPMC_A8.$suggestSolution       = "PR0_PRU0_GPIO12";
-psram1.psramDriver.GPMC.GPMC_A9.$suggestSolution       = "PR0_PRU0_GPIO13";
-psram1.psramDriver.GPMC.GPMC_A10.$suggestSolution      = "PR0_PRU0_GPIO14";
-psram1.psramDriver.GPMC.GPMC_A11.$suggestSolution      = "PR0_PRU1_GPIO6";
-psram1.psramDriver.GPMC.GPMC_A12.$suggestSolution      = "PR0_PRU1_GPIO4";
-psram1.psramDriver.GPMC.GPMC_A13.$suggestSolution      = "PR0_PRU1_GPIO0";
-psram1.psramDriver.GPMC.GPMC_A14.$suggestSolution      = "PR0_PRU1_GPIO1";
-psram1.psramDriver.GPMC.GPMC_A15.$suggestSolution      = "PR0_PRU1_GPIO2";
-psram1.psramDriver.GPMC.GPMC_A16.$suggestSolution      = "PR0_PRU1_GPIO3";
-psram1.psramDriver.GPMC.GPMC_A17.$suggestSolution      = "PR0_PRU1_GPIO16";
-psram1.psramDriver.GPMC.GPMC_A18.$suggestSolution      = "PR0_PRU1_GPIO15";
-psram1.psramDriver.GPMC.GPMC_A19.$suggestSolution      = "PR0_PRU1_GPIO11";
-psram1.psramDriver.GPMC.GPMC_A20.$suggestSolution      = "PR0_PRU1_GPIO12";
-psram1.psramDriver.GPMC.GPMC_A21.$suggestSolution      = "PR0_PRU1_GPIO13";
-psram1.psramDriver.GPMC.GPMC_BE1n.$suggestSolution     = "PR0_PRU1_GPIO10";
-psram1.psramDriver.GPMC.GPMC_AD0.$suggestSolution      = "EPWM13_A";
-psram1.psramDriver.GPMC.GPMC_AD1.$suggestSolution      = "EPWM13_B";
-psram1.psramDriver.GPMC.GPMC_AD2.$suggestSolution      = "EPWM14_A";
-psram1.psramDriver.GPMC.GPMC_AD3.$suggestSolution      = "EPWM14_B";
-psram1.psramDriver.GPMC.GPMC_AD4.$suggestSolution      = "EPWM15_A";
-psram1.psramDriver.GPMC.GPMC_AD5.$suggestSolution      = "EPWM15_B";
-psram1.psramDriver.GPMC.GPMC_AD8.$suggestSolution      = "MMC_CLK";
-psram1.psramDriver.GPMC.GPMC_AD9.$suggestSolution      = "MMC_CMD";
-psram1.psramDriver.GPMC.GPMC_AD10.$suggestSolution     = "MMC_DAT0";
-psram1.psramDriver.GPMC.GPMC_AD11.$suggestSolution     = "MMC_DAT1";
-psram1.psramDriver.GPMC.GPMC_AD12.$suggestSolution     = "MMC_DAT2";
-psram1.psramDriver.GPMC.GPMC_AD13.$suggestSolution     = "MMC_DAT3";
-psram1.psramDriver.GPMC.GPMC_AD14.$suggestSolution     = "MMC_SDWP";
-psram1.psramDriver.GPMC.GPMC_AD15.$suggestSolution     = "MMC_SDCD";
-psram1.psramDriver.GPMC.GPMC_WAIT0.$suggestSolution    = "PR0_PRU0_GPIO10";
-gpio1.GPIO.$suggestSolution                            = "GPIO0";
-gpio1.GPIO.gpioPin.$suggestSolution                    = "QSPI_CSn0";
+ram1.parallelRamDriver.psramDriverIoExpander.I2C.SCL.$suggestSolution  = "UART0_RTSn";
+ram1.parallelRamDriver.psramDriverIoExpander.I2C.SDA.$suggestSolution  = "UART0_CTSn";
+ram1.parallelRamDriver.sleepEnGpioDriver.GPIO_n.$suggestSolution       = "QSPI_CSn0";
+ram1.parallelRamDriver.psramDriver.GPMC.$suggestSolution               = "GPMC";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_ADVn_ALE.$suggestSolution = "SDFM0_CLK2";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_BE0n_CLE.$suggestSolution = "PR0_PRU1_GPIO9";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A0.$suggestSolution       = "PR0_PRU0_GPIO4";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A1.$suggestSolution       = "PR0_PRU0_GPIO0";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A2.$suggestSolution       = "PR0_PRU0_GPIO1";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A3.$suggestSolution       = "PR0_PRU0_GPIO2";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A4.$suggestSolution       = "PR0_PRU0_GPIO3";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A5.$suggestSolution       = "PR0_PRU0_GPIO16";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A6.$suggestSolution       = "PR0_PRU0_GPIO15";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A7.$suggestSolution       = "PR0_PRU0_GPIO11";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A8.$suggestSolution       = "PR0_PRU0_GPIO12";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A9.$suggestSolution       = "PR0_PRU0_GPIO13";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A10.$suggestSolution      = "PR0_PRU0_GPIO14";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A11.$suggestSolution      = "PR0_PRU1_GPIO6";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A12.$suggestSolution      = "PR0_PRU1_GPIO4";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A13.$suggestSolution      = "PR0_PRU1_GPIO0";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A14.$suggestSolution      = "PR0_PRU1_GPIO1";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A15.$suggestSolution      = "PR0_PRU1_GPIO2";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A16.$suggestSolution      = "PR0_PRU1_GPIO3";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A17.$suggestSolution      = "PR0_PRU1_GPIO16";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A18.$suggestSolution      = "PR0_PRU1_GPIO15";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A19.$suggestSolution      = "PR0_PRU1_GPIO11";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A20.$suggestSolution      = "PR0_PRU1_GPIO12";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_A21.$suggestSolution      = "PR0_PRU1_GPIO13";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_BE1n.$suggestSolution     = "PR0_PRU1_GPIO10";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_AD0.$suggestSolution      = "EPWM13_A";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_AD1.$suggestSolution      = "EPWM13_B";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_AD2.$suggestSolution      = "EPWM14_A";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_AD3.$suggestSolution      = "EPWM14_B";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_AD4.$suggestSolution      = "EPWM15_A";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_AD5.$suggestSolution      = "EPWM15_B";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_AD6.$suggestSolution      = "UART1_RXD";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_AD7.$suggestSolution      = "UART1_TXD";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_AD8.$suggestSolution      = "MMC_CLK";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_AD9.$suggestSolution      = "MMC_CMD";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_AD10.$suggestSolution     = "MMC_DAT0";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_AD11.$suggestSolution     = "MMC_DAT1";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_AD12.$suggestSolution     = "MMC_DAT2";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_AD13.$suggestSolution     = "MMC_DAT3";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_AD14.$suggestSolution     = "MMC_SDWP";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_AD15.$suggestSolution     = "MMC_SDCD";
+ram1.parallelRamDriver.psramDriver.GPMC.GPMC_WAIT0.$suggestSolution    = "PR0_PRU0_GPIO10";
+gpio2.GPIO_n.$suggestSolution                                          = "QSPI_CSn1";
