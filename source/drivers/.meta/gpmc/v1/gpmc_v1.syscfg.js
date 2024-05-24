@@ -192,7 +192,7 @@ function pinmuxRequirements(inst) {
     switch(inst.deviceType)
     {
         default:
-        case "NOR":
+        case "PSRAM":
             switch(inst.deviceWidth)
             {
                 default:
@@ -348,9 +348,9 @@ let gpmc_module = {
             name: "deviceType",
             displayName: "Device Type",
             description: "Type of device connected to GPMC",
-            default: "NOR",
+            default: "PSRAM",
             options: [
-                { name: "NOR", displayName: "PSRAM" },
+                { name: "PSRAM", displayName: "PSRAM" },
             ]
         },
         {
