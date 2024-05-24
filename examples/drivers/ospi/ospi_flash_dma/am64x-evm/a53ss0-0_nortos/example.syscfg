@@ -1,0 +1,77 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "a53ss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.20.0+3587"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const flash      = scripting.addModule("/board/flash/flash", {}, false);
+const flash1     = flash.addInstance();
+const udma       = scripting.addModule("/drivers/udma/udma", {}, false);
+const udma1      = udma.addInstance();
+const clock      = scripting.addModule("/kernel/dpl/clock");
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mmu_armv8  = scripting.addModule("/kernel/dpl/mmu_armv8", {}, false);
+const mmu_armv81 = mmu_armv8.addInstance();
+const mmu_armv82 = mmu_armv8.addInstance();
+const mmu_armv83 = mmu_armv8.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+flash1.$name                         = "CONFIG_FLASH0";
+flash1.peripheralDriver.$name        = "CONFIG_OSPI0";
+flash1.peripheralDriver.phyEnable    = true;
+flash1.peripheralDriver.inputClkFreq = 166666666;
+
+udma1.$name                       = "CONFIG_UDMA0";
+udma1.udmaBlkCopyChannel.create(1);
+udma1.udmaBlkCopyChannel[0].$name = "CONFIG_UDMA_BLKCOPY_CH0";
+
+debug_log.enableUartLog        = true;
+debug_log.enableCssLog         = false;
+debug_log.uartLog.$name        = "CONFIG_UART_LOG";
+debug_log.uartLog.UART.$assign = "USART0";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
+
+mmu_armv81.$name = "SOC_MEM_REGION";
+mmu_armv81.size  = 0x80000000;
+
+mmu_armv82.$name     = "MSRAM_REGION";
+mmu_armv82.vAddr     = 0x70000000;
+mmu_armv82.pAddr     = 0x70000000;
+mmu_armv82.size      = 0x200000;
+mmu_armv82.attribute = "MAIR7";
+
+mmu_armv83.$name     = "DDR_REGION";
+mmu_armv83.vAddr     = 0x80000000;
+mmu_armv83.pAddr     = 0x80000000;
+mmu_armv83.size      = 0x80000000;
+mmu_armv83.attribute = "MAIR7";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+flash1.peripheralDriver.OSPI.$suggestSolution      = "OSPI0";
+flash1.peripheralDriver.OSPI.CLK.$suggestSolution  = "OSPI0_CLK";
+flash1.peripheralDriver.OSPI.CSn0.$suggestSolution = "OSPI0_CSn0";
+flash1.peripheralDriver.OSPI.DQS.$suggestSolution  = "OSPI0_DQS";
+flash1.peripheralDriver.OSPI.D7.$suggestSolution   = "OSPI0_D7";
+flash1.peripheralDriver.OSPI.D6.$suggestSolution   = "OSPI0_D6";
+flash1.peripheralDriver.OSPI.D5.$suggestSolution   = "OSPI0_D5";
+flash1.peripheralDriver.OSPI.D4.$suggestSolution   = "OSPI0_D4";
+flash1.peripheralDriver.OSPI.D3.$suggestSolution   = "OSPI0_D3";
+flash1.peripheralDriver.OSPI.D2.$suggestSolution   = "OSPI0_D2";
+flash1.peripheralDriver.OSPI.D1.$suggestSolution   = "OSPI0_D1";
+flash1.peripheralDriver.OSPI.D0.$suggestSolution   = "OSPI0_D0";
+debug_log.uartLog.UART.RXD.$suggestSolution        = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$suggestSolution        = "UART0_TXD";
