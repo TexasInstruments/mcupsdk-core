@@ -133,6 +133,7 @@ const topModules_a53 = [
     "/drivers/i2c/i2c",
     "/drivers/ipc/ipc",
     "/drivers/mmcsd/mmcsd",
+    "/drivers/mcspi/mcspi",
     "/drivers/uart/uart",
     "/drivers/udma/udma",
     "/drivers/watchdog/watchdog",

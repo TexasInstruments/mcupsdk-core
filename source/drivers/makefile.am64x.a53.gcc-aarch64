@@ -34,6 +34,9 @@ FILES_common := \
     gpmc_dma.c \
     gpmc_dma_udma.c \
     gtc.c \
+    mcspi_v0.c \
+    mcspi_dma_udma.c \
+    mcspi_v0_lld.c \
     i2c_v0.c \
     i2c_v0_lld.c \
     ipc_notify_v0.c \
@@ -89,6 +92,11 @@ FILES_PATH_common = \
     ipc_notify/v0/soc/am64x \
     ipc_rpmsg/ \
     mmcsd/v0 \
+    mcspi/v0 \
+    mcspi/v0/lld \
+    mcspi/v0/lld/dma \
+    mcspi/v0/lld/dma/udma \
+    mcspi/v0/lld/dma/dummy \
     sciclient \
     sciclient/soc/am64x_am243x \
     soc/am64x_am243x \
