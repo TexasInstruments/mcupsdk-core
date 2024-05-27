@@ -179,6 +179,7 @@ const example_file_list = [
     "examples/usb/device/dfu/.project/project_nortos.js",
     "examples/usb/device/ncm/.project/project_nortos.js",
     "examples/usb/device/rndis/.project/project_nortos.js",
+    "examples/networking/enet_cli/.project/project.js",
     "examples/networking/enet_loopback/enet_cpsw_loopback/.project/project.js",
     "examples/networking/lwip/cpsw_lwip_https/.project/project.js",
     "examples/networking/lwip/cpsw_lwip_mqtt/.project/project.js",

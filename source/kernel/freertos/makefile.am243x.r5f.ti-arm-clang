@@ -61,6 +61,7 @@ FILES_common := \
     FreeRTOS_POSIX_unistd.c \
     FreeRTOS_POSIX_utils.c \
     port.c \
+    FreeRTOS_CLI.c \
 
 ASMFILES_common := \
     boot_armv7r_asm.S \
@@ -83,6 +84,7 @@ FILES_PATH_common = \
     FreeRTOS-Kernel/portable/MemMang \
     FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/source/ \
     portable/TI_ARM_CLANG/ARM_CR5F \
+    FreeRTOS-Plus-CLI/ \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
@@ -94,6 +96,7 @@ INCLUDES_common := \
     -IFreeRTOS-POSIX/include/private \
     -IFreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include \
     -IFreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include/portable \
+    -IFreeRTOS-Plus-CLI \
 
 DEFINES_common := \
     -DSOC_AM243X \

@@ -52,6 +52,8 @@ const files_r5f = {
         "FreeRTOS_POSIX_utils.c",
         // picked from freertos "portable"
         "port.c",
+        // picked from freertos CLI
+        "FreeRTOS_CLI.c",
     ]
 };
 
@@ -107,6 +109,8 @@ const files_m4f = {
         "FreeRTOS_POSIX_utils.c",
         // picked from freertos "portable"
         "port.c",
+        // picked from freertos CLI
+        "FreeRTOS_CLI.c",
     ]
 };
 
@@ -119,6 +123,7 @@ const includes_r5f = {
         "FreeRTOS-POSIX/include/private",
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include",
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include/portable",
+        "FreeRTOS-Plus-CLI",
     ],
 };
 
@@ -131,6 +136,7 @@ const includes_m4f = {
         "FreeRTOS-POSIX/include/private",
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include",
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/include/portable",
+        "FreeRTOS-Plus-CLI",
     ],
 };
 
@@ -177,6 +183,8 @@ const filedirs_r5f = {
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/source/",
         // picked from freertos "portable"
         "portable/TI_ARM_CLANG/ARM_CR5F",
+        // picked from freertos CLI
+        "FreeRTOS-Plus-CLI/",
     ],
 };
 
@@ -195,6 +203,8 @@ const filedirs_m4f = {
         "FreeRTOS-POSIX/FreeRTOS-Plus-POSIX/source/",
         // picked from freertos "portable"
         "portable/TI_ARM_CLANG/ARM_CM4F",
+        // picked from freertos CLI
+        "FreeRTOS-Plus-CLI/",
     ],
 };
 
