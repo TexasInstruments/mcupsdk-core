@@ -55,10 +55,6 @@
 #define TEST_ADD_INCREMENT                 (0x100000)
 #define TEST_ITERATIONS                    (8)
 
-/* PSRAM Instance Macros */
-#define CONFIG_PSRAM0 (0U)
-#define CONFIG_PSRAM_NUM_INSTANCES (1U)
-
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
 /* ========================================================================== */
@@ -74,20 +70,9 @@ uint8_t gGpmcTestTxBuf[TEST_GPMC_BUF_SIZE];
 uint8_t gGpmcTestRxBuf[TEST_GPMC_BUF_SIZE] __attribute__((aligned(128U)));
 
 uint32_t  gGpmcTestAddIncrement[TEST_ITERATIONS] = {0x00000000, 0x00100000, 0x00200000, 0x00300000, 0x00400000, 0x00500000, 0x00600000, 0x00700000};
-/*
- * PSRAM related functions and structures
- */
-#include <board/psram.h>
 
-/* PSRAM Instance Macros */
-#define CONFIG_PSRAM0 (0U)
-#define CONFIG_PSRAM_NUM_INSTANCES (1U)
-
-uint8_t gNandDataScratchMem[4096] __attribute__((aligned(128)));
-uint8_t gNandEccScratchMem[256];
-
-/* PSRAM Driver handles */
-extern Psram_Handle gPsramHandle[CONFIG_PSRAM_NUM_INSTANCES];
+/* RAM Driver handles */
+extern Ram_Handle gRamHandle[CONFIG_RAM_NUM_INSTANCES];
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -156,13 +141,13 @@ static void test_gpmc_read_write_config(void *args)
     {
         /* GPMC write from TX buffer */
         curTime = ClockP_getTimeUsec();
-        retVal = Psram_write(gPsramHandle[CONFIG_PSRAM0], offset + gGpmcTestAddIncrement[i], gGpmcTestTxBuf, TEST_GPMC_BUF_SIZE);
+        retVal = Ram_write(gRamHandle[CONFIG_RAM0], offset + gGpmcTestAddIncrement[i], gGpmcTestTxBuf, TEST_GPMC_BUF_SIZE);
         curTime = ClockP_getTimeUsec() - curTime;
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
 
         /* GPMC read to RX buffer */
         curTime = ClockP_getTimeUsec();
-        retVal = Psram_read(gPsramHandle[CONFIG_PSRAM0], offset + gGpmcTestAddIncrement[i], gGpmcTestRxBuf, TEST_GPMC_BUF_SIZE);
+        retVal = Ram_read(gRamHandle[CONFIG_RAM0], offset + gGpmcTestAddIncrement[i], gGpmcTestRxBuf, TEST_GPMC_BUF_SIZE);
         curTime = ClockP_getTimeUsec() - curTime;
         TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
 
