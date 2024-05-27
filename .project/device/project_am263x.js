@@ -251,6 +251,7 @@ const example_file_list = [
     "test/examples/drivers/epwm/epwm_xcmp_dma/.project/project.js",
     "test/examples/drivers/epwm/epwm_xcmp_multiple_edges/.project/project.js",
     "test/examples/drivers/epwm/epwm_diode_emulation/.project/project.js",
+    "test/examples/drivers/ecap/ecap_signal_monitoring/.project/project.js",
     "test/sdl/pbist/sdl_pbist_test/.project/project.js",
     "test/sdl/pbist/ip_pbist_test/.project/project.js",
     "test/sdl/dcc/dcc_mcu/dcc_func_test/.project/project.js",
