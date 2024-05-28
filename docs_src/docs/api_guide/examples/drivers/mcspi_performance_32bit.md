@@ -23,7 +23,9 @@ data transfer in controller mode with performance measurment.
  CPU + OS       | r5fss0-0 freertos
  ^              | r5fss0-0 nortos
  ^              | m4fss0-0 nortos
+ ^              | a53ss0-0 freertos
  Toolchain      | ti-arm-clang
+ ^              | arm.gnu.aarch64-none
  Board          | @VAR_BOARD_NAME_LOWER, @VAR_SK_BOARD_NAME_LOWER
  Example folder | examples/drivers/mcspi/mcspi_performance_32bit
 
@@ -108,6 +110,20 @@ Data Width      Data Length     Transfer Time (micro sec)
 ----------------------------------------------------------
 
 All tests have passed!!
+\endcode
+\endcond
+
+\cond SOC_AM64X
+a53ss0-0_freertos app log
+\code
+[MCSPI] Performance Example Started...
+
+----------------------------------------------------------
+McSPI Clock 12500000 Hz
+----------------------------------------------------------
+Data Width      Data Length     Transfer Time (micro sec)
+32              5               14.00
+----------------------------------------------------------
 \endcode
 \endcond
 
