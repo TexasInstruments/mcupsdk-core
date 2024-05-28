@@ -25,7 +25,9 @@ If data is matched, test result is passed otherwise failed.
  ---------------|-----------
  CPU + OS       | r5fss0-0 freertos
  ^              | r5fss0-0 nortos
+ ^              | a53ss0-0 freertos
  Toolchain      | ti-arm-clang
+ ^              | arm.gnu.aarch64-none
  Board          | @VAR_BOARD_NAME_LOWER, @VAR_SK_BOARD_NAME_LOWER
  Example folder | examples/drivers/mcspi/mcspi_loopback_turbo_mode
 
