@@ -6403,6 +6403,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Mcspi Performance 8bit Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "mcspi_performance_8bit",
+        "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcspi",
+            "mcspi_performance_8bit",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mcspi Performance 32bit Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_performance_32bit",
         "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
