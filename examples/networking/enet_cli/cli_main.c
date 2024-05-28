@@ -99,18 +99,20 @@ void EnetCLI_mainTask(void *args)
     char rxBuffer[MAX_READ_BUFFER_LEN] = "";
     char txBuffer[MAX_WRITE_BUFFER_LEN] = "";
 
-    strncpy(txBuffer, "CLI for Sitara MCU (Testing)\r\n", MAX_WRITE_BUFFER_LEN);
+    strncpy(txBuffer,
+            "CLI for AM243x\r\nUse 'help' to list all available commands\r\n",
+            MAX_WRITE_BUFFER_LEN);
     UART_writeCLI(gUartHandle[0], &transaction, txBuffer, MAX_WRITE_BUFFER_LEN);
 
     /* Dummy command */
     CLI_Command_Definition_t greetingCommand = { .pcCommand = "hello",
-            .pcHelpString = "hello:\r\n Gives a greeting\r\n",
+            .pcHelpString = "hello:\r\n Gives a greeting\r\n\n",
             .pxCommandInterpreter = EnetCLI_greet,
             .cExpectedNumberOfParameters = 0 };
 
     /* Command to quit CLI application */
     CLI_Command_Definition_t quitCommand = { .pcCommand = "quit",
-            .pcHelpString = "quit:\r\n Closes CLI application\r\n",
+            .pcHelpString = "quit:\r\n Closes CLI application\r\n\n",
             .pxCommandInterpreter = EnetCLI_quitTerminal,
             .cExpectedNumberOfParameters = 0 };
 
@@ -118,21 +120,21 @@ void EnetCLI_mainTask(void *args)
     CLI_Command_Definition_t initEnetCommand =
             { .pcCommand = "init",
                     .pcHelpString =
-                            "init [<link_speed>]:\r\n Initializes drives for ethernet networking with the given link speed.\r\n Link speeds: 0->10Mbps, 1->100Mbps(default), 2->1Gbps, 3->Auto\r\n",
+                            "init [<link_speed>]:\r\n Initializes drives for ethernet networking with the given link speed.\r\n Link speeds: 0->10Mbps, 1->100Mbps(default), 2->1Gbps, 3->Auto\r\n\n",
                     .pxCommandInterpreter = EnetCLI_init,
                     .cExpectedNumberOfParameters = -1 };
 
     /* Command to open Tx DMA channel */
     CLI_Command_Definition_t openTxDmaCommand = { .pcCommand = "openTxDma",
             .pcHelpString =
-                    "openTxDma [<tx_ch_num>]:\r\n Opens a Tx DMA channel\r\n",
+                    "openTxDma [<tx_ch_num>]:\r\n Opens a Tx DMA channel\r\n\n",
             .pxCommandInterpreter = EnetCLI_openTxDma,
             .cExpectedNumberOfParameters = -1 };
 
     /* Command to open Rx DMA channel */
     CLI_Command_Definition_t openRxDmaCommand = { .pcCommand = "openRxDma",
             .pcHelpString =
-                    "openRxDma [<rx_ch_num>]:\r\n Opens a Rx DMA channel\r\n",
+                    "openRxDma [<rx_ch_num>]:\r\n Opens a Rx DMA channel\r\n\n",
             .pxCommandInterpreter = EnetCLI_openRxDma,
             .cExpectedNumberOfParameters = -1 };
 
@@ -140,7 +142,7 @@ void EnetCLI_mainTask(void *args)
     CLI_Command_Definition_t addUcastCommand =
             { .pcCommand = "addUcast",
                     .pcHelpString =
-                            "addUcast [-d] <mac_addr>:\r\n Adds a unicast ALE entry with the given MAC address.\r\n Use the -d tag to make the MAC address as the default source address for sending packets.\r\n",
+                            "addUcast [-d] <mac_addr>:\r\n Adds a unicast ALE entry with the given MAC address.\r\n Use the -d tag to make the MAC address as the default source address for sending packets.\r\n\n",
                     .pxCommandInterpreter = EnetCLI_addUcast,
                     .cExpectedNumberOfParameters = -1 };
 
@@ -148,7 +150,7 @@ void EnetCLI_mainTask(void *args)
     CLI_Command_Definition_t classifyCommand =
             { .pcCommand = "classify",
                     .pcHelpString =
-                            "classify [-e <ether_type>] [-c <rx_ch_num>]:\r\n Adds a classifier entry with the given rules as filters and directs all filtered packets to the given channel. (default: 1)\r\n",
+                            "classify [-e <ether_type>] [-sm <src_mac_sddr>] [-sd <dest_mac_addr>] [-p <port_num>] [-c <rx_ch_num>]:\r\n Adds a classifier entry with the given rules as filters and directs all filtered packets to the given channel. (default: 1)\r\n\n",
                     .pxCommandInterpreter = EnetCLI_addClassifier,
                     .cExpectedNumberOfParameters = -1 };
 
@@ -156,7 +158,7 @@ void EnetCLI_mainTask(void *args)
     CLI_Command_Definition_t txPktCommand =
             { .pcCommand = "txPkt",
                     .pcHelpString =
-                            "txPkt [-m <dest_mac_addr>] [-c <tx_ch_num>] [<message>]:\r\n Transmit the message to the destination MAC address (defaults: ff:ff:ff:ff:ff:ff) using the provided dma channel (default: 0)\r\n",
+                            "txPkt [-m <dest_mac_addr>] [-c <tx_ch_num>] [<message>]:\r\n Transmit the message to the destination MAC address (defaults: ff:ff:ff:ff:ff:ff) using the provided dma channel (default: 0)\r\n\n",
                     .pxCommandInterpreter = EnetCLI_transmitPkt,
                     .cExpectedNumberOfParameters = -1 };
 
@@ -164,7 +166,7 @@ void EnetCLI_mainTask(void *args)
     CLI_Command_Definition_t rxPktCommand =
             { .pcCommand = "rxPkt",
                     .pcHelpString =
-                            "rxPkt [<rx_ch_num>]:\r\n Recieves messages from the given DMA channel (default: 0)\r\n",
+                            "rxPkt [<rx_ch_num>]:\r\n Recieves messages from the given DMA channel (default: 0)\r\n\n",
                     .pxCommandInterpreter = EnetCLI_receivePkt,
                     .cExpectedNumberOfParameters = -1 };
 
@@ -172,7 +174,7 @@ void EnetCLI_mainTask(void *args)
     CLI_Command_Definition_t stopRxPktCommand =
             { .pcCommand = "stopRxPkt",
                     .pcHelpString =
-                            "stopRxPkt [<rx_ch_num>]:\r\n Stops recieving packets from the given DMA channel (default: 0)\r\n",
+                            "stopRxPkt [<rx_ch_num>]:\r\n Stops recieving packets from the given DMA channel (default: 0)\r\n\n",
                     .pxCommandInterpreter = EnetCLI_stopRxPkt,
                     .cExpectedNumberOfParameters = -1 };
 
@@ -180,14 +182,13 @@ void EnetCLI_mainTask(void *args)
     CLI_Command_Definition_t rxDumpCommand =
             { .pcCommand = "rxDump",
                     .pcHelpString =
-                            "rxDump [<rx_ch_num>]:\r\n Returns the last 4 packets recieved by the given DMA channel (default: 0)\r\n",
+                            "rxDump [<rx_ch_num>]:\r\n Returns the last 4 packets recieved by the given DMA channel (default: 0)\r\n\n",
                     .pxCommandInterpreter = EnetCLI_dumpRxBuffer,
                     .cExpectedNumberOfParameters = -1 };
 
     /* Command to display CPSW statistics */
-    CLI_Command_Definition_t cpswStatsCommand = { .pcCommand =
-            "dispCpswStats", .pcHelpString =
-            "dispCpswStats:\r\n Displays CPSW statistics\r\n",
+    CLI_Command_Definition_t cpswStatsCommand = { .pcCommand = "dispCpswStats",
+            .pcHelpString = "dispCpswStats:\r\n Displays CPSW statistics\r\n\n",
             .pxCommandInterpreter = EnetCLI_dispCpswStats,
             .cExpectedNumberOfParameters = 0 };
 
@@ -211,7 +212,7 @@ void EnetCLI_mainTask(void *args)
     /* Continuously take commands from the user and process the commands till application quits */
     while (inTerminal)
     {
-        strncpy(txBuffer, "> ", MAX_WRITE_BUFFER_LEN);
+        strncpy(txBuffer, "\n> ", MAX_WRITE_BUFFER_LEN);
         UART_writeCLI(gUartHandle[0], &transaction, txBuffer,
         MAX_WRITE_BUFFER_LEN);
         UART_readCLI(gUartHandle[0], &transaction, rxBuffer,

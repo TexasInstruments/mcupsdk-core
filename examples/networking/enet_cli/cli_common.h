@@ -75,9 +75,9 @@
 #include "FreeRTOS.h"
 #include "FreeRTOS_CLI.h"
 
-
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* ========================================================================== */
@@ -94,14 +94,14 @@ extern "C" {
 typedef struct EnetApp_Obj_s
 {
     /* Enet driver */
-	Enet_Type enetType;
-	uint32_t instId;
-	uint32_t coreId;
-	uint32_t coreKey;
+    Enet_Type enetType;
+    uint32_t instId;
+    uint32_t coreId;
+    uint32_t coreKey;
     uint32_t boardId;
     uint8_t numMacPorts;
     Enet_MacPort macPort[ENET_MAC_PORT_NUM];
-    emac_mode macMode;      /* MAC mode (defined in board library) */
+    emac_mode macMode; /* MAC mode (defined in board library) */
     Enet_Handle hEnet;
     uint8_t hostMacAddr[ENET_MAC_ADDR_LEN];
     int8_t numTxDmaCh;
@@ -109,14 +109,14 @@ typedef struct EnetApp_Obj_s
 
     /* Packet transmission */
     EnetDma_TxChHandle hTxCh[MAX_NUM_DMA_CH];
-	EnetDma_PktQ txFreePktInfoQ[MAX_NUM_DMA_CH];
+    EnetDma_PktQ txFreePktInfoQ[MAX_NUM_DMA_CH];
     SemaphoreP_Object txSemObj[MAX_NUM_DMA_CH];
 
     /* Packet reception */
     EnetDma_RxChHandle hRxCh[MAX_NUM_DMA_CH];
     TaskP_Object rxTaskObj[MAX_NUM_DMA_CH];
-	EnetDma_PktQ rxFreeQ[MAX_NUM_DMA_CH];
-	EnetDma_PktQ rxReadyQ[MAX_NUM_DMA_CH];
+    EnetDma_PktQ rxFreeQ[MAX_NUM_DMA_CH];
+    EnetDma_PktQ rxReadyQ[MAX_NUM_DMA_CH];
     SemaphoreP_Object rxSemObj[MAX_NUM_DMA_CH];
     int8_t rxRunFlag[MAX_NUM_DMA_CH];
 

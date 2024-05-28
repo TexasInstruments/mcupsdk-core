@@ -46,7 +46,8 @@
 /* None */
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* ========================================================================== */
@@ -67,40 +68,40 @@ extern "C" {
 
 /* Callback functions for the CLI interpreter */
 BaseType_t EnetCLI_greet(char *pcWriteBuffer, size_t xWriteBufferLen,
-		const char *pcCommandString);
+        const char *pcCommandString);
 
 BaseType_t EnetCLI_quitTerminal(char *pcWriteBuffer, size_t xWriteBufferLen,
-		const char *pcCommandString);
+        const char *pcCommandString);
 
 BaseType_t EnetCLI_init(char *pcWriteBuffer, size_t xWriteBufferLen,
-		const char *pcCommandString);
+        const char *pcCommandString);
 
 BaseType_t EnetCLI_openTxDma(char *pcWriteBuffer, size_t xWriteBufferLen,
-		const char *pcCommandString);
+        const char *pcCommandString);
 
 BaseType_t EnetCLI_openRxDma(char *pcWriteBuffer, size_t xWriteBufferLen,
-		const char *pcCommandString);
+        const char *pcCommandString);
 
 BaseType_t EnetCLI_addUcast(char *pcWriteBuffer, size_t xWriteBufferLen,
-		const char *pcCommandString);
+        const char *pcCommandString);
 
 BaseType_t EnetCLI_transmitPkt(char *pcWriteBuffer, size_t xWriteBufferLen,
-		const char *pcCommandString);
+        const char *pcCommandString);
 
 BaseType_t EnetCLI_receivePkt(char *pcWriteBuffer, size_t xWriteBufferLen,
-		const char *pcCommandString);
+        const char *pcCommandString);
 
 BaseType_t EnetCLI_stopRxPkt(char *pcWriteBuffer, size_t xWriteBufferLen,
-		const char *pcCommandString);
+        const char *pcCommandString);
 
 BaseType_t EnetCLI_dumpRxBuffer(char *pcWriteBuffer, size_t xWriteBufferLen,
-		const char *pcCommandString);
+        const char *pcCommandString);
 
 BaseType_t EnetCLI_addClassifier(char *pcWriteBuffer, size_t xWriteBufferLen,
-		const char *pcCommandString);
+        const char *pcCommandString);
 
 BaseType_t EnetCLI_dispCpswStats(char *pcWriteBuffer, size_t xWriteBufferLen,
-		const char *pcCommandString);
+        const char *pcCommandString);
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */

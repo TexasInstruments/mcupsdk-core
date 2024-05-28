@@ -65,8 +65,6 @@ static void EnetApp_close(void);
 
 static int32_t EnetApp_waitForLinkUp(Enet_MacPort macPort);
 
-static int8_t EnetApp_isValidMacAddr(char *mac);
-
 static int8_t EnetApp_addUcastEntry(uint8_t *macAddr);
 
 static int8_t EnetApp_addClassifierEntry(CpswAle_PolicerMatchParams prm,
@@ -262,6 +260,7 @@ BaseType_t EnetCLI_openRxDma(char *pcWriteBuffer, size_t xWriteBufferLen,
 BaseType_t EnetCLI_addUcast(char *pcWriteBuffer, size_t xWriteBufferLen,
         const char *pcCommandString)
 {
+    uint32_t status;
     uint8_t macAddr[ENET_MAC_ADDR_LEN];
     char *pcParameter;
     BaseType_t paramLen;
@@ -273,11 +272,15 @@ BaseType_t EnetCLI_addUcast(char *pcWriteBuffer, size_t xWriteBufferLen,
     {
         if (strncmp(pcParameter, "-d", paramLen) == 0)
             makeDefault = 1;
-        else if (EnetApp_isValidMacAddr(pcParameter))
+        else
         {
-            sscanf(pcParameter, "%hhx:%hhx:%hhx:%hhx:%hhx:%hhx", &macAddr[0],
-                    &macAddr[1], &macAddr[2], &macAddr[3], &macAddr[4],
-                    &macAddr[5]);
+            status = EnetAppUtils_macAddrAtoI(pcParameter, macAddr);
+            if (status)
+            {
+                strncpy(pcWriteBuffer, "Invalid Parameter\r\n",
+                        xWriteBufferLen);
+                return pdFALSE;
+            }
             if (makeDefault)
             {
                 EnetUtils_copyMacAddr(EnetApp_Inst.hostMacAddr, macAddr);
@@ -286,16 +289,11 @@ BaseType_t EnetCLI_addUcast(char *pcWriteBuffer, size_t xWriteBufferLen,
             }
             break;
         }
-        else
-        {
-            strncpy(pcWriteBuffer, "Invalid Args\r\n", xWriteBufferLen);
-            return pdFALSE;
-        }
         paramCnt++;
         pcParameter = (char*) FreeRTOS_CLIGetParameter(pcCommandString,
                 paramCnt, &paramLen);
     }
-    uint32_t status = EnetApp_addUcastEntry(macAddr);
+    status = EnetApp_addUcastEntry(macAddr);
     if (status)
         strncpy(pcWriteBuffer, "Command failed\r\n", xWriteBufferLen);
     else
@@ -306,6 +304,7 @@ BaseType_t EnetCLI_addUcast(char *pcWriteBuffer, size_t xWriteBufferLen,
 BaseType_t EnetCLI_addClassifier(char *pcWriteBuffer, size_t xWriteBufferLen,
         const char *pcCommandString)
 {
+    int32_t status = 0;
     char *pcParameter;
     BaseType_t paramLen;
     uint32_t paramCnt = 1;
@@ -323,17 +322,45 @@ BaseType_t EnetCLI_addClassifier(char *pcWriteBuffer, size_t xWriteBufferLen,
                     paramCnt + 1, &paramLen);
             prms.etherType = (uint16_t) strtol(pcParameter, NULL, 16);
         }
+        else if (strncmp(pcParameter, "-sm", paramLen) == 0)
+        {
+            prms.policerMatchEnMask |= CPSW_ALE_POLICER_MATCH_MACSRC;
+            pcParameter = (char*) FreeRTOS_CLIGetParameter(pcCommandString,
+                    paramCnt + 1, &paramLen);
+            status = EnetAppUtils_macAddrAtoI(pcParameter,
+                    prms.srcMacAddrInfo.addr.addr);
+            if (status)
+            {
+                strncpy(pcWriteBuffer, "Invalid source MAC address\r\n",
+                        xWriteBufferLen);
+                return pdFALSE;
+            }
+        }
+        else if (strncmp(pcParameter, "-dm", paramLen) == 0)
+        {
+            prms.policerMatchEnMask |= CPSW_ALE_POLICER_MATCH_MACDST;
+            pcParameter = (char*) FreeRTOS_CLIGetParameter(pcCommandString,
+                    paramCnt + 1, &paramLen);
+            status = EnetAppUtils_macAddrAtoI(pcParameter,
+                    prms.dstMacAddrInfo.addr.addr);
+            if (status)
+            {
+                strncpy(pcWriteBuffer, "Invalid destination MAC address\r\n",
+                        xWriteBufferLen);
+                return pdFALSE;
+            }
+        }
+        else if (strncmp(pcParameter, "-p", paramLen) == 0)
+        {
+            prms.policerMatchEnMask |= CPSW_ALE_POLICER_MATCH_PORT;
+            pcParameter = (char*) FreeRTOS_CLIGetParameter(pcCommandString,
+                    paramCnt + 1, &paramLen);
+            prms.portNum = atoi(pcParameter);
+        }
         else if (strncmp(pcParameter, "-c", paramLen) == 0)
         {
             pcParameter = (char*) FreeRTOS_CLIGetParameter(pcCommandString,
                     paramCnt + 1, &paramLen);
-            if (atoi(pcParameter) >= EnetApp_Inst.numRxDmaCh
-                    || rxCh >= EnetApp_Inst.numRxDmaCh)
-            {
-                strncpy(pcWriteBuffer, "Rx DMA channel is not open\r\n",
-                        xWriteBufferLen);
-                return pdFALSE;
-            }
             rxCh = atoi(pcParameter);
         }
         else
@@ -350,7 +377,13 @@ BaseType_t EnetCLI_addClassifier(char *pcWriteBuffer, size_t xWriteBufferLen,
         strncpy(pcWriteBuffer, "No classifier rules\r\n", xWriteBufferLen);
         return pdFALSE;
     }
-    int32_t status = EnetApp_addClassifierEntry(prms, rxCh);
+    else if (rxCh >= EnetApp_Inst.numRxDmaCh)
+    {
+        strncpy(pcWriteBuffer, "Rx DMA channel is not open\r\n",
+                xWriteBufferLen);
+        return pdFALSE;
+    }
+    status = EnetApp_addClassifierEntry(prms, rxCh);
     if (status)
         strncpy(pcWriteBuffer, "Command failed\r\n", xWriteBufferLen);
     else
@@ -361,10 +394,11 @@ BaseType_t EnetCLI_addClassifier(char *pcWriteBuffer, size_t xWriteBufferLen,
 BaseType_t EnetCLI_transmitPkt(char *pcWriteBuffer, size_t xWriteBufferLen,
         const char *pcCommandString)
 {
+    int32_t status;
     uint8_t destAddr[6] = { 255, 255, 255, 255, 255, 255 };
     uint8_t dmaChNum = 0;
     char payloadMsg[50] = "";
-    strcpy(payloadMsg, "Test packet transferred from AM243x");
+    strcpy(payloadMsg, "Test packet from AM243x");
     char *pcParameter;
     BaseType_t paramLen;
     uint32_t paramCnt = 1;
@@ -376,19 +410,12 @@ BaseType_t EnetCLI_transmitPkt(char *pcWriteBuffer, size_t xWriteBufferLen,
         {
             pcParameter = (char*) FreeRTOS_CLIGetParameter(pcCommandString,
                     paramCnt + 1, &paramLen);
-            if (pcParameter != NULL)
+            status = EnetAppUtils_macAddrAtoI(pcParameter, destAddr);
+            if (status)
             {
-                char destAddr_s[18] = "";
-                strncpy(destAddr_s, pcParameter, paramLen);
-                if (!EnetApp_isValidMacAddr(destAddr_s))
-                {
-                    strncpy(pcWriteBuffer, "Invalid MAC address\r\n",
-                            xWriteBufferLen);
-                    return pdFALSE;
-                }
-                sscanf(destAddr_s, "%hhx:%hhx:%hhx:%hhx:%hhx:%hhx",
-                        &destAddr[0], &destAddr[1], &destAddr[2], &destAddr[3],
-                        &destAddr[4], &destAddr[5]);
+                strncpy(pcWriteBuffer, "Invalid MAC address\r\n",
+                        xWriteBufferLen);
+                return pdFALSE;
             }
             paramCnt += 2;
         }
@@ -414,7 +441,7 @@ BaseType_t EnetCLI_transmitPkt(char *pcWriteBuffer, size_t xWriteBufferLen,
                 xWriteBufferLen);
         return pdFALSE;
     }
-    int32_t status = EnetApp_transmitPkt(payloadMsg, destAddr, dmaChNum);
+    status = EnetApp_transmitPkt(payloadMsg, destAddr, dmaChNum);
     if (status)
         strncpy(pcWriteBuffer, "Failed\r\n", xWriteBufferLen);
     else
@@ -586,28 +613,6 @@ static void EnetApp_close(void)
 
     /* Disable peripheral clocks */
     EnetAppUtils_disableClocks(EnetApp_Inst.enetType, EnetApp_Inst.instId);
-}
-
-static int8_t EnetApp_isValidMacAddr(char *mac)
-{
-    uint32_t macIdx = 0;
-    uint32_t digitCnt = 0;
-    int32_t delimCnt = 0;
-    while (*(mac + macIdx))
-    {
-        if (isxdigit(*(mac + macIdx)))
-            digitCnt++;
-        else if (*(mac + macIdx) == ':')
-        {
-            if (digitCnt == 0 || digitCnt / 2 - 1 != delimCnt)
-                break;
-            ++delimCnt;
-        }
-        else
-            delimCnt = -1;
-        ++macIdx;
-    }
-    return (digitCnt == 12 && delimCnt == 5);
 }
 
 static int8_t EnetApp_addUcastEntry(uint8_t *macAddr)
