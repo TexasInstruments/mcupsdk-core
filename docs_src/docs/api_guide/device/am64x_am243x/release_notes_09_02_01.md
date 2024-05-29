@@ -266,12 +266,33 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> Resolution/Comments
 </tr>
 <tr>
-    <td> SYSFW-13171
+    <td> MCUSDK-13171
     <td> Wrong dword length in NorSpi_SfdpSectorMapParamTable_s structure in nor_spisfdp.h
     <td> OSPI
     <td> 08.03.00 onwards
     <td> AM64x, AM243x
     <td> Length is corrected now
+</tr>
+<tr>
+    <td> SYSFW-7315
+    <td> Extra bypass step in boot time  pll init routine
+    <td> DM
+    <td> 09.02.00 onwards
+    <td> Extra bypass step removed
+</tr>
+<tr>
+    <td> SYSFW-7370
+    <td> pm init functions are missing proper return values
+    <td> DM
+    <td> 09.02.00 onwards
+    <td> pm init routines return value added
+</tr>
+<tr>
+    <td> SYSFW-7040
+    <td> JTAG unlock issue on MCU-M4 on AM62x HS-SE
+    <td> DM
+    <td> 08.06.00 onwards
+    <td> Unlock code fixed for MCU M4
 </tr>
 </table>
 
