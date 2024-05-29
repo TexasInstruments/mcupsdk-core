@@ -34,15 +34,16 @@ FILES_common := \
     gpmc_dma.c \
     gpmc_dma_udma.c \
     gtc.c \
-    mcspi_v0.c \
-    mcspi_dma_udma.c \
-    mcspi_v0_lld.c \
     i2c_v0.c \
     i2c_v0_lld.c \
     ipc_notify_v0.c \
     ipc_notify_v0_cfg.c \
     ipc_rpmsg.c \
     ipc_rpmsg_vring.c \
+    mcan.c \
+    mcspi_v0.c \
+    mcspi_dma_udma.c \
+    mcspi_v0_lld.c \
     mmcsd_v0.c \
     mmcsd_priv.c \
     pinmux.c \
@@ -76,27 +77,28 @@ FILES_common := \
     watchdog_soc.c \
 
 FILES_PATH_common = \
-    gpmc/v0 \
-    gpmc/v0/dma \
-    gpmc/v0/dma/udma \
+    adc/v0 \
     ecap/v0 \
     epwm/v0 \
     eqep/v0 \
-    adc/v0 \
+    gpmc/v0 \
+    gpmc/v0/dma \
+    gpmc/v0/dma/udma \
     gpio/v0 \
     gtc/v0 \
-    pinmux/am64x_am243x \
     i2c/v0 \
     i2c/v0/lld \
     ipc_notify/v0 \
     ipc_notify/v0/soc/am64x \
     ipc_rpmsg/ \
-    mmcsd/v0 \
+    mcan/v0 \
     mcspi/v0 \
     mcspi/v0/lld \
     mcspi/v0/lld/dma \
     mcspi/v0/lld/dma/udma \
     mcspi/v0/lld/dma/dummy \
+    mmcsd/v0 \
+    pinmux/am64x_am243x \
     sciclient \
     sciclient/soc/am64x_am243x \
     soc/am64x_am243x \

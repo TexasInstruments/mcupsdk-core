@@ -123,17 +123,18 @@ const topModules_mcu = [
 ];
 
 const topModules_a53 = [
+    "/drivers/adc/adc",
     "/drivers/ecap/ecap",
     "/drivers/epwm/epwm",
     "/drivers/eqep/eqep",
-    "/drivers/adc/adc",
     "/drivers/gpio/gpio",
     "/drivers/gpmc/gpmc",
     "/drivers/gtc/gtc",
     "/drivers/i2c/i2c",
     "/drivers/ipc/ipc",
-    "/drivers/mmcsd/mmcsd",
+    "/drivers/mcan/mcan",
     "/drivers/mcspi/mcspi",
+    "/drivers/mmcsd/mmcsd",
     "/drivers/uart/uart",
     "/drivers/udma/udma",
     "/drivers/watchdog/watchdog",

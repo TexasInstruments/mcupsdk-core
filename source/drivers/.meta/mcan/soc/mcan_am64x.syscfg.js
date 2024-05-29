@@ -8,25 +8,54 @@ const mcan_config_r5fss = [
         baseAddr        : "CSL_MCAN0_MSGMEM_RAM_BASE",
         intrNum         : 187,
         clockIds        : [ "TISCI_DEV_MCAN0" ],
-        clockFrequencies: [ 
-            { 
+        clockFrequencies: [
+            {
                 moduleId: "TISCI_DEV_MCAN0",
                 clkId   : "TISCI_DEV_MCAN0_MCANSS_CCLK_CLK",
                 clkRate : mcan_func_clk,
             },
-        ],            
+        ],
     },
     {
         name            : "MCAN1",
         baseAddr        : "CSL_MCAN1_MSGMEM_RAM_BASE",
         intrNum         : 190,
         clockIds        : [ "TISCI_DEV_MCAN1" ],
-        clockFrequencies: [ 
-            { 
+        clockFrequencies: [
+            {
                 moduleId: "TISCI_DEV_MCAN1",
                 clkId   : "TISCI_DEV_MCAN1_MCANSS_CCLK_CLK",
                 clkRate : mcan_func_clk,
-            },  
+            },
+        ],
+    },
+];
+
+const mcan_config_a53ss = [
+    {
+        name            : "MCAN0",
+        baseAddr        : "CSL_MCAN0_MSGMEM_RAM_BASE",
+        intrNum         : 187,
+        clockIds        : [ "TISCI_DEV_MCAN0" ],
+        clockFrequencies: [
+            {
+                moduleId: "TISCI_DEV_MCAN0",
+                clkId   : "TISCI_DEV_MCAN0_MCANSS_CCLK_CLK",
+                clkRate : mcan_func_clk,
+            },
+        ],
+    },
+    {
+        name            : "MCAN1",
+        baseAddr        : "CSL_MCAN1_MSGMEM_RAM_BASE",
+        intrNum         : 190,
+        clockIds        : [ "TISCI_DEV_MCAN1" ],
+        clockFrequencies: [
+            {
+                moduleId: "TISCI_DEV_MCAN1",
+                clkId   : "TISCI_DEV_MCAN1_MCANSS_CCLK_CLK",
+                clkRate : mcan_func_clk,
+            },
         ],
     },
 ];
@@ -36,6 +65,12 @@ function getConfigArr() {
 
     mcan_config = mcan_config_r5fss;
 
+    if(common.getSelfSysCfgCoreName().includes("a53")){
+        mcan_config = mcan_config_a53ss;
+    }
+    else {
+        mcan_config = mcan_config_r5fss;
+    }
     return mcan_config;
 }
 
