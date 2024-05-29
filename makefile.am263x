@@ -512,8 +512,7 @@ help:
 	@echo  $(MAKE) -s -C examples/sdl/ccm/sdl_ccm_example/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/parity/sdl_dma_parity/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/ccm/sdl_ccm_vim/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/sdl/mcan/mcan_loopback_polling/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
-	@echo  $(MAKE) -s -C examples/sdl/mcan/mcan_loopback_polling/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/sdl/integrated_examples/am263x-cc/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_auto_cpu/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_auto_cpu/am263x-lp/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/sdl/mcrc/mcrc_full_cpu/am263x-cc/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -1328,7 +1327,6 @@ BUILD_COMBO_EXAMPLE_ALL += sdl_ecc_bus_safety_example_am263x-cc_r5fss0-0_nortos_
 BUILD_COMBO_EXAMPLE_ALL += sdl_ccm_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_dma_parity_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_vim_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang
-BUILD_COMBO_EXAMPLE_ALL += mcan_sdl_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mcan_sdl_am263x-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_auto_cpu_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sdl_mcrc_auto_cpu_example_am263x-lp_r5fss0-0_nortos_ti-arm-clang
@@ -2638,11 +2636,8 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  sdl_vim_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_vim/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
- mcan_sdl_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
-	$(MAKE) -C examples/sdl/mcan/mcan_loopback_polling/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
-
  mcan_sdl_am263x-cc_r5fss0-0_freertos_ti-arm-clang:
-	$(MAKE) -C examples/sdl/mcan/mcan_loopback_polling/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
+	$(MAKE) -C examples/sdl/integrated_examples/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
  sdl_mcrc_auto_cpu_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile all
@@ -3139,7 +3134,6 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ecc_bus_safety_example_am263x-cc_r5fss0-0_n
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_ccm_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_dma_parity_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_vim_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_sdl_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mcan_sdl_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_auto_cpu_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sdl_mcrc_auto_cpu_example_am263x-lp_r5fss0-0_nortos_ti-arm-clang_clean
@@ -4444,11 +4438,8 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  sdl_vim_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_vim/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
- mcan_sdl_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
-	$(MAKE) -C examples/sdl/mcan/mcan_loopback_polling/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
-
  mcan_sdl_am263x-cc_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/sdl/mcan/mcan_loopback_polling/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+	$(MAKE) -C examples/sdl/integrated_examples/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
  sdl_mcrc_auto_cpu_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile clean
@@ -4945,7 +4936,6 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ecc_bus_safety_example_am263x-cc_r5fss0-0_n
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_ccm_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_dma_parity_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_vim_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_sdl_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mcan_sdl_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_auto_cpu_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sdl_mcrc_auto_cpu_example_am263x-lp_r5fss0-0_nortos_ti-arm-clang_scrub
@@ -6250,11 +6240,8 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
  sdl_vim_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/ccm/sdl_ccm_vim/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
- mcan_sdl_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/sdl/mcan/mcan_loopback_polling/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
-
  mcan_sdl_am263x-cc_r5fss0-0_freertos_ti-arm-clang_scrub:
-	$(MAKE) -C examples/sdl/mcan/mcan_loopback_polling/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+	$(MAKE) -C examples/sdl/integrated_examples/am263x-cc/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  sdl_mcrc_auto_cpu_example_am263x-cc_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/sdl/mcrc/mcrc_auto_cpu/am263x-cc/r5fss0-0_nortos/ti-arm-clang -f makefile scrub

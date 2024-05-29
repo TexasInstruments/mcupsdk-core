@@ -27,11 +27,18 @@ The table below describes the diagnostics used from SDL in this example. In gene
 | ----------------------|----------------|---------------------------------------------------------------------------------|
 | Self-Test Check (STC) | Startup        | Checks R5F0-0 and R5F0-1 Cores.                                                 |
 | PBIST                 | Startup        | Checks R5F0.                                                                    |
+| CCM        (Lockstep) | Startup        | Checks R5F0-0 and R5F0-1 Cores.                                                 |
+| MCRC                  | Runtime        | Autocpu mode.                                                                   |
 | MCAN0 ECC             | Runtime        | Performs 1 bit and 2 bit injection tests for MCAN0.                             |
+| ICSSM ECC             | Runtime        | Performs 1 bit and 2 bit injection tests for ICSSM.                             |
+| MSSL2 ECC             | Runtime        | Performs 1 bit and 2 bit injection tests for MSSL2.                             |
 | RTI                   | Runtime        | R5F0-0 UC1 RTI diagnostic.                                                      |
+| RTI                   | Runtime        | R5F0-0 UC2 RTI diagnostic.                                                      |
 | DCC                   | Runtime        | DCC diagnostic UC1.                                                             |
 | TCM Parity            | Runtime        | Parity TCM diagnostic.                                                          |
+| DMA Parity            | Runtime        | Parity DMA diagnostic.                                                          |
 | ECC Bus Safety        | Runtime        | SEC, DED and RED tests.                                                         |
+| CCM        (Lockstep) | Runtime        | Checks R5F0-0 and R5F0-1 Cores.                                                 |
 
 ## Common ESM {#EXAMPLES_SDL_MCAN_COMMONESM}
 This example uses a common ESM and callback. In configuring the ESM we do not make any assertions on the error pin. Instead, if a diagnostic fails, or there is an unexpected ESM event, we will assert the error PIN (LD16).
@@ -102,7 +109,7 @@ Polled: 2000 TxBytes: 800000  RxBytes:800000  TxErr: 0  RxErr: 0  BadID: 0  Mism
  CPU + OS       | r5fss0-0 FreeRTOS
  Toolchain      | ti-arm-clang
  Board          | am263x-cc
- Example folder | examples/sdl/mcan/mcan_loopback_polling
+ Example folder | examples/sdl/integrated_examples
 
 # Steps to Run the Example {#EXAMPLES_SDL_MCAN_STEPSTORUN}
 
@@ -110,7 +117,32 @@ Polled: 2000 TxBytes: 800000  RxBytes:800000  TxErr: 0  RxErr: 0  BadID: 0  Mism
   and build it using the CCS project menu (see \ref CCS_PROJECTS_PAGE).
 * **When using makefiles to build**, note the required combination and build using
   make command (see \ref MAKEFILE_BUILD_PAGE)
-* Load the image and access the UART.
+* Flash the image and access the UART.
+
+# Steps to Test the Example
+
+- Integrated example should only be tested in QSPI boot mode and should not be tested in no boot mode with debugger connected.
+- Follow the below procedure to test the Integrated example.
+  1. A quick recap of steps done so far that are needed for the flashing to work
+     - Make sure the UART port used for terminal is identified as mentioned in \ref CCS_UART_TERMINAL
+     - Make sure python3 is installed as mentioned in \ref INSTALL_PYTHON3
+     - Make sure you have the EVM power cable and UART cable connected as shown in \ref EVM_CABLES
+  2. Build the integrated application as mentioned in Build a Hello World example, \ref GETTING_STARTED_BUILD
+  3. As part of the build process in the final step a file with extension .appimage is generated. This is the file we need to flash.
+  4. When building with makefiles and single-core projects, this file can be found here
+
+			${SDK_INSTALL_PATH}/examples/sdl/integrtaed_examples/{board}/r5fss0-0_freertos/ti-arm-clang/mcan_sdl.release.appimage
+
+  5. A default configuration file can be found at below path. You can edit this file directly or take a copy and edit this file.
+
+			${SDK_INSTALL_PATH}/tools/boot/sbl_prebuilt/{board}/default_sbl_qspi.cfg
+
+  6. Edit below line in the config file to point to your application .appimage file. Give the absolute path to the .appimage file
+    or path relative to ${SDK_INSTALL_PATH}/tools/boot. **Make sure to use forward slash / in the filename path**.
+
+			--file=../../examples/sdl/integrtaed_examples/{board}/r5fss0-0_freertos/ti-arm-clang/mcan_sdl.release.appimage --operation=flash --flash-offset=0x80000
+  7. Save and close the config file.
+  8. Flash the application by follow the steps mentioned in the page, \ref GETTING_STARTED_FLASH
 
 # See Also {#EXAMPLES_SDL_MCAN_SEEALSO}
 * AM263x Sitara™ Microcontrollers Texas Instruments Families of Products Technical Reference Manual.
@@ -123,7 +155,7 @@ On a failure
 \code
 On startup:
 
-[MAIN] Start up diagnostics (STC,PBIST) passed.
+[MAIN] Start up diagnostics (STC,PBIST,CCM) passed.
 [MAIN] MCAN set to Loopback Mode.
 [MAIN] Diagnostic check timer set to 120000 ticks.
 [MAIN] System set to FREERUN.
@@ -140,11 +172,17 @@ When runtime diagnostics are performed:
 
 [MCAN] Polled: 16000 TxBytes: 6400000  RxBytes:6400000  TxErr: 0  RxErr: 0  BadID: 0  MismatchData: 0
 [MAIN] Running diagnostics...
-    RTI UC1...... PASSED.
-    ECC MCAN0.... PASSED.
-    DCC UC1...... PASSED.
-    TCM Parity... PASSED.
-    Bus Safety... PASSED.
+    RTI UC1...... PASSED. 
+    RTI UC2...... PASSED. 
+    MCRC AUTO mode test... PASSED. 
+    ECC MCAN0.... PASSED. 
+    ECC ICSSM.... PASSED. 
+    ECC MSSL2.... PASSED. 
+    DCC UC1...... PASSED. 
+    TCM Parity... PASSED. 
+    DMA Parity... PASSED. 
+    Bus Safety... PASSED. 
+    Lockstep mode test... PASSED. 
 [MAIN] Diagnostics Complete.
 [MCAN] Polled: 17000 TxBytes: 6800000  RxBytes:6800000  TxErr: 0  RxErr: 0  BadID: 0  MismatchData: 0
 
