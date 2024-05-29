@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="ARM"
+                deviceId="Cortex A.AM64x"
+            />
+        </when>
+    </applicability>
+
+    <project
+        title="Mcan Loopback Interrupt"
+        name = "mcan_loopback_interrupt_am64x-evm_a53ss0-0_freertos_gcc-aarch64"
+        products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
+        configurations="
+                Debug,
+                Release,
+        "
+        connection="TIXDS110_Connection.xml"
+        toolChain="GNU"
+        toolVersion="9.2"
+        device="Cortex A.AM64x"
+        deviceCore="CortexA53_0"
+        ignoreDefaultDeviceSettings="true"
+        ignoreDefaultCCSSettings="false"
+        endianness="little"
+        outputFormat="ELF"
+        outputType="executable"
+
+        compilerBuildOptions="
+            -I${MCU_PLUS_SDK_PATH}/source
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/GCC/ARM_CA53
+            -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/a53
+            -mcpu=cortex-a53+fp+simd
+            -mabi=lp64
+            -mcmodel=large
+            -mstrict-align
+            -mfix-cortex-a53-835769
+            -mfix-cortex-a53-843419
+            -Wall
+            -Werror
+            -g
+            -Wno-int-to-pointer-cast
+            -Wno-pointer-to-int-cast
+            -Wno-unused-but-set-variable
+            -fdata-sections
+            -ffunction-sections
+            -DSOC_AM64X
+        "
+        linkerBuildOptions="
+            -L${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib
+            -L${MCU_PLUS_SDK_PATH}/source/drivers/lib
+            -L$(CGT_GCC_AARCH64_PATH)/lib
+            -Wl,-Map=mcan_loopback_interrupt.${ConfigName}.map
+            -Wl,-static
+            -Wl,--gc-sections
+            -Wl,--build-id=none
+            -lstdc++
+            -lgcc
+            -lm
+            -lc
+            -lrdimon
+        "
+
+        postBuildStep="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_ccs_bootimage_gen OUTNAME=${BuildArtifactFileBaseName} PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE} DEVICE=am64x"
+
+        enableSysConfigTool="true"
+        sysConfigBuildOptions="
+            --context a53ss0-0 --part Default --package ALV
+        "
+
+        description="A Mcan Loopback Interrupt FREERTOS project">
+
+        <configuration name="Debug"
+            compilerBuildOptions="
+                -D_DEBUG_=1
+            "
+            linkerBuildOptions="
+                -lfreertos.am64x.a53.gcc-aarch64.debug.lib
+                -ldrivers.am64x.a53.gcc-aarch64.debug.lib
+            "
+        ></configuration>
+        <configuration name="Release"
+            compilerBuildOptions="
+                -O2
+            "
+            linkerBuildOptions="
+                -lfreertos.am64x.a53.gcc-aarch64.release.lib
+                -ldrivers.am64x.a53.gcc-aarch64.release.lib
+            "
+        ></configuration>
+        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
+        <file path="../../../mcan_loopback_interrupt.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../main.c" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="linker.cmd" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="../example.syscfg" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am64x/EXAMPLES_DRIVERS_MCAN_LOOPBACK_INTERRUPT.html"
+                openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
+        </file>
+        <file path="syscfg_c.rov.xs" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+        <file path="makefile_ccs_bootimage_gen" openOnCreation="false" excludeFromBuild="false" action="copy">
+        </file>
+    </project>
+</projectSpec>
