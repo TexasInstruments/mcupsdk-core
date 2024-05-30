@@ -182,7 +182,7 @@ function getConfigurables()
 {
     let config = [];
 
-    config.push(
+        config.push(
         {
             name: "mode",
             displayName: "Mode of Operation",
@@ -460,6 +460,7 @@ function getConfigurables()
             name: "sdkInfra",
             displayName: "SDK Infra",
             default: "HLD",
+            hidden:enableDisableSDKInfra(),
             options: [
                 {
                     name: "HLD",
@@ -567,7 +568,7 @@ function getConfigurables()
             ],
             description: "Initial delay for first transfer in bus clock cycles. Applicable only for single controller mode",
         },
-    )
+        )
 
     if(common.isMcuDomainSupported())
     {
@@ -669,5 +670,13 @@ function getModule()
     }
     return module;
 }
-
+function enableDisableSDKInfra() {
+    if(common.getSelfSysCfgCoreName().includes("a53")) {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 exports = getModule();
