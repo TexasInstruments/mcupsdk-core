@@ -467,6 +467,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_rpmsg_echo_linux_am64x-evm_syst
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_safeipc_echo_am64x-evm_system_freertos_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_spinlock_sharedmem_am64x-evm_system_freertos_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_external_loopback_interrupt_am64x-evm_system_freertos_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += mcan_external_loopback_interrupt2_am64x-evm_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += reset_isolation_am64x-evm_system_nortos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += reset_isolation_ipc_am64x-evm_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += spinlock_example_am64x-evm_system_nortos_build
@@ -1911,6 +1912,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  mcan_external_loopback_interrupt_am64x-evm_system_freertos_nortos_build:
 	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt/am64x-evm/system_freertos_nortos -f makefile_projectspec all
 
+ mcan_external_loopback_interrupt2_am64x-evm_system_freertos_build:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt2/am64x-evm/system_freertos -f makefile_projectspec all
+
  reset_isolation_am64x-evm_system_nortos_build:
 	$(MAKE) -C examples/drivers/safety/reset_isolation/am64x-evm/system_nortos -f makefile_projectspec all
 
@@ -2417,6 +2421,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_rpmsg_echo_linux_am64x-evm_syst
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_safeipc_echo_am64x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_spinlock_sharedmem_am64x-evm_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_external_loopback_interrupt_am64x-evm_system_freertos_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += mcan_external_loopback_interrupt2_am64x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += reset_isolation_am64x-evm_system_nortos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += reset_isolation_ipc_am64x-evm_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += spinlock_example_am64x-evm_system_nortos_clean
@@ -3861,6 +3866,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  mcan_external_loopback_interrupt_am64x-evm_system_freertos_nortos_clean:
 	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt/am64x-evm/system_freertos_nortos -f makefile_projectspec clean
 
+ mcan_external_loopback_interrupt2_am64x-evm_system_freertos_clean:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt2/am64x-evm/system_freertos -f makefile_projectspec clean
+
  reset_isolation_am64x-evm_system_nortos_clean:
 	$(MAKE) -C examples/drivers/safety/reset_isolation/am64x-evm/system_nortos -f makefile_projectspec clean
 
@@ -4367,6 +4375,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_rpmsg_echo_linux_am64x-evm_sys
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_safeipc_echo_am64x-evm_system_freertos_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_spinlock_sharedmem_am64x-evm_system_freertos_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_external_loopback_interrupt_am64x-evm_system_freertos_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += mcan_external_loopback_interrupt2_am64x-evm_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += reset_isolation_am64x-evm_system_nortos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += reset_isolation_ipc_am64x-evm_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += spinlock_example_am64x-evm_system_nortos_export
@@ -5811,6 +5820,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  mcan_external_loopback_interrupt_am64x-evm_system_freertos_nortos_export:
 	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt/am64x-evm/system_freertos_nortos -f makefile_projectspec export
 
+ mcan_external_loopback_interrupt2_am64x-evm_system_freertos_export:
+	$(MAKE) -C examples/drivers/mcan/mcan_external_loopback_interrupt2/am64x-evm/system_freertos -f makefile_projectspec export
+
  reset_isolation_am64x-evm_system_nortos_export:
 	$(MAKE) -C examples/drivers/safety/reset_isolation/am64x-evm/system_nortos -f makefile_projectspec export
 
@@ -6355,6 +6367,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_safeipc_echo/am64x-evm/system_freertos_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_spinlock_sharedmem/am64x-evm/system_freertos_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_external_loopback_interrupt/am64x-evm/system_freertos_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/mcan/mcan_external_loopback_interrupt2/am64x-evm/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/safety/reset_isolation/am64x-evm/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/safety/reset_isolation_ipc/am64x-evm/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/spinlock/spinlock_example/am64x-evm/system_nortos -f makefile_projectspec [export all clean]

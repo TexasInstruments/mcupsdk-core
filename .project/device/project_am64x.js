@@ -101,6 +101,7 @@ const example_file_list = [
     "examples/drivers/ipc/ipc_safeipc_echo/.project/project.js",
     "examples/drivers/ipc/ipc_spinlock_sharedmem/.project/project.js",
     "examples/drivers/mcan/mcan_external_loopback_interrupt/.project/project.js",
+    "examples/drivers/mcan/mcan_external_loopback_interrupt2/.project/project.js",
     "examples/drivers/mcan/mcan_loopback_dma/.project/project.js",
     "examples/drivers/mcan/mcan_loopback_interrupt/.project/project.js",
     "examples/drivers/mcan/mcan_loopback_polling/.project/project.js",

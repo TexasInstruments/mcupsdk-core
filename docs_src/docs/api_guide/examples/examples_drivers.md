@@ -57,6 +57,9 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_IPC_SPINLOCK_SHAREDMEM
 -# MCAN
    -# \subpage EXAMPLES_DRIVERS_MCAN_EXTERNAL_LOOPBACK_INTERRUPT
+\cond SOC_AM64X
+   -# \subpage EXAMPLES_DRIVERS_MCAN_EXTERNAL_LOOPBACK_INTERRUPT2
+\endcond
 \cond SOC_AM64X || SOC_AM243X
    -# \subpage EXAMPLES_DRIVERS_MCAN_LOOPBACK_DMA
 \endcond

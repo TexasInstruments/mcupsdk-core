@@ -5017,6 +5017,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Mcan External Loopback Interrupt2 Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "mcan_external_loopback_interrupt2",
+        "location": "../../examples/drivers/mcan/mcan_external_loopback_interrupt2/am64x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_external_loopback_interrupt2",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcan External Loopback Interrupt2 Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "mcan_external_loopback_interrupt2",
+        "location": "../../examples/drivers/mcan/mcan_external_loopback_interrupt2/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_external_loopback_interrupt2",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mcan Loopback Dma Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcan_loopback_dma",
         "location": "../../examples/drivers/mcan/mcan_loopback_dma/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -5149,39 +5215,6 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "A Mcan Loopback Interrupt Example. CPU is A53SS0-0 running FREERTOS.",
-        "name": "mcan_loopback_interrupt",
-        "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
-        "devtools": [
-            "AM64x_GP_EVM"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "compiler": [
-            "gcc"
-        ],
-        "subCategories": [
-            "drivers",
-            "mcan",
-            "mcan_loopback_interrupt",
-            "a53ss0-0_freertos"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
         "description": "A Mcan Loopback Interrupt Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcan_loopback_interrupt",
         "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am64x-sk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -5232,6 +5265,39 @@
             "mcan",
             "mcan_loopback_interrupt",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcan Loopback Interrupt Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "mcan_loopback_interrupt",
+        "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_loopback_interrupt",
+            "a53ss0-0_freertos"
         ],
         "mainCategories": [
             [
@@ -17193,6 +17259,36 @@
             "mcan",
             "mcan_external_loopback_interrupt",
             "system_freertos_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Mcan External Loopback Interrupt2 System Example.",
+        "name": "mcan_external_loopback_interrupt2",
+        "location": "../../examples/drivers/mcan/mcan_external_loopback_interrupt2/am64x-evm/system_freertos/system.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "drivers",
+            "mcan",
+            "mcan_external_loopback_interrupt2",
+            "system_freertos"
         ],
         "mainCategories": [
             [

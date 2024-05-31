@@ -1,0 +1,63 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "a53ss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.20.0+3587"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const ipc        = scripting.addModule("/drivers/ipc/ipc");
+const mcan       = scripting.addModule("/drivers/mcan/mcan", {}, false);
+const mcan1      = mcan.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mmu_armv8  = scripting.addModule("/kernel/dpl/mmu_armv8", {}, false);
+const mmu_armv81 = mmu_armv8.addInstance();
+const mmu_armv82 = mmu_armv8.addInstance();
+const mmu_armv83 = mmu_armv8.addInstance();
+const mmu_armv84 = mmu_armv8.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+ipc.r5fss1_0 = "NONE";
+ipc.r5fss1_1 = "NONE";
+ipc.m4fss0_0 = "NONE";
+ipc.r5fss0_0 = "notify";
+ipc.r5fss0_1 = "NONE";
+
+mcan1.$name        = "CONFIG_MCAN0";
+mcan1.MCAN.$assign = "MCAN1";
+
+debug_log.enableCssLog       = false;
+debug_log.enableSharedMemLog = true;
+
+mmu_armv81.$name = "SOC_MEM_REGION";
+mmu_armv81.size  = 0x80000000;
+
+mmu_armv82.$name     = "MSRAM_REGION";
+mmu_armv82.vAddr     = 0x70000000;
+mmu_armv82.pAddr     = 0x70000000;
+mmu_armv82.size      = 0x200000;
+mmu_armv82.attribute = "MAIR7";
+
+mmu_armv83.$name     = "LOG_SHM_MEM_REGION";
+mmu_armv83.size      = 0x10000;
+mmu_armv83.vAddr     = 0x701D0000;
+mmu_armv83.pAddr     = 0x701D0000;
+mmu_armv83.attribute = "MAIR4";
+
+mmu_armv84.$name     = "DDR_REGION";
+mmu_armv84.vAddr     = 0x80000000;
+mmu_armv84.pAddr     = 0x80000000;
+mmu_armv84.size      = 0x80000000;
+mmu_armv84.attribute = "MAIR7";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+mcan1.MCAN.RX.$suggestSolution = "MCAN1_RX";
+mcan1.MCAN.TX.$suggestSolution = "MCAN1_TX";
