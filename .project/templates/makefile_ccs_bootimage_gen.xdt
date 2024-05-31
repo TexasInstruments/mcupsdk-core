@@ -24,6 +24,10 @@ else
 	PYTHON=python3
 endif
 
+% let isMulticore = false
+% if(args.project.isPartOfSystemProject == true) {
+% isMulticore = true;
+% }
 OUTFILE=$(PROFILE)/$(OUTNAME).out
 BOOTIMAGE_PATH=$(abspath ${PROFILE})
 % if (args.project.isBootLoader) {
@@ -61,10 +65,20 @@ BOOTIMAGE_NAME_SIGNED:=$(BOOTIMAGE_PATH)/$(OUTNAME).appimage.signed
 BOOTIMAGE_RPRC_NAME:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc_tmp
+% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if(!isMulticore) {
+BOOTIMAGE_NAME_MCELF:=$(BOOTIMAGE_PATH)/$(OUTNAME).mcelf
+% }
+% }
 % if ((["am263x", "am263px", "am261x", "am273x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
 BOOTIMAGE_NAME_HS:=$(BOOTIMAGE_PATH)/`args.project.name`.$(PROFILE).appimage.hs
 BOOTIMAGE_NAME_HS_FS:=$(BOOTIMAGE_PATH)/`args.project.name`.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
+% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if(!isMulticore) {
+TARGETS += $(BOOTIMAGE_NAME_MCELF)
+% }
+% }
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
 endif
@@ -284,6 +298,11 @@ APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_
 % if ((["am263x", "am263px", "am261x", "am273x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 % }
+% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if(!isMulticore) {
+MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
+% }
+% }
 
 ifeq ($(OS),Windows_NT)
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
@@ -341,6 +360,18 @@ else
 endif
 % }
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
+% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+	% if(!isMulticore) {
+
+	@echo  Boot multi-core ELF image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_NAME_MCELF) ...
+
+	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_`args.project.cpu`):$(OUTFILE) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH)
+
+	@echo  Boot multi-core ELF image: $(BOOTIMAGE_NAME_MCELF) Done !!!
+	@echo  .
+
+	% }
+% }
 % if (args.project.isLinuxFwGen) {
 	$(RM) $(PROFILE)/`args.linuxFwName`
 	$(STRIP) -o=$(PROFILE)/`args.linuxFwName` $(OUTFILE)
