@@ -303,6 +303,7 @@ void Bootloader_close(Bootloader_Handle handle);
  * \param handle  [in] Bootloader driver handle from \ref Bootloader_open
  * \param cpuInfo [in] Data structure containing information regarding the CPU. This should have been filled
  *                     by the \ref Bootloader_parseMultiCoreAppImage API
+ * \param imageFormat [in] Image format of the binary to be loaded - RPRC/MCELF
  *
  * \return SystemP_SUCCESS on success, else failure
  */
@@ -478,6 +479,16 @@ uint32_t Bootloader_isCorePresent(Bootloader_Handle handle, uint32_t cslCoreId);
  */
 uint32_t Bootloader_getBootMedia(Bootloader_Handle handle);
 
+/**
+ * \brief API to parse and load MCELF image
+ *
+ * This API parses the MCELF file and loads the loadable segments into xthe respective cores.
+ *
+ * \param handle Bootloader driver handle from \ref Bootloader_open
+ * \param bootImageInfo [in] Data structure of type Bootloader_BootImageInfo which will be filled
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
 int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader_BootImageInfo *bootImageInfo);
 /** @} */
 

@@ -323,7 +323,7 @@ endif
 $(BOOTIMAGE_NAME_MCELF):
 	@echo  Boot multi-core ELF image: $(BOOTIMAGE_PATH)/$@ ...
 
-	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_r5fss0-0):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT)
+	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_r5fss0-0):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH)
 
 	@echo  Boot multi-core ELF image: $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
