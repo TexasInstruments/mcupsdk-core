@@ -33,12 +33,29 @@
 #include <kernel/dpl/HwiP.h>
 #include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
 #include <drivers/hw_include/csl_types.h>
+#include <kernel/dpl/DebugP.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-void __attribute__((interrupt("SWI"), section(".text.hwi"))) HwiP_svc_handler(void);
-void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak)) HwiP_data_abort_handler_c(void);
+void __attribute__((interrupt("SWI"), section(".text.hwi")))
+HwiP_svc_handler(void);
+void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak))
+HwiP_data_abort_handler_c(volatile uint32_t var);
+void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak))
+HwiP_prefetch_abort_handler_c(volatile uint32_t var);
+void __attribute__((interrupt("UNDEF"), section(".text.hwi")))
+HwiP_undefined_handler_c(volatile uint32_t var);
+
+volatile uint32_t GET_DFSR(void);
+volatile uint32_t GET_ADFSR(void);
+volatile uint32_t GET_DFAR(void);
+volatile uint32_t GET_IFSR(void);
+volatile uint32_t GET_AIFSR(void);
+volatile uint32_t GET_IFAR(void);
+volatile uint32_t GET_SPSR(void);
+volatile uint32_t GET_LR(void);
+
 #ifdef __cplusplus
 }
 #endif
@@ -63,7 +80,8 @@ static inline  void Hwip_restore_fpu_context(void)
 }
 
 
-/* IRQ handler starts execution in HwiP_irq_handler, defined in HwiP_armv7r_handlers_nortos_asm.S
+/* IRQ handler starts execution in HwiP_irq_handler, defined in
+HwiP_armv7r_handlers_nortos_asm.S
  * After some initial assembly logic it then branches to this function.
  * After exiting this function it does some more assembly before exiting
  */
@@ -120,7 +138,8 @@ void __attribute__((section(".text.hwi"))) HwiP_irq_handler_c(void)
     }
 }
 
-void __attribute__((interrupt("FIQ"), section(".text.hwi"))) HwiP_fiq_handler(void)
+void __attribute__((interrupt("FIQ"), section(".text.hwi")))
+HwiP_fiq_handler(void)
 {
     int32_t status;
     uint32_t intNum;
@@ -180,7 +199,8 @@ void __attribute__((interrupt("FIQ"), section(".text.hwi"))) HwiP_fiq_handler(vo
     #endif
 }
 
-void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_reserved_handler(void)
+void __attribute__((interrupt("UNDEF"), section(".text.hwi")))
+HwiP_reserved_handler(void)
 {
     volatile uint32_t loop = 1;
     while(loop!=0U)
@@ -189,8 +209,20 @@ void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_reserved_han
     }
 }
 
-void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_undefined_handler(void)
+void __attribute__((interrupt("UNDEF"), section(".text.hwi"),weak))
+HwiP_undefined_handler_c(volatile uint32_t SP)
 {
+
+    typedef struct {
+        volatile uint32_t SPSR;
+        /* DFSR register */
+        volatile uint32_t ADDRESS;
+        /* Instruction causing the exception*/
+    }UNDEF_REG;
+
+    UNDEF_REG abort_regs;
+    abort_regs.SPSR=GET_SPSR();
+    abort_regs.ADDRESS=*(&(SP)+10);
     volatile uint32_t loop = 1;
     while(loop!=0U)
     {
@@ -198,7 +230,8 @@ void __attribute__((interrupt("UNDEF"), section(".text.hwi"))) HwiP_undefined_ha
     }
 }
 
-void __attribute__((interrupt("SWI"), section(".text.hwi"))) HwiP_svc_handler(void)
+void __attribute__((interrupt("SWI"), section(".text.hwi")))
+HwiP_svc_handler(void)
 {
     volatile uint32_t loop = 1;
     while(loop!=0U)
@@ -208,8 +241,64 @@ void __attribute__((interrupt("SWI"), section(".text.hwi"))) HwiP_svc_handler(vo
 
 }
 
-void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_prefetch_abort_handler(void)
+void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak))
+HwiP_prefetch_abort_handler_c(volatile uint32_t SP)
 {
+
+    typedef struct {
+        volatile uint32_t IFSR;
+        /* IFSR register */
+        volatile uint32_t AIFSR;
+        /* AIFSR register */
+        volatile uint32_t IFAR;
+        /* IFAR register */
+        volatile uint32_t ADDRESS;
+        /* Instruction causing the exception*/
+        volatile uint32_t SPSR;
+        /* SPSR register*/
+    }PREFETCH_ABORT_REG;
+    typedef struct {
+        volatile uint32_t index;
+        /* index bit*/
+        volatile uint32_t side_ext;
+        /* side extension*/
+        volatile uint32_t recoverable_error;
+        /* recoverable error*/
+        volatile uint32_t side;
+        /* source of error*/
+        volatile uint32_t cacheway;
+        /* cacheway*/
+    }AIFSR;
+
+    typedef struct {
+        volatile uint32_t status;
+        /* status */
+        volatile uint32_t sd;
+        /* SD bit */
+    }IFSR;
+
+    PREFETCH_ABORT_REG abort_regs;
+
+    /*Extract register values through functions coded in ASM*/
+    abort_regs.AIFSR=GET_AIFSR();
+    abort_regs.IFAR=GET_IFAR();
+    abort_regs.IFSR=GET_IFSR();
+    abort_regs.ADDRESS=*(&(SP)+10);
+    abort_regs.SPSR=GET_SPSR();
+
+    /*Extract contents of IFSR register*/
+    IFSR ifsr;
+    ifsr.status=(abort_regs.IFSR & 0xF) |((abort_regs.IFSR>>10 & 0x1)>>4);
+    ifsr.sd=(abort_regs.IFSR>>12) & 0x1;
+
+    /*Extract contents of AIFSR register*/
+    AIFSR aifsr;
+    aifsr.index=(abort_regs.AIFSR>>5) & 0x1FF;
+    aifsr.side_ext=(abort_regs.AIFSR>>20) & 0x1;
+    aifsr.recoverable_error=(abort_regs.AIFSR>>21) & 0x1;
+    aifsr.side=(abort_regs.AIFSR>>22) & 0x3;
+    aifsr.cacheway=(abort_regs.AIFSR>>24) & 0xF;
+
     volatile uint32_t loop = 1;
     while(loop!=0U)
     {
@@ -217,11 +306,72 @@ void __attribute__((interrupt("ABORT"), section(".text.hwi"))) HwiP_prefetch_abo
     }
 }
 
-void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak)) HwiP_data_abort_handler_c(void)
+void __attribute__((interrupt("ABORT"), section(".text.hwi"),weak))
+HwiP_data_abort_handler_c(volatile uint32_t SP)
 {
+
+    typedef struct {
+        volatile uint32_t DFSR;
+        /* DFSR register */
+        volatile uint32_t ADFSR;
+        /* ADFSR register */
+        volatile uint32_t DFAR;
+        /* DFAR register */
+        volatile uint32_t ADDRESS;
+        /* Instruction causing the exception*/
+        volatile uint32_t SPSR;
+        /* SPSR register*/
+    }DATA_ABORT_REG;
+    typedef struct {
+        volatile uint32_t index;
+        /* index bit*/
+        volatile uint32_t side_ext;
+        /* side extension*/
+        volatile uint32_t recoverable_error;
+        /* recoverable error*/
+        volatile uint32_t side;
+        /* source of error*/
+        volatile uint32_t cacheway;
+        /* cacheway*/
+    }ADFSR;
+    typedef struct {
+        volatile uint32_t status;
+        /* status */
+        volatile uint32_t sd;
+        /* SD bit */
+        volatile uint32_t rw;
+        /* read or write error */
+    }DFSR;
+
+    /*Extract register values through functions coded in ASM*/
+    DATA_ABORT_REG abort_regs;
+    abort_regs.ADFSR=GET_ADFSR();
+    abort_regs.DFAR=GET_DFAR();
+    abort_regs.DFSR=GET_DFSR();
+    abort_regs.ADDRESS=*(&(SP)+10);
+    abort_regs.SPSR=GET_SPSR();
+
+    /*Extract contents of DFSR register*/
+    DFSR dfsr;
+    dfsr.status=(abort_regs.DFSR & 0xF) |((abort_regs.DFSR>>10 & 0x1)>>4);
+    dfsr.rw=(abort_regs.DFSR>>11) & 0x1;
+    dfsr.sd=(abort_regs.DFSR>>12) & 0x1;
+
+    /*Extract contents of ADFSR register*/
+    ADFSR adfsr;
+    adfsr.index=(abort_regs.ADFSR>>5) & 0x1FF;
+    adfsr.side_ext=(abort_regs.ADFSR>>20) & 0x1;
+    adfsr.recoverable_error=(abort_regs.ADFSR>>21) & 0x1;
+    adfsr.side=(abort_regs.ADFSR>>22) & 0x3;
+    adfsr.cacheway=(abort_regs.ADFSR>>24) & 0xF;
+
+
+
+
     volatile uint32_t loop = 1;
     while(loop!=0U)
     {
         ;
     }
 }
+
