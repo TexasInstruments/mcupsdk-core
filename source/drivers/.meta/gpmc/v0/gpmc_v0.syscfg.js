@@ -428,8 +428,6 @@ let gpmc_module = {
                 if(inst.deviceType != "PARALLEL_NAND") {
                     hideConfigs = true;
                 }
-                ui.enableOptimisedAccess.hidden = hideConfigs;
-                ui.cycleOptimisation.hidden = hideConfigs;
 
                 /* Timing parameters */
 
@@ -550,14 +548,24 @@ let gpmc_module = {
                 ui.waitPinPol.hidden = hideConfigs;
                 ui.addrDataMux.hidden = hideConfigs;
                 ui.timeLatency.hidden = hideConfigs;
-                ui.enableOptimisedAccess.hidden = hideConfigs;
-                if(inst.enableOptimisedAccess == "ENABLED")
+                if(inst.deviceType == "PSRAM")
                 {
-                    ui.cycleOptimisation.hidden = hideConfigs;
-                }
-                else
-                {
+                    ui.enableOptimisedAccess.hidden = true;
                     ui.cycleOptimisation.hidden = true;
+
+                }
+                else if(inst.deviceType == "PARALLEL_NAND")
+                {
+                    ui.enableOptimisedAccess.hidden = hideConfigs;
+
+                    if(inst.enableOptimisedAccess == "ENABLED")
+                    {
+                        ui.cycleOptimisation.hidden = hideConfigs;
+                    }
+                    else
+                    {
+                        ui.cycleOptimisation.hidden = true;
+                    }
                 }
 
             },
