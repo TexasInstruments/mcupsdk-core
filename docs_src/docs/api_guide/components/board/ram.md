@@ -27,7 +27,7 @@ The driver takes care of configuring the specific interface necessary to interac
 ## Features NOT Supported
 
 - Serial RAM devices
-- Burst read & write support
+- Burst read & write is not supported
 - DMA support
 
 ## Important Usage Guidelines

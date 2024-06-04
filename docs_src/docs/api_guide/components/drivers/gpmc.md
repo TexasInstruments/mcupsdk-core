@@ -75,7 +75,6 @@ from the NAND device with minimum effect on NOR/SRAM concurrent access
 - Multiple read access in asynchronous mode is not supported in address/data-multiplexed and AAD-
 multiplexed modes
 - Interupt mode is not supported.
-- Interface to NORLIKE or SRAM-like devices are not supported.
 \endcond
 
 ## GPMC Overview

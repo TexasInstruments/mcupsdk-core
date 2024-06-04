@@ -11,6 +11,12 @@ When both the data match, throughput is calculated & test result is passed other
 
 An external PSRAM needs to be connected to the device via GPMC interface.
 
+\cond SOC_AM64X || SOC_AM243X
+\note
+    - **TI GPMC Daughter Card:** A 16-bit pSRAM of 64Mb capacity is present on board.
+    - For 16-bit devices, the address lines SoC_GPMC A1 should be conected to Device A0 & so on. On Daughter Card, SoC_GPMC A0 is connected to Device A0 line.
+    - Due to this only half the capacity is accessible (32Mb of 64Mb) & addresses are accessed in alternate manner (address 0, 2, 4 ..) with each address corresponding to 16 bits of data.
+\endcond
 # Supported Combinations {#EXAMPLES_DRIVERS_GPMC_PSRAM_IO_COMBOS}
 
 \cond SOC_AM263X
