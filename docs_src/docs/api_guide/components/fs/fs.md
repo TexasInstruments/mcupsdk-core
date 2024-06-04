@@ -10,4 +10,5 @@ It consists of below sub-modules
 
 \cond SOC_AM64X || SOC_AM243X
 - \subpage FS_FREERTOS_FAT
+- \subpage FS_LITTLEFS
 \endcond
