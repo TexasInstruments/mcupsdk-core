@@ -308,6 +308,14 @@ Benchmark demo              | 4xR5F's        | YES               | NORTOS       
     <th> Workaround
 </tr>
 <tr>
+    <td> MCUSDK-13350
+    <td> Pcie_benchmark, Pcie_buf_transfer, Pcie_legacy_irq, Pcie_msi_irq, Pcie_msix_irq and sbl_pcie are broken on 9.2.1 release
+    <td> PCIE
+    <td> 9.2.1 onwards
+    <td> AM64x, AM243x
+    <td> None.
+</tr>
+<tr>
     <td> MCUSDK-626
     <td> DMA not working with ADC FIFO 1
     <td> ADC
