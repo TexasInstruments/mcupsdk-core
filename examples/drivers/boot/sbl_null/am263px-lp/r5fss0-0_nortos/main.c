@@ -39,6 +39,8 @@
 const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
     = HSMRT_IMG;
 
+extern HsmClient_t gHSMClient ;
+
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
  * with debugger connected.
@@ -65,9 +67,9 @@ int main(void)
     Bootloader_profileAddProfilePoint("Drivers_open");
 
     DebugP_log("\r\n");
-    // Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_socInitL2MailBoxMemory();
-    // Bootloader_profileAddProfilePoint("LoadHsmRtFw");
+    Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
     DebugP_log("Starting NULL Bootloader ... \r\n");
 

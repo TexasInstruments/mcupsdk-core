@@ -14,11 +14,8 @@ from random import randint
 import shutil
 from textwrap import dedent
 from hkdf import hkdf
-import hashlib
-from elftools.elf.elffile import ELFFile
 
 # Some globals
-g_elfheader_size = 52
 g_sha_to_use = "sha512"
 
 g_valid_cores = [
@@ -94,35 +91,6 @@ iterationCnt =  INTEGER:{TEST_IMAGE_KEY_DERIVE_INDEX}
 salt         =  FORMAT:HEX,OCT:{TEST_IMAGE_KEY_DERIVE_SALT}
 '''
 
-def compute_elf_image_sha(sha_to_use, binfile):
-    sha = hashlib.sha256()
-
-    # Parse ELF header first
-    e_header = None
-    fullfile = None
-    with open(binfile, 'rb') as f:
-        fullfile = f.read()
-
-    e_header = fullfile[0:g_elfheader_size]
-    # Compute hash for elf header
-    sha.update(e_header)
-
-    # Now parse the PHT
-    with open(binfile, 'rb') as f:
-        ELF = ELFFile(f)
-        pht_offset = ELF.header['e_phoff']
-        pht_size = ELF.header['e_phentsize'] * ELF.header['e_phnum']
-
-        # Compute hash for PHT
-        sha.update(fullfile[pht_offset:pht_size])
-
-        for segment in ELF.iter_segments():
-            if segment.header['p_filesz'] != 0:
-                sha.update(segment.data)
-
-    return sha.hexdigest()
-
-
 def get_cert(args):
     '''Generate the x509 certificate config'''
     print("Generating certificate for {} ...".format(args.bin))
@@ -173,7 +141,9 @@ def get_cert(args):
 
         # Get file size and SHA value
         v_TEST_IMAGE_LENGTH = os.path.getsize(bin_file)
-        v_TEST_IMAGE_SHA_VAL = compute_elf_image_sha(g_sha_to_use, bin_file)
+        sha_val = subprocess.check_output(
+            'openssl dgst -{} -hex {}'.format(g_sha_to_use, bin_file), shell=True).decode()
+        v_TEST_IMAGE_SHA_VAL = sub("^.*= ", r'', sha_val).strip('\n')
 
     # Load address has to be valid hex
     # TODO

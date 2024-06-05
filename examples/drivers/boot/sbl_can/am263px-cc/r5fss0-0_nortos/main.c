@@ -44,8 +44,8 @@
 #define BOOTLOADER_APPIMAGE_MAX_FILE_SIZE (0x80000) /* Size of section MSRAM_2 specified in linker.cmd */
 uint8_t gAppImageBuf[BOOTLOADER_APPIMAGE_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
 
-// const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
-//     = HSMRT_IMG;
+const uint8_t gHsmRtFw[HSMRT_IMG_SIZE_IN_BYTES]__attribute__((section(".rodata.hsmrt")))
+    = HSMRT_IMG;
 
 extern HsmClient_t gHSMClient ;
 
@@ -89,7 +89,7 @@ int main()
 
     DebugP_log("\r\n");
     Bootloader_socInitL2MailBoxMemory();
-    // Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
+    Bootloader_socLoadHsmRtFw(&gHSMClient, gHsmRtFw, HSMRT_IMG_SIZE_IN_BYTES);
     Bootloader_profileAddProfilePoint("LoadHsmRtFw");
 
     status = Keyring_init(&gHSMClient);
