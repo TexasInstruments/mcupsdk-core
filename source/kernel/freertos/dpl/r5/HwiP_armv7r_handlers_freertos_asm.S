@@ -52,14 +52,75 @@ HwiP_data_abort_handler:
         /*   Push used registers. */
         PUSH	{r0-r4, r12}
 
-        /* SPSR has the snapshot of CPSR before data abort. Compare thumb state bit in SPSR */
+        SUB lr, lr, #8
+
+        /*   Push the return address and SPSR. */
+        PUSH	{lr}
+        MRS	lr, SPSR
+        PUSH	{lr}
+
+        LDR r1, HwiP_data_abort_handler_const
+        BLX r1
+
+        POP	{LR}
+        MSR	SPSR_cxsf, LR
+        POP	{LR}
+        POP	{r0-r4, r12}
+        MOVS	PC, LR
+
+/* FUNCTION DEF: void HwiP_prefetch_abort_handler(void) */
+        .global HwiP_prefetch_abort_handler
+        .type HwiP_prefetch_abort_handler,%function
+        .section ".text.hwi","ax",%progbits
+        .align 2
+HwiP_prefetch_abort_handler:
+        /* Return to the instruction following the interrupted.
+         * The instruction that caused the data abort is at R14_ABT – 4 which means
+         * that the pointer points two instructions beyond the instruction that caused
+         * the abort. (pc - 4) in arm mode and (pc - 6) in thumb mode (2 bytes aligned
+         * instruction set) points to the second instruction beyond the address where
+         * the exception was generated.
+         */
+
+        /*   Push used registers. */
+        PUSH	{r0-r4, r12}
+
+        SUB lr, lr, #4
+
+        /*   Push the return address and SPSR. */
+        PUSH	{lr}
+        MRS	lr, SPSR
+        PUSH	{lr}
+
+        LDR r1, HwiP_prefetch_abort_handler_const
+        BLX r1
+
+        POP	{LR}
+        MSR	SPSR_cxsf, LR
+        POP	{LR}
+        POP	{r0-r4, r12}
+        MOVS	PC, LR
+
+/* FUNCTION DEF: void HwiP_undefined_handler(void) */
+        .global HwiP_undefined_handler
+        .type HwiP_undefined_handler,%function
+        .section ".text.hwi","ax",%progbits
+        .align 2
+HwiP_undefined_handler:
+
+        PUSH	{r0-r4, r12}
+
+        /* SPSR has the snapshot of CPSR before data abort. Compare thumb
+state bit in SPSR */
         MRS r0, SPSR
         AND r1, r0, #0x20
         CMP R1, #0
 
-        /* branches to label ARM_STATE if the thumb state bit is not set */
+        /* branches to label ARM_STATE if the thumb state bit is not set
+*/
         BEQ ARM_STATE
         SUB lr, lr, #2
+        B END
         ARM_STATE:
         SUB lr, lr, #4
         END:
@@ -69,17 +130,78 @@ HwiP_data_abort_handler:
         MRS	lr, SPSR
         PUSH	{lr}
 
-        /*   Call the interrupt handler. */
-        LDR	r1, HwiP_data_abort_handler_const
-        BLX	r1
+        LDR r1, HwiP_undefined_handler_const
+        BLX r1
 
-        /*  Restore used registers, LR and SPSR before  returning. */
         POP	{LR}
         MSR	SPSR_cxsf, LR
         POP	{LR}
         POP	{r0-r4, r12}
-        MOVS	PC, LR
+        MOVS PC,LR
+
+/*==============================================================================
+*   Get Data Fault Status Register (DFSR) value
+==============================================================================*/
+        .global GET_DFSR
+GET_DFSR:
+        MRC p15, #0, r0, c5, c0, #0
+        BX      lr
+
+/*==============================================================================
+*   Get Data Fault Status Register (ADFSR) value
+==============================================================================*/
+        .global GET_ADFSR
+GET_ADFSR:
+        MRC p15, #0, r0, c5, c1, #0
+        BX      lr
+
+/*==============================================================================
+*   Get Data Fault Address Register (DFAR) value
+==============================================================================*/
+        .global GET_DFAR
+GET_DFAR:
+        MRC p15, #0, r0, c6, c0, #0
+        BX      lr
+
+
+
+/*==============================================================================
+*   Get Instruction Fault Status Register Register (IFSR) value
+==============================================================================*/
+        .global GET_IFSR
+GET_IFSR:
+        MRC p15, #0, r0, c5, c0, #1
+        BX      lr
+
+/*==============================================================================
+*   Get Instruction Fault Status Register Register (AIFSR) value
+==============================================================================*/
+        .global GET_AIFSR
+GET_AIFSR:
+        MRC p15, #0, r0, c5, c1, #1
+        BX      lr
+
+/*==============================================================================
+*   Get Instruction Fault Address Register Register (IFAR) value
+==============================================================================*/
+        .global GET_IFAR
+GET_IFAR:
+        MRC p15, #0, r0, c6, c0, #2
+        BX      lr
+
+
+
+/*==============================================================================
+*   Get Saved Program Status Register (SPSR) value
+==============================================================================*/
+        .global GET_SPSR
+GET_SPSR:
+        MRS r0,SPSR
+        BX      lr
 
 HwiP_data_abort_handler_const: .word HwiP_data_abort_handler_c
+HwiP_prefetch_abort_handler_const: .word HwiP_prefetch_abort_handler_c
+HwiP_undefined_handler_const: .word HwiP_undefined_handler_c
 
         .end
+
