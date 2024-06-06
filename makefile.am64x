@@ -38,7 +38,7 @@ help:
 	@echo  $(MAKE) -s -f makefile.am64x cmsis_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am64x dhrystone_benchmark_a53.gcc-aarch64
 	@echo  $(MAKE) -s -f makefile.am64x drivers_r5f.ti-arm-clang drivers_m4f.ti-arm-clang drivers_a53.gcc-aarch64
-	@echo  $(MAKE) -s -f makefile.am64x freertos_fat_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am64x freertos_fat_r5f.ti-arm-clang freertos_fat_a53.gcc-aarch64
 	@echo  $(MAKE) -s -f makefile.am64x nortos_r5f.ti-arm-clang nortos_m4f.ti-arm-clang nortos_a53.gcc-aarch64
 	@echo  $(MAKE) -s -f makefile.am64x freertos_r5f.ti-arm-clang freertos_m4f.ti-arm-clang freertos_a53.gcc-aarch64 freertos_a53-smp.gcc-aarch64
 	@echo  $(MAKE) -s -f makefile.am64x mathlib_r5f.ti-arm-clang
@@ -81,7 +81,7 @@ help:
 	@echo  $(MAKE) -s -f makefile.am64x cmsis_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am64x dhrystone_benchmark_a53.gcc-aarch64_clean
 	@echo  $(MAKE) -s -f makefile.am64x drivers_r5f.ti-arm-clang_clean drivers_m4f.ti-arm-clang_clean drivers_a53.gcc-aarch64_clean
-	@echo  $(MAKE) -s -f makefile.am64x freertos_fat_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am64x freertos_fat_r5f.ti-arm-clang_clean freertos_fat_a53.gcc-aarch64_clean
 	@echo  $(MAKE) -s -f makefile.am64x nortos_r5f.ti-arm-clang_clean nortos_m4f.ti-arm-clang_clean nortos_a53.gcc-aarch64_clean
 	@echo  $(MAKE) -s -f makefile.am64x freertos_r5f.ti-arm-clang_clean freertos_m4f.ti-arm-clang_clean freertos_a53.gcc-aarch64_clean freertos_a53-smp.gcc-aarch64_clean
 	@echo  $(MAKE) -s -f makefile.am64x mathlib_r5f.ti-arm-clang_clean
@@ -602,7 +602,7 @@ BUILD_COMBO_board = board_r5f.ti-arm-clang board_m4f.ti-arm-clang board_a53.gcc-
 BUILD_COMBO_cmsis = cmsis_r5f.ti-arm-clang
 BUILD_COMBO_dhrystone_benchmark = dhrystone_benchmark_a53.gcc-aarch64
 BUILD_COMBO_drivers = drivers_r5f.ti-arm-clang drivers_m4f.ti-arm-clang drivers_a53.gcc-aarch64
-BUILD_COMBO_freertos_fat = freertos_fat_r5f.ti-arm-clang
+BUILD_COMBO_freertos_fat = freertos_fat_r5f.ti-arm-clang freertos_fat_a53.gcc-aarch64
 BUILD_COMBO_nortos = nortos_r5f.ti-arm-clang nortos_m4f.ti-arm-clang nortos_a53.gcc-aarch64
 BUILD_COMBO_freertos = freertos_r5f.ti-arm-clang freertos_m4f.ti-arm-clang freertos_a53.gcc-aarch64 freertos_a53-smp.gcc-aarch64
 BUILD_COMBO_mathlib = mathlib_r5f.ti-arm-clang
@@ -785,7 +785,7 @@ BUILD_COMBO_CLEAN_board = board_r5f.ti-arm-clang_clean board_m4f.ti-arm-clang_cl
 BUILD_COMBO_CLEAN_cmsis = cmsis_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_dhrystone_benchmark = dhrystone_benchmark_a53.gcc-aarch64_clean
 BUILD_COMBO_CLEAN_drivers = drivers_r5f.ti-arm-clang_clean drivers_m4f.ti-arm-clang_clean drivers_a53.gcc-aarch64_clean
-BUILD_COMBO_CLEAN_freertos_fat = freertos_fat_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_freertos_fat = freertos_fat_r5f.ti-arm-clang_clean freertos_fat_a53.gcc-aarch64_clean
 BUILD_COMBO_CLEAN_nortos = nortos_r5f.ti-arm-clang_clean nortos_m4f.ti-arm-clang_clean nortos_a53.gcc-aarch64_clean
 BUILD_COMBO_CLEAN_freertos = freertos_r5f.ti-arm-clang_clean freertos_m4f.ti-arm-clang_clean freertos_a53.gcc-aarch64_clean freertos_a53-smp.gcc-aarch64_clean
 BUILD_COMBO_CLEAN_mathlib = mathlib_r5f.ti-arm-clang_clean
@@ -962,7 +962,7 @@ BUILD_COMBO_SCRUB_board = board_r5f.ti-arm-clang_scrub board_m4f.ti-arm-clang_sc
 BUILD_COMBO_SCRUB_cmsis = cmsis_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_dhrystone_benchmark = dhrystone_benchmark_a53.gcc-aarch64_scrub_scrub
 BUILD_COMBO_SCRUB_drivers = drivers_r5f.ti-arm-clang_scrub drivers_m4f.ti-arm-clang_scrub drivers_a53.gcc-aarch64_scrub_scrub
-BUILD_COMBO_SCRUB_freertos_fat = freertos_fat_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_freertos_fat = freertos_fat_r5f.ti-arm-clang_scrub freertos_fat_a53.gcc-aarch64_scrub_scrub
 BUILD_COMBO_SCRUB_nortos = nortos_r5f.ti-arm-clang_scrub nortos_m4f.ti-arm-clang_scrub nortos_a53.gcc-aarch64_scrub_scrub
 BUILD_COMBO_SCRUB_freertos = freertos_r5f.ti-arm-clang_scrub freertos_m4f.ti-arm-clang_scrub freertos_a53.gcc-aarch64_scrub freertos_a53-smp.gcc-aarch64_scrub_scrub
 BUILD_COMBO_SCRUB_mathlib = mathlib_r5f.ti-arm-clang_scrub_scrub
