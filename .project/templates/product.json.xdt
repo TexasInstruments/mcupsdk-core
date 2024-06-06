@@ -25,6 +25,7 @@
         "/kernel/dpl",
         "/drivers/drivers",
         "/board/board",
+        "/eclipse_threadx/eclipse_threadx",
         "/fs/fs",
         "/networking/networking",
         "/security/security",
