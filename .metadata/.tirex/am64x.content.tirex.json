@@ -6535,6 +6535,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Mmcsd Raw Io Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "mmcsd_raw_io",
+        "location": "../../examples/drivers/mmcsd/mmcsd_raw_io/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "mmcsd",
+            "mmcsd_raw_io",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Mmcsd File Io Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mmcsd_file_io",
         "location": "../../examples/drivers/mmcsd/mmcsd_file_io/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
