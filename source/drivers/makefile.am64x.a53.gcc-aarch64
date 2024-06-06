@@ -17,6 +17,7 @@ DEVICE_TYPE?=GP
 LIBNAME:=drivers.am64x.a53.gcc-aarch64.$(PROFILE).lib
 
 FILES_common := \
+    adc.c \
     csl_bcdma.c \
     csl_intaggr.c \
     csl_lcdma_ringacc.c \
@@ -78,6 +79,7 @@ FILES_PATH_common = \
     ecap/v0 \
     epwm/v0 \
     eqep/v0 \
+    adc/v0 \
     gpio/v0 \
     gtc/v0 \
     pinmux/am64x_am243x \

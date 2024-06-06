@@ -163,6 +163,7 @@ const files_m4f = {
 
 const files_a53 = {
     common: [
+        "adc.c",
         "csl_bcdma.c",
         "csl_intaggr.c",
         "csl_lcdma_ringacc.c",
@@ -312,6 +313,7 @@ const filedirs_a53 =  {
         "ecap/v0",
         "epwm/v0",
         "eqep/v0",
+        "adc/v0",
         "gpio/v0",
         "gtc/v0",
         `pinmux/am64x_am243x`,
