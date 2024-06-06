@@ -15,6 +15,12 @@ ifeq ($(SOC),$(filter $(SOC), am64x am243x))
   SOC_PY=am64x
 endif
 
+ifeq ($(SOC),$(filter $(SOC), am65x_sr2))
+  SOC_FOLDER=am65x
+  SOC_RES=am65x
+  SOC_PY=am65x_sr2
+endif
+
 K3_RESPART_REPO=$(THIS_PATH)/respart/$(SOC)/k3-respart-tool-0.5
 K3_RESPART_PRODUCT=$(K3_RESPART_REPO)/.metadata/product.json
 
@@ -88,6 +94,9 @@ endif
 ifeq ($(SOC),$(filter $(SOC), am243x))
   CFLAGS_BOARDCFG=-DSOC_AM243X
 endif
+ifeq ($(SOC),$(filter $(SOC), am65x_sr2))
+  CFLAGS_BOARDCFG=-DSOC_AM65X
+endif
 CFLAGS_BOARDCFG+= \
     -Wno-gnu-variable-sized-type-not-at-end \
     -Werror \
@@ -129,7 +138,9 @@ DEVGRP_MCU=2
 
 $(APP_NAME): $(HEXFILES)
 	$(PYTHON) $(BLOB_GEN) --sw-rev 1 --devgrp $(DEVGRP_MAIN) --bcfg $(BCFG) --bcfg-rm $(BCFG_RM) --bcfg-pm $(BCFG_PM) --bcfg-sec $(BCFG_SEC) --output-file $(BCFG_BLOB_FILE)
+ifeq ($(SOC),$(filter $(SOC), am64x_am243x))
 	$(PYTHON) $(BLOB_GEN) --sw-rev 1 --devgrp $(DEVGRP_MAIN) --bcfg $(BCFG_LINUX) --bcfg-rm $(BCFG_RM_LINUX) --bcfg-pm $(BCFG_PM_LINUX) --bcfg-sec $(BCFG_SEC_LINUX) --output-file $(BCFG_BLOB_LINUX_FILE)
+endif
 
 sysfw_hex_header:
 	cat $(SYSFW_PATH)/sysfw-hs-fs-enc-cert.bin $(SYSFW_PATH)/sysfw-hs-fs-enc.bin > $(SYSFW_PATH)/$(SYSFW_BIN_NAME)

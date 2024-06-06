@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020, Texas Instruments Incorporated
+ * Copyright (c) 2018-2024, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -303,6 +303,12 @@ typedef uint8_t domgrp_t;
 #include <drivers/sciclient/include/tisci/am62x/tisci_clocks.h>
 #include <drivers/sciclient/include/tisci/am62x/tisci_hosts.h>
 #include <drivers/sciclient/include/am62x/sciclient_fmwMsgParams.h>
+#endif
+#if defined (SOC_AM65X)
+#include <drivers/sciclient/include/am65x/sciclient_fmwMsgParams.h>
+#include <drivers/sciclient/include/tisci/am65x/tisci_hosts.h>
+#include <drivers/sciclient/include/tisci/am65x/tisci_sec_proxy.h>
+#include <drivers/sciclient/include/tisci/am65x/tisci_resasg_types.h>
 #endif
 #include <drivers/sciclient/include/tisci/security/tisci_sec_macros.h>
 #include <drivers/sciclient/include/tisci/security/tisci_firewall.h>

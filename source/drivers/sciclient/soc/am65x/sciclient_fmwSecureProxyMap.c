@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,7 +32,7 @@
  */
 
 /**
- *  \file am64x_am243x/sciclient_fmwSecureProxyMap.c
+ *  \file sciclient_fmwSecureProxyMap.c
  *
  *  \brief File containing the secure proxy map for all hosts.
  *
@@ -72,72 +72,84 @@ const Sciclient_MapStruct_t gSciclientMap[SCICLIENT_CONTEXT_MAX_NUM] =
 {
     {
         /** Context **/
-        SCICLIENT_SECURE_CONTEXT,
+        SCICLIENT_NON_SECURE_CONTEXT,
 
         /** CPU ID of the A53/A72/R5F/DSP */
         TISCI_HOST_ID_MAIN_0_R5_0,
 
         /** Thread ID of the low priority thread(write) allowed for the CPU */
-        TISCI_SEC_PROXY_MAIN_0_R5_0_WRITE_LOW_PRIORITY_THREAD_ID,
+        TISCI_SEC_PROXY_R5_0_LOW_PRIORITY_WRITE_THREAD_ID,
 
         /** Thread ID of the response thread(read) available for the CPU */
-        TISCI_SEC_PROXY_MAIN_0_R5_0_READ_RESPONSE_THREAD_ID,
+        TISCI_SEC_PROXY_R5_0_RESPONSE_READ_THREAD_ID,
 
         /** Notification Interrupt Number */
-        0
+        CSL_MCU0_INTR_NAVSS0_R5_0_PEND_1,
+
+        /** Thread ID of the high priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_R5_0_HIGH_PRIORITY_WRITE_THREAD_ID
 
     },
 
-    {
-        /** Context **/
-        SCICLIENT_NON_SECURE_CONTEXT,
-
-        /** CPU ID of the A53/A72/R5F/DSP */
-        TISCI_HOST_ID_MAIN_0_R5_1,
-
-        /** Thread ID of the low priority thread(write) allowed for the CPU */
-        TISCI_SEC_PROXY_MAIN_0_R5_1_WRITE_LOW_PRIORITY_THREAD_ID,
-
-        /** Thread ID of the response thread(read) available for the CPU */
-        TISCI_SEC_PROXY_MAIN_0_R5_1_READ_RESPONSE_THREAD_ID,
-
-        /** Notification Interrupt Number */
-        0
-
-    },
     {
         /** Context **/
         SCICLIENT_SECURE_CONTEXT,
 
         /** CPU ID of the A53/A72/R5F/DSP */
-        TISCI_HOST_ID_MAIN_0_R5_2,
+        TISCI_HOST_ID_R5_1,
 
         /** Thread ID of the low priority thread(write) allowed for the CPU */
-        TISCI_SEC_PROXY_MAIN_0_R5_2_WRITE_LOW_PRIORITY_THREAD_ID,
+        TISCI_SEC_PROXY_R5_1_LOW_PRIORITY_WRITE_THREAD_ID,
 
         /** Thread ID of the response thread(read) available for the CPU */
-        TISCI_SEC_PROXY_MAIN_0_R5_2_READ_RESPONSE_THREAD_ID,
+        TISCI_SEC_PROXY_R5_1_RESPONSE_READ_THREAD_ID,
 
         /** Notification Interrupt Number */
-        0
+        CSL_MCU0_INTR_NAVSS0_R5_0_PEND_3,
+
+        /** Thread ID of the high priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_R5_1_HIGH_PRIORITY_WRITE_THREAD_ID
 
     },
-
     {
         /** Context **/
         SCICLIENT_NON_SECURE_CONTEXT,
 
         /** CPU ID of the A53/A72/R5F/DSP */
-        TISCI_HOST_ID_MAIN_0_R5_3,
+        TISCI_HOST_ID_R5_2,
 
         /** Thread ID of the low priority thread(write) allowed for the CPU */
-        TISCI_SEC_PROXY_MAIN_0_R5_3_WRITE_LOW_PRIORITY_THREAD_ID,
+        TISCI_SEC_PROXY_R5_2_LOW_PRIORITY_WRITE_THREAD_ID,
 
         /** Thread ID of the response thread(read) available for the CPU */
-        TISCI_SEC_PROXY_MAIN_0_R5_3_READ_RESPONSE_THREAD_ID,
+        TISCI_SEC_PROXY_R5_2_RESPONSE_READ_THREAD_ID,
 
         /** Notification Interrupt Number */
-        0
+        CSL_MCU0_INTR_NAVSS0_R5_0_PEND_1,
+
+        /** Thread ID of the high priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_R5_2_HIGH_PRIORITY_WRITE_THREAD_ID
+
+    },
+
+    {
+        /** Context **/
+        SCICLIENT_SECURE_CONTEXT,
+
+        /** CPU ID of the A53/A72/R5F/DSP */
+        TISCI_HOST_ID_R5_3,
+
+        /** Thread ID of the low priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_R5_3_LOW_PRIORITY_WRITE_THREAD_ID,
+
+        /** Thread ID of the response thread(read) available for the CPU */
+        TISCI_SEC_PROXY_R5_3_RESPONSE_READ_THREAD_ID,
+
+        /** Notification Interrupt Number */
+        CSL_MCU0_INTR_NAVSS0_R5_0_PEND_3,
+
+        /** Thread ID of the high priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_R5_3_HIGH_PRIORITY_WRITE_THREAD_ID
 
     },
 
@@ -149,31 +161,37 @@ const Sciclient_MapStruct_t gSciclientMap[SCICLIENT_CONTEXT_MAX_NUM] =
         TISCI_HOST_ID_A53_0,
 
         /** Thread ID of the low priority thread(write) allowed for the CPU */
-        TISCI_SEC_PROXY_A53_0_WRITE_LOW_PRIORITY_THREAD_ID,
+        TISCI_SEC_PROXY_A53_0_LOW_PRIORITY_WRITE_THREAD_ID,
 
         /** Thread ID of the response thread(read) available for the CPU */
-        TISCI_SEC_PROXY_A53_0_READ_RESPONSE_THREAD_ID,
+        TISCI_SEC_PROXY_A53_0_RESPONSE_READ_THREAD_ID,
 
         /** Notification Interrupt Number */
-        0
+        CSL_GIC0_INTR_NAVSS0_BUS_A53_PEND_1,
+
+        /** Thread ID of the high priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_A53_0_HIGH_PRIORITY_WRITE_THREAD_ID
 
     },
 
     {
         /** Context **/
-        SCICLIENT_NON_SECURE_CONTEXT,
+        SCICLIENT_SECURE_CONTEXT,
 
         /** CPU ID of the A53/A72/R5F/DSP */
         TISCI_HOST_ID_A53_1,
 
         /** Thread ID of the low priority thread(write) allowed for the CPU */
-        TISCI_SEC_PROXY_A53_1_WRITE_LOW_PRIORITY_THREAD_ID,
+        TISCI_SEC_PROXY_A53_1_LOW_PRIORITY_WRITE_THREAD_ID,
 
         /** Thread ID of the response thread(read) available for the CPU */
-        TISCI_SEC_PROXY_A53_1_READ_RESPONSE_THREAD_ID,
+        TISCI_SEC_PROXY_A53_1_RESPONSE_READ_THREAD_ID,
 
         /** Notification Interrupt Number */
-        0
+        CSL_GIC0_INTR_NAVSS0_BUS_A53_PEND_3,
+
+        /** Thread ID of the high priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_A53_1_HIGH_PRIORITY_WRITE_THREAD_ID
 
     },
 
@@ -185,13 +203,16 @@ const Sciclient_MapStruct_t gSciclientMap[SCICLIENT_CONTEXT_MAX_NUM] =
         TISCI_HOST_ID_A53_2,
 
         /** Thread ID of the low priority thread(write) allowed for the CPU */
-        TISCI_SEC_PROXY_A53_2_WRITE_LOW_PRIORITY_THREAD_ID,
+        TISCI_SEC_PROXY_A53_2_LOW_PRIORITY_WRITE_THREAD_ID,
 
         /** Thread ID of the response thread(read) available for the CPU */
-        TISCI_SEC_PROXY_A53_2_READ_RESPONSE_THREAD_ID,
+        TISCI_SEC_PROXY_A53_2_RESPONSE_READ_THREAD_ID,
 
         /** Notification Interrupt Number */
-        0
+        CSL_GIC0_INTR_NAVSS0_BUS_A53_PEND_5,
+
+        /** Thread ID of the high priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_A53_2_HIGH_PRIORITY_WRITE_THREAD_ID
 
     },
 
@@ -203,13 +224,16 @@ const Sciclient_MapStruct_t gSciclientMap[SCICLIENT_CONTEXT_MAX_NUM] =
         TISCI_HOST_ID_A53_3,
 
         /** Thread ID of the low priority thread(write) allowed for the CPU */
-        TISCI_SEC_PROXY_A53_3_WRITE_LOW_PRIORITY_THREAD_ID,
+        TISCI_SEC_PROXY_A53_3_LOW_PRIORITY_WRITE_THREAD_ID,
 
         /** Thread ID of the response thread(read) available for the CPU */
-        TISCI_SEC_PROXY_A53_3_READ_RESPONSE_THREAD_ID,
+        TISCI_SEC_PROXY_A53_3_RESPONSE_READ_THREAD_ID,
 
         /** Notification Interrupt Number */
-        0
+        CSL_GIC0_INTR_NAVSS0_BUS_A53_PEND_7,
+
+        /** Thread ID of the high priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_A53_3_HIGH_PRIORITY_WRITE_THREAD_ID
 
     },
 
@@ -218,34 +242,19 @@ const Sciclient_MapStruct_t gSciclientMap[SCICLIENT_CONTEXT_MAX_NUM] =
         SCICLIENT_NON_SECURE_CONTEXT,
 
         /** CPU ID of the A53/A72/R5F/DSP */
-        TISCI_HOST_ID_M4_0,
+        TISCI_HOST_ID_A53_4,
 
         /** Thread ID of the low priority thread(write) allowed for the CPU */
-        TISCI_SEC_PROXY_M4_0_WRITE_LOW_PRIORITY_THREAD_ID,
+        TISCI_SEC_PROXY_A53_4_LOW_PRIORITY_WRITE_THREAD_ID,
 
         /** Thread ID of the response thread(read) available for the CPU */
-        TISCI_SEC_PROXY_M4_0_READ_RESPONSE_THREAD_ID,
+        TISCI_SEC_PROXY_A53_4_RESPONSE_READ_THREAD_ID,
 
         /** Notification Interrupt Number */
-        0
+        CSL_GIC0_INTR_NAVSS0_BUS_A53_PEND_9,
 
-    },
-
-    {
-        /** Context **/
-        SCICLIENT_SECURE_CONTEXT,
-
-        /** CPU ID of the A53/A72/R5F/DSP */
-        TISCI_HOST_ID_MAIN_1_R5_0,
-
-        /** Thread ID of the low priority thread(write) allowed for the CPU */
-        TISCI_SEC_PROXY_MAIN_1_R5_0_WRITE_LOW_PRIORITY_THREAD_ID,
-
-        /** Thread ID of the response thread(read) available for the CPU */
-        TISCI_SEC_PROXY_MAIN_1_R5_0_READ_RESPONSE_THREAD_ID,
-
-        /** Notification Interrupt Number */
-        0
+        /** Thread ID of the high priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_A53_4_HIGH_PRIORITY_WRITE_THREAD_ID
 
     },
 
@@ -254,34 +263,19 @@ const Sciclient_MapStruct_t gSciclientMap[SCICLIENT_CONTEXT_MAX_NUM] =
         SCICLIENT_NON_SECURE_CONTEXT,
 
         /** CPU ID of the A53/A72/R5F/DSP */
-        TISCI_HOST_ID_MAIN_1_R5_1,
+        TISCI_HOST_ID_A53_5,
 
         /** Thread ID of the low priority thread(write) allowed for the CPU */
-        TISCI_SEC_PROXY_MAIN_1_R5_1_WRITE_LOW_PRIORITY_THREAD_ID,
+        TISCI_SEC_PROXY_A53_5_LOW_PRIORITY_WRITE_THREAD_ID,
 
         /** Thread ID of the response thread(read) available for the CPU */
-        TISCI_SEC_PROXY_MAIN_1_R5_1_READ_RESPONSE_THREAD_ID,
+        TISCI_SEC_PROXY_A53_5_RESPONSE_READ_THREAD_ID,
 
         /** Notification Interrupt Number */
-        0
+        CSL_GIC0_INTR_NAVSS0_BUS_A53_PEND_11,
 
-    },
-
-    {
-        /** Context **/
-        SCICLIENT_SECURE_CONTEXT,
-
-        /** CPU ID of the A53/A72/R5F/DSP */
-        TISCI_HOST_ID_MAIN_1_R5_2,
-
-        /** Thread ID of the low priority thread(write) allowed for the CPU */
-        TISCI_SEC_PROXY_MAIN_1_R5_2_WRITE_LOW_PRIORITY_THREAD_ID,
-
-        /** Thread ID of the response thread(read) available for the CPU */
-        TISCI_SEC_PROXY_MAIN_1_R5_2_READ_RESPONSE_THREAD_ID,
-
-        /** Notification Interrupt Number */
-        0
+        /** Thread ID of the high priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_A53_5_HIGH_PRIORITY_WRITE_THREAD_ID
 
     },
 
@@ -290,36 +284,147 @@ const Sciclient_MapStruct_t gSciclientMap[SCICLIENT_CONTEXT_MAX_NUM] =
         SCICLIENT_NON_SECURE_CONTEXT,
 
         /** CPU ID of the A53/A72/R5F/DSP */
-        TISCI_HOST_ID_MAIN_1_R5_3,
+        TISCI_HOST_ID_A53_6,
 
         /** Thread ID of the low priority thread(write) allowed for the CPU */
-        TISCI_SEC_PROXY_MAIN_1_R5_3_WRITE_LOW_PRIORITY_THREAD_ID,
+        TISCI_SEC_PROXY_A53_6_LOW_PRIORITY_WRITE_THREAD_ID,
 
         /** Thread ID of the response thread(read) available for the CPU */
-        TISCI_SEC_PROXY_MAIN_1_R5_3_READ_RESPONSE_THREAD_ID,
+        TISCI_SEC_PROXY_A53_6_RESPONSE_READ_THREAD_ID,
 
-        /** Notification Interrupt Number. */
-        0U
+        /** Notification Interrupt Number */
+        CSL_GIC0_INTR_NAVSS0_BUS_A53_PEND_13,
+
+        /** Thread ID of the high priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_A53_6_HIGH_PRIORITY_WRITE_THREAD_ID
 
     },
 
-    /* TBD: This host hasn't officially been defined by SYSFW yet so
-     * simply copying the existing M4 non-secure context */
     {
         /** Context **/
         SCICLIENT_NON_SECURE_CONTEXT,
 
         /** CPU ID of the A53/A72/R5F/DSP */
-        TISCI_HOST_ID_M4_0,
+        TISCI_HOST_ID_A53_7,
 
         /** Thread ID of the low priority thread(write) allowed for the CPU */
-        TISCI_SEC_PROXY_M4_0_WRITE_LOW_PRIORITY_THREAD_ID,
+        TISCI_SEC_PROXY_A53_7_LOW_PRIORITY_WRITE_THREAD_ID,
 
         /** Thread ID of the response thread(read) available for the CPU */
-        TISCI_SEC_PROXY_M4_0_READ_RESPONSE_THREAD_ID,
+        TISCI_SEC_PROXY_A53_7_RESPONSE_READ_THREAD_ID,
 
         /** Notification Interrupt Number */
-        0
+        CSL_GIC0_INTR_NAVSS0_BUS_A53_PEND_15,
+
+        /** Thread ID of the high priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_A53_7_HIGH_PRIORITY_WRITE_THREAD_ID
+
+    },
+
+    {
+        /** Context **/
+        SCICLIENT_NON_SECURE_CONTEXT,
+
+        /** CPU ID of the A53/A72/R5F/DSP */
+        TISCI_HOST_ID_GPU_0,
+
+        /** Thread ID of the low priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_GPU_0_LOW_PRIORITY_WRITE_THREAD_ID,
+
+        /** Thread ID of the response thread(read) available for the CPU */
+        TISCI_SEC_PROXY_GPU_0_RESPONSE_READ_THREAD_ID,
+
+        /** Notification Interrupt Number.
+        *    TODO: Interrupt usage from DMSC is still not clear. */
+        0U,
+
+        /** Thread ID of the high priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_GPU_0_HIGH_PRIORITY_WRITE_THREAD_ID
+
+    },
+    {
+        /** Context **/
+        SCICLIENT_NON_SECURE_CONTEXT,
+
+        /** CPU ID of the A53/A72/R5F/DSP */
+        TISCI_HOST_ID_GPU_1,
+
+        /** Thread ID of the low priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_GPU_1_LOW_PRIORITY_WRITE_THREAD_ID,
+
+        /** Thread ID of the response thread(read) available for the CPU */
+        TISCI_SEC_PROXY_GPU_1_RESPONSE_READ_THREAD_ID,
+
+        /** Notification Interrupt Number.
+        *    TODO: Interrupt usage from DMSC is still not clear. */
+        0U,
+
+        /** Thread ID of the high priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_GPU_1_HIGH_PRIORITY_WRITE_THREAD_ID
+
+    },
+    {
+        /** Context **/
+        SCICLIENT_NON_SECURE_CONTEXT,
+
+        /** CPU ID of the A53/A72/R5F/DSP */
+        TISCI_HOST_ID_ICSSG_0,
+
+        /** Thread ID of the low priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_ICSSG_0_LOW_PRIORITY_WRITE_THREAD_ID,
+
+        /** Thread ID of the response thread(read) available for the CPU */
+        TISCI_SEC_PROXY_ICSSG_0_RESPONSE_READ_THREAD_ID,
+
+        /** Notification Interrupt Number.
+        *    TODO: Interrupt usage from DMSC is still not clear. */
+        0U,
+
+        /** Thread ID of the high priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_ICSSG_0_HIGH_PRIORITY_WRITE_THREAD_ID
+
+    },
+    {
+        /** Context **/
+        SCICLIENT_NON_SECURE_CONTEXT,
+
+        /** CPU ID of the A53/A72/R5F/DSP */
+        TISCI_HOST_ID_ICSSG_1,
+
+        /** Thread ID of the low priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_ICSSG_1_LOW_PRIORITY_WRITE_THREAD_ID,
+
+        /** Thread ID of the response thread(read) available for the CPU */
+        TISCI_SEC_PROXY_ICSSG_1_RESPONSE_READ_THREAD_ID,
+
+        /** Notification Interrupt Number.
+        *    TODO: Interrupt usage from DMSC is still not clear. */
+        0U,
+
+        /** Thread ID of the high priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_ICSSG_1_HIGH_PRIORITY_WRITE_THREAD_ID
+
+    },
+    {
+        /** Context **/
+        SCICLIENT_NON_SECURE_CONTEXT,
+
+        /** CPU ID of the A53/A72/R5F/DSP */
+        TISCI_HOST_ID_ICSSG_2,
+
+        /** Thread ID of the low priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_ICSSG_2_LOW_PRIORITY_WRITE_THREAD_ID,
+
+        /** Thread ID of the response thread(read) available for the CPU */
+        TISCI_SEC_PROXY_ICSSG_2_RESPONSE_READ_THREAD_ID,
+
+        /** Notification Interrupt Number.
+        *    TODO: Interrupt usage from DMSC is still not clear. */
+        0U,
+
+        /** Thread ID of the high priority thread(write) allowed for the CPU */
+        TISCI_SEC_PROXY_ICSSG_2_HIGH_PRIORITY_WRITE_THREAD_ID
+
     }
 };
 
@@ -327,7 +432,7 @@ int32_t Sciclient_getTxThreadId(uint32_t contextId)
 {
     uint32_t  txThread;
 
-    txThread = gSciclientMap[contextId].reqLowPrioThreadId;
+    txThread = gSciclientMap[contextId].reqHighPrioThreadId;
     return txThread;
 }
 
@@ -338,5 +443,3 @@ int32_t Sciclient_getRxThreadId(uint32_t contextId)
     rxThread = gSciclientMap[contextId].respThreadId;
     return rxThread;
 }
-
-

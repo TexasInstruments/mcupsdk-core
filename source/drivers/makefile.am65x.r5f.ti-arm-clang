@@ -16,14 +16,22 @@ ConfigName:=$(PROFILE)
 LIBNAME:=drivers.am65x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
-    soc.c \
+    csl_sec_proxy.c \
     pinmux.c \
+    sciclient.c \
+    sciclient_boardcfg.c \
+    sciclient_fmwSecureProxyMap.c \
+    sciclient_pm.c \
+    sciclient_soc_priv.c \
+    soc.c \
 
 ASMFILES_common := \
 
 FILES_PATH_common = \
-    soc/am65x \
     pinmux/am65x \
+    sciclient \
+    sciclient/soc/am65x \
+    soc/am65x \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
@@ -69,6 +77,9 @@ ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
 FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
 CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
 ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ifeq ($(INSTRUMENTATION_MODE), yes)
+CFLAGS += -fprofile-instr-generate -fcoverage-mapping
+endif
 ifeq ($(CPLUSPLUS_BUILD), yes)
 CFLAGS += $(CFLAGS_cpp_common)
 endif

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2020, Texas Instruments Incorporated
+ * Copyright (c) 2017-2024, Texas Instruments Incorporated
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -168,6 +168,24 @@ static void Sciclient_recvMessage(uint32_t rxThread,
  *  \return None
  */
 static void Sciclient_secProxyFlush(uint32_t thread);
+
+/**
+ *  \brief   API to get the transmission thread ID.
+ *
+ *  \param   contextId  Context of the CPU.
+ *
+ *  \return None
+ */
+int32_t Sciclient_getTxThreadId(uint32_t contextId);
+
+/**
+ *  \brief   API to get the receive thread ID.
+ *
+ *  \param   contextId   Context of the CPU.
+ *
+ *  \return None
+ */
+int32_t Sciclient_getRxThreadId(uint32_t contextId);
 
 /* ========================================================================== */
 /*                            Extern Functions                                */
@@ -387,8 +405,9 @@ int32_t Sciclient_service(const Sciclient_ReqPrm_t *pReqPrm,
         contextId = Sciclient_getCurrentContext(pReqPrm->messageType);
         if(contextId < SCICLIENT_CONTEXT_MAX_NUM)
         {
-            txThread = gSciclientMap[contextId].reqLowPrioThreadId;
-            rxThread = gSciclientMap[contextId].respThreadId;
+            txThread = Sciclient_getTxThreadId(contextId);
+            rxThread = Sciclient_getRxThreadId(contextId);
+
             if(gSciclientMap[contextId].context == SCICLIENT_SECURE_CONTEXT)
             {
                 gSecHeaderSizeWords = sizeof(struct tisci_sec_header)/sizeof(uint32_t);

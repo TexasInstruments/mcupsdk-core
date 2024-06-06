@@ -4,7 +4,13 @@ let device = "am65x"
 
 const files_r5f = {
     common: [
+        "csl_sec_proxy.c",
         "pinmux.c",
+        "sciclient.c",
+        "sciclient_boardcfg.c",
+        "sciclient_fmwSecureProxyMap.c",
+        "sciclient_pm.c",
+        "sciclient_soc_priv.c",
         "soc.c",
     ],
 };
@@ -12,6 +18,8 @@ const files_r5f = {
 const filedirs = {
     common: [
         "pinmux/am65x",
+        "sciclient",
+        "sciclient/soc/am65x",
         "soc/am65x",
     ],
 };

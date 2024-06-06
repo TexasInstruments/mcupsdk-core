@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -31,42 +31,29 @@
  *
  */
 /**
- *  \file soc/sciclient_soc_priv.h
+ *  \file am65x/sciclient_irq_rm.h
  *
- *  \brief Private SOC file
+ *  \brief Private AM65xx specific RM interrupt data
  */
 
-#ifndef SCICLIENT_SOC_PRIV_TOP_H_
-#define SCICLIENT_SOC_PRIV_TOP_H_
+#ifndef SCICLIENT_IRQ_RM_H_
+#define SCICLIENT_IRQ_RM_H_
 
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#if defined (SOC_AM64X) || defined (SOC_AM243X)
-#include <drivers/sciclient/soc/am64x_am243x/sciclient_soc_priv.h>
-#include <drivers/sciclient/soc/am64x_am243x/sciclient_irq_rm.h>
-#endif
-
-#if defined (SOC_AM62X)
-#include <drivers/sciclient/soc/am62x/sciclient_soc_priv.h>
-#include <drivers/sciclient/soc/am62x/sciclient_irq_rm.h>
-#endif
-
-#if defined (SOC_AM65X)
-#include <drivers/sciclient/soc/am65x/sciclient_soc_priv.h>
-#include <drivers/sciclient/soc/am65x/sciclient_irq_rm.h>
-#endif
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <stdint.h>
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/* None */
+#define SCICLIENT_RM_IA_NUM_INST 4
+
+#define SCICLIENT_RM_IR_NUM_INST 8
+
+#define SCICLIENT_IRQ_MAX_ROUTE_DEPTH 3
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -75,19 +62,9 @@ extern "C" {
 /* None */
 
 /* ========================================================================== */
-/*                          Function Declarations                             */
+/*                            Global Variables                                */
 /* ========================================================================== */
 
 /* None */
 
-/* ========================================================================== */
-/*                       Static Function Definitions                          */
-/* ========================================================================== */
-
-/* None */
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* SCICLIENT_SOC_PRIV_TOP_H_ */
+#endif /* SCICLIENT_IRQ_RM_H_ */

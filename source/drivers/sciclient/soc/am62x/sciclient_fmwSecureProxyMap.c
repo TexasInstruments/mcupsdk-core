@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -268,3 +268,18 @@ const Sciclient_MapStruct_t gSciclientMap[SCICLIENT_CONTEXT_MAX_NUM] =
     }
 };
 
+int32_t Sciclient_getTxThreadId(uint32_t contextId)
+{
+    uint32_t  txThread;
+
+    txThread = gSciclientMap[contextId].reqLowPrioThreadId;
+    return txThread;
+}
+
+int32_t Sciclient_getRxThreadId(uint32_t contextId)
+{
+    uint32_t  rxThread;
+
+    rxThread = gSciclientMap[contextId].respThreadId;
+    return rxThread;
+}

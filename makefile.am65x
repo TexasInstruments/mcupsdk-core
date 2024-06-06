@@ -68,9 +68,9 @@ libs-prebuilt: $(BUILD_COMBO_PREBUILT_ALL)
 
 libs-private: $(BUILD_COMBO_PRIVATE_ALL)
 
+
 $(BUILD_COMBO_drivers):
 	$(MAKE) -C source/drivers -f makefile.am65x.$(subst drivers_,,$@) all
-
 
 
 
@@ -89,9 +89,9 @@ BUILD_COMBO_PREBUILT_CLEAN_ALL =
 libs-clean: $(BUILD_COMBO_CLEAN_ALL)
 libs-prebuilt-clean: $(BUILD_COMBO_PREBUILT_CLEAN_ALL)
 
+
 $(BUILD_COMBO_CLEAN_drivers):
 	$(MAKE) -C source/drivers -f makefile.am65x.$(subst drivers_,,$(subst _clean,,$@)) clean
-
 
 
 
@@ -109,9 +109,9 @@ BUILD_COMBO_PREBUILT_SCRUB_ALL =
 libs-scrub: $(BUILD_COMBO_SCRUB_ALL)
 libs-prebuilt-scrub: $(BUILD_COMBO_PREBUILT_SCRUB_ALL)
 
+
 $(BUILD_COMBO_SCRUB_drivers):
 	$(MAKE) -C source/drivers -f makefile.am65x.$(subst drivers_,,$(subst _scrub,,$@)) scrub
-
 
 
 BUILD_COMBO_EXAMPLE_ALL =

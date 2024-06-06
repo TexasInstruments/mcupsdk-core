@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2020 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -97,6 +97,9 @@ typedef struct
 
     uint32_t respIntrNum;
     /**< Response Interrupt Number. */
+
+    uint32_t reqHighPrioThreadId;
+    /**< Thread ID of the high priority thread(write) allowed for the CPU */
 } Sciclient_MapStruct_t;
 
 /**
