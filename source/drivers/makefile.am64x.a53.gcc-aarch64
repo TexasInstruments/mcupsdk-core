@@ -39,6 +39,8 @@ FILES_common := \
     ipc_notify_v0_cfg.c \
     ipc_rpmsg.c \
     ipc_rpmsg_vring.c \
+    mmcsd_v0.c \
+    mmcsd_priv.c \
     pinmux.c \
     sciclient.c \
     sciclient_pm.c \
@@ -84,6 +86,7 @@ FILES_PATH_common = \
     ipc_notify/v0 \
     ipc_notify/v0/soc/am64x \
     ipc_rpmsg/ \
+    mmcsd/v0 \
     sciclient \
     sciclient/soc/am64x_am243x \
     soc/am64x_am243x \
