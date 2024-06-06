@@ -4,6 +4,8 @@ const component_file_list = [
     "source/board/.project/project.js",
     "source/cmsis/.project/project.js",
     "source/drivers/.project/project.js",
+    "source/eclipse_threadx/threadx/.project/project.js",
+    "source/eclipse_threadx/filex/.project/project.js",
     "source/fs/freertos_fat/.project/project.js",
     "source/fs/littlefs/.project/project.js",
     "source/middleware/.project/project.js",
