@@ -12,7 +12,7 @@
 
 CCS_PATH=$(CCS_INSTALL_DIR)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
-% if (["am243x", "am64x", "am263x", "am263px", "am273x","awr294x"].includes(args.project.device)) {
+% if (["am65x", "am243x", "am64x", "am263x", "am263px", "am273x","awr294x"].includes(args.project.device)) {
 include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 % }
 
@@ -40,6 +40,13 @@ else
 	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_GP)
 %}
 endif
+% } else if (args.project.device == "am65x") {
+BOOTIMAGE_NAME_GP:=`args.project.name`.$(PROFILE).tiimage
+BOOTIMAGE_NAME_HS:=`args.project.name`.$(PROFILE).hs.tiimage
+ifeq ($(DEVICE_TYPE),HS)
+	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_HS)
+else
+	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_GP)
 % } else {
 BOOTIMAGE_NAME:=$(BOOTIMAGE_PATH)/$(OUTNAME).tiimage
 % }
@@ -57,6 +64,13 @@ BOOTIMAGE_RPRC_NAME_TMP:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc_tmp
 % if ((["am263x", "am263px", "am273x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
 BOOTIMAGE_NAME_HS:=$(BOOTIMAGE_PATH)/`args.project.name`.$(PROFILE).appimage.hs
 BOOTIMAGE_NAME_HS_FS:=$(BOOTIMAGE_PATH)/`args.project.name`.$(PROFILE).appimage.hs_fs
+TARGETS := $(BOOTIMAGE_NAME)
+ifeq ($(DEVICE_TYPE), HS)
+   TARGETS += $(BOOTIMAGE_NAME_HS)
+endif
+% }
+% if ((["am65x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
+BOOTIMAGE_NAME_HS:=$(BOOTIMAGE_PATH)/`args.project.name`.$(PROFILE).appimage.hs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
@@ -82,6 +96,9 @@ else
   BOOTIMAGE_CERT_GEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/signing/x509CertificateGen.sh
 endif
 BOOTIMAGE_TEMP_OUT_FILE=$(PROFILE)/temp_stdout_$(PROFILE).txt
+% if (args.project.device == "am65x") {
+BOOTIMAGE_CERT_KEY=$(APP_SIGNING_KEY)
+% }
 
 % if (args.project.isBootLoader) {
 % if ((args.project.device == "am64x") || (args.project.device == "am243x")) {
@@ -107,6 +124,14 @@ BOARDCFG_BLOB=$(MCU_PLUS_SDK_PATH)/source/drivers/sciclient/sciclient_default_bo
 BOARDCFG_BLOB=$(MCU_PLUS_SDK_PATH)/source/drivers/sciclient/sciclient_default_boardcfg/am243x/boardcfg_blob.bin
 % }
 % }
+% if ((args.project.device == "am65x")) {
+ifeq ($(DEVICE_TYPE),HS)
+BOOTIMAGE_CERT_KEY=$(APP_SIGNING_KEY)
+else
+BOOTIMAGE_CERT_KEY=$(ROM_DEGENERATE_KEY)
+endif
+SYSFW_PATH=$(MCU_PLUS_SDK_PATH)/source/drivers/sciclient/soc/am65x
+% }
 % }
 % if ((args.project.device == "am273x") || (args.project.device == "awr294x") || (args.project.device == "am263x") || (args.project.device == "am263px")) {
 ifeq ($(DEVICE_TYPE),HS)
@@ -121,6 +146,8 @@ BOOTIMAGE_CERT_GEN_CMD=$(PYTHON) $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_rom
 SBL_RUN_ADDRESS=0x10200000
 % } else if( (args.project.device == "am263x")  || (args.project.device == "am263px")){
 SBL_RUN_ADDRESS=0x70002000
+% } else if (args.project.device == "am65x") {
+SBL_RUN_ADDRESS=0x41C00100
 % } else {
 SBL_RUN_ADDRESS=0x70000000
 % }
@@ -168,6 +195,13 @@ endif
 endif
 else
 	$(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_NAME) --debug DBG_SOC_DEFAULT
+% } else if ((args.project.device == "am65x")) {
+ifeq ($(DEVICE_TYPE),HS)
+	$(BOOTIMAGE_CERT_GEN_CMD) -b $(BOOTIMAGE_PATH)/$(BOOTIMAGE_BIN_NAME) -o $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) -c R5 -l $(SBL_RUN_ADDRESS) -k $(BOOTIMAGE_CERT_KEY) -d DEBUG -j DBG_FULL_ENABLE -m SPLIT_MODE
+else
+	$(BOOTIMAGE_CERT_GEN_CMD) -b $(BOOTIMAGE_PATH)/$(BOOTIMAGE_BIN_NAME) -o $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME) -c R5 -l $(SBL_RUN_ADDRESS) -k $(BOOTIMAGE_CERT_KEY) -d DEBUG -j DBG_FULL_ENABLE -m SPLIT_MODE
+endif
+	$(COPY) $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME) tiboot3.bin
 % } else {
 ifeq ($(DEVICE_TYPE),HS)
 ifeq ($(ENC_SBL_ENABLED),yes)
@@ -235,10 +269,16 @@ BOOTIMAGE_CORE_ID_m4fss0-0 = 5
 SBL_RUN_ADDRESS=0x70000000
 SBL_DEV_ID=55
 % }
+% if (args.project.device == "am65x") {
+BOOTIMAGE_CORE_ID_r5fss0-0 = 4
+BOOTIMAGE_CORE_ID_r5fss0-1 = 5
+SBL_RUN_ADDRESS=0x41C00100
+SBL_DEV_ID=55
+% }
 
 MULTI_CORE_IMAGE_GEN = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
 OUTRPRC_CMD = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
-% if (((args.project.device == "am243x") || (args.project.device == "am64x"))) {
+% if (((args.project.device == "am65x") || (args.project.device == "am243x") || (args.project.device == "am64x"))) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
 % }
 % if ((["am263x", "am263px", "am273x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
@@ -315,6 +355,22 @@ ifeq ($(DEVICE_TYPE),HS)
 	@echo  .
 else
 	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_NAME).hs_fs Done !!!
+	@echo  .
+endif
+% }
+% if (args.project.device == "am65x") {
+$(BOOTIMAGE_NAME_HS): $(BOOTIMAGE_NAME)
+ifeq ($(DEVICE_TYPE), HS)
+# Sign the appimage using appimage signing script
+ifeq ($(ENC_ENABLED),no)
+	@echo Boot image signing: Encryption is disabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(BOOTIMAGE_NAME_HS)
+else
+	@echo Boot image signing: Encryption is enabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --output $(BOOTIMAGE_NAME_HS)
+	$(RM) $(BOOTIMAGE_NAME)-enc
+endif
+	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
 	@echo  .
 endif
 % }
