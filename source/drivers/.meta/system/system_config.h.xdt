@@ -30,6 +30,10 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+%%{
+    let common = system.getScript("/common");
+    let boot_module = system.modules["/drivers/bootloader/bootloader"];
+%%}
 /*
  * Auto generated file
  */
@@ -39,17 +43,26 @@
 
 #include <stdint.h>
 #include <drivers/hw_include/cslr_soc.h>
+#include <drivers/hw_include/hw_types.h>
 #include "ti_dpl_config.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+% if ((common.getSocName() == "am65x") && boot_module == undefined){
+#define MCU_VECS_SIZE 0x40
+#define MCU_MEMSET_ITERATIONS 16
+%}
+
 /*
  * Common Functions
  */
 void System_init(void);
 void System_deinit(void);
+% if ((common.getSocName() == "am65x") && boot_module == undefined){
+void CopyVecsToATCMmem(void);
+%}
 
 % for(let subTemplate of args) {
     % if (subTemplate.driver_config) {

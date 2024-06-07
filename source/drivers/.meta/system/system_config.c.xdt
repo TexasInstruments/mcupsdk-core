@@ -34,6 +34,7 @@
     let sciclientDeInitTemplate = '/drivers/sciclient/sciclient_deinit.c.xdt'
     let common = system.getScript("/common");
     let cpuName = system.getScript('/common').getSelfSysCfgCoreName();
+    let boot_module = system.modules["/drivers/bootloader/bootloader"];
 %%}
 /*
  * Auto generated file
@@ -42,6 +43,7 @@
 #include "ti_drivers_config.h"
 % if (common.isSciClientSupported()) {
 #include <drivers/sciclient.h>
+#include <string.h>
 % }
 
 % for(let subTemplate of args) {
@@ -53,12 +55,19 @@
 void Pinmux_init(void);
 void PowerClock_init(void);
 void PowerClock_deinit(void);
-
+% if ((common.getSocName() == "am65x") && boot_module == undefined){
+void _vectors();
+% }
 /*
  * Common Functions
  */
 void System_init(void)
 {
+% if ((common.getSocName() == "am65x") && boot_module == undefined){
+    /* Copy vectors to ATCM memory
+     */
+    CopyVecsToATCMmem();
+% }
     /* DPL init sets up address transalation unit, on some CPUs this is needed
      * to access SCICLIENT services, hence this needs to happen first
      */
@@ -120,3 +129,16 @@ void System_deinit(void)
 % }
     Dpl_deinit();
 }
+% if ((common.getSocName() == "am65x") && boot_module == undefined){
+void CopyVecsToATCMmem()
+{
+    int count;
+    /* ECC priming. Fill atcm memory with zero of vector size  */
+    for(count = 0; count < MCU_MEMSET_ITERATIONS; count++)
+    {
+        HW_WR_REG32((CSL_MCU_ATCM_BASE) + count*4, 0x00);
+    }
+    /* copy vectors */
+    memcpy((void *)CSL_MCU_ATCM_BASE, (void *)_vectors, MCU_VECS_SIZE);
+}
+% }
