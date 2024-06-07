@@ -779,6 +779,7 @@ static int32_t QSPI_spiMemMapReadDma(QSPILLD_Handle hQspi, void *buf, uint32_t a
     QSPILLD_InitHandle hQspiInit;
     uint32_t dmaOffset;
     uint32_t nonAlignedBytes;
+    uint32_t edmaNonAlignedBytes;
     uint8_t *pDmaDst  = NULL;
     uint32_t dmaLen;
 
@@ -844,25 +845,41 @@ static int32_t QSPI_spiMemMapReadDma(QSPILLD_Handle hQspi, void *buf, uint32_t a
         pSrc++;
         nonAlignedBytes--;
     }
+    /* Update QSPI state to Non-Block Mode */
+    hQspi->state = QSPI_STATE_NON_BLOCK;
     if(dmaLen != 0U)
     {
         /* calculate the nonAligned bytes at the end */
         nonAlignedBytes = dmaLen - ((dmaLen ) & (~0x3));
-
+        edmaNonAlignedBytes = nonAlignedBytes;
         /* Get the previous multiple of 4 of dmaLen as edma transfer can only be done with length in multiple of 4*/
         dmaLen = (dmaLen ) & (~0x3);
-        QSPI_edmaTransfer(pDmaDst, pSrc, dmaLen, hQspi, timeout);
-        pDst += dmaLen;
-        pSrc += dmaLen;
 
-        /* Do the normal memory to memory transfer of nonAligned bytes at the end. */
-        while(nonAlignedBytes != 0)
+        if(nonAlignedBytes != 0)
         {
-            *pDst = *pSrc;
-            pDst++;
-            pSrc++;
-            nonAlignedBytes--;
+            pDst += dmaLen;
+            pSrc += dmaLen;
+
+            /* Do the normal memory to memory transfer of nonAligned bytes at the end. */
+            while (nonAlignedBytes != 0)
+            {
+                *pDst = *pSrc;
+                pDst++;
+                pSrc++;
+                nonAlignedBytes--;
+            }
+
+            pDst -= (dmaLen + edmaNonAlignedBytes);
+            pSrc -= (dmaLen + edmaNonAlignedBytes);
+
         }
+        if (dmaLen != 0)
+        {
+            /* Update QSPI state to Block Mode */
+            hQspi->state = QSPI_STATE_BLOCK;
+            QSPI_edmaTransfer(pDmaDst, pSrc, dmaLen, hQspi, timeout);
+        }
+
     }
 
     return status;
@@ -1213,7 +1230,7 @@ void QSPI_lld_isr(void* args)
                 hQspi->transaction->state = QSPI_STATE_DATA_READ;
             }
             CSL_REG32_WR(&pReg->SPI_CMD_REG, hQspi->transaction->cmdRegVal);
-            
+
             break;
 
         case QSPI_STATE_DATA_WRITE:
@@ -1234,7 +1251,7 @@ void QSPI_lld_isr(void* args)
                 hQspi->transaction->count--;
                 hQspi->transaction->currentIndex++;
                 CSL_REG32_WR(&pReg->SPI_CMD_REG, hQspi->transaction->cmdRegVal);
-                
+
             }
             else
             {
@@ -1257,7 +1274,7 @@ void QSPI_lld_isr(void* args)
                 CSL_FINS(hQspi->transaction->cmdRegVal, QSPI_SPI_CMD_REG_CSNUM, hQspi->hQspiInit->chipSelect);
                 hQspi->transaction->count --;
                 CSL_REG32_WR(&pReg->SPI_CMD_REG, hQspi->transaction->cmdRegVal);
-                
+
 
             }
             else
@@ -1274,7 +1291,7 @@ void QSPI_lld_isr(void* args)
                     hQspi->transaction->currentIndex++;
                     hQspi->transaction->count --;
                     CSL_REG32_WR(&pReg->SPI_CMD_REG, hQspi->transaction->cmdRegVal);
-                    
+
                 }
                 else
                 {
@@ -1296,7 +1313,7 @@ void QSPI_lld_isr(void* args)
         default:
             /* Not in Use */
             break;
-    }   
+    }
 }
 
 void QSPI_lld_readCompleteCallback(void* args)

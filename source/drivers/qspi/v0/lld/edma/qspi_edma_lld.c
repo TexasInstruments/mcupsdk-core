@@ -244,6 +244,10 @@ void QSPI_edmaTransfer(void* dst, void* src, uint32_t length,
     edmaParam.srcCIdx       = (int16_t) EDMA_QSPI_A_COUNT;
     edmaParam.destCIdx      = (int16_t) EDMA_QSPI_A_COUNT;
     edmaParam.linkAddr      = 0xFFFFU;
+
+    hQspi->transaction = &(hQspi->trans);
+    hQspi->transaction->dataLen = length;
+    hQspi->transaction->buf = dst;
     /*
      * Check if transfer length is less than maximum EDMA transfer count or if it's a
      * multiple of maximum transfer length in which case, chaining is not required and this
@@ -283,6 +287,7 @@ void QSPI_edmaTransfer(void* dst, void* src, uint32_t length,
                 }
 
                 EDMA_clrIntrRegion(baseAddr, regionId, tcc);
+                CacheP_inv(dst, length*EDMA_QSPI_A_COUNT, CacheP_TYPE_ALL);
             }
         }
     }
@@ -320,10 +325,11 @@ void QSPI_edmaTransfer(void* dst, void* src, uint32_t length,
                 }
 
                 EDMA_clrIntrRegion(baseAddr, regionId, tcc);
+
+                CacheP_inv(dst, length*EDMA_QSPI_A_COUNT, CacheP_TYPE_ALL);
             }
         }
     }
-    CacheP_inv(dst, length*EDMA_QSPI_A_COUNT, CacheP_TYPE_ALL);
 }
 
 int32_t QSPI_edmaChannelFree(QSPILLD_Handle hQspi)
@@ -368,5 +374,9 @@ int32_t QSPI_edmaChannelFree(QSPILLD_Handle hQspi)
 
 static void QSPI_edmaIsrFxn(Edma_IntrHandle intrHandle, void *args)
 {
+    QSPILLD_Handle pQspiHdl  = (QSPILLD_Handle) args;
+
+    CacheP_inv(pQspiHdl->transaction->buf, pQspiHdl->transaction->dataLen, CacheP_TYPE_ALL);
+    /*  */
     QSPI_lld_readCompleteCallback((QSPILLD_Handle)args);
 }

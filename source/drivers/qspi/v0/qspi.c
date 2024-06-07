@@ -584,10 +584,12 @@ int32_t QSPI_readMemMapMode(QSPI_Handle handle, QSPI_Transaction *trans)
         qspilldHandle               = obj->qspilldHandle;
         if(true == qspilldHandle->hQspiInit->dmaEnable)
         {
-            status = QSPI_lld_readDma(qspilldHandle,trans->count,trans->buf,trans->addrOffset,trans->transferTimeout);
             edmaInterrupt = EDMA_isInterruptEnabled(qspilldHandle->hQspiInit->qspiDmaHandle);
-            if (edmaInterrupt == TRUE)
+            status = QSPI_lld_readDma(qspilldHandle,trans->count,trans->buf,trans->addrOffset,trans->transferTimeout);
+
+            if(status == SystemP_SUCCESS && edmaInterrupt == TRUE && qspilldHandle->state == QSPI_STATE_BLOCK)
             {
+                qspilldHandle->state = QSPI_STATE_IDLE;
                 /* Pend the semaphore */
                 (void) SemaphoreP_pend(&obj->transferSemObj, SystemP_WAIT_FOREVER);
             }

@@ -267,6 +267,14 @@ typedef void *QSPI_DmaChConfig;
  * \brief This transaction state indicates read functionality
  */
 #define QSPI_STATE_DATA_READ            (3U)
+/**
+ * \brief This transaction state indicates Block for read completion
+ */
+#define QSPI_STATE_BLOCK                (4U)
+/**
+ * \brief This transaction state  indicates Don't Block for read completion
+ */
+#define QSPI_STATE_NON_BLOCK            (5U)
 
 /**@}*/
 
