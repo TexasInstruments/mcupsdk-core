@@ -47,6 +47,10 @@ const buildOptionCombos_am62x = [
     { device: device, cpu: "m4f", cgt: "ti-arm-clang"},
 ];
 
+const buildOptionCombos_am65x = [
+    { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
+];
+
 function getComponentProperty(device) {
     let property = {};
     let buildOptionCombos = {
@@ -57,6 +61,7 @@ function getComponentProperty(device) {
         "am273x": buildOptionCombos_am273x,
         "awr294x": buildOptionCombos_awr294x,
         "am62x": buildOptionCombos_am62x,
+        "am65x": buildOptionCombos_am65x,
     };
 
     property.dirPath = path.resolve(__dirname, "..");

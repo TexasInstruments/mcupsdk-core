@@ -4,6 +4,7 @@ const component_file_list = [
     "source/drivers/.project/project.js",
     "source/kernel/freertos/.project/project.js",
     "source/kernel/nortos/.project/project.js",
+    "test/unity/.project/project.js",
 ];
 
 const device_defines = {
