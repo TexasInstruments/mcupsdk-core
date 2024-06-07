@@ -1,0 +1,12 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/eclipse_threadx/filex/filex'];
+%%}
+/*
+ * FileX
+ */
+
+extern FX_MEDIA gt_media[];
+
+void EclipseThreadx_FilexOpen(void);
+void EclipseThreadx_FilexClose(void);
