@@ -42,6 +42,7 @@ help:
 	@echo  .
 	@echo  Example build targets,
 	@echo  ======================
+	@echo  $(MAKE) -s -C kernel/dpl/am65x-idk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
@@ -116,6 +117,7 @@ $(BUILD_COMBO_SCRUB_unity):
 
 BUILD_COMBO_EXAMPLE_ALL =
 # Various Example Targets
+BUILD_COMBO_EXAMPLE_ALL += test_dpl_am65x-idk_r5fss0-0_freertos_ti-arm-clang
 
 # Various System Example Targets
 
@@ -132,9 +134,13 @@ examples: $(BUILD_COMBO_EXAMPLE_ALL)
 
 examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
+ test_dpl_am65x-idk_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C kernel/dpl/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
 
 BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_dpl_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 # Various System Example Clean Targets
 
 
@@ -146,9 +152,13 @@ examples-clean: $(BUILD_COMBO_EXAMPLE_CLEAN_ALL)
 
 examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
+ test_dpl_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C kernel/dpl/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
 
 BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_dpl_am65x-idk_r5fss0-0_freertos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
 
 
@@ -159,6 +169,9 @@ BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL =
 examples-scrub: $(BUILD_COMBO_EXAMPLE_SCRUB_ALL)
 
 examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
+
+ test_dpl_am65x-idk_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C kernel/dpl/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
 
 sbl: libs
