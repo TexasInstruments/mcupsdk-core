@@ -6,6 +6,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL =
 # Various Example Projectspec Build Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += hello_world_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build
 # Various System Example Projectspec Build Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am65x-idk_system_freertos_build
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
 # Various Private Example Projectspec Build Targets
@@ -18,12 +19,16 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  hello_world_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/hello_world/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
+ empty_am65x-idk_system_freertos_build:
+	$(MAKE) -C examples/empty/am65x-idk/system_freertos -f makefile_projectspec all
+
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
 # Various Example Projectspec Clean Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += hello_world_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 # Various System Example Projectspec Clean Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am65x-idk_system_freertos_clean
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
 # Various Private Example Projectspec Clean Targets
@@ -36,12 +41,16 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  hello_world_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/hello_world/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
+ empty_am65x-idk_system_freertos_clean:
+	$(MAKE) -C examples/empty/am65x-idk/system_freertos -f makefile_projectspec clean
+
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
 # Various Example Projectspec Export Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += hello_world_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export
 # Various System Example Projectspec Export Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am65x-idk_system_freertos_export
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
 # Various Private Example Projectspec Export Targets
@@ -53,6 +62,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  hello_world_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/hello_world/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ empty_am65x-idk_system_freertos_export:
+	$(MAKE) -C examples/empty/am65x-idk/system_freertos -f makefile_projectspec export
 
 
 
@@ -78,6 +90,7 @@ help:
 	@echo  .
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================
+	@echo  $(MAKE) -s -C examples/empty/am65x-idk/system_freertos -f makefile_projectspec [export all clean]
 	@echo  .
 
 .PHONY: all all-private
