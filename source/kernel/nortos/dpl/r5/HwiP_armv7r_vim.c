@@ -266,6 +266,10 @@ void HWI_SECTION HwiP_init(void)
 
     #ifdef HWIP_VIM_VIC_ENABLE
     HwiP_enableVIC();
+    #else
+    #if defined (SOC_AM65X)
+        HwiP_disableVIC();
+    #endif
     #endif
     HwiP_enableFIQ();
     /* dont enable IRQ, enable it after

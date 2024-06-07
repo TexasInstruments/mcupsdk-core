@@ -73,10 +73,9 @@ void __attribute__((section(".text.hwi"))) HwiP_irq_handler_c(void)
     uint32_t intNum;
 
     #ifndef HWIP_VIM_VIC_ENABLE
-    volatile uint32_t dummy;
 
     /* Read to force prioritization logic to take effect, in non-VIC mode */
-    dummy = HwiP_getIRQVecAddr();
+    HwiP_getIRQVecAddr();
     #endif
 
     status = HwiP_getIRQ(&intNum);

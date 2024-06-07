@@ -43,7 +43,9 @@ extern "C"
 #include <drivers/hw_include/soc_config.h>
 
 /* compile flag to enable VIC mode of operation, undef this to use non-VIC mode */
+#if !defined (SOC_AM65X)
 #define HWIP_VIM_VIC_ENABLE
+#endif
 
 
 #define HWI_SECTION __attribute__((section(".text.hwi")))
@@ -104,6 +106,7 @@ uint32_t HwiP_disableFIQ(void);
 void HwiP_enableFIQ(void);
 void HwiP_enableVIC(void);
 
+void HwiP_disableVIC(void);
 void HwiP_fiq_handler(void);
 void HwiP_irq_handler(void);
 void HwiP_reserved_handler(void);
