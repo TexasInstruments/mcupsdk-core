@@ -1,0 +1,95 @@
+%%{
+    let common = system.getScript("/common");
+    let module = system.modules['/eclipse_threadx/filex/filex'];
+%%}
+
+/*
+ * FileX
+ */
+
+FX_MEDIA gt_media[CONFIG_FILEX_NUM_INSTANCES];
+static unsigned char gt_media_memory[CONFIG_FILEX_NUM_INSTANCES][16u * 1024];
+
+void EclipseThreadx_FilexOpen(void)
+{
+    VOID (*gp_media_driver)(FX_MEDIA *media);
+    MMCSD_Handle mmcsd_hndl;
+    uint32_t blk_cnt;
+    uint32_t blk_sz;
+    uint32_t sec_cnt;
+    uint32_t sec_sz;
+    UINT status;
+
+
+     _fx_system_initialize();
+
+% for(let k = 0; k < module.$instances.length; k++) {
+
+% let inst = module.$instances[k];
+% if ((inst.media == "SD") || (inst.media == "EMMC")) {
+   
+    gp_media_driver = filex_mmcsd_driver;
+    mmcsd_hndl = MMCSD_getHandle(`inst.peripheralDriver.$name`);
+    if (mmcsd_hndl == NULL) {
+        DebugP_logError("Drivers_FilexOpen() failed: MMCSD module instance %d not found !!!\r\n", `k`);
+    }
+
+    blk_sz = MMCSD_getBlockSize(mmcsd_hndl);
+    blk_cnt = MMCSD_getBlockCount(mmcsd_hndl);
+
+% } else if (inst.media == "NOR") {
+        
+
+% } else if (inst.media == "NAND") {
+
+% } else {
+
+
+% }
+%
+% if (inst.auto_format) {
+
+    /* Try to open the media. If the media is not formatted, format and try again. */
+    status =  fx_media_open(&gt_media[`k`], "`inst.peripheralDriver.$name`", gp_media_driver, (void *)&mmcsd_hndl, gt_media_memory[`k`], sizeof(gt_media_memory[`k`]));
+    if (status != FX_SUCCESS) {
+        sec_sz = `inst.sector_size`u;
+        sec_cnt = ((uint64_t)blk_cnt * blk_sz) / sec_sz;
+        status = fx_media_format(&gt_media[`k`], // Media instance.
+                                 gp_media_driver, // Driver entry
+                                 (void *)&mmcsd_hndl, // MMCSD handle.
+                                 gt_media_memory[`k`], // Media buffer pointer
+                                 sizeof(gt_media_memory[`k`]), // Media buffer size
+                                 "`inst.peripheralDriver.$name`", // Volume Name
+                                 1, // Number of FATs
+                                 32, // Directory Entries
+                                 0, // Hidden sectors
+                                 sec_cnt, // Total sectors
+                                 sec_sz, // Sector size
+                                 `inst.sectors_per_cluster`, // Sectors per cluster
+                                 1, // Heads
+                                 1); // Sectors per track
+        if (status != FX_SUCCESS) {
+            DebugP_logError("Drivers_FilexOpen() failed: fx_media_format() returned error %d !!!\r\n", status);
+            return;
+        }
+    }
+% }
+
+    /* Open the media. */
+    status =  fx_media_open(&gt_media[`k`], // Media instance.
+                            "`inst.peripheralDriver.$name`", // Media Name.
+                            gp_media_driver, // Driver entry.
+                            (void *)&mmcsd_hndl, // MMCSD handle. 
+                            gt_media_memory[`k`], // Media buffer pointer.
+                            sizeof(gt_media_memory[`k`])); // Media buffer size.
+    if (status != FX_SUCCESS) {
+        DebugP_logError("Drivers_FilexOpen() failed: fx_media_open() returned error %d !!!\r\n", status);
+        return;
+    }
+% }
+}
+
+void EclipseThreadx_FilexClose(void)
+{
+    /* Nothing to do. */
+}
