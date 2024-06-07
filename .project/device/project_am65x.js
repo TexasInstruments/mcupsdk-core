@@ -13,6 +13,7 @@ const device_defines = {
 };
 
 const example_file_list = [
+    "examples/hello_world/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {

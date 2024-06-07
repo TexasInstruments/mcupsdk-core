@@ -1,12 +1,45 @@
 [
     {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
+        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running FREERTOS.",
+        "name": "hello_world",
+        "location": "../../examples/hello_world/am65x-idk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM65x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
         "resourceType": "web.page",
         "resourceClass": [
             "document"
         ],
         "name": "User Guide",
         "location": "../../docs/api_guide_am65x/index.html",
-        "devtools": [],
+        "devtools": [
+            "AM65x_GP_EVM"
+        ],
         "mainCategories": [
             [
                 "Documents"
