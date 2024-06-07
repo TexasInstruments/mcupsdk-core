@@ -253,6 +253,7 @@ const example_file_list = [
     "examples/sdl/ecc/sdl_ecc_mcan/.project/project.js",
     "examples/sdl/parity/sdl_tcm_parity/.project/project.js",
     "examples/sdl/ecc/sdl_ecc_r5_btcm/.project/project.js",
+    "examples/sdl/ecc/sdl_ecc_r5_d-data/.project/project.js",
     "examples/sdl/ecc/sdl_ecc_icssm/.project/project.js",
     "examples/sdl/ecc/sdl_ecc_mss_tptc/.project/project.js",
     "examples/sdl/rti/UC1/.project/project.js",
