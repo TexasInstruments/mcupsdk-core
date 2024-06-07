@@ -15,6 +15,7 @@ const device_defines = {
 const example_file_list = [
     "examples/empty/.project/project_freertos.js",
     "examples/hello_world/.project/project.js",
+    "examples/hello_world_cpp/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {

@@ -100,6 +100,37 @@
         "resourceSubClass": [
             "example.gettingstarted"
         ],
+        "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running FREERTOS.",
+        "name": "hello_world_cpp",
+        "location": "../../examples/hello_world_cpp/am65x-idk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM65x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "hello_world_cpp",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.gettingstarted"
+        ],
         "description": "An Empty Example. This example is intended to be a starting point for new development System project.",
         "name": "empty",
         "location": "../../examples/empty/am65x-idk/system_freertos/system.projectspec",
