@@ -48,6 +48,7 @@ help:
 	@echo  ======================
 	@echo  $(MAKE) -s -C examples/hello_world/am65x-idk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/hello_world_cpp/am65x-idk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/kernel/freertos/task_switch/am65x-idk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
@@ -149,6 +150,7 @@ BUILD_COMBO_EXAMPLE_ALL =
 # Various Example Targets
 BUILD_COMBO_EXAMPLE_ALL += hello_world_am65x-idk_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += hello_world_cpp_am65x-idk_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += task_switch_am65x-idk_r5fss0-0_freertos_ti-arm-clang
 
 # Various System Example Targets
 BUILD_COMBO_EXAMPLE_ALL += empty_am65x-idk_system_freertos
@@ -172,6 +174,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  hello_world_cpp_am65x-idk_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/hello_world_cpp/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile all
 
+ task_switch_am65x-idk_r5fss0-0_freertos_ti-arm-clang:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
  empty_am65x-idk_system_freertos:
 	$(MAKE) -C examples/empty/am65x-idk/system_freertos -f makefile all
 
@@ -180,6 +185,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL =
 # Various Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += hello_world_cpp_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += task_switch_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 # Various System Example Clean Targets
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += empty_am65x-idk_system_freertos_clean
 
@@ -198,6 +204,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  hello_world_cpp_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/hello_world_cpp/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
 
+ task_switch_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
  empty_am65x-idk_system_freertos_clean:
 	$(MAKE) -C examples/empty/am65x-idk/system_freertos -f makefile clean
 
@@ -206,6 +215,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL =
 # Various Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_am65x-idk_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += hello_world_cpp_am65x-idk_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += task_switch_am65x-idk_r5fss0-0_freertos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += empty_am65x-idk_system_freertos_scrub
 
@@ -223,6 +233,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  hello_world_cpp_am65x-idk_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/hello_world_cpp/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ task_switch_am65x-idk_r5fss0-0_freertos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/kernel/freertos/task_switch/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
 
  empty_am65x-idk_system_freertos_scrub:
 	$(MAKE) -C examples/empty/am65x-idk/system_freertos -f makefile scrub
