@@ -130,36 +130,41 @@ _tx_thread_stack_build:
 @
     LDR     r2, [r0, #16]                   @ Pickup end of stack area
     BIC     r2, r2, #7                      @ Ensure 8-byte alignment
-    SUB     r2, r2, #76                     @ Allocate space for the stack frame
+    SUB     r2, r2, #72                     @ Allocate space for the stack frame
 @
 @    /* Actually build the stack frame.  */
 @
     MOV     r3, #1                          @ Build interrupt stack type
     STR     r3, [r2, #0]                    @ Store stack type
     MOV     r3, #0                          @ Build initial register value
-    STR     r3, [r2, #8]                    @ Store initial r0
-    STR     r3, [r2, #12]                   @ Store initial r1
-    STR     r3, [r2, #16]                   @ Store initial r2
-    STR     r3, [r2, #20]                   @ Store initial r3
-    STR     r3, [r2, #24]                   @ Store initial r4
-    STR     r3, [r2, #28]                   @ Store initial r5
-    STR     r3, [r2, #32]                   @ Store initial r6
-    STR     r3, [r2, #36]                   @ Store initial r7
-    STR     r3, [r2, #40]                   @ Store initial r8
-    STR     r3, [r2, #44]                   @ Store initial r9
+    STR     r3, [r2, #4]                    @ Store initial r0
+    STR     r3, [r2, #8]                    @ Store initial r1
+    STR     r3, [r2, #12]                   @ Store initial r2
+    STR     r3, [r2, #16]                   @ Store initial r3
+    STR     r3, [r2, #20]                   @ Store initial r4
+    STR     r3, [r2, #24]                   @ Store initial r5
+    STR     r3, [r2, #28]                   @ Store initial r6
+    STR     r3, [r2, #32]                   @ Store initial r7
+    STR     r3, [r2, #36]                   @ Store initial r8
+    STR     r3, [r2, #40]                   @ Store initial r9
+
     LDR     r3, [r0, #12]                   @ Pickup stack starting address
-    STR     r3, [r2, #48]                   @ Store initial r10 (sl)
+    STR     r3, [r2, #44]                   @ Store initial r10 (sl)
+
+    STR     r3, [r2, #48]                   @ Store initial r11
+    STR     r3, [r2, #52]                   @ Store initial r12
+
     LDR     r3,=_tx_thread_schedule         @ Pickup address of _tx_thread_schedule for GDB backtrace
-    STR     r3, [r2, #60]                   @ Store initial r14 (lr)
-    MOV     r3, #0                          @ Build initial register value
-    STR     r3, [r2, #52]                   @ Store initial r11
-    STR     r3, [r2, #56]                   @ Store initial r12
-    STR     r1, [r2, #64]                   @ Store initial pc
-    STR     r3, [r2, #68]                   @ 0 for back-trace
+    STR     r3, [r2, #56]                   @ Store initial r14 (lr)
+
+    STR     r1, [r2, #60]                   @ Store initial pc
+
     MRS     r1, CPSR                        @ Pickup CPSR
     BIC     r1, r1, #CPSR_MASK              @ Mask mode bits of CPSR
     ORR     r3, r1, #SYS_MODE               @ Build CPSR, SYS mode, interrupts enabled
-    STR     r3, [r2, #4]                    @ Store initial CPSR
+    STR     r3, [r2, #64]                   @ Store initial CPSR
+
+    STR     r3, [r2, #68]                   @ 0 for back-trace
 @
 @    /* Setup stack pointer.  */
 @    thread_ptr -> tx_thread_stack_ptr =  r2;
