@@ -161,7 +161,7 @@ __tx_thread_schedule_loop:
 @    /* Determine if an interrupt frame or a synchronous task suspension frame
 @   is present.  */
 @
-    LDMIA   sp!, {r4, r5}                       @ Pickup the stack type and saved CPSR
+    LDMIA   sp!, {r4}                           @ Pickup the stack type and saved CPSR
     CMP     r4, #0                              @ Check for synchronous context switch
     BEQ     _tx_solicited_return
     MSR     SPSR_cxsf, r5                       @ Setup SPSR for return
