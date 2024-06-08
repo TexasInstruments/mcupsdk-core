@@ -51,11 +51,7 @@
 #include "tx_user.h"
 #endif
 
-#ifdef TX_ENABLE_FIQ_SUPPORT
-DISABLE_INTS    =       0xC0                    @ Disable IRQ/FIQ interrupts
-#else
 DISABLE_INTS    =       0x80                    @ Disable IRQ interrupts
-#endif
 MODE_MASK       =       0x1F                    @ Mode mask 
 IRQ_MODE_BITS   =       0x12                    @ IRQ mode bits
 @
@@ -127,10 +123,6 @@ _tx_thread_irq_nesting_end:
     BIC     r0, r0, #MODE_MASK                  @ Clear mode bits
     ORR     r0, r0, #IRQ_MODE_BITS              @ Build IRQ mode CPSR
     MSR     CPSR_c, r0                          @ Reenter IRQ mode
-#ifdef __THUMB_INTERWORK
     BX      r3                                  @ Return to caller
-#else
-    MOV     pc, r3                              @ Return to caller
-#endif
 @}
 

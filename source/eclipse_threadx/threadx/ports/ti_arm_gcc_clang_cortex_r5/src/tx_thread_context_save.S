@@ -116,9 +116,6 @@ _tx_thread_context_save:
 @    {
 @
     STMDB   sp!, {r0-r3}                    @ Save some working registers 
-#ifdef TX_ENABLE_FIQ_SUPPORT
-    CPSID   if                              @ Disable FIQ interrupts
-#endif
     LDR     r3, =_tx_thread_system_state    @ Pickup address of system state variable
     LDR     r2, [r3]                        @ Pickup system state
     CMP     r2, #0                          @ Is this the first interrupt?

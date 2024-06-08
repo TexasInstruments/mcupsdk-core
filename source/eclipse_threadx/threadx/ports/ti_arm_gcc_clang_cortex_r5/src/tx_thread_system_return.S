@@ -59,28 +59,6 @@
     .global     _tx_thread_schedule
     .global     _tx_execution_thread_exit
 @
-@
-@
-@/* Define the 16-bit Thumb mode veneer for _tx_thread_system_return for
-@   applications calling this function from to 16-bit Thumb mode.  */
-@
-    .text
-    .align  2
-    .global $_tx_thread_system_return
-    .type   $_tx_thread_system_return,function
-$_tx_thread_system_return:
-    .thumb
-     BX        pc                               @ Switch to 32-bit mode
-     NOP                                        @ 
-    .arm
-     STMFD     sp!, {lr}                        @ Save return address
-     BL        _tx_thread_system_return         @ Call _tx_thread_system_return function
-     LDMFD     sp!, {lr}                        @ Recover saved return address
-     BX        lr                               @ Return to 16-bit caller
-@
-@
-    .text
-    .align  2
 @/**************************************************************************/ 
 @/*                                                                        */ 
 @/*  FUNCTION                                               RELEASE        */ 
@@ -130,11 +108,7 @@ _tx_thread_system_return:
 @   /* Lockout interrupts.  */
 @
     MRS     r1, CPSR                            @ Pickup the CPSR
-#ifdef TX_ENABLE_FIQ_SUPPORT
-    CPSID   if                                  @ Disable IRQ and FIQ interrupts
-#else
     CPSID   i                                   @ Disable IRQ interrupts
-#endif
 @    /* Save minimal context on the stack.  */
 @
     STMDB   sp!, {r4-r11, lr}                   @ Save minimal context

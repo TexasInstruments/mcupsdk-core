@@ -153,11 +153,7 @@ typedef unsigned short                          USHORT;
 
 /* Define various constants for the ThreadX ARM port.  */ 
 
-#ifdef TX_ENABLE_FIQ_SUPPORT
-#define TX_INT_DISABLE                          0xC0        /* Disable IRQ & FIQ interrupts     */
-#else
 #define TX_INT_DISABLE                          0x80        /* Disable IRQ interrupts           */
-#endif
 #define TX_INT_ENABLE                           0x00        /* Enable IRQ interrupts            */
 
 
@@ -180,12 +176,6 @@ typedef unsigned short                          USHORT;
 
 /* Define the port specific options for the _tx_build_options variable. This variable indicates
    how the ThreadX library was built.  */
-
-#ifdef TX_ENABLE_FIQ_SUPPORT
-#define TX_FIQ_ENABLED                          1
-#else
-#define TX_FIQ_ENABLED                          0
-#endif
 
 #ifdef TX_ENABLE_IRQ_NESTING
 #define TX_IRQ_NESTING_ENABLED                  2
@@ -318,11 +308,7 @@ unsigned int   _tx_thread_interrupt_restore(UINT old_posture);
 
 #define TX_INTERRUPT_SAVE_AREA                  UINT interrupt_save;
 
-#ifdef TX_ENABLE_FIQ_SUPPORT
-#define TX_DISABLE                              asm volatile (" MRS %0,CPSR; CPSID if ": "=r" (interrupt_save) );
-#else
 #define TX_DISABLE                              asm volatile (" MRS %0,CPSR; CPSID i ": "=r" (interrupt_save) );
-#endif
 
 #define TX_RESTORE                              asm volatile (" MSR CPSR_c,%0 "::"r" (interrupt_save) );
 

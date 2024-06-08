@@ -115,9 +115,6 @@ _tx_thread_vectored_context_save:
 @    if (_tx_thread_system_state++)
 @    {
 @
-#ifdef TX_ENABLE_FIQ_SUPPORT
-    CPSID   if                                  @ Disable IRQ and FIQ interrupts
-#endif
     LDR     r3, =_tx_thread_system_state        @ Pickup address of system state variable
     LDR     r2, [r3, #0]                        @ Pickup system state
     CMP     r2, #0                              @ Is this the first interrupt?
