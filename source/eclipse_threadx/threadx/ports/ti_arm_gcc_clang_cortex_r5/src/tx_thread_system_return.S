@@ -115,7 +115,7 @@ _tx_thread_system_return:
     LDR     r5, =_tx_thread_current_ptr         @ Pickup address of current ptr
     LDR     r6, [r5, #0]                        @ Pickup current thread pointer
 @
-#ifdef TX_ENABLE_VFP_SUPPORT
+#if !defined(__SOFT_FP__) && defined(__ARM_FP) & 0
     LDR     r0, [r6, #144]                      @ Pickup the VFP enabled flag
     CMP     r0, #0                              @ Is the VFP enabled?
     BEQ     _tx_skip_solicited_vfp_save         @ No, skip VFP solicited save
@@ -123,7 +123,7 @@ _tx_thread_system_return:
     STR     r4, [sp, #-4]!                      @ Save FPSCR
     VSTMDB  sp!, {D8-D15}                       @ Save D8-D15
 _tx_skip_solicited_vfp_save:
-#endif
+#endif // #if !defined(__SOFT_FP__) && defined(__ARM_FP)
 @
     MOV     r0, #0                              @ Build a solicited stack type
     STMDB   sp!, {r0-r1}                        @ Save type and CPSR
