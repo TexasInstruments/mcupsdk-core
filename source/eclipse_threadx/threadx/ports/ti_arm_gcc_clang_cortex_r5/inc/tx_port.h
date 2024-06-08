@@ -135,7 +135,7 @@ typedef unsigned short                          USHORT;
    thread creation is less than this value, the thread create call will return an error.  */
 
 #ifndef TX_MINIMUM_STACK
-#define TX_MINIMUM_STACK                        200         /* Minimum stack size for this port  */
+#define TX_MINIMUM_STACK                        256         /* Minimum stack size for this port  */
 #endif
 
 
@@ -297,7 +297,6 @@ typedef unsigned short                          USHORT;
 
 unsigned int   _tx_thread_interrupt_disable(void);
 unsigned int   _tx_thread_interrupt_restore(UINT old_posture);
-
 
 #define TX_INTERRUPT_SAVE_AREA                  UINT interrupt_save;
 
