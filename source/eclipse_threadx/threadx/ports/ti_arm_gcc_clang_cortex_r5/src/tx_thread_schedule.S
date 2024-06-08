@@ -164,8 +164,7 @@ __tx_thread_schedule_loop:
     LDMIA   sp!, {r4}                           @ Pickup the stack type and saved CPSR
     CMP     r4, #0                              @ Check for synchronous context switch
     BEQ     _tx_solicited_return
-    MSR     SPSR_cxsf, r5                       @ Setup SPSR for return
-#ifdef TX_ENABLE_VFP_SUPPORT
+#if !defined(__SOFT_FP__) && defined(__ARM_FP) & 0
     LDR     r1, [r0, #144]                      @ Pickup the VFP enabled flag
     CMP     r1, #0                              @ Is the VFP enabled?
     BEQ     _tx_skip_interrupt_vfp_restore      @ No, skip VFP interrupt restore
@@ -173,11 +172,12 @@ __tx_thread_schedule_loop:
     LDR     r4, [sp], #4                        @ Pickup FPSCR
     VMSR    FPSCR, r4                           @ Restore FPSCR
 _tx_skip_interrupt_vfp_restore:
-#endif
-    LDMIA   sp!, {r0-r12, lr, pc}^              @ Return to point of thread interrupt
+#endif // #if !defined(__SOFT_FP__) && defined(__ARM_FP)
+    LDMIA   sp!, {r0-r12, lr}                   @ Return to point of thread interrupt
+    RFEIA   sp!
 @
 _tx_solicited_return:
-#ifdef TX_ENABLE_VFP_SUPPORT
+#if !defined(__SOFT_FP__) && defined(__ARM_FP) & 0
     LDR     r1, [r0, #144]                      @ Pickup the VFP enabled flag
     CMP     r1, #0                              @ Is the VFP enabled?
     BEQ     _tx_skip_solicited_vfp_restore      @ No, skip VFP solicited restore
@@ -185,8 +185,8 @@ _tx_solicited_return:
     LDR     r4, [sp], #4                        @ Pickup FPSCR
     VMSR    FPSCR, r4                           @ Restore FPSCR
 _tx_skip_solicited_vfp_restore:
-#endif
-    MOV     r0, r5                              @ Move CPSR to scratch register
+#endif // #if !defined(__SOFT_FP__) && defined(__ARM_FP)
+    LDMIA   sp!, {r0} // CPSR.
     LDMIA   sp!, {r4-r11, lr}                   @ Return to thread synchronously
     MSR     CPSR_cxsf, r0                       @ Recover CPSR
 @
@@ -195,7 +195,7 @@ _tx_skip_solicited_vfp_restore:
 @}
 @
 @
-#ifdef TX_ENABLE_VFP_SUPPORT
+#if !defined(__SOFT_FP__) && defined(__ARM_FP) & 0
     .global tx_thread_vfp_enable
     .type  tx_thread_vfp_enable,function
 tx_thread_vfp_enable:
@@ -225,5 +225,5 @@ tx_thread_vfp_disable:
 __tx_no_thread_to_disable:
     MSR     CPSR_cxsf, r2                       @ Recover CPSR
     BX      LR                                  @ Return to caller
-#endif
+#endif // #if !defined(__SOFT_FP__) && defined(__ARM_FP)
 
