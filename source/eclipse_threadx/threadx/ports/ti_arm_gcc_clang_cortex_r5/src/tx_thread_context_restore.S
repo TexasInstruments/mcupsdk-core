@@ -57,7 +57,7 @@
 
     .arm
 
-SVC_MODE        =     0x93               @ Disable IRQ, SVC mode
+SYS_MODE        =     0x9F               @ Disable IRQ, SYS mode
 IRQ_MODE        =     0x92               @ Disable IRQ, IRQ mode
 @
     .global     _tx_thread_system_state
@@ -197,16 +197,19 @@ __tx_thread_preempt_restore:
 @
     LDMIA   sp!, {r3, r10, r12, lr}         @ Recover temporarily saved registers
     MOV     r1, lr                          @ Save lr (point of interrupt)
-    MOV     r2, #SVC_MODE                   @ Build SVC mode CPSR
-    MSR     CPSR_c, r2                      @ Enter SVC mode
-    STR     r1, [sp, #-4]!                  @ Save point of interrupt
+    MOV     r2, #SYS_MODE                   @ Build SYS mode CPSR
+    MSR     CPSR_c, r2                      @ Enter SYS mode
+
+    STMDB   sp!, {r3}                       @ SPSR save.
+    STMDB   sp!, {r1}                       @ Save point of interrupt
+
     STMDB   sp!, {r4-r12, lr}               @ Save upper half of registers
     MOV     r4, r3                          @ Save SPSR in r4
     MOV     r2, #IRQ_MODE                   @ Build IRQ mode CPSR
     MSR     CPSR_c, r2                      @ Enter IRQ mode
     LDMIA   sp!, {r0-r3}                    @ Recover r0-r3
-    MOV     r5, #SVC_MODE                   @ Build SVC mode CPSR
-    MSR     CPSR_c, r5                      @ Enter SVC mode
+    MOV     r5, #SYS_MODE                   @ Build SYS mode CPSR
+    MSR     CPSR_c, r5                      @ Enter SYS mode
     STMDB   sp!, {r0-r3}                    @ Save r0-r3 on thread's stack
 @
     LDR     r1, =_tx_thread_current_ptr     @ Pickup address of current thread ptr
@@ -223,7 +226,7 @@ _tx_skip_irq_vfp_save:
 #endif
 @
     MOV     r3, #1                          @ Build interrupt stack type
-    STMDB   sp!, {r3, r4}                   @ Save interrupt stack type and SPSR
+    STMDB   sp!, {r3}                       @ Save interrupt stack type
     STR     sp, [r0, #8]                    @ Save stack pointer in thread control
                                             @   block
 @
@@ -263,8 +266,8 @@ __tx_thread_idle_system_restore:
 @
 @    /* Just return back to the scheduler!  */
 @
-    MOV     r0, #SVC_MODE                   @ Build SVC mode CPSR
-    MSR     CPSR_c, r0                      @ Enter SVC mode
+    MOV     r0, #SYS_MODE                   @ Build SYS mode CPSR
+    MSR     CPSR_c, r0                      @ Enter SYS mode
     B       _tx_thread_schedule             @ Return to scheduler
 @}
 
