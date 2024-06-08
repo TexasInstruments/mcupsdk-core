@@ -51,25 +51,6 @@
 #include "tx_user.h"
 #endif
 
-@/* Define the 16-bit Thumb mode veneer for _tx_thread_interrupt_restore for
-@   applications calling this function from to 16-bit Thumb mode.  */
-@
-    .text
-    .align 2
-    .global $_tx_thread_interrupt_restore
-$_tx_thread_interrupt_restore:
-        .thumb
-     BX        pc                               @ Switch to 32-bit mode
-     NOP                                        @ 
-    .arm
-     STMFD     sp!, {lr}                        @ Save return address
-     BL        _tx_thread_interrupt_restore     @ Call _tx_thread_interrupt_restore function
-     LDMFD     sp!, {lr}                        @ Recover saved return address
-     BX        lr                               @ Return to 16-bit caller
-@
-@
-    .text
-    .align 2
 @/**************************************************************************/ 
 @/*                                                                        */ 
 @/*  FUNCTION                                               RELEASE        */ 
@@ -117,10 +98,6 @@ _tx_thread_interrupt_restore:
 @    /* Apply the new interrupt posture.  */
 @
     MSR     CPSR_c, r0                          @ Setup new CPSR
-#ifdef __THUMB_INTERWORK
     BX      lr                                  @ Return to caller
-#else
-    MOV     pc, lr                              @ Return to caller
-#endif
 @}
 

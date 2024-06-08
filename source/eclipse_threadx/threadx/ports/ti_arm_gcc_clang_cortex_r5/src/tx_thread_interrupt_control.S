@@ -54,24 +54,6 @@
 
 INT_MASK        =   0x03F
 
-@
-@/* Define the 16-bit Thumb mode veneer for _tx_thread_interrupt_control for
-@   applications calling this function from to 16-bit Thumb mode.  */
-@
-    .text
-    .align 2
-    .global $_tx_thread_interrupt_control
-$_tx_thread_interrupt_control:
-        .thumb
-     BX        pc                               @ Switch to 32-bit mode
-     NOP                                        @ 
-    .arm
-     STMFD     sp!, {lr}                        @ Save return address
-     BL        _tx_thread_interrupt_control     @ Call _tx_thread_interrupt_control function
-     LDMFD     sp!, {lr}                        @ Recover saved return address
-     BX        lr                               @ Return to 16-bit caller
-@
-@
     .text
     .align 2
 @/**************************************************************************/ 
@@ -129,10 +111,6 @@ _tx_thread_interrupt_control:
 @
     MSR     CPSR_c, r1                  @ Setup new CPSR
     BIC     r0, r3, r2                  @ Return previous interrupt mask
-#ifdef __THUMB_INTERWORK
     BX      lr                          @ Return to caller
-#else
-    MOV     pc, lr                      @ Return to caller
-#endif
 @}
 

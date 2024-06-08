@@ -120,10 +120,6 @@ _tx_thread_irq_nesting_start:
                                                 @   and push r1 just to keep 8-byte alignment
     BIC     r0, r0, #IRQ_DISABLE                @ Build enable IRQ CPSR
     MSR     CPSR_c, r0                          @ Enter system mode
-#ifdef __THUMB_INTERWORK
     BX      r3                                  @ Return to caller
-#else
-    MOV     pc, r3                              @ Return to caller
-#endif
 @}
 

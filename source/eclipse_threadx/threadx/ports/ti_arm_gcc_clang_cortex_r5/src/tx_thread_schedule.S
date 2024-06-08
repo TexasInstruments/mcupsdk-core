@@ -56,27 +56,6 @@
     .global     _tx_timer_time_slice
     .global     _tx_execution_thread_enter
 @
-@
-@/* Define the 16-bit Thumb mode veneer for _tx_thread_schedule for
-@   applications calling this function from to 16-bit Thumb mode.  */
-@
-    .text
-    .align  2
-    .global $_tx_thread_schedule
-    .type   $_tx_thread_schedule,function
-$_tx_thread_schedule:
-         .thumb
-     BX        pc                                   @ Switch to 32-bit mode
-     NOP                                            @ 
-    .arm
-     STMFD     sp!, {lr}                            @ Save return address
-     BL        _tx_thread_schedule                  @ Call _tx_thread_schedule function
-     LDMFD     sp!, {lr}                            @ Recover saved return address
-     BX        lr                                   @ Return to 16-bit caller
-@
-@
-    .text
-    .align 2
 @/**************************************************************************/ 
 @/*                                                                        */ 
 @/*  FUNCTION                                               RELEASE        */ 
@@ -126,11 +105,7 @@ _tx_thread_schedule:
 @
 @    /* Enable interrupts.  */
 @
-#ifdef TX_ENABLE_FIQ_SUPPORT
-    CPSIE   if                                  @ Enable IRQ and FIQ interrupts
-#else
     CPSIE   i                                   @ Enable IRQ interrupts
-#endif
 @
 @    /* Wait for a thread to execute.  */
 @    do
@@ -149,11 +124,7 @@ __tx_thread_schedule_loop:
 @    /* Yes! We have a thread to execute.  Lockout interrupts and
 @       transfer control to it.  */
 @
-#ifdef TX_ENABLE_FIQ_SUPPORT
-    CPSID   if                                  @ Disable IRQ and FIQ interrupts
-#else
     CPSID   i                                   @ Disable IRQ interrupts
-#endif
 @
 @    /* Setup the current thread pointer.  */
 @    _tx_thread_current_ptr =  _tx_thread_execute_ptr;
@@ -219,11 +190,7 @@ _tx_skip_solicited_vfp_restore:
     LDMIA   sp!, {r4-r11, lr}                   @ Return to thread synchronously
     MSR     CPSR_cxsf, r0                       @ Recover CPSR
 @
-#ifdef __THUMB_INTERWORK
     BX      lr                                  @ Return to caller
-#else
-    MOV     pc, lr                              @ Return to caller
-#endif
 @
 @}
 @
@@ -233,11 +200,7 @@ _tx_skip_solicited_vfp_restore:
     .type  tx_thread_vfp_enable,function
 tx_thread_vfp_enable:
     MRS     r2, CPSR                            @ Pickup the CPSR
-#ifdef TX_ENABLE_FIQ_SUPPORT
-    CPSID   if                                  @ Disable IRQ and FIQ interrupts
-#else
     CPSID   i                                   @ Disable IRQ interrupts
-#endif
     LDR     r0, =_tx_thread_current_ptr         @ Build current thread pointer address
     LDR     r1, [r0]                            @ Pickup current thread pointer
     CMP     r1, #0                              @ Check for NULL thread pointer
@@ -252,11 +215,7 @@ __tx_no_thread_to_enable:
     .type  tx_thread_vfp_disable,function
 tx_thread_vfp_disable:
     MRS     r2, CPSR                            @ Pickup the CPSR
-#ifdef TX_ENABLE_FIQ_SUPPORT
-    CPSID   if                                  @ Disable IRQ and FIQ interrupts
-#else
     CPSID   i                                   @ Disable IRQ interrupts
-#endif
     LDR     r0, =_tx_thread_current_ptr         @ Build current thread pointer address
     LDR     r1, [r0]                            @ Pickup current thread pointer
     CMP     r1, #0                              @ Check for NULL thread pointer

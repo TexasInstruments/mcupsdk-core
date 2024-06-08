@@ -57,13 +57,8 @@
 
     .arm
 
-#ifdef TX_ENABLE_FIQ_SUPPORT
-SVC_MODE        =     0xD3               @ Disable IRQ/FIQ, SVC mode
-IRQ_MODE        =     0xD2               @ Disable IRQ/FIQ, IRQ mode
-#else
 SVC_MODE        =     0x93               @ Disable IRQ, SVC mode
 IRQ_MODE        =     0x92               @ Disable IRQ, IRQ mode
-#endif
 @
     .global     _tx_thread_system_state
     .global     _tx_thread_current_ptr
@@ -128,11 +123,7 @@ _tx_thread_context_restore:
 @
 @    /* Lockout interrupts.  */
 @
-#ifdef TX_ENABLE_FIQ_SUPPORT
-    CPSID   if                              @ Disable IRQ and FIQ interrupts
-#else
     CPSID   i                               @ Disable IRQ interrupts
-#endif
 
 #ifdef TX_ENABLE_EXECUTION_CHANGE_NOTIFY
 @
