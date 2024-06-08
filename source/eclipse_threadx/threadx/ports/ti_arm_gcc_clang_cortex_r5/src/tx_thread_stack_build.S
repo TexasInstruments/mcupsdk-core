@@ -53,7 +53,7 @@
 
     .arm
 
-SVC_MODE        =       0x13                    @ SVC mode
+SYS_MODE        =       0x1F                    @ SYS mode
 CPSR_MASK       =       0x9F                    @ Mask initial CPSR, IRQ interrupts enabled
 @
 @
@@ -158,7 +158,7 @@ _tx_thread_stack_build:
     STR     r3, [r2, #68]                   @ 0 for back-trace
     MRS     r1, CPSR                        @ Pickup CPSR
     BIC     r1, r1, #CPSR_MASK              @ Mask mode bits of CPSR
-    ORR     r3, r1, #SVC_MODE               @ Build CPSR, SVC mode, interrupts enabled
+    ORR     r3, r1, #SYS_MODE               @ Build CPSR, SYS mode, interrupts enabled
     STR     r3, [r2, #4]                    @ Store initial CPSR
 @
 @    /* Setup stack pointer.  */
