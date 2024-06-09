@@ -238,10 +238,6 @@ const asmfiles = {
         // R5 port
         "tx_thread_context_restore.S",
         "tx_thread_context_save.S",
-        "tx_thread_fiq_context_restore.S",
-        "tx_thread_fiq_context_save.S",
-        "tx_thread_fiq_nesting_end.S",
-        "tx_thread_fiq_nesting_start.S",
         "tx_thread_interrupt_control.S",
         "tx_thread_interrupt_disable.S",
         "tx_thread_interrupt_restore.S",
