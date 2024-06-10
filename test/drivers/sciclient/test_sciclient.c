@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Texas Instruments Incorporated
+ * Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -239,6 +239,13 @@ static void test_sciclient_rm_ir_output(void *args)
         TISCI_DEV_MAIN_GPIOMUX_INTROUTER0,
         TISCI_DEV_WKUP_MCU_GPIOMUX_INTROUTER0,
         TISCI_DEV_TIMESYNC_EVENT_ROUTER0,
+    };
+#elif defined (SOC_AM65X)
+    uint16_t validIrDevIds[4] = {
+        TISCI_DEV_CMPEVENT_INTRTR0,
+        TISCI_DEV_GPIOMUX_INTRTR0,
+        TISCI_DEV_WKUP_GPIOMUX_INTRTR0,
+        TISCI_DEV_TIMESYNC_INTRTR0,
     };
 #else
     uint16_t validIrDevIds[4] = {

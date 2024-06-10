@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 Texas Instruments Incorporated
+ *  Copyright (C) 2023 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,45 +30,19 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#ifndef SOC_CONFIG_TOP_H_
-#define SOC_CONFIG_TOP_H_
-
-
-#include <stdint.h>
-
+#ifndef SOC_CONFIG_IN_H_
+#define SOC_CONFIG_IN_H_
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-#if defined (SOC_AM64X) || defined (SOC_AM243X)
-#include <drivers/hw_include/am64x_am243x/soc_config.h>
-#endif
+/* IP versions */
+#define IP_VERSION_INTAGGR_V0
+#define IP_VERSION_INTR_ROUTER_V0
 
-#if defined (SOC_AM263X)
-#include <drivers/hw_include/am263x/soc_config.h>
-#endif
-#if defined (SOC_AM263PX)
-#include <drivers/hw_include/am263px/soc_config.h>
-#endif
-
-
-#if defined (SOC_AM273X)
-#include <drivers/hw_include/am273x/soc_config.h>
-#endif
-
-#if defined (SOC_AWR294X)
-#include <drivers/hw_include/awr294x/soc_config.h>
-#endif
-
-#if defined (SOC_AM62X)
-#include <drivers/hw_include/am62x/soc_config.h>
-#endif
-
-#if defined (SOC_AM65X)
-#include <drivers/hw_include/am65x/soc_config.h>
-#endif
+/* Driver versions */
 
 #ifdef __cplusplus
 }
