@@ -37,6 +37,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ddr_ecc_test_main_esm_am64x-evm_r5f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ddr_ecc_test_main_esm_am64x-sk_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecap_apwm_mode_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecap_apwm_mode_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecap_apwm_mode_am64x-evm_a53ss0-0_freertos_gcc-aarch64_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecap_apwm_mode_am64x-evm_a53ss0-0_nortos_gcc-aarch64_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecap_epwm_loopback_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ecap_epwm_loopback_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += epwm_duty_cycle_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build
@@ -567,6 +569,12 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  ecap_apwm_mode_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ ecap_apwm_mode_am64x-evm_a53ss0-0_freertos_gcc-aarch64_build:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec all
+
+ ecap_apwm_mode_am64x-evm_a53ss0-0_nortos_gcc-aarch64_build:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile_projectspec all
 
  ecap_epwm_loopback_am64x-evm_r5fss0-0_nortos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec all
@@ -1895,6 +1903,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ddr_ecc_test_main_esm_am64x-evm_r5f
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ddr_ecc_test_main_esm_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecap_apwm_mode_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecap_apwm_mode_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecap_apwm_mode_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecap_apwm_mode_am64x-evm_a53ss0-0_nortos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecap_epwm_loopback_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ecap_epwm_loopback_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += epwm_duty_cycle_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
@@ -2425,6 +2435,12 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  ecap_apwm_mode_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ ecap_apwm_mode_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec clean
+
+ ecap_apwm_mode_am64x-evm_a53ss0-0_nortos_gcc-aarch64_clean:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile_projectspec clean
 
  ecap_epwm_loopback_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec clean
@@ -3753,6 +3769,8 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ddr_ecc_test_main_esm_am64x-evm_r5
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ddr_ecc_test_main_esm_am64x-sk_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecap_apwm_mode_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecap_apwm_mode_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecap_apwm_mode_am64x-evm_a53ss0-0_freertos_gcc-aarch64_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecap_apwm_mode_am64x-evm_a53ss0-0_nortos_gcc-aarch64_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecap_epwm_loopback_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ecap_epwm_loopback_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += epwm_duty_cycle_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export
@@ -4283,6 +4301,12 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  ecap_apwm_mode_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ ecap_apwm_mode_am64x-evm_a53ss0-0_freertos_gcc-aarch64_export:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec export
+
+ ecap_apwm_mode_am64x-evm_a53ss0-0_nortos_gcc-aarch64_export:
+	$(MAKE) -C examples/drivers/ecap/ecap_apwm_mode/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile_projectspec export
 
  ecap_epwm_loopback_am64x-evm_r5fss0-0_nortos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/ecap/ecap_epwm_loopback/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec export
@@ -5636,6 +5660,8 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/ddr/ddr_ecc_test_main_esm/am64x-sk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_apwm_mode/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_apwm_mode/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_apwm_mode/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_apwm_mode/am64x-evm/a53ss0-0_nortos/gcc-aarch64 -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_epwm_loopback/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/ecap/ecap_epwm_loopback/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/epwm/epwm_duty_cycle/am64x-evm/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]

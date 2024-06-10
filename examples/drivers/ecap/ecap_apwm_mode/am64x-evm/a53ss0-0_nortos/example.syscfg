@@ -1,0 +1,57 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "a53ss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.20.0+3587"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const ecap       = scripting.addModule("/drivers/ecap/ecap", {}, false);
+const ecap1      = ecap.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const mmu_armv8  = scripting.addModule("/kernel/dpl/mmu_armv8", {}, false);
+const mmu_armv81 = mmu_armv8.addInstance();
+const mmu_armv82 = mmu_armv8.addInstance();
+const mmu_armv83 = mmu_armv8.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+ecap1.$name                    = "CONFIG_ECAP0";
+ecap1.ECAP.IN_APWM_OUT.$assign = "ECAP0_IN_APWM_OUT";
+
+debug_log.enableCssLog         = false;
+debug_log.enableUartLog        = true;
+debug_log.uartLog.$name        = "CONFIG_UART_CONSOLE";
+debug_log.uartLog.UART.$assign = "USART0";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
+
+mmu_armv81.size  = 0x80000000;
+mmu_armv81.$name = "SOC_MEM_REGION";
+
+mmu_armv82.vAddr     = 0x70000000;
+mmu_armv82.pAddr     = 0x70000000;
+mmu_armv82.size      = 0x200000;
+mmu_armv82.attribute = "MAIR7";
+mmu_armv82.$name     = "MSRAM_REGION";
+
+mmu_armv83.vAddr     = 0x80000000;
+mmu_armv83.pAddr     = 0x80000000;
+mmu_armv83.size      = 0x80000000;
+mmu_armv83.attribute = "MAIR7";
+mmu_armv83.$name     = "DDR_REGION";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+ecap1.ECAP.$suggestSolution                 = "ECAP0";
+debug_log.uartLog.UART.RXD.$suggestSolution = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$suggestSolution = "UART0_TXD";

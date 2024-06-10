@@ -64,7 +64,10 @@ When using AM263x-LP
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
  ^              | r5fss0-0 freertos
+ ^              | a53ss0-0 freertos
+ ^              | a53ss0-0 nortos
  Toolchain      | ti-arm-clang
+ ^              | arm.gnu.aarch64-none
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/drivers/ecap/ecap_apwm_mode/
 
