@@ -82,4 +82,48 @@ HwiP_data_abort_handler:
 
 HwiP_data_abort_handler_const: .word HwiP_data_abort_handler_c
 
-        .end
+
+/* HwiP_irq_handler(), calls the C IRQ handling function. */
+.global HwiP_irq_handler
+.global __tx_irq_processing_return
+.global _tx_thread_context_restore
+.global _tx_thread_context_restore
+.global HwiP_irq_handler_c
+
+.arm
+.align 8
+.type HwiP_irq_handler, %function
+HwiP_irq_handler:
+
+    B _tx_thread_context_save
+__tx_irq_processing_return:
+
+    bl HwiP_irq_handler_c
+
+    B _tx_thread_context_restore
+
+    /* Should not get here. */
+    B .
+
+/* Unused SVC handler, should not be reached. */
+.global HwiP_svc_handler
+.arm
+.align 8
+.type HwiP_svc_handler, %function
+HwiP_svc_handler:
+    NOP
+    B .
+    NOP
+    BX lr
+
+/* ThreadX Low Level initialization call, unused in this implementation. */
+.global _tx_initialize_low_level
+.arm
+.align 8
+.type _tx_initialize_low_level, %function
+_tx_initialize_low_level:
+    NOP
+    BX lr
+
+
+.end
