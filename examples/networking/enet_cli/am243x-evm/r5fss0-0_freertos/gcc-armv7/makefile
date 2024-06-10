@@ -36,7 +36,15 @@ BOOTIMAGE_NAME_HS_FS:=enet_cli.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 FILES_common := \
-	cli_functions.c \
+	cli_common.c \
+	gptp_log.c \
+	gptp_stack.c \
+	l2_networking.c \
+	ale_unicast.c \
+	ale_classifier.c \
+	ale_vlan.c \
+	cli_debug.c \
+	cli_phy.c \
 	cli_main.c \
 	main.c \
 	ti_drivers_config.c \
@@ -75,17 +83,23 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4 \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/src/include \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/include \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-port/freertos/include \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/lwipif/inc \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-stack/contrib \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am243x \
+	-I${MCU_PLUS_SDK_PATH}/examples/networking/tsn \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_unibase \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/tilld \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/gptpconf \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs \
 	-Igenerated \
 
 DEFINES_common := \
 	-DSOC_AM243X \
 	-DENET_ENABLE_PER_CPSW=1 \
+
+DEFINES_debug := \
+	-DENET_DEBUG_MODE \
 
 CFLAGS_common := \
 	-mcpu=cortex-r5 \
@@ -107,6 +121,7 @@ CFLAGS_common := \
 	-Wno-unused-but-set-variable \
 	-fdata-sections \
 	-ffunction-sections \
+	--include tsn_buildconf/sitara_buildconf.h \
 
 CFLAGS_release := \
 	-O2 \
@@ -127,17 +142,20 @@ LIBS_PATH_common = \
 	-L${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	-L${MCU_PLUS_SDK_PATH}/source/board/lib \
 	-L${MCU_PLUS_SDK_PATH}/source/networking/enet/lib \
-	-L${MCU_PLUS_SDK_PATH}/source/networking/lwip/lib \
+	-L${MCU_PLUS_SDK_PATH}/source/networking/tsn/lib \
 	-L${CGT_GCC_ARMV7_PATH}/lib \
 
 LIBS_common = \
 	-l:freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	-l:drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	-l:enet-cpsw.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:lwipif-cpsw-freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:lwip-freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	-l:lwip-contrib-freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	-l:board.am243x.r5f.gcc-armv7.${ConfigName}.lib \
+	-l:libc.a \
+	-l:libsysbm.a \
+	-l:tsn_combase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-l:tsn_unibase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-l:tsn_gptp-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-l:tsn_uniconf-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 
 LFLAGS_common = \
 	-mcpu=cortex-r5 \
@@ -157,10 +175,13 @@ LIBS_NAME = \
 	freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	enet-cpsw.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	lwipif-cpsw-freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	lwip-freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
-	lwip-contrib-freertos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	board.am243x.r5f.gcc-armv7.${ConfigName}.lib \
+	libc.a \
+	libsysbm.a \
+	tsn_combase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	tsn_unibase-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	tsn_gptp-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
+	tsn_uniconf-freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib \
 
 LIBS_PATH_NAME = \
 	generated \
@@ -168,7 +189,7 @@ LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
 	${MCU_PLUS_SDK_PATH}/source/networking/enet/lib \
-	${MCU_PLUS_SDK_PATH}/source/networking/lwip/lib \
+	${MCU_PLUS_SDK_PATH}/source/networking/tsn/lib \
 	${CGT_GCC_ARMV7_PATH}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))

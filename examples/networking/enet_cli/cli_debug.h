@@ -31,13 +31,13 @@
  */
 
 /*!
- * \file  cli_functions.h
+ * \file  cli_debug.h
  *
- * \brief This file contains all the function headers used by the CLI application.
+ * \brief header file for cli_debug.c
  */
 
-#ifndef _CLI_FUNCTIONS_H_
-#define _CLI_FUNCTIONS_H_
+#ifndef _CLI_DEBUG_H_
+#define _CLI_DEBUG_H_
 
 /* ========================================================================== */
 /*                             Include Files                                  */
@@ -66,42 +66,12 @@ extern "C"
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-/* Callback functions for the CLI interpreter */
-BaseType_t EnetCLI_greet(char *pcWriteBuffer, size_t xWriteBufferLen,
-        const char *pcCommandString);
+BaseType_t EnetCLI_showCpswStats(char *writeBuffer, size_t writeBufferLen,
+        const char *commandString);
 
-BaseType_t EnetCLI_quitTerminal(char *pcWriteBuffer, size_t xWriteBufferLen,
-        const char *pcCommandString);
+BaseType_t EnetCLI_aleDump(char *writeBuffer, size_t writeBufferLen,
+        const char *commandString);
 
-BaseType_t EnetCLI_init(char *pcWriteBuffer, size_t xWriteBufferLen,
-        const char *pcCommandString);
-
-BaseType_t EnetCLI_openTxDma(char *pcWriteBuffer, size_t xWriteBufferLen,
-        const char *pcCommandString);
-
-BaseType_t EnetCLI_openRxDma(char *pcWriteBuffer, size_t xWriteBufferLen,
-        const char *pcCommandString);
-
-BaseType_t EnetCLI_addUcast(char *pcWriteBuffer, size_t xWriteBufferLen,
-        const char *pcCommandString);
-
-BaseType_t EnetCLI_transmitPkt(char *pcWriteBuffer, size_t xWriteBufferLen,
-        const char *pcCommandString);
-
-BaseType_t EnetCLI_receivePkt(char *pcWriteBuffer, size_t xWriteBufferLen,
-        const char *pcCommandString);
-
-BaseType_t EnetCLI_stopRxPkt(char *pcWriteBuffer, size_t xWriteBufferLen,
-        const char *pcCommandString);
-
-BaseType_t EnetCLI_dumpRxBuffer(char *pcWriteBuffer, size_t xWriteBufferLen,
-        const char *pcCommandString);
-
-BaseType_t EnetCLI_addClassifier(char *pcWriteBuffer, size_t xWriteBufferLen,
-        const char *pcCommandString);
-
-BaseType_t EnetCLI_dispCpswStats(char *pcWriteBuffer, size_t xWriteBufferLen,
-        const char *pcCommandString);
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -112,4 +82,4 @@ BaseType_t EnetCLI_dispCpswStats(char *pcWriteBuffer, size_t xWriteBufferLen,
 }
 #endif
 
-#endif /* _CLI_FUNCTIONS_H_ */
+#endif /* _CLI_DEBUG_H_ */

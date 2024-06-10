@@ -31,49 +31,19 @@
  */
 
 /*!
- * \file  cli_common.h
+ * \file  ale_vlan.h
  *
- * \brief This is the common header file of the CLI application.
+ * \brief This is the header file for ale_vlan.c.
  */
 
-#ifndef _CLI_COMMON_H_
-#define _CLI_COMMON_H_
+#ifndef _ALE_VLAN_H_
+#define _ALE_VLAN_H_
 
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include <stdint.h>
-#include <string.h>
-#include <assert.h>
-#include <stdio.h>
-#include <ctype.h>
-#include <stdlib.h>
-
-#include <include/core/enet_osal.h>
-#include <kernel/dpl/TaskP.h>
-#include <kernel/dpl/ClockP.h>
-#include <kernel/dpl/SemaphoreP.h>
-
-#include <enet.h>
-#include <enet_cfg.h>
-#include <include/core/enet_dma.h>
-#include <include/per/cpsw.h>
-
-#include <enet_apputils.h>
-#include <enet_appmemutils.h>
-#include <enet_appmemutils_cfg.h>
-
-/* SDK includes */
-#include "ti_drivers_open_close.h"
-#include "ti_board_open_close.h"
-#include "ti_board_config.h"
-#include "ti_enet_open_close.h"
-#include "ti_enet_config.h"
-
-/* FreeRTOS CLI library */
-#include "FreeRTOS.h"
-#include "FreeRTOS_CLI.h"
+/* None */
 
 #ifdef __cplusplus
 extern "C"
@@ -84,84 +54,29 @@ extern "C"
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-#define MAX_NUM_DMA_CH 2
-#define MAX_NUM_MAC_PORTS 2
-
-/* Maximum write and read buffer length for CLI */
-#define MAX_WRITE_BUFFER_LEN 1000
-#define MAX_READ_BUFFER_LEN 500
+/* Nine */
 
 /* ========================================================================== */
 /*                         Structures and Enums                               */
 /* ========================================================================== */
 
-/* Structure with parameters of an Ethernet object */
-typedef struct EnetApp_Obj_s
-{
-    /* Enet driver */
-    Enet_Type enetType;
-    uint32_t instId;
-    uint32_t coreId;
-    uint32_t coreKey;
-    uint32_t boardId;
-    uint8_t numMacPorts;
-    Enet_MacPort macPort[ENET_MAC_PORT_NUM];
-    emac_mode macMode; /* MAC mode (defined in board library) */
-    Enet_Handle hEnet;
-    uint8_t hostMacAddr[ENET_MAC_ADDR_LEN];
-    int8_t numTxDmaCh;
-    int8_t numRxDmaCh;
-
-    /* Packet transmission */
-    EnetDma_TxChHandle hTxCh[MAX_NUM_DMA_CH];
-    EnetDma_PktQ txFreePktInfoQ[MAX_NUM_DMA_CH];
-    SemaphoreP_Object txSemObj[MAX_NUM_DMA_CH];
-
-    /* Packet reception */
-    EnetDma_RxChHandle hRxCh[MAX_NUM_DMA_CH];
-    TaskP_Object rxTaskObj[MAX_NUM_DMA_CH];
-    EnetDma_PktQ rxFreeQ[MAX_NUM_DMA_CH];
-    EnetDma_PktQ rxReadyQ[MAX_NUM_DMA_CH];
-    SemaphoreP_Object rxSemObj[MAX_NUM_DMA_CH];
-    int8_t rxRunFlag[MAX_NUM_DMA_CH];
-
-    /* Status flags */
-    int8_t initFlag;
-    int8_t tsnFlag;
-} EnetApp_Obj;
+/* None */
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-void EnetApp_createClock(void);
-
-void EnetApp_deleteClock(void);
-
-/* Function to read user input from the terminal */
-void UART_readCLI(char *rxBuffer, uint32_t rxBufferLen);
-
-/* Function to display string on the terminal */
-void UART_writeCLI(char *txBuffer);
+BaseType_t EnetCLI_addVlan(char *writebuffer, size_t writeBufferLen,
+        const char *commandString);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-/* Enet object instance declaration */
-EnetApp_Obj EnetApp_inst;
-
-/* Transaction for writing to and reading from UART */
-UART_Transaction UART_trans;
-
-/* Number of packets per tx channel */
-int32_t EnetApp_pktPerTxCh[ENET_SYSCFG_TX_CHANNELS_NUM];
-
-/* Number of packets per rx channel */
-int32_t EnetApp_pktPerRxCh[ENET_SYSCFG_RX_FLOWS_NUM];
+/* None */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _CLI_COMMON_H_ */
+#endif /* _ALE_VLAN_H_ */

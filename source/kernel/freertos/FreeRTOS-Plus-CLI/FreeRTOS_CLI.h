@@ -53,7 +53,8 @@ typedef struct xCOMMAND_LINE_INPUT
 /* For backward compatibility. */
 #define xCommandLineInput CLI_Command_Definition_t
 
-#define configCOMMAND_INT_MAX_OUTPUT_SIZE 1000
+/* When using locally defined buffers, this macro should be 1 */
+#define configCOMMAND_INT_MAX_OUTPUT_SIZE 1
 
 /*
  * Register the command passed in using the pxCommandToRegister parameter.
