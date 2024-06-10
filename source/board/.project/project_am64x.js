@@ -40,6 +40,8 @@ const files_m4f = {
 
 const files_a53 = {
     common: [
+        "ram.c",
+        "psram_gpmc.c",
         "led.c",
         "led_gpio.c",
         "led_tpic2810.c",

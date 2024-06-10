@@ -23,6 +23,7 @@ const topModules = [
 ];
 
 const topModules_a53 = [
+    "/board/ram/ram",
     "/board/led/led",
 ];
 

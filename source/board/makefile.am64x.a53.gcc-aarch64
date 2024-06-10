@@ -16,6 +16,8 @@ ConfigName:=$(PROFILE)
 LIBNAME:=board.am64x.a53.gcc-aarch64.$(PROFILE).lib
 
 FILES_common := \
+    ram.c \
+    psram_gpmc.c \
     led.c \
     led_gpio.c \
     led_tpic2810.c \
