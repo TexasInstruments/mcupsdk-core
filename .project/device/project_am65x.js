@@ -14,6 +14,7 @@ const device_defines = {
 };
 
 const example_file_list = [
+    "examples/drivers/sciclient/sciclient_get_version/.project/project.js",
     "examples/empty/.project/project_freertos.js",
     "examples/hello_world/.project/project.js",
     "examples/hello_world_cpp/.project/project.js",
