@@ -432,6 +432,8 @@ let gpmc_module = {
                 /* Timing parameters */
 
                 if(inst.deviceType == "PARALLEL_NAND") {
+                    inst.dmaEnable = true;
+                    ui.dmaEnable.readOnly = false;
                     inst.csOnTime = soc.getNandlikeGpmcConfig().timingParams.csOnTime;
                     inst.csRdOffTime = soc.getNandlikeGpmcConfig().timingParams.csRdOffTime;
                     inst.csWrOffTime = soc.getNandlikeGpmcConfig().timingParams.csWrOffTime;
@@ -458,6 +460,8 @@ let gpmc_module = {
                     inst.cycleDelaySameChipSel = soc.getNandlikeGpmcConfig().timingParams.cycleDelaySameChipSel;
                     inst.cycleDelayDiffChipSel = soc.getNandlikeGpmcConfig().timingParams.cycleDelayDiffChipSel;
                 }else if(inst.deviceType == "PSRAM") {
+                    inst.dmaEnable = false;
+                    ui.dmaEnable.readOnly = true;
                     inst.csOnTime = soc.getPsramGpmcConfig().timingParams.csOnTime;
                     inst.csRdOffTime = soc.getPsramGpmcConfig().timingParams.csRdOffTime;
                     inst.csWrOffTime = soc.getPsramGpmcConfig().timingParams.csWrOffTime;
@@ -511,6 +515,7 @@ let gpmc_module = {
             displayName: "Enable DMA",
             default: true,
             description: `Enable data transfer using DMA`,
+            readOnly: false,
         },
         {
             name: "chipSelBaseAddr",
