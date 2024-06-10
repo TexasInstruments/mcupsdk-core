@@ -169,6 +169,12 @@ const files_a53 = {
         "csl_pktdma.c",
         "csl_sec_proxy.c",
         "gpio.c",
+        "gpmc_v0.c",
+        "gpmc_priv_v0.c",
+        "gpmc_nandlike_v0.c",
+        "gpmc_norlike_v0.c",
+        "gpmc_dma.c",
+        "gpmc_dma_udma.c",
         "gtc.c",
         "i2c_v0.c",
         "i2c_v0_lld.c",
@@ -295,6 +301,9 @@ const asmfiles_r5f = {
 
 const filedirs_a53 =  {
     common: [
+        "gpmc/v0",
+        "gpmc/v0/dma",
+        "gpmc/v0/dma/udma",
         "gpio/v0",
         "gtc/v0",
         `pinmux/am64x_am243x`,

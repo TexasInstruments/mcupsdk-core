@@ -124,6 +124,7 @@ const topModules_mcu = [
 
 const topModules_a53 = [
     "/drivers/gpio/gpio",
+    "/drivers/gpmc/gpmc",
     "/drivers/gtc/gtc",
     "/drivers/i2c/i2c",
     "/drivers/ipc/ipc",
