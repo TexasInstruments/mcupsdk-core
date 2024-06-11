@@ -218,7 +218,8 @@ const files = {
         "tx_trace_isr_exit_insert.c",
         "tx_trace_object_register.c",
         "tx_trace_object_unregister.c",
-        "tx_trace_user_event_insert.c"
+        "tx_trace_user_event_insert.c",
+        "tx_thread_stack_build_c.c",
     ],
 };
 
