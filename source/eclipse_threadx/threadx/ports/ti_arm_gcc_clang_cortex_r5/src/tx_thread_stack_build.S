@@ -99,6 +99,7 @@ CPSR_MASK       =       0x9F                    @ Mask initial CPSR, IRQ interru
 @/**************************************************************************/
 @VOID   _tx_thread_stack_build(TX_THREAD *thread_ptr, VOID (*function_ptr)(VOID))
 @{
+    .global tx_threadx_stack_build_cpsr_get
     .global  _tx_thread_stack_build
     .type    _tx_thread_stack_build,function
 _tx_thread_stack_build:
@@ -128,6 +129,14 @@ _tx_thread_stack_build:
 @
 @    Stack Bottom: (higher memory address)  */
 @
+@
+@   Fetch the CPSR and thumb bit from the C helper function.
+@   This is done to support both thumb and arm builds.
+    PUSH {r0, r1, lr}
+    BL tx_threadx_stack_build_cpsr_get
+    MOV r4, r0
+    POP {r0, r1, lr}
+
     LDR     r2, [r0, #16]                   @ Pickup end of stack area
     BIC     r2, r2, #7                      @ Ensure 8-byte alignment
     SUB     r2, r2, #72                     @ Allocate space for the stack frame
@@ -159,8 +168,7 @@ _tx_thread_stack_build:
 
     STR     r1, [r2, #60]                   @ Store initial pc
 
-    MRS     r1, CPSR                        @ Pickup CPSR
-    BIC     r1, r1, #CPSR_MASK              @ Mask mode bits of CPSR
+    BIC     r1, r4, #CPSR_MASK              @ Mask mode bits of CPSR
     ORR     r3, r1, #SYS_MODE               @ Build CPSR, SYS mode, interrupts enabled
     STR     r3, [r2, #64]                   @ Store initial CPSR
 
