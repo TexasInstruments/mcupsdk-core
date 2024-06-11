@@ -223,6 +223,47 @@ function isMcuDomainSupported()
     }
 }
 
+function getUseWakeupDomainPeripheralsConfig()
+{
+    let config = {
+        name: "useWakeUpDomainPeripherals",
+        displayName: "Use Wakeup Domain Peripherals",
+        default: false,
+        readOnly: false,
+        onChange: function(inst, ui) {
+            let property = false;
+            if(inst.useWakeupDomainPeripherals == true)
+            {
+                property = true;
+            }
+            if(getSocName() != "am65x" )
+            {
+                ui.useMcuDomainPeripherals.readOnly = property;
+            }
+        }
+    }
+
+    if (getSocName().match(/am65x/)){
+        if (getSelfSysCfgCoreName().includes("r5f")) {
+            /* For Wakeup Domain r5 */
+            config.default = true;
+            config.readOnly = false;
+        }
+    }
+
+    return config;
+}
+
+function isWakeupDomainSupported()
+{
+    switch(getSocName()) {
+        case "am65x":
+            return true;
+        default:
+            return false;
+    }
+}
+
 function findDuplicates(arrayToCheck)
 {
     const count = arrayToCheck =>
@@ -358,6 +399,8 @@ exports = {
     getSysCfgCoreNames,
     getUseMcuDomainPeripheralsConfig,
     isMcuDomainSupported,
+    getUseWakeupDomainPeripheralsConfig,
+    isWakeupDomainSupported,
     findDuplicates,
     stringOrEmpty,
     typeMatches,

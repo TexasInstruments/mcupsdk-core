@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -110,7 +110,7 @@ static Pinmux_PerCfg_t gPinMuxMainDomainCfg[] = {
     {PINMUX_END, PINMUX_END}
 };
 
-% if(common.isMcuDomainSupported()) {
+% if(common.isMcuDomainSupported() || common.isWakeupDomainSupported()) {
 static Pinmux_PerCfg_t gPinMuxMcuDomainCfg[] = {
 % for(let subTemplate of args) {
     % if (subTemplate.moduleName) {
