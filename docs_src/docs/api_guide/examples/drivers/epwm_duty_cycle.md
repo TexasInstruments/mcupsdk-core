@@ -20,6 +20,7 @@ The example does the below
 - ISR is used to keep track of keep track of elapsed time.
 - Show usage of ePWM APIs
 \cond SOC_AM64X
+- For a53  this example uses poling method to generate pwm signal.
 - To probe ePWM output you need to have IO breakout board..
 - Short Pin 2 and 3 of J11 on IO break out board.
 - Signal can be probed on Pin 7 of J6 on IO break out board.
@@ -58,7 +59,10 @@ The example does the below
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
  ^              | r5fss0-0 freertos
+ ^              | a53ss0-0 freertos
+ ^              | a53ss0-0 nortos
  Toolchain      | ti-arm-clang
+ ^              | arm.gnu.aarch64-none
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/drivers/epwm/epwm_duty_cycle/
 
