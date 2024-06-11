@@ -17,6 +17,7 @@ LIBNAME:=drivers.am65x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
     csl_sec_proxy.c \
+    gpio.c \
     pinmux.c \
     sciclient.c \
     sciclient_boardcfg.c \
@@ -31,6 +32,7 @@ FILES_common := \
 ASMFILES_common := \
 
 FILES_PATH_common = \
+    gpio/v0 \
     pinmux/am65x \
     sciclient \
     sciclient/soc/am65x \

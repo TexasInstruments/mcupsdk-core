@@ -5,6 +5,7 @@ let device = "am65x"
 const files_r5f = {
     common: [
         "csl_sec_proxy.c",
+        "gpio.c",
         "pinmux.c",
         "sciclient.c",
         "sciclient_boardcfg.c",
@@ -20,6 +21,7 @@ const files_r5f = {
 
 const filedirs = {
     common: [
+        "gpio/v0",
         "pinmux/am65x",
         "sciclient",
         "sciclient/soc/am65x",
