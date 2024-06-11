@@ -44,9 +44,7 @@ HwiP_data_abort_handler:
         /* Return to the instruction following the interrupted.
          * The instruction that caused the data abort is at R14_ABT – 8 which means
          * that the pointer points two instructions beyond the instruction that caused
-         * the abort. (pc - 4) in arm mode and (pc - 6) in thumb mode (2 bytes aligned
-         * instruction set) points to the second instruction beyond the address where
-         * the exception was generated.
+         * the abort.
          */
 
         /*   Push used registers. */
@@ -76,10 +74,8 @@ HwiP_data_abort_handler:
 HwiP_prefetch_abort_handler:
         /* Return to the instruction following the interrupted.
          * The instruction that caused the data abort is at R14_ABT – 4 which means
-         * that the pointer points two instructions beyond the instruction that caused
-         * the abort. (pc - 4) in arm mode and (pc - 6) in thumb mode (2 bytes aligned
-         * instruction set) points to the second instruction beyond the address where
-         * the exception was generated.
+         * that the pointer points one instruction beyond the instruction that caused
+         * the abort.
          */
 
         /*   Push used registers. */
@@ -107,17 +103,20 @@ HwiP_prefetch_abort_handler:
         .section ".text.hwi","ax",%progbits
         .align 2
 HwiP_undefined_handler:
+        /* Return to the instruction following the interrupted.
+         * The instruction that caused the data abort is at R14_ABT – 4 (in arm mode) or R14_ABT - 2
+         * (in thumb mode) which means that the pointer points one instruction
+         * beyond the instruction that caused the abort.
+         */
 
         PUSH	{r0-r4, r12}
 
-        /* SPSR has the snapshot of CPSR before data abort. Compare thumb
-state bit in SPSR */
+        /* SPSR has the snapshot of CPSR before data abort. Compare thumb state bit in SPSR */
         MRS r0, SPSR
         AND r1, r0, #0x20
         CMP R1, #0
 
-        /* branches to label ARM_STATE if the thumb state bit is not set
-*/
+        /* branches to label ARM_STATE if the thumb state bit is not set */
         BEQ ARM_STATE
         SUB lr, lr, #2
         B END

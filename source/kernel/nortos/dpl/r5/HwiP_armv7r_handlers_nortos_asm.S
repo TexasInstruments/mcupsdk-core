@@ -68,10 +68,8 @@ HwiP_irq_handler:
         PUSH  {R0}
         #endif
 
-        /* Ensure bit 2 of the stack pointer is clear.  r2 holds the bit 2
-value for
-         * future use.  _RB_ Is this ever needed provided the start of the
-stack is
+        /* Ensure bit 2 of the stack pointer is clear.  r2 holds the bit 2 value for
+         * future use.  _RB_ Is this ever needed provided the start of the stack is
          * alligned on an 8-byte boundary?
          */
         MOV     r2, sp
@@ -111,20 +109,15 @@ stack is
         .align 2
 HwiP_data_abort_handler:
         /* Return to the instruction following the interrupted.
-         * The instruction that caused the data abort is at R14_ABT – 8
-which means
-         * that the pointer points two instructions beyond the instruction
-that caused
-         * the abort. (pc - 4) in arm mode and (pc - 6) in thumb mode (2
-bytes aligned
-         * instruction set) points to the second instruction beyond the
-address where
-         * the exception was generated.
+         * The instruction that caused the data abort is at R14_ABT – 8 which means
+         * that the pointer points two instructions beyond the instruction that caused
+         * the abort.
          */
 
         /*   Push used registers. */
         PUSH	{r0-r4, r12}
 
+        /*  Subtract LR to obtain address of instruction. */
         SUB lr, lr, #8
 
         /*   Push the return address and SPSR. */
@@ -148,20 +141,15 @@ address where
         .align 2
 HwiP_prefetch_abort_handler:
         /* Return to the instruction following the interrupted.
-         * The instruction that caused the data abort is at R14_ABT – 4
-which means
-         * that the pointer points two instructions beyond the instruction
-that caused
-         * the abort. (pc - 4) in arm mode and (pc - 6) in thumb mode (2
-bytes aligned
-         * instruction set) points to the second instruction beyond the
-address where
-         * the exception was generated.
+         * The instruction that caused the data abort is at R14_ABT – 4 which means
+         * that the pointer points one instruction beyond the instruction that caused
+         * the abort.
          */
 
         /*   Push used registers. */
         PUSH	{r0-r4, r12}
 
+        /*  Subtract LR to obtain address of instruction. */
         SUB lr, lr, #4
 
         /*   Push the return address and SPSR. */
@@ -184,17 +172,19 @@ address where
         .section ".text.hwi","ax",%progbits
         .align 2
 HwiP_undefined_handler:
-
+        /* Return to the instruction following the interrupted.
+         * The instruction that caused the data abort is at R14_ABT – 4 (in arm mode) or R14_ABT - 2
+         * (in thumb mode) which means that the pointer points one instruction
+         * beyond the instruction that caused the abort.
+         */
         PUSH	{r0-r4, r12}
 
-        /* SPSR has the snapshot of CPSR before data abort. Compare thumb
-state bit in SPSR */
+        /* SPSR has the snapshot of CPSR before data abort. Compare thumb state bit in SPSR */
         MRS r0, SPSR
         AND r1, r0, #0x20
         CMP R1, #0
 
-        /* branches to label ARM_STATE if the thumb state bit is not set
-*/
+        /* branches to label ARM_STATE if the thumb state bit is not set */
         BEQ ARM_STATE
         SUB lr, lr, #2
         B END
