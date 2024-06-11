@@ -10,11 +10,20 @@ function getTisciId(core) {
 
 //To get the Router Id of the Core
 function getRouterID(core) {
-    let mcuCore = ["m4fss0-0"]
-    if (mcuCore.includes(core)) {
-        return "TISCI_DEV_MCU_MCU_GPIOMUX_INTROUTER0"
+    if(soc === "am65x"){
+        let mcuCore = ["r5fss0-0", "r5fss0-1"]
+        if (mcuCore.includes(core)) {
+            return "TISCI_DEV_WKUP_GPIOMUX_INTRTR0"
+        }
+        return "TISCI_DEV_GPIOMUX_INTRTR0"
     }
-    return "TISCI_DEV_MAIN_GPIOMUX_INTROUTER0"
+    else{
+        let mcuCore = ["m4fss0-0"]
+        if (mcuCore.includes(core)) {
+            return "TISCI_DEV_MCU_MCU_GPIOMUX_INTROUTER0"
+        }
+        return "TISCI_DEV_MAIN_GPIOMUX_INTROUTER0"
+    }
 }
 
 //To extract number from the string
@@ -42,7 +51,7 @@ function getCoreConfig(start, num) {
 
 //To get K3 board config soc name
 function getSocName(soc) {
-    if (soc === "am64x" || soc === "am243x" || soc === "am62x") {
+    if (soc === "am65x" || soc === "am64x" || soc === "am243x" || soc === "am62x") {
         return soc
     }
     else {
@@ -72,6 +81,13 @@ function parseData(boardCfg, config, routerId, core, soc) {
                         break;
                     case "am64x":
                     case "am243x":
+                        numArr = tempArr[2].split(/[, ]+/);
+                        startArr = tempArr[4].split(/[, ]+/);
+                        numResource = parseInt(numArr[3]);
+                        startResource = parseInt(startArr[3]);
+                        config[core] = getCoreConfig(startResource, numResource);
+                        break;
+                    case "am65x":
                         numArr = tempArr[2].split(/[, ]+/);
                         startArr = tempArr[4].split(/[, ]+/);
                         numResource = parseInt(numArr[3]);
@@ -109,14 +125,23 @@ try {
 //To pick the directory of the script file
 var dir = __dirname
 
-let tisciId = {
-    "m4fss0-0": "TISCI_HOST_ID_M4_0",
-    "r5fss0-0": "TISCI_HOST_ID_MAIN_0_R5_1",
-    "r5fss0-1": "TISCI_HOST_ID_MAIN_0_R5_3",
-    "r5fss1-0": "TISCI_HOST_ID_MAIN_1_R5_1",
-    "r5fss1-1": "TISCI_HOST_ID_MAIN_1_R5_3",
-    "a53ss0-0": "TISCI_HOST_ID_A53_2",
-};
+var tisciId = {};
+if(soc === "am65x"){
+    var tisciId = {
+        "r5fss0-0": "TISCI_HOST_ID_R5_0",
+        "r5fss0-1": "TISCI_HOST_ID_R5_2",
+    };
+}
+else{
+    var tisciId = {
+        "m4fss0-0": "TISCI_HOST_ID_M4_0",
+        "r5fss0-0": "TISCI_HOST_ID_MAIN_0_R5_1",
+        "r5fss0-1": "TISCI_HOST_ID_MAIN_0_R5_3",
+        "r5fss1-0": "TISCI_HOST_ID_MAIN_1_R5_1",
+        "r5fss1-1": "TISCI_HOST_ID_MAIN_1_R5_3",
+        "a53ss0-0": "TISCI_HOST_ID_A53_2",
+    };
+}
 
 //Local k3BoardConfig.json in the SDK
 try {
@@ -136,7 +161,12 @@ try {
 }
 
 let config = {};
-var coreList = ["m4fss0-0", "r5fss0-0", "r5fss0-1", "r5fss1-0", "r5fss1-1", "a53ss0-0", "a53ss0-1"]
+if(soc === "am65x"){
+    var coreList = ["r5fss0-0", "r5fss0-1"]
+}
+else{
+    var coreList = ["m4fss0-0", "r5fss0-0", "r5fss0-1", "r5fss1-0", "r5fss1-1", "a53ss0-0", "a53ss0-1"]
+}
 for (const core of coreList) {
     routerId = getRouterID(core)
     parseData(cfgData, config, routerId, core, soc);
