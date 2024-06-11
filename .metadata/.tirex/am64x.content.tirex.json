@@ -1387,6 +1387,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An ECAP EPWM Loopback Example. This example captures a square wave with 25% duty cycle. CPU is A53SS0-0 running FREERTOS.",
+        "name": "ecap_epwm_loopback",
+        "location": "../../examples/drivers/ecap/ecap_epwm_loopback/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "ecap",
+            "ecap_epwm_loopback",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An ECAP EPWM Loopback Example. This example captures a square wave with 25% duty cycle. CPU is A53SS0-0 running NORTOS.",
+        "name": "ecap_epwm_loopback",
+        "location": "../../examples/drivers/ecap/ecap_epwm_loopback/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "ecap",
+            "ecap_epwm_loopback",
+            "a53ss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "An EPWM duty test example. This example generates a 1KHz wave with 25% duty cycle. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_duty_cycle",
         "location": "../../examples/drivers/epwm/epwm_duty_cycle/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",

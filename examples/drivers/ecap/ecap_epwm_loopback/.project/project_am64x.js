@@ -35,11 +35,33 @@ const libdirs_freertos = {
     ],
 };
 
+const libdirs_freertos_a53 = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+    ],
+};
+
+const libdirs_nortos_a53 = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
+        "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+    ],
+};
+
 const includes_freertos_r5f = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/r5f",
+    ],
+};
+
+const includes_freertos_a53 = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/GCC/ARM_CA53",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/a53",
     ],
 };
 
@@ -56,6 +78,20 @@ const libs_freertos_r5f = {
         "freertos.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am64x.r5f.ti-arm-clang.${ConfigName}.lib",
+    ],
+};
+
+const libs_freertos_a53 = {
+    common: [
+        "freertos.am64x.a53.gcc-aarch64.${ConfigName}.lib",
+        "drivers.am64x.a53.gcc-aarch64.${ConfigName}.lib",
+    ],
+};
+
+const libs_nortos_a53 = {
+    common: [
+        "nortos.am64x.a53.gcc-aarch64.${ConfigName}.lib",
+        "drivers.am64x.a53.gcc-aarch64.${ConfigName}.lib",
     ],
 };
 
@@ -91,9 +127,41 @@ const templates_freertos_r5f =
     }
 ];
 
+const templates_freertos_a53 =
+[
+    {
+        input: ".project/templates/am64x/common/linker_a53.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/am64x/freertos/main_freertos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "ecap_epwm_loopback_main",
+        },
+    }
+];
+
+const templates_nortos_a53 =
+[
+    {
+        input: ".project/templates/am64x/common/linker_a53.cmd.xdt",
+        output: "linker.cmd",
+    },
+    {
+        input: ".project/templates/am64x/nortos/main_nortos.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "ecap_epwm_loopback_main",
+        },
+    }
+];
+
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "freertos"},
+    { device: device, cpu: "a53ss0-0", cgt: "gcc-aarch64",  board: "am64x-evm", os: "freertos"},
+    { device: device, cpu: "a53ss0-0", cgt: "gcc-aarch64",  board: "am64x-evm", os: "nortos"},
 ];
 
 function getComponentProperty(device) {
@@ -131,6 +199,21 @@ function getComponentBuildProperty(buildOption) {
         {
             build_property.libs = libs_nortos_r5f;
             build_property.templates = templates_nortos_r5f;
+        }
+    }
+    if(buildOption.cpu.match(/a53*/)) {
+        if(buildOption.os.match(/freertos*/))
+        {
+            build_property.includes = includes_freertos_a53;
+            build_property.libdirs = libdirs_freertos_a53;
+            build_property.libs = libs_freertos_a53;
+            build_property.templates = templates_freertos_a53;
+        }
+        else
+        {
+            build_property.libdirs = libdirs_nortos_a53;
+            build_property.libs = libs_nortos_a53;
+            build_property.templates = templates_nortos_a53;
         }
     }
 

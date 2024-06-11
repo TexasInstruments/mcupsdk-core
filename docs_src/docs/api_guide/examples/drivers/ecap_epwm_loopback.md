@@ -38,7 +38,7 @@ Below is the setup details.
 \cond SOC_AM273X
 
 ## AM273X-EVM
-- Connect the EPWM output to ECAP input on the AM273X board. 
+- Connect the EPWM output to ECAP input on the AM273X board.
 - Remove the R144 resistor which is connected to MSS_SPIA_CLK on BallNo. G19
 - On the board connect external wire from resistor R81 to MSS_SPIA_CLK connected on BallNo G19(where R144 resistor is removed).
 
@@ -52,7 +52,10 @@ Below is the setup details.
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
  ^              | r5fss0-0 freertos
+ ^              | a53ss0-0 freertos
+ ^              | a53ss0-0 nortos
  Toolchain      | ti-arm-clang
+ ^              | arm.gnu.aarch64-none
  Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/drivers/ecap/ecap_epwm_loopback/
 

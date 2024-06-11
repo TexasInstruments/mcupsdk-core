@@ -99,7 +99,6 @@ uint32_t gEcapBaseAddr, gEpwmBaseAddr;
 static void App_ecapIntrISR(void *arg);
 static void App_epwmInit(void);
 static void App_ecapInit(void);
-static void App_ecapCompareOutput(double dutyCycle, double actualOpFreq);
 
 void ecap_epwm_loopback_main(void *args)
 {
@@ -196,8 +195,8 @@ static void App_ecapInit(void)
     /* Disable and Clear Interrupts */
     ECAP_intrDisable(gEcapBaseAddr, ECAP_INT_ALL);
     ECAP_intrStatusClear(gEcapBaseAddr, ECAP_INT_ALL);
-    
-#if defined(SOC_AM273X)   
+
+#if defined(SOC_AM273X)
     /* Capture input source select */
     ECAP_captureInputSourceSelect(gEcapBaseAddr,ECAP_CAPTURE_INPUT_SOURCE_SELECT_0);
 #endif
