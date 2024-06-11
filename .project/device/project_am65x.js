@@ -21,6 +21,7 @@ const example_file_list = [
     "examples/kernel/freertos/posix_demo/.project/project.js",
     "examples/kernel/freertos/task_switch/.project/project.js",
     "test/kernel/dpl/.project/project.js",
+    "test/kernel/freertos/.project/project.js",
 ];
 
 function getProjectSpecCpu(cpu) {
