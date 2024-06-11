@@ -64,15 +64,15 @@ All tests have passed
 \endcond
 \cond SOC_AM64X
 \code
-Write Speed: 0.000035 Mbps
-Read Speed: 40.983810 Mbps
+Write Speed: 40.972553 Mbps
+Read Speed: 44.413368 Mbps
 All tests have passed!!
 \endcode
 \endcond
 \cond SOC_AM243X
 \code
-Write Speed: 0.000066 Mbps
-Read Speed: 53.597580 Mbps
+Write Speed: 81.980049 Mbps
+Read Speed: 59.017868 Mbps
 All tests have passed!!
 \endcode
 \endcond

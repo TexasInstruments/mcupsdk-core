@@ -36,7 +36,7 @@
 
 #if defined(SOC_AM64X) || defined(SOC_AM243X)
 #define APP_GPMC_PSRAM_OFFSET_BASE  (1024*1024)
-#define APP_GPMC_DATA_SIZE          (1024*1024)
+#define APP_GPMC_DATA_SIZE          (2*1024*1024)
 
 uint8_t gGpmcTxBuf[APP_GPMC_DATA_SIZE] __attribute__((aligned(64), section("ddr_data"))) ;
 /* read buffer MUST be cache line aligned when using DMA, we aligned to 64B though 32B is enough */
@@ -88,7 +88,7 @@ void gpmc_psram_io_main(void *args)
         endTime = ClockP_getTimeUsec();
 
         duration = endTime - startTime;
-        writeSpeed += ((float)APP_GPMC_DATA_SIZE * 8U)/(duration * 1024* 1024);
+        writeSpeed += ((float)APP_GPMC_DATA_SIZE * 8U)/(duration);
 
         startTime = ClockP_getTimeUsec();
         Ram_read(gRamHandle[CONFIG_RAM0], offset, gGpmcRxBuf, APP_GPMC_DATA_SIZE);
