@@ -1750,6 +1750,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An EQEP Capture Example. This example captures the quadrature input signal and measures it's frequency. CPU is A53SS0-0 running FREERTOS.",
+        "name": "eqep_capture",
+        "location": "../../examples/drivers/eqep/eqep_capture/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "eqep",
+            "eqep_capture",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An EQEP Capture Example. This example captures the quadrature input signal and measures it's frequency. CPU is A53SS0-0 running NORTOS.",
+        "name": "eqep_capture",
+        "location": "../../examples/drivers/eqep/eqep_capture/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "eqep",
+            "eqep_capture",
+            "a53ss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Fsi Loopback Interrupt Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "fsi_loopback_interrupt",
         "location": "../../examples/drivers/fsi/fsi_loopback_interrupt/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
