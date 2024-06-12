@@ -127,7 +127,7 @@ void MPU_SECTION MpuP_setRegion(uint32_t regionNum, void * addr, uint32_t size, 
 
 void MPU_SECTION MpuP_enable(void)
 {
-    if(MpuP_isEnable()==0U)
+    if(MpuP_isEnable()==(uint32_t) 0U)
     {
         uint32_t type;
         uintptr_t key;
@@ -135,11 +135,16 @@ void MPU_SECTION MpuP_enable(void)
         key = HwiP_disable();
 
         /* get the current enabled bits */
-        type = CacheP_getEnabled();
+        type = (uint32_t)CacheP_getEnabled();
 
-        DebugP_assertNoLog ((type & CacheP_TYPE_ALL)  == 0U);
+        if (type & CacheP_TYPE_L1) {
+            CacheP_disable(CacheP_TYPE_L1);
+        }
 
         MpuP_enableAsm();
+
+        /* set cache back to initial settings */
+        CacheP_enable(type);
 
         __asm__  __volatile__ (" dsb" "\n\t": : : "memory");
         __asm__  __volatile__ (" isb" "\n\t": : : "memory");

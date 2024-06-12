@@ -222,7 +222,28 @@ _c_int00:
         #else
         LDR     sp, c_STACK_END
         #endif
+        //*------------------------------------------------------
+        //* Enable ECC for R5F Cache
+        //*------------------------------------------------------
+        MRC p15, 0, r0, c1, c0, 0  // Read System Control Register
+        BIC r0, r0, #0x1 << 2      // Disable data cache bit
+        BIC r0, r0, #0x1 << 12     // Disable instruction cache bit
+        DSB
+        MCR p15, 0, r0, c1, c0, 0  // Write System Control Register
+        ISB                        // Ensures following instructions are not executed from cache
+        MRC p15, 0, r1, c1, c0, 1  // Read Auxiliary Control Register
+        ORR r1, r1, #(0x1 << 3)    //Enable ECC for Cache
+        ORR r1,r1,#(0x1 << 5)
+        MCR p15, 0, r1, c1, c0, 1  // Write Auxiliary Control Register
 
+        MCR p15, 0, r0, c15, c5, 0 // Invalidate entire data cache
+        MCR p15, 0, r0, c7, c5, 0  // Invalidate entire instruction cache
+        MRC p15, 0, r0, c1, c0, 0  // Read System Control Register
+        ORR r0, r0, #0x1 << 2      // Enable data cache bit
+        ORR r0, r0, #0x1 << 12     // Enable instruction cache bit
+        DSB
+        MCR p15, 0, r0, c1, c0, 0  // Write System Control Register
+        ISB
         //*------------------------------------------------------
         //* Call the __mpu_init hook function.
         //*------------------------------------------------------
