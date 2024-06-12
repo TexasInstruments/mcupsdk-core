@@ -59,14 +59,16 @@ void GPIO_init()
 /* On M4F, interrupt number as specified in TRM is input to the NVIC but from M4 point of view there are 16 internal interrupts
  * and then the NVIC input interrupts start, hence we need to add +16 to the value specified by TRM */
 #define BOARD_BUTTON_GPIO_INTR_NUM      (CSLR_`config.routerId`_GPIOMUX_INTROUTER0_OUTP_`config.intrOut` + 16u)
-%}
-%else {
+%} else if(common.getSocName() === "am65x"){
+#define BOARD_BUTTON_GPIO_INTR_NUM      (CSL_`config.routerId`_GPIOMUX_INTR0_OUTP_`config.intrOut`)
+% } else {
 #define BOARD_BUTTON_GPIO_INTR_NUM      (CSLR_`config.routerId`_GPIOMUX_INTROUTER0_OUTP_`config.intrOut`)
 %}
 
 #define BOARD_BUTTON_GPIO_SWITCH_NUM    (5)
 
 /** \brief bank interrupt source index base */
+#define TISCI_BANK_SRC_IDX_BASE_WKUP_GPIO0  (128U)
 #define TISCI_BANK_SRC_IDX_BASE_GPIO0       (90U)
 #define TISCI_BANK_SRC_IDX_BASE_GPIO1       (90U)
 #define TISCI_BANK_SRC_IDX_BASE_MCU_GPIO0   (30U)
@@ -116,7 +118,11 @@ static void Sciclient_gpioIrqSet(void)
     %}
     %}
     rmIrqReq.dst_id                 = TISCI_DEV_`config.coreId`;
+    % if(common.getSocName() === "am65x"){
+    rmIrqReq.dst_host_irq           = CSL_`config.routerId`_GPIOMUX_INTR0_OUTP_`config.intrOut`;
+    % } else {
     rmIrqReq.dst_host_irq           = CSLR_`config.routerId`_GPIOMUX_INTROUTER0_OUTP_`config.intrOut`;
+    % }
     rmIrqReq.ia_id                  = 0U;
     rmIrqReq.vint                   = 0U;
     rmIrqReq.vint_status_bit_index  = 0U;
@@ -152,7 +158,11 @@ static void Sciclient_gpioIrqRelease(void)
     %}
     %}
     rmIrqReq.dst_id                 = TISCI_DEV_`config.coreId`;
+    % if(common.getSocName() === "am65x"){
+    rmIrqReq.dst_host_irq           = CSL_`config.routerId`_GPIOMUX_INTR0_OUTP_`config.intrOut`;
+    % } else {
     rmIrqReq.dst_host_irq           = CSLR_`config.routerId`_GPIOMUX_INTROUTER0_OUTP_`config.intrOut`;
+    % }
     rmIrqReq.ia_id                  = 0U;
     rmIrqReq.vint                   = 0U;
     rmIrqReq.vint_status_bit_index  = 0U;

@@ -9,7 +9,7 @@ let errorLog = '';
 function getInstanceConfig(moduleInstance) {
     let coreId = undefined;
     let routerId = undefined;
-    if (common.isMcuDomainSupported()) {
+    if (common.isMcuDomainSupported() || common.isWakeupDomainSupported()) {
         coreId = soc.getTisciDestCoreID();
         routerId = soc.getCpuRouterId();
     }
@@ -229,8 +229,12 @@ function getConfigurables() {
             },
         )
     }
-    if (common.isMcuDomainSupported()) {
+    if ((common.isMcuDomainSupported()) && (common.getSocName() != "am65x")) {
         config.push(common.getUseMcuDomainPeripheralsConfig());
+    }
+    if(common.isWakeupDomainSupported())
+    {
+      config.push(common.getUseWakeupDomainPeripheralsConfig());
     }
     return config;
 }

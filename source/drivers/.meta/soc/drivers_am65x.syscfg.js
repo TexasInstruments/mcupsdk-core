@@ -2,9 +2,13 @@
 let common = system.getScript("/common");
 
 const driverVer = {
+    "gpio": {
+        version: "v0_1",
+    },
 };
 
 const topModules = [
+    "/drivers/gpio/gpio",
 ];
 
 function getCpuID() {
