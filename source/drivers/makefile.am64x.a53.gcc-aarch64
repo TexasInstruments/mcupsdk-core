@@ -24,6 +24,7 @@ FILES_common := \
     csl_sec_proxy.c \
     ecap.c \
     epwm.c \
+    eqep.c \
     gpio.c \
     gpmc_v0.c \
     gpmc_priv_v0.c \
@@ -74,6 +75,7 @@ FILES_PATH_common = \
     gpmc/v0/dma/udma \
     ecap/v0 \
     epwm/v0 \
+    eqep/v0 \
     gpio/v0 \
     gtc/v0 \
     pinmux/am64x_am243x \
