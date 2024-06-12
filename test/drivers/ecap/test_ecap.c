@@ -123,7 +123,6 @@ uint32_t gEcapBaseAddr, gEpwmBaseAddr;
 static void App_ecapIntrISR(void *arg);
 static void App_epwmInit(void);
 static void App_ecapInit(void *args);
-static void App_ecapCompareOutput(double dutyCycle, double actualOpFreq);
 static void test_ecap_epwm_loopback(void *args);
 static void test_ecap_epwm_loopback_negative(void *args);
 static void test_ecap_init_test_params(ECAP_TestParams *testParams,

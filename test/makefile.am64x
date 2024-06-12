@@ -106,6 +106,7 @@ help:
 	@echo  $(MAKE) -s -C drivers/ddr/am64x-evm/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ddr/am64x-sk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/ecap/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C drivers/ecap/am64x-evm/a53ss0-0_freertos/gcc-aarch64 [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/epwm/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/eqep/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C drivers/fsi/am64x-evm/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -344,6 +345,7 @@ BUILD_COMBO_EXAMPLE_ALL += boot_testapp_mb_am64x-sk_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_ddr_am64x-evm_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_ddr_am64x-sk_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_ecap_am64x-evm_r5fss0-0_freertos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += test_ecap_am64x-evm_a53ss0-0_freertos_gcc-aarch64
 BUILD_COMBO_EXAMPLE_ALL += test_epwm_am64x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_eqep_am64x-evm_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += test_fsi_am64x-evm_r5fss0-0_freertos_ti-arm-clang
@@ -635,6 +637,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  test_ecap_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C drivers/ecap/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
+
+ test_ecap_am64x-evm_a53ss0-0_freertos_gcc-aarch64:
+	$(MAKE) -C drivers/ecap/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile all
 
  test_epwm_am64x-evm_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C drivers/epwm/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile all
@@ -971,6 +976,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += boot_testapp_mb_am64x-sk_r5fss0-0_nortos_ti-arm
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ddr_am64x-evm_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ddr_am64x-sk_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecap_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_ecap_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_epwm_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_eqep_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += test_fsi_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
@@ -1257,6 +1263,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  test_ecap_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/ecap/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
+
+ test_ecap_am64x-evm_a53ss0-0_freertos_gcc-aarch64_clean:
+	$(MAKE) -C drivers/ecap/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile clean
 
  test_epwm_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C drivers/epwm/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -1593,6 +1602,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += boot_testapp_mb_am64x-sk_r5fss0-0_nortos_ti-arm
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ddr_am64x-evm_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ddr_am64x-sk_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecap_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_ecap_am64x-evm_a53ss0-0_freertos_gcc-aarch64_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_epwm_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_eqep_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += test_fsi_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub
@@ -1879,6 +1889,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  test_ecap_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/ecap/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
+
+ test_ecap_am64x-evm_a53ss0-0_freertos_gcc-aarch64_scrub:
+	$(MAKE) -C drivers/ecap/am64x-evm/a53ss0-0_freertos/gcc-aarch64 -f makefile scrub
 
  test_epwm_am64x-evm_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C drivers/epwm/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
