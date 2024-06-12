@@ -5,10 +5,14 @@ const driverVer = {
     "gpio": {
         version: "v0_1",
     },
+    "i2c": {
+        version: "v0",
+    },
 };
 
 const topModules = [
     "/drivers/gpio/gpio",
+    "/drivers/i2c/i2c",
 ];
 
 function getCpuID() {

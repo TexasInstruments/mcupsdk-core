@@ -44,6 +44,9 @@ function getInterfaceName(inst) {
     if(inst.useMcuDomainPeripherals)
         return "MCU_I2C"
 
+    if(inst.useWakeUpDomainPeripherals)
+        return "WKUP_I2C"
+
     return "I2C";
 }
 
@@ -148,6 +151,7 @@ let i2c_module = {
             description: "Transfer callback function when callback mode is selected",
         },
         common.getUseMcuDomainPeripheralsConfig(),
+        common.getUseWakeupDomainPeripheralsConfig(),
         {
             name: "advanced",
             displayName: "Show Advanced Config",
@@ -224,6 +228,7 @@ let i2c_module = {
                 }
             },
             description: "SDK Infra",
+            hidden: (common.getSocName() == "am65x"),
         },
     ],
     validate : validate,
