@@ -122,11 +122,11 @@ MCSPILLD_InitObject gMcspiInitObject[CONFIG_MCSPI_NUM_INSTANCES] =
     % let ch_instances = instance.mcspiChannel;
     % let chMode = "SINGLE";
     % let msMode = "CONTROLLER";
-    % if(config.mode == "CONTROLLER") {
-    %   chMode = "CONTROLLER";
+    % if(config.mode == "MULTI_CONTROLLER") {
+    %   chMode = "MULTI";
     % }
     % if(config.mode == "PERIPHERAL") {
-    %   chMode = "PERIPHERAL";
+    %   msMode = "PERIPHERAL";
     % }
     {
         .inputClkFreq                = `config.inputClkFreq`,
