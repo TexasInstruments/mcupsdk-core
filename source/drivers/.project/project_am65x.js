@@ -6,6 +6,8 @@ const files_r5f = {
     common: [
         "csl_sec_proxy.c",
         "gpio.c",
+        "i2c_v0.c",
+        "i2c_v0_lld.c",
         "pinmux.c",
         "sciclient.c",
         "sciclient_boardcfg.c",
@@ -22,6 +24,8 @@ const files_r5f = {
 const filedirs = {
     common: [
         "gpio/v0",
+        "i2c/v0",
+        "i2c/v0/lld",
         "pinmux/am65x",
         "sciclient",
         "sciclient/soc/am65x",

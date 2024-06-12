@@ -106,6 +106,26 @@ extern "C"
  */
 #define TISCI_DEV_GTC0_GTC_CLK  TISCI_DEV_GTC0_BUS_VBUSP_CLK
 
+/** \brief API to validate I2C base address. */
+static inline int32_t I2C_lld_isBaseAddrValid(uint32_t baseAddr)
+{
+    /* Set status to invalid Param */
+    int32_t status = (int32_t)(-3);
+
+    if (    (baseAddr == CSL_I2C0_CFG_BASE) ||  \
+            (baseAddr == CSL_I2C1_CFG_BASE) ||  \
+            (baseAddr == CSL_I2C2_CFG_BASE) ||  \
+            (baseAddr == CSL_I2C3_CFG_BASE) ||  \
+            (baseAddr == CSL_MCU_I2C0_CFG_BASE) ||  \
+            (baseAddr == CSL_WKUP_I2C0_CFG_BASE) )
+    {
+        /* Set status to success */
+        status = 0;
+    }
+
+    return status;
+}
+
 /**
  * \brief Enable clock to specified module
  *
