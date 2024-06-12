@@ -14,6 +14,7 @@ const device_defines = {
 };
 
 const example_file_list = [
+    "examples/drivers/gpio/gpio_led_blink/.project/project.js",
     "examples/drivers/sciclient/sciclient_get_version/.project/project.js",
     "examples/drivers/sciclient/sciclient_set_boardcfg/.project/project.js",
     "examples/empty/.project/project_freertos.js",
