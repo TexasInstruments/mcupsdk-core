@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -41,6 +41,10 @@
 
 extern uint8_t Board_getSocTemperatureSensorAddr(void);
 extern uint8_t Board_getPowerSecTemperatureSensorAddr(void);
+#if defined(SOC_AM65X)
+extern void I2C_intr_router_configInit(void);
+extern void I2C_intr_router_configDeinit(void);
+#endif
 
 void i2c_temperature_main(void *arg0)
 {
@@ -55,6 +59,9 @@ void i2c_temperature_main(void *arg0)
 
     Drivers_open();
     Board_driversOpen();
+    #if defined(SOC_AM65X)
+    I2C_intr_router_configInit();
+    #endif
 
     i2cHandle = gI2cHandle[CONFIG_I2C0];
 
@@ -133,6 +140,9 @@ void i2c_temperature_main(void *arg0)
         DebugP_log("Some tests have failed!!\r\n");
     }
 
+    #if defined(SOC_AM65X)
+    I2C_intr_router_configDeinit();
+    #endif
     Board_driversClose();
     Drivers_close();
 

@@ -7,6 +7,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL =
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_input_interrupt_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += gpio_led_blink_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_led_blink_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += i2c_temperature_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sciclient_get_version_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sciclient_get_version_am65x-idk_r5fss0-1_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sciclient_set_boardcfg_am65x-idk_r5fss0-0_nortos_ti-arm-clang_build
@@ -34,6 +35,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  i2c_led_blink_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
+
+ i2c_temperature_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
  sciclient_get_version_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
@@ -69,6 +73,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_input_interrupt_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += gpio_led_blink_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_led_blink_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += i2c_temperature_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sciclient_get_version_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sciclient_get_version_am65x-idk_r5fss0-1_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sciclient_set_boardcfg_am65x-idk_r5fss0-0_nortos_ti-arm-clang_clean
@@ -96,6 +101,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  i2c_led_blink_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
+
+ i2c_temperature_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
  sciclient_get_version_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
@@ -131,6 +139,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_input_interrupt_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += gpio_led_blink_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_led_blink_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += i2c_temperature_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sciclient_get_version_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sciclient_get_version_am65x-idk_r5fss0-1_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sciclient_set_boardcfg_am65x-idk_r5fss0-0_nortos_ti-arm-clang_export
@@ -158,6 +167,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  i2c_led_blink_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/i2c/i2c_led_blink/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
+
+ i2c_temperature_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export:
+	$(MAKE) -C examples/drivers/i2c/i2c_temperature/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
  sciclient_get_version_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/drivers/sciclient/sciclient_get_version/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
@@ -209,6 +221,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_input_interrupt/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/gpio/gpio_led_blink/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_led_blink/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am65x-idk/r5fss0-1_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_set_boardcfg/am65x-idk/r5fss0-0_nortos/ti-arm-clang -f makefile_projectspec [export all clean]
