@@ -1,6 +1,9 @@
 %%{
     let module = system.modules['/drivers/i2c/i2c'];
 %%}
+%%{
+    let common = system.getScript("/common");
+%%}
 /*
  * I2C
  */
@@ -41,3 +44,97 @@ I2C_Config gI2cConfig[CONFIG_I2C_NUM_INSTANCES] =
 };
 
 uint32_t gI2cConfigNum = CONFIG_I2C_NUM_INSTANCES;
+
+%for(let i = 0; i < module.$instances.length; i++) {
+   % let instance = module.$instances[i];
+   % let config = module.getInstanceConfig(instance);
+%if((config.enableIntr) && (common.getSocName() === "am65x") && ((config.name === "I2C0") || (config.name === "I2C1") || (config.name === "I2C2") || (config.name === "I2C3"))){
+ /*
+ * Board info
+ */
+/* This is based on DMSC board config and core */
+
+/** \brief bank interrupt source index base */
+#define TISCI_BANK_SRC_IDX_BASE_I2C   (0U)
+
+
+static void Sciclient_i2cIrqSet(void);
+static void Sciclient_i2cIrqRelease(void);
+
+void I2C_intr_router_configInit(void)
+{
+    Sciclient_i2cIrqSet();
+}
+
+void I2C_intr_router_configDeinit(void)
+{
+    Sciclient_i2cIrqRelease();
+}
+
+static void Sciclient_i2cIrqSet(void)
+{
+    int32_t                             retVal;
+    struct tisci_msg_rm_irq_set_req     rmIrqReq;
+    struct tisci_msg_rm_irq_set_resp    rmIrqResp;
+%for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if(config.enableIntr){
+    rmIrqReq.valid_params           = 0U;
+    rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_ID_VALID;
+    rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_HOST_IRQ_VALID;
+    rmIrqReq.global_event           = 0U;
+    rmIrqReq.src_id                 = TISCI_DEV_`config.name`;
+    rmIrqReq.src_index              = TISCI_BANK_SRC_IDX_BASE_I2C;
+    rmIrqReq.dst_id                 = TISCI_DEV_MCU_ARMSS0_CPU0;
+    rmIrqReq.dst_host_irq           = `config.intNum`;
+    rmIrqReq.ia_id                  = 0U;
+    rmIrqReq.vint                   = 0U;
+    rmIrqReq.vint_status_bit_index  = 0U;
+    rmIrqReq.secondary_host         = TISCI_MSG_VALUE_RM_UNUSED_SECONDARY_HOST;
+
+    retVal = Sciclient_rmIrqSet(&rmIrqReq, &rmIrqResp, SystemP_WAIT_FOREVER);
+    if(0 != retVal)
+    {
+        DebugP_log("[Error] Sciclient event config failed!!!\r\n");
+        DebugP_assert(FALSE);
+    }
+    % }
+    % }
+    return;
+}
+
+static void Sciclient_i2cIrqRelease(void)
+{
+    int32_t                             retVal;
+    struct tisci_msg_rm_irq_release_req rmIrqReq;
+%for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % if(config.enableIntr){
+    rmIrqReq.valid_params           = 0U;
+    rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_ID_VALID;
+    rmIrqReq.valid_params          |= TISCI_MSG_VALUE_RM_DST_HOST_IRQ_VALID;
+    rmIrqReq.global_event           = 0U;
+    rmIrqReq.src_id                 = TISCI_DEV_`config.name`;
+    rmIrqReq.src_index              = TISCI_BANK_SRC_IDX_BASE_I2C;
+    rmIrqReq.dst_id                 = TISCI_DEV_MCU_ARMSS0_CPU0;
+    rmIrqReq.dst_host_irq           = `config.intNum`;
+    rmIrqReq.ia_id                  = 0U;
+    rmIrqReq.vint                   = 0U;
+    rmIrqReq.vint_status_bit_index  = 0U;
+    rmIrqReq.secondary_host         = TISCI_MSG_VALUE_RM_UNUSED_SECONDARY_HOST;
+
+    retVal = Sciclient_rmIrqRelease(&rmIrqReq, SystemP_WAIT_FOREVER);
+    if(0 != retVal)
+    {
+        DebugP_log("[Error] Sciclient event reset failed!!!\r\n");
+        DebugP_assert(FALSE);
+    }
+    % }
+    % }
+    return;
+}
+% break;
+% }
+% }
