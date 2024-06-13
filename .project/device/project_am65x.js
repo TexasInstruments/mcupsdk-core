@@ -1,6 +1,7 @@
 const common = require("../common.js");
 
 const component_file_list = [
+    "source/board/.project/project.js",
     "source/drivers/.project/project.js",
     "source/kernel/freertos/.project/project.js",
     "source/kernel/nortos/.project/project.js",

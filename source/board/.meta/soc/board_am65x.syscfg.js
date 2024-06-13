@@ -5,6 +5,7 @@ const driverVer = {
 };
 
 const topModules = [
+    "/board/led/led",
 ];
 
 exports = {
