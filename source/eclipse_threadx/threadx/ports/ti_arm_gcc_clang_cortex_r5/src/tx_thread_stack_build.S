@@ -132,47 +132,58 @@ _tx_thread_stack_build:
 @
 @   Fetch the CPSR and thumb bit from the C helper function.
 @   This is done to support both thumb and arm builds.
-    PUSH {r0, r1, lr}
+    PUSH {r0-r3, lr}
     BL tx_threadx_stack_build_cpsr_get
     MOV r4, r0
-    POP {r0, r1, lr}
+    POP {r0-r3, lr}
 
     LDR     r2, [r0, #16]                   @ Pickup end of stack area
     BIC     r2, r2, #7                      @ Ensure 8-byte alignment
+#if !defined(__SOFT_FP__) && defined(__ARM_FP)
+    SUB     r2, r2, #204                    @ Allocate space for the stack frame
+#define FP_OFF 132
+#else
     SUB     r2, r2, #72                     @ Allocate space for the stack frame
+#define FP_OFF 0
+#endif // #if !defined(__SOFT_FP__) && defined(__ARM_FP)
 @
 @    /* Actually build the stack frame.  */
 @
     MOV     r3, #1                          @ Build interrupt stack type
     STR     r3, [r2, #0]                    @ Store stack type
-    MOV     r3, #0                          @ Build initial register value
-    STR     r3, [r2, #4]                    @ Store initial r0
-    STR     r3, [r2, #8]                    @ Store initial r1
-    STR     r3, [r2, #12]                   @ Store initial r2
-    STR     r3, [r2, #16]                   @ Store initial r3
-    STR     r3, [r2, #20]                   @ Store initial r4
-    STR     r3, [r2, #24]                   @ Store initial r5
-    STR     r3, [r2, #28]                   @ Store initial r6
-    STR     r3, [r2, #32]                   @ Store initial r7
-    STR     r3, [r2, #36]                   @ Store initial r8
-    STR     r3, [r2, #40]                   @ Store initial r9
 
-    LDR     r3, [r0, #12]                   @ Pickup stack starting address
-    STR     r3, [r2, #44]                   @ Store initial r10 (sl)
+#if !defined(__SOFT_FP__) && defined(__ARM_FP)
 
-    STR     r3, [r2, #48]                   @ Store initial r11
-    STR     r3, [r2, #52]                   @ Store initial r12
+#endif // #if !defined(__SOFT_FP__) && defined(__ARM_FP)
+
+    MOV     r3, #0xA                          @ Build initial register value
+    STR     r3, [r2, #(4+FP_OFF)]                    @ Store initial r0
+    STR     r3, [r2, #(8+FP_OFF)]                    @ Store initial r1
+    STR     r3, [r2, #(12+FP_OFF)]                   @ Store initial r2
+    STR     r3, [r2, #(16+FP_OFF)]                   @ Store initial r3
+    STR     r3, [r2, #(20+FP_OFF)]                   @ Store initial r4
+    STR     r3, [r2, #(24+FP_OFF)]                   @ Store initial r5
+    STR     r3, [r2, #(28+FP_OFF)]                   @ Store initial r6
+    STR     r3, [r2, #(32+FP_OFF)]                   @ Store initial r7
+    STR     r3, [r2, #(36+FP_OFF)]                   @ Store initial r8
+    STR     r3, [r2, #(40+FP_OFF)]                   @ Store initial r9
+
+    LDR     r3, [r0, #(12)]                   @ Pickup stack starting address
+    STR     r3, [r2, #(44+FP_OFF)]                   @ Store initial r10 (sl)
+
+    STR     r3, [r2, #(48+FP_OFF)]                   @ Store initial r11
+    STR     r3, [r2, #(52+FP_OFF)]                   @ Store initial r12
 
     LDR     r3,=_tx_thread_schedule         @ Pickup address of _tx_thread_schedule for GDB backtrace
-    STR     r3, [r2, #56]                   @ Store initial r14 (lr)
+    STR     r3, [r2, #(56+FP_OFF)]                   @ Store initial r14 (lr)
 
-    STR     r1, [r2, #60]                   @ Store initial pc
+    STR     r1, [r2, #(60+FP_OFF)]                   @ Store initial pc
 
     BIC     r1, r4, #CPSR_MASK              @ Mask mode bits of CPSR
     ORR     r3, r1, #SYS_MODE               @ Build CPSR, SYS mode, interrupts enabled
-    STR     r3, [r2, #64]                   @ Store initial CPSR
+    STR     r3, [r2, #(64+FP_OFF)]                   @ Store initial CPSR
 
-    STR     r3, [r2, #68]                   @ 0 for back-trace
+    STR     r3, [r2, #(68+FP_OFF)]                   @ 0 for back-trace
 @
 @    /* Setup stack pointer.  */
 @    thread_ptr -> tx_thread_stack_ptr =  r2;
