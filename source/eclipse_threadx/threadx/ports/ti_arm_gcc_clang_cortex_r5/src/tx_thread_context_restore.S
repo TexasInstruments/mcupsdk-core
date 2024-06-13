@@ -215,7 +215,7 @@ __tx_thread_preempt_restore:
     LDR     r1, =_tx_thread_current_ptr     @ Pickup address of current thread ptr
     LDR     r0, [r1]                        @ Pickup current thread pointer
 @
-#if !defined(__SOFT_FP__) && defined(__ARM_FP) && 0
+#if !defined(__SOFT_FP__) && defined(__ARM_FP)
     VMRS    r2, FPSCR                       @ Pickup the FPSCR
     STR     r2, [sp, #-4]!                  @ Save FPSCR
     VSTMDB  sp!, {D0-D15}                   @ Save D0-D15

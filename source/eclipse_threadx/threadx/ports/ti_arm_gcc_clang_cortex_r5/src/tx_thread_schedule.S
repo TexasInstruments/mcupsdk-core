@@ -164,27 +164,19 @@ __tx_thread_schedule_loop:
     LDMIA   sp!, {r4}                           @ Pickup the stack type and saved CPSR
     CMP     r4, #0                              @ Check for synchronous context switch
     BEQ     _tx_solicited_return
-#if !defined(__SOFT_FP__) && defined(__ARM_FP) & 0
-    LDR     r1, [r0, #144]                      @ Pickup the VFP enabled flag
-    CMP     r1, #0                              @ Is the VFP enabled?
-    BEQ     _tx_skip_interrupt_vfp_restore      @ No, skip VFP interrupt restore
+#if !defined(__SOFT_FP__) && defined(__ARM_FP)
     VLDMIA  sp!, {D0-D15}                       @ Recover D0-D15
     LDR     r4, [sp], #4                        @ Pickup FPSCR
     VMSR    FPSCR, r4                           @ Restore FPSCR
-_tx_skip_interrupt_vfp_restore:
 #endif // #if !defined(__SOFT_FP__) && defined(__ARM_FP)
     LDMIA   sp!, {r0-r12, lr}                   @ Return to point of thread interrupt
     RFEIA   sp!
 @
 _tx_solicited_return:
-#if !defined(__SOFT_FP__) && defined(__ARM_FP) & 0
-    LDR     r1, [r0, #144]                      @ Pickup the VFP enabled flag
-    CMP     r1, #0                              @ Is the VFP enabled?
-    BEQ     _tx_skip_solicited_vfp_restore      @ No, skip VFP solicited restore
+#if !defined(__SOFT_FP__) && defined(__ARM_FP)
     VLDMIA  sp!, {D8-D15}                       @ Recover D8-D15
     LDR     r4, [sp], #4                        @ Pickup FPSCR
     VMSR    FPSCR, r4                           @ Restore FPSCR
-_tx_skip_solicited_vfp_restore:
 #endif // #if !defined(__SOFT_FP__) && defined(__ARM_FP)
     LDMIA   sp!, {r0} // CPSR.
     LDMIA   sp!, {r4-r11, lr}                   @ Return to thread synchronously
@@ -194,36 +186,3 @@ _tx_skip_solicited_vfp_restore:
 @
 @}
 @
-@
-#if !defined(__SOFT_FP__) && defined(__ARM_FP) & 0
-    .global tx_thread_vfp_enable
-    .type  tx_thread_vfp_enable,function
-tx_thread_vfp_enable:
-    MRS     r2, CPSR                            @ Pickup the CPSR
-    CPSID   i                                   @ Disable IRQ interrupts
-    LDR     r0, =_tx_thread_current_ptr         @ Build current thread pointer address
-    LDR     r1, [r0]                            @ Pickup current thread pointer
-    CMP     r1, #0                              @ Check for NULL thread pointer
-    BEQ     __tx_no_thread_to_enable            @ If NULL, skip VFP enable
-    MOV     r0, #1                              @ Build enable value
-    STR     r0, [r1, #144]                      @ Set the VFP enable flag (tx_thread_vfp_enable field in TX_THREAD)
-__tx_no_thread_to_enable:
-    MSR     CPSR_cxsf, r2                       @ Recover CPSR
-    BX      LR                                  @ Return to caller
-@
-    .global tx_thread_vfp_disable
-    .type  tx_thread_vfp_disable,function
-tx_thread_vfp_disable:
-    MRS     r2, CPSR                            @ Pickup the CPSR
-    CPSID   i                                   @ Disable IRQ interrupts
-    LDR     r0, =_tx_thread_current_ptr         @ Build current thread pointer address
-    LDR     r1, [r0]                            @ Pickup current thread pointer
-    CMP     r1, #0                              @ Check for NULL thread pointer
-    BEQ     __tx_no_thread_to_disable           @ If NULL, skip VFP disable
-    MOV     r0, #0                              @ Build disable value
-    STR     r0, [r1, #144]                      @ Clear the VFP enable flag (tx_thread_vfp_enable field in TX_THREAD)
-__tx_no_thread_to_disable:
-    MSR     CPSR_cxsf, r2                       @ Recover CPSR
-    BX      LR                                  @ Return to caller
-#endif // #if !defined(__SOFT_FP__) && defined(__ARM_FP)
-
