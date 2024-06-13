@@ -75,7 +75,7 @@ const Sciclient_MapStruct_t gSciclientMap[SCICLIENT_CONTEXT_MAX_NUM] =
         SCICLIENT_NON_SECURE_CONTEXT,
 
         /** CPU ID of the A53/A72/R5F/DSP */
-        TISCI_HOST_ID_MAIN_0_R5_0,
+        TISCI_HOST_ID_R5_0,
 
         /** Thread ID of the low priority thread(write) allowed for the CPU */
         TISCI_SEC_PROXY_R5_0_LOW_PRIORITY_WRITE_THREAD_ID,

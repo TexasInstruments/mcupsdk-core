@@ -552,7 +552,7 @@ int32_t Sciclient_loadFirmware(const uint32_t *pSciclient_firmware)
     /* Construct header */
     header.type = SCICLIENT_ROM_MSG_R5_TO_M3_M3FW;
 
-    header.host = TISCI_HOST_ID_MAIN_0_R5_0;
+    header.host = SCICLIENT_HOST_ID;
     /* ROM expects a sequence number of 0 */
     header.seq  = 0U;
     /* ROM doesn't check for flags */

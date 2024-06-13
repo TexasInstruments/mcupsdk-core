@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019-2020 Texas Instruments Incorporated
+ *  Copyright (C) 2019-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -64,6 +64,8 @@ extern "C"
 #endif
 /** @} */
 
+/** CPU ID of the R5F */
+#define SCICLIENT_HOST_ID            (TISCI_HOST_ID_MAIN_0_R5_0)
 
 #ifdef __cplusplus
 }

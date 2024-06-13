@@ -64,7 +64,7 @@
 /** DMSC(Secure): Device Management and Security Control */
 #define TISCI_HOST_ID_DMSC (0U)
 /** r5_0(Non Secure): Cortex R5 Context 0 on MCU island */
-#define TISCI_HOST_ID_MAIN_0_R5_0 (3U)
+#define TISCI_HOST_ID_R5_0 (3U)
 /** r5_1(Secure): Cortex R5 Context 1 on MCU island(Boot) */
 #define TISCI_HOST_ID_R5_1 (4U)
 /** r5_2(Non Secure): Cortex R5 Context 2 on MCU island */
