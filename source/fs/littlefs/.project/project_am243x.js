@@ -6,7 +6,7 @@ const files = {
     common: [
         "lfs.c",
         "lfs_util.c",
-        "lfs_ospi.c",
+        "lfs_flash.c",
     ],
 };
 
@@ -30,6 +30,9 @@ const cflags = {
         "-Wno-extra",
         "-Wno-uninitialized",
         "-Wno-unused-but-set-variable",
+    ],
+    release: [
+        "-DLFS_NO_DEBUG",
     ],
 };
 

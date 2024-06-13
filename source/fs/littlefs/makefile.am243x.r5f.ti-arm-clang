@@ -18,7 +18,7 @@ LIBNAME:=littlefs.am243x.r5f.ti-arm-clang.$(PROFILE).lib
 FILES_common := \
     lfs.c \
     lfs_util.c \
-    lfs_ospi.c \
+    lfs_flash.c \
 
 FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/fs/littlefs \
@@ -47,6 +47,10 @@ CFLAGS_common := \
     -Wno-uninitialized \
     -Wno-unused-but-set-variable \
 
+CFLAGS_release := \
+    -Os \
+    LFS_NO_DEBUG \
+
 CFLAGS_cpp_common := \
     -Wno-c99-designator \
     -Wno-extern-c-compat \
@@ -61,9 +65,6 @@ CFLAGS_cpp_common := \
 
 CFLAGS_debug := \
     -D_DEBUG_=1 \
-
-CFLAGS_release := \
-    -Os \
 
 ARFLAGS_common := \
     rc \

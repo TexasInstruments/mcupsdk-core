@@ -87,7 +87,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_OSPI_FLASH_FILE_IO";
+const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_OSPI_FLASH_FILE_IO";
 
 const templates_nortos_r5f =
 [
