@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -37,6 +37,10 @@
 #include "ti_board_open_close.h"
 
 extern uint32_t Board_getnumLedPerGroup(void);
+#if defined(SOC_AM65X)
+extern void I2C_intr_router_configInit(void);
+extern void I2C_intr_router_configDeinit(void);
+#endif
 
 void i2c_led_blink_main(void *args)
 {
@@ -47,6 +51,9 @@ void i2c_led_blink_main(void *args)
     /* Open drivers to open the UART driver for console */
     Drivers_open();
     Board_driversOpen();
+    #if defined(SOC_AM65X)
+    I2C_intr_router_configInit();
+    #endif
 
     DebugP_log("I2C LED Blink Test Started ...\r\n");
     DebugP_log("LED will Blink for %d loop ...\r\n", loopcnt);
@@ -93,6 +100,9 @@ void i2c_led_blink_main(void *args)
     DebugP_log("I2C LED Blink Test Passed!!\r\n");
     DebugP_log("All tests have passed!!\r\n");
 
+    #if defined(SOC_AM65X)
+    I2C_intr_router_configDeinit();
+    #endif
     Board_driversClose();
     Drivers_close();
 }
