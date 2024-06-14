@@ -6,7 +6,14 @@
         % let instance = module.$instances[i];
         % let clockFrequencies = module.getClockFrequencies(instance);
         % clockFrequencies.forEach( function(clockFrequency) {
-    { `clockFrequency.moduleId`, `clockFrequency.clkId`, `clockFrequency.clkRate` },
+%       if(clockFrequency.clkParentId)
+%       {
+        { `clockFrequency.moduleId`, `clockFrequency.clkId`, `clockFrequency.clkRate`,`clockFrequency.clkParentId`},
+%       }
+%       else
+%       {
+        { `clockFrequency.moduleId`, `clockFrequency.clkId`, `clockFrequency.clkRate`,-1},
+%       }
         % } );
     % }
 % }
