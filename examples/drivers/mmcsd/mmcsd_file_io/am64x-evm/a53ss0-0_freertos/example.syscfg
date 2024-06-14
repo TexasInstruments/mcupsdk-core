@@ -1,0 +1,67 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM64x" --package "ALV" --part "Default" --context "a53ss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.20.0+3587"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const freertos_fat  = scripting.addModule("/fs/freertos_fat/freertos_fat", {}, false);
+const freertos_fat1 = freertos_fat.addInstance();
+const clock         = scripting.addModule("/kernel/dpl/clock");
+const debug_log     = scripting.addModule("/kernel/dpl/debug_log");
+const mmu_armv8     = scripting.addModule("/kernel/dpl/mmu_armv8", {}, false);
+const mmu_armv81    = mmu_armv8.addInstance();
+const mmu_armv82    = mmu_armv8.addInstance();
+const mmu_armv83    = mmu_armv8.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+freertos_fat1.$name                    = "CONFIG_FREERTOS_FAT0";
+freertos_fat1.peripheralDriver.$name   = "CONFIG_MMCSD0";
+freertos_fat1.peripheralDriver.phyType = "SW_PHY";
+
+debug_log.enableUartLog = true;
+debug_log.enableCssLog  = false;
+debug_log.uartLog.$name = "CONFIG_UART0";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
+
+mmu_armv81.$name = "SOC_MEM_REGION";
+mmu_armv81.size  = 0x80000000;
+
+mmu_armv82.$name     = "MSRAM_REGION";
+mmu_armv82.vAddr     = 0x70000000;
+mmu_armv82.pAddr     = 0x70000000;
+mmu_armv82.attribute = "MAIR7";
+mmu_armv82.size      = 0x200000;
+
+mmu_armv83.$name     = "DDR_REGION";
+mmu_armv83.vAddr     = 0x80000000;
+mmu_armv83.pAddr     = 0x80000000;
+mmu_armv83.size      = 0x80000000;
+mmu_armv83.attribute = "MAIR7";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+freertos_fat1.peripheralDriver.MMC1.$suggestSolution       = "MMC1";
+freertos_fat1.peripheralDriver.MMC1.CLK.$suggestSolution   = "MMC1_CLK";
+freertos_fat1.peripheralDriver.MMC1.CLKLB.$suggestSolution = "MMC1_CLKLB";
+freertos_fat1.peripheralDriver.MMC1.CMD.$suggestSolution   = "MMC1_CMD";
+freertos_fat1.peripheralDriver.MMC1.DAT0.$suggestSolution  = "MMC1_DAT0";
+freertos_fat1.peripheralDriver.MMC1.DAT1.$suggestSolution  = "MMC1_DAT1";
+freertos_fat1.peripheralDriver.MMC1.DAT2.$suggestSolution  = "MMC1_DAT2";
+freertos_fat1.peripheralDriver.MMC1.DAT3.$suggestSolution  = "MMC1_DAT3";
+freertos_fat1.peripheralDriver.MMC1.SDCD.$suggestSolution  = "MMC1_SDCD";
+debug_log.uartLog.UART.$suggestSolution                    = "USART0";
+debug_log.uartLog.UART.RXD.$suggestSolution                = "UART0_RXD";
+debug_log.uartLog.UART.TXD.$suggestSolution                = "UART0_TXD";

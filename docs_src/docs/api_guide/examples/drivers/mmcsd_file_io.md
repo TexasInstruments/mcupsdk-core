@@ -17,10 +17,12 @@ When the comparison match, test result is passed otherwise failed.
  Parameter      | Value
  ---------------|-----------
  CPU + OS       | r5fss0-0 nortos
+ ^              | r5fss0-0 freertos
  ^              | a53ss0-0 nortos
+ ^              | a53ss0-0 freertos
  Toolchain      | ti-arm-clang
  ^              | arm.gnu.aarch64-none
- Board          | @VAR_BOARD_NAME_LOWER, @VAR_SK_BOARD_NAME_LOWER
+ Board          | @VAR_BOARD_NAME_LOWER
  Example folder | examples/drivers/mmcsd/mmcsd_file_io
 
 \endcond
