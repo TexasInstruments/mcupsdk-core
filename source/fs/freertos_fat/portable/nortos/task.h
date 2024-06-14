@@ -72,10 +72,10 @@
 
 typedef void* TaskHandle_t;
 
-void *pvTaskGetThreadLocalStoragePointer(TaskHandle_t xTaskToQuery, BaseType_t xIndex);
-void *vTaskSetThreadLocalStoragePointer(TaskHandle_t xTaskToSet, BaseType_t xIndex, void *pvValue);
-void vTaskSuspendAll(void);
-void xTaskResumeAll(void);
+__attribute__((weak)) void *pvTaskGetThreadLocalStoragePointer(TaskHandle_t xTaskToQuery, BaseType_t xIndex);
+__attribute__((weak)) void *vTaskSetThreadLocalStoragePointer(TaskHandle_t xTaskToSet, BaseType_t xIndex, void *pvValue);
+__attribute__((weak)) void vTaskSuspendAll(void);
+__attribute__((weak)) void xTaskResumeAll(void);
 
 #ifdef  __cplusplus
     } /* extern "C" */
