@@ -48,8 +48,8 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-    #include <fs/littlefs/lfs.h>
-    #include <fs/littlefs/lfs_util.h>
+    #include <fs/littlefs/LittleFS/lfs.h>
+    #include <fs/littlefs/LittleFS/lfs_util.h>
     #include <board/flash.h>
 
 /* ========================================================================== */

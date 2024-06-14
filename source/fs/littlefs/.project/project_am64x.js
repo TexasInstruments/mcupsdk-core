@@ -12,14 +12,14 @@ const files = {
 
 const filedirs = {
     common: [
-        "${MCU_PLUS_SDK_PATH}/source/fs/littlefs",
+        "${MCU_PLUS_SDK_PATH}/source/fs/littlefs/LittleFS",
         "${MCU_PLUS_SDK_PATH}/source/fs/littlefs/portable",
     ],
 };
 
 const includes_r5f = {
     common: [
-        "${MCU_PLUS_SDK_PATH}/source/fs/littlefs",
+        "${MCU_PLUS_SDK_PATH}/source/fs/littlefs/LittleFS",
         "${MCU_PLUS_SDK_PATH}/source/fs/littlefs/portable",
     ],
 };

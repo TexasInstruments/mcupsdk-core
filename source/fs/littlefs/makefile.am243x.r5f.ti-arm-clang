@@ -21,13 +21,13 @@ FILES_common := \
     lfs_flash.c \
 
 FILES_PATH_common = \
-    ${MCU_PLUS_SDK_PATH}/source/fs/littlefs \
+    ${MCU_PLUS_SDK_PATH}/source/fs/littlefs/LittleFS \
     ${MCU_PLUS_SDK_PATH}/source/fs/littlefs/portable \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
     -I${MCU_PLUS_SDK_PATH}/source \
-    -I${MCU_PLUS_SDK_PATH}/source/fs/littlefs \
+    -I${MCU_PLUS_SDK_PATH}/source/fs/littlefs/LittleFS \
     -I${MCU_PLUS_SDK_PATH}/source/fs/littlefs/portable \
 
 DEFINES_common := \
@@ -49,7 +49,7 @@ CFLAGS_common := \
 
 CFLAGS_release := \
     -Os \
-    LFS_NO_DEBUG \
+    -DLFS_NO_DEBUG \
 
 CFLAGS_cpp_common := \
     -Wno-c99-designator \

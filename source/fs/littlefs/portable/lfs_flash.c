@@ -91,7 +91,7 @@ int LFS_blockRead( const struct lfs_config *cfg, lfs_block_t block,
         Flash_Handle flashHandle = Flash_getHandle(gLfsFlashConfig[curLfsInst].lfsFlashIndex);
         uint32_t flash_offset = gLfsFlashConfig[curLfsInst].lfsFlashOffset + block * cfg->block_size + offset;
 
-        retVal = Flash_read(flashHandle, flash_offset, buffer, size);
+        retVal = Flash_read(flashHandle, flash_offset, (uint8_t *)buffer, size);
     }
     else{
         retVal = SystemP_FAILURE;
