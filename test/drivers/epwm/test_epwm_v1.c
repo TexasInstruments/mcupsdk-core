@@ -1578,21 +1578,26 @@ int32_t AM263x_EPWM_xTR_0003(uint32_t base, uint32_t i)
     TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_HRCNFG)
     & CSL_EPWM_HRCNFG_EDGMODEB_MASK) >> CSL_EPWM_HRCNFG_EDGMODEB_SHIFT , HRPWM_MEP_CTRL_FALLING_EDGE);
 
-    HRPWM_setHiResCounterCompareValue(base, HRPWM_COUNTER_COMPARE_A, 100);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG32(base + CSL_EPWM_CMPA)
-    & CSL_EPWM_CMPA_CMPAHR_MASK) >> (CSL_EPWM_CMPA_CMPAHR_SHIFT + 8U) ,
-    HRPWM_getHiResCounterCompareValueOnly(base, HRPWM_COUNTER_COMPARE_A));
+    for(uint16_t hiResVal = 0; hiResVal < 0xFF; hiResVal ++)
+    {
+        HRPWM_setHiResCounterCompareValue(base, HRPWM_COUNTER_COMPARE_A, hiResVal);
+        TEST_ASSERT_EQUAL_INT32((HW_RD_REG32(base + CSL_EPWM_CMPA)
+        & CSL_EPWM_CMPA_CMPAHR_MASK) >> (CSL_EPWM_CMPA_CMPAHR_SHIFT + 8U) ,
+        HRPWM_getHiResCounterCompareValueOnly(base, HRPWM_COUNTER_COMPARE_A));
 
-    if(HRPWM_getHiResCounterCompareValueOnly(base, HRPWM_COUNTER_COMPARE_A) != 100)
-        error++;
+        if(HRPWM_getHiResCounterCompareValueOnly(base, HRPWM_COUNTER_COMPARE_A) != hiResVal)
+            error++;
+    }
+    for(uint16_t hiResVal = 0; hiResVal < 0xFF; hiResVal ++)
+    {
+        HRPWM_setHiResCounterCompareValue(base, HRPWM_COUNTER_COMPARE_B, hiResVal);
+        TEST_ASSERT_EQUAL_INT32((HW_RD_REG32(base + CSL_EPWM_CMPB)
+        & CSL_EPWM_CMPB_CMPBHR_MASK) >> (CSL_EPWM_CMPB_CMPBHR_SHIFT + 8U) ,
+        HRPWM_getHiResCounterCompareValueOnly(base, HRPWM_COUNTER_COMPARE_B));
 
-    HRPWM_setHiResCounterCompareValue(base, HRPWM_COUNTER_COMPARE_B, 200);
-    TEST_ASSERT_EQUAL_INT32((HW_RD_REG32(base + CSL_EPWM_CMPB)
-    & CSL_EPWM_CMPB_CMPBHR_MASK) >> (CSL_EPWM_CMPB_CMPBHR_SHIFT + 8U) ,
-    HRPWM_getHiResCounterCompareValueOnly(base, HRPWM_COUNTER_COMPARE_B));
-
-    if(HRPWM_getHiResCounterCompareValueOnly(base, HRPWM_COUNTER_COMPARE_B) != 200)
-        error++;
+        if(HRPWM_getHiResCounterCompareValueOnly(base, HRPWM_COUNTER_COMPARE_B) != hiResVal)
+            error++;
+    }
 
     HRPWM_setCounterCompareShadowLoadEvent(base, HRPWM_CHANNEL_A, HRPWM_LOAD_ON_CNTR_PERIOD);
     TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_HRCNFG)
@@ -4424,7 +4429,7 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
    /* EPWM_setDigitalCompareWindowOffset(base, 0xFFFF);
    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_DCFOFFSET)
    & CSL_EPWM_DCFOFFSET_DCFOFFSET_MASK) >> CSL_EPWM_DCFOFFSET_DCFOFFSET_SHIFT, 0xFFFF); */
-   
+
 
    EPWM_setDigitalCompareWindowLength(base, 0xABCD);
    TEST_ASSERT_EQUAL_INT32((HW_RD_REG16(base + CSL_EPWM_DCFWINDOW)
@@ -4739,17 +4744,17 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
 
     /* EPWM_enableADCTriggerEventCountInit */
     EPWM_enableADCTriggerEventCountInit(base, EPWM_SOC_A);
-    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL)&CSL_EPWM_ETCNTINITCTL_SOCAINITEN_MASK, 
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL)&CSL_EPWM_ETCNTINITCTL_SOCAINITEN_MASK,
         CSL_EPWM_ETCNTINITCTL_SOCAINITEN_MASK);
-        
+
     EPWM_enableADCTriggerEventCountInit(base, EPWM_SOC_B);
-    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL)&CSL_EPWM_ETCNTINITCTL_SOCBINITEN_MASK, 
+    TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL)&CSL_EPWM_ETCNTINITCTL_SOCBINITEN_MASK,
         CSL_EPWM_ETCNTINITCTL_SOCBINITEN_MASK);
 
     /* EPWM_disableADCTriggerEventCountInit */
     EPWM_disableADCTriggerEventCountInit(base, EPWM_SOC_A);
     TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL)&CSL_EPWM_ETCNTINITCTL_SOCAINITEN_MASK, 0u);
-        
+
     EPWM_disableADCTriggerEventCountInit(base, EPWM_SOC_B);
     TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL)&CSL_EPWM_ETCNTINITCTL_SOCBINITEN_MASK, 0u);
 
@@ -4759,11 +4764,11 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
         TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(base + CSL_EPWM_VCAPCTL)&CSL_EPWM_VCAPCTL_VDELAYDIV_MASK)>>CSL_EPWM_VCAPCTL_VDELAYDIV_SHIFT, delayMode);
     }
 
-    
+
     for(uint8_t output = EPWM_AQ_OUTPUT_A;;output = EPWM_AQ_OUTPUT_B)
     {
         for(uint32_t action = EPWM_AQ_OUTPUT_NO_CHANGE_UP_T1; action <= EPWM_AQ_OUTPUT_TOGGLE_DOWN_T2; action = (action==EPWM_AQ_OUTPUT_NO_CHANGE_UP_T1)? EPWM_AQ_OUTPUT_LOW_UP_T1:(action << 1))
-        {   
+        {
             EPWM_setAdditionalActionQualifierActionComplete(base, output, action);
             uint32_t registerTOffset = (uint32_t)CSL_EPWM_AQCTLA2 + (uint16_t)output;
 
@@ -4844,14 +4849,14 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
     EPWM_disableGlobalLoadOneShotMode(base);
     TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_GLDCTL) & CSL_EPWM_GLDCTL_OSHTMODE_MASK, 0);
 
-    /* 
+    /*
     Read Only EPWM_startValleyCapture(base);
     TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_VCAPCTL) & CSL_EPWM_VCAPCTL_VCAPSTART_MASK, CSL_EPWM_VCAPCTL_VCAPSTART_MASK);
     HW_WR_REG16(base + CSL_EPWM_VCAPCTL, (HW_RD_REG16(base + CSL_EPWM_VCAPCTL) & ~CSL_EPWM_VCAPCTL_VCAPSTART_MASK)); */
 
     EPWM_enableValleyCapture(base);
     TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_VCAPCTL) & CSL_EPWM_VCAPCTL_VCAPE_MASK, CSL_EPWM_VCAPCTL_VCAPE_MASK);
-    
+
     EPWM_disableValleyCapture(base);
     TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_VCAPCTL) & CSL_EPWM_VCAPCTL_VCAPE_MASK, 0);
 
@@ -4862,7 +4867,7 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
     shadowModeOffset = CSL_EPWM_AQCTL_SHDWAQAMODE_SHIFT + (uint16_t)EPWM_ACTION_QUALIFIER_B;
     EPWM_disableActionQualifierShadowLoadMode(base, EPWM_ACTION_QUALIFIER_B);
     TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_AQCTL) & (CSL_EPWM_AQCTL_SHDWAQAMODE_MAX << shadowModeOffset), 0);
-    
+
     EPWM_CounterCompareModule array[4] = {
         EPWM_COUNTER_COMPARE_A,
         EPWM_COUNTER_COMPARE_B,
@@ -4905,7 +4910,7 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
         TEST_ASSERT_EQUAL_UINT16((HW_RD_REG16(registerOffset) & (CSL_EPWM_CMPCTL_SHDWAMODE_MAX)) >> shadowModeOffset, 0);
 
         for(uint8_t loadMode = EPWM_COMP_LOAD_ON_CNTR_ZERO; loadMode <= EPWM_COMP_LOAD_ON_SYNC_CNTR_ZERO_PERIOD; loadMode++)
-        {   
+        {
             uint16_t syncModeOffset;
             uint16_t loadModeOffset;
             uint16_t shadowModeOffset;
@@ -4939,8 +4944,8 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
             uint16_t value = HW_RD_REG16(registerOffset);
             uint16_t mask  = (CSL_EPWM_CMPCTL_LOADASYNC_MAX << syncModeOffset) | (CSL_EPWM_CMPCTL_LOADAMODE_MAX << loadModeOffset) | (CSL_EPWM_CMPCTL_SHDWAMODE_MAX << shadowModeOffset);
             uint16_t field = (((uint16_t)loadMode >> 2U) << syncModeOffset) | (((uint16_t)loadMode & CSL_EPWM_CMPCTL_LOADASYNC_MAX) << loadModeOffset);
-            
-            TEST_ASSERT_EQUAL_UINT16(value & mask, field);   
+
+            TEST_ASSERT_EQUAL_UINT16(value & mask, field);
         }
     }
 
@@ -4996,7 +5001,7 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
     TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL) &CSL_EPWM_ETCNTINITCTL_INTINITEN_MASK, CSL_EPWM_ETCNTINITCTL_INTINITEN_MASK);
     EPWM_disableInterruptEventCountInit(base);
     TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINITCTL) &CSL_EPWM_ETCNTINITCTL_INTINITEN_MASK, 0);
-    
+
     EPWM_enableGlobalLoadOneShotMode(base);
     TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_GLDCTL) &CSL_EPWM_GLDCTL_OSHTMODE_MASK, CSL_EPWM_GLDCTL_OSHTMODE_MASK);
     EPWM_disableGlobalLoadOneShotMode(base);
@@ -5007,7 +5012,7 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
     TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINIT) &CSL_EPWM_ETCNTINIT_INTINIT_MASK, 0);
     EPWM_setInterruptEventCountInitValue(base,15);
     TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_ETCNTINIT) &CSL_EPWM_ETCNTINIT_INTINIT_MASK, 15);
-    
+
     EPWM_enableGlobalLoad(base);
     TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_GLDCTL) &CSL_EPWM_GLDCTL_GLD_MASK, CSL_EPWM_GLDCTL_GLD_MASK);
     EPWM_disableGlobalLoad(base);
@@ -5018,7 +5023,7 @@ int32_t AM263x_EPWM_xTR_0048(uint32_t base)
     TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_SWVDELVAL) & CSL_EPWM_SWVDELVAL_SWVDELVAL_MASK, 0);
     EPWM_setValleySWDelayValue(base,0xffff);
     TEST_ASSERT_EQUAL_UINT16(HW_RD_REG16(base + CSL_EPWM_SWVDELVAL) & CSL_EPWM_SWVDELVAL_SWVDELVAL_MASK, 0xffff);
-    
+
     return error;
 }
 

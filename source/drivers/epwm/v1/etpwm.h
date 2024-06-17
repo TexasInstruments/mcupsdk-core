@@ -9808,7 +9808,7 @@ HRPWM_setHiResCounterCompareValue(uint32_t base,
     //
     // Check the arguments
     //
-    DebugP_assert(hrCompCount <= CSL_EPWM_CMPA_CMPAHR_MAX);
+    DebugP_assert((hrCompCount << 8U) <= CSL_EPWM_CMPA_CMPAHR_MAX);
 
     //
     // Write to the high resolution counter compare registers
@@ -9819,7 +9819,7 @@ HRPWM_setHiResCounterCompareValue(uint32_t base,
         // Write to CMPAHR
         //
         HW_WR_REG32(base + CSL_EPWM_CMPA,
-            HW_RD_REG32(base + CSL_EPWM_CMPA) | (((uint32_t)hrCompCount & CSL_EPWM_CMPA_CMPAHR_MASK) << 8U));
+            (HW_RD_REG32(base + CSL_EPWM_CMPA) & ~CSL_EPWM_CMPA_CMPAHR_MASK) | (((uint32_t)hrCompCount << (uint32_t)8U) & CSL_EPWM_CMPA_CMPAHR_MASK));
     }
     else
     {
@@ -9827,7 +9827,7 @@ HRPWM_setHiResCounterCompareValue(uint32_t base,
         // Write to CMPBHR
         //
         HW_WR_REG32(base + CSL_EPWM_CMPB,
-            HW_RD_REG32(base + CSL_EPWM_CMPB) | (((uint32_t)hrCompCount & CSL_EPWM_CMPB_CMPBHR_MASK) << (uint32_t)8U));
+            (HW_RD_REG32(base + CSL_EPWM_CMPB) & ~CSL_EPWM_CMPA_CMPAHR_MASK) | (((uint32_t)hrCompCount << (uint32_t)8U) & CSL_EPWM_CMPA_CMPAHR_MASK));
     }
 }
 
