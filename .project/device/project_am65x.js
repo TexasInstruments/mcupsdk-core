@@ -25,6 +25,7 @@ const example_file_list = [
     "examples/drivers/udma/udma_chaining/.project/project.js",
     "examples/drivers/udma/udma_memcpy_interrupt/.project/project.js",
     "examples/drivers/udma/udma_memcpy_polling/.project/project.js",
+    "examples/drivers/udma/udma_sw_trigger/.project/project.js",
     "examples/empty/.project/project_freertos.js",
     "examples/hello_world/.project/project.js",
     "examples/hello_world_cpp/.project/project.js",
