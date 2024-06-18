@@ -22,6 +22,7 @@ const example_file_list = [
     "examples/drivers/i2c/i2c_temperature/.project/project.js",
     "examples/drivers/sciclient/sciclient_get_version/.project/project.js",
     "examples/drivers/sciclient/sciclient_set_boardcfg/.project/project.js",
+    "examples/drivers/udma/udma_memcpy_polling/.project/project.js",
     "examples/empty/.project/project_freertos.js",
     "examples/hello_world/.project/project.js",
     "examples/hello_world_cpp/.project/project.js",
