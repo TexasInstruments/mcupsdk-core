@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -90,6 +90,9 @@ void *udma_memcpy_interrupt_main(void *args)
     uint32_t        trRespStatus;
     uint8_t        *trpdMem = &gUdmaTestTrpdMem[0U];
     uint64_t        trpdMemPhy = (uint64_t) Udma_defaultVirtToPhyFxn(trpdMem, 0U, NULL);
+    #if defined (SOC_AM65X)
+    uint32_t        instId;
+    #endif
 
     /* Open drivers to open the UART driver for console */
     Drivers_open();
@@ -134,6 +137,13 @@ void *udma_memcpy_interrupt_main(void *args)
     DebugP_log("All tests have passed!!\r\n");
     Board_driversClose();
     Drivers_close();
+    #if defined (SOC_AM65X)
+    for(instId = 0U; instId < CONFIG_UDMA_NUM_INSTANCES; instId++)
+    {
+       retVal = Udma_deinit(&gUdmaDrvObj[instId]);
+       DebugP_assert(UDMA_SOK == retVal);
+    }
+    #endif
 
     return NULL;
 }

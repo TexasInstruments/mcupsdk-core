@@ -271,6 +271,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Udma Memcpy Interrupt Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "udma_memcpy_interrupt",
+        "location": "../../examples/drivers/udma/udma_memcpy_interrupt/am65x-idk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM65x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "udma",
+            "udma_memcpy_interrupt",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Udma Memcpy Polling Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "udma_memcpy_polling",
         "location": "../../examples/drivers/udma/udma_memcpy_polling/am65x-idk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
