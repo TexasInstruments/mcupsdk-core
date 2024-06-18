@@ -16,7 +16,11 @@ ConfigName:=$(PROFILE)
 LIBNAME:=drivers.am65x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
+    csl_intaggr.c \
+    csl_proxy.c \
+    csl_ringacc.c \
     csl_sec_proxy.c \
+    csl_udmap.c \
     gpio.c \
     i2c_v0.c \
     i2c_v0_lld.c \
@@ -30,6 +34,17 @@ FILES_common := \
     sciclient_rm_irq.c \
     sciclient_soc_priv.c \
     soc.c \
+    udma.c \
+    udma_ch.c \
+    udma_event.c \
+    udma_flow.c \
+    udma_ring_common.c \
+    udma_ring_normal.c \
+    udma_rm.c \
+    udma_rmcfg.c \
+    udma_rmcfg_common.c \
+    udma_soc.c \
+    udma_utils.c \
 
 ASMFILES_common := \
 
@@ -37,10 +52,15 @@ FILES_PATH_common = \
     gpio/v0 \
     i2c/v0 \
     i2c/v0/lld \
+    hw_include/ringacc/V0/priv \
     pinmux/am65x \
     sciclient \
     sciclient/soc/am65x \
     soc/am65x \
+    udma/v1 \
+    udma/hw_include \
+    udma/soc \
+    udma/soc/am65x \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \

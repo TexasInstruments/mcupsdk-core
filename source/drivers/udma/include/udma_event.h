@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -148,6 +148,33 @@ extern "C" {
 /** @} */
 
 /**
+ *  \brief Event type used to register an event for trapping an out of range
+ *  flow ID received on a packet.
+ *
+ *  Note: This is a global event per UDMA instance (Main and MCU separately)
+ *  and is common for all flow/channel in an UDMA instance. Hence this should
+ *  be registered only once per system (by a master core) to handle flow error
+ *  events.
+ */
+#define UDMA_EVENT_TYPE_ERR_OUT_OF_RANGE_FLOW   ((uint32_t) 0x0006U)
+/**
+ *  \brief Ring monitor event used for getting callback when ring monitor
+ *  event criteria is met.
+ *
+ *  Note: Not all modes of ring monitor generate events. Only the mode
+ *  TISCI_MSG_VALUE_RM_MON_MODE_THRESHOLD generate event based on the
+ *  low and high threshold programmed. In this case, the same event gets
+ *  generated when both low and high thresholds are crossed.
+ *
+ *  When user want to get only the low threshold event, the high threshold
+ *  can be programmed a value which is greater than than the ring element count
+ *  When user want to get only the high threshold event, the low threshold
+ *  can be programmed zero.
+ *
+ */
+#define UDMA_EVENT_TYPE_RING_MON                ((uint32_t) 0x0007U)
+
+/**
  *  \anchor Udma_EventMode
  *  \name UDMA Event Mode
  *
@@ -241,7 +268,12 @@ typedef struct
      *
      *   If set to #UDMA_CORE_INTR_ANY, will allocate from free pool.
      *   Else will try to allocate the mentioned interrupt itself. */
-
+    #if (UDMA_SOC_CFG_RING_MON_PRESENT == 1)
+    Udma_RingMonHandle      monHandle;
+    /**< [IN] Ring monitor handle when the event type is one of below
+     *          - #UDMA_EVENT_TYPE_RING_MON
+     *   This parameter can be NULL for other types. */
+    #endif
     /*
      * Output parameters
      */

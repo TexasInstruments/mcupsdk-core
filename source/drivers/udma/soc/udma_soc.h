@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018-2021 (C) Texas Instruments Incorporated
+ *  Copyright 2018-2024 (C) Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -45,6 +45,10 @@
 
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
 #include <drivers/udma/soc/am64x_am243x/udma_soc.h>
+#endif
+
+#if defined (SOC_AM65X)
+#include <drivers/udma/soc/am65x/udma_soc.h>
 #endif
 
 #if defined (SOC_AM62X)

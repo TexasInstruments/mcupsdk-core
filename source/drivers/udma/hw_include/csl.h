@@ -1,5 +1,5 @@
-/*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+/*  ===========================================================================
+ *  Copyright (c) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -29,29 +29,35 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
+*/
+
+/** ============================================================================
+ *   @file  csl/csl.h
+ *
+ *   @brief  This file contains the Register Desciptions for CSL
+ *
  */
-#ifndef SOC_CONFIG_IN_H_
-#define SOC_CONFIG_IN_H_
 
-#ifdef __cplusplus
-extern "C"
-{
+
+#ifndef CSL_H
+#define CSL_H
+
+#include <drivers/hw_include/csl_types.h>
+
+/** ---------------------------------------------------------------------------
+ * @brief Static Inline define
+ *
+ * ----------------------------------------------------------------------------
+ */
+#ifndef CSL_IDEF_INLINE
+#define CSL_IDEF_INLINE static inline
 #endif
 
-/* IP versions */
-#define IP_VERSION_GPIO_V0
-#define IP_VERSION_I2C_V0
-#define IP_VERSION_INTAGGR_V0
-#define IP_VERSION_INTR_ROUTER_V0
-#define IP_VERSION_RINGACC_V0
+void
+    CSL_sysInit (
+        void
+);
 
-/* Driver versions */
-#define DRV_VERSION_GPIO_V0
-#define DRV_VERSION_I2C_V0
-#define DRV_VERSION_UDMA_V1
+#endif /* CSL_H */
 
-#ifdef __cplusplus
-}
-#endif
 
-#endif

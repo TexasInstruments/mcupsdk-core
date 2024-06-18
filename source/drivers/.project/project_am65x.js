@@ -4,7 +4,11 @@ let device = "am65x"
 
 const files_r5f = {
     common: [
+        "csl_intaggr.c",
+        "csl_proxy.c",
+        "csl_ringacc.c",
         "csl_sec_proxy.c",
+        "csl_udmap.c",
         "gpio.c",
         "i2c_v0.c",
         "i2c_v0_lld.c",
@@ -18,6 +22,17 @@ const files_r5f = {
         "sciclient_rm_irq.c",
         "sciclient_soc_priv.c",
         "soc.c",
+        "udma.c",
+        "udma_ch.c",
+        "udma_event.c",
+        "udma_flow.c",
+        "udma_ring_common.c",
+        "udma_ring_normal.c",
+        "udma_rm.c",
+        "udma_rmcfg.c",
+        "udma_rmcfg_common.c",
+        "udma_soc.c",
+        "udma_utils.c",
     ],
 };
 
@@ -26,10 +41,15 @@ const filedirs = {
         "gpio/v0",
         "i2c/v0",
         "i2c/v0/lld",
+        "hw_include/ringacc/V0/priv",
         "pinmux/am65x",
         "sciclient",
         "sciclient/soc/am65x",
         "soc/am65x",
+        "udma/v1",
+        "udma/hw_include",
+        "udma/soc",
+        `udma/soc/am65x`,
     ],
 };
 

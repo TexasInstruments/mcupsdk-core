@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -105,6 +105,8 @@ extern "C" {
 #define UDMA_CH_FLAG_PDMA               ((uint32_t) 0x0008U)
 /** \brief PSIL channel flag meant for periperals like Ethernet, SA2UL */
 #define UDMA_CH_FLAG_PSIL               ((uint32_t) 0x0010U)
+/** \brief UTC channel flag */
+#define UDMA_CH_FLAG_UTC                ((uint32_t) 0x0020U)
 /** \brief High capacity channel flag */
 #define UDMA_CH_FLAG_HC                 ((uint32_t) 0x0040U)
 /** \brief Ultra high capacity channel flag */
@@ -175,6 +177,13 @@ extern "C" {
  *  See \ref Udma_MappedRxGrpSoc for differnt types of SOC specific mapped RX channels.
  */
 #define UDMA_CH_TYPE_RX_MAPPED          (UDMA_CH_FLAG_RX | UDMA_CH_FLAG_PSIL | UDMA_CH_FLAG_MAPPED)
+/**
+ *  \brief UTC channel. This could be
+ *      - UTC with descriptor posted through UDMA external channel like VPAC/DMPAC
+ *      - DRU channel with direct mode with descriptor posted through direct
+ *        DRU register writes or with indirect mode through External channel
+ */
+#define UDMA_CH_TYPE_UTC                (UDMA_CH_FLAG_UTC)
 /** @} */
 
 /**
@@ -897,6 +906,27 @@ int32_t Udma_getPeerData(Udma_ChHandle chHandle, uint32_t *peerData);
  *  \return \ref Udma_ErrorCodes
  */
 int32_t Udma_clearPeerData(Udma_ChHandle chHandle, uint32_t peerData);
+
+#if (UDMA_SOC_CFG_RA_NORMAL_PRESENT == 1)
+/**
+ *  \brief Returns the global trigger event for the channel
+ *
+ *  This function will return the appropriate global 0/1 trigger event for the channel.
+ *
+ *  Notes: Trigger is not supported for external channels
+ *         and the function will return #UDMA_EVENT_INVALID.
+ *
+ *  \param chHandle     [IN] UDMA channel handle.
+ *                           This parameter can't be NULL.
+ *
+ *  \param trigger      [IN] Global0 or Global 1 Trigger - refer
+ *                          \ref CSL_UdmapTrFlagsTrigger
+ *
+ *  \return Global trigger event
+ */
+int32_t Udma_chDequeueTdResponse(Udma_ChHandle chHandle,
+                                 CSL_UdmapTdResponse *tdResponse);
+#endif
 /* ========================================================================== */
 /*                       Static Function Definitions                          */
 /* ========================================================================== */
@@ -912,7 +942,11 @@ int32_t Udma_clearPeerData(Udma_ChHandle chHandle, uint32_t peerData);
  */
 typedef struct Udma_ChObject_t
 {
-    uintptr_t rsv[150U];
+    #if defined (SOC_AM65X)
+        uintptr_t rsv[200U];
+    #else
+        uintptr_t rsv[150U];
+    #endif
     /**< reserved, should NOT be modified by end users */
 } Udma_ChObject;
 

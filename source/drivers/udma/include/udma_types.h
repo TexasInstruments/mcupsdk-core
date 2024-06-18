@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -71,6 +71,10 @@ typedef void *                          Udma_EventHandle;
 typedef void *                          Udma_RingHandle;
 /** \brief UDMA flow handle */
 typedef void *                          Udma_FlowHandle;
+#if (UDMA_SOC_CFG_RING_MON_PRESENT == 1)
+/** \brief UDMA ring monitor handle */
+typedef struct Udma_RingMonObj *        Udma_RingMonHandle;
+#endif
 
 /** \brief Cache line size for alignment of descriptor and buffers */
 #define UDMA_CACHELINE_ALIGNMENT        (128U)
@@ -122,6 +126,22 @@ typedef void *                          Udma_FlowHandle;
 #define UDMA_INST_ID_1                  (1U)
 #define UDMA_INST_ID_2                  (2U)
 #define UDMA_INST_ID_3                  (3U)
+/** @} */
+
+/**
+ *  \anchor Udma_UtcId
+ *  \name UDMA UTC ID
+ *
+ *  This represents the various UTC IP in the SOC. The actual UTC present
+ *  in the chip is SOC dependent. Refer soc file for the actual instance
+ *  present. Kindly use Udma_UtcIdSoc macros for SOC specific name.
+ *
+ *  @{
+ */
+#define UDMA_UTC_ID0                    (0U)
+#define UDMA_UTC_ID1                    (1U)
+#define UDMA_UTC_ID2                    (2U)
+#define UDMA_UTC_ID3                    (3U)
 /** @} */
 
 /**

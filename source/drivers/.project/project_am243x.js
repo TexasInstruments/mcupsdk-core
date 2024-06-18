@@ -220,7 +220,7 @@ const filedirs = {
         "uart/v0/lld/dma",
         "uart/v0/lld/dma/udma",
         "uart/v0/lld/dma/dummy",
-        "udma",
+        "udma/v0",
         "udma/hw_include",
         "udma/soc",
         `udma/soc/am64x_am243x`,

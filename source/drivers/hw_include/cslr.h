@@ -1,5 +1,5 @@
 /*  ============================================================================
- *  Copyright (C) 2002-2019 Texas Instruments Incorporated
+ *  Copyright (C) 2002-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -55,7 +55,7 @@ extern "C"
 #include <drivers/hw_include/tistdtypes.h>
 #include <drivers/hw_include/csl_utils.h>
 
-#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#if  defined (SOC_AM65X) || defined (SOC_AM64X) || defined (SOC_AM243X)
 #include <drivers/hw_include/cslr64.h>
 #endif
 

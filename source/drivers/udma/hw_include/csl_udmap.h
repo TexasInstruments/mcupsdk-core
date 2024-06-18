@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (c) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -29,29 +29,20 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
+*/
+/** ============================================================================
+ *   @file  csl_udmap.h
+ *
+ *   @path  $(CSLPATH)
+ *
+ *   @desc  This file contains the CSL-FL API's for UDMAP
+ *  ============================================================================
  */
-#ifndef SOC_CONFIG_IN_H_
-#define SOC_CONFIG_IN_H_
+#ifndef CSL_UDMAP_TOP_H_
+#define CSL_UDMAP_TOP_H_
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
-/* IP versions */
-#define IP_VERSION_GPIO_V0
-#define IP_VERSION_I2C_V0
-#define IP_VERSION_INTAGGR_V0
-#define IP_VERSION_INTR_ROUTER_V0
-#define IP_VERSION_RINGACC_V0
-
-/* Driver versions */
-#define DRV_VERSION_GPIO_V0
-#define DRV_VERSION_I2C_V0
-#define DRV_VERSION_UDMA_V1
-
-#ifdef __cplusplus
-}
+#if defined (SOC_AM65X)
+#include <drivers/udma/hw_include/udmap/v0/csl_udmap.h>
 #endif
 
 #endif

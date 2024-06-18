@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -29,29 +29,19 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- */
-#ifndef SOC_CONFIG_IN_H_
-#define SOC_CONFIG_IN_H_
+*/
+#ifndef CSLR_UDMAP_TOP_H_
+#define CSLR_UDMAP_TOP_H_
 
-#ifdef __cplusplus
-extern "C"
-{
+#include <drivers/soc.h>
+#include <drivers/udma/hw_include/csl.h>
+#include <drivers/hw_include/tistdtypes.h>
+#include <drivers/udma/hw_include/cslr_udmap.h>
+
+#if defined (SOC_AM65X)
+#include <drivers/udma/hw_include/udmap/v0/cslr_udmap.h>
+#include <drivers/udma/include/csl_udmap_cppi5.h>
+#include <drivers/udma/include/csl_udmap_tr.h>
 #endif
 
-/* IP versions */
-#define IP_VERSION_GPIO_V0
-#define IP_VERSION_I2C_V0
-#define IP_VERSION_INTAGGR_V0
-#define IP_VERSION_INTR_ROUTER_V0
-#define IP_VERSION_RINGACC_V0
-
-/* Driver versions */
-#define DRV_VERSION_GPIO_V0
-#define DRV_VERSION_I2C_V0
-#define DRV_VERSION_UDMA_V1
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif
+#endif /* CSLR_UDMAP_TOP_H_ */

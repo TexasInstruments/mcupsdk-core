@@ -70,6 +70,7 @@
 /* UDMA_SOC_CFG_* macros are defined udma_soc.h.
  * So including this first
  */
+#include <drivers/udma/include/csl_udmap_tr.h>
 #include <drivers/udma/soc/udma_soc.h>
 #include <drivers/udma/include/udma_types.h>
 #include <drivers/udma/include/udma_ring.h>
@@ -77,7 +78,6 @@
 #include <drivers/udma/include/udma_event.h>
 #include <drivers/udma/include/udma_rm.h>
 #include <drivers/udma/include/udma_ch.h>
-#include <drivers/udma/include/csl_udmap_tr.h>
 #include <drivers/udma/include/csl_udmap_cppi5.h>
 #include <drivers/udma/include/csl_pktdma_cppi5.h>
 #include <drivers/udma/include/udma_utils.h>
