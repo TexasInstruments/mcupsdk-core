@@ -307,7 +307,7 @@ const example_file_list = [
 	"test/drivers/mcspi/mcspi_controller_peripheral/.project/project.js",
 	"test/drivers/mcspi/mcspi_controller_peripheral_dma/.project/project.js",
     "test/drivers/optiflash/.project/project.js",
-	//"test/drivers/ospi/.project/project.js",
+	"test/drivers/ospi/.project/project.js",
     "test/benchmarks/memory_access_latency/.project/project.js",
 	"test/drivers/sdfm/.project/project.js",
 	"test/drivers/resolver/.project/project.js",

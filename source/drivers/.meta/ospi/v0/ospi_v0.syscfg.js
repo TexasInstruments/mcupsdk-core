@@ -2,6 +2,7 @@ let common = system.getScript("/common");
 let hwi = system.getScript("/kernel/dpl/hwi.js");
 let pinmux = system.getScript("/drivers/pinmux/pinmux");
 let soc = system.getScript(`/drivers/ospi/soc/ospi_${common.getSocName()}`);
+let phyConfigs = (common.getSocName() == "am263px");
 
 function getConfigArr() {
 	return soc.getConfigArr();
@@ -161,8 +162,30 @@ let ospi_module = {
             }]
         },
     },
-    config : [
+    config : getConfigurables(),
+    sharedModuleInstances: soc.addModuleInstances,
+    pinmuxRequirements,
+    getInstanceConfig,
+    getInterfaceName,
+    getPeripheralPinNames,
+    getClockEnableIds,
+    getClockFrequencies,
+    getDmaRestrictedRegions,
+    getSupportedProtocols,
+    onMigrate,
+};
 
+
+function onMigrate(newInst, oldInst, oldSystem) {
+    let pins = getPeripheralPinNames(oldInst)
+    let interfaceName = getInterfaceName(oldInst)
+    common.onMigrate(newInst, oldInst, oldSystem, pins, interfaceName)
+}
+
+function getConfigurables()
+{
+    let config = [];
+    config.push(
         {
             name: "inputClkFreq",
             displayName: "Input Clock Frequency (Hz)",
@@ -252,6 +275,31 @@ let ospi_module = {
             displayName: "Enable PHY Mode",
             default: false,
             description: `PHY mode MUST be enabled when using higher clocks (> 50 Mhz)`,
+            onChange: function(inst,ui)
+            {
+                if(phyConfigs)
+                {
+                    ui.phaseDetectDelayElement.hidden = !inst.phyEnable;
+                    ui.phyControlMode.hidden = !inst.phyEnable;
+                    ui.dllLockMode.hidden = !inst.phyEnable;
+                    ui.txDllLowWindowStart.hidden = !inst.phyEnable;
+                    ui.txDllLowWindowEnd.hidden = !inst.phyEnable;
+                    ui.txDllHighWindowStart.hidden = !inst.phyEnable;
+                    ui.txDllHighWindowEnd.hidden = !inst.phyEnable;
+                    ui.rxLowSearchStart.hidden = !inst.phyEnable;
+                    ui.rxLowSearchEnd.hidden = !inst.phyEnable;
+                    ui.rxHighSearchStart.hidden = !inst.phyEnable;
+                    ui.rxHighSearchEnd.hidden = !inst.phyEnable;
+                    ui.txLowSearchStart.hidden = !inst.phyEnable;
+                    ui.txLowSearchEnd.hidden = !inst.phyEnable;
+                    ui.txHighSearchStart.hidden = !inst.phyEnable;
+                    ui.txHighSearchEnd.hidden = !inst.phyEnable;
+                    ui.txDLLSearchOffset.hidden = !inst.phyEnable;
+                    ui.rdDelayMin.hidden = !inst.phyEnable;
+                    ui.rdDelayMax.hidden = !inst.phyEnable;
+                    ui.rxTxDLLSearchStep.hidden = !inst.phyEnable;
+                }
+            }
         },
         /* Advanced parameters */
         {
@@ -307,26 +355,285 @@ let ospi_module = {
                 { name: "OSPI_DECODER_SELECT16", displayName: "DECODER_SELECT16" },
             ]
         },
-    ],
-    sharedModuleInstances: soc.addModuleInstances,
-    pinmuxRequirements,
-    getInstanceConfig,
-    getInterfaceName,
-    getPeripheralPinNames,
-    getClockEnableIds,
-    getClockFrequencies,
-    getDmaRestrictedRegions,
-    getSupportedProtocols,
-    onMigrate,
-};
 
-function onMigrate(newInst, oldInst, oldSystem) {
-    let pins = getPeripheralPinNames(oldInst)
-    let interfaceName = getInterfaceName(oldInst)
-    common.onMigrate(newInst, oldInst, oldSystem, pins, interfaceName)
+    )
+
+    if(phyConfigs)
+    {
+        config.push(
+            {
+                name: "phyConfig",
+                displayName : "PHY Configuration",
+                collapsed : true,
+                config : [
+                    {
+                        name: "phaseDetectDelayElement",
+                        displayName: "Phase Detect Delay Element",
+                        description: "Number of delay elements to be inserted between phase detect flip-flops ",
+                        default: soc.getPhyTuningParams().phaseDelayElement,
+                        hidden: !phyConfigs,
+                    },
+                    {
+                        name : "phyControlMode",
+                        displayName: "PHY Control Mode",
+                        longDescription :"\nControls the bypass mode of the master and slave DLLs. \
+                        \nIf this bit is set, the bypass mode is intended to be used only for debug. \
+                        \n0h = Master operational mode \
+                        \nDLL works in normal mode of operation where the slave delay line \
+                        \nsettings are used as fractional delay of the master delay line encoder \
+                        \nreading of the number of delays in one cycle. \
+                        \n1h = Bypass mode \
+                        \nMaster DLL is disabled with only 1 delay element in its delay line. \
+                        \nThe slave delay lines decode delays in absolute delay elements \
+                        \nrather than as fractional delays.",
+                        default: soc.getPhyTuningParams().phyControlMode,
+                        options: [
+                            { name : "PHY_MASTER_MODE", displayName : "Master Mode"},
+                            { name : "PHY_BYPASS_MODE", displayName : "Bypass Mode"}
+                        ],
+                        hidden: !phyConfigs,
+                    },
+                    {
+                        name : "dllLockMode",
+                        displayName : "DLL Lock Mode",
+                        longDescription : "Determines if the master delay line locks on a full cycle or half cycle \
+                        of delay. This bit need not be written by software. Force DLL lock mode with this setting.",
+                        default: soc.getPhyTuningParams().dllLockMode,
+                        options: [
+                            { name : "FULL_CYCLE_LOCK", displayName : "Full Cycle Lock"},
+                            { name : "HALF_CYCLE_LOCK", displayName : "Half Cycle Lock"}
+                        ],
+                        hidden: !phyConfigs,
+                    },
+                    {
+                        name : "windowParams",
+                        displayName : "Tuning Window Parameters",
+                        longDescription : "Shown below is an approximate txDLL vs rxDLL graph of a typical PHY. \
+                        \nRegions P1-P2-BL and Q1-Q2-R2-TR-R1 are the passing regions. \
+                        \nEach region corresponds to a different value of read data capture delay. \
+                        \nThe gap between the regions can move away or towards origin depending on various factors (like temperature).  \
+                        \nThere can be just one region also. Or the orientation of the gap will be opposite.  \
+                        \n\nThe tuning/calibration algorithm can work correctly only if we have a general idea of this graph.\n" + "\n" +
+                        `                       RX
+                           |\n\
+                           |     R1\n\
+                           |     _______________________________ TR\n\
+                           |     |                               |\n\
+                           |     | Q1                            |\n\
+                           |   P1 \\                              |\n\
+                           |       \\                             |\n\
+                           |     |\\ \\                            |\n\
+                           |     | \\ \\                           |\n\
+                           |     |  \\ \\                          |\n\
+                           |     |   \\ \\                         |\n\
+                           |     |    \\ \\                        |\n\
+                           |     |     \\ \\                       |\n\
+                           |     |      \\ \\                      |\n\
+                           |     |       \\ \\ Q2                  |\n\
+                           |     |________\\ \\____________________|R2\n\
+                           |     BL     P2\n\
+                           |_________________________________________ TX\n`+
+                        "\n\nTo find the RxDLL boundaries, we fix a valid TxDLL and search through RxDLL range, rdDelay values \
+                        \nAs we are not sure of a valid TxDLL we use a window of TxDLL values to find the RxDLL boundaries.\n " + "\n" +
+                        `               Rx_DLL\n\
+                        ▲\n\
+                        │   ++++++++++++++++\n\
+                    127 │     ++++++++++++++\n\
+                        │   x   ++++++++++++\n\
+                        │   xx   +++++++++++\n\
+                        │   xxx   ++++++++++\n\
+                        │   xxxx   +++++++++\n\
+                        │   xxxxx   ++++++++\n\
+                        │ │ xxx│xx   +++++++\n\
+                        │ │ xxx│xxx   ++++++\n\
+                        │ │ xxx│xxxx   +++++\n\
+                        │ │ xxx│xxxxx   ++++\n\
+                        │ │ xxx│xxxxxx   +++\n\
+               Search   │ │ xxx│xxxxxxx   ++\n\
+               Rx_Low ──┼─┤►xxx│xxxxxxxx   +\n\
+                        │ │    │\n\
+                       ─┼─┼────┼────────────►  Tx_DLL\n\
+                       0│ │    │           127\n\
+                          │    │\n\
+                          │    │\n\
+          \n\
+                      Tx_Low   Tx_Low\n\
+                      Start    End\n` +
+                        "\n\nFind the rxDLL boundaries using the TxDLL window at the higher end .            \
+                        \nwe start the window_end and decrement the TxDLL value until we find the valid point.\n" +"\n" +
+                        `               Rx_DLL\n
+                        ▲\n\
+                        │   ++++++++++++++++\n\
+                    127 │   ++++++++++++++++\n\
+                        │   ++++++++++++++++\n\
+                        │    +++++++++++++++\n\
+                        │     +++++++++│++++│\n\
+                        │      ++++++++│++++│\n\
+                        │   x   +++++++│++++│\n\
+                        │   xx   ++++++│++++│\n\
+                        │   xxx   +++++│++++│\n\
+                        │   xxxx   ++++│++++│\n\
+                        │   xxxxx   +++│++++│\n\
+                        │   xxxxxx   ++│++++│\n\
+                        │   xxxxxxx   +│++++│         Search\n\
+                        │   xxxxxxxx   │++++◄───────  Rx_Low\n\
+                        │              │    │\n\
+                        ─┼──────────────┼────┤► Tx_DLL\n\
+                        0│              │    │   127\n\
+                                        │    │\n\
+                                Tx_High        Tx_High\n\
+                                Start          End\n`,
+                        collapsed: true,
+                        config: [
+                            {
+                                name: "rdDelayMin",
+                                displayName : "Read Delay Min",
+                                description : "Minimum value of Read delay for Read Delay Capture Register for tuning search.",
+                                default: soc.getPhyTuningParams().rdDelayMin,
+                                displayFormat: "dec",
+                                hidden: !phyConfigs,
+                            },
+                            {
+                                name: "rdDelayMax",
+                                displayName : "Read Delay Max",
+                                description : "Maximum value of Read delay for Read Delay Capture Register for tuning search.",
+                                default: soc.getPhyTuningParams().rdDelayMax,
+                                displayFormat: "dec",
+                                hidden: !phyConfigs,
+                            },
+                            {
+                                name: "txDllLowWindowStart",
+                                displayName : "RxDLL Search - TxDLL Low Start",
+                                description : "Tx Dll window lower value to search RxDLL low and high. \
+                                This corresponds to the bottom left point serach.",
+                                default: soc.getPhyTuningParams().txDllLowWindowStart,
+                                displayFormat: "dec",
+                                hidden: !phyConfigs,
+                            },
+                            {
+                                name: "txDllLowWindowEnd",
+                                displayName : "RxDLL Search - TxDLL Low End",
+                                description : "Tx Dll window higher value to search RxDLL low and high. \
+                                This corresponds to the bottom left point search.",
+                                default: soc.getPhyTuningParams().txDllLowWindowEnd,
+                                displayFormat: "dec",
+                                hidden: !phyConfigs,
+                            },
+                            {
+                                name: "txDllHighWindowStart",
+                                displayName : "RxDLL Search - TxDLL High Start",
+                                description : "Tx Dll window lower value to search RxDLL low and high. \
+                                This corresponds to the top right point search.",
+                                default: soc.getPhyTuningParams().txDllHighWindowStart,
+                                displayFormat: "dec",
+                                hidden: !phyConfigs,
+                            },
+                            {
+                                name: "txDllHighWindowEnd",
+                                displayName : "RxDLL Search - TxDLL High End",
+                                description : "Tx Dll window higher value to search RxDLL low and high. \
+                                This corresponds to the top right point search.",
+                                default: soc.getPhyTuningParams().txDllHighWindowEnd,
+                                displayFormat: "dec",
+                                hidden: !phyConfigs,
+                            },
+                            {
+                                name: "rxLowSearchStart",
+                                displayName : "RxDLL Low Search Start",
+                                description : "Rx Dll lower value for Rx Dll low search. \
+                                The value of Rx dll will lie in this window bottom left point search.",
+                                default: soc.getPhyTuningParams().rxLowSearchStart,
+                                displayFormat: "dec",
+                                hidden: !phyConfigs,
+                            },
+                            {
+                                name: "rxLowSearchEnd",
+                                displayName : "RxDLL Low Search End",
+                                description : "Rx Dll higher value for Rx Dll low search. \
+                                The value of Rx dll will lie in this window bottom left point search.",
+                                default: soc.getPhyTuningParams().rxLowSearchEnd,
+                                displayFormat: "dec",
+                                hidden: !phyConfigs,
+                            },
+                            {
+                                name: "rxHighSearchStart",
+                                displayName : "RxDLL High Search Start",
+                                description : "Rx Dll lower value for Rx Dll high search. \
+                                The value of Rx dll will lie in this window top right point search.",
+                                default: soc.getPhyTuningParams().rxHighSearchStart,
+                                displayFormat: "dec",
+                                hidden: !phyConfigs,
+                            },
+                            {
+                                name: "rxHighSearchEnd",
+                                displayName : "RxDLL High Search End",
+                                description : "Rx Dll higher value for Rx Dll high search. \
+                                The value of Rx dll will lie in this window for top right point search.",
+                                default: soc.getPhyTuningParams().rxHighSearchEnd,
+                                displayFormat: "dec",
+                                hidden: !phyConfigs,
+                            },
+                            {
+                                name: "txLowSearchStart",
+                                displayName : "TxDLL Low Search Start",
+                                description : "Tx Dll lower value for Tx Dll low search. \
+                                The value of Tx dll will lie in this window.",
+                                default: soc.getPhyTuningParams().txLowSearchStart,
+                                displayFormat: "dec",
+                                hidden: !phyConfigs,
+                            },
+                            {
+                                name: "txLowSearchEnd",
+                                displayName : "TxDLL Low Search End",
+                                description : "Tx Dll higher value for Tx Dll low search. \
+                                The value of Tx dll will lie in this window.",
+                                default: soc.getPhyTuningParams().txLowSearchEnd,
+                                displayFormat: "dec",
+                                hidden: !phyConfigs,
+                            },
+                            {
+                                name: "txHighSearchStart",
+                                displayName : "TxDLL High Search Start",
+                                description : "Tx Dll lower value for Tx Dll high search. \
+                                The value of Tx dll will lie in this window.",
+                                default: soc.getPhyTuningParams().txHighSearchStart,
+                                displayFormat: "dec",
+                                hidden: !phyConfigs,
+                            },
+                            {
+                                name: "txHighSearchEnd",
+                                displayName : "TxDLL High Search End",
+                                description : "Tx Dll higher value for Tx Dll high search. \
+                                The value of Tx dll will lie in this window.",
+                                default: soc.getPhyTuningParams().txHighSearchEnd,
+                                displayFormat: "dec",
+                                hidden: !phyConfigs,
+                            },
+                            {
+                                name: "txDLLSearchOffset",
+                                displayName : "TxDLL Search Offset",
+                                description : "Tx Dll step increase for backup Rx Dll low and high search.",
+                                default: soc.getPhyTuningParams().txDLLSearchOffset,
+                                displayFormat: "dec",
+                                hidden: !phyConfigs,
+                            },
+                            {
+                                name: "rxTxDLLSearchStep",
+                                displayName : "RxDL & TxDLL Search Step",
+                                description : "Rx Dll and Tx DLL step increase for Rx Dll and Tx Dll low and high search.",
+                                default: soc.getPhyTuningParams().rxTxDLLSearchStep,
+                                displayFormat: "dec",
+                                hidden: !phyConfigs,
+                            },
+                        ]
+                    }
+                ]
+            },
+        )
+    }
+
+    return config;
 }
-
-
 function validate(inst, report) {
 
     common.validate.checkNumberRange(inst, report, "intrPriority", 0, hwi.getHwiMaxPriority(), "dec");

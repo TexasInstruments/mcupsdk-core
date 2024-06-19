@@ -22,6 +22,31 @@ const ospi_config_r5fss = [
     },
 ];
 
+const ospi_phyTuning_ddr_config =
+[
+    {
+        phyControlMode          : "PHY_MASTER_MODE",
+        dllLockMode             : "HALF_CYCLE_LOCK",
+        phaseDelayElement       : 1,
+        rdDelayMin              : 1,
+        rdDelayMax              : 3,
+        txDllLowWindowStart     : 0,
+        txDllLowWindowEnd       : 48,
+        txDllHighWindowStart    : 20,
+        txDllHighWindowEnd      : 96,
+        rxLowSearchStart        : 0,
+        rxLowSearchEnd          : 40,
+        rxHighSearchStart       : 10,
+        rxHighSearchEnd         : 127,
+        txLowSearchStart        : 0,
+        txLowSearchEnd          : 64,
+        txHighSearchStart       : 20,
+        txHighSearchEnd         : 127,
+        txDLLSearchOffset       : 8,
+        rxTxDLLSearchStep       : 4,
+    }
+];
+
 const ospi_dma_restrict_regions = [
     { start : "CSL_MSS_TCMA_RAM_BASE"   , size : "CSL_MSS_TCMA_RAM_SIZE" },
     { start : "CSL_HSM_RAM_U_BASE"      , size : "0x2fffc" }
@@ -50,6 +75,10 @@ function getDmaRestrictedRegions() {
     return ospi_dma_restrict_regions;
 }
 
+function getPhyTuningParams(protocol)
+{
+    return ospi_phyTuning_ddr_config[0];
+}
 function addModuleInstances(instance) {
     let modInstances = new Array();
 
@@ -100,7 +129,8 @@ exports = {
     getDmaRestrictedRegions,
     getSupportedDataLines,
     addModuleInstances,
-    getTemplates
+    getTemplates,
+    getPhyTuningParams
 };
 
 

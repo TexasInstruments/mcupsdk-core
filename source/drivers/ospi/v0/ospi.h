@@ -231,6 +231,42 @@ typedef void *OSPI_Handle;
 #define OSPI_DECODER_SELECT16 ((uint32_t) 1U)
 /** @} */
 
+/**
+ *  \anchor OSPI_PHY_Control_Mode
+ *  \name OSPI PHY Control Mode
+ *
+ *  Controls the bypass mode of the Initiator and Target DLLs.
+ *  If this bit is set, the bypass mode is intended to be used only for debug.
+ *  0h = Initiator operational mode
+ *  DLL works in normal mode of operation where the Target delay line
+ *  settings are used as fractional delay of the Initiator delay line encoder
+ *  reading of the number of delays in one cycle.
+ *  1h = Bypass mode
+ *  Initiator DLL is disabled with only 1 delay element in its delay line.
+ *  The Target delay lines decode delays in absolute delay elements
+ *  rather than as fractional delays.
+ *
+ *  @{
+ */
+#define OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_MODE           (0U)
+#define OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_BYPASS_MODE           (1U)
+/** @} */
+
+
+/**
+ *  \anchor OSPI_PHY_DLL_Lock
+ *  \name OSPI PHY DLL Lock
+ *
+ * Determines if the Initiator delay line locks on a full cycle or half cycle
+ * of delay. This bit need not be written by software. Force DLL lock mode with this setting.
+ *
+ *  @{
+ */
+#define OSPI_PHY_DLL_FULL_CYCLE_LOCK                   ((uint16_t) 0U)
+#define OSPI_PHY_DLL_HALF_CYCLE_LOCK                   ((uint16_t) 1U)
+/** @} */
+
+
 /* ========================================================================== */
 /*                         Structure Declarations                             */
 /* ========================================================================== */
@@ -322,6 +358,49 @@ typedef struct
      */
 } OSPI_Params;
 
+/**
+ *  \brief OSPI PHY Tuning Window Parameters
+ *
+ *  These are input window parameters for OSPI PHY tuning algorithm. This data is usually SOC
+ *  specific and is filled by SysConfig.
+ *
+ */
+typedef struct
+{
+    int32_t txDllLowWindowStart;
+    int32_t txDllLowWindowEnd;
+    int32_t txDllHighWindowStart;
+    int32_t txDllHighWindowEnd;
+    int32_t rxLowSearchStart;
+    int32_t rxLowSearchEnd;
+    int32_t rxHighSearchStart;
+    int32_t rxHighSearchEnd;
+    int32_t txLowSearchStart;
+    int32_t txLowSearchEnd;
+    int32_t txHighSearchStart;
+    int32_t txHighSearchEnd;
+    int32_t txDLLSearchOffset;
+    uint32_t rxTxDLLSearchStep;
+    uint32_t rdDelayMin;
+    uint32_t rdDelayMax;
+} OSPI_PhyWindowParams;
+
+/**
+ *  \brief OSPI PHY Configuration
+ *
+ *  Global structure to provide input to OSPI PHY tuining algorithm with either default or
+ *  fast boot tuning paramters. It maintains the essential PHY configurations parameters.
+ *  This data is usually SOC specific and is filled by SysConfig.
+ *
+ */
+typedef struct
+{
+    uint32_t phaseDelayElement;
+    uint32_t phyControlMode;
+    uint32_t dllLockMode;
+    OSPI_PhyWindowParams tuningWindowParams;
+} OSPI_PhyConfiguration;
+
 /** \brief OSPI instance attributes - used during init time */
 typedef struct
 {
@@ -365,6 +444,8 @@ typedef struct
     array should be terminated by a { 0xFFFFFFFFU, 0U } entry. It is used while
     using DMA copy to check if the destination address is a region not accessible to DMA
     and switch to CPU copy */
+    OSPI_PhyConfiguration  phyConfiguration;
+    /**< OSPI PHY configuration params */
 
 } OSPI_Attrs;
 

@@ -33,6 +33,7 @@
 #include <string.h>
 #include <kernel/dpl/ClockP.h>
 #include <drivers/ospi.h>
+#include <drivers/ospi/v0/cslr_ospi.h>
 #include <drivers/hw_include/cslr.h>
 
 # ifndef MIN
@@ -49,38 +50,14 @@
     })
 # endif
 
-#define OSPI_PHY_INIT_RD_DELAY      (1U)
-#define OSPI_PHY_MAX_RD_DELAY       (4U)
+#define OSPI_PHY_GRAPHER_INIT_RD_DELAY      (0U)
+#define OSPI_PHY_GRAPHER_MAX_RD_DELAY       (4U)
 #define OSPI_DLL_LOCK_TIMEOUT       (82U)
 #define OSPI_DDR_SEARCH_STEP        (4U)
 
 /* Mid range frequency to use different tuning point parameters */
-#define OSPI_PHY_TUNING_FREQ_RANGE  (166666666U)
+#define OSPI_PHY_TUNING_FREQ_RANGE  (133333333U)
 
-/* This enum defines the PHY to operate in master/bypass mode.*/
-#define OSPI_CFG_PHY_OP_MODE_DEFAULT           ((uint32_t) 0U)
-/* Configure PHY to operate in Master mode */
-#define OSPI_CFG_PHY_OP_MODE_MASTER            ((uint32_t) 1U)
-/* Configure PHY to operate in Bypass mode */
-#define OSPI_CFG_PHY_OP_MODE_BYPASS            ((uint32_t) 2U)
-
-/* Value for master mode */
-#define OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_MODE (0U)
-/* Value for bypass mode */
-#define OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_BYPASS_MODE (1U)
-
-/* PHY operation mode based on OSPI functional clock */
-#define OSPI_CFG_PHY_DLL_MODE_DEFAULT          (OSPI_LOCK_CYCLE_HALF)
-/* Configure PHY to operate in Master mode */
-#define OSPI_LOCK_CYCLE_FULL                   ((uint16_t) 0U)
-/* Configure PHY to operate in Bypass mode */
-#define OSPI_LOCK_CYCLE_HALF                   ((uint16_t) 1U)
-
-/**
- * Number of delay elements to be inserted between phase detect flip-flops.
- * Do NOT Modify.
-*/
-#define PHASE_DELAY_ELEMENT         (3U)
 
 /**
  * \brief   OSPI controller master mode baud rate divisor.
@@ -109,55 +86,6 @@
  *
  */
 #define OSPI_PHASE_DETECT_DLL_NUM_DELAY_ELEMENT(x)    ((uint32_t)((x) - 1))
-
-
-typedef struct
-{
-    int32_t txDllLowWindowStart;
-    int32_t txDllLowWindowEnd;
-    int32_t txDllHighWindowStart;
-    int32_t txDllHighWindowEnd;
-    int32_t rxLowSearchStart;
-    int32_t rxLowSearchEnd;
-    int32_t rxHighSearchStart;
-    int32_t rxHighSearchEnd;
-    int32_t txLowSearchStart;
-    int32_t txLowSearchEnd;
-    int32_t txHighSearchStart;
-    int32_t txHighSearchEnd;
-    int32_t txDLLSearchOffset;
-
-} OSPI_PhyTuneWindowParams;
-
-OSPI_PhyTuneWindowParams gPhyTuneWindowParamsFixedOtp1 = {
-    .txDllLowWindowStart  = 28,
-    .txDllLowWindowEnd    = 48,
-    .txDllHighWindowStart = 60,
-    .txDllHighWindowEnd   = 96,
-    .rxLowSearchStart     = 0,
-    .rxLowSearchEnd       = 40,
-    .rxHighSearchStart    = 24,
-    .rxHighSearchEnd      = 127,
-    .txLowSearchStart     = 0,
-    .txLowSearchEnd       = 64,
-    .txHighSearchStart    = 78,
-    .txHighSearchEnd      = 127,
-    .txDLLSearchOffset    = 8,
-};
-
-OSPI_PhyTuneWindowParams gPhyTuneWindowParamsFixedOtp2  = {
-    .txDllLowWindowStart  = 20,
-    .txDllLowWindowEnd    = 30,
-    .txDllHighWindowStart = 110,
-    .txDllHighWindowEnd   = 55,
-    .rxLowSearchStart     = 10,
-    .rxLowSearchEnd       = 80,
-    .txHighSearchStart    = 30,
-    .rxHighSearchEnd      = 127,
-    .txHighSearchEnd      = 127,
-};
-
-OSPI_PhyTuneWindowParams *gPhyTuneWindowParams = &gPhyTuneWindowParamsFixedOtp1;
 
 #define OSPI_FLASH_ATTACK_VECTOR_SIZE       (128U)
 #ifndef abs
@@ -310,7 +238,7 @@ static uint8_t gOspiFlashAttackVector[OSPI_FLASH_ATTACK_VECTOR_SIZE] =
  0x01    // 0b00000001 @ 0x0000047F 1151 bytes
 };
 
-static uint32_t gReadBuf[OSPI_FLASH_ATTACK_VECTOR_SIZE/sizeof(uint32_t)] = { 0U };
+static uint32_t gReadBuf[OSPI_FLASH_ATTACK_VECTOR_SIZE/sizeof(uint32_t)] = {0U};
 
 typedef struct
 {
@@ -325,63 +253,39 @@ void OSPI_phyBasicConfig(OSPI_Handle handle)
     const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
     const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)(attrs->baseAddr);
 
-    uint32_t opMode;
-    uint8_t isDtrEn;
-
-    isDtrEn = CSL_REG32_FEXT(&pReg->CONFIG_REG,OSPI_FLASH_CFG_CONFIG_REG_ENABLE_DTR_PROTOCOL_FLD);
-
-    if(isDtrEn)
-    {
-        opMode   = OSPI_CFG_PHY_OP_MODE_MASTER;
-    }
-    else
-    {
-        opMode   = OSPI_CFG_PHY_OP_MODE_DEFAULT;
-    }
-
-    /* Force Half lock cycle */
     CSL_REG32_FINS(&pReg->PHY_MASTER_CONTROL_REG,
                    OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_LOCK_MODE_FLD,
-                   OSPI_CFG_PHY_DLL_MODE_DEFAULT);
+                   attrs->phyConfiguration.dllLockMode);
 
     /* Select the number of delay element to be inserted between
      * phase detect flip-flops.
      */
-    CSL_REG32_FINS(&pReg->PHY_MASTER_CONTROL_REG,
-                    OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_PHASE_DETECT_SELECTOR_FLD,
-                    OSPI_PHASE_DETECT_DLL_NUM_DELAY_ELEMENT(PHASE_DELAY_ELEMENT));
+     CSL_REG32_FINS(&pReg->PHY_MASTER_CONTROL_REG,
+                     OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_PHASE_DETECT_SELECTOR_FLD,
+                     OSPI_PHASE_DETECT_DLL_NUM_DELAY_ELEMENT(attrs->phyConfiguration.phaseDelayElement));
 
-    /* PHY DLL master operational mode */
-    if(opMode == OSPI_CFG_PHY_OP_MODE_MASTER)
-    {
-        /* Configure PHY in Master operational mode */
-        CSL_REG32_FINS(&pReg->PHY_MASTER_CONTROL_REG,
+    /* Configure PHY Control mode */
+    CSL_REG32_FINS(&pReg->PHY_MASTER_CONTROL_REG,
                     OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_BYPASS_MODE_FLD,
-                    OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_MODE);
-    }
-    /* PHY DLL master operational mode */
-    else if(opMode == OSPI_CFG_PHY_OP_MODE_BYPASS)
+                    attrs->phyConfiguration.phyControlMode);
+
+
+    if(attrs->phyConfiguration.phyControlMode != OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_MODE &&
+        attrs->phyConfiguration.phyControlMode != OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_BYPASS_MODE) /* default mode config */
     {
-        /* Configure PHY in Bypass operational mode */
-        CSL_REG32_FINS(&pReg->PHY_MASTER_CONTROL_REG,
-                    OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_BYPASS_MODE_FLD,
-                    OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_BYPASS_MODE);
-    }
-    else /* default mode config */
-    {
-        if(attrs->inputClkFreq  >= 166666666U)
+        if(attrs->inputClkFreq  >= OSPI_PHY_TUNING_FREQ_RANGE)
         {
             /* Master operational mode for OSPI clock frequency of 166MHz */
             CSL_REG32_FINS(&pReg->PHY_MASTER_CONTROL_REG,
                         OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_BYPASS_MODE_FLD,
-                        0);
+                        OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_MODE);
         }
         else
         {
             /* Bypass mode for OSPI clock frequencies less than 166MHz */
             CSL_REG32_FINS(&pReg->PHY_MASTER_CONTROL_REG,
                         OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_BYPASS_MODE_FLD,
-                        1);
+                        OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_BYPASS_MODE);
         }
     }
 
@@ -392,7 +296,6 @@ void OSPI_phyResyncDLL(OSPI_Handle handle)
     const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
     const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)(attrs->baseAddr);
     uint32_t idleFlag = 0;
-    uint64_t curTime;
 
     /* Wait for Idle */
     while (idleFlag == 0)
@@ -419,24 +322,19 @@ void OSPI_phyResyncDLL(OSPI_Handle handle)
     /* Set Initial delay for the master DLL */
     CSL_REG32_FINS(&pReg->PHY_MASTER_CONTROL_REG,
                    OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_INITIAL_DELAY_FLD,
-                   0x10U);
+                   0x10);
 
     /* DLL out of reset */
     CSL_REG32_FINS(&pReg->PHY_CONFIGURATION_REG,
                    OSPI_FLASH_CFG_PHY_CONFIGURATION_REG_PHY_CONFIG_RESET_FLD,
                    1U);
 
-    curTime = ClockP_getTimeUsec();
     /* Wait DLL lock done */
     while ((CSL_REG32_FEXT(&pReg->DLL_OBSERVABLE_LOWER_REG,
-           OSPI_FLASH_CFG_DLL_OBSERVABLE_LOWER_REG_DLL_OBSERVABLE_LOWER_DLL_LOCK_FLD) == 0U)
-           && ((ClockP_getTimeUsec() - curTime) <= OSPI_DLL_LOCK_TIMEOUT));
-
-    curTime = ClockP_getTimeUsec();
+            OSPI_FLASH_CFG_DLL_OBSERVABLE_LOWER_REG_DLL_OBSERVABLE_LOWER_DLL_LOCK_FLD) == 0U));
     /* Wait DLL loopback lock done */
     while ((CSL_REG32_FEXT(&pReg->DLL_OBSERVABLE_LOWER_REG,
-           OSPI_FLASH_CFG_DLL_OBSERVABLE_LOWER_REG_DLL_OBSERVABLE_LOWER_LOOPBACK_LOCK_FLD) == 0U)
-           && ((ClockP_getTimeUsec() - curTime) <= OSPI_DLL_LOCK_TIMEOUT));
+            OSPI_FLASH_CFG_DLL_OBSERVABLE_LOWER_REG_DLL_OBSERVABLE_LOWER_LOOPBACK_LOCK_FLD) == 0U));
 
     /* Resync the Slave DLLs */
     CSL_REG32_FINS(&pReg->PHY_CONFIGURATION_REG,
@@ -447,6 +345,7 @@ void OSPI_phyResyncDLL(OSPI_Handle handle)
     CSL_REG32_FINS(&pReg->CONFIG_REG,
                    OSPI_FLASH_CFG_CONFIG_REG_ENB_SPI_FLD,
                    TRUE);
+
 }
 
 void OSPI_phySetRdDelayTxRxDLL(OSPI_Handle handle, OSPI_PhyConfig *configPoint)
@@ -464,7 +363,6 @@ void OSPI_phySetRdDelayTxRxDLL(OSPI_Handle handle, OSPI_PhyConfig *configPoint)
                    rdDelay);
 
     /* Set the PHY rxDLL and txDLL */
-
     uint32_t dtrEnable = CSL_REG32_FEXT(&pReg->CONFIG_REG,
                          OSPI_FLASH_CFG_CONFIG_REG_ENABLE_DTR_PROTOCOL_FLD);
 
@@ -490,32 +388,33 @@ void OSPI_phySetRdDelayTxRxDLL(OSPI_Handle handle, OSPI_PhyConfig *configPoint)
     OSPI_phyResyncDLL(handle);
 }
 
+
+
 int32_t OSPI_phyReadAttackVector(OSPI_Handle handle, uint32_t offset)
 {
     int32_t status = SystemP_SUCCESS;
     uint32_t flashDataBaseAddr = OSPI_getFlashDataBaseAddr(handle);
-    uint8_t *src = (uint8_t *)(flashDataBaseAddr + offset);
-    uint8_t *dst = (uint8_t *)gReadBuf;
+    uint32_t *src = (uint32_t *)(flashDataBaseAddr + offset);
+    uint32_t *dst = (uint32_t *)gReadBuf;
     uint32_t count = OSPI_FLASH_ATTACK_VECTOR_SIZE;
 
     OSPI_enableDacMode(handle);
 
-    while(count--)
+    for(int i=0;i<count/4;i++)
     {
-        *dst++ = *src++;
+        dst[i] = src[i];
+        uint32_t temp = (gOspiFlashAttackVector[4*i + 3]<<24)|(gOspiFlashAttackVector[4*i + 2]<<16)|(gOspiFlashAttackVector[4*i + 1]<<8)|(gOspiFlashAttackVector[4*i + 0]<<0);
+        if(dst[i] != temp)
+            return SystemP_FAILURE;
     }
-
-    if(memcmp(gReadBuf, gOspiFlashAttackVector, OSPI_FLASH_ATTACK_VECTOR_SIZE)!=0)
-    {
-        status = SystemP_FAILURE;
-    }
-
     return status;
 }
 
 void OSPI_phyFindRxLow(OSPI_Handle handle, OSPI_PhyConfig *start, uint32_t offset, OSPI_PhyConfig *result)
 {
     int32_t rdAttackStatus = SystemP_SUCCESS;
+    const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
+    OSPI_PhyWindowParams *gPhyTuneWindowParams = (OSPI_PhyWindowParams *)&attrs->phyConfiguration.tuningWindowParams;
 
     result->txDLL = start->txDLL;
     result->rxDLL = start->rxDLL;
@@ -527,7 +426,7 @@ void OSPI_phyFindRxLow(OSPI_Handle handle, OSPI_PhyConfig *start, uint32_t offse
 
     while(rdAttackStatus == SystemP_FAILURE)
     {
-        result->rxDLL += OSPI_DDR_SEARCH_STEP;
+        result->rxDLL += gPhyTuneWindowParams->rxTxDLLSearchStep;
         if(result->rxDLL > gPhyTuneWindowParams->rxLowSearchEnd)
         {
             result->rxDLL = 128U;
@@ -535,12 +434,16 @@ void OSPI_phyFindRxLow(OSPI_Handle handle, OSPI_PhyConfig *start, uint32_t offse
         }
         OSPI_phySetRdDelayTxRxDLL(handle, result);
         rdAttackStatus = OSPI_phyReadAttackVector(handle, offset);
+
     }
+
 }
 
 void OSPI_phyFindRxHigh(OSPI_Handle handle, OSPI_PhyConfig *start, uint32_t offset, OSPI_PhyConfig *result)
 {
     int32_t rdAttackStatus = SystemP_SUCCESS;
+    const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
+    OSPI_PhyWindowParams *gPhyTuneWindowParams = (OSPI_PhyWindowParams *)&attrs->phyConfiguration.tuningWindowParams;
 
     result->txDLL = start->txDLL;
     result->rxDLL = start->rxDLL;
@@ -552,7 +455,7 @@ void OSPI_phyFindRxHigh(OSPI_Handle handle, OSPI_PhyConfig *start, uint32_t offs
 
     while(rdAttackStatus == SystemP_FAILURE)
     {
-        result->rxDLL -= OSPI_DDR_SEARCH_STEP;
+        result->rxDLL -= gPhyTuneWindowParams->rxTxDLLSearchStep;
         if(result->rxDLL < gPhyTuneWindowParams->rxHighSearchStart)
         {
             result->rxDLL = 128U;
@@ -570,6 +473,8 @@ void OSPI_phyFindRxHigh(OSPI_Handle handle, OSPI_PhyConfig *start, uint32_t offs
 void OSPI_phyFindTxLow(OSPI_Handle handle, OSPI_PhyConfig *start, uint32_t offset, OSPI_PhyConfig *result)
 {
     int32_t rdAttackStatus = SystemP_SUCCESS;
+    const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
+    OSPI_PhyWindowParams *gPhyTuneWindowParams = (OSPI_PhyWindowParams *)&attrs->phyConfiguration.tuningWindowParams;
 
     result->txDLL = start->txDLL;
     result->rxDLL = start->rxDLL;
@@ -581,7 +486,7 @@ void OSPI_phyFindTxLow(OSPI_Handle handle, OSPI_PhyConfig *start, uint32_t offse
 
     while(rdAttackStatus == SystemP_FAILURE)
     {
-        result->txDLL += OSPI_DDR_SEARCH_STEP;
+        result->txDLL += gPhyTuneWindowParams->rxTxDLLSearchStep;
         if(result->txDLL > gPhyTuneWindowParams->txLowSearchEnd)
         {
             result->txDLL = 128U;
@@ -599,9 +504,11 @@ void OSPI_phyFindTxLow(OSPI_Handle handle, OSPI_PhyConfig *start, uint32_t offse
 void OSPI_phyFindTxHigh(OSPI_Handle handle, OSPI_PhyConfig *start, uint32_t offset, OSPI_PhyConfig *result)
 {
     int32_t rdAttackStatus = SystemP_SUCCESS;
+    const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
+    OSPI_PhyWindowParams *gPhyTuneWindowParams = (OSPI_PhyWindowParams *)&attrs->phyConfiguration.tuningWindowParams;
 
-    result->txDLL = start->txDLL;
-    result->rxDLL = start->rxDLL;
+    result->txDLL   = start->txDLL;
+    result->rxDLL   = start->rxDLL;
     result->rdDelay = start->rdDelay;
 
     OSPI_phySetRdDelayTxRxDLL(handle, result);
@@ -610,7 +517,7 @@ void OSPI_phyFindTxHigh(OSPI_Handle handle, OSPI_PhyConfig *start, uint32_t offs
 
     while(rdAttackStatus == SystemP_FAILURE)
     {
-        result->txDLL -= OSPI_DDR_SEARCH_STEP;
+        result->txDLL -= gPhyTuneWindowParams->rxTxDLLSearchStep;
         if(result->txDLL < gPhyTuneWindowParams->txHighSearchStart)
         {
             result->txDLL = 128U;
@@ -697,9 +604,7 @@ int32_t OSPI_phyTuneGrapher(OSPI_Handle handle, uint32_t flashOffset, uint8_t ar
     /* Perform the Basic PHY configuration for the OSPI controller */
     OSPI_phyBasicConfig(handle);
 
-    gPhyTuneWindowParams = &gPhyTuneWindowParamsFixedOtp1;
-
-    for(rdDelay = OSPI_PHY_INIT_RD_DELAY; rdDelay < OSPI_PHY_MAX_RD_DELAY; rdDelay++)
+    for(rdDelay = OSPI_PHY_GRAPHER_INIT_RD_DELAY; rdDelay < OSPI_PHY_GRAPHER_MAX_RD_DELAY; rdDelay++)
     {
         for(txDll = 0; txDll < 128; txDll++)
         {
@@ -712,6 +617,7 @@ int32_t OSPI_phyTuneGrapher(OSPI_Handle handle, uint32_t flashOffset, uint8_t ar
                 OSPI_phySetRdDelayTxRxDLL(handle, &searchPoint);
 
                 status = OSPI_phyReadAttackVector(handle, flashOffset);
+
                 if(status == SystemP_SUCCESS)
                 {
                     arrays[rdDelay][txDll][rxDll] = 1;
@@ -733,6 +639,9 @@ int32_t OSPI_phyTuneGrapher(OSPI_Handle handle, uint32_t flashOffset, uint8_t ar
 int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfig *otp)
 {
     int32_t status = SystemP_SUCCESS;
+    const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
+    OSPI_PhyWindowParams *gPhyTuneWindowParams = (OSPI_PhyWindowParams *)&attrs->phyConfiguration.tuningWindowParams;
+
     OSPI_PhyConfig searchPoint;
     OSPI_PhyConfig bottomLeft = {0,0,0}, topRight = {0,0,0};
     OSPI_PhyConfig gapLow = {0,0,0}, gapHigh = {0,0,0};
@@ -754,45 +663,19 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
      * To find the RxDLL boundaries, we fix a valid TxDLL and search through RxDLL range, rdDelay values
      * As we are not sure of a valid TxDLL we use a window of TxDLL values to find the RxDLL boundaries.
      */
-    /*
-           Rx_DLL
-              ▲
-              │   ++++++++++++++++
-          127 │     ++++++++++++++
-              │   x   ++++++++++++
-              │   xx   +++++++++++
-              │   xxx   ++++++++++
-              │   xxxx   +++++++++
-              │   xxxxx   ++++++++
-              │ │ xxx│xx   +++++++
-              │ │ xxx│xxx   ++++++
-              │ │ xxx│xxxx   +++++
-              │ │ xxx│xxxxx   ++++
-              │ │ xxx│xxxxxx   +++
-     Search   │ │ xxx│xxxxxxx   ++
-     Rx_Low ──┼─┤►xxx│xxxxxxxx   +
-              │ │    │
-             ─┼─┼────┼────────────►  Tx_DLL
-             0│ │    │           127
-                │    │
-                │    │
-
-            Tx_Low   Tx_Low
-            Start    End
-    */
 
     searchPoint.txDLL = gPhyTuneWindowParams->txDllLowWindowStart;
 
     while(searchPoint.txDLL <= gPhyTuneWindowParams->txDllLowWindowEnd)
     {
-        searchPoint.rdDelay = OSPI_PHY_INIT_RD_DELAY;
+        searchPoint.rdDelay = gPhyTuneWindowParams->rdDelayMin;
         searchPoint.rxDLL = gPhyTuneWindowParams->rxLowSearchStart;
         OSPI_phyFindRxLow(handle, &searchPoint, flashOffset, &rxLow);
 
         while(rxLow.rxDLL == 128U)
         {
             searchPoint.rdDelay++;
-            if(searchPoint.rdDelay > OSPI_PHY_MAX_RD_DELAY)
+            if(searchPoint.rdDelay > gPhyTuneWindowParams->rdDelayMax)
             {
                 if(searchPoint.txDLL >= gPhyTuneWindowParams->txDllLowWindowEnd)
                 {
@@ -804,6 +687,7 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
                     break;
                 }
             }
+
             OSPI_phyFindRxLow(handle, &searchPoint, flashOffset, &rxLow);
         }
 
@@ -812,7 +696,7 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
             break;
         }
 
-        searchPoint.txDLL += OSPI_DDR_SEARCH_STEP;
+        searchPoint.txDLL += gPhyTuneWindowParams->rxTxDLLSearchStep;
     }
 
     /***************************** GOLDEN Secondary Rx_Low Search *****************************/
@@ -826,13 +710,15 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
         searchPoint.txDLL = gPhyTuneWindowParams->txDllLowWindowEnd;
     }
 
-    searchPoint.rdDelay = OSPI_PHY_INIT_RD_DELAY;
+
+    searchPoint.rdDelay = gPhyTuneWindowParams->rdDelayMin;
     searchPoint.rxDLL   = gPhyTuneWindowParams->rxLowSearchStart;
+
     OSPI_phyFindRxLow(handle, &searchPoint, flashOffset, &sec_rxLow);
     while(sec_rxLow.rxDLL == 128U)
     {
         searchPoint.rdDelay++;  /* For each TxDLL in the window, go through all the valid rdDelays until we find the RxLow */
-        if(searchPoint.rdDelay > OSPI_PHY_MAX_RD_DELAY)
+        if(searchPoint.rdDelay > gPhyTuneWindowParams->rdDelayMax)
         {
             if(searchPoint.txDLL >= gPhyTuneWindowParams->txDllLowWindowEnd)
             {
@@ -844,29 +730,9 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
                 break;
             }
         }
+
         OSPI_phyFindRxLow(handle, &searchPoint, flashOffset, &sec_rxLow);
     }
-
-    /*
-     * Pick Minimum value of rxDLL between rxLow and sec_rxLow
-     * Pick Minimum value of rdDelay(read_delay) between rxLow and sec_rxLow
-    ┌────────┬───────────┬────────────────────────────────────┐
-    │Primary │ Secondary │   Final  Point                     │
-    │ Search │  Search   │                                    │
-    │        │           │                                    │
-    ├────────┼───────────┼────────────────────────────────────┤
-    │ Fail   │   Fail    │  Return Fail                       │
-    ├────────┼───────────┼────────────────────────────────────┤
-    │ Fail   │   Pass    │  Return Fail                       │
-    ├────────┼───────────┼────────────────────────────────────┤
-    │ Pass   │   Fail    │  Return Fail                       │
-    ├────────┼───────────┼────────────────────────────────────┤
-    │ Pass   │   Pass    │ RxDll = Min(Primary, Secondary)    │
-    │        │           │ RdDelay = Min(Primary, Secondary)  │
-    │        │           │ TxDll = Primary                    │
-    │        │           │                                    │
-    └────────┴───────────┴────────────────────────────────────┘
-     */
 
     rxLow.rxDLL = MIN(rxLow.rxDLL, sec_rxLow.rxDLL);
     rxLow.rdDelay = MIN(rxLow.rdDelay, sec_rxLow.rdDelay);
@@ -882,44 +748,20 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
      * Start the rdDelay (Read delay) from maximum and decrement it.
      * As these are valid values and rxHigh rdDelay is always >= rxLow rdDelay
      */
-    /*
-               Rx_DLL
-                  ▲
-              127 │   ▲+++++++++++++++
-        Search    │   │ ++++++++++++++
-       Rx_High────┼──►│   ++++++++++++
- on Fixed Tx_DLL  │   │x   +++++++++++
-                  │   │xx   ++++++++++
-                  │   │xxx   +++++++++
-                  │   │xxxx   ++++++++
-                  │   ▼xxxxx   +++++++
-                  │   Xxxxxxx   ++++++
-                  │   Xxxxxxxx   +++++
-                  │   Xxxxxxxxx   ++++
-                  │   Xxxxxxxxxx   +++
-                  │   Xxxxxxxxxxx   ++
-                  │   Xxxxxxxxxxxx   +
-                  │
-                 ─┼───────────────────►  Tx_DLL
-                 0│                  127
-    */
 
     searchPoint.rxDLL = gPhyTuneWindowParams->rxHighSearchEnd;
-    searchPoint.rdDelay = OSPI_PHY_MAX_RD_DELAY;
-
+    searchPoint.rdDelay = gPhyTuneWindowParams->rdDelayMax;
     OSPI_phyFindRxHigh(handle, &searchPoint, flashOffset, &rxHigh);
-
     while(rxHigh.rxDLL == 128U)
     {
         searchPoint.rdDelay--;
-        if(searchPoint.rdDelay < OSPI_PHY_INIT_RD_DELAY)
+        if(searchPoint.rdDelay < (int32_t) gPhyTuneWindowParams->rdDelayMin)
         {
             status = SystemP_FAILURE;
             break;
         }
         OSPI_phyFindRxHigh(handle, &searchPoint, flashOffset, &rxHigh);
     }
-
 
     /***************************** GOLDEN Secondary Rx_High Search *********************/
     /*
@@ -929,6 +771,7 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
      */
     if(searchPoint.txDLL <= (gPhyTuneWindowParams->txDllLowWindowEnd - gPhyTuneWindowParams->txDLLSearchOffset))
     {
+
         searchPoint.txDLL += gPhyTuneWindowParams->txDLLSearchOffset;
     }
     else
@@ -937,14 +780,15 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
     }
 
     searchPoint.rxDLL = gPhyTuneWindowParams->rxHighSearchEnd;
-    searchPoint.rdDelay = OSPI_PHY_MAX_RD_DELAY;
+    searchPoint.rdDelay = gPhyTuneWindowParams->rdDelayMax;
+
 
     OSPI_phyFindRxHigh(handle, &searchPoint, flashOffset, &sec_rxHigh);
 
     while(sec_rxHigh.rxDLL == 128U)
     {
         searchPoint.rdDelay--;
-        if(searchPoint.rdDelay < OSPI_PHY_INIT_RD_DELAY)
+        if(searchPoint.rdDelay < (int32_t)gPhyTuneWindowParams->rdDelayMin)
         {
             status = SystemP_FAILURE;
             break;
@@ -955,27 +799,6 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
         }
         OSPI_phyFindRxHigh(handle, &searchPoint, flashOffset, &sec_rxHigh);
     }
-
-    /*
-     * Compare the Primary and Secondary point
-     * Pick the point which has passing maximum rxDll
-    ┌────────┬───────────┬────────────────────────────────────┐
-    │Primary │ Secondary │   Final  Point                     │
-    │ Search │  Search   │                                    │
-    │        │           │                                    │
-    ├────────┼───────────┼────────────────────────────────────┤
-    │ Fail   │   Fail    │  Return Fail                       │
-    ├────────┼───────────┼────────────────────────────────────┤
-    │ Fail   │   Pass    │  Pick Secondary search             │
-    ├────────┼───────────┼────────────────────────────────────┤
-    │ Pass   │   Fail    │  Pick Primary search               │
-    ├────────┼───────────┼────────────────────────────────────┤
-    │ Pass   │   Pass    │ If(secondary.rxDll > primary.rxDll)│
-    │        │           │ Pick Secondary search point        │
-    │        │           │ Else                               │
-    │        │           │ Pick Primary search point          │
-    └────────┴───────────┴────────────────────────────────────┘
-    */
 
     if(sec_rxHigh.rxDLL != 128U)
     {
@@ -999,7 +822,6 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
             return status;
         }
     }
-
     /*
      * Check a different point if the rxLow and rxHigh are on the same rdDelay.
      * This avoids mistaking the metastability gap for an rxDLL boundary
@@ -1011,44 +833,20 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
          * Find the rxDLL boundaries using the TxDLL window at the higher end .
          * we start the window_end and decrement the TxDLL value until we find the valid point.
          */
-        /*
-           Rx_DLL
-            ▲
-            │   ++++++++++++++++
-        127 │   ++++++++++++++++
-            │   ++++++++++++++++
-            │    +++++++++++++++
-            │     +++++++++│++++│
-            │      ++++++++│++++│
-            │   x   +++++++│++++│
-            │   xx   ++++++│++++│
-            │   xxx   +++++│++++│
-            │   xxxx   ++++│++++│
-            │   xxxxx   +++│++++│
-            │   xxxxxx   ++│++++│
-            │   xxxxxxx   +│++++│         Search
-            │   xxxxxxxx   │++++◄───────  Rx_Low
-            │              │    │
-           ─┼──────────────┼────┤► Tx_DLL
-           0│              │    │   127
-                           │    │
-                   Tx_High        Tx_High
-                   Start          End
-        */
 
         searchPoint.txDLL = gPhyTuneWindowParams->txDllHighWindowEnd;
 
         /* Find rxDLL Min */
         while(searchPoint.txDLL >= gPhyTuneWindowParams->txDllHighWindowStart)
         {
-            searchPoint.rdDelay = OSPI_PHY_INIT_RD_DELAY;
+            searchPoint.rdDelay = gPhyTuneWindowParams->rdDelayMin;
             searchPoint.rxDLL = gPhyTuneWindowParams->rxLowSearchStart;
             OSPI_phyFindRxLow(handle, &searchPoint, flashOffset, &backupPoint);
 
             while(backupPoint.rxDLL == 128U)
             {
                 searchPoint.rdDelay++;
-                if(searchPoint.rdDelay > OSPI_PHY_MAX_RD_DELAY)
+                if(searchPoint.rdDelay > (int32_t)gPhyTuneWindowParams->rdDelayMax)
                 {
                     if(searchPoint.txDLL <= gPhyTuneWindowParams->txDllHighWindowStart)
                     {
@@ -1063,12 +861,12 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
                 OSPI_phyFindRxLow(handle, &searchPoint, flashOffset, &backupPoint);
             }
 
-            if(backupPoint.rxDLL != 128U)
+            if(backupPoint.rxDLL != (int32_t)128U)
             {
                 break;
             }
 
-            searchPoint.txDLL -= OSPI_DDR_SEARCH_STEP;
+            searchPoint.txDLL -= gPhyTuneWindowParams->rxTxDLLSearchStep;
         }
 
         /***************************** BACKUP Secondary Rx_Low Search *********************/
@@ -1082,13 +880,13 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
             searchPoint.txDLL = gPhyTuneWindowParams->txDllHighWindowStart;
         }
 
-        searchPoint.rdDelay = OSPI_PHY_INIT_RD_DELAY;
+        searchPoint.rdDelay = gPhyTuneWindowParams->rdDelayMin;
         searchPoint.rxDLL   = gPhyTuneWindowParams->rxLowSearchStart;
         OSPI_phyFindRxLow(handle, &searchPoint, flashOffset, &sec_rxLow);
         while(sec_rxLow.rxDLL == 128U)
         {
             searchPoint.rdDelay++;  /* For each TxDLL in the window, go through all the valid rdDelays until we find the RxLow */
-            if(searchPoint.rdDelay > OSPI_PHY_MAX_RD_DELAY)
+            if(searchPoint.rdDelay > (int32_t) gPhyTuneWindowParams->rdDelayMax)
             {
                 if(searchPoint.txDLL <= gPhyTuneWindowParams->txDllHighWindowStart)
                 {
@@ -1097,6 +895,7 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
                 }
                 else
                 {
+
                     break;
                 }
             }
@@ -1121,36 +920,15 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
          * Find rxDLL Max
          * Start the rdDelay (Read delay) from maximum and decrement it.
          */
-        /*
-        Rx_DLL
-        127 ▲
-            │   +++++++++++++++▲                Search Rx_High
-            │   +++++++++++++++│◄────────────   on Fixed Tx_DLL
-            │   +++++++++++++++│
-            │    ++++++++++++++│
-            │     +++++++++++++│
-            │      ++++++++++++│
-            │   x   +++++++++++▼
-            │   xx   +++++++++++
-            │   xxx   ++++++++++
-            │   xxxx   +++++++++
-            │   xxxxx   ++++++++
-            │   xxxxxx   +++++++
-            │   xxxxxxx   ++++++
-            │   xxxxxxxx    ++++
-            │
-           ─┼────────────────────► Tx_DLL
-           0│                       127
-        */
 
         searchPoint.rxDLL = gPhyTuneWindowParams->rxHighSearchEnd;
-        searchPoint.rdDelay = OSPI_PHY_MAX_RD_DELAY;
+        searchPoint.rdDelay = gPhyTuneWindowParams->rdDelayMax;
         OSPI_phyFindRxHigh(handle, &searchPoint, flashOffset, &backupPoint);
 
         while(backupPoint.rxDLL == 128U)
         {
             searchPoint.rdDelay--;
-            if(searchPoint.rdDelay < OSPI_PHY_INIT_RD_DELAY)
+            if(searchPoint.rdDelay < (int32_t)gPhyTuneWindowParams->rdDelayMin)
             {
                 status = SystemP_FAILURE;
                 break;
@@ -1173,13 +951,13 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
         }
 
         searchPoint.rxDLL = gPhyTuneWindowParams->rxHighSearchEnd;
-        searchPoint.rdDelay = OSPI_PHY_MAX_RD_DELAY;
+        searchPoint.rdDelay = gPhyTuneWindowParams->rdDelayMax;
         OSPI_phyFindRxHigh(handle, &searchPoint, flashOffset, &sec_rxHigh);
 
         while(sec_rxHigh.rxDLL == 128U)
         {
             searchPoint.rdDelay--;
-            if(searchPoint.rdDelay < OSPI_PHY_INIT_RD_DELAY)
+            if(searchPoint.rdDelay < (int32_t) gPhyTuneWindowParams->rdDelayMin)
             {
                 status = SystemP_FAILURE;
                 break;
@@ -1190,22 +968,6 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
         /*
          * Compare the Primary and Secondary point
          * Pick the point which has passing maximum rxDll
-        ┌────────┬───────────┬────────────────────────────────────┐
-        │Primary │ Secondary │   Final  Point                     │
-        │ Search │  Search   │                                    │
-        │        │           │                                    │
-        ├────────┼───────────┼────────────────────────────────────┤
-        │ Fail   │   Fail    │  Return Fail                       │
-        ├────────┼───────────┼────────────────────────────────────┤
-        │ Fail   │   Pass    │  Pick Secondary search             │
-        ├────────┼───────────┼────────────────────────────────────┤
-        │ Pass   │   Fail    │  Pick Primary search               │
-        ├────────┼───────────┼────────────────────────────────────┤
-        │ Pass   │   Pass    │ If(secondary.rxDll > primary.rxDll)│
-        │        │           │ Pick Secondary search point        │
-        │        │           │ Else                               │
-        │        │           │ Pick Primary search point          │
-        └────────┴───────────┴────────────────────────────────────┘
         */
 
         if(sec_rxHigh.rxDLL != 128U)
@@ -1242,31 +1004,8 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
      * Look for txDLL boundaries at 1/4 of rxDLL window
      * Find txDLL Min
      */
-    /*
-                  Rx_DLL
-                 127 ▲
-                     │   ++++++++++++++++
-          Rx_High    │     ++++++++++++++
-              ───────┼──►x   ++++++++++++
-                     │   xx   +++++++++++
-                     │   xxx   ++++++++++
-                     │   xxxx   +++++++++
-                     │   xxxxx   ++++++++
-      Fix Rx_DLL     │   xxxxxx   +++++++
-     1/4 between     │   xxxxxxx   ++++++
-  Rx_High and Rx_Low │   xxxxxxxx   +++++
-               ──────┼─► ◄───┬──►    ++++
-                     │   xxxx│xxxxx   +++
-           Rx_Low    │   xxxx│xxxxxx   ++
-               ──────┼──►xxxx│xxxxxxx   +
-                     │       │
-                    ─┼───────┼───────────►  Tx_DLL
-                    0│       │          127
-                             │
-                        Search Tx_Low
-     */
 
-    searchPoint.rdDelay = OSPI_PHY_INIT_RD_DELAY;
+    searchPoint.rdDelay = gPhyTuneWindowParams->rdDelayMin;
     searchPoint.rxDLL = rxLow.rxDLL+(rxHigh.rxDLL-rxLow.rxDLL)/4U;
     searchPoint.txDLL = gPhyTuneWindowParams->txLowSearchStart;
     OSPI_phyFindTxLow(handle, &searchPoint, flashOffset, &txLow);
@@ -1276,43 +1015,20 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
         searchPoint.rdDelay++;
         OSPI_phyFindTxLow(handle, &searchPoint, flashOffset, &txLow);
 
-        if(searchPoint.rdDelay > OSPI_PHY_MAX_RD_DELAY)
+        if(searchPoint.rdDelay > (int32_t)gPhyTuneWindowParams->rdDelayMax)
         {
             status = SystemP_FAILURE;
+
             return status;
         }
     }
-
     /***************************** GOLDEN Tx_High Search *********************/
     /*
      * Find txDLL Max
      * Start the rdDelay (Read delay) from maximum and decrement it.
      */
-    /*
-                Rx_DLL
-               127 ▲
-                   │   +++++++++++++++++
-        Rx_High    │     +++++++++++++++
-            ───────┼──►x   +++++++++++++
-                   │   xx   ++++++++++++
-                   │   xxx   +++++++++++
-                   │   xxxx   ++++++++++
-                   │   xxxxx   +++++++++
-     Fix Rx_DLL    │   xxxxxx   ++++++++
-    1/4 between    │   xxxxxxx   +++++++
- Rx_High and Rx_Low│   xxxxxxxx   ++++++
-             ──────┼─► xxxxxxxxx   ◄─┬─►
-                   │   xxxxxxxxxx   +│++
-         Rx_Low    │   xxxxxxxxxxx   │++
-             ──────┼──►xxxxxxxxxxxx  │++
-                   │                 │
-                  ─┼─────────────────┼─►  Tx_DLL
-                  0│                 │127
-                                  Search Tx_Max
-    */
-
     searchPoint.txDLL = gPhyTuneWindowParams->txHighSearchEnd;
-    searchPoint.rdDelay = OSPI_PHY_MAX_RD_DELAY;
+    searchPoint.rdDelay = gPhyTuneWindowParams->rdDelayMax;
     OSPI_phyFindTxHigh(handle, &searchPoint, flashOffset, &txHigh);
 
     while(txHigh.txDLL == 128U)
@@ -1320,7 +1036,7 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
         searchPoint.rdDelay--;
         OSPI_phyFindTxHigh(handle, &searchPoint, flashOffset, &txHigh);
 
-        if(searchPoint.rdDelay < OSPI_PHY_INIT_RD_DELAY)
+        if(searchPoint.rdDelay <(int32_t) gPhyTuneWindowParams->rdDelayMin)
         {
             status = SystemP_FAILURE;
             return status;
@@ -1337,31 +1053,8 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
         /***************************** BACKUP Tx_Low Search *********************/
         /* Look for txDLL boundaries at 3/4 of rxDLL window */
         /* Find txDLL Min */
-        /*
-             Rx_DLL
-            127 ▲
-                │
-       Rx_High──┼──►+++++++++++++++++
-                │   +++++++++++++++++
-    Fix Rx_DLL  │   +++++++++++++++++
-3/4 of Rx_High ─┼─► ◄───┬───►++++++++
-    and Rx_Low  │     ++│++++++++++++
-                │      +│++++++++++++
-                │   x   │++++++++++++
-                │   xx  │++++++++++++
-                │   xxx │ +++++++++++
-                │   xxxx│  ++++++++++
-                │   xxxx│   +++++++++
-                │   xxxx│x   ++++++++
-                │   xxxx│xx   +++++++
-        Rx_Low──┼──►xxxx│xxx   ++++++
-                │       │
-               ─┼───────┼────────────► Tx_DLL
-               0│       │               127
-                   Search Tx_Min
-        */
 
-        searchPoint.rdDelay = OSPI_PHY_INIT_RD_DELAY;
+        searchPoint.rdDelay = gPhyTuneWindowParams->rdDelayMin;
         searchPoint.rxDLL = rxLow.rxDLL + 3U*(rxHigh.rxDLL-rxLow.rxDLL)/4U;
         searchPoint.txDLL = gPhyTuneWindowParams->txLowSearchStart;
         OSPI_phyFindTxLow(handle, &searchPoint, flashOffset, &backupPoint);
@@ -1369,7 +1062,7 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
         {
             searchPoint.rdDelay++;
             OSPI_phyFindTxLow(handle, &searchPoint, flashOffset, &backupPoint);
-            if(searchPoint.rdDelay > OSPI_PHY_MAX_RD_DELAY)
+            if(searchPoint.rdDelay > (int32_t)gPhyTuneWindowParams->rdDelayMax)
             {
                 status = SystemP_FAILURE;
                 return status;
@@ -1385,39 +1078,15 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
          * Find txDLL Max
          * Start the rdDelay (Read delay) from maximum and decrement it.
          */
-        /*
-         Rx_DLL
-          127
-            ▲
-            │
-   Rx_High──┼──►+++++++++++++++++
-            │   +++++++++++++++++
- Fix Rx_DLL │   +++++++++++++++++
- 3/4 of ────┼─► +++++++◄────┬───►
-  Rx_High   │     ++++++++++│++++
-   and      │      +++++++++│++++
-  Rx_Low    │   x   ++++++++│++++
-            │   xx   +++++++│++++
-            │   xxx   ++++++│++++
-            │   xxxx   +++++│++++
-            │   xxxxx   ++++│++++
-            │   xxxxxx   +++│++++
-            │   xxxxxxx   ++│++++
-    Rx_Low──┼──►xxxxxxxx   +│++++
-            │               │
-           ─┼───────────────┼────► Tx_DLL
-           0│               │       127
-                         Search Tx_Max
-        */
 
         searchPoint.txDLL = gPhyTuneWindowParams->txHighSearchEnd;
-        searchPoint.rdDelay = OSPI_PHY_MAX_RD_DELAY;
+        searchPoint.rdDelay = gPhyTuneWindowParams->rdDelayMax;
         OSPI_phyFindTxHigh(handle, &searchPoint, flashOffset, &backupPoint);
         while(backupPoint.txDLL==128U)
         {
             searchPoint.rdDelay--;
             OSPI_phyFindTxHigh(handle, &searchPoint, flashOffset, &backupPoint);
-            if(searchPoint.rdDelay < OSPI_PHY_INIT_RD_DELAY)
+            if(searchPoint.rdDelay <(int32_t) gPhyTuneWindowParams->rdDelayMin)
             {
                 status = SystemP_FAILURE;
                 return status;
@@ -1630,199 +1299,11 @@ int32_t OSPI_phyFindOTP1(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfi
     return status;
 }
 
-int32_t OSPI_phyFindOTP2(OSPI_Handle handle, uint32_t flashOffset, OSPI_PhyConfig *otp)
-{
-    int32_t status = SystemP_SUCCESS;
-    OSPI_PhyConfig searchPoint = {0,0,0};
-    OSPI_PhyConfig topLeft = {0,0,0}, bottomRight = {0,0,0};
-    OSPI_PhyConfig rxLow = {0,0,0}, rxHigh = {0,0,0};
-    OSPI_PhyConfig gapLow = {0,0,0}, gapHigh = {0,0,0};
-    float slope, intercept;
-
-    /* Need to find topLeft corner. This will be a (txLow, rxHigh) point*/
-
-    searchPoint.txDLL = gPhyTuneWindowParams->txDllLowWindowStart;
-
-    while(searchPoint.txDLL <= gPhyTuneWindowParams->txDllLowWindowEnd)
-    {
-        searchPoint.rdDelay = OSPI_PHY_INIT_RD_DELAY;
-        searchPoint.rxDLL = gPhyTuneWindowParams->rxHighSearchEnd;
-        OSPI_phyFindRxHigh(handle, &searchPoint, flashOffset, &rxHigh);
-
-        while(rxHigh.rxDLL == 128U)
-        {
-            searchPoint.rdDelay++;
-            if(searchPoint.rdDelay > OSPI_PHY_MAX_RD_DELAY)
-            {
-                if(searchPoint.txDLL >= gPhyTuneWindowParams->txDllLowWindowEnd)
-                {
-                    status = SystemP_FAILURE;
-                    return status;
-                }
-                break;
-            }
-            OSPI_phyFindRxHigh(handle, &searchPoint, flashOffset, &rxHigh);
-        }
-
-        if(rxHigh.rxDLL != 128U)
-        {
-            break;
-        }
-
-        searchPoint.txDLL++;
-    }
-
-    topLeft = searchPoint;
-
-    /* Need to find bottomRight corner. This will be a (txHigh, rxLow) point. */
-    searchPoint.txDLL = gPhyTuneWindowParams->txDllHighWindowStart;
-
-    while(searchPoint.txDLL >= gPhyTuneWindowParams->txDllHighWindowEnd)
-    {
-        searchPoint.rxDLL = 0;
-        searchPoint.rdDelay = OSPI_PHY_INIT_RD_DELAY;
-        OSPI_phyFindRxLow(handle, &searchPoint, flashOffset, &rxLow);
-
-        while(rxLow.rxDLL == 128U)
-        {
-            searchPoint.rdDelay++;
-            if(searchPoint.rdDelay > OSPI_PHY_MAX_RD_DELAY)
-            {
-                if(searchPoint.txDLL <= gPhyTuneWindowParams->txDllHighWindowEnd)
-                {
-                    status = SystemP_FAILURE;
-                    return status;
-                }
-                break;
-            }
-            OSPI_phyFindRxLow(handle, &searchPoint, flashOffset, &rxLow);
-        }
-
-        if(rxLow.rxDLL != 128U)
-        {
-            break;
-        }
-
-        searchPoint.txDLL--;
-    }
-
-    bottomRight = searchPoint;
-
-    /* Find the equation of diagonal between topLeft and bottomRight */
-    slope = ((float)topLeft.rxDLL-(float)bottomRight.rxDLL)/((float)topLeft.txDLL-(float)bottomRight.txDLL);
-    intercept = (float)topLeft.rxDLL - slope*((float)topLeft.txDLL);
-
-    searchPoint = topLeft;
-
-    do
-    {
-        OSPI_phySetRdDelayTxRxDLL(handle, &searchPoint);
-        status = OSPI_phyReadAttackVector(handle, flashOffset);
-        searchPoint.txDLL += 1U;
-        searchPoint.rxDLL = (int32_t)(slope*(float)(searchPoint.txDLL)+intercept);
-
-    }while(status == SystemP_FAILURE);
-
-    do
-    {
-        OSPI_phySetRdDelayTxRxDLL(handle, &searchPoint);
-        status = OSPI_phyReadAttackVector(handle, flashOffset);
-        searchPoint.txDLL += 1U;
-        searchPoint.rxDLL = (int32_t)(slope*(float)(searchPoint.txDLL)+intercept);
-
-    }while(status == SystemP_SUCCESS);
-
-    searchPoint.txDLL -= 1U;
-    searchPoint.rxDLL = (int32_t)(slope*(float)(searchPoint.txDLL)+intercept);
-    gapHigh = searchPoint;
-
-    /* If there's only one segment, put tuning point in the middle and adjust for temperature */
-    if(bottomRight.rdDelay == topLeft.rdDelay)
-    {
-        /* Start of the metastability gap is a good approximation for the bottomRight */
-        bottomRight = gapHigh;
-        searchPoint.rdDelay = topLeft.rdDelay;
-        searchPoint.txDLL = (topLeft.txDLL+bottomRight.txDLL)/2U;
-        searchPoint.rxDLL = (topLeft.rxDLL+bottomRight.rxDLL)/2U;
-
-        /* TODO: Temperature adjustment */
-    }
-    else
-    {
-        /* If there are two segments, find the start and end of the second one */
-        searchPoint = bottomRight;
-
-        do
-        {
-            OSPI_phySetRdDelayTxRxDLL(handle, &searchPoint);
-            status = OSPI_phyReadAttackVector(handle, flashOffset);
-            searchPoint.txDLL -= 1U;
-            searchPoint.rxDLL = (int32_t)(slope*(float)(searchPoint.txDLL)+intercept);
-
-        }while(status == SystemP_FAILURE);
-
-        do
-        {
-            OSPI_phySetRdDelayTxRxDLL(handle, &searchPoint);
-            status = OSPI_phyReadAttackVector(handle, flashOffset);
-            searchPoint.txDLL -= 1U;
-            searchPoint.rxDLL = (int32_t)(slope*(float)(searchPoint.txDLL)+intercept);
-
-        }while(status == SystemP_SUCCESS);
-
-        searchPoint.txDLL += 1U;
-        searchPoint.rxDLL = (int32_t)(slope*(float)(searchPoint.txDLL)+intercept);
-        gapLow = searchPoint;
-
-        /* Place the final tuning point of the PHY in the corner furthest from the gap */
-        float len1 = abs(gapLow.txDLL-bottomRight.txDLL) + abs(gapLow.rxDLL-bottomRight.rxDLL);
-        float len2 = abs(gapHigh.txDLL-topLeft.txDLL) + abs(gapHigh.rxDLL-topLeft.rxDLL);
-
-        if(len2 > len1)
-        {
-            searchPoint = topLeft;
-            searchPoint.txDLL += (int32_t)(abs(topLeft.txDLL-gapHigh.txDLL)/2);
-            searchPoint.rxDLL = (int32_t)((float)searchPoint.txDLL * slope + intercept);
-        }
-        else
-        {
-            searchPoint = bottomRight;
-            searchPoint.txDLL -= (int32_t)(abs(bottomRight.txDLL-gapLow.txDLL)/2);
-            searchPoint.rxDLL = (int32_t)((float)searchPoint.txDLL * slope + intercept);
-        }
-    }
-
-    OSPI_phySetRdDelayTxRxDLL(handle, &searchPoint);
-
-    status = OSPI_phyReadAttackVector(handle, flashOffset);
-
-    if(status == SystemP_SUCCESS)
-    {
-        otp->rxDLL = searchPoint.rxDLL;
-        otp->txDLL = searchPoint.txDLL;
-        otp->rdDelay = searchPoint.rdDelay;
-    }
-    else
-    {
-        otp->rxDLL = 0;
-        otp->txDLL = 0;
-        otp->rdDelay = 0;
-    }
-
-    return status;
-}
-
 int32_t OSPI_phyTuneDDR(OSPI_Handle handle, uint32_t flashOffset)
 {
-
     int32_t status = SystemP_SUCCESS;
     OSPI_PhyConfig otp;
-    uint8_t isDtrEn;
-
     OSPI_Object *obj = ((OSPI_Config *)handle)->object;
-    const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
-    const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)attrs->baseAddr;
-
     /* Enable PHY */
     OSPI_enablePhy(handle);
     /* keep phy pipeline disabled */
@@ -1830,30 +1311,55 @@ int32_t OSPI_phyTuneDDR(OSPI_Handle handle, uint32_t flashOffset)
     /* Perform the Basic PHY configuration for the OSPI controller */
     OSPI_phyBasicConfig(handle);
 
-    isDtrEn = CSL_REG32_FEXT(&pReg->CONFIG_REG,OSPI_FLASH_CFG_CONFIG_REG_ENABLE_DTR_PROTOCOL_FLD);
+    /* Use the normal algorithm */
+    status = OSPI_phyFindOTP1(handle, flashOffset, &otp);
+    /* Configure phy for the optimal tuning point */
 
-    if(isDtrEn)
-    {
-        gPhyTuneWindowParams = &gPhyTuneWindowParamsFixedOtp1;
+    OSPI_phySetRdDelayTxRxDLL(handle, &otp);
+    /* Update the phyRdDelay book-keeping. This is needed when we enable PHY later */
 
-        /* Use the normal algorithm */
-        status = OSPI_phyFindOTP1(handle, flashOffset, &otp);
-    }
-    else
-    {
-        gPhyTuneWindowParams = &gPhyTuneWindowParamsFixedOtp2;
+    obj->phyRdDataCapDelay = otp.rdDelay;
 
-       /* Use the second algorithm */
-        status = OSPI_phyFindOTP2(handle, flashOffset, &otp);
-    }
+     /* Disable PHY */
+    OSPI_disablePhy(handle);
+    return status;
+
+}
+
+int32_t OSPI_phyTuneSDR(OSPI_Handle handle, uint32_t flashOffset)
+{
+    int32_t status = SystemP_SUCCESS;
+    OSPI_PhyConfig otp;
+
+    OSPI_Object *obj = ((OSPI_Config *)handle)->object;
+    const OSPI_Attrs *attrs = ((OSPI_Config *)handle)->attrs;
+    const CSL_ospi_flash_cfgRegs *pReg = (const CSL_ospi_flash_cfgRegs *)(attrs->baseAddr);
+
+    /* Set Internal loopback mode */
+    CSL_REG32_FINS(&pReg->RD_DATA_CAPTURE_REG, OSPI_FLASH_CFG_RD_DATA_CAPTURE_REG_BYPASS_FLD, TRUE);
+
+    /* Set the baud rate div to zero. */
+    CSL_REG32_FINS(&pReg->CONFIG_REG, OSPI_FLASH_CFG_CONFIG_REG_MSTR_BAUD_DIV_FLD, 0);
+
+    /* Enable phy mode. */
+    CSL_REG32_FINS(&pReg->CONFIG_REG, OSPI_FLASH_CFG_CONFIG_REG_PHY_MODE_ENABLE_FLD, TRUE);
+
+    /* Disable PHY pipeline */
+    CSL_REG32_FINS(&pReg->CONFIG_REG, OSPI_FLASH_CFG_CONFIG_REG_PIPELINE_PHY_FLD, FALSE);
+
+    /* PHY DLL master operational mode */
+    CSL_REG32_FINS(&pReg->PHY_MASTER_CONTROL_REG,
+                    OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_BYPASS_MODE_FLD,
+                    FALSE);
+
+    /* Use the normal algorithm */
+    status = OSPI_phyFindOTP1(handle, flashOffset, &otp);
+
     /* Configure phy for the optimal tuning point */
     OSPI_phySetRdDelayTxRxDLL(handle, &otp);
 
     /* Update the phyRdDelay book-keeping. This is needed when we enable PHY later */
     obj->phyRdDataCapDelay = otp.rdDelay;
-
-     /* Disable PHY */
-    OSPI_disablePhy(handle);
 
     return status;
 }

@@ -47,7 +47,7 @@ const files_r5f = {
 		"ospi_dma.c",
 		"ospi_dma_edma.c",
 		"ospi_nor_flash.c",
-		"ospi_phy.c",
+		"ospi_phy_am26x.c",
 		"ospi_v0.c",
 		"pinmux.c",
 		"pmu.c",

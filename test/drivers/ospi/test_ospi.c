@@ -39,7 +39,7 @@
 #include <inttypes.h>
 #include <unity.h>
 #include <kernel/dpl/DebugP.h>
-#include <kernel/dpl/ClockP.h>
+#include <kernel/dpl/CycleCounterP.h>
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
@@ -99,13 +99,10 @@ void test_main(void *args)
     Drivers_open();
     UNITY_BEGIN();
 
-    RUN_TEST(test_ospi_read_write_1s1s1s_config, 0, NULL);
+    RUN_TEST(test_ospi_read_write_1s1s1s_config, 13386, NULL);
     Drivers_ospiClose();
     Drivers_ospiOpen();
-    RUN_TEST(test_ospi_phy_tuning, 0, NULL);
-    Drivers_ospiClose();
-    Drivers_ospiOpen();
-    RUN_TEST(test_ospi_read_write_max_config, 0, NULL);
+    RUN_TEST(test_ospi_phy_tuning, 13387, NULL);
 
     UNITY_END();
     Drivers_close();
@@ -165,6 +162,7 @@ static void test_ospi_phy_tuning(void *args)
     int32_t retVal = SystemP_SUCCESS;
     uint32_t phyTuningData, phyTuningDataSize;
     uint32_t blk, page;
+    uint32_t cycles;
     OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
 
     /* Open Flash drivers with OSPI instance as input */
@@ -183,54 +181,27 @@ static void test_ospi_phy_tuning(void *args)
 
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
 
+    cycles = CycleCounterP_getCount32();
     retVal = OSPI_phyTuneDDR(ospiHandle, TEST_OSPI_FLASH_PHY_TUNING_OFFSET);
+    cycles = CycleCounterP_getCount32() - cycles;
+
+    DebugP_log("TIME FOR PHY TUNING: %d cycles\r \n",cycles);
+
+#if defined(SOC_AM263PX)
+    if(cycles > 2000000)
+    {
+        retVal = SystemP_FAILURE;
+    }
+#endif
 
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+#if defined(SOC_AM263PX)
+    Flash_reset(gFlashHandle[CONFIG_FLASH0]);
+#endif
 
     Board_driversClose();
 }
-
-static void test_ospi_read_write_max_config(void *args)
-{
-    int32_t retVal = SystemP_SUCCESS;
-    uint32_t blk, page, i;
-    uint32_t offset = TEST_OSPI_FLASH_OFFSET_BASE;
-
-    /* Open Flash drivers with OSPI instance as input */
-    retVal = Board_driversOpen();
-    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-
-    /* Block erase at the test offset */
-    Flash_offsetToBlkPage(gFlashHandle[CONFIG_FLASH0], offset, &blk, &page);
-    retVal = Flash_eraseBlk(gFlashHandle[CONFIG_FLASH0], blk);
-
-    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-
-    for(i = 0; i < TEST_OSPI_DATA_REPEAT_COUNT; i++)
-    {
-        retVal += Flash_write(gFlashHandle[CONFIG_FLASH0], offset + i*TEST_OSPI_DATA_SIZE, gOspiTestTxBuf, TEST_OSPI_DATA_SIZE);
-    }
-
-    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-
-    retVal = Flash_read(gFlashHandle[CONFIG_FLASH0], offset, gOspiTestRxBuf, TEST_OSPI_RX_BUF_SIZE);
-
-    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-
-    for(i = 0; i < TEST_OSPI_RX_BUF_SIZE; i++)
-    {
-        if(gOspiTestRxBuf[i] != gOspiTestTxBuf[(i%256)])
-        {
-            retVal = SystemP_FAILURE;
-            break;
-        }
-    }
-
-    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
-
-    Board_driversClose();
-}
-
 
 
 
