@@ -126,6 +126,23 @@ static inline int32_t I2C_lld_isBaseAddrValid(uint32_t baseAddr)
     return status;
 }
 
+/** \brief API to validate UART base address */
+static inline int32_t UART_IsBaseAddrValid(uint32_t baseAddr)
+{
+    int32_t status = (int32_t)-3;
+
+    if ((baseAddr == CSL_UART0_BASE) ||
+        (baseAddr == CSL_UART1_BASE) ||
+        (baseAddr == CSL_UART2_BASE) ||
+        (baseAddr == CSL_MCU_UART0_BASE))
+
+    {
+        status = 0;
+    }
+
+    return status;
+}
+
 /**
  * \brief Enable clock to specified module
  *

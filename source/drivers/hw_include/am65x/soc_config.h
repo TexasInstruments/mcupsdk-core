@@ -44,10 +44,12 @@ extern "C"
 #define IP_VERSION_INTAGGR_V0
 #define IP_VERSION_INTR_ROUTER_V0
 #define IP_VERSION_RINGACC_V0
+#define IP_VERSION_UART_V0
 
 /* Driver versions */
 #define DRV_VERSION_GPIO_V0
 #define DRV_VERSION_I2C_V0
+#define DRV_VERSION_UART_V0
 #define DRV_VERSION_UDMA_V1
 
 #ifdef __cplusplus

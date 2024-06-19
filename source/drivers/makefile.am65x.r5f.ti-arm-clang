@@ -34,6 +34,9 @@ FILES_common := \
     sciclient_rm_irq.c \
     sciclient_soc_priv.c \
     soc.c \
+    uart_v0.c \
+    uart_v0_lld.c \
+    uart_dma_udma.c \
     udma.c \
     udma_ch.c \
     udma_event.c \
@@ -57,6 +60,10 @@ FILES_PATH_common = \
     sciclient \
     sciclient/soc/am65x \
     soc/am65x \
+    uart/v0 \
+    uart/v0/lld \
+    uart/v0/lld/dma \
+    uart/v0/lld/dma/udma \
     udma/v1 \
     udma/hw_include \
     udma/soc \
