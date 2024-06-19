@@ -7591,6 +7591,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Ospi Flash Xip Example. CPU is A53SS0-0 running FREERTOS.",
+        "name": "ospi_flash_xip",
+        "location": "../../examples/drivers/ospi/ospi_flash_xip/am64x-evm/a53ss0-0_freertos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "ospi",
+            "ospi_flash_xip",
+            "a53ss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ospi Flash Xip Example. CPU is A53SS0-0 running NORTOS.",
+        "name": "ospi_flash_xip",
+        "location": "../../examples/drivers/ospi/ospi_flash_xip/am64x-evm/a53ss0-0_nortos/gcc-aarch64/example.projectspec",
+        "devtools": [
+            "AM64x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "gcc"
+        ],
+        "subCategories": [
+            "drivers",
+            "ospi",
+            "ospi_flash_xip",
+            "a53ss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Pcie Benchmark Ep Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "pcie_benchmark_ep",
         "location": "../../examples/drivers/pcie/pcie_benchmark/pcie_benchmark_ep/am64x-evm/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
