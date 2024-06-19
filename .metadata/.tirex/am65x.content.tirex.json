@@ -304,6 +304,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Uart Echo Callback Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "uart_echo_callback",
+        "location": "../../examples/drivers/uart/uart_echo_callback/am65x-idk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM65x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_callback",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Udma Chaining Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "udma_chaining",
         "location": "../../examples/drivers/udma/udma_chaining/am65x-idk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",

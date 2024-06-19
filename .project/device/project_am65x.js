@@ -23,6 +23,7 @@ const example_file_list = [
     "examples/drivers/sciclient/sciclient_get_version/.project/project.js",
     "examples/drivers/sciclient/sciclient_set_boardcfg/.project/project.js",
     "examples/drivers/uart/uart_echo/.project/project.js",
+    "examples/drivers/uart/uart_echo_callback/.project/project.js",
     "examples/drivers/udma/udma_chaining/.project/project.js",
     "examples/drivers/udma/udma_memcpy_interrupt/.project/project.js",
     "examples/drivers/udma/udma_memcpy_polling/.project/project.js",
