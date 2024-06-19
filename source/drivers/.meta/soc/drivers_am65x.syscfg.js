@@ -8,6 +8,9 @@ const driverVer = {
     "i2c": {
         version: "v0",
     },
+    "uart": {
+        version: "v0",
+    },
     "udma": {
         version: "v0",
     },
@@ -16,6 +19,7 @@ const driverVer = {
 const topModules = [
     "/drivers/gpio/gpio",
     "/drivers/i2c/i2c",
+    "/drivers/uart/uart",
     "/drivers/udma/udma",
 ];
 

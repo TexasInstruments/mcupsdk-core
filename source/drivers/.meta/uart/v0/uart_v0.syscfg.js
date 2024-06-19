@@ -356,6 +356,7 @@ function getConfigurables()
                     }
                 }
             },
+            hidden: (common.getSocName() == "am65x"),
         },
         /* Advanced parameters */
         {
