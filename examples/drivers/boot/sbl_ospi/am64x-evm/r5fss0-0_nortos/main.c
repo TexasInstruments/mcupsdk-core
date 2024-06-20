@@ -214,7 +214,6 @@ int main(void)
                 }
             }
             Bootloader_profileAddProfilePoint("CPU Load");
-            Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
             Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, OSPI_getInputClk(gOspiHandle[CONFIG_OSPI0]));
 
             #if 1
@@ -231,15 +230,6 @@ int main(void)
                 }
             }
             #endif
-
-            if(status == SystemP_SUCCESS)
-            {
-                /* Print SBL Profiling logs to UART as other cores may use the UART for logging */
-                Bootloader_profileAddProfilePoint("SBL End");
-                Bootloader_profilePrintProfileLog();
-                DebugP_log("Image loading done, switching to application ...\r\n");
-                UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
-            }
 
             /* Run CPUs */
             /* Do not run M4 when MCU domain is reset isolated */
@@ -273,6 +263,18 @@ int main(void)
                 {
                     status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
                 }
+
+                Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
+
+                if(status == SystemP_SUCCESS)
+                {
+                    /* Print SBL Profiling logs to UART as other cores may use the UART for logging */
+                    Bootloader_profileAddProfilePoint("SBL End");
+                    Bootloader_profilePrintProfileLog();
+                    DebugP_log("Image loading done, switching to application ...\r\n");
+                    UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
+                }
+
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
             }
             /* it should not return here, if it does, then there was some error */

@@ -193,7 +193,7 @@ void Bootloader_profilePrintProfileLog(void)
         DebugP_log("%s\r\n", SOC_getCoreName(gProfileObj.coresPresent[i]));
     }
 
-    for(i = 1; i < gProfileObj.logIndex - 1; i++)
+    for(i = 1; i < gProfileObj.logIndex; i++)
     {
         uint32_t timeDiff = (gProfileObj.info[i].cycleCount - gProfileObj.info[i-1].cycleCount)/cpuMHz;
         DebugP_log("KPI_DATA: [BOOTLOADER PROFILE] %-32s : %10uus \r\n", gProfileObj.info[i].pName, timeDiff);
