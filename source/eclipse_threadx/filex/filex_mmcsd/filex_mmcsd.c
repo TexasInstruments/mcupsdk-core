@@ -35,11 +35,11 @@
 #include <fx_port.h>
 #include <fx_media.h>
 #include <drivers/mmcsd/v0/mmcsd.h>
+#include "filex_mmcsd.h"
 
-
-VOID filex_mmcsd_driver(FX_MEDIA *media_ptr)
+VOID _fx_mmcsd_driver(FX_MEDIA *media_ptr)
 {
-    MMCSD_Handle mmcsd_hndl;
+    fx_mmcsd_driver_data_t *p_mmcsd_data;
     uint32_t block_size;
 
     /* There are several useful/important pieces of information contained in the media
@@ -113,8 +113,8 @@ VOID filex_mmcsd_driver(FX_MEDIA *media_ptr)
     */
 
 
-    mmcsd_hndl = *((MMCSD_Handle *)media_ptr->fx_media_driver_info);
-    block_size = MMCSD_getBlockSize(mmcsd_hndl);
+    p_mmcsd_data = ((fx_mmcsd_driver_data_t *)media_ptr->fx_media_driver_info);
+    block_size = MMCSD_getBlockSize(p_mmcsd_data->mmcsd_hndl);
 
     /* Process the driver request specified in the media control block.  */
     switch(media_ptr->fx_media_driver_request)
@@ -130,7 +130,7 @@ VOID filex_mmcsd_driver(FX_MEDIA *media_ptr)
             start_blk = media_ptr->fx_media_driver_logical_sector * media_ptr->fx_media_bytes_per_sector / block_size;
             blk_cnt = media_ptr->fx_media_driver_sectors * media_ptr->fx_media_bytes_per_sector / block_size;
 
-            res = MMCSD_read(mmcsd_hndl, media_ptr->fx_media_driver_buffer, start_blk, blk_cnt);
+            res = MMCSD_read(p_mmcsd_data->mmcsd_hndl, media_ptr->fx_media_driver_buffer, start_blk, blk_cnt);
             if (res != SystemP_SUCCESS) {
                 media_ptr->fx_media_driver_status = FX_IO_ERROR;
                 break;
@@ -151,7 +151,7 @@ VOID filex_mmcsd_driver(FX_MEDIA *media_ptr)
             start_blk = media_ptr->fx_media_driver_logical_sector * media_ptr->fx_media_bytes_per_sector / block_size;
             blk_cnt = media_ptr->fx_media_driver_sectors * media_ptr->fx_media_bytes_per_sector / block_size;
 
-            res = MMCSD_write(mmcsd_hndl, media_ptr->fx_media_driver_buffer, start_blk, blk_cnt);
+            res = MMCSD_write(p_mmcsd_data->mmcsd_hndl, media_ptr->fx_media_driver_buffer, start_blk, blk_cnt);
             if (res != SystemP_SUCCESS) {
                 media_ptr->fx_media_driver_status = FX_IO_ERROR;
                 break;
@@ -203,7 +203,7 @@ VOID filex_mmcsd_driver(FX_MEDIA *media_ptr)
         {
             int res;
 
-            res = MMCSD_read(mmcsd_hndl, media_ptr->fx_media_driver_buffer, 0u, 1u);
+            res = MMCSD_read(p_mmcsd_data->mmcsd_hndl, media_ptr->fx_media_driver_buffer, 0u, 1u);
             if (res != SystemP_SUCCESS) {
                 media_ptr->fx_media_driver_status = FX_IO_ERROR;
                 break;
@@ -219,7 +219,7 @@ VOID filex_mmcsd_driver(FX_MEDIA *media_ptr)
         {
             int res;
 
-            res = MMCSD_write(mmcsd_hndl, media_ptr->fx_media_driver_buffer, 0u, 1u);
+            res = MMCSD_write(p_mmcsd_data->mmcsd_hndl, media_ptr->fx_media_driver_buffer, 0u, 1u);
             if (res != SystemP_SUCCESS) {
                 media_ptr->fx_media_driver_status = FX_IO_ERROR;
                 break;

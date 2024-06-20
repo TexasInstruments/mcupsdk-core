@@ -40,20 +40,24 @@
 #include "ti_eclipse_threadx_open_close.h"
 % if (filex_module) {
 #include <fx_api.h>
-% if (_.filter(filex_module.$instances, function (inst) { return (inst.media == "SD" || inst.media == "EMMC");})) {
+% if (!_.isEmpty(_.filter(filex_module.$instances, function (inst) { return (inst.media == "SD" || inst.media == "EMMC");}))) {
 #include <eclipse_threadx/filex/filex_mmcsd/filex_mmcsd.h>
 #include <drivers/mmcsd.h>
+% }
+% }
+
+% if (filex_module) {
+% if (!_.isEmpty(_.filter(filex_module.$instances, function (inst) { return (inst.media == "RAMDISK");}))) {
+extern VOID _fx_ram_driver(FX_MEDIA *media_ptr);
 % }
 % }
 
 
 void EclipseThreadx_open(void)
 {
-
 % for(let subTemplate of args) {
 `system.getTemplate(subTemplate.open)()`
 % }
-
 }
 
 void EclipseThreadx_close(void)

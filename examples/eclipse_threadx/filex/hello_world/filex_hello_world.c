@@ -54,16 +54,18 @@ void filex_hello_world_main(void *args)
     EclipseThreadx_open();
 
     // Create a new file 'test.bin'.
-    status = fx_file_create(&gt_media[CONFIG_FILEX0], "test.bin");
+    status = fx_file_create(&gt_media[FILEX0], "test.bin");
     DebugP_assert((status == FX_SUCCESS) || (status == FX_ALREADY_CREATED));
 
     // Open the file for writing.
-    status = fx_file_open(&gt_media[CONFIG_FILEX0], &file, "test.bin", FX_OPEN_FOR_WRITE);
+    status = fx_file_open(&gt_media[FILEX0], &file, "test.bin", FX_OPEN_FOR_WRITE);
     DebugP_assert(status == FX_SUCCESS);
 
     // Clear the whole file (in case it already exists and contains data).
     status = fx_file_truncate(&file, 0);
     DebugP_assert((status == FX_SUCCESS) || (status == FX_ALREADY_CREATED));
+
+    DebugP_log("Empty 'test.bin' file created.\r\n");
 
     // Write the message.
     status = fx_file_write(&file, MESSAGE, sizeof(MESSAGE));
@@ -73,8 +75,10 @@ void filex_hello_world_main(void *args)
     status = fx_file_close(&file);
     DebugP_assert(status == FX_SUCCESS);
 
+    DebugP_log("Message " MESSAGE " successfully written.\r\n");
+
     // Re-open the file, this time for reading.
-    status = fx_file_open(&gt_media[CONFIG_FILEX0], &file, "test.bin", FX_OPEN_FOR_READ);
+    status = fx_file_open(&gt_media[FILEX0], &file, "test.bin", FX_OPEN_FOR_READ);
     DebugP_assert(status == FX_SUCCESS);
 
     // Read the previously written message.
@@ -87,6 +91,8 @@ void filex_hello_world_main(void *args)
 
     // Make sure that the read-back message matches the original message.
     DebugP_assert(strcmp((const char *)t_buf, MESSAGE) == 0);
+
+    DebugP_log("Message " MESSAGE " successfully read back.\r\n");
 
     EclipseThreadx_close();
     Board_driversClose();

@@ -164,7 +164,7 @@ const example_file_list = [
     "examples/drivers/udma/udma_memcpy_polling/.project/project.js",
     "examples/drivers/udma/udma_sw_trigger/.project/project.js",
     "examples/drivers/watchdog/watchdog_interrupt/.project/project.js",
-    "examples/eclipse_threadx/threadx/empty/.project/project.js",
+    "examples/eclipse_threadx/threadx/hello_world/.project/project.js",
     "examples/eclipse_threadx/filex/hello_world/.project/project.js",
     "examples/empty/.project/project_freertos.js",
     "examples/empty/.project/project_nortos.js",

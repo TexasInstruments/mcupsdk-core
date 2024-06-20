@@ -17,23 +17,40 @@ let filex_module = {
             open_close_config: "/eclipse_threadx/filex/templates/filex_open_close.h.xdt",
         },
     },
-	defaultInstanceName: "CONFIG_FILEX",
+	defaultInstanceName: "FILEX",
 	config: [
 		{
 			name: "media",
 			displayName: "Select Media",
 			description: "Select the media which is to be used underneath the virtual file system provided by FileX",
-			default: "SD",
+			default: "RAMDISK",
 			options: [
+                { name: "RAMDISK"},
 				{ name: "SD" },
                 { name: "EMMC" },
-			]
+			],
+            onChange: function (inst, ui) {
+                if(inst.media == "RAMDISK") {
+                    inst.auto_format = true;
+                    ui.ramdisk_size.hidden = false;
+                } else {
+                    inst.auto_format = false;
+                    ui.ramdisk_size.hidden = true;
+                }
+            }
 		},
+        {
+            name: "ramdisk_size",
+            hidden: false,
+            displayName: "RAM Disk Size",
+            description: "Size of the RAM disk in bytes.",
+            default: 32768,
+        },
         {
             name: "auto_format",
             displayName: "Auto-Format",
-            description: "Automatically format the media if no file system is found. Be careful: will overwrite content!",
-            default: false
+            description: "Automatically format the media if no file system is found.",
+            default: true,
         },
         {
             name: "sector_size",
@@ -60,6 +77,7 @@ let filex_module = {
             ]
         }
 	],
+    validate: validate,
 	moduleInstances: moduleInstances,
 };
 
@@ -69,6 +87,9 @@ function moduleInstances(inst) {
     let moduleSelectName = "";
 
     switch(inst.media) {
+        case "RAMDISK":
+            // No driver needed.
+            break;
     	case "SD":
             moduleSelectName = "MMC1";
             if ((common.getSocName() == "am263x") || (common.getSocName() == "am263px"))
@@ -102,9 +123,16 @@ function moduleInstances(inst) {
                     cardType : "EMMC",
     		    },
     		});
+            break;
     }
 
     return (modInstances);
+}
+
+function validate(inst, report) {
+    if (inst.auto_format && (inst.media != "RAMDISK")) {
+        report.logInfo("Be careful: content will be lost!", inst, "auto_format");
+    }
 }
 
 exports = filex_module;
