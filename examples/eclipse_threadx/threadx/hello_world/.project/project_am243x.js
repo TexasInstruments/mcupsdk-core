@@ -4,7 +4,7 @@ let device = "am243x";
 
 const files = {
     common: [
-        "threadx_empty.c",
+        "threadx_hello_world.c",
         "main.c",
     ],
 };
@@ -76,7 +76,7 @@ const templates_gcc =
         input: ".project/templates/am243x/threadx/main_threadx.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "threadx_empty_main",
+            entryFunction: "threadx_hello_world_main",
         },
     }
 ];
@@ -87,7 +87,7 @@ const templates =
         input: ".project/templates/am243x/threadx/main_threadx.c.xdt",
         output: "../main.c",
         options: {
-            entryFunction: "threadx_empty_main",
+            entryFunction: "threadx_hello_world_main",
         },
     }
 ];
@@ -102,10 +102,10 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "threadx_empty";
+    property.name = "threadx_hello_world";
     property.isInternal = false;
     property.tirexResourceSubClass = [ "example.gettingstarted" ];
-    property.description = "An empty Eclipse-ThreadX example. "
+    property.description = "A simple ThreadX hello world example. "
     property.buildOptionCombos = buildOptionCombos;
 
     return property;

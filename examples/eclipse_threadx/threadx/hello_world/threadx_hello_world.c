@@ -39,13 +39,16 @@
 #include "ti_eclipse_threadx_open_close.h"
 #include <tx_api.h>
 
-void threadx_empty_main(void *args)
+void threadx_hello_world_main(void *args)
 {
     Drivers_open();
     Board_driversOpen();
     EclipseThreadx_open();
 
-    // User code here.
+    while (1) {
+        DebugP_log("Hello world!\r\n");
+        tx_thread_sleep(100);
+    }
 
     EclipseThreadx_close();
     Board_driversClose();
