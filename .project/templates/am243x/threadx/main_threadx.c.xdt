@@ -1,6 +1,6 @@
 %%{
     let options = args.options;
-    let stackSize = 4096;
+    let stackSize = 8192;
     let taskPri = 1;
     let entryFunction = "example_main";
 
