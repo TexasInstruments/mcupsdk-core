@@ -60,6 +60,10 @@ void uart_echo_dma(void *args)
 {
     int32_t          transferOK;
     UART_Transaction trans;
+    #if defined (SOC_AM65X)
+    int32_t         retVal = UDMA_SOK;
+    uint32_t        instId;
+    #endif
 
     Drivers_open();
     Board_driversOpen();
@@ -106,6 +110,13 @@ void uart_echo_dma(void *args)
 
     Board_driversClose();
     Drivers_close();
+    #if defined (SOC_AM65X)
+    for(instId = 0U; instId < CONFIG_UDMA_NUM_INSTANCES; instId++)
+    {
+        retVal = Udma_deinit(&gUdmaDrvObj[instId]);
+        DebugP_assert(UDMA_SOK == retVal);
+    }
+    #endif
 
     return;
 }

@@ -337,6 +337,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Uart Echo Dma Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "uart_echo_dma",
+        "location": "../../examples/drivers/uart/uart_echo_dma/am65x-idk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM65x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "uart",
+            "uart_echo_dma",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Uart Echo Low Latency Interrupt Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "uart_echo_low_latency_interrupt",
         "location": "../../examples/drivers/uart/uart_echo_low_latency_interrupt/am65x-idk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
