@@ -40,6 +40,7 @@ const component_file_list = [
     "source/networking/tsn/.project/project_tsn_unibase.js",
     "source/networking/tsn/.project/project_tsn_lldp.js",
     "source/networking/tsn/.project/project_tsn_l2.js",
+    "source/networking/enet_cli/.project/project_enet_cli.js",
     "test/unity/.project/project.js",
     "docs_src/docs/api_guide/doxy_samples/.project/project.js",
 ];
