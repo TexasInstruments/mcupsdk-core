@@ -157,6 +157,13 @@ typedef unsigned short                          USHORT;
 #define TX_INT_ENABLE                           0x00        /* Enable IRQ interrupts            */
 
 
+/* Define default timer tick rate.  */
+
+#ifndef TX_TIMER_TICKS_PER_SECOND
+#define TX_TIMER_TICKS_PER_SECOND               (1000UL)
+#endif
+
+
 /* Define the clock source for trace event entry time stamp. The following two item are port specific.  
    For example, if the time source is at the address 0x0a800024 and is 16-bits in size, the clock 
    source constants would be:
