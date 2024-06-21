@@ -566,39 +566,41 @@ int32_t UART_write(UART_Handle handle, UART_Transaction *trans)
             {
                 status = UART_lld_writeDma(uartLld_handle, trans->buf, trans->count, &extendedParams);
             }
-            if ((SystemP_SUCCESS == status) &&
-                (object->prms.writeMode == UART_TRANSFER_MODE_BLOCKING))
+            if (SystemP_SUCCESS == status)
             {
-                /* Pend on lock and wait for Hwi to finish. */
-                semStatus = SemaphoreP_pend(&object->writeTransferSemObj, trans->timeout);
-                if (semStatus == SystemP_SUCCESS)
+                if(object->prms.writeMode == UART_TRANSFER_MODE_BLOCKING)
                 {
-                    if (trans->status == (uint32_t)UART_STATUS_SUCCESS)
+                    /* Pend on lock and wait for Hwi to finish. */
+                    semStatus = SemaphoreP_pend(&object->writeTransferSemObj, trans->timeout);
+                    if (semStatus == SystemP_SUCCESS)
                     {
-                        status = SystemP_SUCCESS;
+                        if (trans->status == (uint32_t)UART_STATUS_SUCCESS)
+                        {
+                            status = SystemP_SUCCESS;
+                        }
+                        else
+                        {
+                            status = SystemP_FAILURE;
+                        }
                     }
                     else
                     {
+                        trans->status = UART_TRANSFER_TIMEOUT;
+                        /* Cancel the DMA without posting the semaphore */
+                        (void)UART_writeCancelNoCB(uartLld_handle);
                         status = SystemP_FAILURE;
                     }
                 }
                 else
                 {
-                    trans->status = UART_TRANSFER_TIMEOUT;
-                    /* Cancel the DMA without posting the semaphore */
-                    (void)UART_writeCancelNoCB(uartLld_handle);
-                    status = SystemP_FAILURE;
-                }
-            }
-            else
-            {
-                /*
+                    /*
                     * for callback mode, immediately return SUCCESS,
                     * once the transaction is done, callback function
                     * will return the transaction status and actual
                     * write count
                     */
-                status = SystemP_SUCCESS;
+                    status = SystemP_SUCCESS;
+                }
             }
         }
         else
@@ -671,39 +673,41 @@ int32_t UART_read(UART_Handle handle, UART_Transaction *trans)
             {
                 status = UART_lld_readDma(uartLld_handle, trans->buf, trans->count, &extendedParams);
             }
-            if ((SystemP_SUCCESS == status) &&
-                (object->prms.readMode == UART_TRANSFER_MODE_BLOCKING))
+            if (SystemP_SUCCESS == status)
             {
-                /* Pend on lock and wait for Hwi to finish. */
-                semStatus = SemaphoreP_pend(&object->readTransferSemObj, trans->timeout);
-                if (semStatus == SystemP_SUCCESS)
+                if(object->prms.readMode == UART_TRANSFER_MODE_BLOCKING)
                 {
-                    if (trans->status == (uint32_t)UART_STATUS_SUCCESS)
+                    /* Pend on lock and wait for Hwi to finish. */
+                    semStatus = SemaphoreP_pend(&object->readTransferSemObj, trans->timeout);
+                    if (semStatus == SystemP_SUCCESS)
                     {
-                        status = SystemP_SUCCESS;
+                        if (trans->status == (uint32_t)UART_STATUS_SUCCESS)
+                        {
+                            status = SystemP_SUCCESS;
+                        }
+                        else
+                        {
+                            status = SystemP_FAILURE;
+                        }
                     }
                     else
                     {
+                        trans->status = UART_TRANSFER_TIMEOUT;
+                        /* Cancel the DMA without posting the semaphore */
+                        (void)UART_readCancelNoCB(uartLld_handle);
                         status = SystemP_FAILURE;
                     }
                 }
                 else
                 {
-                    trans->status = UART_TRANSFER_TIMEOUT;
-                    /* Cancel the DMA without posting the semaphore */
-                    (void)UART_readCancelNoCB(uartLld_handle);
-                    status = SystemP_FAILURE;
-                }
-            }
-            else
-            {
-                /*
+                    /*
                     * for callback mode, immediately return SUCCESS,
                     * once the transaction is done, callback function
                     * will return the transaction status and actual
                     * read count
                     */
-                status = SystemP_SUCCESS;
+                    status = SystemP_SUCCESS;
+                }
             }
         }
         else
