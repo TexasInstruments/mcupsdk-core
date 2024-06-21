@@ -62,6 +62,7 @@ FILES_common := \
     uart_v0.c \
     uart_v0_lld.c \
     uart_dma_udma.c \
+    uart_dma_soc.c \
     udma.c \
     udma_ch.c \
     udma_event.c \
@@ -108,6 +109,7 @@ FILES_PATH_common = \
     uart/v0/lld/dma \
     uart/v0/lld/dma/udma \
     udma/v0 \
+    uart/v0/lld/dma/soc/am64x_am243x \
     udma/hw_include \
     udma/soc \
     udma/soc/am64x_am243x \

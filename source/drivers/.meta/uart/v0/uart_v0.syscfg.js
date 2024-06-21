@@ -127,14 +127,26 @@ function addModuleInstances(instance) {
     let modInstances = new Array();
 
     if(instance.intrEnable == "DMA") {
-        modInstances.push({
-            name: "udmaDriver",
-            displayName: "UDMA Configuration",
-            moduleName: "/drivers/udma/udma",
-            requiredArgs: {
-                instance: "PKTDMA_0",
-            }
-        });
+        if(common.getSocName() === "am65x"){
+            modInstances.push({
+                name: "udmaDriver",
+                displayName: "UDMA Configuration",
+                moduleName: "/drivers/udma/udma",
+                requiredArgs: {
+                    instance: "MCU_0",
+                }
+            });
+        }
+        else{
+            modInstances.push({
+                name: "udmaDriver",
+                displayName: "UDMA Configuration",
+                moduleName: "/drivers/udma/udma",
+                requiredArgs: {
+                    instance: "PKTDMA_0",
+                }
+            });
+        }
     }
 
     if( instance.sdkInfra == "HLD")
@@ -630,7 +642,7 @@ function validate(inst, report) {
         report.logError("HW flow control threshold should be greater than or equal to Rx trigger level", inst, "hwFlowControlThr");
     }
     if ((inst.useMcuDomainPeripherals) &&
-        (inst.intrEnable == "DMA")) {
+        (inst.intrEnable == "DMA") && (common.getSocName() != "am65x")) {
         report.logError("DMA is not supported in MCU Domain", inst, "useMcuDomainPeripherals");
     }
     if ((inst.intrEnable == "DMA") && (inst.readReturnMode == "PARTIAL")) {

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (c) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,55 +30,25 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef UART_DMA_UDMA_H_
-#define UART_DMA_UDMA_H_
+#include <drivers/udma.h>
+#include <drivers/uart/v0/lld/dma/soc/uart_dma_soc.h>
 
-#include <stdint.h>
-
-#ifdef __cplusplus
-extern "C"
+void UART_udmapSetReturnPolicy(
+        Udma_ChHandle chHandle,
+        uint8_t       *pHpdMem)
 {
-#endif
+        uint32_t descType = (uint32_t)CSL_UDMAP_CPPI5_PD_DESCINFO_DTYPE_VAL_HOST;
 
-typedef struct UART_UdmaChConfig_s
-{
-    void            *drvHandle;
-    /**< UDMA driver handle */
-    void            *txChHandle;
-    /**< UDMA channel tx handle */
-    void            *rxChHandle;
-    /**< UDMA channel rx handle */
-    void            *cqTxEvtHandle;
-    /**< UDMA cq tx event handle */
-    void            *cqRxEvtHandle;
-    /**< UDMA cq rx event handle */
-    void            *txHpdMem;
-    /**< UDMA TX HPD memory pointers */
-    void            *rxHpdMem;
-    /**< UDMA RX HPD memory pointers */
-    uint32_t        hpdMemSize;
-    /**< Size of TR PD memory */
-    void            *txRingMem;
-    /**< UDMA TX Ring memory pointers */
-    void            *cqTxRingMem;
-    /**< UDMA TX completion queue ring memory pointer */
-    void            *rxRingMem;
-    /**< UDMA RX Ring memory pointers */
-    void            *cqRxRingMem;
-    /**< UDMA RX completion queue ring memory pointer */
-    uint32_t        ringMemSize;
-    /**< Size of Ring Memory */
-    uint32_t        ringElemCnt;
-    /**< Ring Element Count */
-    uint32_t        isOpen;
-    /**< Flag to indicate whether the DMA instance is opened already */
-    uint32_t        isCqRingMem;
-    /**< UDMA completion queue ring memory is enabled or disabled */
-    /**< This is only used for AM65x */
-}UART_UdmaChConfig;
+        CSL_UdmapCppi5HMPD *pHpd = (CSL_UdmapCppi5HMPD *) pHpdMem;
 
-#ifdef __cplusplus
+        /* Return Policy descriptors */
+        CSL_udmapCppi5SetReturnPolicy(
+        pHpd,
+        descType,
+        0U,
+        0U,
+        0U,
+        0U);
+
+        return;
 }
-#endif
-
-#endif /* UART_DMA_UDMA_H_ */

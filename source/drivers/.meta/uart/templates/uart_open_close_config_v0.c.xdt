@@ -45,6 +45,7 @@ UART_Handle gUartHandle[CONFIG_UART_NUM_INSTANCES];
 #include <kernel/dpl/ClockP.h>
 %if(uartUdmaInstances.length > 0) {
 #include <drivers/uart/v0/lld/dma/udma/uart_dma_udma.h>
+#include <drivers/uart/v0/lld/dma/soc/uart_dma_soc.h>
 #include <drivers/udma.h>
 
 /*
@@ -74,7 +75,13 @@ static Udma_EventObject        gUart`i`UdmaCqRxEventObj;
 
 /* UART UDMA Channel Ring Mem */
 static uint8_t gUart`i`UdmaRxRingMem[UART_UDMA_TEST_RING_MEM_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
+% if(common.getSocName() === "am65x"){
+static uint8_t gUart`i`UdmaCqRxRingMem[UART_UDMA_TEST_RING_MEM_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
+%}
 static uint8_t gUart`i`UdmaTxRingMem[UART_UDMA_TEST_RING_MEM_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
+% if(common.getSocName() === "am65x"){
+static uint8_t gUart`i`UdmaCqTxRingMem[UART_UDMA_TEST_RING_MEM_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
+%}
 
 /* UART UDMA Channel HPD Mem */
 static uint8_t gUart`i`UdmaTxHpdMem[UART_UDMA_TEST_DESC_SIZE] __attribute__((aligned(UDMA_CACHELINE_ALIGNMENT)));
@@ -94,10 +101,21 @@ UART_UdmaChConfig gUartUdmaChConfig[CONFIG_UART_NUM_DMA_INSTANCES] =
         .rxHpdMem         = &gUart`i`UdmaRxHpdMem,
         .hpdMemSize       = UART_UDMA_TEST_DESC_SIZE,
         .txRingMem        = &gUart`i`UdmaTxRingMem,
+%if(common.getSocName() === "am65x"){
+        .cqTxRingMem      = &gUart`i`UdmaCqTxRingMem,
+%}
         .rxRingMem        = &gUart`i`UdmaRxRingMem,
+%if(common.getSocName() === "am65x"){
+        .cqRxRingMem      = &gUart`i`UdmaCqRxRingMem,
+%}
         .ringMemSize      = UART_UDMA_TEST_RING_MEM_SIZE,
         .ringElemCnt      = UART_UDMA_TEST_RING_ENTRIES,
         .isOpen           = FALSE,
+%if(common.getSocName() === "am65x"){
+        .isCqRingMem      = UDMA_COMP_QUEUE_RING_MEM_ENABLED,
+%}else{
+        .isCqRingMem      = UDMA_COMP_QUEUE_RING_MEM_DISABLED,
+%}
         },
    % }
 
