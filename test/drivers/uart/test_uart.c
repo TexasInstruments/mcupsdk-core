@@ -93,6 +93,10 @@ static void uart_autobaud_external_loopback_full_test(void *args);
 static void uart_write_cancel_external_loopback_full_test(void *args);
 static void uart_read_cancel_external_loopback_full_test(void *args);
 static void uart_six_bit_char_length_external_loopback_full_test(void *args);
+#if defined(SOC_AM65X)
+extern void UART_intr_router_configInit(void);
+extern void UART_intr_router_configDeinit(void);
+#endif
 
 void test_main(void *args)
 {
@@ -100,6 +104,9 @@ void test_main(void *args)
 
     Drivers_open();
     Board_driversOpen();
+    #if defined(SOC_AM65X)
+    UART_intr_router_configInit();
+    #endif
 
     UNITY_BEGIN();
 
@@ -184,7 +191,7 @@ void test_main(void *args)
     test_uart_set_params(&testParams, 12603);
     RUN_TEST(uart_read_cancel_external_loopback_full_test, 12603, (void*)&testParams);
 #endif
-    #if defined(SOC_AM64X) || defined(SOC_AM243X)
+    #if defined(SOC_AM64X) || defined(SOC_AM243X) || defined(SOC_AM65X)
     test_uart_set_params(&testParams, 2514);
     RUN_TEST(uart_echo_read_full_test_dmaMode, 2514, (void*)&testParams);
     #endif
@@ -196,6 +203,9 @@ void test_main(void *args)
 
     UNITY_END();
 
+    #if defined(SOC_AM65X)
+    UART_intr_router_configDeinit();
+    #endif
     Board_driversClose();
     Drivers_close();
 }
@@ -276,7 +286,7 @@ static void uart_echo_read_full_test(void *args)
     return;
 }
 
-#if defined(SOC_AM64X) || defined(SOC_AM243X)
+#if defined(SOC_AM64X) || defined(SOC_AM243X) || defined(SOC_AM65X)
 static void uart_echo_read_full_test_dmaMode(void *args)
 {
     int32_t          transferOK, status;
@@ -999,6 +1009,9 @@ static void test_uart_set_params(UART_TestParams *testParams, uint32_t tcId)
     #endif
     #if defined(SOC_AM62X)
     params->intrNum = CSLR_MCU_M4FSS0_CORE0_NVIC_MCU_UART0_USART_IRQ_0 + 16;
+    #endif
+    #if defined(SOC_AM65X)
+    params->intrNum = CSL_MCU0_INTR_MAIN2MCU_LVL_INTR0_OUTL_8;
     #endif
     switch (tcId)
     {
