@@ -153,6 +153,134 @@ int32_t SOC_moduleClockEnable(uint32_t moduleId, uint32_t enable)
     }
     return status;
 }
+int32_t SOC_moduleSetClockFrequencyWithParent(uint32_t moduleId, uint32_t clkId, uint32_t clkParent, uint64_t clkRate)
+{
+    int32_t status = SystemP_SUCCESS;
+    uint64_t respClkRate = 0;
+    uint32_t numParents = 0U;
+    uint32_t moduleClockParentChanged = 0U;
+    uint32_t clockStatus = 0U;
+    uint32_t origParent = 0U;
+    uint32_t foundParent = 0U;
+
+    /* Check if the clock is enabled or not */
+    status = Sciclient_pmModuleGetClkStatus(moduleId,
+                                            clkId,
+                                            &clockStatus,
+                                            SystemP_WAIT_FOREVER);
+    if (status == SystemP_SUCCESS)
+    {
+        /* Get the number of parents for the clock */
+        status = Sciclient_pmGetModuleClkNumParent(moduleId,
+                                                   clkId,
+                                                   &numParents,
+                                                   SystemP_WAIT_FOREVER);
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        if(numParents > 1U)
+        {
+            /* save the original parent to restore later */
+            status = Sciclient_pmGetModuleClkParent(moduleId,
+                                                    clkId,
+                                                    &origParent,
+                                                    SystemP_WAIT_FOREVER);
+        }
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        /* Disable the clock before changing the frequency */
+        status = Sciclient_pmModuleClkRequest(moduleId,
+                                              clkId,
+                                              TISCI_MSG_VALUE_CLOCK_SW_STATE_UNREQ,
+                                              0U,
+                                              SystemP_WAIT_FOREVER);
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        /* Check if given parent is valid */
+        if (clkParent > numParents)
+        {
+            status = SystemP_FAILURE;
+        }
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        /* Check if a parent change is needed, if yes set to new parent */
+        if (clkParent != origParent)
+        {
+            status = Sciclient_pmSetModuleClkParent(moduleId,
+                                                        clkId,
+                                                        clkParent,
+                                                        SystemP_WAIT_FOREVER);
+            if (status == SystemP_SUCCESS)
+            {
+                moduleClockParentChanged = 1U;
+            }
+        }
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        /* Check if the clock can be set to desired freq at this parent */
+        status = Sciclient_pmQueryModuleClkFreq(moduleId,
+                                                clkId,
+                                                clkRate,
+                                                &respClkRate,
+                                                SystemP_WAIT_FOREVER);
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        if(respClkRate == clkRate)
+        {
+            /* yes, found a parent at which this frequency can be set */
+            foundParent = 1U;
+        }
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        if(foundParent == 1U)
+        {
+            /* Set the clock at the desired frequency at the currently selected parent */
+            status = Sciclient_pmSetModuleClkFreq(moduleId,
+                                                  clkId,
+                                                  clkRate,
+                                                  TISCI_MSG_FLAG_CLOCK_ALLOW_FREQ_CHANGE,
+                                                  SystemP_WAIT_FOREVER);
+        }
+        else
+        {
+            /* no parent found to set the desired frequency */
+            status = SystemP_FAILURE;
+        }
+
+    }
+    if (status == SystemP_SUCCESS)
+    {
+        if (clockStatus == TISCI_MSG_VALUE_CLOCK_HW_STATE_NOT_READY)
+        {
+            /* Restore the clock again to original state */
+            status = Sciclient_pmModuleClkRequest(moduleId,
+                                                  clkId,
+                                                  clockStatus,
+                                                  0U,
+                                                  SystemP_WAIT_FOREVER);
+        }
+    }
+    if (status != SystemP_SUCCESS)
+    {
+        if (moduleClockParentChanged == 1U)
+        {
+            /* No parent found or some error, restore the parent to original value */
+            Sciclient_pmSetModuleClkParent(moduleId,
+                                           clkId,
+                                           origParent,
+                                           SystemP_WAIT_FOREVER);
+            /* let the failure status be returned, so not checking status for this API call */
+        }
+    }
+    return status;
+}
+
 
 int32_t SOC_moduleSetClockFrequency(uint32_t moduleId, uint32_t clkId, uint64_t clkRate)
 {
