@@ -177,7 +177,7 @@ int32_t SemaphoreP_pend(SemaphoreP_Object *obj, uint32_t timeout)
 
     if(tx_ret != TX_SUCCESS)
     {
-        if(tx_ret == TX_WAIT_ERROR)
+        if(tx_ret == TX_NO_INSTANCE)
         {
             status = SystemP_TIMEOUT;
         }
