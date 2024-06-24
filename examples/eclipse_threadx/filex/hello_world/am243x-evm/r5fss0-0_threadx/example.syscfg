@@ -43,7 +43,7 @@ const section11       = section.addInstance();
  */
 filex1.$name = "FILEX0";
 
-clock.usecPerTick = 10000;
+clock.usecPerTick = 1000;
 
 debug_log.enableUartLog        = true;
 debug_log.uartLog.$name        = "CONFIG_UART0";
