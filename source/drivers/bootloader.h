@@ -84,9 +84,6 @@ extern "C"
 #define BOOTLOADER_MEDIA_PCIE      (0xB0070006)
 #define BOOTLOADER_MEDIA_USB       (0xB0070007)
 
-#define BOOTLOADER_IMAGE_RPRC      (0U)
-#define BOOTLOADER_IMAGE_MCELF     (1U)
-
 /**
  * \brief Handle to the Bootloader driver returned by Bootloader_open()
  */
@@ -217,7 +214,6 @@ typedef struct Bootloader_Config_s
     uint32_t disableAppImageAuth;
     /* Whether to initialize ICSS cores or not */
     uint32_t initICSSCores;
-    uint32_t imageFormat;
 
 } Bootloader_Config;
 
@@ -292,9 +288,9 @@ Bootloader_Handle Bootloader_open(uint32_t instanceNum, Bootloader_Params *openP
 void Bootloader_close(Bootloader_Handle handle);
 
 /**
- * \brief API to load a non-self CPU
+ * \brief API to initialize a non-self CPU
  *
- * This API will load RPRC images a non-self CPU, i.e a CPU on which the bootloader application is not running. This API
+ * This API will initialize a non-self CPU, i.e a CPU on which the bootloader application is not running. This API
  * is not applicable for cores from self cluster. They will be loaded by the \ref Bootloader_loadSelfCpu API.
  *
  * NOTE: No checks are done to confirm non-self CPU ID is passed, user need to make sure non-self CPU ID is passed, else
@@ -303,11 +299,27 @@ void Bootloader_close(Bootloader_Handle handle);
  * \param handle  [in] Bootloader driver handle from \ref Bootloader_open
  * \param cpuInfo [in] Data structure containing information regarding the CPU. This should have been filled
  *                     by the \ref Bootloader_parseMultiCoreAppImage API
- * \param imageFormat [in] Image format of the binary to be loaded - RPRC/MCELF
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-int32_t Bootloader_loadCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo, uint32_t imageFormat);
+int32_t Bootloader_initCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo);
+
+/**
+ * \brief API to load a non-self CPU
+ *
+ * This API will load RPRC images on a non-self CPU, i.e a CPU on which the bootloader application is not running. This API
+ * is not applicable for cores from self cluster. They will be loaded by the \ref Bootloader_loadSelfCpu API.
+ *
+ * NOTE: No checks are done to confirm non-self CPU ID is passed, user need to make sure non-self CPU ID is passed, else
+ *       the load could fail.
+ *
+ * \param handle  [in] Bootloader driver handle from \ref Bootloader_open
+ * \param cpuInfo [in] Data structure containing information regarding the CPU. This should have been filled
+ *                     by the \ref Bootloader_parseMultiCoreAppImage API
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t Bootloader_loadCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo);
 
 /**
  * \brief API to load self CPU

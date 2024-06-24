@@ -106,7 +106,24 @@ void Bootloader_close(Bootloader_Handle handle)
     }
 }
 
-int32_t Bootloader_loadCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo, uint32_t imageFormat)
+int32_t Bootloader_initCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo)
+{
+    int32_t status = SystemP_SUCCESS;
+
+    status = Bootloader_socCpuRequest(cpuInfo->cpuId);
+
+    status = Bootloader_socCpuSetClock(cpuInfo->cpuId, cpuInfo->clkHz);
+
+    if(SystemP_SUCCESS == status)
+    {
+        Bootloader_Config *config = (Bootloader_Config *)handle;
+        status = Bootloader_socCpuPowerOnReset(cpuInfo->cpuId,config->socCoreOpMode);
+    }
+
+    return status;
+}
+
+int32_t Bootloader_loadCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo)
 {
     int32_t status = SystemP_SUCCESS;
 
@@ -122,7 +139,7 @@ int32_t Bootloader_loadCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo
 
     if(SystemP_SUCCESS == status)
     {
-        if( cpuInfo->rprcOffset != BOOTLOADER_INVALID_ID && imageFormat == BOOTLOADER_IMAGE_RPRC)
+        if( cpuInfo->rprcOffset != BOOTLOADER_INVALID_ID)
         {
             status = Bootloader_rprcImageLoad(handle, cpuInfo);
         }
@@ -163,7 +180,7 @@ int32_t Bootloader_runCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo)
     return status;
 }
 
-int32_t Bootloader_loadSelfCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo, uint32_t imageFormat)
+int32_t Bootloader_loadSelfCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo, uint32_t skipLoad)
 {
     int32_t status = SystemP_SUCCESS;
     uint32_t cpuId = cpuInfo->cpuId;
@@ -194,7 +211,7 @@ int32_t Bootloader_loadSelfCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpu
     {
         status = Bootloader_socMemInitCpu(cpuId);
     }
-    if((SystemP_SUCCESS == status) && (imageFormat == BOOTLOADER_IMAGE_RPRC))
+    if((SystemP_SUCCESS == status) && (skipLoad == FALSE))
     {
         if( cpuInfo->rprcOffset != BOOTLOADER_INVALID_ID)
         {
@@ -229,7 +246,7 @@ int32_t Bootloader_bootCpu(Bootloader_Handle handle, Bootloader_CpuInfo *cpuInfo
 {
     int32_t status = SystemP_SUCCESS;
 
-    status = Bootloader_loadCpu(handle, cpuInfo, 0); //change this when porting for SBL NULL
+    status = Bootloader_loadCpu(handle, cpuInfo);
 
     if(status == SystemP_SUCCESS)
     {
@@ -850,6 +867,7 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
     }
 
     int32_t i;
+	uint8_t initCpuDone[4] = {0};
 
     if(elfClass == ELFCLASS_32)
     {
@@ -859,6 +877,12 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
             {
                 if(elfPhdrPtr32[i].type == PT_LOAD)
                 {
+					uint8_t cpuId = gNoteSegBuffer[segmentMapIdx + i - 1];
+					if(!initCpuDone[cpuId])
+					{
+						status = Bootloader_initCpu(handle, &bootImageInfo->cpuInfo[cpuId]);
+						initCpuDone[cpuId] = 1;
+					}
                     config->fxns->imgSeekFxn(elfPhdrPtr32[i].offset, config->args);
                     uint32_t addr = Bootloader_socTranslateSectionAddr(gNoteSegBuffer[segmentMapIdx + i - 1], elfPhdrPtr32[i].vaddr);
                     config->fxns->imgReadFxn((void *)addr, elfPhdrPtr32[i].filesz, config->args);
