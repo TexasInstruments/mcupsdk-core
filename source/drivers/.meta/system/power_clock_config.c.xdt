@@ -32,6 +32,7 @@
 %%{
     let clockEnableTemplate = '/drivers/system/power_clock_module_enable.c.xdt'
     let clockSetFrequencyTemplate = '/drivers/system/power_clock_module_set_frequency.c.xdt'
+    let common = system.getScript("/common");
 %%}
 /*
  * Auto generated file
@@ -101,10 +102,10 @@ void Module_clockSetFrequency(void)
 
     while(gSocModulesClockFrequency[i].moduleId!=SOC_MODULES_END)
     {
-
+% if (common.getSocName() == "am64x" || common.getSocName() == "am243x") {
         if (gSocModulesClockFrequency[i].clkParentId != -1)
         {
-            //Set module clock to specified frequency and with a specific parent
+            /* Set module clock to specified frequency and with a specific parent */
             status = SOC_moduleSetClockFrequencyWithParent(
                         gSocModulesClockFrequency[i].moduleId,
                         gSocModulesClockFrequency[i].clkId,
@@ -114,14 +115,20 @@ void Module_clockSetFrequency(void)
         }
         else
         {
-            //Set module clock to specified frequency
+            /* Set module clock to specified frequency */
             status = SOC_moduleSetClockFrequency(
                         gSocModulesClockFrequency[i].moduleId,
                         gSocModulesClockFrequency[i].clkId,
                         gSocModulesClockFrequency[i].clkRate
                         );
         }
-
+% } else {
+        status = SOC_moduleSetClockFrequency(
+                    gSocModulesClockFrequency[i].moduleId,
+                    gSocModulesClockFrequency[i].clkId,
+                    gSocModulesClockFrequency[i].clkRate
+                    );
+% }
         DebugP_assertNoLog(status == SystemP_SUCCESS);
         i++;
     }
