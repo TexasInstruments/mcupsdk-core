@@ -47,7 +47,9 @@ typedef struct {
     uint32_t moduleId;
     uint32_t clkId;
     uint32_t clkRate;
+% if (common.getSocName() == "am64x" || common.getSocName() == "am243x") {
     uint32_t clkParentId;
+% }
 
 } SOC_ModuleClockFrequency;
 
@@ -66,7 +68,12 @@ SOC_ModuleClockFrequency gSocModulesClockFrequency[] = {
 `system.getTemplate(clockSetFrequencyTemplate)(subTemplate.moduleName)`
     % }
 % }
+% if (common.getSocName() == "am64x" || common.getSocName() == "am243x") {
     { SOC_MODULES_END, SOC_MODULES_END, SOC_MODULES_END, SOC_MODULES_END },
+% }
+% else {
+    { SOC_MODULES_END, SOC_MODULES_END, SOC_MODULES_END },
+% }
 };
 
 void Module_clockEnable(void)
