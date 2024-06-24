@@ -42,6 +42,7 @@ FILES_common := \
     DebugP_shmLogReader_freertos.c \
     TaskP_freertos.c \
     EventP_freertos.c \
+    MailboxP_freertos.c \
     event_groups.c \
     tasks.c \
     timers.c \

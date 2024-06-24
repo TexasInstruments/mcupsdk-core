@@ -19,6 +19,7 @@ const files_r5f = {
         // picked from freertos DPL
         "ClockP_freertos.c",
         "ClockP_freertos_r5.c",
+        "MailboxP_freertos.c",
         "DebugP_freertos.c",
         "DebugP_memTraceLogWriter.c",
         "DebugP_shmLogReader_freertos.c",
@@ -27,6 +28,7 @@ const files_r5f = {
         "HeapP_freertos.c",
         "SemaphoreP_freertos.c",
         "TaskP_freertos.c",
+        "MailboxP_freertos.c",
         // picked from freertos "kernel"
         "event_groups.c",
         "heap_3.c",

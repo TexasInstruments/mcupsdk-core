@@ -31,6 +31,7 @@ const files_r5f = {
         "DebugP_shmLogReader_freertos.c",
         "TaskP_freertos.c",
         "EventP_freertos.c",
+        "MailboxP_freertos.c",
         // picked from freertos "kernel"
         "event_groups.c",
         "tasks.c",

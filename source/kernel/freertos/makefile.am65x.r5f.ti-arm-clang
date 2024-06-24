@@ -31,6 +31,7 @@ FILES_common := \
     TimerP.c \
     ClockP_freertos.c \
     ClockP_freertos_r5.c \
+    MailboxP_freertos.c \
     DebugP_freertos.c \
     DebugP_memTraceLogWriter.c \
     DebugP_shmLogReader_freertos.c \
@@ -39,6 +40,7 @@ FILES_common := \
     HeapP_freertos.c \
     SemaphoreP_freertos.c \
     TaskP_freertos.c \
+    MailboxP_freertos.c \
     event_groups.c \
     heap_3.c \
     list.c \

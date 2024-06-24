@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -43,6 +43,7 @@
 #include <kernel/dpl/CycleCounterP.h>
 #include <kernel/dpl/EventP.h>
 #include <kernel/dpl/QueueP.h>
+#include <kernel/dpl/MailboxP.h>
 #include <drivers/soc.h>
 #include <unity.h>
 #include "ti_drivers_open_close.h"
@@ -65,6 +66,37 @@ int32_t gEventSet2StatusFromISR;
 int32_t gEventClearStatusFromISR;
 int32_t gEventGetBitsStatusFromISR;
 uint32_t gEventGetBitsFromISR;
+
+/* MailboxP Test Object and Definitions */
+#define TEST_MBOX_TASK_STACK_SIZE      (4*1024U)
+#define TEST_MBOX_TASK1_PRIO             (14U)
+#define TEST_MBOX_TASK2_PRIO             (14U)
+#define TEST_MBOX_MSG_SIZE               (10U)
+#define TEST_MBOX_BUFF_COUNT             (3U)
+
+struct test_mboxTaskTestParam
+{
+    MailboxP_Handle hMboxClientRx;
+    MailboxP_Handle hMboxClientTx;
+};
+
+struct test_mboxIsrTestParam
+{
+    MailboxP_Handle hMboxClientRx;
+    MailboxP_Handle hMboxClientTx;
+    int32_t numMsgs1;
+    int32_t numMsgs2;
+    int32_t status1AtIsr;
+    int32_t status2AtIsr;
+    uint8_t msgAtIsr[TEST_MBOX_MSG_SIZE];
+};
+
+static uint8_t gTestMboxTask1Stack[EVENT_TASK_STACK_SIZE] __attribute__((aligned(32)));
+static MailboxP_Object gMyMboxClientTx;
+static MailboxP_Object gMyMboxClientRx;
+static TaskP_Object gTestMboxTaskObj;
+static uint8_t gMailBoxBuff[TEST_MBOX_MSG_SIZE*TEST_MBOX_BUFF_COUNT];
+
 
 /* User defined heap memory and handle */
 #define MY_HEAP_MEM_SIZE (2 * 1024u)
@@ -688,6 +720,150 @@ void myTaskMain(void *args)
     TaskP_exit();
 }
 
+void test_MailboxTask1(void *args)
+{
+    struct test_mboxTaskTestParam* pTaskArgs = (struct test_mboxTaskTestParam*) args;
+    uint8_t msgBuff[TEST_MBOX_MSG_SIZE];
+
+    int32_t status = MailboxP_post(pTaskArgs->hMboxClientTx, "PINGT", SystemP_NO_WAIT);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+
+    status = MailboxP_pend(pTaskArgs->hMboxClientRx, msgBuff, SystemP_WAIT_FOREVER);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+
+    /* fill the \0 char to avoid mem overflows in error cases */
+    TEST_ASSERT_EQUAL_STRING("PONGM", msgBuff);
+    TaskP_exit();
+}
+
+static void testMboxEchoIsr(void *args)
+{
+    struct test_mboxIsrTestParam *pTestParms = (struct test_mboxIsrTestParam*) args;
+    pTestParms->numMsgs1 = MailboxP_getNumPendingMsgs(pTestParms->hMboxClientRx);
+    pTestParms->status1AtIsr = MailboxP_pend(pTestParms->hMboxClientRx, pTestParms->msgAtIsr, SystemP_NO_WAIT);
+    pTestParms->status2AtIsr = MailboxP_post(pTestParms->hMboxClientTx, pTestParms->msgAtIsr, SystemP_NO_WAIT);
+    pTestParms->numMsgs2 = MailboxP_getNumPendingMsgs(pTestParms->hMboxClientTx);
+}
+
+void test_mailbox(void *args)
+{
+    int32_t status;
+    MailboxP_Params mboxParams;
+    TaskP_Params    taskParams;
+    MailboxP_Handle mboxClientTxHandle;
+    MailboxP_Handle mboxClientRxHandle;
+    uint8_t msgBuff[TEST_MBOX_MSG_SIZE];
+    struct test_mboxTaskTestParam taskArgs;
+
+    MailboxP_Params_init(&mboxParams);
+    mboxParams.name = (uint8_t *)"testMbox";
+    mboxParams.buf  = (void *)gMailBoxBuff;
+    mboxParams.size =  TEST_MBOX_MSG_SIZE;
+    mboxParams.count = TEST_MBOX_BUFF_COUNT;
+    mboxParams.bufsize = TEST_MBOX_MSG_SIZE * TEST_MBOX_BUFF_COUNT;
+
+    mboxClientTxHandle = MailboxP_create(&gMyMboxClientTx, &mboxParams);
+    TEST_ASSERT_NOT_NULL(mboxClientTxHandle);
+
+    mboxClientRxHandle = MailboxP_create(&gMyMboxClientRx, &mboxParams);
+    TEST_ASSERT_NOT_NULL(mboxClientRxHandle);
+
+    taskArgs.hMboxClientTx = mboxClientTxHandle;
+    taskArgs.hMboxClientRx = mboxClientRxHandle;
+
+    TaskP_Params_init(&taskParams);
+    taskParams.name = "MAILBOX_TASK1";
+    taskParams.stackSize = TEST_MBOX_TASK_STACK_SIZE;
+    taskParams.stack = gTestMboxTask1Stack;
+    taskParams.priority = TEST_MBOX_TASK1_PRIO;
+    taskParams.args = &taskArgs;
+    taskParams.taskMain = test_MailboxTask1;
+
+
+    //############
+    TEST_ASSERT_EQUAL_INT32(0x0, MailboxP_getNumPendingMsgs(mboxClientTxHandle));
+    TEST_ASSERT_EQUAL_INT32(0x0, MailboxP_getNumPendingMsgs(mboxClientRxHandle));
+
+    status = MailboxP_pend(mboxClientTxHandle, msgBuff, SystemP_NO_WAIT);
+    TEST_ASSERT_EQUAL_INT32(SystemP_TIMEOUT, status);
+
+    status = TaskP_construct(&gTestMboxTaskObj, &taskParams);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+    status = MailboxP_pend(mboxClientTxHandle, msgBuff, SystemP_WAIT_FOREVER);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+    TEST_ASSERT_EQUAL_STRING("PINGT", msgBuff);
+
+    status = MailboxP_post(mboxClientRxHandle, "PONGM", SystemP_WAIT_FOREVER);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+    ClockP_sleep(1); // allow for test_MailboxTask1 to run
+    TaskP_destruct(&gTestMboxTaskObj);
+
+    //############
+    TEST_ASSERT_EQUAL_INT32(0x0, MailboxP_getNumPendingMsgs(mboxClientTxHandle));
+    TEST_ASSERT_EQUAL_INT32(0x0, MailboxP_getNumPendingMsgs(mboxClientRxHandle));
+    status = TaskP_construct(&gTestMboxTaskObj, &taskParams);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+    ClockP_sleep(1); // allow for test_MailboxTask1 to run
+
+    status = MailboxP_pend(mboxClientTxHandle, msgBuff, SystemP_NO_WAIT);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+    TEST_ASSERT_EQUAL_STRING("PINGT", msgBuff);
+
+    status = MailboxP_post(mboxClientRxHandle, "PONGM", SystemP_NO_WAIT);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+
+    TEST_ASSERT_EQUAL_INT32(0x1, MailboxP_getNumPendingMsgs(mboxClientRxHandle));
+    ClockP_sleep(1); // allow for test_MailboxTask1 to run
+    TEST_ASSERT_EQUAL_INT32(0x0, MailboxP_getNumPendingMsgs(mboxClientRxHandle));
+    TEST_ASSERT_EQUAL_INT32(0x0, MailboxP_getNumPendingMsgs(mboxClientTxHandle));
+    TaskP_destruct(&gTestMboxTaskObj);
+
+    //############
+    HwiP_Params hwiParams;
+    HwiP_Object hwiObj;
+
+    struct test_mboxIsrTestParam isrParams;
+    isrParams.hMboxClientTx = mboxClientTxHandle;
+    isrParams.hMboxClientRx = mboxClientRxHandle;
+    strcpy((char*)isrParams.msgAtIsr, "TEST");
+    isrParams.numMsgs1 = -1;
+    isrParams.numMsgs2 = -1;
+    isrParams.status1AtIsr = SystemP_FAILURE;
+    isrParams.status2AtIsr = SystemP_FAILURE;
+
+    HwiP_Params_init(&hwiParams);
+    hwiParams.intNum = TEST_INT_NUM;
+    hwiParams.callback = testMboxEchoIsr;
+    hwiParams.args = &isrParams;
+    status = HwiP_construct(&hwiObj, &hwiParams);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+
+    TEST_ASSERT_EQUAL_INT32(0x0, MailboxP_getNumPendingMsgs(mboxClientTxHandle));
+    TEST_ASSERT_EQUAL_INT32(0x0, MailboxP_getNumPendingMsgs(mboxClientRxHandle));
+
+    status = MailboxP_post(mboxClientRxHandle, "PONGM", SystemP_NO_WAIT);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+
+    HwiP_post(hwiParams.intNum);
+    status = MailboxP_pend(mboxClientTxHandle, msgBuff, SystemP_NO_WAIT);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, status);
+    TEST_ASSERT_EQUAL_STRING("PONGM", msgBuff);
+    HwiP_destruct(&hwiObj);
+
+    TEST_ASSERT_EQUAL_INT32(isrParams.numMsgs1, 1);
+    TEST_ASSERT_EQUAL_INT32(isrParams.numMsgs2, 1);
+    TEST_ASSERT_EQUAL_INT32(isrParams.status1AtIsr, SystemP_SUCCESS);
+    TEST_ASSERT_EQUAL_INT32(isrParams.status2AtIsr, SystemP_SUCCESS);
+    TEST_ASSERT_EQUAL_STRING("PONGM", isrParams.msgAtIsr);
+
+    TEST_ASSERT_EQUAL_INT32(0x0, MailboxP_getNumPendingMsgs(mboxClientTxHandle));
+    TEST_ASSERT_EQUAL_INT32(0x0, MailboxP_getNumPendingMsgs(mboxClientRxHandle));
+
+    //############
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, MailboxP_delete(mboxClientTxHandle));
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, MailboxP_delete(mboxClientRxHandle));
+}
+
 void test_task(void *args)
 {
     int32_t status;
@@ -1246,6 +1422,10 @@ void test_main(void *args)
     #if defined (OS_FREERTOS) || defined (OS_SAFERTOS)
     RUN_TEST(test_task, 294, NULL);
     RUN_TEST(test_event, 805, NULL);
+    #endif
+
+    #if defined (OS_FREERTOS)
+    RUN_TEST(test_mailbox, 13390, NULL);
     #endif
 
     #if defined(__ARM_ARCH_7R__) && defined(OS_FREERTOS)

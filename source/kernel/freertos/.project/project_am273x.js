@@ -30,6 +30,7 @@ const files_r5f = {
         "SemaphoreP_freertos.c",
         "TaskP_freertos.c",
         "EventP_freertos.c",
+        "MailboxP_freertos.c",
         // picked from freertos "kernel"
         "event_groups.c",
         "tasks.c",
@@ -81,6 +82,7 @@ const files_c66 = {
         "SemaphoreP_freertos.c",
         "TaskP_freertos.c",
         "EventP_freertos.c",
+        "MailboxP_freertos.c",
         // picked from freertos "kernel"
         "event_groups.c",
         "tasks.c",
