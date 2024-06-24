@@ -2,7 +2,7 @@
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "AM243x_ALV_beta" --package "ALV" --part "ALV" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
- * @versions {"tool":"1.19.0+3426"}
+ * @versions {"tool":"1.20.0+3587"}
  */
 
 /**
@@ -105,11 +105,13 @@ fsi_rx2.$name = "CONFIG_FSI_RX1";
 
 fsi_tx1.$name = "CONFIG_FSI_TX0";
 
-gpio1.$name                = "CONFIG_GPIO0";
-led1.peripheralDriver      = gpio1;
-gpio1.GPIO.gpioPin.$assign = "ECAP0_IN_APWM_OUT";
+gpio1.$name           = "CONFIG_GPIO0";
+led1.peripheralDriver = gpio1;
+gpio1.rx              = true;
+gpio1.GPIO_n.$assign  = "ECAP0_IN_APWM_OUT";
 
 gpio2.$name = "CONFIG_GPIO1";
+gpio2.rx    = true;
 
 i2c1.$name               = "CONFIG_I2C0";
 eeprom1.peripheralDriver = i2c1;
@@ -286,7 +288,7 @@ section3.output_section[1].$name      = ".rodata";
 section3.output_section[1].palignment = true;
 
 section4.$name                        = "Data Segment";
-section4.load_memory                  = "MSRAM";
+section4.load_memory                  = "NON_CACHE_MEM";
 section4.output_section.create(1);
 section4.output_section[0].$name      = ".data";
 section4.output_section[0].palignment = true;
@@ -429,21 +431,19 @@ fsi_tx1.FSI_TX.$suggestSolution                    = "FSI_TX1";
 fsi_tx1.FSI_TX.CLK.$suggestSolution                = "GPMC0_WPn";
 fsi_tx1.FSI_TX.D0.$suggestSolution                 = "GPMC0_BE0n_CLE";
 fsi_tx1.FSI_TX.D1.$suggestSolution                 = "GPMC0_WAIT1";
-gpio1.GPIO.$suggestSolution                        = "GPIO1";
-gpio2.GPIO.$suggestSolution                        = "GPIO1";
-gpio2.GPIO.gpioPin.$suggestSolution                = "PRG0_PRU1_GPO11";
+gpio2.GPIO_n.$suggestSolution                      = "OSPI0_LBCLKO";
 i2c1.I2C.$suggestSolution                          = "I2C3";
 i2c1.I2C.SCL.$suggestSolution                      = "MCAN1_TX";
 i2c1.I2C.SDA.$suggestSolution                      = "MCAN1_RX";
-i2c2.I2C.$suggestSolution                          = "I2C1";
-i2c2.I2C.SCL.$suggestSolution                      = "I2C1_SCL";
-i2c2.I2C.SDA.$suggestSolution                      = "I2C1_SDA";
+i2c2.I2C.$suggestSolution                          = "I2C0";
+i2c2.I2C.SCL.$suggestSolution                      = "I2C0_SCL";
+i2c2.I2C.SDA.$suggestSolution                      = "I2C0_SDA";
 i2c3.I2C.$suggestSolution                          = "I2C2";
 i2c3.I2C.SCL.$suggestSolution                      = "GPMC0_CSn2";
 i2c3.I2C.SDA.$suggestSolution                      = "GPMC0_CSn3";
-i2c4.I2C.$suggestSolution                          = "I2C0";
-i2c4.I2C.SCL.$suggestSolution                      = "I2C0_SCL";
-i2c4.I2C.SDA.$suggestSolution                      = "I2C0_SDA";
+i2c4.I2C.$suggestSolution                          = "I2C1";
+i2c4.I2C.SCL.$suggestSolution                      = "I2C1_SCL";
+i2c4.I2C.SDA.$suggestSolution                      = "I2C1_SDA";
 mcan1.MCAN.$suggestSolution                        = "MCAN0";
 mcan1.MCAN.RX.$suggestSolution                     = "MCAN0_RX";
 mcan1.MCAN.TX.$suggestSolution                     = "MCAN0_TX";
