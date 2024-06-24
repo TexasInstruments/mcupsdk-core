@@ -45,6 +45,12 @@ const defines_nortos = {
     ],
 }
 
+const defines_threadx = {
+    common: [
+        "OS_THREADX"
+    ],
+}
+
 const libdirs_nortos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
@@ -57,6 +63,15 @@ const libdirs_freertos = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+        "${MCU_PLUS_SDK_PATH}/test/unity/lib",
+    ],
+};
+
+const libdirs_threadx = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
+        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/lib",
+        "${MCU_PLUS_SDK_PATH}/source/board/lib",
         "${MCU_PLUS_SDK_PATH}/test/unity/lib",
     ],
 };
@@ -85,6 +100,14 @@ const includes_freertos_m4f = {
     ],
 };
 
+const includes_threadx_r5f = {
+  common: [
+        "${MCU_PLUS_SDK_PATH}/test/unity/",
+        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/threadx_src/common/inc",
+        "${MCU_PLUS_SDK_PATH}/source/eclipse_threadx/threadx/ports/ti_arm_gcc_clang_cortex_r5/inc",
+    ],
+};
+
 const libs_nortos_r5f = {
     common: [
         "nortos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
@@ -100,6 +123,14 @@ const libs_freertos_r5f = {
         "unity.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
+
+const libs_threadx_r5f = {
+    common: [
+        "threadx.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "unity.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+    ],  
+}
 
 const libs_nortos_r5f_gcc = {
     common: [
@@ -163,6 +194,17 @@ const templates_freertos_r5f =
     }
 ];
 
+const templates_threadx_r5f =
+[
+    {
+        input: ".project/templates/am243x/threadx/main_threadx.c.xdt",
+        output: "../main.c",
+        options: {
+            entryFunction: "test_main",
+        },
+    }
+];
+
 const templates_nortos_r5f_gcc =
 [
     {
@@ -210,6 +252,7 @@ const templates_freertos_m4f =
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "threadx"},
     { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "nortos"},
     { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp",  os: "nortos"},
@@ -218,6 +261,7 @@ const buildOptionCombos = [
     { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am243x-lp",  os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm", os: "freertos"},
+    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm", os: "threadx"},
     { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-lp",  os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-lp",  os: "freertos"},
 ];
@@ -229,7 +273,7 @@ function getComponentProperty() {
     property.type = "executable";
     property.name = "test_dpl";
     property.isInternal = true;
-    property.skipProjectSpec = true;
+    property.skipProjectSpec = false;
     property.buildOptionCombos = buildOptionCombos;
 
     return property;
@@ -264,6 +308,14 @@ function getComponentBuildProperty(buildOption) {
                 build_property.libs = libs_freertos_r5f;
                 build_property.templates = templates_freertos_r5f;
             }
+        }
+        else if (buildOption.os.match(/threadx*/))
+        {
+            build_property.includes = includes_threadx_r5f;
+            build_property.libdirs = libdirs_threadx;
+            build_property.defines = defines_threadx;
+            build_property.libs = libs_threadx_r5f;
+            build_property.templates = templates_threadx_r5f;
         }
         else
         {
