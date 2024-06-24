@@ -39,7 +39,7 @@ const section11       = section.addInstance();
 /**
  * Write custom configuration values to the imported modules.
  */
-clock.usecPerTick = 10000;
+clock.usecPerTick = 1000;
 
 debug_log.enableUartLog        = true;
 debug_log.uartLog.$name        = "CONFIG_UART0";
