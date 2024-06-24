@@ -71,7 +71,7 @@ function getGpioPinRequirements(interfaceName, pinName)
     let pinConfig = soc.getPinConfigurables(interfaceName, pinName);
     let interfacePins;
 
-    if (interfaceName == "GPIO" && !(common.getSocName() == "am64x" || common.getSocName() == "am273x" || common.getSocName() == "awr294x")){
+    if (interfaceName == "GPIO" && !(common.getSocName() == "am65x" || common.getSocName() == "am64x" || common.getSocName() == "am273x" || common.getSocName() == "awr294x")){
         interfacePins = Object.keys(system.deviceData.interfaces[interfaceName].interfacePins[interfaceName].pinMappings);
     }
     else {
