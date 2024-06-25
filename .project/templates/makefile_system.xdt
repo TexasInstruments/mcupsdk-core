@@ -54,10 +54,15 @@ CORE_`numProjects`_IMG=../`project.cpu`_`project.os`/`project.cgt`/`args.project
 
 SYSTEM_FLAG := true
 
-all: syscfg
+all: postBuild
+
+corebuild: syscfg
 % for (let project of args.project.projects) {
 	$(MAKE) -C ../`project.cpu`_`project.os`/`project.cgt`/ all SYSTEM_FLAG=${SYSTEM_FLAG}
 % }
+
+
+postBuild: corebuild
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME)
 % if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)
