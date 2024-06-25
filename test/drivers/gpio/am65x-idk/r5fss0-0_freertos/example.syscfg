@@ -11,6 +11,7 @@
 const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
 const gpio1      = gpio.addInstance();
 const gpio2      = gpio.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
 const mpu_armv71 = mpu_armv7.addInstance();
 const mpu_armv72 = mpu_armv7.addInstance();
@@ -30,6 +31,16 @@ gpio1.WKUP_GPIO.gpioPin.$assign = "WKUP_GPIO0_1";
 gpio2.$name                     = "GPIO_PUSH_BUTTON";
 gpio2.WKUP_GPIO.$assign         = "WKUP_GPIO0";
 gpio2.WKUP_GPIO.gpioPin.$assign = "MCU_OSPI0_CSn1";
+
+debug_log.enableUartLog                   = true;
+debug_log.uartLog.$name                   = "CONFIG_UART0";
+debug_log.uartLog.useMcuDomainPeripherals = true;
+debug_log.uartLog.MCU_UART.$assign        = "MCU_USART0";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
 
 mpu_armv71.size         = 31;
 mpu_armv71.allowExecute = false;
@@ -57,3 +68,11 @@ mpu_armv75.$name    = "MSMC_SRAM_MEM_MAP";
 mpu_armv76.baseAddr = 0x80000000;
 mpu_armv76.size     = 31;
 mpu_armv76.$name    = "DDR_MEM_MAP";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+debug_log.uartLog.MCU_UART.RXD.$suggestSolution = "MCU_OSPI1_D1";
+debug_log.uartLog.MCU_UART.TXD.$suggestSolution = "MCU_OSPI1_D2";

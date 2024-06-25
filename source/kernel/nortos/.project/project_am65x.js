@@ -13,6 +13,7 @@ const files_r5f = {
         "DebugP_nortos.c",
         "DebugP_shmLogWriter.c",
         "DebugP_shmLogReader.c",
+        "DebugP_uartLogWriter.c",
         "EventP_nortos.c",
         "HeapP_internal.c",
         "HeapP_nortos.c",

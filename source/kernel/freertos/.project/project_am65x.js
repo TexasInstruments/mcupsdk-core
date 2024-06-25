@@ -9,6 +9,7 @@ const files_r5f = {
         "DebugP_shmLogWriter.c",
         "DebugP_shmLogReader.c",
         "DebugP_log.c",
+        "DebugP_uartLogWriter.c",
         "HwiP_armv7r_vim.c",
         "HeapP_internal.c",
         "MpuP_armv7r.c",
