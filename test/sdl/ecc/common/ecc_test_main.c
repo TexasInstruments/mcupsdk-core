@@ -155,7 +155,7 @@ void tearDown(void)
 }
 #endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,
@@ -484,7 +484,7 @@ static int32_t ECC_appTest(uint32_t testId)
     switch (testId)
     {
         case ECC_ERROR_TEST_ID:
-#if defined(SOC_AM263X) || defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 #if defined(R5F_INPUTS)
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
             /* Clear all status registers of MSS AGGRA ECC AGGR.*/
@@ -569,7 +569,7 @@ static int32_t ECC_appTest(uint32_t testId)
             break;
 
         case ECC_FUNC_TEST_ID:
-#if defined(SOC_AM263X) || defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 #if defined(R5F_INPUTS)
             testResult = ECC_ip_funcTest();
 #elif defined(C66_INPUTS)

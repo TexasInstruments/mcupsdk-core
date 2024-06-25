@@ -55,7 +55,7 @@
 #if defined(SOC_AM263X)
 #include <sdl/esm/v0/sdl_esm.h>
 #endif
-#if defined(SOC_AM263PX)
+#if defined(SOC_AM263PX) || defined(SOC_AM261X)
 #include <sdl/esm/v2/sdl_esm.h>
 #endif
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
@@ -74,7 +74,7 @@ extern "C" {
     @{
  *
  */
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined(SOC_AM261X)
 
 #define SDL_SOC_ECC_AGGR                                            (0U)
 #define SDL_R5FSS0_CORE0_ECC_AGGR                                   (1U)
@@ -85,8 +85,10 @@ extern "C" {
 #define SDL_ICSSM_ICSS_G_CORE_BORG_ECC_AGGR                         (6U)
 #define SDL_MCAN0_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (7U)
 #define SDL_MCAN1_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (8U)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX)
 #define SDL_MCAN2_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (9U)
 #define SDL_MCAN3_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (10U)
+#endif
 #if defined(SOC_AM263PX)
 #define SDL_MCAN4_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (11U)
 #define SDL_MCAN5_MCANSS_MSGMEM_WRAP_ECC_AGGR                       (12U)
@@ -200,7 +202,7 @@ extern "C" {
 /* The following are the memory sub type for Memory type
    SDL_ECC_MEMTYPE_MCU_R5F0_CORE & SDL_ECC_MEMTYPE_MCU_R5F1_CORE */
 /* Keeping for backward-compatibility. Recommend to use RAM_ID directly from sdlr_soc_ecc_aggr.h file */
-#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM273X) || defined(SOC_AWR294X) || defined(SOC_AM263X) || defined(SOC_AM263PX) || defined(SOC_AM261X)
 /** \brief Select memory subtype ATCM0 BANK0 */
 #define SDL_ECC_R5F_MEM_SUBTYPE_ATCM0_BANK0_VECTOR_ID (SDL_R5FSS0_CORE0_ECC_AGGR_PULSAR_SL_ATCM0_BANK0_RAM_ID)
 /** \brief Select memory subtype ATCM0 BANK1 */
@@ -538,7 +540,7 @@ void SDL_ECC_applicationCallbackFunction(SDL_ECC_MemType eccMemType,
                                          uint32_t ramId,
                                          uint64_t bitErrorOffset,
                                          uint32_t bitErrorGroup);
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined(SOC_AM261X)
 /** ============================================================================
  *
  * \brief   Injects ECC TCM Parity error
@@ -671,7 +673,7 @@ int32_t SDL_ECC_tpccParity(SDL_ECC_MemType eccMemType,
 							  uint32_t paramregvalue,
 							  uint32_t regval);
 
-#if defined(SOC_AM263PX)
+#if defined(SOC_AM263PX) || defined(SOC_AM261X)
 /** ============================================================================
  *
  * \brief   Enable TMU ROM Parity

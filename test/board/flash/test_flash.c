@@ -48,7 +48,7 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 #define TEST_FLASH_OFFSET_BASE      (0x10000U)
 #else
 #define TEST_FLASH_OFFSET_BASE      (0x200000U)
@@ -170,7 +170,7 @@ static void test_flash_readwrite(void *args)
         retVal |= memcmp(gFlashTestTxBuf, gFlashTestRxBuf, TEST_FLASH_DATA_SIZE);
     }
 
-#if defined(SOC_AM263PX)
+#if defined(SOC_AM263PX) || defined (SOC_AM261X)
     Flash_reset(gFlashHandle[CONFIG_FLASH0]);
 #endif
     TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);

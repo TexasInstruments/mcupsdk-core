@@ -66,7 +66,7 @@
 #define APP_MCSPI_PERF_LOOP_ITER_CNT        (1000U)
 #define APP_MCSPI_MAX_BITRATE_INDEX         (13U)
 
-#if defined(SOC_AM263X) || defined (SOC_AM263PX)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 
 #define MCSPI0_BASE_ADDRESS             (CSL_MCSPI0_U_BASE)
 #define MCSPI1_BASE_ADDRESS             (CSL_MCSPI1_U_BASE)
@@ -80,6 +80,7 @@
 #define MCSPI3_INT_NUM                  (CSLR_R5FSS0_CORE0_INTR_MCSPI3_INTR)
 #define MCSPI4_INT_NUM                  (CSLR_R5FSS0_CORE0_INTR_MCSPI4_INTR)
 
+<<<<<<< HEAD
 #elif defined(SOC_AM64X)
 
 #ifdef R5F_CORE
@@ -109,6 +110,19 @@
 #define MCSPI3_INT_NUM                  (CSLR_GICSS0_SPI_MCSPI3_INTR_SPI_0)
 #define MCSPI4_INT_NUM                  (CSLR_GICSS0_SPI_MCSPI4_INTR_SPI_0)
 #endif
+=======
+#elif defined(SOC_AM261X)
+
+#define MCSPI0_BASE_ADDRESS             (CSL_MCSPI0_U_BASE)
+#define MCSPI1_BASE_ADDRESS             (CSL_MCSPI1_U_BASE)
+#define MCSPI2_BASE_ADDRESS             (CSL_MCSPI2_U_BASE)
+#define MCSPI3_BASE_ADDRESS             (CSL_MCSPI3_U_BASE)
+
+#define MCSPI0_INT_NUM                  (CSLR_R5FSS0_CORE0_INTR_MCSPI0_INTR)
+#define MCSPI1_INT_NUM                  (CSLR_R5FSS0_CORE0_INTR_MCSPI1_INTR)
+#define MCSPI2_INT_NUM                  (CSLR_R5FSS0_CORE0_INTR_MCSPI2_INTR)
+#define MCSPI3_INT_NUM                  (CSLR_R5FSS0_CORE0_INTR_MCSPI3_INTR)
+>>>>>>> 21435fbf641 (am261x: infra: am261x porting)
 
 #else
 
@@ -247,7 +261,7 @@ void test_main(void *args)
     test_mcspi_set_params(&testParams, 336);
     RUN_TEST(test_mcspi_loopback, 336, (void*)&testParams);
 /* AM263X does not support MCU_SPI instance */
-#if !(defined(SOC_AM263X) || defined (SOC_AM263PX))
+#if !(defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X))
 /* AM243 LP we, have only 2 instances available */
 #if (CONFIG_MCSPI_NUM_INSTANCES > 2)
     test_mcspi_set_params(&testParams, 970);
@@ -260,7 +274,7 @@ void test_main(void *args)
     test_mcspi_set_params(&testParams, 972);
     RUN_TEST(test_mcspi_loopback,  972, (void*)&testParams);
 #endif
-#if !defined(SOC_AM64X) && !defined(SOC_AM243X) && !defined(SOC_AM263X) && !defined (SOC_AM263PX)
+#if !defined(SOC_AM64X) && !defined(SOC_AM243X) && !defined(SOC_AM263X) && !defined (SOC_AM263PX) || defined (SOC_AM261X)
     test_mcspi_set_params(&testParams, 973);
     RUN_TEST(test_mcspi_loopback,  973, (void*)&testParams);
 #endif
@@ -2687,7 +2701,7 @@ static void test_mcspi_set_params(MCSPI_TestParams *testParams, uint32_t tcId)
             openParams->transferCallbackFxn    = test_mcspi_callback;
             break;
 /* AM263X does not support MCU_SPI instance */
-#if !(defined(SOC_AM263X) || defined (SOC_AM263PX))
+#if !(defined(SOC_AM263X) || defined (SOC_AM263PX)) || defined (SOC_AM261X)
 #if (CONFIG_MCSPI_NUM_INSTANCES > 2)
         case 970:
             attrParams->baseAddr           = CSL_MCU_MCSPI0_CFG_BASE;

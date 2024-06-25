@@ -83,7 +83,7 @@ static void RTISetClockSource(uint32_t rtiModuleSelect,
 {
 #if !defined(SOC_TPR12) && !defined (SOC_AWR294X) /* No need to set clock for TPR12 */
     switch (rtiModuleSelect) {
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
         case SDL_WDT0_U_BASE:
             HW_WR_FIELD32(SDL_MCU_CTRL_MMR0_CFG0_BASE +
                           SDL_MCU_CTRL_MMR_CFG0_MCU_RTI0_CLKSEL,
@@ -316,7 +316,7 @@ int32_t SDL_RTI_funcTest(void)
 static void IntrDisable(uint32_t intsrc)
 {
     uint32_t intrStatus;
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     SDL_RTI_getStatus(SDL_INSTANCE_WDT0, &intrStatus);
     SDL_RTI_clearStatus(SDL_INSTANCE_WDT0, intrStatus);
 #elif defined (R5F_INPUTS)
@@ -343,7 +343,7 @@ static void IntrDisable(uint32_t intsrc)
 #endif
 #endif
    /* Clear ESM registers. */
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     SDL_ESM_disableIntr(SDL_ESM_U_BASE, intsrc);
     SDL_ESM_clrNError(SDL_INSTANCE_ESM0);
 #endif
@@ -355,7 +355,7 @@ static void IntrDisable(uint32_t intsrc)
 
 }
 
-#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,  uint32_t index, uint32_t intSrc, void *arg)
 {

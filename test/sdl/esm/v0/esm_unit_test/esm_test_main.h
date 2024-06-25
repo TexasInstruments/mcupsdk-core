@@ -52,7 +52,7 @@
 #include <sdl/esm/v0/v0_0/sdl_esm_priv.h>
 #endif
 
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
 #include <sdl/esm/v2/sdl_esm.h>
 #include <sdl/esm/v2/v2_0/sdl_esm_priv.h>
 #endif
@@ -85,8 +85,14 @@
 #include <sdl/include/am263px/sdlr_soc_baseaddress.h>
 #include <sdl/esm/soc/am263px/sdl_esm_core.h>
 #endif
+#if defined (SOC_AM261X)
+#include <sdl/include/am261x/sdlr_soc_baseaddress.h>
+#include <sdl/esm/soc/am261x/sdl_esm_core.h>
+#endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+
+
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 #define SDL_TEST_ESM_BASE  SDL_TOP_ESM_U_BASE
 #define ESM_TEST_BASE SDL_TOP_ESM_U_BASE
 

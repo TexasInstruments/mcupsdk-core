@@ -43,7 +43,7 @@
 int32_t sdl_ecc_bus_safety_negTest(void)
 {
     int32_t  testStatus = SDL_APP_TEST_PASS;
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     SDL_ECC_BUS_SAFETY_staticRegs regs;
 #endif
 #if defined (SUBSYS_DSS)
@@ -429,7 +429,7 @@ SDL_ECC_BUS_SAFETY_staticRegs regs;
 #endif
 #endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {

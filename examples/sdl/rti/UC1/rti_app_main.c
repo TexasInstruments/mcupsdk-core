@@ -60,7 +60,7 @@
 /*                         Macros                                            */
 /*===========================================================================*/
 /* None */
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 #define SDL_ESM0_INSTANCE SDL_ESM_INST_MAIN_ESM0
 #endif
 /* R5F Core for AM273x & AWR294x */
@@ -91,7 +91,7 @@ typedef struct {
 
 } SOC_SDL_ModuleClockFrequency;
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 SOC_SDL_ModuleClockFrequency sdl_gSocModulesClockFrequency[] = {
     { SOC_RcmPeripheralId_WDT0, SOC_RcmPeripheralClockSource_SYS_CLK, 32000 },
 
@@ -110,7 +110,7 @@ SOC_SDL_ModuleClockFrequency sdl_gSocModulesClockFrequency[] = {
 static int32_t Sdl_Module_clockEnable()
 {
     int32_t status;
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
         status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_WDT0, 1);
 #endif
 #if defined (SOC_AM273X) || (SOC_AWR294X)
@@ -133,7 +133,7 @@ static int32_t Sdl_Module_clockSetFrequency()
 }
 #endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 SDL_ESM_config RTI_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -211,7 +211,7 @@ SDL_ESM_config RTI_Test_esmInitConfig_MAIN =
 #endif
 #endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                    SDL_ESM_IntType esmIntType,
                                                    uint32_t grpChannel,
@@ -284,7 +284,7 @@ void test_sdl_rti_baremetal_test_app (void)
      Board_driversOpen();
 
 
-#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     void *ptr = (void *)&arg;
 #endif
 

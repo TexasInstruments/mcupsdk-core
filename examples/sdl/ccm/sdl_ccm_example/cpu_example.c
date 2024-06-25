@@ -68,7 +68,7 @@
  */
 int32_t cpu_example_app(uint32_t instance);
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                                    SDL_ESM_IntType esmIntrType,
                                                    uint32_t grpChannel,
@@ -91,7 +91,7 @@ static uint32_t arg;
 volatile bool ESMError = false;
 int32_t loop=0;
 
-#if defined(SOC_AM263X) || defined (SOC_AM263PX)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 SDL_ESM_config CCM_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -223,7 +223,7 @@ int32_t CCM_Test_init (int32_t instNum)
 
     if (retValue == 0) {
         /* Initialize MAIN ESM module */
-#if defined(SOC_AM263X) || defined (SOC_AM263PX)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
         result = SDL_ESM_init(ESM_INSTANCE, &CCM_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
 #endif
 #if defined(SOC_AM273X)||defined(SOC_AWR294X)
@@ -270,7 +270,7 @@ int32_t CCM_Test_init (int32_t instNum)
 int32_t CCM_funcTest(void)
 {
     int32_t    testResult = 0;
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 	int32_t loopCnt=2;
 #endif
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
@@ -336,7 +336,7 @@ int32_t cpu_example_app(uint32_t ccmcore)
 /* ========================================================================== */
 /*                            Internal Function Definition                    */
 /* ========================================================================== */
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,

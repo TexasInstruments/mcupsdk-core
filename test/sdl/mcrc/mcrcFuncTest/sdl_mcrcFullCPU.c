@@ -74,7 +74,7 @@ static SDL_MCRC_ConfigParams_t testParams[2] =
 		MCU_MCRC64_0,
 #endif
 
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 		MCRC0,
 #endif
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
@@ -96,7 +96,7 @@ static SDL_MCRC_ConfigParams_t testParams[2] =
 #if defined(SOC_AM64X)  || defined (SOC_AM243X)
 		MCU_MCRC64_0,
 #endif
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 		MCRC0,
 #endif
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
@@ -185,7 +185,7 @@ int32_t sdl_mcrcFullCPU_main(void)
 
         if (result != SDL_PASS)
         {
-#if defined (SOC_AM263X) || defined(SOC_AM263PX)
+#if defined (SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
             if (testParams[testCase].instance == MCRC0 )
             {
                 DebugP_log("\n Full_CPU mode MCRC signature verification failed for the instance MCRC0 \n\n");
@@ -213,7 +213,7 @@ int32_t sdl_mcrcFullCPU_main(void)
         }
         else
         {
-#if defined (SOC_AM263X) || defined(SOC_AM263PX)
+#if defined (SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
             if (testParams[testCase].instance == MCRC0 )
             {
                 DebugP_log("\n Full_CPU mode MCRC signature verification done successfully for the instance MCRC0 \n\n ");

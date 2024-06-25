@@ -44,6 +44,9 @@ extern "C"
 #if defined (SOC_AM263PX)
 #include <sdl/include/am263px/soc_config.h>
 #endif
+#if defined (SOC_AM261X)
+#include <sdl/include/am261x/soc_config.h>
+#endif
 #if defined (SOC_AM273X)
 #include <sdl/include/am273x/soc_config.h>
 #endif

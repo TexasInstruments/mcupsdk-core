@@ -80,7 +80,7 @@ sdlDccTest_t  sdlDccTestList[] = {
     {NULL,             "TERMINATING CONDITION",  SDL_APP_TEST_NOT_RUN }
 };
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 SDL_ESM_config DCC_Test_esmInitConfig_MAIN =
 {
       .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -207,7 +207,7 @@ void test_sdl_dcc_baremetal_test_app (void)
     sdlApp_print("\n DCC Function Test Application\r\n");
 
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     /* Initialize MAIN DCC module */
     result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &DCC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
 

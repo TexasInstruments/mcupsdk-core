@@ -80,7 +80,7 @@ static int32_t CCM_IP_test(uint32_t instanceId)
 	/* initialize the address */
 	pRegs        = (SDL_vimRegs *)(uintptr_t)SDL_MSS_VIM_R5A_U_BASE;
 #endif
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 	uint32_t intrNum = SDL_R5FSS0_CORE0_INTR_ESM0_ESM_INT_HI;
 	/* initialize the address */
 	pRegs        = (SDL_vimRegs *)(uintptr_t)SDL_VIM_U_BASE;

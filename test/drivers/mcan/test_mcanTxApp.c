@@ -378,7 +378,7 @@ int32_t st_mcanTxApp_main(st_mcanTestcaseParams_t *testParams)
             gMcanBaseAddr = DEF_MCAN_MODULE;
         }
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
         if (testParams->testcaseId == 1235)
         {
             gMcanBaseAddr = CONFIG_MCAN2_BASE_ADDR;

@@ -92,7 +92,7 @@ SDL_ESM_config SDTF_esmInitConfig_MAIN_appcallback =
     /**< All events high priority: except clkstop for unused clocks
      *   and PCIE events */
 };
-#elif defined (SOC_AM263X) || defined (SOC_AM263PX)
+#elif defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 SDL_ESM_config SDTF_esmInitConfig_MAIN_appcallback =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -348,7 +348,7 @@ int32_t Negative_test_priv_file(void)
     int32_t retVal=0;
     uint32_t esmInstBaseAddr;
     SDL_ErrType_t result;
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
     result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &SDTF_esmInitConfig_MAIN_appcallback,SDL_ESM_applicationCallbackFunction, NULL);
 #elif defined(SOC_AM64X)
     result = SDL_ESM_init(SDL_ESM_INST_MCU_ESM0, &SDTF_esmInitConfig_MCU_appcallback,SDL_ESM_applicationCallbackFunction, NULL);
@@ -357,7 +357,7 @@ int32_t Negative_test_priv_file(void)
     {
         DebugP_log("SDL_ESM_init: failure \r\n");
     }
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
     SDL_ESM_getBaseAddr(SDL_ESM_INST_MAIN_ESM0, &esmInstBaseAddr);
 #elif defined(SOC_AM64X)
     SDL_ESM_getBaseAddr(SDL_ESM_INST_MCU_ESM0, &esmInstBaseAddr);
@@ -386,7 +386,7 @@ int32_t Negative_test_priv_file(void)
     {
         DebugP_log("sdlEsm_apiTest: failure on line no. %d \r\n", __LINE__);
     }
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
     retVal =SDTF_runESMInjectInstance(SDL_ESM_INST_MAIN_ESM0, 1, 8);
 #elif defined(SOC_AM64X)
     retVal =SDTF_runESMInjectInstance(SDL_ESM_INST_MCU_ESM0, 1, 8);

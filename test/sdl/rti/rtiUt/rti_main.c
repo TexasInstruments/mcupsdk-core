@@ -104,7 +104,7 @@ typedef struct {
 
 } SOC_SDL_ModuleClockFrequency;
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 SOC_SDL_ModuleClockFrequency sdl_gSocModulesClockFrequency[] = {
     { SOC_RcmPeripheralId_WDT0, SOC_RcmPeripheralClockSource_SYS_CLK, 32000 },
 
@@ -122,7 +122,7 @@ SOC_SDL_ModuleClockFrequency sdl_gSocModulesClockFrequency[] = {
 static int32_t Sdl_Module_clockEnable()
 {
     int32_t status;
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     status =  SOC_moduleClockEnable(SOC_RcmPeripheralId_WDT0, 1);
 #endif
 #if defined (SOC_AM273X) || (SOC_AWR294X)

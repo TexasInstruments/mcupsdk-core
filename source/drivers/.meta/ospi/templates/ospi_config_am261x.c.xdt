@@ -1,0 +1,94 @@
+%%{
+    let module = system.modules['/drivers/ospi/ospi'];
+    let emdaCount = 0;
+    for(let i = 0; i < module.$instances.length; i++)
+    {
+        let instance = module.$instances[i];
+        if(instance.dmaEnable === true)
+        {
+            emdaCount += 1;
+        }
+    }
+%%}
+/*
+ * OSPI
+ */
+
+% let dmaRestrictRegions = module.getDmaRestrictedRegions();
+
+/* Regions restricted for DMA. We should use CPU memcpy in these cases */
+static OSPI_AddrRegion gOspiDmaRestrictRegions[] =
+{
+% for(let i = 0; i < dmaRestrictRegions.length; i++) {
+    % let region = dmaRestrictRegions[i];
+    {
+        .regionStartAddr = `region.start`,
+        .regionSize      = `region.size`,
+    },
+% }
+    {
+        .regionStartAddr = 0xFFFFFFFFU,
+        .regionSize      = 0U,
+    }
+};
+
+/* OSPI attributes */
+static OSPI_Attrs gOspiAttrs[CONFIG_OSPI_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    % let config = module.getInstanceConfig(instance);
+    % let name = config.name;
+    {
+        .baseAddr             = `config.baseAddr`,
+        .dataBaseAddr         = `config.dataBaseAddr`,
+        .inputClkFreq         = `config.inputClkFreq`U,
+        .intrNum              = `config.intrNum`U,
+        .intrEnable           = `config.intrEnable.toString(10).toUpperCase()`,
+        .intrPriority         = `config.intrPriority`U,
+        .dmaEnable            = `config.dmaEnable.toString(10).toUpperCase()`,
+        .phyEnable            = `config.phyEnable.toString(10).toUpperCase()`,
+        .dacEnable            = `config.dacEnable.toString(10).toUpperCase()`,
+        .chipSelect           = OSPI_`config.chipSelect`,
+        .frmFmt               = OSPI_FF_`config.frmFmt`,
+        .decChipSelect        = `config.decChipSelect`,
+        .baudRateDiv          = `config.baudRateDiv`,
+        .dmaRestrictedRegions = gOspiDmaRestrictRegions,
+    },
+% }
+};
+/* OSPI objects - initialized by the driver */
+static OSPI_Object gOspiObjects[CONFIG_OSPI_NUM_INSTANCES];
+/* OSPI driver configuration */
+OSPI_Config gOspiConfig[CONFIG_OSPI_NUM_INSTANCES] =
+{
+% for(let i = 0; i < module.$instances.length; i++) {
+    % let instance = module.$instances[i];
+    {
+        &gOspiAttrs[`instance.$name.toUpperCase()`],
+        &gOspiObjects[`instance.$name.toUpperCase()`],
+    },
+% }
+};
+
+uint32_t gOspiConfigNum = CONFIG_OSPI_NUM_INSTANCES;
+
+#include <drivers/ospi/v0/dma/ospi_dma.h>
+#include <drivers/ospi/v0/dma/edma/ospi_dma_edma.h>
+% if(emdaCount > 0) {
+OspiDma_EdmaArgs gOspiEdmaArgs[`module.$instances.length`];
+
+OSPI_DmaConfig gOspiDmaConfig[CONFIG_OSPI_NUM_DMA_INSTANCES] =
+{
+%for(let i = 0; i < module.$instances.length; i++) {
+    {
+        .fxns        = &gOspiDmaEdmaFxns,
+        .ospiDmaArgs = &(gOspiEdmaArgs[`i`])
+    }
+%}
+};
+% } else {
+    OspiDma_EdmaArgs gOspiEdmaArgs[] = {0};
+    OSPI_DmaConfig gOspiDmaConfig[] = {0};
+% }
+uint32_t gOspiDmaConfigNum = CONFIG_OSPI_NUM_DMA_INSTANCES;

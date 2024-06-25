@@ -40,7 +40,7 @@ extern "C"
 
 #include <drivers/hw_include/soc_config.h>
 
-#if defined (SOC_AM263X) || defined (SOC_AM273X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM273X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 #include <drivers/mpu_firewall/v0/mpu_firewall.h>
 #endif
 

@@ -43,7 +43,7 @@
 int32_t sdl_ip_mcrcNegTest(void)
 {
     int32_t               testStatus = SDL_APP_TEST_PASS;
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     SDL_MCRC_InstType     instance = MCRC0;
 #endif
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
@@ -427,7 +427,7 @@ int32_t sdl_ip_mcrcPosTest(void)
 	SDL_MCRC_InstType     endInstance = MCU_MCRC64_0 ;
 #endif
 
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 	SDL_MCRC_InstType     startInstance = MCRC0;
 	SDL_MCRC_InstType     endInstance = MCRC0;
 #endif

@@ -157,7 +157,7 @@
 /* Print buffer character limit for prints- UART or CCS Console */
 #define APP_PRINT_BUFFER_SIZE                       (4000)
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 #define CONFIG_MCAN_TS_INTRNUM                      (CSLR_R5FSS0_CORE0_INTR_MCAN0_EXT_TS_ROLLOVER_LVL_INT_0)
 #elif defined (SOC_AM62X)
 #define CONFIG_MCAN_TS_INTRNUM                      (CSLR_MCU_M4FSS0_CORE0_NVIC_MCU_MCAN0_COMMON_0_MCANSS_EXT_TS_ROLLOVER_LVL_INT_0)
@@ -354,7 +354,7 @@ int32_t App_mcanRegisterInterrupt(uint32_t modIdx)
     status              = HwiP_construct(&gMcanHwiObject1, &hwiPrms);
     DebugP_assert(status == SystemP_SUCCESS);
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     /* Register MCAN0 interrupt */
     HwiP_Params_init(&hwiPrms);
     hwiPrms.intNum      = CONFIG_MCAN2_INTR;
@@ -394,7 +394,7 @@ int32_t App_mcanUnRegisterInterrupt(uint32_t modIdx)
     HwiP_destruct(&gMcanHwiObject1);
     HwiP_destruct(&gMcanHwiObject2);
     HwiP_destruct(&gMcanHwiObject3);
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     HwiP_destruct(&gMcanHwiObject4);
     HwiP_destruct(&gMcanHwiObject5);
 #endif
@@ -462,7 +462,7 @@ void App_mcanIntr1ISR(void *arg)
     }
 }
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 void App_mcanIntr2ISR(void *arg)
 {
     uint32_t intrStatus;

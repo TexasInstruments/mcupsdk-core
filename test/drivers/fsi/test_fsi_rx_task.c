@@ -98,7 +98,7 @@ void fsi_rx_main(void *args)
     FSI_clearRxModuleReset(rxBaseAddr, FSI_RX_MAIN_CORE_RESET);
     status = FSI_performRxInitialization(rxBaseAddr);
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     if(rxTestParams->udataFilterTest == TRUE)
     {
         FSI_enableRxDataFilter(rxBaseAddr);
@@ -199,7 +199,7 @@ void fsi_rx_main(void *args)
             FSI_getRxECCLog(rxBaseAddr, &rxEccLog);
             DebugP_assert(rxEccLog == 0U);
         }
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
         if(rxTestParams->udataFilterTest == TRUE)
         {
             uint16_t userData;
@@ -220,7 +220,7 @@ void fsi_rx_main(void *args)
 
     Fsi_appRxIntrDeInit(rxBaseAddr, rxTestParams);
     FSI_disableRxInternalLoopback(rxBaseAddr);
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     if(rxTestParams->udataFilterTest == TRUE)
     {
         FSI_disableRxDataFilter(rxBaseAddr);

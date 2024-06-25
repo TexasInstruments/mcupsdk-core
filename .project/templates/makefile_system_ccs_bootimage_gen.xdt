@@ -59,7 +59,7 @@ BOOTIMAGE_CORE_ID_m4fss0-0 = 14
 SBL_RUN_ADDRESS=0x70000000
 SBL_DEV_ID=55
 % }
-% if( (args.project.device == "am263x")  || (args.project.device == "am263px")){
+% if( (args.project.device == "am263x")  || (args.project.device == "am263px") || (args.project.device == "am261x")){
 BOOTIMAGE_CORE_ID_r5fss0-0 = 0
 BOOTIMAGE_CORE_ID_r5fss0-1 = 1
 BOOTIMAGE_CORE_ID_r5fss1-0 = 2
@@ -94,7 +94,7 @@ OUTRPRC_CMD = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
 % if ((args.project.device == "am243x") || (args.project.device == "am64x")) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
 % }
-% if ((args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 % }
 
@@ -141,7 +141,7 @@ else
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
 endif
 % }
-% if ((args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED),no)
@@ -171,7 +171,7 @@ endif
 % }
 % }
 
-% if ((args.project.device == "am243x") || (args.project.device == "am64x") || (args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am243x") || (args.project.device == "am64x") || (args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 ifeq ($(DEVICE_TYPE),HS)
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME).hs Done !!!
 else

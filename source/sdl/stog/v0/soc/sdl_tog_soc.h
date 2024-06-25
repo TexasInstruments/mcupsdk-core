@@ -53,6 +53,10 @@ extern "C" {
 #include <sdl/stog/v0/soc/am263px/sdl_soc_tog.h>
 #endif /* SOC_AM263PX */
 
+#if defined (SOC_AM261X)
+#include <sdl/stog/v0/soc/am261x/sdl_soc_tog.h>
+#endif /* SOC_AM261X */
+
 #ifdef __cplusplus
 }
 #endif  /* extern "C" */

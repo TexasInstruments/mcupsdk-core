@@ -53,6 +53,9 @@ extern "C"
 #include <drivers/hw_include/am263px/soc_config.h>
 #endif
 
+#if defined (SOC_AM261X)
+#include <drivers/hw_include/am261x/soc_config.h>
+#endif
 
 #if defined (SOC_AM273X)
 #include <drivers/hw_include/am273x/soc_config.h>

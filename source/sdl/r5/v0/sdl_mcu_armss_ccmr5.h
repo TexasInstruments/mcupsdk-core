@@ -93,7 +93,7 @@ typedef enum SDL_McuArmssCcmR5RegId_e
     /**< register id for KEY register 3 */
     SDL_MCU_ARMSS_CCMR5_POLCNTRL_REGID = (6u),
     /**< register id for Polatiry Control Reg */
-#ifdef SOC_AM263PX
+#if defined (SOC_AM263PX) || (SOC_AM261X)
     SDL_MCU_ARMSS_CCMR5_CCMKEYR5_REGID = (7u),
     /**< register id for KEY register 5 */
     SDL_MCU_ARMSS_CCMR5_CCMSR5_REGID = (8u),
@@ -125,7 +125,7 @@ typedef enum SDL_McuArmssCcmR5ModuleId_e
     /**< module id for VIM */
     SDL_MCU_ARMSS_CCMR5_INACTIVITY_MONITOR_MODULE_ID = (2u),
     /**< module id for Inactivity monitor */
-#ifdef SOC_AM263PX
+#if defined (SOC_AM263PX) || (SOC_AM261X)
     SDL_MCU_ARMSS_CCMR5_TMU_MODULE_ID = (3u),
     /**< module id for TMU */
     SDL_MCU_ARMSS_CCMR5_RL2_MODULE_ID = (4u),

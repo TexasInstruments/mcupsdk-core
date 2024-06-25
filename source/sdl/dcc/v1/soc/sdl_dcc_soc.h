@@ -50,6 +50,10 @@ extern "C" {
 #include <sdl/dcc/v1/soc/am263px/sdl_soc_dcc.h>
 #endif /* SOC_AM263PX */
 
+#if defined (SOC_AM261X)
+#include <sdl/dcc/v1/soc/am261x/sdl_soc_dcc.h>
+#endif /* SOC_AM261X */
+
 #if defined (SOC_AWR294X)
 #include <sdl/esm/soc/awr294x/sdl_esm_soc.h>
 #include <sdl/include/awr294x/sdlr_mss_ctrl.h>

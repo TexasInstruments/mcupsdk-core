@@ -81,7 +81,7 @@ typedef enum {
     /**< CCM output compare block monitor type */
     SDL_CCM_MONITOR_TYPE_VIM = 2,
     /**< CCM VIM block monitor type */
-#ifdef SOC_AM263PX
+#if defined (SOC_AM263PX) || (SOC_AM261X)
     SDL_CCM_MONITOR_TYPE_TMU = 3,
     /**< CCM TMU block monitor type */
     SDL_CCM_MONITOR_TYPE_RL2 = 4,
@@ -125,7 +125,7 @@ typedef struct {
 	volatile uint32_t CCMKEYR2;          /* MKEY2 value */
 	volatile uint32_t CCMKEYR3;          /* MKEY3 value */
 	volatile uint32_t CCMPOLCNTRL;       /* POL_INV value */
-#ifdef SOC_AM263PX
+#if defined (SOC_AM263PX) || (SOC_AM261X)
 	volatile uint32_t CCMKEYR5;          /* MKEY5 value */
 	volatile uint32_t CCMKEYR6;          /* MKEY6 value */
 #endif

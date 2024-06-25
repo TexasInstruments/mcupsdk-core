@@ -42,7 +42,7 @@
 #include "tog_test_main.h"
 #include <dpl_interface.h>
 #include<kernel/dpl/HwiP.h>
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
 #include <sdl/sdl_exception.h>
 #include <sdl/r5/v0/sdl_interrupt.h>
 #endif
@@ -232,7 +232,7 @@ int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
 }
 #endif
 
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
 extern uint8_t SDL_TOG_interruptDone;
 /* This is the list of exception handle and the parameters */
 const SDL_R5ExptnHandlers TOG_Test_R5ExptnHandlers =
@@ -409,7 +409,7 @@ void TOG_injectESMError(uint32_t instanceIndex)
         DebugP_log("   Inject SDL_TOG_init TimeoutVal Failed \r\n");
         /* Assert */
     }
-#if !defined (SOC_AM263PX)
+#if !defined (SOC_AM263PX) || defined (SOC_AM261X)
     if(instanceIndex==0)
 	{
 	  SDL_REG32_RD(END_POINT_ACCESS0);
@@ -507,7 +507,7 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
         }
     }
 
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
     SDL_TOG_registerInterrupt();
     /* Initialise exception handler */
     TOG_exceptionInit();
@@ -524,7 +524,7 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
     if (result == 0)
     {
         /* Timeout if exceeds time */
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
         while ((!SDL_TOG_interruptDone)
 #else
         while ((!handlerFlag)
@@ -534,7 +534,7 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
             timeoutCount++;
         }
 
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
         if (!(SDL_TOG_interruptDone))
 #else
         if (!(handlerFlag))
@@ -548,7 +548,7 @@ int32_t tog_minTimeout(uint32_t instanceIndex)
         }
         /* reset Done flag so we can run again */
         handlerFlag = false;
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
         SDL_TOG_interruptDone = false;
 #endif
     }

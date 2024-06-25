@@ -61,6 +61,11 @@
 #if defined(SOC_AM263PX)
 #include <sdl/include/am263px/sdlr_soc_ecc_aggr.h>
 #endif
+#if defined(SOC_AM261X)
+#include <sdl/include/am261x/sdlr_soc_ecc_aggr.h>
+#endif
+#if defined(SOC_AM273X)
+
 #if defined(SOC_AM273X)
 #include <sdl/include/am273x/sdlr_soc_ecc_aggr.h>
 #endif
@@ -186,7 +191,7 @@ SDL_ESM_NotifyParams ECC_TestparamsMSS[SDL_ESM_MAX_MSS_EXAMPLE_AGGR] =
 };
 #endif
 
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 
 static uint32_t arg;
 
@@ -251,7 +256,7 @@ int32_t ECC_Example_init (void)
 {
     int32_t retValue=0;
     SDL_ErrType_t result;
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
     void *ptr = (void *)&arg;
 #endif
     /* Initialise exception handler */
@@ -273,7 +278,7 @@ int32_t ECC_Example_init (void)
     }
     if (retValue == 0) {
         /* Initialize ESM module */
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
         result = SDL_ESM_init(SDL_ESM_INST_MAIN_ESM0, &ECC_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
 #endif
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
@@ -411,7 +416,7 @@ static int32_t ECC_sdlFuncTest(void)
 
     if (retVal == 0)
     {
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
         result = ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_2BitInjectTest();
 #endif
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
@@ -432,7 +437,7 @@ static int32_t ECC_sdlFuncTest(void)
             } while (esmError == false);
         }
         if(result == SDL_PASS){
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
             DebugP_log("\r\nUC-1: Injected 2-bit error and got ESM Interrupt\r\n");
 #endif
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
@@ -448,7 +453,7 @@ static int32_t ECC_sdlFuncTest(void)
         }
     }
     if (retVal == 0) {
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 
         result = ECC_Test_run_R5FSS0_CORE0_ATCM0_BANK0_1BitInjectTest();
 #endif
@@ -463,7 +468,7 @@ static int32_t ECC_sdlFuncTest(void)
                 timeOutCnt += 10;
                 if (timeOutCnt > maxTimeOutMilliSeconds)
                 {
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
                     result = SDL_EFAIL;
 #endif
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
@@ -474,7 +479,7 @@ static int32_t ECC_sdlFuncTest(void)
             } while (esmError == false);
         }
         if(result == SDL_PASS){
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
             DebugP_log("\r\nUC-2: Injected 1-bit error and got ESM Interrupt\r\n");
 #endif
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)

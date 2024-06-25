@@ -46,7 +46,7 @@
     bool event;
     uint32_t esmBaseAddr;
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 static SDL_ESM_config ESM_esmInitConfig_MAIN_appcallback =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -161,7 +161,7 @@ int32_t sdl_Esm_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
         instance = SDL_ESM_INST_MAIN_ESM0;
 #endif
 
@@ -381,7 +381,7 @@ int32_t sdl_Esm_negTest(void)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
         instance = SDL_ESM_INST_MAIN_ESM0;
 #endif
         if (SDL_ESM_getStaticRegisters(instance, NULL) != SDL_EBADARGS)
@@ -445,7 +445,7 @@ int32_t sdl_Esm_negTest(void)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         instance = SDL_ESM_INSTANCE_MAX;
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 		if ((SDL_ESM_registerECCCallback(instance, ESM_esmInitConfig_MAIN_appcallback.enableBitmap,
                                              SDL_ESM_applicationCallbackFunction, &apparg) != SDL_EFAIL))
 #endif
@@ -463,7 +463,7 @@ int32_t sdl_Esm_negTest(void)
     /*  Negative test for API SDL_ESM_init  */
     if (testStatus == SDL_APP_TEST_PASS)
     {
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
         instance = SDL_ESM_INST_MAIN_ESM0;
 #endif
         if (SDL_ESM_init(instance, NULL, NULL, NULL) != SDL_EBADARGS)

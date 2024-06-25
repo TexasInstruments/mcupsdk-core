@@ -646,7 +646,7 @@ int32_t SDL_ESM_registerCCMCallback(SDL_ESM_Inst esmInstType,uint32_t eventBitma
 		}
 	}
 #endif
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
         retval = Esmhandlerinit(instance);
     }
 #endif

@@ -68,7 +68,7 @@
 #if defined(SOC_AM263X)
 #include <sdl/esm/v0/sdl_esm.h>
 #endif
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
 #include <sdl/esm/v2/sdl_esm.h>
 #endif
 #include <drivers/hw_include/csl_types.h>
@@ -798,7 +798,7 @@ extern int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_RED_FI_Global_Main_Test(void);
 #endif
 
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 /* Node MSS_AHB_CR5A */
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_CR5A_AHB_RED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_CR5A_AHB_RED_FI_Main_Test(void);
@@ -950,7 +950,7 @@ extern int32_t SDL_ECC_BUS_SAFETY_MSS_MMC_RED_FI_Main_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_MMC_RED_FI_Safe_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_MMC_RED_FI_Global_Main_Test(void);
 
-#if !defined(SOC_AM263PX)
+#if !defined(SOC_AM263PX) || defined (SOC_AM261X)
 /* Node MSS_GPMC */
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPMC_RED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPMC_DED_Test(void);
@@ -1112,7 +1112,7 @@ extern int32_t SDL_ECC_BUS_SAFETY_MSS_MMC_RED_FI_Main_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_MMC_RED_FI_Safe_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_MMC_RED_FI_Global_Main_Test(void);
 
-#if !defined(SOC_AM263PX)
+#if !defined(SOC_AM263PX) || defined (SOC_AM261X)
 /* Node MSS_GPMC */
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPMC_RED_Test(void);
 extern int32_t SDL_ECC_BUS_SAFETY_MSS_GPMC_DED_Test(void);

@@ -40,7 +40,7 @@
 
 #include "mcrc_main.h"
 
-#if defined(SOC_AM263X)|| defined (SOC_AM64X) || defined (SOC_AM243X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X)|| defined (SOC_AM64X) || defined (SOC_AM243X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 #define SDL_MCRC_CHANNEL_MAXIMUM 4;
 #endif
 
@@ -51,7 +51,7 @@
 int32_t sdl_mcrc_posTest(void)
 {
     int32_t               testStatus = SDL_APP_TEST_PASS;
-#if defined (SOC_AM263X) || defined(SOC_AM263PX)
+#if defined (SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
     SDL_MCRC_InstType     instance = MCRC0;
 	SDL_MCRC_InstType     start_instance = MCRC0;
 	SDL_MCRC_InstType     end_instance = MCRC0;

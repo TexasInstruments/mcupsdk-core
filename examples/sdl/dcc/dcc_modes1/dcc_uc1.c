@@ -67,8 +67,13 @@ volatile SDL_DCC_Inst gCurDccInst;
 #if defined (SOC_AM263PX)
 #include <sdl/include/am263px/sdlr_intr_r5fss0_core0.h>
 #endif
+#if defined (SOC_AM261X)
+#include <sdl/include/am261x/sdlr_intr_r5fss0_core0.h>
+#endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+
+
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 
 #define NUM_USE_CASES          (0x9U)
 
@@ -528,7 +533,7 @@ static int32_t SDL_DCCAppWaitForCompletion();
 /*                         Global Variables                                  */
 /*===========================================================================*/
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 SDL_ESM_config DCC_Test_esmInitConfig_MAIN =
 {
       .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -701,7 +706,7 @@ static void SDL_DCCAppSetSeedVals(uint32_t       refClkFreq,
     }
     SDL_DCCAppPrint(APP_DCC_STR ": Seed values calculation done.\n");
 }
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,  uint32_t index, uint32_t intSrc, void *arg)
 {

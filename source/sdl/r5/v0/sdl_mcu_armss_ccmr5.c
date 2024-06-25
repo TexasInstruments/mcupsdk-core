@@ -68,7 +68,7 @@ static uint32_t SDL_armR5GetRegOffset(SDL_McuArmssCcmR5RegId  regId)
         case SDL_MCU_ARMSS_CCMR5_POLCNTRL_REGID:
             offset  = SDL_MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMPOLCNTRL;
             break;
-#ifdef SOC_AM263PX
+#if defined (SOC_AM263PX) || (SOC_AM261X)
         case SDL_MCU_ARMSS_CCMR5_CCMSR5_REGID:
             offset = SDL_MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMSR5;
             break;
@@ -264,7 +264,7 @@ int32_t SDL_armR5CCMSetOperationModeKey (
                       MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMKEYR3_MKEY3, \
                       mKey);
                  break;
-#ifdef SOC_AM263PX
+#if defined (SOC_AM263PX) || (SOC_AM261X)
             case SDL_MCU_ARMSS_CCMR5_TMU_MODULE_ID:
                 offset = SDL_armR5GetRegOffset(SDL_MCU_ARMSS_CCMR5_CCMKEYR5_REGID);
                 addr           = ((uint32_t) baseAddress + offset);
@@ -347,7 +347,7 @@ int32_t SDL_armR5CCMGetCompareError (
                 *pCmpError = SDL_REG32_FEXT(addr, \
                       MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMSR3_CMPE3);
                   break;
-#ifdef SOC_AM263PX
+#if defined (SOC_AM263PX) || (SOC_AM261X)
             case SDL_MCU_ARMSS_CCMR5_TMU_MODULE_ID:
                 offset = SDL_armR5GetRegOffset(SDL_MCU_ARMSS_CCMR5_CCMSR5_REGID);
                 addr           = ((uint32_t) baseAddress + offset);
@@ -429,7 +429,7 @@ int32_t SDL_armR5CCMGetOperationModeKey (
                       MCU_ARMSS_CCMR5_COMPARE_WRAPPER_CFG_MMRS_CCMKEYR3_MKEY3);
                      break;
 
-#ifdef SOC_AM263PX
+#if defined (SOC_AM263PX) || (SOC_AM261X)
             case SDL_MCU_ARMSS_CCMR5_TMU_MODULE_ID:
                     offset = SDL_armR5GetRegOffset(SDL_MCU_ARMSS_CCMR5_CCMKEYR3_REGID);
                     addr           = ((uint32_t) baseAddress + offset);
@@ -534,7 +534,7 @@ int32_t SDL_armR5CCMClearCompareError (
                       cmpE);
                      break;
 
-#ifdef SOC_AM263PX
+#if defined (SOC_AM263PX) || (SOC_AM261X)
             case SDL_MCU_ARMSS_CCMR5_TMU_MODULE_ID:
                      offset = SDL_armR5GetRegOffset(SDL_MCU_ARMSS_CCMR5_CCMSR3_REGID);
                      addr           = ((uint32_t) baseAddress + offset);

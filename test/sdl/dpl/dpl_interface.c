@@ -92,7 +92,7 @@ pSDL_DPL_HwipHandle SDL_TEST_registerInterrupt(SDL_DPL_HwipParams *pParams)
     int32_t objNum;
 
     hwipParams.args = (void *)pParams->callbackArg;
-#if !defined(SOC_AWR294X) && !defined(SOC_AM273X) && !defined(SOC_AM263X) && !defined(SOC_AM263PX)
+#if !defined(SOC_AWR294X) && !defined(SOC_AM273X) && !defined(SOC_AM263X) && !defined(SOC_AM263PX) || defined (SOC_AM261X)
     /*
      * For M4F, external interrupt #10 at NVIC is
      * 16 internal interrupts + external interrupt number at NVIC
@@ -132,7 +132,7 @@ int32_t SDL_TEST_deregisterInterrupt(pSDL_DPL_HwipHandle handle)
 
 int32_t SDL_TEST_enableInterrupt(uint32_t intNum)
 {
-#if !defined(SOC_AWR294X) && !defined(SOC_AM273X) && !defined(SOC_AM263X) && !defined(SOC_AM263PX)
+#if !defined(SOC_AWR294X) && !defined(SOC_AM273X) && !defined(SOC_AM263X) && !defined(SOC_AM263PX) || defined (SOC_AM261X)
 	/*
      * For M4F, external interrupt #10 at NVIC is
      * 16 internal interrupts + external interrupt number at NVIC
@@ -152,7 +152,7 @@ int32_t SDL_TEST_enableInterrupt(uint32_t intNum)
 
 int32_t SDL_TEST_disableInterrupt(uint32_t intNum)
 {
-#if !defined(SOC_AWR294X) && !defined(SOC_AM273X) && !defined(SOC_AM263X) && !defined(SOC_AM263PX)
+#if !defined(SOC_AWR294X) && !defined(SOC_AM273X) && !defined(SOC_AM263X) && !defined(SOC_AM263PX) || defined (SOC_AM261X)
     /*
      * For M4F, external interrupt #10 at NVIC is
      * 16 internal interrupts + external interrupt number at NVIC

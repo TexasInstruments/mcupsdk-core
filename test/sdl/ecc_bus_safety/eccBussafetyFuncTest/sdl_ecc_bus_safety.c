@@ -67,7 +67,7 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_SEC_test(uint32_t busSftyNode ,uint32_t ad
 #endif
 #endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 /* generalized helper function for red test  */
 static int32_t SDL_ECC_BUS_SAFETY_MSS_RED_test(const SDL_ESM_Inst esmInstType,SDL_ESM_config* params,\
        uint32_t busSftyNode, SDL_ECC_BUS_SAFETY_busSftyFiType fiType, SDL_ECC_BUS_SAFETY_busSftyFiRedType redType);
@@ -233,7 +233,7 @@ int32_t SDL_ECC_BUS_SAFETY_DAP_R232_DED_RED_ESM_ApplicationCallbackFunction(SDL_
 #endif
 #endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 /* Call back for DED and RED on MSS_CR5A_AHB */
 int32_t SDL_ECC_BUS_SAFETY_MSS_CR5A_AHB_DED_RED_ESM_ApplicationCallbackFunction(SDL_ESM_Inst esmInst, SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,  uint32_t index, uint32_t intSrc, void *arg);
@@ -516,7 +516,7 @@ volatile bool SDL_MSS_intrFlg[SDL_ECC_BUS_SAFETY_DAP_R232+1U];
 #endif
 
 
-#if  defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if  defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 volatile bool mssSecFlag = FALSE;
 volatile bool SDL_MSS_intrFlg[SDL_ECC_BUS_SAFETY_MSS_STM_STIM+1U];
 #endif
@@ -773,7 +773,7 @@ SDL_ESM_NotifyParams ECC_BUS_SAFETY_TestparamsMSS[30U] =
 #endif
 #endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
  SDL_ESM_config ECC_Bus_Safety_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -2080,7 +2080,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_GPMC_DED_RED_ESM_ApplicationCallbackFunction(SDL_
 }
 #endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 /********************************************************************************************************
 *   For Node MSS_L2_A ESM Callback Function
 *********************************************************************************************************/
@@ -3916,7 +3916,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_DMM_RED_FI_Global_Main_Test(void)
 #endif
 #endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 /********************************************************************************************************
 *   For Node MSS_L2_A
 *********************************************************************************************************/
@@ -4206,7 +4206,7 @@ int32_t SDL_ECC_BUS_SAFETY_MSS_CPSW_RED_FI_Global_Main_Test(void)
             SDL_ECC_BUS_SAFETY_MSS_CPSW, SDL_ECC_BUS_SAFETY_FI_GLOBAL_MAIN, SDL_ECC_BUS_SAFETY_MAIN_CMD_INTERFACE));
 }
 
-#if !defined(SOC_AM263PX)
+#if !defined(SOC_AM263PX) || defined (SOC_AM261X)
 /********************************************************************************************************
 *   For Node MSS_GPMC
 *********************************************************************************************************/
@@ -5505,7 +5505,7 @@ static int32_t SDL_ECC_BUS_SAFETY_MSS_RED_test(uint32_t busSftyNode, SDL_ECC_BUS
 #endif
 #endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 /********************************************************************************************************
 *   For SEC
 *********************************************************************************************************/

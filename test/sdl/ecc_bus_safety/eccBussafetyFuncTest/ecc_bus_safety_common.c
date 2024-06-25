@@ -451,7 +451,7 @@ void SDL_ECC_BUS_SAFETY_MSS_getEDMAParameters(uint32_t busSftyNode , uint32_t *d
             break;
         }
 #endif
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
         /* MSS TPTC A0 RD */
         case SDL_ECC_BUS_SAFETY_MSS_TPTC_A0_RD :
         {

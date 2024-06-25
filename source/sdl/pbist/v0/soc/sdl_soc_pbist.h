@@ -63,6 +63,11 @@ extern "C" {
 #include <sdl/pbist/v0/soc/am263px/sdl_ip_pbist.h>
 #endif /* SOC_AM263PX */
 
+#if defined (SOC_AM261X)
+#include <sdl/pbist/v0/soc/am261x/sdl_pbist_soc.h>
+#include <sdl/pbist/v0/soc/am261x/sdl_ip_pbist.h>
+#endif /* SOC_AM261X */
+
 #if defined (SOC_AM64X)
 #include <sdl/pbist/v0/soc/am64x/sdl_pbist_soc.h>
 #include <sdl/pbist/v0/soc/am64x/sdl_ip_pbist.h>

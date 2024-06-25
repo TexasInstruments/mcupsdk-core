@@ -25,6 +25,8 @@
         "AWR294X",
         "AM263x_beta",
         "AM263Px",
+        "AM261x_ZCZ",
+        "AM261x_ZFG",
         "AM62x",
         "AM65xx_SR2.0_beta",
     ],
@@ -142,6 +144,26 @@
             "name": "r5fss1-1",
             "targetdbId": "Cortex_R5_3"
         }, {
+            "name": "hsm0-0",
+            "targetdbId": "Cortex_M4_0"
+        }],
+        "AM261x_ZCZ": [{
+            "name": "r5fss0-0",
+            "targetdbId": "Cortex_R5_0"
+        }, {
+            "name": "r5fss0-1",
+            "targetdbId": "Cortex_R5_1"
+        },{
+            "name": "hsm0-0",
+            "targetdbId": "Cortex_M4_0"
+        }],
+        "AM261x_ZFG": [{
+            "name": "r5fss0-0",
+            "targetdbId": "Cortex_R5_0"
+        }, {
+            "name": "r5fss0-1",
+            "targetdbId": "Cortex_R5_1"
+        },{
             "name": "hsm0-0",
             "targetdbId": "Cortex_M4_0"
         }],

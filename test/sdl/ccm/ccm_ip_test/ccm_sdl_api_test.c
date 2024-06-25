@@ -53,7 +53,7 @@
 #if defined(SOC_AM263X)
 #include <sdl/esm/v0/sdl_esm.h>
 #endif
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
 #include <sdl/esm/v2/sdl_esm.h>
 #endif
 #if defined (SOC_AM273X)
@@ -133,7 +133,7 @@ int32_t CCM_sdlApiTest(void)
 {
     int32_t    testResult = 0;
 	int32_t    j = 0;
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 	int32_t loop=2;
 #endif
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)

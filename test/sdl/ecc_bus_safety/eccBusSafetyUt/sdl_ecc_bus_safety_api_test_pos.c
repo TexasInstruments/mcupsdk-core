@@ -43,7 +43,7 @@
 int32_t sdl_ecc_bus_safety_posTest(void)
 {
     int32_t  testStatus = SDL_APP_TEST_PASS;
-#if !defined (SOC_AM263PX)
+#if !defined (SOC_AM263PX) || defined (SOC_AM261X)
     SDL_ECC_BUS_SAFETY_staticRegs regs;
 #endif
     uint32_t writeData = 0x1234567U;
@@ -300,7 +300,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
     }
 #endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_secErrorClear(SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD) != SDL_PASS)
@@ -799,7 +799,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
 #endif
 
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_redErrorClear(SDL_ECC_BUS_SAFETY_MSS_CR5C_AXI_RD) != SDL_PASS)
@@ -1515,7 +1515,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
 #endif
 
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 
     if (testStatus == SDL_APP_TEST_PASS)
     {
@@ -1621,7 +1621,7 @@ int32_t sdl_ecc_bus_safety_posTest(void)
 
 #endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     if (testStatus == SDL_APP_TEST_PASS)
     {
         if (SDL_ECC_BUS_SAFETY_MSS_getSecErrorStatus(SDL_ECC_BUS_SAFETY_MSS_MBOX,&status) != SDL_PASS)

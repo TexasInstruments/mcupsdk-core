@@ -47,7 +47,10 @@ extern "C" {
 #endif /* SOC_AM263X */
 #if defined (SOC_AM263PX)
 #include <sdl/mcrc/v0/soc/am263px/sdl_mcrc_soc.h>
-#endif /* SOC_AM263X */
+#endif /* SOC_AM263PX */
+#if defined (SOC_AM261X)
+#include <sdl/mcrc/v0/soc/am261x/sdl_mcrc_soc.h>
+#endif /* SOC_AM261X */
 #if defined (SOC_AM64X)
 #include <sdl/mcrc/v0/soc/am64x/sdl_mcrc_soc.h>
 #endif /* SOC_AM64X */

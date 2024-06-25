@@ -57,7 +57,7 @@
 #if defined(SOC_AM263X)
 #include <sdl/esm/v0/sdl_esm.h>
 #endif
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
 #include <sdl/esm/v2/sdl_esm.h>
 #endif
 #if defined(SOC_AM273X)
@@ -73,7 +73,7 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-#if defined(SOC_AM263X) || defined (SOC_AM263PX)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 #define INSTANCE 		SDL_R5SS0_CCM
 #elif defined(SOC_AM273X) || defined(AWR294X)
 #define INSTANCE 		SDL_MSS_CCMR
@@ -85,7 +85,7 @@
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 extern int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                    SDL_ESM_IntType esmIntType,
                                                    uint32_t grpChannel,
@@ -103,7 +103,7 @@ int32_t SDL_ESM_applicationCallback(SDL_ESM_Inst esmInstType,
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 SDL_ESM_config CCM_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -527,7 +527,7 @@ int32_t CCM_Test_init (int32_t instNum, uint32_t indexNum)
     void *ptr = (void *)&arg;
 
     if (retValue == 0) {
-#if defined(SOC_AM263X) || defined (SOC_AM263PX)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
         result = SDL_ESM_init(ESM_INSTANCE, &CCM_Test_esmInitConfig_MAIN, SDL_ESM_applicationCallbackFunction, ptr);
 #endif
 #if defined(SOC_AM273X)||defined(SOC_AWR294X)
@@ -574,7 +574,7 @@ int32_t CCM_funcTest(void)
 {
     int32_t    testResult = 0;
 	int32_t    loop= 0;
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 	int32_t loopCnt=2;
 #endif
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
@@ -631,7 +631,7 @@ void func_test_main(void *args)
 /* ========================================================================== */
 /*                            Internal Function Definition                    */
 /* ========================================================================== */
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInstType,
                                                    SDL_ESM_IntType esmIntType,
                                                    uint32_t grpChannel,

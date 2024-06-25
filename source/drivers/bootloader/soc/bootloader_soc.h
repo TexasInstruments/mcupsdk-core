@@ -54,8 +54,9 @@ extern "C"
 #if defined (SOC_AM263PX)
 #include <drivers/bootloader/soc/am263px/bootloader_soc.h>
 #endif
-
-
+#if defined (SOC_AM261X)
+#include <drivers/bootloader/soc/am261x/bootloader_soc.h>
+#endif
 
 #ifdef __cplusplus
 }

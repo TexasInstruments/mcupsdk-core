@@ -530,7 +530,7 @@ sdlECCBusSftyTest_t  sdlEccBusSftyTestList[] = {
 
 #endif
 #endif
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     {SDL_ECC_BUS_SAFETY_MSS_CR5A_AHB_RED_Test,                       "CR5A_AHB_RED_Test in Interrupt  Method",                        SDL_APP_TEST_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_CR5B_AHB_RED_Test,                       "CR5B_AHB_RED_Test in Interrupt  Method",                        SDL_APP_TEST_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_CR5C_AHB_RED_Test,                       "CR5C_AHB_RED_Test in Interrupt  Method",                        SDL_APP_TEST_NOT_RUN },
@@ -638,7 +638,7 @@ sdlECCBusSftyTest_t  sdlEccBusSftyTestList[] = {
     {SDL_ECC_BUS_SAFETY_MSS_MMC_RED_FI_Safe_Test,                    "MSS_MMC_RED_Test with fi safe Interrupt Method",                SDL_APP_TEST_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_MMC_RED_FI_Global_Main_Test,             "MSS_MMC_RED_Test with fi global safe Interrupt Method",         SDL_APP_TEST_NOT_RUN },
 
-#if !defined(SOC_AM263PX)
+#if !defined(SOC_AM263PX) || defined (SOC_AM261X)
     /* Node MSS_GPMC */
     {SDL_ECC_BUS_SAFETY_MSS_GPMC_SEC_Test,                           "MSS_GPMC_SEC_Test in Interrupt  Method",                        SDL_APP_TEST_NOT_RUN },
     {SDL_ECC_BUS_SAFETY_MSS_GPMC_DED_Test,                           "MSS_GPMC_DED_Test in Interrupt  Method",                        SDL_APP_TEST_NOT_RUN },

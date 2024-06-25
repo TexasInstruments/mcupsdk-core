@@ -53,7 +53,7 @@ static HwiP_Object          gMpuFirewallHwiObject;
 static SemaphoreP_Object    gSemObject;
 HsmClient_t                 gHsmClient ;
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 /* main core that starts the message exchange */
 uint32_t gMainCoreId = CSL_CORE_ID_R5FSS0_0;
 /* remote cores that echo messages from main core, make sure to NOT list main core in this list */

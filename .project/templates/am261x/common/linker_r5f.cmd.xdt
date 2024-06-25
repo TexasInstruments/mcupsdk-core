@@ -1,0 +1,266 @@
+%%{
+    let options = args.options;
+
+    let stackSize = 16*1024;
+    let heapSize =  32*1024;
+    /* with nested interrupts logic added, IRQ stack is only used minimally, instead
+     * SVC stack is used, hence IRQ stack size is less as compared to SVC stack
+     */
+    let irqStackSize = 256;
+    let svcStackSize = 4*1024;
+    let fiqStackSize = 256;
+    let abortStackSize = 256;
+    let undefinedStackSize = 256;
+    let codeDataAddr = 0;
+    let codeDataSize = 0;
+    let codeDataAddrFlash = 0;
+    let codeDataSizeFlash = 0;
+    let useFlash = false;
+    let addrBase = 0;
+    let addrBaseFlash = 0;
+    let isSingleCore = false;
+    /* Temp change till we support DDR - alloc all memory to single core
+     * as we don't plan to run code coverage for system project */
+    if(args.isInstrumentation)
+    {
+        isSingleCore = true;
+    }
+    let isIcssPktBufEnable = false;
+
+    if(options && options.isXip)
+    {
+        useFlash = true;
+    }
+
+    /* if no options given use defaults */
+    if(options && options.stackSize)
+        stackSize = options.stackSize;
+    if(options && options.heapSize)
+        heapSize = options.heapSize;
+    if(options && options.irqStackSize)
+        irqStackSize = options.irqStackSize;
+    if(options && options.fiqStackSize)
+        fiqStackSize = options.fiqStackSize;
+    if(options && options.svcStackSize)
+        svcStackSize = options.svcStackSize;
+    if(options && options.abortStackSize)
+        abortStackSize = options.abortStackSize;
+    if(options && options.undefinedStackSize)
+        undefinedStackSize = options.undefinedStackSize;
+    if(options && options.isSingleCore)
+        isSingleCore = options.isSingleCore;
+    if(options && options.isIcssPktBufEnable)
+        isIcssPktBufEnable = options.isIcssPktBufEnable;
+
+    if(isSingleCore === true) {
+        codeDataSize = 0x40000 * 4;
+        codeDataSizeFlash = 0x80000;
+    }
+    else {
+        codeDataSize = 0x40000;
+        codeDataSizeFlash = 0x80000;
+    }
+
+    /* MSS mailbox memory */
+    let ipcShmAddrBase = 0x72000000;
+
+    /* offset from  top of codeDataAddrDdr where the code/data is actually placed,
+       the first codeDataOffsetDdr bytes are used for IPC in linux
+     */
+
+    addrBase = 0x70040000;
+    addrBaseFlash = 0x60100000;
+
+    if(isSingleCore === true) {
+        codeDataAddr    = addrBase;
+        codeDataAddrFlash = addrBaseFlash;
+    }
+    else {
+        if(args.project.cpu == "r5fss0-0") {
+            codeDataAddr    = addrBase + codeDataSize*0;
+            codeDataAddrFlash = addrBaseFlash + codeDataSizeFlash*0;
+        }
+        if(args.project.cpu == "r5fss0-1") {
+            codeDataAddr    = addrBase + codeDataSize*1;
+            codeDataAddrFlash = addrBaseFlash + codeDataSizeFlash*1;
+        }
+        if(args.project.cpu == "r5fss1-0") {
+            codeDataAddr    = addrBase + codeDataSize*2;
+            codeDataAddrFlash = addrBaseFlash + codeDataSizeFlash*2;
+        }
+        if(args.project.cpu == "r5fss1-1") {
+            codeDataAddr    = addrBase + codeDataSize*3;
+            codeDataAddrFlash = addrBaseFlash + codeDataSizeFlash*3;
+        }
+    }
+    if(options && options.codeDataAddr)
+        codeDataAddr = options.codeDataAddr;
+    if(options && options.codeDataSize)
+        codeDataSize = options.codeDataSize;
+    if(options && options.codeDataAddrFlash)
+        codeDataAddrFlash = options.codeDataAddrFlash;
+    if(options && options.codeDataSizeFlash)
+        codeDataSizeFlash = options.codeDataSizeFlash;
+%%}
+
+/* This is the stack that is used by code running within main()
+ * In case of NORTOS,
+ * - This means all the code outside of ISR uses this stack
+ * In case of FreeRTOS
+ * - This means all the code until vTaskStartScheduler() is called in main()
+ *   uses this stack.
+ * - After vTaskStartScheduler() each task created in FreeRTOS has its own stack
+ */
+--stack_size=`stackSize`
+/* This is the heap size for malloc() API in NORTOS and FreeRTOS
+ * This is also the heap used by pvPortMalloc in FreeRTOS
+ */
+--heap_size=`heapSize`
+-e_vectors  /* This is the entry of the application, _vector MUST be plabed starting address 0x0 */
+
+/* This is the size of stack when R5 is in IRQ mode
+ * In NORTOS,
+ * - Here interrupt nesting is enabled
+ * - This is the stack used by ISRs registered as type IRQ
+ * In FreeRTOS,
+ * - Here interrupt nesting is enabled
+ * - This is stack that is used initally when a IRQ is received
+ * - But then the mode is switched to SVC mode and SVC stack is used for all user ISR callbacks
+ * - Hence in FreeRTOS, IRQ stack size is less and SVC stack size is more
+ */
+__IRQ_STACK_SIZE = `irqStackSize`;
+/* This is the size of stack when R5 is in IRQ mode
+ * - In both NORTOS and FreeRTOS nesting is disabled for FIQ
+ */
+__FIQ_STACK_SIZE = `fiqStackSize`;
+__SVC_STACK_SIZE = `svcStackSize`; /* This is the size of stack when R5 is in SVC mode */
+__ABORT_STACK_SIZE = `abortStackSize`;  /* This is the size of stack when R5 is in ABORT mode */
+__UNDEFINED_STACK_SIZE = `undefinedStackSize`;  /* This is the size of stack when R5 is in UNDEF mode */
+
+SECTIONS
+{
+    /* This has the R5F entry point and vector table, this MUST be at 0x0 */
+    .vectors:{} palign(8) > R5F_VECS
+
+    /* This has the R5F boot code until MPU is enabled,  this MUST be at a address < 0x80000000
+     * i.e this cannot be placed in DDR
+     */
+    GROUP {
+        .text.hwi: palign(8)
+        .text.cache: palign(8)
+        .text.mpu: palign(8)
+        .text.boot: palign(8)
+        .text:abort: palign(8) /* this helps in loading symbols when using XIP mode */
+    } > OCRAM
+
+    /* This is rest of code. This can be placed in DDR if DDR is available and needed */
+    GROUP {
+        .text:   {} palign(8)   /* This is where code resides */
+        .rodata: {} palign(8)   /* This is where const's go */
+    % if(useFlash) {
+    } > FLASH
+    % } else {
+    } > OCRAM
+    % }
+
+    /* This is rest of initialized data. This can be placed in DDR if DDR is available and needed */
+    GROUP {
+
+        .data:   {} palign(8)   /* This is where initialized globals and static go */
+    } > OCRAM
+
+    /* This is rest of uninitialized data. This can be placed in DDR if DDR is available and needed */
+    GROUP {
+        .bss:    {} palign(8)   /* This is where uninitialized globals go */
+        RUN_START(__BSS_START)
+        RUN_END(__BSS_END)
+        .sysmem: {} palign(8)   /* This is where the malloc heap goes */
+        .stack:  {} palign(8)   /* This is where the main() stack goes */
+    } > OCRAM
+
+    % if(args.isInstrumentation) {
+    GROUP {
+        __llvm_prf_cnts: {} align(8)
+        RUN_START(__start___llvm_prf_cnts)
+        RUN_END(__stop___llvm_prf_cnts)
+    } > OCRAM
+
+    % }
+    /* This is where the stacks for different R5F modes go */
+    GROUP {
+        .irqstack: {. = . + __IRQ_STACK_SIZE;} align(8)
+        RUN_START(__IRQ_STACK_START)
+        RUN_END(__IRQ_STACK_END)
+        .fiqstack: {. = . + __FIQ_STACK_SIZE;} align(8)
+        RUN_START(__FIQ_STACK_START)
+        RUN_END(__FIQ_STACK_END)
+        .svcstack: {. = . + __SVC_STACK_SIZE;} align(8)
+        RUN_START(__SVC_STACK_START)
+        RUN_END(__SVC_STACK_END)
+        .abortstack: {. = . + __ABORT_STACK_SIZE;} align(8)
+        RUN_START(__ABORT_STACK_START)
+        RUN_END(__ABORT_STACK_END)
+        .undefinedstack: {. = . + __UNDEFINED_STACK_SIZE;} align(8)
+        RUN_START(__UNDEFINED_STACK_START)
+        RUN_END(__UNDEFINED_STACK_END)
+    } > OCRAM
+
+    /* Sections needed for C++ projects */
+    GROUP {
+        .ARM.exidx:  {} palign(8)   /* Needed for C++ exception handling */
+        .init_array: {} palign(8)   /* Contains function pointers called before main */
+        .fini_array: {} palign(8)   /* Contains function pointers called after main */
+    % if(useFlash) {
+    } > FLASH
+    % } else {
+    } > OCRAM
+    % }
+
+    % if (isIcssPktBufEnable) {
+    /* Packet buffer memory used by ICCS */
+    .bss.icss_emac_pktbuf_mem (NOLOAD): {} > ICSS_PKT_BUF_MEM
+    % }
+    /* General purpose user shared memory, used in some examples */
+    .bss.user_shared_mem (NOLOAD) : {} > USER_SHM_MEM
+    /* this is used when Debug log's to shared memory are enabled, else this is not used */
+    .bss.log_shared_mem  (NOLOAD) : {} > LOG_SHM_MEM
+    /* this is used only when IPC RPMessage is enabled, else this is not used */
+    .bss.ipc_vring_mem   (NOLOAD) : {} > RTOS_NORTOS_IPC_SHM_MEM
+    /* this is used only when Secure IPC is enabled */
+    .bss.sipc_hsm_queue_mem   (NOLOAD) : {} > MAILBOX_HSM
+    .bss.sipc_r5f_queue_mem   (NOLOAD) : {} > MAILBOX_R5F
+}
+
+MEMORY
+{
+    R5F_VECS  : ORIGIN = 0x00000000 , LENGTH = 0x00000040
+    R5F_TCMA  : ORIGIN = 0x00000040 , LENGTH = 0x00007FC0
+    R5F_TCMB  : ORIGIN = 0x00080000 , LENGTH = 0x00008000
+
+    /* when using multi-core application's i.e more than one R5F/M4F active, make sure
+     * this memory does not overlap with other R5F's
+     */
+    OCRAM     : ORIGIN = 0x`codeDataAddr.toString(16).toUpperCase()` , LENGTH = 0x`codeDataSize.toString(16).toUpperCase()`
+
+    /* This section can be used to put XIP section of the application in flash, make sure this does not overlap with
+     * other CPUs. Also make sure to add a MPU entry for this section and mark it as cached and code executable
+     */
+    FLASH     : ORIGIN = 0x`codeDataAddrFlash.toString(16).toUpperCase()` , LENGTH = 0x`codeDataSizeFlash.toString(16).toUpperCase()`
+
+
+    % if (isIcssPktBufEnable) {
+    /* shared memories that is used between ICCS and this core. MARK as non-cache or cache+sharable */
+    ICSS_PKT_BUF_MEM        : ORIGIN = 0x70000000, LENGTH = 0x00010000
+
+    % }
+    /* shared memories that are used by RTOS/NORTOS cores */
+    /* On R5F,
+     * - make sure there is a MPU entry which maps below regions as non-cache
+     */
+    USER_SHM_MEM            : ORIGIN = 0x701D0000, LENGTH = 0x00004000
+    LOG_SHM_MEM             : ORIGIN = 0x701D4000, LENGTH = 0x00004000
+    /* MSS mailbox memory is used as shared memory, we dont use bottom 32*12 bytes, since its used as SW queue by ipc_notify */
+    RTOS_NORTOS_IPC_SHM_MEM : ORIGIN = 0x`ipcShmAddrBase.toString(16).toUpperCase()`, LENGTH = 0x3E80
+    MAILBOX_HSM:    ORIGIN = 0x44000000 , LENGTH = 0x000003CE
+    MAILBOX_R5F:    ORIGIN = 0x44000400 , LENGTH = 0x000003CE
+    }

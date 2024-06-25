@@ -51,7 +51,7 @@
 /* ========================================================================== */
 /*                                Macros                                      */
 /* ========================================================================== */
-#if defined(SOC_AM263X) || defined (SOC_AM263PX)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 #define INSTANCE 		SDL_R5SS0_CCM
 #define ESM_INSTANCE 	SDL_ESM_INST_MAIN_ESM0
 #elif defined(SOC_AM273X) || defined(SOC_AWR294X)

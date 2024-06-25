@@ -42,7 +42,7 @@
 #define TIMER_INTERRUPT (CSLR_R5FSS0_CORE0_INTR_TIMER10_INTR_PEND_0)
 #endif
 
-#if defined(SOC_AM263X) || defined (SOC_AM263PX)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 #define TIMER_INTERRUPT (CSLR_R5FSS1_CORE0_INTR_RTI2_INTR_0)
 #endif
 /* client ID that is used to send and receive messages */
@@ -55,7 +55,7 @@ uint32_t gMainCoreId = CSL_CORE_ID_R5FSS0_0;
 uint32_t gRemoteCoreId = CSL_CORE_ID_R5FSS1_0;
 #endif
 
-#if defined(SOC_AM263X) || defined (SOC_AM263PX)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 /* main core that starts the message exchange */
 uint32_t gMainCoreId = CSL_CORE_ID_R5FSS0_0;
 /* remote cores that echo messages from main core */

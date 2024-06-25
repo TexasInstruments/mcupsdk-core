@@ -4,11 +4,11 @@
 
 export `args.sdkName`?=$(abspath `args.relPath`)
 include $(`args.sdkName`)/imports.mak
-% if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x")    ||   (args.project.device == "am263px")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
+% if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x")    ||   (args.project.device == "am263px") || (args.project.device == "am261x")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
 include $(`args.sdkName`)/devconfig/devconfig.mak
 % }
 
-% if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am263px")  ||  (args.project.device == "am273x") || (args.project.device == "awr294x")) {
+% if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")  ||  (args.project.device == "am273x") || (args.project.device == "awr294x")) {
 ifeq ($(OS), Windows_NT)
 	PYTHON=python
 else
@@ -26,7 +26,7 @@ MULTI_CORE_BOOTIMAGE_NAME_XIP:=`args.project.name`_system.$(PROFILE).appimage_xi
 MULTI_CORE_BOOTIMAGE_NAME_QSPI:=`args.project.name`_system.$(PROFILE).appimage_qspi
 MULTI_CORE_BOOTIMAGE_NAME_QSPI_HS:=$(MULTI_CORE_BOOTIMAGE_NAME_QSPI).hs
 % }
-% if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am263px")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
+% if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
 MULTI_CORE_BOOTIMAGE_NAME_HS:=$(MULTI_CORE_BOOTIMAGE_NAME).hs
 % }
 
@@ -48,7 +48,7 @@ all: syscfg
 	$(MAKE) -C ../`project.cpu`_`project.os`/`project.cgt`/ all SYSTEM_FLAG=${SYSTEM_FLAG}
 % }
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME)
-% if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x")|| (args.project.device == "am263x") || (args.project.device == "am263px")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
+% if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x")|| (args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
 ifeq ($(DEVICE_TYPE), HS)
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
 % if (args.project.device == "awr294x") {
@@ -92,7 +92,7 @@ scrub:
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage
 	$(RM) \*.appimage.signed
-% if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") ||   (args.project.device == "am263px")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
+% if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") ||   (args.project.device == "am263px") || (args.project.device == "am261x")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
 	$(RM) \*.appimage.hs
 % }
 % if (args.project.device == "awr294x"){
@@ -102,7 +102,7 @@ ifeq ($(OS),Windows_NT)
 else
 	$(RM) *.appimage
 	$(RM) *.appimage.signed
-% if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") ||  (args.project.device == "am263px")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
+% if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x") || (args.project.device == "am263x") ||  (args.project.device == "am263px") || (args.project.device == "am261x")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
 	$(RM) \*.appimage.hs
 % }
 % if (args.project.device == "awr294x"){
@@ -145,7 +145,7 @@ BOOTIMAGE_CORE_ID_m4fss0-0 = 14
 SBL_RUN_ADDRESS=0x70000000
 SBL_DEV_ID=55
 % }
-% if( (args.project.device == "am263x")  || (args.project.device == "am263px")){
+% if( (args.project.device == "am263x")  || (args.project.device == "am263px") || (args.project.device == "am261x")){
 BOOTIMAGE_CORE_ID_r5fss0-0 = 0
 BOOTIMAGE_CORE_ID_r5fss0-1 = 1
 BOOTIMAGE_CORE_ID_r5fss1-0 = 2
@@ -186,7 +186,7 @@ OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.j
 % if ((args.project.device == "am65x") || (args.project.device == "am243x") || (args.project.device == "am64x")) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
 % }
-% if ((args.project.device == "am263x") ||  (args.project.device == "am263px")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
+% if ((args.project.device == "am263x") ||  (args.project.device == "am263px") || (args.project.device == "am261x")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 % }
 
@@ -262,7 +262,7 @@ endif
 	@echo  .
 endif
 % }
-% if ((args.project.device == "am263x") ||  (args.project.device == "am263px")  ||  (args.project.device == "am273x")) {
+% if ((args.project.device == "am263x") ||  (args.project.device == "am263px") || (args.project.device == "am261x")  ||  (args.project.device == "am273x")) {
 $(MULTI_CORE_BOOTIMAGE_NAME_HS): $(MULTI_CORE_BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script

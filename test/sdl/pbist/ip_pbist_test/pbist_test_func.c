@@ -981,7 +981,7 @@ int32_t PBIST_runTest(uint32_t instanceId, bool runNegTest)
 #endif
 #endif
 
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
     if((status == SDL_PASS) && (testType == SDL_PBIST_TEST))
     {
         {

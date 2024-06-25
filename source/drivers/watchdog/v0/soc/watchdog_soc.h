@@ -50,6 +50,11 @@
 #if defined (SOC_AM263PX)
 #include <drivers/watchdog/v0/soc/am263px/watchdog_soc.h>
 #endif
+#if defined (SOC_AM261X)
+#include <drivers/watchdog/v0/soc/am261x/watchdog_soc.h>
+#endif
+
+
 
 
 #ifdef __cplusplus

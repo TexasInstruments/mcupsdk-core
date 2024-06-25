@@ -77,7 +77,7 @@ static int32_t CCM_errTest(void)
 	/* initialize the address */
 	pRegs        = (SDL_vimRegs *)(uintptr_t)SDL_MSS_VIM_R5A_U_BASE;
 #endif
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 	/* initialize the address */
 	pRegs        = (SDL_vimRegs *)(uintptr_t)SDL_VIM_U_BASE;
 #endif

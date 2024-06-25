@@ -188,7 +188,7 @@ void test_main(void *args)
     RUN_TEST(test_fsi_txrx, 1521, (void*)&testParams);
     test_fsi_set_params(&testParams, 1522);
     RUN_TEST(test_fsi_txrx, 1522, (void*)&testParams);
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     test_fsi_set_params(&testParams, 4081);
     RUN_TEST(test_fsi_txrx, 4081, (void*)&testParams);
 #endif
@@ -338,7 +338,7 @@ static void test_fsi_set_params(FSI_MainTestParams *testParams, uint32_t testCas
             gFsiTxTestParams.numLane  = FSI_DATA_WIDTH_2_LANE;
             gFsiRxTestParams.delayLineCtrlTest  = TRUE;
             /* TX Delay Test is applicable for AM263X only */
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
             gFsiTxTestParams.delayLineCtrlTest  = TRUE;
 #endif
             break;
@@ -366,7 +366,7 @@ static void test_fsi_set_params(FSI_MainTestParams *testParams, uint32_t testCas
             gFsiRxTestParams.rxFrameWDTest = TRUE;
             gFsiTxTestParams.rxFrameWDTest = TRUE;
             break;
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
         case 4081:
             Fsi_appTxRxTestParamsInit(&gFsiRxTestParams, &gFsiTxTestParams);
             gFsiRxTestParams.udataFilterTest = TRUE;

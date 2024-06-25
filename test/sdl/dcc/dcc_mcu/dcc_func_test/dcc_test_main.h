@@ -66,7 +66,7 @@
 #include <sdl/include/am263x/sdlr_intr_r5fss0_core0.h>
 #endif
 
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
 #include <sdl/esm/v2/sdl_esm.h>
 #include <sdl/include/am263px/sdlr_soc_baseaddress.h>
 #include <sdl/include/am263px/sdlr_intr_r5fss0_core0.h>
@@ -107,7 +107,7 @@
 #define APP_DCC_MODULE_INST             (SDL_DSS_DCCA_U_BASE)
 #endif
 #endif
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 #define APP_DCC_MODULE_INST             (SDL_DCC0_U_BASE)
 #endif
 /**< Instance of DCC. While changing the instance, ensure update clock sources*/
@@ -121,7 +121,7 @@
 /**< Maximum value that can be held in the COUNT1 register (test clock) */
 
 /* Defines that control the clock inputs to DCC and allowed variance */
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 #define APP_DCC_REF_CLOCK_SRC_0         (SDL_DCC_CLK0_SRC_CLOCK0_2) /*RCCLK10M (10MHZ) */
 #define APP_DCC_TEST_CLOCK_SRC_1        (SDL_DCC_CLK1_SRC_CLOCKSRC3) /* XTALCLK(25MHZ)*/
 #endif
@@ -165,7 +165,7 @@
 #endif
 #endif
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 #define APP_DCC_REF_CLOCK_FREQ_IN_KHZ   (25000U)
 /**< Clock source for Counter 0, 25 MHz for AM263X or AM263PX*/
 #define APP_DCC_TEST_CLOCK_FREQ_IN_KHZ  (32U)
@@ -179,7 +179,7 @@
 
 
 /* DCC INPUT MACROS*/
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 #define ESM_INST_BASE      (SDL_TOP_ESM_U_BASE)
 #define DCC_INST_BASE      (SDL_DCC0_U_BASE)
 #define DCC_INST_NUM       (SDL_DCC_INST_MSS_DCCA)
@@ -247,7 +247,7 @@ typedef struct sdlDccTest_s
 /*===========================================================================*/
 extern int32_t SDL_DCC_funcTest(void);
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 int32_t SDL_ESM_applicationCallbackFunction(SDL_ESM_Inst esmInst,
                                             SDL_ESM_IntType esmIntrType,
                                             uint32_t grpChannel,

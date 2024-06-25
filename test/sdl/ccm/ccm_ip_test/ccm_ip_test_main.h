@@ -59,7 +59,7 @@ extern "C"
 #if defined(SOC_AM263X)
 #include <sdl/esm/v0/sdl_esm.h>
 #endif
-#if defined (SOC_AM263PX)
+#if defined (SOC_AM263PX) || defined (SOC_AM261X)
 #include <sdl/esm/v2/sdl_esm.h>
 #endif
 #if defined (SOC_AM263X)
@@ -68,6 +68,11 @@ extern "C"
 #if defined (SOC_AM263PX)
 #include <sdl/include/am263px/sdlr_intr_r5fss0_core0.h>
 #endif
+#if defined (SOC_AM261X)
+#include <sdl/include/am261x/sdlr_intr_r5fss0_core0.h>
+#endif
+#if defined (SOC_AM273X)
+
 #if defined (SOC_AM273X)
 #include <sdl/esm/v1/sdl_esm.h>
 #endif
@@ -81,7 +86,7 @@ extern "C"
 #define  CCM_IP_API_TEST_ID       (0U)
 #define  CCM_IP_ERROR_TEST_ID     (1U)
 #define  CCM_TOTAL_NUM_TESTS      (2U)
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 #define  CCM_NUM_INSTANCE         (3U)
 #define INSTANCE 		SDL_R5SS0_CCM
 #endif

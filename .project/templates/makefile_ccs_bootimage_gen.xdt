@@ -12,7 +12,7 @@
 
 CCS_PATH=$(CCS_INSTALL_DIR)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
-% if (["am65x", "am243x", "am64x", "am263x", "am263px", "am273x","awr294x"].includes(args.project.device)) {
+% if (["am65x", "am243x", "am64x", "am263x", "am263px", "am261x", "am273x","awr294x"].includes(args.project.device)) {
 include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
 % }
 
@@ -27,7 +27,7 @@ endif
 OUTFILE=$(PROFILE)/$(OUTNAME).out
 BOOTIMAGE_PATH=$(abspath ${PROFILE})
 % if (args.project.isBootLoader) {
-% if (["am243x", "am64x", "am263x", "am263px", "am273x","awr294x"].includes(args.project.device)) {
+% if (["am243x", "am64x", "am263x", "am263px", "am261x", "am273x","awr294x"].includes(args.project.device)) {
 BOOTIMAGE_NAME_GP:=$(BOOTIMAGE_PATH)/$(OUTNAME).tiimage
 BOOTIMAGE_NAME_HS:=`args.project.name`.$(PROFILE).hs.tiimage
 BOOTIMAGE_NAME_HS_FS:=`args.project.name`.$(PROFILE).hs_fs.tiimage
@@ -61,7 +61,7 @@ BOOTIMAGE_NAME_SIGNED:=$(BOOTIMAGE_PATH)/$(OUTNAME).appimage.signed
 BOOTIMAGE_RPRC_NAME:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc_tmp
-% if ((["am263x", "am263px", "am273x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
+% if ((["am263x", "am263px", "am261x", "am273x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
 BOOTIMAGE_NAME_HS:=$(BOOTIMAGE_PATH)/`args.project.name`.$(PROFILE).appimage.hs
 BOOTIMAGE_NAME_HS_FS:=$(BOOTIMAGE_PATH)/`args.project.name`.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
@@ -133,7 +133,7 @@ endif
 SYSFW_PATH=$(MCU_PLUS_SDK_PATH)/source/drivers/sciclient/soc/am65x
 % }
 % }
-% if ((args.project.device == "am273x") || (args.project.device == "awr294x") || (args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am273x") || (args.project.device == "awr294x") || (args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 ifeq ($(DEVICE_TYPE),HS)
 BOOTIMAGE_CERT_KEY=$(APP_SIGNING_KEY)
 else
@@ -144,7 +144,7 @@ BOOTIMAGE_CERT_GEN_CMD=$(PYTHON) $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_rom
 
 % if ((args.project.device == "am273x") || (args.project.device == "awr294x")) {
 SBL_RUN_ADDRESS=0x10200000
-% } else if( (args.project.device == "am263x")  || (args.project.device == "am263px")){
+% } else if( (args.project.device == "am263x")  || (args.project.device == "am263px") || (args.project.device == "am261x")){
 SBL_RUN_ADDRESS=0x70002000
 % } else if (args.project.device == "am65x") {
 SBL_RUN_ADDRESS=0x41C00100
@@ -178,7 +178,7 @@ endif
 else
 	$(BOOTIMAGE_CERT_GEN_CMD) --image-bin $(BOOTIMAGE_BIN_NAME) --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key $(BOOTIMAGE_CERT_KEY) --out-image $(BOOTIMAGE_NAME) --debug DBG_SOC_DEFAULT
 endif
-% } else if ((args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px")) {
+% } else if ((args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 ifeq ($(DEVICE_TYPE),HS)
 ifeq ($(DEBUG_TIFS), yes)
 ifeq ($(ENC_SBL_ENABLED),yes)
@@ -240,7 +240,7 @@ BOOTIMAGE_CORE_ID_m4fss0-0 = 14
 SBL_RUN_ADDRESS=0x70000000
 SBL_DEV_ID=55
 % }
-% if( (args.project.device == "am263x")  || (args.project.device == "am263px")){
+% if( (args.project.device == "am263x")  || (args.project.device == "am263px") || (args.project.device == "am261x")){
 BOOTIMAGE_CORE_ID_r5fss0-0 = 0
 BOOTIMAGE_CORE_ID_r5fss0-1 = 1
 BOOTIMAGE_CORE_ID_r5fss1-0 = 2
@@ -281,7 +281,7 @@ OUTRPRC_CMD = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
 % if (((args.project.device == "am65x") || (args.project.device == "am243x") || (args.project.device == "am64x"))) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
 % }
-% if ((["am263x", "am263px", "am273x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
+% if ((["am263x", "am263px", "am261x", "am273x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 % }
 
@@ -374,7 +374,7 @@ endif
 	@echo  .
 endif
 % }
-% if ((["am263x", "am263px", "am273x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
+% if ((["am263x", "am263px", "am261x", "am273x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED),no)

@@ -59,7 +59,7 @@
 #define MCRC_DMCH_VALUE1 EDMA_DSS_TPCC_A_EVT_MCRC_DMA_REQ1
 #endif
 #endif
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 #define MCRC_DMCH_VALUE0 DMA_TRIG_XBAR_EDMA_MODULE_0
 #define MCRC_DMCH_VALUE1 DMA_TRIG_XBAR_EDMA_MODULE_1
 #define MCRC_DMCH_VALUE2 DMA_TRIG_XBAR_EDMA_MODULE_2
@@ -81,7 +81,7 @@
 #define MCRC_APP_CRC_PATTERN_CNT             ((uint32_t)(MCRC_APP_USER_DATA_SIZE / MCRC_APP_CRC_PATTERN_SIZE))
 #define MCRC_APP_CRC_SECT_CNT                (1U)
 
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 #define MCRC_USECASES	(4U)
 #elif defined(SOC_AM273X)||defined(SOC_AWR294X)
 #define MCRC_USECASES	(2U)
@@ -106,7 +106,7 @@ uint64_t autoModeTime, cpuModeTime;
 static    SDL_MCRC_ConfigParams_t testparams[MCRC_USECASES] =
 {
     {
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
         MCRC0,
 #endif
 #if defined(SOC_AM273X)||defined(SOC_AWR294X)
@@ -125,7 +125,7 @@ static    SDL_MCRC_ConfigParams_t testparams[MCRC_USECASES] =
 		(uint32_t) &gMCRCSrcBuffer[0],
     },
 	{
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
         MCRC0,
 #endif
 #if defined(SOC_AM273X)||defined(SOC_AWR294X)
@@ -143,7 +143,7 @@ static    SDL_MCRC_ConfigParams_t testparams[MCRC_USECASES] =
         MCRC_APP_USER_DATA_SIZE,
 		(uint32_t) &gMCRCSrcBuffer[0],
     },
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 	{
 		MCRC0,
         (uint32_t) SDL_MCRC_CHANNEL_3,
@@ -323,7 +323,7 @@ int32_t mcrcAutoCPU_main(void)
 			testStatus = EDMA_allocDmaChannel(gEdmaHandle[0], &dmaCh0);
 			DebugP_assert(testStatus == SystemP_SUCCESS);
 #endif
-#if defined(SOC_AM263X) || defined(SOC_AM263PX)
+#if defined(SOC_AM263X) || defined(SOC_AM263PX) || defined (SOC_AM261X)
 			if(testCase==0)
 			{
 				dmaCh0 = MCRC_DMCH_VALUE0;

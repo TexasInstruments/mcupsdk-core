@@ -50,7 +50,7 @@
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 #define TEST_FLASH_OFFSET_BASE      (0x10000U)
 #else
 #define TEST_FLASH_OFFSET_BASE      (0x200000U)

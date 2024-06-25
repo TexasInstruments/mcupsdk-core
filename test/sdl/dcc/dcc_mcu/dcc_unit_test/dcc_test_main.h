@@ -114,7 +114,7 @@ extern int32_t SDL_DCC_negTest(void);
 /*===========================================================================*/
 /*                          SOC Specific Macros                     */
 /*===========================================================================*/
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 #define DCC_INST_NUM     (SDL_DCC_INST_MSS_DCCA)
 #endif
 #if defined (SOC_AWR294X)

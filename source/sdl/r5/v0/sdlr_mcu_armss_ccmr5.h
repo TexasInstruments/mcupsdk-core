@@ -57,7 +57,7 @@ typedef struct {
     volatile uint32_t CCMSR3;                    /* CCM Status Register */
     volatile uint32_t CCMKEYR3;                  /* CCM Key Register */
     volatile uint32_t CCMPOLCNTRL;               /* CCM Polarity Inv Register */
-#ifdef SOC_AM263PX
+#if defined (SOC_AM263PX) || (SOC_AM261X)
     volatile uint32_t RSVD0;                     /* 0x1C - RESERVED 0 */
     volatile uint32_t RSVD1;                     /* 0x20 - RESERVED 1 */
     volatile uint32_t RSVD2;                     /* 0x24 - RESERVED 2 */

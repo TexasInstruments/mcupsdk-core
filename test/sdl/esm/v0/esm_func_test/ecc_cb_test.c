@@ -93,7 +93,7 @@ uint32_t eventBitMapMAIN[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
     0xffffffffu,
 };
 
-#elif defined (SOC_AM263X) || defined (SOC_AM263PX)
+#elif defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 SDL_ESM_config ECC_Test_esmInitConfig_MAIN =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */

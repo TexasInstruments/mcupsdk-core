@@ -49,7 +49,7 @@
 #define STATUS_NUM (1u)
 #define SDL_ESM_EN_KEY_ENBALE_VAL (0xFU)
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 SDL_ESM_config ESM_esmInitConfig_MAIN_appcallback =
 {
     .esmErrorConfig = {1u, 8u}, /* Self test error config */
@@ -86,7 +86,7 @@ int32_t SDTF_runESMInjectHigh_MAIN2(void);
 int32_t sdl_Esm_posTest(void)
 {
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
  	SDL_ESM_Inst         i = SDL_ESM_INST_MAIN_ESM0;
 	SDL_ESM_Inst Test_instance = i;
 #endif
@@ -109,7 +109,7 @@ int32_t sdl_Esm_posTest(void)
 
     New_SDL_TEST_ESM_BASE = (uint32_t) AddrTranslateP_getLocalAddr(SDL_TEST_ESM_BASE);
 
-#if defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
 
    /* ESMSetInfluenceOnErrPin API test */
     if (testStatus == SDL_APP_TEST_PASS)

@@ -52,6 +52,9 @@ extern "C"
 #include <drivers/hw_include/am263px/cslr_soc.h>
 #endif
 
+#if defined (SOC_AM261X)
+#include <drivers/hw_include/am261x/cslr_soc.h>
+#endif
 
 #if defined (SOC_AM273X)
 #include <drivers/hw_include/am273x/cslr_soc.h>
