@@ -179,14 +179,14 @@ void Bootloader_profilePrintProfileLog(void)
     }
     uint32_t clk = gProfileObj.bootMediaClk;
 
-    DebugP_log("[BOOTLOADER_PROFILE] Boot Media       : %s \r\n", bootMediaName);
+    DebugP_log("KPI_DATA: [BOOTLOADER_PROFILE] Boot Media       : %s \r\n", bootMediaName);
     /* If boot media clock is not given don't print that information */
     if(clk != 0)
     {
         DebugP_log("KPI_DATA: [BOOTLOADER_PROFILE] Boot Media Clock : %.3f MHz \r\n", (float)clk/1000000.0);
     }
     DebugP_log("KPI_DATA: [BOOTLOADER_PROFILE] Boot Image Size  : %d KB \r\n", gProfileObj.appimageSize/1024);
-    DebugP_log("[BOOTLOADER_PROFILE] Cores present    : \r\n");
+    DebugP_log("KPI_DATA: [BOOTLOADER_PROFILE] Cores present    : \r\n");
 
     for(i = 0; i < gProfileObj.numCores; i++)
     {

@@ -881,11 +881,14 @@ int32_t Bootloader_parseAndLoadMultiCoreELF(Bootloader_Handle handle, Bootloader
 					if(!initCpuDone[cpuId])
 					{
 						status = Bootloader_initCpu(handle, &bootImageInfo->cpuInfo[cpuId]);
+						config->coresPresentMap |= 1 << cpuId;
+						Bootloader_profileAddCore(cpuId);
 						initCpuDone[cpuId] = 1;
 					}
                     config->fxns->imgSeekFxn(elfPhdrPtr32[i].offset, config->args);
                     uint32_t addr = Bootloader_socTranslateSectionAddr(gNoteSegBuffer[segmentMapIdx + i - 1], elfPhdrPtr32[i].vaddr);
                     config->fxns->imgReadFxn((void *)addr, elfPhdrPtr32[i].filesz, config->args);
+					config->bootImageSize += elfPhdrPtr32[i].filesz;
                     if(doAuth == TRUE)
                     {
                         status = auth_update((uintptr_t)addr, elfPhdrPtr32[i].filesz);

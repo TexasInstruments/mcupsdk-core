@@ -155,7 +155,7 @@ int main(void)
             {
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
-                status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
+                status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], FALSE);
             }
 #endif
 
@@ -196,28 +196,6 @@ int main(void)
             if (status == SystemP_SUCCESS)
             {
                 /* Load the RPRC image on self core now */
-#ifdef BOOTLOADER_IMAGE_RPRC
-				if(bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
-				{
-					status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
-				}
-#endif
-
-                if (status == SystemP_SUCCESS)
-                {
-                    /*
-                        enable Phy and Phy pipeline for XIP execution
-                        again because those would be disabled by Bootloader_rprcImageLoad
-                    */
-                    if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
-                    {
-                        status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
-                        DebugP_assert(status == SystemP_SUCCESS);
-
-                        status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
-                        DebugP_assert(status == SystemP_SUCCESS);
-                    }
-                }
                 if(status == SystemP_SUCCESS)
                 {
                     Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
