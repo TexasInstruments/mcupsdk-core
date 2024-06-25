@@ -33,6 +33,7 @@ BOOTIMAGE_RPRC_NAME_TMP:=hwa_real_fft.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=hwa_real_fft.$(PROFILE).appimage.hs
 BOOTIMAGE_NAME_HS_FS:=hwa_real_fft.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
+
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
 endif
@@ -272,8 +273,6 @@ endif
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo  Boot image: am273x:c66ss0:nortos:ti-c6000 $(BOOTIMAGE_PATH)/$@ Done !!!
-	@echo  .
-
 $(BOOTIMAGE_NAME_HS): $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
@@ -299,4 +298,7 @@ endif
 	@echo  Boot image: am273x:c66ss0:nortos:ti-c6000 $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
 	@echo  .
 endif
+
+
+
 -include $(addprefix $(OBJDIR)/, $(DEPS))

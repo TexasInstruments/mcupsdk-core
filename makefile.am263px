@@ -512,7 +512,6 @@ help:
 	@echo  .
 	@echo  System Example build targets,
 	@echo  =============================
-	@echo  $(MAKE) -s -C examples/benchmarks/ocmc_benchmarking/am263px-cc/system_dual_core [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/benchmarks/ocmc_benchmarking/am263px-cc/system_tri_core [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am263px-cc/system_freertos_nortos [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/edma/edma_interrupt_transfer/am263px-lp/system_freertos_nortos [all clean syscfg-gui syscfg]
@@ -1301,7 +1300,6 @@ BUILD_COMBO_EXAMPLE_ALL += enet_txsg_am263px-cc_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += enet_txsg_am263px-lp_r5fss0-0_freertos_ti-arm-clang
 
 # Various System Example Targets
-BUILD_COMBO_EXAMPLE_ALL += ocmc_benchmarking_am263px-cc_system_dual_core
 BUILD_COMBO_EXAMPLE_ALL += ocmc_benchmarking_am263px-cc_system_tri_core
 BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am263px-cc_system_freertos_nortos
 BUILD_COMBO_EXAMPLE_ALL += edma_interrupt_transfer_am263px-lp_system_freertos_nortos
@@ -2593,9 +2591,6 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
  empty_am263px-cc_icssm-pru1_fw_ti-pru-cgt:
 	$(MAKE) -C examples/pru_io/empty/firmware/am263px-cc/icssm-pru1_fw/ti-pru-cgt -f makefile all
 
- ocmc_benchmarking_am263px-cc_system_dual_core:
-	$(MAKE) -C examples/benchmarks/ocmc_benchmarking/am263px-cc/system_dual_core -f makefile all
-
  ocmc_benchmarking_am263px-cc_system_tri_core:
 	$(MAKE) -C examples/benchmarks/ocmc_benchmarking/am263px-cc/system_tri_core -f makefile all
 
@@ -3055,7 +3050,6 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += vtm_example_am263px-cc_r5fss0-0_nortos_ti-arm-c
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_txsg_am263px-cc_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += enet_txsg_am263px-lp_r5fss0-0_freertos_ti-arm-clang_clean
 # Various System Example Clean Targets
-BUILD_COMBO_EXAMPLE_CLEAN_ALL += ocmc_benchmarking_am263px-cc_system_dual_core_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += ocmc_benchmarking_am263px-cc_system_tri_core_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am263px-cc_system_freertos_nortos_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += edma_interrupt_transfer_am263px-lp_system_freertos_nortos_clean
@@ -4343,9 +4337,6 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
  empty_am263px-cc_icssm-pru1_fw_ti-pru-cgt_clean:
 	$(MAKE) -C examples/pru_io/empty/firmware/am263px-cc/icssm-pru1_fw/ti-pru-cgt -f makefile clean
 
- ocmc_benchmarking_am263px-cc_system_dual_core_clean:
-	$(MAKE) -C examples/benchmarks/ocmc_benchmarking/am263px-cc/system_dual_core -f makefile clean
-
  ocmc_benchmarking_am263px-cc_system_tri_core_clean:
 	$(MAKE) -C examples/benchmarks/ocmc_benchmarking/am263px-cc/system_tri_core -f makefile clean
 
@@ -4805,7 +4796,6 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += vtm_example_am263px-cc_r5fss0-0_nortos_ti-arm-c
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_txsg_am263px-cc_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += enet_txsg_am263px-lp_r5fss0-0_freertos_ti-arm-clang_scrub
 # Various System Example Scrub Targets
-BUILD_COMBO_EXAMPLE_SCRUB_ALL += ocmc_benchmarking_am263px-cc_system_dual_core_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += ocmc_benchmarking_am263px-cc_system_tri_core_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am263px-cc_system_freertos_nortos_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += edma_interrupt_transfer_am263px-lp_system_freertos_nortos_scrub
@@ -6092,9 +6082,6 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  empty_am263px-cc_icssm-pru1_fw_ti-pru-cgt_scrub:
 	$(MAKE) -C examples/pru_io/empty/firmware/am263px-cc/icssm-pru1_fw/ti-pru-cgt -f makefile scrub
-
- ocmc_benchmarking_am263px-cc_system_dual_core_scrub:
-	$(MAKE) -C examples/benchmarks/ocmc_benchmarking/am263px-cc/system_dual_core -f makefile scrub
 
  ocmc_benchmarking_am263px-cc_system_tri_core_scrub:
 	$(MAKE) -C examples/benchmarks/ocmc_benchmarking/am263px-cc/system_tri_core -f makefile scrub

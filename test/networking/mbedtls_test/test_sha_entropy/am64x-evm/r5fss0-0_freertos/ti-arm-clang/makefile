@@ -37,6 +37,7 @@ BOOTIMAGE_NAME_HS:=test_mbedtls_sha_entropy.$(PROFILE).appimage.hs
 BOOTIMAGE_NAME_HS_FS:=test_mbedtls_sha_entropy.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
+
 FILES_common := \
 	main.c \
 	mbedtls_main.c \
@@ -326,7 +327,6 @@ endif
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
-
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED),no)
@@ -347,6 +347,9 @@ else
 	@echo  Boot image: am64x:r5fss0-0:freertos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS_FS) Done !!!
 	@echo  .
 endif
+
+
+
 .PHONY: coverage
 coverage:
 	@echo Creating Coverage Report for test_mbedtls_sha_entropy.$(PROFILE) ...

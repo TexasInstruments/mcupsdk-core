@@ -30,12 +30,14 @@ BOOTIMAGE_PATH=$(abspath .)
 BOOTIMAGE_NAME:=ipc_notify_ut.$(PROFILE).appimage
 BOOTIMAGE_NAME_XIP:=ipc_notify_ut.$(PROFILE).appimage_xip
 BOOTIMAGE_NAME_SIGNED:=ipc_notify_ut.$(PROFILE).appimage.signed
+BOOTIMAGE_NAME_MCELF:=ipc_notify_ut.$(PROFILE).mcelf
 BOOTIMAGE_RPRC_NAME:=ipc_notify_ut.$(PROFILE).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=ipc_notify_ut.$(PROFILE).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=ipc_notify_ut.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=ipc_notify_ut.$(PROFILE).appimage.hs
 BOOTIMAGE_NAME_HS_FS:=ipc_notify_ut.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
+
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
 endif
@@ -198,6 +200,7 @@ clean:
 	$(RM) $(BOOTIMAGE_NAME_SIGNED)
 	$(RM) $(BOOTIMAGE_RPRC_NAME)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_XIP)
+	$(RM) $(BOOTIMAGE_NAME_MCELF)
 	$(RMDIR) generated/
 
 scrub:
@@ -210,6 +213,8 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
+	$(RM) \*.mcelf
+	$(RM) \*.mcelf_xip
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -217,6 +222,8 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
+	$(RM) *.mcelf
+	$(RM) *.mcelf_xip
 endif
 	$(RMDIR) generated
 
@@ -264,6 +271,7 @@ SBL_DEV_ID=55
 MULTI_CORE_IMAGE_GEN = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
 OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
+MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
 
 ifeq ($(OS),Windows_NT)
   XIPGEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/xipGen/xipGen.exe
@@ -291,6 +299,10 @@ endif
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo  Boot image: am263px:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
+	@echo  Boot multi-core ELF image: $(BOOTIMAGE_PATH)/$@ ...
+	@sleep 1
+	@echo $(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_r5fss0-0):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH)
+	@echo  Boot multi-core ELF image: $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
 
 $(BOOTIMAGE_NAME_HS): $(BOOTIMAGE_NAME)
@@ -318,6 +330,9 @@ endif
 	@echo  Boot image: am263px:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
 	@echo  .
 endif
+
+
+
 .PHONY: coverage
 coverage:
 	@echo Creating Coverage Report for ipc_notify_ut.$(PROFILE) ...

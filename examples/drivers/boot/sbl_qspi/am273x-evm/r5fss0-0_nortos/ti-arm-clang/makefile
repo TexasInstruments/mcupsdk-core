@@ -286,6 +286,9 @@ endif
 
 	@echo  .
 
+
+
+
 .PHONY: coverage
 coverage:
 	@echo Creating Coverage Report for sbl_qspi.$(PROFILE) ...

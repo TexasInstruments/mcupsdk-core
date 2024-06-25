@@ -35,6 +35,7 @@ BOOTIMAGE_NAME_HS:=crc_ut.$(PROFILE).appimage.hs
 BOOTIMAGE_NAME_QSPI_HS:=crc_ut.$(PROFILE).appimage_qspi.hs
 BOOTIMAGE_NAME_HS_FS:=crc_ut.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
+
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
    TARGETS += $(BOOTIMAGE_NAME_QSPI_HS)
@@ -294,8 +295,6 @@ endif
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo  Boot image: awr294x:c66ss0:nortos:ti-c6000 $(BOOTIMAGE_PATH)/$@ Done !!!
-	@echo  .
-
 $(BOOTIMAGE_NAME_HS): $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
@@ -315,4 +314,7 @@ endif
 	@echo  Boot image: awr294x:c66ss0:nortos:ti-c6000 $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_QSPI_HS) Done !!!
 	@echo  .
 endif
+
+
+
 -include $(addprefix $(OBJDIR)/, $(DEPS))

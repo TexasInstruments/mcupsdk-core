@@ -38,6 +38,7 @@ BOOTIMAGE_NAME_HS:=sdl_ecc_r5_atcm0.$(PROFILE).appimage.hs
 BOOTIMAGE_NAME_QSPI_HS:=sdl_ecc_r5_atcm0.$(PROFILE).appimage_qspi.hs
 BOOTIMAGE_NAME_HS_FS:=sdl_ecc_r5_atcm0.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
+
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
    TARGETS += $(BOOTIMAGE_NAME_QSPI_HS)
@@ -312,8 +313,6 @@ endif
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo  Boot image: awr294x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
-	@echo  .
-
 $(BOOTIMAGE_NAME_HS): $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
@@ -333,6 +332,9 @@ endif
 	@echo  Boot image: awr294x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_QSPI_HS) Done !!!
 	@echo  .
 endif
+
+
+
 .PHONY: coverage
 coverage:
 	@echo Creating Coverage Report for sdl_ecc_r5_atcm0.$(PROFILE) ...

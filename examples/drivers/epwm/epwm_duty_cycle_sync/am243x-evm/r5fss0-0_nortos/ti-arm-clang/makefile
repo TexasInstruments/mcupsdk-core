@@ -37,6 +37,7 @@ BOOTIMAGE_NAME_HS:=epwm_duty_cycle_sync.$(PROFILE).appimage.hs
 BOOTIMAGE_NAME_HS_FS:=epwm_duty_cycle_sync.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
+
 FILES_common := \
 	app_epwm_dc.c \
 	epwm_dc.c \
@@ -286,7 +287,6 @@ endif
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
-
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED),no)
@@ -307,6 +307,9 @@ else
 	@echo  Boot image: am243x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS_FS) Done !!!
 	@echo  .
 endif
+
+
+
 .PHONY: coverage
 coverage:
 	@echo Creating Coverage Report for epwm_duty_cycle_sync.$(PROFILE) ...

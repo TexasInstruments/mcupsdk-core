@@ -15377,35 +15377,6 @@
         ],
         "description": "An OCRAM memory benchmark. System project.",
         "name": "ocmc_benchmarking",
-        "location": "../../examples/benchmarks/ocmc_benchmarking/am263px-cc/system_dual_core/system.projectspec",
-        "devtools": [
-            "TMDSCNCD263P"
-        ],
-        "kernel": [
-            "freertos"
-        ],
-        "subCategories": [
-            "benchmarks",
-            "ocmc_benchmarking",
-            "system_dual_core"
-        ],
-        "mainCategories": [
-            [
-                "Examples",
-                "Development Tools"
-            ]
-        ]
-    },
-    {
-        "resourceType": "project.ccs",
-        "resourceClass": [
-            "example"
-        ],
-        "resourceSubClass": [
-            "example.general"
-        ],
-        "description": "An OCRAM memory benchmark. System project.",
-        "name": "ocmc_benchmarking",
         "location": "../../examples/benchmarks/ocmc_benchmarking/am263px-cc/system_tri_core/system.projectspec",
         "devtools": [
             "TMDSCNCD263P"

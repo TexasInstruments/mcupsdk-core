@@ -37,7 +37,7 @@ BOOTIMAGE_RPRC_NAME_TMP:=pmu_multievent.$(PROFILE).rprc_tmp
 BOOTIMAGE_NAME_HS:=pmu_multievent.$(PROFILE).appimage.hs
 BOOTIMAGE_NAME_HS_FS:=pmu_multievent.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-TARGETS += $(BOOTIMAGE_NAME_MCELF)
+
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
 endif
@@ -207,6 +207,7 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
 	$(RM) \*.mcelf
+	$(RM) \*.mcelf_xip
 else
 	$(RM) *.out
 	$(RM) *.map
@@ -215,6 +216,7 @@ else
 	$(RM) *.tiimage*
 	$(RM) *.bin
 	$(RM) *.mcelf
+	$(RM) *.mcelf_xip
 endif
 	$(RMDIR) generated
 
@@ -290,13 +292,9 @@ endif
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 	@echo  Boot image: am263x:r5fss1-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$@ Done !!!
-	@echo  .
-
-$(BOOTIMAGE_NAME_MCELF):
 	@echo  Boot multi-core ELF image: $(BOOTIMAGE_PATH)/$@ ...
-
-	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_r5fss1-0):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH)
-
+	@sleep 1
+	@echo $(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_r5fss1-0):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH)
 	@echo  Boot multi-core ELF image: $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
 
@@ -325,6 +323,9 @@ endif
 	@echo  Boot image: am263x:r5fss1-0:nortos:ti-arm-clang $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) Done !!!
 	@echo  .
 endif
+
+
+
 .PHONY: coverage
 coverage:
 	@echo Creating Coverage Report for pmu_multievent.$(PROFILE) ...
