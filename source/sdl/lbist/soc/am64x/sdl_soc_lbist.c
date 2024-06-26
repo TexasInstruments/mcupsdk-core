@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Texas Instruments Incorporated
+ * Copyright (C) 2023-2024 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -64,7 +64,7 @@
 /*
 * LBIST expected MISR's (using parameters above)
 */
-#define M4F_MISR_EXP_VAL           (0xB89963D9)
+#define M4F_MISR_EXP_VAL           (0xB89963D9U)
 #define SDL_MCU_M4F0_LBIST_BASE (SDL_MCU_CTRL_MMR0_CFG0_BASE+SDL_MCU_CTRL_MMR_CFG0_MCU_M4FSS0_LBIST_CTRL )
 
 /* ========================================================================== */

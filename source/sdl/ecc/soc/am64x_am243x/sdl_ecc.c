@@ -3,7 +3,7 @@
  *
  * Software Diagnostics Library module for ECC
  *
- *  Copyright (c) Texas Instruments Incorporated 2018-2023
+ *  Copyright (c) Texas Instruments Incorporated 2018-2024
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -96,7 +96,7 @@ uint32_t eventBitMapMCU[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
 /* Event BitMap for ECC ESM callback for MAIN */
 uint32_t eventBitMapMAIN[SDL_ESM_MAX_EVENT_MAP_NUM_WORDS] =
 {
-  0xfffffb0fu, 0xffc000efu, 0xffbffd8f, 0x00008f80u,
+  0xfffffb0fu, 0xffc000efu, 0xffbffd8fu, 0x00008f80u,
   0x00001800u, 0x00000000u, 0x00000000u, 0x00000000u,
   0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,
   0x00000000u, 0x00000000u, 0x00000000u, 0x00000000u,

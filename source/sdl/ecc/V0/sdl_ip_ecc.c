@@ -6,7 +6,7 @@
  *
  *  \par
  *  ============================================================================
- *  @n   (C) Copyright 2015-2023, Texas Instruments, Inc.
+ *  @n   (C) Copyright 2015-2024, Texas Instruments, Inc.
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -774,7 +774,7 @@ static void SDL_ecc_aggrReadSVBUSReg(SDL_ecc_aggrRegs *pEccAggrRegs,
         SDL_FMK(ECC_AGGR_VECTOR_RD_SVBUS, (uint32_t)1U) );
 
     /* Wait till read operation is complete */
-    while( (SDL_ecc_aggrIsSVBUSRegReadDone(pEccAggrRegs)) == (bool)false );
+    while( (SDL_ecc_aggrIsSVBUSRegReadDone(pEccAggrRegs)) == (bool)false ) { }
 
     /* Now read the read value */
     *pRegVal = SDL_REG32_RD((volatile uint32_t *)((uint32_t)pEccAggrRegs+regOffset));
