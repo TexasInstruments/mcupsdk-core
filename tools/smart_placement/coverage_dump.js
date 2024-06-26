@@ -45,22 +45,64 @@
  * that scripting console, run command loadjsfile("<absolute path to this script>")
  */
 
-var scriptEnv = Packages.com.ti.ccstudio.scripting.environment.ScriptingEnvironment.instance();
-var server = scriptEnv.getServer("DebugServer.1");
-var session = server.openSession(".*/Cortex_R5_0");
+importPackage(Packages.com.ti.debug.engine.scripting);
+importPackage(Packages.com.ti.debug.engine.scripting.setup);
+importPackage(Packages.com.ti.ccstudio.scripting.environment);
+importPackage(Packages.java.lang);
+importPackage(java.io);
+importPackage(java.lang);
 
-session.target.halt();
+var targetCoreProcessorId = [1971336192]
+var targetCores = [];
+var cpu_list = ds.getListOfCPUs();
 
-var cntStart = session.symbol.getAddress("__start___llvm_prf_cnts");
-var cntStop = session.symbol.getAddress("__stop___llvm_prf_cnts");
-
-var cntContent = session.memory.readData(0, cntStart, 8, cntStop - cntStart);
-
-var executable = session.symbol.getSymbolFileName();
-var outFile = new Packages.java.io.RandomAccessFile(executable + ".cnt" , "rw");
-
-outFile.setLength(0);
-for each (var val in cntContent) {
-    outFile.writeByte(Number(val));
+for(var cpui = 0; cpui < cpu_list.length; cpui++)
+{
+    print(cpu_list[cpui]);
 }
-outFile.close();
+targetCores = cpu_list;
+
+for(var cpui = 0; cpui < targetCores.length; cpui++)
+{
+    var sesssionName = targetCores[cpui];
+    print("Opening session for CPU: " + sesssionName);
+    var session = ds.openSession(sesssionName);
+    if(session.target.isConnected() === true)
+    {
+        var gotSymbols = false;
+        session.target.halt();
+        try
+        {
+            var cntStart = session.symbol.getAddress("__start___llvm_prf_cnts");
+            var cntStop = session.symbol.getAddress("__stop___llvm_prf_cnts");
+            gotSymbols = true;
+        }
+        catch(err)
+        {
+            print("\tProvided binary is not instrumented. Cannot find \"__start___llvm_prf_cnts\" and \"__stop___llvm_prf_cnts\" symbols.");
+        }
+
+        var executable = session.symbol.getSymbolFileName();
+        var outFileName = executable + ".cnt";
+
+        if(gotSymbols == true && executable.length !== 0)
+        {
+            var cntContent = session.memory.readData(0, cntStart, 8, cntStop - cntStart);
+
+            print("\tWriting to file: " + outFileName);
+            var outFile = new Packages.java.io.RandomAccessFile( outFileName, "rw");
+
+            outFile.setLength(0);
+            for each (var val in cntContent) {
+                outFile.writeByte(Number(val));
+            }
+            outFile.close();
+        }
+        session.terminate();
+    }
+    else
+    {
+        print("\tSkipping this core, as it is not connected.");
+    }
+}
+

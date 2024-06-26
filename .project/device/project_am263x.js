@@ -41,7 +41,7 @@ const device_defines = {
 const example_file_list = [
     "examples/benchmarks/coremark_benchmark/.project/project.js",
     "examples/benchmarks/dhrystone_benchmark/.project/project.js",
-    "examples/benchmarks/ocmc_benchmarking/.project/project_freertos.js",
+    "examples/benchmarks/ocmc_benchmarking/.project/project.js",
     "examples/drivers/adc/adc_multiple_soc_epwm/.project/project.js",
     "examples/drivers/adc/adc_ppb_epwm_trip/.project/project.js",
     "examples/drivers/adc/adc_ppb_delay/.project/project.js",

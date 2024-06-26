@@ -54,7 +54,7 @@ const example_file_list = [
     "examples/benchmarks/benchmark_demo/.project/project.js",
     "examples/benchmarks/coremark_benchmark/.project/project.js",
     "examples/benchmarks/dhrystone_benchmark/.project/project.js",
-    "examples/benchmarks/ocmc_benchmarking/.project/project_freertos.js",
+    "examples/benchmarks/ocmc_benchmarking/.project/project.js",
     "examples/drivers/adc/adc_singleshot/.project/project.js",
     "examples/drivers/boot/sbl_emmc/.project/project.js",
     "examples/drivers/boot/sbl_jtag_uniflash/.project/project.js",
