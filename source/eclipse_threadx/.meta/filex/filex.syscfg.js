@@ -56,13 +56,35 @@ let filex_module = {
             name: "sector_size",
             displayName: "Sector Size",
             description: "Sector size.",
-            default: 512,
+            default: 4096,
             options: [
                 { name: 512},
                 { name: 1024},
                 { name: 2048},
                 { name: 4096},
             ]
+        },
+        {
+            name: "fat_cnt",
+            displayName: "Number of FATs",
+            description: "Number of FATs.",
+            default: 1,
+            options: [
+                { name: 1},
+                { name: 2},
+            ]
+        },
+        {
+            name: "dir_entry_cnt",
+            displayName: "Directory entries",
+            description: "Number of directory entries in the root director.",
+            default: 32,
+        },
+        {
+            name: "hidden_sec_cnt",
+            displayName: "Hidden Sectors",
+            description: "Number sectors hidden before the media boot sector.",
+            default: 0,
         },
         {
             name: "sectors_per_cluster",
