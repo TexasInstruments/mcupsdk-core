@@ -1,7 +1,7 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @cliArgs --device "AM263Px" --package "ZCZ_S" --part "AM263P4" --context "r5fss1-0" --product "MCU_PLUS_SDK@07.03.01"
  * @versions {"tool":"1.20.0+3587"}
  */
 
@@ -17,7 +17,6 @@ const mpu_armv74      = mpu_armv7.addInstance();
 const mpu_armv75      = mpu_armv7.addInstance();
 const mpu_armv76      = mpu_armv7.addInstance();
 const mpu_armv77      = mpu_armv7.addInstance();
-const mpu_armv78      = mpu_armv7.addInstance();
 const default_linker  = scripting.addModule("/memory_configurator/default_linker", {}, false);
 const default_linker1 = default_linker.addInstance();
 const general         = scripting.addModule("/memory_configurator/general", {}, false);
@@ -36,24 +35,15 @@ const section8        = section.addInstance();
 const section9        = section.addInstance();
 const section10       = section.addInstance();
 const section11       = section.addInstance();
-const RL2             = scripting.addModule("/optiflash/RL2/RL2", {}, false);
-const RL21            = RL2.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
-debug_log.enableUartLog            = true;
-debug_log.uartLog.$name            = "CONFIG_UART0";
-debug_log.uartLog.UART.$assign     = "UART0";
-debug_log.uartLog.UART.RXD.$assign = "UART0_RXD";
-debug_log.uartLog.UART.TXD.$assign = "UART0_TXD";
-debug_log.uartLog.child.$name      = "drivers_uart_v2_uart_v2_template0";
-
 mpu_armv71.$name             = "CONFIG_MPU_REGION0";
 mpu_armv71.size              = 31;
 mpu_armv71.attributes        = "Device";
-mpu_armv71.allowExecute      = false;
 mpu_armv71.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv71.allowExecute      = false;
 
 mpu_armv72.$name             = "CONFIG_MPU_REGION1";
 mpu_armv72.size              = 15;
@@ -81,16 +71,9 @@ mpu_armv76.size         = 14;
 mpu_armv76.allowExecute = false;
 mpu_armv76.attributes   = "NonCached";
 
-mpu_armv77.$name             = "CONFIG_MPU_REGION6";
-mpu_armv77.baseAddr          = 0x60000000;
-mpu_armv77.size              = 27;
-mpu_armv77.accessPermissions = "Supervisor RD, User RD";
-
-mpu_armv78.$name             = "OSPI_CFG_NO_ACCESS";
-mpu_armv78.size              = 10;
-mpu_armv78.baseAddr          = 0x53808000;
-mpu_armv78.accessPermissions = "Supervisor BLOCK, User BLOCK";
-mpu_armv78.attributes        = "Device";
+mpu_armv77.$name    = "CONFIG_MPU_REGION6";
+mpu_armv77.baseAddr = 0x60000000;
+mpu_armv77.size     = 27;
 
 default_linker1.$name = "memory_configurator_default_linker0";
 
@@ -101,7 +84,7 @@ general1.svc_stack_size = 1024;
 general1.linker.$name   = "TIARMCLANG0";
 
 region1.$name                               = "MEMORY_REGION_CONFIGURATION0";
-region1.memory_region.create(8);
+region1.memory_region.create(6);
 region1.memory_region[0].type               = "TCMA";
 region1.memory_region[0].$name              = "R5F_VECS";
 region1.memory_region[0].size               = 0x40;
@@ -112,23 +95,15 @@ region1.memory_region[1].size               = 0x7FC0;
 region1.memory_region[2].type               = "TCMB";
 region1.memory_region[2].size               = 0x8000;
 region1.memory_region[2].$name              = "R5F_TCMB";
-region1.memory_region[3].auto               = false;
 region1.memory_region[3].$name              = "MSRAM_STACK";
+region1.memory_region[3].auto               = false;
+region1.memory_region[3].manualStartAddress = 0x70020000;
 region1.memory_region[3].size               = 0x10000;
-region1.memory_region[4].manualStartAddress = 0x70040000;
 region1.memory_region[4].$name              = "MSRAM";
-region1.memory_region[4].auto               = false;
 region1.memory_region[4].size               = 0xEAAAA;
 region1.memory_region[5].type               = "FLASH";
 region1.memory_region[5].$name              = "FLASH";
-region1.memory_region[5].manualStartAddress = 0x60300000;
 region1.memory_region[5].size               = 0x200000;
-region1.memory_region[6].auto               = false;
-region1.memory_region[6].type               = "FLASH";
-region1.memory_region[6].size               = 0x300000;
-region1.memory_region[6].$name              = "FLASH_RESERVED";
-region1.memory_region[7].$name              = "L2_CACHE_BANK";
-region1.memory_region[7].size               = 0x10000;
 
 section1.load_memory                  = "R5F_VECS";
 section1.group                        = false;
@@ -150,10 +125,10 @@ section2.output_section[3].$name                  = ".text.boot";
 section2.output_section[3].palignment             = true;
 section2.output_section[4].palignment             = true;
 section2.output_section[4].$name                  = ".text.main";
-section2.output_section[5].palignment             = true;
 section2.output_section[5].$name                  = ".rodata.cfg";
-section2.output_section[6].$name                  = "cio";
+section2.output_section[5].palignment             = true;
 section2.output_section[6].palignment             = true;
+section2.output_section[6].$name                  = "cio";
 section2.output_section[6].input_section.create(1);
 section2.output_section[6].input_section[0].$name = "-llibsysbm.a<trgmsg.c.obj> (.text)";
 
@@ -217,7 +192,6 @@ section4.output_section[6].palignment  = true;
 section4.output_section[7].$name       = ".buf_6";
 section4.output_section[7].palignment  = true;
 section4.output_section[8].$name       = ".buf_7";
-section4.output_section[8].palignment  = true;
 section4.output_section[9].$name       = ".buf_8";
 section4.output_section[9].palignment  = true;
 section4.output_section[10].$name      = ".buf_9";
@@ -225,7 +199,6 @@ section4.output_section[10].palignment = true;
 section4.output_section[11].$name      = ".buf_10";
 section4.output_section[11].palignment = true;
 section4.output_section[12].$name      = ".buf_11";
-section4.output_section[12].palignment = true;
 section4.output_section[13].$name      = ".buf_12";
 section4.output_section[13].palignment = true;
 section4.output_section[14].$name      = ".buf_13";
@@ -331,12 +304,3 @@ section11.load_memory                  = "FLASH";
 section11.output_section.create(1);
 section11.output_section[0].palignment = true;
 section11.output_section[0].$name      = ".TI.offchip";
-
-RL21.$name                                  = "RL20";
-RL21.enable                                 = false;
-RL21.memoryRegion                           = "L2_CACHE_BANK";
-RL21.cacheSize                              = "RL2_CACHESIZE_64K";
-RL21.memory_section.group                   = scripting.forceWrite(true);
-RL21.memory_section.load_to_memory          = scripting.forceWrite("Memory");
-RL21.memory_section.select_multiple_regions = scripting.forceWrite(false);
-RL21.memory_section.split_across_memories   = scripting.forceWrite(false);

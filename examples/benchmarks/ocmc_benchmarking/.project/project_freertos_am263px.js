@@ -56,7 +56,7 @@ const libs_freertos_r5f = {
 
 const lnkfiles = {
     common: [
-        "../linker.cmd",
+        "linker.cmd",
     ]
 };
 
@@ -77,10 +77,36 @@ const syscfgfile = "../example.syscfg";
 const readmeDoxygenPageTag = "SMART_PLACEMENT_AND_BENCHMARK";
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos", isPartOfSystemProject: false}
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos", isPartOfSystemProject: true},
 ];
 
-const systemProjects = [];
+const systemProjects = [
+    {
+        name: "ocmc_benchmarking",
+        tag: "dual_core",
+        skipProjectSpec: false,
+        readmeDoxygenPageTag: readmeDoxygenPageTag,
+        board: "am263px-cc",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos"},
+            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos"},
+        ],
+    },
+    {
+        name: "ocmc_benchmarking",
+        tag: "tri_core",
+        skipProjectSpec: false,
+        readmeDoxygenPageTag: readmeDoxygenPageTag,
+        board: "am263px-cc",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos"},
+            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos"},
+            { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos"},
+        ],
+    }
+];
 
 function getComponentProperty() {
     let property = {};

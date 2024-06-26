@@ -11,7 +11,7 @@
 
     <project
         title="Ocmc Benchmarking"
-        name = "ocmc_benchmarking_am263px-cc_r5fss0-0_freertos_ti-arm-clang"
+        name = "ocmc_benchmarking_am263px-cc_r5fss1-0_freertos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Release,
@@ -21,7 +21,7 @@
         toolChain="TICLANG"
         cgtVersion="3.2.2"
         device="Cortex R.AM263Px"
-        deviceCore="Cortex_R5_0"
+        deviceCore="Cortex_R5_2"
         ignoreDefaultDeviceSettings="true"
         ignoreDefaultCCSSettings="true"
         endianness="little"
@@ -60,7 +60,7 @@
 
         enableSysConfigTool="true"
         sysConfigBuildOptions="
-            --context r5fss0-0 --part AM263P4 --package ZCZ_S
+            --context r5fss1-0 --part AM263P4 --package ZCZ_S
         "
 
         description="A Ocmc Benchmarking FREERTOS project">
