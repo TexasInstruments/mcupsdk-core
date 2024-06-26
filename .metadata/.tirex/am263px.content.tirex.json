@@ -167,6 +167,70 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "An OCRAM memory benchmark. CPU is R5FSS0-1 running FREERTOS.",
+        "name": "ocmc_benchmarking",
+        "location": "../../examples/benchmarks/ocmc_benchmarking/am263px-cc/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "ocmc_benchmarking",
+            "r5fss0-1_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An OCRAM memory benchmark. CPU is R5FSS1-0 running FREERTOS.",
+        "name": "ocmc_benchmarking",
+        "location": "../../examples/benchmarks/ocmc_benchmarking/am263px-cc/r5fss1-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "ocmc_benchmarking",
+            "r5fss1-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "ADC Safety Checker example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_safety_checker",
         "location": "../../examples/drivers/adc/adc_safety_checker/am263px-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
@@ -15295,6 +15359,64 @@
             "networking",
             "enet_tx_scatter_gather",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An OCRAM memory benchmark. System project.",
+        "name": "ocmc_benchmarking",
+        "location": "../../examples/benchmarks/ocmc_benchmarking/am263px-cc/system_dual_core/system.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "ocmc_benchmarking",
+            "system_dual_core"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "An OCRAM memory benchmark. System project.",
+        "name": "ocmc_benchmarking",
+        "location": "../../examples/benchmarks/ocmc_benchmarking/am263px-cc/system_tri_core/system.projectspec",
+        "devtools": [
+            "TMDSCNCD263P"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "subCategories": [
+            "benchmarks",
+            "ocmc_benchmarking",
+            "system_tri_core"
         ],
         "mainCategories": [
             [

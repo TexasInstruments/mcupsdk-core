@@ -49,10 +49,6 @@
 
 Please read more on smart placement at \ref SMART_PLACEMENT, before moving further ahead.
 
-In this example,`annotations.S` is an assembly file that contains annotations.
-
-Assembly annotations is being used for easier implementation.
-
 `annotations.S` has a macro named `ENABLE_SMART_PLACEMENT_ANNOTATION` which can be used to enable and disable annotations which will effectively enable and disable smart placement.
 
 Here it will be shown how code performance (or CPI) is improved with smart placement.
