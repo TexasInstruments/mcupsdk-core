@@ -31,13 +31,13 @@
  */
 
 /*!
- * \file  enet_cli_phy.h
+ * \file  enet_cli_debug.h
  *
- * \brief Header file for enet_cli_phy.c
+ * \brief Header file for enet_cli_debug.c
  */
 
-#ifndef _ENET_CLI_PHY_H_
-#define _ENET_CLI_PHY_H_
+#ifndef _ENET_CLI_DEBUG_H_
+#define _ENET_CLI_DEBUG_H_
 
 /* ========================================================================== */
 /*                             Include Files                                  */
@@ -66,7 +66,7 @@ extern "C"
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-BaseType_t EnetCli_phyCommandHandler(char *writeBuffer, size_t writeBufferLen,
+BaseType_t EnetCli_debugCommandHandler(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
 /* ========================================================================== */
@@ -79,4 +79,4 @@ BaseType_t EnetCli_phyCommandHandler(char *writeBuffer, size_t writeBufferLen,
 }
 #endif
 
-#endif /* _ENET_CLI_PHY_H_ */
+#endif /* _ENET_CLI_DEBUG_H_ */

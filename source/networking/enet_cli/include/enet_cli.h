@@ -43,7 +43,21 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-/* None */
+/* Standard Libraries */
+#include <stdint.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <kernel/dpl/TaskP.h>
+
+/* Networking Libraries */
+#include <enet.h>
+#include <enet_apputils.h>
+
+/* FreeRTOS Libraries */
+#include "FreeRTOS.h"
+#include "FreeRTOS_CLI.h"
 
 #ifdef __cplusplus
 extern "C"

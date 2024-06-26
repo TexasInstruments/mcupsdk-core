@@ -16,8 +16,11 @@ ConfigName:=$(PROFILE)
 LIBNAME:=enet_cli.am243x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
-    enet_cli.c \
     enet_cli_phy.c \
+    enet_cli_utils.c \
+    enet_cli_debug.c \
+    enet_cli_config.c \
+    enet_cli.c \
 
 FILES_PATH_common = \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet_cli/src \
@@ -50,6 +53,9 @@ DEFINES_common := \
     -DPRINT_FORMAT_NO_WARNING \
     -DUB_LOGCAT=3 \
     -DUB_LOGTSTYPE=UB_CLOCK_REALTIME \
+
+DEFINES_debug := \
+    -DENET_DEBUG_MODE \
 
 CFLAGS_common := \
     -mcpu=cortex-r5 \

@@ -3,8 +3,11 @@ const _ = require('lodash');
 
 const files = {
     common: [
-        "enet_cli.c",
         "enet_cli_phy.c",
+        "enet_cli_utils.c",
+        "enet_cli_debug.c",
+        "enet_cli_config.c",
+        "enet_cli.c",
     ],
 };
 
@@ -45,6 +48,9 @@ const defines = {
         'PRINT_FORMAT_NO_WARNING',
         'UB_LOGCAT=3',
         'UB_LOGTSTYPE=UB_CLOCK_REALTIME',
+    ],
+    debug: [
+         "ENET_DEBUG_MODE",
     ],
 };
 

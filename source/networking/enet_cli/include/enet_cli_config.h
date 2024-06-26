@@ -31,13 +31,13 @@
  */
 
 /*!
- * \file  enet_cli_phy.h
+ * \file  enet_cli_config.h
  *
- * \brief Header file for enet_cli_phy.c
+ * \brief <descrption>
  */
 
-#ifndef _ENET_CLI_PHY_H_
-#define _ENET_CLI_PHY_H_
+#ifndef _ENET_CLI_CONFIG_H_
+#define _ENET_CLI_CONFIG_H_
 
 /* ========================================================================== */
 /*                             Include Files                                  */
@@ -54,7 +54,9 @@ extern "C"
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/* None */
+/* Remap type values */
+#define REMAP_INGRESS 0
+#define REMAP_EGRESS 1
 
 /* ========================================================================== */
 /*                         Structures and Enums                               */
@@ -66,8 +68,8 @@ extern "C"
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-BaseType_t EnetCli_phyCommandHandler(char *writeBuffer, size_t writeBufferLen,
-        const char *commandString);
+BaseType_t EnetCli_configCommandHandler(char *writeBuffer,
+        size_t writeBufferLen, const char *commandString);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -79,4 +81,4 @@ BaseType_t EnetCli_phyCommandHandler(char *writeBuffer, size_t writeBufferLen,
 }
 #endif
 
-#endif /* _ENET_CLI_PHY_H_ */
+#endif /* _ENET_CLI_CONFIG_H_ */
