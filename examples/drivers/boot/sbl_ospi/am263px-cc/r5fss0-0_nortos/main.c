@@ -89,14 +89,14 @@ int main(void)
     status = Keyring_init(&gHSMClient);
     DebugP_assert(status == SystemP_SUCCESS);
 
-    DebugP_log("Starting OSPI Bootloader ... \r\n");
-
     /* ROM doesn't reset the OSPI flash. This can make the flash initialization
     troublesome because sequences are very different in Octal DDR mode. So for a
     moment switch OSPI controller to 8D mode and do a flash reset. */
     flashFixUpOspiBoot(gOspiHandle[CONFIG_OSPI0]);
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
+
+    DebugP_log("Starting OSPI Bootloader ... \r\n");
 
     Bootloader_profileAddProfilePoint("Board_driversOpen");
 
@@ -136,7 +136,7 @@ int main(void)
             {
                 bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].clkHz = Bootloader_socCpuGetClkDefault(CSL_CORE_ID_R5FSS0_0);
                 Bootloader_profileAddCore(CSL_CORE_ID_R5FSS0_0);
-                status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], TRUE);
+                status = Bootloader_loadSelfCpu(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0], FALSE);
             }
 
             Bootloader_profileAddProfilePoint("CPU load");
@@ -171,36 +171,14 @@ int main(void)
             }
             if ((status == SystemP_SUCCESS) && (TRUE == Bootloader_isCorePresent(bootHandle, CSL_CORE_ID_R5FSS0_0)))
             {
-                if (bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0].rprcOffset != BOOTLOADER_INVALID_ID)
-                {
-                    status = Bootloader_rprcImageLoad(bootHandle, &bootImageInfo.cpuInfo[CSL_CORE_ID_R5FSS0_0]);
-                }
-                if (status == SystemP_SUCCESS)
-                {
-                    /*
-                        enable Phy and Phy pipeline for XIP execution
-                        again because those would be disabled by Bootloader_rprcImageLoad
-                    */
-                    if (OSPI_isPhyEnable(gOspiHandle[CONFIG_OSPI0]))
-                    {
-                        status = OSPI_enablePhy(gOspiHandle[CONFIG_OSPI0]);
-                        DebugP_assert(status == SystemP_SUCCESS);
 
-                        status = OSPI_enablePhyPipeline(gOspiHandle[CONFIG_OSPI0]);
-                        DebugP_assert(status == SystemP_SUCCESS);
-                    }
-                }
-                if(status == SystemP_SUCCESS)
-                {
-                    Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
-                    Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, OSPI_getInputClk(ospiHandle));
-                    Bootloader_profileAddProfilePoint("SBL End");
-                    Bootloader_profilePrintProfileLog();
-                    DebugP_log("Image loading done, switching to application ...\r\n");
-                    UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
-                }
+                Bootloader_profileUpdateAppimageSize(Bootloader_getMulticoreImageSize(bootHandle));
+                Bootloader_profileUpdateMediaAndClk(BOOTLOADER_MEDIA_FLASH, OSPI_getInputClk(ospiHandle));
+                Bootloader_profileAddProfilePoint("SBL End");
+                Bootloader_profilePrintProfileLog();
+                DebugP_log("Image loading done, switching to application ...\r\n");
+                UART_flushTxFifo(gUartHandle[CONFIG_UART0]);
 
-                /* If any of the R5 core 0 have valid image reset the R5 core. */
                 status = Bootloader_runSelfCpu(bootHandle, &bootImageInfo);
             }
 
