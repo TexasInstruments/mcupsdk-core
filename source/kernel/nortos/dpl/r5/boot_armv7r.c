@@ -38,7 +38,7 @@ void __TI_auto_init(void);
 extern uint32_t __BSS_START;
 extern uint32_t __BSS_END;
 
-int32_t _system_pre_init(void)
+__attribute__((section(".text.boot"))) int32_t _system_pre_init(void)
 {
     uint32_t bss_size = ((uintptr_t)&__BSS_END - (uintptr_t)&__BSS_START);
     (void) memset((void*)&__BSS_START, 0x00, bss_size);
