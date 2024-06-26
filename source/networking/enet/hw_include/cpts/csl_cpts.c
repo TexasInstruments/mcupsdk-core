@@ -46,7 +46,7 @@
 #if defined (SOC_AM273X) || defined (SOC_AWR294X)
 #define CSL_CPTS_NUM_TS_GENF    (1U)
 #define CSL_CPTS_NUM_TS_ESTF    (1U)
-#elif defined(SOC_AM263X) || defined (SOC_AM263PX)
+#elif defined(SOC_AM263X) || defined (SOC_AM263PX) || defined(SOC_AM261X)
 #define CSL_CPTS_NUM_TS_GENF    (1U)
 #define CSL_CPTS_NUM_TS_ESTF    (2U)
 #else

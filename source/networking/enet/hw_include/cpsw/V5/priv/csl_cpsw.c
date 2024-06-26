@@ -55,7 +55,7 @@
 #include <cslr_xge_cpsw.h>
 #include <csl_cpswitch.h>
 
-#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined(SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined(SOC_AM263X) || defined (SOC_AM263PX) || defined(SOC_AM261X)
 #define CSL_NUM_ALE_VLAN_MASK_MUX1_ENTRIES		(3U)
 #else
 #define CSL_NUM_ALE_VLAN_MASK_MUX1_ENTRIES		(7U)

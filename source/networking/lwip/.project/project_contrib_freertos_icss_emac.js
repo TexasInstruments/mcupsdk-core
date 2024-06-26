@@ -76,6 +76,9 @@ const deviceSpecificIncludes = {
     am263px : [
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px/icss_emac",
     ],
+    am261x : [
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am261x/icss_emac",
+    ],
 };
 
 
@@ -95,12 +98,15 @@ const deviceSpecific_cflags = {
     ],
     am263px : [
     ],
+    am261x : [
+    ],
 };
 
 
 const buildOptionCombos = [
     { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: "am261x", cpu: "r5f", cgt: "ti-arm-clang"},
 ];
 
 function getComponentProperty() {

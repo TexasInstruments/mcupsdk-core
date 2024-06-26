@@ -72,7 +72,7 @@
 #include "enet_udmautils.h"
 #endif
 
-#if defined (SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX) || defined(SOC_AM261X)
 #include "enet_ioctlutils.h"
 #include "enet_cpdmautils.h"
 #endif
@@ -171,7 +171,7 @@ typedef enum
 typedef struct EnetApp_HandleInfo_s
 {
     Enet_Handle hEnet;
-#if !(defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX))
+#if !(defined(SOC_AM273X) || defined(SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX) || defined(SOC_AM261X))
     Udma_DrvHandle hUdmaDrv;
 #endif
 } EnetApp_HandleInfo;

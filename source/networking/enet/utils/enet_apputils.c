@@ -1139,13 +1139,13 @@ int32_t EnetAppUtils_ipAddrAtoI(const char* txt, uint8_t *addr)
 
 }
 
-#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX) || defined(SOC_AM261X)
 void EnetAppUtils_enableClocks(Enet_Type enetType, uint32_t instId)
 {
 }
 #endif
 
-#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX)
+#if defined (SOC_AM273X) || defined (SOC_AWR294X) || defined (SOC_AM263X) || defined (SOC_AM263PX) || defined(SOC_AM261X)
 void EnetAppUtils_disableClocks(Enet_Type enetType, uint32_t instId)
 {
 }

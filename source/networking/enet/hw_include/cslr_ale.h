@@ -50,7 +50,7 @@ extern "C"
 
 #if defined(SOC_AM273X) || defined(SOC_AWR294X)
 #include <ale/V4/cslr_ale.h>
-#elif defined(SOC_AM263X)|| defined(SOC_AM243X) || defined (SOC_AM64X) || defined (SOC_AM263PX)
+#elif defined(SOC_AM263X)|| defined(SOC_AM243X) || defined (SOC_AM64X) || defined (SOC_AM263PX) || defined(SOC_AM261X)
 #include <ale/V5/cslr_ale.h>
 #else
 #error "SOC not supported"

@@ -52,6 +52,10 @@ const socIncludes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am263px",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px/enet",
     ],
+    am261x : [
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am261x",
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am261x/enet",
+    ],
     am273x : [
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/am273x",
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am273x",
@@ -87,6 +91,9 @@ const soc_cflags = {
     am263px : [
         "-Wno-ti-macros",
     ],
+    am261x : [
+        "-Wno-ti-macros",
+    ],
     am273x : [
         "-Wno-ti-macros",
         "-fno-strict-aliasing",
@@ -117,6 +124,7 @@ const defines_r5f = {
 const buildOptionCombos = [
     { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: "am261x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am243x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am243x", cpu: "r5f", cgt: "gcc-armv7"},
     { device: "am273x", cpu: "r5f", cgt: "ti-arm-clang"},

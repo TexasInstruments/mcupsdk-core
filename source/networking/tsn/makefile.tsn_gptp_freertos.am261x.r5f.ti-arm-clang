@@ -1,0 +1,194 @@
+#
+# Auto generated makefile
+#
+
+export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+
+CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
+
+CC=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmclang
+AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
+
+PROFILE?=release
+ConfigName:=$(PROFILE)
+
+LIBNAME:=tsn_gptp-freertos.am261x.r5f.ti-arm-clang.$(PROFILE).lib
+
+FILES_common := \
+    announce_interval_setting_sm.c \
+    clock_master_sync_offset_sm.c \
+    clock_master_sync_receive_sm.c \
+    clock_master_sync_send_sm.c \
+    clock_slave_sync_sm.c \
+    gm_stable_sm.c \
+    gptp_capable_receive_sm.c \
+    gptp_capable_transmit_sm.c \
+    gptp2_debug_defs.c \
+    gptpclock.c \
+    gptpcommon.c \
+    gptpman.c \
+    gptpmasterclock.c \
+    link_delay_interval_setting_sm.c \
+    md_abnormal_hooks.c \
+    md_announce_receive_sm.c \
+    md_announce_send_sm.c \
+    md_pdelay_req_sm.c \
+    md_pdelay_resp_sm.c \
+    md_signaling_receive_sm.c \
+    md_signaling_send_sm.c \
+    md_sync_receive_sm.c \
+    md_sync_send_sm.c \
+    mdeth.c \
+    mind.c \
+    one_step_tx_oper_setting_sm.c \
+    port_announce_information_ext_sm.c \
+    port_announce_information_sm.c \
+    port_announce_receive_sm.c \
+    port_announce_transmit_sm.c \
+    port_state_selection_sm.c \
+    port_state_setting_ext_sm.c \
+    port_sync_sync_receive_sm.c \
+    port_sync_sync_send_sm.c \
+    site_sync_sync_sm.c \
+    sync_interval_setting_sm.c \
+    gptpgcfg.c \
+    lld_gptpnet.c \
+    lld_gptpclock.c \
+    lld_ptpdevclock.c \
+    xl4-extmod-xl4gptp.c \
+    xl4-extmod-xl4gptp_runconf.c \
+    gptp_perfmon.c \
+
+FILES_PATH_common = \
+    ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp \
+    ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/tilld \
+    ${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/gptpconf \
+
+INCLUDES_common := \
+    -I${CG_TOOL_ROOT}/include/c \
+    -I${MCU_PLUS_SDK_PATH}/source \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x \
+    -I${MCU_PLUS_SDK_PATH}/source \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/$(MCU_PLUS_SDK_MCU)/r5f \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/ \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/ \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/mod \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/tilld \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_gptp/gptpconf \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/rtos \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/rtos/am243x \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs/generated \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara \
+    -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am261x/r5f \
+
+DEFINES_common := \
+    -DSOC_AM261X \
+    -DTSNPKGVERSION=\"1.2.3\" \
+    -DPRINT_FORMAT_NO_WARNING \
+    -DUB_LOGCAT=3 \
+    -DUB_LOGTSTYPE=UB_CLOCK_REALTIME \
+
+CFLAGS_common := \
+    -mcpu=cortex-r5 \
+    -mfloat-abi=hard \
+    -mfpu=vfpv3-d16 \
+    -mthumb \
+    -Wall \
+    -Werror \
+    -g \
+    -Wno-gnu-variable-sized-type-not-at-end \
+    -Wno-unused-function \
+    -Wno-extra \
+    -Wvisibility \
+    --include tsn_buildconf/sitara_buildconf.h \
+    --include lld_gptp_private.h \
+
+CFLAGS_release := \
+    -Os \
+    -Oz \
+    -flto \
+
+CFLAGS_cpp_common := \
+    -Wno-c99-designator \
+    -Wno-extern-c-compat \
+    -Wno-c++11-narrowing \
+    -Wno-reorder-init-list \
+    -Wno-deprecated-register \
+    -Wno-writable-strings \
+    -Wno-enum-compare \
+    -Wno-reserved-user-defined-literal \
+    -Wno-unused-const-variable \
+    -x c++ \
+
+CFLAGS_debug := \
+    -D_DEBUG_=1 \
+
+ARFLAGS_common := \
+    rc \
+
+FILES := $(FILES_common) $(FILES_$(PROFILE))
+ASMFILES := $(ASMFILES_common) $(ASMFILES_$(PROFILE))
+FILES_PATH := $(FILES_PATH_common) $(FILES_PATH_$(PROFILE))
+CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ASMFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+ifeq ($(INSTRUMENTATION_MODE), yes)
+CFLAGS += -fprofile-instr-generate -fcoverage-mapping
+endif
+ifeq ($(CPLUSPLUS_BUILD), yes)
+CFLAGS += $(CFLAGS_cpp_common)
+endif
+DEFINES := $(DEFINES_common) $(DEFINES_$(PROFILE))
+INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
+ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
+
+LIBDIR := lib
+OBJDIR := obj/am261x/ti-arm-clang/$(PROFILE)/r5f/tsn_gptp-freertos/
+OBJS := $(FILES:%.c=%.obj)
+OBJS += $(ASMFILES:%.S=%.obj)
+DEPS := $(FILES:%.c=%.d)
+
+vpath %.obj $(OBJDIR)
+vpath %.c $(FILES_PATH)
+vpath %.S $(FILES_PATH)
+
+$(OBJDIR)/%.obj %.obj: %.c
+	@echo  Compiling: $(LIBNAME): $<
+	$(CC) -c $(CFLAGS) $(INCLUDES) $(DEFINES) -MMD -o $(OBJDIR)/$@ $<
+
+$(OBJDIR)/%.obj %.obj: %.S
+	@echo  Compiling: $(LIBNAME): $<
+	$(CC) -c $(ASMFLAGS) -o $(OBJDIR)/$@ $<
+
+all: $(LIBDIR)/$(LIBNAME)
+
+$(LIBDIR)/$(LIBNAME): $(OBJS) | $(LIBDIR)
+	@echo  .
+	@echo  Archiving: $(LIBNAME) to $@ ...
+	$(AR) $(ARFLAGS) $@ $(addprefix $(OBJDIR), $(OBJS))
+	@echo  Archiving: $(LIBNAME) Done !!!
+	@echo  .
+
+clean:
+	@echo  Cleaning: $(LIBNAME) ...
+	$(RMDIR) $(OBJDIR)
+	$(RM) $(LIBDIR)/$(LIBNAME)
+
+scrub:
+	@echo  Scrubing: $(LIBNAME) ...
+	-$(RMDIR) obj/
+	-$(RMDIR) lib/
+
+$(OBJS): | $(OBJDIR)
+
+$(LIBDIR) $(OBJDIR):
+	$(MKDIR) $@
+
+-include $(addprefix $(OBJDIR)/, $(DEPS))

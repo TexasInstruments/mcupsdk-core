@@ -73,7 +73,7 @@ extern "C"
 
 #include <xge/V5/cslr_xge_cpsw_ss_s.h>
 
-#elif defined(SOC_AM263X) || defined (SOC_AM263PX)
+#elif defined(SOC_AM263X) || defined (SOC_AM263PX) || defined(SOC_AM261X)
 
 #include <xge/V6/cslr_xge_cpsw_ss_s.h>
 

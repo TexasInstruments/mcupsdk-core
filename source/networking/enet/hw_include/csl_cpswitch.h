@@ -179,7 +179,7 @@ typedef struct {
     Uint32      domain;
 } CSL_CPTS_EVENTINFO;
 
-#if defined(SOC_AM65XX) || defined(SOC_J721E) || defined (SOC_J74202) || defined (SOC_J721S2) || defined (SOC_J7200) || defined(SOC_AM64X) || defined(SOC_AM243X) || defined (SOC_AM62X) || defined (SOC_AM273X) || defined (SOC_AWR294X) || defined(SOC_AM263X) || defined (SOC_AM263PX)
+#if defined(SOC_AM65XX) || defined(SOC_J721E) || defined (SOC_J74202) || defined (SOC_J721S2) || defined (SOC_J7200) || defined(SOC_AM64X) || defined(SOC_AM243X) || defined (SOC_AM62X) || defined (SOC_AM273X) || defined (SOC_AWR294X) || defined(SOC_AM263X) || defined (SOC_AM263PX) || defined(SOC_AM261X)
 
 #include <cpsw/V5/csl_cpsw.h>
 #include <emac/V5/csl_cpgmac_sl.h>
@@ -200,7 +200,7 @@ typedef struct {
 #include <cpsw/V5/V5_1/csl_cpsw_ss.h>
 #include <cpdma/csl_cpdma.h>
 
-#elif defined(SOC_AM263X) || defined (SOC_AM263PX)
+#elif defined(SOC_AM263X) || defined (SOC_AM263PX) || defined(SOC_AM261X)
 #include <cpsw/V5/V5_2/csl_cpsw_ss.h>
 #include <cpdma/csl_cpdma.h>
 

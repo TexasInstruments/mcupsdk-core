@@ -221,6 +221,10 @@ const deviceSpecificIncludes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am263px/icss_emac",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263px/r5f",
     ],
+    am261x : [
+        "${MCU_PLUS_SDK_PATH}/source/networking/lwip/lwip-config/am261x/icss_emac",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am261x/r5f",
+    ],
 };
 
 
@@ -240,11 +244,14 @@ const deviceSpecific_cflags = {
     ],
     am263px : [
     ],
+    am261x : [
+    ],
 };
 
 const buildOptionCombos = [
     { device: "am263x", cpu: "r5f", cgt: "ti-arm-clang"},
     { device: "am263px", cpu: "r5f", cgt: "ti-arm-clang"},
+    { device: "am261x", cpu: "r5f", cgt: "ti-arm-clang"},
 ];
 
 function getComponentProperty(device) {

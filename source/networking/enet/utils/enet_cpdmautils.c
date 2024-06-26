@@ -107,7 +107,7 @@ void EnetAppUtils_freePktInfoQ(EnetDma_PktQ *pPktInfoQ)
 
 extern MpuP_Config gMpuConfig;
 extern MpuP_RegionConfig gMpuRegionConfig[];
-const uint32_t gMpuRegionSizeInBytes[] = 
+const uint32_t gMpuRegionSizeInBytes[] =
 {
     [MpuP_RegionSize_32]   =  32,
     [MpuP_RegionSize_64]   =  64,
@@ -146,7 +146,7 @@ bool EnetAppUtils_isDescCached(void)
     uintptr_t descStartAddr, descEndAddr;
     uint32_t descSize;
 
-#if defined(SOC_AM263X) || defined (SOC_AM263PX)
+#if defined(SOC_AM263X) || defined (SOC_AM263PX) || defined(SOC_AM261X)
     enetType = ENET_CPSW_3G;
 #elif (defined(SOC_AM273X) || defined(SOC_AWR294X))
     enetType = ENET_CPSW_2G;
@@ -158,7 +158,7 @@ bool EnetAppUtils_isDescCached(void)
     descEndAddr   = (uintptr_t) (descStartAddr + descSize);
     for (i = (gMpuConfig.numRegions - 1); i >= 0; i--)
     {
-        
+
         if (gMpuRegionConfig[i].size != MpuP_RegionSize_4G)
         {
             EnetAppUtils_assert(gMpuRegionConfig[i].size >= MpuP_RegionSize_32);

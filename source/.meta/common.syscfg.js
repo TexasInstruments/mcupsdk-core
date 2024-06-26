@@ -56,7 +56,7 @@ function getSocName() {
         return "am263x";
     if(system.deviceData.device == "AM263Px")
         return "am263px";
-    if(system.deviceData.device == "AM261x")
+    if((system.deviceData.device == "AM261x_ZCZ") || (system.deviceData.device == "AM261x_ZFG"))
         return "am261x";
     if(system.deviceData.device == "AM273x")
         return "am273x";

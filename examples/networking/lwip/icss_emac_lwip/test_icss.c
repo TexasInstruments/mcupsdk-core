@@ -75,6 +75,9 @@
 #include <drivers/hw_include/am263x/cslr_mss_ctrl.h>
 #elif SOC_AM263PX
 #include <drivers/hw_include/am263px/cslr_mss_ctrl.h>
+#elif SOC_AM261X
+#include <drivers/hw_include/am261x/cslr_mss_ctrl.h>
+
 #endif
 #include <drivers/pinmux.h>
 #include<drivers/pruicss/m_v0/pruicss.h>
@@ -524,7 +527,7 @@ extern void Lwip2Emac_getHandle(Lwip2Emac_Handle *AppLwipHandle);
 /** \brief LwIP Interface Layer Handle */
 Lwip2Emac_Handle lwipifHandle;
 
-#if defined SOC_AM263X || defined SOC_AM263PX
+#if defined SOC_AM263X || defined SOC_AM263PX || defined (SOC_AM261X)
 #define I2C_EEPROM_MAC0_DATA_OFFSET      (0x43)
 #else
 #define I2C_EEPROM_MAC0_DATA_OFFSET      (0x3D)

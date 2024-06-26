@@ -14,7 +14,7 @@
 ;  such license is granted  solely to the extent that any such patent is necessary 
 ;  to Utilize the software alone.  The patent license shall not apply to any 
 ;  combinations which include this software, other than combinations with devices 
-;  manufactured by or for TI (¿TI Devices¿).  No hardware patent is licensed hereunder.
+;  manufactured by or for TI (ï¿½TI Devicesï¿½).  No hardware patent is licensed hereunder.
 ; 
 ;  Redistributions must preserve existing copyright notices and reproduce this license 
 ;  (including the above copyright notice and the disclaimer and (if applicable) source 
@@ -42,9 +42,9 @@
 ; 
 ;  DISCLAIMER.
 ; 
-;  THIS SOFTWARE IS PROVIDED BY TI AND TI¿S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED 
+;  THIS SOFTWARE IS PROVIDED BY TI AND TIï¿½S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED 
 ;  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY 
-;  AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND TI¿S 
+;  AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL TI AND TIï¿½S 
 ;  LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
 ;  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE 
 ;  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
@@ -126,13 +126,13 @@ NUMBER_OF_QUEUES    .set    4           ; different number of queues will have s
 QUEUE_1_SIZE    .set        97  ; Network Management high
 QUEUE_2_SIZE    .set        97  ; Network Management low
 QUEUE_3_SIZE    .set        97  ; Protocol specific
-QUEUE_4_SIZE    .set        97  ; NRT (IP,ARP, ICMP, …)
+QUEUE_4_SIZE    .set        97  ; NRT (IP,ARP, ICMP, ï¿½)
 
 ; HOST PORT QUEUES can buffer up to 4 full sized frames per queue
 HOST_QUEUE_1_SIZE    .set       194 ; Protocol and/or VLAN priority 7 and 6
 HOST_QUEUE_2_SIZE    .set       194 ; Protocol mid
 HOST_QUEUE_3_SIZE    .set       194 ; Protocol low
-HOST_QUEUE_4_SIZE    .set       194 ; NRT (IP, ARP, ICMP …)
+HOST_QUEUE_4_SIZE    .set       194 ; NRT (IP, ARP, ICMP ï¿½)
 
 COLLISION_QUEUE_SIZE    .set    48
 P0_COL_TOP_MOST_BD_OFFSET    .set   (4*COLLISION_QUEUE_SIZE) + P0_COL_BD_OFFSET - 4
