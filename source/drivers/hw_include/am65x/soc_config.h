@@ -39,6 +39,7 @@ extern "C"
 #endif
 
 /* IP versions */
+#define DRV_VERSION_DDR_V1
 #define IP_VERSION_GPIO_V0
 #define IP_VERSION_I2C_V0
 #define IP_VERSION_INTAGGR_V0

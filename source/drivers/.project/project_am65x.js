@@ -9,6 +9,7 @@ const files_r5f = {
         "csl_ringacc.c",
         "csl_sec_proxy.c",
         "csl_udmap.c",
+        "ddr.c",
         "gpio.c",
         "i2c_v0.c",
         "i2c_v0_lld.c",
@@ -42,6 +43,7 @@ const files_r5f = {
 
 const filedirs = {
     common: [
+        "ddr/v1",
         "gpio/v0",
         "i2c/v0",
         "i2c/v0/lld",
