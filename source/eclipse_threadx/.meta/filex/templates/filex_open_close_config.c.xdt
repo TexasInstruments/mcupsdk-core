@@ -41,7 +41,7 @@ void EclipseThreadx_FilexOpen(void)
 
         /* Format the media. */
         status = fx_media_format(&gt_media[`filex_inst_ix`], _fx_ram_driver, (void *)&gt_ramdisk_`k`_mem[0], gt_media_memory[`filex_inst_ix`], sizeof(gt_media_memory[`filex_inst_ix`]), 
-                                 "`filex_inst.$name`", 1, 32, 0, `filex_inst.ramdisk_size / filex_inst.sector_size`U, `filex_inst.sector_size`U, `filex_inst.sectors_per_cluster`, 1, 1);
+                                 "`filex_inst.$name`", `filex_inst.fat_cnt`, `filex_inst.dir_entry_cnt`, `filex_inst.hidden_sec_cnt`, `filex_inst.ramdisk_size / filex_inst.sector_size`U, `filex_inst.sector_size`U, `filex_inst.sectors_per_cluster`, 1, 1);
         if (status != FX_SUCCESS) {
             DebugP_logError("EclipseThreadx_FilexOpen() failed: fx_media_format() returned error %d !!!\r\n", status);
             return;
@@ -84,7 +84,7 @@ void EclipseThreadx_FilexOpen(void)
 
         /* Format the media. */
         status = fx_media_format(&gt_media[`filex_inst_ix`], _fx_mmcsd_driver, (void *)&gt_mmcsd_driver_data[`k`], gt_media_memory[`filex_inst_ix`], sizeof(gt_media_memory[`filex_inst_ix`]), 
-                                 "`filex_inst.$name`", 1, 32, 0, ((uint64_t)blk_cnt * blk_sz) / `filex_inst.sector_size`U, `filex_inst.sector_size`U, `filex_inst.sectors_per_cluster`, 1, 1);
+                                 "`filex_inst.$name`", `filex_inst.fat_cnt`, `filex_inst.dir_entry_cnt`, `filex_inst.hidden_sec_cnt`, ((uint64_t)blk_cnt * blk_sz) / `filex_inst.sector_size`U, `filex_inst.sector_size`U, `filex_inst.sectors_per_cluster`, 1, 1);
         if (status != FX_SUCCESS) {
             DebugP_logError("EclipseThreadx_FilexOpen() failed: fx_media_format() returned error %d !!!\r\n", status);
             return;
