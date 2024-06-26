@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -444,4 +444,12 @@ uint32_t Bootloader_socIsAuthRequired(void)
 void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid){
     uint8_t boot_seq[] = {0x06, 0x09, 0x2B, 0x06, 0x01, 0x04, 0x01, 0x82, 0x26, 0x01, 0x01};
     memcpy(boot_seq_oid, boot_seq, sizeof(boot_seq));
+}
+
+int32_t Bootloader_socCpuSetAppEntryPoint(uint32_t cpuId, uintptr_t entryPoint)
+{
+   int32_t status = SystemP_SUCCESS;
+   /* dummy api call */
+
+    return status;
 }

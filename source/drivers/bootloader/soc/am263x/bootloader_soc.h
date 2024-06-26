@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -291,6 +291,12 @@ void Bootloader_socLoadHsmRtFw(HsmClient_t *gHSMClient, const uint8_t *HsmRtFw, 
  * \brief API to set CPU clock to 200 MHz or 400 MHz on the basis of eFUSE bits configuration
  */
 void Bootloader_socSetAutoClock();
+
+/**
+ * dummy api call
+ */
+int32_t Bootloader_socCpuSetAppEntryPoint(uint32_t cpuId, uintptr_t entryPoint);
+
 #ifdef __cplusplus
 }
 #endif

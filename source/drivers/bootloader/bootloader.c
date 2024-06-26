@@ -251,6 +251,28 @@ int32_t Bootloader_rprcImageParseEntryPoint(Bootloader_Handle handle, Bootloader
     return status;
 }
 
+int32_t Bootloader_cpuSetAppEntryPoint(Bootloader_BootImageInfo *bootImageInfo, uint32_t bDualSelfR5F)
+{
+    int32_t status = SystemP_SUCCESS;
+    uintptr_t entryPoint;
+    uint32_t cpuId;
+
+    cpuId = CSL_CORE_ID_R5FSS0_0;
+    entryPoint = bootImageInfo->cpuInfo[cpuId].entryPoint;
+
+    status = Bootloader_socCpuSetAppEntryPoint(cpuId, entryPoint);
+
+    if(bDualSelfR5F == TRUE)
+    {
+        cpuId = CSL_CORE_ID_R5FSS0_1;
+        entryPoint = bootImageInfo->cpuInfo[cpuId].entryPoint;
+
+        status = Bootloader_socCpuSetAppEntryPoint(cpuId, entryPoint);
+    }
+
+    return status;
+}
+
 int32_t Bootloader_bootSelfCpu(Bootloader_Handle handle, Bootloader_BootImageInfo *bootImageInfo)
 {
     int32_t status = SystemP_SUCCESS;

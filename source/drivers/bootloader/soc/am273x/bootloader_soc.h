@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -307,6 +307,11 @@ void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid);
  *         \ref BOOTLOADER_SOC_VARIANT_SINGLE_R5F
  */
 uint32_t Bootloader_socGetCoreVariant(void);
+
+/**
+ * dummy api call
+ */
+int32_t Bootloader_socCpuSetAppEntryPoint(uint32_t cpuId, uintptr_t entryPoint);
 
 #ifdef __cplusplus
 }

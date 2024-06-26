@@ -39,6 +39,9 @@ extern "C"
 #endif
 
 
+#if defined (SOC_AM65X)
+#include <drivers/bootloader/soc/am65x/bootloader_soc.h>
+#endif
 #if defined (SOC_AM64X) || defined (SOC_AM243X)
 #include <drivers/bootloader/soc/am64x_am243x/bootloader_soc.h>
 #endif

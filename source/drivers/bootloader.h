@@ -394,6 +394,16 @@ int32_t Bootloader_bootSelfCpu(Bootloader_Handle handle, Bootloader_BootImageInf
 int32_t Bootloader_parseMultiCoreAppImage(Bootloader_Handle handle, Bootloader_BootImageInfo *bootImageInfo);
 
 /**
+ * \brief Set Application entry point for self CPU in the AM65x SOC from reset
+ *
+ * \param bootImageInfo  [out] Pointer to a \ref Bootloader_BootImageInfo structure
+ * \param bDualSelfR5F  TRUE (1U) if dual cores enabled, FALSE (0U) if not.
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t Bootloader_cpuSetAppEntryPoint(Bootloader_BootImageInfo *bootImageInfo, uint32_t bDualSelfR5F);
+
+/**
  * \brief Parse entrypoint from RPRC
  *
  * This API reads the RPRC image to parse the entry points of a particular CPU

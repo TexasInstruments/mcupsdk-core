@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,8 +30,8 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef BOOTLOADER_SOC_AWR294X_H_
-#define BOOTLOADER_SOC_AWR294X_H_
+#ifndef BOOTLOADER_SOC_AM65X_H_
+#define BOOTLOADER_SOC_AM65X_H_
 
 #ifdef __cplusplus
 extern "C"
@@ -40,27 +40,25 @@ extern "C"
 
 
 #include <drivers/hw_include/cslr_soc.h>
-#include <drivers/hsmclient.h>
-/* ========================================================================== */
-/*                           Macros & Typedefs                                */
-/* ========================================================================== */
+#include <drivers/bootloader.h>
+
+#define BOOTLOADER_DEVICE_VARIANT_SINGLE_CORE    (0x00000000U)
+#define BOOTLOADER_DEVICE_VARIANT_DUAL_CORE      (0x00040000U)
+#define BOOTLOADER_DEVICE_VARIANT_QUAD_CORE      (0x000C0000U)
+
+#define BOOTLOADER_R5FSS0                        (0x00000000U)
+#define BOOTLOADER_R5FSS1                        (0x00010000U)
+
+/** \brief Cache line size for alignment of descriptor and buffers */
+#define BOOTLOADER_CACHELINE_ALIGNMENT        (32U)
+
+/** \brief Macro to align the size in bytes to BOOTLOADER cache line alignment */
+#define BOOTLOADER_ALIGN_SIZE(x)              (((x) + BOOTLOADER_CACHELINE_ALIGNMENT) & ~(BOOTLOADER_CACHELINE_ALIGNMENT - 1U))
+/** \brief Flash base address */
+#define BOOTLOADER_FLASH_BASE_ADDR             (CSL_MCU_FSS0_DAT_REG1_BASE)
 
 /**
- *  \anchor DevTypes
- *  \name Device Types
- *  @{
- */
-/** \brief device type HSSE */
-#define BOOTLOADER_DEVTYPE_HSSE         (0x0AU)
-/** \brief device type HSFS */
-#define BOOTLOADER_DEVTYPE_HSFS         (0xAAU)
-/** \brief device type GP   */
-#define BOOTLOADER_DEVTYPE_GP           (0x03U)
-/** \brief hsmclient ID for bootloader */
-#define BOOTLOADER_CLIENT_ID            (0x02)
-/** @} */
-/**
- * \brief Data structure containing information about a core specific to the AWR294x SOC
+ * \brief Data structure containing information about a core specific to the AM65x SOC
  *
  * This structure is used to store the data about cores in the SoC in the form of a lookup table which will be
  * used by various APIs.
@@ -68,13 +66,16 @@ extern "C"
  */
 typedef struct
 {
+	uint32_t tisciProcId;
+	uint32_t tisciDevId;
+	uint32_t tisciClockId;
 	uint32_t defaultClockHz;
 	char coreName[8];
 
 } Bootloader_CoreBootInfo;
 
 /**
- * \brief Request for a particular CPU in the AM64x SOC
+ * \brief Request for a particular CPU in the AM65x SOC
  *
  * This API internally makes Sciclient calls to request control of the CPU
  *
@@ -85,7 +86,7 @@ typedef struct
 int32_t  Bootloader_socCpuRequest(uint32_t cpuId);
 
 /**
- * \brief Release a particular CPU in the AM64x SOC
+ * \brief Release a particular CPU in the AM65x SOC
  *
  * This API internally makes Sciclient calls to release control of the CPU
  *
@@ -96,7 +97,7 @@ int32_t  Bootloader_socCpuRequest(uint32_t cpuId);
 int32_t  Bootloader_socCpuRelease(uint32_t cpuId);
 
 /**
- * \brief Set the clock of a particular CPU in the AM64x SOC
+ * \brief Set the clock of a particular CPU in the AM65x SOC
  *
  * This API internally makes Sciclient calls to set CPU clock
  *
@@ -108,7 +109,7 @@ int32_t  Bootloader_socCpuRelease(uint32_t cpuId);
 int32_t  Bootloader_socCpuSetClock(uint32_t cpuId, uint32_t cpuHz);
 
 /**
- * \brief Get the clock of a particular CPU in the AM64x SOC
+ * \brief Get the clock of a particular CPU in the AM65x SOC
  *
  * This API internally makes Sciclient calls to get the current clock frequency of CPU
  *
@@ -119,7 +120,7 @@ int32_t  Bootloader_socCpuSetClock(uint32_t cpuId, uint32_t cpuHz);
 uint64_t Bootloader_socCpuGetClock(uint32_t cpuId);
 
 /**
- * \brief Get the default clock of a particular CPU in the AM64x SOC
+ * \brief Get the default clock of a particular CPU in the AM65x SOC
  *
  * This API queries and internal lookup table to fetch the default clock speed at which a
  * particular CPU should run.
@@ -131,7 +132,7 @@ uint64_t Bootloader_socCpuGetClock(uint32_t cpuId);
 uint32_t Bootloader_socCpuGetClkDefault(uint32_t cpuId);
 
 /**
- * \brief Do power-on-reset of a particular CPU in the AM64x SOC
+ * \brief Do power-on-reset of a particular CPU in the AM65x SOC
  *
  * This API is called only when booting a non-self CPU.
  *
@@ -144,7 +145,7 @@ uint32_t Bootloader_socCpuGetClkDefault(uint32_t cpuId);
 int32_t  Bootloader_socCpuPowerOnReset(uint32_t cpuId,void *socCoreOpMode);
 
 /**
- * \brief Release a particular CPU in the AM64x SOC from reset
+ * \brief Release a particular CPU in the AM65x SOC from reset
  *
  * This API is called only when booting a non-self CPU. There is a different
  * API \ref Bootloader_socCpuResetReleaseSelf in the case of a self CPU
@@ -157,14 +158,14 @@ int32_t  Bootloader_socCpuPowerOnReset(uint32_t cpuId,void *socCoreOpMode);
 int32_t  Bootloader_socCpuResetRelease(uint32_t cpuId, uintptr_t entryPoint);
 
 /**
- * \brief Release self CPU in the AM64x SOC from reset
+ * \brief Release self CPU in the AM65x SOC from reset
  *
  * \return SystemP_SUCCESS on success, else failure
  */
 int32_t  Bootloader_socCpuResetReleaseSelf(void);
 
 /**
- * \brief Set entry point for self CPU in the AM64x SOC from reset
+ * \brief Set entry point for self CPU in the AM65x SOC from reset
  *
  * This API need not be called when booting a non-self CPU. The entry point can be specified
  * in the \ref Bootloader_socCpuResetRelease function itself
@@ -175,6 +176,16 @@ int32_t  Bootloader_socCpuResetReleaseSelf(void);
  * \return SystemP_SUCCESS on success, else failure
  */
 int32_t  Bootloader_socCpuSetEntryPoint(uint32_t cpuId, uintptr_t entryPoint);
+
+/**
+ * \brief Set Application entry point for self CPU in the AM65x SOC from reset
+ *
+ * \param cpuId      [in] The CSL ID of the core
+ * \param entryPoint [in] The entryPoint of the CPU, from where it should start execution
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t Bootloader_socCpuSetAppEntryPoint(uint32_t cpuId, uintptr_t entryPoint);
 
 /**
  * \brief Translate a CPU address to the SOC address wherever applicable
@@ -224,15 +235,36 @@ char* Bootloader_socGetCoreName(uint32_t cpuId);
 int32_t Bootloader_socMemInitCpu(uint32_t cpuId);
 
 /**
- * \brief API to trigger the security handover from SYSFW
+ * \brief Obtain the Sciclient Proc Id corresponding to the CSL core ID
+ *
+ * \param cpuId [in] The CSL ID of the core
+ *
+ * \return CSL core ID of a CPU
+ */
+uint32_t Bootloader_socGetSciclientCpuProcId(uint32_t cpuId);
+
+/**
+ * \brief Obtain the Sciclient Device Id corresponding to the CSL core ID
+ *
+ * \param cpuId [in] The CSL ID of the core
+ *
+ * \return CSL core ID of a CPU
+ */
+uint32_t Bootloader_socGetSciclientCpuDevId(uint32_t cpuId);
+
+/**
+ * \brief API to wait for boot notification from SYSFW/ROM
  *
  * \return SystemP_SUCCESS on success, else failure
  */
-int32_t Bootloader_socSecHandover(void);
+int32_t Bootloader_socWaitForFWBoot(void);
 
-void Bootloader_socConfigurePll(void);
-
-void Bootloader_socConfigurePllPostApllSwitch(void);
+/**
+ * \brief API to open required firewalls using SYSFW
+ *
+ * \return SystemP_SUCCESS on success, else failure
+ */
+int32_t Bootloader_socOpenFirewalls(void);
 
 /**
  * \brief API to authenticate (and decrypt if needed) an appimage using SYSFW
@@ -252,9 +284,29 @@ int32_t Bootloader_socAuthImage(uint32_t certLoadAddr);
 uint32_t Bootloader_socIsAuthRequired(void);
 
 /**
- * \brief API to load hsm runtime firmware
+ * \brief API to check if an R5 cluster/subsystem has dual cores enabled or not
+ *
+ * \return TRUE (1U) if dual cores enabled, FALSE (0U) if not.
  */
-void Bootloader_socLoadHsmRtFw(HsmClient_t *gHSMClient, const uint8_t *HsmRtFw, uint32_t hsmRTSize);
+uint32_t Bootloader_socIsR5FSSDual(uint32_t ssNum);
+
+/**
+ * \brief API to check the GPN variant of the SOC - whether it's a quad core,
+ * dual core or a single core variant
+ *
+ * \return \ref BOOTLOADER_DEVICE_VARIANT_SINGLE_CORE,
+ *         \ref BOOTLOADER_DEVICE_VARIANT_DUAL_CORE or
+ *         \ref BOOTLOADER_DEVICE_VARIANT_QUAD_CORE or
+ *          0xFFFFFFFF if invalid bit field read
+ */
+uint32_t Bootloader_socGetCoreVariant(void);
+
+/**
+ * \brief Notify other cores firewall open from SBL. Function writes a Software defined
+ * magic word to PSRAM address (software defined) to signal Firewall open to MCU cores.
+ * This function should only be called from SBL
+ */
+void Bootloader_socNotifyFirewallOpen(void);
 
 /**
  * \brief API to get boot sequence oid
@@ -264,13 +316,8 @@ void Bootloader_socLoadHsmRtFw(HsmClient_t *gHSMClient, const uint8_t *HsmRtFw, 
  */
 void Bootloader_socGetBootSeqOid(uint8_t* boot_seq_oid);
 
-/**
- * dummy api call
- */
-int32_t Bootloader_socCpuSetAppEntryPoint(uint32_t cpuId, uintptr_t entryPoint);
-
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* BOOTLOADER_SOC_AM64X_H_ */
+#endif /* BOOTLOADER_SOC_AM65X_H_ */

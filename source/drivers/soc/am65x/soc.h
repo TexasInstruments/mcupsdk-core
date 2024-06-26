@@ -268,6 +268,14 @@ void SOC_waitForFwlUnlock(void);
  * \return TRUE on success, else failure
  */
 int32_t SOC_isHsDevice(void);
+
+/**
+ *  \brief  This function gets the SOC mapped data base address of the flash
+ *
+ *  \return Data BaseAddress of the flash
+ */
+uint32_t SOC_getFlashDataBaseAddr(void);
+
 /** @} */
 
 #ifdef __cplusplus

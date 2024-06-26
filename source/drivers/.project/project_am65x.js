@@ -4,6 +4,13 @@ let device = "am65x"
 
 const files_r5f = {
     common: [
+        "bootloader.c",
+        "bootloader_buf_io.c",
+        "bootloader_mem.c",
+        "bootloader_profile.c",
+        "bootloader_soc.c",
+        "bootloader_xmodem.c",
+        "crc16.c",
         "csl_intaggr.c",
         "csl_proxy.c",
         "csl_ringacc.c",
@@ -16,9 +23,11 @@ const files_r5f = {
         "pinmux.c",
         "sciclient.c",
         "sciclient_boardcfg.c",
+        "sciclient_firewall.c",
         "sciclient_fmwSecureProxyMap.c",
         "sciclient_irq_rm.c",
         "sciclient_pm.c",
+        "sciclient_procboot.c",
         "sciclient_rm.c",
         "sciclient_rm_irq.c",
         "sciclient_soc_priv.c",
@@ -38,11 +47,14 @@ const files_r5f = {
         "udma_rmcfg_common.c",
         "udma_soc.c",
         "udma_utils.c",
+        "xmodem.c",
     ],
 };
 
 const filedirs = {
     common: [
+        "bootloader",
+        `bootloader/soc/am65x`,
         "ddr/v1",
         "gpio/v0",
         "i2c/v0",

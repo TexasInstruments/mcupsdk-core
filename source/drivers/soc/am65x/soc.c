@@ -708,3 +708,8 @@ int32_t SOC_isHsDevice(void)
 
     return secDev;
 }
+
+uint32_t SOC_getFlashDataBaseAddr(void)
+{
+    return CSL_MCU_FSS0_DAT_REG1_BASE;
+}
