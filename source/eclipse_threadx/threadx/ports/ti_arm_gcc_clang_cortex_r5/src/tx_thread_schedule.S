@@ -173,12 +173,12 @@ __tx_thread_schedule_loop:
     RFEIA   sp!
 @
 _tx_solicited_return:
+    LDMIA   sp!, {r0} // CPSR.
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
-    VLDMIA  sp!, {D8-D15}                       @ Recover D8-D15
+    VLDMIA  sp!, {D0-D15}                       @ Recover D8-D15
     LDR     r4, [sp], #4                        @ Pickup FPSCR
     VMSR    FPSCR, r4                           @ Restore FPSCR
 #endif // #if !defined(__SOFT_FP__) && defined(__ARM_FP)
-    LDMIA   sp!, {r0} // CPSR.
     LDMIA   sp!, {r4-r11, lr}                   @ Return to thread synchronously
     MSR     CPSR_cxsf, r0                       @ Recover CPSR
 @
