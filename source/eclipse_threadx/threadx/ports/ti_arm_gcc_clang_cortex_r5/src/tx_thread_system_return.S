@@ -118,7 +118,7 @@ _tx_thread_system_return:
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
     VMRS    r4, FPSCR                           @ Pickup the FPSCR
     STR     r4, [sp, #-4]!                      @ Save FPSCR
-    VSTMDB  sp!, {D8-D15}                       @ Save D8-D15
+    VSTMDB  sp!, {D0-D15}                       @ Save D8-D15
 #endif // #if !defined(__SOFT_FP__) && defined(__ARM_FP)
 @
     MOV     r0, #0                              @ Build a solicited stack type
