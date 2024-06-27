@@ -129,6 +129,9 @@ _tx_thread_stack_build:
 @
 @    Stack Bottom: (higher memory address)  */
 @
+
+    PUSH {r4-r7}                            @ Save some working registers.
+
 @
 @   Fetch the CPSR and thumb bit from the C helper function.
 @   This is done to support both thumb and arm builds.
@@ -152,11 +155,30 @@ _tx_thread_stack_build:
     MOV     r3, #1                          @ Build interrupt stack type
     STR     r3, [r2, #0]                    @ Store stack type
 
-#if !defined(__SOFT_FP__) && defined(__ARM_FP)
+    MOV     r6, #0x0                        @ Build initial VFP register value
+    MOV     r7, #0x0
 
+#if !defined(__SOFT_FP__) && defined(__ARM_FP)
+    STRD     r6, r7, [r2, #(4+0)]           @ Store cleared VFP register values.
+    STRD     r6, r7, [r2, #(4+8)]
+    STRD     r6, r7, [r2, #(4+16)]
+    STRD     r6, r7, [r2, #(4+24)]
+    STRD     r6, r7, [r2, #(4+32)]
+    STRD     r6, r7, [r2, #(4+40)]
+    STRD     r6, r7, [r2, #(4+48)]
+    STRD     r6, r7, [r2, #(4+56)]
+    STRD     r6, r7, [r2, #(4+64)]
+    STRD     r6, r7, [r2, #(4+72)]
+    STRD     r6, r7, [r2, #(4+80)]
+    STRD     r6, r7, [r2, #(4+88)]
+    STRD     r6, r7, [r2, #(4+96)]
+    STRD     r6, r7, [r2, #(4+104)]
+    STRD     r6, r7, [r2, #(4+112)]
+    STRD     r6, r7, [r2, #(4+120)]
+    STR     r6, [r2, #(4+128)]                       @ Save initial FPSCR value
 #endif // #if !defined(__SOFT_FP__) && defined(__ARM_FP)
 
-    MOV     r3, #0xA                          @ Build initial register value
+    MOV     r3, #0x0                                 @ Build initial register value
     STR     r3, [r2, #(4+FP_OFF)]                    @ Store initial r0
     STR     r3, [r2, #(8+FP_OFF)]                    @ Store initial r1
     STR     r3, [r2, #(12+FP_OFF)]                   @ Store initial r2
@@ -190,6 +212,8 @@ _tx_thread_stack_build:
 @
     STR     r2, [r0, #8]                    @ Save stack pointer in thread's
                                             @   control block
+
+    POP {r4-r7}                             @ Restore working registers
     BX      lr                              @ Return to caller
 @}
 
