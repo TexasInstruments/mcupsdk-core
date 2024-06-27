@@ -1227,6 +1227,17 @@ int32_t SDL_ECC_injectError(SDL_ECC_MemType eccMemType,
              }
         }
 
+        /* Disable the parity bit for all type of R5F cache memory */
+        if((eccMemType == SDL_R5FSS0_CORE0_ECC_AGGR) || (eccMemType == SDL_R5FSS0_CORE1_ECC_AGGR)
+            || (eccMemType == SDL_R5FSS1_CORE0_ECC_AGGR)|| (eccMemType == SDL_R5FSS1_CORE1_ECC_AGGR))
+        {
+            if((memSubType >= SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_ITAG_RAM0_RAM_ID) && (memSubType <= SDL_R5FSS0_CORE0_ECC_AGGR_CPU0_DDATA_RAM7_RAM_ID))
+            {
+                /* Disable parity bit since it is not supported for R5F cache memories */
+                regValue = (regValue & (~(SDL_ECC_RAM_CTRL_CHECK_PARITY_MASK)));
+            }
+        }
+
         if (retVal == SDL_PASS) {
             /* Write bit error configuration to register */
             sdlRetval = SDL_ecc_aggrWriteEccRamCtrlReg(eccAggrRegs,
