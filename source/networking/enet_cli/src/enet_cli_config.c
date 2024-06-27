@@ -242,7 +242,7 @@ static int32_t EnetConfig_setPriorityMap(uint8_t port,
     int32_t status = ENET_SOK;
 
     /* For host port */
-    if (port == 0)
+    if (port == CPSW_ALE_HOST_PORT_NUM)
     {
         EnetPort_PriorityMap inArgs;
         memset(&inArgs, 0, sizeof(inArgs));
@@ -303,7 +303,8 @@ static void EnetConfig_getPriorityMap(uint8_t portNum)
     Enet_IoctlPrms prms;
     int32_t status;
 
-    if (portNum == 0)
+    /* For host port */
+    if (portNum == CPSW_ALE_HOST_PORT_NUM)
     {
         EnetPort_PriorityMap outArgs;
         ENET_IOCTL_SET_OUT_ARGS(&prms, &outArgs);
@@ -338,6 +339,8 @@ static void EnetConfig_getPriorityMap(uint8_t portNum)
         }
         EnetAppUtils_print("\r\n");
     }
+
+    /* For MAC ports */
     else
     {
         EnetMacPort_GenericInArgs inArgs;

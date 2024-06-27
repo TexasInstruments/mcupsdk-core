@@ -175,7 +175,7 @@ static void EnetDebug_showCpswStats(uint8_t portNum, bool reset)
     int32_t status;
 
     /* Show host port statistics */
-    if (portNum == 0)
+    if (portNum == CPSW_ALE_HOST_PORT_NUM)
     {
         ENET_IOCTL_SET_OUT_ARGS(&prms, &portStats);
         ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
