@@ -66,8 +66,8 @@ static BaseType_t EnetCli_configHelp(char *writeBuffer, size_t writeBufferLen,
 static BaseType_t EnetCli_priorityMap(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
-static int32_t EnetConfig_setPriorityMap(uint8_t port, uint8_t remapType,
-        uint8_t *map);
+static int32_t EnetConfig_setPriorityMap(uint8_t port,
+        EnetCli_RemapType remapType, uint8_t *map);
 
 static void EnetConfig_getPriorityMap(uint8_t portNum);
 
@@ -77,8 +77,11 @@ static BaseType_t EnetCli_traceLvl(char *writeBuffer, size_t writeBufferLen,
 static BaseType_t EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
-static int32_t EnetConfig_addClassifierEntry(CpswAle_PolicerMatchParams prm,
-        int8_t rxCh);
+static int32_t EnetConfig_addClassifierEntry(
+        CpswAle_PolicerMatchParams *matchPrms, uint8_t rxCh);
+
+static int32_t EnetConfig_remClassifierEntry(
+        CpswAle_PolicerMatchParams *matchPrms, int8_t rxCh);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -98,13 +101,21 @@ BaseType_t EnetCli_configCommandHandler(char *writeBuffer,
     parameter = (char*) FreeRTOS_CLIGetParameter(commandString, 1, &paramLen);
 
     if (parameter == NULL || strncmp(parameter, "help", paramLen) == 0)
+    {
         return EnetCli_configHelp(writeBuffer, writeBufferLen, commandString);
+    }
     else if (strncmp(parameter, "mqprio", paramLen) == 0)
+    {
         return EnetCli_priorityMap(writeBuffer, writeBufferLen, commandString);
+    }
     else if (strncmp(parameter, "tracelvl", paramLen) == 0)
+    {
         return EnetCli_traceLvl(writeBuffer, writeBufferLen, commandString);
+    }
     else if (strncmp(parameter, "classifier", paramLen) == 0)
+    {
         return EnetCli_classifier(writeBuffer, writeBufferLen, commandString);
+    }
     else
     {
         snprintf(writeBuffer, writeBufferLen,
@@ -158,10 +169,11 @@ static BaseType_t EnetCli_priorityMap(char *writeBuffer, size_t writeBufferLen,
     int32_t status = ENET_SOK;
     char *parameter;
     BaseType_t paramLen;
-    uint8_t remapType, portNum;
+    uint8_t portNum;
+    EnetCli_RemapType remapType;
     uint8_t map[8];
 
-    for (uint8_t paramCnt = 2; paramCnt < 12; paramCnt++)
+    for (uint32_t paramCnt = 2; paramCnt < 12; paramCnt++)
     {
         parameter = (char*) FreeRTOS_CLIGetParameter(commandString, paramCnt,
                 &paramLen);
@@ -180,7 +192,7 @@ static BaseType_t EnetCli_priorityMap(char *writeBuffer, size_t writeBufferLen,
         if (paramCnt == 2)
         {
             portNum = atoi(parameter);
-            if (portNum < 0 || portNum > EnetInfo_inst.numMacPorts)
+            if (portNum < 0 || portNum > EnetCli_inst.numMacPorts)
             {
                 snprintf(writeBuffer, writeBufferLen,
                         "Invalid port number\r\n");
@@ -190,9 +202,13 @@ static BaseType_t EnetCli_priorityMap(char *writeBuffer, size_t writeBufferLen,
         else if (paramCnt == 3)
         {
             if (strncmp(parameter, "-i", paramLen) == 0)
-                remapType = REMAP_INGRESS;
+            {
+                remapType = ENET_CLI_REMAP_INGRESS;
+            }
             else if (strncmp(parameter, "-e", paramLen) == 0)
-                remapType = REMAP_EGRESS;
+            {
+                remapType = ENET_CLI_REMAP_EGRESS;
+            }
             else
             {
                 snprintf(writeBuffer, writeBufferLen, "Invalid remap type\r\n");
@@ -219,8 +235,8 @@ static BaseType_t EnetCli_priorityMap(char *writeBuffer, size_t writeBufferLen,
     return pdFALSE;
 }
 
-static int32_t EnetConfig_setPriorityMap(uint8_t port, uint8_t remapType,
-        uint8_t *map)
+static int32_t EnetConfig_setPriorityMap(uint8_t port,
+        EnetCli_RemapType remapType, uint8_t *map)
 {
     Enet_IoctlPrms prms;
     int32_t status = ENET_SOK;
@@ -231,40 +247,50 @@ static int32_t EnetConfig_setPriorityMap(uint8_t port, uint8_t remapType,
         EnetPort_PriorityMap inArgs;
         memset(&inArgs, 0, sizeof(inArgs));
 
-        for (uint8_t i = 0; i < 8; i++)
-            inArgs.priorityMap[i] = *(map + i);
+        for (uint32_t mapIdx = 0; mapIdx < 8; mapIdx++)
+        {
+            inArgs.priorityMap[mapIdx] = *(map + mapIdx);
+        }
         ENET_IOCTL_SET_IN_ARGS(&prms, &inArgs);
-        if (remapType == REMAP_INGRESS)
-            ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+        if (remapType == ENET_CLI_REMAP_INGRESS)
+        {
+            ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
                     ENET_HOSTPORT_IOCTL_SET_PRI_REGEN_MAP, &prms, status);
-        else if (remapType == REMAP_EGRESS)
-            ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+        }
+        else if (remapType == ENET_CLI_REMAP_EGRESS)
+        {
+            ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
                     ENET_HOSTPORT_IOCTL_SET_EGRESS_QOS_PRI_MAP, &prms, status);
+        }
     }
 
     /* For MAC port */
     else
     {
-        if (remapType == REMAP_INGRESS)
+        if (remapType == ENET_CLI_REMAP_INGRESS)
         {
             EnetMacPort_SetPriorityRegenMapInArgs inArgs;
             memset(&inArgs, 0, sizeof(inArgs));
             inArgs.macPort = (Enet_MacPort) (port - 1);
-            for (uint8_t i = 0; i < 8; i++)
-                inArgs.priorityRegenMap.priorityMap[i] = *(map + i);
+            for (uint32_t mapIdx = 0; mapIdx < 8; mapIdx++)
+            {
+                inArgs.priorityRegenMap.priorityMap[mapIdx] = *(map + mapIdx);
+            }
             ENET_IOCTL_SET_IN_ARGS(&prms, &inArgs);
-            ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+            ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
                     ENET_MACPORT_IOCTL_SET_PRI_REGEN_MAP, &prms, status);
         }
-        else if (remapType == REMAP_EGRESS)
+        else if (remapType == ENET_CLI_REMAP_EGRESS)
         {
             EnetMacPort_SetEgressPriorityMapInArgs inArgs;
             memset(&inArgs, 0, sizeof(inArgs));
             inArgs.macPort = (Enet_MacPort) (port - 1);
-            for (uint8_t i = 0; i < 8; i++)
-                inArgs.priorityMap.priorityMap[i] = *(map + i);
+            for (uint32_t mapIdx = 0; mapIdx < 8; mapIdx++)
+            {
+                inArgs.priorityMap.priorityMap[mapIdx] = *(map + mapIdx);
+            }
             ENET_IOCTL_SET_IN_ARGS(&prms, &inArgs);
-            ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+            ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
                     ENET_MACPORT_IOCTL_SET_EGRESS_QOS_PRI_MAP, &prms, status);
         }
     }
@@ -281,27 +307,35 @@ static void EnetConfig_getPriorityMap(uint8_t portNum)
     {
         EnetPort_PriorityMap outArgs;
         ENET_IOCTL_SET_OUT_ARGS(&prms, &outArgs);
-        ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+        ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
                 ENET_HOSTPORT_IOCTL_GET_PRI_REGEN_MAP, &prms, status);
         if (status == ENET_SOK)
         {
             EnetAppUtils_print("VLAN Priority Regen Map --> ");
-            for (uint8_t i = 0; i < 8; i++)
-                EnetAppUtils_print("%d ", outArgs.priorityMap[i]);
+            for (uint32_t mapIdx = 0; mapIdx < 8; mapIdx++)
+            {
+                EnetAppUtils_print("%d ", outArgs.priorityMap[mapIdx]);
+            }
         }
         else
+        {
             EnetAppUtils_print("Failed to fetch VLAN priority regen map");
+        }
         EnetAppUtils_print("\r\n");
-        ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+        ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
                 ENET_HOSTPORT_IOCTL_GET_EGRESS_QOS_PRI_MAP, &prms, status);
         if (status == ENET_SOK)
         {
             EnetAppUtils_print("Egress QoS Priority Map --> ");
-            for (uint8_t i = 0; i < 8; i++)
-                EnetAppUtils_print("%d ", outArgs.priorityMap[i]);
+            for (uint32_t mapIdx = 0; mapIdx < 8; mapIdx++)
+            {
+                EnetAppUtils_print("%d ", outArgs.priorityMap[mapIdx]);
+            }
         }
         else
+        {
             EnetAppUtils_print("Failed to fetch egress Qos priority map");
+        }
         EnetAppUtils_print("\r\n");
     }
     else
@@ -310,27 +344,35 @@ static void EnetConfig_getPriorityMap(uint8_t portNum)
         EnetPort_PriorityMap outArgs;
         inArgs.macPort = (Enet_MacPort) (portNum - 1);
         ENET_IOCTL_SET_INOUT_ARGS(&prms, &inArgs, &outArgs);
-        ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+        ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
                 ENET_MACPORT_IOCTL_GET_PRI_REGEN_MAP, &prms, status);
         if (status == ENET_SOK)
         {
             EnetAppUtils_print("VLAN Priority Regen Map --> ");
-            for (uint8_t i = 0; i < 8; i++)
-                EnetAppUtils_print("%d ", outArgs.priorityMap[i]);
+            for (uint32_t mapIdx = 0; mapIdx < 8; mapIdx++)
+            {
+                EnetAppUtils_print("%d ", outArgs.priorityMap[mapIdx]);
+            }
         }
         else
+        {
             EnetAppUtils_print("Failed to fetch VLAN priority regen map");
+        }
         EnetAppUtils_print("\r\n");
-        ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+        ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
                 ENET_MACPORT_IOCTL_GET_EGRESS_QOS_PRI_MAP, &prms, status);
         if (status == ENET_SOK)
         {
             EnetAppUtils_print("Egress QoS Priority Map --> ");
-            for (uint8_t i = 0; i < 8; i++)
-                EnetAppUtils_print("%d ", outArgs.priorityMap[i]);
+            for (uint32_t mapIdx = 0; mapIdx < 8; mapIdx++)
+            {
+                EnetAppUtils_print("%d ", outArgs.priorityMap[mapIdx]);
+            }
         }
         else
+        {
             EnetAppUtils_print("Failed to fetch egress Qos priority map");
+        }
         EnetAppUtils_print("\r\n");
     }
 }
@@ -352,7 +394,7 @@ static BaseType_t EnetCli_traceLvl(char *writeBuffer, size_t writeBufferLen,
     else
     {
         lvl = (EnetTrace_TraceLevel) atoi(parameter);
-        if (lvl < 0 || lvl > 5)
+        if ((lvl < 0) || (lvl > 5))
         {
             snprintf(writeBuffer, writeBufferLen, "Invalid trace level\r\n");
             return pdFALSE;
@@ -500,7 +542,7 @@ static BaseType_t EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
             args.policerMatchEnMask |= CPSW_ALE_POLICER_MATCH_PORT;
             parameter = (char*) FreeRTOS_CLIGetParameter(commandString,
                     paramCnt + 1, &paramLen);
-            if (atoi(parameter) >= EnetInfo_inst.numMacPorts
+            if (atoi(parameter) >= EnetCli_inst.numMacPorts
                     || atoi(parameter) < 0)
             {
                 snprintf(writeBuffer, writeBufferLen, "Invalid MAC port\r\n");
@@ -540,31 +582,22 @@ static BaseType_t EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
     if (remove)
     {
         /* Remove classifier entry from ALE */
-        CpswAle_DelPolicerEntryInArgs inArgs;
-        inArgs.policerMatch = args;
-        Enet_IoctlPrms prms;
-        ENET_IOCTL_SET_IN_ARGS(&prms, &inArgs);
-        ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
-                CPSW_ALE_IOCTL_DEL_POLICER, &prms, status);
-        if (rxCh != -1 && status == ENET_SOK)
-        {
-            uint32_t threadId = rxCh + 1;
-            ENET_IOCTL_SET_IN_ARGS(&prms, &threadId);
-            ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
-                    CPSW_ALE_IOCTL_DEL_ALL_POLICER_THREADID, &prms, status);
-        }
-
+        status = EnetConfig_remClassifierEntry(&args, rxCh);
         if (status)
+        {
             snprintf(writeBuffer, writeBufferLen,
                     "Failed to remove classifier entry from ALE\r\n");
+        }
         else
+        {
             snprintf(writeBuffer, writeBufferLen,
                     "Removed classifier entry(s) from ALE\r\n");
+        }
     }
     else
     {
         /* Add classifier entry to ALE */
-        status = EnetConfig_addClassifierEntry(args, rxCh);
+        status = EnetConfig_addClassifierEntry(&args, rxCh);
         if (status)
             snprintf(writeBuffer, writeBufferLen,
                     "Failed to add classifier entry to ALE\r\n");
@@ -575,8 +608,8 @@ static BaseType_t EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
     return pdFALSE;
 }
 
-static int32_t EnetConfig_addClassifierEntry(CpswAle_PolicerMatchParams prm,
-        int8_t rxCh)
+static int32_t EnetConfig_addClassifierEntry(
+        CpswAle_PolicerMatchParams *matchPrms, uint8_t rxCh)
 {
     CpswAle_SetPolicerEntryInArgs setPolicerInArgs;
     CpswAle_SetPolicerEntryOutArgs setPolicerOutArgs;
@@ -584,15 +617,46 @@ static int32_t EnetConfig_addClassifierEntry(CpswAle_PolicerMatchParams prm,
     int32_t status;
 
     memset(&setPolicerInArgs, 0, sizeof(setPolicerInArgs));
-    setPolicerInArgs.policerMatch = prm;
+
+    /* Add policer entry with the given parameters and route the classified
+     * packets to the specified rx dma channel.
+     */
+    setPolicerInArgs.policerMatch = *matchPrms;
     setPolicerInArgs.threadIdEn = true;
+    /* The thread ID ranges from 1 to 8, rxCh passed to this function ranges from 0 to 7 */
     setPolicerInArgs.threadId = rxCh + 1;
     setPolicerInArgs.peakRateInBitsPerSec = 0;
     setPolicerInArgs.commitRateInBitsPerSec = 0;
     ENET_IOCTL_SET_INOUT_ARGS(&prms, &setPolicerInArgs, &setPolicerOutArgs);
-
-    ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+    ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
             CPSW_ALE_IOCTL_SET_POLICER, &prms, status);
+
+    return status;
+}
+
+static int32_t EnetConfig_remClassifierEntry(
+        CpswAle_PolicerMatchParams *matchPrms, int8_t rxCh)
+{
+    /* Remove classifier entry from ALE */
+    CpswAle_DelPolicerEntryInArgs inArgs;
+    int32_t status;
+    Enet_IoctlPrms prms;
+
+    /* Remove policer entry which matches the given parameters */
+    inArgs.policerMatch = *matchPrms;
+    ENET_IOCTL_SET_IN_ARGS(&prms, &inArgs);
+    ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
+            CPSW_ALE_IOCTL_DEL_POLICER, &prms, status);
+
+    /* If rxCh is specified, remove all classifier associated to the channel */
+    if (rxCh != -1 && status == ENET_SOK)
+    {
+        /* The thread ID ranges from 1 to 8, rxCh passed to this function ranges from 0 to 7 */
+        uint32_t threadId = rxCh + 1;
+        ENET_IOCTL_SET_IN_ARGS(&prms, &threadId);
+        ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
+                CPSW_ALE_IOCTL_DEL_ALL_POLICER_THREADID, &prms, status);
+    }
 
     return status;
 }

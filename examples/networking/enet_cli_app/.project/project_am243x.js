@@ -213,7 +213,7 @@ function getComponentProperty() {
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
     property.name = "enet_cli_app";
-    property.isInternal = false;
+    property.isInternal = true;
     property.buildOptionCombos = buildOptionCombos;
 
     return property;

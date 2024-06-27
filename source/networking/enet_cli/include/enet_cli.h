@@ -75,14 +75,14 @@ extern "C"
 /*                         Structures and Enums                               */
 /* ========================================================================== */
 
-typedef struct EnetInfo_Obj_s
+typedef struct EnetCli_Obj_s
 {
     Enet_Type enetType;
     uint32_t instId;
     Enet_Handle hEnet;
     uint8_t numMacPorts;
     uint32_t coreId;
-} EnetInfo_Obj;
+} EnetCli_Obj;
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
@@ -97,7 +97,7 @@ BaseType_t EnetCli_processCommand(const char *commandInput, char *writeBuffer,
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-EnetInfo_Obj EnetInfo_inst;
+EnetCli_Obj EnetCli_inst;
 
 #ifdef __cplusplus
 }

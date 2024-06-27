@@ -159,21 +159,21 @@ static BaseType_t EnetCli_phyScan(char *writeBuffer, size_t writeBufferLen,
 
     inArgs.macPort = (Enet_MacPort) macPort;
     ENET_IOCTL_SET_INOUT_ARGS(&prms, &inArgs, &isAlive);
-    ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+    ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
             ENET_PHY_IOCTL_IS_ALIVE, &prms, status);
     if (status == 0)
     {
         if (isAlive)
         {
             ENET_IOCTL_SET_INOUT_ARGS(&prms, &inArgs, &phyInfo);
-            ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+            ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
                     ENET_PHY_IOCTL_GET_ID, &prms, status);
             ENET_IOCTL_SET_INOUT_ARGS(&prms, &inArgs, &isLinked);
-            ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+            ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
                     ENET_PHY_IOCTL_IS_LINKED, &prms, status);
             ethPort.boardId = EnetBoard_getId();
-            ethPort.enetType = EnetInfo_inst.enetType;
-            ethPort.instId = EnetInfo_inst.instId;
+            ethPort.enetType = EnetCli_inst.enetType;
+            ethPort.instId = EnetCli_inst.instId;
             ethPort.macPort = (Enet_MacPort) macPort;
             EnetBoard_getMiiConfig(&ethPort.mii);
             phyCfg = EnetBoard_getPhyCfg(&ethPort);
@@ -191,7 +191,7 @@ static BaseType_t EnetCli_phyScan(char *writeBuffer, size_t writeBufferLen,
                 "\nMAC Port %d -->\r\n Scan failed\r\n", macPort);
 
     macPort++;
-    if (macPort == EnetInfo_inst.numMacPorts)
+    if (macPort == EnetCli_inst.numMacPorts)
     {
         macPort = 0;
         return pdFALSE;
@@ -217,7 +217,7 @@ static BaseType_t EnetCli_getPhyLinkStatus(char *writeBuffer,
     if (parameter != NULL)
     {
         macPort = atoi(parameter);
-        if (macPort < 0 || macPort >= EnetInfo_inst.numMacPorts)
+        if (macPort < 0 || macPort >= EnetCli_inst.numMacPorts)
         {
             snprintf(writeBuffer, writeBufferLen, "Invalid Mac Port\r\n");
             return pdFALSE;
@@ -227,12 +227,12 @@ static BaseType_t EnetCli_getPhyLinkStatus(char *writeBuffer,
 
     inArgs.macPort = (Enet_MacPort) macPort;
     ENET_IOCTL_SET_INOUT_ARGS(&prms, &inArgs, &isLinked);
-    ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+    ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
             ENET_PHY_IOCTL_IS_LINKED, &prms, status);
     if (isLinked)
     {
         ENET_IOCTL_SET_INOUT_ARGS(&prms, &inArgs, &linkCfg);
-        ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+        ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
                 ENET_PHY_IOCTL_GET_LINK_MODE, &prms, status);
         if (status == ENET_SOK)
         {
@@ -265,7 +265,7 @@ static BaseType_t EnetCli_getPhyLinkStatus(char *writeBuffer,
     else
     {
         macPort++;
-        if (macPort == EnetInfo_inst.numMacPorts)
+        if (macPort == EnetCli_inst.numMacPorts)
         {
             macPort = 0;
             return pdFALSE;
@@ -291,14 +291,14 @@ static BaseType_t EnetCli_dumpPhyRegs(char *writeBuffer, size_t writeBufferLen,
         return pdFALSE;
     }
     inArgs.macPort = (Enet_MacPort) atoi(parameter);
-    if (inArgs.macPort < 0 || inArgs.macPort >= EnetInfo_inst.numMacPorts)
+    if (inArgs.macPort < 0 || inArgs.macPort >= EnetCli_inst.numMacPorts)
     {
         snprintf(writeBuffer, writeBufferLen, "Invalid MAC Port\r\n");
         return pdFALSE;
     }
 
     ENET_IOCTL_SET_IN_ARGS(&prms, &inArgs);
-    ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+    ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
             ENET_PHY_IOCTL_PRINT_REGS, &prms, status);
     if (status != ENET_SOK)
         snprintf(writeBuffer, writeBufferLen,
@@ -316,7 +316,7 @@ static BaseType_t EnetCli_writePhyRegs(char *writeBuffer, size_t writeBufferLen,
     EnetPhy_WriteRegInArgs inArgs;
     Enet_IoctlPrms prms;
 
-    for (uint8_t paramCnt = 2; paramCnt < 5; paramCnt++)
+    for (uint32_t paramCnt = 2; paramCnt < 5; paramCnt++)
     {
         parameter = (char*) FreeRTOS_CLIGetParameter(commandString, paramCnt,
                 &paramLen);
@@ -330,7 +330,7 @@ static BaseType_t EnetCli_writePhyRegs(char *writeBuffer, size_t writeBufferLen,
         {
             inArgs.macPort = (Enet_MacPort) atoi(parameter);
             if (inArgs.macPort < 0
-                    || inArgs.macPort >= EnetInfo_inst.numMacPorts)
+                    || inArgs.macPort >= EnetCli_inst.numMacPorts)
             {
                 snprintf(writeBuffer, writeBufferLen, "Invalid MAC Port\r\n");
                 return pdFALSE;
@@ -343,7 +343,7 @@ static BaseType_t EnetCli_writePhyRegs(char *writeBuffer, size_t writeBufferLen,
     }
 
     ENET_IOCTL_SET_IN_ARGS(&prms, &inArgs);
-    ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+    ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
             ENET_PHY_IOCTL_WRITE_REG, &prms, status);
 
     if (status != ENET_SOK)
@@ -366,7 +366,7 @@ static BaseType_t EnetCli_readPhyRegs(char *writeBuffer, size_t writeBufferLen,
     uint16_t val;
     Enet_IoctlPrms prms;
 
-    for (uint8_t paramCnt = 2; paramCnt < 4; paramCnt++)
+    for (uint32_t paramCnt = 2; paramCnt < 4; paramCnt++)
     {
         parameter = (char*) FreeRTOS_CLIGetParameter(commandString, paramCnt,
                 &paramLen);
@@ -380,7 +380,7 @@ static BaseType_t EnetCli_readPhyRegs(char *writeBuffer, size_t writeBufferLen,
         {
             inArgs.macPort = (Enet_MacPort) atoi(parameter);
             if (inArgs.macPort < 0
-                    || inArgs.macPort >= EnetInfo_inst.numMacPorts)
+                    || inArgs.macPort >= EnetCli_inst.numMacPorts)
             {
                 snprintf(writeBuffer, writeBufferLen, "Invalid MAC Port\r\n");
                 return pdFALSE;
@@ -391,7 +391,7 @@ static BaseType_t EnetCli_readPhyRegs(char *writeBuffer, size_t writeBufferLen,
     }
 
     ENET_IOCTL_SET_INOUT_ARGS(&prms, &inArgs, &val);
-    ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+    ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
             ENET_PHY_IOCTL_READ_REG, &prms, status);
 
     if (status != ENET_SOK)

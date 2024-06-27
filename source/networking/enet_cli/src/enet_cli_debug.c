@@ -94,14 +94,22 @@ BaseType_t EnetCli_debugCommandHandler(char *writeBuffer, size_t writeBufferLen,
     parameter = (char*) FreeRTOS_CLIGetParameter(commandString, 1, &paramLen);
 
     if (parameter == NULL || strncmp(parameter, "help", paramLen) == 0)
+    {
         return EnetCli_debugHelp(writeBuffer, writeBufferLen, commandString);
+    }
     else if (strncmp(parameter, "cpswstats", paramLen) == 0)
+    {
         return EnetCli_showCpswStats(writeBuffer, writeBufferLen, commandString);
+    }
     else if (strncmp(parameter, "dumpale", paramLen) == 0)
+    {
         return EnetCli_dumpAleTable(writeBuffer, writeBufferLen, commandString);
+    }
     else if (strncmp(parameter, "dumppolicer", paramLen) == 0)
+    {
         return EnetCLI_dumpPolicerTable(writeBuffer, writeBufferLen,
                 commandString);
+    }
     else
     {
         snprintf(writeBuffer, writeBufferLen,
@@ -145,14 +153,16 @@ static BaseType_t EnetCli_showCpswStats(char *writeBuffer,
         return pdFALSE;
     }
     portNum = atoi(parameter);
-    if (portNum < 0 || portNum > EnetInfo_inst.numMacPorts)
+    if (portNum < 0 || portNum > EnetCli_inst.numMacPorts)
     {
         snprintf(writeBuffer, writeBufferLen, "Invalid MAC port\r\n");
         return pdFALSE;
     }
     parameter = (char*) FreeRTOS_CLIGetParameter(commandString, 3, &paramLen);
     if (parameter != NULL && strncmp(parameter, "-r", paramLen) == 0)
+    {
         reset = true;
+    }
 
     EnetDebug_showCpswStats(portNum, reset);
     return pdFALSE;
@@ -168,7 +178,7 @@ static void EnetDebug_showCpswStats(uint8_t portNum, bool reset)
     if (portNum == 0)
     {
         ENET_IOCTL_SET_OUT_ARGS(&prms, &portStats);
-        ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+        ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
                 ENET_STATS_IOCTL_GET_HOSTPORT_STATS, &prms, status);
         if (status == ENET_SOK)
         {
@@ -179,12 +189,14 @@ static void EnetDebug_showCpswStats(uint8_t portNum, bool reset)
             EnetAppUtils_print("\r\n");
         }
         else
+        {
             EnetAppUtils_print("Failed to get host stats: %d\r\n", status);
+        }
 
         if (reset)
         {
             ENET_IOCTL_SET_NO_ARGS(&prms);
-            ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+            ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
                     ENET_STATS_IOCTL_RESET_HOSTPORT_STATS, &prms, status);
             EnetAppUtils_print("Host port stats reset\r\n");
         }
@@ -195,7 +207,7 @@ static void EnetDebug_showCpswStats(uint8_t portNum, bool reset)
     {
         Enet_MacPort macPort = (Enet_MacPort) (portNum - 1);
         ENET_IOCTL_SET_INOUT_ARGS(&prms, &macPort, &portStats);
-        ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+        ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
                 ENET_STATS_IOCTL_GET_MACPORT_STATS, &prms, status);
         if (status == ENET_SOK)
         {
@@ -206,12 +218,14 @@ static void EnetDebug_showCpswStats(uint8_t portNum, bool reset)
             EnetAppUtils_print("\r\n");
         }
         else
+        {
             EnetAppUtils_print("Failed to get MAC stats: %d\r\n", status);
+        }
 
         if (reset)
         {
             ENET_IOCTL_SET_IN_ARGS(&prms, &macPort);
-            ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+            ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
                     ENET_STATS_IOCTL_RESET_MACPORT_STATS, &prms, status);
             EnetAppUtils_print("MAC port %d stats reset\r\n", portNum - 1);
         }
@@ -225,10 +239,12 @@ static BaseType_t EnetCli_dumpAleTable(char *writeBuffer, size_t writeBufferLen,
     Enet_IoctlPrms prms;
     int32_t status;
     ENET_IOCTL_SET_NO_ARGS(&prms);
-    ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+    ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
             CPSW_ALE_IOCTL_DUMP_TABLE, &prms, status);
     if (status != ENET_SOK)
+    {
         snprintf(writeBuffer, writeBufferLen, "Failed to fetch ALE table data\r\n");
+    }
 #else
     snprintf(writeBuffer, writeBufferLen,
             "This commands is only available in debug mode!!\r\n");
@@ -242,10 +258,12 @@ static BaseType_t EnetCLI_dumpPolicerTable(char *writeBuffer,
     Enet_IoctlPrms prms;
     int32_t status;
     ENET_IOCTL_SET_NO_ARGS(&prms);
-    ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
+    ENET_IOCTL(EnetCli_inst.hEnet, EnetCli_inst.coreId,
             CPSW_ALE_IOCTL_DUMP_POLICER_ENTRIES, &prms, status);
     if (status != ENET_SOK)
+    {
         snprintf(writeBuffer, writeBufferLen,
                 "Failed to fetch policer entries\r\n");
+    }
     return pdFALSE;
 }

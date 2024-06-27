@@ -89,13 +89,21 @@ BaseType_t EnetCli_utilsCommandHandler(char *writeBuffer, size_t writeBufferLen,
     parameter = (char*) FreeRTOS_CLIGetParameter(commandString, 1, &paramLen);
 
     if (parameter == NULL || strncmp(parameter, "help", paramLen) == 0)
+    {
         return EnetCli_utilsHelp(writeBuffer, writeBufferLen, commandString);
+    }
     else if (strncmp(parameter, "cpuload", paramLen) == 0)
+    {
         return EnetCli_getCpuLoad(writeBuffer, writeBufferLen, commandString);
+    }
     else if (strncmp(parameter, "readmem", paramLen) == 0)
+    {
         return EnetCli_readMem(writeBuffer, writeBufferLen, commandString);
+    }
     else if (strncmp(parameter, "writemem", paramLen) == 0)
+    {
         return EnetCli_writeMem(writeBuffer, writeBufferLen, commandString);
+    }
     else
     {
         snprintf(writeBuffer, writeBufferLen,
@@ -158,27 +166,41 @@ static BaseType_t EnetCli_readMem(char *writeBuffer, size_t writeBufferLen,
         parameter = (char*) FreeRTOS_CLIGetParameter(commandString, 3,
                 &paramLen);
         if (parameter != NULL)
+        {
             wordCnt = atoi(parameter);
+        }
         endAddr = addrVal + (wordCnt - 1) * 4;
 
         if (addrVal % 16)
+        {
             addrVal = addrVal - (addrVal % 16);
+        }
         if (endAddr % 4)
+        {
             endAddr = endAddr - (endAddr % 4);
+        }
         processCommand = false;
     }
 
     addr = (uint32_t*) addrVal;
     if (addrVal % 16 == 0 && addrVal == endAddr)
+    {
         snprintf(writeBuffer, writeBufferLen, "\r\n0x%.8x | %.8x\r\n", addrVal,
                 addr[0]);
+    }
     else if (addrVal % 16 == 0)
+    {
         snprintf(writeBuffer, writeBufferLen, "\r\n0x%.8x | %.8x", addrVal,
                 addr[0]);
+    }
     else if (addrVal == endAddr)
+    {
         snprintf(writeBuffer, writeBufferLen, "   %.8x\r\n", addr[0]);
+    }
     else
+    {
         snprintf(writeBuffer, writeBufferLen, "   %.8x", addr[0]);
+    }
     addrVal += 4;
     if (addrVal > endAddr)
     {
@@ -207,7 +229,9 @@ static BaseType_t EnetCli_writeMem(char *writeBuffer, size_t writeBufferLen,
     }
     addrVal = (uint32_t) strtol(parameter, NULL, 16);
     if (addrVal % 4)
+    {
         addrVal = addrVal - (addrVal % 4);
+    }
     addr = (uint32_t*) addrVal;
 
     parameter = (char*) FreeRTOS_CLIGetParameter(commandString, wordCnt + 3,

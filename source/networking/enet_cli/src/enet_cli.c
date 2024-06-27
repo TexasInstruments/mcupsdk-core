@@ -107,12 +107,12 @@ static CLI_Command_Definition_t utilsCommands =
 void EnetCli_init(Enet_Type enetType, uint32_t instId)
 {
     /* Retrieve board info and enet handle */
-    memset(&EnetInfo_inst, 0, sizeof(EnetInfo_Obj));
-    EnetInfo_inst.enetType = enetType;
-    EnetInfo_inst.instId = instId;
-    EnetInfo_inst.coreId = Enet_getCoreId();
-    EnetInfo_inst.hEnet = Enet_getHandle(enetType, instId);
-    EnetInfo_inst.numMacPorts = Enet_getMacPortMax(enetType, instId);
+    memset(&EnetCli_inst, 0, sizeof(EnetCli_Obj));
+    EnetCli_inst.enetType = enetType;
+    EnetCli_inst.instId = instId;
+    EnetCli_inst.coreId = Enet_getCoreId();
+    EnetCli_inst.hEnet = Enet_getHandle(enetType, instId);
+    EnetCli_inst.numMacPorts = Enet_getMacPortMax(enetType, instId);
 
     /* Register all commands */
     FreeRTOS_CLIRegisterCommand(&enetConfigCommands);

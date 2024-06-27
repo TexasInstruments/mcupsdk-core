@@ -54,9 +54,12 @@ extern "C"
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/* Remap type values */
-#define REMAP_INGRESS 0
-#define REMAP_EGRESS 1
+typedef enum EnetCLi_RemapType_e
+{
+    ENET_CLI_REMAP_INGRESS = 0,
+    ENET_CLI_REMAP_EGRESS = 1
+}EnetCli_RemapType;
+
 
 /* ========================================================================== */
 /*                         Structures and Enums                               */
