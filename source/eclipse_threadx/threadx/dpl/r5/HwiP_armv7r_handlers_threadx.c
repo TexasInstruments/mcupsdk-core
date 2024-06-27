@@ -39,9 +39,6 @@
 static volatile uint32_t gdummy;
 
 
-/* compile flag to enable or disable interrupt nesting */
-#define HWIP_NESTED_INTERRUPTS_IRQ_ENABLE
-
 /* Save FPU context, used in FIQ Handler */
 static inline  void Hwip_save_fpu_context(void)
 {
