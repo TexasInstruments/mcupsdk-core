@@ -72,8 +72,6 @@ extern "C"
 #include <sdl/include/am261x/sdlr_intr_r5fss0_core0.h>
 #endif
 #if defined (SOC_AM273X)
-
-#if defined (SOC_AM273X)
 #include <sdl/esm/v1/sdl_esm.h>
 #endif
 #if defined (SOC_AWR294X)

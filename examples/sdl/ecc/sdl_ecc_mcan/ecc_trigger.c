@@ -61,8 +61,6 @@
 #include <sdl/include/am261x/sdlr_soc_ecc_aggr.h>
 #endif
 #if defined(SOC_AM273X)
-
-#if defined(SOC_AM273X)
 #include <sdl/include/am273x/sdlr_soc_ecc_aggr.h>
 #endif
 #if defined(SOC_AWR294X)
