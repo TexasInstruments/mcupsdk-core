@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -58,19 +58,6 @@
 /* number of iterations of message exchange to do */
 uint32_t gMsgEchoCount = 100000u;
 
-#if defined(SOC_AM243X)
-/* main core that starts the message exchange */
-uint32_t gMainCoreId = CSL_CORE_ID_R5FSS0_0;
-/* remote cores that echo messages from main core, make sure to NOT list main core in this list */
-uint32_t gRemoteCoreId[] = {
-    CSL_CORE_ID_M4FSS0_0,
-    CSL_CORE_ID_R5FSS0_1,
-    CSL_CORE_ID_R5FSS1_0,
-    CSL_CORE_ID_R5FSS1_1,
-    CSL_CORE_ID_MAX /* this value indicates the end of the array */
-};
-#endif
-
 #if defined (SOC_AM263X) || defined (SOC_AM263PX)
 /* main core that starts the message exchange */
 uint32_t gMainCoreId = CSL_CORE_ID_R5FSS0_0;
@@ -79,31 +66,6 @@ uint32_t gRemoteCoreId[] = {
     CSL_CORE_ID_R5FSS0_1,
     CSL_CORE_ID_R5FSS1_0,
     CSL_CORE_ID_R5FSS1_1,
-    CSL_CORE_ID_MAX /* this value indicates the end of the array */
-};
-#endif
-
-#if defined(SOC_AM64X)
-/* main core that starts the message exchange */
-uint32_t gMainCoreId = CSL_CORE_ID_R5FSS0_0;
-/* remote cores that echo messages from main core, make sure to NOT list main core in this list */
-uint32_t gRemoteCoreId[] = {
-    CSL_CORE_ID_M4FSS0_0,
-    CSL_CORE_ID_R5FSS0_1,
-    CSL_CORE_ID_R5FSS1_0,
-    CSL_CORE_ID_R5FSS1_1,
-    CSL_CORE_ID_A53SS0_0,
-    CSL_CORE_ID_MAX /* this value indicates the end of the array */
-};
-#endif
-
-#if defined(SOC_AM273X) || defined(SOC_AWR294X)
-/* main core that starts the message exchange */
-uint32_t gMainCoreId = CSL_CORE_ID_R5FSS0_0;
-/* remote cores that echo messages from main core, make sure to NOT list main core in this list */
-uint32_t gRemoteCoreId[] = {
-    CSL_CORE_ID_R5FSS0_1,
-    CSL_CORE_ID_C66SS0,
     CSL_CORE_ID_MAX /* this value indicates the end of the array */
 };
 #endif
