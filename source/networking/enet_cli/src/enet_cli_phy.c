@@ -80,6 +80,10 @@ static BaseType_t EnetCli_writePhyRegs(char *writeBuffer, size_t writeBufferLen,
 static BaseType_t EnetCli_readPhyRegs(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
+uint32_t EnetBoard_getId(void);
+
+void EnetBoard_getMiiConfig(EnetMacPort_Interface *mii);
+
 /* ========================================================================== */
 /*                            Global Variables                                */
 /* ========================================================================== */
@@ -153,7 +157,7 @@ static BaseType_t EnetCli_phyScan(char *writeBuffer, size_t writeBufferLen,
     EnetBoard_EthPort ethPort;
     bool isAlive, isLinked;
 
-    inArgs.macPort = macPort;
+    inArgs.macPort = (Enet_MacPort) macPort;
     ENET_IOCTL_SET_INOUT_ARGS(&prms, &inArgs, &isAlive);
     ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
             ENET_PHY_IOCTL_IS_ALIVE, &prms, status);
@@ -170,7 +174,7 @@ static BaseType_t EnetCli_phyScan(char *writeBuffer, size_t writeBufferLen,
             ethPort.boardId = EnetBoard_getId();
             ethPort.enetType = EnetInfo_inst.enetType;
             ethPort.instId = EnetInfo_inst.instId;
-            ethPort.macPort = macPort;
+            ethPort.macPort = (Enet_MacPort) macPort;
             EnetBoard_getMiiConfig(&ethPort.mii);
             phyCfg = EnetBoard_getPhyCfg(&ethPort);
             snprintf(writeBuffer, writeBufferLen,
@@ -221,7 +225,7 @@ static BaseType_t EnetCli_getPhyLinkStatus(char *writeBuffer,
         allPorts = false;
     }
 
-    inArgs.macPort = macPort;
+    inArgs.macPort = (Enet_MacPort) macPort;
     ENET_IOCTL_SET_INOUT_ARGS(&prms, &inArgs, &isLinked);
     ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
             ENET_PHY_IOCTL_IS_LINKED, &prms, status);
@@ -286,7 +290,7 @@ static BaseType_t EnetCli_dumpPhyRegs(char *writeBuffer, size_t writeBufferLen,
                 "Missing argument(s)\r\nFor more info run \'phy help\'\r\n");
         return pdFALSE;
     }
-    inArgs.macPort = atoi(parameter);
+    inArgs.macPort = (Enet_MacPort) atoi(parameter);
     if (inArgs.macPort < 0 || inArgs.macPort >= EnetInfo_inst.numMacPorts)
     {
         snprintf(writeBuffer, writeBufferLen, "Invalid MAC Port\r\n");
@@ -324,7 +328,7 @@ static BaseType_t EnetCli_writePhyRegs(char *writeBuffer, size_t writeBufferLen,
         }
         if (paramCnt == 2)
         {
-            inArgs.macPort = atoi(parameter);
+            inArgs.macPort = (Enet_MacPort) atoi(parameter);
             if (inArgs.macPort < 0
                     || inArgs.macPort >= EnetInfo_inst.numMacPorts)
             {
@@ -374,7 +378,7 @@ static BaseType_t EnetCli_readPhyRegs(char *writeBuffer, size_t writeBufferLen,
         }
         if (paramCnt == 2)
         {
-            inArgs.macPort = atoi(parameter);
+            inArgs.macPort = (Enet_MacPort) atoi(parameter);
             if (inArgs.macPort < 0
                     || inArgs.macPort >= EnetInfo_inst.numMacPorts)
             {

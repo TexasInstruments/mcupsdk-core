@@ -70,17 +70,17 @@
 
 /* Commands for modifying ethernet configuration */
 static CLI_Command_Definition_t enetConfigCommands =
-        { .pcCommand = "enetconfig",
+        { .pcCommand = "enet_cfg",
             .pcHelpString =
-                    "enetconfig {help|setmap|getmap|tracelvl}:\r\n Commands to modify ethernet configurations.\r\n\n",
+                    "enet_cfg {help|mqprio|tracelvl|classifier}:\r\n Commands to modify ethernet configurations.\r\n\n",
             .pxCommandInterpreter = EnetCli_configCommandHandler,
             .cExpectedNumberOfParameters = -1 };
 
 /* Commands to print debug data */
 static CLI_Command_Definition_t enetDebugCommands =
-        { .pcCommand = "enetdebug",
+        { .pcCommand = "enet_dbg",
             .pcHelpString =
-                    "enetdebug {help|cpswstats|dumpale|dumppolicer}:\r\n Commands to print debug data.\r\n\n",
+                    "enet_dbg {help|cpswstats|dumpale|dumppolicer}:\r\n Commands to print debug data.\r\n\n",
             .pxCommandInterpreter = EnetCli_debugCommandHandler,
             .cExpectedNumberOfParameters = -1 };
 

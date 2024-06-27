@@ -105,7 +105,7 @@ BaseType_t EnetCli_debugCommandHandler(char *writeBuffer, size_t writeBufferLen,
     else
     {
         snprintf(writeBuffer, writeBufferLen,
-                "Bad argument\r\nFor more info run \'enetdebug help\'\r\n");
+                "Bad argument\r\nFor more info run \'enet_dbg help\'\r\n");
         return pdFALSE;
     }
 }
@@ -119,13 +119,13 @@ static BaseType_t EnetCli_debugHelp(char *writeBuffer, size_t writeBufferLen,
 {
     EnetAppUtils_print("Commands to print debug data.\r\nUsage:\r\n");
     EnetAppUtils_print(
-            "\tenetdebug cpswstats <port_num> [-r]\tPrints CPSW statistics.\r\n");
+            "\tenet_dbg cpswstats <port_num> [-r]\tPrints CPSW statistics.\r\n");
     EnetAppUtils_print(
             "\t\t\t\t\t\tUsing -r tag will reset the stats after printing.\r\n");
-    EnetAppUtils_print("\tenetdebug dumpale\t\t\tPrints the ALE table.\r\n");
+    EnetAppUtils_print("\tenet_dbg dumpale\t\t\tPrints the ALE table.\r\n");
     EnetAppUtils_print(
-            "\tenetdebug dumppolicer\t\t\tPrints the policer table.\r\n");
-    EnetAppUtils_print("\tenetdebug help\t\t\t\tPrints this message.\r\n");
+            "\tenet_dbg dumppolicer\t\t\tPrints the policer table.\r\n");
+    EnetAppUtils_print("\tenet_dbg help\t\t\t\tPrints this message.\r\n");
     return pdFALSE;
 }
 
@@ -141,7 +141,7 @@ static BaseType_t EnetCli_showCpswStats(char *writeBuffer,
     if (parameter == NULL)
     {
         snprintf(writeBuffer, writeBufferLen,
-                "Missing argument(s)\r\nFor more info run \'enetdebug help\'\r\n");
+                "Missing argument(s)\r\nFor more info run \'enet_dbg help\'\r\n");
         return pdFALSE;
     }
     portNum = atoi(parameter);
@@ -193,7 +193,7 @@ static void EnetDebug_showCpswStats(uint8_t portNum, bool reset)
     /* Show MAC port statistics */
     else
     {
-        Enet_MacPort macPort = portNum - 1;
+        Enet_MacPort macPort = (Enet_MacPort) (portNum - 1);
         ENET_IOCTL_SET_INOUT_ARGS(&prms, &macPort, &portStats);
         ENET_IOCTL(EnetInfo_inst.hEnet, EnetInfo_inst.coreId,
                 ENET_STATS_IOCTL_GET_MACPORT_STATS, &prms, status);
