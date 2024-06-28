@@ -872,7 +872,7 @@ void tearDown(void)
 
 
 
-void test_main(void *args)
+void test_main(ULONG args)
 {
     UINT status;
 
