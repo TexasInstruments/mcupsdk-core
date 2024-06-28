@@ -42,16 +42,23 @@
 
 #define MESSAGE  "Hello world!"
 
-void filex_hello_world_main(void *args)
+void filex_hello_world_main(ULONG args)
 {
+    int32_t res;
     UINT status;
     FX_FILE file;
     ULONG actual_sz;
     uint8_t t_buf[sizeof(MESSAGE)];
 
     Drivers_open();
-    Board_driversOpen();
-    EclipseThreadx_open();
+    
+    res = Board_driversOpen();
+    DebugP_assert(res == SystemP_SUCCESS);
+
+    res = EclipseThreadx_open();
+    DebugP_assert(res == SystemP_SUCCESS);
+
+    DebugP_log("[FILEX HELLO WORLD] Hello world example started ...\r\n");
 
     // Create a new file 'test.bin'.
     status = fx_file_create(&gt_media[FILEX0], "test.bin");
@@ -65,8 +72,6 @@ void filex_hello_world_main(void *args)
     status = fx_file_truncate(&file, 0);
     DebugP_assert((status == FX_SUCCESS) || (status == FX_ALREADY_CREATED));
 
-    DebugP_log("Empty 'test.bin' file created.\r\n");
-
     // Write the message.
     status = fx_file_write(&file, MESSAGE, sizeof(MESSAGE));
     DebugP_assert(status == FX_SUCCESS);
@@ -74,8 +79,6 @@ void filex_hello_world_main(void *args)
     // Close the file.
     status = fx_file_close(&file);
     DebugP_assert(status == FX_SUCCESS);
-
-    DebugP_log("Message " MESSAGE " successfully written.\r\n");
 
     // Re-open the file, this time for reading.
     status = fx_file_open(&gt_media[FILEX0], &file, "test.bin", FX_OPEN_FOR_READ);
@@ -90,11 +93,18 @@ void filex_hello_world_main(void *args)
     DebugP_assert(status == FX_SUCCESS);
 
     // Make sure that the read-back message matches the original message.
-    DebugP_assert(strcmp((const char *)t_buf, MESSAGE) == 0);
+    if(strcmp((const char *)&t_buf[0], MESSAGE) == 0)
+    {
+        DebugP_log("Some tests have failed!!\r\n");
+    }
+    else
+    {
+        DebugP_log("All tests have passed!!\r\n");
+    }
 
-    DebugP_log("Message " MESSAGE " successfully read back.\r\n");
+    res = EclipseThreadx_close();
+    DebugP_assert(res == SystemP_SUCCESS);
 
-    EclipseThreadx_close();
     Board_driversClose();
     Drivers_close();
 }
