@@ -37,10 +37,13 @@
 #include <drivers/mmcsd/v0/mmcsd.h>
 #include "filex_mmcsd.h"
 
+
+
 VOID _fx_mmcsd_driver(FX_MEDIA *media_ptr)
 {
-    fx_mmcsd_driver_data_t *p_mmcsd_data;
+    MMCSD_Handle mmcsd_hndl;
     uint32_t block_size;
+    int res;
 
     /* There are several useful/important pieces of information contained in the media
        structure, some of which are supplied by FileX and others are for the driver to
@@ -113,8 +116,6 @@ VOID _fx_mmcsd_driver(FX_MEDIA *media_ptr)
     */
 
 
-    p_mmcsd_data = ((fx_mmcsd_driver_data_t *)media_ptr->fx_media_driver_info);
-    block_size = MMCSD_getBlockSize(p_mmcsd_data->mmcsd_hndl);
 
     /* Process the driver request specified in the media control block.  */
     switch(media_ptr->fx_media_driver_request)
@@ -124,13 +125,19 @@ VOID _fx_mmcsd_driver(FX_MEDIA *media_ptr)
         {
             uint32_t start_blk;
             uint32_t blk_cnt;
-            int32_t res;
+
+            mmcsd_hndl = MMCSD_getHandle((uint32_t)media_ptr->fx_media_driver_info);
+            if (mmcsd_hndl == NULL) {
+                media_ptr->fx_media_driver_status = FX_IO_ERROR;
+                break;
+            }
 
 
+            block_size = MMCSD_getBlockSize(mmcsd_hndl);
             start_blk = media_ptr->fx_media_driver_logical_sector * media_ptr->fx_media_bytes_per_sector / block_size;
             blk_cnt = media_ptr->fx_media_driver_sectors * media_ptr->fx_media_bytes_per_sector / block_size;
 
-            res = MMCSD_read(p_mmcsd_data->mmcsd_hndl, media_ptr->fx_media_driver_buffer, start_blk, blk_cnt);
+            res = MMCSD_read(mmcsd_hndl, media_ptr->fx_media_driver_buffer, start_blk, blk_cnt);
             if (res != SystemP_SUCCESS) {
                 media_ptr->fx_media_driver_status = FX_IO_ERROR;
                 break;
@@ -145,13 +152,18 @@ VOID _fx_mmcsd_driver(FX_MEDIA *media_ptr)
         {
             uint32_t start_blk;
             uint32_t blk_cnt;
-            int32_t res;
 
+            mmcsd_hndl = MMCSD_getHandle((uint32_t)media_ptr->fx_media_driver_info);
+            if (mmcsd_hndl == NULL) {
+                media_ptr->fx_media_driver_status = FX_IO_ERROR;
+                break;
+            }
 
+            block_size = MMCSD_getBlockSize(mmcsd_hndl);
             start_blk = media_ptr->fx_media_driver_logical_sector * media_ptr->fx_media_bytes_per_sector / block_size;
             blk_cnt = media_ptr->fx_media_driver_sectors * media_ptr->fx_media_bytes_per_sector / block_size;
 
-            res = MMCSD_write(p_mmcsd_data->mmcsd_hndl, media_ptr->fx_media_driver_buffer, start_blk, blk_cnt);
+            res = MMCSD_write(mmcsd_hndl, media_ptr->fx_media_driver_buffer, start_blk, blk_cnt);
             if (res != SystemP_SUCCESS) {
                 media_ptr->fx_media_driver_status = FX_IO_ERROR;
                 break;
@@ -201,9 +213,13 @@ VOID _fx_mmcsd_driver(FX_MEDIA *media_ptr)
 
         case FX_DRIVER_BOOT_READ:
         {
-            int res;
+            mmcsd_hndl = MMCSD_getHandle((uint32_t)media_ptr->fx_media_driver_info);
+            if (mmcsd_hndl == NULL) {
+                media_ptr->fx_media_driver_status = FX_IO_ERROR;
+                break;
+            }
 
-            res = MMCSD_read(p_mmcsd_data->mmcsd_hndl, media_ptr->fx_media_driver_buffer, 0u, 1u);
+            res = MMCSD_read(mmcsd_hndl, media_ptr->fx_media_driver_buffer, 0u, 1u);
             if (res != SystemP_SUCCESS) {
                 media_ptr->fx_media_driver_status = FX_IO_ERROR;
                 break;
@@ -217,9 +233,13 @@ VOID _fx_mmcsd_driver(FX_MEDIA *media_ptr)
 
         case FX_DRIVER_BOOT_WRITE:
         {
-            int res;
+            mmcsd_hndl = MMCSD_getHandle((uint32_t)media_ptr->fx_media_driver_info);
+            if (mmcsd_hndl == NULL) {
+                media_ptr->fx_media_driver_status = FX_IO_ERROR;
+                break;
+            }
 
-            res = MMCSD_write(p_mmcsd_data->mmcsd_hndl, media_ptr->fx_media_driver_buffer, 0u, 1u);
+            res = MMCSD_write(mmcsd_hndl, media_ptr->fx_media_driver_buffer, 0u, 1u);
             if (res != SystemP_SUCCESS) {
                 media_ptr->fx_media_driver_status = FX_IO_ERROR;
                 break;
