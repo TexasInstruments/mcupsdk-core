@@ -53,18 +53,22 @@ extern VOID _fx_ram_driver(FX_MEDIA *media_ptr);
 % }
 
 
-void EclipseThreadx_open(void)
+int32_t EclipseThreadx_open(void)
 {
 % for(let subTemplate of args) {
 `system.getTemplate(subTemplate.open)()`
 % }
+
+    return (SystemP_SUCCESS);
 }
 
-void EclipseThreadx_close(void)
+int32_t EclipseThreadx_close(void)
 {
 % for(let subTemplate of args) {
 `system.getTemplate(subTemplate.close)()`
 % }
+
+    return (SystemP_SUCCESS);
 }
 
 % for(let subTemplate of args) {

@@ -50,8 +50,8 @@ extern "C" {
 /*
  * Common Functions
  */
-void EclipseThreadx_open(void);
-void EclipseThreadx_close(void);
+int32_t EclipseThreadx_open(void);
+int32_t EclipseThreadx_close(void);
 
 % for(let subTemplate of args) {
     % if (subTemplate.open_close_config) {
