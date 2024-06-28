@@ -41,8 +41,4 @@
 
 void _fx_mmcsd_driver(FX_MEDIA *media_ptr);
 
-typedef struct fx_mmcsd_driver_data {
-    MMCSD_Handle mmcsd_hndl;
-} fx_mmcsd_driver_data_t;
-
 #endif /* FILEX_MMCSD_H_ */
