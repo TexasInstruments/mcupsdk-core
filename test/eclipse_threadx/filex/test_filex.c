@@ -67,7 +67,7 @@ static void test_filex_file_read_write(void *args);
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-void test_main(void *args)
+void test_main(ULONG args)
 {
     /* Open drivers to open the UART driver for console */
     Drivers_open();
