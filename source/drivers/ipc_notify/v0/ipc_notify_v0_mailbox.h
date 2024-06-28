@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -57,6 +57,10 @@ extern "C" {
 
 /* value to construct to enable/disable/clear mew message interrupt for a given HW fifo */
 #define MAILBOX_NEW_MSG_INT(fifo)               ((uint32_t)1U << (((uint32_t)(fifo) & (uint32_t)(MAILBOX_MAX_FIFO-(uint32_t)1U))*(uint32_t)2U))
+
+/* Invalid value for the mailbox's */
+#define  MAILBOX_CLUSTER_INVALID                (0xFFU)
+#define  MAILBOX_USER_INVALID                   (0xFFU)
 
 /* return number of messages pending in the HW fifo to be read within a mailbox */
 static inline uint32_t IpcNotify_mailboxGetNumMsg(uint32_t mailboxBaseAddr, uint32_t hwFifoNum)

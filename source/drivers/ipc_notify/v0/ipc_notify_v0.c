@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2018-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,6 +30,7 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <drivers/ipc_notify/v0/soc/ipc_notify_soc.h>
 #include <drivers/ipc_notify/v0/ipc_notify_v0.h>
 #include <drivers/ipc_notify/v0/ipc_notify_v0_mailbox.h>
 
@@ -287,6 +288,7 @@ void IpcNotify_Params_init(IpcNotify_Params *params)
     params->linuxCoreId = CSL_CORE_ID_MAX;
     params->isCrcEnabled = 0;
     params->crcHookFxn = NULL;
+    params->isIPCIntrRouter = 0;
 }
 
 int32_t IpcNotify_init(const IpcNotify_Params *params)
@@ -363,8 +365,12 @@ int32_t IpcNotify_init(const IpcNotify_Params *params)
             if(gIpcNotifyCtrl.isCoreEnabled[pInterruptConfig->coreIdList[core]] != 0U)
             {
                 IpcNotify_getReadMailbox(pInterruptConfig->coreIdList[core], &mailboxBaseAddr, &hwFifoId, &userId);
-                IpcNotify_mailboxClearInt(mailboxBaseAddr, hwFifoId, userId);
-                IpcNotify_mailboxEnableInt(mailboxBaseAddr, hwFifoId, userId);
+		if( params->isIPCIntrRouter == IPC_INTR_ROUTER_ENABLE){
+                    IpcNotify_setIntrRtr( gIpcNotifyCtrl.selfCoreId, pInterruptConfig->coreIdList[core], mailboxBaseAddr, hwFifoId, userId);
+		}else{
+                    IpcNotify_mailboxClearInt(mailboxBaseAddr, hwFifoId, userId);
+                    IpcNotify_mailboxEnableInt(mailboxBaseAddr, hwFifoId, userId);
+		}
             }
         }
         HwiP_Params_init(&hwiParams);

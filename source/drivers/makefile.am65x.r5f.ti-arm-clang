@@ -32,6 +32,11 @@ FILES_common := \
     gpio.c \
     i2c_v0.c \
     i2c_v0_lld.c \
+    ipc_notify_soc.c \
+    ipc_notify_v0.c \
+    ipc_notify_v0_cfg.c \
+    ipc_rpmsg.c \
+    ipc_rpmsg_vring.c \
     pinmux.c \
     sciclient.c \
     sciclient_boardcfg.c \
@@ -70,6 +75,10 @@ FILES_PATH_common = \
     gpio/v0 \
     i2c/v0 \
     i2c/v0/lld \
+    ipc_notify/v0 \
+    ipc_notify/v0/soc/ \
+    ipc_notify/v0/soc/am65x \
+    ipc_rpmsg/ \
     hw_include/ringacc/V0/priv \
     pinmux/am65x \
     sciclient \

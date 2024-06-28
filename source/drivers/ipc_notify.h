@@ -96,6 +96,16 @@ extern "C" {
 #define IPC_NOTIFY_CRC_DATASIZE    (4U)
 
 /**
+ * \brief Interrupt router enable for IPC.
+ */
+#define IPC_INTR_ROUTER_ENABLE    (0x01U)
+
+/**
+ * \brief Interrupt router disable for IPC.
+ */
+#define IPC_INTR_ROUTER_DISABLE    (0x00U)
+
+/**
  * \brief User callback that is invoked when a message is received from a reote core for a given client ID
  *
  * Before invoking the API, the IPC module would have 'popped` the message from the HW or SW FIFO already.
@@ -160,6 +170,7 @@ typedef struct IpcNotify_Params_ {
     uint8_t  isCrcEnabled; /* CRC Enable/Disable flag */
     IpcNotify_CrcHookFxn crcHookFxn; /* Hook Function to be provided by application for CRC calculation. */
     uint8_t  isMailboxIpcEnabled; /**< This is used to check if Mailbox IPC is enabled*/
+    uint8_t  isIPCIntrRouter; /** < This is used to check if IPC Interrupt router is enabled */
 } IpcNotify_Params;
 
 /**

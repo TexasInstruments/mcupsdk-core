@@ -53,6 +53,7 @@ FILES_PATH_common = \
     mcspi/v0 \
     mcspi/v0/dma \
     mcspi/v0/dma/udma \
+    ipc_notify/v0/soc \
     ipc_notify/v0/soc/am62x \
     ipc_rpmsg/ \
     sciclient \
