@@ -63,7 +63,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_FILEX";
+const readmeDoxygenPageTag = "EXAMPLES_ECLIPSE_THREADX_FILEX_HELLO_WORLD";
 
 const templates_gcc =
 [
