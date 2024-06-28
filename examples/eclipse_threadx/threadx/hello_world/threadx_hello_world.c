@@ -39,18 +39,26 @@
 #include "ti_eclipse_threadx_open_close.h"
 #include <tx_api.h>
 
-void threadx_hello_world_main(void *args)
+void threadx_hello_world_main(ULONG args)
 {
+    int32_t res;
+
     Drivers_open();
-    Board_driversOpen();
-    EclipseThreadx_open();
+    
+    res = Board_driversOpen();
+    DebugP_assert(res == SystemP_SUCCESS);
+
+    res = EclipseThreadx_open();
+    DebugP_assert(res == SystemP_SUCCESS);
 
     while (1) {
         DebugP_log("Hello world!\r\n");
         tx_thread_sleep(100);
     }
 
-    EclipseThreadx_close();
+    res = EclipseThreadx_close();
+    DebugP_assert(res == SystemP_SUCCESS);
+
     Board_driversClose();
     Drivers_close();
 }
