@@ -297,6 +297,94 @@ void SOC_enableAdcReference(uint32_t adcInstance)
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
 }
 
+void SOC_enableAdcInternalReference(uint32_t adcInstance, uint32_t enable)
+{
+    /* Determine the group number of the ADC and the mask to be written to compctl register */
+    uint32_t refbufCtrl_regOffset = CSL_TOP_CTRL_ADC_REFBUF0_CTRL;
+    uint32_t compctlmask = 0x7;
+
+    if(adcInstance == 1 || adcInstance == 2)
+    {
+        compctlmask = (compctlmask << 4);
+        refbufCtrl_regOffset = CSL_TOP_CTRL_ADC_REFBUF0_CTRL;
+    }
+    else if(adcInstance == 3 || adcInstance == 4)
+    {
+        compctlmask = (compctlmask << 8);
+        refbufCtrl_regOffset = CSL_TOP_CTRL_ADC_REFBUF1_CTRL;
+    }
+
+    uint16_t mask = (enable == TRUE) ? (uint16_t)CSL_TOP_CTRL_ADC_REFBUF0_CTRL_ENABLE_MASK : (~(uint16_t)CSL_TOP_CTRL_ADC_REFBUF0_CTRL_ENABLE_MASK);
+    /* Unlock Top Control Space */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
+
+    /* Enable/ Disable ADC references by writing to MMR */
+    CSL_REG16_WR(CSL_TOP_CTRL_U_BASE + refbufCtrl_regOffset, mask);
+
+    /* Lock Top Control Space */
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
+}
+
+void SOC_enableAdcReferenceMonitor(uint32_t adcInstance, uint32_t enable)
+{
+    /* Determine the group number of the ADC and the mask to be written to compctl register */
+    uint16_t compctlmask = CSL_TOP_CTRL_ADC_REF_COMP_CTRL_ADC0_REFOK_EN_MASK;
+
+    if(adcInstance == 1 || adcInstance == 2)
+    {
+        compctlmask = CSL_TOP_CTRL_ADC_REF_COMP_CTRL_ADC12_REFOK_EN_MASK;
+    }
+    else if(adcInstance == 3 || adcInstance == 4)
+    {
+        compctlmask = CSL_TOP_CTRL_ADC_REF_COMP_CTRL_ADC34_REFOK_EN_MASK;
+    }
+
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
+
+    if(enable == TRUE)
+    {
+        /* write to Monitor enable register */
+        CSL_REG16_WR(CSL_TOP_CTRL_U_BASE + CSL_TOP_CTRL_ADC_REF_COMP_CTRL,
+            CSL_REG16_RD(CSL_TOP_CTRL_U_BASE + CSL_TOP_CTRL_ADC_REF_COMP_CTRL) | compctlmask);
+    }
+    else
+    {
+        /* write to Monitor Disable register */
+        CSL_REG16_WR(CSL_TOP_CTRL_U_BASE + CSL_TOP_CTRL_ADC_REF_COMP_CTRL,
+            CSL_REG16_RD(CSL_TOP_CTRL_U_BASE + CSL_TOP_CTRL_ADC_REF_COMP_CTRL) & ~compctlmask);
+    }
+
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
+}
+
+uint32_t SOC_getAdcReferenceStatus(uint32_t adcInstance)
+{
+    uint16_t statusMask = CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC0_REF_OV_GOOD_MASK | CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC0_REF_UV_GOOD_MASK;
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
+    uint16_t refStatus = CSL_REG16_RD(CSL_TOP_CTRL_U_BASE + CSL_TOP_CTRL_ADC_REF_GOOD_STATUS);
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
+    if(adcInstance == 0){
+        statusMask = CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC0_REF_OV_GOOD_MASK | CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC0_REF_UV_GOOD_MASK;
+    }
+    else if((adcInstance == 1) || (adcInstance == 2)){
+        statusMask = CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC12_REF_OV_GOOD_MASK | CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC12_REF_UV_GOOD_MASK;
+    }
+    else if((adcInstance == 3) || (adcInstance == 4)){
+        statusMask = CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC34_REF_OV_GOOD_MASK | CSL_TOP_CTRL_ADC_REF_GOOD_STATUS_ADC34_REF_UV_GOOD_MASK;
+    }
+
+    if((refStatus & statusMask) == statusMask)
+    {
+        /* Monitor Status is good */
+        return TRUE;
+    }
+    else
+    {
+        /* Monitor Status is Bad */
+        return FALSE;
+    }
+}
+
 void SOC_setEpwmGroup(uint32_t epwmInstance, uint32_t group)
 {
     uint32_t baseAddr = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_EPWM_STATICXBAR_SEL0;

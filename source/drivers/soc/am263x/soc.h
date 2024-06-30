@@ -188,6 +188,30 @@ void SOC_setMultipleEpwmTbClk(uint32_t epwmMask, uint32_t enable);
 void SOC_enableAdcReference(uint32_t adcInstance);
 
 /**
+ * \brief Enables the ADC internal reference
+ *
+ * \param adcInstance [in] ADC instance number [0 - (CSL_ADC_PER_CNT-1)]
+ * \param enable      [in] TRUE to enable internal reference - FALSE to disable.
+ */
+void SOC_enableAdcInternalReference(uint32_t adcInstance, uint32_t enable);
+
+/**
+ * \brief Enable ADC reference Monitors by writing to Control MMR
+ *
+ * \param adcInstance [in] ADC instance number [0 - (CSL_ADC_PER_CNT-1)]
+ * \param enable      [in] TRUE to enable internal reference Monitor - FALSE to disable.
+ */
+void SOC_enableAdcReferenceMonitor(uint32_t adcInstance, uint32_t enable);
+
+/**
+ * \brief Gets the Reference status
+ *
+ * \param adcInstance  [in] ADC instance number [0 - (CSL_ADC_PER_CNT-1)]
+ * \return                  TRUE - reference OK. FALSE - reference NOT OK.
+ */
+uint32_t SOC_getAdcReferenceStatus(uint32_t adcInstance);
+
+/**
  * \brief Configure the ePWM group
  *
  * \param epwmInstance [in] ePWM instance number [0 - (CSL_EPWM_PER_CNT-1)]
