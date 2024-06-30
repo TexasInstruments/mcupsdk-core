@@ -53,7 +53,7 @@ void threadx_hello_world_main(ULONG args)
 
     while (1) {
         DebugP_log("Hello world!\r\n");
-        tx_thread_sleep(100);
+        tx_thread_sleep( ClockP_usecToTicks(1000000u));
     }
 
     res = EclipseThreadx_close();
