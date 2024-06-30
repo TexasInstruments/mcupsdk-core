@@ -568,6 +568,49 @@ void SOC_enableAdcDacLoopback(uint32_t enable)
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, TOP_CTRL_PARTITION0);
 }
 
+void SOC_enableCmpssaDacLoopBack(uint32_t cmpssaInstance, uint32_t dacType, uint32_t enable)
+{
+    uint32_t regOffset = CSL_TOP_CTRL_U_BASE + CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL;
+    uint32_t shift = CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSL0_LOOPBACK_EN_SHIFT;
+    if(dacType == CMPSS_LOOP_BACK_INH)
+    {
+        shift = CSL_TOP_CTRL_CMPSSA_LOOPBACK_CTRL_CMPSSH0_LOOPBACK_EN_SHIFT;
+    }
+    shift += cmpssaInstance;
+
+    if(enable == TRUE)
+    {
+        CSL_REG32_WR(regOffset,
+            (CSL_REG32_RD(regOffset) | (1U << shift)));
+    }
+    else
+    {
+        CSL_REG32_WR(regOffset,
+            (CSL_REG32_RD(regOffset) & ~(1U << shift)));
+    }
+}
+
+void SOC_enableCmpssbDacLoopBack(uint32_t cmpssbInstance, uint32_t dacType, uint32_t enable)
+{
+    uint32_t regOffset = CSL_TOP_CTRL_U_BASE + CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL;
+    uint32_t shift = CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSL0_LOOPBACK_EN_SHIFT;
+    if(dacType == CMPSS_LOOP_BACK_INH)
+    {
+        shift = CSL_TOP_CTRL_CMPSSB_LOOPBACK_CTRL_CMPSSH0_LOOPBACK_EN_SHIFT;
+    }
+    shift += cmpssbInstance;
+
+    if(enable == TRUE)
+    {
+        CSL_REG32_WR(regOffset,
+            (CSL_REG32_RD(regOffset) | (1U << shift)));
+    }
+    else
+    {
+        CSL_REG32_WR(regOffset,
+            (CSL_REG32_RD(regOffset) & ~(1U << shift)));
+    }
+}
 
 void SOC_setEpwmGroup(uint32_t epwmInstance, uint32_t group)
 {

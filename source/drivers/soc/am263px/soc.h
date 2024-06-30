@@ -98,6 +98,9 @@ extern "C"
 #define ADC_EXTCHSELCT_DELAY_3_CYCLES            (0U)
 #define ADC_EXTCHSELCT_DELAY_6_CYCLES            (1U)
 
+#define CMPSS_LOOP_BACK_INH                     (0U)
+#define CMPSS_LOOP_BACK_INL                     (1U)
+
 /** \brief API to validate MCSPI base address. */
 static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
 {
@@ -225,22 +228,22 @@ void SOC_enableAdcReferenceMonitor(uint32_t adcInstance, uint32_t enable);
 uint32_t SOC_getAdcReferenceStatus(uint32_t adcInstance);
 
 /**
- * @brief Enable or disable the OSD circuit over the ADC channels 
- * 
+ * @brief Enable or disable the OSD circuit over the ADC channels
+ *
  * @param adcInstance [in] ADC instance [0 - 4] ADC_R instance [5,6]
  * @param channel     [in] Channel number for the ADC. [0 - 5]
- * @param enable      [in] TRUE to enable and FALSE to disable the OSD circuit.  
+ * @param enable      [in] TRUE to enable and FALSE to disable the OSD circuit.
  */
 void SOC_enableAdcOsdChannel(uint32_t adcInstance, uint32_t channel, uint32_t enable);
 
 /**
- * @brief Sets the ADC OSD Configuration. 
- * 
+ * @brief Sets the ADC OSD Configuration.
+ *
  * @param adcInstance [in] ADC instance [0 - 4] ADC_R instance [5,6]
  * @param config      [in] configuration to be enabled of the OSD circuit.
- * 
- * It is recommended to wait for atleast 1uS after configuration, before sampling 
- * 
+ *
+ * It is recommended to wait for atleast 1uS after configuration, before sampling
+ *
  * config   | function      | Impedance | Voltage on 5K | Voltage on 7K
  * ---------|---------------|-----------|---------------|-----------
  * 0        | Zero Scale    | 5K // 7K  | VSSA          | VSSA
@@ -249,61 +252,61 @@ void SOC_enableAdcOsdChannel(uint32_t adcInstance, uint32_t channel, uint32_t en
  * ---------|---------------|-----------|---------------|-----------
  * 2        | Zero Scale    | 7K        | OPEN          | VSSA
  * ---------|---------------|-----------|---------------|-----------
- * 3        | Full Scale    | 5K // 7K  | VDD           | VDD 
+ * 3        | Full Scale    | 5K // 7K  | VDD           | VDD
  * ---------|---------------|-----------|---------------|-----------
  * 4        | Full Scale    | 5K        | VDD           | OPEN
  * ---------|---------------|-----------|---------------|-----------
- * 5        | Full Scale    | 7K        | OPEN          | VDD 
+ * 5        | Full Scale    | 7K        | OPEN          | VDD
  * ---------|---------------|-----------|---------------|-----------
- * 6        | 5/12 Scale    | 5K // 7K  | VSSA          | VDD 
+ * 6        | 5/12 Scale    | 5K // 7K  | VSSA          | VDD
  * ---------|---------------|-----------|---------------|-----------
  * 7        | 5/12 Scale    | 5K // 7K  | VDD           | VSSA
- * ---------|---------------|-----------|---------------|----------- 
+ * ---------|---------------|-----------|---------------|-----------
  */
 void SOC_setAdcOsdConfig(uint32_t adcInstance, uint32_t config);
 
 /**
  * @brief Enable or Disable the ADC instnace for Gloabl SW force.
- * 
+ *
  * @param adcInstance [in] ADC instances [0 - 4] ADC_R instance [ 5 - 6]
- * @param enable      [in] TRUE to enable and FALSE to disable the GLobal Force Selection  
+ * @param enable      [in] TRUE to enable and FALSE to disable the GLobal Force Selection
  */
 void SOC_enableAdcGlobalForce(uint32_t adcInstance, uint32_t enable);
 
 /**
  * @brief Triggers a global force for the SOC in enabled ADCs
- * the ADCs may be enabled by using SOC_enableAdcGlobalForce() API  
- * 
+ * the ADCs may be enabled by using SOC_enableAdcGlobalForce() API
+ *
  * @param socNumber [in] SOC Number  [0 - 15]
  */
 void SOC_adcSocGlobalForce(uint32_t socNumber);
 /**
  * @brief Selects the ADC External Channel Select bit for the output from each xbar out
- * 
+ *
  * @param extChXbarOut [in] selects the ADC_EXTCHSEL_XBAR_OUTx x in [0 - 9]
  * @param extChXbarIn [in] Valid Values are the following
- *                      ADC0_EXTCHSEL_BIT0    
- *                      ADC0_EXTCHSEL_BIT1    
- *                      ADC1_EXTCHSEL_BIT0    
- *                      ADC1_EXTCHSEL_BIT1    
- *                      ADC2_EXTCHSEL_BIT0    
- *                      ADC2_EXTCHSEL_BIT1    
- *                      ADC3_EXTCHSEL_BIT0    
- *                      ADC3_EXTCHSEL_BIT1    
- *                      ADC4_EXTCHSEL_BIT0    
- *                      ADC4_EXTCHSEL_BIT1    
- *                      ADC_R0_EXTCHSEL_BIT0  
- *                      ADC_R0_EXTCHSEL_BIT1  
- *                      ADC_R1_EXTCHSEL_BIT0  
- *                      ADC_R2_EXTCHSEL_BIT1  
+ *                      ADC0_EXTCHSEL_BIT0
+ *                      ADC0_EXTCHSEL_BIT1
+ *                      ADC1_EXTCHSEL_BIT0
+ *                      ADC1_EXTCHSEL_BIT1
+ *                      ADC2_EXTCHSEL_BIT0
+ *                      ADC2_EXTCHSEL_BIT1
+ *                      ADC3_EXTCHSEL_BIT0
+ *                      ADC3_EXTCHSEL_BIT1
+ *                      ADC4_EXTCHSEL_BIT0
+ *                      ADC4_EXTCHSEL_BIT1
+ *                      ADC_R0_EXTCHSEL_BIT0
+ *                      ADC_R0_EXTCHSEL_BIT1
+ *                      ADC_R1_EXTCHSEL_BIT0
+ *                      ADC_R2_EXTCHSEL_BIT1
  */
 void SOC_selectAdcExtChXbar(uint32_t extChXbarOut, uint32_t extChXbarIn);
 
 /**
  * @brief Mux select to choose delay for ADC Extchsel
- * 
+ *
  * @param delay [in] 3 Cycle Delay or 6 Cycle Delay
- * Valid Values are 
+ * Valid Values are
  * ADC_EXTCHSELCT_DELAY_3_CYCLES
  * ADC_EXTCHSELCT_DELAY_6_CYCLES
  */
@@ -311,10 +314,34 @@ void SOC_selextAdcExtChDelay(uint32_t delay);
 
 /**
  * @brief Enable or Disable the ADC CAL Pin to loopback with DAC
- * 
- * @param enable [in] TRUE to enable, FALSE to disable 
+ *
+ * @param enable [in] TRUE to enable, FALSE to disable
  */
 void SOC_enableAdcDacLoopback(uint32_t enable);
+
+/**
+ * @brief Enable or disable the CMPSS - DAC Loop Back configuration
+ *
+ * @param cmpssaInstance Instance number of CMPSS TYPE A
+ * @param dacType determines which CMPSS input line
+ * Valid values are
+ * CMPSS_LOOP_BACK_INH
+ * CMPSS_LOOP_BACK_INL
+ * @param enable
+ */
+void SOC_enableCmpssaDacLoopBack(uint32_t cmpssaInstance, uint32_t dacType, uint32_t enable);
+
+/**
+ * @brief Enable or disable the CMPSS - DAC Loop Back configuration
+ *
+ * @param cmpssbInstance  Instance number of CMPSS TYPE B
+ * @param dacType determines which CMPSS input line
+ * Valid values are
+ * CMPSS_LOOP_BACK_INH
+ * CMPSS_LOOP_BACK_INL
+ * @param enable
+ */
+void SOC_enableCmpssbDacLoopBack(uint32_t cmpssbInstance, uint32_t dacType, uint32_t enable);
 
 /**
  * \brief Configure the ePWM group
@@ -333,14 +360,14 @@ void SOC_selectSdfm1Clk0Source(uint8_t source);
 
 
 /**
- * @brief Sets the configuraion for the loopback control. 
- * 
+ * @brief Sets the configuraion for the loopback control.
+ *
  * @param sdfmInstance [in] SDFM instance number [0,1]
  * @param clkInstance  [in] SDFM Clock number [0 - 3]
  * @param defaultValue [in] TRUE to set the default Loopback control loopback FALSE to set alternate Loopback control
- * 
- * \note this API doesn't configure the PinMux if the loopback clock is required to be routed to the pin, 
- * the pinMux should be configured with the Output override enabled. 
+ *
+ * \note this API doesn't configure the PinMux if the loopback clock is required to be routed to the pin,
+ * the pinMux should be configured with the Output override enabled.
  */
 void SOC_sdfmClkLoopBackConfig(uint32_t sdfmInstance, uint32_t clkInstance, uint32_t defaultValue);
 
