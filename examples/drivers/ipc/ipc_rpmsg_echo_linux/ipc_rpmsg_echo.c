@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -135,6 +135,14 @@ uint32_t gRemoteCoreId[] = {
     CSL_CORE_ID_R5FSS1_0,
     CSL_CORE_ID_R5FSS1_1,
     CSL_CORE_ID_M4FSS0_0,
+    CSL_CORE_ID_MAX /* this value indicates the end of the array */
+};
+#endif
+
+#if defined (SOC_AM65X)
+uint32_t gRemoteCoreId[] = {
+    CSL_CORE_ID_R5FSS0_0,
+    CSL_CORE_ID_R5FSS0_1,
     CSL_CORE_ID_MAX /* this value indicates the end of the array */
 };
 #endif

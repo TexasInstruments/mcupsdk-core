@@ -28,6 +28,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += dpl_demo_am65x-idk_r5fss0-0_freerto
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += posix_demo_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += task_switch_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build
 # Various System Example Projectspec Build Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += ipc_rpmsg_echo_linux_am65x-idk_system_freertos_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += empty_am65x-idk_system_freertos_build
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
@@ -107,6 +108,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  task_switch_am65x-idk_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
+ ipc_rpmsg_echo_linux_am65x-idk_system_freertos_build:
+	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo_linux/am65x-idk/system_freertos -f makefile_projectspec all
+
  empty_am65x-idk_system_freertos_build:
 	$(MAKE) -C examples/empty/am65x-idk/system_freertos -f makefile_projectspec all
 
@@ -138,6 +142,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += dpl_demo_am65x-idk_r5fss0-0_freerto
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += posix_demo_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += task_switch_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 # Various System Example Projectspec Clean Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += ipc_rpmsg_echo_linux_am65x-idk_system_freertos_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += empty_am65x-idk_system_freertos_clean
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
@@ -217,6 +222,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  task_switch_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
+ ipc_rpmsg_echo_linux_am65x-idk_system_freertos_clean:
+	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo_linux/am65x-idk/system_freertos -f makefile_projectspec clean
+
  empty_am65x-idk_system_freertos_clean:
 	$(MAKE) -C examples/empty/am65x-idk/system_freertos -f makefile_projectspec clean
 
@@ -248,6 +256,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += dpl_demo_am65x-idk_r5fss0-0_freert
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += posix_demo_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += task_switch_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export
 # Various System Example Projectspec Export Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += ipc_rpmsg_echo_linux_am65x-idk_system_freertos_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += empty_am65x-idk_system_freertos_export
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
@@ -327,6 +336,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  task_switch_am65x-idk_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/kernel/freertos/task_switch/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
+ ipc_rpmsg_echo_linux_am65x-idk_system_freertos_export:
+	$(MAKE) -C examples/drivers/ipc/ipc_rpmsg_echo_linux/am65x-idk/system_freertos -f makefile_projectspec export
+
  empty_am65x-idk_system_freertos_export:
 	$(MAKE) -C examples/empty/am65x-idk/system_freertos -f makefile_projectspec export
 
@@ -376,6 +388,7 @@ help:
 	@echo  .
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================
+	@echo  $(MAKE) -s -C examples/drivers/ipc/ipc_rpmsg_echo_linux/am65x-idk/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/empty/am65x-idk/system_freertos -f makefile_projectspec [export all clean]
 	@echo  .
 
