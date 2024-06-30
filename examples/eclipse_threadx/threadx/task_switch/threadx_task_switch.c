@@ -63,10 +63,10 @@
 #define PING_TASK_PRI  (2u)
 #define PONG_TASK_PRI  (3u)
 
-#define PING_TASK_SIZE (1024u)
+#define PING_TASK_SIZE (8192u)
 uint8_t gPingTaskStack[PING_TASK_SIZE] __attribute__((aligned(32)));
 
-#define PONG_TASK_SIZE (1024u)
+#define PONG_TASK_SIZE (8192u)
 uint8_t gPongTaskStack[PONG_TASK_SIZE] __attribute__((aligned(32)));
 
 TX_THREAD gPingThread;
