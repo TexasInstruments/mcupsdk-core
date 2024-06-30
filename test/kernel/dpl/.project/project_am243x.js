@@ -225,7 +225,6 @@ const templates_freertos_r5f_gcc =
             entryFunction: "test_main",
         },
     }
-];
 
 const templates_nortos_m4f =
 [
@@ -257,6 +256,7 @@ const buildOptionCombos = [
     { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp",  os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp",  os: "freertos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "threadx"},
     { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am243x-lp",  os: "nortos"},
     { device: device, cpu: "m4fss0-0", cgt: "ti-arm-clang", board: "am243x-lp",  os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm", os: "nortos"},
@@ -264,6 +264,7 @@ const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-evm", os: "threadx"},
     { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-lp",  os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-lp",  os: "freertos"},
+    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am243x-lp", os: "threadx"},
 ];
 
 function getComponentProperty() {
