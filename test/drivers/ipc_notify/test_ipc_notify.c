@@ -67,6 +67,17 @@ uint32_t gRemoteCoreId[] = {
 };
 #endif
 
+#if defined(SOC_AM65X)
+/* main core that checks the test pass/fail */
+uint32_t gMainCoreId = CSL_CORE_ID_R5FSS0_0;
+/* All cores that participate in the IPC */
+uint32_t gRemoteCoreId[] = {
+    CSL_CORE_ID_R5FSS0_0,
+    CSL_CORE_ID_R5FSS0_1,
+    CSL_CORE_ID_MAX /* this value indicates the end of the array */
+};
+#endif
+
 #if defined(SOC_AM243X)
 /* main core that checks the test pass/fail */
 uint32_t gMainCoreId = CSL_CORE_ID_R5FSS0_0;
@@ -483,6 +494,10 @@ void test_ipc_main_core_start()
     RUN_TEST(test_notifyOneToOneBackToBack, 312, (void*)CSL_CORE_ID_R5FSS0_1);
     RUN_TEST(test_notifyOneToOneBackToBack, 313, (void*)CSL_CORE_ID_M4FSS0_0);
     RUN_TEST(test_notifyErrorChecks, 314, (void*)CSL_CORE_ID_R5FSS0_1);
+    #endif
+    #if defined(SOC_AM65X)
+    RUN_TEST(test_notifyOneToOne, 308, (void*)CSL_CORE_ID_R5FSS0_1);
+    RUN_TEST(test_notifyOneToOneBackToBack, 312, (void*)CSL_CORE_ID_R5FSS0_1);
     #endif
     #if defined(SOC_AM263X) || defined (SOC_AM263PX)
     RUN_TEST(test_notifyOneToOne, 308, (void*)CSL_CORE_ID_R5FSS0_1);
