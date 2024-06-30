@@ -93,7 +93,7 @@ void filex_hello_world_main(ULONG args)
     DebugP_assert(status == FX_SUCCESS);
 
     // Make sure that the read-back message matches the original message.
-    if(strcmp((const char *)&t_buf[0], MESSAGE) == 0)
+    if(strcmp((const char *)&t_buf[0], MESSAGE) != 0)
     {
         DebugP_log("Some tests have failed!!\r\n");
     }
