@@ -95,6 +95,8 @@ const templates =
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-evm", os: "threadx"},
     { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7",    board: "am243x-evm", os: "threadx"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am243x-lp", os: "threadx"},
+    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7",    board: "am243x-lp", os: "threadx"},
 ];
 
 function getComponentProperty() {
