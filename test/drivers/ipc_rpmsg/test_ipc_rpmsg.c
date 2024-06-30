@@ -62,6 +62,17 @@ uint32_t gRemoteCoreId[] = {
 };
 #endif
 
+#if defined(SOC_AM65X)
+/* main core that checks the test pass/fail */
+uint32_t gMainCoreId = CSL_CORE_ID_R5FSS0_0;
+/* All cores that participate in the IPC */
+uint32_t gRemoteCoreId[] = {
+    CSL_CORE_ID_R5FSS0_0,
+    CSL_CORE_ID_R5FSS0_1,
+    CSL_CORE_ID_MAX /* this value indicates the end of the array */
+};
+#endif
+
 #if defined(SOC_AM243X)
 /* main core that checks the test pass/fail */
 uint32_t gMainCoreId = CSL_CORE_ID_R5FSS0_0;
