@@ -105,7 +105,7 @@ uint32_t gSdfmBase = CONFIG_SDFM0_BASE_ADDR;
  *
  */
 
-void App_configSDFMClkPinMux(uint32_t config);
+// void App_configSDFMClkPinMux(uint32_t config); // this configuration has been moved to syscfg
 
 void sdfm_ecap_loop_back_main(void *args)
 {
@@ -114,14 +114,12 @@ void sdfm_ecap_loop_back_main(void *args)
     Board_driversOpen();
 
     /* enabling the Pinmux */
-    App_configSDFMClkPinMux(TRUE);
 
     DebugP_log("SDFM filter sync CPU read Test Started ...\r\n");
 
     /* ECAP is the clock source, and has been set in APWM mode. the EPWM is used as DATA can be synced with ECAP*/
     /* syncing the DATA EPWM */
     ECAP_loadCounter(CONFIG_ECAP0_BASE_ADDR);
-
 
     /* Register & enable interrupt */
     HwiP_Params         hwiPrms;
@@ -164,9 +162,6 @@ void sdfm_ecap_loop_back_main(void *args)
 
     DebugP_log("All tests have passed!!\r\n");
 
-    /* Deconfiguring Pinmux */
-    App_configSDFMClkPinMux(FALSE);
-
     SemaphoreP_destruct(&gSdfmSemObject);
 
     Board_driversClose();
@@ -204,79 +199,3 @@ static void sdfmISR(void *handle)
         SemaphoreP_post(&gSdfmSemObject);
     }
 }
-
-void App_configSDFMClkPinMux(uint32_t config)
-{
-
-    static Pinmux_PerCfg_t gPinmux_sdfmClkConfig[] = {
-
-        /* Configuring for the forced ouput enabled */
-
-        /* SDFM0 pin config */
-        /* SDFM0_CLK0 -> SDFM0_CLK0 (B16) */
-        {
-            PIN_SDFM0_CLK0,
-            ( PIN_MODE(8) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW | PIN_QUAL_ASYNC | PIN_FORCE_OUTPUT_ENABLE )
-        },
-        /* SDFM0 pin config */
-        /* SDFM0_CLK1 -> SDFM0_CLK1 (A16) */
-        {
-            PIN_SDFM0_CLK1,
-            ( PIN_MODE(8) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW | PIN_QUAL_ASYNC | PIN_FORCE_OUTPUT_ENABLE )
-        },
-        /* SDFM0 pin config */
-        /* SDFM0_CLK2 -> SDFM0_CLK2 (B15) */
-        {
-            PIN_SDFM0_CLK2,
-            ( PIN_MODE(8) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW | PIN_QUAL_ASYNC | PIN_FORCE_OUTPUT_ENABLE )
-        },
-        /* SDFM0 pin config */
-        /* SDFM0_CLK3 -> SDFM0_CLK3 (A15) */
-        {
-            PIN_SDFM0_CLK3,
-            ( PIN_MODE(8) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW | PIN_QUAL_ASYNC | PIN_FORCE_OUTPUT_ENABLE )
-        },
-
-        {PINMUX_END, PINMUX_END}
-    };
-
-    static Pinmux_PerCfg_t gPinmux_sdfmClkDeconfig[] = {
-
-        /* Configuring for GPIO */
-        {
-            PIN_SDFM0_CLK0,
-            ( PIN_MODE(7) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW | PIN_QUAL_ASYNC )
-        },
-        {
-            PIN_SDFM0_CLK1,
-            ( PIN_MODE(7) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW | PIN_QUAL_ASYNC )
-        },
-        {
-            PIN_SDFM0_CLK2,
-            ( PIN_MODE(7) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW | PIN_QUAL_ASYNC )
-        },
-        {
-            PIN_SDFM0_CLK3,
-            ( PIN_MODE(7) | PIN_PULL_DISABLE | PIN_SLEW_RATE_LOW | PIN_QUAL_ASYNC )
-        },
-
-        {PINMUX_END, PINMUX_END}
-    };
-
-
-    /*
-    * Pinmux
-    */
-    if(config == TRUE)
-    {
-        Pinmux_config(gPinmux_sdfmClkConfig, PINMUX_DOMAIN_ID_MAIN);
-    }
-    else
-    {
-        Pinmux_config(gPinmux_sdfmClkDeconfig, PINMUX_DOMAIN_ID_MAIN);
-    }
-
-
-
-}
-
