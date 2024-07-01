@@ -277,6 +277,7 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_HRPWM_DEADBAND_SFO
    -# \subpage EXAMPLES_DRIVERS_HRPWM_PHASE_SHIFT_SFO
    -# \subpage EXAMPLES_DRIVERS_HRPWM_DUTY_CYCLE_SFO
+   -# \subpage EXAMPLES_DRIVERS_UP_AQ
 \cond SOC_AM263PX
    -# \subpage EXAMPLES_DRIVERS_EPWM_DCCAP
    -# \subpage EXAMPLES_DRIVERS_EPWM_DIODE_EMULATION

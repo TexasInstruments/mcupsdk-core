@@ -4027,6 +4027,72 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "This Example Demonstrates the action qualifier module using UP Count mode. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_up_aq",
+        "location": "../../examples/drivers/epwm/epwm_up_aq/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "TMDSCNCD263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_up_aq",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "This Example Demonstrates the action qualifier module using UP Count mode. CPU is R5FSS0-0 running NORTOS.",
+        "name": "epwm_up_aq",
+        "location": "../../examples/drivers/epwm/epwm_up_aq/am263x-lp/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "LP-AM263"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "epwm",
+            "epwm_up_aq",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "HRPWM Deadband SFO example. CPU is R5FSS0-0 running NORTOS.",
         "name": "hrpwm_deadband_sfo",
         "location": "../../examples/drivers/epwm/hrpwm_deadband_sfo/am263x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
