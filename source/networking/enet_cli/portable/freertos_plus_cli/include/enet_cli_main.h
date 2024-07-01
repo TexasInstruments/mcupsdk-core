@@ -31,19 +31,20 @@
  */
 
 /*!
- * \file  enet_cli_phy.h
+ * \file  enet_cli_main.h
  *
- * \brief Header file for enet_cli_phy.c
+ * \brief Header file for FreeRTOS+CLI porting layer for enet_cli lib.
  */
 
-#ifndef _ENET_CLI_PHY_H_
-#define _ENET_CLI_PHY_H_
+#ifndef _ENET_CLI_MAIN_H_
+#define _ENET_CLI_MAIN_H_
 
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-/* None */
+#include "FreeRTOS.h"
+#include "FreeRTOS_CLI.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -66,8 +67,8 @@ extern "C"
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-BaseType_t EnetCli_phyCommandHandler(char *writeBuffer, size_t writeBufferLen,
-        const char *commandString);
+void EnetCli_registerCustomCommands(CLI_Command_Definition_t *commandList,
+        uint32_t numOfCommands);
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -79,4 +80,4 @@ BaseType_t EnetCli_phyCommandHandler(char *writeBuffer, size_t writeBufferLen,
 }
 #endif
 
-#endif /* _ENET_CLI_PHY_H_ */
+#endif /* _ENET_CLI_MAIN_H_ */

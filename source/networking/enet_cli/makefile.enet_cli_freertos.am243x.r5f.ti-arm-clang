@@ -13,16 +13,18 @@ AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-LIBNAME:=enet_cli.am243x.r5f.ti-arm-clang.$(PROFILE).lib
+LIBNAME:=enet_cli_freertos.am243x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
     enet_cli_phy.c \
     enet_cli_utils.c \
     enet_cli_debug.c \
     enet_cli_config.c \
+    enet_cli_main.c \
     enet_cli.c \
 
 FILES_PATH_common = \
+    ${MCU_PLUS_SDK_PATH}/source/networking/enet_cli/portable/freertos_plus_cli/src \
     ${MCU_PLUS_SDK_PATH}/source/networking/enet_cli/src \
 
 INCLUDES_common := \
@@ -44,6 +46,7 @@ INCLUDES_common := \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/core/include/core \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4 \
+    -I${MCU_PLUS_SDK_PATH}/source/networking/enet_cli/portable/freertos_plus_cli/include \
     -I${MCU_PLUS_SDK_PATH}/source/networking/enet_cli/include \
     -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/r5f \
 
@@ -111,7 +114,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am243x/ti-arm-clang/$(PROFILE)/r5f/enet_cli/
+OBJDIR := obj/am243x/ti-arm-clang/$(PROFILE)/r5f/enet_cli_freertos/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

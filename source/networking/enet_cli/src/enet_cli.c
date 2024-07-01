@@ -41,10 +41,6 @@
 /* ========================================================================== */
 
 #include "enet_cli.h"
-#include "enet_cli_phy.h"
-#include "enet_cli_utils.h"
-#include "enet_cli_debug.h"
-#include "enet_cli_config.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -68,37 +64,7 @@
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-/* Commands for modifying ethernet configuration */
-static CLI_Command_Definition_t enetConfigCommands =
-        { .pcCommand = "enet_cfg",
-            .pcHelpString =
-                    "enet_cfg {help|mqprio|tracelvl|classifier}:\r\n Commands to modify ethernet configurations.\r\n\n",
-            .pxCommandInterpreter = EnetCli_configCommandHandler,
-            .cExpectedNumberOfParameters = -1 };
-
-/* Commands to print debug data */
-static CLI_Command_Definition_t enetDebugCommands =
-        { .pcCommand = "enet_dbg",
-            .pcHelpString =
-                    "enet_dbg {help|cpswstats|dumpale|dumppolicer}:\r\n Commands to print debug data.\r\n\n",
-            .pxCommandInterpreter = EnetCli_debugCommandHandler,
-            .cExpectedNumberOfParameters = -1 };
-
-/* Commands to access PHY */
-static CLI_Command_Definition_t phyCommands =
-        { .pcCommand = "phy",
-            .pcHelpString =
-                    "phy {help|scan|status|dump|write|read}:\r\n Commands to access ethernet PHYs.\r\n\n",
-            .pxCommandInterpreter = EnetCli_phyCommandHandler,
-            .cExpectedNumberOfParameters = -1 };
-
-/* Utility Commands for SOC */
-static CLI_Command_Definition_t utilsCommands =
-        { .pcCommand = "utils",
-            .pcHelpString =
-                    "utils {help|cpuload|readmem|writemem}:\r\n Utility commands for SOC.\r\n\n",
-            .pxCommandInterpreter = EnetCli_utilsCommandHandler,
-            .cExpectedNumberOfParameters = -1 };
+/* None */
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -114,17 +80,8 @@ void EnetCli_init(Enet_Type enetType, uint32_t instId)
     EnetCli_inst.hEnet = Enet_getHandle(enetType, instId);
     EnetCli_inst.numMacPorts = Enet_getMacPortMax(enetType, instId);
 
-    /* Register all commands */
-    FreeRTOS_CLIRegisterCommand(&enetConfigCommands);
-    FreeRTOS_CLIRegisterCommand(&enetDebugCommands);
-    FreeRTOS_CLIRegisterCommand(&phyCommands);
-    FreeRTOS_CLIRegisterCommand(&utilsCommands);
-}
-
-BaseType_t EnetCli_processCommand(const char *commandInput, char *writeBuffer,
-        size_t writeBufferLen)
-{
-    return FreeRTOS_CLIProcessCommand(commandInput, writeBuffer, writeBufferLen);
+    EnetAppUtils_assert(EnetCli_inst.hEnet != NULL);
+    EnetAppUtils_assert(EnetCli_inst.enetType == ENET_CPSW_3G);
 }
 
 /* ========================================================================== */

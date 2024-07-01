@@ -31,19 +31,19 @@
  */
 
 /*!
- * \file  enet_cli_debug.h
+ * \file  enet_cli_mod.h
  *
- * \brief Header file for enet_cli_debug.c
+ * \brief <descrption>
  */
 
-#ifndef _ENET_CLI_DEBUG_H_
-#define _ENET_CLI_DEBUG_H_
+#ifndef _ENET_CLI_MOD_H_
+#define _ENET_CLI_MOD_H_
 
 /* ========================================================================== */
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-/* None */
+#include <enet_cli.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -54,7 +54,11 @@ extern "C"
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-/* None */
+typedef enum EnetCLi_RemapType_e
+{
+    ENET_CLI_REMAP_INGRESS = 0,
+    ENET_CLI_REMAP_EGRESS = 1
+}EnetCli_RemapType;
 
 /* ========================================================================== */
 /*                         Structures and Enums                               */
@@ -66,7 +70,16 @@ extern "C"
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-BaseType_t EnetCli_debugCommandHandler(char *writeBuffer, size_t writeBufferLen,
+bool EnetCli_configCommandHandler(char *writeBuffer,
+        size_t writeBufferLen, const char *commandString);
+
+bool EnetCli_debugCommandHandler(char *writeBuffer, size_t writeBufferLen,
+        const char *commandString);
+
+bool EnetCli_phyCommandHandler(char *writeBuffer, size_t writeBufferLen,
+        const char *commandString);
+
+bool EnetCli_utilsCommandHandler(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
 /* ========================================================================== */
@@ -79,4 +92,4 @@ BaseType_t EnetCli_debugCommandHandler(char *writeBuffer, size_t writeBufferLen,
 }
 #endif
 
-#endif /* _ENET_CLI_DEBUG_H_ */
+#endif /* MCU_PLUS_SDK_SOURCE_NETWORKING_ENET_CLI_INCLUDE_ENET_CLI_MOD_H_ */

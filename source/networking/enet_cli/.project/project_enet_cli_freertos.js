@@ -7,12 +7,14 @@ const files = {
         "enet_cli_utils.c",
         "enet_cli_debug.c",
         "enet_cli_config.c",
+        "enet_cli_main.c",
         "enet_cli.c",
     ],
 };
 
 const filedirs = {
     common: [
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet_cli/portable/freertos_plus_cli/src",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet_cli/src",
     ],
 };
@@ -38,6 +40,7 @@ const includes = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/soc/k3/am64x_am243x",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet_cli/portable/freertos_plus_cli/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet_cli/include",
     ],
 };
@@ -121,8 +124,8 @@ function getComponentProperty(device) {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "library";
-    property.name = "enet_cli";
-    property.tag  = "enet_cli";
+    property.name = "enet_cli_freertos";
+    property.tag  = "enet_cli_freertos";
     property.isInternal = false;
 
     deviceBuildCombos = []

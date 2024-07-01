@@ -49,15 +49,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <kernel/dpl/TaskP.h>
-
 /* Networking Libraries */
 #include <enet.h>
 #include <enet_apputils.h>
 
-/* FreeRTOS Libraries */
-#include "FreeRTOS.h"
-#include "FreeRTOS_CLI.h"
+#include "enet_cli_main.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -68,8 +64,7 @@ extern "C"
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
 
-#define ENET_CLI_MIN_WRITE_BUF_LEN 150
-#define ENET_CLI_MIN_READ_BUF_LEN 100
+/* None */
 
 /* ========================================================================== */
 /*                         Structures and Enums                               */
@@ -90,8 +85,13 @@ typedef struct EnetCli_Obj_s
 
 void EnetCli_init(Enet_Type enetType, uint32_t instId);
 
-BaseType_t EnetCli_processCommand(const char *commandInput, char *writeBuffer,
+void EnetCli_registerBuiltInCommands();
+
+bool EnetCli_processCommand(const char *pCommandInput, char *pWriteBuffer,
         size_t writeBufferLen);
+
+const char* EnetCli_getParameter(const char *pCommandString,
+        uint32_t wantedParam, uint32_t *paramLen);
 
 /* ========================================================================== */
 /*                            Global Variables                                */

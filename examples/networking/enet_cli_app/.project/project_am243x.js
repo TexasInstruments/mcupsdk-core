@@ -45,6 +45,7 @@ const includes_freertos_r5f = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Plus-CLI",
+        "${MCU_PLUS_SDK_PATH}/source/networking/enet_cli/portable/freertos_plus_cli/include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet_cli/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/r5f",
@@ -81,7 +82,7 @@ const includes_freertos_r5f = {
 const libs_freertos_r5f = {
     common: [
         "freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "enet_cli.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "enet_cli_freertos.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "enet-cpsw.am243x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am243x.r5f.ti-arm-clang.${ConfigName}.lib",

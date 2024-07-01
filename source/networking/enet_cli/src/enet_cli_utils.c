@@ -40,8 +40,9 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include "enet_cli.h"
-#include "enet_cli_utils.h"
+#include <kernel/dpl/TaskP.h>
+
+#include "enet_cli_mod.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -59,16 +60,16 @@
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-static BaseType_t EnetCli_utilsHelp(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_utilsHelp(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
-static BaseType_t EnetCli_getCpuLoad(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_getCpuLoad(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
-static BaseType_t EnetCli_readMem(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_readMem(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
-static BaseType_t EnetCli_writeMem(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_writeMem(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
 /* ========================================================================== */
@@ -81,12 +82,12 @@ static BaseType_t EnetCli_writeMem(char *writeBuffer, size_t writeBufferLen,
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-BaseType_t EnetCli_utilsCommandHandler(char *writeBuffer, size_t writeBufferLen,
+bool EnetCli_utilsCommandHandler(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
-    char *parameter;
-    BaseType_t paramLen;
-    parameter = (char*) FreeRTOS_CLIGetParameter(commandString, 1, &paramLen);
+    const char *parameter;
+    uint32_t paramLen;
+    parameter = EnetCli_getParameter(commandString, 1, &paramLen);
 
     if (parameter == NULL || strncmp(parameter, "help", paramLen) == 0)
     {
@@ -108,7 +109,7 @@ BaseType_t EnetCli_utilsCommandHandler(char *writeBuffer, size_t writeBufferLen,
     {
         snprintf(writeBuffer, writeBufferLen,
                 "Bad argument\r\nFor more info run \'utils help\'\r\n");
-        return pdFALSE;
+        return false;
     }
 }
 
@@ -116,7 +117,7 @@ BaseType_t EnetCli_utilsCommandHandler(char *writeBuffer, size_t writeBufferLen,
 /*                   Static Function Definitions                              */
 /* ========================================================================== */
 
-static BaseType_t EnetCli_utilsHelp(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_utilsHelp(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
     EnetAppUtils_print("Utility commands for SOC.\r\nUsage:\r\n");
@@ -129,19 +130,19 @@ static BaseType_t EnetCli_utilsHelp(char *writeBuffer, size_t writeBufferLen,
     EnetAppUtils_print(
             "\tutils writemem <start_addr> [<word1> ...]\tWrites data to memory address.\r\n");
     EnetAppUtils_print("\tutils help\t\t\t\t\tPrints this message.\r\n");
-    return pdFALSE;
+    return false;
 }
 
-static BaseType_t EnetCli_getCpuLoad(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_getCpuLoad(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
     uint32_t cpuLoad = TaskP_loadGetTotalCpuLoad();
     snprintf(writeBuffer, writeBufferLen, "Current CPU load = %3d.%02d%%\r\n",
             cpuLoad / 100, cpuLoad % 100);
-    return pdFALSE;
+    return false;
 }
 
-static BaseType_t EnetCli_readMem(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_readMem(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
     static bool processCommand = true;
@@ -150,20 +151,20 @@ static BaseType_t EnetCli_readMem(char *writeBuffer, size_t writeBufferLen,
     uint32_t wordCnt = 1;
     uint32_t *addr;
     char *parameter;
-    BaseType_t paramLen;
+    uint32_t paramLen;
 
     if (processCommand)
     {
-        parameter = (char*) FreeRTOS_CLIGetParameter(commandString, 2,
+        parameter = (char*) EnetCli_getParameter(commandString, 2,
                 &paramLen);
         if (parameter == NULL)
         {
             snprintf(writeBuffer, writeBufferLen,
                     "Missing argument(s)\r\nFor more info run \'utils help\'\r\n");
-            return pdFALSE;
+            return false;
         }
         addrVal = (uint32_t) strtol(parameter, NULL, 16);
-        parameter = (char*) FreeRTOS_CLIGetParameter(commandString, 3,
+        parameter = (char*) EnetCli_getParameter(commandString, 3,
                 &paramLen);
         if (parameter != NULL)
         {
@@ -205,27 +206,27 @@ static BaseType_t EnetCli_readMem(char *writeBuffer, size_t writeBufferLen,
     if (addrVal > endAddr)
     {
         processCommand = true;
-        return pdFALSE;
+        return false;
     }
-    return pdTRUE;
+    return true;
 }
 
-static BaseType_t EnetCli_writeMem(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_writeMem(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
     uint32_t addrVal = 0;
     uint32_t data = 0;
     uint32_t *addr;
     char *parameter;
-    BaseType_t paramLen;
+    uint32_t paramLen;
     uint32_t wordCnt = 0;
 
-    parameter = (char*) FreeRTOS_CLIGetParameter(commandString, 2, &paramLen);
+    parameter = (char*) EnetCli_getParameter(commandString, 2, &paramLen);
     if (parameter == NULL)
     {
         snprintf(writeBuffer, writeBufferLen,
                 "Missing argument(s)\r\nFor more info run \'utils help\'\r\n");
-        return pdFALSE;
+        return false;
     }
     addrVal = (uint32_t) strtol(parameter, NULL, 16);
     if (addrVal % 4)
@@ -234,17 +235,17 @@ static BaseType_t EnetCli_writeMem(char *writeBuffer, size_t writeBufferLen,
     }
     addr = (uint32_t*) addrVal;
 
-    parameter = (char*) FreeRTOS_CLIGetParameter(commandString, wordCnt + 3,
+    parameter = (char*) EnetCli_getParameter(commandString, wordCnt + 3,
             &paramLen);
     while (parameter != NULL)
     {
         data = (uint32_t) strtol(parameter, NULL, 16);
         memcpy(addr + (4 * wordCnt), &data, 4);
         wordCnt++;
-        parameter = (char*) FreeRTOS_CLIGetParameter(commandString, wordCnt + 3,
+        parameter = (char*) EnetCli_getParameter(commandString, wordCnt + 3,
                 &paramLen);
     }
     snprintf(writeBuffer, writeBufferLen, "Wrote %d bytes to address %p\r\n",
             wordCnt * 4, addr);
-    return pdFALSE;
+    return false;
 }

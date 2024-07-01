@@ -41,8 +41,7 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include "enet_cli.h"
-#include "enet_cli_config.h"
+#include "enet_cli_mod.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -60,10 +59,10 @@
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-static BaseType_t EnetCli_configHelp(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_configHelp(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
-static BaseType_t EnetCli_priorityMap(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_priorityMap(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
 static int32_t EnetConfig_setPriorityMap(uint8_t port,
@@ -71,10 +70,10 @@ static int32_t EnetConfig_setPriorityMap(uint8_t port,
 
 static void EnetConfig_getPriorityMap(uint8_t portNum);
 
-static BaseType_t EnetCli_traceLvl(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_traceLvl(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
-static BaseType_t EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
 static int32_t EnetConfig_addClassifierEntry(
@@ -93,12 +92,12 @@ static int32_t EnetConfig_remClassifierEntry(
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-BaseType_t EnetCli_configCommandHandler(char *writeBuffer,
+bool EnetCli_configCommandHandler(char *writeBuffer,
         size_t writeBufferLen, const char *commandString)
 {
     char *parameter;
-    BaseType_t paramLen;
-    parameter = (char*) FreeRTOS_CLIGetParameter(commandString, 1, &paramLen);
+    uint32_t paramLen;
+    parameter = (char*) EnetCli_getParameter(commandString, 1, &paramLen);
 
     if (parameter == NULL || strncmp(parameter, "help", paramLen) == 0)
     {
@@ -120,7 +119,7 @@ BaseType_t EnetCli_configCommandHandler(char *writeBuffer,
     {
         snprintf(writeBuffer, writeBufferLen,
                 "Bad argument\r\nFor more info run \'enet_cfg help\'\r\n");
-        return pdFALSE;
+        return false;
     }
 }
 
@@ -128,7 +127,7 @@ BaseType_t EnetCli_configCommandHandler(char *writeBuffer,
 /*                   Static Function Definitions                              */
 /* ========================================================================== */
 
-static BaseType_t EnetCli_configHelp(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_configHelp(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
     EnetAppUtils_print(
@@ -160,33 +159,33 @@ static BaseType_t EnetCli_configHelp(char *writeBuffer, size_t writeBufferLen,
     EnetAppUtils_print(
             "\t\t   [-ov <outer_vid>]\r\n\t\t   [-pcp <priority>]\r\n");
     EnetAppUtils_print("\tenet_cfg help\t\t\t\tPrints this message.\r\n");
-    return pdFALSE;
+    return false;
 }
 
-static BaseType_t EnetCli_priorityMap(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_priorityMap(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
     int32_t status = ENET_SOK;
     char *parameter;
-    BaseType_t paramLen;
+    uint32_t paramLen;
     uint8_t portNum;
     EnetCli_RemapType remapType;
     uint8_t map[8];
 
     for (uint32_t paramCnt = 2; paramCnt < 12; paramCnt++)
     {
-        parameter = (char*) FreeRTOS_CLIGetParameter(commandString, paramCnt,
+        parameter = (char*) EnetCli_getParameter(commandString, paramCnt,
                 &paramLen);
         if (parameter == NULL)
         {
             if (paramCnt == 3)
             {
                 EnetConfig_getPriorityMap(portNum);
-                return pdFALSE;
+                return false;
             }
             snprintf(writeBuffer, writeBufferLen,
                     "Missing argument(s)\r\nFor more info run \'enet_cfg help\'\r\n");
-            return pdFALSE;
+            return false;
         }
 
         if (paramCnt == 2)
@@ -196,7 +195,7 @@ static BaseType_t EnetCli_priorityMap(char *writeBuffer, size_t writeBufferLen,
             {
                 snprintf(writeBuffer, writeBufferLen,
                         "Invalid port number\r\n");
-                return pdFALSE;
+                return false;
             }
         }
         else if (paramCnt == 3)
@@ -212,7 +211,7 @@ static BaseType_t EnetCli_priorityMap(char *writeBuffer, size_t writeBufferLen,
             else
             {
                 snprintf(writeBuffer, writeBufferLen, "Invalid remap type\r\n");
-                return pdFALSE;
+                return false;
             }
         }
         else
@@ -222,7 +221,7 @@ static BaseType_t EnetCli_priorityMap(char *writeBuffer, size_t writeBufferLen,
             {
                 snprintf(writeBuffer, writeBufferLen,
                         "Invalid priority value\r\n");
-                return pdFALSE;
+                return false;
             }
         }
     }
@@ -232,7 +231,7 @@ static BaseType_t EnetCli_priorityMap(char *writeBuffer, size_t writeBufferLen,
         snprintf(writeBuffer, writeBufferLen, "Remap failed!!\r\n");
     else
         snprintf(writeBuffer, writeBufferLen, "Remap successful\r\n");
-    return pdFALSE;
+    return false;
 }
 
 static int32_t EnetConfig_setPriorityMap(uint8_t port,
@@ -380,14 +379,14 @@ static void EnetConfig_getPriorityMap(uint8_t portNum)
     }
 }
 
-static BaseType_t EnetCli_traceLvl(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_traceLvl(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
     char *parameter;
-    BaseType_t paramLen;
+    uint32_t paramLen;
     EnetTrace_TraceLevel lvl;
 
-    parameter = (char*) FreeRTOS_CLIGetParameter(commandString, 2, &paramLen);
+    parameter = (char*) EnetCli_getParameter(commandString, 2, &paramLen);
     if (parameter == NULL)
     {
         lvl = EnetTrace_getLevel();
@@ -400,34 +399,34 @@ static BaseType_t EnetCli_traceLvl(char *writeBuffer, size_t writeBufferLen,
         if ((lvl < 0) || (lvl > 5))
         {
             snprintf(writeBuffer, writeBufferLen, "Invalid trace level\r\n");
-            return pdFALSE;
+            return false;
         }
         EnetTrace_setLevel(lvl);
         snprintf(writeBuffer, writeBufferLen, "Set trace level to %d\r\n", lvl);
     }
-    return pdFALSE;
+    return false;
 }
 
-static BaseType_t EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
     int32_t status = 0;
     char *parameter;
-    BaseType_t paramLen;
+    uint32_t paramLen;
     uint32_t paramCnt = 2;
     CpswAle_PolicerMatchParams args;
     memset(&args, 0, sizeof(args));
     int8_t rxCh = -1;
     bool remove = false;
 
-    parameter = (char*) FreeRTOS_CLIGetParameter(commandString, paramCnt,
+    parameter = (char*) EnetCli_getParameter(commandString, paramCnt,
             &paramLen);
     if (strncmp(parameter, "-r", paramLen) == 0)
     {
         remove = true;
         paramCnt += 1;
     }
-    parameter = (char*) FreeRTOS_CLIGetParameter(commandString, paramCnt,
+    parameter = (char*) EnetCli_getParameter(commandString, paramCnt,
             &paramLen);
     while (parameter != NULL)
     {
@@ -435,7 +434,7 @@ static BaseType_t EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
         if (strncmp(parameter, "-e", paramLen) == 0)
         {
             args.policerMatchEnMask |= CPSW_ALE_POLICER_MATCH_ETHERTYPE;
-            parameter = (char*) FreeRTOS_CLIGetParameter(commandString,
+            parameter = (char*) EnetCli_getParameter(commandString,
                     paramCnt + 1, &paramLen);
             args.etherType = (uint16_t) strtol(parameter, NULL, 16);
         }
@@ -443,7 +442,7 @@ static BaseType_t EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
         else if (strncmp(parameter, "-sm", paramLen) == 0)
         {
             args.policerMatchEnMask |= CPSW_ALE_POLICER_MATCH_MACSRC;
-            parameter = (char*) FreeRTOS_CLIGetParameter(commandString,
+            parameter = (char*) EnetCli_getParameter(commandString,
                     paramCnt + 1, &paramLen);
             status = EnetAppUtils_macAddrAtoI(parameter,
                     args.srcMacAddrInfo.addr.addr);
@@ -451,14 +450,14 @@ static BaseType_t EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
             {
                 snprintf(writeBuffer, writeBufferLen,
                         "Invalid MAC address\r\n");
-                return pdFALSE;
+                return false;
             }
         }
         /* Classifier based on destination MAC address */
         else if (strncmp(parameter, "-dm", paramLen) == 0)
         {
             args.policerMatchEnMask |= CPSW_ALE_POLICER_MATCH_MACDST;
-            parameter = (char*) FreeRTOS_CLIGetParameter(commandString,
+            parameter = (char*) EnetCli_getParameter(commandString,
                     paramCnt + 1, &paramLen);
             status = EnetAppUtils_macAddrAtoI(parameter,
                     args.dstMacAddrInfo.addr.addr);
@@ -466,7 +465,7 @@ static BaseType_t EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
             {
                 snprintf(writeBuffer, writeBufferLen,
                         "Invalid MAC address\r\n");
-                return pdFALSE;
+                return false;
             }
         }
         /* Classifier based on source IP address */
@@ -474,14 +473,14 @@ static BaseType_t EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
         {
             args.policerMatchEnMask |= CPSW_ALE_POLICER_MATCH_IPSRC;
             args.srcIpInfo.ipAddrType = CPSW_ALE_IPADDR_CLASSIFIER_IPV4;
-            parameter = (char*) FreeRTOS_CLIGetParameter(commandString,
+            parameter = (char*) EnetCli_getParameter(commandString,
                     paramCnt + 1, &paramLen);
             status = EnetAppUtils_ipAddrAtoI(parameter,
                     args.srcIpInfo.ipv4Info.ipv4Addr);
             if (status)
             {
                 snprintf(writeBuffer, writeBufferLen, "Invalid IP address\r\n");
-                return pdFALSE;
+                return false;
             }
         }
         /* Classifier based on destination IP address */
@@ -489,26 +488,26 @@ static BaseType_t EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
         {
             args.policerMatchEnMask |= CPSW_ALE_POLICER_MATCH_IPDST;
             args.dstIpInfo.ipAddrType = CPSW_ALE_IPADDR_CLASSIFIER_IPV4;
-            parameter = (char*) FreeRTOS_CLIGetParameter(commandString,
+            parameter = (char*) EnetCli_getParameter(commandString,
                     paramCnt + 1, &paramLen);
             status = EnetAppUtils_ipAddrAtoI(parameter,
                     args.dstIpInfo.ipv4Info.ipv4Addr);
             if (status)
             {
                 snprintf(writeBuffer, writeBufferLen, "Invalid IP address\r\n");
-                return pdFALSE;
+                return false;
             }
         }
         /* Classifier based on inner vlan id */
         else if (strncmp(parameter, "-iv", paramLen) == 0)
         {
             args.policerMatchEnMask |= CPSW_ALE_POLICER_MATCH_IVLAN;
-            parameter = (char*) FreeRTOS_CLIGetParameter(commandString,
+            parameter = (char*) EnetCli_getParameter(commandString,
                     paramCnt + 1, &paramLen);
             if (atoi(parameter) > 4096 || atoi(parameter) < 0)
             {
                 snprintf(writeBuffer, writeBufferLen, "Invalid VLAN ID\r\n");
-                return pdFALSE;
+                return false;
             }
             args.ivlanId = atoi(parameter);
         }
@@ -516,12 +515,12 @@ static BaseType_t EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
         else if (strncmp(parameter, "-ov", paramLen) == 0)
         {
             args.policerMatchEnMask |= CPSW_ALE_POLICER_MATCH_OVLAN;
-            parameter = (char*) FreeRTOS_CLIGetParameter(commandString,
+            parameter = (char*) EnetCli_getParameter(commandString,
                     paramCnt + 1, &paramLen);
             if (atoi(parameter) > 4096 || atoi(parameter) < 0)
             {
                 snprintf(writeBuffer, writeBufferLen, "Invalid VLAN ID\r\n");
-                return pdFALSE;
+                return false;
             }
             args.ovlanId = atoi(parameter);
         }
@@ -529,13 +528,13 @@ static BaseType_t EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
         else if (strncmp(parameter, "-pcp", paramLen) == 0)
         {
             args.policerMatchEnMask |= CPSW_ALE_POLICER_MATCH_OVLAN;
-            parameter = (char*) FreeRTOS_CLIGetParameter(commandString,
+            parameter = (char*) EnetCli_getParameter(commandString,
                     paramCnt + 1, &paramLen);
             if (atoi(parameter) > 7 || atoi(parameter) < 0)
             {
                 snprintf(writeBuffer, writeBufferLen,
                         "Invalid priority value\r\n");
-                return pdFALSE;
+                return false;
             }
             args.priority = atoi(parameter);
         }
@@ -543,30 +542,30 @@ static BaseType_t EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
         else if (strncmp(parameter, "-p", paramLen) == 0)
         {
             args.policerMatchEnMask |= CPSW_ALE_POLICER_MATCH_PORT;
-            parameter = (char*) FreeRTOS_CLIGetParameter(commandString,
+            parameter = (char*) EnetCli_getParameter(commandString,
                     paramCnt + 1, &paramLen);
             if (atoi(parameter) >= EnetCli_inst.numMacPorts
                     || atoi(parameter) < 0)
             {
                 snprintf(writeBuffer, writeBufferLen, "Invalid MAC port\r\n");
-                return pdFALSE;
+                return false;
             }
             args.portNum = atoi(parameter) + 1;
         }
         /* The DMA channel to use for forwarding classified packets */
         else if (strncmp(parameter, "-c", paramLen) == 0)
         {
-            parameter = (char*) FreeRTOS_CLIGetParameter(commandString,
+            parameter = (char*) EnetCli_getParameter(commandString,
                     paramCnt + 1, &paramLen);
             rxCh = atoi(parameter);
         }
         else
         {
             snprintf(writeBuffer, writeBufferLen, "Invalid args\r\n");
-            return pdFALSE;
+            return false;
         }
         paramCnt += 2;
-        parameter = (char*) FreeRTOS_CLIGetParameter(commandString, paramCnt,
+        parameter = (char*) EnetCli_getParameter(commandString, paramCnt,
                 &paramLen);
     }
 
@@ -574,12 +573,12 @@ static BaseType_t EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
     {
         snprintf(writeBuffer, writeBufferLen,
                 "No classifier params specified\r\n");
-        return pdFALSE;
+        return false;
     }
     if (rxCh == -1 && !remove)
     {
         snprintf(writeBuffer, writeBufferLen, "No Rx channel specified\r\n");
-        return pdFALSE;
+        return false;
     }
 
     if (remove)
@@ -608,7 +607,7 @@ static BaseType_t EnetCli_classifier(char *writeBuffer, size_t writeBufferLen,
             snprintf(writeBuffer, writeBufferLen,
                     "Added classifier entry to ALE\r\n");
     }
-    return pdFALSE;
+    return false;
 }
 
 static int32_t EnetConfig_addClassifierEntry(

@@ -43,8 +43,7 @@
 /* Networking Libraries */
 #include <enet_board.h>
 
-#include "enet_cli.h"
-#include "enet_cli_phy.h"
+#include "enet_cli_mod.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -62,22 +61,22 @@
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-static BaseType_t EnetCli_phyHelp(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_phyHelp(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
-static BaseType_t EnetCli_phyScan(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_phyScan(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
-static BaseType_t EnetCli_getPhyLinkStatus(char *writeBuffer,
+static bool EnetCli_getPhyLinkStatus(char *writeBuffer,
         size_t writeBufferLen, const char *commandString);
 
-static BaseType_t EnetCli_dumpPhyRegs(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_dumpPhyRegs(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
-static BaseType_t EnetCli_writePhyRegs(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_writePhyRegs(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
-static BaseType_t EnetCli_readPhyRegs(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_readPhyRegs(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
 uint32_t EnetBoard_getId(void);
@@ -94,12 +93,12 @@ void EnetBoard_getMiiConfig(EnetMacPort_Interface *mii);
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-BaseType_t EnetCli_phyCommandHandler(char *writeBuffer, size_t writeBufferLen,
+bool EnetCli_phyCommandHandler(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
     char *parameter;
-    BaseType_t paramLen;
-    parameter = (char*) FreeRTOS_CLIGetParameter(commandString, 1, &paramLen);
+    uint32_t paramLen;
+    parameter = (char*) EnetCli_getParameter(commandString, 1, &paramLen);
 
     if (parameter == NULL || strncmp(parameter, "help", paramLen) == 0)
         return EnetCli_phyHelp(writeBuffer, writeBufferLen, commandString);
@@ -118,7 +117,7 @@ BaseType_t EnetCli_phyCommandHandler(char *writeBuffer, size_t writeBufferLen,
     {
         snprintf(writeBuffer, writeBufferLen,
                 "Bad argument\r\nFor more info run \'phy help\'\r\n");
-        return pdFALSE;
+        return false;
     }
 }
 
@@ -126,7 +125,7 @@ BaseType_t EnetCli_phyCommandHandler(char *writeBuffer, size_t writeBufferLen,
 /*                   Static Function Definitions                              */
 /* ========================================================================== */
 
-static BaseType_t EnetCli_phyHelp(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_phyHelp(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
     EnetAppUtils_print("Commands to access ethernet PHY.\r\nUsage:\r\n");
@@ -142,10 +141,10 @@ static BaseType_t EnetCli_phyHelp(char *writeBuffer, size_t writeBufferLen,
     EnetAppUtils_print(
             "\tphy read <mac_port> <addr>\t\tRead data of register from PHY.\r\n");
     EnetAppUtils_print("\tphy help\t\t\t\tPrints this message.\r\n");
-    return pdFALSE;
+    return false;
 }
 
-static BaseType_t EnetCli_phyScan(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_phyScan(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
     int32_t status = 0;
@@ -194,12 +193,12 @@ static BaseType_t EnetCli_phyScan(char *writeBuffer, size_t writeBufferLen,
     if (macPort == EnetCli_inst.numMacPorts)
     {
         macPort = 0;
-        return pdFALSE;
+        return false;
     }
-    return pdTRUE;
+    return true;
 }
 
-static BaseType_t EnetCli_getPhyLinkStatus(char *writeBuffer,
+static bool EnetCli_getPhyLinkStatus(char *writeBuffer,
         size_t writeBufferLen, const char *commandString)
 {
     int32_t status = 0;
@@ -207,20 +206,20 @@ static BaseType_t EnetCli_getPhyLinkStatus(char *writeBuffer,
     char duplexity[10] = "Auto";
     static uint8_t macPort = 0;
     char *parameter;
-    BaseType_t paramLen;
+    uint32_t paramLen;
     Enet_IoctlPrms prms;
     EnetPhy_GenericInArgs inArgs;
     bool isLinked, allPorts = true;
     EnetMacPort_LinkCfg linkCfg;
 
-    parameter = (char*) FreeRTOS_CLIGetParameter(commandString, 2, &paramLen);
+    parameter = (char*) EnetCli_getParameter(commandString, 2, &paramLen);
     if (parameter != NULL)
     {
         macPort = atoi(parameter);
         if (macPort < 0 || macPort >= EnetCli_inst.numMacPorts)
         {
             snprintf(writeBuffer, writeBufferLen, "Invalid Mac Port\r\n");
-            return pdFALSE;
+            return false;
         }
         allPorts = false;
     }
@@ -260,7 +259,7 @@ static BaseType_t EnetCli_getPhyLinkStatus(char *writeBuffer,
     if (!allPorts)
     {
         macPort = 0;
-        return pdFALSE;
+        return false;
     }
     else
     {
@@ -268,33 +267,33 @@ static BaseType_t EnetCli_getPhyLinkStatus(char *writeBuffer,
         if (macPort == EnetCli_inst.numMacPorts)
         {
             macPort = 0;
-            return pdFALSE;
+            return false;
         }
-        return pdTRUE;
+        return true;
     }
 }
 
-static BaseType_t EnetCli_dumpPhyRegs(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_dumpPhyRegs(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
     int32_t status = 0;
     char *parameter;
-    BaseType_t paramLen;
+    uint32_t paramLen;
     Enet_IoctlPrms prms;
     EnetPhy_GenericInArgs inArgs;
 
-    parameter = (char*) FreeRTOS_CLIGetParameter(commandString, 2, &paramLen);
+    parameter = (char*) EnetCli_getParameter(commandString, 2, &paramLen);
     if (parameter == NULL)
     {
         snprintf(writeBuffer, writeBufferLen,
                 "Missing argument(s)\r\nFor more info run \'phy help\'\r\n");
-        return pdFALSE;
+        return false;
     }
     inArgs.macPort = (Enet_MacPort) atoi(parameter);
     if (inArgs.macPort < 0 || inArgs.macPort >= EnetCli_inst.numMacPorts)
     {
         snprintf(writeBuffer, writeBufferLen, "Invalid MAC Port\r\n");
-        return pdFALSE;
+        return false;
     }
 
     ENET_IOCTL_SET_IN_ARGS(&prms, &inArgs);
@@ -304,27 +303,27 @@ static BaseType_t EnetCli_dumpPhyRegs(char *writeBuffer, size_t writeBufferLen,
         snprintf(writeBuffer, writeBufferLen,
                 "Failed to get PHY register dump\r\n");
 
-    return pdFALSE;
+    return false;
 }
 
-static BaseType_t EnetCli_writePhyRegs(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_writePhyRegs(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
     char *parameter;
     int32_t status;
-    BaseType_t paramLen;
+    uint32_t paramLen;
     EnetPhy_WriteRegInArgs inArgs;
     Enet_IoctlPrms prms;
 
     for (uint32_t paramCnt = 2; paramCnt < 5; paramCnt++)
     {
-        parameter = (char*) FreeRTOS_CLIGetParameter(commandString, paramCnt,
+        parameter = (char*) EnetCli_getParameter(commandString, paramCnt,
                 &paramLen);
         if (parameter == NULL)
         {
             snprintf(writeBuffer, writeBufferLen,
                     "Missing argument(s)\r\nFor more info run \'phy help\'\r\n");
-            return pdFALSE;
+            return false;
         }
         if (paramCnt == 2)
         {
@@ -333,7 +332,7 @@ static BaseType_t EnetCli_writePhyRegs(char *writeBuffer, size_t writeBufferLen,
                     || inArgs.macPort >= EnetCli_inst.numMacPorts)
             {
                 snprintf(writeBuffer, writeBufferLen, "Invalid MAC Port\r\n");
-                return pdFALSE;
+                return false;
             }
         }
         if (paramCnt == 3)
@@ -353,28 +352,28 @@ static BaseType_t EnetCli_writePhyRegs(char *writeBuffer, size_t writeBufferLen,
                 "Wrote value %04x to register %04x\r\n", inArgs.val,
                 inArgs.reg);
 
-    return pdFALSE;
+    return false;
 }
 
-static BaseType_t EnetCli_readPhyRegs(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_readPhyRegs(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
     char *parameter;
     int32_t status;
-    BaseType_t paramLen;
+    uint32_t paramLen;
     EnetPhy_ReadRegInArgs inArgs;
     uint16_t val;
     Enet_IoctlPrms prms;
 
     for (uint32_t paramCnt = 2; paramCnt < 4; paramCnt++)
     {
-        parameter = (char*) FreeRTOS_CLIGetParameter(commandString, paramCnt,
+        parameter = (char*) EnetCli_getParameter(commandString, paramCnt,
                 &paramLen);
         if (parameter == NULL)
         {
             snprintf(writeBuffer, writeBufferLen,
                     "Missing argument(s)\r\nFor more info run \'phy help\'\r\n");
-            return pdFALSE;
+            return false;
         }
         if (paramCnt == 2)
         {
@@ -383,7 +382,7 @@ static BaseType_t EnetCli_readPhyRegs(char *writeBuffer, size_t writeBufferLen,
                     || inArgs.macPort >= EnetCli_inst.numMacPorts)
             {
                 snprintf(writeBuffer, writeBufferLen, "Invalid MAC Port\r\n");
-                return pdFALSE;
+                return false;
             }
         }
         if (paramCnt == 3)
@@ -400,5 +399,5 @@ static BaseType_t EnetCli_readPhyRegs(char *writeBuffer, size_t writeBufferLen,
         snprintf(writeBuffer, writeBufferLen, "Value at %04x: %04x\r\n",
                 inArgs.reg, val);
 
-    return pdFALSE;
+    return false;
 }

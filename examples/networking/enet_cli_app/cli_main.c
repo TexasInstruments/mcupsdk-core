@@ -70,7 +70,69 @@
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-/* None */
+CLI_Command_Definition_t commandList[] =
+        { { .pcCommand = "enet_addtxchn",
+                .pcHelpString =
+                        "enet_addtxchn <tx_ch_num>:\r\n Opens a Tx channel.\r\n\n",
+                .pxCommandInterpreter = EnetCLI_openTxChn,
+                .cExpectedNumberOfParameters = 1 },
+            { .pcCommand = "enet_addrxchn",
+                .pcHelpString =
+                        "enet_addrxchn <rx_ch_num>:\r\n Opens an Rx channel.\r\n\n",
+                .pxCommandInterpreter = EnetCLI_openRxChn,
+                .cExpectedNumberOfParameters = 1 },
+            { .pcCommand = "enet_sendraw",
+                .pcHelpString =
+                        "enet_sendraw <tx_ch_num> [-dm <dest_mac_addr>] [-sm <src_mac_addr>] [-v <vlan_id>] [-pcp <priority>] [-m <message>]:\r\n Sends a raw ethernet packet.\r\n\n",
+                .pxCommandInterpreter = EnetCLI_transmitPkt,
+                .cExpectedNumberOfParameters = -1 },
+            { .pcCommand = "enet_capture",
+                .pcHelpString =
+                        "enet_capture {start | stop} <rx_ch_num>:\r\n Start/stop capturing incoming ethernet packets.\r\n\n",
+                .pxCommandInterpreter = EnetCLI_capturePkt,
+                .cExpectedNumberOfParameters = 2 },
+            { .pcCommand = "enet_capturedump",
+                .pcHelpString =
+                        "enet_capturedump <rx_ch_num>:\r\n Returns the last 4 packets recieved at the specified channel.\r\n\n",
+                .pxCommandInterpreter = EnetCLI_dumpRxBuffer,
+                .cExpectedNumberOfParameters = 1 }, { .pcCommand = "quit",
+                .pcHelpString = "quit:\r\n Closes the CLI application.\r\n\n",
+                .pxCommandInterpreter = EnetCLI_quitTerminal,
+                .cExpectedNumberOfParameters = 0 },
+            { .pcCommand = "enet_adducast",
+                .pcHelpString =
+                        "enet_adducast <mac_addr> [-d]:\r\n Adds a unicast ALE entry with the given MAC address.\r\n Use the -d tag to make the MAC address as the default source address for sending packets.\r\n\n",
+                .pxCommandInterpreter = EnetCLI_addUcast,
+                .cExpectedNumberOfParameters = -1 },
+            { .pcCommand = "enet_remucast",
+                .pcHelpString =
+                        "enet_remucast <mac_addr>:\r\n Removes unicast ALE entry with the given MAC address.\r\n\n",
+                .pxCommandInterpreter = EnetCLI_removeUcast,
+                .cExpectedNumberOfParameters = 1 },
+            { .pcCommand = "enet_addvlan",
+                .pcHelpString =
+                        "enet_addvlan <vlan_id> {<port1> ...}:\r\n Configures the given ports to the specified VLAN id.\r\n\n",
+                .pxCommandInterpreter = EnetCLI_addVlan,
+                .cExpectedNumberOfParameters = -1 },
+            { .pcCommand = "enet_remvlan",
+                .pcHelpString =
+                        "enet_remvlan <vlan_id>:\r\n Removes VLAN config with specified ID.\r\n\n",
+                .pxCommandInterpreter = EnetCLI_removeVlan,
+                .cExpectedNumberOfParameters = 1 },
+            { .pcCommand = "enet_ptpd",
+                .pcHelpString =
+                        "enet_ptpd {start | stop} <dma_channel> [-p1 <priority_1>] [-p2 <priority_2>] [-s <sync_interval>]:\r\n Start/stop gPTP stack. \r\n\n",
+                .pxCommandInterpreter = EnetCLI_ptpService,
+                .cExpectedNumberOfParameters = -1 },
+            { .pcCommand = "enet_hostmacaddr",
+                .pcHelpString =
+                        "enet_hostmacaddr:\r\n Prints the host port MAC address. \r\n\n",
+                .pxCommandInterpreter = EnetCLI_getHostMac,
+                .cExpectedNumberOfParameters = 0 },
+            { .pcCommand = "lwip_shell", .pcHelpString =
+                    "lwip_shell {start | stop}:\r\n Opens an LwIP shell.\r\n\n",
+                .pxCommandInterpreter = EnetCLI_lwipShell,
+                .cExpectedNumberOfParameters = 1 } };
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -84,127 +146,19 @@ void EnetCLI_mainTask(void *args)
     /* Initialize UART transaction */
     UART_Transaction_init(&UART_trans);
 
-    /* Command to open Tx channel */
-    CLI_Command_Definition_t openTxChCommand = { .pcCommand = "enet_addtxchn",
-        .pcHelpString =
-                "enet_addtxchn <tx_ch_num>:\r\n Opens a Tx channel.\r\n\n",
-        .pxCommandInterpreter = EnetCLI_openTxChn,
-        .cExpectedNumberOfParameters = 1 };
-
-    /* Command to open Rx channel */
-    CLI_Command_Definition_t openRxChCommand = { .pcCommand = "enet_addrxchn",
-        .pcHelpString =
-                "enet_addrxchn <rx_ch_num>:\r\n Opens an Rx channel.\r\n\n",
-        .pxCommandInterpreter = EnetCLI_openRxChn,
-        .cExpectedNumberOfParameters = 1 };
-
-    /* Command to send packets */
-    CLI_Command_Definition_t txPktCommand =
-            { .pcCommand = "enet_sendraw",
-                .pcHelpString =
-                        "enet_sendraw <tx_ch_num> [-dm <dest_mac_addr>] [-sm <src_mac_addr>] [-v <vlan_id>] [-pcp <priority>] [-m <message>]:\r\n Sends a raw ethernet packet.\r\n\n",
-                .pxCommandInterpreter = EnetCLI_transmitPkt,
-                .cExpectedNumberOfParameters = -1 };
-
-    /* Command to activate a specific Rx channel to listen to incoming packets */
-    CLI_Command_Definition_t rxPktCommand =
-            { .pcCommand = "enet_capture",
-                .pcHelpString =
-                        "enet_capture {start | stop} <rx_ch_num>:\r\n Start/stop capturing incoming ethernet packets.\r\n\n",
-                .pxCommandInterpreter = EnetCLI_capturePkt,
-                .cExpectedNumberOfParameters = 2 };
-
-    /* Command to display the packets captured by an Rx channel from the buffer */
-    CLI_Command_Definition_t rxDumpCommand =
-            { .pcCommand = "enet_capturedump",
-                .pcHelpString =
-                        "enet_capturedump <rx_ch_num>:\r\n Returns the last 4 packets recieved at the specified channel.\r\n\n",
-                .pxCommandInterpreter = EnetCLI_dumpRxBuffer,
-                .cExpectedNumberOfParameters = 1 };
-
-    /* Command to quit CLI application */
-    CLI_Command_Definition_t quitCommand = { .pcCommand = "quit",
-        .pcHelpString = "quit:\r\n Closes the CLI application.\r\n\n",
-        .pxCommandInterpreter = EnetCLI_quitTerminal,
-        .cExpectedNumberOfParameters = 0 };
-
-    /* Command to add Unicast entry to the ALE */
-    CLI_Command_Definition_t addUcastCommand =
-            { .pcCommand = "enet_adducast",
-                .pcHelpString =
-                        "enet_adducast <mac_addr> [-d]:\r\n Adds a unicast ALE entry with the given MAC address.\r\n Use the -d tag to make the MAC address as the default source address for sending packets.\r\n\n",
-                .pxCommandInterpreter = EnetCLI_addUcast,
-                .cExpectedNumberOfParameters = -1 };
-
-    /* Command to remove Unicast entry from the ALE */
-    CLI_Command_Definition_t remUcastCommand =
-            { .pcCommand = "enet_remucast",
-                .pcHelpString =
-                        "enet_remucast <mac_addr>:\r\n Removes unicast ALE entry with the given MAC address.\r\n\n",
-                .pxCommandInterpreter = EnetCLI_removeUcast,
-                .cExpectedNumberOfParameters = 1 };
-
-    /* Command to configure VLAN for ports */
-    CLI_Command_Definition_t addVlanCommand =
-            { .pcCommand = "enet_addvlan",
-                .pcHelpString =
-                        "enet_addvlan <vlan_id> {<port1> ...}:\r\n Configures the given ports to the specified VLAN id.\r\n\n",
-                .pxCommandInterpreter = EnetCLI_addVlan,
-                .cExpectedNumberOfParameters = -1 };
-
-    /* Command to remove VLAN config */
-    CLI_Command_Definition_t remVlanCommand =
-            { .pcCommand = "enet_remvlan",
-                .pcHelpString =
-                        "enet_remvlan <vlan_id>:\r\n Removes VLAN config with specified ID.\r\n\n",
-                .pxCommandInterpreter = EnetCLI_removeVlan,
-                .cExpectedNumberOfParameters = 1 };
-
-    /* Command to start gPTP */
-    CLI_Command_Definition_t ptpServiceCommand =
-            { .pcCommand = "enet_ptpd",
-                .pcHelpString =
-                        "enet_ptpd {start | stop} <dma_channel> [-p1 <priority_1>] [-p2 <priority_2>] [-s <sync_interval>]:\r\n Start/stop gPTP stack. \r\n\n",
-                .pxCommandInterpreter = EnetCLI_ptpService,
-                .cExpectedNumberOfParameters = -1 };
-
-    /* Command for print host mac address */
-    CLI_Command_Definition_t hostMacCommand =
-            { .pcCommand = "enet_hostmacaddr",
-                .pcHelpString =
-                        "enet_hostmacaddr:\r\n Prints the host port MAC address. \r\n\n",
-                .pxCommandInterpreter = EnetCLI_getHostMac,
-                .cExpectedNumberOfParameters = 0 };
-
-    /* Command to open LwIP shell */
-    CLI_Command_Definition_t lwipShell = { .pcCommand = "lwip_shell",
-        .pcHelpString =
-                "lwip_shell {start | stop}:\r\n Opens an LwIP shell.\r\n\n",
-        .pxCommandInterpreter = EnetCLI_lwipShell,
-        .cExpectedNumberOfParameters = 1 };
-
-    /* Registering the commands to the CLI interpreter */
-    FreeRTOS_CLIRegisterCommand(&openTxChCommand);
-    FreeRTOS_CLIRegisterCommand(&openRxChCommand);
-    FreeRTOS_CLIRegisterCommand(&txPktCommand);
-    FreeRTOS_CLIRegisterCommand(&rxPktCommand);
-    FreeRTOS_CLIRegisterCommand(&rxDumpCommand);
-    FreeRTOS_CLIRegisterCommand(&addUcastCommand);
-    FreeRTOS_CLIRegisterCommand(&remUcastCommand);
-    FreeRTOS_CLIRegisterCommand(&addVlanCommand);
-    FreeRTOS_CLIRegisterCommand(&remVlanCommand);
-    FreeRTOS_CLIRegisterCommand(&hostMacCommand);
-    FreeRTOS_CLIRegisterCommand(&ptpServiceCommand);
-    FreeRTOS_CLIRegisterCommand(&lwipShell);
-    FreeRTOS_CLIRegisterCommand(&quitCommand);
-
     /* Initialize Enet Drivers */
     EnetApp_init();
 
     /* Add commands provided by enet_cli library */
     EnetCli_init(EnetApp_inst.enetType, EnetApp_inst.instId);
 
-    BaseType_t xMoreDataToFollow;
+    /* Register custom commands */
+    EnetCli_registerCustomCommands(commandList, sizeof(commandList)/sizeof(commandList[0]));
+
+    /* Register commands that are built in in enet_cli lib */
+    EnetCli_registerBuiltInCommands();
+
+    bool xMoreDataToFollow;
     int8_t inTerminal = 1;
 
     /* Create read and write buffer */
@@ -224,11 +178,11 @@ void EnetCLI_mainTask(void *args)
         do
         {
             xMoreDataToFollow = EnetCli_processCommand(rxBuffer, txBuffer,
-                    MAX_WRITE_BUFFER_LEN);
+            MAX_WRITE_BUFFER_LEN);
 
             UART_writeCLI(txBuffer);
             memset(txBuffer, 0x00, MAX_WRITE_BUFFER_LEN);
-        } while (xMoreDataToFollow != pdFALSE);
+        } while (xMoreDataToFollow);
         if (strcmp(rxBuffer, "quit") == 0)
         {
             inTerminal = 0;

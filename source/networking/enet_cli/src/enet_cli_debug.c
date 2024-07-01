@@ -43,8 +43,7 @@
 /* Networking Libraries */
 #include <include/per/cpsw.h>
 
-#include "enet_cli.h"
-#include "enet_cli_debug.h"
+#include "enet_cli_mod.h"
 
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
@@ -62,18 +61,18 @@
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
-static BaseType_t EnetCli_debugHelp(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_debugHelp(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
-static BaseType_t EnetCli_showCpswStats(char *writeBuffer,
+static bool EnetCli_showCpswStats(char *writeBuffer,
         size_t writeBufferLen, const char *commandString);
 
 static void EnetDebug_showCpswStats(uint8_t portNum, bool reset);
 
-static BaseType_t EnetCli_dumpAleTable(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_dumpAleTable(char *writeBuffer, size_t writeBufferLen,
         const char *commandString);
 
-static BaseType_t EnetCLI_dumpPolicerTable(char *writeBuffer,
+static bool EnetCLI_dumpPolicerTable(char *writeBuffer,
         size_t writeBufferLen, const char *commandString);
 
 /* ========================================================================== */
@@ -86,12 +85,12 @@ static BaseType_t EnetCLI_dumpPolicerTable(char *writeBuffer,
 /*                          Function Definitions                              */
 /* ========================================================================== */
 
-BaseType_t EnetCli_debugCommandHandler(char *writeBuffer, size_t writeBufferLen,
+bool EnetCli_debugCommandHandler(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
     char *parameter;
-    BaseType_t paramLen;
-    parameter = (char*) FreeRTOS_CLIGetParameter(commandString, 1, &paramLen);
+    uint32_t paramLen;
+    parameter = (char*) EnetCli_getParameter(commandString, 1, &paramLen);
 
     if (parameter == NULL || strncmp(parameter, "help", paramLen) == 0)
     {
@@ -114,7 +113,7 @@ BaseType_t EnetCli_debugCommandHandler(char *writeBuffer, size_t writeBufferLen,
     {
         snprintf(writeBuffer, writeBufferLen,
                 "Bad argument\r\nFor more info run \'enet_dbg help\'\r\n");
-        return pdFALSE;
+        return false;
     }
 }
 
@@ -122,7 +121,7 @@ BaseType_t EnetCli_debugCommandHandler(char *writeBuffer, size_t writeBufferLen,
 /*                   Static Function Definitions                              */
 /* ========================================================================== */
 
-static BaseType_t EnetCli_debugHelp(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_debugHelp(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
     EnetAppUtils_print("Commands to print debug data.\r\nUsage:\r\n");
@@ -134,38 +133,38 @@ static BaseType_t EnetCli_debugHelp(char *writeBuffer, size_t writeBufferLen,
     EnetAppUtils_print(
             "\tenet_dbg dumppolicer\t\t\tPrints the policer table.\r\n");
     EnetAppUtils_print("\tenet_dbg help\t\t\t\tPrints this message.\r\n");
-    return pdFALSE;
+    return false;
 }
 
-static BaseType_t EnetCli_showCpswStats(char *writeBuffer,
+static bool EnetCli_showCpswStats(char *writeBuffer,
         size_t writeBufferLen, const char *commandString)
 {
     uint8_t portNum;
     bool reset = false;
     char *parameter;
-    BaseType_t paramLen;
+    uint32_t paramLen;
 
-    parameter = (char*) FreeRTOS_CLIGetParameter(commandString, 2, &paramLen);
+    parameter = (char*) EnetCli_getParameter(commandString, 2, &paramLen);
     if (parameter == NULL)
     {
         snprintf(writeBuffer, writeBufferLen,
                 "Missing argument(s)\r\nFor more info run \'enet_dbg help\'\r\n");
-        return pdFALSE;
+        return false;
     }
     portNum = atoi(parameter);
     if (portNum < 0 || portNum > EnetCli_inst.numMacPorts)
     {
         snprintf(writeBuffer, writeBufferLen, "Invalid MAC port\r\n");
-        return pdFALSE;
+        return false;
     }
-    parameter = (char*) FreeRTOS_CLIGetParameter(commandString, 3, &paramLen);
+    parameter = (char*) EnetCli_getParameter(commandString, 3, &paramLen);
     if (parameter != NULL && strncmp(parameter, "-r", paramLen) == 0)
     {
         reset = true;
     }
 
     EnetDebug_showCpswStats(portNum, reset);
-    return pdFALSE;
+    return false;
 }
 
 static void EnetDebug_showCpswStats(uint8_t portNum, bool reset)
@@ -232,7 +231,7 @@ static void EnetDebug_showCpswStats(uint8_t portNum, bool reset)
     }
 }
 
-static BaseType_t EnetCli_dumpAleTable(char *writeBuffer, size_t writeBufferLen,
+static bool EnetCli_dumpAleTable(char *writeBuffer, size_t writeBufferLen,
         const char *commandString)
 {
 #ifdef ENET_DEBUG_MODE
@@ -249,10 +248,10 @@ static BaseType_t EnetCli_dumpAleTable(char *writeBuffer, size_t writeBufferLen,
     snprintf(writeBuffer, writeBufferLen,
             "This commands is only available in debug mode!!\r\n");
 #endif
-    return pdFALSE;
+    return false;
 }
 
-static BaseType_t EnetCLI_dumpPolicerTable(char *writeBuffer,
+static bool EnetCLI_dumpPolicerTable(char *writeBuffer,
         size_t writeBufferLen, const char *commandString)
 {
     Enet_IoctlPrms prms;
@@ -265,5 +264,5 @@ static BaseType_t EnetCLI_dumpPolicerTable(char *writeBuffer,
         snprintf(writeBuffer, writeBufferLen,
                 "Failed to fetch policer entries\r\n");
     }
-    return pdFALSE;
+    return false;
 }
