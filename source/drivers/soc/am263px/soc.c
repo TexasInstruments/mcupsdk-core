@@ -1208,6 +1208,42 @@ void Soc_enableEPWMHalt (uint32_t epwmInstance)
     /* Lock CONTROLSS_CTRL registers */
     SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
 }
+
+void Soc_disableEPWMHalt (uint32_t epwmInstance)
+{
+    uint32_t baseAddr = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_EPWM0_HALTEN + (EPWM_HALTEN_STEP*epwmInstance);
+
+    /* Unlock CONTROLSS_CTRL registers */
+    SOC_controlModuleUnlockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+
+    /* Get Core ID Info */
+    CSL_armR5GetCpuID(&virtToPhymap.cpuInfo);
+
+    uint32_t shift = 0;
+
+    if (virtToPhymap.cpuInfo.grpId == (uint32_t)CSL_ARM_R5_CLUSTER_GROUP_ID_0)
+    {
+        if(virtToPhymap.cpuInfo.cpuID == CSL_ARM_R5_CPU_ID_0) /* R5SS0-0 */
+            shift = CSL_CONTROLSS_CTRL_EPWM0_HALTEN_CR5A0_SHIFT;
+
+        else if(virtToPhymap.cpuInfo.cpuID == CSL_ARM_R5_CPU_ID_1)   /* R5SS0-1 */
+            shift = CSL_CONTROLSS_CTRL_EPWM0_HALTEN_CR5B0_SHIFT;
+    }
+    else if (virtToPhymap.cpuInfo.grpId == (uint32_t)CSL_ARM_R5_CLUSTER_GROUP_ID_1)
+    {
+        if(virtToPhymap.cpuInfo.cpuID == CSL_ARM_R5_CPU_ID_0) /* R5SS1-0 */
+            shift = CSL_CONTROLSS_CTRL_EPWM0_HALTEN_CR5A1_SHIFT;
+
+        else if(virtToPhymap.cpuInfo.cpuID == CSL_ARM_R5_CPU_ID_1)   /* R5SS1-1 */
+            shift = CSL_CONTROLSS_CTRL_EPWM0_HALTEN_CR5B1_SHIFT;
+    }
+
+    CSL_REG32_WR(baseAddr, CSL_REG32_RD(baseAddr) &  ~(CSL_CONTROLSS_CTRL_EPWM0_HALTEN_CR5A0_MASK << shift));
+
+    /* Lock CONTROLSS_CTRL registers */
+    SOC_controlModuleLockMMR(SOC_DOMAIN_ID_MAIN, CONTROLSS_CTRL_PARTITION0);
+}
+
 void SOC_generateOttoReset(uint32_t ottoInstance)
 {
     uint32_t baseAddr = CSL_CONTROLSS_CTRL_U_BASE + CSL_CONTROLSS_CTRL_OTTO0_RST + (0x4*ottoInstance);

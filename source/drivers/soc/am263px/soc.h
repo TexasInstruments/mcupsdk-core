@@ -626,6 +626,14 @@ void SOC_generateRdcReset(uint32_t rdcInstance);
 void Soc_enableEPWMHalt (uint32_t epwmInstance);
 
 /**
+ * \brief Halt EPWM with corresponding cPU
+ *
+ * \param epwmInstance [in] EPWM instance number [0 - 31]
+ */
+
+void Soc_disableEPWMHalt (uint32_t epwmInstance);
+
+/**
  * \brief Generate OTTO reset
  *
  * \param ottoInstance [in] OTTO instance number [0 - 3]

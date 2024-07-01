@@ -40,20 +40,20 @@
  *  This example configures EPWM0, EPWM1, epEPWM2 to produce signal of desired
  * frequency and duty. It also configures phase between the configured
  * modules.
- * 
+ *
  * Signal of 10kHz with duty of 0.5 is configured on ePWMxA & ePWMxB
  * with ePWMxB inverted. Also, phase of 120 degree is configured between
  * EPWM0 to EPWM2 signals.
- * 
+ *
  * During the test, monitor EPWM0, EPWM1, and/or epwEPWM2 outputs
  * on an oscilloscope.
- * 
- * On AM263x CC/ AM263Px CC with HSEC Dock, 
+ *
+ * On AM263x CC/ AM263Px CC with HSEC Dock,
  * Probe the following on the HSEC pins
  *  - EPWM 0A/0B : 49 / 51
  *  - EPWM 1A/1B : 53 / 55
  *  - EPWM 2A/2B : 50 / 52
- * 
+ *
  * On AM263x LP/ AM263Px LP,
  * Probe the following on boosterpack
  *  - EPWM 0A/0B : J4 11 / J8 59
@@ -64,7 +64,7 @@
 #define SYSCLK_FREQ (200*1000*1000U) // 200 MHz
 
 EPWM_SignalParams pwmSignal ={
-        10000,                          // Desired Signal Frequency(in Hz) 
+        10000,                          // Desired Signal Frequency(in Hz)
         0.5f,                           // Desired ePWMxA Signal Duty
         0.5f,                           // Desired ePWMxB Signal Duty
         true,                           // Invert ePWMxB Signal if true
@@ -78,6 +78,9 @@ uint32_t gEpwm0Base = CONFIG_EPWM0_BASE_ADDR;
 uint32_t gEpwm1Base = CONFIG_EPWM1_BASE_ADDR;
 uint32_t gEpwm2Base = CONFIG_EPWM2_BASE_ADDR;
 
+extern uint32_t epwmTbClkSyncEnableMask;
+extern uint32_t epwmTbClkSyncDisableMask;
+
 void configurePhase(uint32_t base, uint32_t mainBase, uint16_t phaseVal);
 
 void epwm_configure_signal_main(void *args)
@@ -86,27 +89,27 @@ void epwm_configure_signal_main(void *args)
     Drivers_open();
     Board_driversOpen();
 
-    uint32_t epwmsMask = (1U << 0U) | (1U << 1U) | (1U << 2U);
+    // uint32_t epwmsMask = (1U << 0U) | (1U << 1U) | (1U << 2U);
     /* Check the syscfg for configurations */
-    
-    /* Note that the Sync Mechanism is added for the waveform viewability. 
-    it is not a pre-requisite for the Chopper functionality.*/    
-    
+
+    /* Note that the Sync Mechanism is added for the waveform viewability.
+    it is not a pre-requisite for the Chopper functionality.*/
+
     DebugP_log("EPWM Configure Signal Test Started ...\r\n");
     DebugP_log("EPWM Configure Signal Example runs for 5 Secs \r\n");
 
     /* Disabling tbclk sync for EPWMs 0-2 for configurations */
-    SOC_setMultipleEpwmTbClk(epwmsMask, FALSE);
+    SOC_setMultipleEpwmTbClk(epwmTbClkSyncEnableMask, FALSE);
 
-    /* Note that syscfg has these modules added for pinmux and 
+    /* Note that syscfg has these modules added for pinmux and
     other SOC Configurations but not for the EPWM signal configurations */
 
     /* Configuring the EPWM signals as per EPWM_SignalParams */
     EPWM_configureSignal(gEpwm0Base, &pwmSignal);
     EPWM_configureSignal(gEpwm1Base, &pwmSignal);
     EPWM_configureSignal(gEpwm2Base, &pwmSignal);
-    
-    /* Disabling the Phase shift for the EPWM 0. 
+
+    /* Disabling the Phase shift for the EPWM 0.
     and setting it as main PWM to sync others */
     EPWM_disablePhaseShiftLoad(gEpwm0Base);
     EPWM_setPhaseShift(gEpwm0Base, 0U);
@@ -124,7 +127,7 @@ void epwm_configure_signal_main(void *args)
     EPWM_enablePhaseShiftLoad(gEpwm2Base);
 
     /* Enabling tbclk sync for EPWMs 0-2 after configurations */
-    SOC_setMultipleEpwmTbClk(epwmsMask, TRUE);
+    SOC_setMultipleEpwmTbClk(epwmTbClkSyncEnableMask, TRUE);
 
     ClockP_sleep(5);
 
@@ -144,10 +147,10 @@ void configurePhase(uint32_t base, uint32_t mainBase, uint16_t phaseVal)
     /* Read Period value to calculate value for Phase Register */
     readPrdVal = EPWM_getTimeBasePeriod(mainBase);
 
-    /* 
-    Phase calculation for the UP_DOWN_COUNT Mode. 
-    this can differ based on the counter mode set by user 
-    E.g. for Counter modes up or down, 
+    /*
+    Phase calculation for the UP_DOWN_COUNT Mode.
+    this can differ based on the counter mode set by user
+    E.g. for Counter modes up or down,
         phaseRegVal = (readPrdVal * phaseVal) / 360U;
     */
     phaseRegVal = (2U * readPrdVal * phaseVal) / 360U;
