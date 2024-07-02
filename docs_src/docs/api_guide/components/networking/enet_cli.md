@@ -40,6 +40,10 @@ The Enet CLI library provides a command line interpreter for networking applicat
  
 For details on the APIs, refer to \ref ENET_CLI_API.
 
+## Demo and Examples
+
+\ref EXAMPLES_ENET_CLI_APP
+
 ## Usage Guide
 
 - To use the built-in commands, the enet_cli library uses certain data (like enet handle, core ID, and so on) that needs to be initialized first using `EnetCli_init()`.
