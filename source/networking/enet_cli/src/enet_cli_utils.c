@@ -128,7 +128,7 @@ static bool EnetCli_utilsHelp(char *writeBuffer, size_t writeBufferLen,
     EnetAppUtils_print(
             "\t\t\t\t\t\t\tIf number of words is not specified, prints one word.\r\n");
     EnetAppUtils_print(
-            "\tutils writemem <start_addr> [<word1> ...]\tWrites data to memory address.\r\n");
+            "\tutils writemem <start_addr> <word1> ...\tWrites data to memory address.\r\n");
     EnetAppUtils_print("\tutils help\t\t\t\t\tPrints this message.\r\n");
     return false;
 }

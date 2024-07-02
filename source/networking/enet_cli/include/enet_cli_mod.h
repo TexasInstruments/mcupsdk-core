@@ -60,6 +60,15 @@ typedef enum EnetCLi_RemapType_e
     ENET_CLI_REMAP_EGRESS = 1
 }EnetCli_RemapType;
 
+typedef struct EnetCli_Obj_s
+{
+    Enet_Type enetType;
+    uint32_t instId;
+    Enet_Handle hEnet;
+    uint8_t numMacPorts;
+    uint32_t coreId;
+} EnetCli_Obj;
+
 /* ========================================================================== */
 /*                         Structures and Enums                               */
 /* ========================================================================== */
@@ -86,7 +95,7 @@ bool EnetCli_utilsCommandHandler(char *writeBuffer, size_t writeBufferLen,
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-/* None */
+extern EnetCli_Obj EnetCli_inst;
 
 #ifdef __cplusplus
 }

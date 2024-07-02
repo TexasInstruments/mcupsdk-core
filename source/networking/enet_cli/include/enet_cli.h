@@ -33,7 +33,14 @@
 /*!
  * \file  enet_cli.h
  *
- * \brief Header file for enet_cli library.
+ * \brief This file contains the APIs of enet_cli lib.
+ */
+
+/*!
+ * \ingroup  NETWORKING_MODULE
+ * \defgroup ENET_CLI_API Enet CLI API
+ *
+ * @{
  */
 
 #ifndef _ENET_CLI_H_
@@ -53,7 +60,7 @@
 #include <enet.h>
 #include <enet_apputils.h>
 
-#include "enet_cli_main.h"
+#include "enet_cli_port.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -70,26 +77,55 @@ extern "C"
 /*                         Structures and Enums                               */
 /* ========================================================================== */
 
-typedef struct EnetCli_Obj_s
-{
-    Enet_Type enetType;
-    uint32_t instId;
-    Enet_Handle hEnet;
-    uint8_t numMacPorts;
-    uint32_t coreId;
-} EnetCli_Obj;
+/* None */
 
 /* ========================================================================== */
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
+/*!
+ * \brief Initialize variables necessary for CLI.
+ *
+ * Gets necessary data like enet handle, core ID and number of MAC
+ * ports that are required by the built-in commands.
+ *
+ * \param enetType  Enet peripheral type
+ * \param instId    Enet peripheral instance ID
+ */
 void EnetCli_init(Enet_Type enetType, uint32_t instId);
 
+/*!
+ * \brief Registers all built-in commands to command interpreter.
+ *
+ * Use this to enable built-in commands in the application. Should be
+ * called only after calling EnetCli_init().
+ */
 void EnetCli_registerBuiltInCommands();
 
+/*!
+ * \brief Processes the command and runs the associated function.
+ *
+ * Processes the command and executes the function that is associated to the
+ * command.
+ *
+ * \param pCommandInput     The command to be processed
+ * \param pWriteBuffer      Buffer to store output after command is executed
+ * \param writeBufferLen    Length of the output buffer
+ *
+ * \return true if more data needs to be returned. Otherwise false.
+ */
 bool EnetCli_processCommand(const char *pCommandInput, char *pWriteBuffer,
         size_t writeBufferLen);
 
+/*!
+ * \brief Extracts a specific parameter from the command.
+ *
+ * \param pCommandString    The command from which the parameter needs to be extracted
+ * \param wantedParam       The parameter index that needs to be extracted
+ * \param paramLen          The length of the extracted parameter
+ *
+ * \return A pointer to the first character of the extracted parameter string.
+ */
 const char* EnetCli_getParameter(const char *pCommandString,
         uint32_t wantedParam, uint32_t *paramLen);
 
@@ -97,10 +133,12 @@ const char* EnetCli_getParameter(const char *pCommandString,
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-EnetCli_Obj EnetCli_inst;
+/* None */
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* _ENET_CLI_H_ */
+
+/*! @} */

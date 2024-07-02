@@ -31,9 +31,16 @@
  */
 
 /*!
- * \file  enet_cli_main.h
+ * \file  enet_cli_port.h
  *
- * \brief Header file for FreeRTOS+CLI porting layer for enet_cli lib.
+ * \brief Porting layer of enet_cli lib for FreeRTOS+CLI command interpreter.
+ */
+
+/*!
+ * \ingroup  ENET_CLI_API
+ * \defgroup FREERTOS_PLUS_CLI FreeRTOS Plus CLI Porting Layer
+ *
+ * @{
  */
 
 #ifndef _ENET_CLI_MAIN_H_
@@ -67,6 +74,15 @@ extern "C"
 /*                          Function Declarations                             */
 /* ========================================================================== */
 
+/*!
+ * \brief Register custom commands to command interpreter.
+ *
+ * Use this function to register user defined commands when using FreeRTOS
+ * Plus CLI command interpreter.
+ *
+ * \param commandList       Array of commands which needs to be registered
+ * \param numOfCommands     Number of commands that needs to be registered
+ */
 void EnetCli_registerCustomCommands(CLI_Command_Definition_t *commandList,
         uint32_t numOfCommands);
 
@@ -81,3 +97,5 @@ void EnetCli_registerCustomCommands(CLI_Command_Definition_t *commandList,
 #endif
 
 #endif /* _ENET_CLI_MAIN_H_ */
+
+/*! @} */

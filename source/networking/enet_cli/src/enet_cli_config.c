@@ -133,9 +133,9 @@ static bool EnetCli_configHelp(char *writeBuffer, size_t writeBufferLen,
     EnetAppUtils_print(
             "Commands to modify ethernet configurations.\r\nUsage:\r\n");
     EnetAppUtils_print(
-            "\tenet_cfg mqprio <port_num> {-i|-e}\tModifies priority remap data.\r\n");
+            "\tenet_cfg mqprio <port_num> [{-i|-e}\tModifies priority remap data.\r\n");
     EnetAppUtils_print(
-            "\t\t   <map0> ... <map7>\t\tUse -i tag to set VLAN priority regeneration map.\r\n");
+            "\t\t   <map0> ... <map7>]\t\tUse -i tag to set VLAN priority regeneration map.\r\n");
     EnetAppUtils_print(
             "\t\t\t\t\t\tUse -e tag to set QoS egress priority map.\r\n");
     EnetAppUtils_print(

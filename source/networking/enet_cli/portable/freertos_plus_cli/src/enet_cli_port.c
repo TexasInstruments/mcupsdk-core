@@ -31,7 +31,7 @@
  */
 
 /*!
- * \file  enet_cli_main.c
+ * \file  enet_cli_port.c
  *
  * \brief This file contains the function definitions of FreeRTOS+CLI
  *        porting layer for enet_cli lib.
@@ -41,7 +41,7 @@
 /*                             Include Files                                  */
 /* ========================================================================== */
 
-#include "enet_cli_main.h"
+#include "enet_cli_port.h"
 #include "enet_cli_mod.h"
 
 /* ========================================================================== */
@@ -131,12 +131,13 @@ void EnetCli_registerBuiltInCommands()
 }
 
 /* Function to register custom commands */
-void EnetCli_registerCustomCommands(CLI_Command_Definition_t *commandList, uint32_t numOfCommands)
+void EnetCli_registerCustomCommands(CLI_Command_Definition_t *commandList,
+        uint32_t numOfCommands)
 {
     BaseType_t status;
-    for(uint32_t commandIdx = 0; commandIdx < numOfCommands; commandIdx ++)
+    for (uint32_t commandIdx = 0; commandIdx < numOfCommands; commandIdx++)
     {
-        status = FreeRTOS_CLIRegisterCommand(commandList+commandIdx);
+        status = FreeRTOS_CLIRegisterCommand(commandList + commandIdx);
         EnetAppUtils_assert(status == pdPASS);
     }
 }
@@ -151,9 +152,11 @@ bool EnetCli_processCommand(const char *pCommandInput, char *pWriteBuffer,
     return EnetCli_baseTypeToBool(moreDataToFollow);
 }
 
-const char* EnetCli_getParameter(const char *pCommandString, uint32_t wantedParam, uint32_t *paramLen)
+const char* EnetCli_getParameter(const char *pCommandString,
+        uint32_t wantedParam, uint32_t *paramLen)
 {
-    return FreeRTOS_CLIGetParameter(pCommandString, wantedParam, (BaseType_t *)paramLen);
+    return FreeRTOS_CLIGetParameter(pCommandString, wantedParam,
+            (BaseType_t*) paramLen);
 }
 
 /* ========================================================================== */

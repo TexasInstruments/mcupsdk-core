@@ -7,7 +7,7 @@ const files = {
         "enet_cli_utils.c",
         "enet_cli_debug.c",
         "enet_cli_config.c",
-        "enet_cli_main.c",
+        "enet_cli_port.c",
         "enet_cli.c",
     ],
 };

@@ -192,3 +192,8 @@ This page lists all the examples related to Ethernet Communication.
 ### ICSS-EMAC Example using LwIP Stack
 -# \subpage EXAMPLES_ICSS_EMAC_LWIP
 \endcond
+
+\cond SOC_AM243X
+### CLI Example on FreeRTOS
+-# \subpage EXAMPLES_ENET_CLI_APP
+\endcond
