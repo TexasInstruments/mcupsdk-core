@@ -54,17 +54,17 @@ extern MpuP_RegionConfig gMpuRegionConfig[];
 
 static uint32_t MPU_SECTION MpuP_getAttrsAndSize(MpuP_RegionAttrs *region, uint32_t size)
 {
-    uint32_t regionAttrs = 
-          ((uint32_t)(region->isExecuteNever & (uint32_t)0x1) << 28) 
+    uint32_t regionAttrs =
+          ((uint32_t)(region->isExecuteNever & (uint32_t)0x1) << 28)
         | ((uint32_t)(region->accessPerm     & (uint32_t)0x7) << 24)
-        | ((uint32_t)(region->tex            & (uint32_t)0x7) << 19) 
-        | ((uint32_t)(region->isSharable     & (uint32_t)0x1) << 18) 
-        | ((uint32_t)(region->isCacheable    & (uint32_t)0x1) << 17) 
+        | ((uint32_t)(region->tex            & (uint32_t)0x7) << 19)
+        | ((uint32_t)(region->isSharable     & (uint32_t)0x1) << 18)
+        | ((uint32_t)(region->isCacheable    & (uint32_t)0x1) << 17)
         | ((uint32_t)(region->isBufferable   & (uint32_t)0x1) << 16)
         | ((uint32_t)(region->subregionDisableMask & (uint32_t)0xFF) << 8)
         | ((uint32_t)(size & (uint32_t)0x1F)                  << 1)
         | ((uint32_t)(region->isEnable       & (uint32_t)0x1) << 0)
-        ; 
+        ;
 
     return regionAttrs;
 }
@@ -128,14 +128,14 @@ void MPU_SECTION MpuP_enable(void)
 
         value = 0;
         if ((gMpuConfig.enableBackgroundRegion) != 0U) {
-            value |= (1u << 2u);  /* PRIVDEFENA, 0: Disables the default memory map, 
-                                   *             1: enable default memory map for non mapped regions 
+            value |= (1u << 2u);  /* PRIVDEFENA, 0: Disables the default memory map,
+                                   *             1: enable default memory map for non mapped regions
                                    */
         }
         value |= (1u << 1u);  /* HFNMIENA, 0: disable MPU for fault handlers, 1: enable MPU for fault handlers */
         value |= (1u << 0u);  /* 0: MPU disable, 1: MPU enable */
 
-        *MPU_CTRL = value;  
+        *MPU_CTRL = value;
 
         __asm__ __volatile__  (" dsb" "\n\t": : : "memory");
         __asm__ __volatile__  (" isb" "\n\t": : : "memory");
@@ -146,7 +146,7 @@ void MPU_SECTION MpuP_enable(void)
 
 void MPU_SECTION MpuP_disable(void)
 {
-    if((MpuP_isEnable()) == 0U)
+    if((MpuP_isEnable()) == 1U)
     {
         uintptr_t key;
 
@@ -178,9 +178,9 @@ void MPU_SECTION MpuP_init(void)
     /*
      * Initialize MPU regions
      */
-    for (i = 0; i < gMpuConfig.numRegions; i++) 
+    for (i = 0; i < gMpuConfig.numRegions; i++)
     {
-        MpuP_setRegion(i, 
+        MpuP_setRegion(i,
                 (void*)gMpuRegionConfig[i].baseAddr,
                 gMpuRegionConfig[i].size,
                 &gMpuRegionConfig[i].attrs
