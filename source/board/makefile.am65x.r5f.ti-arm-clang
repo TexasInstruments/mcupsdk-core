@@ -16,10 +16,16 @@ ConfigName:=$(PROFILE)
 LIBNAME:=board.am65x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
+    flash.c \
+    flash_nor_ospi.c \
     led.c \
     led_tpic2810.c \
+    nor_spi_sfdp.c \
 
 FILES_PATH_common = \
+    flash \
+    flash/sfdp \
+    flash/ospi \
     led \
 
 INCLUDES_common := \

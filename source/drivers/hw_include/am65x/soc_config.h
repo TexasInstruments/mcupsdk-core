@@ -52,6 +52,7 @@ extern "C"
 #define IP_VERSION_UART_V0
 
 /* Driver versions */
+#define DRV_VERSION_FLASH_V0
 #define DRV_VERSION_GPIO_V0
 #define DRV_VERSION_I2C_V0
 #define DRV_VERSION_MMCSD_V2

@@ -4,13 +4,19 @@ let device = "am65x";
 
 const files_r5f = {
     common: [
+        "flash.c",
+        "flash_nor_ospi.c",
         "led.c",
         "led_tpic2810.c",
+        "nor_spi_sfdp.c",
     ],
 };
 
 const filedirs = {
     common: [
+        "flash",
+        "flash/sfdp",
+        "flash/ospi",
         "led",
     ],
 };

@@ -39,6 +39,7 @@ extern "C"
 #endif
 
 #include <stdint.h>
+#include <stddef.h>
 #include <kernel/dpl/SystemP.h>
 #include <drivers/hw_include/soc_config.h>
 #include <board/flash/flash_config.h>
