@@ -60,6 +60,7 @@ help:
 	@echo  $(MAKE) -s -C examples/drivers/i2c/i2c_temperature/am65x-idk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_file_io/am65x-idk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/mmcsd/mmcsd_raw_io/am65x-idk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
+	@echo  $(MAKE) -s -C examples/drivers/ospi/ospi_flash_io/am65x-idk/r5fss0-0_nortos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_ep/am65x-idk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_rc/am65x-idk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
 	@echo  $(MAKE) -s -C examples/drivers/sciclient/sciclient_get_version/am65x-idk/r5fss0-0_freertos/ti-arm-clang [all clean syscfg-gui syscfg]
@@ -222,6 +223,7 @@ BUILD_COMBO_EXAMPLE_ALL += i2c_read_am65x-idk_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += i2c_temperature_am65x-idk_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mmcsd_file_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += mmcsd_raw_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang
+BUILD_COMBO_EXAMPLE_ALL += ospi_flash_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pcie_buf_transfer_ep_am65x-idk_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += pcie_buf_transfer_rc_am65x-idk_r5fss0-0_freertos_ti-arm-clang
 BUILD_COMBO_EXAMPLE_ALL += sciclient_get_version_am65x-idk_r5fss0-0_freertos_ti-arm-clang
@@ -282,6 +284,9 @@ examples-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_ALL)
 
  mmcsd_raw_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io/am65x-idk/r5fss0-0_nortos/ti-arm-clang -f makefile all
+
+ ospi_flash_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am65x-idk/r5fss0-0_nortos/ti-arm-clang -f makefile all
 
  pcie_buf_transfer_ep_am65x-idk_r5fss0-0_freertos_ti-arm-clang:
 	$(MAKE) -C examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_ep/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile all
@@ -356,6 +361,7 @@ BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_read_am65x-idk_r5fss0-0_freertos_ti-arm-cla
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += i2c_temperature_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mmcsd_file_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += mmcsd_raw_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang_clean
+BUILD_COMBO_EXAMPLE_CLEAN_ALL += ospi_flash_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pcie_buf_transfer_ep_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += pcie_buf_transfer_rc_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
 BUILD_COMBO_EXAMPLE_CLEAN_ALL += sciclient_get_version_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean
@@ -411,6 +417,9 @@ examples-private-clean: $(BUILD_COMBO_EXAMPLE_PRIVATE_CLEAN_ALL)
 
  mmcsd_raw_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io/am65x-idk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
+
+ ospi_flash_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang_clean:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am65x-idk/r5fss0-0_nortos/ti-arm-clang -f makefile clean
 
  pcie_buf_transfer_ep_am65x-idk_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_ep/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile clean
@@ -485,6 +494,7 @@ BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_read_am65x-idk_r5fss0-0_freertos_ti-arm-cla
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += i2c_temperature_am65x-idk_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mmcsd_file_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += mmcsd_raw_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang_scrub
+BUILD_COMBO_EXAMPLE_SCRUB_ALL += ospi_flash_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pcie_buf_transfer_ep_am65x-idk_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += pcie_buf_transfer_rc_am65x-idk_r5fss0-0_freertos_ti-arm-clang_scrub
 BUILD_COMBO_EXAMPLE_SCRUB_ALL += sciclient_get_version_am65x-idk_r5fss0-0_freertos_ti-arm-clang_scrub
@@ -540,6 +550,9 @@ examples-scrub-private: $(BUILD_COMBO_EXAMPLE_PRIVATE_SCRUB_ALL)
 
  mmcsd_raw_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/mmcsd/mmcsd_raw_io/am65x-idk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
+
+ ospi_flash_io_am65x-idk_r5fss0-0_nortos_ti-arm-clang_scrub:
+	$(MAKE) -C examples/drivers/ospi/ospi_flash_io/am65x-idk/r5fss0-0_nortos/ti-arm-clang -f makefile scrub
 
  pcie_buf_transfer_ep_am65x-idk_r5fss0-0_freertos_ti-arm-clang_scrub:
 	$(MAKE) -C examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_ep/am65x-idk/r5fss0-0_freertos/ti-arm-clang -f makefile scrub
