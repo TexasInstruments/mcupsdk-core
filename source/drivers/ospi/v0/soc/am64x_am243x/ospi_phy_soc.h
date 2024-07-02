@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2024 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,49 +30,43 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef OSPI_UDMA_H_
-#define OSPI_UDMA_H_
+/**
+ *  \file v0/soc/ospi_phy_soc.h
+ *
+ *  \brief OSPI Driver PHY AM64X API/interface file.
+ */
 
-#include <stdint.h>
+#ifndef OSPI_PHY_SOC_H_
+#define OSPI_PHY_SOC_H_
+
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-#define OSPI_DMA_UDMA_MAX_L0_XFER_SIZE (65536U)
-#define OSPI_DMA_UDMA_XFER_SIZE        (64512U)
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
 
-typedef struct OspiDma_UdmaArgs_s
-{
-    void            *drvHandle;
-    /**< UDMA driver handle */
-    void            *chHandle;
-    /**< UDMA channel handle */
-    void            *trpdMem;
-    /**< UDMA TR PD memory pointers */
-    uint32_t        trpdMemSize;
-    /**< Size of TR PD memory */
-    void            *ringMem;
-    /**< UDMA Ring memory pointers */
-    uint32_t        ringMemSize;
-    /**< Size of Ring Memory */
-    uint32_t        ringElemCount;
-    /**< Ring Element Count */
-    void            *cqMem;
-    /**< UDMA Cq memory pointers */
-    uint32_t        cqMemSize;
-    /**< Size of Cq memory */
-    uint32_t        isCqRingMem;
-    /**< UDMA completion queue ring memory is enabled or disabled */
-    /**< This is only used for AM65x */
+#define OSPI_PHY_INIT_RD_DELAY_SOC (0U)
 
-} OspiDma_UdmaArgs;
+/* ========================================================================== */
+/*                         Structure Declarations                             */
+/* ========================================================================== */
 
-extern OSPI_DmaFxns gOspiDmaUdmaFxns;
+/* ========================================================================== */
+/*                  Internal/Private Structure Declarations                   */
+/* ========================================================================== */
+
+/* ========================================================================== */
+/*                       Function Declarations                                */
+/* ========================================================================== */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* OSPI_UDMA_H_ */
+#endif /* #ifndef OSPI_PHY_SOC_H_ */

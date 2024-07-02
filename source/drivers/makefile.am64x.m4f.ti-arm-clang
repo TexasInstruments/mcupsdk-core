@@ -112,7 +112,9 @@ FILES_PATH_common = \
     ospi \
     ospi/v0 \
     ospi/v0/dma \
+    ospi/v0/dma/soc/am64x_am243x \
     ospi/v0/dma/udma \
+    ospi/v0/soc/am64x_am243x \
     pcie \
     pcie/v0 \
     pcie/v0/soc/am64x_am243x \

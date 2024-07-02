@@ -42,6 +42,11 @@ FILES_common := \
     ipc_rpmsg_vring.c \
     mmcsd_priv.c \
     mmcsd_v2.c \
+    ospi_v0.c \
+    ospi_dma.c \
+    ospi_dma_udma.c \
+    ospi_nor_flash.c \
+    ospi_phy.c \
     pinmux.c \
     pcie.c \
     pcie_v1.c \
@@ -85,16 +90,22 @@ FILES_PATH_common = \
     bootloader/soc/am65x \
     ddr/v1 \
     gpio/v0 \
+    hw_include/ringacc/V0/priv \
+    hw_include/serdes_sb/V1 \
     i2c/v0 \
     i2c/v0/lld \
     ipc_notify/v0 \
     ipc_notify/v0/soc/ \
     ipc_notify/v0/soc/am65x \
     ipc_rpmsg/ \
-    hw_include/ringacc/V0/priv \
-    hw_include/serdes_sb/V1 \
     mmcsd \
     mmcsd/v2 \
+    ospi \
+    ospi/v0 \
+    ospi/v0/dma \
+    ospi/v0/dma/soc/am65x \
+    ospi/v0/dma/udma \
+    ospi/v0/soc/am65x \
     pcie \
     pcie/v1 \
     pcie/v1/soc/am65x \

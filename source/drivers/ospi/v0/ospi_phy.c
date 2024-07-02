@@ -34,8 +34,9 @@
 #include <drivers/ospi.h>
 #include <drivers/ospi/v0/cslr_ospi.h>
 #include <drivers/hw_include/cslr.h>
+#include <drivers/ospi/v0/soc/ospi_phy_soc.h>
 
-#define OSPI_PHY_INIT_RD_DELAY (0U)
+#define OSPI_PHY_INIT_RD_DELAY (OSPI_PHY_INIT_RD_DELAY_SOC)
 #define OSPI_PHY_MAX_RD_DELAY  (4U)
 
 typedef struct

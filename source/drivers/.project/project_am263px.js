@@ -113,6 +113,7 @@ const filedirs = {
 		"ospi/v0",
 		"ospi/v0/dma",
 		"ospi/v0/dma/edma",
+		"ospi/v0/soc/am263px",
 		"pmu",
 		"pmu/r5f",
 		"resolver/v0",

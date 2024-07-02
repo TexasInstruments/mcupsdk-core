@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,6 +32,7 @@
 
 #include <drivers/ospi/v0/dma/ospi_dma.h>
 #include <drivers/ospi/v0/dma/udma/ospi_dma_udma.h>
+#include <drivers/ospi/v0/dma/soc/ospi_dma_soc.h>
 #include <drivers/udma.h>
 #include <kernel/dpl/CacheP.h>
 
@@ -73,6 +74,11 @@ static int32_t OspiDma_udmaOpen(void* ospiDmaArgs)
     chPrms.fqRingPrms.ringMemSize   = udmaArgs->ringMemSize;
     chPrms.fqRingPrms.elemCnt       = udmaArgs->ringElemCount;
 
+    if(udmaArgs->isCqRingMem == UDMA_COMP_QUEUE_RING_MEM_ENABLE){
+        chPrms.cqRingPrms.ringMem       = udmaArgs->cqMem;
+        chPrms.cqRingPrms.ringMemSize   = udmaArgs->ringMemSize;
+        chPrms.cqRingPrms.elemCnt       = udmaArgs->ringElemCount;
+    }
     /* Open channel for block copy */
     udmaStatus = Udma_chOpen(drvHandle, chHandle, chType, &chPrms);
     DebugP_assert(UDMA_SOK == udmaStatus);
