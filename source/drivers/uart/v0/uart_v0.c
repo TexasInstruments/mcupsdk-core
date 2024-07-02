@@ -588,6 +588,7 @@ int32_t UART_write(UART_Handle handle, UART_Transaction *trans)
                         trans->status = UART_TRANSFER_TIMEOUT;
                         /* Cancel the DMA without posting the semaphore */
                         (void)UART_writeCancelNoCB(uartLld_handle);
+                        uartLld_handle->writeTrans.buf = NULL;
                         status = SystemP_FAILURE;
                     }
                 }
@@ -695,6 +696,7 @@ int32_t UART_read(UART_Handle handle, UART_Transaction *trans)
                         trans->status = UART_TRANSFER_TIMEOUT;
                         /* Cancel the DMA without posting the semaphore */
                         (void)UART_readCancelNoCB(uartLld_handle);
+                        uartLld_handle->readTrans.buf = NULL;
                         status = SystemP_FAILURE;
                     }
                 }
