@@ -1,4 +1,0 @@
-%%{
-    let module = system.modules['/drivers/gtc/gtc'];
-%%}
-	GTC_init();

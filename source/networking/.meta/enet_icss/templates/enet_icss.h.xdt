@@ -1,5 +1,0 @@
-%%{
-    let module = system.modules[args[0]];
-%%}
-
-/* ENET MACROS */

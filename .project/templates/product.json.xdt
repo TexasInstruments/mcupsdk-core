@@ -18,7 +18,7 @@
     "version": "07.03.01",
     "documentationPath": "../docs",
     "includePaths": [
-        "../source",
+        "../source/sysconfig",
     ],
     "components": [
 % if((args.device == "am64x") || (args.device == "am243x")) {

@@ -1,6 +1,0 @@
-%%{
-    let common = system.getScript("/common");
-    let soc = `${common.getSocName()}`
-%%}
-#include <drivers/soc/`soc`/soc_xbar.h>
-void Drivers_mdlXbarOpen(void);

@@ -1,3 +1,0 @@
-#include <drivers/ecap.h>
-
-void Drivers_ecapOpen(void);

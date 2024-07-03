@@ -1,2 +1,0 @@
-    /* initialize interrupt profiling */
-    ProfileP_init();

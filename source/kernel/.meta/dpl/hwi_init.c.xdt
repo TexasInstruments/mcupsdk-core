@@ -1,2 +1,0 @@
-    /* initialize Hwi but keep interrupts disabled */
-    HwiP_init();

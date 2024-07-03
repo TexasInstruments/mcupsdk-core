@@ -1,4 +1,0 @@
-#include <drivers/sdfm.h>
-#define SDFM_HTLZ_ENABLE  0x8000 //High Threshold (Z) enabled
-#define SDFM_HTLZ_DISABLE 0x0000 //High Threshold (Z) disabled
-void Drivers_sdfmOpen(void);

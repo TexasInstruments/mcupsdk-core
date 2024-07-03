@@ -1,3 +1,0 @@
-#include <drivers/eqep.h>
-
-void Drivers_eqepOpen(void);

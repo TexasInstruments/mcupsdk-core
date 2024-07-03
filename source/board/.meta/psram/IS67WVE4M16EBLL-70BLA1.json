@@ -1,7 +1,0 @@
-{
-    "psramSize": 8388608,
-    "manufacturer": "ISSI",
-    "type": "PSRAM",
-    "accessTime": "70 ns",
-    "interfaceType": "parallel",
-}

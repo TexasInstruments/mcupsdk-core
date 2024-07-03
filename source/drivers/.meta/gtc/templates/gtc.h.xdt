@@ -1,7 +1,0 @@
-%%{
-    let module = system.modules['/drivers/ddr/ddr'];
-%%}
-/*
- * GTC
- */
-#include <drivers/gtc.h>

@@ -1,4 +1,0 @@
-%%{
-    let module = system.modules['/drivers/ddr/ddr'];
-%%}
-	DDR_init(&gDdrParams);

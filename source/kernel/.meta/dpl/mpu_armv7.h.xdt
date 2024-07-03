@@ -1,7 +1,0 @@
-%%{
-    let module = system.modules['/kernel/dpl/mpu_armv7'];
-%%}
-% if (module.isCacheAvailable()) {
-#include <kernel/dpl/CacheP.h>
-% }
-#include <kernel/dpl/MpuP_armv7.h>

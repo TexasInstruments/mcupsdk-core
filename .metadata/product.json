@@ -4,7 +4,7 @@
     "version": "07.03.01",
     "documentationPath": "../docs",
     "includePaths": [
-        "../source",
+        "../source/sysconfig",
     ],
     "components": [
         "/kernel/dpl",

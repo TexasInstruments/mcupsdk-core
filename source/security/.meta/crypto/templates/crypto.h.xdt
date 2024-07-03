@@ -1,8 +1,0 @@
-%%{
-    let common = system.getScript("/common");
-    let module = system.modules['/security/crypto/crypto'];
-%%}
-/*
- * Crypto
- */
-#include <security/crypto.h>

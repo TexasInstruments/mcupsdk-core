@@ -1,3 +1,0 @@
-%%{
-    let module = system.modules['/xbar/mdl_xbar/mdl_xbar'];
-%%}
