@@ -27,6 +27,7 @@ const example_file_list = [
     "examples/drivers/ipc/ipc_rpmsg_echo_linux/.project/project.js",
     "examples/drivers/mmcsd/mmcsd_file_io/.project/project.js",
     "examples/drivers/mmcsd/mmcsd_raw_io/.project/project.js",
+    "examples/drivers/ospi/ospi_flash_dma/.project/project.js",
     "examples/drivers/ospi/ospi_flash_io/.project/project.js",
     "examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_ep/.project/project.js",
     "examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_rc/.project/project.js",
