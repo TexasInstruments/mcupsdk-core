@@ -159,6 +159,7 @@ static Bool UART_statusIsDataReady(UARTLLD_Handle handle);
 static uint32_t UART_fifoRead(UARTLLD_Handle handle, uint8_t *buffer, uint32_t readSizeRemaining);
 static void UART_readDataPolling(UARTLLD_Handle handle);
 static int32_t UART_readPolling(UARTLLD_Handle handle, UART_Transaction *trans);
+static int32_t UART_readPollingWithCounter(UARTLLD_Handle handle, UART_Transaction *trans);
 static void UART_i2310WA(uint32_t baseAddr);
 
 static void UART_configInstance(UARTLLD_Handle handle);
@@ -1863,6 +1864,72 @@ int32_t UART_lld_read(UARTLLD_Handle hUart, void * rxBuf, uint32_t size, uint32_
     return status;
 }
 
+int32_t UART_lld_readWithCounter(UARTLLD_Handle hUart, void * rxBuf, uint32_t size, uint32_t timeout,
+                     const UART_ExtendedParams *extendedParams)
+{
+    int32_t status = UART_TRANSFER_STATUS_SUCCESS;
+    UART_Transaction    *trans;
+
+    if(NULL_PTR != hUart)
+    {
+        trans = &hUart->readTrans;
+        /* Check if any transaction is in progress */
+        if(NULL_PTR != trans->buf)
+        {
+            trans->status = UART_TRANSFER_STATUS_ERROR_INUSE;
+            status = UART_TRANSFER_STATUS_FAILURE;
+        }
+        else
+        {
+             /* Initialize the input parameters */
+            UART_lld_Transaction_init(trans);
+            if(extendedParams != NULL)
+            {
+                trans->args   = extendedParams->args;
+            }
+            else
+            {
+                trans->args = NULL;
+            }
+
+            trans->buf = (void *) rxBuf;
+            trans->count = size;
+            trans->timeout = timeout;
+
+            if(hUart->state == UART_STATE_READY)
+            {
+                status = UART_checkTransaction(trans);
+            }
+            else
+            {
+                status = UART_TRANSFER_BUSY;
+            }
+
+            if(UART_TRANSFER_STATUS_SUCCESS == status)
+            {
+                /* Initialize transaction params */
+                hUart->readBuf             = trans->buf;
+                hUart->readTrans.timeout   = trans->timeout;
+                hUart->readCount           = 0U;
+                hUart->rxTimeoutCnt        = 0U;
+                hUart->readErrorCnt        = 0U;
+                hUart->state = UART_STATE_BUSY;
+
+                /* Polled mode */
+                status = UART_readPollingWithCounter(hUart, trans);
+                hUart->state = UART_STATE_READY;
+            }
+        }
+    }
+
+    else
+    {
+        status = UART_INVALID_PARAM;
+    }
+
+    return status;
+}
+
 int32_t UART_lld_readIntr(UARTLLD_Handle hUart, void * rxBuf, uint32_t size,
                           const UART_ExtendedParams *extendedParams)
 {
@@ -2441,6 +2508,45 @@ static int32_t UART_readPolling(UARTLLD_Handle hUart, UART_Transaction *trans)
         {
             /* timeout occured */
             timeoutElapsed = TRUE;
+        }
+    }
+
+    if ((hUart->readSizeRemaining == 0U) &&
+        (hUart->readErrorCnt == 0U) && (hUart->rxTimeoutCnt == 0U))
+    {
+        retVal             = UART_TRANSFER_STATUS_SUCCESS;
+        trans->status      = UART_TRANSFER_STATUS_SUCCESS;
+        UART_lld_Transaction_deInit(&hUart->readTrans);
+    }
+    else
+    {
+        /* Return UART_TRANSFER_TIMEOUT so that application gets whatever bytes are
+         * transmitted. Set the trans status to timeout so that
+         * application can handle the timeout. */
+        retVal             = UART_TRANSFER_TIMEOUT;
+        trans->status      = UART_TRANSFER_STATUS_TIMEOUT;
+        trans->count       = hUart->readCount;
+        UART_lld_Transaction_deInit(&hUart->readTrans);
+    }
+
+    return (retVal);
+}
+
+static int32_t UART_readPollingWithCounter(UARTLLD_Handle hUart, UART_Transaction *trans)
+{
+    int32_t             retVal  = UART_TRANSFER_STATUS_SUCCESS;
+    uint32_t            timeout = 0x6ffff;
+    hUart->readSizeRemaining = trans->count;
+
+    /* timeout operation */
+    while (( timeout > (uint32_t) 0U) && (0U != hUart->readSizeRemaining))
+    {
+        /* Transfer DATA */
+        UART_readDataPolling(hUart);
+        /* Check whether timeout happened or not */
+        if ( timeout > (uint32_t) 0U)
+        {
+            timeout--;
         }
     }
 

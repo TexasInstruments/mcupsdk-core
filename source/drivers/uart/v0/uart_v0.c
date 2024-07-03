@@ -713,7 +713,10 @@ int32_t UART_read(UART_Handle handle, UART_Transaction *trans)
         else
         {
             /* Polled mode */
-            status = UART_lld_read(uartLld_handle, trans->buf, trans->count, trans->timeout, &extendedParams);
+            if (UART_CONFIG_MODE_POLLED == prms->transferMode)
+                status = UART_lld_read(uartLld_handle, trans->buf, trans->count, trans->timeout, &extendedParams);
+            else
+                status = UART_lld_readWithCounter(uartLld_handle, trans->buf, trans->count, trans->timeout, &extendedParams);
         }
     }
 

@@ -434,6 +434,7 @@ typedef void *UART_DmaChConfig;
 #define UART_CONFIG_MODE_INTERRUPT    (0x01U)
 #define UART_CONFIG_MODE_USER_INTR    (0x02U)
 #define UART_CONFIG_MODE_DMA          (0x03U)
+#define UART_CONFIG_MODE_POLLED_WITH_COUNTER (0x04U)
 /** @} */
 
 #define UART_STATE_RX_DISABLED        (0x0U)
@@ -778,6 +779,21 @@ int32_t UART_lld_writeDma(UARTLLD_Handle hUart, void * txBuf, uint32_t size,
  *
  */
 int32_t UART_lld_read(UARTLLD_Handle hUart, void * rxBuf, uint32_t size, uint32_t timeout,
+                      const UART_ExtendedParams *extendedParams);
+
+/**
+ *  \brief  This API writes data to the UART instance in Polling mode.
+ *
+ *  \param  hUart           Handle to the UART instance used
+ *  \param  rxBuf           Pointer to read data buffer
+ *  \param  size            Data size to be transferred
+ *  \param  timeout         Write timeout value
+ *  \param  extendedParams  Structure to hold the extended parameters
+ *
+ *  \return #SystemP_SUCCESS if successful; else error on failure
+ *
+ */
+int32_t UART_lld_readWithCounter(UARTLLD_Handle hUart, void * rxBuf, uint32_t size, uint32_t timeout,
                       const UART_ExtendedParams *extendedParams);
 
 /**

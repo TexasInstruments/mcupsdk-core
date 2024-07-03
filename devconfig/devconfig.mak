@@ -1,5 +1,6 @@
 # Device type (HS/GP)
 DEVICE_TYPE?=GP
+DEVICE=am65x
 
 # Path to the signing tools, keys etc
 SIGNING_TOOL_PATH?=$(MCU_PLUS_SDK_PATH)/tools/boot/signing
@@ -23,7 +24,7 @@ else ifeq ($(DEVICE),am263px)
 	CUST_MPK=$(SIGNING_TOOL_PATH)/mcu_custMpk.pem
 	CUST_MEK=$(SIGNING_TOOL_PATH)/mcu_custMek.key
 else ifeq ($(DEVICE),am65x)
-        CUST_MPK=$(SIGNING_TOOL_PATH)/k3_dev_mpk.pem
+	CUST_MPK=$(SIGNING_TOOL_PATH)/k3_dev_mpk.pem
 else
 	CUST_MPK=$(SIGNING_TOOL_PATH)/custMpk_am64x_am243x.pem
 	CUST_MEK=$(SIGNING_TOOL_PATH)/custMek_am64x_am243x.txt
