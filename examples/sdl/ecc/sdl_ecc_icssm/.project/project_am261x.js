@@ -19,7 +19,7 @@ const filedirs = {
         "..",       /* core_os_combo base */
         "../../..", /* Example base */
         "../../../../../dpl", /* SDL DPL base */
-		"../../../../../ecc/sdl_ecc_icssm/am261x-cc",
+		"../../../../../ecc/sdl_ecc_icssm/am261x-som",
     ],
 };
 
@@ -37,7 +37,7 @@ const includes_nortos = {
 		"${MCU_PLUS_SDK_PATH}/examples/sdl/dpl/",
 		"${MCU_PLUS_SDK_PATH}/examples/sdl/ecc/",
 		"${MCU_PLUS_SDK_PATH}/examples/sdl/ecc/sdl_ecc_icssm/",
-		"${MCU_PLUS_SDK_PATH}/examples/sdl/ecc/sdl_ecc_icssm/am261x-cc/",
+		"${MCU_PLUS_SDK_PATH}/examples/sdl/ecc/sdl_ecc_icssm/am261x-som/",
     ],
 };
 
@@ -72,7 +72,7 @@ const templates_nortos_r5f =
 ];
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-cc", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
 ];
 
 function getComponentProperty() {

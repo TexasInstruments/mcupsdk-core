@@ -70,7 +70,7 @@ const templates_r5f =
 ];
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-cc", os: "freertos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "freertos"},
 ];
 
@@ -103,7 +103,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.libs = libs_r5f;
         build_property.templates = templates_r5f;
     }
-    
+
     return build_property;
 }
 

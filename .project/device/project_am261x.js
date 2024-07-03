@@ -366,13 +366,13 @@ function getExampleList() {
 function getSysCfgDevice(board) {
     switch (board) {
         case "am261x-lp":
-            return "AM261x_ZCZ";
+            return "AM261x_ZFG";
         default:
-        case "am261x-cc":
+        case "am261x-som":
             return "AM261x_ZCZ";
-        case "am261x-cc-addon-ind":
+        case "am261x-som-addon-ind":
             return "AM261x_ZCZ";
-        case "am261x-cc-addon-auto":
+        case "am261x-som-addon-auto":
             return "AM261x_ZCZ";
     }
 }
@@ -384,11 +384,11 @@ function getProjectSpecDevice(board) {
         case "am261x-lp":
             return "AM261x";
         default:
-        case "am261x-cc":
+        case "am261x-som":
             return "AM261x";
-        case "am261x-cc-addon-ind":
+        case "am261x-som-addon-ind":
             return "AM261x";
-        case "am261x-cc-addon-auto":
+        case "am261x-som-addon-auto":
             return "AM261x";
     }
 }
@@ -402,11 +402,11 @@ function getSysCfgPkg(board) {
         case "am261x-lp":
             return "ZFG";
         default:
-        case "am261x-cc":
+        case "am261x-som":
             return "ZCZ";
-        case "am261x-cc-addon-ind":
+        case "am261x-som-addon-ind":
             return "ZCZ";
-        case "am261x-cc-addon-auto":
+        case "am261x-som-addon-auto":
             return "ZCZ";
     }
 }
@@ -416,11 +416,11 @@ function getSysCfgPart(board) {
         case "am261x-lp":
             return "AM2612";
         default:
-        case "am261x-cc":
+        case "am261x-som":
             return "AM2611";
-        case "am261x-cc-addon-ind":
+        case "am261x-som-addon-ind":
             return "AM2611";
-        case "am261x-cc-addon-auto":
+        case "am261x-som-addon-auto":
             return "AM2611";
     }
 }
@@ -430,11 +430,11 @@ function getDevToolTirex(board) {
         case "am261x-lp":
             return "LP-AM263P";
         default:
-        case "am261x-cc":
+        case "am261x-som":
             return "TMDSCNCD263P";
-        case "am261x-cc-addon-ind":
+        case "am261x-som-addon-ind":
             return "TMDSCNCD263P";
-        case "am261x-cc-addon-auto":
+        case "am261x-som-addon-auto":
             return "TMDSCNCD263P";
     }
 }

@@ -27,7 +27,7 @@
 #define `instance.$name.toUpperCase()`_PHY0_ADDR (`instance.phyAddr1`U)
 #define `instance.$name.toUpperCase()`_PHY1_ADDR (`instance.phyAddr2`U)
 
-%if ((device === "am261x-cc") && (instance.DisableMacPort2 === false) && ((instance.BoardType === "am261x-cc") || (instance.BoardType === "am261x-cc-addon-ind") || (instance.BoardType === "am261x-cc-addon-auto"))){
+%if ((device === "am261x-som") && (instance.DisableMacPort2 === false) && ((instance.BoardType === "am261x-som") || (instance.BoardType === "am261x-som-addon-ind") || (instance.BoardType === "am261x-som-addon-auto"))){
 #include <ti_drivers_config.h>
 #include <drivers/i2c.h>
 #include <board/ioexp/ioexp_tca6424.h>
@@ -38,9 +38,9 @@ static void EnetBoard_setMacPort2IOExpanderCfg(void);
 
 /* PHY drivers */
 extern EnetPhy_Drv gEnetPhyDrvGeneric;
-%if ((device === "am261x-cc") && (instance.BoardType === "am261x-cc-addon-auto")) {
+%if ((device === "am261x-som") && (instance.BoardType === "am261x-som-addon-auto")) {
 extern EnetPhy_Drv gEnetPhyDrvDp83tg720;
-%}else if ((device === "am261x-cc") && (instance.BoardType === "am261x-cc-addon-ind")) {
+%}else if ((device === "am261x-som") && (instance.BoardType === "am261x-som-addon-ind")) {
 extern EnetPhy_Drv gEnetPhyDrvDp83867;
 %}else {
 extern EnetPhy_Drv gEnetPhyDrvDp83869;
@@ -49,9 +49,9 @@ extern EnetPhy_Drv gEnetPhyDrvDp83869;
 /*! \brief All the registered PHY specific drivers. */
 static const EnetPhyDrv_Handle gEnetPhyDrvs[] =
 {
-%if ((device === "am261x-cc") && (instance.BoardType === "am261x-cc-addon-auto")) {
+%if ((device === "am261x-som") && (instance.BoardType === "am261x-som-addon-auto")) {
     &gEnetPhyDrvDp83tg720, /* DP83TG720 */
-%}else if ((device === "am261x-cc") && (instance.BoardType === "am261x-cc-addon-ind")) {
+%}else if ((device === "am261x-som") && (instance.BoardType === "am261x-som-addon-ind")) {
     &gEnetPhyDrvDp83867,   /* DP83867 */
 %}else {
     &gEnetPhyDrvDp83869,   /* DP83869 */
@@ -120,7 +120,7 @@ static void EnetBoard_enableExternalMux();
 /*                            Global Variables                                */
 /* ========================================================================== */
 
-% if (instance.BoardType === "am261x-cc-addon-auto") {
+% if (instance.BoardType === "am261x-som-addon-auto") {
 /*!
  * \brief Common Processor Board (CPB) board's DP83TG720 PHY configuration.
  */
@@ -128,7 +128,7 @@ static const Dp83tg720_Cfg gEnetCpbBoard_phyCfg =
 {
 
 };
-%}else if ((instance.BoardType === "am261x-cc") || (instance.BoardType === "am261x-lp")) {
+%}else if ((instance.BoardType === "am261x-som") || (instance.BoardType === "am261x-lp")) {
 /*!
  * \brief Common Processor Board (CPB) board's DP83869 PHY configuration.
  */
@@ -366,7 +366,7 @@ int32_t EnetBoard_setupPorts(EnetBoard_EthPort *ethPorts,
 % } else {
             CSL_FINS( mssCtrlRegs->CPSW_CONTROL,MSS_CTRL_CPSW_CONTROL_PORT2_MODE_SEL, MSS_CPSW_CONTROL_PORT_MODE_RMII);
 %}
-%if ((device === "am261x-cc") && (instance.DisableMacPort2 === false) && ((instance.BoardType === "am261x-cc") || (instance.BoardType === "am261x-cc-addon-ind") || (instance.BoardType === "am261x-cc-addon-auto"))){
+%if ((device === "am261x-som") && (instance.DisableMacPort2 === false) && ((instance.BoardType === "am261x-som") || (instance.BoardType === "am261x-som-addon-ind") || (instance.BoardType === "am261x-som-addon-auto"))){
             EnetBoard_setMacPort2IOExpanderCfg();
 %}
             break;
@@ -378,7 +378,7 @@ int32_t EnetBoard_setupPorts(EnetBoard_EthPort *ethPorts,
     return ENET_SOK;
 }
 
-%if ((device === "am261x-cc") && (instance.DisableMacPort2 === false) && ((instance.BoardType === "am261x-cc") || (instance.BoardType === "am261x-cc-addon-ind") || (instance.BoardType === "am261x-cc-addon-auto"))){
+%if ((device === "am261x-som") && (instance.DisableMacPort2 === false) && ((instance.BoardType === "am261x-som") || (instance.BoardType === "am261x-som-addon-ind") || (instance.BoardType === "am261x-som-addon-auto"))){
 static void EnetBoard_setMacPort2IOExpanderCfg(void)
 {
     EEPROM_Handle  eepromHandle = gEepromHandle[CONFIG_EEPROM0];
@@ -517,7 +517,7 @@ static void EnetBoard_setMacPort2IOExpanderCfg(void)
             }
             if (status == SystemP_SUCCESS)
             {
-%if (instance.BoardType === "am261x-cc") {
+%if (instance.BoardType === "am261x-som") {
                 status =  TCA6424_setOutput(&gTCA6424_Config, rgmii2MuxSelLine, TCA6424_OUT_STATE_LOW);
 %}else {
                 status =  TCA6424_setOutput(&gTCA6424_Config, rgmii2MuxSelLine, TCA6424_OUT_STATE_HIGH);

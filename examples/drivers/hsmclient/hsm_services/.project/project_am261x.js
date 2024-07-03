@@ -91,7 +91,7 @@ const templates_freertos_r5f =
 const readmeDoxygenPageTag = "EXAMPLES_HSM_SERVICES";
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-cc", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
 ];
 
 function getComponentProperty() {

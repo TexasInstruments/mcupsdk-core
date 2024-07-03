@@ -81,8 +81,10 @@ function getDeviceName() {
         return "am263x-cc";
     if(system.deviceData.device == "AM263Px")
         return "am263px-cc";
-    if(system.deviceData.device == "AM261x")
-        return "am261x-cc";
+    if(system.deviceData.device == "AM261x_ZCZ")
+        return "am261x-som";
+    if(system.deviceData.device == "AM261x_ZFG")
+        return "am261x-lp";
     if(system.deviceData.device == "AM273x")
         return "am273x-evm";
     if(system.deviceData.device == "AWR294X")

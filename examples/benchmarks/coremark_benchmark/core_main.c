@@ -75,6 +75,9 @@ Original Author: Shay Gal-on
 #if defined SOC_AM263PX
 #include <drivers/soc/am263px/soc.h>
 #endif
+#if defined SOC_AM261X
+#include <drivers/soc/am261x/soc.h>
+#endif
 #if defined SOC_AM243X || defined SOC_AM64X
 #include <drivers/soc/am64x_am243x/soc.h>
 #endif

@@ -2,11 +2,11 @@ let path = require('path');
 
 const device = "am261x";
 
-const TAG_CC_BOARD  = "am261x-cc";
+const TAG_CC_BOARD  = "am261x-som";
 const TAG_LP_BOARD  = "am261x-lp";
 
 const files = {
-    "am261x-cc":
+    "am261x-som":
     {
         common:
         [
@@ -25,7 +25,7 @@ const files = {
     }
 }
 const projectSpecFiles = {
-    "am261x-cc":
+    "am261x-som":
     {
         common:
         [
@@ -81,7 +81,7 @@ const syscfgfile = "../example.syscfg"
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_OSPI_FLASH_IO";
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-cc", os: "nortos"},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos"},
 ];
 

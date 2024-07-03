@@ -61,7 +61,7 @@ INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include/c \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
-	-I${MCU_PLUS_SDK_PATH}/test/drivers/gpio/am261x-cc \
+	-I${MCU_PLUS_SDK_PATH}/test/drivers/gpio/am261x-som \
 	-Igenerated \
 
 DEFINES_common := \
@@ -238,7 +238,7 @@ syscfg: ../example.syscfg
 endif
 
 syscfg-gui:
-	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZCZ --context r5fss0-0 --part AM2612 --package ZFG --output generated/  ../example.syscfg
+	$(SYSCFG_NWJS) $(SYSCFG_PATH) --product $(SYSCFG_SDKPRODUCT) --device AM261x_ZFG --context r5fss0-0 --part AM2612 --package ZFG --output generated/  ../example.syscfg
 
 #
 # Generation of boot image which can be loaded by Secondary Boot Loader (SBL)

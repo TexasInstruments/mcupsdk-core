@@ -65,7 +65,7 @@ const templates_nortos_r5f =
 
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-cc", os: "nortos",isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos",isPartOfSystemProject: true},
 
 ];
 
@@ -75,9 +75,9 @@ const systemProjects = [
         tag: "nortos_nortos",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
-        board: "am261x-cc",
+        board: "am261x-som",
         projects: [
-            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-cc", os: "nortos"},
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"},
 
         ],
     }

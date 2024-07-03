@@ -104,8 +104,8 @@ const templates_freertos_r5f =
 ];
 
 const buildOptionCombos = [
-    { device: "am263px", cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-cc", os: "freertos", isPartOfSystemProject: true},
-    { device: "am263px", cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-cc", os: "nortos", isPartOfSystemProject: true},
+    { device: "am263px", cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos", isPartOfSystemProject: true},
+    { device: "am263px", cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos", isPartOfSystemProject: true},
     { device: "am263px", cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-lp", os: "freertos", isPartOfSystemProject: true},
     { device: "am263px", cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-lp", os: "nortos", isPartOfSystemProject: true},
 ];
@@ -115,10 +115,10 @@ const systemProjects = [
         name: "test_mcspi_controller_peripheral",
         tag: "freertos_nortos",
         skipProjectSpec: true,
-        board: "am261x-cc",
+        board: "am261x-som",
         projects: [
-            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-cc", os: "freertos", isPartOfSystemProject: true},
-            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-cc", os: "nortos", isPartOfSystemProject: true},
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "freertos", isPartOfSystemProject: true},
+            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos", isPartOfSystemProject: true},
         ],
     },
     {

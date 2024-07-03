@@ -9,7 +9,7 @@
         ],
         "description": "ADC triggering DMA via tDMA showcasing example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_alternate_dma_trigger",
-        "location": "../../examples/drivers/adc/adc_alternate_dma_trigger/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_alternate_dma_trigger/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -75,7 +75,7 @@
         ],
         "description": "ADC burst mode epwm example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_burst_mode_epwm",
-        "location": "../../examples/drivers/adc/adc_burst_mode_epwm/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_burst_mode_epwm/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -141,7 +141,7 @@
         ],
         "description": "ADC burst mode oversampling example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_burst_mode_oversampling",
-        "location": "../../examples/drivers/adc/adc_burst_mode_oversampling/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_burst_mode_oversampling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -207,7 +207,7 @@
         ],
         "description": "Demonstrates ADC DAC Loopback feature CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_dac_loopback",
-        "location": "../../examples/drivers/adc/adc_dac_loopback/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_dac_loopback/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -273,7 +273,7 @@
         ],
         "description": "ADC differential mode example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_differential_mode",
-        "location": "../../examples/drivers/adc/adc_differential_mode/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_differential_mode/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -339,7 +339,7 @@
         ],
         "description": "ADC early interrupt and offset example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_early_interrupt_offset",
-        "location": "../../examples/drivers/adc/adc_early_interrupt_offset/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_early_interrupt_offset/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -405,7 +405,7 @@
         ],
         "description": "Multiple ADC SOC triggered from Global Software Force CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_global_force",
-        "location": "../../examples/drivers/adc/adc_global_force/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_global_force/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -471,7 +471,7 @@
         ],
         "description": "An ADC High Priority example. This example showcases the high priority soc feature of ADC. CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_high_priority_soc",
-        "location": "../../examples/drivers/adc/adc_high_priority_soc/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_high_priority_soc/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -537,7 +537,7 @@
         ],
         "description": "An ADC Software triggered example. This example converts a SOC when triggered by Software. CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_multiple_soc_epwm",
-        "location": "../../examples/drivers/adc/adc_multiple_soc_epwm/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_multiple_soc_epwm/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -603,7 +603,7 @@
         ],
         "description": "Example to showcase Open Shorts Detection in the ADC Channels. CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_open_shorts_detection",
-        "location": "../../examples/drivers/adc/adc_open_shorts_detection/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_open_shorts_detection/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -669,7 +669,7 @@
         ],
         "description": "ADC PPB Delay example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_ppb_delay",
-        "location": "../../examples/drivers/adc/adc_ppb_delay/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_ppb_delay/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -735,7 +735,7 @@
         ],
         "description": "An ADC example that triggers ePWM using ADC Post Processing Block. CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_ppb_epwm_trip",
-        "location": "../../examples/drivers/adc/adc_ppb_epwm_trip/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_ppb_epwm_trip/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -801,7 +801,7 @@
         ],
         "description": "ADC PPB Limits example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_ppb_limits",
-        "location": "../../examples/drivers/adc/adc_ppb_limits/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_ppb_limits/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -867,7 +867,7 @@
         ],
         "description": "ADC PPB Offset example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_ppb_offset",
-        "location": "../../examples/drivers/adc/adc_ppb_offset/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_ppb_offset/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -933,7 +933,7 @@
         ],
         "description": "ADC Safety Checker example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_safety_checker",
-        "location": "../../examples/drivers/adc/adc_safety_checker/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_safety_checker/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -999,7 +999,7 @@
         ],
         "description": "ADC SOC Continuous example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_soc_continuous",
-        "location": "../../examples/drivers/adc/adc_soc_continuous/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_soc_continuous/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1065,7 +1065,7 @@
         ],
         "description": "An ADC Software triggered example. This example converts a SOC when triggered by Software. CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_soc_continuous_dma",
-        "location": "../../examples/drivers/adc/adc_soc_continuous_dma/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_soc_continuous_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1131,7 +1131,7 @@
         ],
         "description": "ADC SOC triggered from ECAP example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_soc_ecap",
-        "location": "../../examples/drivers/adc/adc_soc_ecap/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_soc_ecap/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1197,7 +1197,7 @@
         ],
         "description": "ADC SOC Epwm example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_soc_epwm",
-        "location": "../../examples/drivers/adc/adc_soc_epwm/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_soc_epwm/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1263,7 +1263,7 @@
         ],
         "description": "ADC SOC Oversampling example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_soc_oversampling",
-        "location": "../../examples/drivers/adc/adc_soc_oversampling/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_soc_oversampling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1329,7 +1329,7 @@
         ],
         "description": "ADC SOC triggered from RTI example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_soc_rti",
-        "location": "../../examples/drivers/adc/adc_soc_rti/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_soc_rti/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1395,7 +1395,7 @@
         ],
         "description": "An ADC Software triggered example. This example converts a SOC when triggered by Software. CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_soc_software",
-        "location": "../../examples/drivers/adc/adc_soc_software/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_soc_software/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1461,7 +1461,7 @@
         ],
         "description": "An ADC Synchronous Software triggered example. CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_soc_software_sync",
-        "location": "../../examples/drivers/adc/adc_soc_software_sync/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_soc_software_sync/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1527,7 +1527,7 @@
         ],
         "description": "ADC Software Interleaved Averaging example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_sw_interleaved_averaging",
-        "location": "../../examples/drivers/adc/adc_sw_interleaved_averaging/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_sw_interleaved_averaging/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1593,7 +1593,7 @@
         ],
         "description": "ADC Trigger Repeater Oversampling example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_trigger_repeater_oversampling",
-        "location": "../../examples/drivers/adc/adc_trigger_repeater_oversampling/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_trigger_repeater_oversampling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1659,7 +1659,7 @@
         ],
         "description": "ADC Trigger Repeater Undersampling example CPU is R5FSS0-0 running NORTOS.",
         "name": "adc_trigger_repeater_undersampling",
-        "location": "../../examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/adc/adc_trigger_repeater_undersampling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1725,7 +1725,7 @@
         ],
         "description": "A Sbl Can Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_can",
-        "location": "../../examples/drivers/boot/sbl_can/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/boot/sbl_can/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1791,7 +1791,7 @@
         ],
         "description": "A Sbl Can Uniflash Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_can_uniflash",
-        "location": "../../examples/drivers/boot/sbl_can_uniflash/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/boot/sbl_can_uniflash/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1857,7 +1857,7 @@
         ],
         "description": "A Sbl Jtag Uniflash Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_jtag_uniflash",
-        "location": "../../examples/drivers/boot/sbl_jtag_uniflash/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/boot/sbl_jtag_uniflash/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1923,7 +1923,7 @@
         ],
         "description": "A Sbl Null Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_null",
-        "location": "../../examples/drivers/boot/sbl_null/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/boot/sbl_null/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -1989,7 +1989,7 @@
         ],
         "description": "A Sbl Ospi Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_ospi",
-        "location": "../../examples/drivers/boot/sbl_ospi/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/boot/sbl_ospi/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -2055,7 +2055,7 @@
         ],
         "description": "A Sbl Sd Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_sd",
-        "location": "../../examples/drivers/boot/sbl_sd/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/boot/sbl_sd/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -2121,7 +2121,7 @@
         ],
         "description": "A Sbl Uart Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_uart",
-        "location": "../../examples/drivers/boot/sbl_uart/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/boot/sbl_uart/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -2187,7 +2187,7 @@
         ],
         "description": "A Sbl Uart Uniflash Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "sbl_uart_uniflash",
-        "location": "../../examples/drivers/boot/sbl_uart_uniflash/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/boot/sbl_uart_uniflash/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -2253,7 +2253,7 @@
         ],
         "description": "A CMPSS example that enables the CMPSS High comparator and feeds the asynchronous output to GPIO and EPWM CPU is R5FSS0-0 running NORTOS.",
         "name": "cmpss_asynchronous_trip",
-        "location": "../../examples/drivers/cmpss/cmpss_asynchronous_trip/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/cmpss/cmpss_asynchronous_trip/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -2319,7 +2319,7 @@
         ],
         "description": "A CMPSS example that enables the CMPSS High comparator and feeds the digital filter output to GPIO and EPWM CPU is R5FSS0-0 running NORTOS.",
         "name": "cmpss_digital_filter_trip",
-        "location": "../../examples/drivers/cmpss/cmpss_digital_filter_trip/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/cmpss/cmpss_digital_filter_trip/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -2385,7 +2385,7 @@
         ],
         "description": "An DAC example that generates a constant voltage on DAC output. CPU is R5FSS0-0 running NORTOS.",
         "name": "dac_constant_voltage",
-        "location": "../../examples/drivers/dac/dac_constant_voltage/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/dac/dac_constant_voltage/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -2451,7 +2451,7 @@
         ],
         "description": "An DAC example that is synced by EPWM. CPU is R5FSS0-0 running NORTOS.",
         "name": "dac_epwm_sync",
-        "location": "../../examples/drivers/dac/dac_epwm_sync/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/dac/dac_epwm_sync/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -2517,7 +2517,7 @@
         ],
         "description": "An DAC example that generates a ramp wave on DAC output. CPU is R5FSS0-0 running NORTOS.",
         "name": "dac_ramp_wave",
-        "location": "../../examples/drivers/dac/dac_ramp_wave/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/dac/dac_ramp_wave/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -2583,7 +2583,7 @@
         ],
         "description": "An DAC example that generates a random voltage on DAC output. CPU is R5FSS0-0 running NORTOS.",
         "name": "dac_random_voltage",
-        "location": "../../examples/drivers/dac/dac_random_voltage/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/dac/dac_random_voltage/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -2649,7 +2649,7 @@
         ],
         "description": "An DAC example that generates a sine wave using DMA on DAC output. CPU is R5FSS0-0 running NORTOS.",
         "name": "dac_sine_dma",
-        "location": "../../examples/drivers/dac/dac_sine_dma/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/dac/dac_sine_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -2715,7 +2715,7 @@
         ],
         "description": "An DAC example that generates a sine wave on DAC output. CPU is R5FSS0-0 running NORTOS.",
         "name": "dac_sine_wave",
-        "location": "../../examples/drivers/dac/dac_sine_wave/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/dac/dac_sine_wave/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -2781,7 +2781,7 @@
         ],
         "description": "An DAC example that generates a square wave on DAC output. CPU is R5FSS0-0 running NORTOS.",
         "name": "dac_square_wave",
-        "location": "../../examples/drivers/dac/dac_square_wave/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/dac/dac_square_wave/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -2847,7 +2847,7 @@
         ],
         "description": "An ECAP APWM mode example. This example sets up ECAP in APWM mode. CPU is R5FSS0-0 running NORTOS.",
         "name": "ecap_apwm_mode",
-        "location": "../../examples/drivers/ecap/ecap_apwm_mode/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/ecap/ecap_apwm_mode/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -2913,7 +2913,7 @@
         ],
         "description": "An ECAP CAPTURE PWM example. This example captures pwm. CPU is R5FSS0-0 running NORTOS.",
         "name": "ecap_capture_pwm",
-        "location": "../../examples/drivers/ecap/ecap_capture_pwm/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/ecap/ecap_capture_pwm/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -2979,7 +2979,7 @@
         ],
         "description": "An ECAP triggering EDMA example. This example demonstrates EDMA triggering from ECAP. CPU is R5FSS0-0 running NORTOS.",
         "name": "ecap_edma",
-        "location": "../../examples/drivers/ecap/ecap_edma/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/ecap/ecap_edma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -3045,7 +3045,7 @@
         ],
         "description": "An EDMA chain transfer example. This example demonstrates chain in EDMA. CPU is R5FSS0-0 running NORTOS.",
         "name": "edma_chain_transfer",
-        "location": "../../examples/drivers/edma/edma_chain_transfer/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/edma/edma_chain_transfer/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -3111,7 +3111,7 @@
         ],
         "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. CPU is R5FSS0-0 running FREERTOS.",
         "name": "edma_interrupt_transfer",
-        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -3144,7 +3144,7 @@
         ],
         "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. CPU is R5FSS0-1 running NORTOS.",
         "name": "edma_interrupt_transfer",
-        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -3177,7 +3177,7 @@
         ],
         "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. CPU is R5FSS1-0 running NORTOS.",
         "name": "edma_interrupt_transfer",
-        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-som/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -3210,7 +3210,7 @@
         ],
         "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. CPU is R5FSS1-1 running NORTOS.",
         "name": "edma_interrupt_transfer",
-        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-cc/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-som/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -3375,7 +3375,7 @@
         ],
         "description": "An EDMA link transfer example. This example demonstrates linking in EDMA. CPU is R5FSS0-0 running NORTOS.",
         "name": "edma_link_transfer",
-        "location": "../../examples/drivers/edma/edma_link_transfer/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/edma/edma_link_transfer/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -3441,7 +3441,7 @@
         ],
         "description": "An EDMA Multi Memory transfer example. This example demonstrates transfer between multip memory types using EDMA. CPU is R5FSS0-0 running NORTOS.",
         "name": "edma_multimem_transfer",
-        "location": "../../examples/drivers/edma/edma_multimem_transfer/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/edma/edma_multimem_transfer/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -3507,7 +3507,7 @@
         ],
         "description": "An EDMA Polled transfer example. This example demonstrates polling in EDMA. CPU is R5FSS0-0 running NORTOS.",
         "name": "edma_polled_transfer",
-        "location": "../../examples/drivers/edma/edma_polled_transfer/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/edma/edma_polled_transfer/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -3540,7 +3540,7 @@
         ],
         "description": "An EDMA Polled transfer example. This example demonstrates polling in EDMA. CPU is R5FSS0-0 running FREERTOS.",
         "name": "edma_polled_transfer",
-        "location": "../../examples/drivers/edma/edma_polled_transfer/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/edma/edma_polled_transfer/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -3639,7 +3639,7 @@
         ],
         "description": "This Example Demonstrates the Chopper Submodule Functionalities of EPWM. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_chopper",
-        "location": "../../examples/drivers/epwm/epwm_chopper/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/epwm_chopper/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -3705,7 +3705,7 @@
         ],
         "description": "This Example Demonstrates the Configure Signal API usage. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_configure_signal",
-        "location": "../../examples/drivers/epwm/epwm_configure_signal/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/epwm_configure_signal/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -3771,7 +3771,7 @@
         ],
         "description": "This example demonstrates the dccap functionalities of epwm. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_dccap",
-        "location": "../../examples/drivers/epwm/epwm_dccap/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/epwm_dccap/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -3837,7 +3837,7 @@
         ],
         "description": "This example demonstrates the deadband functionalities of epwm. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_deadband",
-        "location": "../../examples/drivers/epwm/epwm_deadband/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/epwm_deadband/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -3903,7 +3903,7 @@
         ],
         "description": "This example demonstrates the functionalities of epwm working in DE mode, the trip inputs are sourced from other epwm instances only and not from cmpss. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_diode_emulation",
-        "location": "../../examples/drivers/epwm/epwm_diode_emulation/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/epwm_diode_emulation/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -3969,7 +3969,7 @@
         ],
         "description": "An EPWM DMA test example. This example generates waveforms according to the values updated by DMA channels in EPWM registers. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_dma",
-        "location": "../../examples/drivers/epwm/epwm_dma/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/epwm_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4035,7 +4035,7 @@
         ],
         "description": "An EPWM HR duty test example. This example generates a 1KHz wave with 25% duty cycle. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_hr_duty_cycle",
-        "location": "../../examples/drivers/epwm/epwm_hr_duty_cycle/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/epwm_hr_duty_cycle/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4101,7 +4101,7 @@
         ],
         "description": "An EPWM HR UpDown example. This example modifies the MEP control registers to show edge displacement for high-resolution period with ePWM in Up-Down count mode. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_hr_updown",
-        "location": "../../examples/drivers/epwm/epwm_hr_updown/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/epwm_hr_updown/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4167,7 +4167,7 @@
         ],
         "description": "The purpose of the example is to show some of the operations that can be done using ICL.We can route a signal of EPWM instance through some other EPWM instance without even configuring the latter.We use ICLXBar along with the ICL block functionalities provided inside each instance to get the desired results. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_illegal_combo_logic",
-        "location": "../../examples/drivers/epwm/epwm_illegal_combo_logic/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/epwm_illegal_combo_logic/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4233,7 +4233,7 @@
         ],
         "description": "In this example ePWM uses Minimum Deadband to do various operations on the signal coming to the MDL block. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_minimum_deadband",
-        "location": "../../examples/drivers/epwm/epwm_minimum_deadband/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/epwm_minimum_deadband/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4299,7 +4299,7 @@
         ],
         "description": "A EPWM example for PWM protection circuitry (using PRU) & ASC shutdown delay time. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_protection_pru",
-        "location": "../../examples/drivers/epwm/epwm_protection_pru/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/epwm_protection_pru/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4365,7 +4365,7 @@
         ],
         "description": "The purpose of the example is to configure and display synhronization among EPWM's that are phase-shifted CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_synchronization",
-        "location": "../../examples/drivers/epwm/epwm_synchronization/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/epwm_synchronization/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4398,7 +4398,7 @@
         ],
         "description": "An EPWM Trip zone test example. This example demonstrates tripping of epwm output using OST and CBC mode. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_trip_zone",
-        "location": "../../examples/drivers/epwm/epwm_trip_zone/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/epwm_trip_zone/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4464,7 +4464,7 @@
         ],
         "description": "An EPWM Valley Switching test example. This example uses the valley switching module to delay the digital compare signals by a software defined DELAY value. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_valley_switching",
-        "location": "../../examples/drivers/epwm/epwm_valley_switching/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/epwm_valley_switching/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4530,7 +4530,7 @@
         ],
         "description": "This example demonstrates the xcmp features of the epwm, and registers populated by edma. CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_xcmp_dma",
-        "location": "../../examples/drivers/epwm/epwm_xcmp_dma/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/epwm_xcmp_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4596,7 +4596,7 @@
         ],
         "description": "An EPWM xcmp example. This example is used to generate multiple edges in pwm cycle CPU is R5FSS0-0 running NORTOS.",
         "name": "epwm_xcmp_multiple_edges",
-        "location": "../../examples/drivers/epwm/epwm_xcmp_multiple_edges/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/epwm_xcmp_multiple_edges/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4662,7 +4662,7 @@
         ],
         "description": "HRPWM Deadband SFO example. CPU is R5FSS0-0 running NORTOS.",
         "name": "hrpwm_deadband_sfo",
-        "location": "../../examples/drivers/epwm/hrpwm_deadband_sfo/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/hrpwm_deadband_sfo/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4695,7 +4695,7 @@
         ],
         "description": "HRPWM Duty Cycle SFO example. CPU is R5FSS0-0 running NORTOS.",
         "name": "hrpwm_duty_cycle_sfo",
-        "location": "../../examples/drivers/epwm/hrpwm_duty_cycle_sfo/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/hrpwm_duty_cycle_sfo/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4728,7 +4728,7 @@
         ],
         "description": "HRPWM Phase Shift SFO example. CPU is R5FSS0-0 running NORTOS.",
         "name": "hrpwm_phase_shift_sfo",
-        "location": "../../examples/drivers/epwm/hrpwm_phase_shift_sfo/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/epwm/hrpwm_phase_shift_sfo/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4761,7 +4761,7 @@
         ],
         "description": "An EQEP Frequency Measurement example. This example measures frequency of signal generated by ePWM module. CPU is R5FSS0-0 running NORTOS.",
         "name": "eqep_frequency_measurement",
-        "location": "../../examples/drivers/eqep/eqep_frequency_measurement/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/eqep/eqep_frequency_measurement/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4827,7 +4827,7 @@
         ],
         "description": "An EQEP Positon speed example. This example provides position and speed measurement using capture unit and speed measurement using unit time out. CPU is R5FSS0-0 running NORTOS.",
         "name": "eqep_position_speed",
-        "location": "../../examples/drivers/eqep/eqep_position_speed/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/eqep/eqep_position_speed/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4893,7 +4893,7 @@
         ],
         "description": "A Flc Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "flc",
-        "location": "../../examples/drivers/flc/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/flc/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4925,7 +4925,7 @@
         ],
         "description": "A Fsi Loopback Dma Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "fsi_loopback_dma",
-        "location": "../../examples/drivers/fsi/fsi_loopback_dma/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/fsi/fsi_loopback_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -4991,7 +4991,7 @@
         ],
         "description": "A Fsi Loopback Interrupt Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "fsi_loopback_interrupt",
-        "location": "../../examples/drivers/fsi/fsi_loopback_interrupt/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/fsi/fsi_loopback_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5057,7 +5057,7 @@
         ],
         "description": "A Fsi Loopback Polling Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "fsi_loopback_polling",
-        "location": "../../examples/drivers/fsi/fsi_loopback_polling/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/fsi/fsi_loopback_polling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5123,7 +5123,7 @@
         ],
         "description": "A Gpio Input Interrupt Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "gpio_input_interrupt",
-        "location": "../../examples/drivers/gpio/gpio_input_interrupt/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/gpio/gpio_input_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5189,7 +5189,7 @@
         ],
         "description": "A GPIO LED Blink Example. This example blinks a EVM LED for few seconds. CPU is R5FSS0-0 running NORTOS.",
         "name": "gpio_led_blink",
-        "location": "../../examples/drivers/gpio/gpio_led_blink/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/gpio/gpio_led_blink/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5222,7 +5222,7 @@
         ],
         "description": "A GPIO Multi LED Blink Example. This example blinks each LED for few seconds. CPU is R5FSS0-0 running NORTOS.",
         "name": "gpio_multi_led_blink",
-        "location": "../../examples/drivers/gpio/gpio_multi_led_blink/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/gpio/gpio_multi_led_blink/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5255,7 +5255,7 @@
         ],
         "description": "A Gpmc Psram Io Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "gpmc_psram_io",
-        "location": "../../examples/drivers/gpmc/gpmc_psram_io/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/gpmc/gpmc_psram_io/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5288,7 +5288,7 @@
         ],
         "description": "Demonstrate hsm services message CPU is R5FSS0-0 running NORTOS.",
         "name": "hsm_services",
-        "location": "../../examples/drivers/hsmclient/hsm_services/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/hsmclient/hsm_services/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5321,7 +5321,7 @@
         ],
         "description": "Demonstrate mpu firewall services and interrupt handling CPU is R5FSS0-0 running NORTOS.",
         "name": "mpu_firewall_services_demo",
-        "location": "../../examples/drivers/hsmclient/mpu_firewall_services_demo/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/hsmclient/mpu_firewall_services_demo/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5354,7 +5354,7 @@
         ],
         "description": "Demonstrate mpu firewall services and interrupt handling CPU is R5FSS0-1 running NORTOS.",
         "name": "mpu_firewall_services_demo",
-        "location": "../../examples/drivers/hsmclient/mpu_firewall_services_demo/am261x-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/hsmclient/mpu_firewall_services_demo/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5387,7 +5387,7 @@
         ],
         "description": "A I2C LED Blink Example. This example blinks a EVM LED for few seconds. CPU is R5FSS0-0 running NORTOS.",
         "name": "i2c_led_blink",
-        "location": "../../examples/drivers/i2c/i2c_led_blink/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/i2c/i2c_led_blink/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5420,7 +5420,7 @@
         ],
         "description": "A I2C LED Blink Example. This example blinks a EVM LED for few seconds. CPU is R5FSS0-0 running FREERTOS.",
         "name": "i2c_led_blink",
-        "location": "../../examples/drivers/i2c/i2c_led_blink/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/i2c/i2c_led_blink/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5552,7 +5552,7 @@
         ],
         "description": "A I2c Led Blink Interrupt Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "i2c_led_blink_interrupt_lld",
-        "location": "../../examples/drivers/i2c/i2c_led_blink_interrupt_lld/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/i2c/i2c_led_blink_interrupt_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5618,7 +5618,7 @@
         ],
         "description": "A I2c Led Blink Polling Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "i2c_led_blink_polling_lld",
-        "location": "../../examples/drivers/i2c/i2c_led_blink_polling_lld/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/i2c/i2c_led_blink_polling_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5684,7 +5684,7 @@
         ],
         "description": "A I2c Led Read Write Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "i2c_led_read_write_lld",
-        "location": "../../examples/drivers/i2c/i2c_led_read_write_lld/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/i2c/i2c_led_read_write_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5717,7 +5717,7 @@
         ],
         "description": "A I2c Memory Read Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "i2c_memory_read",
-        "location": "../../examples/drivers/i2c/i2c_memory_read/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/i2c/i2c_memory_read/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5750,7 +5750,7 @@
         ],
         "description": "A I2c Memory Read Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "i2c_memory_read",
-        "location": "../../examples/drivers/i2c/i2c_memory_read/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/i2c/i2c_memory_read/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5849,7 +5849,7 @@
         ],
         "description": "A I2c Memory Read Interrupt Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "i2c_memory_read_interrupt_lld",
-        "location": "../../examples/drivers/i2c/i2c_memory_read_interrupt_lld/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/i2c/i2c_memory_read_interrupt_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5915,7 +5915,7 @@
         ],
         "description": "A I2c Memory Read Polling Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "i2c_memory_read_polling_lld",
-        "location": "../../examples/drivers/i2c/i2c_memory_read_polling_lld/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/i2c/i2c_memory_read_polling_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -5981,7 +5981,7 @@
         ],
         "description": "A I2c Read Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "i2c_read",
-        "location": "../../examples/drivers/i2c/i2c_read/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/i2c/i2c_read/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6014,7 +6014,7 @@
         ],
         "description": "A I2c Read Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "i2c_read",
-        "location": "../../examples/drivers/i2c/i2c_read/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/i2c/i2c_read/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6113,7 +6113,7 @@
         ],
         "description": "A I2c Temperature Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "i2c_temperature",
-        "location": "../../examples/drivers/i2c/i2c_temperature/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/i2c/i2c_temperature/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6146,7 +6146,7 @@
         ],
         "description": "A I2c Temperature Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "i2c_temperature",
-        "location": "../../examples/drivers/i2c/i2c_temperature/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/i2c/i2c_temperature/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6179,7 +6179,7 @@
         ],
         "description": "A I2c Temperature Interrupt Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "i2c_temperature_interrupt_lld",
-        "location": "../../examples/drivers/i2c/i2c_temperature_interrupt_lld/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/i2c/i2c_temperature_interrupt_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6212,7 +6212,7 @@
         ],
         "description": "A I2c Temperature Polling Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "i2c_temperature_polling_lld",
-        "location": "../../examples/drivers/i2c/i2c_temperature_polling_lld/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/i2c/i2c_temperature_polling_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6245,7 +6245,7 @@
         ],
         "description": "A Ipc Notify Echo Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "ipc_notify_echo",
-        "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6278,7 +6278,7 @@
         ],
         "description": "A Ipc Notify Echo Example. CPU is R5FSS0-1 running NORTOS.",
         "name": "ipc_notify_echo",
-        "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6311,7 +6311,7 @@
         ],
         "description": "A Ipc Notify Echo Example. CPU is R5FSS1-0 running NORTOS.",
         "name": "ipc_notify_echo",
-        "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-som/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6344,7 +6344,7 @@
         ],
         "description": "A Ipc Notify Echo Example. CPU is R5FSS1-1 running NORTOS.",
         "name": "ipc_notify_echo",
-        "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-cc/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-som/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6509,7 +6509,7 @@
         ],
         "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "ipc_rpmsg_echo",
-        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6542,7 +6542,7 @@
         ],
         "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS0-1 running NORTOS.",
         "name": "ipc_rpmsg_echo",
-        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6575,7 +6575,7 @@
         ],
         "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS1-0 running NORTOS.",
         "name": "ipc_rpmsg_echo",
-        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-som/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6608,7 +6608,7 @@
         ],
         "description": "A Ipc Rpmsg Echo Example. CPU is R5FSS1-1 running NORTOS.",
         "name": "ipc_rpmsg_echo",
-        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-cc/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-som/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6773,7 +6773,7 @@
         ],
         "description": "A Ipc Spinlock Sharedmem Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "ipc_spinlock_sharedmem",
-        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6806,7 +6806,7 @@
         ],
         "description": "A Ipc Spinlock Sharedmem Example. CPU is R5FSS0-1 running NORTOS.",
         "name": "ipc_spinlock_sharedmem",
-        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am261x-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6905,7 +6905,7 @@
         ],
         "description": "A Lin External Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "lin_external",
-        "location": "../../examples/drivers/lin/lin_external/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/lin/lin_external/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6938,7 +6938,7 @@
         ],
         "description": "A Lin External Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "lin_external",
-        "location": "../../examples/drivers/lin/lin_external/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/lin/lin_external/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -6971,7 +6971,7 @@
         ],
         "description": "A Lin Loopback Interrupt Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "lin_loopback_interrupt",
-        "location": "../../examples/drivers/lin/lin_loopback_interrupts/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/lin/lin_loopback_interrupts/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -7004,7 +7004,7 @@
         ],
         "description": "A Lin Loopback Interrupt Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "lin_loopback_interrupt",
-        "location": "../../examples/drivers/lin/lin_loopback_interrupts/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/lin/lin_loopback_interrupts/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -7103,7 +7103,7 @@
         ],
         "description": "A Lin Loopback Polling Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "lin_loopback_polling",
-        "location": "../../examples/drivers/lin/lin_loopback_polling/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/lin/lin_loopback_polling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -7136,7 +7136,7 @@
         ],
         "description": "A Lin Loopback Polling Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "lin_loopback_polling",
-        "location": "../../examples/drivers/lin/lin_loopback_polling/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/lin/lin_loopback_polling/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -7235,7 +7235,7 @@
         ],
         "description": "A Lin Sci Dma Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "lin_sci_dma",
-        "location": "../../examples/drivers/lin/lin_sci_dma/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/lin/lin_sci_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -7268,7 +7268,7 @@
         ],
         "description": "A Lin Sci Dma Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "lin_sci_dma",
-        "location": "../../examples/drivers/lin/lin_sci_dma/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/lin/lin_sci_dma/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -7367,7 +7367,7 @@
         ],
         "description": "A Lin Sci Loopback Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "lin_sci_loopback",
-        "location": "../../examples/drivers/lin/lin_sci_loopback/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/lin/lin_sci_loopback/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -7400,7 +7400,7 @@
         ],
         "description": "A Lin Sci Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "lin_sci_loopback",
-        "location": "../../examples/drivers/lin/lin_sci_loopback/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/lin/lin_sci_loopback/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -7499,7 +7499,7 @@
         ],
         "description": "A Mcan External Read Write Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcan_external_read_write",
-        "location": "../../examples/drivers/mcan/mcan_external_read_write/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcan/mcan_external_read_write/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -7532,7 +7532,7 @@
         ],
         "description": "A Mcan External Read Write Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "mcan_external_read_write",
-        "location": "../../examples/drivers/mcan/mcan_external_read_write/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcan/mcan_external_read_write/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -7631,7 +7631,7 @@
         ],
         "description": "A Mcan Loopback Interrupt Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcan_loopback_interrupt",
-        "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -7664,7 +7664,7 @@
         ],
         "description": "A Mcan Loopback Interrupt Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "mcan_loopback_interrupt",
-        "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcan/mcan_loopback_interrupt/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -7763,7 +7763,7 @@
         ],
         "description": "A Mcan Loopback Polling Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcan_loopback_polling",
-        "location": "../../examples/drivers/mcan/mcan_loopback_polling/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcan/mcan_loopback_polling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -7796,7 +7796,7 @@
         ],
         "description": "A Mcan Loopback Polling Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "mcan_loopback_polling",
-        "location": "../../examples/drivers/mcan/mcan_loopback_polling/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcan/mcan_loopback_polling/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -7895,7 +7895,7 @@
         ],
         "description": "A Mcspi Loopback Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_loopback",
-        "location": "../../examples/drivers/mcspi/mcspi_loopback/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -7928,7 +7928,7 @@
         ],
         "description": "A Mcspi Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "mcspi_loopback",
-        "location": "../../examples/drivers/mcspi/mcspi_loopback/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8027,7 +8027,7 @@
         ],
         "description": "A Mcspi Loopback Dma Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_loopback_dma",
-        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8060,7 +8060,7 @@
         ],
         "description": "A Mcspi Loopback Dma Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "mcspi_loopback_dma",
-        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8159,7 +8159,7 @@
         ],
         "description": "A Mcspi Loopback Dma Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_loopback_dma_lld",
-        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8192,7 +8192,7 @@
         ],
         "description": "A Mcspi Loopback Dma Lld Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "mcspi_loopback_dma_lld",
-        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_dma_lld/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8291,7 +8291,7 @@
         ],
         "description": "A Mcspi Loopback Interrupt Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_loopback_interrupt_lld",
-        "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8324,7 +8324,7 @@
         ],
         "description": "A Mcspi Loopback Interrupt Lld Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "mcspi_loopback_interrupt_lld",
-        "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_interrupt_lld/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8423,7 +8423,7 @@
         ],
         "description": "A Mcspi Loopback Multi Instances Multi Channels Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_loopback_multi_instances_multi_channels_lld",
-        "location": "../../examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8456,7 +8456,7 @@
         ],
         "description": "A Mcspi Loopback Multi Instances Multi Channels Lld Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "mcspi_loopback_multi_instances_multi_channels_lld",
-        "location": "../../examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_multi_instances_multi_channels_lld/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8555,7 +8555,7 @@
         ],
         "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_loopback_polling_lld",
-        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8588,7 +8588,7 @@
         ],
         "description": "A Mcspi Loopback Polling Lld Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "mcspi_loopback_polling_lld",
-        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_polling_lld/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8687,7 +8687,7 @@
         ],
         "description": "A Mcspi Loopback Turbo Mode Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_loopback_turbo_mode",
-        "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8720,7 +8720,7 @@
         ],
         "description": "A Mcspi Loopback Turbo Mode Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "mcspi_loopback_turbo_mode",
-        "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_loopback_turbo_mode/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8819,7 +8819,7 @@
         ],
         "description": "A Mcspi Performance 32bit Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_performance_32bit",
-        "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8852,7 +8852,7 @@
         ],
         "description": "A Mcspi Performance 32bit Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "mcspi_performance_32bit",
-        "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_performance_32bit/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8951,7 +8951,7 @@
         ],
         "description": "A Mcspi Performance 8bit Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mcspi_performance_8bit",
-        "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -8984,7 +8984,7 @@
         ],
         "description": "A Mcspi Performance 8bit Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "mcspi_performance_8bit",
-        "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mcspi/mcspi_performance_8bit/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9083,7 +9083,7 @@
         ],
         "description": "A Mmcsd File Io Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mmcsd_file_io",
-        "location": "../../examples/drivers/mmcsd/mmcsd_file_io/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mmcsd/mmcsd_file_io/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9149,7 +9149,7 @@
         ],
         "description": "A Mmcsd Raw Io Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mmcsd_raw_io",
-        "location": "../../examples/drivers/mmcsd/mmcsd_raw_io/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/mmcsd/mmcsd_raw_io/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9215,7 +9215,7 @@
         ],
         "description": "A Ospi Flash Diag Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "ospi_flash_diag",
-        "location": "../../examples/drivers/ospi/ospi_flash_diag/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/ospi/ospi_flash_diag/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9281,7 +9281,7 @@
         ],
         "description": "A Ospi Flash Dma Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "ospi_flash_dma",
-        "location": "../../examples/drivers/ospi/ospi_flash_dma/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/ospi/ospi_flash_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9347,7 +9347,7 @@
         ],
         "description": "A Ospi Flash Io Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "ospi_flash_io",
-        "location": "../../examples/drivers/ospi/ospi_flash_io/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/ospi/ospi_flash_io/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9413,7 +9413,7 @@
         ],
         "description": "A Ospi Nand Flash Io Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "ospi_nand_flash_io",
-        "location": "../../examples/drivers/ospi/ospi_nand_flash_io/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/ospi/ospi_nand_flash_io/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9446,7 +9446,7 @@
         ],
         "description": "A Pmu Multievent Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "pmu_multievent",
-        "location": "../../examples/drivers/pmu/pmu_multievent/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/pmu/pmu_multievent/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9479,7 +9479,7 @@
         ],
         "description": "A Pmu Multievent Example. CPU is R5FSS0-1 running NORTOS.",
         "name": "pmu_multievent",
-        "location": "../../examples/drivers/pmu/pmu_multievent/am261x-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/pmu/pmu_multievent/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9512,7 +9512,7 @@
         ],
         "description": "A Pmu Multievent Example. CPU is R5FSS1-0 running NORTOS.",
         "name": "pmu_multievent",
-        "location": "../../examples/drivers/pmu/pmu_multievent/am261x-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/pmu/pmu_multievent/am261x-som/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9545,7 +9545,7 @@
         ],
         "description": "A Pmu Multievent Example. CPU is R5FSS1-1 running NORTOS.",
         "name": "pmu_multievent",
-        "location": "../../examples/drivers/pmu/pmu_multievent/am261x-cc/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/pmu/pmu_multievent/am261x-som/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9710,7 +9710,7 @@
         ],
         "description": "Basic Region Base Address Translation (RAT) example. This shows how to setup Remote Layer 2 cache. CPU is R5FSS0-0 running NORTOS.",
         "name": "rat",
-        "location": "../../examples/drivers/rat/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/rat/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9742,7 +9742,7 @@
         ],
         "description": "Basic RL2 example. This shows how to setup Remote Layer 2 cache. CPU is R5FSS0-0 running NORTOS.",
         "name": "rl2",
-        "location": "../../examples/drivers/rl2/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/rl2/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9806,7 +9806,7 @@
         ],
         "description": "An example to demonstrate LED blink using RTI. CPU is R5FSS0-0 running NORTOS.",
         "name": "rti_led_blink",
-        "location": "../../examples/drivers/rti/rti_led_blink/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/rti/rti_led_blink/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9839,7 +9839,7 @@
         ],
         "description": "An example to demonstrate LED blink using RTI. CPU is R5FSS0-0 running FREERTOS.",
         "name": "rti_led_blink",
-        "location": "../../examples/drivers/rti/rti_led_blink/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/rti/rti_led_blink/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9872,7 +9872,7 @@
         ],
         "description": "A SDFM example that reads filter data from CPU CPU is R5FSS0-0 running NORTOS.",
         "name": "sdfm_ecap_loop_back",
-        "location": "../../examples/drivers/sdfm/sdfm_ecap_loop_back/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/sdfm/sdfm_ecap_loop_back/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9905,7 +9905,7 @@
         ],
         "description": "A SDFM example that reads filter data from CPU CPU is R5FSS0-0 running NORTOS.",
         "name": "sdfm_epwm_sync_cpuread",
-        "location": "../../examples/drivers/sdfm/sdfm_epwm_sync_cpuread/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/sdfm/sdfm_epwm_sync_cpuread/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9938,7 +9938,7 @@
         ],
         "description": "A SDFM example that reads filter data from CPU CPU is R5FSS0-0 running NORTOS.",
         "name": "sdfm_filter_sync_cpuread",
-        "location": "../../examples/drivers/sdfm/sdfm_filter_sync_cpuread/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/sdfm/sdfm_filter_sync_cpuread/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -9971,7 +9971,7 @@
         ],
         "description": "A SDFM example that reads filter data from CPU CPU is R5FSS0-0 running NORTOS.",
         "name": "sdfm_filter_sync_cpuread_single_channel",
-        "location": "../../examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/sdfm/sdfm_filter_sync_cpuread_single_channel/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -10037,7 +10037,7 @@
         ],
         "description": "A SDFM example that reads filter data from DMA CPU is R5FSS0-0 running NORTOS.",
         "name": "sdfm_filter_sync_dmaread",
-        "location": "../../examples/drivers/sdfm/sdfm_filter_sync_dmaread/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/sdfm/sdfm_filter_sync_dmaread/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -10070,7 +10070,7 @@
         ],
         "description": "An example to demonstrate the working of spinlock CPU is R5FSS0-0 running NORTOS.",
         "name": "spinlock_example",
-        "location": "../../examples/drivers/spinlock/spinlock_example/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/spinlock/spinlock_example/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -10103,7 +10103,7 @@
         ],
         "description": "An example to demonstrate the working of spinlock CPU is R5FSS0-1 running NORTOS.",
         "name": "spinlock_example",
-        "location": "../../examples/drivers/spinlock/spinlock_example/am261x-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/spinlock/spinlock_example/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -10202,7 +10202,7 @@
         ],
         "description": "This example shows the context save feature of TMU. CPU is R5FSS0-0 running NORTOS.",
         "name": "tmu_context_save",
-        "location": "../../examples/drivers/tmu/tmu_context_save/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/tmu/tmu_context_save/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -10268,7 +10268,7 @@
         ],
         "description": "This example shows 4 core support of TMU. CPU is R5FSS0-0 running NORTOS.",
         "name": "tmu_cores_support",
-        "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -10301,7 +10301,7 @@
         ],
         "description": "This example shows 4 core support of TMU. CPU is R5FSS0-1 running NORTOS.",
         "name": "tmu_cores_support",
-        "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -10334,7 +10334,7 @@
         ],
         "description": "This example shows 4 core support of TMU. CPU is R5FSS1-0 running NORTOS.",
         "name": "tmu_cores_support",
-        "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-som/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -10367,7 +10367,7 @@
         ],
         "description": "This example shows 4 core support of TMU. CPU is R5FSS1-1 running NORTOS.",
         "name": "tmu_cores_support",
-        "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-cc/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-som/r5fss1-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -10532,7 +10532,7 @@
         ],
         "description": "This example shows hardware acceleration of trigonometric operations using TMU. CPU is R5FSS0-0 running NORTOS.",
         "name": "tmu_operations",
-        "location": "../../examples/drivers/tmu/tmu_operations/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/tmu/tmu_operations/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -10598,7 +10598,7 @@
         ],
         "description": "This example shows the gains of using TMU and how it enhances the performance in application use case CPU is R5FSS0-0 running NORTOS.",
         "name": "tmu_park_transform",
-        "location": "../../examples/drivers/tmu/tmu_park_transform/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/tmu/tmu_park_transform/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -10664,7 +10664,7 @@
         ],
         "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo",
-        "location": "../../examples/drivers/uart/uart_echo/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/uart/uart_echo/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -10697,7 +10697,7 @@
         ],
         "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running FREERTOS.",
         "name": "uart_echo",
-        "location": "../../examples/drivers/uart/uart_echo/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/uart/uart_echo/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -10796,7 +10796,7 @@
         ],
         "description": "A Uart Echo Callback Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo_callback",
-        "location": "../../examples/drivers/uart/uart_echo_callback/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/uart/uart_echo_callback/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -10829,7 +10829,7 @@
         ],
         "description": "A Uart Echo Callback Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "uart_echo_callback",
-        "location": "../../examples/drivers/uart/uart_echo_callback/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/uart/uart_echo_callback/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -10928,7 +10928,7 @@
         ],
         "description": "A UART echo DMA example. This example demonstrates uart echo using UART DMA. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo_dma",
-        "location": "../../examples/drivers/uart/uart_echo_dma/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/uart/uart_echo_dma/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -10961,7 +10961,7 @@
         ],
         "description": "A UART echo DMA example. This example demonstrates uart echo using UART DMA. CPU is R5FSS0-0 running FREERTOS.",
         "name": "uart_echo_dma",
-        "location": "../../examples/drivers/uart/uart_echo_dma/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/uart/uart_echo_dma/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -11060,7 +11060,7 @@
         ],
         "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo_dma_lld",
-        "location": "../../examples/drivers/uart/uart_echo_dma_lld/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/uart/uart_echo_dma_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -11126,7 +11126,7 @@
         ],
         "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo_interrupt_lld",
-        "location": "../../examples/drivers/uart/uart_echo_interrupt_lld/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/uart/uart_echo_interrupt_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -11192,7 +11192,7 @@
         ],
         "description": "A Uart Echo Low Latency Interrupt Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo_low_latency_interrupt",
-        "location": "../../examples/drivers/uart/uart_echo_low_latency_interrupt/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/uart/uart_echo_low_latency_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -11258,7 +11258,7 @@
         ],
         "description": "A Uart Echo Low Latency Polling Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo_low_latency_polling",
-        "location": "../../examples/drivers/uart/uart_echo_low_latency_polling/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/uart/uart_echo_low_latency_polling/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -11324,7 +11324,7 @@
         ],
         "description": "A UART echo example. This example demonstrates uart echo using UART. CPU is R5FSS0-0 running NORTOS.",
         "name": "uart_echo_polling_lld",
-        "location": "../../examples/drivers/uart/uart_echo_polling_lld/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/uart/uart_echo_polling_lld/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -11390,7 +11390,7 @@
         ],
         "description": "A Watchdog non reset mode example. This example generates NMI. CPU is R5FSS0-0 running NORTOS.",
         "name": "watchdog_interrupt",
-        "location": "../../examples/drivers/watchdog/watchdog_interrupt/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/watchdog/watchdog_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -11456,7 +11456,7 @@
         ],
         "description": "A Watchdog reset mode example. This example triggers the SOC warm reset. CPU is R5FSS0-0 running NORTOS.",
         "name": "watchdog_reset_mode",
-        "location": "../../examples/drivers/watchdog/watchdog_reset/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/drivers/watchdog/watchdog_reset/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -11522,7 +11522,7 @@
         ],
         "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-0 running FREERTOS.",
         "name": "empty",
-        "location": "../../examples/empty/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/empty/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -11553,7 +11553,7 @@
         ],
         "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-1 running FREERTOS.",
         "name": "empty",
-        "location": "../../examples/empty/am261x-cc/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/empty/am261x-som/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -11646,7 +11646,7 @@
         ],
         "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-0 running NORTOS.",
         "name": "empty",
-        "location": "../../examples/empty/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/empty/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -11677,7 +11677,7 @@
         ],
         "description": "An Empty Example. This example is intended to be a starting point for new development CPU is R5FSS0-1 running NORTOS.",
         "name": "empty",
-        "location": "../../examples/empty/am261x-cc/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/empty/am261x-som/r5fss0-1_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -11770,7 +11770,7 @@
         ],
         "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running NORTOS.",
         "name": "hello_world",
-        "location": "../../examples/hello_world/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/hello_world/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -11801,7 +11801,7 @@
         ],
         "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running FREERTOS.",
         "name": "hello_world",
-        "location": "../../examples/hello_world/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/hello_world/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -11894,7 +11894,7 @@
         ],
         "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running NORTOS.",
         "name": "hello_world_cpp",
-        "location": "../../examples/hello_world_cpp/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/hello_world_cpp/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -11925,7 +11925,7 @@
         ],
         "description": "A simple \"Hello, World\" Example.  CPU is R5FSS0-0 running FREERTOS.",
         "name": "hello_world_cpp",
-        "location": "../../examples/hello_world_cpp/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/hello_world_cpp/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12018,7 +12018,7 @@
         ],
         "description": "A \"Hello, World\" Example. This example shows configuration and usage of CPU+OS for MPU, cache, interrupts, heaps, semaphores, timers and cycle counters. CPU is R5FSS0-0 running NORTOS.",
         "name": "dpl_demo",
-        "location": "../../examples/kernel/dpl/dpl_demo/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/kernel/dpl/dpl_demo/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12051,7 +12051,7 @@
         ],
         "description": "A \"Hello, World\" Example. This example shows configuration and usage of CPU+OS for MPU, cache, interrupts, heaps, semaphores, timers and cycle counters. CPU is R5FSS0-0 running FREERTOS.",
         "name": "dpl_demo",
-        "location": "../../examples/kernel/dpl/dpl_demo/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/kernel/dpl/dpl_demo/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12150,7 +12150,7 @@
         ],
         "description": "Low latency interrupt example CPU is R5FSS0-0 running NORTOS.",
         "name": "dpl_low_latency_interrupt",
-        "location": "../../examples/kernel/dpl/dpl_low_latency_interrupt/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/kernel/dpl/dpl_low_latency_interrupt/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12183,7 +12183,7 @@
         ],
         "description": "An interrupt prioritization example. This example demonstrates prioritization of interrupts. CPU is R5FSS0-0 running NORTOS.",
         "name": "interrupt_prioritization",
-        "location": "../../examples/kernel/dpl/interrupt_prioritization/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/kernel/dpl/interrupt_prioritization/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12216,7 +12216,7 @@
         ],
         "description": "An interrupt prioritization example. This example demonstrates prioritization of interrupts. CPU is R5FSS0-0 running FREERTOS.",
         "name": "interrupt_prioritization",
-        "location": "../../examples/kernel/dpl/interrupt_prioritization/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/kernel/dpl/interrupt_prioritization/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12315,7 +12315,7 @@
         ],
         "description": "A Posix Demo Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "posix_demo",
-        "location": "../../examples/kernel/freertos/posix_demo/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/kernel/freertos/posix_demo/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12381,7 +12381,7 @@
         ],
         "description": "A Task Switch Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "task_switch",
-        "location": "../../examples/kernel/freertos/task_switch/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/kernel/freertos/task_switch/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12447,7 +12447,7 @@
         ],
         "description": "A basic smart placement exmaple. This example is intended to be a starting point protraying smart placement. CPU is R5FSS0-0 running NORTOS.",
         "name": "basic_smart_placement",
-        "location": "../../examples/kernel/nortos/basic_smart_placement/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/kernel/nortos/basic_smart_placement/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12480,7 +12480,7 @@
         ],
         "description": "WFI Standy mode example demo CPU is R5FSS0-0 running NORTOS.",
         "name": "wfi_standby_demo",
-        "location": "../../examples/kernel/nortos/wfi_standby_demo/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/kernel/nortos/wfi_standby_demo/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12513,7 +12513,7 @@
         ],
         "description": "WFI Standy mode example demo CPU is R5FSS1-0 running NORTOS.",
         "name": "wfi_standby_demo",
-        "location": "../../examples/kernel/nortos/wfi_standby_demo/am261x-cc/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/kernel/nortos/wfi_standby_demo/am261x-som/r5fss1-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12546,7 +12546,7 @@
         ],
         "description": "A Mathlib Benchmark Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "mathlib_benchmark",
-        "location": "../../examples/mathlib/benchmark/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/mathlib/benchmark/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12610,7 +12610,7 @@
         ],
         "description": "A Enet Cpsw Est Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_est",
-        "location": "../../examples/networking/enet_cpsw_est/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/enet_cpsw_est/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12674,7 +12674,7 @@
         ],
         "description": "A Enet L2 Cpsw Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_l2_cpsw",
-        "location": "../../examples/networking/enet_layer2_cpsw/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/enet_layer2_cpsw/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12706,7 +12706,7 @@
         ],
         "description": "A Enet L2 Cpsw Example. CPU is R5FSS0-1 running FREERTOS.",
         "name": "enet_l2_cpsw",
-        "location": "../../examples/networking/enet_layer2_cpsw/am261x-cc/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/enet_layer2_cpsw/am261x-som/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12802,7 +12802,7 @@
         ],
         "description": "A Enet Loopback Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_loopback",
-        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12835,7 +12835,7 @@
         ],
         "description": "A Enet Loopback Example. CPU is R5FSS0-1 running FREERTOS.",
         "name": "enet_loopback",
-        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am261x-cc/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/enet_loopback/enet_cpsw_loopback/am261x-som/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12901,7 +12901,7 @@
         ],
         "description": "A Enet Txsg Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_txsg",
-        "location": "../../examples/networking/enet_tx_scatter_gather/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/enet_tx_scatter_gather/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -12965,7 +12965,7 @@
         ],
         "description": "A Cpsw Lwip Https Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "cpsw_lwip_https",
-        "location": "../../examples/networking/lwip/cpsw_lwip_https/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/lwip/cpsw_lwip_https/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13031,7 +13031,7 @@
         ],
         "description": "A Enet Cpsw Rawhttpserver Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "enet_cpsw_rawhttpserver",
-        "location": "../../examples/networking/lwip/enet_cpsw_rawhttpserver/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/lwip/enet_cpsw_rawhttpserver/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13097,7 +13097,7 @@
         ],
         "description": "A Enet Cpsw Socket Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_socket",
-        "location": "../../examples/networking/lwip/enet_cpsw_socket/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/lwip/enet_cpsw_socket/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13163,7 +13163,7 @@
         ],
         "description": "A Enet Cpsw Tcpclient Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_tcpclient",
-        "location": "../../examples/networking/lwip/enet_cpsw_tcpclient/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/lwip/enet_cpsw_tcpclient/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13229,7 +13229,7 @@
         ],
         "description": "A Enet Cpsw Tcpserver Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_tcpserver",
-        "location": "../../examples/networking/lwip/enet_cpsw_tcpserver/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/lwip/enet_cpsw_tcpserver/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13295,7 +13295,7 @@
         ],
         "description": "A Enet Cpsw Udp Igmp Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_udp_igmp",
-        "location": "../../examples/networking/lwip/enet_cpsw_udp_igmp/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/lwip/enet_cpsw_udp_igmp/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13361,7 +13361,7 @@
         ],
         "description": "A Enet Cpsw Udpclient Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_cpsw_udpclient",
-        "location": "../../examples/networking/lwip/enet_cpsw_udpclient/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/lwip/enet_cpsw_udpclient/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13427,7 +13427,7 @@
         ],
         "description": "A Enet Lwip Cpsw Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "enet_lwip_cpsw",
-        "location": "../../examples/networking/lwip/enet_lwip_cpsw/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/lwip/enet_lwip_cpsw/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13460,7 +13460,7 @@
         ],
         "description": "A Enet Lwip Cpsw Example. CPU is R5FSS0-1 running FREERTOS.",
         "name": "enet_lwip_cpsw",
-        "location": "../../examples/networking/lwip/enet_lwip_cpsw/am261x-cc/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/lwip/enet_lwip_cpsw/am261x-som/r5fss0-1_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13526,7 +13526,7 @@
         ],
         "description": "A Icss Emac Lwip Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "icss_emac_lwip",
-        "location": "../../examples/networking/lwip/icss_emac_lwip/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/lwip/icss_emac_lwip/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13625,7 +13625,7 @@
         ],
         "description": "A Gptp App Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "gptp_app",
-        "location": "../../examples/networking/tsn/gptp_cpsw_app/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/tsn/gptp_cpsw_app/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13691,7 +13691,7 @@
         ],
         "description": "A Gptp Lwip Cpsw Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "gptp_lwip_cpsw",
-        "location": "../../examples/networking/tsn/gptp_lwip_cpsw/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/tsn/gptp_lwip_cpsw/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13757,7 +13757,7 @@
         ],
         "description": "A Lldp App Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "lldp_app",
-        "location": "../../examples/networking/tsn/lldp_cpsw_app/am261x-cc/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/networking/tsn/lldp_cpsw_app/am261x-som/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13790,7 +13790,7 @@
         ],
         "description": "This example verifies the operation of CCM module CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ccm_example",
-        "location": "../../examples/sdl/ccm/sdl_ccm_example/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/ccm/sdl_ccm_example/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13823,7 +13823,7 @@
         ],
         "description": "This example verifies the operation of CCM RL2 module CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ccm_rl2_example",
-        "location": "../../examples/sdl/ccm/sdl_ccm_rl2_example/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/ccm/sdl_ccm_rl2_example/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13856,7 +13856,7 @@
         ],
         "description": "This example verifies the operation of CCM TMU module CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ccm_tmu_example",
-        "location": "../../examples/sdl/ccm/sdl_ccm_tmu_example/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/ccm/sdl_ccm_tmu_example/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13889,7 +13889,7 @@
         ],
         "description": "This example verifies the operation of VIM module CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_vim_example",
-        "location": "../../examples/sdl/ccm/sdl_ccm_vim/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/ccm/sdl_ccm_vim/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13922,7 +13922,7 @@
         ],
         "description": "This example verifies DCC in various modes of operation CPU is R5FSS0-0 running NORTOS.",
         "name": "dcc",
-        "location": "../../examples/sdl/dcc/dcc_modes1/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/dcc/dcc_modes1/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13955,7 +13955,7 @@
         ],
         "description": "This example verifies ECC inject operations in single and double bits for ICSSM CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ecc_icssm",
-        "location": "../../examples/sdl/ecc/sdl_ecc_icssm/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/ecc/sdl_ecc_icssm/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -13988,7 +13988,7 @@
         ],
         "description": "This example verifies ECC inject operations in single and double bits forMCAN CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ecc_mcan",
-        "location": "../../examples/sdl/ecc/sdl_ecc_mcan/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/ecc/sdl_ecc_mcan/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14021,7 +14021,7 @@
         ],
         "description": "This example verifies ECC inject operations in single and double bits for MSS L2 CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ecc_mss_l2",
-        "location": "../../examples/sdl/ecc/sdl_ecc_mss_l2/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/ecc/sdl_ecc_mss_l2/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14054,7 +14054,7 @@
         ],
         "description": "This example verifies ECC inject operations in single and double bits for TPTC CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ecc_mss_tptc",
-        "location": "../../examples/sdl/ecc/sdl_ecc_mss_tptc/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/ecc/sdl_ecc_mss_tptc/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14087,7 +14087,7 @@
         ],
         "description": "This example verifies ECC inject operations in single and double bits for R5FA ATCM0 CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ecc_r5_atcm0",
-        "location": "../../examples/sdl/ecc/sdl_ecc_r5_atcm0/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/ecc/sdl_ecc_r5_atcm0/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14120,7 +14120,7 @@
         ],
         "description": "This example verifies ECC inject operations in single and double bits for R5F BTCM CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ecc_r5_btcm",
-        "location": "../../examples/sdl/ecc/sdl_ecc_r5_btcm/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/ecc/sdl_ecc_r5_btcm/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14153,7 +14153,7 @@
         ],
         "description": "ECC BUS SAFETY Example This example demonstrates all MSS and DSS Nodes ECC BUS Safety Diagnostics CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_ecc_bus_safety_example",
-        "location": "../../examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/ecc_bus_safety/ecc_bus_safety_main/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14186,7 +14186,7 @@
         ],
         "description": "This example verifies MCRC Auto CPU operation CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_mcrc_auto_cpu_example",
-        "location": "../../examples/sdl/mcrc/mcrc_auto_cpu/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/mcrc/mcrc_auto_cpu/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14219,7 +14219,7 @@
         ],
         "description": "This example verifies MCRC Full CPU operation CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_mcrc_full_cpu_example",
-        "location": "../../examples/sdl/mcrc/mcrc_full_cpu/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/mcrc/mcrc_full_cpu/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14252,7 +14252,7 @@
         ],
         "description": "This example verifies MCRC Semi CPU operation CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_mcrc_semi_cpu_example",
-        "location": "../../examples/sdl/mcrc/mcrc_semi_cpu/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/mcrc/mcrc_semi_cpu/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14285,7 +14285,7 @@
         ],
         "description": "This example verifies error inject operations for DMA Parity CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_dma_parity",
-        "location": "../../examples/sdl/parity/sdl_dma_parity/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/parity/sdl_dma_parity/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14318,7 +14318,7 @@
         ],
         "description": "This example verifies error inject operations for TCM Parity CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_tcm_parity",
-        "location": "../../examples/sdl/parity/sdl_tcm_parity/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/parity/sdl_tcm_parity/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14351,7 +14351,7 @@
         ],
         "description": "This example verifies error inject operations for tmu Parity CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_tmu_parity",
-        "location": "../../examples/sdl/parity/sdl_tmu_parity/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/parity/sdl_tmu_parity/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14384,7 +14384,7 @@
         ],
         "description": "This example verifies the PBIST CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_pbist_example",
-        "location": "../../examples/sdl/pbist/pbist_mcu/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/pbist/pbist_mcu/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14417,7 +14417,7 @@
         ],
         "description": "This example read all r5f cpu static register CPU is R5FSS0-0 running NORTOS.",
         "name": "r5f_cpu_utils",
-        "location": "../../examples/sdl/r5f_cpu_utils/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/r5f_cpu_utils/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14449,7 +14449,7 @@
         ],
         "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_rti_example_uc1",
-        "location": "../../examples/sdl/rti/UC1/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/rti/UC1/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14482,7 +14482,7 @@
         ],
         "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_rti_example_uc2",
-        "location": "../../examples/sdl/rti/UC2/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/rti/UC2/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14515,7 +14515,7 @@
         ],
         "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_rti_example_uc3",
-        "location": "../../examples/sdl/rti/UC3/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/rti/UC3/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14548,7 +14548,7 @@
         ],
         "description": "This example verifies RTI operation CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_rti_example_uc4",
-        "location": "../../examples/sdl/rti/UC4/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/rti/UC4/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14581,7 +14581,7 @@
         ],
         "description": "This example verifies STC is Done for R5F0 core followed by R5F1. CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_stc",
-        "location": "../../examples/sdl/stc/stc_mcu/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/stc/stc_mcu/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14614,7 +14614,7 @@
         ],
         "description": "This example demonstrates error enjecting usecase of Timeout Gasket (TOG) CPU is R5FSS0-0 running NORTOS.",
         "name": "sdl_stog_r5f",
-        "location": "../../examples/sdl/stog/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/stog/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14646,7 +14646,7 @@
         ],
         "description": "This example verifies CRC for TMU ROM CPU is R5FSS0-0 running NORTOS.",
         "name": "tmu_rom_checksum_example",
-        "location": "../../examples/sdl/tmu_rom_checksum/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/tmu_rom_checksum/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14678,7 +14678,7 @@
         ],
         "description": "This example verifies VTM operation CPU is R5FSS0-0 running NORTOS.",
         "name": "vtm_example",
-        "location": "../../examples/sdl/vtm/vtm_mcu/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/sdl/vtm/vtm_mcu/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14711,7 +14711,7 @@
         ],
         "description": "A Crypto Dthe Aes Cbc 128 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_dthe_aes_cbc_128",
-        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cbc_128/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14745,7 +14745,7 @@
         ],
         "description": "A Crypto Dthe Aes Cbc 256 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_dthe_aes_cbc_256",
-        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cbc_256/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cbc_256/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14779,7 +14779,7 @@
         ],
         "description": "A Crypto Aes Cfb Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_aes_cfb",
-        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cfb/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cfb/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14813,7 +14813,7 @@
         ],
         "description": "A Crypto Dthe Aes Cmac 128 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_dthe_aes_cmac_128",
-        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cmac_128/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cmac_128/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14847,7 +14847,7 @@
         ],
         "description": "A Crypto Dthe Aes Cmac 256 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_dthe_aes_cmac_256",
-        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cmac_256/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_cmac_256/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14881,7 +14881,7 @@
         ],
         "description": "A Crypto Dthe Aes Ctr Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_dthe_aes_ctr",
-        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ctr/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ctr/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14915,7 +14915,7 @@
         ],
         "description": "A Crypto Dthe Aes Ecb 128 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_dthe_aes_ecb_128",
-        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ecb_128/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ecb_128/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14949,7 +14949,7 @@
         ],
         "description": "A Crypto Dthe Aes Ecb 256 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_dthe_aes_ecb_256",
-        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ecb_256/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_ecb_256/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -14983,7 +14983,7 @@
         ],
         "description": "A Crypto Dthe Aes Stream Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "crypto_dthe_aes_stream",
-        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_stream/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/security/crypto/dthe_aes/crypto_aes_stream/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -15017,7 +15017,7 @@
         ],
         "description": "A Dthe Hmac Sha256 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "dthe_hmac_sha256",
-        "location": "../../examples/security/crypto/dthe_sha/crypto_hmac_sha256/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/security/crypto/dthe_sha/crypto_hmac_sha256/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -15051,7 +15051,7 @@
         ],
         "description": "A Dthe Hmac Sha512 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "dthe_hmac_sha512",
-        "location": "../../examples/security/crypto/dthe_sha/crypto_hmac_sha512/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/security/crypto/dthe_sha/crypto_hmac_sha512/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -15085,7 +15085,7 @@
         ],
         "description": "A Dthe Sha 256 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "dthe_sha_256",
-        "location": "../../examples/security/crypto/dthe_sha/crypto_sha_256/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/security/crypto/dthe_sha/crypto_sha_256/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -15119,7 +15119,7 @@
         ],
         "description": "A Dthe Sha 512 Example. CPU is R5FSS0-0 running NORTOS.",
         "name": "dthe_sha_512",
-        "location": "../../examples/security/crypto/dthe_sha/crypto_sha_512/am261x-cc/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "location": "../../examples/security/crypto/dthe_sha/crypto_sha_512/am261x-som/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -15153,7 +15153,7 @@
         ],
         "description": "An EDMA Interrupt transfer example. This example demonstrates interrupts in EDMA. System project.",
         "name": "edma_interrupt_transfer",
-        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-cc/system_freertos_nortos/system.projectspec",
+        "location": "../../examples/drivers/edma/edma_interrupt_transfer/am261x-som/system_freertos_nortos/system.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -15213,7 +15213,7 @@
         ],
         "description": "Demonstrate mpu firewall services and interrupt handling System project.",
         "name": "mpu_firewall_services_demo",
-        "location": "../../examples/drivers/hsmclient/mpu_firewall_services_demo/am261x-cc/system_nortos/system.projectspec",
+        "location": "../../examples/drivers/hsmclient/mpu_firewall_services_demo/am261x-som/system_nortos/system.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -15243,7 +15243,7 @@
         ],
         "description": "A Ipc Notify Echo System Example.",
         "name": "ipc_notify_echo",
-        "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-cc/system_freertos_nortos/system.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_notify_echo/am261x-som/system_freertos_nortos/system.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -15303,7 +15303,7 @@
         ],
         "description": "A Ipc Rpmsg Echo System Example.",
         "name": "ipc_rpmsg_echo",
-        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-cc/system_freertos_nortos/system.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_rpmsg_echo/am261x-som/system_freertos_nortos/system.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -15363,7 +15363,7 @@
         ],
         "description": "A Ipc Spinlock Sharedmem System Example.",
         "name": "ipc_spinlock_sharedmem",
-        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am261x-cc/system_freertos_nortos/system.projectspec",
+        "location": "../../examples/drivers/ipc/ipc_spinlock_sharedmem/am261x-som/system_freertos_nortos/system.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -15423,7 +15423,7 @@
         ],
         "description": "An example to demonstrate the working of spinlock System project.",
         "name": "spinlock_example",
-        "location": "../../examples/drivers/spinlock/spinlock_example/am261x-cc/system_nortos/system.projectspec",
+        "location": "../../examples/drivers/spinlock/spinlock_example/am261x-som/system_nortos/system.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -15483,7 +15483,7 @@
         ],
         "description": "This example shows 4 core support of TMU. System project.",
         "name": "tmu_cores_support",
-        "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-cc/system_nortos/system.projectspec",
+        "location": "../../examples/drivers/tmu/tmu_cores_support/am261x-som/system_nortos/system.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -15543,7 +15543,7 @@
         ],
         "description": "An Empty Example. This example is intended to be a starting point for new development System project.",
         "name": "empty",
-        "location": "../../examples/empty/am261x-cc/system_freertos/system.projectspec",
+        "location": "../../examples/empty/am261x-som/system_freertos/system.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -15599,7 +15599,7 @@
         ],
         "description": "An Empty Example. This example is intended to be a starting point for new development System project.",
         "name": "empty",
-        "location": "../../examples/empty/am261x-cc/system_nortos/system.projectspec",
+        "location": "../../examples/empty/am261x-som/system_nortos/system.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -15655,7 +15655,7 @@
         ],
         "description": "WFI Standy mode example demo System project.",
         "name": "wfi_standby_demo",
-        "location": "../../examples/kernel/nortos/wfi_standby_demo/am261x-cc/system_nortos/system.projectspec",
+        "location": "../../examples/kernel/nortos/wfi_standby_demo/am261x-som/system_nortos/system.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],
@@ -15685,7 +15685,7 @@
         ],
         "description": "This example verifies STC is Done for R5F0 core followed by R5F1. System project.",
         "name": "sdl_stc",
-        "location": "../../examples/sdl/stc/stc_mcu/am261x-cc/system_nortos_nortos/system.projectspec",
+        "location": "../../examples/sdl/stc/stc_mcu/am261x-som/system_nortos_nortos/system.projectspec",
         "devtools": [
             "TMDSCNCD263P"
         ],

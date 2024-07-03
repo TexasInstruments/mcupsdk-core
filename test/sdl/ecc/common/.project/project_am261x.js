@@ -30,8 +30,8 @@ const filedirs = {
         "../../..", /* Example base */
         "../../../../../dpl", /* SDL DPL base */
 		"../../../../common",
-		"../../../../ecc_sdl_funcTest/am261x-cc",/* SDL FT base */
-		"../../../../ecc_sdl_unitTest/am261x-cc",/* SDL UT base */
+		"../../../../ecc_sdl_funcTest/am261x-som",/* SDL FT base */
+		"../../../../ecc_sdl_unitTest/am261x-som",/* SDL UT base */
     ],
 };
 
@@ -49,8 +49,8 @@ const includes_nortos = {
         "${MCU_PLUS_SDK_PATH}/test/unity/",
         "${MCU_PLUS_SDK_PATH}/test/sdl/dpl/",
 		"${MCU_PLUS_SDK_PATH}/test/sdl/ecc/common/",
-		"${MCU_PLUS_SDK_PATH}/test/sdl/ecc/ecc_sdl_funcTest/am261x-cc/",
-	    "${MCU_PLUS_SDK_PATH}/test/sdl/ecc/ecc_sdl_unitTest/am261x-cc/",
+		"${MCU_PLUS_SDK_PATH}/test/sdl/ecc/ecc_sdl_funcTest/am261x-som/",
+	    "${MCU_PLUS_SDK_PATH}/test/sdl/ecc/ecc_sdl_unitTest/am261x-som/",
     ],
 };
 
@@ -83,7 +83,7 @@ const templates_nortos_r5f =
 ];
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-cc", os: "nortos"}
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am261x-som", os: "nortos"}
 ];
 
 function getComponentProperty() {
