@@ -40,6 +40,7 @@
 #include <unity.h>
 #include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/CycleCounterP.h>
+#include <kernel/dpl/ClockP.h>
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 
@@ -52,6 +53,40 @@
 #define TEST_OSPI_DATA_SIZE                (256U) /* has to be 256 B aligned */
 #define TEST_OSPI_DATA_REPEAT_COUNT        (8U)
 #define TEST_OSPI_RX_BUF_SIZE              (TEST_OSPI_DATA_SIZE * TEST_OSPI_DATA_REPEAT_COUNT)
+#if defined(SOC_AM65X)
+#define TEST_OSPI_1KB_SIZE                 (256*4U)
+#define TEST_OSPI_2KB_SIZE                 (TEST_OSPI_1KB_SIZE*2U)
+#define TEST_OSPI_4KB_SIZE                 (TEST_OSPI_1KB_SIZE*4U)
+#define TEST_OSPI_1MB_SIZE                 (TEST_OSPI_1KB_SIZE*TEST_OSPI_1KB_SIZE)
+#define TEST_OSPI_5MB_SIZE                 (TEST_OSPI_1MB_SIZE*5U)
+#define TEST_OSPI_10MB_SIZE                (TEST_OSPI_1MB_SIZE*10U)
+#define TEST_OSPI_MAX_TEST_SIZE            (TEST_OSPI_10MB_SIZE)
+#define TEST_OSPI_BLOCK_SIZE               (TEST_OSPI_1KB_SIZE*256U)
+#define TEST_OSPI_READ_FRCOUNT             (10U)  /* Frequency of reading required for average time of read operation*/
+#define TEST_OSPI_PERF_TEST_DATA_COUNT     (3U)   /* Change this value as per testSizes list size */
+
+/* ========================================================================== */
+/*                 Structure Declarations                             */
+/* ========================================================================== */
+/* Structure to store mode settings */
+typedef struct Test_FlashModeSettings_t
+{
+    uint32_t flashType;
+    char* flashName;
+    uint32_t cfgflashType;
+    uint32_t flashProtocol;
+    uint32_t phyEnable;
+    uint32_t dmaEnable;
+    uint32_t dacEnable;
+}Test_FlashModeSettings;
+
+typedef struct TestData_SizesAttr_t
+{
+    uint32_t dataSize; //in MiB
+    float writeSpeed;
+    float readSpeed;
+}TestData_SizesAttr;
+#endif
 
 /* ========================================================================== */
 /*                 Internal Function Declarations                             */
@@ -62,6 +97,14 @@ static void test_ospi_read_write_1s1s1s_config(void *args);
 static void test_ospi_read_write_max_config(void *args);
 static void test_ospi_phy_tuning(void *args);
 
+#if defined(SOC_AM65X)
+static void test_ospi_read_perf(void *args);
+static float test_ospi_write_in_mb(uint32_t flashOffset, uint32_t writeSize);
+static float test_ospi_read_in_mb(uint32_t flashOffset, uint32_t readSize);
+static int32_t test_ospi_read_write_test_in_mb(TestData_SizesAttr* testDataCurObj, uint32_t flashOffset, uint32_t dataSize);
+static void test_ospi_gdevcfg_set_flash_protocol(uint32_t givenflashProtocol);
+static void set_test_flash_type(void);
+#endif
 
 /* ========================================================================== */
 /*                            Global Variables                                */
@@ -87,7 +130,14 @@ uint8_t gOspiTestTxBuf[TEST_OSPI_DATA_SIZE] =
     0xF0,0xF1,0xF2,0xF3,0xF4,0xF5,0xF6,0xF7,0xF8,0xF9,0xFA,0xFB,0xFC,0xFD,0xFE,0xFF
 };
 
+#if defined(SOC_AM65X)
+uint8_t gOspiTestTxBulkBuf[TEST_OSPI_MAX_TEST_SIZE]__attribute__ ((section (".globalScratchBuffer"), aligned (128U)));
+uint8_t gOspiTestRxBuf[TEST_OSPI_MAX_TEST_SIZE]__attribute__ ((section (".globalScratchBuffer"), aligned (128U)));
+
+static Test_FlashModeSettings modeParams;
+#else
 uint8_t gOspiTestRxBuf[TEST_OSPI_RX_BUF_SIZE] __attribute__((aligned(128U)));
+#endif
 
 /* ========================================================================== */
 /*                          Function Definitions                              */
@@ -97,12 +147,26 @@ void test_main(void *args)
 {
     /* Open drivers to open the UART driver for console */
     Drivers_open();
+#if defined(SOC_AM65X)
+    set_test_flash_type();
+    Board_flashClose();
+    Drivers_ospiClose();
+    Drivers_ospiOpen();
+#endif
     UNITY_BEGIN();
 
     RUN_TEST(test_ospi_read_write_1s1s1s_config, 13386, NULL);
     Drivers_ospiClose();
     Drivers_ospiOpen();
     RUN_TEST(test_ospi_phy_tuning, 13387, NULL);
+#if defined(SOC_AM65X)
+    Drivers_ospiClose();
+    Drivers_ospiOpen();
+    RUN_TEST(test_ospi_read_write_max_config, 0, NULL);
+    Drivers_ospiClose();
+    Drivers_ospiOpen();
+    RUN_TEST(test_ospi_read_perf, 0, NULL);
+#endif
 
     UNITY_END();
     Drivers_close();
@@ -203,5 +267,236 @@ static void test_ospi_phy_tuning(void *args)
     Board_driversClose();
 }
 
+#if defined(SOC_AM65X)
+static void test_ospi_read_write_max_config(void *args)
+{
+    int32_t retVal = SystemP_SUCCESS;
+    uint32_t blk, page, i;
+    uint32_t offset = TEST_OSPI_FLASH_OFFSET_BASE;
 
+    /* Open Flash drivers with OSPI instance as input */
+    retVal = Board_driversOpen();
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+    /* Block erase at the test offset */
+    Flash_offsetToBlkPage(gFlashHandle[CONFIG_FLASH0], offset, &blk, &page);
+    retVal = Flash_eraseBlk(gFlashHandle[CONFIG_FLASH0], blk);
+
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+    for(i = 0; i < TEST_OSPI_DATA_REPEAT_COUNT; i++)
+    {
+        retVal += Flash_write(gFlashHandle[CONFIG_FLASH0], offset + i*TEST_OSPI_DATA_SIZE, gOspiTestTxBuf, TEST_OSPI_DATA_SIZE);
+    }
+
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+    retVal = Flash_read(gFlashHandle[CONFIG_FLASH0], offset, gOspiTestRxBuf, TEST_OSPI_RX_BUF_SIZE);
+
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+    for(i = 0; i < TEST_OSPI_RX_BUF_SIZE; i++)
+    {
+        if(gOspiTestRxBuf[i] != gOspiTestTxBuf[(i%256)])
+        {
+            retVal = SystemP_FAILURE;
+            break;
+        }
+    }
+
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+    Board_driversClose();
+}
+
+static void test_ospi_read_perf(void *args)
+{
+    int32_t retVal = SystemP_SUCCESS;
+    uint32_t blk, page;
+    uint32_t offset = TEST_OSPI_FLASH_OFFSET_BASE;
+    /* Please provide size of atleast 1MiB */
+    uint32_t testSizes[TEST_OSPI_PERF_TEST_DATA_COUNT] = {TEST_OSPI_1MB_SIZE, TEST_OSPI_5MB_SIZE, TEST_OSPI_10MB_SIZE};
+
+    TestData_SizesAttr testDataObj[TEST_OSPI_PERF_TEST_DATA_COUNT],TestDataCurrObj;
+
+    const char *flashProtocolList[] = {0,"FLASH_CFG_PROTO_1S_1S_1S","FLASH_CFG_PROTO_1S_1S_2S","FLASH_CFG_PROTO_1S_1S_4S",
+                                        "FLASH_CFG_PROTO_1S_1S_8S","FLASH_CFG_PROTO_4S_4S_4S","FLASH_CFG_PROTO_4S_4D_4D",
+                                        "FLASH_CFG_PROTO_8S_8S_8S","FLASH_CFG_PROTO_8D_8D_8D","FLASH_CFG_PROTO_CUSTOM"};
+
+    const char *flashTypeList[] = {"SERIAL NOR","SERIAL NAND","PARALLEL NOR","PARALLEL NAND"};
+
+    OSPI_Handle ospiHandle = OSPI_getHandle(CONFIG_OSPI0);
+
+    modeParams.flashProtocol = gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.protocol;
+    modeParams.phyEnable = ((OSPI_Config*)ospiHandle)->attrs->phyEnable;
+    modeParams.dmaEnable = ((OSPI_Config*)ospiHandle)->attrs->dmaEnable;
+    modeParams.dacEnable = ((OSPI_Config*)ospiHandle)->attrs->dacEnable;
+
+    /* Open Flash drivers with OSPI instance as input */
+    retVal = Board_driversOpen();
+
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+
+    /* Block erase at the test offset */
+    Flash_offsetToBlkPage(gFlashHandle[CONFIG_FLASH0], offset, &blk, &page);
+
+    /* The contents of buffer "gOspiTestTxBuf" are copied at incremental offsets of 'TEST_OSPI_DATA_SIZE'
+     * until gOspiTestTxBulkBuf buffer is full
+     */
+    for(uint32_t txChunkCnt = 0; txChunkCnt < TEST_OSPI_MAX_TEST_SIZE/TEST_OSPI_DATA_SIZE; txChunkCnt++)
+    {
+        memcpy(gOspiTestTxBulkBuf + txChunkCnt*sizeof(gOspiTestTxBuf) , gOspiTestTxBuf , sizeof(gOspiTestTxBuf));
+    }
+
+    for(uint32_t testCount = 0; testCount < sizeof(testSizes)/sizeof(testSizes[0]); testCount++)
+    {
+        for(uint32_t blkCount = 0; blkCount < testSizes[testCount]/TEST_OSPI_BLOCK_SIZE; blkCount++)
+        {
+            retVal = Flash_eraseBlk(gFlashHandle[CONFIG_FLASH0], blk + blkCount);
+            TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+        }
+
+        retVal = test_ospi_read_write_test_in_mb(&TestDataCurrObj, offset, testSizes[testCount]);
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+        memcpy(&testDataObj[testCount],&TestDataCurrObj,sizeof(TestData_SizesAttr));
+    }
+
+    /* Print performance numbers. */
+    DebugP_log("\n[TEST OSPI] Performance Numbers Print Start\r\n\n");
+    DebugP_log("Flash type: %s\r\n",flashTypeList[modeParams.cfgflashType]);
+    DebugP_log("Flash protocol: %s\r\n",flashProtocolList[modeParams.flashProtocol]);
+
+    if(modeParams.phyEnable)
+        DebugP_log("PHY condition: enabled\r\n");
+    else
+        DebugP_log("PHY condition: disabled\r\n");
+
+    if(modeParams.dmaEnable)
+        DebugP_log("DMA condition: enabled\r\n");
+    else
+        DebugP_log("DMA condition: disabled\r\n");
+
+    if(modeParams.dacEnable)
+        DebugP_log("DAC condition: enabled\r\n");
+    else
+        DebugP_log("DAC condition: disabled\r\n\n");
+
+    DebugP_log("Data size(MiB) | Write speed(MiBps) | Read speed(MiBps)\r\n");
+    DebugP_log("---------------|--------------------|-----------------\r\n");
+
+    for (uint32_t testCount=0; testCount<sizeof(testSizes)/sizeof(testSizes[0]); testCount++) {
+        DebugP_log(" %d\t       | %.2f\t\t    | %.2f\r\n", testDataObj[testCount].dataSize, testDataObj[testCount].writeSpeed,
+            testDataObj[testCount].readSpeed);
+    }
+
+    DebugP_log("\n[TEST OSPI] Performance Numbers Print End\r\n\n");
+
+    Board_driversClose();
+}
+
+/*
+ * Helper functions
+ */
+
+static void set_test_flash_type(void)
+{
+    modeParams.flashType = gFlashConfig[CONFIG_FLASH0].attrs->flashType;
+    modeParams.flashName = gFlashConfig[CONFIG_FLASH0].attrs->flashName;
+
+    /* Entend this for more flashNames when required*/
+    if(modeParams.flashType == CONFIG_FLASH_TYPE_SERIAL &&
+            ((!strcmp(modeParams.flashName,"S28HS512T")) || (!strcmp(modeParams.flashName,"MT35XU512A"))))
+         modeParams.cfgflashType = CONFIG_FLASH_TYPE_SERIAL_NOR;
+    else if(modeParams.flashType == CONFIG_FLASH_TYPE_SERIAL && !strcmp(modeParams.flashName,"W35N01JWTBAG"))
+         modeParams.cfgflashType = CONFIG_FLASH_TYPE_SERIAL_NAND;
+}
+
+
+static void test_ospi_gdevcfg_set_flash_protocol(uint32_t givenflashProtocol)
+{
+    if(modeParams.cfgflashType == CONFIG_FLASH_TYPE_SERIAL_NAND)
+    {
+        switch (givenflashProtocol) {
+            case FLASH_CFG_PROTO_1S_1S_1S:
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.protocol = FLASH_CFG_PROTO_1S_1S_1S;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.isDtr = FALSE;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.cmdRd = 0x03;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.cmdWr = 0x84;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.dummyClksCmd = 0;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.dummyClksRd = 8;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.protoCfg.isAddrReg = FALSE;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.protoCfg.cmdRegWr = 0x00;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.protoCfg.cmdRegRd = 0x00;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.protoCfg.cfgReg = 0x00;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.protoCfg.shift = 0;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.protoCfg.mask = 0x00;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.protoCfg.cfgRegBitP = 0;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.dummyCfg.isAddrReg = FALSE;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.dummyCfg.cmdRegWr = 0x00;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.dummyCfg.cmdRegRd = 0x00;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.dummyCfg.cfgReg = 0x00;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.dummyCfg.shift = 0;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.dummyCfg.mask = 0x00;
+	            gFlashConfig[CONFIG_FLASH0].devConfig->protocolCfg.dummyCfg.cfgRegBitP = 0;
+                break;
+
+            default:
+                break;
+        }
+    }
+}
+
+static float test_ospi_write_in_mb(uint32_t flashOffset, uint32_t writeSize)
+{
+    int32_t retVal = SystemP_SUCCESS;
+    uint64_t startTime, endTime;
+
+    startTime = ClockP_getTimeUsec();
+    retVal = Flash_write(gFlashHandle[CONFIG_FLASH0], flashOffset, gOspiTestTxBulkBuf, writeSize);
+    TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+    endTime = ClockP_getTimeUsec();
+
+    return (float)(endTime - startTime);
+}
+
+static float test_ospi_read_in_mb(uint32_t flashOffset, uint32_t readSize)
+{
+    int32_t retVal = SystemP_SUCCESS;
+    uint64_t startTime, endTime, totalReadTime=0;
+    uint8_t readFcnt = 0;
+
+    while(readFcnt++ < TEST_OSPI_READ_FRCOUNT)
+    {
+        startTime = ClockP_getTimeUsec();
+        retVal = Flash_read(gFlashHandle[CONFIG_FLASH0], flashOffset, gOspiTestRxBuf, readSize);
+        endTime = ClockP_getTimeUsec();
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+        totalReadTime += endTime-startTime;
+    }
+    return (float)totalReadTime/(readFcnt-1);
+}
+
+static int32_t test_ospi_read_write_test_in_mb(TestData_SizesAttr* testDataCurObj, uint32_t flashOffset, uint32_t dataSize)
+{
+    int32_t retVal = SystemP_SUCCESS;
+    float readTime, writeTime;
+
+    if(dataSize < TEST_OSPI_1MB_SIZE){
+        retVal = SystemP_FAILURE;
+        TEST_ASSERT_EQUAL_INT32(SystemP_SUCCESS, retVal);
+    }
+
+    writeTime = test_ospi_write_in_mb(flashOffset, dataSize);
+
+    readTime = test_ospi_read_in_mb(flashOffset, dataSize);
+
+    testDataCurObj->dataSize = dataSize/TEST_OSPI_1MB_SIZE;
+    testDataCurObj->writeSpeed = (float)((float)dataSize/(float)(writeTime));
+    testDataCurObj->readSpeed = (float)((float)dataSize/(float)(readTime));
+
+    /* Test if read data matches with written data */
+    retVal = memcmp(gOspiTestRxBuf, gOspiTestTxBulkBuf, dataSize);
+    return retVal;
+}
+#endif
 

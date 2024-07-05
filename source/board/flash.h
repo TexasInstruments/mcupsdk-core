@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -45,6 +45,18 @@ extern "C"
 #include <board/flash/flash_config.h>
 
 #define FLASH_INVALID_VALUE (0xFFFFFFFFU)
+
+#define CONFIG_FLASH_TYPE_SERIAL            ((uint32_t)0x1)
+#define CONFIG_FLASH_TYPE_PARALLEL          ((uint32_t)0x2)
+
+/**
+ * \brief Flash type supported
+ */
+#define CONFIG_FLASH_TYPE_SERIAL_NOR               (0x00U)
+#define CONFIG_FLASH_TYPE_SERIAL_NAND              (0x01U)
+#define CONFIG_FLASH_TYPE_PARALLEL_NOR             (0x02U)
+#define CONFIG_FLASH_TYPE_PARALLEL_NAND            (0x03U)
+#define CONFIG_FLASH_TYPE_INVALID                  (0xFFU)
 
 /**
  *  \defgroup BOARD_FLASH_MODULE APIs for FLASH
