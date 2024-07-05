@@ -50,6 +50,7 @@ source/industrial_comms/ethercat_slave/stack/patch/SlaveFiles/src/*.h
 source/industrial_comms/ethercat_slave/stack/patch/SlaveFiles/src/*.dll
 source/industrial_comms/ethercat_slave/stack/patch/SlaveFiles/src/*.lib
 source/networking/enet/core
+source/security/security_common
 source/networking/lwip/lwip-stack
 source/cmsis
 source/commercial
