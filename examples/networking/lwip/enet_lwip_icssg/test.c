@@ -396,8 +396,8 @@ test_netif_init(void)
       /* Fall here for Static IP setting */
       LWIP_ASSERT("More IP allocated than reserved" , i < IP_ADDR_POOL_COUNT);
       ip4_addr_set(&ipaddr, & gStaticIP[i]);
-      ip4_addr_set(&gw, & gStaticIPNetmask[i]);
-      ip4_addr_set(&netmask, & gStaticIPGateway[i]);
+      ip4_addr_set(&gw, & gStaticIPGateway[i]);
+      ip4_addr_set(&netmask, & gStaticIPNetmask[i]);
       DebugP_log("[%d]: Starting lwIP, local interface IP is %s\r\n", i, ip4addr_ntoa(&ipaddr));
 #endif /* USE_DHCP */
 #endif /* USE_ETHERNET_TCPIP */
