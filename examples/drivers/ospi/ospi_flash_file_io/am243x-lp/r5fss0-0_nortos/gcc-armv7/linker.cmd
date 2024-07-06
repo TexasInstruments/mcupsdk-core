@@ -58,7 +58,7 @@ MEMORY
     /* when using multi-core application's i.e more than one R5F/M4F active, make sure
      * this memory does not overlap with other R5F's
      */
-    MSRAM     : ORIGIN = 0x70080000 , LENGTH = 0x40000
+    MSRAM     : ORIGIN = 0x70080000 , LENGTH = 0x100000
 
     /* This section can be used to put XIP section of the application in flash, make sure this does not overlap with
      * other CPUs. Also make sure to add a MPU entry for this section and mark it as cached and code executable
@@ -94,6 +94,15 @@ SECTIONS
 
     /* This is rest of initialized data. This can be placed in DDR if DDR is available and needed */
     .data           : ALIGN (8)    {} > MSRAM   /* This is where initialized globals and static go */
+
+    /* General purpose user shared memory, used in some examples */
+    .bss.user_shared_mem (NOLOAD) : { KEEP(*(.bss.user_shared_mem)) } > USER_SHM_MEM
+    /* this is used when Debug log's to shared memory are enabled, else this is not used */
+    .bss.log_shared_mem  (NOLOAD) : { KEEP(*(.bss.log_shared_mem)) } > LOG_SHM_MEM
+    /* this is used only when IPC RPMessage is enabled, else this is not used */
+    .bss.ipc_vring_mem   (NOLOAD) : { KEEP(*(.bss.ipc_vring_mem)) } > RTOS_NORTOS_IPC_SHM_MEM
+    /* General purpose non cacheable memory, used in some examples */
+    .bss.nocache   (NOLOAD) : { KEEP(*(.bss.nocache)) } > NON_CACHE_MEM
 
     /* This is rest of uninitialized data. This can be placed in DDR if DDR is available and needed */
     .bss : {
@@ -153,12 +162,5 @@ SECTIONS
     .init_array : ALIGN (8) {} > MSRAM  /* Contains function pointers called before main */
     .fini_array : ALIGN (8) {} > MSRAM  /* Contains function pointers called after main */
 
-    /* General purpose user shared memory, used in some examples */
-    .bss.user_shared_mem (NOLOAD) : { KEEP(*(.bss.user_shared_mem)) } > USER_SHM_MEM
-    /* this is used when Debug log's to shared memory are enabled, else this is not used */
-    .bss.log_shared_mem  (NOLOAD) : { KEEP(*(.bss.log_shared_mem)) } > LOG_SHM_MEM
-    /* this is used only when IPC RPMessage is enabled, else this is not used */
-    .bss.ipc_vring_mem   (NOLOAD) : { KEEP(*(.bss.ipc_vring_mem)) } > RTOS_NORTOS_IPC_SHM_MEM
-    /* General purpose non cacheable memory, used in some examples */
-    .bss.nocache   (NOLOAD) : { KEEP(*(.bss.nocache)) } > NON_CACHE_MEM
+
 }

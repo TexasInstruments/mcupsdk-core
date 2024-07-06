@@ -34,6 +34,7 @@ BOOTIMAGE_NAME_HS:=ospi_flash_file_io.$(PROFILE).appimage.hs
 BOOTIMAGE_NAME_HS_FS:=ospi_flash_file_io.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
+
 FILES_common := \
 	ospi_flash_file_io.c \
 	main.c \
@@ -99,6 +100,7 @@ LIBS_common = \
 	-l:nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	-l:drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	-l:board.am243x.r5f.gcc-armv7.${ConfigName}.lib \
+	-l:littlefs.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 
 LFLAGS_common = \
 	-mcpu=cortex-r5 \
@@ -118,6 +120,7 @@ LIBS_NAME = \
 	nortos.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	drivers.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 	board.am243x.r5f.gcc-armv7.${ConfigName}.lib \
+	littlefs.am243x.r5f.gcc-armv7.${ConfigName}.lib \
 
 LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib \
@@ -285,7 +288,6 @@ endif
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(BOOTIMAGE_NAME_XIP) $(MULTI_CORE_IMAGE_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
-
 ifeq ($(DEVICE_TYPE), HS)
 # Sign the appimage using appimage signing script
 ifeq ($(ENC_ENABLED),no)
@@ -306,4 +308,7 @@ else
 	@echo  Boot image: am243x:r5fss0-0:nortos:gcc-armv7 $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS_FS) Done !!!
 	@echo  .
 endif
+
+
+
 -include $(addprefix $(OBJDIR)/, $(DEPS))

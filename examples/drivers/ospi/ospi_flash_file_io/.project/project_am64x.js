@@ -139,13 +139,9 @@ const templates_freertos_r5f =
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "nortos"},
-    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7",    board: "am64x-evm", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-evm", os: "freertos"},
-    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am64x-evm", os: "freertos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-sk", os: "nortos"},
-    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7",    board: "am64x-sk", os: "nortos"},
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am64x-sk", os: "freertos"},
-    { device: device, cpu: "r5fss0-0", cgt: "gcc-armv7", board: "am64x-sk", os: "freertos"},
 ];
 
 function getComponentProperty() {
