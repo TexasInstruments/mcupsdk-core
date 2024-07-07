@@ -86,9 +86,7 @@ BOOTIMAGE_NAME_QSPI_HS:=`args.project.name`.$(PROFILE).appimage_qspi.hs
 BOOTIMAGE_NAME_HS_FS:=`args.project.name`.$(PROFILE).appimage.hs_fs
 % }
 TARGETS := $(BOOTIMAGE_NAME)
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
-TARGETS += $(BOOTIMAGE_NAME_MCELF)
-% }
+
 %if (!["am64x", "am243x"].includes(args.project.device)) {
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
@@ -840,18 +838,13 @@ endif
 	$(RM) $(BOOTIMAGE_TEMP_OUT_FILE)
 % if (!["am64x", "am243x"].includes(args.project.device)) {
 	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_PATH)/$@ Done !!!
-	@echo  .
 % }
-
 % if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
-$(BOOTIMAGE_NAME_MCELF): $(BOOTIMAGE_NAME)
 	@echo  Boot multi-core ELF image: $(BOOTIMAGE_PATH)/$@ ...
-
-	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_`args.project.cpu`):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH)
-
+	@sleep 1
+	@echo $(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_`args.project.cpu`):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH)
 	@echo  Boot multi-core ELF image: $(BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
-
 
 % }
 % if (((args.project.device == "am243x") || (args.project.device == "am64x"))) {
@@ -943,6 +936,9 @@ endif
 endif
 % }
 % }
+
+
+
 % if (args.project.cgt == "ti-arm-clang") {
 .PHONY: coverage
 coverage:

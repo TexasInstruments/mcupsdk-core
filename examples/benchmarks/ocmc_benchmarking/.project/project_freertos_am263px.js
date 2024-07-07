@@ -85,17 +85,6 @@ const buildOptionCombos = [
 const systemProjects = [
     {
         name: "ocmc_benchmarking",
-        tag: "dual_core",
-        skipProjectSpec: false,
-        readmeDoxygenPageTag: readmeDoxygenPageTag,
-        board: "am263px-cc",
-        projects: [
-            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos"},
-            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263px-cc", os: "freertos"},
-        ],
-    },
-    {
-        name: "ocmc_benchmarking",
         tag: "tri_core",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
