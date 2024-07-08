@@ -142,11 +142,8 @@ LNKOPTFLAGS := $(LNKOPTFLAGS_common) $(LNKOPTFLAGS_$(PROFILE))
 LNK_FILES := $(LNK_FILES_common) $(LNK_FILES_$(PROFILE))
 
 ifeq ($(strip $(LNK_FILES_common)),rproc_linker.cmd)
-       RPROC_LINKER_FILE_FLAG := 1
-else
-       RPROC_LINKER_FILE_FLAG := 0
+CFLAGS += -DSKIP_ATCM_MEM_RESET
 endif
-CFLAGS += -DAM65X_RPROC_BUILD=$(RPROC_LINKER_FILE_FLAG)
 OBJDIR := obj/$(PROFILE)/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
