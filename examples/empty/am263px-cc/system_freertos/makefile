@@ -64,12 +64,14 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage.hs
 	$(RM) \*.appimage_xip
 	$(RM) \*.mcelf
+	$(RM) \*.mcelf_xip
 else
 	$(RM) *.appimage
 	$(RM) *.appimage.signed
 	$(RM) \*.appimage.hs
 	$(RM) *.appimage_xip
 	$(RM) *.mcelf
+	$(RM) *.mcelf_xip
 endif
 
 syscfg:

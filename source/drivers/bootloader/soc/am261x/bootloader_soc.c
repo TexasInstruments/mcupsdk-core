@@ -484,3 +484,11 @@ void Bootloader_socSetAutoClock()
         Bootloader_socCpuSetClock(CSL_CORE_ID_R5FSS0_0, (uint32_t)(400*1000000));
     }
 }
+
+int32_t Bootloader_socCpuSetAppEntryPoint(uint32_t cpuId, uintptr_t entryPoint)
+{
+   int32_t status = SystemP_SUCCESS;
+   /* dummy api call */
+
+    return status;
+}
