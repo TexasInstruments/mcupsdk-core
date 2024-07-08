@@ -22,7 +22,7 @@ MULTI_CORE_BOOTIMAGE_PATH=$(abspath .)
 MULTI_CORE_BOOTIMAGE_NAME:=`args.project.name`_system.$(PROFILE).appimage
 MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(MULTI_CORE_BOOTIMAGE_NAME).signed
 MULTI_CORE_BOOTIMAGE_NAME_XIP:=`args.project.name`_system.$(PROFILE).appimage_xip
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 MULTI_CORE_BOOTIMAGE_NAME_MCELF:=`args.project.name`_system.$(PROFILE).mcelf
 % }
 % if (args.project.device == "awr294x") {
@@ -64,7 +64,7 @@ corebuild: syscfg
 
 postBuild: corebuild
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME)
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)
 % }
 % if ((args.project.device == "am64x") || (args.project.device == "am243x")|| (args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
@@ -88,7 +88,7 @@ clean:
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_SIGNED)
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_XIP)
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)
 % }
 % if (args.project.device == "awr294x") {
@@ -121,8 +121,9 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.appimage*
 % }
 	$(RM) \*.appimage_xip
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 	$(RM) \*.mcelf
+	$(RM) \*.mcelf_xip
 % }
 else
 	$(RM) *.appimage
@@ -134,8 +135,9 @@ else
 	$(RM) \*.appimage*
 % }
 	$(RM) *.appimage_xip
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 	$(RM) *.mcelf
+	$(RM) *.mcelf_xip
 % }
 endif
 
@@ -217,7 +219,7 @@ APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_
 % if ((args.project.device == "am263x") ||  (args.project.device == "am263px") || (args.project.device == "am261x")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 % }
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
 % }
 
@@ -254,7 +256,7 @@ $(MULTI_CORE_BOOTIMAGE_NAME): $(MULTI_CORE_BOOTIMAGE_DEPENDENCY)
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_PATH)/$@ Done !!!
 	@echo  .
 % }
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 
 CORE_IMG_ARGS :=
 % for (let i = 0; i<numProjects; i++) {

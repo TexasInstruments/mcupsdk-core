@@ -65,7 +65,7 @@ BOOTIMAGE_NAME_SIGNED:=$(BOOTIMAGE_PATH)/$(OUTNAME).appimage.signed
 BOOTIMAGE_RPRC_NAME:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc
 BOOTIMAGE_RPRC_NAME_XIP:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc_xip
 BOOTIMAGE_RPRC_NAME_TMP:=$(BOOTIMAGE_PATH)/$(OUTNAME).rprc_tmp
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 % if(!isMulticore) {
 BOOTIMAGE_NAME_MCELF:=$(BOOTIMAGE_PATH)/$(OUTNAME).mcelf
 % }
@@ -74,7 +74,7 @@ BOOTIMAGE_NAME_MCELF:=$(BOOTIMAGE_PATH)/$(OUTNAME).mcelf
 BOOTIMAGE_NAME_HS:=$(BOOTIMAGE_PATH)/`args.project.name`.$(PROFILE).appimage.hs
 BOOTIMAGE_NAME_HS_FS:=$(BOOTIMAGE_PATH)/`args.project.name`.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 % if(!isMulticore) {
 TARGETS += $(BOOTIMAGE_NAME_MCELF)
 % }
@@ -298,7 +298,7 @@ APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_
 % if ((["am263x", "am263px", "am261x", "am273x"].includes(args.project.device)) && (!args.project.isPartOfSystemProject)) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 % }
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 % if(!isMulticore) {
 MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
 % }
@@ -360,7 +360,7 @@ else
 endif
 % }
 	$(RM) $(BOOTIMAGE_RPRC_NAME_TMP)
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 	% if(!isMulticore) {
 
 	@echo  Boot multi-core ELF image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_NAME_MCELF) ...

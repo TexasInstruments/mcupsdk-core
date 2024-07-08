@@ -71,7 +71,7 @@ BOOTIMAGE_NAME_XIP:=`args.project.name`.$(PROFILE).appimage_xip
 BOOTIMAGE_NAME_QSPI:=`args.project.name`.$(PROFILE).appimage_qspi
 % }
 BOOTIMAGE_NAME_SIGNED:=`args.project.name`.$(PROFILE).appimage.signed
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 BOOTIMAGE_NAME_MCELF:=`args.project.name`.$(PROFILE).mcelf
 % }
 BOOTIMAGE_RPRC_NAME:=`args.project.name`.$(PROFILE).rprc
@@ -495,7 +495,7 @@ clean:
  % }
 	$(RM) $(BOOTIMAGE_RPRC_NAME)
 	$(RM) $(BOOTIMAGE_RPRC_NAME_XIP)
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 	$(RM) $(BOOTIMAGE_NAME_MCELF)
 % }
 % }
@@ -522,7 +522,7 @@ ifeq ($(OS),Windows_NT)
 	$(RM) \*.rprc*
 	$(RM) \*.tiimage*
 	$(RM) \*.bin
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 	% if( !args.project.isBootLoader) {
 	$(RM) \*.mcelf
 	$(RM) \*.mcelf_xip
@@ -535,7 +535,7 @@ else
 	$(RM) *.rprc*
 	$(RM) *.tiimage*
 	$(RM) *.bin
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 	% if( !args.project.isBootLoader) {
 	$(RM) *.mcelf
 	$(RM) *.mcelf_xip
@@ -794,7 +794,7 @@ APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_
 % if (((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")  || (args.project.device == "am273x") || (args.project.device == "awr294x"))) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 % }
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
 % }
 
@@ -839,11 +839,11 @@ endif
 % if (!["am64x", "am243x"].includes(args.project.device)) {
 	@echo  Boot image: `args.project.device`:`args.project.cpu`:`args.project.os`:`args.project.cgt` $(BOOTIMAGE_PATH)/$@ Done !!!
 % }
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
-	@echo  Boot multi-core ELF image: $(BOOTIMAGE_PATH)/$@ ...
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
+	@echo  Boot multi-core ELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) ...
 	@sleep 1
-	@echo $(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_`args.project.cpu`):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH)
-	@echo  Boot multi-core ELF image: $(BOOTIMAGE_PATH)/$@ Done !!!
+	$(PYTHON) $(MCELF_IMAGE_GEN) --core-img=$(BOOTIMAGE_CORE_ID_`args.project.cpu`):$(OUTNAME) --output=$(BOOTIMAGE_NAME_MCELF) --merge-segments=$(MCELF_MERGE_SEGMENTS_FLAG) --tolerance-limit=$(MCELF_MERGE_SEGMENTS_TOLERANCE_LIMIT) --ignore-context=$(MCELF_IGNORE_CONTEXT_FLAG) --xip=$(MCELF_XIP_RANGE) --xlat=$(MCELF_ADDR_TRANSLATION_PATH)
+	@echo  Boot multi-core ELF image: $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_MCELF) Done !!!
 	@echo  .
 
 % }

@@ -11,12 +11,12 @@
 CCS_PATH=$(CCS_INSTALL_DIR)
 include $(`args.sdkName`)/imports.mak
 % if ((args.project.device == "am64x") || (args.project.device == "am243x") ||
-%(args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px") ) {
+%(args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px")  || (args.project.device == "am261x")) {
 include $(`args.sdkName`)/devconfig/devconfig.mak
 % }
 
 % if ((args.project.device == "am64x") || (args.project.device == "am243x") ||
-%(args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px")) {
+%(args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 ifeq ($(OS), Windows_NT)
 	PYTHON=python
 else
@@ -28,7 +28,7 @@ MULTI_CORE_BOOTIMAGE_PATH=$(abspath $(PROFILE))
 MULTI_CORE_BOOTIMAGE_NAME:=$(PROFILE)/$(OUTNAME).appimage
 MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(PROFILE)/$(OUTNAME).appimage.signed
 MULTI_CORE_BOOTIMAGE_NAME_XIP:=$(PROFILE)/$(OUTNAME).appimage_xip
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 MULTI_CORE_BOOTIMAGE_NAME_MCELF:=$(PROFILE)/$(OUTNAME).mcelf
 % }
 % if (args.project.device == "awr294x") {
@@ -100,7 +100,7 @@ APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_
 % if ((args.project.device == "am263x") || (args.project.device == "am273x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 % }
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
 % }
 
@@ -119,13 +119,13 @@ MULTI_CORE_APP_PARAMS_QSPI = $(MULTI_CORE_APP_PARAMS) $(R4_RPRC_PATH)@$(BOOTIMAG
 
 % }
 % let numProjects = 0;
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 % for (let project of args.project.projects) {
 CORE_`numProjects`_IMG=../`args.project.name`_`project.board`_`project.cpu`_`project.os`_`project.cgt`/$(PROFILE)/`args.project.name`_`project.board`_`project.cpu`_`project.os`_`project.cgt`.out
     % numProjects = numProjects + 1;
 % }
 % }
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 
 CORE_IMG_ARGS :=
 % for (let i = 0; i<numProjects; i++) {
@@ -140,7 +140,7 @@ else
 	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME) ...
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME) $(MULTI_CORE_APP_PARAMS) >> $(BOOTIMAGE_TEMP_OUT_FILE)
 	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME_XIP) $(MULTI_CORE_APP_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
-% if ((args.project.device == "am263x") || (args.project.device == "am263px")) {
+% if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 
 	@echo  Boot multi-core ELF image: $(MULTI_CORE_BOOTIMAGE_NAME_MCELF) ...
 
