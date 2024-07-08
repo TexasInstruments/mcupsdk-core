@@ -1,6 +1,5 @@
 # Device type (HS/GP)
 DEVICE_TYPE?=GP
-DEVICE=am65x
 
 # Path to the signing tools, keys etc
 SIGNING_TOOL_PATH?=$(MCU_PLUS_SDK_PATH)/tools/boot/signing
