@@ -56,6 +56,18 @@
         }, {
             "name": "a53ss0-0",
             "targetdbId": "a53ss0-0"
+        },{
+            "name": "icss_g0_pru0",
+            "targetdbId": "icss_g0_pru0"
+        },{
+            "name": "icss_g0_pru1",
+            "targetdbId": "icss_g0_pru1"
+        },{
+            "name": "icss_g1_pru0",
+            "targetdbId": "icss_g1_pru0"
+        },{
+            "name": "icss_g1_pru1",
+            "targetdbId": "icss_g1_pru1"
         }],
         "AM243x_ALV_beta": [{
             "name": "r5fss0-0",
@@ -72,6 +84,18 @@
         }, {
             "name": "m4fss0-0",
             "targetdbId": "m4fss0-0"
+        },{
+            "name": "icss_g0_pru0",
+            "targetdbId": "icss_g0_pru0"
+        },{
+            "name": "icss_g0_pru1",
+            "targetdbId": "icss_g0_pru1"
+        },{
+            "name": "icss_g1_pru0",
+            "targetdbId": "icss_g1_pru0"
+        },{
+            "name": "icss_g1_pru1",
+            "targetdbId": "icss_g1_pru1"
         }],
         "AM243x_ALX_beta": [{
             "name": "r5fss0-0",
@@ -88,6 +112,18 @@
         }, {
             "name": "m4fss0-0",
             "targetdbId": "m4fss0-0"
+        },{
+            "name": "icss_g0_pru0",
+            "targetdbId": "icss_g0_pru0"
+        },{
+            "name": "icss_g0_pru1",
+            "targetdbId": "icss_g0_pru1"
+        },{
+            "name": "icss_g1_pru0",
+            "targetdbId": "icss_g1_pru0"
+        },{
+            "name": "icss_g1_pru1",
+            "targetdbId": "icss_g1_pru1"
         }],
         "AM273x": [{
             "name": "r5fss0-0",
@@ -130,6 +166,12 @@
         }, {
             "name": "hsm0-0",
             "targetdbId": "Cortex_M4_0"
+        },{
+            "name": "icss_m0_pru0",
+            "targetdbId": "icss_m0_pru0"
+        },{
+            "name": "icss_m0_pru1",
+            "targetdbId": "icss_m0_pru1"
         }],
         "AM263Px": [{
             "name": "r5fss0-0",
@@ -146,6 +188,12 @@
         }, {
             "name": "hsm0-0",
             "targetdbId": "Cortex_M4_0"
+        },{
+            "name": "icss_m0_pru0",
+            "targetdbId": "icss_m0_pru0"
+        },{
+            "name": "icss_m0_pru1",
+            "targetdbId": "icss_m0_pru1"
         }],
         "AM261x_ZCZ": [{
             "name": "r5fss0-0",
