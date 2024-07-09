@@ -4,7 +4,13 @@
 
 # Introduction
 
-This example demonstrates how can one write to the extended OTP eFuses of the device. This is currently only supported in HS-SE devices. This is a special example, and is booted by ROM. Because of this it is to be treated like a bootloader application.
+This example demonstrates how can one write to the extended OTP eFuses of the device.
+\if (SOC_AM64X || SOC_AM243X)
+This is currently supported in HS-SE and HS-FS devices.
+\else
+This is currently only supported in HS-SE devices.
+\endif
+ This is a special example, and is booted by ROM. Because of this it is to be treated like a bootloader application.
 
 The example tries to write the USB and PCIE VID/PID onto the OTP rows. It also dumps the OTP MMR rows. It makes use of Sciclient API calls to do this, there are wrapper functions provided in the examples for these.
 
