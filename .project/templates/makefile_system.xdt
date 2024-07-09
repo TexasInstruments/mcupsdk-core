@@ -67,7 +67,7 @@ postBuild: corebuild
 % if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_MCELF)
 % }
-% if ((args.project.device == "am64x") || (args.project.device == "am243x")|| (args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
+% if ((args.project.device == "am65x") || (args.project.device == "am64x") || (args.project.device == "am243x")|| (args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
 ifeq ($(DEVICE_TYPE), HS)
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
 % if (args.project.device == "awr294x") {

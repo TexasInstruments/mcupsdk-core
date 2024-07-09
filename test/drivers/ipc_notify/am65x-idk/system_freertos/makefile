@@ -38,6 +38,9 @@ corebuild: syscfg
 
 postBuild: corebuild
 	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME)
+ifeq ($(DEVICE_TYPE), HS)
+	$(MAKE) $(MULTI_CORE_BOOTIMAGE_NAME_HS)
+endif
 
 clean:
 	$(MAKE) -C ../r5fss0-0_freertos/ti-arm-clang/ clean
