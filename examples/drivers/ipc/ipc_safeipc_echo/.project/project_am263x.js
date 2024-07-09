@@ -33,6 +33,7 @@ const libdirs_nortos = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/source/security/lib",
     ],
 };
 
@@ -41,6 +42,7 @@ const libdirs_freertos = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib",
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
+        "${MCU_PLUS_SDK_PATH}/source/security/lib",
     ],
 };
 
@@ -49,6 +51,7 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f",
+        "${MCU_PLUS_SDK_PATH}/source/security",
     ],
 };
 
@@ -57,6 +60,7 @@ const libs_nortos_r5f = {
         "nortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "security.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -65,6 +69,7 @@ const libs_freertos_r5f = {
         "freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "security.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -72,6 +77,12 @@ const lnkfiles = {
     common: [
         "linker.cmd",
     ]
+};
+
+const includes = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/security",
+    ],
 };
 
 const syscfgfile = "../example.syscfg";
@@ -168,6 +179,7 @@ function getComponentBuildProperty(buildOption) {
             build_property.files = files_nortos_rf5;
             build_property.libs = libs_nortos_r5f;
             build_property.templates = templates_nortos_r5f;
+            build_property.includes = includes;
         }
     }
 

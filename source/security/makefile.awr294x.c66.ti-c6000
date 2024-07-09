@@ -20,14 +20,25 @@ FILES_common := \
     dthe_aes.c \
     dthe_sha.c \
     crypto_util.c \
+    hsmclient.c \
+    hsmclient_utils.c \
+    sipc_notify_cfg.c \
+    sipc_notify_src.c \
 
 FILES_PATH_common = \
-    crypto \
-    crypto/dthe \
+    security_common/drivers/crypto \
+    security_common/drivers/crypto/dthe \
+    security_common/drivers/hsmclient \
+    security_common/drivers/hsmclient/soc/awr294x \
+    security_common/drivers/hsmclient/utils \
+    security_common/drivers/secure_ipc_notify/ \
+    security_common/drivers/secure_ipc_notify/soc/ \
+    security_common/drivers/secure_ipc_notify/soc/awr294x \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include \
     -I${MCU_PLUS_SDK_PATH}/source \
+    -I${MCU_PLUS_SDK_PATH}/source/security \
 
 DEFINES_common := \
     -DSOC_AWR294X \

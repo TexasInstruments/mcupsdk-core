@@ -35,6 +35,7 @@
             -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable
             -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos
             -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config
+            -I${MCU_PLUS_SDK_PATH}/source/security
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
@@ -51,6 +52,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/lib
+            -i${MCU_PLUS_SDK_PATH}/source/security/lib
             -i${CG_TOOL_ROOT}/lib
             -m=sbl_sd.${ConfigName}.map
             --diag_suppress=10063
@@ -76,6 +78,7 @@
                 -ldrivers.am263px.r5f.ti-arm-clang.debug.lib
                 -lboard.am263px.r5f.ti-arm-clang.debug.lib
                 -lfreertos_fat.am263px.r5f.ti-arm-clang.debug.lib
+                -lsecurity.am263px.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -89,6 +92,7 @@
                 -ldrivers.am263px.r5f.ti-arm-clang.release.lib
                 -lboard.am263px.r5f.ti-arm-clang.release.lib
                 -lfreertos_fat.am263px.r5f.ti-arm-clang.release.lib
+                -lsecurity.am263px.r5f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a
             "

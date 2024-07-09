@@ -16,10 +16,10 @@ const files = {
 
 const filedirs = {
     common: [
-        "crypto",
-        "crypto/sa2ul",
-        "crypto/pka",
-        "crypto/rng",
+        "security_common/drivers/crypto",
+        "security_common/drivers/crypto/sa2ul",
+        "security_common/drivers/crypto/pka",
+        "security_common/drivers/crypto/rng",
     ],
 };
 
@@ -27,6 +27,12 @@ const cflags = {
     common: [
         "-mno-unaligned-access",
         "-Wno-extra",
+    ],
+};
+
+const includes = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/security",
     ],
 };
 
@@ -52,6 +58,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.filedirs = filedirs;
     build_property.files = files;
     build_property.cflags = cflags;
+    build_property.includes = includes;
 
     return build_property;
 }

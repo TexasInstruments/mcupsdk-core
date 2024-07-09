@@ -31,9 +31,6 @@ const files_r5f = {
         "gpadc.c",
         "gpadc_soc.c",
         "gpio_v1.c",
-        "hsmclient.c",
-        "hsmclient_loadhsmrt.c",
-        "hsmclient_utils.c",
         "hwa.c",
         "i2c_v1.c",
         "i2c_v1_lld.c",
@@ -53,8 +50,6 @@ const files_r5f = {
         "qspi_lld.c",
         "qspi_edma_lld.c",
         "rti.c",
-        "sipc_notify_src.c",
-        "sipc_notify_cfg.c",
         "soc.c",
         "soc_rcm.c",
         "uart_sci.c",
@@ -77,8 +72,6 @@ const files_c66 = {
         "edma.c",
         "esm_v0.c",
         "gpio_v1.c",
-        "hsmclient.c",
-        "hsmclient_utils.c",
         "hwa.c",
         "i2c_v1.c",
         "i2c_v1_lld.c",
@@ -96,8 +89,6 @@ const files_c66 = {
         "mpu_firewall_v0_cfg.c",
         "pinmux.c",
         "rti.c",
-        "sipc_notify_src.c",
-        "sipc_notify_cfg.c",
         "soc.c",
         "soc_rcm.c",
         "uart_sci.c",
@@ -122,9 +113,6 @@ const filedirs = {
         "gpadc/v0",
         "gpadc/v0/soc/am273x",
         "gpio/v1",
-        "hsmclient",
-        "hsmclient/soc/am273x",
-        "hsmclient/utils",
         "hwa/v0",
         "i2c/v1",
         "i2c/v1/lld",
@@ -143,9 +131,6 @@ const filedirs = {
         "qspi/v0",
         "qspi/v0/lld",
         "qspi/v0/lld/edma",
-        "secure_ipc_notify/",
-        "secure_ipc_notify/soc/am273x",
-        "secure_ipc_notify/soc/",
         "soc/am273x",
         "uart/v1",
         "watchdog/v0",
@@ -170,6 +155,12 @@ const cflags_r5f = {
     release: [
         "-Oz",
         "-flto",
+    ],
+};
+
+const includes = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/security",
     ],
 };
 
@@ -203,6 +194,7 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/c66*/)) {
         build_property.files = files_c66;
     }
+    build_property.includes = includes;
 
     return build_property;
 }

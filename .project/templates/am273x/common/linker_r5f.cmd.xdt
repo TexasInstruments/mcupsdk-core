@@ -174,7 +174,7 @@ SECTIONS
     .bss.ipc_vring_mem   (NOLOAD) : {} > RTOS_NORTOS_IPC_SHM_MEM
     /* this is used only when Secure IPC is enabled */
     .bss.sipc_hsm_queue_mem   (NOLOAD) : {} > MAILBOX_HSM
-    .bss.sipc_r5f_queue_mem   (NOLOAD) : {} > MAILBOX_R5F
+    .bss.sipc_secure_host_queue_mem   (NOLOAD) : {} > MAILBOX_R5F
 }
 
 MEMORY

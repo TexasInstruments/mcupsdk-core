@@ -1,8 +1,8 @@
 //! [include1]
 
 #include<stdio.h>
-#include <security/crypto.h>
-#include <security/crypto/sa2ul/sa2ul.h>
+#include <security/security_common/drivers/crypto/crypto.h>
+#include <security/security_common/drivers//crypto/sa2ul/sa2ul.h>
 
 /* input or output length*/
 #define APP_CRYPTO_AES_CBC_256_INOUT_LENGTH           (16U)

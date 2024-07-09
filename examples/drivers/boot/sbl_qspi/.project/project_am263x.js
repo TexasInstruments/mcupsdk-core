@@ -24,6 +24,7 @@ const libdirs_nortos = {
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
         "${MCU_PLUS_SDK_PATH}/source/sdl/lib",
+        "${MCU_PLUS_SDK_PATH}/source/security/lib",
     ],
 };
 
@@ -33,6 +34,7 @@ const libs_nortos_r5f = {
         "drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
         "sdl.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "security.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -47,6 +49,12 @@ const r5f0_macro = {
         "R5F0_INPUTS",
     ],
 
+};
+
+const includes = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/security",
+    ],
 };
 
 const syscfgfile = "../example.syscfg";
@@ -85,6 +93,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.libs = libs_nortos_r5f;
         build_property.defines = r5f0_macro;
     }
+    build_property.includes = includes;
 
     return build_property;
 }

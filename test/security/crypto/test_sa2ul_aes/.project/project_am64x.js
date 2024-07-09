@@ -31,6 +31,7 @@ const libdirs = {
 
 const includes = {
     common: [
+        "${MCU_PLUS_SDK_PATH}/source/security",
         "${MCU_PLUS_SDK_PATH}/test/unity/",
         "${MCU_PLUS_SDK_PATH}/test/drivers/gpio/am64x-evm",
     ],

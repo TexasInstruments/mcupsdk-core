@@ -26,9 +26,6 @@ const files_r5f = {
 		"fsi_rx.c",
 		"fsi_tx.c",
 		"gpio.c",
-		"hsmclient.c",
-		"hsmclient_loadhsmrt.c",
-		"hsmclient_utils.c",
 		"i2c_v1.c",
         "i2c_v1_lld.c",
 		"ipc_notify_v1.c",
@@ -56,8 +53,6 @@ const files_r5f = {
 		"rti.c",
 		"resolver.c",
 		"sdfm.c",
-		"sipc_notify_cfg.c",
-		"sipc_notify_src.c",
 		"soc.c",
 		"soc_rcm.c",
 		"spinlock.c",
@@ -89,9 +84,6 @@ const filedirs = {
 		"eqep/v1",
 		"fsi/v1",
 		"gpio/v0",
-		"hsmclient",
-		"hsmclient/soc/am263px",
-		"hsmclient/utils",
 		"i2c/v1",
         "i2c/v1/lld",
 		"ipc_notify/v1",
@@ -116,9 +108,6 @@ const filedirs = {
 		"resolver/v0",
 		"rti/v0",
 		"sdfm/v0",
-		"secure_ipc_notify/",
-		"secure_ipc_notify/soc/",
-		"secure_ipc_notify/soc/am263px",
 		"soc/am263px",
 		"spinlock/v0",
 		"uart/v0",
@@ -151,6 +140,12 @@ const cflags_r5f = {
     ],
 };
 
+const includes = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/security",
+    ],
+};
+
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
 ];
@@ -177,6 +172,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.files = files_r5f;
         build_property.asmfiles = asmfiles_r5f;
     }
+	build_property.includes = includes;
 
     return build_property;
 }

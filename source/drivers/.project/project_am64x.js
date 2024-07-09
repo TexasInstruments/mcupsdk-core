@@ -359,6 +359,12 @@ const filedirs_a53 =  {
     ],
 };
 
+const includes = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/security",
+    ],
+};
+
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
     { device: device, cpu: "r5f", cgt: "gcc-armv7"},
@@ -394,7 +400,8 @@ function getComponentBuildProperty(buildOption) {
         build_property.filedirs = filedirs_a53;
         build_property.files = files_a53;
     }
-
+    build_property.includes = includes;
+    
     return build_property;
 }
 

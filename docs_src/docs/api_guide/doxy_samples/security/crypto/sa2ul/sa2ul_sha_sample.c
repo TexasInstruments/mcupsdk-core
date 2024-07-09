@@ -1,8 +1,8 @@
 //! [include]
 
 #include<stdio.h>
-#include <security/crypto.h>
-#include <security/crypto/sa2ul/sa2ul.h>
+#include <security/security_common/drivers/crypto/crypto.h>
+#include <security/security_common/drivers/crypto/sa2ul/sa2ul.h>
 
 Crypto_Context gCryptoSha512Context;
 static uint8_t gCryptoSha512TestBuf[9] = {"abcdefpra"};

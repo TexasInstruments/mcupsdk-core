@@ -24,6 +24,7 @@ const includes_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config",
+        "${MCU_PLUS_SDK_PATH}/source/security",
     ],
 };
 
@@ -33,6 +34,7 @@ const libdirs_nortos = {
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
         "${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/lib",
+        "${MCU_PLUS_SDK_PATH}/source/security/lib",
     ],
 };
 
@@ -42,6 +44,7 @@ const libs_nortos_r5f = {
         "drivers.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "freertos_fat.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "security.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 

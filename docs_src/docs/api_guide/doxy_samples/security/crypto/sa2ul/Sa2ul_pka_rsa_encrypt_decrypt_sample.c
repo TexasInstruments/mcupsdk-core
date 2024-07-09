@@ -2,9 +2,9 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <security/crypto.h>
+#include <security/security_common/drivers/crypto/crypto.h>
 #include <kernel/dpl/DebugP.h>
-#include <security/crypto/pka/pka.h>
+#include <security/security_common/drivers/crypto/pka/pka.h>
 
 /* Openssl command To generate public key : Openssl rsa -pubout -in private.pem -out public.pem*/
 static const struct PKA_RSAPubkey gPkaRsa2kPublicKey = 

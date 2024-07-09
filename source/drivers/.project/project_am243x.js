@@ -254,6 +254,12 @@ const cflags_r5f = {
     ],
 };
 
+const includes = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/security",
+    ],
+};
+
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
     { device: device, cpu: "r5f", cgt: "gcc-armv7"},
@@ -288,6 +294,8 @@ function getComponentBuildProperty(buildOption) {
         build_property.files = files_m4f;
     }
 
+    build_property.includes = includes;
+    
     return build_property;
 }
 

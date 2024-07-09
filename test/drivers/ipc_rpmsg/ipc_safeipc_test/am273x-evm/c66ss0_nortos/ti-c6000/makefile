@@ -58,6 +58,7 @@ INCLUDES_common := \
 	-I${CG_TOOL_ROOT}/include \
 	-I${MCU_PLUS_SDK_PATH}/source \
 	-I${MCU_PLUS_SDK_PATH}/test/unity/ \
+	-I${MCU_PLUS_SDK_PATH}/source/security \
 	-Igenerated \
 
 DEFINES_common := \
@@ -91,6 +92,7 @@ LIBS_PATH_common = \
 	-i${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	-i${MCU_PLUS_SDK_PATH}/source/board/lib \
 	-i${MCU_PLUS_SDK_PATH}/test/unity/lib \
+	-i${MCU_PLUS_SDK_PATH}/source/security/lib \
 	-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
@@ -119,6 +121,7 @@ LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/drivers/lib \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
 	${MCU_PLUS_SDK_PATH}/test/unity/lib \
+	${MCU_PLUS_SDK_PATH}/source/security/lib \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))

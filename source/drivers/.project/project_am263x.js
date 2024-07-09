@@ -31,9 +31,6 @@ const files_r5f = {
         "gpmc_nandlike_v0.c",
         "gpmc_norlike_v0.c",
         "gpmc_dma.c",
-        "hsmclient.c",
-        "hsmclient_loadhsmrt.c",
-        "hsmclient_utils.c",
         "i2c_v1.c",
         "i2c_v1_lld.c",
         "ipc_notify_v1.c",
@@ -58,8 +55,6 @@ const files_r5f = {
         "qspi_edma_lld.c",
         "rti.c",
         "sdfm.c",
-        "sipc_notify_src.c",
-        "sipc_notify_cfg.c",
         "spinlock.c",
         "soc.c",
         "soc_rcm.c",
@@ -87,9 +82,6 @@ const filedirs = {
         "gpio/v0",
         "gpmc/v0",
         "gpmc/v0/dma",
-        "hsmclient",
-        "hsmclient/soc/am263x",
-        "hsmclient/utils",
         "i2c/v1",
         "i2c/v1/lld",
         "ipc_notify/v1",
@@ -116,9 +108,6 @@ const filedirs = {
         "rti/v0",
         "spinlock/v0",
         "sdfm/v0",
-        "secure_ipc_notify/",
-        "secure_ipc_notify/soc/am263x",
-        "secure_ipc_notify/soc/",
         "soc/am263x",
         "uart/v0",
         "uart/v0/lld",
@@ -149,6 +138,12 @@ const cflags_r5f = {
     ],
 };
 
+const includes = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/security",
+    ],
+};
+
 const buildOptionCombos = [
     { device: device, cpu: "r5f", cgt: "ti-arm-clang"},
 ];
@@ -175,6 +170,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.files = files_r5f;
         build_property.asmfiles = asmfiles_r5f;
     }
+    build_property.includes = includes;
 
     return build_property;
 }

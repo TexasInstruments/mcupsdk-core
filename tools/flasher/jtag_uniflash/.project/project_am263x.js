@@ -40,6 +40,12 @@ const lnkfiles = {
     ]
 };
 
+const includes = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/security",
+    ],
+};
+
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "TOOLS_UNIFLASH_CUSTOM_FLASHER";
@@ -75,6 +81,7 @@ function getComponentBuildProperty(buildOption) {
     if(buildOption.cpu.match(/r5f*/)) {
         build_property.libs = libs_nortos_r5f;
     }
+    build_property.includes = includes;
 
     return build_property;
 }

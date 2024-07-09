@@ -42,9 +42,6 @@ FILES_common := \
     gpadc.c \
     gpadc_soc.c \
     gpio_v1.c \
-    hsmclient.c \
-    hsmclient_loadhsmrt.c \
-    hsmclient_utils.c \
     hwa.c \
     i2c_v1.c \
     i2c_v1_lld.c \
@@ -64,8 +61,6 @@ FILES_common := \
     qspi_lld.c \
     qspi_edma_lld.c \
     rti.c \
-    sipc_notify_src.c \
-    sipc_notify_cfg.c \
     soc.c \
     soc_rcm.c \
     uart_sci.c \
@@ -90,9 +85,6 @@ FILES_PATH_common = \
     gpadc/v0 \
     gpadc/v0/soc/awr294x \
     gpio/v1 \
-    hsmclient \
-    hsmclient/soc/awr294x \
-    hsmclient/utils \
     hwa/v0 \
     i2c/v1 \
     i2c/v1/lld \
@@ -110,9 +102,6 @@ FILES_PATH_common = \
     qspi/v0/lld \
     qspi/v0/lld/edma \
     rti/v0 \
-    secure_ipc_notify/ \
-    secure_ipc_notify/soc/awr294x \
-    secure_ipc_notify/soc/ \
     soc/awr294x \
     uart/v1 \
     watchdog/v0 \
@@ -123,6 +112,7 @@ FILES_PATH_common = \
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
     -I${MCU_PLUS_SDK_PATH}/source \
+    -I${MCU_PLUS_SDK_PATH}/source/security \
 
 DEFINES_common := \
     -DSOC_AWR294X \

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "ti_drivers_config.h"
 #include "ti_board_config.h"
-#include <drivers/sipc_notify.h>
+#include <security/security_common/drivers/secure_ipc_notify/sipc_notify.h>
 #include <drivers/secure_ipc_notify/sipc_notify_src.h>
 //![include]
 

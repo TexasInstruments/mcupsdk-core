@@ -31,6 +31,7 @@
         compilerBuildOptions="
             -I${CG_TOOL_ROOT}/arm-none-eabi/include
             -I${MCU_PLUS_SDK_PATH}/source
+            -I${MCU_PLUS_SDK_PATH}/source/security
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16

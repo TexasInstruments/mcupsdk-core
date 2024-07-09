@@ -31,6 +31,7 @@
         compilerBuildOptions="
             -I${CG_TOOL_ROOT}/include/c
             -I${MCU_PLUS_SDK_PATH}/source
+            -I${MCU_PLUS_SDK_PATH}/source/security
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
@@ -46,6 +47,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/kernel/nortos/lib
             -i${MCU_PLUS_SDK_PATH}/source/drivers/lib
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
+            -i${MCU_PLUS_SDK_PATH}/source/security/lib
             -i${CG_TOOL_ROOT}/lib
             -m=mpu_firewall_services_demo.${ConfigName}.map
             --diag_suppress=10063
@@ -70,6 +72,7 @@
                 -lnortos.am263x.r5f.ti-arm-clang.debug.lib
                 -ldrivers.am263x.r5f.ti-arm-clang.debug.lib
                 -lboard.am263x.r5f.ti-arm-clang.debug.lib
+                -lsecurity.am263x.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
             "
@@ -82,6 +85,7 @@
                 -lnortos.am263x.r5f.ti-arm-clang.release.lib
                 -ldrivers.am263x.r5f.ti-arm-clang.release.lib
                 -lboard.am263x.r5f.ti-arm-clang.release.lib
+                -lsecurity.am263x.r5f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a
             "

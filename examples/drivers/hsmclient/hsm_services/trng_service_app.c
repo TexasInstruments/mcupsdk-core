@@ -33,8 +33,8 @@
 #include <stdio.h>
 #include <kernel/dpl/SemaphoreP.h>
 #include <kernel/dpl/SystemP.h>
-#include <drivers/hsmclient.h>
-#include <drivers/sipc_notify.h>
+#include <security/security_common/drivers/hsmclient/hsmclient.h>
+#include <security/security_common/drivers/secure_ipc_notify/sipc_notify.h>
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <kernel/dpl/SystemP.h>

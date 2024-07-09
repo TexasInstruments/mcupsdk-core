@@ -26,6 +26,7 @@ const libdirs_nortos = {
         "${MCU_PLUS_SDK_PATH}/source/drivers/lib",
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/lib",
+        "${MCU_PLUS_SDK_PATH}/source/security/lib",
     ],
 };
 
@@ -44,6 +45,7 @@ const includes_nortos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/hw_include/mdio/V4",
         "${MCU_PLUS_SDK_PATH}/examples/drivers/boot/sbl_qspi_enet/awr294x-evm/r5fss0-0_nortos",
+        "${MCU_PLUS_SDK_PATH}/source/security",
     ],
 };
 
@@ -53,6 +55,7 @@ const libs_nortos_r5f = {
         "drivers.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
         "board.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
         "enet-cpsw.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "security.awr294x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 

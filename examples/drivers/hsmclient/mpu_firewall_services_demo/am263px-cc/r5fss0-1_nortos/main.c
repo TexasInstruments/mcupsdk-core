@@ -35,8 +35,8 @@
 #include "ti_board_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
-#include <drivers/sipc_notify.h>
-#include <drivers/hsmclient.h>
+#include <security/security_common/drivers/secure_ipc_notify/sipc_notify.h>
+#include <security/security_common/drivers/hsmclient/hsmclient.h>
 
 /* ========================================================================== */
 /*                          Function Definitions                              */

@@ -37,10 +37,10 @@
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
 #include <drivers/bootloader.h>
-#include <drivers/hsmclient.h>
+#include <security/security_common/drivers/hsmclient/hsmclient.h>
 #include <drivers/bootloader/bootloader_can.h>
 #include <drivers/bootloader/bootloader_uniflash.h>
-#include <drivers/hsmclient/soc/am273x/hsmRtImg.h> /* hsmRt bin   header file */
+#include <security/security_common/drivers/hsmclient/soc/am273x/hsmRtImg.h> /* hsmRt bin   header file */
 
 #define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x200000) /* This has to match the size of DDR section in linker.cmd */
 uint8_t gUniflashFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.dss_l3")));

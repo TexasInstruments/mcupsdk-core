@@ -23,16 +23,28 @@ FILES_common := \
     eip29t2_firmware.c \
     crypto_util.c \
     rng.c \
+    hsmclient.c \
+    hsmclient_loadhsmrt.c \
+    hsmclient_utils.c \
+    sipc_notify_cfg.c \
+    sipc_notify_src.c \
 
 FILES_PATH_common = \
-    crypto \
-    crypto/dthe \
-    crypto/pka \
-    crypto/rng \
+    security_common/drivers/crypto \
+    security_common/drivers/crypto/dthe \
+    security_common/drivers/crypto/pka \
+    security_common/drivers/crypto/rng \
+    security_common/drivers/hsmclient \
+    security_common/drivers/hsmclient/soc/am263x \
+    security_common/drivers/hsmclient/utils \
+    security_common/drivers/secure_ipc_notify/ \
+    security_common/drivers/secure_ipc_notify/soc/ \
+    security_common/drivers/secure_ipc_notify/soc/am263x \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
     -I${MCU_PLUS_SDK_PATH}/source \
+    -I${MCU_PLUS_SDK_PATH}/source/security \
 
 DEFINES_common := \
     -DSOC_AM263X \

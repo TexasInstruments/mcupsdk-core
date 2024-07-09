@@ -24,14 +24,15 @@ FILES_common := \
     rng.c \
 
 FILES_PATH_common = \
-    crypto \
-    crypto/sa2ul \
-    crypto/pka \
-    crypto/rng \
+    security_common/drivers/crypto \
+    security_common/drivers/crypto/sa2ul \
+    security_common/drivers/crypto/pka \
+    security_common/drivers/crypto/rng \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
     -I${MCU_PLUS_SDK_PATH}/source \
+    -I${MCU_PLUS_SDK_PATH}/source/security \
 
 DEFINES_common := \
     -DSOC_AM64X \

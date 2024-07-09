@@ -42,8 +42,8 @@
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
-#include <security/crypto/dthe/dthe.h>
-#include <security/crypto/dthe/dthe_sha.h>
+#include <security/security_common/drivers/crypto/dthe/dthe.h>
+#include <security/security_common/drivers/crypto/dthe/dthe_sha.h>
 
 #define APP_HMAC_SHA_512                             (512U)
 #define APP_HMAC_SHA_256                             (256U)

@@ -16,7 +16,7 @@ operations for R5FSS.
 
 ###  Bootloader_socLoadHsmRtFw
 The SBL for AM263x/AM263Px/AM273x supports for loading firmware on the HSM. The firmware is
-provided in an encrypted form at `source/drivers/hsmclient/soc/hsmRtImg.h`.
+provided in an encrypted form at `source/security/security_common/drivers/hsmclient/soc/am263x/hsmRtImg.h`.
 The function `Bootloader_socLoadHsmRtFw` sends a message to ROM and ROM
 loads the HSM firmware. After the HSM firmware is loaded and has done
 its init time operations, it sends a message to the SBL called

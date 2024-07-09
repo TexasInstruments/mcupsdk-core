@@ -36,9 +36,9 @@
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
-#include <drivers/hsmclient/soc/am263x/hsmRtImg.h> /* hsmRt bin   header file */
+#include <security/security_common/drivers/hsmclient/soc/am263x/hsmRtImg.h> /* hsmRt bin   header file */
 #include <drivers/bootloader.h>
-#include <drivers/hsmclient.h>
+#include <security/security_common/drivers/hsmclient/hsmclient.h>
 
 #define BOOTLOADER_SD_APPIMAGE_FILENAME ("/sd0/app")
 

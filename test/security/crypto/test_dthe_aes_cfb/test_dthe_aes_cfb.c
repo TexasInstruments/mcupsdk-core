@@ -44,8 +44,8 @@
 #include "ti_board_open_close.h"
 #include <string.h>
 #include <kernel/dpl/DebugP.h>
-#include <security/crypto/dthe/dthe.h>
-#include <security/crypto/dthe/dthe_aes.h>
+#include <security/security_common/drivers/crypto/dthe/dthe.h>
+#include <security/security_common/drivers/crypto/dthe/dthe_aes.h>
 #include <kernel/dpl/ClockP.h>
 
 /* Supported Operations */

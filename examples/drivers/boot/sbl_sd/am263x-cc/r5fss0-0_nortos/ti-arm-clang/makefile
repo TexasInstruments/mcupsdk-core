@@ -60,6 +60,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable \
 	-I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos \
 	-I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config \
+	-I${MCU_PLUS_SDK_PATH}/source/security \
 	-Igenerated \
 
 DEFINES_common := \
@@ -104,6 +105,7 @@ LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/sdl/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/security/lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
@@ -112,6 +114,7 @@ LIBS_common = \
 	-lboard.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lfreertos_fat.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-lsdl.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-lsecurity.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
 
@@ -127,6 +130,7 @@ LIBS_NAME = \
 	board.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	freertos_fat.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	sdl.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
+	security.am263x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
 
@@ -136,6 +140,7 @@ LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
 	${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/lib \
 	${MCU_PLUS_SDK_PATH}/source/sdl/lib \
+	${MCU_PLUS_SDK_PATH}/source/security/lib \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))

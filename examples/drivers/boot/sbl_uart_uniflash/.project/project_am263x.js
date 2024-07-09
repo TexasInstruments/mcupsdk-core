@@ -49,6 +49,12 @@ const r5f0_macro = {
 
 };
 
+const includes = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/security",
+    ],
+};
+
 const syscfgfile = "../example.syscfg";
 
 const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_SBL_UART_UNIFLASH";
@@ -85,7 +91,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.libs = libs_nortos_r5f;
         build_property.defines = r5f0_macro;
     }
-
+    build_property.includes = includes;
 
     return build_property;
 }

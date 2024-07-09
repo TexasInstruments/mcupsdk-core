@@ -41,9 +41,15 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f",
+        "${MCU_PLUS_SDK_PATH}/source/security",
     ],
 };
 
+const includes = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/security",
+    ],
+};
 
 const libs_nortos_r5f = {
     common: [
@@ -132,6 +138,7 @@ function getComponentBuildProperty(buildOption) {
         }
         else
         {
+            build_property.includes = includes;
             build_property.libs = libs_nortos_r5f;
             build_property.templates = templates_nortos_r5f;
         }

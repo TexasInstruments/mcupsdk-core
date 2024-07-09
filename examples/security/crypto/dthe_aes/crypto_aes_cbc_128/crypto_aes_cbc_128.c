@@ -34,9 +34,9 @@
 
 #include <string.h>
 #include <kernel/dpl/DebugP.h>
-#include <security/crypto.h>
-#include <security/crypto/dthe/dthe.h>
-#include <security/crypto/dthe/dthe_aes.h>
+#include <security/security_common/drivers/crypto/crypto.h>
+#include <security/security_common/drivers/crypto/dthe/dthe.h>
+#include <security/security_common/drivers/crypto/dthe/dthe_aes.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
