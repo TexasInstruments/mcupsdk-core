@@ -1,10 +1,12 @@
 # TI Uniflash Tool {#TI_UNIFLASH_TOOL}
 
+[TOC]
+
 ## Introduction
 
 TI UniFlash Tool is a software utility designed for programming "On-chip" and "External flash" memory on TI microcontrollers and wireless connectivity devices. Sitara MCU devices now support TI Uniflash tool for loading or flashing images into the Target. Uniflash offers both graphical and command-line interfaces. This document provides a comprehensive guide on how to use UniFlash for flashing Sitara MCU devices.
 
-## Download and Install Uniflash
+## Download and Install Uniflash {#INSTALL_UNIFLASH}
 
 \note The steps on this page need to be done once on a given host machine
 
@@ -15,7 +17,7 @@ TI UniFlash Tool is a software utility designed for programming "On-chip" and "E
   - Linux, ${HOME}/ti
 - Launch the Uniflash Application
 
-## Launching a Session
+## Launching a Session{#LAUNCHING_SESSION}
 
 To perform flash operations on your device, you must initiate a flash session tailored to the specific device. Here are multiple ways to start a new session:
 
@@ -48,7 +50,7 @@ After setting up one of the above session launch type, Click the Start button to
 \note JTAG flashing support in AM273x was not tested due to XDS emulator failure while connecting R5 core 0 with \ref BOOTMODE_NOBOOT Boot Mode. It is recommended to use Serial flashing for AM273x.
 \endcond
 
-## Programming the Device
+## Programming the Device{#PROGRAM_THE_DEVICE}
 
 \cond SOC_AM243X
 ### JTAG Session
@@ -176,7 +178,7 @@ After setting up one of the above session launch type, Click the Start button to
     - After clicking "Load Image," UniFlash starts the programming process, and the console displays a log of each operation. **[SUCCESS] Program Load completed successfully** will get printed in the console, if the program loads into the target successfully.
 \endcond
 
-## Custom Flash Support
+## Custom Flash Support{#CUSTOM_FLASH}
 \cond SOC_AM263PX || SOC_AM243X || SOC_AM263X
  - JTAG
      - Please use \ref TOOLS_UNIFLASH_CUSTOM_FLASHER guide to build the flasher app and input the path of the .out file in the tool. The custom flasher input field is found at Settings & Utilities page.
@@ -188,7 +190,7 @@ After setting up one of the above session launch type, Click the Start button to
     \imageStyle{uart_flasher_path.png,width:70%}
     \image html uart_flasher_path.png "UART Custom Flash writer"
 
-## Existing Limitations
+## Existing Limitations{#LIMITATIONS}
   - If the flashing operation hangs in the serial session, the Cancel button will be unresponsive. To resolve the issue, close uniflash, relaunch it, and ensure that your board selection and flash configurations are correct.
 
 ## Troubleshooting {#TI_UNIFLASH_TROUBLESHOOTING}
@@ -202,7 +204,7 @@ After setting up one of the above session launch type, Click the Start button to
     <uniflash_root>deskdb\content\TICloudAgent\win\ccs_base\sitara_mcu\flasher
     \endcode
 
-## Supported File Formats
+## Supported File Formats{#SUPPORTED_FORMATS}
 
 When loading a file to flash or RAM, UniFlash supports the following formats:
 
@@ -219,7 +221,7 @@ When saving memory to a file, UniFlash supports the following formats:
 -   TI COFF
 -   Binary
 
-## Memory Browser and Memory Export
+## Memory Browser and Memory Export{#MEMORY_BROWSER}
 
 The Memory View in UniFlash allows you to browse the target memory quickly. Please note that this view is read-only.
 
