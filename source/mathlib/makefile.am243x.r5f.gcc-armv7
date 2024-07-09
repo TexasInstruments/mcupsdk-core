@@ -17,9 +17,11 @@ LIBNAME:=mathlib.am243x.r5f.gcc-armv7.$(PROFILE).lib
 
 FILES_common := \
     ti_arm_trig.c \
+    fastrts.c \
 
 FILES_PATH_common = \
     trig \
+    fastrts \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/arm-none-eabi/include \

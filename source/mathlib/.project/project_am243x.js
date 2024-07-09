@@ -5,12 +5,14 @@ let device = "am243x";
 const files_r5f = {
     common: [
         "ti_arm_trig.c",
+        "fastrts.c"
     ],
 };
 
 const filedirs = {
     common: [
         "trig",
+        "fastrts"
     ],
 };
 

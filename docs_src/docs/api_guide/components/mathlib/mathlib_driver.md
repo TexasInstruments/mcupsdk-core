@@ -62,6 +62,66 @@ NA
 
 \cond SOC_AM263PX || SOC_AM261X
 
+## FastRTS library
+
+Addintionally, TI also offers a traditional Look-up Table based trigonometric functions for users needing the most optimized operation with the trade-off of increase data size (3344Bytes of LUT stored in .trigData). It also bypasses some limitations of the aforementioned TI Arm Trig libary such as the limited input range of 0 - 2PI for sine/cosine functions. Furthermore, the Fast Run-Time-Support (FastRTS) library also offers an optimized math operation of logs and exponents.
+
+## Features Supported
+
+Supports Below trignometric and math functions (fastrts):
+
+- Sine
+- Cosine
+- Sine + Cosine
+- Arcsine
+- Arccosine
+- Arctangent
+- Arctangent2
+- Log (base of e)
+- Exponent (base of e)
+
+## Features Not Supported
+
+NA
+
+## API
+
+\ref DRV_FASTRTS_MODULE
+
+\endcond
+
+\cond SOC_AM243X
+
+## FastRTS library
+
+Addintionally, TI also offers a traditional Look-up Table based trigonometric functions for users needing the most optimized operation with the trade-off of increase data size (3344Bytes of LUT stored in .trigData). It also bypasses some limitations of the aforementioned TI Arm Trig libary such as the limited input range of 0 - 2PI for sine/cosine functions. Furthermore, the Fast Run-Time-Support (FastRTS) library also offers an optimized math operation of logs and exponents.
+
+## Features Supported
+
+Supports Below trignometric and math functions (fastrts):
+
+- Sine
+- Cosine
+- Sine + Cosine
+- Arcsine
+- Arccosine
+- Arctangent
+- Arctangent2
+- Log (base of e)
+- Exponent (base of e)
+
+## Features Not Supported
+
+NA
+
+## API
+
+\ref DRV_FASTRTS_MODULE
+
+\endcond
+
+\cond SOC_AM263PX
+
 ## TMU library
 
 MCU PLUS SDK integrates a software library to use the TMU (Trigonometric Math Unit) hardware in AM263Px. This TMU library provides efficient (assembly level functions) and MATHLIB compatible API interface for performing trigonometric calculations, a critical component in many real-time applications such as Motor Control and Digital Power.

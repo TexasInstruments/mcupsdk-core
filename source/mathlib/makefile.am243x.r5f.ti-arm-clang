@@ -17,9 +17,11 @@ LIBNAME:=mathlib.am243x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
     ti_arm_trig.c \
+    fastrts.c \
 
 FILES_PATH_common = \
     trig \
+    fastrts \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
