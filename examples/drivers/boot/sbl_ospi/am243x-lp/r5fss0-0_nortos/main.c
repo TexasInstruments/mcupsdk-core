@@ -37,6 +37,11 @@
 #include <drivers/sciclient.h>
 #include <drivers/bootloader/soc/bootloader_soc.h>
 #include <drivers/bootloader.h>
+#include <kernel/dpl/ClockP.h>
+
+#define DELAY_SEC (1000U)
+
+void flashFixUpQspiBoot(void);
 
 /* call this API to stop the booting process and spin, do that you can connect
  * debugger, load symbols and then make the 'loop' variable as 0 to continue execution
@@ -51,7 +56,6 @@ void loop_forever(void)
 
 int main(void)
 {
-    
     int32_t status;
 
     Bootloader_profileReset();
@@ -111,6 +115,9 @@ int main(void)
     DebugP_log("\r\n");
     DebugP_log("Starting OSPI Bootloader ... \r\n");
     #endif
+
+	/* ROM doesn't reset the QSPI flash. So do a flash reset */
+    flashFixUpQspiBoot();
 
     status = Board_driversOpen();
     DebugP_assert(status == SystemP_SUCCESS);
@@ -263,4 +270,22 @@ int main(void)
     System_deinit();
 
     return 0;
+}
+
+void flashFixUpQspiBoot(void)
+{
+    uint32_t gpiobaseAddr, pinnum;
+
+	/* Get address after translation translate */
+    gpiobaseAddr = (uint32_t) AddrTranslateP_getLocalAddr(CONFIG_GPIO0_BASE_ADDR);
+
+    pinnum = CONFIG_GPIO0_PIN;
+
+	/* Drive the GPIO Pin low to assert the reset signal */
+    GPIO_pinWriteLow(gpiobaseAddr, pinnum);
+    ClockP_usleep(DELAY_SEC);
+
+	/* Drive the GPIO Pin high to deassert the reset signal */
+    GPIO_pinWriteHigh(gpiobaseAddr, pinnum);
+    ClockP_usleep(DELAY_SEC);
 }
