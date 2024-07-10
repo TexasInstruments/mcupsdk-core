@@ -48,9 +48,7 @@
             -I${MCU_PLUS_SDK_PATH}/examples/networking/tsn
             -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack
             -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara
-            -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_lldp
-            -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_lldp/tilld
-            -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_lldp/yangs/generated
+            -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_inc
             -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf
             -I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs
             -mcpu=cortex-r5
@@ -75,6 +73,7 @@
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${MCU_PLUS_SDK_PATH}/source/networking/enet/lib
             -i${MCU_PLUS_SDK_PATH}/source/networking/tsn/lib
+            -i${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_lib
             -i${CG_TOOL_ROOT}/lib
             -i${PROJECT_BUILD_DIR}/syscfg
             -m=lldp_app.${ConfigName}.map
@@ -108,7 +107,7 @@
                 -llibsysbm.a
                 -ltsn_combase-freertos.am243x.r5f.ti-arm-clang.debug.lib
                 -ltsn_unibase-freertos.am243x.r5f.ti-arm-clang.debug.lib
-                -ltsn_lldp-freertos.am243x.r5f.ti-arm-clang.debug.lib
+                -ltsn_lldp-freertos.am243x.r5f.ti-arm-clang.lib
                 -ltsn_uniconf-freertos.am243x.r5f.ti-arm-clang.debug.lib
                 -llibc.a
                 -llibsysbm.a
@@ -129,7 +128,7 @@
                 -llibsysbm.a
                 -ltsn_combase-freertos.am243x.r5f.ti-arm-clang.release.lib
                 -ltsn_unibase-freertos.am243x.r5f.ti-arm-clang.release.lib
-                -ltsn_lldp-freertos.am243x.r5f.ti-arm-clang.release.lib
+                -ltsn_lldp-freertos.am243x.r5f.ti-arm-clang.lib
                 -ltsn_uniconf-freertos.am243x.r5f.ti-arm-clang.release.lib
                 -llibc.a
                 -llibsysbm.a

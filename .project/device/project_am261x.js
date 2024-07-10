@@ -24,7 +24,6 @@ const component_file_list = [
     "source/networking/tsn/.project/project_tsn_combase.js",
     "source/networking/tsn/.project/project_tsn_uniconf.js",
     "source/networking/tsn/.project/project_tsn_unibase.js",
-    "source/networking/tsn/.project/project_tsn_lldp.js",
     "source/sdl/.project/project.js",
     "source/security/.project/project.js",
     "test/unity/.project/project.js",

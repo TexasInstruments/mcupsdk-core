@@ -36,6 +36,7 @@ const libdirs_freertos = {
         "${MCU_PLUS_SDK_PATH}/source/board/lib",
         "${MCU_PLUS_SDK_PATH}/source/networking/enet/lib",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/lib",
+        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_lib",
     ],
 };
 
@@ -58,9 +59,7 @@ const includes_freertos_r5f = {
         "${MCU_PLUS_SDK_PATH}/examples/networking/tsn",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack",
-        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_lldp",
-        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_lldp/tilld",
-        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_lldp/yangs/generated",
+        "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_inc",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf",
         "${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs",
     ],
@@ -76,7 +75,7 @@ const libs_freertos_r5f = {
         "libsysbm.a",
         "tsn_combase-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
         "tsn_unibase-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
-        "tsn_lldp-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
+        "tsn_lldp-freertos.am263px.r5f.ti-arm-clang.lib",
         "tsn_uniconf-freertos.am263px.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
