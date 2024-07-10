@@ -74,7 +74,7 @@ const cflags = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "SMART_PLACEMENT_AND_BENCHMARK";
+const readmeDoxygenPageTag = "BENCHMARK_SMART_PLACEMENT";
 
 const buildOptionCombos = [
     { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-cc", os: "freertos", isPartOfSystemProject: false},
