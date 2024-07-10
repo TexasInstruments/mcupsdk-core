@@ -288,6 +288,9 @@ This page lists all the examples related to usage of SOC and board peripheral dr
    -# \subpage EXAMPLES_DRIVERS_FSI_LOOPBACK_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_FSI_LOOPBACK_POLLING
 -# GPIO
+\cond SOC_AM263X
+   -# \subpage EXAMPLES_DRIVERS_GPIO_CONTROLLER_MCSPI_PERIPHERAL
+\endcond
    -# \subpage EXAMPLES_DRIVERS_GPIO_INPUT_INTERRUPT
    -# \subpage EXAMPLES_DRIVERS_GPIO_LED_BLINK
    -# \subpage EXAMPLES_DRIVERS_GPIO_MULTI_LED_BLINK
