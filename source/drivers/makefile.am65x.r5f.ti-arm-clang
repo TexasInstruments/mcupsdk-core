@@ -18,9 +18,14 @@ LIBNAME:=drivers.am65x.r5f.ti-arm-clang.$(PROFILE).lib
 FILES_common := \
     bootloader.c \
     bootloader_buf_io.c \
+    bootloader_flash.c \
     bootloader_mem.c \
     bootloader_profile.c \
     bootloader_soc.c \
+    bootloader_uniflash.c \
+    bootloader_uniflash_common.c \
+    bootloader_uniflash_mcelf.c \
+    bootloader_uniflash_rprc.c \
     bootloader_xmodem.c \
     crc16.c \
     csl_intaggr.c \

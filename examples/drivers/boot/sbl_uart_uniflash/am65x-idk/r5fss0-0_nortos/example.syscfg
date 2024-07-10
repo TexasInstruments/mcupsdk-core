@@ -1,0 +1,94 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM65xx_SR2.0_beta" --package "ACD" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.20.0+3587"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const flash       = scripting.addModule("/board/flash/flash", {}, false);
+const flash1      = flash.addInstance();
+const bootloader  = scripting.addModule("/drivers/bootloader/bootloader", {}, false);
+const bootloader1 = bootloader.addInstance();
+const ddr         = scripting.addModule("/drivers/ddr/ddr", {}, false);
+const ddr1        = ddr.addInstance();
+const debug_log   = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg     = scripting.addModule("/kernel/dpl/dpl_cfg");
+const mpu_armv7   = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71  = mpu_armv7.addInstance();
+const mpu_armv72  = mpu_armv7.addInstance();
+const mpu_armv73  = mpu_armv7.addInstance();
+const mpu_armv74  = mpu_armv7.addInstance();
+const mpu_armv75  = mpu_armv7.addInstance();
+const mpu_armv76  = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+bootloader1.$name     = "CONFIG_BOOTLOADER_0";
+bootloader1.bootMedia = "FLASH";
+
+flash1.$name                  = "CONFIG_FLASH0";
+bootloader1.flashDriver       = flash1;
+flash1.peripheralDriver.$name = "CONFIG_OSPI0";
+
+ddr1.$name = "CONFIG_DDR0";
+
+debug_log.enableUartLog                   = true;
+debug_log.uartLog.$name                   = "CONFIG_UART0";
+debug_log.uartLog.intrEnable              = "DISABLE";
+debug_log.uartLog.useMcuDomainPeripherals = true;
+debug_log.uartLog.MCU_UART.$assign        = "MCU_USART0";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
+
+mpu_armv71.size         = 31;
+mpu_armv71.allowExecute = false;
+mpu_armv71.attributes   = "Device";
+mpu_armv71.$name        = "SOC_MEM_MAP";
+
+mpu_armv72.size  = 15;
+mpu_armv72.$name = "ATCM_MEM_MAP";
+
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv73.$name             = "BTCM_MEM_MAP";
+
+mpu_armv74.size       = 19;
+mpu_armv74.baseAddr   = 0x41C00000;
+mpu_armv74.attributes = "NonCached";
+mpu_armv74.$name      = "MSRAM_MEM_MAP";
+
+mpu_armv75.baseAddr = 0x70000000;
+mpu_armv75.size     = 21;
+mpu_armv75.$name    = "MSMC_SRAM_MEM_MAP";
+
+mpu_armv76.baseAddr = 0x80000000;
+mpu_armv76.size     = 31;
+mpu_armv76.$name    = "DDR_MEM_MAP";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+flash1.peripheralDriver.MCU_FSS0_OSPI.$suggestSolution      = "MCU_OSPI0";
+flash1.peripheralDriver.MCU_FSS0_OSPI.CLK.$suggestSolution  = "MCU_OSPI0_CLK";
+flash1.peripheralDriver.MCU_FSS0_OSPI.CSn0.$suggestSolution = "MCU_OSPI0_CSn0";
+flash1.peripheralDriver.MCU_FSS0_OSPI.DQS.$suggestSolution  = "MCU_OSPI0_DQS";
+flash1.peripheralDriver.MCU_FSS0_OSPI.D7.$suggestSolution   = "MCU_OSPI0_D7";
+flash1.peripheralDriver.MCU_FSS0_OSPI.D6.$suggestSolution   = "MCU_OSPI0_D6";
+flash1.peripheralDriver.MCU_FSS0_OSPI.D5.$suggestSolution   = "MCU_OSPI0_D5";
+flash1.peripheralDriver.MCU_FSS0_OSPI.D4.$suggestSolution   = "MCU_OSPI0_D4";
+flash1.peripheralDriver.MCU_FSS0_OSPI.D3.$suggestSolution   = "MCU_OSPI0_D3";
+flash1.peripheralDriver.MCU_FSS0_OSPI.D2.$suggestSolution   = "MCU_OSPI0_D2";
+flash1.peripheralDriver.MCU_FSS0_OSPI.D1.$suggestSolution   = "MCU_OSPI0_D1";
+flash1.peripheralDriver.MCU_FSS0_OSPI.D0.$suggestSolution   = "MCU_OSPI0_D0";
+debug_log.uartLog.MCU_UART.RXD.$suggestSolution             = "MCU_OSPI1_D1";
+debug_log.uartLog.MCU_UART.TXD.$suggestSolution             = "MCU_OSPI1_D2";
