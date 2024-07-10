@@ -110,6 +110,7 @@ int main(void)
     }
     /* clear buffer to reset stale data if any */
     memset(gFileBuf, 0, BOOTLOADER_UNIFLASH_MAX_FILE_SIZE);
+    OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);
     Drivers_close();
     System_deinit();
 

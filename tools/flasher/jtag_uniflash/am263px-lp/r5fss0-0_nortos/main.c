@@ -40,10 +40,12 @@
 #include <drivers/bootloader/bootloader_xmodem.h>
 #include <drivers/bootloader/bootloader_uniflash/bootloader_uniflash.h>
 
-#undef FLASH_WRITE_SECTOR
+#define FLASH_WRITE_SECTOR
 
-#define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x28000) /* This has to match the size of MSRAM1 section in linker.cmd */
-uint8_t gFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
+/* Please make sure to keep the buffersize >= block/sector size and aligned with block/sector size */
+#define BOOTLOADER_UNIFLASH_MAX_FILE_SIZE (0x10000)
+/* This has to match the size of MSRAM1 section in linker.cmd */
+uint8_t gFileBuf[BOOTLOADER_UNIFLASH_MAX_FILE_SIZE+BOOTLOADER_UNIFLASH_HEADER_SIZE] __attribute__((aligned(128), section(".bss.filebuf")));
 
 #define BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE (32*1024)
 uint8_t gVerifyBuf[BOOTLOADER_UNIFLASH_VERIFY_BUF_MAX_SIZE] __attribute__((aligned(128), section(".bss")));
@@ -105,7 +107,7 @@ int main(void)
     }
     /* clear buffer to reset stale data if any */
     memset(gFileBuf, 0, BOOTLOADER_UNIFLASH_MAX_FILE_SIZE);
-
+    OSPI_enableDacMode(gOspiHandle[CONFIG_OSPI0]);
     Drivers_close();
     System_deinit();
 
