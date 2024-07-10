@@ -48,7 +48,7 @@
 #include <drivers/bootloader/soc/bootloader_soc.h>
 #include <kernel/dpl/SystemP.h>
 #include <kernel/nortos/dpl/r5/HwiP_armv7r_vim.h>
-#include <drivers/hsmclient.h>
+#include <security/security_common/drivers/hsmclient/hsmclient.h>
 #include <kernel/dpl/DebugP.h>
 #include <drivers/hw_include/cslr_soc.h>
 /* ========================================================================== */

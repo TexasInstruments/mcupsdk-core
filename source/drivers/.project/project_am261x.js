@@ -29,9 +29,6 @@ const files_r5f = {
         // "gpmc_nandlike_v0.c",
         // "gpmc_norlike_v0.c",
         // "gpmc_dma.c",
-		"hsmclient.c",
-		"hsmclient_loadhsmrt.c",
-		"hsmclient_utils.c",
 		"i2c_v1.c",
 		"i2c_v1_lld.c",
 		"ipc_notify_v1.c",
@@ -57,8 +54,6 @@ const files_r5f = {
 		"rl2.c",
 		"rti.c",
 		"sdfm.c",
-		"sipc_notify_cfg.c",
-		"sipc_notify_src.c",
 		"soc.c",
 		"soc_rcm.c",
 		"spinlock.c",
@@ -90,9 +85,6 @@ const filedirs = {
 		"gpio/v0",
 		// "gpmc/v0",
         // "gpmc/v0/dma",
-		"hsmclient",
-		"hsmclient/soc/am261x",
-		"hsmclient/utils",
 		"i2c/v1",
 		"i2c/v1/lld",
 		"ipc_notify/v1",
@@ -106,9 +98,8 @@ const filedirs = {
 		"mcspi/v0/lld/dma/edma",
 		"mdio/v0",
 		"mmcsd/v1",
-		"mpu_firewall/v0/soc/am261x",
-		"optiflash/v0/flc",
-		"optiflash/v0/rl2",
+        "mpu_firewall/v0",
+        "mpu_firewall/v0/soc/am261x",
 		"ospi",
 		"ospi/v0",
 		"ospi/v0/dma",
@@ -117,9 +108,6 @@ const filedirs = {
 		"pmu/r5f",
 		"rti/v0",
 		"sdfm/v0",
-		"secure_ipc_notify/",
-		"secure_ipc_notify/soc/",
-		"secure_ipc_notify/soc/am261x",
 		"soc/am261x",
 		"spinlock/v0",
 		"uart/v0",
@@ -127,6 +115,8 @@ const filedirs = {
 		"uart/v0/lld/dma",
 		"uart/v0/lld/dma/edma",
 		"watchdog/v0",
+        "optiflash/v0/flc",
+        "optiflash/v0/rl2",
 	],
 };
 
@@ -147,6 +137,12 @@ const cflags_r5f = {
     release: [
         "-Oz",
         "-flto",
+    ],
+};
+
+const includes = {
+    common: [
+        "${MCU_PLUS_SDK_PATH}/source/security",
     ],
 };
 
@@ -176,6 +172,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.files = files_r5f;
         build_property.asmfiles = asmfiles_r5f;
     }
+	build_property.includes = includes;
 
     return build_property;
 }

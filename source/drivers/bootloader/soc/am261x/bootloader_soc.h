@@ -40,7 +40,7 @@ extern "C"
 
 
 #include <drivers/hw_include/cslr_soc.h>
-#include <drivers/hsmclient.h>
+#include <security/security_common/drivers/hsmclient/hsmclient.h>
 /* ========================================================================== */
 /*                           Macros & Typedefs                                */
 /* ========================================================================== */
