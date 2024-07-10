@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-23 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -83,6 +83,11 @@ extern "C"
 #define BOOTLOADER_MEDIA_BUFIO     (0xB0070005)
 #define BOOTLOADER_MEDIA_PCIE      (0xB0070006)
 #define BOOTLOADER_MEDIA_USB       (0xB0070007)
+
+/**
+ * \brief Bootloader buffer enable
+ */
+#define BOOTLOADER_SCRATCH_MEM_ENABLE  (1U)
 
 /**
  * \brief Handle to the Bootloader driver returned by Bootloader_open()
@@ -227,6 +232,7 @@ typedef struct Bootloader_Config_s
     uint32_t disableAppImageAuth;
     /* Whether to initialize ICSS cores or not */
     uint32_t initICSSCores;
+    uint32_t enableScratchMem;
 
 } Bootloader_Config;
 
