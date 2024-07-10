@@ -1,6 +1,6 @@
 let path = require('path');
 
-let device = "am273x";
+let device = "am263x";
 
 const files = {
     common: [
@@ -39,47 +39,24 @@ const includes_freertos_r5f = {
     common: [
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
         "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F",
-        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am273x/r5f",
+        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am263x/r5f",
     ],
 };
 
-const includes_freertos_c66 = {
-    common: [
-        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include",
-        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_CGT/DSP_C66",
-        "${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am273x/c66",
-    ],
-};
 
 const libs_nortos_r5f = {
     common: [
-        "nortos.am273x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "drivers.am273x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "board.am273x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "nortos.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
 const libs_freertos_r5f = {
     common: [
-        "freertos.am273x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "drivers.am273x.r5f.ti-arm-clang.${ConfigName}.lib",
-        "board.am273x.r5f.ti-arm-clang.${ConfigName}.lib",
-    ],
-};
-
-const libs_nortos_c66 = {
-    common: [
-        "nortos.am273x.c66.ti-c6000.${ConfigName}.lib",
-        "drivers.am273x.c66.ti-c6000.${ConfigName}.lib",
-        "board.am273x.c66.ti-c6000.${ConfigName}.lib",
-    ],
-};
-
-const libs_freertos_c66 = {
-    common: [
-        "freertos.am273x.c66.ti-c6000.${ConfigName}.lib",
-        "drivers.am273x.c66.ti-c6000.${ConfigName}.lib",
-        "board.am273x.c66.ti-c6000.${ConfigName}.lib",
+        "freertos.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "drivers.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
+        "board.am263x.r5f.ti-arm-clang.${ConfigName}.lib",
     ],
 };
 
@@ -96,7 +73,7 @@ const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_IPC_NOTIFY_ECHO";
 const templates_nortos_r5f =
 [
     {
-        input: ".project/templates/am273x/nortos/main_nortos.c.xdt",
+        input: ".project/templates/am263x/nortos/main_nortos.c.xdt",
         output: "../main.c",
         options: {
             entryFunction: "ipc_notify_echo_main",
@@ -107,30 +84,7 @@ const templates_nortos_r5f =
 const templates_freertos_r5f =
 [
     {
-        input: ".project/templates/am273x/freertos/main_freertos.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "ipc_notify_echo_main",
-        },
-    }
-];
-
-
-const templates_nortos_c66 =
-[
-    {
-        input: ".project/templates/am273x/nortos/main_nortos.c.xdt",
-        output: "../main.c",
-        options: {
-            entryFunction: "ipc_notify_echo_main",
-        },
-    }
-];
-
-const templates_freertos_c66 =
-[
-    {
-        input: ".project/templates/am273x/freertos/main_freertos.c.xdt",
+        input: ".project/templates/am263x/freertos/main_freertos.c.xdt",
         output: "../main.c",
         options: {
             entryFunction: "ipc_notify_echo_main",
@@ -139,24 +93,43 @@ const templates_freertos_c66 =
 ];
 
 const buildOptionCombos = [
-    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am273x-evm", os: "freertos", isPartOfSystemProject: true},
-    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am273x-evm", os: "nortos", isPartOfSystemProject: true},
-    { device: device, cpu: "c66ss0", cgt: "ti-c6000", board: "am273x-evm", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-cc", os: "freertos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263x-cc", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am263x-cc", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am263x-cc", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-lp", os: "freertos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263x-lp", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am263x-lp", os: "nortos", isPartOfSystemProject: true},
+    { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am263x-lp", os: "nortos", isPartOfSystemProject: true},
 ];
 
 const systemProjects = [
     {
-        name: "ipc_notify_echo",
+        name: "ipc_notify_OnetoOne_BacktoBack",
         tag: "freertos_nortos",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
-        board: "am273x-evm",
+        board: "am263x-cc",
         projects: [
-            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am273x-evm", os: "freertos"},
-            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am273x-evm", os: "nortos"},
-            { device: device, cpu: "c66ss0", cgt: "ti-c6000", board: "am273x-evm", os: "nortos"},
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-cc", os: "freertos"},
+            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263x-cc", os: "nortos"},
+            { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am263x-cc", os: "nortos"},
+            { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am263x-cc", os: "nortos"},
         ],
-    }
+    },
+    {
+        name: "ipc_notify_OnetoOne_BacktoBack",
+        tag: "freertos_nortos",
+        skipProjectSpec: false,
+        readmeDoxygenPageTag: readmeDoxygenPageTag,
+        board: "am263x-lp",
+        projects: [
+            { device: device, cpu: "r5fss0-0", cgt: "ti-arm-clang", board: "am263x-lp", os: "freertos"},
+            { device: device, cpu: "r5fss0-1", cgt: "ti-arm-clang", board: "am263x-lp", os: "nortos"},
+            { device: device, cpu: "r5fss1-0", cgt: "ti-arm-clang", board: "am263x-lp", os: "nortos"},
+            { device: device, cpu: "r5fss1-1", cgt: "ti-arm-clang", board: "am263x-lp", os: "nortos"},
+        ],
+    },
 ];
 
 function getComponentProperty() {
@@ -164,7 +137,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "ipc_notify_echo";
+    property.name = "ipc_notify_OnetoOne_BacktoBack";
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
 
@@ -193,20 +166,6 @@ function getComponentBuildProperty(buildOption) {
         {
             build_property.libs = libs_nortos_r5f;
             build_property.templates = templates_nortos_r5f;
-        }
-    }
-    if(buildOption.cpu.match(/c66*/)) {
-        if(buildOption.os.match(/freertos*/) )
-        {
-            build_property.includes = includes_freertos_c66;
-            build_property.libdirs = libdirs_freertos;
-            build_property.libs = libs_freertos_c66;
-            build_property.templates = templates_freertos_c66;
-        }
-        else
-        {
-            build_property.libs = libs_nortos_c66;
-            build_property.templates = templates_nortos_c66;
         }
     }
 
