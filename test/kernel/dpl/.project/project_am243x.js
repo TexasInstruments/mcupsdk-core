@@ -225,6 +225,7 @@ const templates_freertos_r5f_gcc =
             entryFunction: "test_main",
         },
     }
+];
 
 const templates_nortos_m4f =
 [
