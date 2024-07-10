@@ -196,6 +196,11 @@ const files_a53 = {
         "mcspi_v0_lld.c",
         "mmcsd_v0.c",
         "mmcsd_priv.c",
+		"ospi_v0.c",
+        "ospi_dma.c",
+        "ospi_dma_udma.c",
+        "ospi_nor_flash.c",
+        "ospi_phy_dqs.c",
         "pinmux.c",
         "sciclient.c",
         "sciclient_pm.c",
@@ -340,6 +345,10 @@ const filedirs_a53 =  {
         "mcspi/v0/lld/dma/udma",
         "mcspi/v0/lld/dma/dummy",
         "mmcsd/v0",
+		"ospi",
+        "ospi/v0",
+        "ospi/v0/dma",
+        "ospi/v0/dma/udma",
         `pinmux/am64x_am243x`,
         "sciclient",
         `sciclient/soc/am64x_am243x`,
@@ -401,7 +410,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.files = files_a53;
     }
     build_property.includes = includes;
-    
+
     return build_property;
 }
 
