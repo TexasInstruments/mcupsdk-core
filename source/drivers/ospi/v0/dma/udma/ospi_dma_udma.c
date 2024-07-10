@@ -272,6 +272,19 @@ static int32_t OspiDma_udmaCopy(void* ospiDmaArgs, void* dst, void* src, uint32_
     icnt[2] = (uint16_t)1U;
     icnt[3] = (uint16_t)1U;
 
+#if defined(SOC_AM64X) || defined(SOC_AM243X)
+    uint16_t dummy_icnt[4] = { 32U, 1U, 1U, 1U };
+
+    /*
+      The OSPI controller prefetches 32Bytes for DMA reads and this will be used
+      in the subsequent reads if possible. There are possible cases in which the
+      prefetched data maybe obsolete, and can result in incorrect data.
+      To overcome this issue the 32bytes are first read and discarded.
+    */
+
+    udmaStatus = OspiDma_udmaUpdateSubmitTR(ospiDmaArgs, dst, src, dummy_icnt);
+#endif
+
     udmaStatus = OspiDma_udmaUpdateSubmitTR(ospiDmaArgs, dst, src, icnt);
 
     if(rmainder != 0)
