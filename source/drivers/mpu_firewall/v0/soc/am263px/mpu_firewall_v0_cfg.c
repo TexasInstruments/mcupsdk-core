@@ -252,14 +252,6 @@ MPU_FIREWALL_Config gMpuFirewallConfig[CSL_FW_CNT] =
             .startAddr = CSL_FW_OSPI0_SLV_START_ADDR2,
             .regionSize = CSL_FW_OSPI0_SLV_REGION_SIZE2,
         },
-        {
-            .startAddr = CSL_FW_OSPI0_SLV_START_ADDR3,
-            .regionSize = CSL_FW_OSPI0_SLV_REGION_SIZE3,
-        },
-        {
-            .startAddr = CSL_FW_OSPI0_SLV_START_ADDR4,
-            .regionSize = CSL_FW_OSPI0_SLV_REGION_SIZE4,
-        }
         }
 
     },
