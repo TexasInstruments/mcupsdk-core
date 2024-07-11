@@ -1,0 +1,69 @@
+#
+# Auto generated makefile
+#
+
+# Below variables need to be defined outside this file or via command line
+# - MCU_PLUS_SDK_PATH
+# - PROFILE
+# - CG_TOOL_ROOT
+# - OUTNAME
+# - CCS_INSTALL_DIR
+# - CCS_IDE_MODE
+
+CCS_PATH=$(CCS_INSTALL_DIR)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
+
+STRIP=$(CG_TOOL_ROOT)/bin/tiarmstrip
+OBJCOPY=$(CG_TOOL_ROOT)/bin/tiarmobjcopy
+ifeq ($(OS), Windows_NT)
+	PYTHON=python
+else
+	PYTHON=python3
+endif
+
+OUTFILE=$(PROFILE)/$(OUTNAME).out
+BOOTIMAGE_PATH=$(abspath ${PROFILE})
+BOOTIMAGE_NAME_GP:=sbl_null.$(PROFILE).tiimage
+BOOTIMAGE_NAME_HS:=sbl_null.$(PROFILE).hs.tiimage
+ifeq ($(DEVICE_TYPE),HS)
+	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_HS)
+else
+	BOOTIMAGE_NAME=$(BOOTIMAGE_NAME_GP)
+BOOTIMAGE_BIN_NAME:=$(BOOTIMAGE_PATH)/$(OUTNAME).bin
+
+#
+# Generation of boot image which can be loaded by ROM Boot Loader (RBL)
+#
+ifeq ($(OS),Windows_NT)
+EXE_EXT=.exe
+endif
+ifeq ($(OS),Windows_NT)
+  BOOTIMAGE_CERT_GEN_CMD=powershell -executionpolicy unrestricted -command $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/x509CertificateGen.ps1
+else
+  BOOTIMAGE_CERT_GEN_CMD=$(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/x509CertificateGen.sh
+endif
+BOOTIMAGE_TEMP_OUT_FILE=$(PROFILE)/temp_stdout_$(PROFILE).txt
+BOOTIMAGE_CERT_KEY=$(APP_SIGNING_KEY)
+
+
+SBL_RUN_ADDRESS=0x41C00100
+
+SBL_PREBUILT_PATH=$(MCU_PLUS_SDK_PATH)/tools/boot/sbl_prebuilt/am65x-idk
+
+all:
+ifeq ($(CCS_IDE_MODE),cloud)
+#	No post build steps
+else
+	@echo  Boot image: am65x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_NAME) ...
+	$(OBJCOPY) --strip-all -O binary $(OUTFILE) $(BOOTIMAGE_BIN_NAME)
+ifeq ($(DEVICE_TYPE),HS)
+	$(BOOTIMAGE_CERT_GEN_CMD) -b $(BOOTIMAGE_PATH)/$(BOOTIMAGE_BIN_NAME) -o $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME_HS) -c R5 -l $(SBL_RUN_ADDRESS) -k $(BOOTIMAGE_CERT_KEY) -d DEBUG -j DBG_FULL_ENABLE -m SPLIT_MODE
+else
+	$(BOOTIMAGE_CERT_GEN_CMD) -b $(BOOTIMAGE_PATH)/$(BOOTIMAGE_BIN_NAME) -o $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME) -c R5 -l $(SBL_RUN_ADDRESS) -k $(BOOTIMAGE_CERT_KEY) -d DEBUG -j DBG_FULL_ENABLE -m SPLIT_MODE
+endif
+	$(COPY) $(BOOTIMAGE_PATH)/$(BOOTIMAGE_NAME) tiboot3.bin
+	@echo  Boot image: am65x:r5fss0-0:nortos:ti-arm-clang $(BOOTIMAGE_NAME) Done !!!
+	@echo  .
+endif
+endif
