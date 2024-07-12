@@ -219,7 +219,7 @@ int32_t GPMC_nandWriteData(GPMC_Handle handle, GPMC_Transaction *trans)
 
                 if(status == SystemP_SUCCESS)
                 {
-                    while(byteCount)
+                    while(CSL_REG32_FEXT(attrs->gpmcBaseAddr + CSL_GPMC_PREFETCH_STATUS, GPMC_PREFETCH_STATUS_COUNTVALUE))
                     {
                         /* Wait until FIFO is empty or full 64 bytes FIFO is available to fill. */
                         while (GPMC_interuptStatusGet(attrs->gpmcBaseAddr, GPMC_FIFOEVENT_STATUS) == 0);
