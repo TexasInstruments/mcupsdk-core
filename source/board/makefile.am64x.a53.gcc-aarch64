@@ -17,6 +17,7 @@ LIBNAME:=board.am64x.a53.gcc-aarch64.$(PROFILE).lib
 
 FILES_common := \
     flash.c \
+    flash_nand_gpmc.c \
     flash_nand_ospi.c \
     flash_nor_ospi.c \
     ram.c \

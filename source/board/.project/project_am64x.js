@@ -41,6 +41,7 @@ const files_m4f = {
 const files_a53 = {
     common: [
 		"flash.c",
+        "flash_nand_gpmc.c",
         "flash_nand_ospi.c",
         "flash_nor_ospi.c",
         "ram.c",
