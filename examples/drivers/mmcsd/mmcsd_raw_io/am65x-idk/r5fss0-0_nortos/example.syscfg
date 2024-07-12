@@ -1,0 +1,85 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM65xx_SR2.0_beta" --package "ACD" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.20.0+3587"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const mmcsd      = scripting.addModule("/drivers/mmcsd/mmcsd", {}, false);
+const mmcsd1     = mmcsd.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg    = scripting.addModule("/kernel/dpl/dpl_cfg");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+const mpu_armv76 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+mmcsd1.$name   = "CONFIG_MMCSD0";
+mmcsd1.phyType = "SW_PHY";
+
+debug_log.enableUartLog                   = true;
+debug_log.uartLog.$name                   = "CONFIG_UART0";
+debug_log.uartLog.useMcuDomainPeripherals = true;
+debug_log.uartLog.MCU_UART.$assign        = "MCU_USART0";
+debug_log.uartLog.MCU_UART.RXD.$assign    = "MCU_OSPI1_D1";
+debug_log.uartLog.MCU_UART.TXD.$assign    = "MCU_OSPI1_D2";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
+
+mpu_armv71.size         = 31;
+mpu_armv71.allowExecute = false;
+mpu_armv71.attributes   = "Device";
+mpu_armv71.$name        = "SOC_MEM_MAP";
+
+mpu_armv72.size  = 15;
+mpu_armv72.$name = "ATCM_MEM_MAP";
+
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv73.$name             = "BTCM_MEM_MAP";
+
+mpu_armv74.size       = 19;
+mpu_armv74.baseAddr   = 0x41C00000;
+mpu_armv74.attributes = "NonCached";
+mpu_armv74.$name      = "MSRAM_MEM_MAP";
+
+mpu_armv75.baseAddr = 0x70000000;
+mpu_armv75.size     = 21;
+mpu_armv75.$name    = "MSMC_SRAM_MEM_MAP";
+
+mpu_armv76.baseAddr = 0x80000000;
+mpu_armv76.size     = 31;
+mpu_armv76.$name    = "DDR_MEM_MAP";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+mmcsd1.MMC.$suggestSolution      = "MMC0";
+mmcsd1.MMC.CLK.$suggestSolution  = "MMC0_CLK";
+mmcsd1.MMC.CMD.$suggestSolution  = "MMC0_CMD";
+mmcsd1.MMC.DAT0.$suggestSolution = "MMC0_DAT0";
+mmcsd1.MMC.DAT1.$suggestSolution = "MMC0_DAT1";
+mmcsd1.MMC.DAT2.$suggestSolution = "MMC0_DAT2";
+mmcsd1.MMC.DAT3.$suggestSolution = "MMC0_DAT3";
+mmcsd1.MMC.DAT4.$suggestSolution = "MMC0_DAT4";
+mmcsd1.MMC.DAT5.$suggestSolution = "MMC0_DAT5";
+mmcsd1.MMC.DAT6.$suggestSolution = "MMC0_DAT6";
+mmcsd1.MMC.DAT7.$suggestSolution = "MMC0_DAT7";
+mmcsd1.MMC.DS.$suggestSolution   = "MMC0_DS";
+mmcsd1.MMC.SDWP.$suggestSolution = "MMC0_SDWP";
+mmcsd1.MMC.SDCD.$suggestSolution = "MMC0_SDCD";
