@@ -21,7 +21,7 @@
         toolChain="TI"
         cgtVersion="2.3.3"
         device="AM243x_GP_EVM"
-        deviceCore=""
+        deviceCore="ICSS_G0_TX_PRU_1"
         ignoreDefaultDeviceSettings="true"
         ignoreDefaultCCSSettings="true"
         endianness="little"
@@ -32,7 +32,7 @@
             -I${CG_TOOL_ROOT}/include
             -I${MCU_PLUS_SDK_PATH}/source
             -I${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/common
-            -DPRU1
+            -DTX_PRU1
             -DSLICE1
             -v4
             -DSOC_AM243X

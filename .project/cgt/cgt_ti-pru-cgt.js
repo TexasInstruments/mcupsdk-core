@@ -115,19 +115,19 @@ function getCgtOptions(cpu, device)
     {
         cgtOptions = common.mergeCgtOptions(cgt_common, cgt_pru1);
     }
-    if(cpu.match(/rtupru0/))
+    if(cpu.match(/rtu_pru0/))
     {
         cgtOptions = common.mergeCgtOptions(cgt_common, cgt_rtupru0);
     }
-    if(cpu.match(/rtupru1/))
+    if(cpu.match(/rtu_pru1/))
     {
         cgtOptions = common.mergeCgtOptions(cgt_common, cgt_rtupru1);
     }
-    if(cpu.match(/txpru0/))
+    if(cpu.match(/tx_pru0/))
     {
         cgtOptions = common.mergeCgtOptions(cgt_common, cgt_txpru0);
     }
-    if(cpu.match(/txpru1/))
+    if(cpu.match(/tx_pru1/))
     {
         cgtOptions = common.mergeCgtOptions(cgt_common, cgt_txpru1);
     }

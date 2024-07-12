@@ -144,6 +144,30 @@
         },{
             "name": "icss_g1_pru1",
             "targetdbId": "icss_g1_pru1"
+        },{
+            "name": "icss_g0_rtu_pru0",
+            "targetdbId": "icss_g0_rtu_pru0"
+        },{
+            "name": "icss_g0_rtu_pru1",
+            "targetdbId": "icss_g0_rtu_pru1"
+        },{
+            "name": "icss_g1_rtu_pru0",
+            "targetdbId": "icss_g1_rtu_pru0"
+        },{
+            "name": "icss_g1_rtu_pru1",
+            "targetdbId": "icss_g1_rtu_pru1"
+        },{
+            "name": "icss_g0_tx_pru0",
+            "targetdbId": "icss_g0_tx_pru0"
+        },{
+            "name": "icss_g0_tx_pru1",
+            "targetdbId": "icss_g0_tx_pru1"
+        },{
+            "name": "icss_g1_tx_pru0",
+            "targetdbId": "icss_g1_tx_pru0"
+        },{
+            "name": "icss_g1_tx_pru1",
+            "targetdbId": "icss_g1_tx_pru1"
         }],
 % }
 % if((args.device == "am243x") || (isDevelopmentMode)) {
@@ -174,6 +198,30 @@
         },{
             "name": "icss_g1_pru1",
             "targetdbId": "icss_g1_pru1"
+        },{
+            "name": "icss_g0_rtu_pru0",
+            "targetdbId": "icss_g0_rtu_pru0"
+        },{
+            "name": "icss_g0_rtu_pru1",
+            "targetdbId": "icss_g0_rtu_pru1"
+        },{
+            "name": "icss_g1_rtu_pru0",
+            "targetdbId": "icss_g1_rtu_pru0"
+        },{
+            "name": "icss_g1_rtu_pru1",
+            "targetdbId": "icss_g1_rtu_pru1"
+        },{
+            "name": "icss_g0_tx_pru0",
+            "targetdbId": "icss_g0_tx_pru0"
+        },{
+            "name": "icss_g0_tx_pru1",
+            "targetdbId": "icss_g0_tx_pru1"
+        },{
+            "name": "icss_g1_tx_pru0",
+            "targetdbId": "icss_g1_tx_pru0"
+        },{
+            "name": "icss_g1_tx_pru1",
+            "targetdbId": "icss_g1_tx_pru1"
         }],
         "AM243x_ALX_beta": [{
             "name": "r5fss0-0",
@@ -202,6 +250,30 @@
         },{
             "name": "icss_g1_pru1",
             "targetdbId": "icss_g1_pru1"
+        },{
+            "name": "icss_g0_rtu_pru0",
+            "targetdbId": "icss_g0_rtu_pru0"
+        },{
+            "name": "icss_g0_rtu_pru1",
+            "targetdbId": "icss_g0_rtu_pru1"
+        },{
+            "name": "icss_g1_rtu_pru0",
+            "targetdbId": "icss_g1_rtu_pru0"
+        },{
+            "name": "icss_g1_rtu_pru1",
+            "targetdbId": "icss_g1_rtu_pru1"
+        },{
+            "name": "icss_g0_tx_pru0",
+            "targetdbId": "icss_g0_tx_pru0"
+        },{
+            "name": "icss_g0_tx_pru1",
+            "targetdbId": "icss_g0_tx_pru1"
+        },{
+            "name": "icss_g1_tx_pru0",
+            "targetdbId": "icss_g1_tx_pru0"
+        },{
+            "name": "icss_g1_tx_pru1",
+            "targetdbId": "icss_g1_tx_pru1"
         }],
 % }
 % if((args.device == "am273x") || (isDevelopmentMode)) {

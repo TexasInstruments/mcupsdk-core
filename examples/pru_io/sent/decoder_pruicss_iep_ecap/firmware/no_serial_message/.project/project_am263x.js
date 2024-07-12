@@ -36,7 +36,7 @@ const lnkfiles = {
 const readmeDoxygenPageTag = "EXAMPLES_SENT_DECODER_PRUICSS_IEP_ECAP";
 
 const buildOptionCombos = [
-    { device: device, cpu: "icssm-pru0", cgt: "ti-pru-cgt", board: "am263x-cc", os: "fw"},
+    { device: device, cpu: "icss_m_pru0", cgt: "ti-pru-cgt", board: "am263x-cc", os: "fw"},
 ];
 
 

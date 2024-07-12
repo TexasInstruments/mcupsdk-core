@@ -55,7 +55,7 @@ void freertos_main(void *args)
 }
 
 
-int main()
+int main(void)
 {
     /* init SOC specific modules */
     System_init();

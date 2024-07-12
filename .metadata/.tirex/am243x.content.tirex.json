@@ -14761,8 +14761,8 @@
         "resourceSubClass": [
             "example.general"
         ],
-        "description": "R5F ADC Project CPU is R5FSS0-0 running FREERTOS.",
-        "name": "adc",
+        "description": "A Ads85x8 Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ads85x8",
         "location": "../../examples/pru_io/adc/ads85x8/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
         "devtools": [
             "AM243x_GP_EVM"
@@ -14778,6 +14778,165 @@
             "adc",
             "ads85x8",
             "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ads85x8 Example. CPU is ICSS_G0_PRU0 running FW.",
+        "name": "ads85x8",
+        "location": "../../examples/pru_io/adc/ads85x8/am243x-evm/icss_g0_pru0_fw/ti-pru-cgt/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "fw"
+        ],
+        "compiler": [],
+        "subCategories": [
+            "pru_io",
+            "adc",
+            "ads85x8",
+            "icss_g0_pru0_fw"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ads127 Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ads127",
+        "location": "../../examples/pru_io/adc/ads127/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "pru_io",
+            "adc",
+            "ads127",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ads127 Example. CPU is ICSS_G0_PRU0 running FW.",
+        "name": "ads127",
+        "location": "../../examples/pru_io/adc/ads127/am243x-evm/icss_g0_pru0_fw/ti-pru-cgt/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "fw"
+        ],
+        "compiler": [],
+        "subCategories": [
+            "pru_io",
+            "adc",
+            "ads127",
+            "icss_g0_pru0_fw"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ads131 Example. CPU is R5FSS0-0 running FREERTOS.",
+        "name": "ads131",
+        "location": "../../examples/pru_io/adc/ads131/am243x-evm/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "freertos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "pru_io",
+            "adc",
+            "ads131",
+            "r5fss0-0_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ads131 Example. CPU is ICSS_G0_PRU0 running FW.",
+        "name": "ads131",
+        "location": "../../examples/pru_io/adc/ads131/am243x-evm/icss_g0_pru0_fw/ti-pru-cgt/example.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "fw"
+        ],
+        "compiler": [],
+        "subCategories": [
+            "pru_io",
+            "adc",
+            "ads131",
+            "icss_g0_pru0_fw"
         ],
         "mainCategories": [
             [
@@ -16405,6 +16564,96 @@
             "device",
             "cdc_echo",
             "system_freertos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ads85x8 System Example.",
+        "name": "ads85x8",
+        "location": "../../examples/pru_io/adc/ads85x8/am243x-evm/system_freertos_prufw/system.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "fw"
+        ],
+        "subCategories": [
+            "pru_io",
+            "adc",
+            "ads85x8",
+            "system_freertos_prufw"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ads127 System Example.",
+        "name": "ads127",
+        "location": "../../examples/pru_io/adc/ads127/am243x-evm/system_freertos_prufw/system.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "fw"
+        ],
+        "subCategories": [
+            "pru_io",
+            "adc",
+            "ads127",
+            "system_freertos_prufw"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
+        "description": "A Ads131 System Example.",
+        "name": "ads131",
+        "location": "../../examples/pru_io/adc/ads131/am243x-evm/system_freertos_prufw/system.projectspec",
+        "devtools": [
+            "AM243x_GP_EVM"
+        ],
+        "kernel": [
+            "fw"
+        ],
+        "subCategories": [
+            "pru_io",
+            "adc",
+            "ads131",
+            "system_freertos_prufw"
         ],
         "mainCategories": [
             [

@@ -43,7 +43,7 @@ const templates_pru =
 ];
 
 const buildOptionCombos = [
-    { device: device, cpu: "icssm-pru0", cgt: "ti-pru-cgt", board: "am263x-cc", os: "fw"},
+    { device: device, cpu: "icss_m_pru0", cgt: "ti-pru-cgt", board: "am263x-cc", os: "fw"},
 ];
 
 const hexBuildOptions = [
@@ -71,10 +71,10 @@ function getmakefilePruPostBuildSteps(cpu, board)
 
     switch(cpu)
     {
-        case "icssm-pru1":
+        case "icss_m_pru1":
             core = "pru1"
             break;
-        case "icssm-pru0":
+        case "icss_m_pru0":
             core = "pru0"
     }
 
@@ -89,10 +89,10 @@ function getccsPruPostBuildSteps(cpu, board)
 
     switch(cpu)
     {
-        case "icssm-pru1":
+        case "icss_m_pru1":
             core = "pru1"
             break;
-        case "icssm-pru0":
+        case "icss_m_pru0":
             core = "pru0"
     }
 

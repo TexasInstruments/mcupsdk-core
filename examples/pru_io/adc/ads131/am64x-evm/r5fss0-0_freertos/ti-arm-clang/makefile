@@ -62,7 +62,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/r5f \
 	-I${MCU_PLUS_SDK_PATH}/source/pru_io/driver \
-	-I${MCU_PLUS_SDK_PATH}/examples/pru_io/adc/ads131/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt \
+	-I${MCU_PLUS_SDK_PATH}/examples/pru_io/adc/ads131/firmware \
 	-Igenerated \
 
 DEFINES_common := \

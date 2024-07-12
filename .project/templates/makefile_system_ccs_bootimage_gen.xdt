@@ -106,12 +106,16 @@ MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
 
 MULTI_CORE_APP_PARAMS = \
 % for (let project of args.project.projects) {
+	%if(!(project.cpu.includes('pru'))){
 	../`args.project.name`_`project.board`_`project.cpu`_`project.os`_`project.cgt`/$(PROFILE)/`args.project.name`_`project.board`_`project.cpu`_`project.os`_`project.cgt`.rprc@$(BOOTIMAGE_CORE_ID_`project.cpu`) \
+	%}
 % }
 
 MULTI_CORE_APP_PARAMS_XIP = \
 % for (let project of args.project.projects) {
+	%if(!(project.cpu.includes('pru'))){
 	../`args.project.name`_`project.board`_`project.cpu`_`project.os`_`project.cgt`/$(PROFILE)/`args.project.name`_`project.board`_`project.cpu`_`project.os`_`project.cgt`.rprc_xip@$(BOOTIMAGE_CORE_ID_`project.cpu`) \
+	%}
 % }
 
 % if (args.project.device == "awr294x") {
@@ -121,8 +125,10 @@ MULTI_CORE_APP_PARAMS_QSPI = $(MULTI_CORE_APP_PARAMS) $(R4_RPRC_PATH)@$(BOOTIMAG
 % let numProjects = 0;
 % if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 % for (let project of args.project.projects) {
+%if(!(project.cpu.includes('pru'))){
 CORE_`numProjects`_IMG=../`args.project.name`_`project.board`_`project.cpu`_`project.os`_`project.cgt`/$(PROFILE)/`args.project.name`_`project.board`_`project.cpu`_`project.os`_`project.cgt`.out
     % numProjects = numProjects + 1;
+%}
 % }
 % }
 % if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {

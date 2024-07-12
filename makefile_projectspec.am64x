@@ -497,11 +497,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += sdl_stog_r5f_am64x-evm_system_norto
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
 # Various Private Example Projectspec Build Targets
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += adc_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += adc_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += ads127_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_pru_io_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += ads131_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_am64x-evm_icss_g0_pru0_fw_ti-pru-cgt_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_am64x-evm_icss_g0_pru1_fw_ti-pru-cgt_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_am64x-evm_icss_g0_rtu_pru0_fw_ti-pru-cgt_build
@@ -509,6 +505,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_am64x-evm_icss_g0_rtu
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_am64x-evm_icss_g0_tx_pru0_fw_ti-pru-cgt_build
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += empty_am64x-evm_icss_g0_tx_pru1_fw_ti-pru-cgt_build
 # Various Private System Example Projectspec Build Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += ads85x8_am64x-evm_system_freertos_prufw_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += ads127_am64x-evm_system_freertos_prufw_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL += ads131_am64x-evm_system_freertos_prufw_build
 
 all: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL)
 
@@ -1810,20 +1809,8 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  enet_lwip_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/networking/lwip/enet_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
 
- adc_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
-	$(MAKE) -C examples/pru_io/adc/ads85x8/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- adc_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_build:
-	$(MAKE) -C examples/pru_io/adc/ads85x8/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec all
-
- ads127_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_build:
-	$(MAKE) -C examples/pru_io/adc/ads127/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec all
-
  empty_pru_io_am64x-evm_r5fss0-0_freertos_ti-arm-clang_build:
 	$(MAKE) -C examples/pru_io/empty/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec all
-
- ads131_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_build:
-	$(MAKE) -C examples/pru_io/adc/ads131/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec all
 
  empty_am64x-evm_icss_g0_pru0_fw_ti-pru-cgt_build:
 	$(MAKE) -C examples/pru_io/empty/firmware/am64x-evm/icss_g0_pru0_fw/ti-pru-cgt -f makefile_projectspec all
@@ -2001,6 +1988,15 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
 
  enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_build:
 	$(MAKE) -C examples/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile_projectspec all
+
+ ads85x8_am64x-evm_system_freertos_prufw_build:
+	$(MAKE) -C examples/pru_io/adc/ads85x8/am64x-evm/system_freertos_prufw -f makefile_projectspec all
+
+ ads127_am64x-evm_system_freertos_prufw_build:
+	$(MAKE) -C examples/pru_io/adc/ads127/am64x-evm/system_freertos_prufw -f makefile_projectspec all
+
+ ads131_am64x-evm_system_freertos_prufw_build:
+	$(MAKE) -C examples/pru_io/adc/ads131/am64x-evm/system_freertos_prufw -f makefile_projectspec all
 
  sdl_stog_r5f_am64x-evm_system_nortos_build:
 	$(MAKE) -C examples/sdl/stog_r5f/am64x-evm/system_nortos -f makefile_projectspec all
@@ -2499,11 +2495,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += sdl_stog_r5f_am64x-evm_system_norto
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
 # Various Private Example Projectspec Clean Targets
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += adc_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += adc_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += ads127_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_pru_io_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += ads131_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_am64x-evm_icss_g0_pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_am64x-evm_icss_g0_pru1_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_am64x-evm_icss_g0_rtu_pru0_fw_ti-pru-cgt_clean
@@ -2511,6 +2503,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_am64x-evm_icss_g0_rtu
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_am64x-evm_icss_g0_tx_pru0_fw_ti-pru-cgt_clean
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += empty_am64x-evm_icss_g0_tx_pru1_fw_ti-pru-cgt_clean
 # Various Private System Example Projectspec Clean Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += ads85x8_am64x-evm_system_freertos_prufw_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += ads127_am64x-evm_system_freertos_prufw_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL += ads131_am64x-evm_system_freertos_prufw_clean
 
 clean: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL)
 
@@ -3812,20 +3807,8 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  enet_lwip_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/networking/lwip/enet_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
 
- adc_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
-	$(MAKE) -C examples/pru_io/adc/ads85x8/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- adc_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_clean:
-	$(MAKE) -C examples/pru_io/adc/ads85x8/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec clean
-
- ads127_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_clean:
-	$(MAKE) -C examples/pru_io/adc/ads127/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec clean
-
  empty_pru_io_am64x-evm_r5fss0-0_freertos_ti-arm-clang_clean:
 	$(MAKE) -C examples/pru_io/empty/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec clean
-
- ads131_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_clean:
-	$(MAKE) -C examples/pru_io/adc/ads131/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec clean
 
  empty_am64x-evm_icss_g0_pru0_fw_ti-pru-cgt_clean:
 	$(MAKE) -C examples/pru_io/empty/firmware/am64x-evm/icss_g0_pru0_fw/ti-pru-cgt -f makefile_projectspec clean
@@ -4003,6 +3986,15 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
 
  enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_clean:
 	$(MAKE) -C examples/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile_projectspec clean
+
+ ads85x8_am64x-evm_system_freertos_prufw_clean:
+	$(MAKE) -C examples/pru_io/adc/ads85x8/am64x-evm/system_freertos_prufw -f makefile_projectspec clean
+
+ ads127_am64x-evm_system_freertos_prufw_clean:
+	$(MAKE) -C examples/pru_io/adc/ads127/am64x-evm/system_freertos_prufw -f makefile_projectspec clean
+
+ ads131_am64x-evm_system_freertos_prufw_clean:
+	$(MAKE) -C examples/pru_io/adc/ads131/am64x-evm/system_freertos_prufw -f makefile_projectspec clean
 
  sdl_stog_r5f_am64x-evm_system_nortos_clean:
 	$(MAKE) -C examples/sdl/stog_r5f/am64x-evm/system_nortos -f makefile_projectspec clean
@@ -4501,11 +4493,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += sdl_stog_r5f_am64x-evm_system_nort
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
 # Various Private Example Projectspec Export Targets
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += adc_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += adc_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += ads127_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_pru_io_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export
-BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += ads131_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_am64x-evm_icss_g0_pru0_fw_ti-pru-cgt_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_am64x-evm_icss_g0_pru1_fw_ti-pru-cgt_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_am64x-evm_icss_g0_rtu_pru0_fw_ti-pru-cgt_export
@@ -4513,6 +4501,9 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_am64x-evm_icss_g0_rt
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_am64x-evm_icss_g0_tx_pru0_fw_ti-pru-cgt_export
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += empty_am64x-evm_icss_g0_tx_pru1_fw_ti-pru-cgt_export
 # Various Private System Example Projectspec Export Targets
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += ads85x8_am64x-evm_system_freertos_prufw_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += ads127_am64x-evm_system_freertos_prufw_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL += ads131_am64x-evm_system_freertos_prufw_export
 
 export: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL)
 
@@ -5814,20 +5805,8 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  enet_lwip_icssg_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/networking/lwip/enet_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
 
- adc_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
-	$(MAKE) -C examples/pru_io/adc/ads85x8/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- adc_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_export:
-	$(MAKE) -C examples/pru_io/adc/ads85x8/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec export
-
- ads127_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_export:
-	$(MAKE) -C examples/pru_io/adc/ads127/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec export
-
  empty_pru_io_am64x-evm_r5fss0-0_freertos_ti-arm-clang_export:
 	$(MAKE) -C examples/pru_io/empty/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec export
-
- ads131_am64x-evm_icssg0-pru0_fw_ti-pru-cgt_export:
-	$(MAKE) -C examples/pru_io/adc/ads131/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec export
 
  empty_am64x-evm_icss_g0_pru0_fw_ti-pru-cgt_export:
 	$(MAKE) -C examples/pru_io/empty/firmware/am64x-evm/icss_g0_pru0_fw/ti-pru-cgt -f makefile_projectspec export
@@ -6005,6 +5984,15 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
 
  enet_intercore_icssg_am64x-evm_system_enet_intercore_icssg_export:
 	$(MAKE) -C examples/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile_projectspec export
+
+ ads85x8_am64x-evm_system_freertos_prufw_export:
+	$(MAKE) -C examples/pru_io/adc/ads85x8/am64x-evm/system_freertos_prufw -f makefile_projectspec export
+
+ ads127_am64x-evm_system_freertos_prufw_export:
+	$(MAKE) -C examples/pru_io/adc/ads127/am64x-evm/system_freertos_prufw -f makefile_projectspec export
+
+ ads131_am64x-evm_system_freertos_prufw_export:
+	$(MAKE) -C examples/pru_io/adc/ads131/am64x-evm/system_freertos_prufw -f makefile_projectspec export
 
  sdl_stog_r5f_am64x-evm_system_nortos_export:
 	$(MAKE) -C examples/sdl/stog_r5f/am64x-evm/system_nortos -f makefile_projectspec export
@@ -6470,11 +6458,7 @@ help:
 	@echo  $(MAKE) -s -C examples/networking/enet_vlan_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_icssg_tcpserver/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_lwip_icssg/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/pru_io/adc/ads85x8/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/pru_io/adc/ads85x8/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/pru_io/adc/ads127/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/am64x-evm/r5fss0-0_freertos/ti-arm-clang -f makefile_projectspec [export all clean]
-	@echo  $(MAKE) -s -C examples/pru_io/adc/ads131/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am64x-evm/icss_g0_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am64x-evm/icss_g0_pru1_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/pru_io/empty/firmware/am64x-evm/icss_g0_rtu_pru0_fw/ti-pru-cgt -f makefile_projectspec [export all clean]
@@ -6537,6 +6521,9 @@ help:
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am64x-evm/system_nortos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/usb/device/cdc_echo/am64x-evm/system_freertos -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/networking/lwip/enet_intercore_icssg/am64x-evm/system_enet_intercore_icssg -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/pru_io/adc/ads85x8/am64x-evm/system_freertos_prufw -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/pru_io/adc/ads127/am64x-evm/system_freertos_prufw -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C examples/pru_io/adc/ads131/am64x-evm/system_freertos_prufw -f makefile_projectspec [export all clean]
 	@echo  $(MAKE) -s -C examples/sdl/stog_r5f/am64x-evm/system_nortos -f makefile_projectspec [export all clean]
 	@echo  .
 

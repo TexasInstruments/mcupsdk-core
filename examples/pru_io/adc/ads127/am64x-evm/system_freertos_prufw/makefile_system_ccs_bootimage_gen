@@ -1,0 +1,84 @@
+#
+# Auto generated makefile
+#
+
+# Below variables need to be defined outside this file or via command line
+# - MCU_PLUS_SDK_PATH
+# - PROFILE
+# - OUTNAME
+# - CCS_INSTALL_DIR
+
+CCS_PATH=$(CCS_INSTALL_DIR)
+include $(MCU_PLUS_SDK_PATH)/imports.mak
+include $(MCU_PLUS_SDK_PATH)/devconfig/devconfig.mak
+
+ifeq ($(OS), Windows_NT)
+	PYTHON=python
+else
+	PYTHON=python3
+endif
+
+MULTI_CORE_BOOTIMAGE_PATH=$(abspath $(PROFILE))
+MULTI_CORE_BOOTIMAGE_NAME:=$(PROFILE)/$(OUTNAME).appimage
+MULTI_CORE_BOOTIMAGE_NAME_SIGNED:=$(PROFILE)/$(OUTNAME).appimage.signed
+MULTI_CORE_BOOTIMAGE_NAME_XIP:=$(PROFILE)/$(OUTNAME).appimage_xip
+
+#
+# Generation of multi-core boot image which can be loaded by Secondary Boot Loader (SBL)
+#
+ifeq ($(OS),Windows_NT)
+EXE_EXT=.exe
+endif
+BOOTIMAGE_TEMP_OUT_FILE=$(PROFILE)/temp_stdout_$(PROFILE).txt
+
+BOOTIMAGE_CORE_ID_a53ss0-0 = 0
+BOOTIMAGE_CORE_ID_r5fss0-0 = 4
+BOOTIMAGE_CORE_ID_r5fss0-1 = 5
+BOOTIMAGE_CORE_ID_r5fss1-0 = 6
+BOOTIMAGE_CORE_ID_r5fss1-1 = 7
+BOOTIMAGE_CORE_ID_m4fss0-0 = 14
+SBL_RUN_ADDRESS=0x70000000
+SBL_DEV_ID=55
+
+MULTI_CORE_IMAGE_GEN = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
+OUTRPRC_CMD = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
+APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/appimage_x509_cert_gen.py
+
+MULTI_CORE_APP_PARAMS = \
+	../ads127_am64x-evm_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/ads127_am64x-evm_r5fss0-0_freertos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+
+MULTI_CORE_APP_PARAMS_XIP = \
+	../ads127_am64x-evm_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/ads127_am64x-evm_r5fss0-0_freertos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+
+all:
+ifeq ($(CCS_IDE_MODE),cloud)
+#	No post build steps
+else
+	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME) ...
+	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME) $(MULTI_CORE_APP_PARAMS) >> $(BOOTIMAGE_TEMP_OUT_FILE)
+	$(MULTI_CORE_IMAGE_GEN) --devID $(SBL_DEV_ID) --out $(MULTI_CORE_BOOTIMAGE_NAME_XIP) $(MULTI_CORE_APP_PARAMS_XIP) >> $(BOOTIMAGE_TEMP_OUT_FILE)
+
+ifeq ($(DEVICE_TYPE),HS)
+# Sign the appimage using appimage signing script
+ifeq ($(ENC_ENABLED),no)
+	@echo Boot image signing: Encryption is disabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME).hs
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
+else
+	@echo Boot image signing: Encryption is enabled.
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --enc y --enckey $(APP_ENCRYPTION_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME).hs
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)-enc
+endif
+else
+# Sign the appimage for HS-FS using appimage signing script
+	$(PYTHON) $(APP_IMAGE_SIGN_CMD) --bin $(MULTI_CORE_BOOTIMAGE_NAME) --authtype 1 --key $(APP_SIGNING_KEY) --output $(MULTI_CORE_BOOTIMAGE_NAME).hs_fs
+	$(RM) $(MULTI_CORE_BOOTIMAGE_NAME)
+endif
+
+ifeq ($(DEVICE_TYPE),HS)
+	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME).hs Done !!!
+else
+	@echo  Boot multi-core image: $(MULTI_CORE_BOOTIMAGE_NAME).hs_fs Done !!!
+endif
+	@echo  .
+endif

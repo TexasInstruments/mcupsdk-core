@@ -9,11 +9,9 @@
         </when>
     </applicability>
 
-    <import spec="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}/examples/pru_io/adc/ads85x8/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt/example.projectspec"/>
-
     <project
-        title="Adc"
-        name = "adc_am243x-evm_r5fss0-0_freertos_ti-arm-clang"
+        title="Ads85x8"
+        name = "ads85x8_am243x-evm_r5fss0-0_freertos_ti-arm-clang"
         products="sysconfig;com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
                 Debug,
@@ -37,7 +35,7 @@
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F
             -I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am243x/r5f
             -I${MCU_PLUS_SDK_PATH}/source/pru_io/driver
-            -I${MCU_PLUS_SDK_PATH}/examples/pru_io/adc/ads85x8/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt
+            -I${MCU_PLUS_SDK_PATH}/examples/pru_io/adc/ads85x8/firmware
             -mcpu=cortex-r5
             -mfloat-abi=hard
             -mfpu=vfpv3-d16
@@ -55,16 +53,10 @@
             -i${MCU_PLUS_SDK_PATH}/source/board/lib
             -i${MCU_PLUS_SDK_PATH}/source/pru_io/lib
             -i${CG_TOOL_ROOT}/lib
-            -m=adc.${ConfigName}.map
+            -m=ads85x8.${ConfigName}.map
             --diag_suppress=10063
             --ram_model
             --reread_libs
-        "
-
-        preBuildStep="
-            ${SYSCONFIG_TOOL} -s ${MCU_PLUS_SDK_PATH}/.metadata/product.json --script ${CCS_PROJECT_DIR}/example.syscfg  -d &quot;AM243x_ALV_beta&quot; --context &quot;r5fss0-0&quot; -o &quot;syscfg&quot; --part ALV --package ALV --compiler ticlang;
-            $(MAKE) -C ${MCU_PLUS_SDK_PATH}/examples/pru_io/adc/ads85x8/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile -k clean MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_PROJECT_DEBUG=${CWD};
-            $(MAKE) -C ${MCU_PLUS_SDK_PATH}/examples/pru_io/adc/ads85x8/firmware/am243x-evm/icssg0-pru0_fw/ti-pru-cgt -f makefile -k all MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_PROJECT_DEBUG=${CWD};
         "
 
         postBuildStep="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_ccs_bootimage_gen OUTNAME=${BuildArtifactFileBaseName} PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE} DEVICE=am243x"
@@ -74,7 +66,7 @@
             --context r5fss0-0 --part ALV --package ALV
         "
 
-        description="A Adc FREERTOS project">
+        description="A Ads85x8 FREERTOS project">
 
         <configuration name="Debug"
             compilerBuildOptions="

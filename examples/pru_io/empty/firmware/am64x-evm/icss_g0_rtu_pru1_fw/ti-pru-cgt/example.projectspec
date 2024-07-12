@@ -32,7 +32,7 @@
             -I${CG_TOOL_ROOT}/include
             -I${MCU_PLUS_SDK_PATH}/source
             -I${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/common
-            -DPRU1
+            -DRTU_PRU1
             -DSLICE1
             -v4
             -DSOC_AM64X

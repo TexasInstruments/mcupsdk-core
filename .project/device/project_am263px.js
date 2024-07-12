@@ -369,8 +369,8 @@ function getProjectSpecCpu(cpu) {
         "r5fss0-1": "Cortex_R5_1",
         "r5fss1-0": "Cortex_R5_2",
         "r5fss1-1": "Cortex_R5_3",
-        "icssm-pru0": "ICSSM_PRU_0",
-        "icssm-pru1": "ICSSM_PRU_1",
+        "icss_m_pru0": "ICSSM_PRU_0",
+        "icss_m_pru1": "ICSSM_PRU_1",
     }
 
     return projectSpecCpu[cpu];

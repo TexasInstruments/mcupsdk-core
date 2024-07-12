@@ -1,0 +1,20 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM243x_ALV_beta" --package "ALV" --part "ALV" --context "icss_g0_pru0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.20.0+3587"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const pru_ipc = scripting.addModule("/pru_io/pru_ipc/pru_ipc");
+const adc  = scripting.addModule("/pru_io/adc/adc", {}, false);
+const adc1 = adc.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+adc1.$name              = "CONFIG_ADC0";
+adc1.adcIC              = "ADS127L11";
+adc1.adcConfig[0].$name = "CONFIG_ADS127_PINMUX0";

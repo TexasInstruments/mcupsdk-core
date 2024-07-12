@@ -24,17 +24,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=adc.$(PROFILE).out
+OUTNAME:=ads85x8.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=adc.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=adc.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=adc.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=adc.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=adc.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=adc.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=adc.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=adc.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=ads85x8.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=ads85x8.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=ads85x8.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=ads85x8.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=ads85x8.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=ads85x8.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=ads85x8.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=ads85x8.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 
 
@@ -62,7 +62,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CR5F \
 	-I${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/am64x/r5f \
 	-I${MCU_PLUS_SDK_PATH}/source/pru_io/driver \
-	-I${MCU_PLUS_SDK_PATH}/examples/pru_io/adc/ads85x8/firmware/am64x-evm/icssg0-pru0_fw/ti-pru-cgt \
+	-I${MCU_PLUS_SDK_PATH}/examples/pru_io/adc/ads85x8/firmware \
 	-Igenerated \
 
 DEFINES_common := \
@@ -208,7 +208,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am64x:r5fss0-0:freertos:ti-arm-clang adc ...
+	@echo  Scrubing: am64x:r5fss0-0:freertos:ti-arm-clang ads85x8 ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -325,12 +325,12 @@ endif
 
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for adc.$(PROFILE) ...
+	@echo Creating Coverage Report for ads85x8.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o adc.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=adc.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=adc.$(PROFILE).profdata > coverage/adc.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/adc.$(PROFILE).profdata.json --output-json=coverage/adc.$(PROFILE).analysis.json --output=../adc.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o ads85x8.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=ads85x8.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=ads85x8.$(PROFILE).profdata > coverage/ads85x8.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/ads85x8.$(PROFILE).profdata.json --output-json=coverage/ads85x8.$(PROFILE).analysis.json --output=../ads85x8.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))
