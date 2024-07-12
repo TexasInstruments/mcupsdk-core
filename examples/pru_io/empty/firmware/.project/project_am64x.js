@@ -40,7 +40,7 @@ const lflags = {
 };
 
 const readmeDoxygenPageTag = "EXAMPLES_PRU_EMPTY";
-
+const syscfgfile = "../example.syscfg";
 const templates_pru =
 [
     {
@@ -55,22 +55,22 @@ function getmakefilePruPostBuildSteps(cpu, board)
 
     switch(cpu)
     {
-        case "icssg0-txpru1":
+        case "icss_g0_tx_pru1":
             core = "TXPRU1"
             break;
-        case "icssg0-txpru0":
+        case "icss_g0_tx_pru0":
             core = "TXPRU0"
             break;
-        case "icssg0-rtupru1":
+        case "icss_g0_rtu_pru1":
             core = "RTUPRU1"
             break;
-        case "icssg0-rtupru0":
+        case "icss_g0_rtu_pru0":
             core = "RTUPRU0"
             break;
-        case "icssg0-pru1":
+        case "icss_g0_pru1":
             core = "PRU1"
             break;
-        case "icssg0-pru0":
+        case "icss_g0_pru0":
             core = "PRU0"
     }
 
@@ -85,22 +85,22 @@ function getccsPruPostBuildSteps(cpu, board)
 
     switch(cpu)
     {
-        case "icssg0-txpru1":
+        case "icss_g0_tx_pru1":
             core = "TXPRU1"
             break;
-        case "icssg0-txpru0":
+        case "icss_g0_tx_pru0":
             core = "TXPRU0"
             break;
-        case "icssg0-rtupru1":
+        case "icss_g0_rtu_pru1":
             core = "RTUPRU1"
             break;
-        case "icssg0-rtupru0":
+        case "icss_g0_rtu_pru0":
             core = "RTUPRU0"
             break;
-        case "icssg0-pru1":
+        case "icss_g0_pru1":
             core = "PRU1"
             break;
-        case "icssg0-pru0":
+        case "icss_g0_pru0":
             core = "PRU0"
     }
 
@@ -110,12 +110,12 @@ function getccsPruPostBuildSteps(cpu, board)
 }
 
 const buildOptionCombos = [
-    { device: device, cpu: "icssg0-pru0", cgt: "ti-pru-cgt", board: "am64x-evm", os: "fw"},
-    { device: device, cpu: "icssg0-pru1", cgt: "ti-pru-cgt", board: "am64x-evm", os: "fw"},
-    { device: device, cpu: "icssg0-rtupru0", cgt: "ti-pru-cgt", board: "am64x-evm", os: "fw"},
-    { device: device, cpu: "icssg0-rtupru1", cgt: "ti-pru-cgt", board: "am64x-evm", os: "fw"},
-    { device: device, cpu: "icssg0-txpru0", cgt: "ti-pru-cgt", board: "am64x-evm", os: "fw"},
-    { device: device, cpu: "icssg0-txpru1", cgt: "ti-pru-cgt", board: "am64x-evm", os: "fw"},
+    { device: device, cpu: "icss_g0_pru0", cgt: "ti-pru-cgt", board: "am64x-evm", os: "fw"},
+    { device: device, cpu: "icss_g0_pru1", cgt: "ti-pru-cgt", board: "am64x-evm", os: "fw"},
+    { device: device, cpu: "icss_g0_rtu_pru0", cgt: "ti-pru-cgt", board: "am64x-evm", os: "fw"},
+    { device: device, cpu: "icss_g0_rtu_pru1", cgt: "ti-pru-cgt", board: "am64x-evm", os: "fw"},
+    { device: device, cpu: "icss_g0_tx_pru0", cgt: "ti-pru-cgt", board: "am64x-evm", os: "fw"},
+    { device: device, cpu: "icss_g0_tx_pru1", cgt: "ti-pru-cgt", board: "am64x-evm", os: "fw"},
 ];
 
 function getComponentProperty() {
@@ -143,6 +143,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.filedirs = filedirs;
     build_property.lnkfiles = lnkfiles;
     build_property.includes = includes;
+    build_property.syscfgfile = syscfgfile;
     build_property.templates = templates_pru;
     build_property.lflags = lflags;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;

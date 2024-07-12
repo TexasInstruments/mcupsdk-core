@@ -40,7 +40,7 @@ const lflags = {
 };
 
 const readmeDoxygenPageTag = "EXAMPLES_PRU_EMPTY";
-
+const syscfgfile = "../example.syscfg";
 const templates_pru =
 [
     {
@@ -50,11 +50,11 @@ const templates_pru =
 ];
 
 const buildOptionCombos = [
-    { device: device, cpu: "icssm-pru0", cgt: "ti-pru-cgt", board: "am263px-lp", os: "fw"},
-    { device: device, cpu: "icssm-pru0", cgt: "ti-pru-cgt", board: "am263px-cc", os: "fw"},
+    { device: device, cpu: "icss_m0_pru0", cgt: "ti-pru-cgt", board: "am263px-lp", os: "fw"},
+    { device: device, cpu: "icss_m0_pru0", cgt: "ti-pru-cgt", board: "am263px-cc", os: "fw"},
 
-    { device: device, cpu: "icssm-pru1", cgt: "ti-pru-cgt", board: "am263px-lp", os: "fw"},
-    { device: device, cpu: "icssm-pru1", cgt: "ti-pru-cgt", board: "am263px-cc", os: "fw"},
+    { device: device, cpu: "icss_m0_pru1", cgt: "ti-pru-cgt", board: "am263px-lp", os: "fw"},
+    { device: device, cpu: "icss_m0_pru1", cgt: "ti-pru-cgt", board: "am263px-cc", os: "fw"},
 ];
 
 function getmakefilePruPostBuildSteps(cpu, board)
@@ -63,10 +63,10 @@ function getmakefilePruPostBuildSteps(cpu, board)
 
     switch(cpu)
     {
-        case "icssm-pru1":
+        case "icss_m0_pru1":
             core = "PRU1"
             break;
-        case "icssm-pru0":
+        case "icss_m0_pru0":
             core = "PRU0"
     }
 
@@ -81,10 +81,10 @@ function getccsPruPostBuildSteps(cpu, board)
 
     switch(cpu)
     {
-        case "icssm-pru1":
+        case "icss_m0_pru1":
             core = "PRU1"
             break;
-        case "icssm-pru0":
+        case "icss_m0_pru0":
             core = "PRU0"
     }
 
@@ -119,6 +119,7 @@ function getComponentBuildProperty(buildOption) {
     build_property.filedirs = filedirs;
     build_property.lnkfiles = lnkfiles;
     build_property.lflags = lflags;
+    build_property.syscfgfile = syscfgfile;
     build_property.includes = includes;
     build_property.templates = templates_pru;
     build_property.readmeDoxygenPageTag = readmeDoxygenPageTag;
