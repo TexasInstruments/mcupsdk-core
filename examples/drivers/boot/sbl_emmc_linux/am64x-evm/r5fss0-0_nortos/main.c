@@ -257,33 +257,35 @@ int main(void)
 
         bootHandle = Bootloader_open(CONFIG_BOOTLOADER_EMMC0, &bootParams);
         bootHandleLinux = Bootloader_open(CONFIG_BOOTLOADER_EMMMC_LINUX, &bootParamsLinux);
-        if(bootHandle != NULL)
+
+        if(bootHandleLinux != NULL)
         {
-            /* Initialize PRU Cores if applicable */
-            Bootloader_Config *cfg = (Bootloader_Config *)bootHandle;
-            if(TRUE == cfg->initICSSCores)
-            {
-                status = Bootloader_socEnableICSSCores(BOOTLOADER_ICSS_CORE_DEFAULT_FREQUENCY);
-                DebugP_assert(status == SystemP_SUCCESS);
-            }
+            bootConfigLinux = (Bootloader_Config *)bootHandleLinux;
+            bootConfigLinux->scratchMemPtr = gAppimage;
 
-            bootConfig = (Bootloader_Config *)bootHandle;
-            bootConfig->scratchMemPtr = gAppimage;
-
-            status = App_loadImages(bootHandle, &bootImageInfo);
-            Bootloader_profileAddProfilePoint("App_loadImages");
+            status = App_loadLinuxImages(bootHandleLinux, &bootImageInfoLinux);
+            Bootloader_profileAddProfilePoint("App_loadLinuxImages");
         }
 
         if(SystemP_SUCCESS == status)
         {
-            if(bootHandleLinux != NULL)
+            if(bootHandle != NULL)
             {
-                bootConfigLinux = (Bootloader_Config *)bootHandleLinux;
-                bootConfigLinux->scratchMemPtr = gAppimage;
+                /* Initialize PRU Cores if applicable */
+                Bootloader_Config *cfg = (Bootloader_Config *)bootHandle;
+                if(TRUE == cfg->initICSSCores)
+                {
+                    status = Bootloader_socEnableICSSCores(BOOTLOADER_ICSS_CORE_DEFAULT_FREQUENCY);
+                    DebugP_assert(status == SystemP_SUCCESS);
+                }
 
-                status = App_loadLinuxImages(bootHandleLinux, &bootImageInfoLinux);
-                Bootloader_profileAddProfilePoint("App_loadLinuxImages");
+                bootConfig = (Bootloader_Config *)bootHandle;
+                bootConfig->scratchMemPtr = gAppimage;
+
+                status = App_loadImages(bootHandle, &bootImageInfo);
+                Bootloader_profileAddProfilePoint("App_loadImages");
             }
+
         }
 
         if(SystemP_SUCCESS == status)

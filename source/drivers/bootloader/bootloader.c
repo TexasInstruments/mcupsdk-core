@@ -66,6 +66,10 @@
 extern Bootloader_Config gBootloaderConfig[];
 extern uint32_t gBootloaderConfigNum;
 
+#ifdef DRV_VERSION_MMCSD_V0
+extern Bootloader_MemArgs gMemBootloaderArgs;
+#endif
+
 uint8_t gElfHBuffer[ELF_HEADER_MAX_SIZE];
 uint8_t gNoteSegBuffer[ELF_NOTE_SEGMENT_MAX_SIZE];
 uint8_t gPHTBuffer[ELF_MAX_SEGMENTS * ELF_P_HEADER_MAX_SIZE];
@@ -667,6 +671,14 @@ int32_t Bootloader_verifyMulticoreImage(Bootloader_Handle handle)
                     Bootloader_MmcsdArgs *mmcsdArgs = (Bootloader_MmcsdArgs *)(config->args);
                     mmcsdArgs->appImageOffset += certLen;
                     mmcsdArgs->curOffset = mmcsdArgs->appImageOffset;
+                                        
+                    /* At this point the image is in RAM, change bootmedia from emmc to memory */
+                    gMemBootloaderArgs.appImageBaseAddr = (uint32_t)(config->scratchMemPtr) + certLen;
+                    gMemBootloaderArgs.curOffset = 0U;
+                    
+                    config->fxns = &gBootloaderMemFxns;
+                    config->args = &gMemBootloaderArgs;
+                    config->bootMedia = BOOTLOADER_MEDIA_MEM;
                 }
 #endif
                 status = SystemP_SUCCESS;
