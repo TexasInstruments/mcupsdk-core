@@ -25,6 +25,7 @@ const example_file_list = [
     "examples/drivers/i2c/i2c_read/.project/project.js",
     "examples/drivers/i2c/i2c_temperature/.project/project.js",
     "examples/drivers/ipc/ipc_rpmsg_echo_linux/.project/project.js",
+    "examples/drivers/mmcsd/mmcsd_file_io/.project/project.js",
     "examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_ep/.project/project.js",
     "examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_rc/.project/project.js",
     "examples/drivers/sciclient/sciclient_get_version/.project/project.js",

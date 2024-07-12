@@ -271,6 +271,39 @@
         "resourceSubClass": [
             "example.general"
         ],
+        "description": "A Mmcsd File Io Example. CPU is R5FSS0-0 running NORTOS.",
+        "name": "mmcsd_file_io",
+        "location": "../../examples/drivers/mmcsd/mmcsd_file_io/am65x-idk/r5fss0-0_nortos/ti-arm-clang/example.projectspec",
+        "devtools": [
+            "AM65x_GP_EVM"
+        ],
+        "kernel": [
+            "nortos"
+        ],
+        "compiler": [
+            "ticlang"
+        ],
+        "subCategories": [
+            "drivers",
+            "mmcsd",
+            "mmcsd_file_io",
+            "r5fss0-0_nortos"
+        ],
+        "mainCategories": [
+            [
+                "Examples",
+                "Development Tools"
+            ]
+        ]
+    },
+    {
+        "resourceType": "project.ccs",
+        "resourceClass": [
+            "example"
+        ],
+        "resourceSubClass": [
+            "example.general"
+        ],
         "description": "A Pcie Buf Transfer Ep Example. CPU is R5FSS0-0 running FREERTOS.",
         "name": "pcie_buf_transfer_ep",
         "location": "../../examples/drivers/pcie/pcie_buf_transfer/pcie_buf_transfer_ep/am65x-idk/r5fss0-0_freertos/ti-arm-clang/example.projectspec",
