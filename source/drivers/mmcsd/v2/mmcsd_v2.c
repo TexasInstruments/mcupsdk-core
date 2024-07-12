@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -31,7 +31,7 @@
  */
 
 /**
- *  \file mmcsd_v0.c
+ *  \file mmcsd_v2.c
  *
  *  \brief File containing MMCSD Driver APIs implementation for version V0.
  *
@@ -109,6 +109,11 @@
 #define MMCSD_ECSD_STROBE_SUPPORT_INDEX           (184U)
 #define MMCSD_ECSD_STROBE_SUPPORT_ENHANCED_DIS    (0U)
 #define MMCSD_ECSD_STROBE_SUPPORT_ENHANCED_EN     (1U)
+
+#define MMCSD_ECSD_ACCESS_MODE                    (0x03U)
+
+#define MMCSD_REFERENCE_CLOCK_200M                (200*1000000U)
+#define MMCSD_REFERENCE_CLOCK_52M                 (52*1000000U)
 
 /* ========================================================================== */
 /*                         Structure Declarations                             */
@@ -333,12 +338,12 @@ MMCSD_Handle MMCSD_open(uint32_t index, const MMCSD_Params *openParams)
 
         if(MMCSD_CARD_TYPE_SD == obj->cardType)
         {
-            obj->sdData = (MMCSD_SdDeviceData *) openParams->deviceData;
+            obj->sdData = openParams->deviceData;
             status = MMCSD_initSD(config);
         }
         else if(MMCSD_CARD_TYPE_EMMC == obj->cardType)
         {
-            obj->emmcData = (MMCSD_EmmcDeviceData *) openParams->deviceData;
+            obj->emmcData = openParams->deviceData;
             status = MMCSD_initEMMC(config);
         }
         else if(MMCSD_CARD_TYPE_NO_DEVICE == obj->cardType)
@@ -370,16 +375,77 @@ MMCSD_Handle MMCSD_open(uint32_t index, const MMCSD_Params *openParams)
 
 void MMCSD_close(MMCSD_Handle handle)
 {
+    int32_t status = SystemP_SUCCESS;
     MMCSD_Object *obj = ((MMCSD_Config *)handle)->object;
+    MMCSD_Attrs const *attrs = ((MMCSD_Config *)handle)->attrs;
+    const CSL_mmc_ctlcfgRegs *pReg = (const CSL_mmc_ctlcfgRegs *)attrs->ctrlBaseAddr;
+
+    MMCSD_Transaction trans;
 
     if(obj->intrEnable == TRUE)
     {
         HwiP_destruct(&obj->hwiObj);
     }
 
-    if(obj->isSwitch1_8V)
+    if(obj->cardType == MMCSD_CARD_TYPE_EMMC)
     {
-        /* TODO: Switch signal voltage */
+        MMCSD_initTransaction(&trans);
+        trans.cmd = MMCSD_MMC_CMD(6);
+        trans.arg = (MMCSD_ECSD_ACCESS_MODE << 24U) | (MMCSD_ECSD_BUS_WIDTH_INDEX << 16U) | (((0 << MMCSD_ECSD_BUS_WIDTH_ES_SHIFT) | MMCSD_ECSD_BUS_WIDTH_1BIT) << 8U);
+        status = MMCSD_transfer(handle, &trans);
+
+        obj->busWidth = MMCSD_BUS_WIDTH_1BIT;
+
+        if(SystemP_SUCCESS == status)
+        {
+            MMCSD_halSetBusWidth(attrs->ctrlBaseAddr, MMCSD_BUS_WIDTH_1BIT);
+
+            status = MMCSD_isReadyForTransfer(handle);
+        }
+
+        if(SystemP_SUCCESS == status)
+        {
+            MMCSD_initTransaction(&trans);
+            trans.cmd = MMCSD_MMC_CMD(6);
+            trans.arg = (MMCSD_ECSD_ACCESS_MODE << 24U) | (MMCSD_ECSD_HS_TIMING_INDEX << 16U) | ((((obj->emmcData->driveStrength) << 4U) | 1U) << 8U);
+            status = MMCSD_transfer(handle, &trans);
+
+            if(SystemP_SUCCESS == status)
+            {
+                while(CSL_REG32_FEXT(&pReg->PRESENTSTATE, MMC_CTLCFG_PRESENTSTATE_SDIF_DAT0IN) != 1U);
+            }
+
+            status = MMCSD_halSetUHSMode(attrs->ctrlBaseAddr, MMCSD_UHS_MODE_SDR50);
+
+            MMCSD_phyDisableDLL(attrs->ssBaseAddr);
+
+            status |= MMCSD_halSetBusFreq(attrs->ctrlBaseAddr, attrs->inputClkFreq, MMCSD_REFERENCE_CLOCK_52M, 0U);
+
+            status |= MMCSD_phyConfigure(attrs->ssBaseAddr, MMCSD_PHY_MODE_HSSDR50, MMCSD_REFERENCE_CLOCK_52M, 0U);
+
+        }
+
+        if(SystemP_SUCCESS == status)
+        {
+            status = MMCSD_halSoftReset(attrs->ctrlBaseAddr);
+
+            status |= MMCSD_halSetBusVolt(attrs->ctrlBaseAddr, MMCSD_BUS_VOLT_3_3V);
+
+            MMCSD_phyInit(attrs->ssBaseAddr, attrs->phyType);
+
+            status |= MMCSD_halBusPower(attrs->ctrlBaseAddr, CSL_MMC_CTLCFG_POWER_CONTROL_SD_BUS_POWER_VAL_PWR_ON);
+
+            status |= MMCSD_halSetBusFreq(attrs->ctrlBaseAddr, attrs->inputClkFreq, 400000, FALSE);
+        }
+
+        if(SystemP_SUCCESS == status)
+        {
+            MMCSD_initTransaction(&trans);
+            trans.cmd   = MMCSD_MMC_CMD(0);
+            trans.arg   = 0U;
+            status = MMCSD_transfer(handle, &trans);
+        }
+
         ClockP_usleep(5000);
     }
 
@@ -417,7 +483,7 @@ int32_t MMCSD_read(MMCSD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32_
     MMCSD_Attrs const *attrs = ((MMCSD_Config *)handle)->attrs;
     MMCSD_Transaction trans;
     uint32_t addr = 0U;
-    uint32_t cmd = 0U, stopCmd = 0U;
+    uint32_t  stopCmd = 0U;
     uint32_t blockSize = MMCSD_getBlockSize(handle);
     if((obj->emmcData->supportedModes & MMCSD_EMMC_ECSD_DEVICE_TYPE_HS200_200MHZ_1P8V) &&
        (attrs->supportedModes & MMCSD_SUPPORT_MMC_HS200))
@@ -431,26 +497,10 @@ int32_t MMCSD_read(MMCSD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32_
     if(obj->cardType == MMCSD_CARD_TYPE_EMMC)
     {
         stopCmd = MMCSD_MMC_CMD(12);
-        if(numBlks >  1U)
-        {
-            cmd = MMCSD_MMC_CMD(18);
-        }
-        else
-        {
-            cmd = MMCSD_MMC_CMD(17);
-        }
     }
     else
     {
         stopCmd = MMCSD_SD_CMD(12);
-        if(numBlks >  1U)
-        {
-            cmd = MMCSD_SD_CMD(18);
-        }
-        else
-        {
-            cmd = MMCSD_SD_CMD(17);
-        }
     }
 
     if(SystemP_SUCCESS == status)
@@ -480,7 +530,14 @@ int32_t MMCSD_read(MMCSD_Handle handle, uint8_t *buf, uint32_t startBlk, uint32_
         trans.blockCount = numBlks;
         trans.blockSize = blockSize;
         trans.dataBuf = (void *)buf;
-        trans.cmd = cmd;
+        if(numBlks > 1U)
+        {
+            trans.cmd = MMCSD_MMC_CMD(18);
+        }
+        else
+        {
+            trans.cmd = MMCSD_MMC_CMD(17);
+        }
 
         status = MMCSD_transfer(handle, &trans);
     }
@@ -647,8 +704,10 @@ int32_t MMCSD_enableBootPartition(MMCSD_Handle handle, uint32_t partitionNum)
             trans.arg = arg;
             status = MMCSD_transfer(handle, &trans);
 
-            /* Delay for 3 ms for the change to take effect in the device */
-            ClockP_usleep(3000);
+            if(status == SystemP_SUCCESS)
+            {
+                status = MMCSD_isReadyForTransfer(handle);
+            }
 
             if(status == SystemP_SUCCESS)
             {
@@ -661,8 +720,10 @@ int32_t MMCSD_enableBootPartition(MMCSD_Handle handle, uint32_t partitionNum)
                 status = MMCSD_transfer(handle, &trans);
             }
 
-            /* Delay for 3 ms for the change to take effect in the device */
-            ClockP_usleep(3000);
+            if(status == SystemP_SUCCESS)
+            {
+                status = MMCSD_isReadyForTransfer(handle);
+            }
         }
         else
         {
@@ -698,8 +759,10 @@ int32_t MMCSD_disableBootPartition(MMCSD_Handle handle)
         trans.arg = arg;
         status = MMCSD_transfer(handle, &trans);
 
-        /* Delay for 5 ms for the change to take effect in the device */
-        ClockP_usleep(5000);
+        if(status == SystemP_SUCCESS)
+        {
+            status = MMCSD_isReadyForTransfer(handle);
+        }
     }
     else
     {
@@ -708,6 +771,18 @@ int32_t MMCSD_disableBootPartition(MMCSD_Handle handle)
 
     return status;
 }
+
+uint32_t MMCSD_getInputClk(MMCSD_Handle handle)
+{
+    uint32_t retVal = 0U;
+    if(handle != NULL)
+    {
+        const MMCSD_Attrs* attrs = ((MMCSD_Config *)handle)->attrs;
+        retVal = attrs->inputClkFreq;
+    }
+    return retVal;
+}
+
 
 /* ========================================================================== */
 /*                     Internal function definitions                          */
@@ -970,6 +1045,11 @@ static int32_t MMCSD_initEMMC(MMCSD_Handle handle)
         CSL_REG32_FINS(&pSSReg->CTL_CFG_2_REG,
             MMC_SSCFG_CTL_CFG_2_REG_SLOTTYPE,
             CSL_MMC_CTLCFG_CAPABILITIES_SLOT_TYPE_VAL_EMBEDDED);
+
+        /* Enable IOMUX : 0 for MMCSD, 1 for GPIO */
+        CSL_REG32_FINS(&pSSReg->PHY_CTRL_1_REG,
+            MMC_SSCFG_PHY_CTRL_1_REG_IOMUX_ENABLE,
+            0);
 
         /* Wait for card detect */
         while(!MMCSD_halIsCardInserted(attrs->ctrlBaseAddr));
@@ -1624,36 +1704,15 @@ static int32_t MMCSD_isReadyForTransfer(MMCSD_Handle handle)
 static int32_t MMCSD_setupADMA2(MMCSD_Handle handle, MMCSD_ADMA2Descriptor *desc, uint64_t bufAddr, uint32_t dataSize)
 {
     int32_t status = SystemP_SUCCESS;
-    MMCSD_Object *obj = NULL;
-    const MMCSD_Attrs *attrs = NULL;
-    const CSL_mmc_ctlcfgRegs *pReg = NULL;
+    const MMCSD_Attrs *attrs;
+    const CSL_mmc_ctlcfgRegs *pReg;
     uint32_t dmaParams = 0U;
 
-    if((desc == NULL) || (handle == NULL))
+    if((desc != NULL) && (handle != NULL) && (((MMCSD_Config *)handle)->attrs != NULL))
     {
-        status = SystemP_FAILURE;
-    }
-    if (SystemP_SUCCESS == status)
-    {
+        MMCSD_Object *obj = ((MMCSD_Config *)handle)->object;
         attrs = ((MMCSD_Config *)handle)->attrs;
-        obj = ((MMCSD_Config *)handle)->object;
-
-        if ((attrs == NULL) || (obj == NULL))
-        {
-            status = SystemP_FAILURE;
-        }
-        else
-        {
-            pReg = (const CSL_mmc_ctlcfgRegs *)(attrs->ctrlBaseAddr);
-        }
-        if (pReg == NULL)
-        {
-            status = SystemP_FAILURE;
-        }
-    }
-    if (SystemP_SUCCESS == status)
-    {
-
+        pReg = (const CSL_mmc_ctlcfgRegs *)(attrs->ctrlBaseAddr);
         dmaParams = dataSize << 16U;
         dmaParams |= (((dataSize >> 16U) << 6U) | 0x0023U);
 
@@ -1667,7 +1726,7 @@ static int32_t MMCSD_setupADMA2(MMCSD_Handle handle, MMCSD_ADMA2Descriptor *desc
 
         /* Setup ADMA2 descriptor */
         desc->dmaParams = dmaParams;
-        desc->addrLo    = (uint64_t)bufAddr;
+        desc->addrLo    = (uint32_t)bufAddr;
         desc->addrHi    = ((uint64_t)bufAddr >> 32) & 0xFFFFU;
 
         /* Set 32 bit ADMA2 */
@@ -1792,6 +1851,7 @@ static int32_t MMCSD_switchEmmcMode(MMCSD_Handle handle, uint32_t mode)
         trans.arg = 0x03000000 | (MMCSD_ECSD_BUS_WIDTH_INDEX << 16) | (((es << MMCSD_ECSD_BUS_WIDTH_ES_SHIFT) | ecsdBusWidth) << 8);
         status = MMCSD_transfer(handle, &trans);
 
+
         if(SystemP_SUCCESS == status)
         {
             while(CSL_REG32_FEXT(&pReg->PRESENTSTATE, MMC_CTLCFG_PRESENTSTATE_SDIF_DAT0IN) != 1U);
@@ -1806,9 +1866,6 @@ static int32_t MMCSD_switchEmmcMode(MMCSD_Handle handle, uint32_t mode)
 
     /* Configure the HC */
     MMCSD_halSetUHSMode(attrs->ctrlBaseAddr, uhsMode);
-
-    /* Disable PHY DLL */
-    MMCSD_phyDisableDLL(attrs->ssBaseAddr);
 
     status = MMCSD_halSetBusFreq(attrs->ctrlBaseAddr, attrs->inputClkFreq, clkFreq, 0U);
 
@@ -1959,13 +2016,13 @@ static uint32_t MMCSD_getModeSd(MMCSD_Handle handle)
     */
     uint8_t cardSupportedModes = obj->tempDataBuf[13];
     uint8_t deviceSupportedModes = attrs->supportedModes;
-    uint8_t capabilityModes = 0x03U |
-                              (uint8_t)(CSL_REG64_FEXT(&pReg->CAPABILITIES, MMC_CTLCFG_CAPABILITIES_SDR50_SUPPORT)  << 2U) |
-                              (uint8_t)(CSL_REG64_FEXT(&pReg->CAPABILITIES, MMC_CTLCFG_CAPABILITIES_SDR104_SUPPORT) << 3U) |
-                              (uint8_t)(CSL_REG64_FEXT(&pReg->CAPABILITIES, MMC_CTLCFG_CAPABILITIES_DDR50_SUPPORT)  << 4U);
+    uint8_t CAPABILITIES_SDR50 = CSL_REG64_FEXT(&pReg->CAPABILITIES, MMC_CTLCFG_CAPABILITIES_SDR50_SUPPORT)  << 2U;
+    uint8_t CAPABILITIES_SDR104 = CSL_REG64_FEXT(&pReg->CAPABILITIES, MMC_CTLCFG_CAPABILITIES_SDR104_SUPPORT) << 3U;
+    uint8_t CAPABILITIES_DDR50 = CSL_REG64_FEXT(&pReg->CAPABILITIES, MMC_CTLCFG_CAPABILITIES_DDR50_SUPPORT)  << 4U;
+    uint8_t capabilityModes = 0x03U | CAPABILITIES_SDR50 | CAPABILITIES_SDR104 | CAPABILITIES_DDR50;
     uint8_t commonModes = (cardSupportedModes & deviceSupportedModes) & capabilityModes;
 
-    uint32_t i;
+    int32_t i;
     /* Check only from BIT 4 to BIT 0 */
     for(i = 4; i >=0 ; i--)
     {
@@ -2039,8 +2096,6 @@ static void MMCSD_xferStatusPollingFxn(MMCSD_Handle handle)
     volatile uint32_t dataLength = 0U;
     uint32_t remainingBlocks = 0U, offset = 0U;
     uint32_t tempWord = 0xDEADBABE;
-    uint8_t *pTempWord = NULL;
-    uint32_t i;
 
     uint16_t normalIntrStatus = MMCSD_halNormalIntrStatusGet(attrs->ctrlBaseAddr, MMCSD_INTERRUPT_ALL_NORMAL);
     uint16_t errorIntrStatus = MMCSD_halErrorIntrStatusGet(attrs->ctrlBaseAddr, MMCSD_INTERRUPT_ALL_ERROR);
@@ -2058,14 +2113,15 @@ static void MMCSD_xferStatusPollingFxn(MMCSD_Handle handle)
                 remainingBlocks = obj->readBlockCount;
                 offset = (obj->dataBlockCount - remainingBlocks) * (obj->dataBlockSize);
 
+                volatile uint32_t i;
+
                 for(i = 0; i < dataLength; i += 4U)
                 {
                     tempWord = CSL_REG32_RD(&pReg->DATA_PORT);
-                    pTempWord = (uint8_t *)&tempWord;
-                    obj->dataBufIdx[offset + i] = *(pTempWord);
-                    obj->dataBufIdx[offset + i + 1U] = *(pTempWord + 1U);
-                    obj->dataBufIdx[offset + i + 2U] = *(pTempWord + 2U);
-                    obj->dataBufIdx[offset + i + 3U] = *(pTempWord + 3U);
+                    obj->dataBufIdx[offset + i] = *((uint8_t *)&tempWord);
+                    obj->dataBufIdx[offset + i + 1U] = *((uint8_t *)&tempWord + 1U);
+                    obj->dataBufIdx[offset + i + 2U] = *((uint8_t *)&tempWord + 2U);
+                    obj->dataBufIdx[offset + i + 3U] = *((uint8_t *)&tempWord + 3U);
                 }
                 obj->readBlockCount--;
             }
@@ -2085,13 +2141,14 @@ static void MMCSD_xferStatusPollingFxn(MMCSD_Handle handle)
                 remainingBlocks = obj->writeBlockCount;
                 offset = (obj->dataBlockCount - remainingBlocks) * (obj->dataBlockSize);
 
+                volatile uint32_t i;
+
                 for(i = 0; i < dataLength; i += 4U)
                 {
-                    pTempWord = (uint8_t *)&tempWord;
-                    *(pTempWord)      = obj->dataBufIdx[offset + i];
-                    *(pTempWord + 1U) = obj->dataBufIdx[offset + i + 1U];
-                    *(pTempWord + 2U) = obj->dataBufIdx[offset + i + 2U];
-                    *(pTempWord + 3U) = obj->dataBufIdx[offset + i + 3U];
+                    *((uint8_t *)&tempWord)      = obj->dataBufIdx[offset + i];
+                    *((uint8_t *)&tempWord + 1U) = obj->dataBufIdx[offset + i + 1U];
+                    *((uint8_t *)&tempWord + 2U) = obj->dataBufIdx[offset + i + 2U];
+                    *((uint8_t *)&tempWord + 3U) = obj->dataBufIdx[offset + i + 3U];
                     CSL_REG32_WR(&pReg->DATA_PORT, tempWord);
                 }
                 obj->writeBlockCount--;
@@ -2173,11 +2230,10 @@ static void MMCSD_xferStatusPollingFxnCMD19(MMCSD_Handle handle)
                 for(i = 0; i < dataLength; i += 4U)
                 {
                     tempWord = CSL_REG32_RD(&pReg->DATA_PORT);
-                    uint8_t *pTempWord = (uint8_t *)&tempWord;
-                    obj->dataBufIdx[i] = *(pTempWord);
-                    obj->dataBufIdx[i + 1U] = *(pTempWord + 1U);
-                    obj->dataBufIdx[i + 2U] = *(pTempWord + 2U);
-                    obj->dataBufIdx[i + 3U] = *(pTempWord + 3U);
+                    obj->dataBufIdx[i] = *((uint8_t *)&tempWord);
+                    obj->dataBufIdx[i + 1U] = *((uint8_t *)&tempWord + 1U);
+                    obj->dataBufIdx[i + 2U] = *((uint8_t *)&tempWord + 2U);
+                    obj->dataBufIdx[i + 3U] = *((uint8_t *)&tempWord + 3U);
                 }
             }
 
@@ -2316,15 +2372,15 @@ static void MMCSD_phyGetOtapDelay(uint32_t *outputTapDelaySel, uint32_t *outputT
         case MMCSD_PHY_MODE_HS200:
         case MMCSD_PHY_MODE_SDR104:
             *outputTapDelaySel = 1U;
-            *outputTapDelayVal = 7U;
+            *outputTapDelayVal = 5U;
             *inputTapDelaySel = 1U;
-            *inputTapDelayVal = 0U;
+            *inputTapDelayVal = 7U;
             break;
         case MMCSD_PHY_MODE_DDR50:
             *outputTapDelaySel = 1U;
-            *outputTapDelayVal = 6U;
-            *inputTapDelaySel = 1U;
-            *inputTapDelayVal = 3U;
+            *outputTapDelayVal = 5U;
+            *inputTapDelaySel = 0U;
+            *inputTapDelayVal = 0U;
             break;
         case MMCSD_PHY_MODE_HS400:
             *outputTapDelaySel = 1U;
@@ -2350,14 +2406,9 @@ static int32_t MMCSD_phyConfigure(uint32_t ssBaseAddr, uint32_t phyMode, uint32_
     int32_t status = SystemP_SUCCESS;
     const CSL_mmc_sscfgRegs *ssReg = (const CSL_mmc_sscfgRegs *)ssBaseAddr;
 
-    uint32_t freqSel = 0U, strobeSel = 0U, regVal = 0U;
+    uint32_t freqSel = 0U,  strobeSel = 0U, regVal = 0U;
     uint32_t outputTapDelaySel = 0U, outputTapDelayVal = 0U;
     uint32_t inputTapDelaySel = 0U, inputTapDelayVal = 0U;
-
-    if(phyMode == MMCSD_PHY_MODE_HS400)
-    {
-        strobeSel = 0x77U;
-    }
 
     CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_STRBSEL, strobeSel);
 
@@ -2409,8 +2460,7 @@ static int32_t MMCSD_phyConfigure(uint32_t ssBaseAddr, uint32_t phyMode, uint32_
     regVal |= (uint32_t)(freqSel << 8U);
     CSL_REG32_WR(&ssReg->PHY_CTRL_5_REG, regVal);
 
-    /* Set DLL TRIM ICP */
-    CSL_REG32_FINS(&ssReg->PHY_CTRL_1_REG, MMC_SSCFG_PHY_CTRL_1_REG_DLL_TRM_ICP, 8U);
+	CSL_REG32_FINS(&ssReg->PHY_CTRL_1_REG, MMC_SSCFG_PHY_CTRL_1_REG_DLL_TRM_ICP, 8U);
 
     /* Set driver impedance */
     CSL_REG32_FINS(&ssReg->PHY_CTRL_1_REG, MMC_SSCFG_PHY_CTRL_1_REG_DR_TY, driverImpedance);
@@ -2423,19 +2473,16 @@ static int32_t MMCSD_phyConfigure(uint32_t ssBaseAddr, uint32_t phyMode, uint32_
     /* Disable tap window before modifying the receiver clock delay's, so as to not affect the configured delay's */
     if(outputTapDelaySel | inputTapDelaySel)
     {
-        CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPCHGWIN, 1U);
+        CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPCHGWIN, 1);
 
         CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_OTAPDLYENA, outputTapDelaySel);
         CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_OTAPDLYSEL, outputTapDelayVal);
         CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPDLYENA, inputTapDelaySel);
         CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPDLYSEL, inputTapDelayVal);
 
-        CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPCHGWIN, 0U);
+        CSL_REG32_FINS(&ssReg->PHY_CTRL_4_REG, MMC_SSCFG_PHY_CTRL_4_REG_ITAPCHGWIN, 0);
 
     }
-
-    /* Wait for DLL READY bit */
-    while(CSL_REG32_FEXT(&ssReg->PHY_STAT_1_REG, MMC_SSCFG_PHY_STAT_1_REG_DLLRDY) != TRUE);
 
     return status;
 }

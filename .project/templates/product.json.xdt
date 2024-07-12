@@ -82,6 +82,7 @@
         "/kernel/dpl",
         "/drivers/drivers",
         "/board/board",
+        "/fs/fs",
 % }
     ],
     "devices": [

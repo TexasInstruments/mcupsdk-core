@@ -2,7 +2,7 @@
 # Auto generated makefile
 #
 
-export MCU_PLUS_SDK_PATH?=$(abspath ../..)
+export MCU_PLUS_SDK_PATH?=$(abspath ../../..)
 include $(MCU_PLUS_SDK_PATH)/imports.mak
 
 CG_TOOL_ROOT=$(CGT_TI_ARM_CLANG_PATH)
@@ -13,108 +13,35 @@ AR=$(CGT_TI_ARM_CLANG_PATH)/bin/tiarmar
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-LIBNAME:=drivers.am65x.r5f.ti-arm-clang.$(PROFILE).lib
+LIBNAME:=freertos_fat.am65x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
-    bootloader.c \
-    bootloader_buf_io.c \
-    bootloader_mem.c \
-    bootloader_profile.c \
-    bootloader_soc.c \
-    bootloader_xmodem.c \
-    crc16.c \
-    csl_intaggr.c \
-    csl_proxy.c \
-    csl_ringacc.c \
-    csl_serdes3_pcie.c \
-    csl_wiz8m_sb_refclk100p0MHz_32b_8Gbps_PCIE_1l1c.c \
-    csl_serdes3.c \
-    csl_sec_proxy.c \
-    csl_udmap.c \
-    ddr.c \
-    gpio.c \
-    i2c_v0.c \
-    i2c_v0_lld.c \
-    ipc_notify_soc.c \
-    ipc_notify_v0.c \
-    ipc_notify_v0_cfg.c \
-    ipc_rpmsg.c \
-    ipc_rpmsg_vring.c \
-    mmcsd_priv.c \
-    mmcsd_v2.c \
-    pinmux.c \
-    pcie.c \
-    pcie_v1.c \
-    pcie_serdes.c \
-    pcie_soc.c \
-    sciclient.c \
-    sciclient_boardcfg.c \
-    sciclient_firewall.c \
-    sciclient_fmwSecureProxyMap.c \
-    sciclient_irq_rm.c \
-    sciclient_pm.c \
-    sciclient_procboot.c \
-    sciclient_rm.c \
-    sciclient_rm_irq.c \
-    sciclient_soc_priv.c \
-    soc.c \
-    uart_v0.c \
-    uart_v0_lld.c \
-    uart_dma_udma.c \
-    uart_dma_soc.c \
-    udma.c \
-    udma_ch.c \
-    udma_event.c \
-    udma_flow.c \
-    udma_ring_common.c \
-    udma_ring_normal.c \
-    udma_rm.c \
-    udma_rmcfg.c \
-    udma_rmcfg_common.c \
-    udma_soc.c \
-    udma_utils.c \
-    xmodem.c \
-
-ASMFILES_common := \
+    ff_crc.c \
+    ff_dir.c \
+    ff_error.c \
+    ff_fat.c \
+    ff_file.c \
+    ff_ioman.c \
+    ff_memory.c \
+    ff_stdio.c \
+    ff_string.c \
+    ff_sys.c \
+    ff_format.c \
+    ff_mmcsd.c \
+    portable.c \
 
 FILES_PATH_common = \
-    bootloader \
-    bootloader/bootloader_uniflash \
-    bootloader/bootloader_uniflash/bootloader_uniflash_rprc \
-    bootloader/bootloader_uniflash/bootloader_uniflash_mcelf \
-    bootloader/soc/am65x \
-    ddr/v1 \
-    gpio/v0 \
-    i2c/v0 \
-    i2c/v0/lld \
-    ipc_notify/v0 \
-    ipc_notify/v0/soc/ \
-    ipc_notify/v0/soc/am65x \
-    ipc_rpmsg/ \
-    hw_include/ringacc/V0/priv \
-    hw_include/serdes_sb/V1 \
-    mmcsd \
-    mmcsd/v2 \
-    pcie \
-    pcie/v1 \
-    pcie/v1/soc/am65x \
-    pinmux/am65x \
-    sciclient \
-    sciclient/soc/am65x \
-    soc/am65x \
-    uart/v0 \
-    uart/v0/lld \
-    uart/v0/lld/dma \
-    uart/v0/lld/dma/udma \
-    uart/v0/lld/dma/soc/am65x \
-    udma/v1 \
-    udma/hw_include \
-    udma/soc \
-    udma/soc/am65x \
+    ${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/FreeRTOS-FAT \
+    ${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable \
+    ${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos \
 
 INCLUDES_common := \
     -I${CG_TOOL_ROOT}/include/c \
     -I${MCU_PLUS_SDK_PATH}/source \
+    -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/FreeRTOS-FAT/include \
+    -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/config \
+    -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable \
+    -I${MCU_PLUS_SDK_PATH}/source/fs/freertos_fat/portable/nortos \
 
 DEFINES_common := \
     -DSOC_AM65X \
@@ -129,6 +56,9 @@ CFLAGS_common := \
     -g \
     -Wno-gnu-variable-sized-type-not-at-end \
     -Wno-unused-function \
+    -Wno-extra \
+    -Wno-uninitialized \
+    -Wno-unused-but-set-variable \
 
 CFLAGS_cpp_common := \
     -Wno-c99-designator \
@@ -167,7 +97,7 @@ INCLUDES := $(INCLUDES_common) $(INCLUDE_$(PROFILE))
 ARFLAGS := $(ARFLAGS_common) $(ARFLAGS_$(PROFILE))
 
 LIBDIR := lib
-OBJDIR := obj/am65x/ti-arm-clang/$(PROFILE)/r5f/drivers/
+OBJDIR := obj/am65x/ti-arm-clang/$(PROFILE)/r5f/freertos_fat/
 OBJS := $(FILES:%.c=%.obj)
 OBJS += $(ASMFILES:%.S=%.obj)
 DEPS := $(FILES:%.c=%.d)

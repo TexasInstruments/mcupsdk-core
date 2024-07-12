@@ -36,6 +36,7 @@ help:
 	@echo  ======================
 	@echo  $(MAKE) -s -f makefile.am65x board_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am65x drivers_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am65x freertos_fat_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am65x middleware_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am65x freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am65x nortos_r5f.ti-arm-clang
@@ -44,6 +45,7 @@ help:
 	@echo  ======================
 	@echo  $(MAKE) -s -f makefile.am65x board_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am65x drivers_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am65x freertos_fat_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am65x middleware_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am65x freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am65x nortos_r5f.ti-arm-clang_clean
@@ -85,13 +87,14 @@ help:
 # Various Component Targets
 BUILD_COMBO_board = board_r5f.ti-arm-clang
 BUILD_COMBO_drivers = drivers_r5f.ti-arm-clang
+BUILD_COMBO_freertos_fat = freertos_fat_r5f.ti-arm-clang
 BUILD_COMBO_middleware = middleware_r5f.ti-arm-clang
 BUILD_COMBO_freertos = freertos_r5f.ti-arm-clang
 BUILD_COMBO_nortos = nortos_r5f.ti-arm-clang
 
 
 # Combine all Components
-BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_drivers) $(BUILD_COMBO_middleware) $(BUILD_COMBO_freertos) $(BUILD_COMBO_nortos)
+BUILD_COMBO_ALL = $(BUILD_COMBO_board) $(BUILD_COMBO_drivers) $(BUILD_COMBO_freertos_fat) $(BUILD_COMBO_middleware) $(BUILD_COMBO_freertos) $(BUILD_COMBO_nortos)
 
 
 # Combine all Pre-built Components
@@ -114,6 +117,9 @@ $(BUILD_COMBO_board):
 $(BUILD_COMBO_drivers):
 	$(MAKE) -C source/drivers -f makefile.am65x.$(subst drivers_,,$@) all
 
+$(BUILD_COMBO_freertos_fat):
+	$(MAKE) -C source/fs/freertos_fat -f makefile.am65x.$(subst freertos_fat_,,$@) all
+
 $(BUILD_COMBO_middleware):
 	$(MAKE) -C source/middleware -f makefile.am65x.$(subst middleware_,,$@) all
 
@@ -128,13 +134,14 @@ $(BUILD_COMBO_nortos):
 # Various Component Clean Targets
 BUILD_COMBO_CLEAN_board = board_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_drivers = drivers_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_freertos_fat = freertos_fat_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_middleware = middleware_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_freertos = freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_nortos = nortos_r5f.ti-arm-clang_clean
 
 
 # Combine all Components Clean
-BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_middleware) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_nortos)
+BUILD_COMBO_CLEAN_ALL = $(BUILD_COMBO_CLEAN_board) $(BUILD_COMBO_CLEAN_drivers) $(BUILD_COMBO_CLEAN_freertos_fat) $(BUILD_COMBO_CLEAN_middleware) $(BUILD_COMBO_CLEAN_freertos) $(BUILD_COMBO_CLEAN_nortos)
 
 
 # Combine all Pre-built Components Clean
@@ -151,6 +158,9 @@ $(BUILD_COMBO_CLEAN_board):
 $(BUILD_COMBO_CLEAN_drivers):
 	$(MAKE) -C source/drivers -f makefile.am65x.$(subst drivers_,,$(subst _clean,,$@)) clean
 
+$(BUILD_COMBO_CLEAN_freertos_fat):
+	$(MAKE) -C source/fs/freertos_fat -f makefile.am65x.$(subst freertos_fat_,,$(subst _clean,,$@)) clean
+
 $(BUILD_COMBO_CLEAN_middleware):
 	$(MAKE) -C source/middleware -f makefile.am65x.$(subst middleware_,,$(subst _clean,,$@)) clean
 
@@ -165,13 +175,14 @@ $(BUILD_COMBO_CLEAN_nortos):
 # Various Component Scrub Targets
 BUILD_COMBO_SCRUB_board = board_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_drivers = drivers_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_freertos_fat = freertos_fat_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_middleware = middleware_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_freertos = freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_nortos = nortos_r5f.ti-arm-clang_scrub_scrub
 
 
 # Combine all Components Scrub Targets
-BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_middleware) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_nortos)
+BUILD_COMBO_SCRUB_ALL = $(BUILD_COMBO_SCRUB_board) $(BUILD_COMBO_SCRUB_drivers) $(BUILD_COMBO_SCRUB_freertos_fat) $(BUILD_COMBO_SCRUB_middleware) $(BUILD_COMBO_SCRUB_freertos) $(BUILD_COMBO_SCRUB_nortos)
 
 # Combine all Pre-built Components Scrub Targets
 BUILD_COMBO_PREBUILT_SCRUB_ALL =
@@ -186,6 +197,9 @@ $(BUILD_COMBO_SCRUB_board):
 
 $(BUILD_COMBO_SCRUB_drivers):
 	$(MAKE) -C source/drivers -f makefile.am65x.$(subst drivers_,,$(subst _scrub,,$@)) scrub
+
+$(BUILD_COMBO_SCRUB_freertos_fat):
+	$(MAKE) -C source/fs/freertos_fat -f makefile.am65x.$(subst freertos_fat_,,$(subst _scrub,,$@)) scrub
 
 $(BUILD_COMBO_SCRUB_middleware):
 	$(MAKE) -C source/middleware -f makefile.am65x.$(subst middleware_,,$(subst _scrub,,$@)) scrub

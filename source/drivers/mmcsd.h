@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 Texas Instruments Incorporated
+ *  Copyright (C) 2021-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -46,6 +46,10 @@ extern "C"
 
 #if defined (DRV_VERSION_MMCSD_V1)
 #include <drivers/mmcsd/v1/mmcsd.h>
+#endif
+
+#if defined (DRV_VERSION_MMCSD_V2)
+#include <drivers/mmcsd/v2/mmcsd.h>
 #endif
 
 #ifdef __cplusplus

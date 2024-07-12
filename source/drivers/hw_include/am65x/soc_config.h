@@ -44,6 +44,7 @@ extern "C"
 #define IP_VERSION_I2C_V0
 #define IP_VERSION_INTAGGR_V0
 #define IP_VERSION_INTR_ROUTER_V0
+#define IP_VERSION_MMCSD_V2
 #define IP_VERSION_PCIE_V1
 #define IP_VERSION_RINGACC_V0
 #define IP_VERSION_SERDES_V3
@@ -52,6 +53,7 @@ extern "C"
 /* Driver versions */
 #define DRV_VERSION_GPIO_V0
 #define DRV_VERSION_I2C_V0
+#define DRV_VERSION_MMCSD_V2
 #define DRV_VERSION_PCIE_V1
 #define DRV_VERSION_UART_V0
 #define DRV_VERSION_UDMA_V1

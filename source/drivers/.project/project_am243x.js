@@ -209,6 +209,7 @@ const filedirs = {
         "mcspi/v0/lld/dma/udma",
         "mcspi/v0/lld/dma/dummy",
         "mdio/v0",
+        "mmcsd",
         "mmcsd/v0",
         "ospi",
         "ospi/v0",
