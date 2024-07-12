@@ -80,6 +80,10 @@ const utils = {
                 return "AM263x_CC";
             } else if (board == "am263x-lp") {
                 return "AM263x_LAUNCHPAD";
+            }else if (board == "am263px-cc") {
+                return "AM263px";
+            } else if (board == "am263px-lp") {
+                return "AM263px";
             }
         }
 
