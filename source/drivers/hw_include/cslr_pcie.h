@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -49,6 +49,11 @@ extern "C"
 #include <drivers/hw_include/pcie/V0/cslr_vmap.h>
 #endif
 
+#if defined (IP_VERSION_PCIE_V1)
+#include <drivers/hw_include/pcie/V1/cslr_pcie_ep.h>
+#include <drivers/hw_include/pcie/V1/cslr_pcie_rc.h>
+#include <drivers/hw_include/pcie/V1/cslr_vmap.h>
+#endif
 
 #ifdef __cplusplus
 }

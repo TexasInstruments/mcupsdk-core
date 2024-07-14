@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -43,6 +43,11 @@ extern "C"
 #if defined (DRV_VERSION_PCIE_V0)
 #include <drivers/pcie/pcie.h>
 #include <drivers/pcie/v0/pcie_v0.h>
+#endif
+
+#if defined(DRV_VERSION_PCIE_V1)
+#include <drivers/pcie/pcie.h>
+#include <drivers/pcie/v1/pcie_v1.h>
 #endif
 
 #ifdef __cplusplus

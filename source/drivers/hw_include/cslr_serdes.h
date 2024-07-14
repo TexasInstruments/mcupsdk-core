@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (C) 2022-2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -52,6 +52,9 @@ extern "C"
 #include <drivers/hw_include/serdes_cd/V2/csl_serdes3.h>
 #endif
 
+#if defined(IP_VERSION_SERDES_V3)
+#include <drivers/hw_include/serdes_sb/V1/csl_serdes3.h>
+#endif
 
 #ifdef __cplusplus
 }

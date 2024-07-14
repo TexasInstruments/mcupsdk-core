@@ -26,6 +26,9 @@ FILES_common := \
     csl_intaggr.c \
     csl_proxy.c \
     csl_ringacc.c \
+    csl_serdes3_pcie.c \
+    csl_wiz8m_sb_refclk100p0MHz_32b_8Gbps_PCIE_1l1c.c \
+    csl_serdes3.c \
     csl_sec_proxy.c \
     csl_udmap.c \
     ddr.c \
@@ -38,6 +41,10 @@ FILES_common := \
     ipc_rpmsg.c \
     ipc_rpmsg_vring.c \
     pinmux.c \
+    pcie.c \
+    pcie_v1.c \
+    pcie_serdes.c \
+    pcie_soc.c \
     sciclient.c \
     sciclient_boardcfg.c \
     sciclient_firewall.c \
@@ -80,6 +87,10 @@ FILES_PATH_common = \
     ipc_notify/v0/soc/am65x \
     ipc_rpmsg/ \
     hw_include/ringacc/V0/priv \
+    hw_include/serdes_sb/V1 \
+    pcie \
+    pcie/v1 \
+    pcie/v1/soc/am65x \
     pinmux/am65x \
     sciclient \
     sciclient/soc/am65x \
