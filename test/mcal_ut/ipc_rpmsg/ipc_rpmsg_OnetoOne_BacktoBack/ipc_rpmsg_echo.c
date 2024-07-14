@@ -163,6 +163,7 @@ void ipc_rpmsg_echo_main_core_start(void)
     RPMessage_destruct(&gAckReplyMsgObject);
 
     DebugP_log("All tests have passed!!\r\n");
+    DebugP_assert(status==SystemP_SUCCESS);
 }
 
 /* RPMessage_Object MUST be global or static */

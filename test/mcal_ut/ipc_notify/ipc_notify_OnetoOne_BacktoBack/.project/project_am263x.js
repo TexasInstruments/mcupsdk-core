@@ -68,7 +68,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_IPC_NOTIFY_ECHO";
+const readmeDoxygenPageTag = "TEST_IPC_NOTIFY_ONE_TO_ONE_BACK_TO_BACK";
 
 const templates_nortos_r5f =
 [
@@ -138,7 +138,7 @@ function getComponentProperty() {
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
     property.name = "ipc_notify_OnetoOne_BacktoBack";
-    property.isInternal = false;
+    property.isInternal = true;
     property.buildOptionCombos = buildOptionCombos;
 
     return property;

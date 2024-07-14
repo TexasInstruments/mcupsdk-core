@@ -67,7 +67,7 @@ const lnkfiles = {
 
 const syscfgfile = "../example.syscfg";
 
-const readmeDoxygenPageTag = "EXAMPLES_DRIVERS_IPC_NOTIFY_ECHO";
+const readmeDoxygenPageTag = "TEST_IPC_RPMSG_TWO_CORES";
 
 const templates_nortos_r5f =
 [
@@ -130,7 +130,7 @@ function getComponentProperty() {
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
     property.name = "ipc_rpmsg_twoCores";
-    property.isInternal = false;
+    property.isInternal = true;
     property.buildOptionCombos = buildOptionCombos;
 
     return property;

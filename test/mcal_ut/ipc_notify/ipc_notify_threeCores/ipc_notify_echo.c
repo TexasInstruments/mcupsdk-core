@@ -139,6 +139,7 @@ void ipc_notify_echo_main_core_start(void)
     DebugP_log("[IPC NOTIFY ECHO] Messages sent to each core = %d \r\n", gMsgEchoCount);
     DebugP_log("[IPC NOTIFY ECHO] Number of remote cores = %d \r\n", numRemoteCores);
     DebugP_log("All tests have passed!!\r\n");
+    DebugP_assert(status==SystemP_SUCCESS);
 }
 
 void ipc_notify_msg_handler_remote_core(uint32_t remoteCoreId, uint16_t localClientId, uint32_t msgValue, int32_t crcStatus, void *args)
