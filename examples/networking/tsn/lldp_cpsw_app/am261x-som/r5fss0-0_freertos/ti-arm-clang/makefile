@@ -90,9 +90,7 @@ INCLUDES_common := \
 	-I${MCU_PLUS_SDK_PATH}/examples/networking/tsn \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_combase/tilld/sitara \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_lldp \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_lldp/tilld \
-	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_lldp/yangs/generated \
+	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_inc \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf \
 	-I${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/tsn_uniconf/yangs \
 	-Igenerated \
@@ -146,6 +144,7 @@ LIBS_PATH_common = \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/board/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/networking/enet/lib \
 	-Wl,-i${MCU_PLUS_SDK_PATH}/source/networking/tsn/lib \
+	-Wl,-i${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_lib \
 	-Wl,-i${CG_TOOL_ROOT}/lib \
 
 LIBS_common = \
@@ -157,7 +156,7 @@ LIBS_common = \
 	-llibsysbm.a \
 	-ltsn_combase-freertos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-ltsn_unibase-freertos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	-ltsn_lldp-freertos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	-ltsn_lldp-freertos.am261x.r5f.ti-arm-clang.lib \
 	-ltsn_uniconf-freertos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	-llibc.a \
 	-llibsysbm.a \
@@ -187,7 +186,7 @@ LIBS_NAME = \
 	libsysbm.a \
 	tsn_combase-freertos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	tsn_unibase-freertos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
-	tsn_lldp-freertos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
+	tsn_lldp-freertos.am261x.r5f.ti-arm-clang.lib \
 	tsn_uniconf-freertos.am261x.r5f.ti-arm-clang.${ConfigName}.lib \
 	libc.a \
 	libsysbm.a \
@@ -199,6 +198,7 @@ LIBS_PATH_NAME = \
 	${MCU_PLUS_SDK_PATH}/source/board/lib \
 	${MCU_PLUS_SDK_PATH}/source/networking/enet/lib \
 	${MCU_PLUS_SDK_PATH}/source/networking/tsn/lib \
+	${MCU_PLUS_SDK_PATH}/source/networking/tsn/tsn-stack/eval_lib \
 	${CG_TOOL_ROOT}/lib \
 
 FILES := $(FILES_common) $(FILES_$(PROFILE))
@@ -326,9 +326,9 @@ ifeq ($(OS),Windows_NT)
 EXE_EXT=.exe
 endif
 ifeq ($(OS),Windows_NT)
-  BOOTIMAGE_CERT_GEN_CMD=powershell -executionpolicy unrestricted -command $(MCU_PLUS_SDK_PATH)/tools/boot/signing/x509CertificateGen.ps1
+  BOOTIMAGE_CERT_GEN_CMD=powershell -executionpolicy unrestricted -command $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/x509CertificateGen.ps1
 else
-  BOOTIMAGE_CERT_GEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/signing/x509CertificateGen.sh
+  BOOTIMAGE_CERT_GEN_CMD=$(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/x509CertificateGen.sh
 endif
 BOOTIMAGE_TEMP_OUT_FILE=temp_stdout_$(PROFILE).txt
 
@@ -342,7 +342,7 @@ SBL_DEV_ID=55
 
 MULTI_CORE_IMAGE_GEN = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
 OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
-APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
+APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py
 
 ifeq ($(OS),Windows_NT)

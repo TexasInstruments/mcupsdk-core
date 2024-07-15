@@ -41,9 +41,9 @@ ifeq ($(OS),Windows_NT)
 EXE_EXT=.exe
 endif
 ifeq ($(OS),Windows_NT)
-  BOOTIMAGE_CERT_GEN_CMD=powershell -executionpolicy unrestricted -command $(MCU_PLUS_SDK_PATH)/tools/boot/signing/x509CertificateGen.ps1
+  BOOTIMAGE_CERT_GEN_CMD=powershell -executionpolicy unrestricted -command $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/x509CertificateGen.ps1
 else
-  BOOTIMAGE_CERT_GEN_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/signing/x509CertificateGen.sh
+  BOOTIMAGE_CERT_GEN_CMD=$(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/x509CertificateGen.sh
 endif
 BOOTIMAGE_TEMP_OUT_FILE=$(PROFILE)/temp_stdout_$(PROFILE).txt
 
@@ -52,7 +52,7 @@ BOOTIMAGE_CERT_KEY=$(APP_SIGNING_KEY)
 else
 BOOTIMAGE_CERT_KEY=$(ROM_DEGENERATE_KEY)
 endif
-BOOTIMAGE_CERT_GEN_CMD=$(PYTHON) $(MCU_PLUS_SDK_PATH)/tools/boot/signing/rom_image_gen.py
+BOOTIMAGE_CERT_GEN_CMD=$(PYTHON) $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/rom_image_gen.py
 SYSFW_PATH=$(MCU_PLUS_SDK_PATH)/source/drivers/sciclient/soc/am64x_am243x
 SYSFW_LOAD_ADDR=0x44000
 BOARDCFG_LOAD_ADDR=0x7B000

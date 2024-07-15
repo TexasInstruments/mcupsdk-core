@@ -14,5 +14,5 @@
 
 ## Example Use -
 \code
-python3.10 keyring_cert_gen.py  --root_key ../boot/signing/mcu_custMpk.pem --keys_info keys.json
+python3.10 keyring_cert_gen.py  --root_key ../../source/security/security_common/tools/boot/signing/mcu_custMpk.pem --keys_info keys.json
 \endcode

@@ -27,10 +27,10 @@ K3_RESPART_PRODUCT=$(K3_RESPART_REPO)/.metadata/product.json
 # Certificate Generation script and other commands
 ifeq ($(OS),Windows_NT)
   EXE_EXT=.exe
-  SCICLIENT_CERT_GEN=powershell -executionpolicy unrestricted -command $(MCU_PLUS_SDK_PATH)/tools/boot/signing/x509CertificateGen.ps1
+  SCICLIENT_CERT_GEN=powershell -executionpolicy unrestricted -command $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/x509CertificateGen.ps1
   MV=$(CYGWIN_PATH)/mv
 else
-  SCICLIENT_CERT_GEN=$(MCU_PLUS_SDK_PATH)/tools/boot/signing/x509CertificateGen.sh
+  SCICLIENT_CERT_GEN=$(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/x509CertificateGen.sh
   MV=mv
 endif
 

@@ -41,7 +41,7 @@ SBL_DEV_ID=55
 
 MULTI_CORE_IMAGE_GEN = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
 OUTRPRC_CMD = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
-APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
+APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/appimage_x509_cert_gen.py
 
 MULTI_CORE_APP_PARAMS = \
 	../ipc_safeipc_echo_am243x-lp_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/ipc_safeipc_echo_am243x-lp_r5fss0-0_freertos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \

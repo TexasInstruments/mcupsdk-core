@@ -214,10 +214,10 @@ SBL_DEV_ID=55
 MULTI_CORE_IMAGE_GEN = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/multicoreImageGen.js
 OUTRPRC_CMD = $(SYSCFG_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
 % if ((args.project.device == "am65x") || (args.project.device == "am243x") || (args.project.device == "am64x")) {
-APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
+APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/appimage_x509_cert_gen.py
 % }
 % if ((args.project.device == "am263x") ||  (args.project.device == "am263px") || (args.project.device == "am261x")  || (args.project.device == "am273x") || (args.project.device == "awr294x")) {
-APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
+APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 % }
 % if ((args.project.device == "am263x") || (args.project.device == "am263px") || (args.project.device == "am261x")) {
 MCELF_IMAGE_GEN = $(MCU_PLUS_SDK_PATH)/tools/boot/multicore-elf/genimage.py

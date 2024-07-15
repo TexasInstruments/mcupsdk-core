@@ -307,7 +307,7 @@ integrated as the default option in the makefiles for SBL.
 \note To maintain the longevity of Customer MEK, it is recommended to update the salt
 everytime there is a firmware upgrade.
 
-The salt is supplied to the makefiles via the file `tools/boot/signing/kd_salt.txt`.
+The salt is supplied to the makefiles via the file `/source/security/security_common/tools/boot/signing/kd_salt.txt`.
 
 Here is an example certificate for SBL that takes care of the above recommendation:
 

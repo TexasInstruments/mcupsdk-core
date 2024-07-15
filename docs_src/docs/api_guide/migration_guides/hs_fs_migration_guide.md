@@ -209,7 +209,7 @@ Signing for the application image is new in HS-FS compared to GP. For the signin
 of application images we use a different script. This is because authentication
 of application images are done by SYSFW and it expects a different x509 certificate format.
 For signing application images, the script used in `appimage_x509_cert_gen.py`
-located at `${SDK_ROOT}/tools/boot/signing/`.
+located at `${SDK_ROOT}/source/security/security_common/tools/boot/signing/`.
 The usage of the script will be printed if you run it with `-h` option like so:
 
 \code

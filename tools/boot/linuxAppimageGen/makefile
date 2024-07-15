@@ -50,7 +50,7 @@ endif
 
 MULTI_CORE_IMAGE_GEN=$(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/MulticoreImageGen$(EXE_EXT)
 OUTRPRC_CMD=$(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/out2rprc.exe
-APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/appimage_x509_cert_gen.py
+APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/appimage_x509_cert_gen.py
 
 ifeq ($(OS), Windows_NT)
 	PYTHON=python

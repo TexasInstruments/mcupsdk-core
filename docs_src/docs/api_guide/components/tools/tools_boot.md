@@ -219,13 +219,13 @@ r4          | 3
 
 - For GP devices
   \code
-  cd ${SDK_INSTALL_PATH}/tools/boot/signing
+  cd ${SDK_INSTALL_PATH}/source/security/security_common/tools/boot/signing
   ${PYTHON} rom_image_gen.py --swrv 1 --sbl-bin <path-to-sbl-binary> --sysfw-bin <path-to-sysfw-binary> --boardcfg-blob <path-to-boardcfg-binary-blob> --sbl-loadaddr ${SBL_RUN_ADDRESS} --sysfw-loadaddr ${SYSFW_LOAD_ADDR} --bcfg-loadaddr ${BOARDCFG_LOAD_ADDR} --key ${BOOTIMAGE_CERT_KEY} --rom-image <path-to-output-image>
   \endcode
 
 - For HS devices, we have to pass the HS SYSFW binaries and also the SYSFW inner certificate to the signing script.
   \code
-  cd ${SDK_INSTALL_PATH}/tools/boot/signing
+  cd ${SDK_INSTALL_PATH}/source/security/security_common/tools/boot/signing
   ${PYTHON} rom_image_gen.py --swrv 1 --sbl-bin <path-to-sbl-binary> --sysfw-bin <path-to-sysfw-binary> --sysfw-inner-cert <path-to-sysfw-inner-cert-binary> --boardcfg-blob <path-to-boardcfg-binary-blob> --sbl-loadaddr ${SBL_RUN_ADDRESS} --sysfw-loadaddr ${SYSFW_LOAD_ADDR} --bcfg-loadaddr ${BOARDCFG_LOAD_ADDR} --key ${BOOTIMAGE_CERT_KEY} --debug DBG_FULL_ENABLE --rom-image <path-to-output-image>
   \endcode
 
@@ -233,13 +233,13 @@ r4          | 3
 
 - For SBL images or examples which is loaded by SBL, we use a different signing script. This is solely because of the x509 certificate template differences between ROM and SYSFW. In GP devices appimages are not signed. The signing happens only in HS devices. The script usage is:
   \code
-  cd ${SDK_INSTALL_PATH}/tools/boot/signing
+  cd ${SDK_INSTALL_PATH}/source/security/security_common/tools/boot/signing
   $(PYTHON) appimage_x509_cert_gen.py --bin <path-to-the-binary> --authtype 1 --key <signing-key-derived-from-devconfig> --output <output-image-name>
   \endcode
 
 - In the case of encryption, two extra options are also passed to the script like so:
   \code
-  cd ${SDK_INSTALL_PATH}/tools/boot/signing
+  cd ${SDK_INSTALL_PATH}/source/security/security_common/tools/boot/signing
   $(PYTHON) appimage_x509_cert_gen.py --bin <path-to-the-binary> --authtype 1 --key <signing-key-derived-from-devconfig> --enc y --enckey <encryption-key-derived-from-devconfig> --output <output-image-name>
   \endcode
 
@@ -248,17 +248,17 @@ r4          | 3
 
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM273X || SOC_AWR294X
 
-For SBL images, the script `/tools/boot/signing/mcu_rom_image_gen.py`.
+For SBL images, the script `/source/security/security_common/tools/boot/signing/mcu_rom_image_gen.py`.
 
 For HS-FS devices:
 \code
-cd ${SDK_INSTALL_PATH}/tools/boot/signing
+cd ${SDK_INSTALL_PATH}/source/security/security_common/tools/boot/signing
 $(PYTHON) mcu_rom_image_gen.py --image-bin <path-to-the-binary> --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key <signing-key-configured-in-devconfig> --out-image <output-image-name> --debug $(DEBUG_OPTION)
 \endcode
 
 For HS-SE devices:
 \code
-cd ${SDK_INSTALL_PATH}/tools/boot/signing
+cd ${SDK_INSTALL_PATH}/source/security/security_common/tools/boot/signing
 $(PYTHON) mcu_rom_image_gen.py --sbl-enc --enc-key <encryption-key-configured-in-devconfig> --image-bin <path-to-the-binary> --core R5 --swrv 1 --loadaddr $(SBL_RUN_ADDRESS) --sign-key <signing-key-configured-in-devconfig> --kd-salt <path-to-key-derivation-salt> --out-image <output-image-name> --debug $(DEBUG_OPTION)
 \endcode
 
@@ -555,11 +555,11 @@ image is encrypted by default.
 \cond SOC_AM263X || SOC_AM263PX || SOC_AM273X ||SOC_AWR294X
 ### Application Signing
 
-For Application images, the script `/tools/boot/signing/mcu_appimage_x509_cert_gen.py`.
+For Application images, the script `/source/security/security_common/tools/boot/signing/mcu_appimage_x509_cert_gen.py`.
 
 For HS-SE devices:
 \code
-cd ${SDK_INSTALL_PATH}/tools/boot/signing
+cd ${SDK_INSTALL_PATH}/source/security/security_common/tools/boot/signing
 $(PYTHON) mcu_appimage_x509_cert_gen.py --bin <path-to-the-binary> --key <signing-key-configured-in-devconfig>  --enc y --enckey <encryption-key-configured-in-devconfig>  --kd-salt  <path-to-key-derivation-salt> --output <output-image-name>
 \endcode
 
@@ -981,7 +981,7 @@ python can_bootloader.py --file=< path to multicore appimage of application bina
 \image html keyring_tooling_view.png "Keyring certificate generation and import"
 
 \code
-$python3 keyring_cert_gen.py --root_key ../boot/signing/mcu_custMpk.pem --keys_info keys.json
+$python3 keyring_cert_gen.py --root_key ../../source/security/security_common/tools/boot/signing/mcu_custMpk.pem --keys_info keys.json
 \endcode
 
 - This script is used to generate X.509 certificate for keyring.
@@ -1052,7 +1052,7 @@ $python3 keyring_cert_gen.py --root_key ../boot/signing/mcu_custMpk.pem --keys_i
     - keys_info: json file with keyring meta data.
 - If RSASSA-PSS algorithm for authentication of keyring certificate is required, provide the --rsassa_pss flag and --pss_saltlen **value**. Maximum supported salt length value for RSASSA-PSS is **255**. Please refer to the command below
 \code
-$python3 keyring_cert_gen.py --root_key ../boot/signing/mcu_custMpk.pem --keys_info keys.json --rsassa_pss --pss_saltlen 64
+$python3 keyring_cert_gen.py --root_key ../../source/security/security_common/tools/boot/signing/mcu_custMpk.pem --keys_info keys.json --rsassa_pss --pss_saltlen 64
 \endcode
 - A dummy json and keyring certificate header file is also availble in ${SDK_INSTALL_PATH}/tools/keyring_cert for reference.
 - Below are the logs after execution of script

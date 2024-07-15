@@ -46,7 +46,7 @@ BOOTIMAGE_CORE_ID_m4fss0-0 = 14
 SBL_RUN_ADDRESS=0x70000000
 SBL_DEV_ID=55
 
-BOOTIMAGE_CERT_KEY=$(MCU_PLUS_SDK_PATH)/tools/boot/signing/k3_dev_mpk.pem
+BOOTIMAGE_CERT_KEY=$(MCU_PLUS_SDK_PATH)/source/security/security_common/tools/boot/signing/k3_dev_mpk.pem
 
 MULTI_CORE_IMAGE_GEN=$(MCU_PLUS_SDK_PATH)/tools/boot/multicoreImageGen/MulticoreImageGen$(EXE_EXT)
 OUTRPRC_PATH=$(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/out2rprc.exe
