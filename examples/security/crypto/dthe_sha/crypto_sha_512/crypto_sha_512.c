@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022-23 Texas Instruments Incorporated
+ *  Copyright (C) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,14 +32,24 @@
 
 /* This example demonstrates the implementation of DTHE SHA */
 
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+
 #include <string.h>
 #include <kernel/dpl/DebugP.h>
 #include <security/security_common/drivers/crypto/crypto.h>
 #include <security/security_common/drivers/crypto/dthe/dthe.h>
 #include <security/security_common/drivers/crypto/dthe/dthe_sha.h>
+#include <security/security_common/drivers/crypto/dthe/dma.h>
+#include <security/security_common/drivers/crypto/dthe/dma/edma/dthe_edma.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
 
 /* SHA512 length */
 #define APP_CRYPTO_SHA512_LENGTH                (64U)
@@ -53,6 +63,13 @@
 #define CSL_DTHE_PUBLIC_AES_U_BASE              (0xCE007000U)
 /* DTHE Aes Public address */
 #define CSL_DTHE_PUBLIC_SHA_U_BASE              (0xCE005000U)
+
+/* EDMA config instance */
+#define CONFIG_EDMA_NUM_INSTANCES               (1U)
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
 
 /*Inout test buffer for sha computation */
 static uint8_t gCryptoShaTestInputBuf[APP_CRYPTO_SHA_INPUT_BUF_LENGTH] = {"abcdefpra"};
@@ -69,6 +86,49 @@ static uint8_t gCryptoSha512TestSum[APP_CRYPTO_SHA512_LENGTH] =
     0x78, 0x50, 0x9a, 0x5f, 0x03, 0x4c, 0xc9, 0xcb,
     0x64, 0x39, 0x0a, 0x74, 0x2a, 0xb6, 0xab, 0x43
 };
+
+/* Edma handler*/
+EDMA_Handle gEdmaHandle[CONFIG_EDMA_NUM_INSTANCES];
+
+/* Public context crypto dthe, aes and sha accelerators base address */
+DTHE_Attrs gDTHE_Attrs[1] =
+{
+    {
+        /* crypto accelerator base address */
+        .caBaseAddr         = CSL_DTHE_PUBLIC_U_BASE,
+        /* AES base address */
+        .aesBaseAddr        = CSL_DTHE_PUBLIC_AES_U_BASE,
+        /* SHA base address */
+        .shaBaseAddr        = CSL_DTHE_PUBLIC_SHA_U_BASE,
+        /* For checking dthe driver open or close */
+        .isOpen             = FALSE,
+    },
+};
+
+
+DTHE_Config gDtheConfig[1]=
+{
+    {
+        &gDTHE_Attrs[0],
+        DMA_DISABLE,
+    },
+};
+
+uint32_t gDtheConfigNum = 1;
+
+DMA_Config gDmaConfig[1]=
+{
+    {
+        &gEdmaHandle[0],
+        &gEdmaFxns,
+    },
+};
+uint32_t gDmaConfigNum = 1;
+
+
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
 
 void crypto_sha_512_main(void *args)
 {
@@ -130,28 +190,3 @@ void crypto_sha_512_main(void *args)
 
     return;
 }
-
-/* Public context crypto dthe, aes and sha accelerators base address */
-DTHE_Attrs gDTHE_Attrs[1] =
-{
-    {
-        /* crypto accelerator base address */
-        .caBaseAddr         = CSL_DTHE_PUBLIC_U_BASE,
-        /* AES base address */
-        .aesBaseAddr        = CSL_DTHE_PUBLIC_AES_U_BASE,
-        /* SHA base address */
-        .shaBaseAddr        = CSL_DTHE_PUBLIC_SHA_U_BASE,
-        /* For checking dthe driver open or close */
-        .isOpen             = FALSE,
-    },
-};
-
-
-DTHE_Config gDtheConfig[1]=
-{
-    {
-        &gDTHE_Attrs[0],
-    },
-};
-
-uint32_t gDtheConfigNum = 1;

@@ -32,6 +32,10 @@
 
 /* This test demonstrates the HW implementation of AES CBC encryption and decryption */
 
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -46,7 +50,13 @@
 #include <kernel/dpl/DebugP.h>
 #include <security/security_common/drivers/crypto/dthe/dthe.h>
 #include <security/security_common/drivers/crypto/dthe/dthe_aes.h>
+#include <security/security_common/drivers/crypto/dthe/dma.h>
+#include <security/security_common/drivers/crypto/dthe/dma/edma/dthe_edma.h>
 #include <kernel/dpl/ClockP.h>
+
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
 
 /* Supported Operations */
 #define APP_OPERATION_ENCRYPT           (1U)
@@ -95,6 +105,13 @@
 /* number of tests*/
 #define TEST_COUNT                                    (14U)
 
+/* EDMA config instance */
+#define CONFIG_EDMA_NUM_INSTANCES                     (1U)
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
+
 /* The AES encryption algorithm encrypts and decrypts data in blocks of 128 bits. It can do this using 128-bit, 192-bit, or 256-bit keys */
 static uint8_t gCryptoAesCbc128Key[APP_CRYPTO_AES_CBC_128_MAXKEY_LENGTH] =
 {
@@ -142,17 +159,65 @@ typedef struct
     double performance;
 }App_benchmark;
 
-/* Local test functions */
-static void test_aes_cbc(void *args);
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
 
-void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t key, uint32_t operation);
-static const char *bytesToString(uint64_t bytes);
-void App_printPerformanceLogs(void);
+/* Edma handler*/
+EDMA_Handle gEdmaHandle[CONFIG_EDMA_NUM_INSTANCES];
 
 DTHE_Handle         aesHandle;
 
 uint16_t gCount = 0;
 App_benchmark results[TEST_CRYPTO_AES_TEST_CASES_COUNT];
+
+/* Public context crypto dthe, aes and sha accelerators base address */
+DTHE_Attrs gDTHE_Attrs[1] =
+{
+    {
+        /* crypto accelerator base address */
+        .caBaseAddr         = CSL_DTHE_PUBLIC_U_BASE,
+        /* AES base address */
+        .aesBaseAddr        = CSL_DTHE_PUBLIC_AES_U_BASE,
+        /* SHA base address */
+        .shaBaseAddr        = CSL_DTHE_PUBLIC_SHA_U_BASE,
+        /* For checking dthe driver open or close */
+        .isOpen             = FALSE,
+    },
+};
+
+DTHE_Config gDtheConfig[1]=
+{
+    {
+        &gDTHE_Attrs[0],
+        DMA_DISABLE,
+    },
+};
+
+uint32_t gDtheConfigNum = 1;
+
+DMA_Config gDmaConfig[1]=
+{
+    {
+        &gEdmaHandle[0],
+        &gEdmaFxns,
+    },
+};
+uint32_t gDmaConfigNum = 1;
+
+/* ========================================================================== */
+/*                          Function Declarations                             */
+/* ========================================================================== */
+
+/* Local test functions */
+static void test_aes_cbc(void *args);
+void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t key, uint32_t operation);
+static const char *bytesToString(uint64_t bytes);
+void App_printPerformanceLogs(void);
+
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
 
 void loop_forever()
 {
@@ -368,27 +433,3 @@ void App_printPerformanceLogs()
     }
     DebugP_log("BENCHMARK END\r\n");
 }
-
-/* Public context crypto dthe, aes and sha accelerators base address */
-DTHE_Attrs gDTHE_Attrs[1] =
-{
-    {
-        /* crypto accelerator base address */
-        .caBaseAddr         = CSL_DTHE_PUBLIC_U_BASE,
-        /* AES base address */
-        .aesBaseAddr        = CSL_DTHE_PUBLIC_AES_U_BASE,
-        /* SHA base address */
-        .shaBaseAddr        = CSL_DTHE_PUBLIC_SHA_U_BASE,
-        /* For checking dthe driver open or close */
-        .isOpen             = FALSE,
-    },
-};
-
-DTHE_Config gDtheConfig[1]=
-{
-    {
-        &gDTHE_Attrs[0],
-    },
-};
-
-uint32_t gDtheConfigNum = 1;

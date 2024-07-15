@@ -30,6 +30,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+
 /* This test demonstrates the HW implementation of AES CTR stream*/
 
 #include <stdio.h>
@@ -46,7 +50,13 @@
 #include <kernel/dpl/DebugP.h>
 #include <security/security_common/drivers/crypto/dthe/dthe.h>
 #include <security/security_common/drivers/crypto/dthe/dthe_aes.h>
+#include <security/security_common/drivers/crypto/dthe/dma.h>
+#include <security/security_common/drivers/crypto/dthe/dma/edma/dthe_edma.h>
 #include <kernel/dpl/ClockP.h>
+
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
 
 /* Aes block length*/
 #define TEST_CRYPTO_AES_BLOCK_LENGTH                  (16U)
@@ -96,6 +106,31 @@
 /* number of tests*/
 #define TEST_COUNT                                    (14U)
 
+/* EDMA config instance */
+#define CONFIG_EDMA_NUM_INSTANCES                     (1U)
+
+typedef struct
+{
+    uint16_t key;
+    char operation[20];
+    uint16_t dataSize;
+    uint32_t streamSize;
+    double performance;
+}App_benchmark;
+
+typedef struct testParams_t
+{
+    uint32_t testInputLength;
+    uint32_t testId;
+    uint32_t keyLen;
+    uint32_t keyLenForKpiData;
+    uint8_t *key;
+}testParams;
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
+
 uint32_t localTrackBufNumber = 0;
 /** ctr unprocessed data length */
 uint32_t gCtr_unprocessed_len = 0;
@@ -129,6 +164,9 @@ static uint8_t gCryptoAesCtr256Key[APP_CRYPTO_AES_CTR_256_MAX_KEY_LENGTH] =
     0xEE, 0xA0, 0x40, 0x7C, 0x48, 0xA9, 0xC7, 0x57
 };
 
+/* Edma handler*/
+EDMA_Handle gEdmaHandle[CONFIG_EDMA_NUM_INSTANCES];
+
 uint32_t gInputStreamSizes[] = {
                             TEST_CRYPTO_AES_TEST_256B_BUF_LEN,
                             TEST_CRYPTO_AES_TEST_512B_BUF_LEN,
@@ -147,30 +185,61 @@ uint8_t     gCryptoAesCtrEncResultBuf[TEST_CRYPTO_AES_TEST_32K_BUF_LEN] __attrib
 /* Decryption output buf */
 uint8_t     gCryptoAesCtrDecResultBuf[TEST_CRYPTO_AES_TEST_32K_BUF_LEN] __attribute__((aligned(128), section(".bss.filebuf")));
 
+DTHE_Handle         aesHandle;
+
+uint16_t gCount = 0;
+App_benchmark results[TEST_CRYPTO_AES_TEST_CASES_COUNT];
+
+/* Public context crypto dthe, aes and sha accelerators base address */
+DTHE_Attrs gDTHE_Attrs[1] =
+{
+    {
+        /* crypto accelerator base address */
+        .caBaseAddr         = CSL_DTHE_PUBLIC_U_BASE,
+        /* AES base address */
+        .aesBaseAddr        = CSL_DTHE_PUBLIC_AES_U_BASE,
+        /* SHA base address */
+        .shaBaseAddr        = CSL_DTHE_PUBLIC_SHA_U_BASE,
+        /* For checking dthe driver open or close */
+        .isOpen             = FALSE,
+    },
+};
+
+DTHE_Config gDtheConfig[1]=
+{
+    {
+        &gDTHE_Attrs[0],
+        DMA_DISABLE,
+    },
+};
+
+uint32_t gDtheConfigNum = 1;
+
+DMA_Config gDmaConfig[1]=
+{
+    {
+        &gEdmaHandle[0],
+        &gEdmaFxns,
+    },
+};
+uint32_t gDmaConfigNum = 1;
+
+/* ========================================================================== */
+/*                          Function Declarations                             */
+/* ========================================================================== */
+/* Local test functions */
 int32_t app_aes_ctr_dthe_stream_start(uint8_t *key, uint32_t keyLen, uint32_t encOrDec);
 int32_t app_aes_ctr_dthe_stream_update(uint8_t **input, uint8_t **output, uint32_t ilen, uint32_t encOrDec);
 int32_t app_aes_ctr_dthe_stream_finish(void);
 int32_t test_aes_ctr_dthe(uint8_t *input, uint8_t *output, uint8_t *key, uint32_t keySize, uint32_t inputLen,  uint32_t encOrDec, uint32_t streamSize);
-
-typedef struct
-{
-    uint16_t key;
-    char operation[20];
-    uint16_t dataSize;
-    uint32_t streamSize;
-    double performance;
-}App_benchmark;
-
-/* Local test functions */
 static void test_aes_ctr_stream(void *args);
 void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t key, uint32_t operation, uint32_t streamSize);
 static const char *bytesToString(uint64_t bytes);
 void App_printPerformanceLogs(void);
 
-DTHE_Handle         aesHandle;
-
-uint16_t gCount = 0;
-App_benchmark results[TEST_CRYPTO_AES_TEST_CASES_COUNT];
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
 
 void loop_forever()
 {
@@ -178,15 +247,6 @@ void loop_forever()
     while(loop)
         ;
 }
-
-typedef struct testParams_t
-{
-    uint32_t testInputLength;
-    uint32_t testId;
-    uint32_t keyLen;
-    uint32_t keyLenForKpiData;
-    uint8_t *key;
-}testParams;
 
 void test_main(void *args)
 {
@@ -572,27 +632,3 @@ void App_printPerformanceLogs()
     }
     DebugP_log("BENCHMARK END\r\n");
 }
-
-/* Public context crypto dthe, aes and sha accelerators base address */
-DTHE_Attrs gDTHE_Attrs[1] =
-{
-    {
-        /* crypto accelerator base address */
-        .caBaseAddr         = CSL_DTHE_PUBLIC_U_BASE,
-        /* AES base address */
-        .aesBaseAddr        = CSL_DTHE_PUBLIC_AES_U_BASE,
-        /* SHA base address */
-        .shaBaseAddr        = CSL_DTHE_PUBLIC_SHA_U_BASE,
-        /* For checking dthe driver open or close */
-        .isOpen             = FALSE,
-    },
-};
-
-DTHE_Config gDtheConfig[1]=
-{
-    {
-        &gDTHE_Attrs[0],
-    },
-};
-
-uint32_t gDtheConfigNum = 1;

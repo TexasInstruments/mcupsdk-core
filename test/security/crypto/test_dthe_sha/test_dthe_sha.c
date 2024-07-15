@@ -32,6 +32,10 @@
 
 /* This test demonstrates the HW implementation of SHA */
 
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -44,6 +48,12 @@
 #include "ti_board_open_close.h"
 #include <security/security_common/drivers/crypto/dthe/dthe.h>
 #include <security/security_common/drivers/crypto/dthe/dthe_sha.h>
+#include <security/security_common/drivers/crypto/dthe/dma.h>
+#include <security/security_common/drivers/crypto/dthe/dma/edma/dthe_edma.h>
+
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
 
 #define APP_SHA_512                             (512U)
 #define APP_SHA_256                             (256U)
@@ -80,6 +90,30 @@
 #define TEST_COUNT                              (14U)
 /* number of test vectors*/
 #define TEST_NUM_VECTORS                        (7U)
+
+/* EDMA config instance */
+#define CONFIG_EDMA_NUM_INSTANCES               (1U)
+
+typedef struct
+{
+    uint16_t hashLength;
+    uint16_t dataSize;
+    double performance;
+}App_benchmark;
+
+typedef struct testParams_t
+{
+    uint32_t testInputLength;
+    uint32_t testId;
+    uint32_t hashAlgo;
+    uint32_t hashLength;
+    uint32_t keyLenForBenchMark;
+    uint8_t *ptrExpectedOutput;
+}testParams;
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
 
 /** 2k Test output buffer for sha computation  */
 uint8_t gCryptoShaTestInputBuf[TEST_CRYPTO_SHA_HW_TEST_32K_BUF_LEN] __attribute__((aligned(128), section(".bss.filebuf")));
@@ -209,33 +243,60 @@ uint8_t gCryptoShaHw256_TestSums[TEST_NUM_VECTORS][TEST_SHA256_LENGTH] =
     },
 };
 
-typedef struct
+/* Edma handler*/
+EDMA_Handle gEdmaHandle[CONFIG_EDMA_NUM_INSTANCES];
+
+uint16_t gCount = 0;
+App_benchmark results[TEST_CRYPTO_SHA_TEST_CASES_COUNT];
+
+/* Public context crypto dthe, aes and sha accelerators base address */
+DTHE_Attrs gDTHE_Attrs[1] =
 {
-    uint16_t hashLength;
-    uint16_t dataSize;
-    double performance;
-}App_benchmark;
+    {
+        /* crypto accelerator base address */
+        .caBaseAddr         = CSL_DTHE_PUBLIC_U_BASE,
+        /* AES base address */
+        .aesBaseAddr        = CSL_DTHE_PUBLIC_AES_U_BASE,
+        /* SHA base address */
+        .shaBaseAddr        = CSL_DTHE_PUBLIC_SHA_U_BASE,
+        /* For checking dthe driver open or close */
+        .isOpen             = FALSE,
+    },
+};
+
+DTHE_Config gDtheConfig[1]=
+{
+    {
+        &gDTHE_Attrs[0],
+        DMA_DISABLE,
+    },
+};
+
+uint32_t gDtheConfigNum = 1;
+
+DMA_Config gDmaConfig[1]=
+{
+    {
+        &gEdmaHandle[0],
+        &gEdmaFxns,
+    },
+};
+uint32_t gDmaConfigNum = 1;
+
+/* ========================================================================== */
+/*                          Function Declarations                             */
+/* ========================================================================== */
 
 /* Local test functions */
 static void test_sha(void *args);
-
-typedef struct testParams_t
-{
-    uint32_t testInputLength;
-    uint32_t testId;
-    uint32_t hashAlgo;
-    uint32_t hashLength;
-    uint32_t keyLenForBenchMark;
-    uint8_t *ptrExpectedOutput;
-}testParams;
-
 static void test_get_buf(uint8_t * buf, uint32_t sizeInBytes);
 void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uint32_t hash);
 static const char *bytesToString(uint64_t bytes);
 void App_printPerformanceLogs(void);
 
-uint16_t gCount = 0;
-App_benchmark results[TEST_CRYPTO_SHA_TEST_CASES_COUNT];
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
 
 void test_main(void *args)
 {
@@ -396,27 +457,3 @@ void App_printPerformanceLogs()
     }
     DebugP_log("BENCHMARK END\r\n");
 }
-
-/* Public context crypto dthe, aes and sha accelerators base address */
-DTHE_Attrs gDTHE_Attrs[1] =
-{
-    {
-        /* crypto accelerator base address */
-        .caBaseAddr         = CSL_DTHE_PUBLIC_U_BASE,
-        /* AES base address */
-        .aesBaseAddr        = CSL_DTHE_PUBLIC_AES_U_BASE,
-        /* SHA base address */
-        .shaBaseAddr        = CSL_DTHE_PUBLIC_SHA_U_BASE,
-        /* For checking dthe driver open or close */
-        .isOpen             = FALSE,
-    },
-};
-
-DTHE_Config gDtheConfig[1]=
-{
-    {
-        &gDTHE_Attrs[0],
-    },
-};
-
-uint32_t gDtheConfigNum = 1;

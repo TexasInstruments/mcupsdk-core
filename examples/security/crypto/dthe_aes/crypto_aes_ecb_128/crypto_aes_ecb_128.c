@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022-23 Texas Instruments Incorporated
+ *  Copyright (C) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -32,13 +32,23 @@
 
 /* This example demonstrates the DTHE AES 128 ecb Encryption and Decryptions. */
 
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+
 #include <string.h>
 #include <kernel/dpl/DebugP.h>
 #include <security/security_common/drivers/crypto/crypto.h>
 #include <security/security_common/drivers/crypto/dthe/dthe.h>
 #include <security/security_common/drivers/crypto/dthe/dthe_aes.h>
+#include <security/security_common/drivers/crypto/dthe/dma.h>
+#include <security/security_common/drivers/crypto/dthe/dma/edma/dthe_edma.h>
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
 
 /* Input or output length*/
 #define APP_CRYPTO_AES_ECB_128_INOUT_LENGTH             (16U)
@@ -52,6 +62,13 @@
 #define CSL_DTHE_PUBLIC_AES_U_BASE                      (0xCE007000U)
 /* DTHE Aes Public address */
 #define CSL_DTHE_PUBLIC_SHA_U_BASE                      (0xCE005000U)
+
+/* EDMA config instance */
+#define CONFIG_EDMA_NUM_INSTANCES                       (1U)
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
 
 /* Input buffer for encryption or decryption */
 static uint8_t gCryptoAesEcb128PlainText[APP_CRYPTO_AES_ECB_128_INOUT_LENGTH] __attribute__ ((aligned (APP_CRYPTO_AES_ECB_128_CATCHE_ALIGNMENT))) =
@@ -73,6 +90,46 @@ static uint8_t gCryptoAesEcb128CipherText[APP_CRYPTO_AES_ECB_128_INOUT_LENGTH] _
     0x7b, 0x9e, 0x97, 0xae, 0x03, 0x7d, 0x3f, 0x83,
     0x5a, 0x32, 0x63, 0x75, 0x80, 0x95, 0xc6, 0xa3
 };
+
+/* Edma handler*/
+EDMA_Handle gEdmaHandle[CONFIG_EDMA_NUM_INSTANCES];
+
+/* Public context crypto dthe, aes and sha accelerators base address */
+DTHE_Attrs gDTHE_Attrs[1] =
+{
+    {
+        /* crypto accelerator base address */
+        .caBaseAddr         = CSL_DTHE_PUBLIC_U_BASE,
+        /* AES base address */
+        .aesBaseAddr        = CSL_DTHE_PUBLIC_AES_U_BASE,
+        /* SHA base address */
+        .shaBaseAddr        = CSL_DTHE_PUBLIC_SHA_U_BASE,
+        /* For checking dthe driver open or close */
+        .isOpen             = FALSE,
+    },
+};
+
+DTHE_Config gDtheConfig[1]=
+{
+    {
+        &gDTHE_Attrs[0],
+        DMA_DISABLE,
+    },
+};
+uint32_t gDtheConfigNum = 1;
+
+DMA_Config gDmaConfig[1]=
+{
+    {
+        &gEdmaHandle[0],
+        &gEdmaFxns,
+    },
+};
+uint32_t gDmaConfigNum = 1;
+
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
 
 void crypto_aes_ecb_128_main(void *args)
 {
@@ -178,26 +235,3 @@ void crypto_aes_ecb_128_main(void *args)
 
     return;
 }
-
-/* Public context crypto dthe, aes and sha accelerators base address */
-DTHE_Attrs gDTHE_Attrs[1] =
-{
-    {
-        /* crypto accelerator base address */
-        .caBaseAddr         = CSL_DTHE_PUBLIC_U_BASE,
-        /* AES base address */
-        .aesBaseAddr        = CSL_DTHE_PUBLIC_AES_U_BASE,
-        /* SHA base address */
-        .shaBaseAddr        = CSL_DTHE_PUBLIC_SHA_U_BASE,
-        /* For checking dthe driver open or close */
-        .isOpen             = FALSE,
-    },
-};
-
-DTHE_Config gDtheConfig[1]=
-{
-    {
-        &gDTHE_Attrs[0],
-    },
-};
-uint32_t gDtheConfigNum = 1;

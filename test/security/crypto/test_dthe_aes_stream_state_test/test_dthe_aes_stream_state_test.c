@@ -32,6 +32,10 @@
 
 /* This test demonstrates the HW implementation of AES stream State test */
 
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+
 #include <unity.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
@@ -39,6 +43,12 @@
 #include <string.h>
 #include <security/security_common/drivers/crypto/dthe/dthe.h>
 #include <security/security_common/drivers/crypto/dthe/dthe_aes.h>
+#include <security/security_common/drivers/crypto/dthe/dma.h>
+#include <security/security_common/drivers/crypto/dthe/dma/edma/dthe_edma.h>
+
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
 
 /* Aes block length*/
 #define TEST_CRYPTO_AES_BLOCK_LENGTH                  (16U)
@@ -54,6 +64,14 @@
 #define CSL_DTHE_PUBLIC_AES_U_BASE                    (0xCE007000U)
 /* DTHE Aes Public address */
 #define CSL_DTHE_PUBLIC_SHA_U_BASE                    (0xCE005000U)
+
+/* EDMA config instance */
+#define CONFIG_EDMA_NUM_INSTANCES                     (1U)
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
+DTHE_AES_Params     gAesParams;
 
 /** cmac unprocessed data length */
 uint32_t gCmac_unprocessed_len = 0;
@@ -76,6 +94,49 @@ uint8_t     gCryptoAesEcbEncResultBuf[TEST_CRYPTO_AES_TEST_512B_BUF_LEN] __attri
 /* Decryption output buf */
 uint8_t     gCryptoAesEcbDecResultBuf[TEST_CRYPTO_AES_TEST_512B_BUF_LEN] __attribute__((aligned(128), section(".bss.filebuf")));
 
+/* Edma handler*/
+EDMA_Handle gEdmaHandle[CONFIG_EDMA_NUM_INSTANCES];
+
+DTHE_Handle         aesHandle;
+
+/* Public context crypto dthe, aes and sha accelerators base address */
+DTHE_Attrs gDTHE_Attrs[1] =
+{
+    {
+        /* crypto accelerator base address */
+        .caBaseAddr         = CSL_DTHE_PUBLIC_U_BASE,
+        /* AES base address */
+        .aesBaseAddr        = CSL_DTHE_PUBLIC_AES_U_BASE,
+        /* SHA base address */
+        .shaBaseAddr        = CSL_DTHE_PUBLIC_SHA_U_BASE,
+        /* For checking dthe driver open or close */
+        .isOpen             = FALSE,
+    },
+};
+
+DTHE_Config gDtheConfig[1]=
+{
+    {
+        &gDTHE_Attrs[0],
+        DMA_DISABLE,
+    },
+};
+
+uint32_t gDtheConfigNum = 1;
+
+DMA_Config gDmaConfig[1]=
+{
+    {
+        &gEdmaHandle[0],
+        &gEdmaFxns,
+    },
+};
+uint32_t gDmaConfigNum = 1;
+
+/* ========================================================================== */
+/*                          Function Declarations                             */
+/* ========================================================================== */
+
 int32_t app_aes_ecb_dthe_stream_start(uint8_t *key, uint32_t keyLen, uint32_t encOrDec);
 int32_t app_aes_ecb_dthe_stream_update(uint8_t **input, uint8_t **output, uint32_t ilen, uint32_t encOrDec);
 int32_t app_aes_ecb_dthe_stream_finish(void);
@@ -91,7 +152,9 @@ void test_aes_state_finish_to_update(void *args);
 /** Negative sequence of api's, Test cases with finish after finish call */
 void test_aes_state_finish_to_finish(void *args);
 
-DTHE_Handle         aesHandle;
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
 
 void test_main(void *args)
 {
@@ -134,8 +197,6 @@ void setUp(void)
 void tearDown(void)
 {
 }
-
-DTHE_AES_Params     gAesParams;
 
 /** Negative sequence of api's, Test cases with start after start call */
 void test_aes_state_start_to_start(void *args)
@@ -500,27 +561,3 @@ int32_t app_aes_ecb_dthe_stream_start(uint8_t *key, uint32_t keyLen, uint32_t en
 
     return (status);
 }
-
-/* Public context crypto dthe, aes and sha accelerators base address */
-DTHE_Attrs gDTHE_Attrs[1] =
-{
-    {
-        /* crypto accelerator base address */
-        .caBaseAddr         = CSL_DTHE_PUBLIC_U_BASE,
-        /* AES base address */
-        .aesBaseAddr        = CSL_DTHE_PUBLIC_AES_U_BASE,
-        /* SHA base address */
-        .shaBaseAddr        = CSL_DTHE_PUBLIC_SHA_U_BASE,
-        /* For checking dthe driver open or close */
-        .isOpen             = FALSE,
-    },
-};
-
-DTHE_Config gDtheConfig[1]=
-{
-    {
-        &gDTHE_Attrs[0],
-    },
-};
-
-uint32_t gDtheConfigNum = 1;

@@ -32,13 +32,23 @@
 
 /* This example demonstrates the DTHE AES 256 ctr Encryption and Decryptions. */
 
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+
 #include <string.h>
 #include <kernel/dpl/DebugP.h>
 #include <security/security_common/drivers/crypto/dthe/dthe.h>
 #include <security/security_common/drivers/crypto/dthe/dthe_aes.h>
+#include <security/security_common/drivers/crypto/dthe/dma.h>
+#include <security/security_common/drivers/crypto/dthe/dma/edma/dthe_edma.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
 
 /* Input or output length*/
 #define APP_CRYPTO_AES_CTR_INOUT_LENGTH1                (16U)
@@ -61,6 +71,16 @@
 /* DTHE Aes Public address */
 #define CSL_DTHE_PUBLIC_SHA_U_BASE                      (0xCE005000U)
 
+/* EDMA config instance */
+#define CONFIG_EDMA_NUM_INSTANCES                       (1U)
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
+
+/* Edma handler*/
+EDMA_Handle gEdmaHandle[CONFIG_EDMA_NUM_INSTANCES];
+
 /* Public context crypto dthe, aes and sha accelerators base address */
 DTHE_Attrs gDTHE_Attrs[1] =
 {
@@ -80,9 +100,19 @@ DTHE_Config gDtheConfig[1]=
 {
     {
         &gDTHE_Attrs[0],
+        DMA_DISABLE,
     },
 };
 uint32_t gDtheConfigNum = 1;
+
+DMA_Config gDmaConfig[1]=
+{
+    {
+        &gEdmaHandle[0],
+        &gEdmaFxns,
+    },
+};
+uint32_t gDmaConfigNum = 1;
 
 /* Testing https://www.ietf.org/rfc/rfc3686.txt */
 
@@ -297,7 +327,9 @@ static uint8_t gCryptoAesCtr256EncryptedText3[APP_CRYPTO_AES_CTR_INOUT_LENGTH3] 
     0xEBU, 0x6CU, 0x52U, 0x82U, 0x1DU, 0x0BU, 0xBBU, 0xF7U, 0xCEU, 0x75U, 0x94U, 0x46U, 0x2AU, 0xCAU, 0x4FU, 0xAAU, 0xB4U, 0x07U, 0xDFU, 0x86U, 0x65U, 0x69U, 0xFDU, 0x07U, 0xF4U, 0x8CU, 0xC0U, 0xB5U, 0x83U, 0xD6U, 0x07U, 0x1FU, 0x1EU, 0xC0U, 0xE6U, 0xB8U
 };
 
-/****************************************************************************************************************************************************************/
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
 
 void crypto_aes_ctr_main(void *args)
 {

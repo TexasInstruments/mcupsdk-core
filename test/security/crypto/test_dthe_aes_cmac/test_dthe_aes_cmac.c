@@ -32,6 +32,10 @@
 
 /* This test demonstrates the HW implementation of AES CMAC */
 
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -45,6 +49,12 @@
 #include <security/security_common/drivers/crypto/dthe/dthe.h>
 #include <security/security_common/drivers/crypto/dthe/dthe_aes.h>
 #include <security/security_common/drivers/crypto/crypto.h>
+#include <security/security_common/drivers/crypto/dthe/dma.h>
+#include <security/security_common/drivers/crypto/dthe/dma/edma/dthe_edma.h>
+
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
 
 /* Supported Key length*/
 #define APP_CRYPTO_AES_CMAC_128          (128U)
@@ -88,13 +98,8 @@
 /* number of test vectors*/
 #define TEST_NUM_VECTORS                                        (7U)
 
-/** Input buffer sizes */
-uint32_t gCryptoCmacTestInputBufSizes[TEST_NUM_VECTORS]={TEST_CRYPTO_AES_CMAC_TEST_32K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_16K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_8K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_4K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_2K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_1K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_512B_BUF_LEN};
-
-/** 32k Test input buffer for cmac operation */
-uint8_t gCryptoCmacTestInputBuf[TEST_CRYPTO_AES_CMAC_TEST_32K_BUF_LEN] __attribute__((aligned(TEST_CRYPTO_AES_CMAC_BUF_ALIGNMENT), section(".bss.filebuf")));
-/** Test output buffer for cmac operation  */
-uint8_t gCryptoCmacTestOutputBuf[TEST_CRYPTO_AES_CMAC_OUTPUT_LENGTH] __attribute__((aligned(TEST_CRYPTO_AES_CMAC_BUF_ALIGNMENT), section(".bss.filebuf")));
+/* EDMA config instance */
+#define CONFIG_EDMA_NUM_INSTANCES                               (1U)
 
 typedef struct
 {
@@ -102,6 +107,28 @@ typedef struct
     uint16_t dataSize;
     double performance;
 }App_benchmark;
+
+typedef struct testParams_t
+{
+    uint32_t testInputLength;
+    uint32_t testId;
+    uint32_t keyLen;
+    uint32_t keySize;
+    uint8_t *key;
+    uint8_t *ptrExpectedOutput;
+}testParams;
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
+
+/** Input buffer sizes */
+uint32_t gCryptoCmacTestInputBufSizes[TEST_NUM_VECTORS]={TEST_CRYPTO_AES_CMAC_TEST_32K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_16K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_8K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_4K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_2K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_1K_BUF_LEN, TEST_CRYPTO_AES_CMAC_TEST_512B_BUF_LEN};
+
+/** 32k Test input buffer for cmac operation */
+uint8_t gCryptoCmacTestInputBuf[TEST_CRYPTO_AES_CMAC_TEST_32K_BUF_LEN] __attribute__((aligned(TEST_CRYPTO_AES_CMAC_BUF_ALIGNMENT), section(".bss.filebuf")));
+/** Test output buffer for cmac operation  */
+uint8_t gCryptoCmacTestOutputBuf[TEST_CRYPTO_AES_CMAC_OUTPUT_LENGTH] __attribute__((aligned(TEST_CRYPTO_AES_CMAC_BUF_ALIGNMENT), section(".bss.filebuf")));
 
 /** CMAC-256 test vectors,this is expected hash for the gCryptoCmacTestInputBuf buffer */
 uint8_t gCryptoAesCmac256_32KbTestSum[TEST_NUM_VECTORS][TEST_CRYPTO_AES_CMAC_OUTPUT_LENGTH] =
@@ -153,15 +180,51 @@ uint8_t gCryptoAesCmacZerosInput[TEST_CRYPTO_AES_CMAC_OUTPUT_LENGTH] =
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-typedef struct testParams_t
+/* Edma handler*/
+EDMA_Handle gEdmaHandle[CONFIG_EDMA_NUM_INSTANCES];
+
+DTHE_Handle         gAesCmacHandle;
+
+uint16_t gCount = 0;
+App_benchmark results[TEST_CRYPTO_AES_TEST_CASES_COUNT];
+
+/* Public context crypto dthe, aes and sha accelerators base address */
+DTHE_Attrs gDTHE_Attrs[1] =
 {
-    uint32_t testInputLength;
-    uint32_t testId;
-    uint32_t keyLen;
-    uint32_t keySize;
-    uint8_t *key;
-    uint8_t *ptrExpectedOutput;
-}testParams;
+    {
+        /* crypto accelerator base address */
+        .caBaseAddr         = CSL_DTHE_PUBLIC_U_BASE,
+        /* AES base address */
+        .aesBaseAddr        = CSL_DTHE_PUBLIC_AES_U_BASE,
+        /* SHA base address */
+        .shaBaseAddr        = CSL_DTHE_PUBLIC_SHA_U_BASE,
+        /* For checking dthe driver open or close */
+        .isOpen             = FALSE,
+    },
+};
+
+DTHE_Config gDtheConfig[1]=
+{
+    {
+        &gDTHE_Attrs[0],
+        DMA_DISABLE,
+    },
+};
+
+uint32_t gDtheConfigNum = 1;
+
+DMA_Config gDmaConfig[1]=
+{
+    {
+        &gEdmaHandle[0],
+        &gEdmaFxns,
+    },
+};
+uint32_t gDmaConfigNum = 1;
+
+/* ========================================================================== */
+/*                          Function Declarations                             */
+/* ========================================================================== */
 
 int32_t test_aes_ecb(uint8_t *input,uint8_t *key ,uint8_t inputLen, uint8_t *output, int32_t keySize);
 void test_aes_cmac( uint8_t *key, uint8_t *input, int32_t length, uint8_t *mac, int32_t keySize);
@@ -175,10 +238,9 @@ void App_fillPerformanceResults(uint32_t t1, uint32_t t2, uint32_t numBytes, uin
 static const char *bytesToString(uint64_t bytes);
 void App_printPerformanceLogs(void);
 
-DTHE_Handle         gAesCmacHandle;
-
-uint16_t gCount = 0;
-App_benchmark results[TEST_CRYPTO_AES_TEST_CASES_COUNT];
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
 
 void test_main(void *args)
 {
@@ -475,27 +537,3 @@ void App_printPerformanceLogs()
     }
     DebugP_log("BENCHMARK END\r\n");
 }
-
-/* Public context crypto dthe, aes and sha accelerators base address */
-DTHE_Attrs gDTHE_Attrs[1] =
-{
-    {
-        /* crypto accelerator base address */
-        .caBaseAddr         = CSL_DTHE_PUBLIC_U_BASE,
-        /* AES base address */
-        .aesBaseAddr        = CSL_DTHE_PUBLIC_AES_U_BASE,
-        /* SHA base address */
-        .shaBaseAddr        = CSL_DTHE_PUBLIC_SHA_U_BASE,
-        /* For checking dthe driver open or close */
-        .isOpen             = FALSE,
-    },
-};
-
-DTHE_Config gDtheConfig[1]=
-{
-    {
-        &gDTHE_Attrs[0],
-    },
-};
-
-uint32_t gDtheConfigNum = 1;

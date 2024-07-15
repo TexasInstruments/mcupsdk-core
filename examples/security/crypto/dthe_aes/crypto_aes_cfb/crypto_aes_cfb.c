@@ -32,13 +32,23 @@
 
 /* This example demonstrates the DTHE AES CFB Encryption and Decryptions. */
 
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+
 #include <string.h>
 #include <kernel/dpl/DebugP.h>
 #include <security/security_common/drivers/crypto/dthe/dthe.h>
 #include <security/security_common/drivers/crypto/dthe/dthe_aes.h>
+#include <security/security_common/drivers/crypto/dthe/dma.h>
+#include <security/security_common/drivers/crypto/dthe/dma/edma/dthe_edma.h>
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
+
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
 
 /* Input or output length*/
 #define APP_CRYPTO_AES_CFB_INOUT_LENGTH_1                (16U)
@@ -55,6 +65,13 @@
 #define CSL_DTHE_PUBLIC_AES_U_BASE                      (0xCE007000U)
 /* DTHE Aes Public address */
 #define CSL_DTHE_PUBLIC_SHA_U_BASE                      (0xCE005000U)
+
+/* EDMA config instance */
+#define CONFIG_EDMA_NUM_INSTANCES                       (1U)
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
 
 /* Testing https://csrc.nist.gov/CSRC/media/Projects/Cryptographic-Algorithm-Validation-Program/documents/aes/aesmmt.zip */
 
@@ -206,7 +223,45 @@ static uint8_t gCryptoAesCfb256EncryptedText2[APP_CRYPTO_AES_CFB_INOUT_LENGTH_2]
     0xF9U, 0x75U, 0xEDU, 0xF2U, 0xD5U, 0xCAU, 0x72U, 0x82U, 0x59U, 0x98U, 0x67U, 0xC4U, 0xCDU, 0xDBU, 0x7BU, 0x99U, 0xDEU, 0x01U, 0xE3U, 0x57U, 0xEAU, 0x93U, 0xD4U, 0x13U, 0x2BU, 0x6AU, 0x17U, 0x18U, 0xA4U, 0xCBU, 0x3DU, 0x74U, 0x3AU, 0x56U, 0x03U, 0xD6U, 0xAAU, 0x55U, 0x61U, 0x80U, 0xD8U, 0x47U, 0x71U, 0xEDU, 0x5AU, 0x9AU, 0x0CU, 0xAAU, 0x12U, 0xB9U, 0x25U, 0xC9U, 0xD3U, 0xFBU, 0xFEU, 0x4CU, 0x35U, 0x10U, 0x88U, 0x39U, 0x66U, 0x97U, 0xAFU, 0xBEU, 0xF2U, 0x1FU, 0xE0U, 0x77U, 0x58U, 0xC8U, 0xCCU, 0x68U, 0x92U, 0x9BU, 0x7AU, 0xA2U, 0x2AU, 0x6EU, 0x58U, 0x37U
 };
 
-/****************************************************************************************************************************************************************/
+/* Edma handler*/
+EDMA_Handle gEdmaHandle[CONFIG_EDMA_NUM_INSTANCES];
+
+/* Public context crypto dthe, aes and sha accelerators base address */
+DTHE_Attrs gDTHE_Attrs[1] =
+{
+    {
+        /* crypto accelerator base address */
+        .caBaseAddr         = CSL_DTHE_PUBLIC_U_BASE,
+        /* AES base address */
+        .aesBaseAddr        = CSL_DTHE_PUBLIC_AES_U_BASE,
+        /* SHA base address */
+        .shaBaseAddr        = CSL_DTHE_PUBLIC_SHA_U_BASE,
+        /* For checking dthe driver open or close */
+        .isOpen             = FALSE,
+    },
+};
+
+DTHE_Config gDtheConfig[1]=
+{
+    {
+        &gDTHE_Attrs[0],
+        DMA_DISABLE,
+    },
+};
+uint32_t gDtheConfigNum = 1;
+
+DMA_Config gDmaConfig[1]=
+{
+    {
+        &gEdmaHandle[0],
+        &gEdmaFxns,
+    },
+};
+uint32_t gDmaConfigNum = 1;
+
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
 
 void crypto_aes_cfb_main(void *args)
 {
@@ -631,26 +686,3 @@ void crypto_aes_cfb_main(void *args)
 
     return;
 }
-
-/* Public context crypto dthe, aes and sha accelerators base address */
-DTHE_Attrs gDTHE_Attrs[1] =
-{
-    {
-        /* crypto accelerator base address */
-        .caBaseAddr         = CSL_DTHE_PUBLIC_U_BASE,
-        /* AES base address */
-        .aesBaseAddr        = CSL_DTHE_PUBLIC_AES_U_BASE,
-        /* SHA base address */
-        .shaBaseAddr        = CSL_DTHE_PUBLIC_SHA_U_BASE,
-        /* For checking dthe driver open or close */
-        .isOpen             = FALSE,
-    },
-};
-
-DTHE_Config gDtheConfig[1]=
-{
-    {
-        &gDTHE_Attrs[0],
-    },
-};
-uint32_t gDtheConfigNum = 1;
