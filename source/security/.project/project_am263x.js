@@ -5,8 +5,10 @@ let device = "am263x";
 const files_r5f = {
     common: [
         //Taken from crypto library
+        "dma.c",
         "dthe.c",
         "dthe_aes.c",
+        "dthe_edma.c",
         "dthe_sha.c",
         "pka.c",
         "eip29t2_firmware.c",
@@ -24,6 +26,7 @@ const filedirs_r5f = {
     common: [
         "security_common/drivers/crypto",
         "security_common/drivers/crypto/dthe",
+        "security_common/drivers/crypto/dthe/dma/edma",
         "security_common/drivers/crypto/pka",
         "security_common/drivers/crypto/rng",
         "security_common/drivers/hsmclient",

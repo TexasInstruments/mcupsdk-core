@@ -16,8 +16,10 @@ ConfigName:=$(PROFILE)
 LIBNAME:=security.awr294x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
+    dma.c \
     dthe.c \
     dthe_aes.c \
+    dthe_edma.c \
     dthe_sha.c \
     crypto_util.c \
     hsmclient.c \
@@ -29,6 +31,7 @@ FILES_common := \
 FILES_PATH_common = \
     security_common/drivers/crypto \
     security_common/drivers/crypto/dthe \
+    security_common/drivers/crypto/dthe/dma/edma \
     security_common/drivers/hsmclient \
     security_common/drivers/hsmclient/soc/awr294x \
     security_common/drivers/hsmclient/utils \

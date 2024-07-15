@@ -16,8 +16,10 @@ ConfigName:=$(PROFILE)
 LIBNAME:=security.am263x.r5f.ti-arm-clang.$(PROFILE).lib
 
 FILES_common := \
+    dma.c \
     dthe.c \
     dthe_aes.c \
+    dthe_edma.c \
     dthe_sha.c \
     pka.c \
     eip29t2_firmware.c \
@@ -32,6 +34,7 @@ FILES_common := \
 FILES_PATH_common = \
     security_common/drivers/crypto \
     security_common/drivers/crypto/dthe \
+    security_common/drivers/crypto/dthe/dma/edma \
     security_common/drivers/crypto/pka \
     security_common/drivers/crypto/rng \
     security_common/drivers/hsmclient \

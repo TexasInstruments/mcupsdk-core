@@ -5,8 +5,10 @@ let device = "awr294x";
 const files_r5f = {
     common: [
         //Taken from crypto library
+        "dma.c",
         "dthe.c",
         "dthe_aes.c",
+        "dthe_edma.c",
         "dthe_sha.c",
         "crypto_util.c",
         "hsmclient.c",
@@ -20,8 +22,10 @@ const files_r5f = {
 const files_c66 = {
     common: [
         //Taken from crypto library
+        "dma.c",
         "dthe.c",
         "dthe_aes.c",
+        "dthe_edma.c",
         "dthe_sha.c",
         "crypto_util.c",
         "hsmclient.c",
@@ -35,6 +39,7 @@ const filedirs = {
     common: [
         "security_common/drivers/crypto",
         "security_common/drivers/crypto/dthe",
+        "security_common/drivers/crypto/dthe/dma/edma",
         "security_common/drivers/hsmclient",
 		"security_common/drivers/hsmclient/soc/awr294x",
 		"security_common/drivers/hsmclient/utils",
