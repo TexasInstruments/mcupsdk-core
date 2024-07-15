@@ -3,7 +3,7 @@
     <import spec="../r5fss0-0_freertos/ti-arm-clang/example.projectspec"/>
     <import spec="../r5fss0-1_nortos/ti-arm-clang/example.projectspec"/>
     <project
-        name="ipc_rpmsg_twoCores_am263x-lp_system_freertos_nortos"
+        name="ipc_rpmsg_echo_am263x-lp_system_freertos_nortos"
         products="com.ti.MCU_PLUS_SDK_AMXXX"
         configurations="
             Debug,

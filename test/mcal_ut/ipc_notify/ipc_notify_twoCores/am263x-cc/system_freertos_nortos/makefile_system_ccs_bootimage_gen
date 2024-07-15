@@ -43,12 +43,12 @@ OUTRPRC_CMD = $(CCS_NODE) $(MCU_PLUS_SDK_PATH)/tools/boot/out2rprc/elf2rprc.js
 APP_IMAGE_SIGN_CMD = $(MCU_PLUS_SDK_PATH)/tools/boot/signing/mcu_appimage_x509_cert_gen.py
 
 MULTI_CORE_APP_PARAMS = \
-	../ipc_notify_twoCores_am263x-cc_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/ipc_notify_twoCores_am263x-cc_r5fss0-0_freertos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
-	../ipc_notify_twoCores_am263x-cc_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/ipc_notify_twoCores_am263x-cc_r5fss0-1_nortos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+	../ipc_notify_echo_am263x-cc_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/ipc_notify_echo_am263x-cc_r5fss0-0_freertos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+	../ipc_notify_echo_am263x-cc_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/ipc_notify_echo_am263x-cc_r5fss0-1_nortos_ti-arm-clang.rprc@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
 
 MULTI_CORE_APP_PARAMS_XIP = \
-	../ipc_notify_twoCores_am263x-cc_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/ipc_notify_twoCores_am263x-cc_r5fss0-0_freertos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
-	../ipc_notify_twoCores_am263x-cc_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/ipc_notify_twoCores_am263x-cc_r5fss0-1_nortos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
+	../ipc_notify_echo_am263x-cc_r5fss0-0_freertos_ti-arm-clang/$(PROFILE)/ipc_notify_echo_am263x-cc_r5fss0-0_freertos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-0) \
+	../ipc_notify_echo_am263x-cc_r5fss0-1_nortos_ti-arm-clang/$(PROFILE)/ipc_notify_echo_am263x-cc_r5fss0-1_nortos_ti-arm-clang.rprc_xip@$(BOOTIMAGE_CORE_ID_r5fss0-1) \
 
 all:
 ifeq ($(CCS_IDE_MODE),cloud)

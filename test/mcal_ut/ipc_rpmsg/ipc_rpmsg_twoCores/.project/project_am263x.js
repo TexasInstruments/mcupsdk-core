@@ -100,7 +100,7 @@ const buildOptionCombos = [
 
 const systemProjects = [
     {
-        name: "ipc_rpmsg_twoCores",
+        name: "ipc_rpmsg_echo",
         tag: "freertos_nortos",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
@@ -111,7 +111,7 @@ const systemProjects = [
         ],
     },
     {
-        name: "ipc_rpmsg_twoCores",
+        name: "ipc_rpmsg_echo",
         tag: "freertos_nortos",
         skipProjectSpec: false,
         readmeDoxygenPageTag: readmeDoxygenPageTag,
@@ -129,7 +129,7 @@ function getComponentProperty() {
 
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
-    property.name = "ipc_rpmsg_twoCores";
+    property.name = "ipc_rpmsg_echo";
     property.isInternal = true;
     property.buildOptionCombos = buildOptionCombos;
 

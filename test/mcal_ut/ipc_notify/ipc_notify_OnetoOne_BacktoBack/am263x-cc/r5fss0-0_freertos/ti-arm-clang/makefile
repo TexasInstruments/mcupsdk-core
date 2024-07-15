@@ -24,17 +24,17 @@ endif
 PROFILE?=release
 ConfigName:=$(PROFILE)
 
-OUTNAME:=ipc_notify_OnetoOne_BacktoBack.$(PROFILE).out
+OUTNAME:=ipc_notify__echo.$(PROFILE).out
 
 BOOTIMAGE_PATH=$(abspath .)
-BOOTIMAGE_NAME:=ipc_notify_OnetoOne_BacktoBack.$(PROFILE).appimage
-BOOTIMAGE_NAME_XIP:=ipc_notify_OnetoOne_BacktoBack.$(PROFILE).appimage_xip
-BOOTIMAGE_NAME_SIGNED:=ipc_notify_OnetoOne_BacktoBack.$(PROFILE).appimage.signed
-BOOTIMAGE_RPRC_NAME:=ipc_notify_OnetoOne_BacktoBack.$(PROFILE).rprc
-BOOTIMAGE_RPRC_NAME_XIP:=ipc_notify_OnetoOne_BacktoBack.$(PROFILE).rprc_xip
-BOOTIMAGE_RPRC_NAME_TMP:=ipc_notify_OnetoOne_BacktoBack.$(PROFILE).rprc_tmp
-BOOTIMAGE_NAME_HS:=ipc_notify_OnetoOne_BacktoBack.$(PROFILE).appimage.hs
-BOOTIMAGE_NAME_HS_FS:=ipc_notify_OnetoOne_BacktoBack.$(PROFILE).appimage.hs_fs
+BOOTIMAGE_NAME:=ipc_notify__echo.$(PROFILE).appimage
+BOOTIMAGE_NAME_XIP:=ipc_notify__echo.$(PROFILE).appimage_xip
+BOOTIMAGE_NAME_SIGNED:=ipc_notify__echo.$(PROFILE).appimage.signed
+BOOTIMAGE_RPRC_NAME:=ipc_notify__echo.$(PROFILE).rprc
+BOOTIMAGE_RPRC_NAME_XIP:=ipc_notify__echo.$(PROFILE).rprc_xip
+BOOTIMAGE_RPRC_NAME_TMP:=ipc_notify__echo.$(PROFILE).rprc_tmp
+BOOTIMAGE_NAME_HS:=ipc_notify__echo.$(PROFILE).appimage.hs
+BOOTIMAGE_NAME_HS_FS:=ipc_notify__echo.$(PROFILE).appimage.hs_fs
 TARGETS := $(BOOTIMAGE_NAME)
 ifeq ($(DEVICE_TYPE), HS)
    TARGETS += $(BOOTIMAGE_NAME_HS)
@@ -201,7 +201,7 @@ clean:
 	$(RMDIR) generated/
 
 scrub:
-	@echo  Scrubing: am263x:r5fss0-0:freertos:ti-arm-clang ipc_notify_OnetoOne_BacktoBack ...
+	@echo  Scrubing: am263x:r5fss0-0:freertos:ti-arm-clang ipc_notify__echo ...
 	$(RMDIR) obj
 ifeq ($(OS),Windows_NT)
 	$(RM) \*.out
@@ -320,12 +320,12 @@ endif
 endif
 .PHONY: coverage
 coverage:
-	@echo Creating Coverage Report for ipc_notify_OnetoOne_BacktoBack.$(PROFILE) ...
+	@echo Creating Coverage Report for ipc_notify__echo.$(PROFILE) ...
 	$(MKDIR) coverage
-	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o ipc_notify_OnetoOne_BacktoBack.$(PROFILE).profdata
-	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=ipc_notify_OnetoOne_BacktoBack.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
-	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=ipc_notify_OnetoOne_BacktoBack.$(PROFILE).profdata > coverage/ipc_notify_OnetoOne_BacktoBack.$(PROFILE).profdata.json
-	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/ipc_notify_OnetoOne_BacktoBack.$(PROFILE).profdata.json --output-json=coverage/ipc_notify_OnetoOne_BacktoBack.$(PROFILE).analysis.json --output=../ipc_notify_OnetoOne_BacktoBack.annotations.$(PROFILE).S --top-function-count=500
+	$(PROFDATA) merge -sparse -obj-file=$(OUTNAME) $(OUTNAME).cnt -o ipc_notify__echo.$(PROFILE).profdata
+	$(COV) show --format=html --show-expansions --show-instantiations --show-branches=count --object=$(OUTNAME) -instr-profile=ipc_notify__echo.$(PROFILE).profdata --output-dir=$(COVERAGE_PATH)/coverage --ignore-filename-regex=build_jenkins
+	$(COV) export --format=text --object=$(OUTNAME) --instr-profile=ipc_notify__echo.$(PROFILE).profdata > coverage/ipc_notify__echo.$(PROFILE).profdata.json
+	node $(MCU_PLUS_SDK_PATH)/tools/smart_placement/clang_coverage_analyse.js --input=coverage/ipc_notify__echo.$(PROFILE).profdata.json --output-json=coverage/ipc_notify__echo.$(PROFILE).analysis.json --output=../ipc_notify__echo.annotations.$(PROFILE).S --top-function-count=500
 	@echo Coverage Report Generated at $(COVERAGE_PATH)/coverage folder !!!
 
 -include $(addprefix $(OBJDIR)/, $(DEPS))
