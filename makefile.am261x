@@ -53,10 +53,10 @@ help:
 	@echo  $(MAKE) -s -f makefile.am261x icss_emac_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am261x icss_emac_lwip_if_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am261x mbedtls_r5f.ti-arm-clang
-	@echo  $(MAKE) -s -f makefile.am261x
-	@echo  $(MAKE) -s -f makefile.am261x
-	@echo  $(MAKE) -s -f makefile.am261x
-	@echo  $(MAKE) -s -f makefile.am261x
+	@echo  $(MAKE) -s -f makefile.am261x tsn_gptp-freertos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am261x tsn_combase-freertos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am261x tsn_uniconf-freertos_r5f.ti-arm-clang
+	@echo  $(MAKE) -s -f makefile.am261x tsn_unibase-freertos_r5f.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am261x sdl_r5f.ti-arm-clang sdl_r5fss1.ti-arm-clang
 	@echo  $(MAKE) -s -f makefile.am261x security_r5f.ti-arm-clang
 	@echo  .
@@ -81,10 +81,10 @@ help:
 	@echo  $(MAKE) -s -f makefile.am261x icss_emac_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am261x icss_emac_lwip_if_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am261x mbedtls_r5f.ti-arm-clang_clean
-	@echo  $(MAKE) -s -f makefile.am261x
-	@echo  $(MAKE) -s -f makefile.am261x
-	@echo  $(MAKE) -s -f makefile.am261x
-	@echo  $(MAKE) -s -f makefile.am261x
+	@echo  $(MAKE) -s -f makefile.am261x tsn_gptp-freertos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am261x tsn_combase-freertos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am261x tsn_uniconf-freertos_r5f.ti-arm-clang_clean
+	@echo  $(MAKE) -s -f makefile.am261x tsn_unibase-freertos_r5f.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am261x sdl_r5f.ti-arm-clang_clean sdl_r5fss1.ti-arm-clang_clean
 	@echo  $(MAKE) -s -f makefile.am261x security_r5f.ti-arm-clang_clean
 	@echo  .
@@ -541,10 +541,10 @@ BUILD_COMBO_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang
 BUILD_COMBO_icss_emac = icss_emac_r5f.ti-arm-clang
 BUILD_COMBO_icss_emac_lwip_if = icss_emac_lwip_if_r5f.ti-arm-clang
 BUILD_COMBO_mbedtls = mbedtls_r5f.ti-arm-clang
-BUILD_COMBO_tsn_gptp-freertos =
-BUILD_COMBO_tsn_combase-freertos =
-BUILD_COMBO_tsn_uniconf-freertos =
-BUILD_COMBO_tsn_unibase-freertos =
+BUILD_COMBO_tsn_gptp-freertos = tsn_gptp-freertos_r5f.ti-arm-clang
+BUILD_COMBO_tsn_combase-freertos = tsn_combase-freertos_r5f.ti-arm-clang
+BUILD_COMBO_tsn_uniconf-freertos = tsn_uniconf-freertos_r5f.ti-arm-clang
+BUILD_COMBO_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang
 BUILD_COMBO_sdl = sdl_r5f.ti-arm-clang sdl_r5fss1.ti-arm-clang
 BUILD_COMBO_security = security_r5f.ti-arm-clang
 
@@ -664,10 +664,10 @@ BUILD_COMBO_CLEAN_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang_cle
 BUILD_COMBO_CLEAN_icss_emac = icss_emac_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_icss_emac_lwip_if = icss_emac_lwip_if_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_mbedtls = mbedtls_r5f.ti-arm-clang_clean
-BUILD_COMBO_CLEAN_tsn_gptp-freertos =
-BUILD_COMBO_CLEAN_tsn_combase-freertos =
-BUILD_COMBO_CLEAN_tsn_uniconf-freertos =
-BUILD_COMBO_CLEAN_tsn_unibase-freertos =
+BUILD_COMBO_CLEAN_tsn_gptp-freertos = tsn_gptp-freertos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_tsn_combase-freertos = tsn_combase-freertos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_tsn_uniconf-freertos = tsn_uniconf-freertos_r5f.ti-arm-clang_clean
+BUILD_COMBO_CLEAN_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_sdl = sdl_r5f.ti-arm-clang_clean sdl_r5fss1.ti-arm-clang_clean
 BUILD_COMBO_CLEAN_security = security_r5f.ti-arm-clang_clean
 
@@ -781,10 +781,10 @@ BUILD_COMBO_SCRUB_lwip-contrib-nortos = lwip-contrib-nortos_r5f.ti-arm-clang_scr
 BUILD_COMBO_SCRUB_icss_emac = icss_emac_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_icss_emac_lwip_if = icss_emac_lwip_if_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_mbedtls = mbedtls_r5f.ti-arm-clang_scrub_scrub
-BUILD_COMBO_SCRUB_tsn_gptp-freertos =_scrub
-BUILD_COMBO_SCRUB_tsn_combase-freertos =_scrub
-BUILD_COMBO_SCRUB_tsn_uniconf-freertos =_scrub
-BUILD_COMBO_SCRUB_tsn_unibase-freertos =_scrub
+BUILD_COMBO_SCRUB_tsn_gptp-freertos = tsn_gptp-freertos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_tsn_combase-freertos = tsn_combase-freertos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_tsn_uniconf-freertos = tsn_uniconf-freertos_r5f.ti-arm-clang_scrub_scrub
+BUILD_COMBO_SCRUB_tsn_unibase-freertos = tsn_unibase-freertos_r5f.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_sdl = sdl_r5f.ti-arm-clang_scrub sdl_r5fss1.ti-arm-clang_scrub_scrub
 BUILD_COMBO_SCRUB_security = security_r5f.ti-arm-clang_scrub_scrub
 
