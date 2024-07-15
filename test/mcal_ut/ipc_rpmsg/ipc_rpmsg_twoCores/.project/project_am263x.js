@@ -130,7 +130,7 @@ function getComponentProperty() {
     property.dirPath = path.resolve(__dirname, "..");
     property.type = "executable";
     property.name = "ipc_rpmsg_echo";
-    property.isInternal = true;
+    property.isInternal =true;
     property.buildOptionCombos = buildOptionCombos;
 
     return property;
