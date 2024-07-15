@@ -43,7 +43,16 @@
 #define BUF_SIZE 60
 
 uint32_t src_buf[BUF_SIZE]  __attribute__((aligned(4096)));
+
+#if defined(SOC_AM65X)
+/*
+ * The destination buffer needs to be 64k aligned for address translation
+ * as the lsb of the lower target register is always zero .
+ */
+uint32_t dst_buf[BUF_SIZE]  __attribute((section(".dstBufSec"))) __attribute__((aligned(65536)));
+#else
 uint32_t dst_buf[BUF_SIZE]  __attribute__((aligned(4096)));
+#endif
 
 /* Initialize buffer */
 void Pcie_bufInit(void)

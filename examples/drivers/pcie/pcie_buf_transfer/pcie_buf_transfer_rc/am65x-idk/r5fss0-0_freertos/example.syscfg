@@ -1,0 +1,77 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "AM65xx_SR2.0_beta" --package "ACD" --part "Default" --context "r5fss0-0" --product "MCU_PLUS_SDK@07.03.01"
+ * @versions {"tool":"1.20.0+3587"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const pcie       = scripting.addModule("/drivers/pcie/pcie", {}, false);
+const pcie1      = pcie.addInstance();
+const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
+const dpl_cfg    = scripting.addModule("/kernel/dpl/dpl_cfg");
+const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
+const mpu_armv71 = mpu_armv7.addInstance();
+const mpu_armv72 = mpu_armv7.addInstance();
+const mpu_armv73 = mpu_armv7.addInstance();
+const mpu_armv74 = mpu_armv7.addInstance();
+const mpu_armv75 = mpu_armv7.addInstance();
+const mpu_armv76 = mpu_armv7.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+pcie1.$name                = "CONFIG_PCIE0";
+pcie1.gen                  = "PCIE_GEN2";
+pcie1.numLanes             = "2";
+pcie1.ibAtu.create(1);
+pcie1.ibAtu[0].$name       = "IB_ATU_CFG0";
+pcie1.ibAtu[0].externs     = "extern uint32_t dst_buf[];";
+pcie1.ibAtu[0].lowerBase   = "0x90000000";
+pcie1.ibAtu[0].lowerTarget = "(uint32_t)dst_buf";
+pcie1.obAtu.create(1);
+pcie1.obAtu[0].$name       = "OB_ATU_CFG0";
+pcie1.obAtu[0].lowerTarget = "0x70000000";
+pcie1.obAtu[0].windowSize  = 0xFFFFFF;
+pcie1.obAtu[0].lowerBase   = "0x11000000 ";
+
+debug_log.enableUartLog                   = true;
+debug_log.uartLog.$name                   = "CONFIG_UART0";
+debug_log.uartLog.useMcuDomainPeripherals = true;
+debug_log.uartLog.MCU_UART.$assign        = "MCU_USART0";
+debug_log.uartLog.MCU_UART.RXD.$assign    = "MCU_OSPI1_D1";
+debug_log.uartLog.MCU_UART.TXD.$assign    = "MCU_OSPI1_D2";
+
+const uart_v0_template  = scripting.addModule("/drivers/uart/v0/uart_v0_template", {}, false);
+const uart_v0_template1 = uart_v0_template.addInstance({}, false);
+uart_v0_template1.$name = "drivers_uart_v0_uart_v0_template0";
+debug_log.uartLog.child = uart_v0_template1;
+
+mpu_armv71.size         = 31;
+mpu_armv71.allowExecute = false;
+mpu_armv71.attributes   = "Device";
+mpu_armv71.$name        = "SOC_MEM_MAP";
+
+mpu_armv72.size  = 15;
+mpu_armv72.$name = "ATCM_MEM_MAP";
+
+mpu_armv73.baseAddr          = 0x41010000;
+mpu_armv73.size              = 15;
+mpu_armv73.allowExecute      = false;
+mpu_armv73.accessPermissions = "Supervisor RD+WR, User RD";
+mpu_armv73.$name             = "BTCM_MEM_MAP";
+
+mpu_armv74.size       = 19;
+mpu_armv74.baseAddr   = 0x41C00000;
+mpu_armv74.attributes = "NonCached";
+mpu_armv74.$name      = "MSRAM_MEM_MAP";
+
+mpu_armv75.baseAddr = 0x70000000;
+mpu_armv75.size     = 21;
+mpu_armv75.$name    = "MSMC_SRAM_MEM_MAP";
+
+mpu_armv76.baseAddr = 0x80000000;
+mpu_armv76.size     = 31;
+mpu_armv76.$name    = "DDR_MEM_MAP";
