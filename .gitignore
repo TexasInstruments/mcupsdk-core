@@ -98,3 +98,15 @@ examples/pru_io/empty/firmware/am263x-cc/icssm-pru0_fw/ti-pru-cgt/*.h
 tools/boot/multicore-elf/
 source/sysconfig/
 
+.internal/fotaAcc8051FW/8051FwOut/fota_function_ospi.adb
+.internal/fotaAcc8051FW/8051FwOut/fota_function_ospi.asm
+.internal/fotaAcc8051FW/8051FwOut/fota_function_ospi.cdb
+.internal/fotaAcc8051FW/8051FwOut/fota_function_ospi.hex
+.internal/fotaAcc8051FW/8051FwOut/fota_function_ospi.ihx
+.internal/fotaAcc8051FW/8051FwOut/fota_function_ospi.lk
+.internal/fotaAcc8051FW/8051FwOut/fota_function_ospi.lst
+.internal/fotaAcc8051FW/8051FwOut/fota_function_ospi.mem
+.internal/fotaAcc8051FW/8051FwOut/fota_function_ospi.omf
+.internal/fotaAcc8051FW/8051FwOut/fota_function_ospi.rel
+.internal/fotaAcc8051FW/8051FwOut/fota_function_ospi.rst
+.internal/fotaAcc8051FW/8051FwOut/fota_function_ospi.sym
