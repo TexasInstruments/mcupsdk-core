@@ -183,7 +183,8 @@ void HwiP_post(uint32_t intNum);
  * \brief Disable all interrupts
  *
  * \note In case of ARM R5F, ARM M4F, this only disables IRQ. \n
- *       FIQ is not disabled.
+ *       FIQ is not disabled. \n
+ *       In case of ARM M4F, this only disables interrupts which has priority between 1-7.
  *
  * \return interrupt state before disable, typically used by \ref HwiP_restore later
  */
