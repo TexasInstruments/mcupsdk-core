@@ -314,6 +314,10 @@ static void test_gpmc_read_write_config(void *args)
         {
             gGpmcTestTxBuf[i] = ((j >= TEST_CHAR_RANGE) ? (TEST_CHAR_RANGE-j) : j);
             i++;
+            if(i == TEST_GPMC_BUF_SIZE) 
+            {
+                break;
+            }
         }
     }
 
