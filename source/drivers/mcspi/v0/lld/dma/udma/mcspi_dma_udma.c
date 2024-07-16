@@ -34,12 +34,14 @@
 #include <drivers/mcspi/v0/lld/mcspi_lld.h>
 #include <drivers/mcspi/v0/lld/dma/udma/mcspi_dma_udma.h>
 #include <drivers/mcspi/v0/lld/dma/mcspi_dma.h>
+#include <drivers/mcspi/v0/lld/dma/soc/mcspi_dma_soc.h>
 #include <kernel/dpl/CacheP.h>
 #include <drivers/udma.h>
 #include <kernel/dpl/ClockP.h>
 
 /* Static Function Declarations */
-static void MCSPI_udmaHpdInit(uint8_t *pHpdMem,
+static void MCSPI_udmaHpdInit(Udma_ChHandle chHandle,
+                              uint8_t *pHpdMem,
                               const void *destBuf,
                               uint32_t length);
 static void MCSPI_udmaIsrTx(Udma_EventHandle eventHandle,
@@ -211,7 +213,8 @@ int32_t MCSPI_lld_dmaTransfer(MCSPILLD_Handle hMcspi,
     return (status);
 }
 
-static void MCSPI_udmaHpdInit(uint8_t       *pHpdMem,
+static void MCSPI_udmaHpdInit(Udma_ChHandle chHandle,
+                              uint8_t       *pHpdMem,
                               const void    *destBuf,
                               uint32_t      length)
 {
@@ -228,8 +231,8 @@ static void MCSPI_udmaHpdInit(uint8_t       *pHpdMem,
     CSL_udmapCppi5SetIds(pHpd, descType, 0x321, UDMA_DEFAULT_FLOW_ID);
     CSL_udmapCppi5SetSrcTag(pHpd, 0x0000);     /* Not used */
     CSL_udmapCppi5SetDstTag(pHpd, 0x0000);     /* Not used */
-    /* Return Policy descriptors are reserved in case of AM243X/Am64X */
-    CSL_udmapCppi5SetReturnPolicy(pHpd, descType, 0U, 0U, 0U, 0U);
+    /* Return Policy descriptors */
+    MCSPI_udmapSetReturnPolicy(chHandle, pHpdMem);
     CSL_udmapCppi5LinkDesc(pHpd, 0U);
     CSL_udmapCppi5SetBufferAddr(pHpd, (uint64_t) Udma_defaultVirtToPhyFxn(destBuf, 0U, NULL));
     CSL_udmapCppi5SetBufferLen(pHpd, length);
@@ -265,6 +268,11 @@ static int32_t MCSPI_udmaInitRxCh(MCSPILLD_Handle hMcspi, const MCSPI_ChObject *
     chPrms.fqRingPrms.ringMem       = dmaChConfig->rxRingMem;
     chPrms.fqRingPrms.ringMemSize   = dmaChConfig->ringMemSize;
     chPrms.fqRingPrms.elemCnt       = dmaChConfig->ringElemCnt;
+    if(dmaChConfig->isCqRingMem == UDMA_COMP_QUEUE_RING_MEM_ENABLED){
+        chPrms.cqRingPrms.ringMem       = dmaChConfig->cqRxRingMem;
+        chPrms.cqRingPrms.ringMemSize   = dmaChConfig->ringMemSize;
+        chPrms.cqRingPrms.elemCnt       = dmaChConfig->ringElemCnt;
+    }
     rxChHandle                      = dmaChConfig->rxChHandle;
 
     /* Open channel for block copy */
@@ -322,6 +330,11 @@ static int32_t MCSPI_udmaInitTxCh(MCSPILLD_Handle hMcspi, const MCSPI_ChObject *
     chPrms.fqRingPrms.ringMem       = dmaChConfig->txRingMem;
     chPrms.fqRingPrms.ringMemSize   = dmaChConfig->ringMemSize;
     chPrms.fqRingPrms.elemCnt       = dmaChConfig->ringElemCnt;
+    if(dmaChConfig->isCqRingMem == UDMA_COMP_QUEUE_RING_MEM_ENABLED){
+        chPrms.cqRingPrms.ringMem       = dmaChConfig->cqTxRingMem;
+        chPrms.cqRingPrms.ringMemSize   = dmaChConfig->ringMemSize;
+        chPrms.cqRingPrms.elemCnt       = dmaChConfig->ringElemCnt;
+    }
     txChHandle                      = dmaChConfig->txChHandle;
 
     /* Open channel for block copy */
@@ -446,7 +459,7 @@ static int32_t MCSPI_udmaConfigPdmaTx(const MCSPI_ChObject *chObj,
     DebugP_assert(UDMA_SOK == retVal);
 
     /* Update host packet descriptor, length should be always in terms of total number of bytes */
-    MCSPI_udmaHpdInit((uint8_t *) dmaChConfig->txHpdMem, txBufPtr, (numWords << chObj->bufWidthShift));
+    MCSPI_udmaHpdInit(txChHandle, (uint8_t *) dmaChConfig->txHpdMem, txBufPtr, (numWords << chObj->bufWidthShift));
 
     retVal = Udma_ringQueueRaw(
                  Udma_chGetFqRingHandle(txChHandle),
@@ -502,7 +515,7 @@ static int32_t MCSPI_udmaConfigPdmaRx(const MCSPI_ChObject *chObj,
     DebugP_assert(UDMA_SOK == retVal);
 
     /* Update host packet descriptor, length should be always in terms of total number of bytes */
-    MCSPI_udmaHpdInit((uint8_t *) dmaChConfig->rxHpdMem, rxBufPtr, (numWords << chObj->bufWidthShift));
+    MCSPI_udmaHpdInit(rxChHandle, (uint8_t *) dmaChConfig->rxHpdMem, rxBufPtr, (numWords << chObj->bufWidthShift));
 
     /* Submit HPD to channel */
     retVal = Udma_ringQueueRaw(
@@ -767,16 +780,18 @@ static void MCSPI_udmaIsrRx(Udma_EventHandle eventHandle,
             if ((status == MCSPI_TRANSFER_COMPLETED) &&
                 (MCSPI_TR_MODE_TX_ONLY != chObj->chCfg->trMode))
             {
-                retVal = Udma_getPeerData(rxChHandle, &peerData);
-                DebugP_assert(retVal == UDMA_SOK);
-                startTicks = hMcspiInit->clockP_get();
-                while ((effByteCnt != peerData) && (elapsedTicks < transaction->timeout))
-                {
-                    retVal += Udma_getPeerData(rxChHandle, &peerData);
-                    elapsedTicks = hMcspiInit->clockP_get() - startTicks;
-                };
-                /* Clear Data */
-                retVal += Udma_clearPeerData(rxChHandle, peerData);
+		if(dmaChConfig->isCqRingMem != UDMA_COMP_QUEUE_RING_MEM_ENABLED){
+                    retVal = Udma_getPeerData(rxChHandle, &peerData);
+                    DebugP_assert(retVal == UDMA_SOK);
+                    startTicks = hMcspiInit->clockP_get();
+                    while ((effByteCnt != peerData) && (elapsedTicks < transaction->timeout))
+                    {
+                        retVal += Udma_getPeerData(rxChHandle, &peerData);
+                        elapsedTicks = hMcspiInit->clockP_get() - startTicks;
+                    };
+                    /* Clear Data */
+                    retVal += Udma_clearPeerData(rxChHandle, peerData);
+		}
                 DebugP_assert(retVal == UDMA_SOK);
 
                 /* Stop MCSPI Channel */

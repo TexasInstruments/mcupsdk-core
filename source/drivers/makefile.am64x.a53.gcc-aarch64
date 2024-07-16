@@ -47,6 +47,7 @@ FILES_common := \
     ipc_rpmsg_vring.c \
     mcan.c \
     mcspi_v0.c \
+    mcspi_dma_soc.c \
     mcspi_dma_udma.c \
     mcspi_v0_lld.c \
     ospi_v0.c \
@@ -111,6 +112,7 @@ FILES_PATH_common = \
     mcspi/v0 \
     mcspi/v0/lld \
     mcspi/v0/lld/dma \
+    mcspi/v0/lld/dma/soc/am64x_am243x \
     mcspi/v0/lld/dma/udma \
     mcspi/v0/lld/dma/dummy \
     ospi \

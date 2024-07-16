@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (c) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -28,48 +28,27 @@
  *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
-#ifndef SOC_CONFIG_IN_H_
-#define SOC_CONFIG_IN_H_
 
-#ifdef __cplusplus
-extern "C"
+#include <drivers/udma.h>
+#include <drivers/mcspi/v0/lld/dma/soc/mcspi_dma_soc.h>
+
+void MCSPI_udmapSetReturnPolicy(
+        Udma_ChHandle chHandle,
+        uint8_t       *pHpdMem)
 {
-#endif
+        uint32_t descType = (uint32_t)CSL_UDMAP_CPPI5_PD_DESCINFO_DTYPE_VAL_HOST;
 
-/* IP versions */
-#define DRV_VERSION_DDR_V1
-#define IP_VERSION_GPIO_V0
-#define IP_VERSION_GTC_V0
-#define IP_VERSION_I2C_V0
-#define IP_VERSION_INTAGGR_V0
-#define IP_VERSION_INTR_ROUTER_V0
-#define IP_VERSION_MCSPI_V0
-#define IP_VERSION_MMCSD_V2
-#define IP_VERSION_OSPI_V0
-#define IP_VERSION_PCIE_V1
-#define IP_VERSION_RINGACC_V0
-#define IP_VERSION_SERDES_V3
-#define IP_VERSION_UART_V0
+        CSL_UdmapCppi5HMPD *pHpd = (CSL_UdmapCppi5HMPD *) pHpdMem;
 
-/* Driver versions */
-#define DRV_VERSION_FLASH_V0
-#define DRV_VERSION_GPIO_V0
-#define DRV_VERSION_GTC_V0
-#define DRV_VERSION_I2C_V0
-#define DRV_VERSION_MCSPI_V0
-#define DRV_VERSION_MMCSD_V2
-#define DRV_VERSION_OSPI_V0
-#define DRV_VERSION_PCIE_V1
-#define DRV_VERSION_UART_V0
-#define DRV_VERSION_UDMA_V1
+        /* Return Policy descriptors */
+        CSL_udmapCppi5SetReturnPolicy(
+        pHpd,
+        descType,
+        0U,
+        0U,
+        0U,
+        0U);
 
-/* Driver DMA integration */
-#define DMA_VERSION_MCSPI_UDMA
-
-#ifdef __cplusplus
+        return;
 }
-#endif
-
-#endif

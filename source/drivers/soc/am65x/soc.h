@@ -126,6 +126,26 @@ static inline int32_t I2C_lld_isBaseAddrValid(uint32_t baseAddr)
     return status;
 }
 
+/** \brief API to validate MCSPI base address. */
+static inline int32_t MCSPI_lld_isBaseAddrValid(uint32_t baseAddr)
+{
+    int32_t status = (int32_t)-3;
+
+    if ((baseAddr == CSL_MCSPI0_CFG_BASE) || \
+        (baseAddr == CSL_MCSPI1_CFG_BASE) || \
+        (baseAddr == CSL_MCSPI2_CFG_BASE) || \
+        (baseAddr == CSL_MCSPI3_CFG_BASE) || \
+        (baseAddr == CSL_MCSPI4_CFG_BASE) || \
+        (baseAddr == CSL_MCU_MCSPI0_CFG_BASE) || \
+        (baseAddr == CSL_MCU_MCSPI1_CFG_BASE) || \
+        (baseAddr == CSL_MCU_MCSPI2_CFG_BASE))
+    {
+        status = 0;
+    }
+
+    return status;
+}
+
 /** \brief API to validate UART base address */
 static inline int32_t UART_IsBaseAddrValid(uint32_t baseAddr)
 {

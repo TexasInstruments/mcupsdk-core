@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (c) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -28,48 +28,34 @@
  *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
-#ifndef SOC_CONFIG_IN_H_
-#define SOC_CONFIG_IN_H_
+
+/**
+ *  \file mcspi_dma_soc.h
+ *
+ *  \brief MCSPI DMA SOC specific file.
+ */
+#ifndef MCSPI_DMA_SOC_TOP_H_
+#define MCSPI_DMA_SOC_TOP_H_
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-/* IP versions */
-#define DRV_VERSION_DDR_V1
-#define IP_VERSION_GPIO_V0
-#define IP_VERSION_GTC_V0
-#define IP_VERSION_I2C_V0
-#define IP_VERSION_INTAGGR_V0
-#define IP_VERSION_INTR_ROUTER_V0
-#define IP_VERSION_MCSPI_V0
-#define IP_VERSION_MMCSD_V2
-#define IP_VERSION_OSPI_V0
-#define IP_VERSION_PCIE_V1
-#define IP_VERSION_RINGACC_V0
-#define IP_VERSION_SERDES_V3
-#define IP_VERSION_UART_V0
+#if defined (SOC_AM65X)
+#include <drivers/mcspi/v0/lld/dma/soc/am65x/mcspi_dma_soc.h>
+#endif
 
-/* Driver versions */
-#define DRV_VERSION_FLASH_V0
-#define DRV_VERSION_GPIO_V0
-#define DRV_VERSION_GTC_V0
-#define DRV_VERSION_I2C_V0
-#define DRV_VERSION_MCSPI_V0
-#define DRV_VERSION_MMCSD_V2
-#define DRV_VERSION_OSPI_V0
-#define DRV_VERSION_PCIE_V1
-#define DRV_VERSION_UART_V0
-#define DRV_VERSION_UDMA_V1
+#if defined (SOC_AM62X)
+#include <drivers/mcspi/v0/lld/dma/soc/am62x/mcspi_dma_soc.h>
+#endif
 
-/* Driver DMA integration */
-#define DMA_VERSION_MCSPI_UDMA
+#if defined (SOC_AM64X) || defined (SOC_AM243X)
+#include <drivers/mcspi/v0/lld/dma/soc/am64x_am243x/mcspi_dma_soc.h>
+#endif
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif /* #ifndef MCSPI_DMA_SOC_TOP_H_ */

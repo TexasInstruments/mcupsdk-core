@@ -68,6 +68,10 @@ typedef struct MCSPI_DmaChConfig_s
     /**< UDMA TX Ring memory pointers */
     void            *rxRingMem;
     /**< UDMA RX Ring memory pointers */
+    void            *cqTxRingMem;
+    /**< UDMA TX completion queue ring memory pointers */
+    void            *cqRxRingMem;
+    /**< UDMA RX completion queue ring memory pointers */
     uint32_t        ringMemSize;
     /**< Size of Ring Memory */
     uint32_t        ringElemCnt;
@@ -80,6 +84,9 @@ typedef struct MCSPI_DmaChConfig_s
     /**< Flag to indicate whether the DMA instance is opened already */
     uint32_t        isChEnabled;
     /**< Flag to indicate whether the TX Channel is enabled or not */
+    uint32_t        isCqRingMem;
+    /**< UDMA completion queue ring memory is enabled or disabled */
+    /**< This is only used for AM65x */
 }MCSPI_UdmaChConfig;
 
 #ifdef __cplusplus

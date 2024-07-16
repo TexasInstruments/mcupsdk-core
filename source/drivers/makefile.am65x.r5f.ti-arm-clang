@@ -46,6 +46,10 @@ FILES_common := \
     ipc_notify_v0_cfg.c \
     ipc_rpmsg.c \
     ipc_rpmsg_vring.c \
+    mcspi_dma_soc.c \
+    mcspi_dma_udma.c \
+    mcspi_v0.c \
+    mcspi_v0_lld.c \
     mmcsd_priv.c \
     mmcsd_v2.c \
     ospi_v0.c \
@@ -105,6 +109,12 @@ FILES_PATH_common = \
     ipc_notify/v0/soc/ \
     ipc_notify/v0/soc/am65x \
     ipc_rpmsg/ \
+    mcspi/v0 \
+    mcspi/v0/lld \
+    mcspi/v0/lld/dma \
+    mcspi/v0/lld/dma/soc \
+    mcspi/v0/lld/dma/soc/am65x \
+    mcspi/v0/lld/dma/udma \
     mmcsd \
     mmcsd/v2 \
     ospi \

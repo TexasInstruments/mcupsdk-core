@@ -109,6 +109,7 @@ FILES_PATH_common = \
     mcspi/v0 \
     mcspi/v0/lld \
     mcspi/v0/lld/dma \
+    mcspi/v0/lld/dma/soc/am64x_am243x \
     mcspi/v0/lld/dma/udma \
     mcspi/v0/lld/dma/dummy \
     mdio/v0 \
