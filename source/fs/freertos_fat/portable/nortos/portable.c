@@ -67,24 +67,24 @@
 
 #include "ff_headers.h"
 
-void *pvTaskGetThreadLocalStoragePointer(TaskHandle_t xTaskToQuery, BaseType_t xIndex)
+__attribute__((weak)) void *pvTaskGetThreadLocalStoragePointer(TaskHandle_t xTaskToQuery, BaseType_t xIndex)
 {
 	return 0U;
 }
 
-void *vTaskSetThreadLocalStoragePointer(TaskHandle_t xTaskToSet, BaseType_t xIndex, void *pvValue)
+__attribute__((weak)) void *vTaskSetThreadLocalStoragePointer(TaskHandle_t xTaskToSet, BaseType_t xIndex, void *pvValue)
 {
-	return 0U;	
+	return 0U;
 }
 
-void vTaskSuspendAll(void)
+__attribute__((weak)) void vTaskSuspendAll(void)
 {
 
 }
 
-void xTaskResumeAll(void)
+__attribute__((weak)) void xTaskResumeAll(void)
 {
-	
+
 }
 
 BaseType_t FF_TrySemaphore( void * pxSemaphore, uint32_t ulTime_ms )

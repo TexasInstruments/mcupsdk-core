@@ -107,7 +107,7 @@ extern "C"
 #define configUSE_TIME_SLICING                  (0) /* keep as 0 to get same functionality as SysBIOS6 */
 #define configUSE_NEWLIB_REENTRANT              (0)
 #define configENABLE_BACKWARD_COMPATIBILITY     (1)
-#define configNUM_THREAD_LOCAL_STORAGE_POINTERS (4)
+#define configNUM_THREAD_LOCAL_STORAGE_POINTERS (10) /* Minimun requirement for FreeRTOS FATFS to work */
 #define configSTACK_DEPTH_TYPE                  UBaseType_t
 #define configMESSAGE_BUFFER_LENGTH_TYPE        size_t
 #define configSUPPORT_STATIC_ALLOCATION         (1) /* when = 1, need to provide below,
