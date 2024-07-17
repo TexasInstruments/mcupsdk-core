@@ -33,6 +33,7 @@
 import subprocess
 from intelhex import IntelHex
 import os
+import shutil
 
 outputFolderName = "8051FwOut"
 
@@ -114,3 +115,11 @@ with open(f'{outputFolderName}/fota_fw_arr.c', 'w+') as the_file:
 		the_file.write("0x%02x, "%(byte))
 		line = line + 1
 	the_file.write("\n};")
+
+def replaceFile(src, dst):
+    if os.path.exists(dst):
+        os.remove(dst)
+    shutil.copy2(src, dst)
+
+replaceFile(f'{outputFolderName}/fota_fw_arr.c', "../../source/drivers/flsopskd/v0/fota_fw_arr.c")
+replaceFile(f'{outputFolderName}/fota_fw_arr.h', "../../source/drivers/flsopskd/v0/fota_fw_arr.h")

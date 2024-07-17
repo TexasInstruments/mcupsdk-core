@@ -733,7 +733,7 @@ void FOTA_EraseSector()
     ESFR_MCU_CFG_WR_DAT0 = 0x01;
     ESFR_MCU_CFG_WR_DAT1 = 0x00;
     ESFR_MCU_CFG_WR_DAT2 = 0x0B;
-    ESFR_MCU_CFG_WR_DAT3 = 0xdc;
+    ESFR_MCU_CFG_WR_DAT3 = 0x21;
     FOTA_WriteCfg(OPTISPI_STIG_REG, ESFR_OSPI_REGS_RSEL);
 
     // poll to determine when the STIG command is done
