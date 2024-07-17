@@ -2391,7 +2391,7 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
         {
             if(enable==1)
             {
-                ptrMSSRCMRegs->OSPI0_CLK_GATE = CSL_MSS_RCM_OSPI0_CLK_GATE_RESETVAL;
+                ptrMSSRCMRegs->OSPI0_CLK_GATE = CSL_MSS_RCM_OSPI0_CLK_GATE_GATED_RESETVAL;
             }
             else
             if(enable==0)

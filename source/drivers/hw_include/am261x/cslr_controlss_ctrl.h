@@ -30,8 +30,6 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *  Name        : cslr_controlss_ctrl.h
- *  VPVERSION   : 3.0.358 - 2023.07.24.16.08.29
- *  VPREV       : 2.23.0
 */
 #ifndef CSLR_CONTROLSS_CTRL_H_
 #define CSLR_CONTROLSS_CTRL_H_
@@ -43,7 +41,7 @@ extern "C"
 #include <drivers/hw_include/cslr.h>
 #include <stdint.h>
 
-/***************************************************************************
+/**************************************************************************
 * Hardware Region  :
 **************************************************************************/
 
@@ -53,218 +51,218 @@ extern "C"
 **************************************************************************/
 
 typedef struct {
-    volatile uint32_t PID;                       /* PID register */
-    volatile uint32_t ADCEXTCHSEL0;
-    volatile uint32_t ADCEXTCHSEL1;
-    volatile uint32_t ADCEXTCHSEL2;
-    volatile uint32_t ADCEXTCHSEL3;
-    volatile uint32_t ADCEXTCHSEL4;
-    volatile uint32_t ADCEXTCHSEL5;
-    volatile uint32_t ADCEXTCHSEL6;
-    volatile uint32_t ADCEXTCHSEL7;
-    volatile uint32_t ADCEXTCHSEL8;
-    volatile uint32_t ADCEXTCHSEL9;
-    volatile uint8_t  Resv_68[24];
-    volatile uint32_t ADCSOCFRCGBSEL;
-    volatile uint32_t ADCSOCFRCGB;
-    volatile uint32_t ADC_EXTCH_DLY_SEL;
-    volatile uint8_t  Resv_120[40];
-    volatile uint32_t SDFM0_CLK0_OUT_SEL;
-    volatile uint32_t SDFM0_CLK1_OUT_SEL;
-    volatile uint32_t SDFM0_CLK2_OUT_SEL;
-    volatile uint32_t SDFM0_CLK3_OUT_SEL;
-    volatile uint32_t SDFM1_CLK0_OUT_SEL;
-    volatile uint32_t SDFM1_CLK1_OUT_SEL;
-    volatile uint32_t SDFM1_CLK2_OUT_SEL;
-    volatile uint32_t SDFM1_CLK3_OUT_SEL;
-    volatile uint8_t  Resv_252[100];
-    volatile uint32_t SDFM1_CLK0_SEL;
-    volatile uint8_t  Resv_296[40];
-    volatile uint32_t CONTROLSS_G0_EPWM_WLINK;
-    volatile uint32_t CONTROLSS_G1_EPWM_WLINK;
-    volatile uint8_t  Resv_312[8];
-    volatile uint32_t EPWM_STATICXBAR_SEL0;
-    volatile uint8_t  Resv_328[12];
-    volatile uint32_t EPWM_CLKSYNC;
-    volatile uint8_t  Resv_336[4];
-    volatile uint32_t ADCSOCA0;
-    volatile uint8_t  Resv_344[4];
-    volatile uint32_t ADCSOCB0;
-    volatile uint8_t  Resv_352[4];
-    volatile uint32_t EMUSTOPN_MASK;
-    volatile uint32_t CLB_AQ_EN0;
-    volatile uint8_t  Resv_372[12];
-    volatile uint32_t CLB_DB_EN0;
-    volatile uint8_t  Resv_428[52];
-    volatile uint32_t XBAR_LOOPBACK_CTRL;
-    volatile uint8_t  Resv_512[80];
-    volatile uint32_t ETPWM0_CLK_GATE;
-    volatile uint32_t ETPWM1_CLK_GATE;
-    volatile uint32_t ETPWM2_CLK_GATE;
-    volatile uint32_t ETPWM3_CLK_GATE;
-    volatile uint32_t ETPWM4_CLK_GATE;
-    volatile uint32_t ETPWM5_CLK_GATE;
-    volatile uint32_t ETPWM6_CLK_GATE;
-    volatile uint32_t ETPWM7_CLK_GATE;
-    volatile uint32_t ETPWM8_CLK_GATE;
-    volatile uint32_t ETPWM9_CLK_GATE;
-    volatile uint8_t  Resv_768[216];
-    volatile uint32_t ECAP0_CLK_GATE;
-    volatile uint32_t ECAP1_CLK_GATE;
-    volatile uint32_t ECAP2_CLK_GATE;
-    volatile uint32_t ECAP3_CLK_GATE;
-    volatile uint32_t ECAP4_CLK_GATE;
-    volatile uint32_t ECAP5_CLK_GATE;
-    volatile uint32_t ECAP6_CLK_GATE;
-    volatile uint32_t ECAP7_CLK_GATE;
-    volatile uint8_t  Resv_1024[224];
-    volatile uint32_t CMPSSA0_CLK_GATE;
-    volatile uint32_t CMPSSA1_CLK_GATE;
-    volatile uint32_t CMPSSA2_CLK_GATE;
-    volatile uint32_t CMPSSA3_CLK_GATE;
-    volatile uint32_t CMPSSA4_CLK_GATE;
-    volatile uint32_t CMPSSA5_CLK_GATE;
-    volatile uint32_t CMPSSA6_CLK_GATE;
-    volatile uint32_t CMPSSA7_CLK_GATE;
-    volatile uint32_t CMPSSA8_CLK_GATE;
-    volatile uint8_t  Resv_1152[92];
-    volatile uint32_t ADC_SCTILE0_CLK_GATE;
-    volatile uint32_t ADC_SCTILE1_CLK_GATE;
-    volatile uint32_t ADC_SCTILE2_CLK_GATE;
-    volatile uint32_t ADC_SCTILE3_CLK_GATE;
-    volatile uint32_t ADC_SCTILE4_CLK_GATE;
-    volatile uint32_t ADC_SCTILE5_CLK_GATE;
-    volatile uint8_t  Resv_1344[168];
-    volatile uint32_t ADC0_CLK_GATE;
-    volatile uint32_t ADC1_CLK_GATE;
-    volatile uint32_t ADC2_CLK_GATE;
-    volatile uint8_t  Resv_1440[84];
-    volatile uint32_t EQEP0_CLK_GATE;
-    volatile uint32_t EQEP1_CLK_GATE;
-    volatile uint8_t  Resv_1472[24];
-    volatile uint32_t SDFM0_CLK_GATE;
-    volatile uint32_t SDFM1_CLK_GATE;
-    volatile uint8_t  Resv_1504[24];
-    volatile uint32_t OTTO0_CLK_GATE;
-    volatile uint32_t OTTO1_CLK_GATE;
-    volatile uint8_t  Resv_1536[24];
-    volatile uint32_t FSI_TX0_CLK_GATE;
-    volatile uint8_t  Resv_1568[28];
-    volatile uint32_t FSI_RX0_CLK_GATE;
-    volatile uint8_t  Resv_1664[92];
-    volatile uint32_t ADC_AGG0_CLK_GATE;
-    volatile uint8_t  Resv_1680[12];
-    volatile uint32_t DAC_CLK_GATE;
-    volatile uint8_t  Resv_1776[92];
-    volatile uint32_t FSI_TX0_PLL_CLK_GATE;
-    volatile uint8_t  Resv_1808[28];
-    volatile uint32_t SDFM0_PLL_CLK_GATE;
-    volatile uint32_t SDFM1_PLL_CLK_GATE;
-    volatile uint8_t  Resv_1872[56];
-    volatile uint32_t CONTROLSS_XBAR_CLK_GATE;
-    volatile uint8_t  Resv_2048[172];
-    volatile uint32_t ETPWM0_RST;
-    volatile uint32_t ETPWM1_RST;
-    volatile uint32_t ETPWM2_RST;
-    volatile uint32_t ETPWM3_RST;
-    volatile uint32_t ETPWM4_RST;
-    volatile uint32_t ETPWM5_RST;
-    volatile uint32_t ETPWM6_RST;
-    volatile uint32_t ETPWM7_RST;
-    volatile uint32_t ETPWM8_RST;
-    volatile uint32_t ETPWM9_RST;
-    volatile uint8_t  Resv_2304[216];
-    volatile uint32_t ECAP0_RST;
-    volatile uint32_t ECAP1_RST;
-    volatile uint32_t ECAP2_RST;
-    volatile uint32_t ECAP3_RST;
-    volatile uint32_t ECAP4_RST;
-    volatile uint32_t ECAP5_RST;
-    volatile uint32_t ECAP6_RST;
-    volatile uint32_t ECAP7_RST;
-    volatile uint8_t  Resv_2560[224];
-    volatile uint32_t CMPSSA0_RST;
-    volatile uint32_t CMPSSA1_RST;
-    volatile uint32_t CMPSSA2_RST;
-    volatile uint32_t CMPSSA3_RST;
-    volatile uint32_t CMPSSA4_RST;
-    volatile uint32_t CMPSSA5_RST;
-    volatile uint32_t CMPSSA6_RST;
-    volatile uint32_t CMPSSA7_RST;
-    volatile uint32_t CMPSSA8_RST;
-    volatile uint8_t  Resv_2688[92];
-    volatile uint32_t ADC_SCTILE0_RST;
-    volatile uint32_t ADC_SCTILE1_RST;
-    volatile uint32_t ADC_SCTILE2_RST;
-    volatile uint32_t ADC_SCTILE3_RST;
-    volatile uint32_t ADC_SCTILE4_RST;
-    volatile uint32_t ADC_SCTILE5_RST;
-    volatile uint8_t  Resv_2880[168];
-    volatile uint32_t ADC0_RST;
-    volatile uint32_t ADC1_RST;
-    volatile uint32_t ADC2_RST;
-    volatile uint8_t  Resv_2976[84];
-    volatile uint32_t EQEP0_RST;
-    volatile uint32_t EQEP1_RST;
-    volatile uint8_t  Resv_3008[24];
-    volatile uint32_t SDFM0_RST;
-    volatile uint32_t SDFM1_RST;
-    volatile uint8_t  Resv_3040[24];
-    volatile uint32_t OTTO0_RST;
-    volatile uint32_t OTTO1_RST;
-    volatile uint8_t  Resv_3072[24];
-    volatile uint32_t FSI_TX0_RST;
-    volatile uint8_t  Resv_3104[28];
-    volatile uint32_t FSI_RX0_RST;
-    volatile uint8_t  Resv_3200[92];
-    volatile uint32_t ADC_AGG0_RST;
-    volatile uint8_t  Resv_3216[12];
-    volatile uint32_t DAC_RST;
-    volatile uint8_t  Resv_3328[108];
-    volatile uint32_t EPWM0_HALTEN;
-    volatile uint32_t EPWM1_HALTEN;
-    volatile uint32_t EPWM2_HALTEN;
-    volatile uint32_t EPWM3_HALTEN;
-    volatile uint32_t EPWM4_HALTEN;
-    volatile uint32_t EPWM5_HALTEN;
-    volatile uint32_t EPWM6_HALTEN;
-    volatile uint32_t EPWM7_HALTEN;
-    volatile uint32_t EPWM8_HALTEN;
-    volatile uint32_t EPWM9_HALTEN;
-    volatile uint8_t  Resv_3584[216];
-    volatile uint32_t CMPSSA0_HALTEN;
-    volatile uint32_t CMPSSA1_HALTEN;
-    volatile uint32_t CMPSSA2_HALTEN;
-    volatile uint32_t CMPSSA3_HALTEN;
-    volatile uint32_t CMPSSA4_HALTEN;
-    volatile uint32_t CMPSSA5_HALTEN;
-    volatile uint32_t CMPSSA6_HALTEN;
-    volatile uint32_t CMPSSA7_HALTEN;
-    volatile uint32_t CMPSSA8_HALTEN;
-    volatile uint8_t  Resv_3712[92];
-    volatile uint32_t ECAP0_HALTEN;
-    volatile uint32_t ECAP1_HALTEN;
-    volatile uint32_t ECAP2_HALTEN;
-    volatile uint32_t ECAP3_HALTEN;
-    volatile uint32_t ECAP4_HALTEN;
-    volatile uint32_t ECAP5_HALTEN;
-    volatile uint32_t ECAP6_HALTEN;
-    volatile uint32_t ECAP7_HALTEN;
-    volatile uint8_t  Resv_3904[160];
-    volatile uint32_t EQEP0_HALTEN;
-    volatile uint32_t EQEP1_HALTEN;
-    volatile uint8_t  Resv_4104[192];
-    volatile uint32_t LOCK0_KICK0;               /*  - KICK0 component */
-    volatile uint32_t LOCK0_KICK1;               /*  - KICK1 component */
-    volatile uint32_t INTR_RAW_STATUS;           /* Interrupt Raw Status/Set Register */
-    volatile uint32_t INTR_ENABLED_STATUS_CLEAR;   /* Interrupt Enabled Status/Clear register */
-    volatile uint32_t INTR_ENABLE;               /* Interrupt Enable register */
-    volatile uint32_t INTR_ENABLE_CLEAR;         /* Interrupt Enable Clear register */
-    volatile uint32_t EOI;                       /* EOI register */
-    volatile uint32_t FAULT_ADDRESS;             /* Fault Address register */
-    volatile uint32_t FAULT_TYPE_STATUS;         /* Fault Type Status register */
-    volatile uint32_t FAULT_ATTR_STATUS;         /* Fault Attribute Status register */
-    volatile uint32_t FAULT_CLEAR;               /* Fault Clear register */
+	volatile uint32_t	PID;
+	volatile uint32_t	ADCEXTCHXBAR0_G0_SEL;
+	volatile uint32_t	ADCEXTCHXBAR1_G0_SEL;
+	volatile uint32_t	ADCEXTCHXBAR2_G0_SEL;
+	volatile uint32_t	ADCEXTCHXBAR3_G0_SEL;
+	volatile uint32_t	ADCEXTCHXBAR4_G0_SEL;
+	volatile uint32_t	ADCEXTCHXBAR5_G0_SEL;
+	volatile uint32_t	ADCEXTCHXBAR6_G0_SEL;
+	volatile uint32_t	ADCEXTCHXBAR7_G0_SEL;
+	volatile uint32_t	ADCEXTCHXBAR8_G0_SEL;
+	volatile uint32_t	ADCEXTCHXBAR9_G0_SEL;
+	volatile uint8_t	Resv_68[24];
+	volatile uint32_t	ADCSOCFRCGBSEL;
+	volatile uint32_t	ADCSOCFRCGB;
+	volatile uint32_t	ADC_EXTCH_DLY_SEL;
+	volatile uint8_t	Resv_120[40];
+	volatile uint32_t	SDFM0_CLK0_OUT_SEL;
+	volatile uint32_t	SDFM0_CLK1_OUT_SEL;
+	volatile uint32_t	SDFM0_CLK2_OUT_SEL;
+	volatile uint32_t	SDFM0_CLK3_OUT_SEL;
+	volatile uint32_t	SDFM1_CLK0_OUT_SEL;
+	volatile uint32_t	SDFM1_CLK1_OUT_SEL;
+	volatile uint32_t	SDFM1_CLK2_OUT_SEL;
+	volatile uint32_t	SDFM1_CLK3_OUT_SEL;
+	volatile uint8_t	Resv_252[100];
+	volatile uint32_t	SDFM1_CLK0_SEL;
+	volatile uint8_t	Resv_296[40];
+    volatile uint32_t   CONTROLSS_G0_EPWM_WLINK;
+    volatile uint32_t   CONTROLSS_G1_EPWM_WLINK;
+	volatile uint8_t	Resv_312[8];
+	volatile uint32_t	EPWM_STATICXBAR_SEL0;
+	volatile uint8_t	Resv_328[12];
+	volatile uint32_t	EPWM_CLKSYNC;
+	volatile uint8_t	Resv_336[4];
+	volatile uint32_t	EPWM_SOCA_SEL;
+	volatile uint8_t	Resv_344[4];
+	volatile uint32_t	EPWM_SOCB_SEL;
+	volatile uint8_t	Resv_352[4];
+	volatile uint32_t	EMUSTOPN_MASK;
+	volatile uint32_t	CLB_AQ_EN0;
+	volatile uint8_t	Resv_372[12];
+	volatile uint32_t	CLB_DB_EN0;
+	volatile uint8_t	Resv_428[52];
+	volatile uint32_t	XBAR_LOOPBACK_CTRL;
+	volatile uint8_t	Resv_512[80];
+	volatile uint32_t	ETPWM0_CLK_GATE;
+	volatile uint32_t	ETPWM1_CLK_GATE;
+	volatile uint32_t	ETPWM2_CLK_GATE;
+	volatile uint32_t	ETPWM3_CLK_GATE;
+	volatile uint32_t	ETPWM4_CLK_GATE;
+	volatile uint32_t	ETPWM5_CLK_GATE;
+	volatile uint32_t	ETPWM6_CLK_GATE;
+	volatile uint32_t	ETPWM7_CLK_GATE;
+	volatile uint32_t	ETPWM8_CLK_GATE;
+	volatile uint32_t	ETPWM9_CLK_GATE;
+	volatile uint8_t	Resv_768[216];
+	volatile uint32_t	ECAP0_CLK_GATE;
+	volatile uint32_t	ECAP1_CLK_GATE;
+	volatile uint32_t	ECAP2_CLK_GATE;
+	volatile uint32_t	ECAP3_CLK_GATE;
+	volatile uint32_t	ECAP4_CLK_GATE;
+	volatile uint32_t	ECAP5_CLK_GATE;
+	volatile uint32_t	ECAP6_CLK_GATE;
+	volatile uint32_t	ECAP7_CLK_GATE;
+	volatile uint8_t	Resv_1024[224];
+	volatile uint32_t	CMPSSA0_CLK_GATE;
+	volatile uint32_t	CMPSSA1_CLK_GATE;
+	volatile uint32_t	CMPSSA2_CLK_GATE;
+	volatile uint32_t	CMPSSA3_CLK_GATE;
+	volatile uint32_t	CMPSSA4_CLK_GATE;
+	volatile uint32_t	CMPSSA5_CLK_GATE;
+	volatile uint32_t	CMPSSA6_CLK_GATE;
+	volatile uint32_t	CMPSSA7_CLK_GATE;
+	volatile uint32_t	CMPSSA8_CLK_GATE;
+	volatile uint8_t	Resv_1152[92];
+	volatile uint32_t	ADC_SCTILE0_CLK_GATE;
+	volatile uint32_t	ADC_SCTILE1_CLK_GATE;
+	volatile uint32_t	ADC_SCTILE2_CLK_GATE;
+	volatile uint32_t	ADC_SCTILE3_CLK_GATE;
+	volatile uint32_t	ADC_SCTILE4_CLK_GATE;
+	volatile uint32_t	ADC_SCTILE5_CLK_GATE;
+	volatile uint8_t	Resv_1344[168];
+	volatile uint32_t	ADC0_CLK_GATE;
+	volatile uint32_t	ADC1_CLK_GATE;
+	volatile uint32_t	ADC2_CLK_GATE;
+	volatile uint8_t	Resv_1440[84];
+	volatile uint32_t	EQEP0_CLK_GATE;
+	volatile uint32_t	EQEP1_CLK_GATE;
+	volatile uint8_t	Resv_1472[24];
+	volatile uint32_t	SDFM0_CLK_GATE;
+	volatile uint32_t	SDFM1_CLK_GATE;
+	volatile uint8_t	Resv_1504[24];
+	volatile uint32_t	OTTO0_CLK_GATE;
+	volatile uint32_t	OTTO1_CLK_GATE;
+	volatile uint8_t	Resv_1536[24];
+	volatile uint32_t	FSI_TX0_CLK_GATE;
+	volatile uint8_t	Resv_1568[28];
+	volatile uint32_t	FSI_RX0_CLK_GATE;
+	volatile uint8_t	Resv_1664[92];
+	volatile uint32_t	ADC_AGG0_CLK_GATE;
+	volatile uint8_t	Resv_1680[12];
+	volatile uint32_t	DAC_CLK_GATE;
+	volatile uint8_t	Resv_1776[92];
+	volatile uint32_t	FSI_TX0_PLL_CLK_GATE;
+	volatile uint8_t	Resv_1808[28];
+	volatile uint32_t	SDFM0_PLL_CLK_GATE;
+	volatile uint32_t	SDFM1_PLL_CLK_GATE;
+	volatile uint8_t	Resv_1872[56];
+    volatile uint32_t 	CONTROLSS_XBAR_CLK_GATE;
+	volatile uint8_t	Resv_2048[172];
+	volatile uint32_t	ETPWM0_RST;
+	volatile uint32_t	ETPWM1_RST;
+	volatile uint32_t	ETPWM2_RST;
+	volatile uint32_t	ETPWM3_RST;
+	volatile uint32_t	ETPWM4_RST;
+	volatile uint32_t	ETPWM5_RST;
+	volatile uint32_t	ETPWM6_RST;
+	volatile uint32_t	ETPWM7_RST;
+	volatile uint32_t	ETPWM8_RST;
+	volatile uint32_t	ETPWM9_RST;
+	volatile uint8_t	Resv_2304[216];
+	volatile uint32_t	ECAP0_RST;
+	volatile uint32_t	ECAP1_RST;
+	volatile uint32_t	ECAP2_RST;
+	volatile uint32_t	ECAP3_RST;
+	volatile uint32_t	ECAP4_RST;
+	volatile uint32_t	ECAP5_RST;
+	volatile uint32_t	ECAP6_RST;
+	volatile uint32_t	ECAP7_RST;
+	volatile uint8_t	Resv_2560[224];
+	volatile uint32_t	CMPSSA0_RST;
+	volatile uint32_t	CMPSSA1_RST;
+	volatile uint32_t	CMPSSA2_RST;
+	volatile uint32_t	CMPSSA3_RST;
+	volatile uint32_t	CMPSSA4_RST;
+	volatile uint32_t	CMPSSA5_RST;
+	volatile uint32_t	CMPSSA6_RST;
+	volatile uint32_t	CMPSSA7_RST;
+	volatile uint32_t	CMPSSA8_RST;
+	volatile uint8_t	Resv_2688[92];
+	volatile uint32_t	ADC_SCTILE0_RST;
+	volatile uint32_t	ADC_SCTILE1_RST;
+	volatile uint32_t	ADC_SCTILE2_RST;
+	volatile uint32_t	ADC_SCTILE3_RST;
+	volatile uint32_t	ADC_SCTILE4_RST;
+	volatile uint32_t	ADC_SCTILE5_RST;
+	volatile uint8_t	Resv_2880[168];
+	volatile uint32_t	ADC0_RST;
+	volatile uint32_t	ADC1_RST;
+	volatile uint32_t	ADC2_RST;
+	volatile uint8_t	Resv_2976[84];
+	volatile uint32_t	EQEP0_RST;
+	volatile uint32_t	EQEP1_RST;
+	volatile uint8_t	Resv_3008[24];
+	volatile uint32_t	SDFM0_RST;
+	volatile uint32_t	SDFM1_RST;
+	volatile uint8_t	Resv_3040[24];
+	volatile uint32_t	OTTO0_RST;
+	volatile uint32_t	OTTO1_RST;
+	volatile uint8_t	Resv_3072[24];
+	volatile uint32_t	FSI_TX0_RST;
+	volatile uint8_t	Resv_3104[28];
+	volatile uint32_t	FSI_RX0_RST;
+	volatile uint8_t	Resv_3200[92];
+	volatile uint32_t	ADC_AGG0_RST;
+	volatile uint8_t	Resv_3216[12];
+	volatile uint32_t	DAC_RST;
+	volatile uint8_t	Resv_3328[108];
+	volatile uint32_t	EPWM0_HALTEN;
+	volatile uint32_t	EPWM1_HALTEN;
+	volatile uint32_t	EPWM2_HALTEN;
+	volatile uint32_t	EPWM3_HALTEN;
+	volatile uint32_t	EPWM4_HALTEN;
+	volatile uint32_t	EPWM5_HALTEN;
+	volatile uint32_t	EPWM6_HALTEN;
+	volatile uint32_t	EPWM7_HALTEN;
+	volatile uint32_t	EPWM8_HALTEN;
+	volatile uint32_t	EPWM9_HALTEN;
+	volatile uint8_t	Resv_3584[216];
+	volatile uint32_t	CMPSSA0_HALTEN;
+	volatile uint32_t	CMPSSA1_HALTEN;
+	volatile uint32_t	CMPSSA2_HALTEN;
+	volatile uint32_t	CMPSSA3_HALTEN;
+	volatile uint32_t	CMPSSA4_HALTEN;
+	volatile uint32_t	CMPSSA5_HALTEN;
+	volatile uint32_t	CMPSSA6_HALTEN;
+	volatile uint32_t	CMPSSA7_HALTEN;
+	volatile uint32_t	CMPSSA8_HALTEN;
+	volatile uint8_t	Resv_3712[92];
+	volatile uint32_t	ECAP0_HALTEN;
+	volatile uint32_t	ECAP1_HALTEN;
+	volatile uint32_t	ECAP2_HALTEN;
+	volatile uint32_t	ECAP3_HALTEN;
+	volatile uint32_t	ECAP4_HALTEN;
+	volatile uint32_t	ECAP5_HALTEN;
+	volatile uint32_t	ECAP6_HALTEN;
+	volatile uint32_t	ECAP7_HALTEN;
+	volatile uint8_t	Resv_3904[160];
+	volatile uint32_t	EQEP0_HALTEN;
+	volatile uint32_t	EQEP1_HALTEN;
+	volatile uint8_t	Resv_4104[192];
+    volatile uint32_t 	LOCK0_KICK0;               /*  - KICK0 component */
+    volatile uint32_t 	LOCK0_KICK1;               /*  - KICK1 component */
+    volatile uint32_t 	INTR_RAW_STATUS;           /* Interrupt Raw Status/Set Register */
+    volatile uint32_t 	INTR_ENABLED_STATUS_CLEAR;   /* Interrupt Enabled Status/Clear register */
+    volatile uint32_t 	INTR_ENABLE;               /* Interrupt Enable register */
+    volatile uint32_t 	INTR_ENABLE_CLEAR;         /* Interrupt Enable Clear register */
+    volatile uint32_t 	EOI;                       /* EOI register */
+    volatile uint32_t 	FAULT_ADDRESS;             /* Fault Address register */
+    volatile uint32_t 	FAULT_TYPE_STATUS;         /* Fault Type Status register */
+    volatile uint32_t 	FAULT_ATTR_STATUS;         /* Fault Attribute Status register */
+    volatile uint32_t 	FAULT_CLEAR;               /* Fault Clear register */
 } CSL_controlss_ctrlRegs;
 
 
@@ -272,180 +270,180 @@ typedef struct {
 * Register Macros
 **************************************************************************/
 
-#define CSL_CONTROLSS_CTRL_PID                                           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL0                                  (0x00000004U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL1                                  (0x00000008U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL2                                  (0x0000000CU)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL3                                  (0x00000010U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL4                                  (0x00000014U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL5                                  (0x00000018U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL6                                  (0x0000001CU)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL7                                  (0x00000020U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL8                                  (0x00000024U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL9                                  (0x00000028U)
-#define CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL                                (0x00000044U)
-#define CSL_CONTROLSS_CTRL_ADCSOCFRCGB                                   (0x00000048U)
-#define CSL_CONTROLSS_CTRL_ADC_EXTCH_DLY_SEL                             (0x0000004CU)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK0_OUT_SEL                            (0x00000078U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK1_OUT_SEL                            (0x0000007CU)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK2_OUT_SEL                            (0x00000080U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK3_OUT_SEL                            (0x00000084U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_OUT_SEL                            (0x00000088U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK1_OUT_SEL                            (0x0000008CU)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK2_OUT_SEL                            (0x00000090U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK3_OUT_SEL                            (0x00000094U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_SEL                                (0x000000FCU)
-#define CSL_CONTROLSS_CTRL_CONTROLSS_G0_EPWM_WLINK                       (0x00000128U)
-#define CSL_CONTROLSS_CTRL_CONTROLSS_G1_EPWM_WLINK                       (0x0000012CU)
-#define CSL_CONTROLSS_CTRL_EPWM_STATICXBAR_SEL0                          (0x00000138U)
-#define CSL_CONTROLSS_CTRL_EPWM_CLKSYNC                                  (0x00000148U)
-#define CSL_CONTROLSS_CTRL_ADCSOCA0                                      (0x00000150U)
-#define CSL_CONTROLSS_CTRL_ADCSOCB0                                      (0x00000158U)
-#define CSL_CONTROLSS_CTRL_EMUSTOPN_MASK                                 (0x00000160U)
-#define CSL_CONTROLSS_CTRL_CLB_AQ_EN0                                    (0x00000164U)
-#define CSL_CONTROLSS_CTRL_CLB_DB_EN0                                    (0x00000174U)
-#define CSL_CONTROLSS_CTRL_XBAR_LOOPBACK_CTRL                            (0x000001ACU)
-#define CSL_CONTROLSS_CTRL_ETPWM0_CLK_GATE                               (0x00000200U)
-#define CSL_CONTROLSS_CTRL_ETPWM1_CLK_GATE                               (0x00000204U)
-#define CSL_CONTROLSS_CTRL_ETPWM2_CLK_GATE                               (0x00000208U)
-#define CSL_CONTROLSS_CTRL_ETPWM3_CLK_GATE                               (0x0000020CU)
-#define CSL_CONTROLSS_CTRL_ETPWM4_CLK_GATE                               (0x00000210U)
-#define CSL_CONTROLSS_CTRL_ETPWM5_CLK_GATE                               (0x00000214U)
-#define CSL_CONTROLSS_CTRL_ETPWM6_CLK_GATE                               (0x00000218U)
-#define CSL_CONTROLSS_CTRL_ETPWM7_CLK_GATE                               (0x0000021CU)
-#define CSL_CONTROLSS_CTRL_ETPWM8_CLK_GATE                               (0x00000220U)
-#define CSL_CONTROLSS_CTRL_ETPWM9_CLK_GATE                               (0x00000224U)
-#define CSL_CONTROLSS_CTRL_ECAP0_CLK_GATE                                (0x00000300U)
-#define CSL_CONTROLSS_CTRL_ECAP1_CLK_GATE                                (0x00000304U)
-#define CSL_CONTROLSS_CTRL_ECAP2_CLK_GATE                                (0x00000308U)
-#define CSL_CONTROLSS_CTRL_ECAP3_CLK_GATE                                (0x0000030CU)
-#define CSL_CONTROLSS_CTRL_ECAP4_CLK_GATE                                (0x00000310U)
-#define CSL_CONTROLSS_CTRL_ECAP5_CLK_GATE                                (0x00000314U)
-#define CSL_CONTROLSS_CTRL_ECAP6_CLK_GATE                                (0x00000318U)
-#define CSL_CONTROLSS_CTRL_ECAP7_CLK_GATE                                (0x0000031CU)
-#define CSL_CONTROLSS_CTRL_CMPSSA0_CLK_GATE                              (0x00000400U)
-#define CSL_CONTROLSS_CTRL_CMPSSA1_CLK_GATE                              (0x00000404U)
-#define CSL_CONTROLSS_CTRL_CMPSSA2_CLK_GATE                              (0x00000408U)
-#define CSL_CONTROLSS_CTRL_CMPSSA3_CLK_GATE                              (0x0000040CU)
-#define CSL_CONTROLSS_CTRL_CMPSSA4_CLK_GATE                              (0x00000410U)
-#define CSL_CONTROLSS_CTRL_CMPSSA5_CLK_GATE                              (0x00000414U)
-#define CSL_CONTROLSS_CTRL_CMPSSA6_CLK_GATE                              (0x00000418U)
-#define CSL_CONTROLSS_CTRL_CMPSSA7_CLK_GATE                              (0x0000041CU)
-#define CSL_CONTROLSS_CTRL_CMPSSA8_CLK_GATE                              (0x00000420U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_CLK_GATE                          (0x00000480U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_CLK_GATE                          (0x00000484U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_CLK_GATE                          (0x00000488U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_CLK_GATE                          (0x0000048CU)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_CLK_GATE                          (0x00000490U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_CLK_GATE                          (0x00000494U)
-#define CSL_CONTROLSS_CTRL_ADC0_CLK_GATE                                 (0x00000540U)
-#define CSL_CONTROLSS_CTRL_ADC1_CLK_GATE                                 (0x00000544U)
-#define CSL_CONTROLSS_CTRL_ADC2_CLK_GATE                                 (0x00000548U)
-#define CSL_CONTROLSS_CTRL_EQEP0_CLK_GATE                                (0x000005A0U)
-#define CSL_CONTROLSS_CTRL_EQEP1_CLK_GATE                                (0x000005A4U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK_GATE                                (0x000005C0U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK_GATE                                (0x000005C4U)
-#define CSL_CONTROLSS_CTRL_OTTO0_CLK_GATE                                (0x000005E0U)
-#define CSL_CONTROLSS_CTRL_OTTO1_CLK_GATE                                (0x000005E4U)
-#define CSL_CONTROLSS_CTRL_FSI_TX0_CLK_GATE                              (0x00000600U)
-#define CSL_CONTROLSS_CTRL_FSI_RX0_CLK_GATE                              (0x00000620U)
-#define CSL_CONTROLSS_CTRL_ADC_AGG0_CLK_GATE                             (0x00000680U)
-#define CSL_CONTROLSS_CTRL_DAC_CLK_GATE                                  (0x00000690U)
-#define CSL_CONTROLSS_CTRL_FSI_TX0_PLL_CLK_GATE                          (0x000006F0U)
-#define CSL_CONTROLSS_CTRL_SDFM0_PLL_CLK_GATE                            (0x00000710U)
-#define CSL_CONTROLSS_CTRL_SDFM1_PLL_CLK_GATE                            (0x00000714U)
-#define CSL_CONTROLSS_CTRL_CONTROLSS_XBAR_CLK_GATE                       (0x00000750U)
-#define CSL_CONTROLSS_CTRL_ETPWM0_RST                                    (0x00000800U)
-#define CSL_CONTROLSS_CTRL_ETPWM1_RST                                    (0x00000804U)
-#define CSL_CONTROLSS_CTRL_ETPWM2_RST                                    (0x00000808U)
-#define CSL_CONTROLSS_CTRL_ETPWM3_RST                                    (0x0000080CU)
-#define CSL_CONTROLSS_CTRL_ETPWM4_RST                                    (0x00000810U)
-#define CSL_CONTROLSS_CTRL_ETPWM5_RST                                    (0x00000814U)
-#define CSL_CONTROLSS_CTRL_ETPWM6_RST                                    (0x00000818U)
-#define CSL_CONTROLSS_CTRL_ETPWM7_RST                                    (0x0000081CU)
-#define CSL_CONTROLSS_CTRL_ETPWM8_RST                                    (0x00000820U)
-#define CSL_CONTROLSS_CTRL_ETPWM9_RST                                    (0x00000824U)
-#define CSL_CONTROLSS_CTRL_ECAP0_RST                                     (0x00000900U)
-#define CSL_CONTROLSS_CTRL_ECAP1_RST                                     (0x00000904U)
-#define CSL_CONTROLSS_CTRL_ECAP2_RST                                     (0x00000908U)
-#define CSL_CONTROLSS_CTRL_ECAP3_RST                                     (0x0000090CU)
-#define CSL_CONTROLSS_CTRL_ECAP4_RST                                     (0x00000910U)
-#define CSL_CONTROLSS_CTRL_ECAP5_RST                                     (0x00000914U)
-#define CSL_CONTROLSS_CTRL_ECAP6_RST                                     (0x00000918U)
-#define CSL_CONTROLSS_CTRL_ECAP7_RST                                     (0x0000091CU)
-#define CSL_CONTROLSS_CTRL_CMPSSA0_RST                                   (0x00000A00U)
-#define CSL_CONTROLSS_CTRL_CMPSSA1_RST                                   (0x00000A04U)
-#define CSL_CONTROLSS_CTRL_CMPSSA2_RST                                   (0x00000A08U)
-#define CSL_CONTROLSS_CTRL_CMPSSA3_RST                                   (0x00000A0CU)
-#define CSL_CONTROLSS_CTRL_CMPSSA4_RST                                   (0x00000A10U)
-#define CSL_CONTROLSS_CTRL_CMPSSA5_RST                                   (0x00000A14U)
-#define CSL_CONTROLSS_CTRL_CMPSSA6_RST                                   (0x00000A18U)
-#define CSL_CONTROLSS_CTRL_CMPSSA7_RST                                   (0x00000A1CU)
-#define CSL_CONTROLSS_CTRL_CMPSSA8_RST                                   (0x00000A20U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_RST                               (0x00000A80U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_RST                               (0x00000A84U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_RST                               (0x00000A88U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_RST                               (0x00000A8CU)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_RST                               (0x00000A90U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_RST                               (0x00000A94U)
-#define CSL_CONTROLSS_CTRL_ADC0_RST                                      (0x00000B40U)
-#define CSL_CONTROLSS_CTRL_ADC1_RST                                      (0x00000B44U)
-#define CSL_CONTROLSS_CTRL_ADC2_RST                                      (0x00000B48U)
-#define CSL_CONTROLSS_CTRL_EQEP0_RST                                     (0x00000BA0U)
-#define CSL_CONTROLSS_CTRL_EQEP1_RST                                     (0x00000BA4U)
-#define CSL_CONTROLSS_CTRL_SDFM0_RST                                     (0x00000BC0U)
-#define CSL_CONTROLSS_CTRL_SDFM1_RST                                     (0x00000BC4U)
-#define CSL_CONTROLSS_CTRL_OTTO0_RST                                     (0x00000BE0U)
-#define CSL_CONTROLSS_CTRL_OTTO1_RST                                     (0x00000BE4U)
-#define CSL_CONTROLSS_CTRL_FSI_TX0_RST                                   (0x00000C00U)
-#define CSL_CONTROLSS_CTRL_FSI_RX0_RST                                   (0x00000C20U)
-#define CSL_CONTROLSS_CTRL_ADC_AGG0_RST                                  (0x00000C80U)
-#define CSL_CONTROLSS_CTRL_DAC_RST                                       (0x00000C90U)
-#define CSL_CONTROLSS_CTRL_EPWM0_HALTEN                                  (0x00000D00U)
-#define CSL_CONTROLSS_CTRL_EPWM1_HALTEN                                  (0x00000D04U)
-#define CSL_CONTROLSS_CTRL_EPWM2_HALTEN                                  (0x00000D08U)
-#define CSL_CONTROLSS_CTRL_EPWM3_HALTEN                                  (0x00000D0CU)
-#define CSL_CONTROLSS_CTRL_EPWM4_HALTEN                                  (0x00000D10U)
-#define CSL_CONTROLSS_CTRL_EPWM5_HALTEN                                  (0x00000D14U)
-#define CSL_CONTROLSS_CTRL_EPWM6_HALTEN                                  (0x00000D18U)
-#define CSL_CONTROLSS_CTRL_EPWM7_HALTEN                                  (0x00000D1CU)
-#define CSL_CONTROLSS_CTRL_EPWM8_HALTEN                                  (0x00000D20U)
-#define CSL_CONTROLSS_CTRL_EPWM9_HALTEN                                  (0x00000D24U)
-#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN                                (0x00000E00U)
-#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN                                (0x00000E04U)
-#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN                                (0x00000E08U)
-#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN                                (0x00000E0CU)
-#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN                                (0x00000E10U)
-#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN                                (0x00000E14U)
-#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN                                (0x00000E18U)
-#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN                                (0x00000E1CU)
-#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN                                (0x00000E20U)
-#define CSL_CONTROLSS_CTRL_ECAP0_HALTEN                                  (0x00000E80U)
-#define CSL_CONTROLSS_CTRL_ECAP1_HALTEN                                  (0x00000E84U)
-#define CSL_CONTROLSS_CTRL_ECAP2_HALTEN                                  (0x00000E88U)
-#define CSL_CONTROLSS_CTRL_ECAP3_HALTEN                                  (0x00000E8CU)
-#define CSL_CONTROLSS_CTRL_ECAP4_HALTEN                                  (0x00000E90U)
-#define CSL_CONTROLSS_CTRL_ECAP5_HALTEN                                  (0x00000E94U)
-#define CSL_CONTROLSS_CTRL_ECAP6_HALTEN                                  (0x00000E98U)
-#define CSL_CONTROLSS_CTRL_ECAP7_HALTEN                                  (0x00000E9CU)
-#define CSL_CONTROLSS_CTRL_EQEP0_HALTEN                                  (0x00000F40U)
-#define CSL_CONTROLSS_CTRL_EQEP1_HALTEN                                  (0x00000F44U)
-#define CSL_CONTROLSS_CTRL_LOCK0_KICK0                                   (0x00001008U)
-#define CSL_CONTROLSS_CTRL_LOCK0_KICK1                                   (0x0000100CU)
-#define CSL_CONTROLSS_CTRL_INTR_RAW_STATUS                               (0x00001010U)
-#define CSL_CONTROLSS_CTRL_INTR_ENABLED_STATUS_CLEAR                     (0x00001014U)
-#define CSL_CONTROLSS_CTRL_INTR_ENABLE                                   (0x00001018U)
-#define CSL_CONTROLSS_CTRL_INTR_ENABLE_CLEAR                             (0x0000101CU)
-#define CSL_CONTROLSS_CTRL_EOI                                           (0x00001020U)
-#define CSL_CONTROLSS_CTRL_FAULT_ADDRESS                                 (0x00001024U)
-#define CSL_CONTROLSS_CTRL_FAULT_TYPE_STATUS                             (0x00001028U)
-#define CSL_CONTROLSS_CTRL_FAULT_ATTR_STATUS                             (0x0000102CU)
-#define CSL_CONTROLSS_CTRL_FAULT_CLEAR                                   (0x00001030U)
+/*--------CONTROLSS_CTRL_--------*/
+#define CSL_CONTROLSS_CTRL_PID                                                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR0_G0_SEL                                 (0x00000004U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR1_G0_SEL                                 (0x00000008U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR2_G0_SEL                                 (0x0000000CU)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR3_G0_SEL                                 (0x00000010U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR4_G0_SEL                                 (0x00000014U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR5_G0_SEL                                 (0x00000018U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR6_G0_SEL                                 (0x0000001CU)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR7_G0_SEL                                 (0x00000020U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR8_G0_SEL                                 (0x00000024U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR9_G0_SEL                                 (0x00000028U)
+#define CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL                                       (0x00000044U)
+#define CSL_CONTROLSS_CTRL_ADCSOCFRCGB                                          (0x00000048U)
+#define CSL_CONTROLSS_CTRL_ADC_EXTCH_DLY_SEL                                    (0x0000004CU)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK0_OUT_SEL                                   (0x00000078U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK1_OUT_SEL                                   (0x0000007CU)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK2_OUT_SEL                                   (0x00000080U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK3_OUT_SEL                                   (0x00000084U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_OUT_SEL                                   (0x00000088U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK1_OUT_SEL                                   (0x0000008CU)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK2_OUT_SEL                                   (0x00000090U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK3_OUT_SEL                                   (0x00000094U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_SEL                                       (0x000000FCU)
+#define CSL_CONTROLSS_CTRL_CONTROLSS_G0_EPWM_WLINK                       		(0x00000128U)
+#define CSL_CONTROLSS_CTRL_CONTROLSS_G1_EPWM_WLINK                       		(0x0000012CU)
+#define CSL_CONTROLSS_CTRL_EPWM_STATICXBAR_SEL0                                 (0x00000138U)
+#define CSL_CONTROLSS_CTRL_EPWM_CLKSYNC                                         (0x00000148U)
+#define CSL_CONTROLSS_CTRL_EPWM_SOCA_SEL                                        (0x00000150U)
+#define CSL_CONTROLSS_CTRL_EPWM_SOCB_SEL                                        (0x00000158U)
+#define CSL_CONTROLSS_CTRL_EMUSTOPN_MASK                                        (0x00000160U)
+#define CSL_CONTROLSS_CTRL_CLB_AQ_EN0                                           (0x00000164U)
+#define CSL_CONTROLSS_CTRL_CLB_DB_EN0                                           (0x00000174U)
+#define CSL_CONTROLSS_CTRL_XBAR_LOOPBACK_CTRL                                   (0x000001ACU)
+#define CSL_CONTROLSS_CTRL_ETPWM0_CLK_GATE                                      (0x00000200U)
+#define CSL_CONTROLSS_CTRL_ETPWM1_CLK_GATE                                      (0x00000204U)
+#define CSL_CONTROLSS_CTRL_ETPWM2_CLK_GATE                                      (0x00000208U)
+#define CSL_CONTROLSS_CTRL_ETPWM3_CLK_GATE                                      (0x0000020CU)
+#define CSL_CONTROLSS_CTRL_ETPWM4_CLK_GATE                                      (0x00000210U)
+#define CSL_CONTROLSS_CTRL_ETPWM5_CLK_GATE                                      (0x00000214U)
+#define CSL_CONTROLSS_CTRL_ETPWM6_CLK_GATE                                      (0x00000218U)
+#define CSL_CONTROLSS_CTRL_ETPWM7_CLK_GATE                                      (0x0000021CU)
+#define CSL_CONTROLSS_CTRL_ETPWM8_CLK_GATE                                      (0x00000220U)
+#define CSL_CONTROLSS_CTRL_ETPWM9_CLK_GATE                                      (0x00000224U)
+#define CSL_CONTROLSS_CTRL_ECAP0_CLK_GATE                                       (0x00000300U)
+#define CSL_CONTROLSS_CTRL_ECAP1_CLK_GATE                                       (0x00000304U)
+#define CSL_CONTROLSS_CTRL_ECAP2_CLK_GATE                                       (0x00000308U)
+#define CSL_CONTROLSS_CTRL_ECAP3_CLK_GATE                                       (0x0000030CU)
+#define CSL_CONTROLSS_CTRL_ECAP4_CLK_GATE                                       (0x00000310U)
+#define CSL_CONTROLSS_CTRL_ECAP5_CLK_GATE                                       (0x00000314U)
+#define CSL_CONTROLSS_CTRL_ECAP6_CLK_GATE                                       (0x00000318U)
+#define CSL_CONTROLSS_CTRL_ECAP7_CLK_GATE                                       (0x0000031CU)
+#define CSL_CONTROLSS_CTRL_CMPSSA0_CLK_GATE                                   (0x00000400U)
+#define CSL_CONTROLSS_CTRL_CMPSSA1_CLK_GATE                                   (0x00000404U)
+#define CSL_CONTROLSS_CTRL_CMPSSA2_CLK_GATE                                   (0x00000408U)
+#define CSL_CONTROLSS_CTRL_CMPSSA3_CLK_GATE                                   (0x0000040CU)
+#define CSL_CONTROLSS_CTRL_CMPSSA4_CLK_GATE                                   (0x00000410U)
+#define CSL_CONTROLSS_CTRL_CMPSSA5_CLK_GATE                                   (0x00000414U)
+#define CSL_CONTROLSS_CTRL_CMPSSA6_CLK_GATE                                   (0x00000418U)
+#define CSL_CONTROLSS_CTRL_CMPSSA7_CLK_GATE                                   (0x0000041CU)
+#define CSL_CONTROLSS_CTRL_CMPSSA8_CLK_GATE                                   (0x00000420U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_CLK_GATE                                 (0x00000480U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_CLK_GATE                                 (0x00000484U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_CLK_GATE                                 (0x00000488U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_CLK_GATE                                 (0x0000048CU)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_CLK_GATE                                 (0x00000490U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_CLK_GATE                                 (0x00000494U)
+#define CSL_CONTROLSS_CTRL_ADC0_CLK_GATE                                        (0x00000540U)
+#define CSL_CONTROLSS_CTRL_ADC1_CLK_GATE                                        (0x00000544U)
+#define CSL_CONTROLSS_CTRL_ADC2_CLK_GATE                                        (0x00000548U)
+#define CSL_CONTROLSS_CTRL_EQEP0_CLK_GATE                                       (0x000005A0U)
+#define CSL_CONTROLSS_CTRL_EQEP1_CLK_GATE                                       (0x000005A4U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK_GATE                                       (0x000005C0U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK_GATE                                       (0x000005C4U)
+#define CSL_CONTROLSS_CTRL_OTTO0_CLK_GATE                                       (0x000005E0U)
+#define CSL_CONTROLSS_CTRL_OTTO1_CLK_GATE                                       (0x000005E4U)
+#define CSL_CONTROLSS_CTRL_FSI_TX0_CLK_GATE                                     (0x00000600U)
+#define CSL_CONTROLSS_CTRL_FSI_RX0_CLK_GATE                                     (0x00000620U)
+#define CSL_CONTROLSS_CTRL_ADC_AGG0_CLK_GATE                                    (0x00000680U)
+#define CSL_CONTROLSS_CTRL_DAC_CLK_GATE                                         (0x00000690U)
+#define CSL_CONTROLSS_CTRL_FSI_TX0_PLL_CLK_GATE                                 (0x000006F0U)
+#define CSL_CONTROLSS_CTRL_SDFM0_PLL_CLK_GATE                                   (0x00000710U)
+#define CSL_CONTROLSS_CTRL_SDFM1_PLL_CLK_GATE                                   (0x00000714U)
+#define CSL_CONTROLSS_CTRL_CONTROLSS_XBAR_CLK_GATE                       		(0x00000750U)
+#define CSL_CONTROLSS_CTRL_ETPWM0_RST                                           (0x00000800U)
+#define CSL_CONTROLSS_CTRL_ETPWM1_RST                                           (0x00000804U)
+#define CSL_CONTROLSS_CTRL_ETPWM2_RST                                           (0x00000808U)
+#define CSL_CONTROLSS_CTRL_ETPWM3_RST                                           (0x0000080CU)
+#define CSL_CONTROLSS_CTRL_ETPWM4_RST                                           (0x00000810U)
+#define CSL_CONTROLSS_CTRL_ETPWM5_RST                                           (0x00000814U)
+#define CSL_CONTROLSS_CTRL_ETPWM6_RST                                           (0x00000818U)
+#define CSL_CONTROLSS_CTRL_ETPWM7_RST                                           (0x0000081CU)
+#define CSL_CONTROLSS_CTRL_ETPWM8_RST                                           (0x00000820U)
+#define CSL_CONTROLSS_CTRL_ETPWM9_RST                                           (0x00000824U)
+#define CSL_CONTROLSS_CTRL_ECAP0_RST                                            (0x00000900U)
+#define CSL_CONTROLSS_CTRL_ECAP1_RST                                            (0x00000904U)
+#define CSL_CONTROLSS_CTRL_ECAP2_RST                                            (0x00000908U)
+#define CSL_CONTROLSS_CTRL_ECAP3_RST                                            (0x0000090CU)
+#define CSL_CONTROLSS_CTRL_ECAP4_RST                                            (0x00000910U)
+#define CSL_CONTROLSS_CTRL_ECAP5_RST                                            (0x00000914U)
+#define CSL_CONTROLSS_CTRL_ECAP6_RST                                            (0x00000918U)
+#define CSL_CONTROLSS_CTRL_ECAP7_RST                                            (0x0000091CU)
+#define CSL_CONTROLSS_CTRL_CMPSSA0_RST                                        (0x00000A00U)
+#define CSL_CONTROLSS_CTRL_CMPSSA1_RST                                        (0x00000A04U)
+#define CSL_CONTROLSS_CTRL_CMPSSA2_RST                                        (0x00000A08U)
+#define CSL_CONTROLSS_CTRL_CMPSSA3_RST                                        (0x00000A0CU)
+#define CSL_CONTROLSS_CTRL_CMPSSA4_RST                                        (0x00000A10U)
+#define CSL_CONTROLSS_CTRL_CMPSSA5_RST                                        (0x00000A14U)
+#define CSL_CONTROLSS_CTRL_CMPSSA6_RST                                        (0x00000A18U)
+#define CSL_CONTROLSS_CTRL_CMPSSA7_RST                                        (0x00000A1CU)
+#define CSL_CONTROLSS_CTRL_CMPSSA8_RST                                        (0x00000A20U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_RST                                      (0x00000A80U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_RST                                      (0x00000A84U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_RST                                      (0x00000A88U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_RST                                      (0x00000A8CU)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_RST                                      (0x00000A90U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_RST                                      (0x00000A94U)
+#define CSL_CONTROLSS_CTRL_ADC0_RST                                             (0x00000B40U)
+#define CSL_CONTROLSS_CTRL_ADC1_RST                                             (0x00000B44U)
+#define CSL_CONTROLSS_CTRL_ADC2_RST                                             (0x00000B48U)
+#define CSL_CONTROLSS_CTRL_EQEP0_RST                                            (0x00000BA0U)
+#define CSL_CONTROLSS_CTRL_EQEP1_RST                                            (0x00000BA4U)
+#define CSL_CONTROLSS_CTRL_SDFM0_RST                                            (0x00000BC0U)
+#define CSL_CONTROLSS_CTRL_SDFM1_RST                                            (0x00000BC4U)
+#define CSL_CONTROLSS_CTRL_OTTO0_RST                                            (0x00000BE0U)
+#define CSL_CONTROLSS_CTRL_OTTO1_RST                                            (0x00000BE4U)
+#define CSL_CONTROLSS_CTRL_FSI_TX0_RST                                          (0x00000C00U)
+#define CSL_CONTROLSS_CTRL_FSI_RX0_RST                                          (0x00000C20U)
+#define CSL_CONTROLSS_CTRL_ADC_AGG0_RST                                         (0x00000C80U)
+#define CSL_CONTROLSS_CTRL_DAC_RST                                              (0x00000C90U)
+#define CSL_CONTROLSS_CTRL_EPWM0_HALTEN                                         (0x00000D00U)
+#define CSL_CONTROLSS_CTRL_EPWM1_HALTEN                                         (0x00000D04U)
+#define CSL_CONTROLSS_CTRL_EPWM2_HALTEN                                         (0x00000D08U)
+#define CSL_CONTROLSS_CTRL_EPWM3_HALTEN                                         (0x00000D0CU)
+#define CSL_CONTROLSS_CTRL_EPWM4_HALTEN                                         (0x00000D10U)
+#define CSL_CONTROLSS_CTRL_EPWM5_HALTEN                                         (0x00000D14U)
+#define CSL_CONTROLSS_CTRL_EPWM6_HALTEN                                         (0x00000D18U)
+#define CSL_CONTROLSS_CTRL_EPWM7_HALTEN                                         (0x00000D1CU)
+#define CSL_CONTROLSS_CTRL_EPWM8_HALTEN                                         (0x00000D20U)
+#define CSL_CONTROLSS_CTRL_EPWM9_HALTEN                                         (0x00000D24U)
+#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN                                     (0x00000E00U)
+#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN                                     (0x00000E04U)
+#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN                                     (0x00000E08U)
+#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN                                     (0x00000E0CU)
+#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN                                     (0x00000E10U)
+#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN                                     (0x00000E14U)
+#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN                                     (0x00000E18U)
+#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN                                     (0x00000E1CU)
+#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN                                     (0x00000E20U)
+#define CSL_CONTROLSS_CTRL_ECAP0_HALTEN                                         (0x00000E80U)
+#define CSL_CONTROLSS_CTRL_ECAP1_HALTEN                                         (0x00000E84U)
+#define CSL_CONTROLSS_CTRL_ECAP2_HALTEN                                         (0x00000E88U)
+#define CSL_CONTROLSS_CTRL_ECAP3_HALTEN                                         (0x00000E8CU)
+#define CSL_CONTROLSS_CTRL_ECAP4_HALTEN                                         (0x00000E90U)
+#define CSL_CONTROLSS_CTRL_ECAP5_HALTEN                                         (0x00000E94U)
+#define CSL_CONTROLSS_CTRL_ECAP6_HALTEN                                         (0x00000E98U)
+#define CSL_CONTROLSS_CTRL_ECAP7_HALTEN                                         (0x00000E9CU)
+#define CSL_CONTROLSS_CTRL_EQEP0_HALTEN                                         (0x00000F40U)
+#define CSL_CONTROLSS_CTRL_EQEP1_HALTEN                                         (0x00000F44U)
+#define CSL_CONTROLSS_CTRL_LOCK0_KICK0                                          (0x00001008U)
+#define CSL_CONTROLSS_CTRL_LOCK0_KICK1                                          (0x0000100CU)
+#define CSL_CONTROLSS_CTRL_INTR_RAW_STATUS                                      (0x00001010U)
+#define CSL_CONTROLSS_CTRL_INTR_ENABLED_STATUS_CLEAR                            (0x00001014U)
+#define CSL_CONTROLSS_CTRL_INTR_ENABLE                                          (0x00001018U)
+#define CSL_CONTROLSS_CTRL_INTR_ENABLE_CLEAR                                    (0x0000101CU)
+#define CSL_CONTROLSS_CTRL_EOI                                                  (0x00001020U)
+#define CSL_CONTROLSS_CTRL_FAULT_ADDRESS                                        (0x00001024U)
+#define CSL_CONTROLSS_CTRL_FAULT_TYPE_STATUS                                    (0x00001028U)
+#define CSL_CONTROLSS_CTRL_FAULT_ATTR_STATUS                                    (0x0000102CU)
+#define CSL_CONTROLSS_CTRL_FAULT_CLEAR                                          (0x00001030U)
 
 /**************************************************************************
 * Field Definition Macros
 **************************************************************************/
-
 
 /* PID */
 
@@ -474,205 +472,183 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_PID_PID_MSB16_RESETVAL                        (0x00006180U)
 #define CSL_CONTROLSS_CTRL_PID_PID_MSB16_MAX                             (0x0000FFFFU)
 
-#define CSL_CONTROLSS_CTRL_PID_RESETVAL                                  (0x61800215U)
 
-/* ADCEXTCHSEL0 */
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL0_SEL_MASK                         (0x0000000FU)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL0_SEL_SHIFT                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL0_SEL_RESETVAL                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL0_SEL_MAX                          (0x0000000FU)
+/* ADCEXTCHXBAR0_G0_SEL */
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR0_G0_SEL_SEL_MASK                        (0x0000000FU)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR0_G0_SEL_SEL_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR0_G0_SEL_SEL_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR0_G0_SEL_SEL_MAX                         (0x0000000FU)
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL0_RESETVAL                         (0x00000000U)
 
-/* ADCEXTCHSEL1 */
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL1_SEL_MASK                         (0x0000000FU)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL1_SEL_SHIFT                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL1_SEL_RESETVAL                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL1_SEL_MAX                          (0x0000000FU)
+/* ADCEXTCHXBAR1_G0_SEL */
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR1_G0_SEL_SEL_MASK                        (0x0000000FU)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR1_G0_SEL_SEL_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR1_G0_SEL_SEL_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR1_G0_SEL_SEL_MAX                         (0x0000000FU)
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL1_RESETVAL                         (0x00000000U)
 
-/* ADCEXTCHSEL2 */
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL2_SEL_MASK                         (0x0000000FU)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL2_SEL_SHIFT                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL2_SEL_RESETVAL                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL2_SEL_MAX                          (0x0000000FU)
+/* ADCEXTCHXBAR2_G0_SEL */
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR2_G0_SEL_SEL_MASK                        (0x0000000FU)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR2_G0_SEL_SEL_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR2_G0_SEL_SEL_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR2_G0_SEL_SEL_MAX                         (0x0000000FU)
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL2_RESETVAL                         (0x00000000U)
 
-/* ADCEXTCHSEL3 */
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL3_SEL_MASK                         (0x0000000FU)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL3_SEL_SHIFT                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL3_SEL_RESETVAL                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL3_SEL_MAX                          (0x0000000FU)
+/* ADCEXTCHXBAR3_G0_SEL */
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR3_G0_SEL_SEL_MASK                        (0x0000000FU)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR3_G0_SEL_SEL_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR3_G0_SEL_SEL_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR3_G0_SEL_SEL_MAX                         (0x0000000FU)
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL3_RESETVAL                         (0x00000000U)
 
-/* ADCEXTCHSEL4 */
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL4_SEL_MASK                         (0x0000000FU)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL4_SEL_SHIFT                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL4_SEL_RESETVAL                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL4_SEL_MAX                          (0x0000000FU)
+/* ADCEXTCHXBAR4_G0_SEL */
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR4_G0_SEL_SEL_MASK                        (0x0000000FU)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR4_G0_SEL_SEL_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR4_G0_SEL_SEL_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR4_G0_SEL_SEL_MAX                         (0x0000000FU)
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL4_RESETVAL                         (0x00000000U)
 
-/* ADCEXTCHSEL5 */
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL5_SEL_MASK                         (0x0000000FU)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL5_SEL_SHIFT                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL5_SEL_RESETVAL                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL5_SEL_MAX                          (0x0000000FU)
+/* ADCEXTCHXBAR5_G0_SEL */
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR5_G0_SEL_SEL_MASK                        (0x0000000FU)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR5_G0_SEL_SEL_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR5_G0_SEL_SEL_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR5_G0_SEL_SEL_MAX                         (0x0000000FU)
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL5_RESETVAL                         (0x00000000U)
 
-/* ADCEXTCHSEL6 */
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL6_SEL_MASK                         (0x0000000FU)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL6_SEL_SHIFT                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL6_SEL_RESETVAL                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL6_SEL_MAX                          (0x0000000FU)
+/* ADCEXTCHXBAR6_G0_SEL */
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR6_G0_SEL_SEL_MASK                        (0x0000000FU)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR6_G0_SEL_SEL_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR6_G0_SEL_SEL_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR6_G0_SEL_SEL_MAX                         (0x0000000FU)
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL6_RESETVAL                         (0x00000000U)
 
-/* ADCEXTCHSEL7 */
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL7_SEL_MASK                         (0x0000000FU)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL7_SEL_SHIFT                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL7_SEL_RESETVAL                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL7_SEL_MAX                          (0x0000000FU)
+/* ADCEXTCHXBAR7_G0_SEL */
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR7_G0_SEL_SEL_MASK                        (0x0000000FU)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR7_G0_SEL_SEL_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR7_G0_SEL_SEL_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR7_G0_SEL_SEL_MAX                         (0x0000000FU)
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL7_RESETVAL                         (0x00000000U)
 
-/* ADCEXTCHSEL8 */
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL8_SEL_MASK                         (0x0000000FU)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL8_SEL_SHIFT                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL8_SEL_RESETVAL                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL8_SEL_MAX                          (0x0000000FU)
+/* ADCEXTCHXBAR8_G0_SEL */
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR8_G0_SEL_SEL_MASK                        (0x0000000FU)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR8_G0_SEL_SEL_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR8_G0_SEL_SEL_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR8_G0_SEL_SEL_MAX                         (0x0000000FU)
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL8_RESETVAL                         (0x00000000U)
 
-/* ADCEXTCHSEL9 */
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL9_SEL_MASK                         (0x0000000FU)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL9_SEL_SHIFT                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL9_SEL_RESETVAL                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL9_SEL_MAX                          (0x0000000FU)
+/* ADCEXTCHXBAR9_G0_SEL */
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR9_G0_SEL_SEL_MASK                        (0x0000000FU)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR9_G0_SEL_SEL_SHIFT                       (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR9_G0_SEL_SEL_RESETVAL                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCEXTCHXBAR9_G0_SEL_SEL_MAX                         (0x0000000FU)
 
-#define CSL_CONTROLSS_CTRL_ADCEXTCHSEL9_RESETVAL                         (0x00000000U)
+
 
 /* ADCSOCFRCGBSEL */
+#define CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL_ENABLE_MASK                           (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL_ENABLE_SHIFT                          (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL_ENABLE_RESETVAL                       (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL_ENABLE_MAX                            (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL_ENABLE_MASK                    (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL_ENABLE_SHIFT                   (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL_ENABLE_RESETVAL                (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL_ENABLE_MAX                     (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADCSOCFRCGBSEL_RESETVAL                       (0x00000000U)
 
 /* ADCSOCFRCGB */
+#define CSL_CONTROLSS_CTRL_ADCSOCFRCGB_TRIG_MASK                                (0x0000FFFFU)
+#define CSL_CONTROLSS_CTRL_ADCSOCFRCGB_TRIG_SHIFT                               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCSOCFRCGB_TRIG_RESETVAL                            (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADCSOCFRCGB_TRIG_MAX                                 (0x0000FFFFU)
 
-#define CSL_CONTROLSS_CTRL_ADCSOCFRCGB_TRIG_MASK                         (0x0000FFFFU)
-#define CSL_CONTROLSS_CTRL_ADCSOCFRCGB_TRIG_SHIFT                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCSOCFRCGB_TRIG_RESETVAL                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCSOCFRCGB_TRIG_MAX                          (0x0000FFFFU)
 
-#define CSL_CONTROLSS_CTRL_ADCSOCFRCGB_RESETVAL                          (0x00000000U)
 
 /* ADC_EXTCH_DLY_SEL */
+#define CSL_CONTROLSS_CTRL_ADC_EXTCH_DLY_SEL_SEL_MASK                           (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC_EXTCH_DLY_SEL_SEL_SHIFT                          (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_EXTCH_DLY_SEL_SEL_RESETVAL                       (0x00000001U)
+#define CSL_CONTROLSS_CTRL_ADC_EXTCH_DLY_SEL_SEL_MAX                            (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_EXTCH_DLY_SEL_SEL_MASK                    (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC_EXTCH_DLY_SEL_SEL_SHIFT                   (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_EXTCH_DLY_SEL_SEL_RESETVAL                (0x00000001U)
-#define CSL_CONTROLSS_CTRL_ADC_EXTCH_DLY_SEL_SEL_MAX                     (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_EXTCH_DLY_SEL_RESETVAL                    (0x00000001U)
 
 /* SDFM0_CLK0_OUT_SEL */
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK0_OUT_SEL_SEL_MASK                          (0x00000001U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK0_OUT_SEL_SEL_SHIFT                         (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK0_OUT_SEL_SEL_RESETVAL                      (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK0_OUT_SEL_SEL_MAX                           (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK0_OUT_SEL_SEL_MASK                   (0x00000001U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK0_OUT_SEL_SEL_SHIFT                  (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK0_OUT_SEL_SEL_RESETVAL               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK0_OUT_SEL_SEL_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK0_OUT_SEL_RESETVAL                   (0x00000000U)
 
 /* SDFM0_CLK1_OUT_SEL */
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK1_OUT_SEL_SEL_MASK                          (0x00000001U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK1_OUT_SEL_SEL_SHIFT                         (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK1_OUT_SEL_SEL_RESETVAL                      (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK1_OUT_SEL_SEL_MAX                           (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK1_OUT_SEL_SEL_MASK                   (0x00000001U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK1_OUT_SEL_SEL_SHIFT                  (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK1_OUT_SEL_SEL_RESETVAL               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK1_OUT_SEL_SEL_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK1_OUT_SEL_RESETVAL                   (0x00000000U)
 
 /* SDFM0_CLK2_OUT_SEL */
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK2_OUT_SEL_SEL_MASK                          (0x00000001U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK2_OUT_SEL_SEL_SHIFT                         (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK2_OUT_SEL_SEL_RESETVAL                      (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK2_OUT_SEL_SEL_MAX                           (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK2_OUT_SEL_SEL_MASK                   (0x00000001U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK2_OUT_SEL_SEL_SHIFT                  (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK2_OUT_SEL_SEL_RESETVAL               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK2_OUT_SEL_SEL_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK2_OUT_SEL_RESETVAL                   (0x00000000U)
 
 /* SDFM0_CLK3_OUT_SEL */
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK3_OUT_SEL_SEL_MASK                          (0x00000001U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK3_OUT_SEL_SEL_SHIFT                         (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK3_OUT_SEL_SEL_RESETVAL                      (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK3_OUT_SEL_SEL_MAX                           (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK3_OUT_SEL_SEL_MASK                   (0x00000001U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK3_OUT_SEL_SEL_SHIFT                  (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK3_OUT_SEL_SEL_RESETVAL               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK3_OUT_SEL_SEL_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK3_OUT_SEL_RESETVAL                   (0x00000000U)
 
 /* SDFM1_CLK0_OUT_SEL */
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_OUT_SEL_SEL_MASK                          (0x00000001U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_OUT_SEL_SEL_SHIFT                         (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_OUT_SEL_SEL_RESETVAL                      (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_OUT_SEL_SEL_MAX                           (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_OUT_SEL_SEL_MASK                   (0x00000001U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_OUT_SEL_SEL_SHIFT                  (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_OUT_SEL_SEL_RESETVAL               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_OUT_SEL_SEL_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_OUT_SEL_RESETVAL                   (0x00000000U)
 
 /* SDFM1_CLK1_OUT_SEL */
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK1_OUT_SEL_SEL_MASK                          (0x00000001U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK1_OUT_SEL_SEL_SHIFT                         (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK1_OUT_SEL_SEL_RESETVAL                      (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK1_OUT_SEL_SEL_MAX                           (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK1_OUT_SEL_SEL_MASK                   (0x00000001U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK1_OUT_SEL_SEL_SHIFT                  (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK1_OUT_SEL_SEL_RESETVAL               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK1_OUT_SEL_SEL_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK1_OUT_SEL_RESETVAL                   (0x00000000U)
 
 /* SDFM1_CLK2_OUT_SEL */
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK2_OUT_SEL_SEL_MASK                          (0x00000001U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK2_OUT_SEL_SEL_SHIFT                         (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK2_OUT_SEL_SEL_RESETVAL                      (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK2_OUT_SEL_SEL_MAX                           (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK2_OUT_SEL_SEL_MASK                   (0x00000001U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK2_OUT_SEL_SEL_SHIFT                  (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK2_OUT_SEL_SEL_RESETVAL               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK2_OUT_SEL_SEL_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK2_OUT_SEL_RESETVAL                   (0x00000000U)
 
 /* SDFM1_CLK3_OUT_SEL */
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK3_OUT_SEL_SEL_MASK                          (0x00000001U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK3_OUT_SEL_SEL_SHIFT                         (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK3_OUT_SEL_SEL_RESETVAL                      (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK3_OUT_SEL_SEL_MAX                           (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK3_OUT_SEL_SEL_MASK                   (0x00000001U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK3_OUT_SEL_SEL_SHIFT                  (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK3_OUT_SEL_SEL_RESETVAL               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK3_OUT_SEL_SEL_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK3_OUT_SEL_RESETVAL                   (0x00000000U)
 
 /* SDFM1_CLK0_SEL */
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_SEL_SEL_MASK                              (0x00000001U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_SEL_SEL_SHIFT                             (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_SEL_SEL_RESETVAL                          (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_SEL_SEL_MAX                               (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_SEL_SEL_MASK                       (0x00000001U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_SEL_SEL_SHIFT                      (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_SEL_SEL_RESETVAL                   (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_SEL_SEL_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK0_SEL_RESETVAL                       (0x00000000U)
 
 /* CONTROLSS_G0_EPWM_WLINK */
 
@@ -681,7 +657,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_CONTROLSS_G0_EPWM_WLINK_ENABLE_RESETVAL       (0x00000000U)
 #define CSL_CONTROLSS_CTRL_CONTROLSS_G0_EPWM_WLINK_ENABLE_MAX            (0xFFFFFFFFU)
 
-#define CSL_CONTROLSS_CTRL_CONTROLSS_G0_EPWM_WLINK_RESETVAL              (0x00000000U)
+
 
 /* CONTROLSS_G1_EPWM_WLINK */
 
@@ -690,7 +666,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_CONTROLSS_G1_EPWM_WLINK_ENABLE_RESETVAL       (0x00000000U)
 #define CSL_CONTROLSS_CTRL_CONTROLSS_G1_EPWM_WLINK_ENABLE_MAX            (0xFFFFFFFFU)
 
-#define CSL_CONTROLSS_CTRL_CONTROLSS_G1_EPWM_WLINK_RESETVAL              (0x00000000U)
+
 
 /* EPWM_STATICXBAR_SEL0 */
 
@@ -744,34 +720,26 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_EPWM_STATICXBAR_SEL0_ETPWM9_RESETVAL          (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EPWM_STATICXBAR_SEL0_ETPWM9_MAX               (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_EPWM_STATICXBAR_SEL0_RESETVAL                 (0x00000000U)
 
 /* EPWM_CLKSYNC */
+#define CSL_CONTROLSS_CTRL_EPWM_CLKSYNC_BIT_MASK                                (0x000003FFU)
+#define CSL_CONTROLSS_CTRL_EPWM_CLKSYNC_BIT_SHIFT                               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_EPWM_CLKSYNC_BIT_RESETVAL                            (0x00000000U)
+#define CSL_CONTROLSS_CTRL_EPWM_CLKSYNC_BIT_MAX                                 (0x000003FFU)
 
-#define CSL_CONTROLSS_CTRL_EPWM_CLKSYNC_BIT_MASK                         (0x000003FFU)
-#define CSL_CONTROLSS_CTRL_EPWM_CLKSYNC_BIT_SHIFT                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_EPWM_CLKSYNC_BIT_RESETVAL                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_EPWM_CLKSYNC_BIT_MAX                          (0x000003FFU)
 
-#define CSL_CONTROLSS_CTRL_EPWM_CLKSYNC_RESETVAL                         (0x00000000U)
+/* EPWM_SOCA_SEL */
+#define CSL_CONTROLSS_CTRL_EPWM_SOCA_SEL_SEL_MASK                               (0x000003FFU)
+#define CSL_CONTROLSS_CTRL_EPWM_SOCA_SEL_SEL_SHIFT                              (0x00000000U)
+#define CSL_CONTROLSS_CTRL_EPWM_SOCA_SEL_SEL_RESETVAL                           (0x00000000U)
+#define CSL_CONTROLSS_CTRL_EPWM_SOCA_SEL_SEL_MAX                                (0x000003FFU)
 
-/* ADCSOCA0 */
 
-#define CSL_CONTROLSS_CTRL_ADCSOCA0_SEL_MASK                             (0x000003FFU)
-#define CSL_CONTROLSS_CTRL_ADCSOCA0_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCSOCA0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCSOCA0_SEL_MAX                              (0x000003FFU)
-
-#define CSL_CONTROLSS_CTRL_ADCSOCA0_RESETVAL                             (0x00000000U)
-
-/* ADCSOCB0 */
-
-#define CSL_CONTROLSS_CTRL_ADCSOCB0_SEL_MASK                             (0x000003FFU)
-#define CSL_CONTROLSS_CTRL_ADCSOCB0_SEL_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCSOCB0_SEL_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADCSOCB0_SEL_MAX                              (0x000003FFU)
-
-#define CSL_CONTROLSS_CTRL_ADCSOCB0_RESETVAL                             (0x00000000U)
+/* EPWM_SOCB_SEL */
+#define CSL_CONTROLSS_CTRL_EPWM_SOCB_SEL_SEL_MASK                               (0x000003FFU)
+#define CSL_CONTROLSS_CTRL_EPWM_SOCB_SEL_SEL_SHIFT                              (0x00000000U)
+#define CSL_CONTROLSS_CTRL_EPWM_SOCB_SEL_SEL_RESETVAL                           (0x00000000U)
+#define CSL_CONTROLSS_CTRL_EPWM_SOCB_SEL_SEL_MAX                                (0x000003FFU)
 
 /* EMUSTOPN_MASK */
 
@@ -785,34 +753,23 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_EMUSTOPN_MASK_CR5B0_RESETVAL                  (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EMUSTOPN_MASK_CR5B0_MAX                       (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_EMUSTOPN_MASK_RESETVAL                        (0x00000000U)
-
 /* CLB_AQ_EN0 */
-
-#define CSL_CONTROLSS_CTRL_CLB_AQ_EN0_ENABLE_MASK                        (0x000FFFFFU)
-#define CSL_CONTROLSS_CTRL_CLB_AQ_EN0_ENABLE_SHIFT                       (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CLB_AQ_EN0_ENABLE_RESETVAL                    (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CLB_AQ_EN0_ENABLE_MAX                         (0x000FFFFFU)
-
-#define CSL_CONTROLSS_CTRL_CLB_AQ_EN0_RESETVAL                           (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CLB_AQ_EN0_ENABLE_MASK                               (0x000FFFFFU)
+#define CSL_CONTROLSS_CTRL_CLB_AQ_EN0_ENABLE_SHIFT                              (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CLB_AQ_EN0_ENABLE_RESETVAL                           (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CLB_AQ_EN0_ENABLE_MAX                                (0x000FFFFFU)
 
 /* CLB_DB_EN0 */
-
-#define CSL_CONTROLSS_CTRL_CLB_DB_EN0_ENABLE_MASK                        (0x000FFFFFU)
-#define CSL_CONTROLSS_CTRL_CLB_DB_EN0_ENABLE_SHIFT                       (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CLB_DB_EN0_ENABLE_RESETVAL                    (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CLB_DB_EN0_ENABLE_MAX                         (0x000FFFFFU)
-
-#define CSL_CONTROLSS_CTRL_CLB_DB_EN0_RESETVAL                           (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CLB_DB_EN0_ENABLE_MASK                               (0x000FFFFFU)
+#define CSL_CONTROLSS_CTRL_CLB_DB_EN0_ENABLE_SHIFT                              (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CLB_DB_EN0_ENABLE_RESETVAL                           (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CLB_DB_EN0_ENABLE_MAX                                (0x000FFFFFU)
 
 /* XBAR_LOOPBACK_CTRL */
-
-#define CSL_CONTROLSS_CTRL_XBAR_LOOPBACK_CTRL_ENABLE_MASK                (0x0000FFFFU)
-#define CSL_CONTROLSS_CTRL_XBAR_LOOPBACK_CTRL_ENABLE_SHIFT               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_XBAR_LOOPBACK_CTRL_ENABLE_RESETVAL            (0x00000000U)
-#define CSL_CONTROLSS_CTRL_XBAR_LOOPBACK_CTRL_ENABLE_MAX                 (0x0000FFFFU)
-
-#define CSL_CONTROLSS_CTRL_XBAR_LOOPBACK_CTRL_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_CTRL_XBAR_LOOPBACK_CTRL_ENABLE_MASK                       (0x0000FFFFU)
+#define CSL_CONTROLSS_CTRL_XBAR_LOOPBACK_CTRL_ENABLE_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_CTRL_XBAR_LOOPBACK_CTRL_ENABLE_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_CTRL_XBAR_LOOPBACK_CTRL_ENABLE_MAX                        (0x0000FFFFU)
 
 /* ETPWM0_CLK_GATE */
 
@@ -821,16 +778,12 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_ETPWM0_CLK_GATE_CLK_GATE_RESETVAL             (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM0_CLK_GATE_CLK_GATE_MAX                  (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ETPWM0_CLK_GATE_RESETVAL                      (0x00000000U)
-
 /* ETPWM1_CLK_GATE */
 
 #define CSL_CONTROLSS_CTRL_ETPWM1_CLK_GATE_CLK_GATE_MASK                 (0x00000007U)
 #define CSL_CONTROLSS_CTRL_ETPWM1_CLK_GATE_CLK_GATE_SHIFT                (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM1_CLK_GATE_CLK_GATE_RESETVAL             (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM1_CLK_GATE_CLK_GATE_MAX                  (0x00000007U)
-
-#define CSL_CONTROLSS_CTRL_ETPWM1_CLK_GATE_RESETVAL                      (0x00000000U)
 
 /* ETPWM2_CLK_GATE */
 
@@ -839,16 +792,12 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_ETPWM2_CLK_GATE_CLK_GATE_RESETVAL             (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM2_CLK_GATE_CLK_GATE_MAX                  (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ETPWM2_CLK_GATE_RESETVAL                      (0x00000000U)
-
 /* ETPWM3_CLK_GATE */
 
 #define CSL_CONTROLSS_CTRL_ETPWM3_CLK_GATE_CLK_GATE_MASK                 (0x00000007U)
 #define CSL_CONTROLSS_CTRL_ETPWM3_CLK_GATE_CLK_GATE_SHIFT                (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM3_CLK_GATE_CLK_GATE_RESETVAL             (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM3_CLK_GATE_CLK_GATE_MAX                  (0x00000007U)
-
-#define CSL_CONTROLSS_CTRL_ETPWM3_CLK_GATE_RESETVAL                      (0x00000000U)
 
 /* ETPWM4_CLK_GATE */
 
@@ -857,16 +806,12 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_ETPWM4_CLK_GATE_CLK_GATE_RESETVAL             (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM4_CLK_GATE_CLK_GATE_MAX                  (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ETPWM4_CLK_GATE_RESETVAL                      (0x00000000U)
-
 /* ETPWM5_CLK_GATE */
 
 #define CSL_CONTROLSS_CTRL_ETPWM5_CLK_GATE_CLK_GATE_MASK                 (0x00000007U)
 #define CSL_CONTROLSS_CTRL_ETPWM5_CLK_GATE_CLK_GATE_SHIFT                (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM5_CLK_GATE_CLK_GATE_RESETVAL             (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM5_CLK_GATE_CLK_GATE_MAX                  (0x00000007U)
-
-#define CSL_CONTROLSS_CTRL_ETPWM5_CLK_GATE_RESETVAL                      (0x00000000U)
 
 /* ETPWM6_CLK_GATE */
 
@@ -875,16 +820,12 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_ETPWM6_CLK_GATE_CLK_GATE_RESETVAL             (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM6_CLK_GATE_CLK_GATE_MAX                  (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ETPWM6_CLK_GATE_RESETVAL                      (0x00000000U)
-
 /* ETPWM7_CLK_GATE */
 
 #define CSL_CONTROLSS_CTRL_ETPWM7_CLK_GATE_CLK_GATE_MASK                 (0x00000007U)
 #define CSL_CONTROLSS_CTRL_ETPWM7_CLK_GATE_CLK_GATE_SHIFT                (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM7_CLK_GATE_CLK_GATE_RESETVAL             (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM7_CLK_GATE_CLK_GATE_MAX                  (0x00000007U)
-
-#define CSL_CONTROLSS_CTRL_ETPWM7_CLK_GATE_RESETVAL                      (0x00000000U)
 
 /* ETPWM8_CLK_GATE */
 
@@ -893,8 +834,6 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_ETPWM8_CLK_GATE_CLK_GATE_RESETVAL             (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM8_CLK_GATE_CLK_GATE_MAX                  (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ETPWM8_CLK_GATE_RESETVAL                      (0x00000000U)
-
 /* ETPWM9_CLK_GATE */
 
 #define CSL_CONTROLSS_CTRL_ETPWM9_CLK_GATE_CLK_GATE_MASK                 (0x00000007U)
@@ -902,358 +841,319 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_ETPWM9_CLK_GATE_CLK_GATE_RESETVAL             (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM9_CLK_GATE_CLK_GATE_MAX                  (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ETPWM9_CLK_GATE_RESETVAL                      (0x00000000U)
+
 
 /* ECAP0_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ECAP0_CLK_GATE_CLK_GATE_MASK                         (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ECAP0_CLK_GATE_CLK_GATE_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP0_CLK_GATE_CLK_GATE_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP0_CLK_GATE_CLK_GATE_MAX                          (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP0_CLK_GATE_CLK_GATE_MASK                  (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ECAP0_CLK_GATE_CLK_GATE_SHIFT                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP0_CLK_GATE_CLK_GATE_RESETVAL              (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP0_CLK_GATE_CLK_GATE_MAX                   (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP0_CLK_GATE_RESETVAL                       (0x00000000U)
 
 /* ECAP1_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ECAP1_CLK_GATE_CLK_GATE_MASK                         (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ECAP1_CLK_GATE_CLK_GATE_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP1_CLK_GATE_CLK_GATE_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP1_CLK_GATE_CLK_GATE_MAX                          (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP1_CLK_GATE_CLK_GATE_MASK                  (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ECAP1_CLK_GATE_CLK_GATE_SHIFT                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP1_CLK_GATE_CLK_GATE_RESETVAL              (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP1_CLK_GATE_CLK_GATE_MAX                   (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP1_CLK_GATE_RESETVAL                       (0x00000000U)
 
 /* ECAP2_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ECAP2_CLK_GATE_CLK_GATE_MASK                         (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ECAP2_CLK_GATE_CLK_GATE_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP2_CLK_GATE_CLK_GATE_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP2_CLK_GATE_CLK_GATE_MAX                          (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP2_CLK_GATE_CLK_GATE_MASK                  (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ECAP2_CLK_GATE_CLK_GATE_SHIFT                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP2_CLK_GATE_CLK_GATE_RESETVAL              (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP2_CLK_GATE_CLK_GATE_MAX                   (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP2_CLK_GATE_RESETVAL                       (0x00000000U)
 
 /* ECAP3_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ECAP3_CLK_GATE_CLK_GATE_MASK                         (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ECAP3_CLK_GATE_CLK_GATE_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP3_CLK_GATE_CLK_GATE_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP3_CLK_GATE_CLK_GATE_MAX                          (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP3_CLK_GATE_CLK_GATE_MASK                  (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ECAP3_CLK_GATE_CLK_GATE_SHIFT                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP3_CLK_GATE_CLK_GATE_RESETVAL              (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP3_CLK_GATE_CLK_GATE_MAX                   (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP3_CLK_GATE_RESETVAL                       (0x00000000U)
 
 /* ECAP4_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ECAP4_CLK_GATE_CLK_GATE_MASK                         (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ECAP4_CLK_GATE_CLK_GATE_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP4_CLK_GATE_CLK_GATE_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP4_CLK_GATE_CLK_GATE_MAX                          (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP4_CLK_GATE_CLK_GATE_MASK                  (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ECAP4_CLK_GATE_CLK_GATE_SHIFT                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP4_CLK_GATE_CLK_GATE_RESETVAL              (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP4_CLK_GATE_CLK_GATE_MAX                   (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP4_CLK_GATE_RESETVAL                       (0x00000000U)
 
 /* ECAP5_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ECAP5_CLK_GATE_CLK_GATE_MASK                         (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ECAP5_CLK_GATE_CLK_GATE_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP5_CLK_GATE_CLK_GATE_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP5_CLK_GATE_CLK_GATE_MAX                          (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP5_CLK_GATE_CLK_GATE_MASK                  (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ECAP5_CLK_GATE_CLK_GATE_SHIFT                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP5_CLK_GATE_CLK_GATE_RESETVAL              (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP5_CLK_GATE_CLK_GATE_MAX                   (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP5_CLK_GATE_RESETVAL                       (0x00000000U)
 
 /* ECAP6_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ECAP6_CLK_GATE_CLK_GATE_MASK                         (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ECAP6_CLK_GATE_CLK_GATE_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP6_CLK_GATE_CLK_GATE_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP6_CLK_GATE_CLK_GATE_MAX                          (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP6_CLK_GATE_CLK_GATE_MASK                  (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ECAP6_CLK_GATE_CLK_GATE_SHIFT                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP6_CLK_GATE_CLK_GATE_RESETVAL              (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP6_CLK_GATE_CLK_GATE_MAX                   (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP6_CLK_GATE_RESETVAL                       (0x00000000U)
 
 /* ECAP7_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ECAP7_CLK_GATE_CLK_GATE_MASK                         (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ECAP7_CLK_GATE_CLK_GATE_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP7_CLK_GATE_CLK_GATE_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP7_CLK_GATE_CLK_GATE_MAX                          (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP7_CLK_GATE_CLK_GATE_MASK                  (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ECAP7_CLK_GATE_CLK_GATE_SHIFT                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP7_CLK_GATE_CLK_GATE_RESETVAL              (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP7_CLK_GATE_CLK_GATE_MAX                   (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP7_CLK_GATE_RESETVAL                       (0x00000000U)
 
 /* CMPSSA0_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_CMPSSA0_CLK_GATE_CLK_GATE_MASK                     (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA0_CLK_GATE_CLK_GATE_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA0_CLK_GATE_CLK_GATE_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA0_CLK_GATE_CLK_GATE_MAX                      (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA0_CLK_GATE_CLK_GATE_MASK                (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA0_CLK_GATE_CLK_GATE_SHIFT               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA0_CLK_GATE_CLK_GATE_RESETVAL            (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA0_CLK_GATE_CLK_GATE_MAX                 (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA0_CLK_GATE_RESETVAL                     (0x00000000U)
 
 /* CMPSSA1_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_CMPSSA1_CLK_GATE_CLK_GATE_MASK                     (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA1_CLK_GATE_CLK_GATE_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA1_CLK_GATE_CLK_GATE_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA1_CLK_GATE_CLK_GATE_MAX                      (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA1_CLK_GATE_CLK_GATE_MASK                (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA1_CLK_GATE_CLK_GATE_SHIFT               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA1_CLK_GATE_CLK_GATE_RESETVAL            (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA1_CLK_GATE_CLK_GATE_MAX                 (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA1_CLK_GATE_RESETVAL                     (0x00000000U)
 
 /* CMPSSA2_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_CMPSSA2_CLK_GATE_CLK_GATE_MASK                     (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA2_CLK_GATE_CLK_GATE_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA2_CLK_GATE_CLK_GATE_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA2_CLK_GATE_CLK_GATE_MAX                      (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA2_CLK_GATE_CLK_GATE_MASK                (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA2_CLK_GATE_CLK_GATE_SHIFT               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA2_CLK_GATE_CLK_GATE_RESETVAL            (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA2_CLK_GATE_CLK_GATE_MAX                 (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA2_CLK_GATE_RESETVAL                     (0x00000000U)
 
 /* CMPSSA3_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_CMPSSA3_CLK_GATE_CLK_GATE_MASK                     (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA3_CLK_GATE_CLK_GATE_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA3_CLK_GATE_CLK_GATE_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA3_CLK_GATE_CLK_GATE_MAX                      (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA3_CLK_GATE_CLK_GATE_MASK                (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA3_CLK_GATE_CLK_GATE_SHIFT               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA3_CLK_GATE_CLK_GATE_RESETVAL            (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA3_CLK_GATE_CLK_GATE_MAX                 (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA3_CLK_GATE_RESETVAL                     (0x00000000U)
 
 /* CMPSSA4_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_CMPSSA4_CLK_GATE_CLK_GATE_MASK                     (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA4_CLK_GATE_CLK_GATE_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA4_CLK_GATE_CLK_GATE_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA4_CLK_GATE_CLK_GATE_MAX                      (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA4_CLK_GATE_CLK_GATE_MASK                (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA4_CLK_GATE_CLK_GATE_SHIFT               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA4_CLK_GATE_CLK_GATE_RESETVAL            (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA4_CLK_GATE_CLK_GATE_MAX                 (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA4_CLK_GATE_RESETVAL                     (0x00000000U)
 
 /* CMPSSA5_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_CMPSSA5_CLK_GATE_CLK_GATE_MASK                     (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA5_CLK_GATE_CLK_GATE_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA5_CLK_GATE_CLK_GATE_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA5_CLK_GATE_CLK_GATE_MAX                      (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA5_CLK_GATE_CLK_GATE_MASK                (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA5_CLK_GATE_CLK_GATE_SHIFT               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA5_CLK_GATE_CLK_GATE_RESETVAL            (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA5_CLK_GATE_CLK_GATE_MAX                 (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA5_CLK_GATE_RESETVAL                     (0x00000000U)
 
 /* CMPSSA6_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_CMPSSA6_CLK_GATE_CLK_GATE_MASK                     (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA6_CLK_GATE_CLK_GATE_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA6_CLK_GATE_CLK_GATE_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA6_CLK_GATE_CLK_GATE_MAX                      (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA6_CLK_GATE_CLK_GATE_MASK                (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA6_CLK_GATE_CLK_GATE_SHIFT               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA6_CLK_GATE_CLK_GATE_RESETVAL            (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA6_CLK_GATE_CLK_GATE_MAX                 (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA6_CLK_GATE_RESETVAL                     (0x00000000U)
 
 /* CMPSSA7_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_CMPSSA7_CLK_GATE_CLK_GATE_MASK                     (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA7_CLK_GATE_CLK_GATE_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA7_CLK_GATE_CLK_GATE_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA7_CLK_GATE_CLK_GATE_MAX                      (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA7_CLK_GATE_CLK_GATE_MASK                (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA7_CLK_GATE_CLK_GATE_SHIFT               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA7_CLK_GATE_CLK_GATE_RESETVAL            (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA7_CLK_GATE_CLK_GATE_MAX                 (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA7_CLK_GATE_RESETVAL                     (0x00000000U)
 
 /* CMPSSA8_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_CMPSSA8_CLK_GATE_CLK_GATE_MASK                     (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA8_CLK_GATE_CLK_GATE_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA8_CLK_GATE_CLK_GATE_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA8_CLK_GATE_CLK_GATE_MAX                      (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA8_CLK_GATE_CLK_GATE_MASK                (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA8_CLK_GATE_CLK_GATE_SHIFT               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA8_CLK_GATE_CLK_GATE_RESETVAL            (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA8_CLK_GATE_CLK_GATE_MAX                 (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA8_CLK_GATE_RESETVAL                     (0x00000000U)
 
 /* ADC_SCTILE0_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_CLK_GATE_CLK_GATE_MASK                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_CLK_GATE_CLK_GATE_SHIFT                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_CLK_GATE_CLK_GATE_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_CLK_GATE_CLK_GATE_MAX                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_CLK_GATE_CLK_GATE_MASK            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_CLK_GATE_CLK_GATE_SHIFT           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_CLK_GATE_CLK_GATE_RESETVAL        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_CLK_GATE_CLK_GATE_MAX             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_CLK_GATE_RESETVAL                 (0x00000000U)
 
 /* ADC_SCTILE1_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_CLK_GATE_CLK_GATE_MASK                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_CLK_GATE_CLK_GATE_SHIFT                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_CLK_GATE_CLK_GATE_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_CLK_GATE_CLK_GATE_MAX                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_CLK_GATE_CLK_GATE_MASK            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_CLK_GATE_CLK_GATE_SHIFT           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_CLK_GATE_CLK_GATE_RESETVAL        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_CLK_GATE_CLK_GATE_MAX             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_CLK_GATE_RESETVAL                 (0x00000000U)
 
 /* ADC_SCTILE2_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_CLK_GATE_CLK_GATE_MASK                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_CLK_GATE_CLK_GATE_SHIFT                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_CLK_GATE_CLK_GATE_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_CLK_GATE_CLK_GATE_MAX                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_CLK_GATE_CLK_GATE_MASK            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_CLK_GATE_CLK_GATE_SHIFT           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_CLK_GATE_CLK_GATE_RESETVAL        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_CLK_GATE_CLK_GATE_MAX             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_CLK_GATE_RESETVAL                 (0x00000000U)
 
 /* ADC_SCTILE3_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_CLK_GATE_CLK_GATE_MASK                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_CLK_GATE_CLK_GATE_SHIFT                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_CLK_GATE_CLK_GATE_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_CLK_GATE_CLK_GATE_MAX                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_CLK_GATE_CLK_GATE_MASK            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_CLK_GATE_CLK_GATE_SHIFT           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_CLK_GATE_CLK_GATE_RESETVAL        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_CLK_GATE_CLK_GATE_MAX             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_CLK_GATE_RESETVAL                 (0x00000000U)
 
 /* ADC_SCTILE4_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_CLK_GATE_CLK_GATE_MASK                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_CLK_GATE_CLK_GATE_SHIFT                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_CLK_GATE_CLK_GATE_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_CLK_GATE_CLK_GATE_MAX                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_CLK_GATE_CLK_GATE_MASK            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_CLK_GATE_CLK_GATE_SHIFT           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_CLK_GATE_CLK_GATE_RESETVAL        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_CLK_GATE_CLK_GATE_MAX             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_CLK_GATE_RESETVAL                 (0x00000000U)
 
 /* ADC_SCTILE5_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_CLK_GATE_CLK_GATE_MASK                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_CLK_GATE_CLK_GATE_SHIFT                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_CLK_GATE_CLK_GATE_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_CLK_GATE_CLK_GATE_MAX                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_CLK_GATE_CLK_GATE_MASK            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_CLK_GATE_CLK_GATE_SHIFT           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_CLK_GATE_CLK_GATE_RESETVAL        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_CLK_GATE_CLK_GATE_MAX             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_CLK_GATE_RESETVAL                 (0x00000000U)
 
 /* ADC0_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ADC0_CLK_GATE_CLK_GATE_MASK                          (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC0_CLK_GATE_CLK_GATE_SHIFT                         (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC0_CLK_GATE_CLK_GATE_RESETVAL                      (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC0_CLK_GATE_CLK_GATE_MAX                           (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC0_CLK_GATE_CLK_GATE_MASK                   (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC0_CLK_GATE_CLK_GATE_SHIFT                  (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC0_CLK_GATE_CLK_GATE_RESETVAL               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC0_CLK_GATE_CLK_GATE_MAX                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC0_CLK_GATE_RESETVAL                        (0x00000000U)
 
 /* ADC1_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ADC1_CLK_GATE_CLK_GATE_MASK                          (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC1_CLK_GATE_CLK_GATE_SHIFT                         (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC1_CLK_GATE_CLK_GATE_RESETVAL                      (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC1_CLK_GATE_CLK_GATE_MAX                           (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC1_CLK_GATE_CLK_GATE_MASK                   (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC1_CLK_GATE_CLK_GATE_SHIFT                  (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC1_CLK_GATE_CLK_GATE_RESETVAL               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC1_CLK_GATE_CLK_GATE_MAX                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC1_CLK_GATE_RESETVAL                        (0x00000000U)
 
 /* ADC2_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ADC2_CLK_GATE_CLK_GATE_MASK                          (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC2_CLK_GATE_CLK_GATE_SHIFT                         (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC2_CLK_GATE_CLK_GATE_RESETVAL                      (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC2_CLK_GATE_CLK_GATE_MAX                           (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC2_CLK_GATE_CLK_GATE_MASK                   (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC2_CLK_GATE_CLK_GATE_SHIFT                  (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC2_CLK_GATE_CLK_GATE_RESETVAL               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC2_CLK_GATE_CLK_GATE_MAX                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC2_CLK_GATE_RESETVAL                        (0x00000000U)
 
 /* EQEP0_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_EQEP0_CLK_GATE_CLK_GATE_MASK                         (0x00000007U)
+#define CSL_CONTROLSS_CTRL_EQEP0_CLK_GATE_CLK_GATE_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_CTRL_EQEP0_CLK_GATE_CLK_GATE_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_CTRL_EQEP0_CLK_GATE_CLK_GATE_MAX                          (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_EQEP0_CLK_GATE_CLK_GATE_MASK                  (0x00000007U)
-#define CSL_CONTROLSS_CTRL_EQEP0_CLK_GATE_CLK_GATE_SHIFT                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_EQEP0_CLK_GATE_CLK_GATE_RESETVAL              (0x00000000U)
-#define CSL_CONTROLSS_CTRL_EQEP0_CLK_GATE_CLK_GATE_MAX                   (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_EQEP0_CLK_GATE_RESETVAL                       (0x00000000U)
 
 /* EQEP1_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_EQEP1_CLK_GATE_CLK_GATE_MASK                         (0x00000007U)
+#define CSL_CONTROLSS_CTRL_EQEP1_CLK_GATE_CLK_GATE_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_CTRL_EQEP1_CLK_GATE_CLK_GATE_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_CTRL_EQEP1_CLK_GATE_CLK_GATE_MAX                          (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_EQEP1_CLK_GATE_CLK_GATE_MASK                  (0x00000007U)
-#define CSL_CONTROLSS_CTRL_EQEP1_CLK_GATE_CLK_GATE_SHIFT                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_EQEP1_CLK_GATE_CLK_GATE_RESETVAL              (0x00000000U)
-#define CSL_CONTROLSS_CTRL_EQEP1_CLK_GATE_CLK_GATE_MAX                   (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_EQEP1_CLK_GATE_RESETVAL                       (0x00000000U)
 
 /* SDFM0_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK_GATE_CLK_GATE_MASK                         (0x00000007U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK_GATE_CLK_GATE_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK_GATE_CLK_GATE_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM0_CLK_GATE_CLK_GATE_MAX                          (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK_GATE_CLK_GATE_MASK                  (0x00000007U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK_GATE_CLK_GATE_SHIFT                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK_GATE_CLK_GATE_RESETVAL              (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK_GATE_CLK_GATE_MAX                   (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_SDFM0_CLK_GATE_RESETVAL                       (0x00000000U)
 
 /* SDFM1_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK_GATE_CLK_GATE_MASK                         (0x00000007U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK_GATE_CLK_GATE_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK_GATE_CLK_GATE_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM1_CLK_GATE_CLK_GATE_MAX                          (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK_GATE_CLK_GATE_MASK                  (0x00000007U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK_GATE_CLK_GATE_SHIFT                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK_GATE_CLK_GATE_RESETVAL              (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK_GATE_CLK_GATE_MAX                   (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_SDFM1_CLK_GATE_RESETVAL                       (0x00000000U)
 
 /* OTTO0_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_OTTO0_CLK_GATE_CLK_GATE_MASK                         (0x00000007U)
+#define CSL_CONTROLSS_CTRL_OTTO0_CLK_GATE_CLK_GATE_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_CTRL_OTTO0_CLK_GATE_CLK_GATE_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_CTRL_OTTO0_CLK_GATE_CLK_GATE_MAX                          (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_OTTO0_CLK_GATE_CLK_GATE_MASK                  (0x00000007U)
-#define CSL_CONTROLSS_CTRL_OTTO0_CLK_GATE_CLK_GATE_SHIFT                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_OTTO0_CLK_GATE_CLK_GATE_RESETVAL              (0x00000000U)
-#define CSL_CONTROLSS_CTRL_OTTO0_CLK_GATE_CLK_GATE_MAX                   (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_OTTO0_CLK_GATE_RESETVAL                       (0x00000000U)
 
 /* OTTO1_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_OTTO1_CLK_GATE_CLK_GATE_MASK                         (0x00000007U)
+#define CSL_CONTROLSS_CTRL_OTTO1_CLK_GATE_CLK_GATE_SHIFT                        (0x00000000U)
+#define CSL_CONTROLSS_CTRL_OTTO1_CLK_GATE_CLK_GATE_RESETVAL                     (0x00000000U)
+#define CSL_CONTROLSS_CTRL_OTTO1_CLK_GATE_CLK_GATE_MAX                          (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_OTTO1_CLK_GATE_CLK_GATE_MASK                  (0x00000007U)
-#define CSL_CONTROLSS_CTRL_OTTO1_CLK_GATE_CLK_GATE_SHIFT                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_OTTO1_CLK_GATE_CLK_GATE_RESETVAL              (0x00000000U)
-#define CSL_CONTROLSS_CTRL_OTTO1_CLK_GATE_CLK_GATE_MAX                   (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_OTTO1_CLK_GATE_RESETVAL                       (0x00000000U)
 
 /* FSI_TX0_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_FSI_TX0_CLK_GATE_CLK_GATE_MASK                       (0x00000007U)
+#define CSL_CONTROLSS_CTRL_FSI_TX0_CLK_GATE_CLK_GATE_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_CTRL_FSI_TX0_CLK_GATE_CLK_GATE_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_CTRL_FSI_TX0_CLK_GATE_CLK_GATE_MAX                        (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_FSI_TX0_CLK_GATE_CLK_GATE_MASK                (0x00000007U)
-#define CSL_CONTROLSS_CTRL_FSI_TX0_CLK_GATE_CLK_GATE_SHIFT               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_FSI_TX0_CLK_GATE_CLK_GATE_RESETVAL            (0x00000000U)
-#define CSL_CONTROLSS_CTRL_FSI_TX0_CLK_GATE_CLK_GATE_MAX                 (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_FSI_TX0_CLK_GATE_RESETVAL                     (0x00000000U)
 
 /* FSI_RX0_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_FSI_RX0_CLK_GATE_CLK_GATE_MASK                       (0x00000007U)
+#define CSL_CONTROLSS_CTRL_FSI_RX0_CLK_GATE_CLK_GATE_SHIFT                      (0x00000000U)
+#define CSL_CONTROLSS_CTRL_FSI_RX0_CLK_GATE_CLK_GATE_RESETVAL                   (0x00000000U)
+#define CSL_CONTROLSS_CTRL_FSI_RX0_CLK_GATE_CLK_GATE_MAX                        (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_FSI_RX0_CLK_GATE_CLK_GATE_MASK                (0x00000007U)
-#define CSL_CONTROLSS_CTRL_FSI_RX0_CLK_GATE_CLK_GATE_SHIFT               (0x00000000U)
-#define CSL_CONTROLSS_CTRL_FSI_RX0_CLK_GATE_CLK_GATE_RESETVAL            (0x00000000U)
-#define CSL_CONTROLSS_CTRL_FSI_RX0_CLK_GATE_CLK_GATE_MAX                 (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_FSI_RX0_CLK_GATE_RESETVAL                     (0x00000000U)
 
 /* ADC_AGG0_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_ADC_AGG0_CLK_GATE_CLK_GATE_MASK                      (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC_AGG0_CLK_GATE_CLK_GATE_SHIFT                     (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_AGG0_CLK_GATE_CLK_GATE_RESETVAL                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_AGG0_CLK_GATE_CLK_GATE_MAX                       (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_AGG0_CLK_GATE_CLK_GATE_MASK               (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC_AGG0_CLK_GATE_CLK_GATE_SHIFT              (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_AGG0_CLK_GATE_CLK_GATE_RESETVAL           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_AGG0_CLK_GATE_CLK_GATE_MAX                (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_AGG0_CLK_GATE_RESETVAL                    (0x00000000U)
 
 /* DAC_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_DAC_CLK_GATE_CLK_GATE_MASK                           (0x00000007U)
+#define CSL_CONTROLSS_CTRL_DAC_CLK_GATE_CLK_GATE_SHIFT                          (0x00000000U)
+#define CSL_CONTROLSS_CTRL_DAC_CLK_GATE_CLK_GATE_RESETVAL                       (0x00000000U)
+#define CSL_CONTROLSS_CTRL_DAC_CLK_GATE_CLK_GATE_MAX                            (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_DAC_CLK_GATE_CLK_GATE_MASK                    (0x00000007U)
-#define CSL_CONTROLSS_CTRL_DAC_CLK_GATE_CLK_GATE_SHIFT                   (0x00000000U)
-#define CSL_CONTROLSS_CTRL_DAC_CLK_GATE_CLK_GATE_RESETVAL                (0x00000000U)
-#define CSL_CONTROLSS_CTRL_DAC_CLK_GATE_CLK_GATE_MAX                     (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_DAC_CLK_GATE_RESETVAL                         (0x00000000U)
 
 /* FSI_TX0_PLL_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_FSI_TX0_PLL_CLK_GATE_CLK_GATE_MASK                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_FSI_TX0_PLL_CLK_GATE_CLK_GATE_SHIFT                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_FSI_TX0_PLL_CLK_GATE_CLK_GATE_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_FSI_TX0_PLL_CLK_GATE_CLK_GATE_MAX                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_FSI_TX0_PLL_CLK_GATE_CLK_GATE_MASK            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_FSI_TX0_PLL_CLK_GATE_CLK_GATE_SHIFT           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_FSI_TX0_PLL_CLK_GATE_CLK_GATE_RESETVAL        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_FSI_TX0_PLL_CLK_GATE_CLK_GATE_MAX             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_FSI_TX0_PLL_CLK_GATE_RESETVAL                 (0x00000000U)
 
 /* SDFM0_PLL_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_SDFM0_PLL_CLK_GATE_CLK_GATE_MASK                     (0x00000007U)
+#define CSL_CONTROLSS_CTRL_SDFM0_PLL_CLK_GATE_CLK_GATE_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM0_PLL_CLK_GATE_CLK_GATE_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM0_PLL_CLK_GATE_CLK_GATE_MAX                      (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_SDFM0_PLL_CLK_GATE_CLK_GATE_MASK              (0x00000007U)
-#define CSL_CONTROLSS_CTRL_SDFM0_PLL_CLK_GATE_CLK_GATE_SHIFT             (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM0_PLL_CLK_GATE_CLK_GATE_RESETVAL          (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM0_PLL_CLK_GATE_CLK_GATE_MAX               (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_SDFM0_PLL_CLK_GATE_RESETVAL                   (0x00000000U)
 
 /* SDFM1_PLL_CLK_GATE */
+#define CSL_CONTROLSS_CTRL_SDFM1_PLL_CLK_GATE_CLK_GATE_MASK                     (0x00000007U)
+#define CSL_CONTROLSS_CTRL_SDFM1_PLL_CLK_GATE_CLK_GATE_SHIFT                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM1_PLL_CLK_GATE_CLK_GATE_RESETVAL                 (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM1_PLL_CLK_GATE_CLK_GATE_MAX                      (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_SDFM1_PLL_CLK_GATE_CLK_GATE_MASK              (0x00000007U)
-#define CSL_CONTROLSS_CTRL_SDFM1_PLL_CLK_GATE_CLK_GATE_SHIFT             (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM1_PLL_CLK_GATE_CLK_GATE_RESETVAL          (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM1_PLL_CLK_GATE_CLK_GATE_MAX               (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_SDFM1_PLL_CLK_GATE_RESETVAL                   (0x00000000U)
 
 /* CONTROLSS_XBAR_CLK_GATE */
 
@@ -1297,7 +1197,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_CONTROLSS_XBAR_CLK_GATE_PWMSYNCOUTXBAR_RESETVAL (0x00000000U)
 #define CSL_CONTROLSS_CTRL_CONTROLSS_XBAR_CLK_GATE_PWMSYNCOUTXBAR_MAX    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CONTROLSS_XBAR_CLK_GATE_RESETVAL              (0x00000000U)
+
 
 /* ETPWM0_RST */
 
@@ -1306,7 +1206,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_ETPWM0_RST_RST_RESETVAL                       (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM0_RST_RST_MAX                            (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ETPWM0_RST_RESETVAL                           (0x00000000U)
+
 
 /* ETPWM1_RST */
 
@@ -1315,7 +1215,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_ETPWM1_RST_RST_RESETVAL                       (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM1_RST_RST_MAX                            (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ETPWM1_RST_RESETVAL                           (0x00000000U)
+
 
 /* ETPWM2_RST */
 
@@ -1324,7 +1224,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_ETPWM2_RST_RST_RESETVAL                       (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM2_RST_RST_MAX                            (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ETPWM2_RST_RESETVAL                           (0x00000000U)
+
 
 /* ETPWM3_RST */
 
@@ -1333,7 +1233,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_ETPWM3_RST_RST_RESETVAL                       (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM3_RST_RST_MAX                            (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ETPWM3_RST_RESETVAL                           (0x00000000U)
+
 
 /* ETPWM4_RST */
 
@@ -1342,7 +1242,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_ETPWM4_RST_RST_RESETVAL                       (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM4_RST_RST_MAX                            (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ETPWM4_RST_RESETVAL                           (0x00000000U)
+
 
 /* ETPWM5_RST */
 
@@ -1351,7 +1251,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_ETPWM5_RST_RST_RESETVAL                       (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM5_RST_RST_MAX                            (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ETPWM5_RST_RESETVAL                           (0x00000000U)
+
 
 /* ETPWM6_RST */
 
@@ -1360,7 +1260,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_ETPWM6_RST_RST_RESETVAL                       (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM6_RST_RST_MAX                            (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ETPWM6_RST_RESETVAL                           (0x00000000U)
+
 
 /* ETPWM7_RST */
 
@@ -1369,7 +1269,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_ETPWM7_RST_RST_RESETVAL                       (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM7_RST_RST_MAX                            (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ETPWM7_RST_RESETVAL                           (0x00000000U)
+
 
 /* ETPWM8_RST */
 
@@ -1378,7 +1278,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_ETPWM8_RST_RST_RESETVAL                       (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM8_RST_RST_MAX                            (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ETPWM8_RST_RESETVAL                           (0x00000000U)
+
 
 /* ETPWM9_RST */
 
@@ -1387,331 +1287,295 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_ETPWM9_RST_RST_RESETVAL                       (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ETPWM9_RST_RST_MAX                            (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ETPWM9_RST_RESETVAL                           (0x00000000U)
+
 
 /* ECAP0_RST */
+#define CSL_CONTROLSS_CTRL_ECAP0_RST_RST_MASK                                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ECAP0_RST_RST_SHIFT                                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP0_RST_RST_RESETVAL                               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP0_RST_RST_MAX                                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP0_RST_RST_MASK                            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ECAP0_RST_RST_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP0_RST_RST_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP0_RST_RST_MAX                             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP0_RST_RESETVAL                            (0x00000000U)
 
 /* ECAP1_RST */
+#define CSL_CONTROLSS_CTRL_ECAP1_RST_RST_MASK                                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ECAP1_RST_RST_SHIFT                                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP1_RST_RST_RESETVAL                               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP1_RST_RST_MAX                                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP1_RST_RST_MASK                            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ECAP1_RST_RST_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP1_RST_RST_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP1_RST_RST_MAX                             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP1_RST_RESETVAL                            (0x00000000U)
 
 /* ECAP2_RST */
+#define CSL_CONTROLSS_CTRL_ECAP2_RST_RST_MASK                                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ECAP2_RST_RST_SHIFT                                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP2_RST_RST_RESETVAL                               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP2_RST_RST_MAX                                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP2_RST_RST_MASK                            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ECAP2_RST_RST_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP2_RST_RST_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP2_RST_RST_MAX                             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP2_RST_RESETVAL                            (0x00000000U)
 
 /* ECAP3_RST */
+#define CSL_CONTROLSS_CTRL_ECAP3_RST_RST_MASK                                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ECAP3_RST_RST_SHIFT                                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP3_RST_RST_RESETVAL                               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP3_RST_RST_MAX                                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP3_RST_RST_MASK                            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ECAP3_RST_RST_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP3_RST_RST_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP3_RST_RST_MAX                             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP3_RST_RESETVAL                            (0x00000000U)
 
 /* ECAP4_RST */
+#define CSL_CONTROLSS_CTRL_ECAP4_RST_RST_MASK                                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ECAP4_RST_RST_SHIFT                                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP4_RST_RST_RESETVAL                               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP4_RST_RST_MAX                                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP4_RST_RST_MASK                            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ECAP4_RST_RST_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP4_RST_RST_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP4_RST_RST_MAX                             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP4_RST_RESETVAL                            (0x00000000U)
 
 /* ECAP5_RST */
+#define CSL_CONTROLSS_CTRL_ECAP5_RST_RST_MASK                                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ECAP5_RST_RST_SHIFT                                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP5_RST_RST_RESETVAL                               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP5_RST_RST_MAX                                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP5_RST_RST_MASK                            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ECAP5_RST_RST_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP5_RST_RST_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP5_RST_RST_MAX                             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP5_RST_RESETVAL                            (0x00000000U)
 
 /* ECAP6_RST */
+#define CSL_CONTROLSS_CTRL_ECAP6_RST_RST_MASK                                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ECAP6_RST_RST_SHIFT                                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP6_RST_RST_RESETVAL                               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP6_RST_RST_MAX                                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP6_RST_RST_MASK                            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ECAP6_RST_RST_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP6_RST_RST_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP6_RST_RST_MAX                             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP6_RST_RESETVAL                            (0x00000000U)
 
 /* ECAP7_RST */
+#define CSL_CONTROLSS_CTRL_ECAP7_RST_RST_MASK                                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ECAP7_RST_RST_SHIFT                                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP7_RST_RST_RESETVAL                               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ECAP7_RST_RST_MAX                                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP7_RST_RST_MASK                            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ECAP7_RST_RST_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP7_RST_RST_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ECAP7_RST_RST_MAX                             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ECAP7_RST_RESETVAL                            (0x00000000U)
 
 /* CMPSSA0_RST */
+#define CSL_CONTROLSS_CTRL_CMPSSA0_RST_RST_MASK                               (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA0_RST_RST_SHIFT                              (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA0_RST_RST_RESETVAL                           (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA0_RST_RST_MAX                                (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA0_RST_RST_MASK                          (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA0_RST_RST_SHIFT                         (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA0_RST_RST_RESETVAL                      (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA0_RST_RST_MAX                           (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA0_RST_RESETVAL                          (0x00000000U)
 
 /* CMPSSA1_RST */
+#define CSL_CONTROLSS_CTRL_CMPSSA1_RST_RST_MASK                               (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA1_RST_RST_SHIFT                              (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA1_RST_RST_RESETVAL                           (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA1_RST_RST_MAX                                (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA1_RST_RST_MASK                          (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA1_RST_RST_SHIFT                         (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA1_RST_RST_RESETVAL                      (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA1_RST_RST_MAX                           (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA1_RST_RESETVAL                          (0x00000000U)
 
 /* CMPSSA2_RST */
+#define CSL_CONTROLSS_CTRL_CMPSSA2_RST_RST_MASK                               (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA2_RST_RST_SHIFT                              (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA2_RST_RST_RESETVAL                           (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA2_RST_RST_MAX                                (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA2_RST_RST_MASK                          (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA2_RST_RST_SHIFT                         (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA2_RST_RST_RESETVAL                      (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA2_RST_RST_MAX                           (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA2_RST_RESETVAL                          (0x00000000U)
 
 /* CMPSSA3_RST */
+#define CSL_CONTROLSS_CTRL_CMPSSA3_RST_RST_MASK                               (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA3_RST_RST_SHIFT                              (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA3_RST_RST_RESETVAL                           (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA3_RST_RST_MAX                                (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA3_RST_RST_MASK                          (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA3_RST_RST_SHIFT                         (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA3_RST_RST_RESETVAL                      (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA3_RST_RST_MAX                           (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA3_RST_RESETVAL                          (0x00000000U)
 
 /* CMPSSA4_RST */
+#define CSL_CONTROLSS_CTRL_CMPSSA4_RST_RST_MASK                               (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA4_RST_RST_SHIFT                              (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA4_RST_RST_RESETVAL                           (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA4_RST_RST_MAX                                (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA4_RST_RST_MASK                          (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA4_RST_RST_SHIFT                         (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA4_RST_RST_RESETVAL                      (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA4_RST_RST_MAX                           (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA4_RST_RESETVAL                          (0x00000000U)
 
 /* CMPSSA5_RST */
+#define CSL_CONTROLSS_CTRL_CMPSSA5_RST_RST_MASK                               (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA5_RST_RST_SHIFT                              (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA5_RST_RST_RESETVAL                           (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA5_RST_RST_MAX                                (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA5_RST_RST_MASK                          (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA5_RST_RST_SHIFT                         (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA5_RST_RST_RESETVAL                      (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA5_RST_RST_MAX                           (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA5_RST_RESETVAL                          (0x00000000U)
 
 /* CMPSSA6_RST */
+#define CSL_CONTROLSS_CTRL_CMPSSA6_RST_RST_MASK                               (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA6_RST_RST_SHIFT                              (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA6_RST_RST_RESETVAL                           (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA6_RST_RST_MAX                                (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA6_RST_RST_MASK                          (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA6_RST_RST_SHIFT                         (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA6_RST_RST_RESETVAL                      (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA6_RST_RST_MAX                           (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA6_RST_RESETVAL                          (0x00000000U)
 
 /* CMPSSA7_RST */
+#define CSL_CONTROLSS_CTRL_CMPSSA7_RST_RST_MASK                               (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA7_RST_RST_SHIFT                              (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA7_RST_RST_RESETVAL                           (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA7_RST_RST_MAX                                (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA7_RST_RST_MASK                          (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA7_RST_RST_SHIFT                         (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA7_RST_RST_RESETVAL                      (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA7_RST_RST_MAX                           (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA7_RST_RESETVAL                          (0x00000000U)
 
 /* CMPSSA8_RST */
+#define CSL_CONTROLSS_CTRL_CMPSSA8_RST_RST_MASK                               (0x00000007U)
+#define CSL_CONTROLSS_CTRL_CMPSSA8_RST_RST_SHIFT                              (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA8_RST_RST_RESETVAL                           (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA8_RST_RST_MAX                                (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA8_RST_RST_MASK                          (0x00000007U)
-#define CSL_CONTROLSS_CTRL_CMPSSA8_RST_RST_SHIFT                         (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA8_RST_RST_RESETVAL                      (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA8_RST_RST_MAX                           (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA8_RST_RESETVAL                          (0x00000000U)
 
 /* ADC_SCTILE0_RST */
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_RST_RST_MASK                             (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_RST_RST_SHIFT                            (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_RST_RST_RESETVAL                         (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_RST_RST_MAX                              (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_RST_RST_MASK                      (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_RST_RST_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_RST_RST_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_RST_RST_MAX                       (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE0_RST_RESETVAL                      (0x00000000U)
 
 /* ADC_SCTILE1_RST */
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_RST_RST_MASK                             (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_RST_RST_SHIFT                            (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_RST_RST_RESETVAL                         (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_RST_RST_MAX                              (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_RST_RST_MASK                      (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_RST_RST_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_RST_RST_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_RST_RST_MAX                       (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE1_RST_RESETVAL                      (0x00000000U)
 
 /* ADC_SCTILE2_RST */
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_RST_RST_MASK                             (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_RST_RST_SHIFT                            (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_RST_RST_RESETVAL                         (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_RST_RST_MAX                              (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_RST_RST_MASK                      (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_RST_RST_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_RST_RST_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_RST_RST_MAX                       (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE2_RST_RESETVAL                      (0x00000000U)
 
 /* ADC_SCTILE3_RST */
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_RST_RST_MASK                             (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_RST_RST_SHIFT                            (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_RST_RST_RESETVAL                         (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_RST_RST_MAX                              (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_RST_RST_MASK                      (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_RST_RST_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_RST_RST_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_RST_RST_MAX                       (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE3_RST_RESETVAL                      (0x00000000U)
 
 /* ADC_SCTILE4_RST */
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_RST_RST_MASK                             (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_RST_RST_SHIFT                            (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_RST_RST_RESETVAL                         (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_RST_RST_MAX                              (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_RST_RST_MASK                      (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_RST_RST_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_RST_RST_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_RST_RST_MAX                       (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE4_RST_RESETVAL                      (0x00000000U)
 
 /* ADC_SCTILE5_RST */
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_RST_RST_MASK                             (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_RST_RST_SHIFT                            (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_RST_RST_RESETVAL                         (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_RST_RST_MAX                              (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_RST_RST_MASK                      (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_RST_RST_SHIFT                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_RST_RST_RESETVAL                  (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_RST_RST_MAX                       (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_SCTILE5_RST_RESETVAL                      (0x00000000U)
 
 /* ADC0_RST */
+#define CSL_CONTROLSS_CTRL_ADC0_RST_RST_MASK                                    (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC0_RST_RST_SHIFT                                   (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC0_RST_RST_RESETVAL                                (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC0_RST_RST_MAX                                     (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC0_RST_RST_MASK                             (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC0_RST_RST_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC0_RST_RST_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC0_RST_RST_MAX                              (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC0_RST_RESETVAL                             (0x00000000U)
 
 /* ADC1_RST */
+#define CSL_CONTROLSS_CTRL_ADC1_RST_RST_MASK                                    (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC1_RST_RST_SHIFT                                   (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC1_RST_RST_RESETVAL                                (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC1_RST_RST_MAX                                     (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC1_RST_RST_MASK                             (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC1_RST_RST_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC1_RST_RST_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC1_RST_RST_MAX                              (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC1_RST_RESETVAL                             (0x00000000U)
 
 /* ADC2_RST */
+#define CSL_CONTROLSS_CTRL_ADC2_RST_RST_MASK                                    (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC2_RST_RST_SHIFT                                   (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC2_RST_RST_RESETVAL                                (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC2_RST_RST_MAX                                     (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC2_RST_RST_MASK                             (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC2_RST_RST_SHIFT                            (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC2_RST_RST_RESETVAL                         (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC2_RST_RST_MAX                              (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC2_RST_RESETVAL                             (0x00000000U)
 
 /* EQEP0_RST */
+#define CSL_CONTROLSS_CTRL_EQEP0_RST_RST_MASK                                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_EQEP0_RST_RST_SHIFT                                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_EQEP0_RST_RST_RESETVAL                               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_EQEP0_RST_RST_MAX                                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_EQEP0_RST_RST_MASK                            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_EQEP0_RST_RST_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_EQEP0_RST_RST_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_EQEP0_RST_RST_MAX                             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_EQEP0_RST_RESETVAL                            (0x00000000U)
 
 /* EQEP1_RST */
+#define CSL_CONTROLSS_CTRL_EQEP1_RST_RST_MASK                                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_EQEP1_RST_RST_SHIFT                                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_EQEP1_RST_RST_RESETVAL                               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_EQEP1_RST_RST_MAX                                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_EQEP1_RST_RST_MASK                            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_EQEP1_RST_RST_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_EQEP1_RST_RST_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_EQEP1_RST_RST_MAX                             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_EQEP1_RST_RESETVAL                            (0x00000000U)
 
 /* SDFM0_RST */
+#define CSL_CONTROLSS_CTRL_SDFM0_RST_RST_MASK                                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_SDFM0_RST_RST_SHIFT                                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM0_RST_RST_RESETVAL                               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM0_RST_RST_MAX                                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_SDFM0_RST_RST_MASK                            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_SDFM0_RST_RST_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM0_RST_RST_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM0_RST_RST_MAX                             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_SDFM0_RST_RESETVAL                            (0x00000000U)
 
 /* SDFM1_RST */
+#define CSL_CONTROLSS_CTRL_SDFM1_RST_RST_MASK                                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_SDFM1_RST_RST_SHIFT                                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM1_RST_RST_RESETVAL                               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_SDFM1_RST_RST_MAX                                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_SDFM1_RST_RST_MASK                            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_SDFM1_RST_RST_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM1_RST_RST_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_SDFM1_RST_RST_MAX                             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_SDFM1_RST_RESETVAL                            (0x00000000U)
 
 /* OTTO0_RST */
+#define CSL_CONTROLSS_CTRL_OTTO0_RST_RST_MASK                                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_OTTO0_RST_RST_SHIFT                                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_OTTO0_RST_RST_RESETVAL                               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_OTTO0_RST_RST_MAX                                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_OTTO0_RST_RST_MASK                            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_OTTO0_RST_RST_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_OTTO0_RST_RST_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_OTTO0_RST_RST_MAX                             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_OTTO0_RST_RESETVAL                            (0x00000000U)
 
 /* OTTO1_RST */
+#define CSL_CONTROLSS_CTRL_OTTO1_RST_RST_MASK                                   (0x00000007U)
+#define CSL_CONTROLSS_CTRL_OTTO1_RST_RST_SHIFT                                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_OTTO1_RST_RST_RESETVAL                               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_OTTO1_RST_RST_MAX                                    (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_OTTO1_RST_RST_MASK                            (0x00000007U)
-#define CSL_CONTROLSS_CTRL_OTTO1_RST_RST_SHIFT                           (0x00000000U)
-#define CSL_CONTROLSS_CTRL_OTTO1_RST_RST_RESETVAL                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_OTTO1_RST_RST_MAX                             (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_OTTO1_RST_RESETVAL                            (0x00000000U)
 
 /* FSI_TX0_RST */
+#define CSL_CONTROLSS_CTRL_FSI_TX0_RST_RST_MASK                                 (0x00000007U)
+#define CSL_CONTROLSS_CTRL_FSI_TX0_RST_RST_SHIFT                                (0x00000000U)
+#define CSL_CONTROLSS_CTRL_FSI_TX0_RST_RST_RESETVAL                             (0x00000000U)
+#define CSL_CONTROLSS_CTRL_FSI_TX0_RST_RST_MAX                                  (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_FSI_TX0_RST_RST_MASK                          (0x00000007U)
-#define CSL_CONTROLSS_CTRL_FSI_TX0_RST_RST_SHIFT                         (0x00000000U)
-#define CSL_CONTROLSS_CTRL_FSI_TX0_RST_RST_RESETVAL                      (0x00000000U)
-#define CSL_CONTROLSS_CTRL_FSI_TX0_RST_RST_MAX                           (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_FSI_TX0_RST_RESETVAL                          (0x00000000U)
 
 /* FSI_RX0_RST */
+#define CSL_CONTROLSS_CTRL_FSI_RX0_RST_RST_MASK                                 (0x00000007U)
+#define CSL_CONTROLSS_CTRL_FSI_RX0_RST_RST_SHIFT                                (0x00000000U)
+#define CSL_CONTROLSS_CTRL_FSI_RX0_RST_RST_RESETVAL                             (0x00000000U)
+#define CSL_CONTROLSS_CTRL_FSI_RX0_RST_RST_MAX                                  (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_FSI_RX0_RST_RST_MASK                          (0x00000007U)
-#define CSL_CONTROLSS_CTRL_FSI_RX0_RST_RST_SHIFT                         (0x00000000U)
-#define CSL_CONTROLSS_CTRL_FSI_RX0_RST_RST_RESETVAL                      (0x00000000U)
-#define CSL_CONTROLSS_CTRL_FSI_RX0_RST_RST_MAX                           (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_FSI_RX0_RST_RESETVAL                          (0x00000000U)
 
 /* ADC_AGG0_RST */
+#define CSL_CONTROLSS_CTRL_ADC_AGG0_RST_RST_MASK                                (0x00000007U)
+#define CSL_CONTROLSS_CTRL_ADC_AGG0_RST_RST_SHIFT                               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_AGG0_RST_RST_RESETVAL                            (0x00000000U)
+#define CSL_CONTROLSS_CTRL_ADC_AGG0_RST_RST_MAX                                 (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_AGG0_RST_RST_MASK                         (0x00000007U)
-#define CSL_CONTROLSS_CTRL_ADC_AGG0_RST_RST_SHIFT                        (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_AGG0_RST_RST_RESETVAL                     (0x00000000U)
-#define CSL_CONTROLSS_CTRL_ADC_AGG0_RST_RST_MAX                          (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_ADC_AGG0_RST_RESETVAL                         (0x00000000U)
 
 /* DAC_RST */
+#define CSL_CONTROLSS_CTRL_DAC_RST_RST_MASK                                     (0x00000007U)
+#define CSL_CONTROLSS_CTRL_DAC_RST_RST_SHIFT                                    (0x00000000U)
+#define CSL_CONTROLSS_CTRL_DAC_RST_RST_RESETVAL                                 (0x00000000U)
+#define CSL_CONTROLSS_CTRL_DAC_RST_RST_MAX                                      (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_DAC_RST_RST_MASK                              (0x00000007U)
-#define CSL_CONTROLSS_CTRL_DAC_RST_RST_SHIFT                             (0x00000000U)
-#define CSL_CONTROLSS_CTRL_DAC_RST_RST_RESETVAL                          (0x00000000U)
-#define CSL_CONTROLSS_CTRL_DAC_RST_RST_MAX                               (0x00000007U)
 
-#define CSL_CONTROLSS_CTRL_DAC_RST_RESETVAL                              (0x00000000U)
 
 /* EPWM0_HALTEN */
 
@@ -1725,7 +1589,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_EPWM0_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EPWM0_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_EPWM0_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* EPWM1_HALTEN */
 
@@ -1739,7 +1603,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_EPWM1_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EPWM1_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_EPWM1_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* EPWM2_HALTEN */
 
@@ -1753,7 +1617,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_EPWM2_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EPWM2_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_EPWM2_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* EPWM3_HALTEN */
 
@@ -1767,7 +1631,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_EPWM3_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EPWM3_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_EPWM3_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* EPWM4_HALTEN */
 
@@ -1781,7 +1645,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_EPWM4_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EPWM4_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_EPWM4_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* EPWM5_HALTEN */
 
@@ -1795,7 +1659,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_EPWM5_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EPWM5_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_EPWM5_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* EPWM6_HALTEN */
 
@@ -1809,7 +1673,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_EPWM6_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EPWM6_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_EPWM6_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* EPWM7_HALTEN */
 
@@ -1823,7 +1687,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_EPWM7_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EPWM7_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_EPWM7_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* EPWM8_HALTEN */
 
@@ -1837,7 +1701,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_EPWM8_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EPWM8_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_EPWM8_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* EPWM9_HALTEN */
 
@@ -1851,273 +1715,273 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_EPWM9_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EPWM9_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_EPWM9_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* CMPSSA0_HALTEN */
+#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN_CR5A0_MASK                   (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN_CR5A0_SHIFT                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN_CR5A0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN_CR5A0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN_CR5A0_MASK                     (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN_CR5A0_SHIFT                    (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN_CR5A0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN_CR5A0_MAX                      (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN_CR5B0_MASK                     (0x00000002U)
-#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN_CR5B0_SHIFT                    (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN_CR5B0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN_CR5B0_MAX                      (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN_CR5B0_MASK                   (0x00000002U)
+#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN_CR5B0_SHIFT                  (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN_CR5B0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN_CR5B0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA0_HALTEN_RESETVAL                       (0x00000000U)
+
 
 /* CMPSSA1_HALTEN */
+#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN_CR5A0_MASK                   (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN_CR5A0_SHIFT                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN_CR5A0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN_CR5A0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN_CR5A0_MASK                     (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN_CR5A0_SHIFT                    (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN_CR5A0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN_CR5A0_MAX                      (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN_CR5B0_MASK                     (0x00000002U)
-#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN_CR5B0_SHIFT                    (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN_CR5B0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN_CR5B0_MAX                      (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN_CR5B0_MASK                   (0x00000002U)
+#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN_CR5B0_SHIFT                  (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN_CR5B0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN_CR5B0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA1_HALTEN_RESETVAL                       (0x00000000U)
+
 
 /* CMPSSA2_HALTEN */
+#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN_CR5A0_MASK                   (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN_CR5A0_SHIFT                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN_CR5A0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN_CR5A0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN_CR5A0_MASK                     (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN_CR5A0_SHIFT                    (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN_CR5A0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN_CR5A0_MAX                      (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN_CR5B0_MASK                     (0x00000002U)
-#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN_CR5B0_SHIFT                    (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN_CR5B0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN_CR5B0_MAX                      (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN_CR5B0_MASK                   (0x00000002U)
+#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN_CR5B0_SHIFT                  (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN_CR5B0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN_CR5B0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA2_HALTEN_RESETVAL                       (0x00000000U)
+
 
 /* CMPSSA3_HALTEN */
+#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN_CR5A0_MASK                   (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN_CR5A0_SHIFT                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN_CR5A0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN_CR5A0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN_CR5A0_MASK                     (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN_CR5A0_SHIFT                    (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN_CR5A0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN_CR5A0_MAX                      (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN_CR5B0_MASK                     (0x00000002U)
-#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN_CR5B0_SHIFT                    (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN_CR5B0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN_CR5B0_MAX                      (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN_CR5B0_MASK                   (0x00000002U)
+#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN_CR5B0_SHIFT                  (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN_CR5B0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN_CR5B0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA3_HALTEN_RESETVAL                       (0x00000000U)
+
 
 /* CMPSSA4_HALTEN */
+#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN_CR5A0_MASK                   (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN_CR5A0_SHIFT                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN_CR5A0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN_CR5A0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN_CR5A0_MASK                     (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN_CR5A0_SHIFT                    (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN_CR5A0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN_CR5A0_MAX                      (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN_CR5B0_MASK                     (0x00000002U)
-#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN_CR5B0_SHIFT                    (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN_CR5B0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN_CR5B0_MAX                      (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN_CR5B0_MASK                   (0x00000002U)
+#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN_CR5B0_SHIFT                  (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN_CR5B0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN_CR5B0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA4_HALTEN_RESETVAL                       (0x00000000U)
+
 
 /* CMPSSA5_HALTEN */
+#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN_CR5A0_MASK                   (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN_CR5A0_SHIFT                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN_CR5A0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN_CR5A0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN_CR5A0_MASK                     (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN_CR5A0_SHIFT                    (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN_CR5A0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN_CR5A0_MAX                      (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN_CR5B0_MASK                     (0x00000002U)
-#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN_CR5B0_SHIFT                    (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN_CR5B0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN_CR5B0_MAX                      (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN_CR5B0_MASK                   (0x00000002U)
+#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN_CR5B0_SHIFT                  (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN_CR5B0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN_CR5B0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA5_HALTEN_RESETVAL                       (0x00000000U)
+
 
 /* CMPSSA6_HALTEN */
+#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN_CR5A0_MASK                   (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN_CR5A0_SHIFT                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN_CR5A0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN_CR5A0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN_CR5A0_MASK                     (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN_CR5A0_SHIFT                    (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN_CR5A0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN_CR5A0_MAX                      (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN_CR5B0_MASK                     (0x00000002U)
-#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN_CR5B0_SHIFT                    (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN_CR5B0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN_CR5B0_MAX                      (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN_CR5B0_MASK                   (0x00000002U)
+#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN_CR5B0_SHIFT                  (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN_CR5B0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN_CR5B0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA6_HALTEN_RESETVAL                       (0x00000000U)
+
 
 /* CMPSSA7_HALTEN */
+#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN_CR5A0_MASK                   (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN_CR5A0_SHIFT                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN_CR5A0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN_CR5A0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN_CR5A0_MASK                     (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN_CR5A0_SHIFT                    (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN_CR5A0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN_CR5A0_MAX                      (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN_CR5B0_MASK                     (0x00000002U)
-#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN_CR5B0_SHIFT                    (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN_CR5B0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN_CR5B0_MAX                      (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN_CR5B0_MASK                   (0x00000002U)
+#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN_CR5B0_SHIFT                  (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN_CR5B0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN_CR5B0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA7_HALTEN_RESETVAL                       (0x00000000U)
+
 
 /* CMPSSA8_HALTEN */
+#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN_CR5A0_MASK                   (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN_CR5A0_SHIFT                  (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN_CR5A0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN_CR5A0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN_CR5A0_MASK                     (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN_CR5A0_SHIFT                    (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN_CR5A0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN_CR5A0_MAX                      (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN_CR5B0_MASK                     (0x00000002U)
-#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN_CR5B0_SHIFT                    (0x00000001U)
-#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN_CR5B0_RESETVAL                 (0x00000000U)
-#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN_CR5B0_MAX                      (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN_CR5B0_MASK                   (0x00000002U)
+#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN_CR5B0_SHIFT                  (0x00000001U)
+#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN_CR5B0_RESETVAL               (0x00000000U)
+#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN_CR5B0_MAX                    (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_CMPSSA8_HALTEN_RESETVAL                       (0x00000000U)
+
 
 /* ECAP0_HALTEN */
-
 #define CSL_CONTROLSS_CTRL_ECAP0_HALTEN_CR5A0_MASK                       (0x00000001U)
 #define CSL_CONTROLSS_CTRL_ECAP0_HALTEN_CR5A0_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP0_HALTEN_CR5A0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP0_HALTEN_CR5A0_MAX                        (0x00000001U)
+
 
 #define CSL_CONTROLSS_CTRL_ECAP0_HALTEN_CR5B0_MASK                       (0x00000002U)
 #define CSL_CONTROLSS_CTRL_ECAP0_HALTEN_CR5B0_SHIFT                      (0x00000001U)
 #define CSL_CONTROLSS_CTRL_ECAP0_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP0_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_ECAP0_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* ECAP1_HALTEN */
-
 #define CSL_CONTROLSS_CTRL_ECAP1_HALTEN_CR5A0_MASK                       (0x00000001U)
 #define CSL_CONTROLSS_CTRL_ECAP1_HALTEN_CR5A0_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP1_HALTEN_CR5A0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP1_HALTEN_CR5A0_MAX                        (0x00000001U)
+
 
 #define CSL_CONTROLSS_CTRL_ECAP1_HALTEN_CR5B0_MASK                       (0x00000002U)
 #define CSL_CONTROLSS_CTRL_ECAP1_HALTEN_CR5B0_SHIFT                      (0x00000001U)
 #define CSL_CONTROLSS_CTRL_ECAP1_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP1_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_ECAP1_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* ECAP2_HALTEN */
-
 #define CSL_CONTROLSS_CTRL_ECAP2_HALTEN_CR5A0_MASK                       (0x00000001U)
 #define CSL_CONTROLSS_CTRL_ECAP2_HALTEN_CR5A0_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP2_HALTEN_CR5A0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP2_HALTEN_CR5A0_MAX                        (0x00000001U)
+
 
 #define CSL_CONTROLSS_CTRL_ECAP2_HALTEN_CR5B0_MASK                       (0x00000002U)
 #define CSL_CONTROLSS_CTRL_ECAP2_HALTEN_CR5B0_SHIFT                      (0x00000001U)
 #define CSL_CONTROLSS_CTRL_ECAP2_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP2_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_ECAP2_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* ECAP3_HALTEN */
-
 #define CSL_CONTROLSS_CTRL_ECAP3_HALTEN_CR5A0_MASK                       (0x00000001U)
 #define CSL_CONTROLSS_CTRL_ECAP3_HALTEN_CR5A0_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP3_HALTEN_CR5A0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP3_HALTEN_CR5A0_MAX                        (0x00000001U)
+
 
 #define CSL_CONTROLSS_CTRL_ECAP3_HALTEN_CR5B0_MASK                       (0x00000002U)
 #define CSL_CONTROLSS_CTRL_ECAP3_HALTEN_CR5B0_SHIFT                      (0x00000001U)
 #define CSL_CONTROLSS_CTRL_ECAP3_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP3_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_ECAP3_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* ECAP4_HALTEN */
-
 #define CSL_CONTROLSS_CTRL_ECAP4_HALTEN_CR5A0_MASK                       (0x00000001U)
 #define CSL_CONTROLSS_CTRL_ECAP4_HALTEN_CR5A0_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP4_HALTEN_CR5A0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP4_HALTEN_CR5A0_MAX                        (0x00000001U)
+
 
 #define CSL_CONTROLSS_CTRL_ECAP4_HALTEN_CR5B0_MASK                       (0x00000002U)
 #define CSL_CONTROLSS_CTRL_ECAP4_HALTEN_CR5B0_SHIFT                      (0x00000001U)
 #define CSL_CONTROLSS_CTRL_ECAP4_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP4_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_ECAP4_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* ECAP5_HALTEN */
-
 #define CSL_CONTROLSS_CTRL_ECAP5_HALTEN_CR5A0_MASK                       (0x00000001U)
 #define CSL_CONTROLSS_CTRL_ECAP5_HALTEN_CR5A0_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP5_HALTEN_CR5A0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP5_HALTEN_CR5A0_MAX                        (0x00000001U)
+
 
 #define CSL_CONTROLSS_CTRL_ECAP5_HALTEN_CR5B0_MASK                       (0x00000002U)
 #define CSL_CONTROLSS_CTRL_ECAP5_HALTEN_CR5B0_SHIFT                      (0x00000001U)
 #define CSL_CONTROLSS_CTRL_ECAP5_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP5_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_ECAP5_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* ECAP6_HALTEN */
-
 #define CSL_CONTROLSS_CTRL_ECAP6_HALTEN_CR5A0_MASK                       (0x00000001U)
 #define CSL_CONTROLSS_CTRL_ECAP6_HALTEN_CR5A0_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP6_HALTEN_CR5A0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP6_HALTEN_CR5A0_MAX                        (0x00000001U)
+
 
 #define CSL_CONTROLSS_CTRL_ECAP6_HALTEN_CR5B0_MASK                       (0x00000002U)
 #define CSL_CONTROLSS_CTRL_ECAP6_HALTEN_CR5B0_SHIFT                      (0x00000001U)
 #define CSL_CONTROLSS_CTRL_ECAP6_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP6_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_ECAP6_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* ECAP7_HALTEN */
-
 #define CSL_CONTROLSS_CTRL_ECAP7_HALTEN_CR5A0_MASK                       (0x00000001U)
 #define CSL_CONTROLSS_CTRL_ECAP7_HALTEN_CR5A0_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP7_HALTEN_CR5A0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP7_HALTEN_CR5A0_MAX                        (0x00000001U)
+
 
 #define CSL_CONTROLSS_CTRL_ECAP7_HALTEN_CR5B0_MASK                       (0x00000002U)
 #define CSL_CONTROLSS_CTRL_ECAP7_HALTEN_CR5B0_SHIFT                      (0x00000001U)
 #define CSL_CONTROLSS_CTRL_ECAP7_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_ECAP7_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_ECAP7_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* EQEP0_HALTEN */
-
 #define CSL_CONTROLSS_CTRL_EQEP0_HALTEN_CR5A0_MASK                       (0x00000001U)
 #define CSL_CONTROLSS_CTRL_EQEP0_HALTEN_CR5A0_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EQEP0_HALTEN_CR5A0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EQEP0_HALTEN_CR5A0_MAX                        (0x00000001U)
+
 
 #define CSL_CONTROLSS_CTRL_EQEP0_HALTEN_CR5B0_MASK                       (0x00000002U)
 #define CSL_CONTROLSS_CTRL_EQEP0_HALTEN_CR5B0_SHIFT                      (0x00000001U)
 #define CSL_CONTROLSS_CTRL_EQEP0_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EQEP0_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_EQEP0_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* EQEP1_HALTEN */
-
 #define CSL_CONTROLSS_CTRL_EQEP1_HALTEN_CR5A0_MASK                       (0x00000001U)
 #define CSL_CONTROLSS_CTRL_EQEP1_HALTEN_CR5A0_SHIFT                      (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EQEP1_HALTEN_CR5A0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EQEP1_HALTEN_CR5A0_MAX                        (0x00000001U)
+
 
 #define CSL_CONTROLSS_CTRL_EQEP1_HALTEN_CR5B0_MASK                       (0x00000002U)
 #define CSL_CONTROLSS_CTRL_EQEP1_HALTEN_CR5B0_SHIFT                      (0x00000001U)
 #define CSL_CONTROLSS_CTRL_EQEP1_HALTEN_CR5B0_RESETVAL                   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EQEP1_HALTEN_CR5B0_MAX                        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_EQEP1_HALTEN_RESETVAL                         (0x00000000U)
+
 
 /* LOCK0_KICK0 */
 
@@ -2126,7 +1990,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_LOCK0_KICK0_LOCK0_KICK0_RESETVAL              (0x00000000U)
 #define CSL_CONTROLSS_CTRL_LOCK0_KICK0_LOCK0_KICK0_MAX                   (0xFFFFFFFFU)
 
-#define CSL_CONTROLSS_CTRL_LOCK0_KICK0_RESETVAL                          (0x00000000U)
+
 
 /* LOCK0_KICK1 */
 
@@ -2135,7 +1999,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_LOCK0_KICK1_LOCK0_KICK1_RESETVAL              (0x00000000U)
 #define CSL_CONTROLSS_CTRL_LOCK0_KICK1_LOCK0_KICK1_MAX                   (0xFFFFFFFFU)
 
-#define CSL_CONTROLSS_CTRL_LOCK0_KICK1_RESETVAL                          (0x00000000U)
+
 
 /* INTR_RAW_STATUS */
 
@@ -2159,7 +2023,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_INTR_RAW_STATUS_PROXY_ERR_RESETVAL            (0x00000000U)
 #define CSL_CONTROLSS_CTRL_INTR_RAW_STATUS_PROXY_ERR_MAX                 (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_INTR_RAW_STATUS_RESETVAL                      (0x00000000U)
+
 
 /* INTR_ENABLED_STATUS_CLEAR */
 
@@ -2183,7 +2047,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROXY_ERR_RESETVAL (0x00000000U)
 #define CSL_CONTROLSS_CTRL_INTR_ENABLED_STATUS_CLEAR_ENABLED_PROXY_ERR_MAX (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_INTR_ENABLED_STATUS_CLEAR_RESETVAL            (0x00000000U)
+
 
 /* INTR_ENABLE */
 
@@ -2207,7 +2071,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_INTR_ENABLE_PROXY_ERR_EN_RESETVAL             (0x00000000U)
 #define CSL_CONTROLSS_CTRL_INTR_ENABLE_PROXY_ERR_EN_MAX                  (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_INTR_ENABLE_RESETVAL                          (0x00000000U)
+
 
 /* INTR_ENABLE_CLEAR */
 
@@ -2231,7 +2095,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_INTR_ENABLE_CLEAR_PROXY_ERR_EN_CLR_RESETVAL   (0x00000000U)
 #define CSL_CONTROLSS_CTRL_INTR_ENABLE_CLEAR_PROXY_ERR_EN_CLR_MAX        (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_INTR_ENABLE_CLEAR_RESETVAL                    (0x00000000U)
+
 
 /* EOI */
 
@@ -2240,7 +2104,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_EOI_EOI_VECTOR_RESETVAL                       (0x00000000U)
 #define CSL_CONTROLSS_CTRL_EOI_EOI_VECTOR_MAX                            (0x000000FFU)
 
-#define CSL_CONTROLSS_CTRL_EOI_RESETVAL                                  (0x00000000U)
+
 
 /* FAULT_ADDRESS */
 
@@ -2249,7 +2113,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_FAULT_ADDRESS_FAULT_ADDR_RESETVAL             (0x00000000U)
 #define CSL_CONTROLSS_CTRL_FAULT_ADDRESS_FAULT_ADDR_MAX                  (0xFFFFFFFFU)
 
-#define CSL_CONTROLSS_CTRL_FAULT_ADDRESS_RESETVAL                        (0x00000000U)
+
 
 /* FAULT_TYPE_STATUS */
 
@@ -2263,7 +2127,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_FAULT_TYPE_STATUS_FAULT_NS_RESETVAL           (0x00000000U)
 #define CSL_CONTROLSS_CTRL_FAULT_TYPE_STATUS_FAULT_NS_MAX                (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_FAULT_TYPE_STATUS_RESETVAL                    (0x00000000U)
+
 
 /* FAULT_ATTR_STATUS */
 
@@ -2282,7 +2146,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_FAULT_ATTR_STATUS_FAULT_XID_RESETVAL          (0x00000000U)
 #define CSL_CONTROLSS_CTRL_FAULT_ATTR_STATUS_FAULT_XID_MAX               (0x00000FFFU)
 
-#define CSL_CONTROLSS_CTRL_FAULT_ATTR_STATUS_RESETVAL                    (0x00000000U)
+
 
 /* FAULT_CLEAR */
 
@@ -2291,7 +2155,7 @@ typedef struct {
 #define CSL_CONTROLSS_CTRL_FAULT_CLEAR_FAULT_CLR_RESETVAL                (0x00000000U)
 #define CSL_CONTROLSS_CTRL_FAULT_CLEAR_FAULT_CLR_MAX                     (0x00000001U)
 
-#define CSL_CONTROLSS_CTRL_FAULT_CLEAR_RESETVAL                          (0x00000000U)
+
 
 #ifdef __cplusplus
 }
