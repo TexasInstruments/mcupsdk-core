@@ -23,6 +23,8 @@ const files_r5f = {
 		"edma.c",
 		"eqep.c",
         "etpwm.c",
+        "flsopskd_v0.c",
+        "fota_fw_arr.c",
 		"fsi_rx.c",
 		"fsi_tx.c",
 		"gpio.c",
@@ -117,6 +119,7 @@ const filedirs = {
 		"watchdog/v0",
         "optiflash/v0/flc",
         "optiflash/v0/rl2",
+		"flsopskd/v0"
 	],
 };
 

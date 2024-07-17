@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020-22 Texas Instruments Incorporated
+ *  Copyright (C) 2020 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,69 +30,19 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#ifndef SOC_CONFIG_IN_H_
-#define SOC_CONFIG_IN_H_
+#ifndef CSLR_FOTA_TOP_H_
+#define CSLR_FOTA_TOP_H_
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-/* IP versions */
-#define IP_VERSION_ADC_V2
-#define IP_VERSION_CMPSS_V0
-#define IP_VERSION_DAC_V0
-#define IP_VERSION_ECAP_V1
-#define IP_VERSION_EDMA_V0
-#define IP_VERSION_EPWM_V1
-#define IP_VERSION_EQEP_V1
-#define IP_VERSION_FSI_V1
-#define IP_VERSION_FSS_V0
-#define IP_VERSION_GPIO_V0
-#define IP_VERSION_I2C_V1
-#define IP_VERSION_MCAN_V0
-#define IP_VERSION_MCSPI_V0
-#define IP_VERSION_MDIO_V0
-#define IP_VERSION_MMCSD_V1
-#define IP_VERSION_PRUICSS_M_V0
-#define IP_VERSION_QSPI_V0
-#define IP_VERSION_RESOLVER_V0
-#define IP_VERSION_RTI_V0
-#define IP_VERSION_SDFM_V0
-#define IP_VERSION_SPINLOCK_V0
-#define IP_VERSION_UART_V0
+#include <drivers/hw_include/soc_config.h>
 
-/* Driver versions */
-#define DRV_VERSION_ADC_V2
-#define DRV_VERSION_CMPSS_V0
-#define DRV_VERSION_DAC_V0
-#define DRV_VERSION_ECAP_V1
-#define DRV_VERSION_EDMA_V0
-#define DRV_VERSION_EPWM_V1
-#define DRV_VERSION_EQEP_V1
-#define DRV_VERSION_FLASH_V2
-#define DRV_VERSION_FSI_V1
-#define DRV_VERSION_FSS_V0
-#define DRV_VERSION_FLSOPSKD_V0
-#define DRV_VERSION_GPIO_V0
-#define DRV_VERSION_I2C_V1
-#define DRV_VERSION_LIN_V0
-#define DRV_VERSION_MCAN_V0
-#define DRV_VERSION_MCSPI_V0
-#define DRV_VERSION_MDIO_V0
-#define DRV_VERSION_MMCSD_V1
-#define DRV_VERSION_PRUICSS_M_V0
-#define DRV_VERSION_OSPI_V0
-#define DRV_VERSION_RESOLVER_V0
-#define DRV_VERSION_RTI_V0
-#define DRV_VERSION_SDFM_V0
-#define DRV_VERSION_SPINLOCK_V0
-#define DRV_VERSION_UART_V0
-#define DRV_VERSION_WATCHDOG_V0
-
-/* Driver DMA integration */
-#define DMA_VERSION_MCSPI_EDMA
-#define DMA_VERSION_UART_EDMA
+#if defined (DRV_VERSION_FLSOPSKD_V0)
+#include <drivers/hw_include/cslr_fss.h>
+#endif
 
 #ifdef __cplusplus
 }

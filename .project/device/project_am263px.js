@@ -355,6 +355,7 @@ const example_file_list = [
     "tools/flasher/jtag_uniflash/.project/project.js",
     "examples/pru_io/empty/.project/project.js",
     "examples/pru_io/empty/firmware/.project/project.js",
+    "test/benchmarks/flsopskd_benchmark/.project/project.js"
 ];
 
 function getProjectSpecCpu(cpu) {
