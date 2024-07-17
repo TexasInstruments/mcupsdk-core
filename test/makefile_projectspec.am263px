@@ -15,6 +15,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += flasher_jtag_uniflash_am263px-cc_r5
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += flasher_jtag_uniflash_am263px-lp_r5fss0-0_nortos_ti-arm-clang_build
 # Various System Example Projectspec Build Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += stc_func_test_am263px-cc_system_nortos_nortos_build
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_ALL += flsopskd_benchmark_am263px-cc_system_flsopskd_benchmark_build
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL =
 # Various Private Example Projectspec Build Targets
@@ -54,6 +55,9 @@ all-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_BUILD_PRIVATE_ALL)
  stc_func_test_am263px-cc_system_nortos_nortos_build:
 	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am263px-cc/system_nortos_nortos -f makefile_projectspec all
 
+ flsopskd_benchmark_am263px-cc_system_flsopskd_benchmark_build:
+	$(MAKE) -C benchmarks/flsopskd_benchmark/am263px-cc/system_flsopskd_benchmark -f makefile_projectspec all
+
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL =
@@ -69,6 +73,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += flasher_jtag_uniflash_am263px-cc_r5
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += flasher_jtag_uniflash_am263px-lp_r5fss0-0_nortos_ti-arm-clang_clean
 # Various System Example Projectspec Clean Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += stc_func_test_am263px-cc_system_nortos_nortos_clean
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_ALL += flsopskd_benchmark_am263px-cc_system_flsopskd_benchmark_clean
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL =
 # Various Private Example Projectspec Clean Targets
@@ -108,6 +113,9 @@ clean-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_CLEAN_PRIVATE_ALL)
  stc_func_test_am263px-cc_system_nortos_nortos_clean:
 	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am263px-cc/system_nortos_nortos -f makefile_projectspec clean
 
+ flsopskd_benchmark_am263px-cc_system_flsopskd_benchmark_clean:
+	$(MAKE) -C benchmarks/flsopskd_benchmark/am263px-cc/system_flsopskd_benchmark -f makefile_projectspec clean
+
 
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL =
@@ -123,6 +131,7 @@ BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += flasher_jtag_uniflash_am263px-cc_r
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += flasher_jtag_uniflash_am263px-lp_r5fss0-0_nortos_ti-arm-clang_export
 # Various System Example Projectspec Export Targets
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += stc_func_test_am263px-cc_system_nortos_nortos_export
+BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_ALL += flsopskd_benchmark_am263px-cc_system_flsopskd_benchmark_export
 
 BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL =
 # Various Private Example Projectspec Export Targets
@@ -162,6 +171,9 @@ export-private: $(BUILD_COMBO_EXAMPLE_PROJECTSPEC_EXPORT_PRIVATE_ALL)
  stc_func_test_am263px-cc_system_nortos_nortos_export:
 	$(MAKE) -C sdl/stc/stc_mcu/stc_func_test/am263px-cc/system_nortos_nortos -f makefile_projectspec export
 
+ flsopskd_benchmark_am263px-cc_system_flsopskd_benchmark_export:
+	$(MAKE) -C benchmarks/flsopskd_benchmark/am263px-cc/system_flsopskd_benchmark -f makefile_projectspec export
+
 
 
 help:
@@ -195,6 +207,7 @@ help:
 	@echo  System Example ProjectSpec build targets,
 	@echo  =========================================
 	@echo  $(MAKE) -s -C sdl/stc/stc_mcu/stc_func_test/am263px-cc/system_nortos_nortos -f makefile_projectspec [export all clean]
+	@echo  $(MAKE) -s -C benchmarks/flsopskd_benchmark/am263px-cc/system_flsopskd_benchmark -f makefile_projectspec [export all clean]
 	@echo  .
 
 .PHONY: all all-private
