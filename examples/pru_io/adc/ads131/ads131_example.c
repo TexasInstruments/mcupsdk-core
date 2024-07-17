@@ -162,9 +162,10 @@ void ads_example_main(void *args)
 
     while (1)
     {
-        ClockP_usleep(1);
-        //SemaphoreP_pend(&gAdcDataRecSem, SystemP_WAIT_FOREVER);
-        /* print_samples(samples); */
+        SemaphoreP_pend(&gAdcDataRecSem, SystemP_WAIT_FOREVER);
+        #ifdef _DEBUG_
+        print_samples(samples);
+        #endif
     }
 
     Board_driversClose();
