@@ -131,7 +131,7 @@ typedef struct {
     volatile uint32_t PLL_ETH_HSDIVIDER;
     volatile uint32_t PLL_ETH_HSDIVIDER_CLKOUT0;
     volatile uint8_t  Resv_2360[8];
-    volatile uint32_t PLL_ETH_HSDIVIDER_CLKOUT3;
+    volatile uint32_t PLL_ETH_HSDIVIDER_CLKOUT2;
     volatile uint32_t PLL_ETH_RSTCTRL;
     volatile uint32_t PLL_ETH_HSDIVIDER_RSTCTRL;
     volatile uint8_t  Resv_3072[700];

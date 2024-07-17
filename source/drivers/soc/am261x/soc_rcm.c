@@ -61,29 +61,29 @@
 
 const SOC_RcmADPLLJConfig_t gADPLLJConfigTbl[] =
 {
-    /* CORE_2000_25MHz */
+    /* CORE_500_25MHz */
     {
         .Finp = 25U,
         .N = 9U,
-        .Fout = 2000U,
+        .Fout = 500U,
         .M2 = 1U,
-        .M = 800U,
+        .M = 200U,
         .FracM = 0U,
     },
-    /* PER_1920_25MHz */
+    /* ETH_900_25MHz */
     {
         .Finp = 25U,
         .N = 9U,
-        .Fout = 1920U,
+        .Fout = 900U,
         .M2 = 1U,
-        .M = 768U,
+        .M = 360U,
         .FracM = 0U,
     },
-    /* PER_800_25MHz */
+    /* PER_960_25MHz */
     {
         .Finp = 25U,
-        .N = 11U,
-        .Fout = 800U,
+        .N = 9U,
+        .Fout = 960U,
         .M2 = 1U,
         .M = 384U,
         .FracM = 0U,
@@ -97,9 +97,9 @@ const SOC_RcmXTALInfo gXTALInfo[] =
 
 const uint32_t gPLLFreqId2FOutMap[] =
 {
-    [RCM_PLL_FOUT_FREQID_CLK_2000MHZ]       = 2000U,
-    [RCM_PLL_FOUT_FREQID_CLK_1920MHZ]       = 1920U,
-    [RCM_PLL_FOUT_FREQID_CLK_800MHZ]        = 800U,
+    [RCM_PLL_FOUT_FREQID_CLK_500MHZ]       = 500U,
+    [RCM_PLL_FOUT_FREQID_CLK_900MHZ]       = 900U,
+    [RCM_PLL_FOUT_FREQID_CLK_960MHZ]       = 960U,
 };
 
 const SOC_RcmClkSrcInfo gPeripheralClkSrcInfoMap[] =
@@ -154,15 +154,25 @@ const SOC_RcmClkSrcInfo gPeripheralClkSrcInfoMap[] =
         .pllId = RCM_PLLID_CORE,
         .hsDivOut = RCM_PLLHSDIV_OUT_2,
     },
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3] =
+    {
+        .pllId = RCM_PLLID_CORE,
+        .hsDivOut = RCM_PLLHSDIV_OUT_3,
+    },
     [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0] =
     {
         .pllId = RCM_PLLID_PER,
         .hsDivOut = RCM_PLLHSDIV_OUT_0,
     },
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1] =
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2] =
     {
         .pllId = RCM_PLLID_PER,
-        .hsDivOut = RCM_PLLHSDIV_OUT_1,
+        .hsDivOut = RCM_PLLHSDIV_OUT_2,
+    },
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0] =
+    {
+        .pllId = RCM_PLLID_ETH,
+        .hsDivOut = RCM_PLLHSDIV_OUT_0,
     },
 };
 
@@ -207,8 +217,10 @@ static uint16_t gMcanClkSrcValMap[] =
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = 0x444U,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2]     = UNSUPPORTED_CLOCK_SOURCE,
 };
 
 /**
@@ -220,18 +232,20 @@ static uint16_t gMcanClkSrcValMap[] =
  */
 static uint16_t gOspiClkSrcValMap[] =
 {
-    [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
+    [SOC_RcmPeripheralClockSource_XTALCLK]                     = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
     [SOC_RcmPeripheralClockSource_WUCPUCLK]                    = 0x000U,
     [SOC_RcmPeripheralClockSource_EXT_REFCLK]                  = 0x111U,
-    [SOC_RcmPeripheralClockSource_RCCLK10M]                    = 0x555U,   //And 0x777U
+    [SOC_RcmPeripheralClockSource_RCCLK10M]                    = 0x555U,
     [SOC_RcmPeripheralClockSource_RCCLK32K]                    = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_CTPS_GENF0]                  = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = 0x444U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3]    = 0x666U,
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2]     = UNSUPPORTED_CLOCK_SOURCE,
 };
 
 /**
@@ -243,7 +257,7 @@ static uint16_t gOspiClkSrcValMap[] =
  */
 static uint16_t gRtiClkSrcValMap[] =
 {
-    [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
+    [SOC_RcmPeripheralClockSource_XTALCLK]                     = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
     [SOC_RcmPeripheralClockSource_WUCPUCLK]                    = 0x000U,
     [SOC_RcmPeripheralClockSource_EXT_REFCLK]                  = 0x111U,
@@ -253,8 +267,10 @@ static uint16_t gRtiClkSrcValMap[] =
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = 0x444U,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0]     = 0x666U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2]     = UNSUPPORTED_CLOCK_SOURCE,
 };
 
 /**
@@ -276,8 +292,10 @@ static uint16_t gWdtClkSrcValMap[] =
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = 0x444U,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2]     = UNSUPPORTED_CLOCK_SOURCE,
 };
 
 /**
@@ -299,8 +317,10 @@ static uint16_t gMcSpiClkSrcValMap[] =
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = 0x444U,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2]     = UNSUPPORTED_CLOCK_SOURCE,
 };
 
 /**
@@ -322,8 +342,10 @@ static uint16_t gMmcClkSrcValMap[] =
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = 0x444U,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2]     = UNSUPPORTED_CLOCK_SOURCE,
 };
 
 /**
@@ -345,8 +367,10 @@ static uint16_t gIcssmUartClkSrcValMap[] =
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = 0x444U,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = 0x777U,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2]     = 0x777U,
 };
 
 /**
@@ -362,14 +386,16 @@ static uint16_t gCptsClkSrcValMap[] =
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
     [SOC_RcmPeripheralClockSource_WUCPUCLK]                    = 0x000U,
     [SOC_RcmPeripheralClockSource_EXT_REFCLK]                  = 0x111U,
-    [SOC_RcmPeripheralClockSource_RCCLK10M]                    = 0x555U, //Also 0x777U
+    [SOC_RcmPeripheralClockSource_RCCLK10M]                    = 0x555U,
     [SOC_RcmPeripheralClockSource_RCCLK32K]                    = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_CTPS_GENF0]                  = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = 0x444U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = 0x333U,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0]     = 0x444U,
     [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1]     = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2]     = UNSUPPORTED_CLOCK_SOURCE,
 };
 
 /**
@@ -379,21 +405,23 @@ static uint16_t gCptsClkSrcValMap[] =
  * @details
  *  Mapping Array between Clock mode and Clock Mode Value for GPMC
  */
-// static uint16_t gGpmcClkSrcValMap[] =
-// {
-//     [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
-//     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
-//     [SOC_RcmPeripheralClockSource_WUCPUCLK]                    = 0x000U,
-//     [SOC_RcmPeripheralClockSource_EXT_REFCLK]                  = 0x111U,
-//     [SOC_RcmPeripheralClockSource_RCCLK10M]                    = 0x555U, //Also 0x777U
-//     [SOC_RcmPeripheralClockSource_RCCLK32K]                    = UNSUPPORTED_CLOCK_SOURCE,
-//     [SOC_RcmPeripheralClockSource_CTPS_GENF0]                  = UNSUPPORTED_CLOCK_SOURCE,
-//     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = 0x444U,
-//     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = UNSUPPORTED_CLOCK_SOURCE,
-//     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
-//     [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
-//     [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1]     = 0x333U,
-// };
+static uint16_t gGpmcClkSrcValMap[] =
+{
+    [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
+    [SOC_RcmPeripheralClockSource_SYS_CLK]                     = 0x222U,
+    [SOC_RcmPeripheralClockSource_WUCPUCLK]                    = 0x000U,
+    [SOC_RcmPeripheralClockSource_EXT_REFCLK]                  = 0x111U,
+    [SOC_RcmPeripheralClockSource_RCCLK10M]                    = 0x555U, //Also 0x777U
+    [SOC_RcmPeripheralClockSource_RCCLK32K]                    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_CTPS_GENF0]                  = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = 0x444U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2]     = UNSUPPORTED_CLOCK_SOURCE,
+};
 
 /**
  * @brief
@@ -414,8 +442,10 @@ static uint16_t gControlssPllClkSrcValMap[] =
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = 0x444U,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = 0x222U,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2]     = UNSUPPORTED_CLOCK_SOURCE,
 };
 
 /**
@@ -437,8 +467,10 @@ static uint16_t gI2cClkSrcValMap[] =
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = 0x444U,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2]     = UNSUPPORTED_CLOCK_SOURCE,
 };
 
 /**
@@ -460,8 +492,10 @@ static uint16_t gLinUartClkSrcValMap[] =
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = 0x444U,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = 0x777U,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2]     = 0x777U,
 };
 
 /**
@@ -473,18 +507,20 @@ static uint16_t gLinUartClkSrcValMap[] =
  */
 static uint16_t gR5SysClkSrcValMap[] =
 {
-    [SOC_RcmPeripheralClockSource_XTALCLK]                     = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_WUCPUCLK]                    = 0x000U,
     [SOC_RcmPeripheralClockSource_EXT_REFCLK]                  = 0x111U,
-    [SOC_RcmPeripheralClockSource_RCCLK10M]                    = 0x333U, //Also 0x444U, 0x555U, 0x777U
+    [SOC_RcmPeripheralClockSource_RCCLK10M]                    = 0x444U, //Also 0x555U, 0x777U
     [SOC_RcmPeripheralClockSource_RCCLK32K]                    = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_CTPS_GENF0]                  = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = 0x222U,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0]     = 0x333U,
     [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1]     = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2]     = UNSUPPORTED_CLOCK_SOURCE,
 };
 
 /**
@@ -506,8 +542,10 @@ static uint16_t gTraceClkSrcValMap[] =
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = 0x111U,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = 0x222U,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = 0x333U,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1]     = 0x444U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = 0x444U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2]     = UNSUPPORTED_CLOCK_SOURCE,
 };
 
 /**
@@ -519,18 +557,20 @@ static uint16_t gTraceClkSrcValMap[] =
  */
 static uint16_t gClkoutClkSrcValMap[] =
 {
-    [SOC_RcmPeripheralClockSource_XTALCLK]                     = 0x666U,
+    [SOC_RcmPeripheralClockSource_XTALCLK]                     = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_SYS_CLK]                     = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_WUCPUCLK]                    = 0x000U,
     [SOC_RcmPeripheralClockSource_EXT_REFCLK]                  = UNSUPPORTED_CLOCK_SOURCE,
     [SOC_RcmPeripheralClockSource_RCCLK10M]                    = 0x555U,
-    [SOC_RcmPeripheralClockSource_RCCLK32K]                    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_RCCLK32K]                    = 0x666U,
     [SOC_RcmPeripheralClockSource_CTPS_GENF0]                  = 0x777U,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0]    = 0x111U,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1]    = 0x222U,
     [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2]    = UNSUPPORTED_CLOCK_SOURCE,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = 0x333U,
-    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1]     = 0x444U,
+    [SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3]    = UNSUPPORTED_CLOCK_SOURCE,
+    [SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0]     = 0x333U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0]     = 0x444U,
+    [SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2]     = UNSUPPORTED_CLOCK_SOURCE,
 };
 
 /**
@@ -885,6 +925,13 @@ static void SOC_rcmGetClkSrcAndDivReg (SOC_RcmPeripheralId periphId,
             *clkSrcVal = gOspiClkSrcValMap[clkSource];
             break;
         }
+        // case SOC_RcmPeripheralId_OSPI1:
+        // {
+        //     *clkSrcReg  = &(ptrMSSRCMRegs->OSPI1_CLK_SRC_SEL);
+        //     *clkdDivReg = &(ptrMSSRCMRegs->OSPI1_CLK_DIV_VAL);
+        //     *clkSrcVal = gOspiClkSrcValMap[clkSource];
+        //     break;
+        // }
         case SOC_RcmPeripheralId_RTI0:
         {
             *clkSrcReg  = &(ptrMSSRCMRegs->RTI0_CLK_SRC_SEL);
@@ -969,11 +1016,25 @@ static void SOC_rcmGetClkSrcAndDivReg (SOC_RcmPeripheralId periphId,
             *clkSrcVal = gIcssmUartClkSrcValMap[clkSource];
             break;
         }
+        case SOC_RcmPeripheralId_ICSSM1_UART0:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->ICSSM1_UART0_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->ICSSM1_UART_CLK_DIV_VAL);
+            *clkSrcVal = gIcssmUartClkSrcValMap[clkSource];
+            break;
+        }
         case SOC_RcmPeripheralId_CPTS:
         {
             *clkSrcReg  = &(ptrMSSRCMRegs->CPTS_CLK_SRC_SEL);
             *clkdDivReg = &(ptrMSSRCMRegs->CPTS_CLK_DIV_VAL);
             *clkSrcVal = gCptsClkSrcValMap[clkSource];
+            break;
+        }
+        case SOC_RcmPeripheralId_GPMC:
+        {
+            *clkSrcReg  = &(ptrMSSRCMRegs->GPMC_CLK_SRC_SEL);
+            *clkdDivReg = &(ptrMSSRCMRegs->GPMC_CLK_DIV_VAL);
+            *clkSrcVal = gGpmcClkSrcValMap[clkSource];
             break;
         }
         case SOC_RcmPeripheralId_CONTROLSS_PLL:
@@ -1080,6 +1141,55 @@ static void SOC_rcmProgPllCoreDivider (uint8_t inputClockDiv , uint8_t divider,
 
     /* Sigma delta divider for optimum jitter bit needs to be updated since ROM code programmed to its need */
     *ptrFracMReg = SOC_rcmInsert8 (*ptrFracMReg, 31U, 24U, 8U); //CSL_TOP_RCM_PLL_CORE_FRACDIV_REGSD_SHIFT, CSL_TOP_RCM_PLL_CORE_FRACDIV_REGSD_MASK
+}
+
+/**
+ *  @b Description
+ *  @n
+ *      This API Configure the Dividers and Multipliers for Ethernet PLL
+ *
+ *  @param[in]  inputClockDiv
+ *      Pre-divider value
+ *  @param[in]  divider
+ *      Divider value
+ *  @param[in]  multiplier
+ *      Multiplier Value
+ *  @param[in]  postDivider
+ *      Post Divider Value
+ *  @param[in]  fracMultiplier
+ *      Fractional Multiplier programmable value
+ *
+ *  @retval     None
+ */
+static void SOC_rcmProgPllEthDivider (uint8_t inputClockDiv , uint8_t divider,
+                               uint16_t multiplier, uint8_t postDivider,
+                               uint32_t fracMultiplier)
+{
+    volatile uint32_t *ptrM2NReg, *ptrMN2Reg, *ptrFracMReg;
+    CSL_top_rcmRegs *ptrTopRCMRegs;
+
+    ptrTopRCMRegs = SOC_rcmGetBaseAddressTOPRCM ();
+
+    ptrM2NReg   = &(ptrTopRCMRegs->PLL_ETH_M2NDIV);
+    ptrMN2Reg   = &(ptrTopRCMRegs->PLL_ETH_MN2DIV);
+    ptrFracMReg = &(ptrTopRCMRegs->PLL_ETH_FRACDIV);
+
+    // APPLJ-1 Setting
+    // CLOCKOUT = M/(N+1) * CLKINP * (1/M2)
+
+    *ptrM2NReg = SOC_rcmInsert8 (*ptrM2NReg, 22U, 16U, postDivider);    //CSL_TOP_RCM_PLL_ETH_M2NDIV_M2_SHIFT, CSL_TOP_RCM_PLL_ETH_M2NDIV_M2_MASK
+
+    /* program N (input clock divider) */
+    *ptrM2NReg = SOC_rcmInsert8 (*ptrM2NReg, 7U, 0U, inputClockDiv);    //CSL_TOP_RCM_PLL_ETH_M2NDIV_N_SHIFT, CSL_TOP_RCM_PLL_ETH_M2NDIV_N_MASK
+
+    /* program M (multiplier) */
+    *ptrMN2Reg = SOC_rcmInsert16 (*ptrMN2Reg, 11U, 0U, multiplier);     //CSL_TOP_RCM_PLL_ETH_MN2DIV_M_SHIFT, CSL_TOP_RCM_PLL_ETH_MN2DIV_M_MASK
+
+    /* program N2 (divider) */
+    *ptrMN2Reg = SOC_rcmInsert8 (*ptrMN2Reg, 19U, 16U, divider);        //CSL_TOP_RCM_PLL_ETH_MN2DIV_N2_SHIFT, CSL_TOP_RCM_PLL_ETH_MN2DIV_N2_MASK
+
+    /* program Fractional Multiplier */
+    *ptrFracMReg = SOC_rcmInsert32 (*ptrFracMReg, 17U, 0U, fracMultiplier); //CSL_TOP_RCM_ETH_FRACDIV_FRACTIONALM_SHIFT, CSL_TOP_RCM_PLL_ETH_FRACDIV_FRACTIONALM_MASK
 }
 
 /**
@@ -1274,6 +1384,60 @@ static void SOC_rcmConfigurePllPer (void)
     }while(phaseLockStatus != 1U);
 }
 
+/**
+ *  @b Description
+ *  @n
+ *      This API Configure the Dividers and Multipliers for Eth PLL
+ *
+ *  @param[in]  trimVal
+ *      Trim value for the PLL
+ *  @retval     None
+ */
+static void SOC_rcmConfigurePllEth (void)
+{
+    volatile uint32_t *ptrClkCtrl, *ptrTenable, *ptrTenableDiv, *ptrPllStatus;
+    CSL_top_rcmRegs *ptrTopRCMRegs;
+    uint8_t phaseLockStatus;
+
+    /* Core PLL settings */
+    ptrTopRCMRegs = SOC_rcmGetBaseAddressTOPRCM ();
+
+    ptrClkCtrl    = &(ptrTopRCMRegs->PLL_ETH_CLKCTRL);
+    ptrTenable    = &(ptrTopRCMRegs->PLL_ETH_TENABLE);
+    ptrTenableDiv = &(ptrTopRCMRegs->PLL_ETH_TENABLEDIV);
+    ptrPllStatus  = &(ptrTopRCMRegs->PLL_ETH_STATUS);
+
+    /* program CLKDCOLDOEN[29] = 1, IDLE[23] = 0, CLKDCOLDOPWDNZ[17] = 1, SELFREQDCO[12:10] = 4 */
+    *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 29U, 29U, 0x1U);
+    *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 23U, 23U, 0x0U);
+    *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 17U, 17U, 0x1U);
+    *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 12U, 10U, 0x4U);
+
+    /* Soft reset Pll */
+    *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 0U, 0U, 0x0U);
+
+    /* TENABLE High */
+    *ptrTenable = SOC_rcmInsert8 (*ptrTenable, 0U, 0U, 0x1U);
+
+    /* out of reset Pll */
+    *ptrClkCtrl = SOC_rcmInsert8 (*ptrClkCtrl, 0U, 0U, 0x1U);
+
+    /* TENABLE Low */
+    *ptrTenable = SOC_rcmInsert8 (*ptrTenable, 0U, 0U, 0x0U);
+
+    /* TENABLEDIV High */
+    *ptrTenableDiv = SOC_rcmInsert8 (*ptrTenableDiv, 0U, 0U, 0x1U);
+
+    /* TENABLEDIV Low */
+    *ptrTenableDiv = SOC_rcmInsert8 (*ptrTenableDiv, 0U, 0U, 0x0U);
+
+    /* wait for the Phase lock for peripheral PLL */
+    do
+    {
+        phaseLockStatus = SOC_rcmExtract8 (*ptrPllStatus, 10U, 10U);
+    }while(phaseLockStatus != 1U);
+}
+
 static uint32_t SOC_rcmGetCoreFout(uint32_t Finp, bool div2flag);
 
 static uint32_t SOC_rcmGetCoreHSDivOut(uint32_t Finp, bool div2flag, SOC_RcmPllHSDIVOutId hsDivOut)
@@ -1299,6 +1463,11 @@ static uint32_t SOC_rcmGetCoreHSDivOut(uint32_t Finp, bool div2flag, SOC_RcmPllH
         case RCM_PLLHSDIV_OUT_2:
         {
             clkDiv = CSL_FEXT(ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT2, TOP_RCM_PLL_CORE_HSDIVIDER_CLKOUT2_DIV);
+            break;
+        }
+        case RCM_PLLHSDIV_OUT_3:
+        {
+            clkDiv = CSL_FEXT(ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT3, TOP_RCM_PLL_CORE_HSDIVIDER_CLKOUT3_DIV);
             break;
         }
         case RCM_PLLHSDIV_OUT_NONE:
@@ -1531,6 +1700,44 @@ static uint32_t SOC_rcmGetPerFout(uint32_t Finp, bool div2flag)
     return FOut;
 }
 
+static uint32_t SOC_rcmGetEthFout(uint32_t Finp, bool div2flag)
+{
+    uint8_t pllSwitchFlag;
+    CSL_top_rcmRegs *ptrTopRCMRegs;
+    uint32_t FOut;
+
+    ptrTopRCMRegs = SOC_rcmGetBaseAddressTOPRCM ();
+    /* read the Eth PLL Lock status */
+    pllSwitchFlag = SOC_rcmExtract8 (ptrTopRCMRegs->PLL_ETH_STATUS, 10U, 10U);
+    if (pllSwitchFlag)
+    {
+        uint32_t M, N, M2, FracM;
+
+        N  = CSL_FEXT(ptrTopRCMRegs->PLL_ETH_M2NDIV, TOP_RCM_PLL_ETH_M2NDIV_N);
+        M2 = CSL_FEXT(ptrTopRCMRegs->PLL_ETH_M2NDIV, TOP_RCM_PLL_ETH_M2NDIV_M2);
+        M  = CSL_FEXT(ptrTopRCMRegs->PLL_ETH_MN2DIV, TOP_RCM_PLL_ETH_MN2DIV_M);
+        FracM = CSL_FEXT(ptrTopRCMRegs->PLL_ETH_FRACDIV,TOP_RCM_PLL_ETH_FRACDIV_FRACTIONALM);
+        FOut = SOC_rcmADPLLJGetFOut(Finp, N, M, M2, FracM, div2flag);
+        DebugP_assert(FOut != 0);
+    }
+    else
+    {
+        uint32_t ULOWCLKEN = CSL_FEXT(ptrTopRCMRegs->PLL_ETH_CLKCTRL, TOP_RCM_PLL_ETH_CLKCTRL_ULOWCLKEN);
+        if (ULOWCLKEN == 0)
+        {
+            uint32_t N2;
+
+            N2  = CSL_FEXT(ptrTopRCMRegs->PLL_ETH_MN2DIV, TOP_RCM_PLL_ETH_MN2DIV_N2);
+            FOut = Finp/(N2 + 1);
+        }
+        else
+        {
+            FOut = Finp;
+        }
+    }
+    return FOut;
+}
+
 static uint32_t SOC_rcmGetPerHSDivOut(uint32_t Finp, bool div2flag, SOC_RcmPllHSDIVOutId hsDivOut)
 {
     uint32_t FOut;
@@ -1549,10 +1756,61 @@ static uint32_t SOC_rcmGetPerHSDivOut(uint32_t Finp, bool div2flag, SOC_RcmPllHS
         }
         case RCM_PLLHSDIV_OUT_1:
         {
-            clkDiv = CSL_FEXT(ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT1, TOP_RCM_PLL_PER_HSDIVIDER_CLKOUT0_DIV);
+            DebugP_assert(FALSE);
+            clkDiv = 0;
             break;
         }
         case RCM_PLLHSDIV_OUT_2:
+        {
+            clkDiv = CSL_FEXT(ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT2, TOP_RCM_PLL_PER_HSDIVIDER_CLKOUT2_DIV);
+            break;
+        }
+        case RCM_PLLHSDIV_OUT_3:
+        {
+            DebugP_assert(FALSE);
+            clkDiv = 0;
+            break;
+        }
+        case RCM_PLLHSDIV_OUT_NONE:
+        {
+            DebugP_assert(FALSE);
+            clkDiv = 0;
+            break;
+        }
+    }
+
+    return (FOut/(clkDiv  + 1));
+}
+
+static uint32_t SOC_rcmGetEthHSDivOut(uint32_t Finp, bool div2flag, SOC_RcmPllHSDIVOutId hsDivOut)
+{
+    uint32_t FOut;
+    uint32_t clkDiv;
+    CSL_top_rcmRegs *ptrTopRCMRegs;
+
+    ptrTopRCMRegs = SOC_rcmGetBaseAddressTOPRCM ();
+
+    FOut = SOC_rcmGetEthFout(Finp, div2flag);
+    switch(hsDivOut)
+    {
+        case RCM_PLLHSDIV_OUT_0:
+        {
+            clkDiv = CSL_FEXT(ptrTopRCMRegs->PLL_ETH_HSDIVIDER_CLKOUT0, TOP_RCM_PLL_ETH_HSDIVIDER_CLKOUT0_DIV);
+            break;
+        }
+        case RCM_PLLHSDIV_OUT_1:
+        {
+            DebugP_assert(FALSE);
+            clkDiv = 0;
+            break;
+        }
+        case RCM_PLLHSDIV_OUT_2:
+        {
+            DebugP_assert(FALSE);
+            clkDiv = 0;
+            break;
+        }
+        case RCM_PLLHSDIV_OUT_3:
         {
             DebugP_assert(FALSE);
             clkDiv = 0;
@@ -1636,6 +1894,12 @@ uint32_t SOC_rcmGetPeripheralClockFrequency(SOC_RcmPeripheralClockSource clkSour
         {
             Finp = gXTALInfo[clkFreqId].Finp;
             clkFreq = SOC_rcmGetPerHSDivOut(Finp, gXTALInfo[clkFreqId].div2flag, clkSrcInfo->hsDivOut);
+            break;
+        }
+        case RCM_PLLID_ETH:
+        {
+            Finp = gXTALInfo[clkFreqId].Finp;
+            clkFreq = SOC_rcmGetEthHSDivOut(Finp, gXTALInfo[clkFreqId].div2flag, clkSrcInfo->hsDivOut);
             break;
         }
         case RCM_PLLID_XTALCLK:
@@ -1731,8 +1995,14 @@ void SOC_rcmCoreApllHSDivConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivO
         hsDivOutRegVal--;
         ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT2 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT2, 4U, 0U, hsDivOutRegVal);
     }
-    /* Core PLL output 3 not used.WIll not configure */
-    DebugP_assert((hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_3) == 0);
+    if (hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_3)
+    {
+        DebugP_assert((Fout % hsDivCfg->hsDivOutFreqHz[RCM_PLL_HSDIV_OUTPUT_IDX3]) == 0);
+        hsDivOutRegVal = Fout / hsDivCfg->hsDivOutFreqHz[RCM_PLL_HSDIV_OUTPUT_IDX3];
+        hsDivOutRegVal--;
+        ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT3 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT3, 4U, 0U, hsDivOutRegVal);
+    }
+
     /* Generate Trigger to latch these values */
     ptrTopRCMRegs->PLL_CORE_HSDIVIDER         = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_CORE_HSDIVIDER, 2U, 2U, 0x1U);
     ptrTopRCMRegs->PLL_CORE_HSDIVIDER         = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_CORE_HSDIVIDER, 2U, 2U, 0x0U);
@@ -1749,6 +2019,89 @@ void SOC_rcmCoreApllHSDivConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivO
     if (hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_2)
     {
         ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT2 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT2, 8U, 8U, 0x1U);
+    }
+    if (hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_3)
+    {
+        ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT3 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_CORE_HSDIVIDER_CLKOUT3, 8U, 8U, 0x1U);
+    }
+
+    return;
+}
+
+void SOC_rcmEthApllConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivOutConfig *hsDivCfg)
+{
+    SOC_RcmXtalFreqId XTALFreq;
+    CSL_top_rcmRegs *ptrTopRCMRegs;
+    SOC_RcmADPLLJConfig_t const * adplljCfg;
+    uint32_t hsDivOutRegVal;
+    uint32_t Fout;
+
+    Fout = SOC_RCM_FREQ_MHZ2HZ(gPLLFreqId2FOutMap[outFreqId]);
+    /* Core PLL settings */
+    ptrTopRCMRegs = SOC_rcmGetBaseAddressTOPRCM ();
+
+    /* read the XTAL Frequency */
+    XTALFreq = RCM_XTAL_FREQID_CLK_25MHZ;
+
+   /* program PLL dividers and multipliers.  */
+    adplljCfg = SOC_rcmGetADPLLJConfig(gXTALInfo[XTALFreq].Finp, outFreqId);
+    DebugP_assert(adplljCfg != NULL);
+
+    if (adplljCfg != NULL)
+    {
+        if (gXTALInfo[XTALFreq].div2flag == false)
+        {
+            SOC_rcmProgPllEthDivider (adplljCfg->N, 0U, adplljCfg->M, adplljCfg->M2, adplljCfg->FracM);
+        }
+        else
+        {
+            uint32_t N;
+
+            DebugP_assert(((adplljCfg->N + 1) % 2) == 0);
+            /* Input XTAL freq is half. Divide input divider by 2 to get same output freq */
+            N = ((adplljCfg->N + 1) / 2) - 1;
+
+            SOC_rcmProgPllEthDivider (N, 0U, adplljCfg->M, adplljCfg->M2, adplljCfg->FracM);
+
+        }
+        /* Configure and Lock Core PLL */
+        SOC_rcmConfigurePllEth ();
+
+        /* Derive Clocks */
+        /* Set clock divider values from ETH PLL*/
+        if (hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_0)
+        {
+            DebugP_assert((Fout % hsDivCfg->hsDivOutFreqHz[RCM_PLL_HSDIV_OUTPUT_IDX0]) == 0);
+            hsDivOutRegVal = Fout / hsDivCfg->hsDivOutFreqHz[RCM_PLL_HSDIV_OUTPUT_IDX0];
+            hsDivOutRegVal--;
+            ptrTopRCMRegs->PLL_ETH_HSDIVIDER_CLKOUT0 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_ETH_HSDIVIDER_CLKOUT0, 4U, 0U, hsDivOutRegVal);
+        
+        }
+        if (hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_2)
+        {
+            DebugP_assert((Fout % hsDivCfg->hsDivOutFreqHz[RCM_PLL_HSDIV_OUTPUT_IDX2]) == 0);
+            hsDivOutRegVal = Fout / hsDivCfg->hsDivOutFreqHz[RCM_PLL_HSDIV_OUTPUT_IDX2];
+            hsDivOutRegVal--;
+            ptrTopRCMRegs->PLL_ETH_HSDIVIDER_CLKOUT2 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_ETH_HSDIVIDER_CLKOUT2, 4U, 0U, hsDivOutRegVal);
+        
+        }
+        /* Core PLL output 1 not used.WIll not configure */
+        /* Core PLL output 3 not used.WIll not configure */
+
+        /* Generate Trigger to latch these values */
+        ptrTopRCMRegs->PLL_ETH_HSDIVIDER         = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_ETH_HSDIVIDER, 2U, 2U, 0x1U);
+        ptrTopRCMRegs->PLL_ETH_HSDIVIDER         = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_ETH_HSDIVIDER, 2U, 2U, 0x0U);
+
+        /* Ungate the clocks */
+        if (hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_0)
+        {
+            ptrTopRCMRegs->PLL_ETH_HSDIVIDER_CLKOUT0 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_ETH_HSDIVIDER_CLKOUT0, 8U, 8U, 0x1U);
+        }
+        if (hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_2)
+        {
+            ptrTopRCMRegs->PLL_ETH_HSDIVIDER_CLKOUT2 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_ETH_HSDIVIDER_CLKOUT2, 8U, 8U, 0x1U);
+        }
+
     }
 
     return;
@@ -1801,14 +2154,9 @@ void SOC_rcmPerApllConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivOutConf
             hsDivOutRegVal = Fout / hsDivCfg->hsDivOutFreqHz[RCM_PLL_HSDIV_OUTPUT_IDX0];
             hsDivOutRegVal--;
             ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT0 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT0, 4U, 0U, hsDivOutRegVal);
+        
         }
-        if (hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_1)
-        {
-            DebugP_assert((Fout % hsDivCfg->hsDivOutFreqHz[RCM_PLL_HSDIV_OUTPUT_IDX1]) == 0);
-            hsDivOutRegVal = Fout / hsDivCfg->hsDivOutFreqHz[RCM_PLL_HSDIV_OUTPUT_IDX1];
-            hsDivOutRegVal--;
-            ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT1 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT1, 4U, 0U, hsDivOutRegVal);
-        }
+        /* Core PLL output 1 not used.WIll not configure */
         /* Core PLL output 2 not used.WIll not configure */
         /* Core PLL output 3 not used.WIll not configure */
 
@@ -1820,10 +2168,6 @@ void SOC_rcmPerApllConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivOutConf
         if (hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_0)
         {
             ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT0 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT0, 8U, 8U, 0x1U);
-        }
-        if (hsDivCfg->hsdivOutEnMask & RCM_PLL_HSDIV_OUTPUT_ENABLE_1)
-        {
-            ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT1 = SOC_rcmInsert8 (ptrTopRCMRegs->PLL_PER_HSDIVIDER_CLKOUT1, 8U, 8U, 0x1U);
         }
 
     }
@@ -2056,6 +2400,19 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
             }
             break;
         }
+        // case SOC_RcmPeripheralId_OSPI1:
+        // {
+        //     if(enable==1)
+        //     {
+        //         ptrMSSRCMRegs->OSPI1_CLK_GATE = CSL_MSS_RCM_OSPI1_CLK_GATE_RESETVAL;
+        //     }
+        //     else
+        //     if(enable==0)
+        //     {
+        //         ptrMSSRCMRegs->OSPI1_CLK_GATE = CSL_MSS_RCM_OSPI1_CLK_GATE_GATED_MASK;
+        //     }
+        //     break;
+        // }
         case SOC_RcmPeripheralId_RTI0:
         {
             if(enable==1)
@@ -2212,6 +2569,19 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
             }
             break;
         }
+        case SOC_RcmPeripheralId_ICSSM1_UART0:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->ICSSM1_UART_CLK_GATE = CSL_MSS_RCM_ICSSM1_UART_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->ICSSM1_UART_CLK_GATE = CSL_MSS_RCM_ICSSM1_UART_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
         case SOC_RcmPeripheralId_CPTS:
         {
             if(enable==1)
@@ -2225,20 +2595,19 @@ int32_t SOC_rcmEnablePeripheralClock(SOC_RcmPeripheralId periphId, uint32_t enab
             }
             break;
         }
-        //FIXME REMOVE GPMC FOR AM261X
-        // case SOC_RcmPeripheralId_GPMC:
-        // {
-        //     if(enable==1)
-        //     {
-        //         ptrMSSRCMRegs->GPMC_CLK_GATE = CSL_MSS_RCM_GPMC_CLK_GATE_GATED_RESETVAL;
-        //     }
-        //     else
-        //     if(enable==0)
-        //     {
-        //         ptrMSSRCMRegs->GPMC_CLK_GATE = CSL_MSS_RCM_GPMC_CLK_GATE_GATED_MASK;
-        //     }
-        //     break;
-        // }
+        case SOC_RcmPeripheralId_GPMC:
+        {
+            if(enable==1)
+            {
+                ptrMSSRCMRegs->GPMC_CLK_GATE = CSL_MSS_RCM_GPMC_CLK_GATE_GATED_RESETVAL;
+            }
+            else
+            if(enable==0)
+            {
+                ptrMSSRCMRegs->GPMC_CLK_GATE = CSL_MSS_RCM_GPMC_CLK_GATE_GATED_MASK;
+            }
+            break;
+        }
         case SOC_RcmPeripheralId_CONTROLSS_PLL:
         {
             if(enable==1)

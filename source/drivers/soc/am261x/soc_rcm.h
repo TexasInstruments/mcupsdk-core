@@ -278,17 +278,13 @@ typedef enum SOC_RcmPeripheralId_e
      */
     SOC_RcmPeripheralId_MCAN1,
     /**
-     * \brief   Value specifying MCAN2
-     */
-    SOC_RcmPeripheralId_MCAN2,
-    /**
-     * \brief   Value specifying MCAN3
-     */
-    SOC_RcmPeripheralId_MCAN3,
-    /**
      * \brief   Value specifying OSPI0
      */
     SOC_RcmPeripheralId_OSPI0,
+    /**
+     * \brief   Value specifying OSPI0
+     */
+    SOC_RcmPeripheralId_OSPI1,
     /**
      * \brief   Value specifying RTI0
      */
@@ -314,14 +310,6 @@ typedef enum SOC_RcmPeripheralId_e
      */
     SOC_RcmPeripheralId_WDT1,
     /**
-     * \brief   Value specifying WDT2
-     */
-    SOC_RcmPeripheralId_WDT2,
-    /**
-     * \brief   Value specifying WDT3
-     */
-    SOC_RcmPeripheralId_WDT3,
-    /**
      * \brief   Value specifying MCSPI0
      */
     SOC_RcmPeripheralId_MCSPI0,
@@ -338,22 +326,6 @@ typedef enum SOC_RcmPeripheralId_e
      */
     SOC_RcmPeripheralId_MCSPI3,
     /**
-     * \brief   Value specifying MCSPI4
-     */
-    SOC_RcmPeripheralId_MCSPI4,
-    /**
-     * \brief   Value specifying MCSPI5
-     */
-    SOC_RcmPeripheralId_MCSPI5,
-    /**
-     * \brief   Value specifying MCSPI6
-     */
-    SOC_RcmPeripheralId_MCSPI6,
-    /**
-     * \brief   Value specifying MCSPI7
-     */
-    SOC_RcmPeripheralId_MCSPI7,
-    /**
      * \brief   Value specifying MMC0
      */
     SOC_RcmPeripheralId_MMC0,
@@ -361,6 +333,10 @@ typedef enum SOC_RcmPeripheralId_e
      * \brief   Value specifying ICSSM0_UART0
      */
     SOC_RcmPeripheralId_ICSSM0_UART0,
+    /**
+     * \brief   Value specifying ICSSM1_UART0
+     */
+    SOC_RcmPeripheralId_ICSSM1_UART0,
     /**
      * \brief   Value specifying CPTS
      */
@@ -393,30 +369,6 @@ typedef enum SOC_RcmPeripheralId_e
      * \brief   Value specifying LIN3_UART3
      */
     SOC_RcmPeripheralId_LIN3_UART3,
-    /**
-     * \brief   Value specifying LIN4_UART4
-     */
-    SOC_RcmPeripheralId_LIN4_UART4,
-    /**
-     * \brief   Value specifying LIN5_UART5
-     */
-    SOC_RcmPeripheralId_LIN5_UART5,
-    /**
-     * \brief   Value specifying MCAN4
-     */
-    SOC_RcmPeripheralId_MCAN4,
-    /**
-     * \brief   Value specifying MCAN5
-     */
-    SOC_RcmPeripheralId_MCAN5,
-    /**
-     * \brief   Value specifying MCAN6
-     */
-    SOC_RcmPeripheralId_MCAN6,
-    /**
-     * \brief   Value specifying MCAN7
-     */
-    SOC_RcmPeripheralId_MCAN7,
 }SOC_RcmPeripheralId;
 /** @} */
 
@@ -456,7 +408,7 @@ typedef enum SOC_RcmPeripheralClockSource_e
      */
     SOC_RcmPeripheralClockSource_CTPS_GENF0,
     /**
-     * \brief   Value specifying PLL Core Clock Out 0 (400 Mhz)
+     * \brief   Value specifying PLL Core Clock Out 0 (500 Mhz)
      */
     SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT0,
     /**
@@ -464,17 +416,25 @@ typedef enum SOC_RcmPeripheralClockSource_e
      */
     SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT1,
     /**
-     * \brief   Value specifying PLL Core Clock Out 2 (400 Mhz)
+     * \brief   Value specifying PLL Core Clock Out 2 (500 Mhz)
      */
     SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT2,
     /**
-     * \brief   Value specifying PLL Core Clock Out 0 (160 Mhz)
+     * \brief   Value specifying PLL Core Clock Out 3 (166 Mhz)
+     */
+    SOC_RcmPeripheralClockSource_DPLL_CORE_HSDIV0_CLKOUT3,
+    /**
+     * \brief   Value specifying PLL Eth Clock Out 0 (450 Mhz)
+     */
+    SOC_RcmPeripheralClockSource_DPLL_ETH_HSDIV0_CLKOUT0,
+    /**
+     * \brief   Value specifying PLL Per Clock Out 0 (240 Mhz)
      */
     SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT0,
     /**
-     * \brief   Value specifying PLL Core Clock Out 1 (192 Mhz)
+     * \brief   Value specifying PLL Per Clock Out 2 (160 Mhz)
      */
-    SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT1,
+    SOC_RcmPeripheralClockSource_DPLL_PER_HSDIV0_CLKOUT2,
 } SOC_RcmPeripheralClockSource;
 /** @} */
 
@@ -486,17 +446,17 @@ typedef enum SOC_RcmPeripheralClockSource_e
 typedef enum SOC_RcmPllFoutFreqId_e
 {
     /**
-     * \brief   Value specifying PLL output frequency 2000MHz
+     * \brief   Value specifying PLL output frequency 500MHz
      */
-    RCM_PLL_FOUT_FREQID_CLK_2000MHZ,
+    RCM_PLL_FOUT_FREQID_CLK_500MHZ,
     /**
-     * \brief   Value specifying PLL output frequency 1920MHz
+     * \brief   Value specifying PLL output frequency 900MHz
      */
-    RCM_PLL_FOUT_FREQID_CLK_1920MHZ,
+    RCM_PLL_FOUT_FREQID_CLK_900MHZ,
     /**
-     * \brief   Value specifying PLL output frequency 800MHz
+     * \brief   Value specifying PLL output frequency 960MHz
      */
-    RCM_PLL_FOUT_FREQID_CLK_800MHZ,
+    RCM_PLL_FOUT_FREQID_CLK_960MHZ,
 } SOC_RcmPllFoutFreqId;
 /** @} */
 
@@ -516,6 +476,7 @@ typedef enum SOC_RcmXtalFreqId_e
 typedef enum SOC_RcmPllId_e
 {
     RCM_PLLID_CORE,
+    RCM_PLLID_ETH,
     RCM_PLLID_PER,
     RCM_PLLID_XTALCLK,
     RCM_PLLID_WUCPUCLK,
@@ -544,6 +505,10 @@ typedef enum SOC_RcmPllHSDIVOutId_e
      * \brief   Value specifying HSDIVIDER 2
      */
     RCM_PLLHSDIV_OUT_2,
+    /**
+     * \brief   Value specifying HSDIVIDER 3
+     */
+    RCM_PLLHSDIV_OUT_3,
     /**
      * \brief   Value specifying invalid/no HSDIVIDER ID
      */
@@ -602,6 +567,15 @@ typedef struct SOC_RcmPllHsDivOutConfig_s
  *
  */
 extern void SOC_rcmCoreApllConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivOutConfig *hsDivCfg);
+
+/**
+ * \brief Configure ETH PLL
+ *
+ * \param outFreqId [in] PLL output frequency ID. Enumberation: SOC_RcmPllFoutFreqId
+ * \param *hsDivCfg [in] HSDIVIDER configuration
+ *
+ */
+extern void SOC_rcmEthApllConfig(SOC_RcmPllFoutFreqId outFreqId, SOC_RcmPllHsDivOutConfig *hsDivCfg);
 
 /**
  * \brief Pre-requisite sequence to Re-configure CORE PLL
