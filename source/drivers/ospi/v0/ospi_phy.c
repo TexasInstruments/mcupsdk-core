@@ -81,7 +81,6 @@ OSPI_PhyTuneWindowParams gPhyTuneWindowParamsLT133  = {
 
 OSPI_PhyTuneWindowParams *gPhyTuneWindowParams = &gPhyTuneWindowParamsGTE133;
 
-#define OSPI_FLASH_ATTACK_VECTOR_SIZE       (128U)
 #ifndef abs
     #define abs(x) ((x)>0 ? (x) : -(x))
 #endif

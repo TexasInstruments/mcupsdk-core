@@ -250,6 +250,7 @@ typedef void *OSPI_Handle;
  */
 #define OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_MASTER_MODE           (0U)
 #define OSPI_FLASH_CFG_PHY_MASTER_CONTROL_REG_PHY_BYPASS_MODE           (1U)
+#define OSPI_FLASH_ATTACK_VECTOR_SIZE       (128U)
 /** @} */
 
 
