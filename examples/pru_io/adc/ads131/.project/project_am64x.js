@@ -207,6 +207,7 @@ function getComponentProperty() {
     property.isInternal = false;
     property.buildOptionCombos = buildOptionCombos;
     property.isSkipTopLevelBuild = true;
+    property.skipUpdatingTirex = true;
 
     return property;
 }
@@ -223,8 +224,6 @@ function getComponentBuildProperty(buildOption) {
         build_property.libdirs = libdirs_freertos_r5f;
         build_property.libs = libs_freertos_r5f;
         build_property.templates = templates_freertos_r5f;
-
-        build_property.description = "R5F ADC Project"
     }
 
     else if(buildOption.cpu == "icss_g0_pru0")
@@ -238,9 +237,7 @@ function getComponentBuildProperty(buildOption) {
         build_property.skipMakefileCcsBootimageGen = true;
         build_property.lflags = lflags_pru;
         
-        build_property.skipUpdatingTirex = true;
         build_property.makefile = "pru";  // makefile type
-        build_property.description = "PRU ADC (ads131) Interface Project";
         build_property.ccsPruPostBuildSteps = getccsPruPostBuildSteps(buildOption.cpu, buildOption.board);
         build_property.makefilePruPostBuildSteps = getmakefilePruPostBuildSteps(buildOption.cpu, buildOption.board);
     }

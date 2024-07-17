@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context
+                deviceFamily="PRU"
+                deviceId="AM263x_CC"
+            />
+        </when>
+    </applicability>
+
+    <project
+        title="Sent Decoder Using Iep Capture"
+        name = "sent_decoder_using_iep_capture_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt"
+        products="com.ti.MCU_PLUS_SDK_AMXXX"
+        configurations="
+            Release,
+            Debug,
+        "
+        connection="TIXDS110_Connection.xml"
+        toolChain="TI"
+        cgtVersion="2.3.3"
+        device="AM263x_CC"
+        deviceCore="ICSSM_PRU_0"
+        ignoreDefaultDeviceSettings="true"
+        ignoreDefaultCCSSettings="true"
+        endianness="little"
+        outputFormat="ELF"
+        outputType="executable"
+
+        compilerBuildOptions="
+            -I${CG_TOOL_ROOT}/include
+            -I${MCU_PLUS_SDK_PATH}/source
+            -I${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/common
+            -DPRU0
+            -DSLICE0
+            -v4
+            -DSOC_AM263X
+        "
+        linkerBuildOptions="
+            -m=sent_decoder_using_iep_capture.${ConfigName}.map
+            --disable_auto_rts
+            --entry_point=main
+            --diag_suppress=10063-D
+        "
+
+        postBuildStep="
+            $(CG_TOOL_ROOT)/bin/hexpru --diag_wrap=off --array --array:name_prefix=SentDecoderFirmwarePru -o sent_decoder_using_iep_capture_pru0_bin.h sent_decoder_using_iep_capture_am263x-cc_icss_m0_pru0_fw_ti-pru-cgt.out; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_using_iep_capture_pru0_bin.h ; if ${CCS_HOST_OS} == linux sed -i '0r ${MCU_PLUS_SDK_PATH}/source/pru_io/firmware/pru_load_bin_copyright.h' sent_decoder_using_iep_capture_pru0_bin.h; if ${CCS_HOST_OS} == win32 $(CCS_INSTALL_DIR)/utils/cygwin/mv sent_decoder_using_iep_capture_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/example/firmware/sent_decoder_using_iep_capture_pru0_bin.h; if ${CCS_HOST_OS} == linux mv sent_decoder_using_iep_capture_pru0_bin.h ${MCU_PLUS_SDK_PATH}/examples/pru_io/sent/decoder_pruicss_iep_ecap/example/firmware/sent_decoder_using_iep_capture_pru0_bin.h
+        "
+
+        description="A Sent Decoder Using Iep Capture FW project">
+
+        <configuration name="Debug"
+            compilerBuildOptions="
+                -D_DEBUG_=1
+            "
+            linkerBuildOptions="
+            "
+        ></configuration>
+        <configuration name="Release"
+            compilerBuildOptions="
+                -O3
+            "
+            linkerBuildOptions="
+            "
+        ></configuration>
+        <pathVariable name="MCU_PLUS_SDK_PATH" path="${COM_TI_MCU_PLUS_SDK_AMXXX_INSTALL_DIR}" scope="project" />
+        <file path="./linker.cmd" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="../../../../pru0/main.asm" openOnCreation="false" excludeFromBuild="false" action="link">
+        </file>
+        <file path="${MCU_PLUS_SDK_PATH}/docs/api_guide_am263x/EXAMPLES_SENT_DECODER_PRUICSS_IEP_ECAP.html"
+                openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
+        </file>
+    </project>
+</projectSpec>

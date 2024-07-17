@@ -11,10 +11,13 @@
 const pru_ipc = scripting.addModule("/pru_io/pru_ipc/pru_ipc");
 const adc  = scripting.addModule("/pru_io/adc/adc", {}, false);
 const adc1 = adc.addInstance();
+const pru_ipc1 = pru_ipc.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
  */
+pru_ipc1.$name = "CONFIG_PRU_IPC0";
+
 adc1.$name              = "CONFIG_ADC0";
 adc1.adcIC              = "ADS127L11";
 adc1.adcConfig[0].$name = "CONFIG_ADS127_PINMUX0";

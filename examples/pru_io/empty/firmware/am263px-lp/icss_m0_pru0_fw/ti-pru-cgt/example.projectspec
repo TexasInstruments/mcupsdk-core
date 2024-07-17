@@ -21,7 +21,7 @@
         toolChain="TI"
         cgtVersion="2.3.3"
         device="AM263px"
-        deviceCore=""
+        deviceCore="ICSSM_PRU_0"
         ignoreDefaultDeviceSettings="true"
         ignoreDefaultCCSSettings="true"
         endianness="little"

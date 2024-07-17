@@ -35,7 +35,7 @@ const lnkfiles = {
 const readmeDoxygenPageTag = "EXAMPLES_PRU_EMPTY";
 
 const buildOptionCombos = [
-    { device: device, cpu: "icss_m_pru1", cgt: "ti-pru-cgt", board: "am263x-cc", os: "fw"},
+    { device: device, cpu: "icss_m0_pru1", cgt: "ti-pru-cgt", board: "am263x-cc", os: "fw"},
 ];
 
 const templates_pru =
@@ -59,10 +59,10 @@ function getmakefilePruPostBuildSteps(cpu, board)
 
     switch(cpu)
     {
-        case "icss_m_pru1":
+        case "icss_m0_pru1":
             core = "pru1"
             break;
-        case "icss_m_pru0":
+        case "icss_m0_pru0":
             core = "pru0"
     }
 
@@ -77,10 +77,10 @@ function getccsPruPostBuildSteps(cpu, board)
 
     switch(cpu)
     {
-        case "icss_m_pru1":
+        case "icss_m0_pru1":
             core = "pru1"
             break;
-        case "icss_m_pru0":
+        case "icss_m0_pru0":
             core = "pru0"
     }
 

@@ -43,7 +43,7 @@ const templates_pru =
 ];
 
 const buildOptionCombos = [
-    { device: device, cpu: "icss_m_pru0", cgt: "ti-pru-cgt", board: "am263x-cc", os: "fw"},
+    { device: device, cpu: "icss_m0_pru0", cgt: "ti-pru-cgt", board: "am263x-cc", os: "fw"},
 ];
 
 const cflags = {

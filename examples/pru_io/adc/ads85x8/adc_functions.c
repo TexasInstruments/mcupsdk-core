@@ -38,7 +38,7 @@
 #include "ti_board_open_close.h"
 
 #include <drivers/pruicss.h>
-#include <pru0_load_bin.h> // > PRUFirmware_0 array
+#include <pru0_load_bin.h> /* PRUFirmware_0 array */ 
 #include <pru_ipc.h>
 
 #include <board/ioexp/ioexp_tca6424.h>
